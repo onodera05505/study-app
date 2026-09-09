@@ -1,0 +1,249 @@
+{
+  "exam": "2022r04h",
+  "range": "28-54",
+  "classifications": [
+    {
+      "number": 28,
+      "syllabus_item": 29,
+      "topic_term": "正規化",
+      "topic_is_new": false,
+      "related_terms": ["部分関数従属", "推移関数従属", "完全関数従属", "非正規化"],
+      "confidence": "medium",
+      "notes": "第1〜第3正規形の定義を対応付ける問題。項目29（データベース設計）に「部分関数従属」「推移関数従属」「非正規化」が並ぶのでここに置いたが、「正規化」という表記自体は項目44の用語例にあるため、そちらの表記をそのままコピーした。"
+    },
+    {
+      "number": 29,
+      "syllabus_item": 31,
+      "topic_term": "ジャーナルファイル（ログファイル）",
+      "topic_is_new": false,
+      "related_terms": ["フォワードリカバリ（ロールフォワード）", "バックワードリカバリ（ロールバック）", "チェックポイント", "ダンプファイル"],
+      "confidence": "medium",
+      "notes": "undo（更新前情報）と redo（更新後情報）の両方が要ることを問う障害回復の問題。ログ情報の要否が主題なので「ジャーナルファイル（ログファイル）」を採ったが、既存論点「フォワードリカバリ（ロールフォワード）」に寄せる読み方もあり得る。"
+    },
+    {
+      "number": 30,
+      "syllabus_item": 32,
+      "topic_term": "データマイニング",
+      "topic_is_new": false,
+      "related_terms": ["ビッグデータ", "データウェアハウス", "データマート", "レプリケーション"],
+      "confidence": "medium",
+      "notes": "公式の分野はテクノロジ系なので項目は1〜52から選ぶ必要があり、ビッグデータを扱う項目32（データベース応用）に置いた。「データマイニング」が単独で用語例にあるのは項目90（ストラテジ系）なので、表記はそこからコピーした。"
+    },
+    {
+      "number": 31,
+      "syllabus_item": 35,
+      "topic_term": "IPv6",
+      "topic_is_new": false,
+      "related_terms": ["IPv4", "IP アドレス", "グローバル IP アドレス", "サブネットマスク"],
+      "confidence": "medium",
+      "notes": "IPv6 アドレスの表記規則（16進数とコロン区切り、:: による0の省略は1か所だけ）を問う問題。IPv6 は項目33と項目35の双方の用語例にある。アドレス表記という観点で、IP アドレス・サブネットマスクが載る項目35を選んだ。"
+    },
+    {
+      "number": 32,
+      "syllabus_item": 35,
+      "topic_term": "PPPoE（Point to Point Protocol over Ethernet）",
+      "topic_is_new": false,
+      "related_terms": ["PPP", "IPoE（IP over Ethernet）", "MPLS", "PPTP"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 33,
+      "syllabus_item": 35,
+      "topic_term": "NTP",
+      "topic_is_new": false,
+      "related_terms": ["TELNET", "IMAP", "ポート番号", "UDP"],
+      "confidence": "medium",
+      "notes": "UDP を使うプロトコルを選ばせる問題で、正解は NTP。中心の論点を「UDP」と採る余地もあるが、UDP 単独の用語例が無いため、正解の用語であり項目35の用語例にある NTP を論点にした。"
+    },
+    {
+      "number": 34,
+      "syllabus_item": 35,
+      "topic_term": "サブネットマスク",
+      "topic_is_new": false,
+      "related_terms": ["CIDR（Classless Inter Domain Routing）", "サブネットアドレス", "IP アドレス", "ブロードキャスト"],
+      "confidence": "high",
+      "notes": "/28 のホスト数計算。既存論点「サブネットマスク」（項目35）と同一表記。"
+    },
+    {
+      "number": 35,
+      "syllabus_item": 36,
+      "topic_term": "SDN（Software-Defined Networking）",
+      "topic_is_new": false,
+      "related_terms": ["OpenFlow", "NFV（Network Functions Virtualization）", "SD-WAN（Software DefinedWAN）", "DNS"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 36,
+      "syllabus_item": 38,
+      "topic_term": "アイデンティティ連携（OpenID Connect，SAML）",
+      "topic_is_new": false,
+      "related_terms": ["シングルサインオン", "認証", "認可", "XML デジタル署名"],
+      "confidence": "medium",
+      "notes": "SAML の説明を選ばせる問題。SAML 単独の用語例が無く、同じ SAML を主題とする既出問題（2024r06a 問37）が「アイデンティティ連携（OpenID Connect，SAML）」を採っているため、頻度を分散させないよう同一表記に揃えた。"
+    },
+    {
+      "number": 37,
+      "syllabus_item": 38,
+      "topic_term": "サイバーキルチェーン",
+      "topic_is_new": false,
+      "related_terms": ["標的型攻撃", "ソーシャルエンジニアリング", "マルウェア", "水飲み場型攻撃"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 38,
+      "syllabus_item": 38,
+      "topic_term": "チャレンジレスポンス認証",
+      "topic_is_new": false,
+      "related_terms": ["ワンタイムパスワード", "多要素認証", "ログイン（利用者 ID とパスワード）", "ハッシュ関数"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 39,
+      "syllabus_item": 38,
+      "topic_term": "デジタル署名（署名鍵，検証鍵）",
+      "topic_is_new": false,
+      "related_terms": ["公開鍵暗号方式", "ハッシュ関数", "真正性（Authenticity）", "完全性"],
+      "confidence": "high",
+      "notes": "署名鍵・検証鍵は用語例の括弧内だが、デジタル署名そのものの構成要素の言い換えなので用語例を丸ごとコピーした。既存論点と同一表記。"
+    },
+    {
+      "number": 40,
+      "syllabus_item": 42,
+      "topic_term": "cookie",
+      "topic_is_new": false,
+      "related_terms": ["サードパーティ cookie", "トラッキング", "セッション管理", "Web ブラウザ"],
+      "confidence": "medium",
+      "notes": "cookie の用語例が載っているのは項目37（ネットワーク応用）だが、設問はブラウザ側のセキュリティ・プライバシー設定の効果を問うており、既存論点「cookie」（2025r07h 問41、項目42）と同じ項目42に揃えた。項目37を選ぶ判断もあり得る。"
+    },
+    {
+      "number": 41,
+      "syllabus_item": 38,
+      "topic_term": "シングルサインオン",
+      "topic_is_new": false,
+      "related_terms": ["リバースプロキシ", "クライアント証明書", "アイデンティティ連携（OpenID Connect，SAML）", "認証"],
+      "confidence": "high",
+      "notes": "リバースプロキシ方式の SSO の動作を問う問題。実装寄りとみて項目42を採る読み方もあるが、「シングルサインオン」が単独で用語例にあるのは項目38。"
+    },
+    {
+      "number": 42,
+      "syllabus_item": 38,
+      "topic_term": "レインボーテーブル攻撃",
+      "topic_is_new": false,
+      "related_terms": ["パスワードリスト攻撃（クレデンシャルスタッフィング）", "ブルートフォース攻撃", "ソーシャルエンジニアリング", "ハッシュ関数"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 43,
+      "syllabus_item": 39,
+      "topic_term": "リスクレベル",
+      "topic_is_new": false,
+      "related_terms": ["JIS Q 27000", "リスク基準", "脆弱性", "リスク分析"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 44,
+      "syllabus_item": 41,
+      "topic_term": "Webアイソレーション",
+      "topic_is_new": false,
+      "related_terms": ["VDI（Virtual Desktop Infrastructure：デスクトップ仮想化）", "DMZ（非武装地帯）", "未知マルウェア検出手法", "画面転送"],
+      "confidence": "medium",
+      "notes": "DMZ の VDI サーバでブラウザを動かし画面情報だけを PC に返す＝Web 分離。効果（マルウェアの侵入防止）を問う対策の問題なので項目41の「Webアイソレーション」を論点にしたが、VDI の用語例がある項目16（システムの構成）を採る読み方もある。"
+    },
+    {
+      "number": 45,
+      "syllabus_item": 42,
+      "topic_term": "ファジング",
+      "topic_is_new": false,
+      "related_terms": ["脆弱性検査技術（ソースコード静的検査，プログラムの動的検査，ファジングほか）", "ポートスキャン", "IDS（Intrusion Detection System：侵入検知システム）", "デジタルフォレンジックス（証拠保全ほか）"],
+      "confidence": "medium",
+      "notes": "脆弱性を発見する検査技術の文脈なので項目42とした（既存論点「ファジング」も項目42に集約されている）。ファジングが単独で用語例にあるのは項目46（統合・テスト）で、そちらを採る判断もあり得る。"
+    },
+    {
+      "number": 46,
+      "syllabus_item": 44,
+      "topic_term": "モジュール結合度",
+      "topic_is_new": true,
+      "related_terms": ["データ結合", "スタンプ結合", "共通結合", "外部結合"],
+      "confidence": "high",
+      "notes": "既存論点「モジュール結合度」（2024r06h 問46 で新規作成、項目44）と同一表記を使用。"
+    },
+    {
+      "number": 47,
+      "syllabus_item": 45,
+      "topic_term": "判定条件網羅（decisioncoverage）",
+      "topic_is_new": false,
+      "related_terms": ["命令網羅", "条件網羅", "網羅率", "ホワイトボックステスト"],
+      "confidence": "high",
+      "notes": "用語例の表記（括弧内の英語表記が詰まっている点も含め）をそのままコピーした。"
+    },
+    {
+      "number": 48,
+      "syllabus_item": 48,
+      "topic_term": "完全化保守",
+      "topic_is_new": false,
+      "related_terms": ["是正保守", "適応保守", "予防保守", "リバースエンジニアリング"],
+      "confidence": "high",
+      "notes": "障害は起きていないが保守性向上のために仕様書を整備する＝完全化保守（正解ア）。予防保守と紛れるが、潜在的な障害の除去ではないので完全化保守。"
+    },
+    {
+      "number": 49,
+      "syllabus_item": 49,
+      "topic_term": "ベロシティ",
+      "topic_is_new": false,
+      "related_terms": ["スクラム", "スプリント", "プロダクトバックログ", "スプリントレトロスペクティブ"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 50,
+      "syllabus_item": 21,
+      "topic_term": "IDE（統合開発環境）",
+      "topic_is_new": true,
+      "related_terms": ["コンパイラ", "リンカ", "ICE（In-Circuit Emulator：インサーキットエミュレーター）", "エミュレーター"],
+      "confidence": "high",
+      "notes": "IDE 単独の用語例が無いため新規。既存論点「IDE（統合開発環境）」（2023r05a 問50 で新規作成、項目21）と同一表記。"
+    },
+    {
+      "number": 51,
+      "syllabus_item": 59,
+      "topic_term": "EVM（Earned Value Management）",
+      "topic_is_new": false,
+      "related_terms": ["実コスト", "予算", "コストベースライン", "予想コスト"],
+      "confidence": "high",
+      "notes": "EAC＝BAC÷CPI＝100÷(40/60)＝150。EVM は項目58・59の双方の用語例にあるが、完成時総コスト見積りが主題なので既出（2024r06h 問51 など）と同じ項目59に揃えた。"
+    },
+    {
+      "number": 52,
+      "syllabus_item": 58,
+      "topic_term": "クラッシング",
+      "topic_is_new": false,
+      "related_terms": ["ファストトラッキング", "CCPM（Critical Chain Project Management）", "スケジュールネットワーク分析", "What-If シナリオ分析"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 53,
+      "syllabus_item": 58,
+      "topic_term": "アローダイアグラム",
+      "topic_is_new": false,
+      "related_terms": ["CPM（Critical Path Method：クリティカルパス法）", "PERT", "スケジュールネットワーク分析", "活動順序"],
+      "confidence": "medium",
+      "notes": "作業の開始条件と所要日数の表からクリティカルパス（30+20+25+15+10＝100日）を求める問題。図は与えられていないので「CPM（Critical Path Method：クリティカルパス法）」を採る余地もあるが、同種の日程計算を既存論点「アローダイアグラム」（項目58）に集約している既出（2023r05a 問53、2024r06h 問52）に揃えた。"
+    },
+    {
+      "number": 54,
+      "syllabus_item": 60,
+      "topic_term": "コンティンジェンシー対応戦略",
+      "topic_is_new": false,
+      "related_terms": ["コンティンジェンシー予備", "リスク登録簿", "脅威への戦略", "JIS Q 31000"],
+      "confidence": "high",
+      "notes": "コンティンジェンシ計画＝あらかじめ定義した条件が生じたときにだけ実行する対応策。既出（2023r05a 問54）と同じ項目60・同一表記。"
+    }
+  ]
+}

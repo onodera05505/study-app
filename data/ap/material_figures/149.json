@@ -1,0 +1,24 @@
+{
+  "topic_id": 149,
+  "term": "論理データ構造のマッピング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 関連を表に置き換える規則",
+      "caption": "1 対 ＊ の関連では外部キーを「＊」側の表に置き、そこから「1」側の表への参照制約を指定する。",
+      "nodes": [
+        {"id": "c1", "label": "クラス「顧客」\n多重度 1", "row": 0, "col": 0},
+        {"id": "c2", "label": "クラス「付加情報」\n多重度 ＊", "row": 0, "col": 1},
+        {"id": "t1", "label": "顧客 表\n顧客番号（主キー）", "row": 1, "col": 0, "shape": "cylinder"},
+        {"id": "t2", "label": "付加情報 表\n顧客番号（外部キー）", "row": 1, "col": 1, "shape": "cylinder", "emphasis": true}
+      ],
+      "edges": [
+        {"from": "c1", "to": "c2", "label": "1 対 ＊ の関連", "arrow": "none"},
+        {"from": "c1", "to": "t1", "label": "表にする", "style": "dashed"},
+        {"from": "c2", "to": "t2", "label": "表にする", "style": "dashed"},
+        {"from": "t2", "to": "t1", "label": "参照制約"}
+      ]
+    }
+  ]
+}

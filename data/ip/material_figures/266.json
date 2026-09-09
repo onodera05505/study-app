@@ -1,0 +1,26 @@
+{
+  "topic_id": 266,
+  "term": "リバースエンジニアリング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 逆向きにたどる手法",
+      "caption": "通常の開発と逆に、動いているプログラムから設計情報や仕様書をたどるので「リバース」と呼ぶ。",
+      "nodes": [
+        {"id": "t1", "label": "仕様", "row": 0, "col": 0},
+        {"id": "t2", "label": "設計", "row": 0, "col": 1},
+        {"id": "t3", "label": "プログラム", "row": 0, "col": 2},
+        {"id": "b1", "label": "仕様書ができる", "row": 1, "col": 0, "emphasis": true},
+        {"id": "b2", "label": "設計情報", "row": 1, "col": 1},
+        {"id": "b3", "label": "稼働中の\nプログラム", "row": 1, "col": 2}
+      ],
+      "edges": [
+        {"from": "t1", "to": "t2", "label": "通常の開発"},
+        {"from": "t2", "to": "t3", "label": "作る"},
+        {"from": "b3", "to": "b2", "label": "解析する"},
+        {"from": "b2", "to": "b1", "label": "書き起こす"}
+      ]
+    }
+  ]
+}

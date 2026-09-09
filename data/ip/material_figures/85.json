@@ -1,0 +1,23 @@
+{
+  "topic_id": 85,
+  "term": "ポジショニング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### STP の3段階",
+      "caption": "「差別化する点を明確にする」はポジショニング。プロモーションはその後の実行手段で階層が違う。",
+      "nodes": [
+        {"id": "s", "label": "セグメンテーション\n市場を細かく分ける", "row": 0, "col": 0},
+        {"id": "t", "label": "ターゲティング\n狙う市場を選ぶ", "row": 0, "col": 1},
+        {"id": "p", "label": "ポジショニング\n競合との違いを決める", "row": 0, "col": 2, "emphasis": true},
+        {"id": "mix", "label": "4P で実行\n製品・価格・流通・\nプロモーション", "row": 1, "col": 2, "shape": "round"}
+      ],
+      "edges": [
+        {"from": "s", "to": "t"},
+        {"from": "t", "to": "p"},
+        {"from": "p", "to": "mix", "label": "決めた方針を実行", "style": "dashed"}
+      ]
+    }
+  ]
+}

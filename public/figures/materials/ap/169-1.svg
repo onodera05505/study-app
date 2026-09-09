@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="388" viewBox="0 0 640 388" role="img">
+<title>先頭 22 ビットまでが共通なので、/22 と1ビット短くすると2つの /23 をまとめて表せる。</title>
+<rect x="0.5" y="0.5" width="639" height="387" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(105.2 20)">
+<polyline points="97.4,76 97.4,99 332.2,99 332.2,122" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="332.2,122 328.6,114 335.8,114" fill="#1f2937"/>
+<polyline points="97.4,244 97.4,221 332.2,221 332.2,198" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="332.2,198 335.8,206 328.6,206" fill="#1f2937"/>
+<rect x="0" y="0" width="194.8" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="97.4" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">192.168.0.0/23</text>
+<text x="97.4" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ネットワーク部 23 ビット</text>
+<text x="97.4" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">192.168.0.0 〜 1.255</text>
+<rect x="234.8" y="122" width="194.8" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="332.2" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">192.168.0.0/22</text>
+<text x="332.2" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">ネットワーク部 22 ビット</text>
+<text x="332.2" y="184.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">192.168.0.0 〜 3.255</text>
+<rect x="0" y="244" width="194.8" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="97.4" y="266.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">192.168.2.0/23</text>
+<text x="97.4" y="286.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ネットワーク部 23 ビット</text>
+<text x="97.4" y="306.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">192.168.2.0 〜 3.255</text>
+<rect x="144.8" y="85" width="140" height="16" rx="3" fill="#ffffff"/>
+<text x="214.8" y="98.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">共通部分まで縮めて集約</text>
+</g>
+<text x="320" y="368" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">先頭 22 ビットまでが共通なので、/22 と1ビット短くすると2つの /23 をまとめて表せる。</text>
+</svg>

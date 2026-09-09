@@ -1,0 +1,25 @@
+{
+  "topic_id": 108,
+  "term": "記憶域管理アルゴリズム（ファーストフィット，ベストフィット，ワーストフィット）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 3つの方式が残すもの",
+      "caption": "150K の要求に対し3方式は別々のブロックを選び、ベストフィットは余りが 10K と極小になるので使えない空きが溜まる。",
+      "nodes": [
+        {"id": "ff", "label": "ファーストフィット\n先頭から最初に\n足りたもの", "row": 0, "col": 0},
+        {"id": "bf", "label": "ベストフィット\n満たす最小の\nもの", "row": 0, "col": 1, "emphasis": true},
+        {"id": "wf", "label": "ワーストフィット\n最大のもの", "row": 0, "col": 2},
+        {"id": "ba", "label": "空き A 200K\n→ 余り 50K", "row": 1, "col": 0},
+        {"id": "bb", "label": "空き B 160K\n→ 余り 10K\n小さすぎて使えない", "row": 1, "col": 1, "emphasis": true},
+        {"id": "bc", "label": "空き C 500K\n→ 余り 350K\n次の要求に使える", "row": 1, "col": 2}
+      ],
+      "edges": [
+        {"from": "ff", "to": "ba", "label": "150K"},
+        {"from": "bf", "to": "bb", "label": "150K"},
+        {"from": "wf", "to": "bc", "label": "150K"}
+      ]
+    }
+  ]
+}

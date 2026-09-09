@@ -1,0 +1,456 @@
+{
+  "exam": "2024r06",
+  "range": "51-100",
+  "classifications": [
+    {
+      "number": 51,
+      "syllabus_item": 2,
+      "topic_term": "パレート図",
+      "topic_is_new": false,
+      "related_terms": ["ABC 分析", "特性要因図（フィッシュボーンチャート）", "散布図", "管理図"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 52,
+      "syllabus_item": 27,
+      "topic_term": "プロジェクトスコープマネジメント",
+      "topic_is_new": false,
+      "related_terms": ["WBS（Work Breakdown Structure）", "変更管理", "プロジェクトコミュニケーションマネジメント"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 53,
+      "syllabus_item": 32,
+      "topic_term": "IT ガバナンス",
+      "topic_is_new": true,
+      "related_terms": ["JIS Q 38500（IT ガバナンス）", "内部統制", "経営者"],
+      "confidence": "medium",
+      "notes": "IT ガバナンスは項目32（内部統制）の範囲と判断したが、用語例上は項目8（標準化関連）のJIS Q 38500にも現れるため項目の選択に迷いがある。"
+    },
+    {
+      "number": 54,
+      "syllabus_item": 32,
+      "topic_term": "内部統制",
+      "topic_is_new": true,
+      "related_terms": ["モニタリング", "統制環境", "ITIL", "CMMI"],
+      "confidence": "high",
+      "notes": "項目32の用語例には「内部統制」自体が無いため新規論点としたが、項目の範囲は明確。"
+    },
+    {
+      "number": 55,
+      "syllabus_item": 31,
+      "topic_term": "システム監査",
+      "topic_is_new": false,
+      "related_terms": ["システム監査人", "システム監査基準", "情報セキュリティ監査"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 56,
+      "syllabus_item": 41,
+      "topic_term": "揮発性メモリ",
+      "topic_is_new": false,
+      "related_terms": ["RAM", "ROM", "不揮発性メモリ（フラッシュメモリ）", "DVD（DVD-ROM，DVD-RAM，DVD-R）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 57,
+      "syllabus_item": 63,
+      "topic_term": "公開鍵暗号方式",
+      "topic_is_new": false,
+      "related_terms": ["共通鍵暗号方式", "ハイブリッド暗号方式", "暗号化", "復号"],
+      "confidence": "medium",
+      "notes": "公開鍵暗号方式と共通鍵暗号方式を比較させる問題。鍵配布の容易さを軸としているため公開鍵暗号方式を論点としたが、共通鍵暗号方式を主題とみる余地もある。"
+    },
+    {
+      "number": 58,
+      "syllabus_item": 47,
+      "topic_term": "マクロ",
+      "topic_is_new": true,
+      "related_terms": ["表計算ソフト", "オートコンプリート", "プラグアンドプレイ"],
+      "confidence": "high",
+      "notes": "項目47（オフィスツール）に用語例が無いため新規論点。"
+    },
+    {
+      "number": 59,
+      "syllabus_item": 49,
+      "topic_term": "OCR",
+      "topic_is_new": true,
+      "related_terms": ["イメージスキャナー", "バーコードリーダー", "NFC", "タッチパネル"],
+      "confidence": "medium",
+      "notes": "入力装置の用語問題。項目49（ハードウェア）としたが、項目42（入出力デバイス）の可能性もある。"
+    },
+    {
+      "number": 60,
+      "syllabus_item": 55,
+      "topic_term": "関係データベースの構成要素",
+      "topic_is_new": true,
+      "related_terms": ["テーブル（表）", "レコード", "フィールド（項目）"],
+      "confidence": "medium",
+      "notes": "表・レコード・フィールドの階層関係を問う問題。個々の用語例では問題の中心を表せないため上位の論点名を新設した。"
+    },
+    {
+      "number": 61,
+      "syllabus_item": 60,
+      "topic_term": "cookie",
+      "topic_is_new": false,
+      "related_terms": ["Web ブラウザ", "キャッシュ", "トラックバック"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 62,
+      "syllabus_item": 37,
+      "topic_term": "プログラムのトレース",
+      "topic_is_new": true,
+      "related_terms": ["条件式", "戻り値", "データ型（整数型，実数型，論理型，文字型など）", "引数"],
+      "confidence": "medium",
+      "notes": "擬似言語プログラムを読んで戻り値を求める問題。用語例には「条件式」等の部品しかなく、学習単位としてプログラム読解を論点とした。"
+    },
+    {
+      "number": 63,
+      "syllabus_item": 63,
+      "topic_term": "データ消去",
+      "topic_is_new": true,
+      "related_terms": ["Secure Erase", "SSD", "セキュアブート", "データクレンジング"],
+      "confidence": "high",
+      "notes": "記憶媒体の廃棄・再利用時のデータ消去。項目63の用語例に該当語が無いため新規論点。"
+    },
+    {
+      "number": 64,
+      "syllabus_item": 62,
+      "topic_term": "リスク対応（リスク回避，リスク共有（リスク移転，リスク分散），リスク保有）",
+      "topic_is_new": false,
+      "related_terms": ["サイバー保険", "リスクアセスメント（リスク特定，リスク分析，リスク評価）", "情報セキュリティリスク"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 65,
+      "syllabus_item": 35,
+      "topic_term": "機械学習（教師あり学習，教師なし学習，強化学習）",
+      "topic_is_new": false,
+      "related_terms": ["回帰分析", "特徴量", "ディープラーニング"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 66,
+      "syllabus_item": 63,
+      "topic_term": "CA （Certification Authority：認証局）",
+      "topic_is_new": false,
+      "related_terms": ["PKI（Public Key Infrastructure：公開鍵基盤）", "デジタル証明書", "CRL（Certificate Revocation List：証明書失効リスト）", "公開鍵暗号方式"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 67,
+      "syllabus_item": 44,
+      "topic_term": "稼働率",
+      "topic_is_new": false,
+      "related_terms": ["MTBF（平均故障間動作時間）", "MTTR（平均修復時間）", "並列処理", "故障率"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 68,
+      "syllabus_item": 50,
+      "topic_term": "シグニファイア",
+      "topic_is_new": false,
+      "related_terms": ["UX デザイン（User Experience デザイン）", "ユーザビリティ", "マルチタッチインタフェース（タップ，スワイプ，フリック，ピンチ，ロングプレスほか）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 69,
+      "syllabus_item": 43,
+      "topic_term": "RAID",
+      "topic_is_new": false,
+      "related_terms": ["HDD", "レプリケーション", "NAS"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 70,
+      "syllabus_item": 58,
+      "topic_term": "ESSID（Extended Service Set Identifier）",
+      "topic_is_new": false,
+      "related_terms": ["無線LAN", "AP（アクセスポイント）", "MAC アドレス"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 71,
+      "syllabus_item": 60,
+      "topic_term": "ドメイン名",
+      "topic_is_new": false,
+      "related_terms": ["DNS", "URL", "IP アドレス（IPv6，IPv4，グローバル，プライベート）", "ポート番号"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 72,
+      "syllabus_item": 63,
+      "topic_term": "バイオメトリクス認証",
+      "topic_is_new": true,
+      "related_terms": ["静脈パターン認証", "声紋認証", "顔認証", "多要素認証"],
+      "confidence": "high",
+      "notes": "個別の生体認証方式は用語例にあるが、総称としての論点名が無いため新設。"
+    },
+    {
+      "number": 73,
+      "syllabus_item": 61,
+      "topic_term": "ソーシャルエンジニアリング",
+      "topic_is_new": false,
+      "related_terms": ["IoT セキュリティガイドライン", "ファームウェア", "暗号化", "人的脆弱性"],
+      "confidence": "medium",
+      "notes": "IoT機器の対策を選ばせる形式だが、中心知識はソーシャルエンジニアリングの理解。対策側とみれば項目63の可能性もある。"
+    },
+    {
+      "number": 74,
+      "syllabus_item": 57,
+      "topic_term": "トランザクション",
+      "topic_is_new": false,
+      "related_terms": ["バックワードリカバリ（ロールバック）", "ACID 特性", "排他制御", "更新ログ"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 75,
+      "syllabus_item": 62,
+      "topic_term": "情報セキュリティの要素（機密性，完全性，可用性，真正性，責任追跡性，否認防止，信頼性）",
+      "topic_is_new": false,
+      "related_terms": ["アクセス制御", "デジタル署名（署名鍵，検証鍵）", "レプリケーション"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 76,
+      "syllabus_item": 49,
+      "topic_term": "タッチパネル",
+      "topic_is_new": true,
+      "related_terms": ["ポインティングデバイス（マウス，タッチパネル，ジョイスティック，ペンタブレットほか）", "静電容量方式", "携帯端末（スマートフォン，タブレット端末，ウェアラブル端末，スマートデバイスほか）"],
+      "confidence": "medium",
+      "notes": "タッチパネルは用語例では括弧内にしか現れないため単独の論点として新設。項目42（入出力デバイス）の可能性もある。"
+    },
+    {
+      "number": 77,
+      "syllabus_item": 63,
+      "topic_term": "デジタル署名（署名鍵，検証鍵）",
+      "topic_is_new": false,
+      "related_terms": ["ハッシュ関数", "デジタル証明書", "アクセス権"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 78,
+      "syllabus_item": 14,
+      "topic_term": "AI による認識",
+      "topic_is_new": false,
+      "related_terms": ["スマートスピーカー", "AI アシスタント", "生成 AI"],
+      "confidence": "medium",
+      "notes": "音声認識の位置付けを問う問題。項目14の「AI による認識」を論点としたが、AI 技術一般として項目35とみる余地もある。"
+    },
+    {
+      "number": 79,
+      "syllabus_item": 58,
+      "topic_term": "プロキシ",
+      "topic_is_new": false,
+      "related_terms": ["DNS", "NTP （Network Time Protocol）", "ファイアウォール"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 80,
+      "syllabus_item": 48,
+      "topic_term": "オープンソースソフトウェア",
+      "topic_is_new": true,
+      "related_terms": ["GPL（GNU General Public License）", "コピーレフト", "パブリックドメインソフトウェア", "フリーソフトウェア"],
+      "confidence": "high",
+      "notes": "項目48の用語例にはGPLとコピーレフトしか無いため新規論点としたが、項目4の用語例と同じ表記に揃えた。"
+    },
+    {
+      "number": 81,
+      "syllabus_item": 55,
+      "topic_term": "正規化",
+      "topic_is_new": true,
+      "related_terms": ["主キー", "外部キー", "テーブル（表）", "E-R 図"],
+      "confidence": "high",
+      "notes": "項目55の用語例に「正規化」が無いため新規論点。"
+    },
+    {
+      "number": 82,
+      "syllabus_item": 62,
+      "topic_term": "ISMS クラウドセキュリティ認証",
+      "topic_is_new": true,
+      "related_terms": ["ISMAP（政府情報システムのためのセキュリティ評価制度）", "プライバシーポリシー（個人情報保護方針）", "シングルサインオン", "リスクベース認証"],
+      "confidence": "high",
+      "notes": "用語の意味を問う問題。用語例に無いため新規論点。"
+    },
+    {
+      "number": 83,
+      "syllabus_item": 34,
+      "topic_term": "確率",
+      "topic_is_new": true,
+      "related_terms": ["余事象", "順列・組合せ", "推定"],
+      "confidence": "high",
+      "notes": "項目34（応用数学）の確率・統計に該当するが用語例に「確率」が無いため新規論点。"
+    },
+    {
+      "number": 84,
+      "syllabus_item": 58,
+      "topic_term": "マルチホップ",
+      "topic_is_new": true,
+      "related_terms": ["IoT エリアネットワーク", "MIMO", "キャリアアグリゲーション", "LPWA（Low Power Wide Area）"],
+      "confidence": "high",
+      "notes": "用語例に無いため新規論点。"
+    },
+    {
+      "number": 85,
+      "syllabus_item": 37,
+      "topic_term": "プログラムのトレース",
+      "topic_is_new": true,
+      "related_terms": ["式", "演算子", "戻り値", "2 進数"],
+      "confidence": "medium",
+      "notes": "擬似言語の空欄補充。2進数の桁の重み（基数変換）の理解も必要で、項目33（離散数学）とみる余地もある。"
+    },
+    {
+      "number": 86,
+      "syllabus_item": 62,
+      "topic_term": "継続的改善（PDCA など）",
+      "topic_is_new": false,
+      "related_terms": ["情報セキュリティポリシー（情報セキュリティ方針）", "監査", "情報セキュリティリスク"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 87,
+      "syllabus_item": 61,
+      "topic_term": "ダークウェブ",
+      "topic_is_new": false,
+      "related_terms": ["サイバー攻撃", "RSS", "SEO（Search Engine Optimization：検索エンジン最適化）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 88,
+      "syllabus_item": 38,
+      "topic_term": "JavaScript",
+      "topic_is_new": false,
+      "related_terms": ["Java", "Python", "WebAPI"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 89,
+      "syllabus_item": 63,
+      "topic_term": "PIN",
+      "topic_is_new": true,
+      "related_terms": ["シングルサインオン", "多要素認証", "ログイン（利用者ID とパスワード）", "静脈パターン認証"],
+      "confidence": "medium",
+      "notes": "複数の認証方式の説明を比較させる問題。正解肢の用語であるPINを論点としたが、利用者認証全般を主題とみる余地もある。"
+    },
+    {
+      "number": 90,
+      "syllabus_item": 63,
+      "topic_term": "WAF（Web Application Firewall）",
+      "topic_is_new": false,
+      "related_terms": ["VPN（Virtual Private Network）", "DLP（Data Loss Prevention）", "DMZ（非武装地帯）", "ファイアウォール"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 91,
+      "syllabus_item": 63,
+      "topic_term": "データ消去",
+      "topic_is_new": true,
+      "related_terms": ["論理フォーマット", "漏えい", "ディスク暗号化"],
+      "confidence": "high",
+      "notes": "PC廃棄時の情報漏えい対策。問63と同じ論点に揃えた。"
+    },
+    {
+      "number": 92,
+      "syllabus_item": 59,
+      "topic_term": "ポート番号",
+      "topic_is_new": false,
+      "related_terms": ["TCP/IP", "HTTP", "SMTP", "IP アドレス（IPv6，IPv4，グローバル，プライベート）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 93,
+      "syllabus_item": 56,
+      "topic_term": "データの抽出",
+      "topic_is_new": true,
+      "related_terms": ["選択", "射影", "ワイルドカード", "テーブル（表）"],
+      "confidence": "medium",
+      "notes": "項目56（データ操作）に用語例が無い。ワイルドカードによる条件抽出が中心のため論点名を新設した。"
+    },
+    {
+      "number": 94,
+      "syllabus_item": 62,
+      "topic_term": "情報セキュリティポリシー（情報セキュリティ方針）",
+      "topic_is_new": false,
+      "related_terms": ["リスクアセスメント（リスク特定，リスク分析，リスク評価）", "情報資産", "情報セキュリティ委員会"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 95,
+      "syllabus_item": 35,
+      "topic_term": "ディープラーニング",
+      "topic_is_new": false,
+      "related_terms": ["ニューラルネットワーク", "バックプロパゲーション", "機械学習（教師あり学習，教師なし学習，強化学習）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 96,
+      "syllabus_item": 60,
+      "topic_term": "bcc",
+      "topic_is_new": false,
+      "related_terms": ["cc", "同報メール", "メーリングリスト", "電子メール"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 97,
+      "syllabus_item": 48,
+      "topic_term": "オープンソースソフトウェア",
+      "topic_is_new": true,
+      "related_terms": ["Linux", "Android", "FreeBSD", "GPL（GNU General Public License）"],
+      "confidence": "high",
+      "notes": "OSS のOSを選ばせる問題。問80と同じ論点に揃えた。"
+    },
+    {
+      "number": 98,
+      "syllabus_item": 61,
+      "topic_term": "ランサムウェア",
+      "topic_is_new": true,
+      "related_terms": ["マルウェア（コンピュータウイルス，ボット，スパイウェア，ランサムウェア）", "バックドア", "ワーム", "二重脅迫（ダブルエクストーション）"],
+      "confidence": "high",
+      "notes": "用語例では括弧内にしか現れないため、粒度を優先して単独の論点とした。"
+    },
+    {
+      "number": 99,
+      "syllabus_item": 14,
+      "topic_term": "準天頂衛星",
+      "topic_is_new": true,
+      "related_terms": ["GPS（Global Positioning System：全地球測位システム）応用システム", "GIS（Geographic Information System：地理情報システム）", "ジャイロセンサー"],
+      "confidence": "medium",
+      "notes": "測位技術の用語問題。GPS応用システムとして項目14としたが、モバイル通信寄りとみれば項目60の可能性もある。"
+    },
+    {
+      "number": 100,
+      "syllabus_item": 61,
+      "topic_term": "DNS キャッシュポイズニング",
+      "topic_is_new": true,
+      "related_terms": ["サイバー攻撃", "DNS", "なりすまし", "ソーシャルエンジニアリング"],
+      "confidence": "high",
+      "notes": "用語例に無いため新規論点。"
+    }
+  ]
+}

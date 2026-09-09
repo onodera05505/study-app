@@ -1,0 +1,456 @@
+{
+  "exam": "2019h31h",
+  "range": "51-100",
+  "classifications": [
+    {
+      "number": 51,
+      "syllabus_item": 25,
+      "topic_term": "共同レビュー",
+      "topic_is_new": true,
+      "related_terms": ["システム設計", "受入れテスト", "統合テスト"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 52,
+      "syllabus_item": 28,
+      "topic_term": "SLA",
+      "topic_is_new": false,
+      "related_terms": ["サービスデスク", "信頼性", "MTTR（平均修復時間）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 53,
+      "syllabus_item": 25,
+      "topic_term": "工数見積り",
+      "topic_is_new": false,
+      "related_terms": ["生産性", "開発コスト", "開発期間"],
+      "confidence": "medium",
+      "notes": "生産性と単価から期間・コストを算出する計算問題。項目25（見積り）とプロジェクトコストマネジメント（項目27）で迷ったが、開発委託先の見積り比較なので25とした。"
+    },
+    {
+      "number": 54,
+      "syllabus_item": 25,
+      "topic_term": "ソフトウェア保守",
+      "topic_is_new": false,
+      "related_terms": ["システムテスト", "移行"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 55,
+      "syllabus_item": 31,
+      "topic_term": "改善提案のフォローアップ",
+      "topic_is_new": true,
+      "related_terms": ["監査証拠の入手と評価", "システム監査報告書の作成と報告", "システム監査計画"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 56,
+      "syllabus_item": 27,
+      "topic_term": "プロジェクトスケジュールマネジメント",
+      "topic_is_new": false,
+      "related_terms": ["マスタスケジュール", "WBS（Work Breakdown Structure）", "ガントチャート"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 57,
+      "syllabus_item": 60,
+      "topic_term": "DNS",
+      "topic_is_new": false,
+      "related_terms": ["ドメイン名", "IP アドレス（IPv6，IPv4，グローバル，プライベート）", "MAC アドレス"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 58,
+      "syllabus_item": 58,
+      "topic_term": "デフォルトゲートウェイ",
+      "topic_is_new": true,
+      "related_terms": ["ルーター", "プロキシ", "DHCP", "ファイアウォール"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 59,
+      "syllabus_item": 61,
+      "topic_term": "総当たり（ブルートフォース）攻撃",
+      "topic_is_new": false,
+      "related_terms": ["盗聴", "SSL/TLS（Secure Sockets Layer/Transport Layer Security）", "シングルサインオン", "ログイン（利用者ID とパスワード）"],
+      "confidence": "medium",
+      "notes": "攻撃（項目61）と対策（項目63）にまたがる。攻撃手法の理解が中心と判断し61とした。"
+    },
+    {
+      "number": 60,
+      "syllabus_item": 60,
+      "topic_term": "電子メールの形式（テキスト形式，HTML 形式）",
+      "topic_is_new": false,
+      "related_terms": ["MIME", "デジタル署名（署名鍵，検証鍵）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 61,
+      "syllabus_item": 60,
+      "topic_term": "IP アドレス（IPv6，IPv4，グローバル，プライベート）",
+      "topic_is_new": false,
+      "related_terms": ["有線LAN", "WAN", "プライベートIPアドレス"],
+      "confidence": "medium",
+      "notes": "空欄a,bはLAN/WANの区別（項目58寄り）、空欄cはプライベートIPアドレス。決め手はcなので項目60・IPアドレスを論点にした。"
+    },
+    {
+      "number": 62,
+      "syllabus_item": 43,
+      "topic_term": "RAID",
+      "topic_is_new": false,
+      "related_terms": ["ストライピング", "ミラーリング", "レプリケーション"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 63,
+      "syllabus_item": 62,
+      "topic_term": "継続的改善（PDCA など）",
+      "topic_is_new": false,
+      "related_terms": ["ISMS", "是正処置", "情報セキュリティ監査"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 64,
+      "syllabus_item": 62,
+      "topic_term": "情報セキュリティの要素（機密性，完全性，可用性，真正性，責任追跡性，否認防止，信頼性）",
+      "topic_is_new": false,
+      "related_terms": ["回線の二重化", "WAN", "暗号化"],
+      "confidence": "medium",
+      "notes": "可用性の意味を問う問題。回線冗長化という文脈から項目43（システムの構成）とも読めるが、可用性という情報セキュリティの要素の理解が中心と判断した。"
+    },
+    {
+      "number": 65,
+      "syllabus_item": 61,
+      "topic_term": "不正のトライアングル（機会，動機，正当化）",
+      "topic_is_new": true,
+      "related_terms": ["内部不正", "組織における内部不正防止ガイドライン"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 66,
+      "syllabus_item": 33,
+      "topic_term": "SI接頭語",
+      "topic_is_new": false,
+      "related_terms": ["ナノ", "ギガ", "ピコ", "メガ"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 67,
+      "syllabus_item": 48,
+      "topic_term": "オープンソースソフトウェア",
+      "topic_is_new": false,
+      "related_terms": ["DBMS", "RDBMS", "GPL（GNU General Public License）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 68,
+      "syllabus_item": 62,
+      "topic_term": "リスクアセスメント（リスク特定，リスク分析，リスク評価）",
+      "topic_is_new": false,
+      "related_terms": ["情報資産", "脅威と脆弱性", "リスク対応（リスク回避，リスク共有（リスク移転，リスク分散），リスク保有）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 69,
+      "syllabus_item": 61,
+      "topic_term": "ドライブバイダウンロード",
+      "topic_is_new": false,
+      "related_terms": ["ソーシャルエンジニアリング", "バックドア", "DDoS 攻撃"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 70,
+      "syllabus_item": 41,
+      "topic_term": "キャッシュメモリ",
+      "topic_is_new": false,
+      "related_terms": ["主記憶", "SSD", "HDD", "補助記憶"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 71,
+      "syllabus_item": 33,
+      "topic_term": "剰余演算",
+      "topic_is_new": false,
+      "related_terms": ["ユークリッドの互除法", "プログラムのトレース"],
+      "confidence": "medium",
+      "notes": "余りを求めるボックスを2段たどる問題。剰余の計算（項目33）とトレース（項目37）のどちらとも取れるが、計算内容が論点と判断した。"
+    },
+    {
+      "number": 72,
+      "syllabus_item": 62,
+      "topic_term": "ISMS",
+      "topic_is_new": false,
+      "related_terms": ["情報セキュリティの要素（機密性，完全性，可用性，真正性，責任追跡性，否認防止，信頼性）", "リスクアセスメント（リスク特定，リスク分析，リスク評価）", "利害関係者"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 73,
+      "syllabus_item": 58,
+      "topic_term": "移動体通信規格（LTE，5G など）",
+      "topic_is_new": true,
+      "related_terms": ["仮想移動体通信事業者（MVNO：Mobile Virtual Network Operator）", "ブロックチェーン", "4K／8K"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 74,
+      "syllabus_item": 63,
+      "topic_term": "WPA2",
+      "topic_is_new": false,
+      "related_terms": ["無線LANのセキュリティ", "ESSID（Extended Service Set Identifier）", "S/MIME", "HTTP over TLS（HTTPS）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 75,
+      "syllabus_item": 63,
+      "topic_term": "公開鍵暗号方式",
+      "topic_is_new": false,
+      "related_terms": ["暗号化", "復号", "共通鍵暗号方式"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 76,
+      "syllabus_item": 63,
+      "topic_term": "バイオメトリクス認証",
+      "topic_is_new": false,
+      "related_terms": ["他人受入率（FAR）", "本人拒否率（FRR）", "静脈パターン認証"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 77,
+      "syllabus_item": 58,
+      "topic_term": "伝送速度（bps：bits per second（ビット／秒））",
+      "topic_is_new": false,
+      "related_terms": ["実効通信速度", "バイトとビットの換算"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 78,
+      "syllabus_item": 56,
+      "topic_term": "選択・結合",
+      "topic_is_new": false,
+      "related_terms": ["関係データベース", "外部キー", "データの抽出"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 79,
+      "syllabus_item": 63,
+      "topic_term": "VPN（Virtual Private Network）",
+      "topic_is_new": false,
+      "related_terms": ["検疫ネットワーク", "アドホックネットワーク", "公衆ネットワーク"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 80,
+      "syllabus_item": 49,
+      "topic_term": "3D プリンター",
+      "topic_is_new": true,
+      "related_terms": ["プリンター", "3D"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 81,
+      "syllabus_item": 51,
+      "topic_term": "CSS（Cascading Style Sheets）",
+      "topic_is_new": true,
+      "related_terms": ["HTML（Hyper Text Markup Language）", "RSS", "cookie"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 82,
+      "syllabus_item": 59,
+      "topic_term": "電子メールのプロトコル",
+      "topic_is_new": false,
+      "related_terms": ["SMTP", "POP", "IMAP"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 83,
+      "syllabus_item": 58,
+      "topic_term": "PoE（Power over Ethernet）",
+      "topic_is_new": true,
+      "related_terms": ["PLC（電力線通信）", "NAT", "AP（アクセスポイント）", "ケーブル"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 84,
+      "syllabus_item": 60,
+      "topic_term": "オンラインストレージ",
+      "topic_is_new": true,
+      "related_terms": ["クラウドコンピューティング", "補助記憶", "ファイル共有"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 85,
+      "syllabus_item": 62,
+      "topic_term": "情報セキュリティポリシー（情報セキュリティ方針）",
+      "topic_is_new": false,
+      "related_terms": ["基本方針", "対策基準", "実施手順"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 86,
+      "syllabus_item": 58,
+      "topic_term": "LPWA（Low Power Wide Area）",
+      "topic_is_new": false,
+      "related_terms": ["無線LAN", "IoT エリアネットワーク", "BLE（Bluetooth Low Energy）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 87,
+      "syllabus_item": 63,
+      "topic_term": "物理的セキュリティ対策",
+      "topic_is_new": false,
+      "related_terms": ["施錠管理", "入退室管理", "ファイアウォール", "職務分掌"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 88,
+      "syllabus_item": 61,
+      "topic_term": "マルウェア",
+      "topic_is_new": false,
+      "related_terms": ["ファームウェア", "外部記憶媒体", "セキュリティ対策ソフト"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 89,
+      "syllabus_item": 61,
+      "topic_term": "ソーシャルエンジニアリング",
+      "topic_is_new": false,
+      "related_terms": ["ショルダーハック", "盗み見", "携帯情報端末"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 90,
+      "syllabus_item": 44,
+      "topic_term": "フールプルーフ",
+      "topic_is_new": false,
+      "related_terms": ["フェールセーフ", "フォールトトレラント", "バックワードリカバリ（ロールバック）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 91,
+      "syllabus_item": 19,
+      "topic_term": "E-R 図（Entity Relationship Diagram）",
+      "topic_is_new": false,
+      "related_terms": ["DFD（Data Flow Diagram）", "エンティティ", "関係データベース"],
+      "confidence": "medium",
+      "notes": "データベース設計（項目55）でも扱う内容だが、既存の論点登録（項目19）に合わせた。"
+    },
+    {
+      "number": 92,
+      "syllabus_item": 55,
+      "topic_term": "正規化",
+      "topic_is_new": false,
+      "related_terms": ["関係データベース", "主キー", "冗長性"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 93,
+      "syllabus_item": 42,
+      "topic_term": "NFC",
+      "topic_is_new": true,
+      "related_terms": ["IC カード", "RFID", "IrDA", "赤外線センサー"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 94,
+      "syllabus_item": 61,
+      "topic_term": "ランサムウェア",
+      "topic_is_new": false,
+      "related_terms": ["キーロガー", "ワーム", "マルウェア"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 95,
+      "syllabus_item": 56,
+      "topic_term": "SQL",
+      "topic_is_new": true,
+      "related_terms": ["関係データベース", "FAQ", "UML", "SSL/TLS（Secure Sockets Layer/Transport Layer Security）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 96,
+      "syllabus_item": 46,
+      "topic_term": "ディレクトリ構造",
+      "topic_is_new": false,
+      "related_terms": ["カレントディレクトリ", "ルートディレクトリ", "相対パス", "絶対パス"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 97,
+      "syllabus_item": 40,
+      "topic_term": "クロック周波数",
+      "topic_is_new": false,
+      "related_terms": ["CPU", "マルチコアプロセッサ", "キャッシュメモリ"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 98,
+      "syllabus_item": 47,
+      "topic_term": "IF 関数",
+      "topic_is_new": false,
+      "related_terms": ["論理積", "論理和", "条件式"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 99,
+      "syllabus_item": 63,
+      "topic_term": "デジタルフォレンジックス",
+      "topic_is_new": false,
+      "related_terms": ["デジタルサイネージ", "デジタル署名（署名鍵，検証鍵）", "デジタルディバイド", "ログ"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 100,
+      "syllabus_item": 63,
+      "topic_term": "デジタル署名（署名鍵，検証鍵）",
+      "topic_is_new": false,
+      "related_terms": ["情報セキュリティの要素（機密性，完全性，可用性，真正性，責任追跡性，否認防止，信頼性）", "EC（Electronic Commerce：電子商取引）", "暗号化"],
+      "confidence": "high",
+      "notes": null
+    }
+  ]
+}

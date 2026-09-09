@@ -1,0 +1,456 @@
+{
+  "exam": "2026r08",
+  "range": "51-100",
+  "classifications": [
+    {
+      "number": 51,
+      "syllabus_item": 31,
+      "topic_term": "システム監査の手順",
+      "topic_is_new": true,
+      "related_terms": ["システム監査計画", "監査証拠の入手と評価", "システム監査報告書の作成と報告", "システム監査人"],
+      "confidence": "high",
+      "notes": "監査計画→予備調査→本調査→評価・結論という監査プロセスの各段階を問う。用語例には各段階を包括する語がないため新規論点とした。"
+    },
+    {
+      "number": 52,
+      "syllabus_item": 25,
+      "topic_term": "システム要件定義",
+      "topic_is_new": true,
+      "related_terms": ["共同レビュー", "機能要件", "非機能要件", "妥当性確認テスト"],
+      "confidence": "medium",
+      "notes": "システム企画の「要件定義」（項目23）とも取れるが、開発プロセスの中でのシステム要件定義と利用者の関わり方を問うており項目25とした。"
+    },
+    {
+      "number": 53,
+      "syllabus_item": 29,
+      "topic_term": "サービスレベル管理（SLM）",
+      "topic_is_new": false,
+      "related_terms": ["SLA", "SLO", "サービスの要求事項"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 54,
+      "syllabus_item": 30,
+      "topic_term": "ファシリティマネジメント",
+      "topic_is_new": true,
+      "related_terms": ["執務環境の整備", "フリーアドレス", "テレワーク"],
+      "confidence": "high",
+      "notes": "項目30の用語例はUPS等の設備に限られ、ファシリティマネジメントの概念自体を表す語がないため項目名と同一の論点名を新規に立てた。"
+    },
+    {
+      "number": 55,
+      "syllabus_item": 63,
+      "topic_term": "IoT機器のセキュリティ対策",
+      "topic_is_new": true,
+      "related_terms": ["不正侵入", "初期パスワード", "IoT セキュリティガイドライン", "アクセス制御"],
+      "confidence": "medium",
+      "notes": "脅威（不正侵入）の識別と対策（初期パスワードを使わない）の両方を問う。項目61（脅威）や項目62（IoTセキュリティガイドライン）とも取れるが、機器側の具体的対策が中心なので項目63とした。"
+    },
+    {
+      "number": 56,
+      "syllabus_item": 57,
+      "topic_term": "チェックポイント",
+      "topic_is_new": false,
+      "related_terms": ["トランザクション", "バックワードリカバリ（ロールバック）", "デッドロック", "コミット"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 57,
+      "syllabus_item": 55,
+      "topic_term": "外部キー",
+      "topic_is_new": false,
+      "related_terms": ["主キー", "テーブル（表）", "参照整合性"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 58,
+      "syllabus_item": 50,
+      "topic_term": "構造化シナリオ法",
+      "topic_is_new": false,
+      "related_terms": ["UX デザイン（User Experience デザイン）", "ペルソナ法"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 59,
+      "syllabus_item": 63,
+      "topic_term": "WPA2",
+      "topic_is_new": true,
+      "related_terms": ["無線LAN", "暗号化", "MAC アドレス", "ESSID"],
+      "confidence": "medium",
+      "notes": "無線LAN技術として項目58とも取れるが、暗号化というセキュリティ機能を問うため項目63とした。WPA2は用語例に無いため新規論点。"
+    },
+    {
+      "number": 60,
+      "syllabus_item": 51,
+      "topic_term": "レスポンシブWeb デザイン",
+      "topic_is_new": false,
+      "related_terms": ["モバイルファースト", "CSS（Cascading Style Sheets）", "ユーザビリティ", "ホバー（ロールオーバー）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 61,
+      "syllabus_item": 41,
+      "topic_term": "VRAM",
+      "topic_is_new": true,
+      "related_terms": ["キャッシュメモリ", "不揮発性メモリ（フラッシュメモリ）", "ROM", "主記憶"],
+      "confidence": "high",
+      "notes": "VRAMは用語例に無いため新規論点。項目41（メモリ）に属することは明確。"
+    },
+    {
+      "number": 62,
+      "syllabus_item": 44,
+      "topic_term": "ベンチマーク",
+      "topic_is_new": false,
+      "related_terms": ["レスポンスタイム（応答時間）", "シミュレーション", "システムの性能評価"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 63,
+      "syllabus_item": 61,
+      "topic_term": "ランサムウェア",
+      "topic_is_new": true,
+      "related_terms": ["マルウェア", "バックアップ", "暗号化", "二重脅迫（ダブルエクストーション）"],
+      "confidence": "medium",
+      "notes": "用語例では「マルウェア（…ランサムウェア）」の括弧内表記のため、粒度を合わせて単独表記の新規論点とした。対策（バックアップ）を問うので項目63とも取れる。"
+    },
+    {
+      "number": 64,
+      "syllabus_item": 60,
+      "topic_term": "キャリアアグリゲーション",
+      "topic_is_new": false,
+      "related_terms": ["ハンドオーバー", "MIMO", "基地局", "移動体通信規格（LTE，5G など）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 65,
+      "syllabus_item": 60,
+      "topic_term": "DNS",
+      "topic_is_new": false,
+      "related_terms": ["ドメイン名", "IP アドレス（IPv6，IPv4，グローバル，プライベート）", "プロキシ", "DHCP"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 66,
+      "syllabus_item": 51,
+      "topic_term": "ウィザード",
+      "topic_is_new": true,
+      "related_terms": ["ヘルプ機能", "ポップアップメニュー", "アーカイブ", "ユーザビリティ"],
+      "confidence": "medium",
+      "notes": "ウィザードは用語例に無い。アプリケーションの操作支援機能なので項目47（オフィスツール）とも取れるが、GUIの対話的な操作支援としてインタフェース設計（項目51）とした。"
+    },
+    {
+      "number": 67,
+      "syllabus_item": 37,
+      "topic_term": "整列のアルゴリズム（選択ソート，バブルソート，クイックソート）",
+      "topic_is_new": false,
+      "related_terms": ["配列", "手続", "トレース"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 68,
+      "syllabus_item": 59,
+      "topic_term": "電子メールのプロトコル",
+      "topic_is_new": true,
+      "related_terms": ["SMTP", "POP", "IMAP", "ポート番号"],
+      "confidence": "high",
+      "notes": "送信・受信プロトコルの組合せを問うため、個別の用語例（SMTP等）ではなくそれらを束ねる論点名を新規に立てた。"
+    },
+    {
+      "number": 69,
+      "syllabus_item": 55,
+      "topic_term": "正規化",
+      "topic_is_new": true,
+      "related_terms": ["テーブル（表）", "主キー", "外部キー", "データの重複"],
+      "confidence": "high",
+      "notes": "正規化は用語例に無いため新規論点。データベース設計（項目55）に属することは明確。"
+    },
+    {
+      "number": 70,
+      "syllabus_item": 62,
+      "topic_term": "情報セキュリティインシデント",
+      "topic_is_new": false,
+      "related_terms": ["CSIRT", "継続的改善（PDCA など）", "エスカレーション", "情報セキュリティ管理基準"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 71,
+      "syllabus_item": 63,
+      "topic_term": "リスクベース認証",
+      "topic_is_new": false,
+      "related_terms": ["多要素認証", "ログイン（利用者ID とパスワード）", "ワンタイムパスワード"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 72,
+      "syllabus_item": 55,
+      "topic_term": "外部キー",
+      "topic_is_new": false,
+      "related_terms": ["主キー", "テーブル（表）", "参照整合性", "レコード"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 73,
+      "syllabus_item": 48,
+      "topic_term": "コピーレフト",
+      "topic_is_new": false,
+      "related_terms": ["GPL（GNU General Public License）", "オープンソースソフトウェア", "使用許諾契約"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 74,
+      "syllabus_item": 47,
+      "topic_term": "IF 関数",
+      "topic_is_new": true,
+      "related_terms": ["合計関数", "セル参照", "2進数", "表計算ソフト"],
+      "confidence": "medium",
+      "notes": "項目47（オフィスツール）は用語例が空のため新規論点。2進数の加算という側面もあるが、解答に必要なのは表計算の式（IFのネスト）の理解なので項目47とした。"
+    },
+    {
+      "number": 75,
+      "syllabus_item": 60,
+      "topic_term": "bcc",
+      "topic_is_new": false,
+      "related_terms": ["cc", "同報メール", "電子メール", "メーリングリスト"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 76,
+      "syllabus_item": 58,
+      "topic_term": "LPWA（Low Power Wide Area）",
+      "topic_is_new": false,
+      "related_terms": ["無線LAN", "移動体通信規格（LTE，5G など）", "IoT エリアネットワーク", "BLE（Bluetooth Low Energy）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 77,
+      "syllabus_item": 62,
+      "topic_term": "情報セキュリティの要素（機密性，完全性，可用性，真正性，責任追跡性，否認防止，信頼性）",
+      "topic_is_new": false,
+      "related_terms": ["虹こう彩認証", "多要素認証", "入退室管理", "アクセス制御"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 78,
+      "syllabus_item": 42,
+      "topic_term": "温度センサー",
+      "topic_is_new": false,
+      "related_terms": ["アクチュエーター", "IoT（Internet of Things）", "エッジコンピューティング", "アナログ"],
+      "confidence": "medium",
+      "notes": "問われているのは「センサー」という総称だが、用語例に総称が無いため該当する個別用語（温度センサー）を論点とした。センサーとアクチュエーターの対比が本質。"
+    },
+    {
+      "number": 79,
+      "syllabus_item": 62,
+      "topic_term": "サイバーセキュリティ経営ガイドライン",
+      "topic_is_new": false,
+      "related_terms": ["情報セキュリティポリシー（情報セキュリティ方針）", "CSIRT", "リスクアセスメント（リスク特定，リスク分析，リスク評価）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 80,
+      "syllabus_item": 63,
+      "topic_term": "他人受入率（FAR）",
+      "topic_is_new": false,
+      "related_terms": ["本人拒否率（FRR）", "静脈パターン認証", "顔認証", "多要素認証"],
+      "confidence": "medium",
+      "notes": "他人受入率と本人拒否率の両方を問う問題で、どちらを論点にするか迷う。問題文で先に現れ、安全性重視の指標である他人受入率（FAR）を論点とした。"
+    },
+    {
+      "number": 81,
+      "syllabus_item": 58,
+      "topic_term": "BLE（Bluetooth Low Energy）",
+      "topic_is_new": false,
+      "related_terms": ["Bluetooth", "LPWA（Low Power Wide Area）", "移動体通信規格（LTE，5G など）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 82,
+      "syllabus_item": 35,
+      "topic_term": "バックプロパゲーション",
+      "topic_is_new": false,
+      "related_terms": ["ニューラルネットワーク", "活性化関数", "ディープラーニング", "過学習"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 83,
+      "syllabus_item": 63,
+      "topic_term": "マルウェア対策",
+      "topic_is_new": true,
+      "related_terms": ["セキュリティパッチ", "セキュリティホール", "マルウェア", "ログイン（利用者ID とパスワード）"],
+      "confidence": "medium",
+      "notes": "用語例に「セキュリティパッチ」「マルウェア対策」に相当する語が無いため新規論点。マルウェアの脅威側（項目61）とも取れるが、感染防止策を問うので項目63とした。"
+    },
+    {
+      "number": 84,
+      "syllabus_item": 35,
+      "topic_term": "演繹推論",
+      "topic_is_new": false,
+      "related_terms": ["帰納推論", "ルールベース", "述語論理"],
+      "confidence": "high",
+      "notes": "用語例の表記が「演繹えき推論」とルビが混入した形になっているため、正しい表記「演繹推論」を採用した（用語例由来なので topic_is_new は false）。"
+    },
+    {
+      "number": 85,
+      "syllabus_item": 37,
+      "topic_term": "条件式",
+      "topic_is_new": false,
+      "related_terms": ["関数", "戻り値", "引数", "データ型（整数型，実数型，論理型，文字型など）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 86,
+      "syllabus_item": 57,
+      "topic_term": "バックアップ",
+      "topic_is_new": true,
+      "related_terms": ["フルバックアップ", "差分バックアップ", "フォワードリカバリ（ロールフォワード）", "遠隔バックアップ"],
+      "confidence": "medium",
+      "notes": "バックアップ運用として項目29（サービスマネジメントシステム）とも取れるが、データベースの障害復旧が主題なので項目57とした。用語例に単独の「バックアップ」が無いため新規論点。"
+    },
+    {
+      "number": 87,
+      "syllabus_item": 43,
+      "topic_term": "NAS",
+      "topic_is_new": false,
+      "related_terms": ["RAID", "ESSID（Extended Service Set Identifier）", "補助記憶", "レプリケーション"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 88,
+      "syllabus_item": 37,
+      "topic_term": "繰返し処理",
+      "topic_is_new": true,
+      "related_terms": ["条件式", "代入", "手続", "カウンタ"],
+      "confidence": "high",
+      "notes": "ループの初期値と繰返し回数を問う。用語例に制御構造（繰返し）を表す語が無いため新規論点。"
+    },
+    {
+      "number": 89,
+      "syllabus_item": 62,
+      "topic_term": "脅威と脆弱性",
+      "topic_is_new": true,
+      "related_terms": ["情報セキュリティリスク", "リスクアセスメント（リスク特定，リスク分析，リスク評価）", "情報セキュリティインシデント", "セキュリティホール"],
+      "confidence": "medium",
+      "notes": "脅威・脆弱性・リスク・インシデントの用語定義の区別を問う。脅威そのものは項目61に属するが、リスクマネジメントの枠組みでの用語整理なので項目62とした。用語例に該当語が無いため新規論点。"
+    },
+    {
+      "number": 90,
+      "syllabus_item": 63,
+      "topic_term": "PKI（Public Key Infrastructure：公開鍵基盤）",
+      "topic_is_new": false,
+      "related_terms": ["デジタル証明書", "CA （Certification Authority：認証局）", "公開鍵暗号方式", "ルート証明書"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 91,
+      "syllabus_item": 63,
+      "topic_term": "ハッシュ関数",
+      "topic_is_new": false,
+      "related_terms": ["デジタル署名（署名鍵，検証鍵）", "ブロックチェーン", "暗号化", "復号"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 92,
+      "syllabus_item": 63,
+      "topic_term": "ゼロトラスト",
+      "topic_is_new": true,
+      "related_terms": ["多要素認証", "ファイアウォール", "DMZ（非武装地帯）", "アクセス制御"],
+      "confidence": "high",
+      "notes": "ゼロトラストは用語例に無いため新規論点。境界防御との対比を問う。"
+    },
+    {
+      "number": 93,
+      "syllabus_item": 62,
+      "topic_term": "ISMS",
+      "topic_is_new": true,
+      "related_terms": ["リスクアセスメント（リスク特定，リスク分析，リスク評価）", "リスク対応（リスク回避，リスク共有（リスク移転，リスク分散），リスク保有）", "情報セキュリティポリシー（情報セキュリティ方針）", "継続的改善（PDCA など）"],
+      "confidence": "high",
+      "notes": "ISMS構築の手順（適用範囲の決定が最初）を問う。項目62の用語例にISMS自体が無いため新規論点（項目8のISO/IEC 27000とは別論点として扱う）。"
+    },
+    {
+      "number": 94,
+      "syllabus_item": 63,
+      "topic_term": "物理的セキュリティ対策",
+      "topic_is_new": true,
+      "related_terms": ["遠隔バックアップ", "入退室管理", "情報セキュリティ啓発", "施錠管理"],
+      "confidence": "medium",
+      "notes": "技術的・人的・物理的という対策の分類を問う。用語例には個別の対策しか無いため分類名を新規論点とした。粒度がやや広い点は要レビュー。"
+    },
+    {
+      "number": 95,
+      "syllabus_item": 63,
+      "topic_term": "サニタイジング",
+      "topic_is_new": true,
+      "related_terms": ["SQL インジェクション対策", "クロスサイトスクリプティング対策", "WAF（Web Application Firewall）"],
+      "confidence": "high",
+      "notes": "用語の意味を問う問題なのでその用語をそのまま論点にした。サニタイジングは用語例に無いため新規論点。"
+    },
+    {
+      "number": 96,
+      "syllabus_item": 61,
+      "topic_term": "APT 攻撃",
+      "topic_is_new": true,
+      "related_terms": ["標的型攻撃", "ゼロデイ攻撃", "サイバー攻撃", "パスワードリスト攻撃（クレデンシャルスタッフィング）"],
+      "confidence": "high",
+      "notes": "APT攻撃は用語例に無いため新規論点。項目61（脅威・攻撃手法）に属することは明確。"
+    },
+    {
+      "number": 97,
+      "syllabus_item": 48,
+      "topic_term": "オープンソースソフトウェア",
+      "topic_is_new": true,
+      "related_terms": ["コピーレフト", "GPL（GNU General Public License）", "再配布の自由", "使用許諾契約"],
+      "confidence": "medium",
+      "notes": "OSSの定義（有償配布可・利用分野の制限不可・改変版の再配布可）を問う。項目48の用語例にはGPLとコピーレフトしか無く、項目4の用語例にある「オープンソースソフトウェア」を論点名として流用したため新規扱い。項目4（知的財産権）とも取れる。"
+    },
+    {
+      "number": 98,
+      "syllabus_item": 35,
+      "topic_term": "プロンプトエンジニアリング",
+      "topic_is_new": false,
+      "related_terms": ["大規模言語モデル（LLM）", "生成 AI", "ニューラルネットワーク", "帰納推論"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 99,
+      "syllabus_item": 49,
+      "topic_term": "イメージスキャナー",
+      "topic_is_new": false,
+      "related_terms": ["dpi（dot per inch）", "バーコードリーダー", "解像度", "アクセシビリティ"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 100,
+      "syllabus_item": 62,
+      "topic_term": "ISMS",
+      "topic_is_new": true,
+      "related_terms": ["リスクアセスメント（リスク特定，リスク分析，リスク評価）", "情報セキュリティリスク", "情報セキュリティポリシー（情報セキュリティ方針）", "継続的改善（PDCA など）"],
+      "confidence": "high",
+      "notes": "問93と同一論点。情報資産の洗い出しとリスクアセスメントというISMSの活動内容を問う。"
+    }
+  ]
+}

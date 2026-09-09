@@ -1,0 +1,24 @@
+{
+  "topic_id": 113,
+  "term": "バージョン管理ツール",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 集中型と分散型",
+      "caption": "分散型は開発者の手元にも全履歴の複製があるので、サーバにつながらなくても履歴を調べてコミットできる。",
+      "nodes": [
+        {"id": "cl", "label": "集中型\nSVN・CVS・RCS", "row": 0, "col": 0, "shape": "round"},
+        {"id": "cs", "label": "サーバ\n全履歴", "row": 0, "col": 1, "shape": "cylinder"},
+        {"id": "cd", "label": "開発者の手元\n作業コピーだけ", "row": 0, "col": 2},
+        {"id": "dl", "label": "分散型\nGit", "row": 1, "col": 0, "shape": "round", "emphasis": true},
+        {"id": "ds", "label": "共有リポジトリ\n全履歴", "row": 1, "col": 1, "shape": "cylinder"},
+        {"id": "dd", "label": "開発者の手元\n全履歴の複製", "row": 1, "col": 2, "shape": "cylinder", "emphasis": true}
+      ],
+      "edges": [
+        {"from": "cs", "to": "cd", "label": "接続が必要", "arrow": "both"},
+        {"from": "ds", "to": "dd", "label": "push で共有", "arrow": "both"}
+      ]
+    }
+  ]
+}

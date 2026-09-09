@@ -1,0 +1,61 @@
+{
+  "topic_id": 38,
+  "term": "アローダイアグラム",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 最早結合点時刻の求め方",
+      "caption": "結合点に入る矢印ごとに「元の結合点の最早時刻＋所要日数」を出し、その最大値がその結合点の最早結合点時刻になる。",
+      "nodes": [
+        {
+          "id": "n2",
+          "label": "結合点2\n最早 3日",
+          "row": 0,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "n3",
+          "label": "結合点3\n最早 4日",
+          "row": 1,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "n4",
+          "label": "結合点4\n最早 7日",
+          "row": 2,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "n5",
+          "label": "結合点5\n最早 7日（最大）",
+          "row": 1,
+          "col": 1,
+          "shape": "round",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "n2",
+          "to": "n5",
+          "label": "E 2日  3＋2＝5"
+        },
+        {
+          "from": "n3",
+          "to": "n5",
+          "label": "F 2日  4＋2＝6"
+        },
+        {
+          "from": "n4",
+          "to": "n5",
+          "label": "ダミー 0日  7＋0＝7",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "topic_id": 432,
+  "term": "キャッシュメモリ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 記憶階層のしくみ",
+      "caption": "CPU は1次→2次→主記憶の順に探し、CPU に近いほど速くて容量が小さい。",
+      "nodes": [
+        {"id": "cpu", "label": "CPU", "row": 0, "col": 0},
+        {"id": "l1", "label": "1次キャッシュ\nSRAM・最も速い", "row": 0, "col": 1, "emphasis": true},
+        {"id": "l2", "label": "2次キャッシュ\nSRAM", "row": 0, "col": 2},
+        {"id": "main", "label": "主記憶\nDRAM", "row": 0, "col": 3},
+        {"id": "aux", "label": "補助記憶\nSSD・HDD", "row": 0, "col": 4, "shape": "cylinder"}
+      ],
+      "edges": [
+        {"from": "cpu", "to": "l1", "label": "まず探す"},
+        {"from": "l1", "to": "l2", "label": "無ければ", "arrow": "both"},
+        {"from": "l2", "to": "main", "label": "無ければ", "arrow": "both"},
+        {"from": "main", "to": "aux", "label": "最も遅く大容量", "arrow": "both", "style": "dashed"}
+      ]
+    }
+  ]
+}

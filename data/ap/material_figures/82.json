@@ -1,0 +1,56 @@
+{
+  "topic_id": 82,
+  "term": "FLOPS",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 計算の解き方",
+      "caption": "総コア数を先に確定させれば、総演算性能は掛け算、ノード数は割り算だけで出る。",
+      "nodes": [
+        {
+          "id": "now",
+          "label": "現状\n1コア 10 GFLOPS\n8 コア×1,000 ノード\n＝総コア数 8,000",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "tot",
+          "label": "更新後の総コア数\n8,000×4＝32,000",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "flops",
+          "label": "総演算性能\n20 GFLOPS×32,000\n＝640 TFLOPS",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "nodes",
+          "label": "ノード数\n32,000÷16\n＝2,000",
+          "row": 1,
+          "col": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": "now",
+          "to": "tot",
+          "label": "総コア数を 4 倍"
+        },
+        {
+          "from": "tot",
+          "to": "flops",
+          "label": "×1コアの性能 20"
+        },
+        {
+          "from": "tot",
+          "to": "nodes",
+          "label": "÷1ノードのコア数 16"
+        }
+      ]
+    }
+  ]
+}

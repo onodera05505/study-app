@@ -1,0 +1,26 @@
+{
+  "topic_id": 394,
+  "term": "GPU",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### なぜ行列演算に強いのか",
+      "caption": "GPU は 1 つの命令を多数の小コアで大量のデータへ一斉に適用する。コアごとに別プログラムを走らせるのは CPU の側。",
+      "nodes": [
+        {"id": "gi", "label": "同じ 1 つの命令", "row": 0, "col": 0},
+        {"id": "gp", "label": "GPU\n小コア 数百〜数千", "row": 0, "col": 1, "emphasis": true},
+        {"id": "go", "label": "大量のデータへ一斉適用\n＝ SIMD", "row": 0, "col": 2},
+        {"id": "ci", "label": "コアごとに別の命令", "row": 1, "col": 0},
+        {"id": "cp", "label": "CPU\n高機能コア 数個", "row": 1, "col": 1},
+        {"id": "co", "label": "別々のプログラムを並行実行\n＝ MIMD", "row": 1, "col": 2}
+      ],
+      "edges": [
+        {"from": "gi", "to": "gp"},
+        {"from": "gp", "to": "go", "label": "行列の積和演算が速い"},
+        {"from": "ci", "to": "cp"},
+        {"from": "cp", "to": "co"}
+      ]
+    }
+  ]
+}

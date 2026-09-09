@@ -1,0 +1,24 @@
+{
+  "topic_id": 74,
+  "term": "流れ図",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 1つずれる誤りの見分け方",
+      "caption": "M＝3 では 3 を掛け終えた時点で n が M＋1＝4 に進んでいるので、抜ける条件は n＞M になる。",
+      "nodes": [
+        {"id": "ini", "label": "x←1, n←1", "row": 0, "col": 0, "shape": "round"},
+        {"id": "bod", "label": "x←x×n（掛ける値 1, 2, 3）\nそのあと n←n＋1", "row": 1, "col": 0},
+        {"id": "jud", "label": "判断 a\nn＞M", "row": 1, "col": 1, "emphasis": true},
+        {"id": "end", "label": "終了\nx＝1×2×3＝6", "row": 0, "col": 1, "shape": "round"}
+      ],
+      "edges": [
+        {"from": "ini", "to": "bod"},
+        {"from": "bod", "to": "jud", "label": "判断時の n＝2 → 3 → 4"},
+        {"from": "jud", "to": "bod", "label": "No", "style": "dashed"},
+        {"from": "jud", "to": "end", "label": "Yes：n＝4＝M＋1"}
+      ]
+    }
+  ]
+}

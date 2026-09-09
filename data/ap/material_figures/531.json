@@ -1,0 +1,23 @@
+{
+  "topic_id": 531,
+  "term": "リスクベース認証",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "普段と違うと判断したときだけ追加認証へ分岐するので、日常の利便性を保ったまま安全性を高められる。",
+      "nodes": [
+        {"id": "req", "label": "ログイン要求\nID とパスワード", "row": 0, "col": 1},
+        {"id": "judge", "label": "普段との差を評価\nIP・国／地域・端末\n時間帯・移動距離", "row": 1, "col": 1, "emphasis": true},
+        {"id": "ok", "label": "普段どおり\nパスワードだけで\nそのまま利用", "row": 2, "col": 0},
+        {"id": "add", "label": "普段と違う\n追加の本人認証\nワンタイムパスワード等", "row": 2, "col": 2}
+      ],
+      "edges": [
+        {"from": "req", "to": "judge"},
+        {"from": "judge", "to": "ok", "label": "差が小さい"},
+        {"from": "judge", "to": "add", "label": "差が大きい"}
+      ]
+    }
+  ]
+}

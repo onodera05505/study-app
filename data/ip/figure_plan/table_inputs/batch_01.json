@@ -1,0 +1,91 @@
+{
+ "exam": "ip",
+ "batch": 1,
+ "files": [
+  {
+   "path": "data/ip/materials_v2/bundle_01.json",
+   "topics": [
+    {
+     "topic_id": 10,
+     "term": "情報セキュリティの要素（機密性，完全性，可用性，真正性，責任追跡性，否認防止，信頼性）",
+     "question_count": 12,
+     "idea": "7要素×代表的な対策・事故例の表。保全性・保守性は要素でないと欄外に明記"
+    },
+    {
+     "topic_id": 22,
+     "term": "SLA",
+     "question_count": 9,
+     "idea": "SLA に書く項目／書かない項目の対比表。SLA＝文書、SLM＝活動の行も設ける"
+    },
+    {
+     "topic_id": 234,
+     "term": "バイオメトリクス認証",
+     "question_count": 9,
+     "idea": "身体的・行動的・知識・所有物の4欄に例を振り分ける表。画像認証は欄外に置く"
+    }
+   ]
+  },
+  {
+   "path": "data/ip/materials_v2/bundle_23.json",
+   "topics": [
+    {
+     "topic_id": 267,
+     "term": "リファクタリング",
+     "question_count": 2,
+     "idea": "リファクタリング・デバッグ・機能追加・リバースエンジニアリングを外から見た振る舞いが変わるかで並べる表"
+    },
+    {
+     "topic_id": 269,
+     "term": "SI接頭語",
+     "question_count": 2,
+     "idea": "k・M・G・T・Pとm・μ・n・pを指数付きで一列に並べ、隣は1000倍、2進接頭語はKiB・MiBと注記"
+    },
+    {
+     "topic_id": 277,
+     "term": "フールプルーフ",
+     "question_count": 2,
+     "idea": "人のミスへの備え（フールプルーフ）と故障への備え（フェールセーフ・ソフト・トレラント）を2列に分け例を振る"
+    }
+   ]
+  },
+  {
+   "path": "data/ip/materials_v2/bundle_13.json",
+   "topics": [
+    {
+     "topic_id": 167,
+     "term": "GPU",
+     "question_count": 3,
+     "idea": "GPU/GUI/CGI/VGA/DVI/MPEG/UPS の略語×役割の表で取り違えを防ぐ"
+    },
+    {
+     "topic_id": 239,
+     "term": "無線LANのセキュリティ",
+     "question_count": 3,
+     "idea": "暗号化・MACアドレスフィルタリング・ステルスを守る対象と効果と限界の3列で並べる表"
+    }
+   ]
+  },
+  {
+   "path": "data/ip/materials_v2/bundle_06.json",
+   "topics": [
+    {
+     "topic_id": 238,
+     "term": "多要素認証",
+     "question_count": 5,
+     "idea": "知識・所持・生体の3欄に例を振り分ける表。SMS とワンタイムPWは所持に置く"
+    }
+   ]
+  },
+  {
+   "path": "data/ip/materials_v2/bundle_35.json",
+   "topics": [
+    {
+     "topic_id": 130,
+     "term": "ファンクションポイント（FP：Function Point）法",
+     "question_count": 1,
+     "idea": "FP法・積み上げ法・類推見積法を、何を数えるか／使える時期／精度の3列で並べた表にする"
+    }
+   ]
+  }
+ ]
+}

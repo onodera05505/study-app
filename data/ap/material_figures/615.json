@@ -1,0 +1,25 @@
+{
+  "topic_id": 615,
+  "term": "BNF",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 判定の手順",
+      "caption": "括弧の形は（パラメタ指定,パラメタ）に固定で、再帰できるのは左側だけ。だから ((abc,def),ghi) は葉まで展開できる。",
+      "nodes": [
+        {"id": "root", "label": "＜パラメタ指定＞\n((abc,def),ghi)", "row": 0, "col": 1, "emphasis": true},
+        {"id": "l1", "label": "＜パラメタ指定＞\n(abc,def)", "row": 1, "col": 0},
+        {"id": "r1", "label": "＜パラメタ＞\nghi", "row": 1, "col": 2},
+        {"id": "l2", "label": "＜パラメタ指定＞\nabc", "row": 2, "col": 0},
+        {"id": "r2", "label": "＜パラメタ＞\ndef", "row": 2, "col": 1}
+      ],
+      "edges": [
+        {"from": "root", "to": "l1", "label": "左は再帰できる"},
+        {"from": "root", "to": "r1", "label": "右は英字の並びだけ"},
+        {"from": "l1", "to": "l2"},
+        {"from": "l1", "to": "r2"}
+      ]
+    }
+  ]
+}

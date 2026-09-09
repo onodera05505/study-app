@@ -1,0 +1,461 @@
+{
+  "bundle": "expl_01",
+  "topics": [
+    {
+      "topic_id": 2,
+      "term": "オープンソースソフトウェア",
+      "field": "テクノロジ系",
+      "middle": "ソフトウェア",
+      "syllabus_item_name": "オープンソースソフトウェア",
+      "question_count": 12,
+      "explanation": "**OSS（オープンソースソフトウェア）**とは、ソースコードが公開され、利用・改変・再配布の自由が保証されたソフトウェアです。\n\n- **著作権は放棄されていません**。放棄されているのはパブリックドメインソフトウェアの方です\n- **有償でも構いません**。有償サポート付きの製品も、OSS を使って作ったソフトウェアの販売も認められます\n- **利用分野を制限してはいけません**。分野や人を差別しない、という条件に反します",
+      "detail": "### OSS が満たすべき条件\n\nOSS は「ソースコードが見られるソフトウェア」のことではありません。利用目的を問わず自由に使えること、改変できること、再配布できること、特定の分野や人を差別しないことなど、満たすべき条件が定められています。ですから「ソースコードが公開されていれば全て OSS」という記述は誤りです。\n\n### 著作権・料金・開発者\n\n- **著作権** — 開発者が保持したままです。著作権を持っているからこそ、利用条件をライセンスとして定められます\n- **コピーレフト型** — GPL のように、改変して再配布するなら同じ条件で公開することを求める型です\n- **有償か無償か** — 自由であることとは別の話です。無償という意味のフリーソフトウェアとも同じではありません\n- **開発者** — 個人とは限りません。企業の社員が業務として開発に参加している製品もあります\n- **ライセンス** — 製品ごとに違います。ISO が定めた共通のライセンスで統一されているわけではありません\n\n### 代表的な OSS と、その種類\n\n名前を挙げて「これは何の OSS か」を問う出題が繰り返されているので、種類とセットで覚えます。\n\n| 種類 | 代表的な OSS | OSS ではないもの |\n| --- | --- | --- |\n| **OS** | Linux、Android、FreeBSD | iOS、Windows |\n| **Web サーバ** | Apache HTTP Server | ― |\n| **Web ブラウザ** | Firefox | Internet Explorer、Edge |\n| **メールソフト** | Thunderbird | ― |\n| **DBMS** | MySQL、PostgreSQL | ― |\n\nワープロや表計算を含むオフィスソフトも OSS として開発されています。\n\n### 出題パターン\n\n1. **名前から選ぶ形** — 「OSS である DBMS は」「携帯端末に使われる OSS の OS は」のように問われます。OSS かどうかと、種類が合っているかの二段階で絞ります。Thunderbird は OSS ですが OS ではない、といった引っかけが実際に出ました\n2. **記述の正誤を全て選ぶ形** — 最も多い形です。著作権の放棄、有償提供の禁止、実行形式での配布の禁止、ビジネス用途の禁止、個人による無償開発に限るという記述は、**すべて誤り**です。再配布できる、販売できる、有償サポートのある製品がある、企業も開発している、という記述が正しいものになります\n3. **改変したものの扱い** — 特定の利用分野に制限して提供するのは認められません。不具合を修正したソースコードを自分の Web サイトで公開するのは、再配布の自由に沿った行為なので認められます",
+      "questions": [
+        {
+          "question_id": "2026r08-q97",
+          "content_key": "50bfe9f96eabc25f",
+          "exam_label": "令和8年度",
+          "number": 97,
+          "stem": "OSS（Open Source Software）の取扱いに関する記述のうち，適切なものだけを全て挙げたものはどれか。\na OSS を集めた記録媒体を，顧客に有償で提供する。\nb 改変した OSS を，特定の利用分野に制限して OSS として提供する。\nc 不具合を発見して修正した OSS のソースコードを，自分の Web サイトで提供する。",
+          "choices": {
+            "ア": "a",
+            "イ": "a，c",
+            "ウ": "b，c",
+            "エ": "c"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2025r07-q96",
+          "content_key": "ce1a903fbef3595a",
+          "exam_label": "令和7年度",
+          "number": 96,
+          "stem": "OSS（Open Source Software）に関する次の記述のうち，適切なものだけを全て挙げたものはどれか。\na 個人だけではなく，企業や団体が開発したソフトウェアもある。\nb 著作権が放棄されている。\nc 入手したソフトウェアは，自由に再配布してもよい。",
+          "choices": {
+            "ア": "a，b",
+            "イ": "a，b，c",
+            "ウ": "a，c",
+            "エ": "b，c"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2024r06-q80",
+          "content_key": "57cda3e1539cc9f0",
+          "exam_label": "令和6年度",
+          "number": 80,
+          "stem": "OSS（Open Source Software）に関する記述として，適切なものだけを全て挙げたものはどれか。\n\na OSS を利用して作成したソフトウェアを販売することができる。\nb ソースコードが公開されたソフトウェアは全て OSS である。\nc 著作権が放棄されているソフトウェアである。",
+          "choices": {
+            "ア": "a",
+            "イ": "a, b",
+            "ウ": "b, c",
+            "エ": "c"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2024r06-q97",
+          "content_key": "98fad15fd0b4e37b",
+          "exam_label": "令和6年度",
+          "number": 97,
+          "stem": "次のOSのうち，OSS（Open Source Software）として提供されるものだけを全て挙げたものはどれか。\na Android　b FreeBSD　c iOS　d Linux",
+          "choices": {
+            "ア": "a，b",
+            "イ": "a，b，d",
+            "ウ": "b，d",
+            "エ": "c，d"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2023r05-q82",
+          "content_key": "ec9a088ae2d53427",
+          "exam_label": "令和5年度",
+          "number": 82,
+          "stem": "OSS（Open Source Software）に関する記述 a ～ c のうち，適切なものだけを全て挙げたものはどれか。\na ソースコードに手を加えて再配布することができる。\nb ソースコードの入手は無償だが，有償の保守サポートを受けなければならない。\nc 著作権が放棄されており，無断で利用することができる。",
+          "choices": {
+            "ア": "a",
+            "イ": "a, c",
+            "ウ": "b",
+            "エ": "c"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2022r04-q63",
+          "content_key": "be37b2caac9b1329",
+          "exam_label": "令和4年度",
+          "number": 63,
+          "stem": "スマートフォンやタブレットなどの携帯端末に用いられている，OSS (Open Source Software) である OS はどれか。",
+          "choices": {
+            "ア": "Android",
+            "イ": "iOS",
+            "ウ": "Safari",
+            "エ": "Windows"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2021r03-q78",
+          "content_key": "a2b562aba2c95dfa",
+          "exam_label": "令和3年度",
+          "number": 78,
+          "stem": "OSS（Open Source Software）に関する記述として，適切なものはどれか。",
+          "choices": {
+            "ア": "ソースコードを公開しているソフトウェアは，全て OSS である。",
+            "イ": "著作権が放棄されており，誰でも自由に利用可能である。",
+            "ウ": "どのソフトウェアも，個人が無償で開発している。",
+            "エ": "利用に当たり，有償サポートが提供される製品がある。"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2020r02o-q96",
+          "content_key": "3853171cfab852f2",
+          "exam_label": "令和2年度 10月",
+          "number": 96,
+          "stem": "OSS（Open Source Software）に関する記述として，適切なものはどれか。",
+          "choices": {
+            "ア": "製品によっては，企業の社員が業務として開発に参加している。",
+            "イ": "ソースコードだけが公開されており，実行形式での配布は禁じられている。",
+            "ウ": "どの製品も，ISO で定められたオープンソースライセンスによって同じ条件で提供されている。",
+            "エ": "ビジネス用途での利用は禁じられている。"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2019r01a-q89",
+          "content_key": "bbcdbb20c93d6d1f",
+          "exam_label": "令和元年度 秋期",
+          "number": 89,
+          "stem": "OSS（Open Source Software）に関する記述のうち，適切なものだけを全て挙げたものはどれか。\n① Web サーバとして広く用いられている Apache HTTP Server は OSS である。\n② Web ブラウザである Internet Explorer は OSS である。\n③ ワープロソフトや表計算ソフト，プレゼンテーションソフトなどを含むビジネス統合パッケージは開発されていない。",
+          "choices": {
+            "ア": "①",
+            "イ": "①，②",
+            "ウ": "②，③",
+            "エ": "③"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2019h31h-q67",
+          "content_key": "08581241d7ad4e0b",
+          "exam_label": "平成31年度 春期",
+          "number": 67,
+          "stem": "OSS（Open Source Software）である DBMS はどれか。",
+          "choices": {
+            "ア": "Android",
+            "イ": "Firefox",
+            "ウ": "MySQL",
+            "エ": "Thunderbird"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2018h30a-q81",
+          "content_key": "d8988484a6a17e14",
+          "exam_label": "平成30年度 秋期",
+          "number": 81,
+          "stem": "ソフトウェア ① 〜 ④ のうち，スマートフォンやタブレットなどの携帯端末に使用される OSS（Open Source Software）の OS だけを全て挙げたものはどれか。\n①　Android\n②　iOS\n③　Thunderbird\n④　Windows Phone",
+          "choices": {
+            "ア": "①",
+            "イ": "①，②，③",
+            "ウ": "②，④",
+            "エ": "③，④"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2018h30h-q78",
+          "content_key": "9eb146813dd72582",
+          "exam_label": "平成30年度 春期",
+          "number": 78,
+          "stem": "OSS（Open Source Software）である Web ブラウザはどれか。",
+          "choices": {
+            "ア": "Apache",
+            "イ": "Firefox",
+            "ウ": "Linux",
+            "エ": "Thunderbird"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 9,
+      "term": "ITガバナンス",
+      "field": "マネジメント系",
+      "middle": "システム監査",
+      "syllabus_item_name": "内部統制",
+      "question_count": 12,
+      "explanation": "**IT ガバナンス**とは、経営者が IT 戦略の策定と実行を統制し、企業をあるべき方向へ導く組織能力のことです。\n\n- 構築し推進する責任者は**経営者**です。株主でも情報システム部門でもありません\n- ただし**経営者が全てを行うわけではありません**。原則や方針を定めるのが経営者、それに沿って活動するのが各部署です\n- 評価する対象は**現在と将来**の IT 利用です。過去の実績ではありません",
+      "detail": "### 経営陣が担う3つの活動（JIS Q 38500）\n![経営者がやるのは評価・指示・モニタの3つ。IT を実際に使って動かすのは各部署で、経営者が全部を行うわけではない。](/figures/materials/ip/9-1.svg)\n\n- **評価（Evaluate）** — 現在と将来の IT 利用が事業の目的に合っていて、効果的・効率的かつ受け入れられるものかを見極めます\n- **指示（Direct）** — 情報システム戦略を実現するために必要な責任と要員を、組織に割り当てます\n- **モニタ（Monitor）** — 戦略で想定した効果がどの程度達成されているかを確かめる情報を集めます\n\nこの3つがそのまま選択肢の正誤を分ける基準になります。将来像の比較分析を外部の専門家に依頼して評価すること自体は適切ですが、戦略の立案からモニタリングまで全面的に任せてしまうと経営陣の責任が果たせないため、不適切と判断されます。\n\n### 経営者と情報システム部門の分担\n\n線引きは「ルールを決める側か、ルールに従って動く側か」です。\n\n- **経営者** — IT ガバナンス方針の明確化、情報化投資の決定における原則の制定、IT 投資判断基準の確立\n- **情報システム部門の責任者** — 部門内の役割分担と権限の決定、プロジェクト計画に基づく進捗管理、SLA を守るためのオペレーション管理\n\n### 混同しやすい用語\n\n- **内部統制** — 業務が適正に行われるようにする社内の仕組み全般。IT ガバナンスは、そのうち IT 利用の部分を経営陣が統治する活動という関係です\n- **システム監査** — 情報システムのリスクへの対応が適切に整備・運用されているかを、第三者が評価すること\n- **IT サービスマネジメント（ITIL）** — 事業のニーズを満たす良質な IT サービスを提供するための、運用側のベストプラクティス\n- **コンプライアンス** — 法令や社会規範を守ること。IT の方向付けを統制する話ではありません\n\n### 出題パターン\n\n1. **説明を選ぶ形** — 「IT 戦略の策定と実行をコントロールする組織能力」という言い回しが正解になります。運用のベストプラクティス、第三者による評価、開発と取引の標準化は、それぞれ ITIL・システム監査・共通フレームの説明です\n2. **誰の責任かを問う形** — 経営者です。IT ベンダにだけ必要、IT 部門が独自にルールを定める、経営者が全ての活動を行う、はいずれも誤りになります\n3. **穴埋め** — 経営者が評価するのは「現在と将来」の IT 利用です。過去でも、現在だけでもありません\n4. **リーダーシップのリスクを問う形** — 取締役会等が規範を策定し、率先して守らないと組織に倫理的な行動が徹底されない、が正解です。責任を担当部門に持たせる方向の記述は誤りになります",
+      "questions": [
+        {
+          "question_id": "2026r08-q35",
+          "content_key": "f2a5f713fcf9f499",
+          "exam_label": "令和8年度",
+          "number": 35,
+          "stem": "情報システムの企画，開発，運用，保守に関わるマネジメントとプロセスに対して，IT ガバナンスにおける経営陣の活動として，評価，指示，モニターを実施する必要がある。IT ガバナンスにおける経営陣の活動に関する記述として，適切なものだけを全て挙げたものはどれか。\na 外部のコンサルタントに責任と権限を委譲し，戦略立案からモニタリングまで全面的に任せる。\nb 情報システム戦略で想定した効果が，どの程度達成されているか確認するための情報を収集する。\nc 情報システム戦略を実現するために，必要な責任と要員を組織に割り当てる。\nd 情報システムの複数の将来像を想定し，外部の情報システムの専門家に比較分析を依頼して評価する。",
+          "choices": {
+            "ア": "a, b, c",
+            "イ": "a, c",
+            "ウ": "b, c",
+            "エ": "b, c, d"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2026r08-q41",
+          "content_key": "5a66c4d2cf106a1b",
+          "exam_label": "令和8年度",
+          "number": 41,
+          "stem": "IT ガバナンスの活動において，取締役会等のリーダーシップに関するリスクの記述として，最も適切なものはどれか。",
+          "choices": {
+            "ア": "権限委譲して策定させた成果物である IT 戦略は，担当部門に最終的な責任をもたせないと，取締役会等の説明責任が果たせない。",
+            "イ": "組織体としてのパフォーマンスの期待値は，取締役会等が設定に関与すると，現状踏襲型となり組織体の目的を達成できない。",
+            "ウ": "取締役会等が規範を策定し，率先して遵守しないと，組織体にその倫理的な行動が徹底されない。",
+            "エ": "取締役会等が組織体の IT ガバナンス方針を明示すると，情報システム部門主導の活動に偏重してしまう。"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2024r06-q53",
+          "content_key": "d662bc5a3d8169af",
+          "exam_label": "令和6年度",
+          "number": 53,
+          "stem": "IT ガバナンスに関する次の記述中の a に入れる字句として，最も適切なものはどれか。 経営者は，［ a ］の事業の目的を支援する観点で，効果的，効率的かつ受容可能な［ a ］の IT の利用について評価する。",
+          "choices": {
+            "ア": "過去と現在",
+            "イ": "現在",
+            "ウ": "現在と将来",
+            "エ": "将来"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2023r05-q53",
+          "content_key": "2bb5c6805f246a32",
+          "exam_label": "令和5年度",
+          "number": 53,
+          "stem": "ITが適切に活用されるために企業が実施している活動を，ルールを決める活動と，ルールに従って行動する活動に分けたとき，ルールを決める活動に該当するものはどれか。",
+          "choices": {
+            "ア": "IT投資判断基準の確立",
+            "イ": "SLA遵守のためのオペレーション管理",
+            "ウ": "開発プロジェクトの予算管理",
+            "エ": "標準システム開発手法に準拠した個別のプロジェクトの推進"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2022r04-q40",
+          "content_key": "df7cebaebe2b0f44",
+          "exam_label": "令和4年度",
+          "number": 40,
+          "stem": "IT ガバナンスに関する記述として，最も適切なものはどれか。",
+          "choices": {
+            "ア": "IT サービスマネジメントに関して，広く利用されているベストプラクティスを集めたもの",
+            "イ": "システム及びソフトウェア開発とその取引の適正化に向けて，それらのベースとなる作業項目の一つ一つを定義して標準化したもの",
+            "ウ": "経営陣が組織の価値を高めるために実践する行動であり，情報システム戦略の策定及び実現に必要な組織能力のこと",
+            "エ": "プロジェクトの要求事項を満足させるために，知識，スキル，ツール，技法をプロジェクト活動に適用すること"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2021r03-q49",
+          "content_key": "cf46ddaba170db00",
+          "exam_label": "令和3年度",
+          "number": 49,
+          "stem": "IT ガバナンスに関する次の記述中の a に入れる，最も適切な字句はどれか。\n［ a ］ は，現在及び将来の IT の利用についての評価と IT 利用が事業の目的に合致することを確実にする役割がある。",
+          "choices": {
+            "ア": "株主",
+            "イ": "監査人",
+            "ウ": "経営者",
+            "エ": "情報システム責任者"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2020r02o-q45",
+          "content_key": "7cc9f1f288d46647",
+          "exam_label": "令和2年度 10月",
+          "number": 45,
+          "stem": "IT ガバナンスの説明として，最も適切なものはどれか。",
+          "choices": {
+            "ア": "企業が競争優位性構築を目的に，IT 戦略の策定・実行をコントロールし，あるべき方向へ導く組織能力のこと",
+            "イ": "事業のニーズを満たす良質の IT サービスを実施すること",
+            "ウ": "情報システムにまつわるリスクに対するコントロールが，適切に整備，運用されていることを第三者が評価すること",
+            "エ": "情報セキュリティを確保，維持するために，技術的，物理的，人的，組織的な視点からの対策を，経営層を中心とした体制で組織的に行うこと"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2019r01a-q53",
+          "content_key": "e7288e1c59ffc08d",
+          "exam_label": "令和元年度 秋期",
+          "number": 53,
+          "stem": "企業における IT ガバナンスを構築し，推進する責任者として，適切な者は誰か。",
+          "choices": {
+            "ア": "株主",
+            "イ": "経営者",
+            "ウ": "従業員",
+            "エ": "情報システム部員"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2019h31h-q39",
+          "content_key": "b558da8ce244149b",
+          "exam_label": "平成31年度 春期",
+          "number": 39,
+          "stem": "企業などの競争力を高めるために，情報システム戦略の策定及び実行を統制するものとして，最も適切なものはどれか。",
+          "choices": {
+            "ア": "IT ガバナンス",
+            "イ": "コンプライアンス",
+            "ウ": "システム監査",
+            "エ": "プロジェクトマネジメント"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2018h30a-q41",
+          "content_key": "3b9053785fefbc01",
+          "exam_label": "平成30年度 秋期",
+          "number": 41,
+          "stem": "適切な IT ガバナンスを構築するための役割 ① ～ ④ に関して，それを担う経営者と情報システム部門の責任者の分担の適切な組合せはどれか。\n① IT ガバナンスの方針の明確化\n② 情報化投資の決定における原則の制定\n③ 情報システム部門内における役割分担と権限の決定\n④ プロジェクト計画に基づいたシステム開発の進捗管理",
+          "choices": {
+            "ア": "経営者：①，② ，情報システム部門の責任者：③，④",
+            "イ": "経営者：①，③ ，情報システム部門の責任者：②，④",
+            "ウ": "経営者：②，③ ，情報システム部門の責任者：①，④",
+            "エ": "経営者：②，④ ，情報システム部門の責任者：①，③"
+          },
+          "answer": "ア",
+          "has_figure": true,
+          "figure_description": "選択肢が組合せ表になっている。\n\n| | 経営者 | 情報システム部門の責任者 |\n| --- | --- | --- |\n| ア | ①，② | ③，④ |\n| イ | ①，③ | ②，④ |\n| ウ | ②，③ | ①，④ |\n| エ | ②，④ | ①，③ |",
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2018h30h-q40",
+          "content_key": "bbed4777a86d1a4b",
+          "exam_label": "平成30年度 春期",
+          "number": 40,
+          "stem": "IT ガバナンスに関する記述として，適切なものはどれか。",
+          "choices": {
+            "ア": "IT ベンダが構築すべきものであり，それ以外の組織では必要ない。",
+            "イ": "IT を管理している部門が，全社の IT に関する原則やルールを独自に定めて周知する。",
+            "ウ": "経営者が IT に関する原則や方針を定めて，各部署で方針に沿った活動を実施する。",
+            "エ": "経営者の責任であり，IT ガバナンスに関する活動は全て経営者が行う。"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2018h30h-q49",
+          "content_key": "547a54ded3627784",
+          "exam_label": "平成30年度 春期",
+          "number": 49,
+          "stem": "IT ガバナンスの説明として，適切なものはどれか。",
+          "choices": {
+            "ア": "IT サービスの運用を対象としたベストプラクティスのフレームワーク",
+            "イ": "IT 戦略の策定と実行をコントロールする組織の能力",
+            "ウ": "IT や情報を活用する利用者の能力",
+            "エ": "各種手続に IT を導入して業務の効率化を図った行政機構"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    }
+  ]
+}

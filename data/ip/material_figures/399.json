@@ -1,0 +1,62 @@
+{
+  "topic_id": 399,
+  "term": "ROE（自己資本利益率）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 式と読み方",
+      "caption": "分母が自己資本なら ROE、総資産なら ROA。E は Equity＝株主の持分。",
+      "nodes": [
+        {
+          "id": "asset",
+          "label": "資産\n＝総資産",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "debt",
+          "label": "負債\n借入金など\n返済が要る",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "eq",
+          "label": "自己資本\n株主の持分\n返済が要らない",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "roa",
+          "label": "ROA ＝\n当期純利益 ÷ 総資産",
+          "row": 1,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "roe",
+          "label": "ROE ＝\n当期純利益 ÷ 自己資本",
+          "row": 2,
+          "col": 1,
+          "shape": "round",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "asset",
+          "to": "roa",
+          "label": "分母",
+          "style": "dashed"
+        },
+        {
+          "from": "eq",
+          "to": "roe",
+          "label": "分母",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

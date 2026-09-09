@@ -1,0 +1,29 @@
+{
+  "topic_id": 358,
+  "term": "イーサネットフレーム",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### カプセル化の構造",
+      "caption": "後から付けたヘッダほど先頭に来るので、送出順は 宛先 MAC → 宛先 IP → 宛先ポート番号になる。",
+      "nodes": [
+        {"id": "eth", "label": "イーサネットヘッダ\n宛先 MAC アドレス", "row": 0, "col": 0, "emphasis": true},
+        {"id": "ip", "label": "IP ヘッダ\n宛先 IP アドレス", "row": 0, "col": 1},
+        {"id": "tcp", "label": "TCP ヘッダ\n宛先ポート番号", "row": 0, "col": 2},
+        {"id": "dat", "label": "データ", "row": 0, "col": 3},
+        {"id": "l2", "label": "3 番目に付与\nデータリンク層", "row": 1, "col": 0},
+        {"id": "l3", "label": "2 番目に付与\nネットワーク層", "row": 1, "col": 1},
+        {"id": "l4", "label": "1 番目に付与\nトランスポート層", "row": 1, "col": 2}
+      ],
+      "edges": [
+        {"from": "eth", "to": "ip", "label": "先頭から順に送出"},
+        {"from": "ip", "to": "tcp"},
+        {"from": "tcp", "to": "dat"},
+        {"from": "l2", "to": "eth", "style": "dashed"},
+        {"from": "l3", "to": "ip", "style": "dashed"},
+        {"from": "l4", "to": "tcp", "style": "dashed"}
+      ]
+    }
+  ]
+}

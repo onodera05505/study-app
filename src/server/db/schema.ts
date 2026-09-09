@@ -1,0 +1,264 @@
+import { sql } from 'drizzle-orm'
+import { index, integer, primaryKey, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core'
+
+const now = sql`(unixepoch())`
+
+/** シラバス Ver.6.5 の項目（1〜63）。分野・大分類・中分類はこの1テーブルに畳んである。
+ *  合否は分野単位の AND 条件で決まるので、field は必ず引ける形にしておく。 */
+export const syllabusItems = sqliteTable(
+  'syllabus_items',
+  {
+    id: integer('id').primaryKey(), // シラバスの項目番号 1..63 をそのまま使う
+    name: text('name').notNull(),
+    field: text('field').notNull(), // ストラテジ系 | マネジメント系 | テクノロジ系
+    majorNo: integer('major_no').notNull(),
+    major: text('major').notNull(),
+    middleNo: integer('middle_no').notNull(),
+    middle: text('middle').notNull(),
+  },
+  (t) => [index('idx_syllabus_field').on(t.field, t.id)],
+)
+
+/** 論点。学習の単位。過去問とは M:N で結び、紐づく件数が出題頻度＝重要度になる。 */
+export const topics = sqliteTable(
+  'topics',
+  {
+    id: integer('id').primaryKey({ autoIncrement: true }),
+    term: text('term').notNull(),
+    syllabusItemId: integer('syllabus_item_id')
+      .notNull()
+      .references(() => syllabusItems.id),
+    /** シラバスの用語例に無く、分類時に新設した論点。レビュー対象を絞るための印。 */
+    isNew: integer('is_new', { mode: 'boolean' }).notNull().default(false),
+    /** 短い説明。学習画面で最初に見せる。 */
+    explanation: text('explanation'),
+    /** 詳しい解説・周辺知識。「詳しく」で展開する。 */
+    detail: text('detail'),
+    /** topic_questions の件数キャッシュ。並べ替えのたびに数えないための非正規化。 */
+    questionCount: integer('question_count').notNull().default(0),
+    createdAt: integer('created_at').notNull().default(now),
+    updatedAt: integer('updated_at').notNull().default(now),
+  },
+  (t) => [
+    // 同じ論点が別レコードに割れると頻度が分散して重要度が壊れるので一意にする
+    uniqueIndex('uq_topic_term').on(t.syllabusItemId, t.term),
+    index('idx_topic_freq').on(t.questionCount),
+  ],
+)
+
+/** 過去問。IPA の公開問題。表示時は必ず出典を添える（利用条件）。 */
+export const pastQuestions = sqliteTable(
+  'past_questions',
+  {
+    /** "2024r06-q8" 形式。再取り込み時に UPSERT できる安定キー。 */
+    id: text('id').primaryKey(),
+    exam: text('exam').notNull(), // 2024r06
+    examLabel: text('exam_label').notNull(), // 令和6年度
+    number: integer('number').notNull(), // 1..100
+    text: text('text').notNull(),
+    /** 選択肢。{"ア": "...", "イ": "..."} の JSON 文字列。 */
+    choices: text('choices').notNull(),
+    answer: text('answer').notNull(), // ア | イ | ウ | エ
+    hasFigure: integer('has_figure', { mode: 'boolean' }).notNull().default(false),
+    /** 図表の文章による書き起こし。表や擬似言語はこちらのほうが読みやすい。 */
+    figureDescription: text('figure_description'),
+    /** 図として描かれている問題だけ、原本から切り出した画像のパス（/figures/…）。
+     *  ブロック図やアローダイアグラムは文章で読むより図を見るほうが速く、
+     *  本番も図で出るので図で慣れておくほうが実戦的。表や擬似言語には付けない。 */
+    figureImage: text('figure_image'),
+    /** 出典表示に使う完成形。「出典：令和6年度 ITパスポート試験 問8」 */
+    citation: text('citation').notNull(),
+    /** 原文を改変した場合に立てる。立っていれば表示側で「一部改変」を併記する。 */
+    modified: integer('modified', { mode: 'boolean' }).notNull().default(false),
+    /** 本文＋選択肢の正規化ハッシュ。同一内容の問題を学習側で1問にまとめるためのキー。
+     *  build_seed.py が計算する。 */
+    contentKey: text('content_key'),
+  },
+  (t) => [
+    uniqueIndex('uq_question_exam_number').on(t.exam, t.number),
+    index('idx_question_exam').on(t.exam, t.number),
+    index('idx_question_content').on(t.contentKey),
+  ],
+)
+
+/** 論点 ⇔ 過去問。この件数が出題頻度になる。 */
+export const topicQuestions = sqliteTable(
+  'topic_questions',
+  {
+    topicId: integer('topic_id')
+      .notNull()
+      .references(() => topics.id, { onDelete: 'cascade' }),
+    questionId: text('question_id')
+      .notNull()
+      .references(() => pastQuestions.id, { onDelete: 'cascade' }),
+    /** その問題の中心論点なら true。周辺として結ばれた場合は false。 */
+    isPrimary: integer('is_primary', { mode: 'boolean' }).notNull().default(true),
+  },
+  (t) => [
+    primaryKey({ columns: [t.topicId, t.questionId] }),
+    index('idx_tq_question').on(t.questionId),
+  ],
+)
+
+export const users = sqliteTable(
+  'users',
+  {
+    id: text('id').primaryKey(),
+    email: text('email').notNull(),
+    name: text('name').notNull(),
+    /** PBKDF2 の "iterations:salt:hash"。Workers の Web Crypto で検証する。 */
+    passwordHash: text('password_hash').notNull(),
+    role: text('role').notNull().default('MEMBER'), // ADMIN | MEMBER
+    createdAt: integer('created_at').notNull().default(now),
+  },
+  (t) => [uniqueIndex('uq_user_email').on(t.email)],
+)
+
+/** 論点ごとの理解度。1: 未理解 / 2: やや理解 / 3: 理解 */
+export const progress = sqliteTable(
+  'progress',
+  {
+    userId: text('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    topicId: integer('topic_id')
+      .notNull()
+      .references(() => topics.id, { onDelete: 'cascade' }),
+    status: integer('status').notNull().default(1),
+    updatedAt: integer('updated_at').notNull().default(now),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.topicId] })],
+)
+
+/** アプリを開いた日の記録。連続記録（ストリーク）の材料になる。
+ *
+ *  1日1行。日付は端末の時差で前後しないよう、**日本時間の暦日**を文字列（YYYY-MM-DD）
+ *  で持つ。unixepoch を UTC で丸めると、日本の深夜0時〜9時が前日に寄ってしまう。
+ *
+ *  学習した内容ではなく「開いた日」を記録する。続けて開くこと自体を habit にするため。 */
+export const dailyVisits = sqliteTable(
+  'daily_visits',
+  {
+    userId: text('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    /** 日本時間の暦日。YYYY-MM-DD */
+    day: text('day').notNull(),
+    createdAt: integer('created_at').notNull().default(now),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.day] })],
+)
+
+/** 演習・模試のセッション。
+ *  kind: drill（論点別ドリル）| field（分野別）| review（弱点復習）| mock（過去問実践） */
+export const sessions = sqliteTable(
+  'sessions',
+  {
+    id: text('id').primaryKey(),
+    userId: text('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    kind: text('kind').notNull(),
+    status: text('status').notNull(), // in_progress | completed | abandoned
+    /** mock のとき、どの回を再現しているか。ランダム構成なら null。 */
+    sourceExam: text('source_exam'),
+    /** 出題範囲の説明。「論点: RAID」「分野: テクノロジ系」など画面表示用。 */
+    scopeLabel: text('scope_label'),
+    /** 制限時間（秒）。無制限なら null。過去問実践は 7200。 */
+    timeLimitSec: integer('time_limit_sec'),
+    questionCount: integer('question_count').notNull(),
+    correctCount: integer('correct_count'),
+    startedAt: integer('started_at').notNull().default(now),
+    finishedAt: integer('finished_at'),
+  },
+  (t) => [index('idx_session_user_status').on(t.userId, t.status, t.startedAt)],
+)
+
+/** 出題された1問。出題時点の内容をスナップショットとして固定する。
+ *  教材を後から直しても、当時の内容で採点・振り返りができるようにするため。 */
+export const sessionQuestions = sqliteTable(
+  'session_questions',
+  {
+    id: text('id').primaryKey(),
+    sessionId: text('session_id')
+      .notNull()
+      .references(() => sessions.id, { onDelete: 'cascade' }),
+    questionId: text('question_id')
+      .notNull()
+      .references(() => pastQuestions.id),
+    /** 0 始まりの出題順。未回答の最小 index が「現在の問題」。 */
+    idx: integer('idx').notNull(),
+    /** { text, choices, answer, citation, hasFigure, figureDescription } の JSON。 */
+    snapshot: text('snapshot').notNull(),
+    userAnswer: text('user_answer'),
+    /** 0: 未回答 / 1: 正解 / 2: 不正解 */
+    result: integer('result').notNull().default(0),
+    answeredAt: integer('answered_at'),
+  },
+  (t) => [
+    uniqueIndex('uq_sq_session_idx').on(t.sessionId, t.idx),
+    // 未回答の最小 index を引く頻出クエリ
+    index('idx_sq_progress').on(t.sessionId, t.result, t.idx),
+  ],
+)
+
+/** アプリ全体設定。1行想定（id='default'）。
+ *  前身アプリ では出題数や除外条件がコードに埋まっていて変えられなかったので、
+ *  変えたくなるものは最初からここに置く。 */
+export const appSettings = sqliteTable('app_settings', {
+  id: text('id').primaryKey(),
+  /** 練習テストの既定出題数 */
+  drillSize: integer('drill_size').notNull().default(10),
+  /** 過去問実践の出題数と制限時間（本番は100問120分） */
+  mockSize: integer('mock_size').notNull().default(100),
+  mockTimeLimitSec: integer('mock_time_limit_sec').notNull().default(7200),
+  /** 合格ラインの目安（％）。総合と分野別。IRT は再現できないので素点の近似。 */
+  passOverallPct: integer('pass_overall_pct').notNull().default(60),
+  passFieldPct: integer('pass_field_pct').notNull().default(30),
+  /** 直近何回連続で正解したら当面出題しないか */
+  masteredStreak: integer('mastered_streak').notNull().default(3),
+  updatedAt: integer('updated_at').notNull().default(now),
+})
+
+/** 問題ごとの解説。「正解の根拠」と「誤答ア〜エが何の用語の説明か」を持つ。
+ *
+ *  論点の教材（topics.explanation / detail）は定義・見分け方・図・計算手順に絞り、
+ *  **誤答選択肢のケアはこちらに移す**。論点は複数の問題に紐づくので、教材に
+ *  誤答の説明を書くと「どの問題の誤答か」が分からなくなる。
+ *
+ *  キーは past_questions.id ではなく **content_key**。IPA は同じ問題を別の回で
+ *  使い回すので（応用情報で119組）、問題 ID を主キーにすると同じ解説を何本も
+ *  書くことになる。content_key なら1本で全部の回に効く。
+ *
+ *  choices_json は [{"label":"ア","term":"用語名 or null","note":"1行"}, …] の4件。
+ *  正解の要素も含む（note は「正解。〜」の形）。 */
+export const questionExplanations = sqliteTable('question_explanations', {
+  /** past_questions.content_key と同じ値。FK は張らない（seed の投入順に依存させない）。 */
+  contentKey: text('content_key').primaryKey(),
+  /** 正解の根拠。Markdown（`[[用語]]` を含んでよい）。1〜3文。 */
+  correctReason: text('correct_reason').notNull(),
+  /** 選択肢ごとの1行説明。JSON 配列4件。 */
+  choicesJson: text('choices_json').notNull(),
+  updatedAt: text('updated_at'),
+})
+
+/** 用語集。本文中の `[[用語]]` を押したときに出すポップの中身。
+ *
+ *  解説の choices[].term から build_seed.py が派生生成する。教材本文の `[[用語]]` で
+ *  拾えなかったものは、その論点の explanation の第1文で補う。
+ *
+ *  topic_id に **FK は張らない**。用語集は派生データで、論点の統合（build_seed.py の
+ *  「消えた論点の掃除」）で参照先が消えることがある。制約で seed 投入を止めるより、
+ *  リンクを出さないほうがよい。check_seed.py が実在を検査する。 */
+export const glossary = sqliteTable(
+  'glossary',
+  {
+    /** 表記そのまま。`[[用語]]` の中身と完全一致させる。 */
+    term: text('term').primaryKey(),
+    /** 1行の説明。 */
+    brief: text('brief').notNull(),
+    /** ドンピシャの論点があれば topics.id。あればポップに「この論点を学ぶ →」を出す。 */
+    topicId: integer('topic_id'),
+  },
+  (t) => [index('idx_glossary_topic').on(t.topicId)],
+)

@@ -1,0 +1,26 @@
+{
+  "topic_id": 385,
+  "term": "S/MIME",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### エンドツーエンドで守るしくみ",
+      "caption": "SSL/TLS が守るのは区間だけで守られない区間が残るが、S/MIME はメール自体を暗号化するので全区間で読まれない。",
+      "nodes": [
+        {"id": "s", "label": "送信者の PC", "row": 0, "col": 0},
+        {"id": "ms", "label": "自社の\nメールサーバ", "row": 0, "col": 1},
+        {"id": "mr", "label": "相手の\nメールサーバ", "row": 0, "col": 2},
+        {"id": "r", "label": "受信者の PC", "row": 0, "col": 3},
+        {"id": "sm", "label": "S/MIME\nメールそのものを暗号化", "row": 1, "col": 1, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "s", "to": "ms", "label": "SSL/TLS が守る"},
+        {"from": "ms", "to": "mr", "label": "守られない区間"},
+        {"from": "mr", "to": "r", "label": "SSL/TLS が守る"},
+        {"from": "sm", "to": "s", "label": "受信者の公開鍵で暗号化", "style": "dashed", "arrow": "none"},
+        {"from": "sm", "to": "r", "label": "受信者の秘密鍵で復号", "style": "dashed", "arrow": "none"}
+      ]
+    }
+  ]
+}

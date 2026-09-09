@@ -1,0 +1,249 @@
+{
+  "exam": "2023r05h",
+  "range": "1-27",
+  "classifications": [
+    {
+      "number": 1,
+      "syllabus_item": 1,
+      "topic_term": "論理積",
+      "topic_is_new": false,
+      "related_terms": ["論理和", "論理シフト"],
+      "confidence": "medium",
+      "notes": "主題は 2 進数表現に対する桁ごとの論理積（AND 255）で下位 8 ビットを取り出し，256 を 0 に戻すマスク処理。用語例に「ビット演算」「マスク」に当たる語が無く，中心の演算である論理積を採った"
+    },
+    {
+      "number": 2,
+      "syllabus_item": 2,
+      "topic_term": "正規分布",
+      "topic_is_new": false,
+      "related_terms": ["標準偏差", "平均値"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 3,
+      "syllabus_item": 3,
+      "topic_term": "ROC 曲線",
+      "topic_is_new": false,
+      "related_terms": ["真陽性率", "偽陽性率", "適合率", "正解率"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 4,
+      "syllabus_item": 5,
+      "topic_term": "ドップラー効果",
+      "topic_is_new": true,
+      "related_terms": ["超音波センサー", "ウェアラブル生体センサー"],
+      "confidence": "medium",
+      "notes": "ドップラー効果を応用したセンサーで血流量を測定できるかを問う。項目 5（計測・制御に関する理論）の用語例にドップラー効果に当たる語が無いため新規論点にした"
+    },
+    {
+      "number": 5,
+      "syllabus_item": 18,
+      "topic_term": "記憶域管理アルゴリズム（ファーストフィット，ベストフィット，ワーストフィット）",
+      "topic_is_new": false,
+      "related_terms": ["2分探索木", "片方向連結リスト", "ビットマップ"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 6,
+      "syllabus_item": 7,
+      "topic_term": "線形探索法",
+      "topic_is_new": false,
+      "related_terms": ["平均比較回数", "2分探索法"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 7,
+      "syllabus_item": 7,
+      "topic_term": "クイックソート",
+      "topic_is_new": false,
+      "related_terms": ["整列アルゴリズム", "分割統治法"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 8,
+      "syllabus_item": 11,
+      "topic_term": "CPI（Cycles Per Instruction）",
+      "topic_is_new": true,
+      "related_terms": ["動作周波数", "MIPS"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 9,
+      "syllabus_item": 11,
+      "topic_term": "命令パイプライン",
+      "topic_is_new": false,
+      "related_terms": ["パイプラインハザード", "スーパーパイプライン"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 10,
+      "syllabus_item": 12,
+      "topic_term": "ライトスルー",
+      "topic_is_new": false,
+      "related_terms": ["ライトバック", "キャッシュメモリ", "主記憶"],
+      "confidence": "medium",
+      "notes": "ライトスルー方式とライトバック方式の両方を比較する問題で主題が一意でない。正解の記述（イ）が扱うライトスルーを論点にし，ライトバックを related に入れた"
+    },
+    {
+      "number": 11,
+      "syllabus_item": 12,
+      "topic_term": "ウェアレベリング",
+      "topic_is_new": false,
+      "related_terms": ["フラッシュメモリ（NAND，NOR）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 12,
+      "syllabus_item": 15,
+      "topic_term": "有機 EL ディスプレイ",
+      "topic_is_new": false,
+      "related_terms": ["液晶ディスプレイ"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 13,
+      "syllabus_item": 17,
+      "topic_term": "スケールイン",
+      "topic_is_new": true,
+      "related_terms": ["スケールアウト", "スケールアップ"],
+      "confidence": "high",
+      "notes": "用語例にはスケールアウト／スケールアップのみでスケールインが無いため新規論点にした"
+    },
+    {
+      "number": 14,
+      "syllabus_item": 17,
+      "topic_term": "使用率",
+      "topic_is_new": true,
+      "related_terms": ["スループット", "ターンアラウンドタイム"],
+      "confidence": "medium",
+      "notes": "CPU と磁気ディスク装置の使用率を求める性能計算。項目 17（システムの評価指標）の用語例に「使用率」に当たる語が無いため新規論点にした"
+    },
+    {
+      "number": 15,
+      "syllabus_item": 16,
+      "topic_term": "フォールトトレラントシステム",
+      "topic_is_new": false,
+      "related_terms": ["フェールセーフ", "フェールソフト", "フォールトアボイダンス"],
+      "confidence": "medium",
+      "notes": "4 つの信頼性技術を比較する問題で主題が一意でない。正解（エ）が説明するフォールトトレランスに対応する用語例「フォールトトレラントシステム」を採った"
+    },
+    {
+      "number": 16,
+      "syllabus_item": 17,
+      "topic_term": "稼働率",
+      "topic_is_new": true,
+      "related_terms": ["信頼性ブロック図", "直列接続", "並列接続"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 17,
+      "syllabus_item": 18,
+      "topic_term": "ページリプレースメント",
+      "topic_is_new": false,
+      "related_terms": ["FIFO", "LRU", "仮想記憶管理"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 18,
+      "syllabus_item": 18,
+      "topic_term": "仮想記憶管理",
+      "topic_is_new": false,
+      "related_terms": ["LRU", "ページフォールト", "フラグメンテーション", "ガーベジコレクション"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 19,
+      "syllabus_item": 7,
+      "topic_term": "ハッシュ表探索法",
+      "topic_is_new": false,
+      "related_terms": ["線形探索法", "2分探索法"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 20,
+      "syllabus_item": 22,
+      "topic_term": "Docker",
+      "topic_is_new": false,
+      "related_terms": ["仮想化（ホスト型，ハイパーバイザー型，コンテナ型）", "KVM", "Xen", "QEMU"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 21,
+      "syllabus_item": 23,
+      "topic_term": "NAND 回路",
+      "topic_is_new": false,
+      "related_terms": ["論理式", "真理値表"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 22,
+      "syllabus_item": 23,
+      "topic_term": "ダイオード",
+      "topic_is_new": false,
+      "related_terms": ["抵抗", "順電圧", "整流回路"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 23,
+      "syllabus_item": 5,
+      "topic_term": "LiDAR（Light Detection And Ranging：レーザーレーダー）",
+      "topic_is_new": false,
+      "related_terms": ["ミリ波レーダー", "超音波センサー"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 24,
+      "syllabus_item": 14,
+      "topic_term": "NFC",
+      "topic_is_new": false,
+      "related_terms": ["Bluetooth", "BLE（Bluetooth Low Energy）", "RFID"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 25,
+      "syllabus_item": 27,
+      "topic_term": "レンダリング",
+      "topic_is_new": false,
+      "related_terms": ["テクスチャマッピング", "ラジオシティ法", "レイトレーシング法", "メタボール"],
+      "confidence": "high",
+      "notes": "CG のレンダリング技法を比較する問題。正解（ウ）のラジオシティ法は用語例に無く，2023r05a 問 25 と同様に総称のレンダリングに束ねた"
+    },
+    {
+      "number": 26,
+      "syllabus_item": 28,
+      "topic_term": "ドキュメント指向データベース",
+      "topic_is_new": false,
+      "related_terms": ["NoSQL データベース（Apache Cassandra，Apache CouchDB，MongoDB，Redis，Neo4j ほか）", "キーバリュー型データベース", "関係データベース"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 27,
+      "syllabus_item": 30,
+      "topic_term": "ストアドプロシージャ",
+      "topic_is_new": true,
+      "related_terms": ["トリガー", "CALL 文"],
+      "confidence": "high",
+      "notes": null
+    }
+  ]
+}

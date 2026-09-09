@@ -1,0 +1,28 @@
+# IPA の過去問 PDF。scripts/fetch_pdfs.py で再取得できるので追跡しない
+data/*/pdfs/
+
+# レンダリング済みページ画像なども同様に再生成できる
+data/*/pages/
+
+# 試験ごとに生成する投入用 SQL
+data/*/seed.sql
+
+# 本番 D1 の吸い出し（scripts/backup_d1.sh）。進捗が入るので追跡しない
+backups/
+
+node_modules/
+dist/
+.wrangler/
+.dev.vars
+.env
+.venv/
+venv/
+__pycache__/
+.DS_Store
+
+# ビルド成果物（deploy-pages.sh が生成）
+.worker-build*/
+
+# Claude Code の個人設定
+.claude/settings.local.json
+

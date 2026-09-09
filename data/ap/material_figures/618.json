@@ -1,0 +1,67 @@
+{
+  "topic_id": 618,
+  "term": "ライブマイグレーション",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 止めずに移せるしくみ",
+      "caption": "移るのは稼働中の仮想マシンで、ディスクは共有ストレージに置いたまま。だからサービスを止めずに物理サーバを保守できる。",
+      "nodes": [
+        {
+          "id": "pa",
+          "label": "物理サーバ A\n保守したい",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "vm",
+          "label": "仮想マシン\nOS もソフトも稼働中",
+          "row": 0,
+          "col": 1,
+          "shape": "round",
+          "emphasis": true
+        },
+        {
+          "id": "pb",
+          "label": "物理サーバ B\n移行先",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "st",
+          "label": "共有ストレージ",
+          "row": 1,
+          "col": 1,
+          "shape": "cylinder"
+        }
+      ],
+      "edges": [
+        {
+          "from": "pa",
+          "to": "vm",
+          "label": "移行前はここで稼働",
+          "arrow": "none"
+        },
+        {
+          "from": "vm",
+          "to": "pb",
+          "label": "停止させずに移す"
+        },
+        {
+          "from": "pa",
+          "to": "st",
+          "style": "dashed",
+          "arrow": "none"
+        },
+        {
+          "from": "pb",
+          "to": "st",
+          "label": "ディスクは共有のまま",
+          "style": "dashed",
+          "arrow": "none"
+        }
+      ]
+    }
+  ]
+}

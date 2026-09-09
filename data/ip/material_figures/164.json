@@ -1,0 +1,29 @@
+{
+  "topic_id": 164,
+  "term": "条件分岐",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 計算の解き方",
+      "caption": "2つの条件の入れ子で枝は4本。20万円・3日は2,000円、5万円・14日は1,000円で合計3,000円。",
+      "nodes": [
+        {"id": "q1", "label": "改善額が\n10 万円より小さい？", "row": 0, "col": 1, "shape": "round"},
+        {"id": "q2", "label": "短縮期間が\n7 日より小さい？", "row": 1, "col": 0, "shape": "round"},
+        {"id": "q3", "label": "短縮期間が\n7 日より小さい？", "row": 1, "col": 2, "shape": "round"},
+        {"id": "p1", "label": "500 円", "row": 2, "col": 0},
+        {"id": "p2", "label": "1,000 円\n5 万円・14 日", "row": 2, "col": 1, "emphasis": true},
+        {"id": "p3", "label": "2,000 円\n20 万円・3 日", "row": 2, "col": 2, "emphasis": true},
+        {"id": "p4", "label": "5,000 円", "row": 2, "col": 3}
+      ],
+      "edges": [
+        {"from": "q1", "to": "q2", "label": "はい"},
+        {"from": "q1", "to": "q3", "label": "いいえ"},
+        {"from": "q2", "to": "p1", "label": "はい"},
+        {"from": "q2", "to": "p2", "label": "いいえ"},
+        {"from": "q3", "to": "p3", "label": "はい"},
+        {"from": "q3", "to": "p4", "label": "いいえ"}
+      ]
+    }
+  ]
+}

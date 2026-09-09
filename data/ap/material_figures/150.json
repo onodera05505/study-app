@@ -1,0 +1,54 @@
+{
+  "topic_id": 150,
+  "term": "ウィンドウ関数",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 副問合せの書き換えとして問われる",
+      "caption": "学生番号で区切り、実施回の昇順で番号を振ると、番号 1 の行が各学生の初回になる。",
+      "nodes": [
+        {
+          "id": "p1",
+          "label": "PARTITION S01\n実施回 1 → 番号 1\n実施回 7 → 番号 2",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "p2",
+          "label": "PARTITION S02\n実施回 2 → 番号 1\n実施回 5 → 番号 2",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "p3",
+          "label": "PARTITION S03\n実施回 3 → 番号 1\n実施回 9 → 番号 2\n実施回 12 → 番号 3",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "res",
+          "label": "番号 ＝ 1 の行だけ残す\n＝ 学生ごとの初回",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "p1",
+          "to": "res"
+        },
+        {
+          "from": "p2",
+          "to": "res",
+          "label": "ORDER BY 実施回 の昇順"
+        },
+        {
+          "from": "p3",
+          "to": "res"
+        }
+      ]
+    }
+  ]
+}

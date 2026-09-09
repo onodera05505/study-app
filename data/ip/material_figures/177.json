@@ -1,0 +1,23 @@
+{
+  "topic_id": 177,
+  "term": "IF 関数",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 引数の並びと入れ子",
+      "caption": "2番目が「条件が成り立つときの値」。合格と不合格を入れ替えた式が必ず誤答に並ぶ。",
+      "nodes": [
+        {"id": "f", "label": "IF( 条件 , 2番目 , 3番目 )", "row": 0, "col": 1, "shape": "round"},
+        {"id": "t", "label": "2番目\n条件が成り立つ\nときの値", "row": 1, "col": 0, "emphasis": true},
+        {"id": "e", "label": "3番目\n成り立たない\nときの値", "row": 1, "col": 2},
+        {"id": "n", "label": "ここにもう一つ IF\n3通りに分けられる", "row": 2, "col": 2}
+      ],
+      "edges": [
+        {"from": "f", "to": "t", "label": "成り立つ"},
+        {"from": "f", "to": "e", "label": "成り立たない"},
+        {"from": "e", "to": "n", "label": "入れ子", "style": "dashed"}
+      ]
+    }
+  ]
+}

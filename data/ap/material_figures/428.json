@@ -1,0 +1,22 @@
+{
+  "topic_id": 428,
+  "term": "請負契約",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "作業場所が発注者の事業所でも、指揮命令権は受注者に残り、発注者と作業者の間に雇用契約は生じない。",
+      "nodes": [
+        {"id": "buyer", "label": "発注者\n（自社の事業所を提供）", "row": 0, "col": 0},
+        {"id": "vendor", "label": "受注者（請負側）", "row": 0, "col": 1, "emphasis": true},
+        {"id": "worker", "label": "作業者\n発注者の事業所で作業", "row": 1, "col": 1}
+      ],
+      "edges": [
+        {"from": "buyer", "to": "vendor", "label": "請負契約（仕事の完成に報酬）", "arrow": "both"},
+        {"from": "vendor", "to": "worker", "label": "雇用契約と指揮命令"},
+        {"from": "buyer", "to": "worker", "label": "直接の指揮命令はできない", "style": "dashed", "arrow": "none"}
+      ]
+    }
+  ]
+}

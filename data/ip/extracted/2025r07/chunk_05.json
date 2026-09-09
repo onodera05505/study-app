@@ -1,0 +1,51 @@
+{
+  "exam": "2025r07",
+  "pages": [45, 46, 47, 48, 49, 50, 51, 52, 53, 54],
+  "questions": [
+    {
+      "number": 98,
+      "page": 45,
+      "text": "4個の要素から成るデータの並びを，次の手順を繰り返して昇順に整列するとき，整列が終了するまでに(1)から(3)の一連の手順は，何回実行されるか。ここで，最初はデータの並び全体を整列対象とする。\nデータの並び：[27, 42, 33, 12]\n〔手順〕\n（1） 整列対象中の要素の最大の値を選び，最後の要素と入れ替える。\n（2） 最後の要素を整列対象から外す。\n（3） 整列対象に要素が1個以上残っていれば，（1）から（3）の一連の手順を実行する。残っていなければ，整列完了なので終了する。",
+      "choices": {
+        "ア": "2",
+        "イ": "3",
+        "ウ": "4",
+        "エ": "5"
+      },
+      "has_figure": false,
+      "figure_description": null,
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 99,
+      "page": 46,
+      "text": "関数 calculateAmountOfPrize は，業務改善の効果における改善額と短縮期間を，それぞれ improvement と period で受け取り，賞金額を戻り値とする。改善額が20万円で短縮期間が3日の業務改善と，改善額が5万円で短縮期間が14日の業務改善があった。この二つの賞金額の合計は何円か。ここで，改善額と短縮期間の値はそれぞれ0以上とする。",
+      "choices": {
+        "ア": "1,000",
+        "イ": "1,500",
+        "ウ": "3,000",
+        "エ": "5,500"
+      },
+      "has_figure": true,
+      "figure_description": "〔プログラム〕\n\n```\n○整数型: calculateAmountOfPrize(整数型: improvement,  // 改善額(円)\n                              整数型: period)  // 短縮期間(日)\n  整数型: prize  // 賞金額(円)\n  if (improvement が 100000 より小さい)\n    if (period が 7 より小さい)\n      prize ← 500\n    else\n      prize ← 1000\n    endif\n  else\n    if (period が 7 より小さい)\n      prize ← 2000\n    else\n      prize ← 5000\n    endif\n  endif\n  return prize\n```",
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 100,
+      "page": 47,
+      "text": "個人の認証に用いる要素を，知識，所有物及びバイオメトリクスの三つに分類したとき，所有物を要素として用いた認証の例はどれか。",
+      "choices": {
+        "ア": "SMS を用いた認証",
+        "イ": "虹彩の特徴を用いた認証",
+        "ウ": "筆跡や筆圧，スピードなど，文字を書くときの特徴を用いた認証",
+        "エ": "本人が事前に設定した質問とそれに対する答えを用いた認証"
+      },
+      "has_figure": false,
+      "figure_description": null,
+      "confidence": "high",
+      "notes": null
+    }
+  ]
+}

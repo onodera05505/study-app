@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="340" viewBox="0 0 640 340" role="img">
+<title>IP アドレスをブロードキャストで問い、当てはまるホストだけが MAC アドレスをユニキャストで返す。</title>
+<rect x="0.5" y="0.5" width="639" height="339" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(69.6 20)">
+<line x1="55" y1="34" x2="55" y2="272" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="235" y1="34" x2="235" y2="272" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="430.4" y1="34" x2="430.4" y2="272" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="110" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="55" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">送信元ホスト</text>
+<rect x="166" y="0" width="138" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="235" y="11.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">同じセグメントの</text>
+<text x="235" y="31.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">別ホスト</text>
+<rect x="360" y="0" width="140.8" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="430.4" y="11.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">宛先ホスト</text>
+<text x="430.4" y="31.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">その IP の持ち主</text>
+<polyline points="58,68 427.4,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="427.4,68 419.4,71.6 419.4,64.4" fill="#1f2937"/>
+<text x="242.7" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. ARP 要求をブロードキャスト</text>
+<rect x="87.5" y="73" width="310.4" height="16" rx="3" fill="#ffffff"/>
+<text x="242.7" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">この IP アドレスは誰か、と同じセグメント全員に問う</text>
+<rect x="124.7" y="89" width="236" height="16" rx="3" fill="#ffffff"/>
+<text x="242.7" y="102.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ブロードキャストなのでルータを越えない</text>
+<polyline points="235,132 261,132 261,146 237,146" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="237,146 245,142.4 245,149.6" fill="#1f2937"/>
+<text x="269" y="140" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2. 自分の IP でないので破棄</text>
+<polyline points="427.4,174 58,174" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="58,174 66,170.4 66,177.6" fill="#1f2937"/>
+<text x="242.7" y="167" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. ARP 応答をユニキャスト</text>
+<rect x="156.2" y="179" width="173" height="16" rx="3" fill="#ffffff"/>
+<text x="242.7" y="192.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">返すのは自分の MAC アドレス</text>
+<polyline points="55,222 81,222 81,236 57,236" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="57,236 65,232.4 65,239.6" fill="#1f2937"/>
+<text x="89" y="230" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. ARP テーブルに一定時間キャッシュ</text>
+<rect x="-33" y="241" width="176" height="16" rx="3" fill="#ffffff"/>
+<text x="55" y="254.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">次からは問い合わせずに送れる</text>
+</g>
+<text x="320" y="320" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">IP アドレスをブロードキャストで問い、当てはまるホストだけが MAC アドレスをユニキャストで返す。</text>
+</svg>

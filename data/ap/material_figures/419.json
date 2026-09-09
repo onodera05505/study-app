@@ -1,0 +1,21 @@
+{
+  "topic_id": 419,
+  "term": "NPV（Net Present Value：正味現在価値）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "chart",
+      "after": "### 計算の解き方",
+      "caption": "回収額の合計はどれも 240 万円だが、早い年に多く回収する B だけが NPV プラスになる。",
+      "kind": "bar",
+      "x": {"label": "シナリオ", "values": ["A", "B", "C", "投資をしない"]},
+      "y": {"label": "NPV（万円）", "min": -8},
+      "series": [
+        {"label": "現在価値の合計 − 投資額 220 万円", "values": [-5.6, 1.4, -2.1, 0], "emphasis": true}
+      ],
+      "annotations": [
+        {"x": "B", "y": 1.4, "text": "唯一のプラス"}
+      ]
+    }
+  ]
+}

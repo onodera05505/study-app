@@ -1,0 +1,69 @@
+{
+  "topic_id": 390,
+  "term": "DFD（Data Flow Diagram）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 使う4つの記号",
+      "caption": "書き込むデータストアへは矢印が入り、参照するデータストアからは矢印が出る。",
+      "nodes": [
+        {
+          "id": "guest",
+          "label": "来店客\n源泉と吸収",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "uke",
+          "label": "受付\n処理",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "seki",
+          "label": "空席状況\nデータストア",
+          "row": 1,
+          "col": 0,
+          "shape": "cylinder"
+        },
+        {
+          "id": "list",
+          "label": "来店客リスト\nデータストア",
+          "row": 1,
+          "col": 1,
+          "shape": "cylinder",
+          "emphasis": true
+        },
+        {
+          "id": "annai",
+          "label": "座席案内\n処理",
+          "row": 2,
+          "col": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": "guest",
+          "to": "uke",
+          "label": "名前"
+        },
+        {
+          "from": "uke",
+          "to": "list",
+          "label": "記入する"
+        },
+        {
+          "from": "list",
+          "to": "annai",
+          "label": "参照"
+        },
+        {
+          "from": "seki",
+          "to": "annai",
+          "label": "参照"
+        }
+      ]
+    }
+  ]
+}

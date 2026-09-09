@@ -1,0 +1,25 @@
+{
+  "topic_id": 121,
+  "term": "業務プロセスのモデリング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### アクティビティ図で表せるもの",
+      "caption": "スイムレーンで分けた区画が表すのは担当する人の役割で、時間・コスト・品質指標は表せない。",
+      "nodes": [
+        {"id": "lx", "label": "レーン\n申込担当", "row": 0, "col": 0, "emphasis": true},
+        {"id": "a1", "label": "申込を\n受け付ける", "row": 0, "col": 1, "shape": "round"},
+        {"id": "a2", "label": "内容を\n入力する", "row": 0, "col": 2, "shape": "round"},
+        {"id": "ly", "label": "レーン\n課長", "row": 1, "col": 0, "emphasis": true},
+        {"id": "a3", "label": "内容を\n承認する", "row": 1, "col": 2, "shape": "round"},
+        {"id": "a4", "label": "完了", "row": 1, "col": 3, "shape": "round"}
+      ],
+      "edges": [
+        {"from": "a1", "to": "a2"},
+        {"from": "a2", "to": "a3", "label": "承認へ回す"},
+        {"from": "a3", "to": "a4"}
+      ]
+    }
+  ]
+}

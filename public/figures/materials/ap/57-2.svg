@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="370" viewBox="0 0 640 370" role="img">
+<title>しきい値を端から端まで動かして偽陽性率と真陽性率の関係を描いたものが ROC 曲線で、左上に寄る（AUC が1に近い）ほど良い分類器。</title>
+<rect x="0.5" y="0.5" width="639" height="369" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<line x1="45.8" y1="216" x2="588" y2="216" stroke="#e5e7eb" stroke-width="1"/>
+<text x="37.8" y="220.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">0</text>
+<line x1="45.8" y1="174" x2="588" y2="174" stroke="#e5e7eb" stroke-width="1"/>
+<text x="37.8" y="178.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">0.2</text>
+<line x1="45.8" y1="132" x2="588" y2="132" stroke="#e5e7eb" stroke-width="1"/>
+<text x="37.8" y="136.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">0.4</text>
+<line x1="45.8" y1="90" x2="588" y2="90" stroke="#e5e7eb" stroke-width="1"/>
+<text x="37.8" y="94.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">0.6</text>
+<line x1="45.8" y1="48" x2="588" y2="48" stroke="#e5e7eb" stroke-width="1"/>
+<text x="37.8" y="52.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">0.8</text>
+<line x1="45.8" y1="6" x2="588" y2="6" stroke="#e5e7eb" stroke-width="1"/>
+<text x="37.8" y="10.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">1</text>
+<line x1="45.8" y1="6" x2="45.8" y2="216" stroke="#1f2937" stroke-width="1.2"/>
+<line x1="45.8" y1="216" x2="588" y2="216" stroke="#1f2937" stroke-width="1.2"/>
+<path d="M 45.8 216 L 154.24 100.5 L 262.68 52.2 L 371.12 27 L 479.56 14.4 L 588 6" fill="none" stroke="#2563eb" stroke-width="2.6"/>
+<circle cx="45.8" cy="216" r="2.6" fill="#2563eb"/>
+<circle cx="154.24" cy="100.5" r="2.6" fill="#2563eb"/>
+<circle cx="262.68" cy="52.2" r="2.6" fill="#2563eb"/>
+<circle cx="371.12" cy="27" r="2.6" fill="#2563eb"/>
+<circle cx="479.56" cy="14.4" r="2.6" fill="#2563eb"/>
+<circle cx="588" cy="6" r="2.6" fill="#2563eb"/>
+<path d="M 45.8 216 L 154.24 174 L 262.68 132 L 371.12 90 L 479.56 48 L 588 6" fill="none" stroke="#6b7280" stroke-width="1.8"/>
+<circle cx="45.8" cy="216" r="2.6" fill="#6b7280"/>
+<circle cx="154.24" cy="174" r="2.6" fill="#6b7280"/>
+<circle cx="262.68" cy="132" r="2.6" fill="#6b7280"/>
+<circle cx="371.12" cy="90" r="2.6" fill="#6b7280"/>
+<circle cx="479.56" cy="48" r="2.6" fill="#6b7280"/>
+<circle cx="588" cy="6" r="2.6" fill="#6b7280"/>
+<text x="45.8" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">0</text>
+<text x="154.24" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">0.2</text>
+<text x="262.68" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">0.4</text>
+<text x="371.12" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">0.6</text>
+<text x="479.56" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">0.8</text>
+<text x="588" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">1</text>
+<text x="316.9" y="256" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">偽陽性率 FP÷(FP＋TN)</text>
+<text x="16" y="-4" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="start" font-weight="600">真陽性率 TP÷(TP＋FN)</text>
+<line x1="182.9" y1="278" x2="202.9" y2="278" stroke="#2563eb" stroke-width="2.6"/>
+<text x="208.9" y="282.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">ROC 曲線</text>
+<line x1="277.3" y1="278" x2="297.3" y2="278" stroke="#6b7280" stroke-width="2.6"/>
+<text x="303.3" y="282.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">当てずっぽう（AUC＝0.5）</text>
+</g>
+<text x="320" y="334" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">しきい値を端から端まで動かして偽陽性率と真陽性率の関係を描いたものが ROC 曲線で、左上に寄る（AUC が</text>
+<text x="320" y="350" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">1に近い）ほど良い分類器。</text>
+</svg>

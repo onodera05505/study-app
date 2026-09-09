@@ -1,0 +1,19 @@
+{
+  "topic_id": 116,
+  "term": "BYOD（Bring Your Own Device）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "matrix",
+      "after": "### 私物を業務に使うということ",
+      "caption": "私物を業務に使う組合せだけが BYOD。貸与端末の業務利用も、私物の私的利用も当てはまらない。",
+      "x": {"label": "端末", "values": ["私物", "会社の貸与"]},
+      "y": {"label": "使い方", "values": ["業務で使う", "私的に使う"]},
+      "cells": [
+        ["BYOD\n許可を得ていれば BYOD\n無断ならシャドー IT", "ふつうの貸与端末\nBYOD ではない"],
+        ["ただの私生活\nBYOD ではない", "貸与端末の私的利用\n社内規定に反する"]
+      ],
+      "emphasis": [[0, 0]]
+    }
+  ]
+}

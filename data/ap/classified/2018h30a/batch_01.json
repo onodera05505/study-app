@@ -1,0 +1,249 @@
+{
+  "exam": "2018h30a",
+  "range": "1-27",
+  "classifications": [
+    {
+      "number": 1,
+      "syllabus_item": 1,
+      "topic_term": "排他的論理和",
+      "topic_is_new": false,
+      "related_terms": ["等価演算", "否定論理和", "論理積", "論理和"],
+      "confidence": "high",
+      "notes": "2021r03h 問1 と問題文・選択肢まで同一。既存論点「排他的論理和」（項目1，2021r03h 問1）に合わせた。related も既存論点の並びに寄せ，正解の「等価演算」だけ加えた"
+    },
+    {
+      "number": 2,
+      "syllabus_item": 2,
+      "topic_term": "待ち行列理論",
+      "topic_is_new": true,
+      "related_terms": ["平均到着率", "平均サービス率", "サービス時間", "M/M/1"],
+      "confidence": "high",
+      "notes": "M/M/1 の平均待ち時間と利用率の関係を問う典型問題。既存論点「待ち行列理論」（項目2，2021r03a 問2 ほか5問）に合わせた。既存レコードが is_new=true なので topic_is_new もそれに合わせている"
+    },
+    {
+      "number": 3,
+      "syllabus_item": 2,
+      "topic_term": "正規分布",
+      "topic_is_new": false,
+      "related_terms": ["標準偏差", "平均値", "分散", "確率密度"],
+      "confidence": "high",
+      "notes": "平均と標準偏差から 90 点以上の割合を比較させる問題で，正規分布の性質（平均から標準偏差何個分か）が中心。既存論点「正規分布」（項目2，2023r05h 問2）の表記をコピー"
+    },
+    {
+      "number": 4,
+      "syllabus_item": 9,
+      "topic_term": "BNF",
+      "topic_is_new": false,
+      "related_terms": ["構文記法", "文脈自由文法", "再帰", "EBNF（Extended Backus Naur Form：拡張バッカス記法）"],
+      "confidence": "high",
+      "notes": "項目9の用語例「BNF」をそのままコピー。既存論点に BNF は無いが用語例にある語なので topic_is_new は false。再帰的な生成規則から導出可能な文字列を選ぶ問題"
+    },
+    {
+      "number": 5,
+      "syllabus_item": 3,
+      "topic_term": "ハフマン符号",
+      "topic_is_new": false,
+      "related_terms": ["情報源符号化（データ圧縮）", "ランレングス", "BCD（Binary Coded Decimal：2 進化10進）", "PCM（Pulse Code Modulation：パルス符号変調）"],
+      "confidence": "high",
+      "notes": "ハフマン方式の説明を選ぶ用語問題。既存論点「ハフマン符号」（項目3，2020r02o 問4）に合わせた。用語例は項目3・項目4の両方にあり，項目7には「ハフマン法」があるが，既存回が項目3を採っているのでそれに合わせている。選択肢アはランレングス，イは BCD，エは PCM"
+    },
+    {
+      "number": 6,
+      "syllabus_item": 6,
+      "topic_term": "完全2分木",
+      "topic_is_new": false,
+      "related_terms": ["2分木", "根", "葉", "枝"],
+      "confidence": "high",
+      "notes": "「葉以外の節点が全て二つの子をもち，根から葉までの深さが等しい木」＝完全2分木の性質（葉の個数と内部節点の個数の関係）を問う。項目6の用語例「完全2分木」をそのままコピー"
+    },
+    {
+      "number": 7,
+      "syllabus_item": 6,
+      "topic_term": "多次元配列",
+      "topic_is_new": false,
+      "related_terms": ["静的配列", "動的配列", "行列", "組合せ最適化問題"],
+      "confidence": "medium",
+      "notes": "2次元配列の添字条件 i＞j を満たす要素数を数える問題。数え上げ（99+98+…+1）自体は組合せだが，中心は2次元配列の添字の構造なので項目6・用語例「多次元配列」を採った。項目1・2（離散数学・応用数学）と迷ったため confidence は medium"
+    },
+    {
+      "number": 8,
+      "syllabus_item": 7,
+      "topic_term": "2 分探索法",
+      "topic_is_new": false,
+      "related_terms": ["線形探索法", "ハッシュ表探索法", "シノニム対策", "ハッシング"],
+      "confidence": "medium",
+      "notes": "探索表の構成法（コード順・使用頻度順・一意な場所）に適した探索手法の組合せを選ぶ比較問題。選択肢を分ける鍵が a のコード順＝2分探索なので，項目7の用語例「2 分探索法」（間の空白も含めてコピー）を主題とし，比較対象の線形探索法・ハッシュ表探索法を related に置いた。3手法のどれを主題に採るかは割れうるので medium"
+    },
+    {
+      "number": 9,
+      "syllabus_item": 4,
+      "topic_term": "ハミング符号",
+      "topic_is_new": false,
+      "related_terms": ["パリティチェック", "チェックサム", "ECC", "CRC"],
+      "confidence": "high",
+      "notes": "2020r02o 問10（メモリの誤り検出訂正で2ビット検出・1ビット訂正）と同一の問題。既存論点「ハミング符号」（項目4，2020r02o 問10・2022r04h 問4・2024r06h 問4）に合わせた。メモリの話だが既存回が項目4を採っているので統一している"
+    },
+    {
+      "number": 10,
+      "syllabus_item": 12,
+      "topic_term": "相変化メモリ",
+      "topic_is_new": true,
+      "related_terms": ["DRAM", "SRAM", "フラッシュメモリ（NAND，NOR）", "FeRAM（Ferroelectric Random Access Memory）"],
+      "confidence": "high",
+      "notes": "相変化メモリ（PRAM）の説明を選ぶ用語問題。項目12の用語例に相変化メモリは無く，既存論点にも無いため新規。選択肢ウは SRAM（フリップフロップ），エは DRAM（リフレッシュ）の説明なので related に入れた"
+    },
+    {
+      "number": 11,
+      "syllabus_item": 16,
+      "topic_term": "シンプロビジョニング",
+      "topic_is_new": true,
+      "related_terms": ["ミラーリング", "FC-SAN", "ブロックストレージ", "仮想化（ホスト型，ハイパーバイザー型，コンテナ型）"],
+      "confidence": "medium",
+      "notes": "ストレージの仮想ボリュームを提供し物理ディスクは使用量に応じて割り当てる技術。既存論点「プロビジョニング」（項目17，2023r05h 問50・2025r07h 問63）はサーバ／クラウドの資源準備を指す別概念なので統合せず新規にした。ストレージ構成の話なので項目16を採ったが，項目17と迷ったため medium。選択肢アは RAID1（ミラーリング），ウは SAN"
+    },
+    {
+      "number": 12,
+      "syllabus_item": 16,
+      "topic_term": "ライブマイグレーション",
+      "topic_is_new": true,
+      "related_terms": ["VM（Virtual Machine：仮想マシン）", "仮想化（ホスト型，ハイパーバイザー型，コンテナ型）", "サーバコンソリデーション", "プロビジョニング"],
+      "confidence": "high",
+      "notes": "項目16の用語例は「マイグレーション（ライブマイグレーションほか）」で，括弧の中は別概念の列挙。設問の主題はライブマイグレーションなのでその1語だけを論点にした。他項目に単独表記が無いので topic_is_new は true。既存論点「仮想化（ホスト型，ハイパーバイザー型，コンテナ型）」の2問はいずれもコンテナ型仮想化の説明問題で別主題のため合わせていない"
+    },
+    {
+      "number": 13,
+      "syllabus_item": 17,
+      "topic_term": "サイジング",
+      "topic_is_new": false,
+      "related_terms": ["スループット", "容量・能力管理", "スケールアウト", "TPS（Transaction Per Second）"],
+      "confidence": "medium",
+      "notes": "ピーク時間帯の TPS を求めて必要な CPU 数を決める問題なので，項目17の用語例「サイジング」を採った。既存論点「スループット」（項目17，4問）はいずれも MIPS・転送速度から処理能力を求める問題で主題が違うため合わせていない。両者の切り分けが割れうるので medium"
+    },
+    {
+      "number": 14,
+      "syllabus_item": 17,
+      "topic_term": "稼働率",
+      "topic_is_new": true,
+      "related_terms": ["信頼性ブロック図", "並列運転", "MTBF", "フォールトトレラントシステム"],
+      "confidence": "high",
+      "notes": "2023r05h 問16 と問題文・選択肢まで同一（装置 X〜Z の並列・直列構成の比較）。既存論点「稼働率」（項目17，7問。2023r05h 問16 を含む）に合わせた。項目16の「信頼性ブロック図」とも迷うが，既存回の割当てに統一している"
+    },
+    {
+      "number": 15,
+      "syllabus_item": 17,
+      "topic_term": "稼働率",
+      "topic_is_new": true,
+      "related_terms": ["MTBF", "MTTR", "信頼性ブロック図", "バスタブ曲線"],
+      "confidence": "high",
+      "notes": "MTBF・MTTR と稼働率の関係を問う問題。2025r07h 問12（MTBF・MTTR・稼働率の関係）・2025r07a 問13（信頼性に関する記述）と同型で，いずれも既存論点「稼働率」（項目17）に付いているのでそれに合わせた"
+    },
+    {
+      "number": 16,
+      "syllabus_item": 18,
+      "topic_term": "ラウンドロビン",
+      "topic_is_new": false,
+      "related_terms": ["タイムクウォンタム", "タイムスライス方式", "プリエンプティブ方式", "FCFS（First Come First Served）"],
+      "confidence": "high",
+      "notes": "タイムクウォンタムで中断して待ち行列の最後尾へ回す＝ラウンドロビン方式での経過時間を求める問題。項目18の用語例「ラウンドロビン」をそのままコピー。既存論点に無いが用語例にある語なので topic_is_new は false"
+    },
+    {
+      "number": 17,
+      "syllabus_item": 18,
+      "topic_term": "プリエンプティブ方式",
+      "topic_is_new": false,
+      "related_terms": ["実行可能状態", "待ち状態", "静的優先順位方式", "実行状態"],
+      "confidence": "high",
+      "notes": "優先度の高いタスクが実行可能状態になったときにプリエンプションが起きることを問う。既存論点「プリエンプティブ方式」（項目18，2021r03h 問17 ほか3問）に合わせ，related も既存の並びに寄せた"
+    },
+    {
+      "number": 18,
+      "syllabus_item": 18,
+      "topic_term": "ページフォールト",
+      "topic_is_new": false,
+      "related_terms": ["ページイン", "ページアウト", "ページリプレースメント", "デマンドページング"],
+      "confidence": "high",
+      "notes": "2023r05a 問16 と問題文・数値まで同一。既存論点「ページフォールト」（項目18，2021r03a 問17・2021r03h 問19・2023r05a 問16）に合わせた"
+    },
+    {
+      "number": 19,
+      "syllabus_item": 21,
+      "topic_term": "プロファイラ",
+      "topic_is_new": true,
+      "related_terms": ["デバッガ", "コンパイラ", "トレーサー", "構文解析"],
+      "confidence": "high",
+      "notes": "2024r06h 問19（実行回数・実行時間を収集するツール）と同型。既存論点「プロファイラ」（項目21，2024r06h 問19）に合わせた。項目21の用語例にプロファイラは無いため既存レコードと同じく topic_is_new は true。選択肢ウのパーサは構文解析器"
+    },
+    {
+      "number": 20,
+      "syllabus_item": 15,
+      "topic_term": "画素へのメモリ割当て",
+      "topic_is_new": true,
+      "related_terms": ["液晶ディスプレイ", "グラフィックスモード", "パックトピクセル方式", "VGA"],
+      "confidence": "high",
+      "notes": "2022r04h 問21・2024r06h 問22 と数値まで同一（640×480，始点(5,4)〜終点(9,8)，x=7 のアドレス）。既存論点「画素へのメモリ割当て」（項目15）に合わせ，related も既存レコードをそのまま採った"
+    },
+    {
+      "number": 21,
+      "syllabus_item": 23,
+      "topic_term": "SoC（System on a Chip）",
+      "topic_is_new": false,
+      "related_terms": ["LSI", "ASIC（Application Specific IC）", "マイクロコントローラー", "FPGA（Field Programmable Gate Array）"],
+      "confidence": "high",
+      "notes": "SoC の説明を選ぶ用語問題。既存論点「SoC（System on a Chip）」（項目23，2021r03h 問22・2024r06a 問22）の表記をそのままコピー。選択肢イの MCU はマイクロコントローラー"
+    },
+    {
+      "number": 22,
+      "syllabus_item": 40,
+      "topic_term": "耐タンパ性",
+      "topic_is_new": false,
+      "related_terms": ["IC カード", "サイドチャネル攻撃", "セキュアエレメント", "ESD"],
+      "confidence": "high",
+      "notes": "2022r04h 問23・2024r06a 問24 と問題文・選択肢まで同一。既存論点「耐タンパ性」（項目40，5問）に合わせた。ハードウェアの話だが既存回が項目40（セキュリティ技術評価）を採っているので統一している"
+    },
+    {
+      "number": 23,
+      "syllabus_item": 23,
+      "topic_term": "半加算器",
+      "topic_is_new": true,
+      "related_terms": ["排他的論理和", "論理積", "真理値表", "全加算器"],
+      "confidence": "high",
+      "notes": "2021r03a 問22 と問題文・図まで同一（1桁の2進数の加算で桁上がり X と和 Y を得る回路）。既存論点「半加算器」（項目23，2021r03a 問22）に合わせ，related も既存レコードをそのまま採った。項目23の用語例に半加算器は無いので topic_is_new は true"
+    },
+    {
+      "number": 24,
+      "syllabus_item": 24,
+      "topic_term": "パンくずリスト",
+      "topic_is_new": true,
+      "related_terms": ["ナビゲーション", "階層型", "サイトマップ", "ユーザビリティ"],
+      "confidence": "high",
+      "notes": "2021r03h 問26 と問題文・選択肢まで同一。既存論点「パンくずリスト」（項目24，2021r03h 問26）に合わせ，related も既存レコードをそのまま採った"
+    },
+    {
+      "number": 25,
+      "syllabus_item": 27,
+      "topic_term": "レンダリング",
+      "topic_is_new": false,
+      "related_terms": ["テクスチャマッピング", "レイトレーシング法", "シミュレーション", "モーションキャプチャ"],
+      "confidence": "high",
+      "notes": "バーチャルリアリティにおけるレンダリング（仮想世界の情報を描画可能な画像に変換する処理）の説明を選ぶ問題。既存論点「レンダリング」（項目27，2019h31h 問25 ほか4問）に合わせた。選択肢エはシミュレーション，ウはレジストレーションの説明"
+    },
+    {
+      "number": 26,
+      "syllabus_item": 29,
+      "topic_term": "多重度",
+      "topic_is_new": true,
+      "related_terms": ["UML", "クラス図", "概念データモデル", "E-R 図"],
+      "confidence": "medium",
+      "notes": "UML のクラス図の多重度を条件から決める問題。既存論点「多重度」（項目29，2023r05h 問29 の UML データモデルの多重度）と同型なのでそれに合わせた。項目10（その他の言語，クラス図）や項目44（設計）も候補だが，既存回の割当てに統一するため項目29とした。判断が割れうるので medium"
+    },
+    {
+      "number": 27,
+      "syllabus_item": 7,
+      "topic_term": "ハッシュ表探索法",
+      "topic_is_new": false,
+      "related_terms": ["シノニム対策", "衝突", "ハッシング", "2 分探索法"],
+      "confidence": "high",
+      "notes": "剰余を返すハッシュ関数で3つのキーが衝突する除数を求める問題。2022r04a 問5・2024r06a 問6（h(x)=x mod n で衝突する条件）と同型で，いずれも既存論点「ハッシュ表探索法」（項目7）に付いているのでそれに合わせた"
+    }
+  ]
+}

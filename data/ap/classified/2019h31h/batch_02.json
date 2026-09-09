@@ -1,0 +1,249 @@
+{
+  "exam": "2019h31h",
+  "range": "28-54",
+  "classifications": [
+    {
+      "number": 28,
+      "syllabus_item": 30,
+      "topic_term": "集合関数",
+      "topic_is_new": false,
+      "related_terms": ["グループ化", "問合せ（クエリ）", "BETWEEN や IN などの述語指定", "条件を指定した特定行や列の選択"],
+      "confidence": "medium",
+      "notes": "GROUP BY でクラス名ごとに集約し、集約後の条件を HAVING AVG(点数) >= 600 で絞る SQL を選ばせる問題（イ）。ウは HAVING に集約されていない列を書いている点が誤り。項目30の用語例には「集合関数」と「グループ化」が別々にあるが、正誤を分けるのは HAVING に置く集約関数なので、既存論点「集合関数」（項目30、2024r06h 問26）に合流させた。「グループ化」で新規採番すると集約関数まわりの出題頻度が2つに割れるため。どちらを主題と見るかは割れ得るので confidence は medium。"
+    },
+    {
+      "number": 29,
+      "syllabus_item": 32,
+      "topic_term": "データレイク",
+      "topic_is_new": false,
+      "related_terms": ["データウェアハウス", "データマート", "ビッグデータ", "メタデータ"],
+      "confidence": "high",
+      "notes": "データレイクの特徴（あらゆるデータを元の形式・構造のまま格納する）を選ばせる用語問題。既存論点「データレイク」（項目32、2021r03h 問31）と同一なので表記をそのままコピーした。項目32の用語例にある語なので topic_is_new は false。"
+    },
+    {
+      "number": 30,
+      "syllabus_item": 28,
+      "topic_term": "ACID特性",
+      "topic_is_new": false,
+      "related_terms": ["原子性", "一貫性", "独立性", "耐久性"],
+      "confidence": "high",
+      "notes": "ACID 特性のうち一貫性（consistency）の説明を選ばせる問題。項目31（トランザクション処理）に置く読み方もあるが、用語例「ACID特性」は項目28にあり、既存論点「ACID特性」も項目28（2020r02o 問30・2022r04a 問30）なのでそちらに合流させた。既存2問はそれぞれ耐久性・別の性質を問うており、同じ論点の別の面を問う同型問題。"
+    },
+    {
+      "number": 31,
+      "syllabus_item": 42,
+      "topic_term": "IP マスカレード",
+      "topic_is_new": false,
+      "related_terms": ["NAT", "ポート番号", "プライベート IP アドレス", "グローバル IP アドレス"],
+      "confidence": "medium",
+      "notes": "NAPT（IP マスカレード）ルータが Web サーバ→PC の応答パケットで書き換えるフィールド（宛先 IP アドレスと宛先ポート番号＝イ）を選ばせる問題。既存論点「IP マスカレード」（項目42、2020r02o 問34ほか計4問）と同一概念なので表記をそのままコピーし、項目も既存に合わせて42にした。純粋なネットワーク方式の問題として項目33（用語例に「IP マスカレード」がある）に置く読み方もあり、そこは割れ得るので confidence は medium。項目42の用語例は「IP マスカレード（NAPT）」だが、既存論点の表記が「IP マスカレード」なので表記揺れを防ぐためそちらを優先した。"
+    },
+    {
+      "number": 32,
+      "syllabus_item": 37,
+      "topic_term": "マルチホーミング",
+      "topic_is_new": true,
+      "related_terms": ["IP-VPN", "VPN", "広域 Ethernet", "インターネットサービスプロバイダ（ISP）"],
+      "confidence": "medium",
+      "notes": "複数の ISP 回線を使った冗長化構成を表す用語（マルチホーミング）を選ばせる問題。選択肢の比較対象（IP-VPN、インターネット VPN、広域イーサネット）がいずれも項目37の用語例にある WAN サービスなので項目37に置いた。「マルチホーミング」はどの項目の用語例にも無く、既存論点マスタにも無いので topic_is_new は true。項目33（ネットワーク方式）に置く読み方もあるため confidence は medium。"
+    },
+    {
+      "number": 33,
+      "syllabus_item": 35,
+      "topic_term": "イーサネットフレーム",
+      "topic_is_new": true,
+      "related_terms": ["MAC アドレス", "IP アドレス", "ルーティング", "ARP（アドレス解決プロトコル）"],
+      "confidence": "medium",
+      "notes": "ルータ越しにホストA→ホストB へ送るとき、LAN1 上のイーサネットフレームの宛先は次ホップのルータ（MAC3）、IP データグラムの宛先は最終宛先（IP2）＝ウ。データリンク層アドレスとネットワーク層アドレスの役割の違いが論点。既存論点「イーサネットフレーム」（項目35、2023r05h 問33＝宛先情報の送出順序）と同じ学習単位なので表記をコピーして合流させた。用語例に無い語なので topic_is_new は true（既存論点も同じ扱い）。「ルーティング」「ARP（アドレス解決プロトコル）」に寄せる読み方もあるので confidence は medium。"
+    },
+    {
+      "number": 34,
+      "syllabus_item": 35,
+      "topic_term": "サブネットマスク",
+      "topic_is_new": false,
+      "related_terms": ["サブネットアドレス", "CIDR（Classless Inter Domain Routing）", "ブロードキャスト", "IPv4"],
+      "confidence": "high",
+      "notes": "IP アドレス 10.170.70.19 とマスク 255.255.255.240 からネットワークアドレス 10.170.70.16 を求める計算問題。既存論点「サブネットマスク」（項目35、既に6問）と同型なので表記をそのままコピーした。用語例にある語なので topic_is_new は false。"
+    },
+    {
+      "number": 35,
+      "syllabus_item": 34,
+      "topic_term": "リバースプロキシサーバ",
+      "topic_is_new": false,
+      "related_terms": ["プロキシサーバ", "DMZ（非武装地帯）", "ARP（アドレス解決プロトコル）", "Webサーバ"],
+      "confidence": "high",
+      "notes": "インターネット側クライアントからのリクエストを Web サーバに中継する仕組み（リバースプロキシ）を選ばせる問題で、2025r07a 問31 とほぼ同型。既存論点「リバースプロキシサーバ」（項目34）の表記をそのままコピーして合流させた。項目42の用語例には「リバースプロキシ」という短い表記もあるが、表記を割らないため既存論点側（項目34の用語例「リバースプロキシサーバ」）に合わせた。"
+    },
+    {
+      "number": 36,
+      "syllabus_item": 38,
+      "topic_term": "エクスプロイトコード",
+      "topic_is_new": false,
+      "related_terms": ["エクスプロイトキット", "ゼロデイ攻撃", "脆弱性", "セキュリティホール"],
+      "confidence": "high",
+      "notes": "エクスプロイトコードの説明（脆弱性を検査するために作成されたプログラム＝エ）を選ばせる用語問題。既存論点「エクスプロイトコード」（項目38、2024r06a 問46）と同一。用語例にある語なので topic_is_new は false。"
+    },
+    {
+      "number": 37,
+      "syllabus_item": 38,
+      "topic_term": "リスクベース認証",
+      "topic_is_new": false,
+      "related_terms": ["多要素認証", "追加認証", "ハードウェアトークン", "利用者認証"],
+      "confidence": "high",
+      "notes": "リスクベース認証の特徴（普段と異なる環境からのアクセス時に追加認証＝ウ）を選ばせる用語問題。既存論点「リスクベース認証」（項目38、2021r03h 問39）と同一。用語例にある語なので topic_is_new は false。"
+    },
+    {
+      "number": 38,
+      "syllabus_item": 38,
+      "topic_term": "レインボーテーブル攻撃",
+      "topic_is_new": false,
+      "related_terms": ["パスワードリスト攻撃（クレデンシャルスタッフィング）", "総当たり（ブルートフォース）攻撃", "ソーシャルエンジニアリング", "ハッシュ関数"],
+      "confidence": "high",
+      "notes": "問題文は「レインボー攻撃」だが、内容は平文パスワードとハッシュ値のチェーンを持つテーブルを使う解読手法（ウ）で、既存論点「レインボーテーブル攻撃」（項目38、2022r04h 問42・2023r05a 問36）と同一概念。用語例の表記「レインボーテーブル攻撃」をそのままコピーした（問題文の言い回し「レインボー攻撃」を採ると表記が割れるため）。"
+    },
+    {
+      "number": 39,
+      "syllabus_item": 41,
+      "topic_term": "デジタルフォレンジックス（証拠保全ほか）",
+      "topic_is_new": false,
+      "related_terms": ["ログ管理", "証拠保全", "SIEM（Security Information and Event Management）", "不正アクセスの痕跡"],
+      "confidence": "high",
+      "notes": "ディジタルフォレンジックスの手順（収集・検査・分析・報告）に該当するもの＝削除されたログファイルの復元（イ）を選ばせる問題。既存論点「デジタルフォレンジックス（証拠保全ほか）」（項目41、2023r05h 問42・2025r07a 問44）の表記をそのままコピーした。問題文は「ディジタル」表記だが、用語例・既存論点は「デジタル」なので後者に合わせた。"
+    },
+    {
+      "number": 40,
+      "syllabus_item": 42,
+      "topic_term": "DNSSEC",
+      "topic_is_new": false,
+      "related_terms": ["デジタル署名（署名鍵，検証鍵）", "公開鍵暗号方式", "DNS キャッシュポイズニング", "DNS"],
+      "confidence": "high",
+      "notes": "DNSSEC が公開鍵暗号方式によるデジタル署名で応答の正当性を検証させる仕組みであること（エ）を問う。既存論点「DNSSEC」（項目42、計3問）と同一。用語例にある語なので topic_is_new は false。"
+    },
+    {
+      "number": 41,
+      "syllabus_item": 41,
+      "topic_term": "フォールスネガティブ",
+      "topic_is_new": false,
+      "related_terms": ["フォールスポジティブ", "マルウェア検出手法（パターンマッチング法，ビヘイビア法（振る舞い検知），ヒューリスティック法，未知マルウェア検出手法，動的解析，静的解析，サンドボックスほか）", "検知漏れ", "マルウェア対策ソフト"],
+      "confidence": "high",
+      "notes": "フォールスネガティブ＝感染しているファイルを感染していないと判断する（ウ）。項目41の用語例に「フォールスネガティブ」が単独で載っているのでそのままコピーし、topic_is_new は false。既存論点マスタには未登録の新しい論点。"
+    },
+    {
+      "number": 42,
+      "syllabus_item": 42,
+      "topic_term": "VPN",
+      "topic_is_new": false,
+      "related_terms": ["IPsec", "SSL/TLS", "L2TP", "OSI 基本参照モデル"],
+      "confidence": "high",
+      "notes": "IPsec・L2TP・TLS の OSI 基本参照モデル上の相対位置（上から TLS／IPsec／L2TP＝C）を選ばせる問題で、2025r07h 問43 とほぼ同一問題。3つを比較させる問題なので、比較対象を related_terms に置き、topic_term は既存論点「VPN」（項目42）にそのまま合流させた。単独論点「IPsec」（項目42、3問）もあるが、既存の同型問題が「VPN」で登録されているので、そちらに揃えないと同型問題の頻度が割れる。"
+    },
+    {
+      "number": 43,
+      "syllabus_item": 41,
+      "topic_term": "サンドボックス",
+      "topic_is_new": true,
+      "related_terms": ["マルウェア検出手法（パターンマッチング法，ビヘイビア法（振る舞い検知），ヒューリスティック法，未知マルウェア検出手法，動的解析，静的解析，サンドボックスほか）", "動的解析", "SIEM（Security Information and Event Management）", "エスケープ処理"],
+      "confidence": "high",
+      "notes": "サンドボックスの説明（不正動作の可能性があるプログラムを隔離領域で動作させる＝エ）を問う用語問題。項目41の用語例では「マルウェア検出手法（… サンドボックスほか）」という括弧内の列挙にしか現れない。仕様どおり括弧内が別概念の列挙で設問がその1語を主題にしているので topic_term は「サンドボックス」1語とし、他項目に単独表記が無いため topic_is_new は true。"
+    },
+    {
+      "number": 44,
+      "syllabus_item": 42,
+      "topic_term": "パケットフィルタリング",
+      "topic_is_new": false,
+      "related_terms": ["ステートフルパケットフィルタリング", "MAC アドレス（Media Access Control address）フィルタリング", "アプリケーションゲートウェイ方式", "ファイアウォール"],
+      "confidence": "high",
+      "notes": "パケットフィルタリング型ファイアウォールが通過可否の判断に使うもの＝送信元と宛先の IP アドレスとポート番号（イ）。項目42の用語例「パケットフィルタリング」をそのままコピーした。既存論点マスタには未登録の新しい論点。"
+    },
+    {
+      "number": 45,
+      "syllabus_item": 41,
+      "topic_term": "WAF（Web Application Firewall）",
+      "topic_is_new": false,
+      "related_terms": ["ファイアウォール", "IPS（Intrusion Prevention System：侵入防止システム）", "SQL インジェクション", "クロスサイトスクリプティング"],
+      "confidence": "high",
+      "notes": "WAF の説明（Web アプリケーションへの攻撃を検知・阻止＝ア）を問う用語問題。既存論点「WAF（Web Application Firewall）」（項目41、2022r04a 問42・2024r06h 問41）の表記をそのままコピーした。問題文は「WAF」だけだが、短縮表記で採ると頻度が割れるので用語例の表記に合わせた。"
+    },
+    {
+      "number": 46,
+      "syllabus_item": 44,
+      "topic_term": "DOA（Data Oriented Approach：データ中心アプローチ）",
+      "topic_is_new": false,
+      "related_terms": ["構造化", "モジュール分割", "データモデル", "E-R 図"],
+      "confidence": "medium",
+      "notes": "データ中心分析・設計技法の特徴＝情報資源であるデータの構造に着目する（ウ）。選択肢は構造化設計（ア）・オブジェクト指向（イ）・データ中心（ウ）・プログラム効率優先（エ）の比較。用語例「DOA（Data Oriented Approach：データ中心アプローチ）」は項目29・44の両方にあり、また項目43には「データ中心設計」という別表記がある。分析・設計技法一般を問う問題なので項目44（設計）に置き、表記は括弧つきの用語例をそのままコピーした。項目43／29 に置く読み方もあり得るので confidence は medium。"
+    },
+    {
+      "number": 47,
+      "syllabus_item": 16,
+      "topic_term": "フェールセーフ",
+      "topic_is_new": false,
+      "related_terms": ["フールプルーフ", "フェールソフト", "フォールトトレラントシステム", "フォールトアボイダンス"],
+      "confidence": "high",
+      "notes": "故障時に安全側（信号機を赤）に倒す設計＝フェールセーフ（イ）。アはフールプルーフ、ウはフェールソフト／冗長化、エはフォールトトレラント寄り。既存論点マスタには「フールプルーフ」「フォールトアボイダンス」「フォールトトレラントシステム」が答えの用語ごとに別論点として登録されているので、同じ流儀で答えの用語「フェールセーフ」を論点にした。項目16の用語例にある語なので topic_is_new は false。"
+    },
+    {
+      "number": 48,
+      "syllabus_item": 48,
+      "topic_term": "適応保守",
+      "topic_is_new": false,
+      "related_terms": ["完全化保守", "是正保守", "予防保守", "改良保守"],
+      "confidence": "high",
+      "notes": "OS の更新という環境変化に合わせて既存ソフトウェアを修正する保守＝適応保守（ウ）。既存論点マスタでは保守の種類を答えの用語ごとに別論点にしている（「完全化保守」が項目48で3問）ので、同じ流儀で「適応保守」を論点にした。項目48の用語例にある語なので topic_is_new は false。"
+    },
+    {
+      "number": 49,
+      "syllabus_item": 49,
+      "topic_term": "バーンダウンチャート",
+      "topic_is_new": false,
+      "related_terms": ["ベロシティ", "スクラム", "スプリント", "信頼度成長モデル"],
+      "confidence": "high",
+      "notes": "縦軸「残作業量」・横軸「時間」で右下がりに減っていくグラフ（ア）を選ばせる問題。既存論点「バーンダウンチャート」（項目49、2021r03a 問49）と同一。用語例にある語なので topic_is_new は false。ウの累積バグ数のグラフは信頼度成長モデルなので related_terms に入れた。"
+    },
+    {
+      "number": 50,
+      "syllabus_item": 43,
+      "topic_term": "システム要件定義の評価基準",
+      "topic_is_new": true,
+      "related_terms": ["一貫性", "双方向の追跡可能性（双方向のトレーサビリティ）", "テスト可能性", "システム設計の実現可能性"],
+      "confidence": "medium",
+      "notes": "システム要求事項分析プロセスにおける要求事項評価の基準＝取得ニーズとの一貫性（ウ）。ア・イ・エはテストや設計など後続プロセスの評価基準。項目43の用語例には評価基準が「一貫性」「双方向の追跡可能性（双方向のトレーサビリティ）」「テスト可能性」「システム設計の実現可能性」「運用及び保守の実現可能性」とバラバラに載っており、そのどれか1語を論点にすると学習単位として狭すぎるうえ、次に同型問題が来たとき別の語に割れる。そこで評価基準のセットをまとめた論点名を新設し topic_is_new を true にした。命名が担当ごとに割れ得るので confidence は medium。"
+    },
+    {
+      "number": 51,
+      "syllabus_item": 53,
+      "topic_term": "JIS Q 21500",
+      "topic_is_new": false,
+      "related_terms": ["プロジェクトマネジメント", "PMBOK（Project Management Body of Knowledge：プロジェクトマネジメント知識体系）", "プロジェクト憲章", "プロジェクトライフサイクル"],
+      "confidence": "high",
+      "notes": "JIS Q 21500 の“実行のプロセス群”の説明（プロジェクトマネジメント活動を遂行し全体計画に従って成果物の提示を支援＝エ）。アは管理、イは終結、ウは立ち上げのプロセス群。既存論点「JIS Q 21500」（項目53、2021r03h 問51＝計画のプロセス群に属するプロセス）と同型なので表記をそのままコピーして合流させた。用語例にある語なので topic_is_new は false。"
+    },
+    {
+      "number": 52,
+      "syllabus_item": 59,
+      "topic_term": "EVM（Earned Value Management）",
+      "topic_is_new": false,
+      "related_terms": ["実コスト", "コストベースライン", "差異分析", "予想コスト"],
+      "confidence": "high",
+      "notes": "EAC = BAC ÷ CPI = 100 ÷ (EV40/AC60) = 150 万円（エ）。既存論点「EVM（Earned Value Management）」（項目59、既に5問）と同型なので表記をそのままコピーした。用語例は項目58・59の両方にあるが、既存論点が項目59（プロジェクトのコスト）なのでそちらに合わせた。完成時総コスト見積りはコストの論点なので項目59が妥当。"
+    },
+    {
+      "number": 53,
+      "syllabus_item": 58,
+      "topic_term": "アローダイアグラム",
+      "topic_is_new": false,
+      "related_terms": ["ダミー作業", "CPM（Critical Path Method：クリティカルパス法）", "最早結合点時刻", "PERT"],
+      "confidence": "high",
+      "notes": "アローダイアグラムから読み取れることを選ばせる問題。クリティカルパスは B(10)→ダミー→D(30)→H(10)で、作業 D はクリティカルパス上（イ）。既存論点「アローダイアグラム」（項目58、既に5問）と同型なので表記をそのままコピーした。用語例にある語なので topic_is_new は false。"
+    },
+    {
+      "number": 54,
+      "syllabus_item": 65,
+      "topic_term": "問題管理",
+      "topic_is_new": false,
+      "related_terms": ["根本原因", "インシデント管理", "既知の誤り", "解決策"],
+      "confidence": "high",
+      "notes": "問題管理プロセスで実施すること＝未知の根本原因を特定し恒久的な解決策を策定する（イ）。アはインシデント管理の回避策、エはインシデントの記録。既存論点「問題管理」（項目65、計3問）と同一なので表記をそのままコピーした。用語例は項目48（保守・廃棄）に「問題管理手続の確立」、項目65に「問題管理」があり、IT サービスマネジメントの問題なので項目65が妥当。"
+    }
+  ]
+}

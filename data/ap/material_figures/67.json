@@ -1,0 +1,26 @@
+{
+  "topic_id": 67,
+  "term": "2分探索木",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 見つけ方の手順",
+      "caption": "削除する節の位置に入れられるのは、大小順で隣の値だけ。左へ1つ進んで右へ下り切るか、右へ1つ進んで左へ下り切った先にある。",
+      "nodes": [
+        {"id": "n12", "label": "12\n削除する節", "row": 0, "col": 2, "emphasis": true},
+        {"id": "n10", "label": "10", "row": 1, "col": 0},
+        {"id": "n14", "label": "14", "row": 1, "col": 3},
+        {"id": "n11", "label": "11\n左部分木の最大\n（大小順で1つ前）", "row": 2, "col": 1},
+        {"id": "n13", "label": "13\n右部分木の最小\n（大小順で1つ後）", "row": 2, "col": 2}
+      ],
+      "edges": [
+        {"from": "n12", "to": "n10", "label": "左へ1つ", "arrow": "to"},
+        {"from": "n12", "to": "n14", "label": "右へ1つ", "arrow": "to"},
+        {"from": "n10", "to": "n11", "label": "右へ下り切る", "arrow": "to"},
+        {"from": "n14", "to": "n13", "label": "左へ下り切る", "arrow": "to"},
+        {"from": "n13", "to": "n12", "label": "この1つを移動", "style": "dashed", "arrow": "to"}
+      ]
+    }
+  ]
+}

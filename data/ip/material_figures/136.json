@@ -1,0 +1,87 @@
+{
+  "topic_id": 136,
+  "term": "WBS（Work Breakdown Structure）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 作業を洗い出すための道具",
+      "caption": "上から段階的に分解し、最下位のワークパッケージが担当者と工数を割り当てられる単位になる。日程や順序は書かない。",
+      "nodes": [
+        {
+          "id": "root",
+          "label": "販売管理システムの導入",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "yo",
+          "label": "要件定義",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "kai",
+          "label": "設計・開発",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "ikou",
+          "label": "移行・教育",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "w1",
+          "label": "画面を設計する",
+          "row": 2,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "w2",
+          "label": "プログラムを作る",
+          "row": 2,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "note",
+          "label": "ワークパッケージ\n担当者と工数を割り当てる",
+          "row": 2,
+          "col": 2,
+          "shape": "round"
+        }
+      ],
+      "edges": [
+        {
+          "from": "root",
+          "to": "yo"
+        },
+        {
+          "from": "root",
+          "to": "kai"
+        },
+        {
+          "from": "root",
+          "to": "ikou"
+        },
+        {
+          "from": "kai",
+          "to": "w1"
+        },
+        {
+          "from": "kai",
+          "to": "w2"
+        },
+        {
+          "from": "w2",
+          "to": "note",
+          "style": "dashed",
+          "arrow": "none"
+        }
+      ]
+    }
+  ]
+}

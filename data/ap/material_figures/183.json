@@ -1,0 +1,46 @@
+{
+  "topic_id": 183,
+  "term": "OCSP",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### 問合せの流れ",
+      "caption": "OCSP が答えるのは失効しているかどうかの状態だけで、鍵の再発行や証明書更新の進捗は扱わない。",
+      "actors": [
+        {
+          "id": "cli",
+          "label": "OCSP クライアント"
+        },
+        {
+          "id": "res",
+          "label": "OCSP レスポンダー"
+        }
+      ],
+      "steps": [
+        {
+          "from": "cli",
+          "to": "res",
+          "label": "シリアル番号と発行者 DN のハッシュ値",
+          "note": "証明書そのものを丸ごと送るのではない"
+        },
+        {
+          "from": "res",
+          "to": "res",
+          "label": "失効情報から判定"
+        },
+        {
+          "from": "res",
+          "to": "cli",
+          "label": "有効／失効済み／不明 ＋ 署名",
+          "note": "署名が付くので応答自体が本物かを確かめられる"
+        },
+        {
+          "from": "cli",
+          "to": "cli",
+          "label": "失効なら信頼せず接続を中止"
+        }
+      ]
+    }
+  ]
+}

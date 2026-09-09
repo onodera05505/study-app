@@ -1,0 +1,26 @@
+{
+  "topic_id": 4,
+  "term": "稼働率",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "稼働率は1サイクル MTBF＋MTTR に占める稼働時間の割合なので、両方を同じ倍率にしても変わらず、冗長構成では止まるのが切替の間だけになる。",
+      "nodes": [
+        {"id": "a1", "label": "単一構成\n稼働 MTBF", "row": 0, "col": 0},
+        {"id": "a2", "label": "停止\n修復 MTTR", "row": 0, "col": 1},
+        {"id": "a3", "label": "稼働 MTBF", "row": 0, "col": 2},
+        {"id": "b1", "label": "冗長構成\n稼働系 MTBF", "row": 1, "col": 0},
+        {"id": "b2", "label": "停止は\n切替の間だけ", "row": 1, "col": 1, "emphasis": true},
+        {"id": "b3", "label": "待機系が継続\n修復は裏で行う", "row": 1, "col": 2}
+      ],
+      "edges": [
+        {"from": "a1", "to": "a2", "label": "故障"},
+        {"from": "a2", "to": "a3", "label": "修復完了"},
+        {"from": "b1", "to": "b2", "label": "故障"},
+        {"from": "b2", "to": "b3", "label": "切替完了"}
+      ]
+    }
+  ]
+}

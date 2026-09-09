@@ -1,0 +1,21 @@
+{
+  "topic_id": 414,
+  "term": "PDM（Precedence Diagramming Method：プレシデンスダイアグラム法）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 計算の解き方",
+      "caption": "リードは後続の開始を早め、ラグは遅らせる。最も遅い終了である 12 日が全体の所要日数になる。",
+      "nodes": [
+        {"id": "a", "label": "アクティビティA（6日）\n0 日目 → 6 日目", "row": 0, "col": 0},
+        {"id": "b", "label": "アクティビティB（7日）\n4 日目 → 11 日目", "row": 1, "col": 1},
+        {"id": "c", "label": "アクティビティC（5日）\n7 日目 → 12 日目", "row": 2, "col": 2, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "a", "to": "b", "label": "終了−開始関係（リード2日）"},
+        {"from": "b", "to": "c", "label": "開始−開始関係（ラグ3日）"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,242 @@
+{
+  "bundle": 15,
+  "topics": [
+    {
+      "topic_id": 113,
+      "term": "バージョン管理ツール",
+      "field": "テクノロジ系",
+      "major": "コンピュータシステム",
+      "middle": "ソフトウェア",
+      "syllabus_item_name": "開発ツール",
+      "question_count": 1,
+      "related_terms": [
+        "Git",
+        "Subversion",
+        "分散型バージョン管理",
+        "リポジトリ"
+      ],
+      "questions": [
+        {
+          "exam": "令和6年度 秋期",
+          "number": 19,
+          "text": "分散開発環境において，各開発者のローカル環境に全履歴を含んだ中央リポジトリの完全な複製をもつことによって，中央リポジトリにアクセスできないときでも履歴の調査や変更の記録を可能にする，バージョン管理ツールはどれか。",
+          "choices": {
+            "ア": "Apache Subversion",
+            "イ": "CVS",
+            "ウ": "Git",
+            "エ": "RCS"
+          },
+          "answer": "ウ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 114,
+      "term": "プロファイラ",
+      "field": "テクノロジ系",
+      "major": "コンピュータシステム",
+      "middle": "ソフトウェア",
+      "syllabus_item_name": "開発ツール",
+      "question_count": 1,
+      "related_terms": [
+        "デバッガ",
+        "エミュレーター",
+        "シミュレーター",
+        "トレーサー"
+      ],
+      "questions": [
+        {
+          "exam": "令和6年度 春期",
+          "number": 19,
+          "text": "プログラムを構成するモジュールや関数の実行回数，実行時間など，性能改善のための分析に役立つ情報を収集するツールはどれか。",
+          "choices": {
+            "ア": "エミュレーター",
+            "イ": "シミュレーター",
+            "ウ": "デバッガ",
+            "エ": "プロファイラ"
+          },
+          "answer": "エ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 115,
+      "term": "ローコードツール",
+      "field": "テクノロジ系",
+      "major": "コンピュータシステム",
+      "middle": "ソフトウェア",
+      "syllabus_item_name": "開発ツール",
+      "question_count": 1,
+      "related_terms": [
+        "ノーコードツール",
+        "継続的インテグレーション（CI）",
+        "プロトタイピングモデル"
+      ],
+      "questions": [
+        {
+          "exam": "令和5年度 秋期",
+          "number": 47,
+          "text": "アプリケーションソフトウェアの開発環境上で，用意された部品やテンプレートを GUI による操作で組み合わせたり，必要に応じて一部の処理のソースコードを記述したりして，ソフトウェアを開発する手法はどれか。",
+          "choices": {
+            "ア": "継続的インテグレーション",
+            "イ": "ノーコード開発",
+            "ウ": "プロトタイピング",
+            "エ": "ローコード開発"
+          },
+          "answer": "エ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 116,
+      "term": "Linux カーネル",
+      "field": "テクノロジ系",
+      "major": "コンピュータシステム",
+      "middle": "ソフトウェア",
+      "syllabus_item_name": "オープンソースソフトウェア",
+      "question_count": 1,
+      "related_terms": [
+        "Linux",
+        "モノリシックカーネル",
+        "BShell",
+        "プロセス管理"
+      ],
+      "questions": [
+        {
+          "exam": "令和5年度 秋期",
+          "number": 19,
+          "text": "Linux カーネルの説明として，適切なものはどれか。",
+          "choices": {
+            "ア": "CUI によるコマンド入力のためのシェルと呼ばれるソフトウェアが組み込まれていて，文字での操作が可能である。",
+            "イ": "GUI を利用できるデスクトップ環境が組み込まれていて，マウスを使った直感的な操作が可能である。",
+            "ウ": "Web ブラウザ，ワープロソフト，表計算ソフトなどが含まれており，Linux カーネルだけで多くの業務が行える。",
+            "エ": "プロセス管理やメモリ管理などの，アプリケーションソフトウェアが動作するための基本機能を提供する。"
+          },
+          "answer": "エ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 117,
+      "term": "Swagger",
+      "field": "テクノロジ系",
+      "major": "コンピュータシステム",
+      "middle": "ソフトウェア",
+      "syllabus_item_name": "オープンソースソフトウェア",
+      "question_count": 1,
+      "related_terms": [
+        "OpenAPI Specification",
+        "Web API",
+        "API仕様",
+        "curl"
+      ],
+      "questions": [
+        {
+          "exam": "令和7年度 春期",
+          "number": 17,
+          "text": "OpenAPI Specification に従った API の定義・開発を支援する機能を提供する OSS はどれか。",
+          "choices": {
+            "ア": "curl",
+            "イ": "OpenAM",
+            "ウ": "Serverspec",
+            "エ": "Swagger"
+          },
+          "answer": "エ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 118,
+      "term": "コピーレフト（Copyleft）",
+      "field": "テクノロジ系",
+      "major": "コンピュータシステム",
+      "middle": "ソフトウェア",
+      "syllabus_item_name": "オープンソースソフトウェア",
+      "question_count": 1,
+      "related_terms": [
+        "GPL（General Public License）",
+        "MPL（Mozilla Public License）",
+        "BSDL（Berkeley Software Distribution License）",
+        "動的リンキング"
+      ],
+      "questions": [
+        {
+          "exam": "令和7年度 春期",
+          "number": 16,
+          "text": "表は，OSS のライセンスごとに，そのライセンスの OSS を利用したプログラムを配布するとき，ソースコードを公開しなければならないかどうかを示す。a〜d に入れるライセンスの適切な組合せはどれか。ここで，表中の“○”は公開しなければならないことを表し，“×”は公開しなくてもよいことを表す。",
+          "choices": {
+            "ア": "a：GPL，b：LGPL，c：MPL，d：BSD",
+            "イ": "a：GPL，b：MPL，c：BSD，d：LGPL",
+            "ウ": "a：LGPL，b：GPL，c：MPL，d：BSD",
+            "エ": "a：LGPL，b：MPL，c：BSD，d：GPL"
+          },
+          "answer": "ア",
+          "figure_description": "配布プログラムと OSS ライセンスの表。列見出し a，b，c，d は「OSS ライセンス」という見出しの下にある。\n\n| 配布プログラム | a | b | c | d |\n| --- | --- | --- | --- | --- |\n| OSS のソースコードを修正して作ったプログラム | ○ | ○ | ○ | × |\n| OSS に静的にリンクしたプログラム | ○ | ○ | × | × |\n| OSS に動的にリンクしたプログラム | ○ | × | × | × |\n\n選択肢は次の組合せ表。\n\n| | a | b | c | d |\n| --- | --- | --- | --- | --- |\n| ア | GPL | LGPL | MPL | BSD |\n| イ | GPL | MPL | BSD | LGPL |\n| ウ | LGPL | GPL | MPL | BSD |\n| エ | LGPL | MPL | BSD | GPL |"
+        }
+      ]
+    },
+    {
+      "topic_id": 119,
+      "term": "D/A コンバータ",
+      "field": "テクノロジ系",
+      "major": "コンピュータシステム",
+      "middle": "ハードウェア",
+      "syllabus_item_name": "ハードウェア",
+      "question_count": 1,
+      "related_terms": [
+        "A/Dコンバータ",
+        "分解能",
+        "16進数"
+      ],
+      "questions": [
+        {
+          "exam": "令和7年度 春期",
+          "number": 18,
+          "text": "8ビット D/A 変換器を使って負でない電圧を発生させる。使用する D/A 変換器は，最下位の1ビットの変化で出力が10ミリV変化する。データに0を与えたときの出力は0ミリVである。データに16進数で82を与えたときの出力は何ミリVか。",
+          "choices": {
+            "ア": "820",
+            "イ": "1,024",
+            "ウ": "1,300",
+            "エ": "1,312"
+          },
+          "answer": "ウ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 120,
+      "term": "FPGA（Field Programmable Gate Array）",
+      "field": "テクノロジ系",
+      "major": "コンピュータシステム",
+      "middle": "ハードウェア",
+      "syllabus_item_name": "ハードウェア",
+      "question_count": 1,
+      "related_terms": [
+        "ASIC（Application Specific IC）",
+        "HDL（Hardware Description Language：ハードウェア記述言語）",
+        "EEPROM（ Electrically Erasable Programmable Read Only Memory ）"
+      ],
+      "questions": [
+        {
+          "exam": "令和5年度 秋期",
+          "number": 20,
+          "text": "FPGA の説明として，適切なものはどれか。",
+          "choices": {
+            "ア": "電気的に記憶内容の書換えを行うことができる不揮発性メモリ",
+            "イ": "特定の分野及びアプリケーション用に限定した特定用途向け汎用集積回路",
+            "ウ": "浮動小数点数の演算を高速に実行する演算ユニット",
+            "エ": "論理回路を基板上に実装した後で再プログラムできる集積回路"
+          },
+          "answer": "エ",
+          "figure_description": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,456 @@
+{
+  "exam": "2023r05",
+  "range": "1-50",
+  "classifications": [
+    {
+      "number": 1,
+      "syllabus_item": 13,
+      "topic_term": "リーンスタートアップ",
+      "topic_is_new": false,
+      "related_terms": ["カニバリゼーション", "デジタルトランスフォーメーション（DX）", "PoC（Proof of Concept：概念実証）", "ビジネスモデルキャンバス"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 2,
+      "syllabus_item": 4,
+      "topic_term": "著作権法",
+      "topic_is_new": true,
+      "related_terms": ["特許法", "実用新案法", "ビジネスモデル特許"],
+      "confidence": "high",
+      "notes": "著作権法は用語例に無いが知的財産権（項目4）が該当項目。既存論点「著作権法」に合わせた。"
+    },
+    {
+      "number": 3,
+      "syllabus_item": 9,
+      "topic_term": "インバウンド需要",
+      "topic_is_new": true,
+      "related_terms": ["アウトソーシング", "インキュベーター", "エコシステム"],
+      "confidence": "medium",
+      "notes": "ビジネス用語の意味を問う問題。用語例に該当語が無く、項目9（経営戦略手法）か項目10（マーケティング）か迷った。選択肢がアウトソーシングなど経営戦略手法の語で構成されているため項目9とした。"
+    },
+    {
+      "number": 4,
+      "syllabus_item": 22,
+      "topic_term": "費用対効果",
+      "topic_is_new": false,
+      "related_terms": ["ASP （Application Service Provider）", "減価償却", "初期コスト", "運用コスト"],
+      "confidence": "medium",
+      "notes": "ASP 利用方式と自社開発方式の採算性比較の計算問題。項目21の「費用対効果分析」とも取れるが、既存論点に合わせて項目22の「費用対効果」とした。"
+    },
+    {
+      "number": 5,
+      "syllabus_item": 19,
+      "topic_term": "RPA（Robotic Process Automation）",
+      "topic_is_new": false,
+      "related_terms": ["ワークフロー", "BPM（Business Process Management）", "データマイニング", "M&A （Mergers and Acquisitions）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 6,
+      "syllabus_item": 2,
+      "topic_term": "主成分分析",
+      "topic_is_new": true,
+      "related_terms": ["ABC 分析", "相関と因果", "回帰分析", "データマイニング"],
+      "confidence": "high",
+      "notes": "主成分分析・クラスター分析は用語例に無いため新規論点とした。データ分析手法なので項目2。"
+    },
+    {
+      "number": 7,
+      "syllabus_item": 1,
+      "topic_term": "CxO（Chief x Officer（最高経営責任者（CEO：Chief Executive Officer），最高情報責任者（CIO：Chief Information Officer）など））",
+      "topic_is_new": false,
+      "related_terms": ["経営目標", "EA（Enterprise Architecture）", "プロジェクトマネージャ"],
+      "confidence": "high",
+      "notes": "情報システム戦略（項目18）とも取れるが、問われているのは CIO という役職の知識で、用語例は項目1にある。"
+    },
+    {
+      "number": 8,
+      "syllabus_item": 11,
+      "topic_term": "KGI（Key Goal Indicator：重要目標達成指標）",
+      "topic_is_new": false,
+      "related_terms": ["KPI （Key Performance Indicator：重要業績評価指標）", "CSF（Critical Success Factors：重要成功要因）", "BSC（Balanced Scorecard：バランススコアカード）"],
+      "confidence": "medium",
+      "notes": "KGI と KPI の両方が主題の比較問題。最終目標を表す KGI を論点、KPI を周辺用語とした。"
+    },
+    {
+      "number": 9,
+      "syllabus_item": 7,
+      "topic_term": "ソーシャルメディアポリシー（ソーシャルメディアガイドライン）",
+      "topic_is_new": false,
+      "related_terms": ["ネチケット（ネットマナー）", "SNS（Social Networking Service）", "ハラスメント"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 10,
+      "syllabus_item": 8,
+      "topic_term": "フォーラム標準",
+      "topic_is_new": false,
+      "related_terms": ["デファクトスタンダード", "デジュレスタンダード", "JIS（Japanese Industrial Standards）", "ISO（International Organization for Standardization：国際標準化機構）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 11,
+      "syllabus_item": 1,
+      "topic_term": "デジタルトランスフォーメーション（DX）",
+      "topic_is_new": false,
+      "related_terms": ["デジタルサイネージ", "デジタルディバイド", "IoT（Internet of Things）", "第4 次産業革命"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 12,
+      "syllabus_item": 14,
+      "topic_term": "RFID（IC タグ）",
+      "topic_is_new": false,
+      "related_terms": ["IC カード", "NFC", "ハンドオーバー", "ローミング"],
+      "confidence": "medium",
+      "notes": "非接触 IC チップの応用サービスを問う問題。項目16（IC カード・RFID 応用システム）や項目42（NFC）とも取れるが、応用システムの事例判別なので項目14とした。"
+    },
+    {
+      "number": 13,
+      "syllabus_item": 3,
+      "topic_term": "損益分岐点",
+      "topic_is_new": false,
+      "related_terms": ["固定費", "変動費", "販売量", "利益"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 14,
+      "syllabus_item": 14,
+      "topic_term": "自然言語処理",
+      "topic_is_new": true,
+      "related_terms": ["AI による認識", "特化型AI", "AI アシスタント", "スマートスピーカー"],
+      "confidence": "high",
+      "notes": "自然言語処理は用語例に無いため新規論点とした。AI の活用領域を問う問題なので項目14。"
+    },
+    {
+      "number": 15,
+      "syllabus_item": 5,
+      "topic_term": "不正アクセス禁止法",
+      "topic_is_new": true,
+      "related_terms": ["ログイン（利用者ID とパスワード）", "第三者提供", "個人情報取扱事業者"],
+      "confidence": "high",
+      "notes": "用語例に無いがセキュリティ関連法規（項目5）が該当項目。既存論点「不正アクセス禁止法」に合わせた。"
+    },
+    {
+      "number": 16,
+      "syllabus_item": 29,
+      "topic_term": "FAQ",
+      "topic_is_new": false,
+      "related_terms": ["チャットボット", "サービスデスク", "AIOps", "SPOC"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 17,
+      "syllabus_item": 21,
+      "topic_term": "情報リテラシー",
+      "topic_is_new": true,
+      "related_terms": ["デジタルディバイド", "アクセシビリティ", "コアコンピタンス", "ゲーミフィケーション"],
+      "confidence": "medium",
+      "notes": "情報リテラシーは用語例に無い。デジタルディバイドと対で扱われる論点なので項目21としたが、項目2（データ利活用）とも取れる。"
+    },
+    {
+      "number": 18,
+      "syllabus_item": 5,
+      "topic_term": "一般データ保護規則（GDPR）",
+      "topic_is_new": false,
+      "related_terms": ["忘れられる権利（消去権）", "個人情報取扱事業者", "第三者提供"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 19,
+      "syllabus_item": 19,
+      "topic_term": "M2M（Machine to Machine）",
+      "topic_is_new": false,
+      "related_terms": ["IoT（Internet of Things）", "MOT（Management Of Technology：技術経営）", "MRP（Material Requirements Planning：資材所要量計画）", "O2O（Online to Offline）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 20,
+      "syllabus_item": 3,
+      "topic_term": "総資本回転率",
+      "topic_is_new": true,
+      "related_terms": ["効率性", "収益性", "安全性", "損益分岐点"],
+      "confidence": "medium",
+      "notes": "用語例の「効率性」に相当する内容だが、論点名としては広すぎるため指標名を論点とした。財務指標の分類（収益性・効率性・安全性）を問う問題。"
+    },
+    {
+      "number": 21,
+      "syllabus_item": 16,
+      "topic_term": "フリーミアム",
+      "topic_is_new": false,
+      "related_terms": ["ロングテール", "サブスクリプション", "EC（Electronic Commerce：電子商取引）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 22,
+      "syllabus_item": 6,
+      "topic_term": "資金決済法",
+      "topic_is_new": false,
+      "related_terms": ["電子マネー", "暗号資産", "金融商品取引法", "キャッシュレス決済（スマートフォンのキャリア決済，非接触IC 決済，QR コード決済ほか）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 23,
+      "syllabus_item": 19,
+      "topic_term": "BPMN （Business Process Model and Notation）",
+      "topic_is_new": false,
+      "related_terms": ["BPR（Business Process Reengineering）", "BPM（Business Process Management）", "DFD（Data Flow Diagram）", "ワークフロー"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 24,
+      "syllabus_item": 2,
+      "topic_term": "発注方式",
+      "topic_is_new": false,
+      "related_terms": ["在庫管理", "定期発注方式", "定量発注方式", "経済的発注量"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 25,
+      "syllabus_item": 6,
+      "topic_term": "景品表示法",
+      "topic_is_new": false,
+      "related_terms": ["特定商取引法", "ステルスマーケティング", "独占禁止法", "PL 法"],
+      "confidence": "medium",
+      "notes": "設問はコンプライアンス全般の体裁だが、a〜c はいずれも景品表示法（懸賞限度額・ステルスマーケティング・原産国表示）に関わるため項目6の「景品表示法」とした。"
+    },
+    {
+      "number": 26,
+      "syllabus_item": 15,
+      "topic_term": "かんばん方式",
+      "topic_is_new": false,
+      "related_terms": ["JIT（Just In Time：ジャストインタイム）", "リーン生産方式", "MRP（Material Requirements Planning：資材所要量計画）", "在庫管理"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 27,
+      "syllabus_item": 2,
+      "topic_term": "バブルチャート",
+      "topic_is_new": true,
+      "related_terms": ["散布図", "レーダーチャート", "複合グラフ", "ガントチャート"],
+      "confidence": "high",
+      "notes": "バブルチャートは用語例に無いため新規論点とした。3要素の可視化手法を問う問題なので項目2。"
+    },
+    {
+      "number": 28,
+      "syllabus_item": 9,
+      "topic_term": "IPO",
+      "topic_is_new": true,
+      "related_terms": ["TOB（Take Over Bid：公開買付け）", "MBO（Management Buyout：経営陣による自社買収）", "VC（Venture Capital：ベンチャーキャピタル）", "M&A （Mergers and Acquisitions）"],
+      "confidence": "high",
+      "notes": "IPO は用語例に無いため新規論点とした。TOB・MBO と同系統の用語なので項目9。"
+    },
+    {
+      "number": 29,
+      "syllabus_item": 4,
+      "topic_term": "不正競争防止法",
+      "topic_is_new": true,
+      "related_terms": ["商標法", "特定商取引法", "DRM（Digital Rights Management）", "著作権法"],
+      "confidence": "high",
+      "notes": "用語例に無いが知的財産権（項目4）が該当項目。既存論点「不正競争防止法」に合わせた。"
+    },
+    {
+      "number": 30,
+      "syllabus_item": 16,
+      "topic_term": "AML・ CFT（Anti-Money Laundering・Countering the Financing of Terrorism：マネーロンダリング・テロ資金供与対策）ソリューション",
+      "topic_is_new": false,
+      "related_terms": ["eKYC（electronic Know Your Customer）", "フィンテック（FinTech）", "暗号資産"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 31,
+      "syllabus_item": 13,
+      "topic_term": "API エコノミー",
+      "topic_is_new": false,
+      "related_terms": ["オープンイノベーション", "アウトソーシング", "シェアリングエコノミー", "WebAPI"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 32,
+      "syllabus_item": 24,
+      "topic_term": "RFP",
+      "topic_is_new": true,
+      "related_terms": ["RFI", "SLA", "提案書", "業務要件定義"],
+      "confidence": "high",
+      "notes": "用語例に無いが調達計画・実施（項目24）が該当項目。既存論点「RFP」に合わせた。"
+    },
+    {
+      "number": 33,
+      "syllabus_item": 15,
+      "topic_term": "MRP（Material Requirements Planning：資材所要量計画）",
+      "topic_is_new": false,
+      "related_terms": ["調達期間（リードタイム）", "在庫管理", "発注方式", "JIT（Just In Time：ジャストインタイム）"],
+      "confidence": "medium",
+      "notes": "所要量と調達期間から発注時期を求める計算問題。項目2の「発注方式」とも取れるが、生産計画からの資材所要量展開なので MRP とした。"
+    },
+    {
+      "number": 34,
+      "syllabus_item": 14,
+      "topic_term": "人間中心のAI 社会原則（人間中心の原則，公平性・説明責任・透明性の原則ほか）",
+      "topic_is_new": false,
+      "related_terms": ["AI 利活用ガイドライン（AI 利活用原則）", "デジタルディバイド", "説明可能なAI（XAI：Explainable AI）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 35,
+      "syllabus_item": 1,
+      "topic_term": "第4 次産業革命",
+      "topic_is_new": false,
+      "related_terms": ["Society5.0", "超スマート社会", "データ駆動型社会", "AI の進化"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 36,
+      "syllabus_item": 29,
+      "topic_term": "サービスデスク",
+      "topic_is_new": true,
+      "related_terms": ["SPOC", "インシデント管理", "問題管理", "エスカレーション"],
+      "confidence": "high",
+      "notes": "用語例に無いがサービスマネジメントシステム（項目29）が該当項目。既存論点「サービスデスク」に合わせた。"
+    },
+    {
+      "number": 37,
+      "syllabus_item": 31,
+      "topic_term": "システム監査人",
+      "topic_is_new": false,
+      "related_terms": ["システム監査基準", "システム監査", "外観上の独立性", "監査調書の作成と保管"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 38,
+      "syllabus_item": 2,
+      "topic_term": "散布図",
+      "topic_is_new": false,
+      "related_terms": ["管理図", "特性要因図（フィッシュボーンチャート）", "パレート図", "相関と因果"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 39,
+      "syllabus_item": 26,
+      "topic_term": "リバースエンジニアリング",
+      "topic_is_new": false,
+      "related_terms": ["リファクタリング", "コードレビュー", "共同レビュー"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 40,
+      "syllabus_item": 26,
+      "topic_term": "DevOps",
+      "topic_is_new": false,
+      "related_terms": ["継続的インテグレーション（CI）", "ウォーターフォールモデル", "プロトタイピングモデル", "ペアプログラミング"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 41,
+      "syllabus_item": 27,
+      "topic_term": "アローダイアグラム",
+      "topic_is_new": false,
+      "related_terms": ["クリティカルパス分析", "ガントチャート", "プロジェクトスケジュールマネジメント", "WBS（Work Breakdown Structure）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 42,
+      "syllabus_item": 25,
+      "topic_term": "テスト工程",
+      "topic_is_new": true,
+      "related_terms": ["統合テスト", "ホワイトボックステスト", "性能テスト", "ブラックボックステスト"],
+      "confidence": "high",
+      "notes": "単体テスト・結合テスト・システムテストの役割分担を問う問題。個別のテスト技法名では収まらないため「テスト工程」を新規論点とした。"
+    },
+    {
+      "number": 43,
+      "syllabus_item": 25,
+      "topic_term": "ソフトウェア導入",
+      "topic_is_new": true,
+      "related_terms": ["移行", "利用者マニュアル", "受入れテスト", "導入計画書"],
+      "confidence": "high",
+      "notes": "用語例に無いがシステム開発技術（項目25）が該当項目。既存論点「ソフトウェア導入」に合わせた。"
+    },
+    {
+      "number": 44,
+      "syllabus_item": 28,
+      "topic_term": "SLA",
+      "topic_is_new": false,
+      "related_terms": ["サービスレベル管理（SLM）", "サービス可用性管理", "チャットボット", "BCP （Business Continuity Plan：事業継続計画）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 45,
+      "syllabus_item": 27,
+      "topic_term": "プロジェクトスケジュールマネジメント",
+      "topic_is_new": true,
+      "related_terms": ["プロジェクト資源マネジメント", "プロジェクトスコープマネジメント", "プロジェクト統合マネジメント", "品質特性（機能性，効率性，使用性，信頼性など）"],
+      "confidence": "medium",
+      "notes": "スコープ・コスト・品質のトレードオフを扱うので統合マネジメントとも取れるが、正解がスケジュール短縮のための資源追加（クラッシング）なのでスケジュールマネジメントとした。"
+    },
+    {
+      "number": 46,
+      "syllabus_item": 29,
+      "topic_term": "サービス可用性管理",
+      "topic_is_new": false,
+      "related_terms": ["MTBF（平均故障間動作時間）", "MTTR（平均修復時間）", "インシデント管理", "冗長化"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 47,
+      "syllabus_item": 29,
+      "topic_term": "サービスレベル管理（SLM）",
+      "topic_is_new": false,
+      "related_terms": ["SLA", "サービス可用性管理", "容量・能力管理", "情報セキュリティ管理"],
+      "confidence": "medium",
+      "notes": "SLA の項目とサービスマネジメントの各管理プロセスの対応付けを問う問題。可用性管理・容量能力管理など複数プロセスにまたがるため、それらを束ねる SLM を論点とした。"
+    },
+    {
+      "number": 48,
+      "syllabus_item": 30,
+      "topic_term": "ファシリティマネジメント",
+      "topic_is_new": true,
+      "related_terms": ["無停電電源装置（UPS：Uninterruptible Power Supply）", "自家発電装置", "サービスレベル管理（SLM）", "IPS （Intrusion Prevention System：侵入防止システム）"],
+      "confidence": "high",
+      "notes": "用語例に無いがファシリティマネジメント（項目30）が該当項目。既存論点に合わせた。"
+    },
+    {
+      "number": 49,
+      "syllabus_item": 26,
+      "topic_term": "リファクタリング",
+      "topic_is_new": false,
+      "related_terms": ["リバースエンジニアリング", "テスト駆動開発", "XP（エクストリームプログラミング）", "デバッグ"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 50,
+      "syllabus_item": 32,
+      "topic_term": "職務分掌",
+      "topic_is_new": true,
+      "related_terms": ["内部統制", "モニタリング", "相互けん制", "ITへの対応"],
+      "confidence": "high",
+      "notes": "用語例に無いが内部統制（項目32）が該当項目。既存論点「職務分掌」に合わせた。"
+    }
+  ]
+}

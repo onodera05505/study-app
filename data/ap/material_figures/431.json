@@ -1,0 +1,28 @@
+{
+  "topic_id": 431,
+  "term": "線形リスト",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 二つの実現方法",
+      "caption": "配列は最大個数分をまとめて確保するので未使用領域が生じ、ポインタは次を指す領域が要素ごとに要る。",
+      "nodes": [
+        {"id": "lab_a", "label": "配列で実現", "row": 0, "col": 0, "shape": "round"},
+        {"id": "a0", "label": "[0] A", "row": 0, "col": 1},
+        {"id": "a1", "label": "[1] B", "row": 0, "col": 2},
+        {"id": "a2", "label": "未使用\n未使用", "row": 0, "col": 3, "emphasis": true},
+        {"id": "lab_p", "label": "ポインタで実現", "row": 1, "col": 0, "shape": "round"},
+        {"id": "p0", "label": "A ｜次", "row": 1, "col": 1},
+        {"id": "p1", "label": "B ｜次", "row": 1, "col": 2},
+        {"id": "p2", "label": "C ｜なし", "row": 1, "col": 3}
+      ],
+      "edges": [
+        {"from": "a0", "to": "a1", "label": "添字で位置を計算", "arrow": "none"},
+        {"from": "a1", "to": "a2", "label": "最大個数分を先に確保", "arrow": "none", "style": "dashed"},
+        {"from": "p0", "to": "p1", "label": "次を指す"},
+        {"from": "p1", "to": "p2", "label": "つなぎ替えだけで挿入"}
+      ]
+    }
+  ]
+}

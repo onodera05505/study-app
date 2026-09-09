@@ -1,0 +1,27 @@
+{
+  "topic_id": 487,
+  "term": "スケジューリング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 計算の解き方",
+      "caption": "C→A→B なら機械 Y は 6 分待つだけで動き出し、最後に残る後処理も 5 分で済むので 29 分と最小になる。",
+      "nodes": [
+        {"id": "hx", "label": "機械 X", "row": 0, "col": 0, "shape": "round"},
+        {"id": "x1", "label": "作業 C\n0 → 6 分", "row": 0, "col": 1},
+        {"id": "x2", "label": "作業 A\n6 → 14 分", "row": 0, "col": 2},
+        {"id": "x3", "label": "作業 B\n14 → 24 分", "row": 0, "col": 3},
+        {"id": "hy", "label": "機械 Y", "row": 1, "col": 0, "shape": "round"},
+        {"id": "y1", "label": "作業 C\n6 → 14 分", "row": 1, "col": 1},
+        {"id": "y2", "label": "作業 A\n14 → 24 分", "row": 1, "col": 2},
+        {"id": "y3", "label": "作業 B\n24 → 29 分", "row": 1, "col": 3, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "x1", "to": "y1", "label": "X の後に Y", "style": "dashed"},
+        {"from": "x2", "to": "y2", "style": "dashed"},
+        {"from": "x3", "to": "y3", "style": "dashed"}
+      ]
+    }
+  ]
+}

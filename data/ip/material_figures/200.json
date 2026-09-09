@@ -1,0 +1,19 @@
+{
+  "topic_id": 200,
+  "term": "LPWA（Low Power Wide Area）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "matrix",
+      "after": "### 比べる相手ごとの答え",
+      "caption": "LPWA は無線 LAN より遠くまで届き、速度は遅く、消費電力は少ない。",
+      "x": {"label": "通信速度", "values": ["遅い", "速い"]},
+      "y": {"label": "届く範囲", "values": ["近距離\n数 m〜数十 m", "広域\n数 km〜数十 km"]},
+      "cells": [
+        ["BLE\n消費電力は少ない", "無線 LAN\n消費電力は多い"],
+        ["LPWA\n消費電力は少ない\n電池で数年", "4G・5G\n消費電力は多い"]
+      ],
+      "emphasis": [[1, 0]]
+    }
+  ]
+}

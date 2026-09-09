@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="320" viewBox="0 0 640 320" role="img">
+<title>DNS は通信を始める前に名前を IP アドレスへ変換する係で、通信そのものは運ばない。</title>
+<rect x="0.5" y="0.5" width="639" height="319" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(36.4 20)">
+<line x1="62.7" y1="34" x2="62.7" y2="252" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="296.9" y1="34" x2="296.9" y2="252" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="517.8" y1="34" x2="517.8" y2="252" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="125.4" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="62.7" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">PC（ブラウザ）</text>
+<rect x="247.5" y="0" width="98.8" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="296.9" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">DNS サーバ</text>
+<rect x="468.4" y="0" width="98.8" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="517.8" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">Web サーバ</text>
+<polyline points="65.7,68 293.9,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="293.9,68 285.9,71.6 285.9,64.4" fill="#1f2937"/>
+<text x="179.8" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. このドメイン名の IP アドレスは？</text>
+<polyline points="293.9,108 65.7,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="65.7,108 73.7,104.4 73.7,111.6" fill="#1f2937"/>
+<text x="179.8" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 203.0.113.10 です</text>
+<rect x="23.4" y="113" width="312.8" height="16" rx="3" fill="#ffffff"/>
+<text x="179.8" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">IP アドレスからドメイン名を引く逆向きも DNS の役割</text>
+<polyline points="65.7,164 514.8,164" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="514.8,164 506.8,167.6 506.8,160.4" fill="#1f2937"/>
+<text x="290.25" y="157" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. その IP アドレスあてに接続</text>
+<rect x="167.75" y="169" width="245" height="16" rx="3" fill="#ffffff"/>
+<text x="290.25" y="182.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">配るのは DHCP、代わりに行くのはプロキシ</text>
+<polyline points="514.8,220 65.7,220" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="65.7,220 73.7,216.4 73.7,223.6" fill="#1f2937"/>
+<text x="290.25" y="213" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. ページを返す</text>
+</g>
+<text x="320" y="300" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">DNS は通信を始める前に名前を IP アドレスへ変換する係で、通信そのものは運ばない。</text>
+</svg>

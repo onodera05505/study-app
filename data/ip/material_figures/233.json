@@ -1,0 +1,30 @@
+{
+  "topic_id": 233,
+  "term": "ハッシュ関数",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 一方向で長さが決まる計算",
+      "caption": "入れるデータの長さが違っても、出てくる値の長さは同じ。値から元のデータには戻せない。",
+      "nodes": [
+        {"id": "d1", "label": "メモ 1 行", "row": 0, "col": 0},
+        {"id": "d2", "label": "文書 100 ページ", "row": 1, "col": 0},
+        {"id": "d3", "label": "動画 1 G バイト", "row": 2, "col": 0},
+        {"id": "h", "label": "ハッシュ関数\nSHA-256", "row": 1, "col": 1, "emphasis": true},
+        {"id": "v1", "label": "256 ビットの値", "row": 0, "col": 2},
+        {"id": "v2", "label": "256 ビットの値", "row": 1, "col": 2},
+        {"id": "v3", "label": "256 ビットの値", "row": 2, "col": 2}
+      ],
+      "edges": [
+        {"from": "d1", "to": "h"},
+        {"from": "d2", "to": "h"},
+        {"from": "d3", "to": "h"},
+        {"from": "h", "to": "v1"},
+        {"from": "h", "to": "v2"},
+        {"from": "h", "to": "v3"},
+        {"from": "v3", "to": "d3", "label": "戻せない（一方向）", "style": "dashed"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,456 @@
+{
+  "exam": "2023r05",
+  "range": "51-100",
+  "classifications": [
+    {
+      "number": 51,
+      "syllabus_item": 29,
+      "topic_term": "FAQ",
+      "topic_is_new": false,
+      "related_terms": ["インシデント管理", "サービスデスク", "SPOC", "構成管理"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 52,
+      "syllabus_item": 31,
+      "topic_term": "会計監査",
+      "topic_is_new": false,
+      "related_terms": ["業務監査", "情報セキュリティ監査", "システム監査", "ITガバナンス"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 53,
+      "syllabus_item": 32,
+      "topic_term": "ITガバナンス",
+      "topic_is_new": true,
+      "related_terms": ["IT投資", "内部統制", "SLA"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 54,
+      "syllabus_item": 27,
+      "topic_term": "プロジェクトスコープマネジメント",
+      "topic_is_new": false,
+      "related_terms": ["WBS（Work Breakdown Structure）", "プロジェクトコストマネジメント", "プロジェクトスケジュールマネジメント"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 55,
+      "syllabus_item": 27,
+      "topic_term": "プロジェクト資源マネジメント",
+      "topic_is_new": true,
+      "related_terms": ["工数（人日）", "生産性", "プロジェクトスケジュールマネジメント"],
+      "confidence": "medium",
+      "notes": "人日の計算問題。計算手法としては「工数計算」だが、要員配置を問うているのでプロジェクト資源マネジメントに寄せた。"
+    },
+    {
+      "number": 56,
+      "syllabus_item": 62,
+      "topic_term": "ISMS クラウドセキュリティ認証",
+      "topic_is_new": true,
+      "related_terms": ["ISMS", "IaaS（Infrastructure as a Service）", "SaaS（Software as a Service）", "プライバシーマーク"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 57,
+      "syllabus_item": 63,
+      "topic_term": "耐タンパ性",
+      "topic_is_new": false,
+      "related_terms": ["IoT機器のセキュリティ対策", "難読化", "セキュアブート"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 58,
+      "syllabus_item": 61,
+      "topic_term": "ドライブバイダウンロード",
+      "topic_is_new": true,
+      "related_terms": ["セキュリティホール", "マルウェア（コンピュータウイルス，ボット，スパイウェア，ランサムウェア）", "SQL インジェクション対策", "フィッシング"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 59,
+      "syllabus_item": 55,
+      "topic_term": "正規化",
+      "topic_is_new": true,
+      "related_terms": ["主キー", "外部キー", "テーブル（表）", "レコード"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 60,
+      "syllabus_item": 37,
+      "topic_term": "整列のアルゴリズム（選択ソート，バブルソート，クイックソート）",
+      "topic_is_new": false,
+      "related_terms": ["繰返し処理", "配列", "プログラムのトレース"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 61,
+      "syllabus_item": 63,
+      "topic_term": "セキュリティバイデザイン",
+      "topic_is_new": false,
+      "related_terms": ["プライバシーバイデザイン", "セキュアブート", "IoT セキュリティガイドライン"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 62,
+      "syllabus_item": 63,
+      "topic_term": "多要素認証",
+      "topic_is_new": false,
+      "related_terms": ["知識情報", "所持情報", "生体情報", "ログイン（利用者ID とパスワード）"],
+      "confidence": "medium",
+      "notes": "認証要素の3分類（知識・所持・生体）そのものを問う問題。用語例に「認証要素」がないため、これを土台とする多要素認証に紐づけた。"
+    },
+    {
+      "number": 63,
+      "syllabus_item": 43,
+      "topic_term": "RAID",
+      "topic_is_new": false,
+      "related_terms": ["ストライピング", "ミラーリング", "HDD"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 64,
+      "syllabus_item": 37,
+      "topic_term": "繰返し処理",
+      "topic_is_new": true,
+      "related_terms": ["関数", "引数", "戻り値", "代入"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 65,
+      "syllabus_item": 63,
+      "topic_term": "WPA2",
+      "topic_is_new": true,
+      "related_terms": ["PSK（事前共有鍵）", "無線LANのセキュリティ", "ESSID（Extended Service Set Identifier）", "暗号化"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 66,
+      "syllabus_item": 57,
+      "topic_term": "トランザクション",
+      "topic_is_new": false,
+      "related_terms": ["コミット", "バックワードリカバリ（ロールバック）", "排他制御", "ACID 特性"],
+      "confidence": "medium",
+      "notes": "問われているのは「コミット」の意味。用語例に単独の「コミット」がないためトランザクションに寄せた。"
+    },
+    {
+      "number": 67,
+      "syllabus_item": 63,
+      "topic_term": "IDS（Intrusion Detection System：侵入検知システム）",
+      "topic_is_new": false,
+      "related_terms": ["IPS （Intrusion Prevention System：侵入防止システム）", "ファイアウォール", "DNS", "NTP （Network Time Protocol）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 68,
+      "syllabus_item": 59,
+      "topic_term": "TCP/IP",
+      "topic_is_new": false,
+      "related_terms": ["アプリケーション層", "FTP", "POP", "SMTP"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 69,
+      "syllabus_item": 37,
+      "topic_term": "探索のアルゴリズム（線形探索法，2 分探索法）",
+      "topic_is_new": false,
+      "related_terms": ["計算量", "整列のアルゴリズム（選択ソート，バブルソート，クイックソート）", "配列"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 70,
+      "syllabus_item": 43,
+      "topic_term": "クラスタ",
+      "topic_is_new": false,
+      "related_terms": ["負荷分散", "並列処理", "スプーリング", "ミラーリング"],
+      "confidence": "high",
+      "notes": "設問の答えは「クラスタリング」だが、用語例の表記「クラスタ」をそのまま採用した。"
+    },
+    {
+      "number": 71,
+      "syllabus_item": 58,
+      "topic_term": "エッジコンピューティング",
+      "topic_is_new": false,
+      "related_terms": ["IoT（Internet of Things）", "クラウドコンピューティング", "ブロックチェーン", "機械学習（教師あり学習，教師なし学習，強化学習）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 72,
+      "syllabus_item": 62,
+      "topic_term": "リスク対応（リスク回避，リスク共有（リスク移転，リスク分散），リスク保有）",
+      "topic_is_new": false,
+      "related_terms": ["リスクアセスメント（リスク特定，リスク分析，リスク評価）", "サイバー保険", "情報セキュリティリスク"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 73,
+      "syllabus_item": 61,
+      "topic_term": "バックドア",
+      "topic_is_new": false,
+      "related_terms": ["盗聴", "フィッシング", "ポートスキャン", "クラッキング"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 74,
+      "syllabus_item": 35,
+      "topic_term": "ニューラルネットワーク",
+      "topic_is_new": false,
+      "related_terms": ["ディープラーニング", "活性化関数", "機械学習（教師あり学習，教師なし学習，強化学習）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 75,
+      "syllabus_item": 47,
+      "topic_term": "IF 関数",
+      "topic_is_new": true,
+      "related_terms": ["論理和", "論理積", "オフィスツール", "条件式"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 76,
+      "syllabus_item": 35,
+      "topic_term": "再現率",
+      "topic_is_new": true,
+      "related_terms": ["適合率", "正解率", "機械学習（教師あり学習，教師なし学習，強化学習）", "学習データ"],
+      "confidence": "medium",
+      "notes": "機械学習モデルの評価指標。用語例にないため新設。項目2（業務分析・データ利活用）の「精度と偏り」「第1種の誤り」寄りとも解釈できる。"
+    },
+    {
+      "number": 77,
+      "syllabus_item": 34,
+      "topic_term": "偏差値",
+      "topic_is_new": false,
+      "related_terms": ["標準偏差", "平均値", "正規分布", "分散"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 78,
+      "syllabus_item": 55,
+      "topic_term": "主キー",
+      "topic_is_new": false,
+      "related_terms": ["インデックス", "外部キー", "フィールド（項目）", "レコード"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 79,
+      "syllabus_item": 62,
+      "topic_term": "継続的改善（PDCA など）",
+      "topic_is_new": false,
+      "related_terms": ["ISMS", "情報セキュリティポリシー（情報セキュリティ方針）", "情報セキュリティリスク"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 80,
+      "syllabus_item": 61,
+      "topic_term": "オートラン",
+      "topic_is_new": true,
+      "related_terms": ["USB メモリ", "マルウェア（コンピュータウイルス，ボット，スパイウェア，ランサムウェア）", "誤操作"],
+      "confidence": "medium",
+      "notes": "OSの機能を問うので項目45（オペレーティングシステム）とも取れるが、マルウェア感染要因という観点から項目61にした。"
+    },
+    {
+      "number": 81,
+      "syllabus_item": 63,
+      "topic_term": "データ消去",
+      "topic_is_new": true,
+      "related_terms": ["物理的破壊", "論理フォーマット", "漏えい", "HDD"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 82,
+      "syllabus_item": 48,
+      "topic_term": "オープンソースソフトウェア",
+      "topic_is_new": true,
+      "related_terms": ["GPL（GNU General Public License）", "コピーレフト", "著作権"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 83,
+      "syllabus_item": 60,
+      "topic_term": "IP電話",
+      "topic_is_new": false,
+      "related_terms": ["VoIP", "仮想移動体通信事業者（MVNO：Mobile Virtual Network Operator）", "NFC", "NTP （Network Time Protocol）"],
+      "confidence": "medium",
+      "notes": "設問の答えはVoIP。用語例にVoIPがなく同義の「IP電話」を採用したため、表記が設問語と異なる。"
+    },
+    {
+      "number": 84,
+      "syllabus_item": 63,
+      "topic_term": "デジタル署名（署名鍵，検証鍵）",
+      "topic_is_new": false,
+      "related_terms": ["ハッシュ関数", "メッセージダイジェスト", "なりすまし", "サーバ証明書"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 85,
+      "syllabus_item": 63,
+      "topic_term": "セキュアブート",
+      "topic_is_new": false,
+      "related_terms": ["デジタル署名（署名鍵，検証鍵）", "ファームウェア", "IoT機器のセキュリティ対策", "耐タンパ性"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 86,
+      "syllabus_item": 63,
+      "topic_term": "ハイブリッド暗号方式",
+      "topic_is_new": false,
+      "related_terms": ["共通鍵暗号方式", "公開鍵暗号方式", "暗号化", "復号"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 87,
+      "syllabus_item": 58,
+      "topic_term": "PLC（電力線通信）",
+      "topic_is_new": true,
+      "related_terms": ["IoT エリアネットワーク", "PoE", "テザリング", "エネルギーハーベスティング"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 88,
+      "syllabus_item": 41,
+      "topic_term": "DVD（DVD-ROM，DVD-RAM，DVD-R）",
+      "topic_is_new": false,
+      "related_terms": ["補助記憶", "CD（CD-ROM，CD-R）", "ブルーレイディスク"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 89,
+      "syllabus_item": 61,
+      "topic_term": "ソーシャルエンジニアリング",
+      "topic_is_new": false,
+      "related_terms": ["なりすまし", "ゼロデイ攻撃", "トロイの木馬", "人的脆弱性"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 90,
+      "syllabus_item": 63,
+      "topic_term": "クリアデスク・クリアスクリーン",
+      "topic_is_new": false,
+      "related_terms": ["物理的セキュリティ対策", "施錠管理", "入退室管理", "盗み見"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 91,
+      "syllabus_item": 35,
+      "topic_term": "活性化関数",
+      "topic_is_new": false,
+      "related_terms": ["ニューラルネットワーク", "バックプロパゲーション", "ディープラーニング"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 92,
+      "syllabus_item": 59,
+      "topic_term": "電子メールのプロトコル",
+      "topic_is_new": true,
+      "related_terms": ["SMTP", "POP", "メーリングリスト", "ドメイン名"],
+      "confidence": "medium",
+      "notes": "正解の選択肢はメール転送サービス（項目60寄り）だが、選択肢全体がSMTP/POP3などメールの仕組みを問うため項目59・電子メールのプロトコルに紐づけた。"
+    },
+    {
+      "number": 93,
+      "syllabus_item": 44,
+      "topic_term": "フールプルーフ",
+      "topic_is_new": false,
+      "related_terms": ["フェールセーフ", "フォールトトレラント", "フェールソフト", "RAID"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 94,
+      "syllabus_item": 62,
+      "topic_term": "情報セキュリティポリシー（情報セキュリティ方針）",
+      "topic_is_new": false,
+      "related_terms": ["ISMS", "プライバシーポリシー（個人情報保護方針）", "情報セキュリティ管理基準"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 95,
+      "syllabus_item": 62,
+      "topic_term": "情報セキュリティの要素（機密性，完全性，可用性，真正性，責任追跡性，否認防止，信頼性）",
+      "topic_is_new": false,
+      "related_terms": ["情報セキュリティインシデント", "漏えい", "誤操作"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 96,
+      "syllabus_item": 33,
+      "topic_term": "SI接頭語",
+      "topic_is_new": true,
+      "related_terms": ["クロック周波数", "伝送速度（bps：bits per second（ビット／秒））", "基数"],
+      "confidence": "medium",
+      "notes": "単位の接頭語を問う問題。項目33（離散数学）には用語例がなく、項目35（情報に関する理論）とも判断が分かれる。"
+    },
+    {
+      "number": 97,
+      "syllabus_item": 60,
+      "topic_term": "サブネットマスク",
+      "topic_is_new": true,
+      "related_terms": ["IP アドレス（IPv6，IPv4，グローバル，プライベート）", "ネットワークアドレス", "DHCP", "DNS"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 98,
+      "syllabus_item": 17,
+      "topic_term": "スマートメーター",
+      "topic_is_new": true,
+      "related_terms": ["HEMS（Home Energy Management System）", "IoT（Internet of Things）", "加速度センサー", "MDM（Mobile Device Management）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 99,
+      "syllabus_item": 63,
+      "topic_term": "バイオメトリクス認証",
+      "topic_is_new": true,
+      "related_terms": ["静脈パターン認証", "顔認証", "多要素認証", "ワンタイムパスワード"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 100,
+      "syllabus_item": 56,
+      "topic_term": "選択・結合",
+      "topic_is_new": true,
+      "related_terms": ["射影", "テーブル（表）", "データの抽出"],
+      "confidence": "high",
+      "notes": null
+    }
+  ]
+}

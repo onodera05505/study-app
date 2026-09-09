@@ -1,0 +1,54 @@
+{
+  "topic_id": 307,
+  "term": "流動比率",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 計算の解き方",
+      "caption": "貸借対照表は左が資産、右が負債と純資産（単位 百万円）。流動比率に使うのは色の付いた2つだけで、他の数字は使わない。",
+      "nodes": [
+        {
+          "id": "ca",
+          "label": "流動資産\n3,000",
+          "row": 0,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "cl",
+          "label": "流動負債\n1,500",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "fa",
+          "label": "固定資産\n4,500",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "fl",
+          "label": "固定負債\n4,000",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "eq",
+          "label": "株主資本\n2,000",
+          "row": 2,
+          "col": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": "ca",
+          "to": "cl",
+          "label": "3,000 ÷ 1,500 ＝ 200％",
+          "arrow": "none"
+        }
+      ]
+    }
+  ]
+}

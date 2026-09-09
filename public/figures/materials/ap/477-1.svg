@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="253" viewBox="0 0 829.5 328" role="img">
+<title>UNION は列ではなく行を増やす。3 行の表から 2 本の SELECT を積んで 6 行になる。</title>
+<rect x="0.5" y="0.5" width="828.5" height="327" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<polyline points="55,102 55,79 287.35,79 287.35,56" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="287.35,56 290.95,64 283.75,64" fill="#1f2937"/>
+<polyline points="55,158 55,181 287.35,181 287.35,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="287.35,204 283.75,196 290.95,196" fill="#1f2937"/>
+<polyline points="287.35,56 287.35,79 519.7,79 519.7,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="519.7,102 516.1,94 523.3,94" fill="#1f2937"/>
+<polyline points="287.35,204 287.35,181 519.7,181 519.7,158" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="519.7,158 523.3,166 516.1,166" fill="#1f2937"/>
+<polyline points="573.7,130 686.5,130" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="686.5,130 678.5,133.6 678.5,126.4" fill="#1f2937"/>
+<rect x="7" y="102" width="96" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="55" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">部門別売上</text>
+<text x="55" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">3 行</text>
+<rect x="214.8" y="0" width="145.1" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="287.35" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">第 1 期を取り出す</text>
+<text x="287.35" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">SELECT</text>
+<rect x="214.8" y="204" width="145.1" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="287.35" y="226.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">第 2 期を取り出す</text>
+<text x="287.35" y="246.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">SELECT</text>
+<rect x="465.7" y="102" width="108" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="519.7" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">UNION</text>
+<text x="519.7" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">行を縦に積む</text>
+<rect x="686.5" y="102" width="96" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="734.5" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">問合せ結果</text>
+<text x="734.5" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">6 行</text>
+<rect x="386.93" y="65" width="33.2" height="16" rx="3" fill="#ffffff"/>
+<text x="403.53" y="78.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3 行</text>
+<rect x="386.93" y="167" width="33.2" height="16" rx="3" fill="#ffffff"/>
+<text x="403.53" y="180.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3 行</text>
+<rect x="581.7" y="113" width="96.8" height="16" rx="3" fill="#ffffff"/>
+<text x="630.1" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3 ＋ 3 ＝ 6 行</text>
+</g>
+<text x="414.75" y="308" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">UNION は列ではなく行を増やす。3 行の表から 2 本の SELECT を積んで 6 行になる。</text>
+</svg>

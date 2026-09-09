@@ -1,0 +1,240 @@
+{
+ "exam": "2024r06h",
+ "range": "55-80",
+ "classifications": [
+  {
+   "number": 55,
+   "syllabus_item": 65,
+   "topic_term": "課金",
+   "topic_is_new": false,
+   "related_terms": ["サービスの予算業務及び会計業務", "SaaS", "財務管理", "費用"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 56,
+   "syllabus_item": 65,
+   "topic_term": "サービスレベル管理",
+   "topic_is_new": false,
+   "related_terms": ["サービスレベル目標", "SLA", "容量・能力管理", "サービス継続計画"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 57,
+   "syllabus_item": 68,
+   "topic_term": "GHGプロトコル",
+   "topic_is_new": false,
+   "related_terms": ["グリーン IT", "環境側面", "ハウジングサービス", "データセンター総合エネルギー効率指標（GEC，PUE，ITEE，ITEU ほか）"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 58,
+   "syllabus_item": 69,
+   "topic_term": "監査調書の作成と保管",
+   "topic_is_new": false,
+   "related_terms": ["監査証拠", "システム監査報告書", "個別監査計画", "中長期計画"],
+   "confidence": "high",
+   "notes": "論点は「監査調書」だが、表記を揺らさないため用語例の文字列をそのままコピーした。"
+  },
+  {
+   "number": 59,
+   "syllabus_item": 69,
+   "topic_term": "システム監査基準",
+   "topic_is_new": true,
+   "related_terms": ["ガバナンス", "コントロール", "情報システムの利活用に係る検証・評価", "システム監査"],
+   "confidence": "medium",
+   "notes": "システム監査基準（令和5年）の枠組みそのものを問う設問。用語例には「内部監査基準」「情報セキュリティ監査基準」はあるが「システム監査基準」が無く、項目名「システム監査」では広すぎるため新設した。"
+  },
+  {
+   "number": 60,
+   "syllabus_item": 70,
+   "topic_term": "IT に係る業務処理統制",
+   "topic_is_new": true,
+   "related_terms": ["IT に係る全般統制", "IT への対応", "内部統制の基本的要素", "IT 統制"],
+   "confidence": "high",
+   "notes": "用語例「IT への対応（IT 環境への対応，IT の利用，IT に係る全般統制，IT に係る業務処理統制）」の括弧内は別概念の列挙で、設問の主題は業務処理統制。単独で載っている項目が無いため topic_is_new。"
+  },
+  {
+   "number": 61,
+   "syllabus_item": 71,
+   "topic_term": "参照モデル",
+   "topic_is_new": false,
+   "related_terms": ["BRM（Business Reference Model）", "業務・システム最適化", "情報システムモデル", "TOGAF（The Open Group Architecture Framework）"],
+   "confidence": "medium",
+   "notes": "エンタープライズアーキテクチャの参照モデル（BRM/DRM/SRM/TRM）を問う設問。「エンタープライズアーキテクチャ」「BRM」は用語例に無いため、用語例にある「参照モデル」を採用した。"
+  },
+  {
+   "number": 62,
+   "syllabus_item": 89,
+   "topic_term": "デジタルガバナンス・コード 2.0",
+   "topic_is_new": false,
+   "related_terms": ["デジタルトランスフォーメーション（DX）", "コーポレートガバナンス", "デジタル経営改革のための評価指標（DX 推進指標）"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 63,
+   "syllabus_item": 73,
+   "topic_term": "SOA（Service Oriented Architecture：サービス指向アーキテクチャ）",
+   "topic_is_new": false,
+   "related_terms": ["ERPパッケージ", "業務パッケージ", "BPR（Business Process Reengineering：ビジネスプロセスリエンジニアリング）", "PDCA"],
+   "confidence": "medium",
+   "notes": "SOA は項目71・73・77 の用語例に同表記で存在する。用語の意味を問う設問であり、ソリューション形態の知識として項目73（ソリューションビジネス）を選んだ。"
+  },
+  {
+   "number": 64,
+   "syllabus_item": 75,
+   "topic_term": "PBP",
+   "topic_is_new": false,
+   "related_terms": ["投資回収期間", "DCF法", "NPV（Net Present Value：正味現在価値）", "投資対効果分析"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 65,
+   "syllabus_item": 77,
+   "topic_term": "EMS（Electronics Manufacturing Services）",
+   "topic_is_new": true,
+   "related_terms": ["OEM", "ODM", "ファブレス", "ファウンドリ"],
+   "confidence": "medium",
+   "notes": "EMS は用語例に無いため新設。OEM・ODM・ファブレス・ファウンドリと同じ内外作の枠組みなので項目77 とした（項目85 エンジニアリングシステムとも迷った）。"
+  },
+  {
+   "number": 66,
+   "syllabus_item": 75,
+   "topic_term": "コンティンジェンシープラン",
+   "topic_is_new": true,
+   "related_terms": ["リスク対応（リスク回避，損失予防，損失軽減，リスク移転，リスク保有など）", "リスク分析の対象", "納期リスク", "品質リスク"],
+   "confidence": "medium",
+   "notes": "コンティンジェンシープランはストラテジ系の用語例に無いため新設。委託先リスクという点で項目77（調達計画・実施）とも迷ったが、リスク分析・リスク対応を扱う項目75 を選んだ。"
+  },
+  {
+   "number": 67,
+   "syllabus_item": 78,
+   "topic_term": "金のなる木",
+   "topic_is_new": false,
+   "related_terms": ["PPM", "花形製品", "問題児", "負け犬"],
+   "confidence": "medium",
+   "notes": "設問全体の主題は PPM だが「PPM」は用語例に単独で無く、問われているのは資金源となる象限そのものなので用語例の「金のなる木」を採用した。"
+  },
+  {
+   "number": 68,
+   "syllabus_item": 78,
+   "topic_term": "ファイブフォース分析（既存競合者同士の敵対関係，新規参入の脅威，代替製品・代替サービスの脅威，買い手の交渉力，供給者の支配力）",
+   "topic_is_new": false,
+   "related_terms": ["マクロ環境分析（PEST 分析，文化的環境）", "Value（経済的価値)", "価値活動", "競争の基本戦略（コストリーダーシップ戦略，差別化戦略，集中戦略）"],
+   "confidence": "high",
+   "notes": "括弧内は5つの力の列挙だが設問はフレームワーク全体が主題のため、用語例を丸ごとコピーした。"
+  },
+  {
+   "number": 69,
+   "syllabus_item": 80,
+   "topic_term": "フィージビリティスタディ",
+   "topic_is_new": false,
+   "related_terms": ["デルファイ法", "ブレーンストーミング", "導入期", "衰退期"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 70,
+   "syllabus_item": 84,
+   "topic_term": "デジタルツイン",
+   "topic_is_new": false,
+   "related_terms": ["サイバーフィジカルシステム（CPS）", "IoT（Internet ofThings）", "シミュレーション"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 71,
+   "syllabus_item": 79,
+   "topic_term": "マスカスタマイゼーション",
+   "topic_is_new": false,
+   "related_terms": ["IoT（Internet ofThings）", "IoT がもたらす効果（監視，制御，最適化，自律化）", "多品種少量生産", "PLM（Product Life cycle Management）"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 72,
+   "syllabus_item": 87,
+   "topic_term": "エッジコンピューティング",
+   "topic_is_new": false,
+   "related_terms": ["エッジ AI", "IoT（Internet of Things）", "センサー", "ウェアラブルコンピュータ"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 73,
+   "syllabus_item": 90,
+   "topic_term": "ナッシュ均衡",
+   "topic_is_new": false,
+   "related_terms": ["ゼロ和2人ゲーム", "マクシミン原理", "ミニマックス定理", "混合戦略"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 74,
+   "syllabus_item": 90,
+   "topic_term": "連関図法",
+   "topic_is_new": true,
+   "related_terms": ["新 QC 七つ道具（親和図法，連関図法，系統図法，マトリックス図法，マトリックスデータ解析法，PDPC（Process Decision Program Chart：プロセス決定計画図）法，アローダイアグラム法）", "アローダイアグラム", "パレート分析", "QC 七つ道具（層別管理，ヒストグラム，パレート図，散布図，特性要因図，チェックシート，管理図）"],
+   "confidence": "high",
+   "notes": "新QC七つ道具の括弧内は別概念の列挙で、設問の主題は連関図法。単独で載っている項目が無いため topic_is_new。"
+  },
+  {
+   "number": 75,
+   "syllabus_item": 90,
+   "topic_term": "配分問題",
+   "topic_is_new": false,
+   "related_terms": ["シンプレックス法", "線形計画法", "輸送問題", "最適化"],
+   "confidence": "medium",
+   "notes": "限られた部品を製品に割り当てて利益を最大化する線形計画法の問題。「線形計画法」が用語例に無いため、同じ内容を指す用語例「配分問題」を採用した。"
+  },
+  {
+   "number": 76,
+   "syllabus_item": 91,
+   "topic_term": "目標利益売上高",
+   "topic_is_new": false,
+   "related_terms": ["損益分岐点", "費用分解原価計算", "限界利益図表", "販売量"],
+   "confidence": "medium",
+   "notes": "損益分岐点分析の応用（目標営業利益を確保する販売数量）。問77 の「損益分岐点」と分けるため、用語例の「目標利益売上高」を採用した。"
+  },
+  {
+   "number": 77,
+   "syllabus_item": 91,
+   "topic_term": "損益分岐点",
+   "topic_is_new": false,
+   "related_terms": ["変動損益計算書", "限界利益図表", "費用分解原価計算", "利益図表"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 78,
+   "syllabus_item": 92,
+   "topic_term": "特許権",
+   "topic_is_new": false,
+   "related_terms": ["著作権", "意匠権", "商標権", "発明"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 79,
+   "syllabus_item": 92,
+   "topic_term": "ドメイン名の不正取得",
+   "topic_is_new": false,
+   "related_terms": ["営業秘密", "不正競争防止法における営業秘密の 3 要件（秘密管理性，有用性，非公知性）", "商標権", "損害賠償請求"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 80,
+   "syllabus_item": 93,
+   "topic_term": "要配慮個人情報",
+   "topic_is_new": false,
+   "related_terms": ["匿名加工情報", "仮名加工情報", "個人情報取扱事業者", "個人情報保護に関するガイドライン"],
+   "confidence": "high",
+   "notes": null
+  }
+ ]
+}

@@ -1,0 +1,50 @@
+{
+  "topic_id": 436,
+  "term": "MTTR",
+  "figures": [
+    {
+      "id": 1,
+      "type": "chart",
+      "after": "### 稼働率との関係",
+      "caption": "稼働の帯の平均が MTBF、停止の帯の平均が MTTR。稼働率＝MTBF÷(MTBF＋MTTR)＝90÷100＝0.9。",
+      "kind": "step",
+      "x": {
+        "label": "経過時間（時間）",
+        "values": [
+          0,
+          90,
+          100,
+          190
+        ]
+      },
+      "y": {
+        "label": "状態（1＝稼働 / 0＝停止）",
+        "min": 0,
+        "max": 1.5
+      },
+      "series": [
+        {
+          "label": "装置の状態",
+          "values": [
+            1,
+            0,
+            1,
+            1
+          ]
+        }
+      ],
+      "annotations": [
+        {
+          "x": 45,
+          "y": 1.2,
+          "text": "MTBF 90 時間（稼働）"
+        },
+        {
+          "x": 105,
+          "y": 0.4,
+          "text": "MTTR 10 時間（故障→復旧）"
+        }
+      ]
+    }
+  ]
+}

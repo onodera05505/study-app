@@ -1,0 +1,62 @@
+{
+  "topic_id": 334,
+  "term": "クラウドコンピューティング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみと利点・注意点",
+      "caption": "機器を持たず、ネットワーク越しに必要な量だけ借りる。これがオンデマンドでスケーラブル。",
+      "nodes": [
+        {
+          "id": "u",
+          "label": "利用者\n機器を持たない",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "n",
+          "label": "ネットワーク",
+          "row": 0,
+          "col": 1,
+          "shape": "cloud"
+        },
+        {
+          "id": "c",
+          "label": "事業者の資源\nサーバ・ストレージ\nソフトウェア",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "o",
+          "label": "オンプレミス\n自社で買って\n自社で運用",
+          "row": 1,
+          "col": 0,
+          "shape": "round"
+        }
+      ],
+      "edges": [
+        {
+          "from": "u",
+          "to": "n",
+          "label": "必要なときに要求",
+          "arrow": "both"
+        },
+        {
+          "from": "n",
+          "to": "c",
+          "label": "必要な量だけ提供",
+          "arrow": "both"
+        },
+        {
+          "from": "o",
+          "to": "u",
+          "label": "対になる形態",
+          "style": "dashed",
+          "arrow": "none"
+        }
+      ]
+    }
+  ]
+}

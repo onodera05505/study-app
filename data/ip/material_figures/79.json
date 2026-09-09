@@ -1,0 +1,52 @@
+{
+  "topic_id": 79,
+  "term": "労働者派遣契約",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 三者の関係",
+      "caption": "雇用契約を結ぶのは派遣元だけ。派遣先と派遣労働者の間にあるのは指揮命令だけで、雇用関係はない。",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "派遣元\n雇い主",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "w",
+          "label": "派遣労働者",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "b",
+          "label": "派遣先\n働く職場",
+          "row": 0,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "w",
+          "label": "雇用契約（給与を払う）",
+          "arrow": "none"
+        },
+        {
+          "from": "b",
+          "to": "w",
+          "label": "指揮命令だけ（雇用関係は無い）"
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "label": "労働者派遣契約",
+          "arrow": "none"
+        }
+      ]
+    }
+  ]
+}

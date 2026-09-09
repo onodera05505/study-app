@@ -1,0 +1,23 @@
+{
+  "topic_id": 67,
+  "term": "貸借対照表",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 計算の解き方（自己資本比率）",
+      "caption": "自己資本比率は純資産を総資産で割る。左の合計 1,000 が分母、右下の純資産 300 が分子。",
+      "nodes": [
+        {"id": "ca", "label": "流動資産\n730", "row": 0, "col": 0},
+        {"id": "cl", "label": "流動負債\n200", "row": 0, "col": 1},
+        {"id": "fa", "label": "固定資産\n270", "row": 1, "col": 0},
+        {"id": "fl", "label": "固定負債\n500", "row": 1, "col": 1},
+        {"id": "ta", "label": "資産合計 1,000\n＝総資産（分母）", "row": 2, "col": 0, "emphasis": true},
+        {"id": "eq", "label": "純資産 300\n＝自己資本（分子）", "row": 2, "col": 1, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "eq", "to": "ta", "label": "300 ÷ 1,000 ＝ 30％"}
+      ]
+    }
+  ]
+}

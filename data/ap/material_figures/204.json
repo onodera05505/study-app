@@ -1,0 +1,67 @@
+{
+  "topic_id": 204,
+  "term": "デジタルフォレンジックス（証拠保全ほか）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "収集・検査・分析・報告はインシデントが起きた後の活動で、削除ログの復元は検査に当たる。",
+      "nodes": [
+        {
+          "id": "s1",
+          "label": "収集\n改変せずに保全",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "s2",
+          "label": "検査\n削除ログを復元",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "s3",
+          "label": "分析\n時系列を組み立て",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "s4",
+          "label": "報告\n証拠としてまとめ",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "pre",
+          "label": "予防・検知（発生前）\n暗号化 / SIEM の相関分析",
+          "row": 1,
+          "col": 0,
+          "shape": "round"
+        }
+      ],
+      "edges": [
+        {
+          "from": "s1",
+          "to": "s2"
+        },
+        {
+          "from": "s2",
+          "to": "s3"
+        },
+        {
+          "from": "s3",
+          "to": "s4"
+        },
+        {
+          "from": "pre",
+          "to": "s1",
+          "style": "dashed",
+          "arrow": "none",
+          "label": "手順に含まれない"
+        }
+      ]
+    }
+  ]
+}

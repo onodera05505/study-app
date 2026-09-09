@@ -1,0 +1,26 @@
+{
+  "topic_id": 185,
+  "term": "アイデンティティ連携（OpenID Connect，SAML）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### 認証の流れ",
+      "caption": "パスワードは社内にとどまり、クラウドへ渡るのは署名付きの認証結果だけ。",
+      "actors": [
+        {"id": "b", "label": "ブラウザ"},
+        {"id": "sp", "label": "クラウドサービス\n（SP）"},
+        {"id": "idp", "label": "認証サーバ\n（IdP）"},
+        {"id": "dir", "label": "ディレクトリ\nサービス"}
+      ],
+      "steps": [
+        {"from": "b", "to": "sp", "label": "サービスへアクセス（未認証）"},
+        {"from": "sp", "to": "b", "label": "認証サーバへリダイレクト"},
+        {"from": "b", "to": "idp", "label": "利用者 ID とパスワードを入力"},
+        {"from": "idp", "to": "dir", "label": "ID とパスワードを照合", "note": "パスワードはここから外へ出ない"},
+        {"from": "idp", "to": "b", "label": "署名付きアサーション（認証結果）"},
+        {"from": "b", "to": "sp", "label": "アサーションを転送し署名を検証", "note": "クラウド側が直接問い合わせる動きは起こらない"}
+      ]
+    }
+  ]
+}

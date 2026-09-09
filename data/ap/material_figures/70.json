@@ -1,0 +1,23 @@
+{
+  "topic_id": 70,
+  "term": "双方向リスト",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 挿入で書き換える4か所",
+      "caption": "新要素の next は挿入位置の元の次、prev は挿入位置そのもの。前後の要素からの2本も書き換える。",
+      "nodes": [
+        {"id": "d", "label": "要素番号 3\n値 D", "row": 0, "col": 0},
+        {"id": "c", "label": "要素番号 6\n新要素 C", "row": 0, "col": 1, "emphasis": true},
+        {"id": "e", "label": "要素番号 5\n値 E", "row": 0, "col": 2}
+      ],
+      "edges": [
+        {"from": "d", "to": "c", "label": "next[3]＝6"},
+        {"from": "c", "to": "d", "label": "prev[6]＝3"},
+        {"from": "c", "to": "e", "label": "next[6]＝5"},
+        {"from": "e", "to": "c", "label": "prev[5]＝6"}
+      ]
+    }
+  ]
+}

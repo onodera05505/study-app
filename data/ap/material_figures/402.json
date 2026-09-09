@@ -1,0 +1,22 @@
+{
+  "topic_id": 402,
+  "term": "DHCP",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### しくみ",
+      "caption": "最初の DISCOVER をブロードキャストで投げるので、クライアントに DHCP サーバのアドレスを設定しておく必要はない。",
+      "actors": [
+        {"id": "pc", "label": "PC（クライアント）"},
+        {"id": "sv", "label": "DHCP サーバ"}
+      ],
+      "steps": [
+        {"from": "pc", "to": "sv", "label": "DHCPDISCOVER をブロードキャスト", "note": "自分の IP も相手の IP も未知。送信元 0.0.0.0 ／ 宛先 255.255.255.255"},
+        {"from": "sv", "to": "pc", "label": "DHCPOFFER（貸せる IP アドレスを提示）"},
+        {"from": "pc", "to": "sv", "label": "DHCPREQUEST（その IP を使うと申告）"},
+        {"from": "sv", "to": "pc", "label": "DHCPACK（確定）", "note": "IP と一緒にサブネットマスクやデフォルトゲートウェイも配る。リースなので次回も同じとは限らない"}
+      ]
+    }
+  ]
+}

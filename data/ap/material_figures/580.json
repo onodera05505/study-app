@@ -1,0 +1,65 @@
+{
+  "topic_id": 580,
+  "term": "パテントプール",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 交渉の窓口を1つにまとめる",
+      "caption": "各社の必須特許を1か所に持ち寄るので、実装する側は1回の契約でまとめて許諾を受けられる。",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "A 社の\n必須特許",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "b",
+          "label": "B 社の\n必須特許",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "c",
+          "label": "C 社の\n必須特許",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "pool",
+          "label": "パテントプール\n管理団体が一括管理",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "impl",
+          "label": "規格を実装する\n企業",
+          "row": 1,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "pool"
+        },
+        {
+          "from": "b",
+          "to": "pool",
+          "label": "権利を持ち寄る"
+        },
+        {
+          "from": "c",
+          "to": "pool"
+        },
+        {
+          "from": "pool",
+          "to": "impl",
+          "label": "一括で許諾"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "topic_id": 302,
+  "term": "MRP",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 計算の解き方",
+      "caption": "b は A の直下と a 経由の2経路から必要になり、各階層で在庫を引いてから下位へ展開する。",
+      "nodes": [
+        {"id": "pa", "label": "製品 A\n出荷 300 − 在庫 100\n＝ 200 を生産", "row": 0, "col": 0},
+        {"id": "sa", "label": "部品 a\n200×3 ＝ 600\n− 在庫 100 ＝ 500", "row": 1, "col": 1},
+        {"id": "sb", "label": "部品 b\n400 ＋ 500 ＝ 900\n− 在庫 300 ＝ 600", "row": 2, "col": 0, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "pa", "to": "sa", "label": "A 1 個に a 3 個"},
+        {"from": "pa", "to": "sb", "label": "A 1 個に b 2 個 → 400"},
+        {"from": "sa", "to": "sb", "label": "a 1 個に b 1 個 → 500"}
+      ]
+    }
+  ]
+}

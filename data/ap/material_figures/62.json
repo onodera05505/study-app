@@ -1,0 +1,66 @@
+{
+  "topic_id": 62,
+  "term": "ハミング符号",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 誤り位置が分かるしくみ",
+      "caption": "検査式を 1・2・4 の重みで足した値がそのまま誤りビットの位置になる（すべて 0 なら誤り無し）。",
+      "nodes": [
+        {
+          "id": "c0",
+          "label": "c0 ＝ x1+x3+x5+x7\n（mod 2）",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "c1",
+          "label": "c1 ＝ x2+x3+x6+x7\n（mod 2）",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "c2",
+          "label": "c2 ＝ x4+x5+x6+x7\n（mod 2）",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "pos",
+          "label": "誤り位置 i\n＝ c0＋2c1＋4c2",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "fix",
+          "label": "左から i 番目のビットを反転\n＝ 訂正完了",
+          "row": 2,
+          "col": 1,
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "c0",
+          "to": "pos",
+          "label": "1 の位"
+        },
+        {
+          "from": "c1",
+          "to": "pos",
+          "label": "2 の位"
+        },
+        {
+          "from": "c2",
+          "to": "pos",
+          "label": "4 の位"
+        },
+        {
+          "from": "pos",
+          "to": "fix"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "topic_id": 280,
+  "term": "エッジコンピューティング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### なぜ手元で処理するのか",
+      "caption": "デバイスの近くで処理して減らしてから送るので、通信量もサーバーの負荷も小さくなる。",
+      "nodes": [
+        {"id": "dev", "label": "IoT デバイス\nカメラ・センサ", "row": 0, "col": 0},
+        {"id": "edge", "label": "エッジ\n（IoT ゲートウェイ）\nその場で処理", "row": 0, "col": 1, "emphasis": true},
+        {"id": "cloud", "label": "クラウドの\nIoT サーバ", "row": 0, "col": 2, "shape": "cloud"},
+        {"id": "cut", "label": "いらない分は\nここで捨てる", "row": 1, "col": 1}
+      ],
+      "edges": [
+        {"from": "dev", "to": "edge", "label": "生データ（大量）"},
+        {"from": "edge", "to": "cloud", "label": "必要な結果だけ（少量）"},
+        {"from": "edge", "to": "cut", "style": "dashed", "arrow": "none"}
+      ]
+    }
+  ]
+}

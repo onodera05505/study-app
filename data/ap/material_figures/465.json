@@ -1,0 +1,26 @@
+{
+  "topic_id": 465,
+  "term": "偽装請負",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 判定の手順",
+      "caption": "作業場所が同じでも、指示を出す責任者の所属が従業員の所属と食い違えば偽装請負になる。",
+      "nodes": [
+        {"id": "mb", "label": "B 社の責任者", "row": 0, "col": 0},
+        {"id": "eb", "label": "B 社の従業員\n作業場所は A 社", "row": 0, "col": 1},
+        {"id": "ok", "label": "請負として正常", "row": 0, "col": 2, "shape": "round"},
+        {"id": "ma", "label": "A 社の責任者", "row": 1, "col": 0, "emphasis": true},
+        {"id": "eb2", "label": "B 社の従業員\n作業場所は A 社", "row": 1, "col": 1},
+        {"id": "ng", "label": "偽装請負", "row": 1, "col": 2, "shape": "round", "emphasis": true}
+      ],
+      "edges": [
+        {"from": "mb", "to": "eb", "label": "指揮命令"},
+        {"from": "eb", "to": "ok"},
+        {"from": "ma", "to": "eb2", "label": "指揮命令"},
+        {"from": "eb2", "to": "ng"}
+      ]
+    }
+  ]
+}

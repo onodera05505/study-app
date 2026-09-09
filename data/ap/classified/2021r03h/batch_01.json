@@ -1,0 +1,249 @@
+{
+  "exam": "2021r03h",
+  "range": "1-27",
+  "classifications": [
+    {
+      "number": 1,
+      "syllabus_item": 1,
+      "topic_term": "排他的論理和",
+      "topic_is_new": false,
+      "related_terms": ["否定論理和", "論理積", "論理和", "命題論理"],
+      "confidence": "high",
+      "notes": "排他的論理和の相補演算（否定）が等価演算であることを問う。用語例「排他的論理和」（項目1）をそのままコピーした。等価演算は用語例に無いため related には入れていない"
+    },
+    {
+      "number": 2,
+      "syllabus_item": 1,
+      "topic_term": "桁落ち",
+      "topic_is_new": false,
+      "related_terms": ["情報落ち", "丸め", "打切り", "オーバーフロー（あふれ）"],
+      "confidence": "high",
+      "notes": "誤差の種類を区別させる問題だが，正解肢の主題は桁落ち。用語例「桁落ち」は項目1にある"
+    },
+    {
+      "number": 3,
+      "syllabus_item": 26,
+      "topic_term": "音声のデータ量",
+      "topic_is_new": true,
+      "related_terms": ["標本化周波数", "量子化ビット数", "サンプリング", "PCM（Pulse Code Modulation：パルス符号変調）"],
+      "confidence": "medium",
+      "notes": "40kHz×16ビット÷8＝80kバイト／秒。用語例には標本化周波数・量子化ビット数はあるが「データ量を求める」論点に当たる語が無い。既存の新規論点「動画像のデータ量」（項目26，2024r06a 問26）と粒度・命名を揃えた。項目5（A/D変換）とも迷ったが，音声のディジタル化とデータ量は項目26の範囲"
+    },
+    {
+      "number": 4,
+      "syllabus_item": 5,
+      "topic_term": "サーミスタ",
+      "topic_is_new": false,
+      "related_terms": ["温度センサー", "超音波センサー", "フォトトランジスタ", "ホール素子"],
+      "confidence": "high",
+      "notes": "用語例「サーミスタ」（項目5）をそのままコピー。選択肢のポテンショメータは用語例に無い"
+    },
+    {
+      "number": 5,
+      "syllabus_item": 6,
+      "topic_term": "LIFO",
+      "topic_is_new": false,
+      "related_terms": ["プッシュ", "ポップ", "FIFO", "線形リスト"],
+      "confidence": "high",
+      "notes": "スタックの入出力順序の数え上げ。「スタック」は項目6の用語例に無く，既存論点「LIFO」（項目6，2025r07h 問5）に揃えた"
+    },
+    {
+      "number": 6,
+      "syllabus_item": 6,
+      "topic_term": "幅優先探索",
+      "topic_is_new": false,
+      "related_terms": ["2分木", "完全2分木", "深さ優先探索", "先行順"],
+      "confidence": "high",
+      "notes": "配列による2分木表現を先頭から走査すると幅優先順になる。「幅優先探索」は項目6と項目7の両方の用語例にある同一概念だが，主題が2分木の表現なので項目6（データ構造）を選んだ。既存論点「後行順」（項目6，2024r06h 問6）と同じ扱い"
+    },
+    {
+      "number": 7,
+      "syllabus_item": 7,
+      "topic_term": "分割統治法",
+      "topic_is_new": false,
+      "related_terms": ["再帰", "動的計画法", "マージソート", "クイックソート"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 8,
+      "syllabus_item": 9,
+      "topic_term": "R",
+      "topic_is_new": false,
+      "related_terms": ["Go", "スクリプト言語", "Python", "Julia"],
+      "confidence": "high",
+      "notes": "用語例「R」（項目9 プログラム言語）をそのままコピー。既存論点「R」（項目9，2024r06a 問7）と同一表記。1文字の論点名なので，統合時に別概念（コマンド名や単位記号など）と混ざらないよう，あくまで統計解析向けプログラム言語 R を指す"
+    },
+    {
+      "number": 9,
+      "syllabus_item": 11,
+      "topic_term": "命令ミックス",
+      "topic_is_new": false,
+      "related_terms": ["FLOPS", "サイクルタイム", "CPI（Cycles Per Instruction）", "分岐命令"],
+      "confidence": "high",
+      "notes": "平均実行時間 25 ナノ秒 → 40 MIPS。用語例「命令ミックス」は項目11にある"
+    },
+    {
+      "number": 10,
+      "syllabus_item": 11,
+      "topic_term": "GPU",
+      "topic_is_new": false,
+      "related_terms": ["GPGPU", "SIMD", "マルチコアプロセッサ", "TPU（Tensor Processing Unit）"],
+      "confidence": "high",
+      "notes": "既存論点「GPU」（項目11，2022r04a 問8）に揃えた"
+    },
+    {
+      "number": 11,
+      "syllabus_item": 16,
+      "topic_term": "グリッドコンピューティング",
+      "topic_is_new": false,
+      "related_terms": ["疎結合", "密結合", "マルチプロセッサシステム", "クラスタ"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 12,
+      "syllabus_item": 12,
+      "topic_term": "ライトスルー",
+      "topic_is_new": false,
+      "related_terms": ["ライトバック", "ディスクキャッシュ", "命令キャッシュ", "データキャッシュ"],
+      "confidence": "high",
+      "notes": "2023r05h 問10 と同一の問題文で，そちらが既存論点「ライトスルー」（項目12）に分類済み。ライトスルーとライトバックの比較だが正解肢の主題はライトスルーなので同じ表記に揃えた"
+    },
+    {
+      "number": 13,
+      "syllabus_item": 16,
+      "topic_term": "フォールトアボイダンス",
+      "topic_is_new": false,
+      "related_terms": ["フェールセーフ", "フェールソフト", "フォールトトレラントシステム", "フールプルーフ"],
+      "confidence": "high",
+      "notes": "信頼性設計の用語を比較させる問題。正解肢の主題はフォールトアボイダンス。既存論点（項目16，2022r04a 問13 ほか）に揃えた"
+    },
+    {
+      "number": 14,
+      "syllabus_item": 16,
+      "topic_term": "信頼性ブロック図",
+      "topic_is_new": false,
+      "related_terms": ["並列運転", "予備切替", "フォールトトレラントシステム", "稼働率"],
+      "confidence": "high",
+      "notes": "2025r07h 問13（構成図から稼働率のグラフを選ぶ）と同型で，そちらは既存論点「信頼性ブロック図」（項目16）。稼働率の数値計算ではなく直列・並列構成の読み取りが中心なので同じ表記に揃えた"
+    },
+    {
+      "number": 15,
+      "syllabus_item": 11,
+      "topic_term": "密結合マルチプロセッサシステム",
+      "topic_is_new": false,
+      "related_terms": ["疎結合マルチプロセッサシステム", "SMP（Symmetric Multi Processing：対称型マルチプロセッシング）", "アムダールの法則", "ディスパッチ"],
+      "confidence": "medium",
+      "notes": "項目16にも「密結合」という用語例があるが，完全な表記「密結合マルチプロセッサシステム」は項目11。プロセッサ数と性能の関係（主記憶アクセスの競合）が中心なので項目11を選んだ"
+    },
+    {
+      "number": 16,
+      "syllabus_item": 17,
+      "topic_term": "ターンアラウンドタイム",
+      "topic_is_new": false,
+      "related_terms": ["レスポンスタイム（応答時間）", "スループット", "FCFS（First Come First Served）", "多重（マルチ）プログラミング"],
+      "confidence": "high",
+      "notes": "ジョブCは 11 秒から 14 秒まで実行され，到着が 3 秒なので 11 秒"
+    },
+    {
+      "number": 17,
+      "syllabus_item": 18,
+      "topic_term": "プリエンプティブ方式",
+      "topic_is_new": false,
+      "related_terms": ["実行可能状態", "実行状態", "待ち状態", "リアルタイム OS"],
+      "confidence": "high",
+      "notes": "タスクの状態遷移を問うが，用語例にある主題語は「プリエンプティブ方式」。既存論点（項目18，2023r05a 問17 ほか）に揃えた"
+    },
+    {
+      "number": 18,
+      "syllabus_item": 18,
+      "topic_term": "ガベージコレクション",
+      "topic_is_new": false,
+      "related_terms": ["ヒープ", "動的リンキング", "メモリコンパクション", "記憶域管理アルゴリズム（ファーストフィット，ベストフィット，ワーストフィット）"],
+      "confidence": "medium",
+      "notes": "用語例「ガベージコレクション」が載るのは項目9（プログラム言語，ヒープと並記）だが，設問の枠組みは主記憶管理で他の選択肢（可変区画方式・動的リンキング・動的再配置）は OS の用語なので項目18とした。問題文の表記は「ガーベジコレクション」だが，表記を揺らさないため用語例の「ガベージコレクション」をコピーした"
+    },
+    {
+      "number": 19,
+      "syllabus_item": 18,
+      "topic_term": "ページフォールト",
+      "topic_is_new": false,
+      "related_terms": ["ページイン", "ページアウト", "デマンドページング", "ページリプレースメント"],
+      "confidence": "high",
+      "notes": "ページフォールト＝ページイン≧ページアウト。既存論点「ページフォールト」（項目18，2021r03a 問17，2023r05a 問16）に揃えた"
+    },
+    {
+      "number": 20,
+      "syllabus_item": 32,
+      "topic_term": "Apache Hadoop",
+      "topic_is_new": true,
+      "related_terms": ["分散ファイルシステム（HDFS（Hadoop Distributed File System），Ceph，GlusterFSほか）", "Apache Spark", "ビッグデータ", "DBMS"],
+      "confidence": "medium",
+      "notes": "用語例は「分散処理フレームワーク（Apache Hadoop，Apache Sparkほか）」で括弧内は別概念の列挙。設問の主題は Hadoop なので括弧内の1語だけを採り，他項目に単独記載が無いため topic_is_new: true。項目19（ミドルウェア）とも迷ったが，用語例が載るのは項目32"
+    },
+    {
+      "number": 21,
+      "syllabus_item": 14,
+      "topic_term": "RFID",
+      "topic_is_new": true,
+      "related_terms": ["NFC", "IrDA", "Bluetooth", "ICタグ"],
+      "confidence": "medium",
+      "notes": "項目14の用語例に RFID は無い（単独記載は項目86の「ICカード・RFID応用システム」の一部のみ）。既存の新規論点「RFID」（項目14，2021r03a 問20）に揃えた。項目37（ネットワーク応用）とも迷ったが先例に従った"
+    },
+    {
+      "number": 22,
+      "syllabus_item": 23,
+      "topic_term": "SoC（System on a Chip）",
+      "topic_is_new": false,
+      "related_terms": ["LSI", "ASIC（Application Specific IC）", "マイクロコントローラー", "IC"],
+      "confidence": "high",
+      "notes": "既存論点「SoC（System on a Chip）」（項目23，2024r06a 問22）と同一表記"
+    },
+    {
+      "number": 23,
+      "syllabus_item": 23,
+      "topic_term": "Hブリッジ回路",
+      "topic_is_new": true,
+      "related_terms": ["アクチュエーター", "ブラシレス DC モーター", "PWM（Pulse Width Modulation：パルス幅変調）制御", "パワー半導体"],
+      "confidence": "medium",
+      "notes": "S2 と S3 を導通させると電流が－端子から＋端子へ流れて逆転する（選択肢ウ）。用語例には「アクチュエーター」しか無いが，既存論点「アクチュエーター」（項目23）は用語の意味を問う3問で構成されており，本問はモータ駆動回路の読み取りが中心なので粒度を合わせて新規論点にした。項目5（DC サーボモーター等）とも迷ったが，スイッチ素子による回路構成の理解が中心なので項目23"
+    },
+    {
+      "number": 24,
+      "syllabus_item": 23,
+      "topic_term": "コンデンサ",
+      "topic_is_new": true,
+      "related_terms": ["回路素子（抵抗，コンデンサ，コイル，トランスほか）", "ダイオード", "トランジスタ", "電源回路"],
+      "confidence": "high",
+      "notes": "用語例は「回路素子（抵抗，コンデンサ，コイル，トランスほか）」で括弧内は別概念の列挙。設問の主題はコンデンサなのでその1語だけを採り，他項目に単独記載が無いため topic_is_new: true とした"
+    },
+    {
+      "number": 25,
+      "syllabus_item": 23,
+      "topic_term": "フリップフロップ",
+      "topic_is_new": false,
+      "related_terms": ["NAND 回路", "順序回路", "タイミングチャート", "真理値表"],
+      "confidence": "high",
+      "notes": "たすき掛けの NAND ラッチ（RS フリップフロップ）。S を 0 にしてから 1 に戻すとセットされ X＝1，Y＝0。既存論点「フリップフロップ」（項目23，2023r05a 問22）に揃えた"
+    },
+    {
+      "number": 26,
+      "syllabus_item": 24,
+      "topic_term": "パンくずリスト",
+      "topic_is_new": true,
+      "related_terms": ["ナビゲーション", "階層型", "サイトマップ", "ユーザビリティ"],
+      "confidence": "medium",
+      "notes": "用語例に無い。項目25（UX/UI デザイン。サイトマップ，ナビゲーションデザインがある）とも迷ったが，階層構造をたどる画面部品なので，既存の新規論点「ハンバーガーメニュー」（項目24，2025r07a 問24）と同じ扱いで項目24にした"
+    },
+    {
+      "number": 27,
+      "syllabus_item": 10,
+      "topic_term": "SVG（Scalable Vector Graphics）",
+      "topic_is_new": false,
+      "related_terms": ["XML Schema", "DOM（Document Object Model）", "PNG", "ベクターデータ"],
+      "confidence": "medium",
+      "notes": "既存論点「SVG（Scalable Vector Graphics）」（項目10，2025r07h 問23）と同一表記。画像フォーマットとして項目26とも迷ったが，用語例が載るのは項目10（その他の言語）で，設問も W3C 仕様・XML 形式を強調している"
+    }
+  ]
+}

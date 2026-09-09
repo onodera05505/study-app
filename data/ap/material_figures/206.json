@@ -1,0 +1,67 @@
+{
+  "topic_id": 206,
+  "term": "IPsec",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 混同しやすい用語（層で整理する）",
+      "caption": "暗号化の仕組みは動く層で見分ける。ネットワーク層＝ IP ＝ IPsec。",
+      "nodes": [
+        {
+          "id": "l1",
+          "label": "アプリケーション層",
+          "row": 0,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "p1",
+          "label": "SSH\nログインや転送を暗号化",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "l2",
+          "label": "トランスポート層",
+          "row": 1,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "p2",
+          "label": "TLS\nアプリの通信を暗号化",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "l3",
+          "label": "ネットワーク層（IP）",
+          "row": 2,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "p3",
+          "label": "IPsec\nIP パケットごと暗号化\nAH・ESP・IKE",
+          "row": 2,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "l4",
+          "label": "データリンク層",
+          "row": 3,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "p4",
+          "label": "PPP\n接続の手順。暗号化ではない",
+          "row": 3,
+          "col": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,358 @@
+{
+  "exam": "2023r05h",
+  "range": "55-80",
+  "classifications": [
+    {
+      "number": 55,
+      "syllabus_item": 66,
+      "topic_term": "継続的改善",
+      "topic_is_new": false,
+      "related_terms": [
+        "サービスマネジメントシステム",
+        "JIS Q 20000の規格群（ISO/IEC 20000シリーズ）",
+        "パフォーマンス",
+        "是正処置"
+      ],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 56,
+      "syllabus_item": 65,
+      "topic_term": "サービスレベル管理",
+      "topic_is_new": false,
+      "related_terms": [
+        "サービスレベル目標",
+        "SLA",
+        "サービスの報告",
+        "パフォーマンス"
+      ],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 57,
+      "syllabus_item": 65,
+      "topic_term": "IaaSなどのクラウドサービスの利用",
+      "topic_is_new": false,
+      "related_terms": [
+        "PaaS",
+        "SaaS",
+        "オンプレミス",
+        "システム運用管理"
+      ],
+      "confidence": "medium",
+      "notes": "クラウド移行で不要となる運用作業の切り分けを問う問題。中心知識は IaaS/PaaS の責任分界なので項目65とした。設問の題材がシステム運用作業なので項目67（サービスの運用）と採る余地もある。既存論点「IaaSなどのクラウドサービスの利用」（2025r07h 問56）に合わせた。"
+    },
+    {
+      "number": 58,
+      "syllabus_item": 69,
+      "topic_term": "予備調査",
+      "topic_is_new": true,
+      "related_terms": [
+        "ドキュメントレビュー法（文書及び記録の収集・閲覧）",
+        "本調査",
+        "監査証拠の入手と評価",
+        "個別監査計画"
+      ],
+      "confidence": "high",
+      "notes": "「予備調査」は用語例に無いが、既存論点（2024r06a 問59）と同名なのでそれに合流させた。"
+    },
+    {
+      "number": 59,
+      "syllabus_item": 69,
+      "topic_term": "インタビュー法（質問書・調査票）",
+      "topic_is_new": false,
+      "related_terms": [
+        "チェックリスト法",
+        "現地調査法",
+        "監査ソフトウェア",
+        "監査証拠の入手と評価"
+      ],
+      "confidence": "medium",
+      "notes": "選択肢がインタビュー法・現地調査法・コンピュータ支援監査技法・チェックリスト法にまたがる。正解（ア）が説明している技法がインタビュー法なので、それを主題と判断した。論点を「監査証拠の入手と評価」と採る余地もある。"
+    },
+    {
+      "number": 60,
+      "syllabus_item": 70,
+      "topic_term": "財務報告に係る内部統制の評価及び監査の基準",
+      "topic_is_new": false,
+      "related_terms": [
+        "内部統制の基本的要素（統制環境，リスクの評価と対応，統制活動，情報と伝達，モニタリング，IT への対応）",
+        "内部統制報告制度",
+        "職務分掌"
+      ],
+      "confidence": "medium",
+      "notes": "主題は同基準における関係者（経営者・取締役会・監査役・内部監査人）の役割と責任。これに対応する個別の用語例が無いため、基準名そのものを論点にした。"
+    },
+    {
+      "number": 61,
+      "syllabus_item": 71,
+      "topic_term": "ROI（Return onInvestment：投資利益率）",
+      "topic_is_new": false,
+      "related_terms": [
+        "IT 投資マネジメント",
+        "投資効果",
+        "NPV（Net Present Value：正味現在価値）"
+      ],
+      "confidence": "medium",
+      "notes": "情報化投資計画における投資効果の評価指標を問う問題。文脈から項目71（情報システム戦略・IT 投資マネジメント）としたが、ROI の用語例自体は項目91（会計・財務）にあり、項目75（システム化計画）と採る余地もある。表記は項目91の用語例をそのままコピーした（原文どおり Return onInvestment）。"
+    },
+    {
+      "number": 62,
+      "syllabus_item": 79,
+      "topic_term": "カスタマーエクスペリエンス",
+      "topic_is_new": true,
+      "related_terms": [
+        "UX（User Experience）",
+        "顧客ロイヤルティ",
+        "顧客価値",
+        "CRM（Customer Relationship Management：顧客関係管理）"
+      ],
+      "confidence": "medium",
+      "notes": "CEM／カスタマーエクスペリエンスに当たる用語例が無いため新規論点。顧客体験の価値を扱う項目79（マーケティング）としたが、CRM の系譜として項目81（経営管理システム）と採る余地もある。"
+    },
+    {
+      "number": 63,
+      "syllabus_item": 86,
+      "topic_term": "情報銀行",
+      "topic_is_new": false,
+      "related_terms": [
+        "パーソナルデータ",
+        "オープンデータ",
+        "匿名加工情報",
+        "ビッグデータ"
+      ],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 64,
+      "syllabus_item": 76,
+      "topic_term": "トレーサビリティ",
+      "topic_is_new": false,
+      "related_terms": [
+        "要求仕様書",
+        "ステークホルダ",
+        "アカウンタビリティ",
+        "業務要件定義"
+      ],
+      "confidence": "high",
+      "notes": "システム要件定義プロセスにおける要求の追跡可能性を問う問題なので、項目76の用語例「トレーサビリティ」を採用（項目84にも同名の用語例があるが、そちらは流通のトレーサビリティ）。"
+    },
+    {
+      "number": 65,
+      "syllabus_item": 77,
+      "topic_term": "RFI",
+      "topic_is_new": true,
+      "related_terms": [
+        "RFP（提案依頼書）",
+        "調達条件",
+        "供給者の選定"
+      ],
+      "confidence": "high",
+      "notes": "RFI・RFP は応用情報シラバス Ver.7.2 の用語例に見当たらないため新規論点とした。"
+    },
+    {
+      "number": 66,
+      "syllabus_item": 77,
+      "topic_term": "見積依頼",
+      "topic_is_new": true,
+      "related_terms": [
+        "要件定義書",
+        "共通フレーム 2013",
+        "提案依頼書（RFP）"
+      ],
+      "confidence": "medium",
+      "notes": "ベンダーへの見積り依頼時に要件定義書が必要という調達手順を問う問題。対応する用語例が無いため新規論点「見積依頼」とした。"
+    },
+    {
+      "number": 67,
+      "syllabus_item": 79,
+      "topic_term": "ROAS（Return On Advertising Spend）",
+      "topic_is_new": true,
+      "related_terms": [
+        "インターネット広告",
+        "コンバージョン率",
+        "広告"
+      ],
+      "confidence": "high",
+      "notes": "ROAS は用語例に無いため新規論点。広告効果の指標なので項目79（マーケティング）とした。"
+    },
+    {
+      "number": 68,
+      "syllabus_item": 80,
+      "topic_term": "バランススコアカード",
+      "topic_is_new": true,
+      "related_terms": [
+        "戦略マップ",
+        "財務の視点",
+        "顧客の視点",
+        "学習と成長の視点"
+      ],
+      "confidence": "high",
+      "notes": "主題は戦略マップだが、バランススコアカードの構成要素なので既存の新規論点「バランススコアカード」（2025r07a 問68）に合流させ、戦略マップは related_terms に置いた。"
+    },
+    {
+      "number": 69,
+      "syllabus_item": 80,
+      "topic_term": "フィージビリティスタディ",
+      "topic_is_new": false,
+      "related_terms": [
+        "採算性",
+        "実行可能性",
+        "システム化構想"
+      ],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 70,
+      "syllabus_item": 82,
+      "topic_term": "共同研究",
+      "topic_is_new": false,
+      "related_terms": [
+        "TLO（Technology Licensing Organization：技術移転機関）",
+        "産学官連携",
+        "特許法"
+      ],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 71,
+      "syllabus_item": 87,
+      "topic_term": "エネルギーハーベスティング",
+      "topic_is_new": false,
+      "related_terms": [
+        "IoT（Internet of Things）",
+        "センサーネットワーク",
+        "ワイヤレス給電",
+        "省電力"
+      ],
+      "confidence": "medium",
+      "notes": "用語例「エネルギーハーベスティング」は項目23（ハードウェア・テクノロジ系）にあるが、公式分野がストラテジ系なので範囲71〜96から選ぶ必要がある。IoT デバイスへの給電技術という出題文脈から項目87（民生機器）とした。表記は項目23の用語例をコピー。"
+    },
+    {
+      "number": 72,
+      "syllabus_item": 86,
+      "topic_term": "アグリゲーションサービス",
+      "topic_is_new": false,
+      "related_terms": [
+        "オムニチャネル",
+        "フランチャイズチェーン",
+        "アカウントアグリゲーション"
+      ],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 73,
+      "syllabus_item": 84,
+      "topic_term": "デジタルツイン",
+      "topic_is_new": false,
+      "related_terms": [
+        "サイバーフィジカルシステム（CPS）",
+        "IoT（Internet of Things）",
+        "スマートグリッド",
+        "スマートメーター"
+      ],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 74,
+      "syllabus_item": 89,
+      "topic_term": "事業部制組織",
+      "topic_is_new": false,
+      "related_terms": [
+        "機能別組織",
+        "プロジェクト組織",
+        "マトリックス組織"
+      ],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 75,
+      "syllabus_item": 90,
+      "topic_term": "デシジョンツリー",
+      "topic_is_new": false,
+      "related_terms": [
+        "期待値原理",
+        "決定理論",
+        "ペイオフ行列（利得表）"
+      ],
+      "confidence": "high",
+      "notes": "同名の用語例が項目76にもあるが、本問は意思決定の期待値計算なので項目90（業務分析・データ利活用）とした。"
+    },
+    {
+      "number": 76,
+      "syllabus_item": 91,
+      "topic_term": "原価計算",
+      "topic_is_new": false,
+      "related_terms": [
+        "製造原価",
+        "経費",
+        "原価計算基準",
+        "非原価項目"
+      ],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 77,
+      "syllabus_item": 91,
+      "topic_term": "目標利益売上高",
+      "topic_is_new": false,
+      "related_terms": [
+        "損益分岐点",
+        "固定費",
+        "変動費率"
+      ],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 78,
+      "syllabus_item": 94,
+      "topic_term": "下請法",
+      "topic_is_new": true,
+      "related_terms": [
+        "情報成果物",
+        "委託事業者",
+        "製造委託",
+        "役務提供委託"
+      ],
+      "confidence": "high",
+      "notes": "シラバス Ver.7.2 の用語例に「下請法」そのものは無い（製造委託・情報成果物など関連概念のみ）ため新規論点とした。"
+    },
+    {
+      "number": 79,
+      "syllabus_item": 94,
+      "topic_term": "労働者派遣契約",
+      "topic_is_new": false,
+      "related_terms": [
+        "指揮命令",
+        "雇用契約",
+        "二重派遣の禁止"
+      ],
+      "confidence": "high",
+      "notes": "主題は労働者派遣法で派遣元事業主に定められた措置。労働者派遣法を扱う既存論点「労働者派遣契約」（2023r05a 問80，2024r06a 問79）に合流させた。"
+    },
+    {
+      "number": 80,
+      "syllabus_item": 95,
+      "topic_term": "集団思考",
+      "topic_is_new": false,
+      "related_terms": [
+        "技術者の倫理綱領",
+        "技術者の社会的責任",
+        "モラル（遵法の意識）",
+        "内部告発"
+      ],
+      "confidence": "high",
+      "notes": null
+    }
+  ]
+}

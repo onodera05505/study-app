@@ -1,0 +1,23 @@
+{
+  "topic_id": 206,
+  "term": "cookie",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### なぜ必要なのか",
+      "caption": "サイト側が書き込んだ cookie を次のアクセスで送り返すので、同じ利用者だと分かる。",
+      "actors": [
+        {"id": "b", "label": "利用者の PC\n（Web ブラウザ）"},
+        {"id": "s", "label": "Web サイト"}
+      ],
+      "steps": [
+        {"from": "b", "to": "s", "label": "1 回目のアクセス"},
+        {"from": "s", "to": "b", "label": "cookie（識別用のデータ）を渡す", "note": "書き込ませるのはサイト側"},
+        {"from": "b", "to": "b", "label": "PC に保存"},
+        {"from": "b", "to": "s", "label": "2 回目のアクセス（cookie を自動で送信）"},
+        {"from": "s", "to": "b", "label": "同じ利用者だと分かる", "note": "ログイン状態やカートの中身を保てる"}
+      ]
+    }
+  ]
+}

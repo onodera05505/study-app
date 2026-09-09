@@ -1,0 +1,29 @@
+{
+  "topic_id": 437,
+  "term": "ジョブスケジューラー",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 計算の解き方",
+      "caption": "多重度 2 で回を追うと、3 回目に B・C の一時ファイルが残ったまま D・E が始まり同時に 4 個。50M ×4 ＝ 200M バイト。",
+      "nodes": [
+        {"id": "a", "label": "A\n1 回目", "row": 1, "col": 0, "shape": "round"},
+        {"id": "b", "label": "B\n2 回目", "row": 0, "col": 1, "shape": "round"},
+        {"id": "c", "label": "C\n2 回目", "row": 2, "col": 1, "shape": "round"},
+        {"id": "d", "label": "D\n3 回目", "row": 0, "col": 2, "shape": "round", "emphasis": true},
+        {"id": "e", "label": "E\n3 回目", "row": 2, "col": 2, "shape": "round", "emphasis": true},
+        {"id": "f", "label": "F\n4 回目", "row": 1, "col": 3, "shape": "round"}
+      ],
+      "edges": [
+        {"from": "a", "to": "b"},
+        {"from": "a", "to": "c"},
+        {"from": "b", "to": "d"},
+        {"from": "b", "to": "e"},
+        {"from": "c", "to": "e"},
+        {"from": "d", "to": "f"},
+        {"from": "e", "to": "f"}
+      ]
+    }
+  ]
+}

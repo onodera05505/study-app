@@ -1,0 +1,23 @@
+{
+  "topic_id": 323,
+  "term": "BSC（Balanced Scorecard：バランススコアカード）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 4つの視点とそのつながり",
+      "caption": "下の視点から上へ効果がつながる。料金など顧客に示す価値は財務ではなく顧客の視点。",
+      "nodes": [
+        {"id": "f", "label": "財務の視点\n売上・利益率", "row": 0, "col": 0},
+        {"id": "c", "label": "顧客の視点\n価格・満足度", "row": 1, "col": 0, "emphasis": true},
+        {"id": "p", "label": "業務プロセスの視点\n社内の仕事のやり方", "row": 2, "col": 0},
+        {"id": "l", "label": "学習と成長の視点\n人材・技術力", "row": 3, "col": 0}
+      ],
+      "edges": [
+        {"from": "l", "to": "p", "label": "人が育つと"},
+        {"from": "p", "to": "c", "label": "仕事の質が上がると"},
+        {"from": "c", "to": "f", "label": "顧客が増えると"}
+      ]
+    }
+  ]
+}

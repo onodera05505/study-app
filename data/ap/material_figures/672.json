@@ -1,0 +1,25 @@
+{
+  "topic_id": 672,
+  "term": "無向グラフ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 木になる条件",
+      "caption": "ノード5個に対し辺が4本（隣接行列の1が8個）で、しかも全部つながっているので木。閉路があれば辺は5本以上になる。",
+      "nodes": [
+        {"id": "n5", "label": "5", "row": 0, "col": 0, "shape": "round"},
+        {"id": "n1", "label": "1", "row": 0, "col": 1, "shape": "round"},
+        {"id": "n2", "label": "2", "row": 0, "col": 2, "shape": "round", "emphasis": true},
+        {"id": "n3", "label": "3", "row": 0, "col": 3, "shape": "round"},
+        {"id": "n4", "label": "4", "row": 1, "col": 2, "shape": "round"}
+      ],
+      "edges": [
+        {"from": "n5", "to": "n1", "arrow": "none"},
+        {"from": "n1", "to": "n2", "arrow": "none"},
+        {"from": "n2", "to": "n3", "arrow": "none"},
+        {"from": "n2", "to": "n4", "arrow": "none"}
+      ]
+    }
+  ]
+}

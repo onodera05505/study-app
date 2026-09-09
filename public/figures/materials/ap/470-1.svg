@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="344" viewBox="0 0 640 344" role="img">
+<title>インタリーブは主記憶の内部を分ける話で、キャッシュは CPU との間、ディスクキャッシュと仮想記憶はディスクとの間、DMA は入出力装置との間の話。</title>
+<rect x="0.5" y="0.5" width="639" height="343" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(159.15 20)">
+<polyline points="85.85,46 85.85,92" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="85.85,92 82.25,84 89.45,84" fill="#1f2937"/>
+<polygon points="85.85,46 89.45,54 82.25,54" fill="#1f2937"/>
+<polyline points="171.7,130 218.7,130" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="218.7,130 210.7,133.6 210.7,126.4" fill="#1f2937"/>
+<polygon points="171.7,130 179.7,126.4 179.7,133.6" fill="#1f2937"/>
+<polyline points="85.85,168 85.85,214" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="85.85,214 82.25,206 89.45,206" fill="#1f2937"/>
+<polygon points="85.85,168 89.45,176 82.25,176" fill="#1f2937"/>
+<rect x="37.85" y="0" width="96" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="85.85" y="27.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">CPU</text>
+<rect x="0" y="92" width="171.7" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="85.85" y="114.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">主記憶</text>
+<text x="85.85" y="134.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">バンク 0〜3 に分割</text>
+<text x="85.85" y="154.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">＝ メモリインタリーブ</text>
+<rect x="218.7" y="107" width="96" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="266.7" y="134.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">入出力装置</text>
+<path d="M 17.85 223 A 68 9 0 0 0 153.85 223 L 153.85 251 A 68 9 0 0 1 17.85 251 Z" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<path d="M 17.85 223 A 68 9 0 0 1 153.85 223" fill="none" stroke="#1f2937" stroke-width="1"/>
+<text x="85.85" y="243.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">磁気ディスク装置</text>
+<rect x="33.85" y="60" width="104" height="16" rx="3" fill="#ffffff"/>
+<text x="85.85" y="73.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">キャッシュメモリ</text>
+<rect x="181.3" y="113" width="27.8" height="16" rx="3" fill="#ffffff"/>
+<text x="195.2" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">DMA</text>
+<rect x="-2.15" y="182" width="176" height="16" rx="3" fill="#ffffff"/>
+<text x="85.85" y="195.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">ディスクキャッシュ／仮想記憶</text>
+</g>
+<text x="320" y="308" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">インタリーブは主記憶の内部を分ける話で、キャッシュは CPU との間、ディスクキャッシュと仮想記憶はディ</text>
+<text x="320" y="324" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">スクとの間、DMA は入出力装置との間の話。</text>
+</svg>

@@ -1,0 +1,25 @@
+{
+  "topic_id": 479,
+  "term": "ブロードキャスト",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 宛先アドレスの書き方が範囲を決める",
+      "caption": "送信は一度だけで、同一セグメントの全ノードが同じフレームを受け取る（順番に送るのではない）。",
+      "nodes": [
+        {"id": "src", "label": "送信元", "row": 1, "col": 0, "emphasis": true},
+        {"id": "sw", "label": "同一セグメント", "row": 1, "col": 1, "shape": "cloud"},
+        {"id": "a", "label": "ノード A", "row": 0, "col": 2},
+        {"id": "b", "label": "ノード B", "row": 1, "col": 2},
+        {"id": "c", "label": "ノード C", "row": 2, "col": 2}
+      ],
+      "edges": [
+        {"from": "src", "to": "sw", "label": "送信は 1 回だけ"},
+        {"from": "sw", "to": "a", "label": "同じフレームが届く"},
+        {"from": "sw", "to": "b"},
+        {"from": "sw", "to": "c", "label": "宛先 MAC は全ビット 1"}
+      ]
+    }
+  ]
+}

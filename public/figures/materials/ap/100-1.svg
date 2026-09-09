@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="354" viewBox="0 0 640 354" role="img">
+<title>多重度がある点を越えるとスループットが崖のように落ちる。実メモリを増やすとその点が右へずれる。</title>
+<rect x="0.5" y="0.5" width="639" height="353" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<line x1="39.2" y1="216" x2="588" y2="216" stroke="#e5e7eb" stroke-width="1"/>
+<text x="31.2" y="220.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">0</text>
+<line x1="39.2" y1="146" x2="588" y2="146" stroke="#e5e7eb" stroke-width="1"/>
+<text x="31.2" y="150.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">20</text>
+<line x1="39.2" y1="76" x2="588" y2="76" stroke="#e5e7eb" stroke-width="1"/>
+<text x="31.2" y="80.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">40</text>
+<line x1="39.2" y1="6" x2="588" y2="6" stroke="#e5e7eb" stroke-width="1"/>
+<text x="31.2" y="10.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">60</text>
+<line x1="39.2" y1="6" x2="39.2" y2="216" stroke="#1f2937" stroke-width="1.2"/>
+<line x1="39.2" y1="216" x2="588" y2="216" stroke="#1f2937" stroke-width="1.2"/>
+<line x1="352.8" y1="6" x2="352.8" y2="216" stroke="#2563eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="354.8" y="5" width="138" height="17" rx="3" fill="#ffffff"/>
+<text x="357.8" y="18" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="start">実メモリが不足し始める</text>
+<path d="M 39.2 181 L 117.6 149.5 L 196 121.5 L 274.4 100.5 L 352.8 93.5 L 431.2 146 L 509.6 188 L 588 205.5" fill="none" stroke="#2563eb" stroke-width="2.6"/>
+<circle cx="39.2" cy="181" r="2.6" fill="#2563eb"/>
+<circle cx="117.6" cy="149.5" r="2.6" fill="#2563eb"/>
+<circle cx="196" cy="121.5" r="2.6" fill="#2563eb"/>
+<circle cx="274.4" cy="100.5" r="2.6" fill="#2563eb"/>
+<circle cx="352.8" cy="93.5" r="2.6" fill="#2563eb"/>
+<circle cx="431.2" cy="146" r="2.6" fill="#2563eb"/>
+<circle cx="509.6" cy="188" r="2.6" fill="#2563eb"/>
+<circle cx="588" cy="205.5" r="2.6" fill="#2563eb"/>
+<path d="M 39.2 181 L 117.6 149.5 L 196 118 L 274.4 90 L 352.8 69 L 431.2 55 L 509.6 48 L 588 62" fill="none" stroke="#6b7280" stroke-width="1.8"/>
+<circle cx="39.2" cy="181" r="2.6" fill="#6b7280"/>
+<circle cx="117.6" cy="149.5" r="2.6" fill="#6b7280"/>
+<circle cx="196" cy="118" r="2.6" fill="#6b7280"/>
+<circle cx="274.4" cy="90" r="2.6" fill="#6b7280"/>
+<circle cx="352.8" cy="69" r="2.6" fill="#6b7280"/>
+<circle cx="431.2" cy="55" r="2.6" fill="#6b7280"/>
+<circle cx="509.6" cy="48" r="2.6" fill="#6b7280"/>
+<circle cx="588" cy="62" r="2.6" fill="#6b7280"/>
+<text x="39.2" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">1</text>
+<text x="117.6" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">2</text>
+<text x="196" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">3</text>
+<text x="274.4" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">4</text>
+<text x="352.8" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">5</text>
+<text x="431.2" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">6</text>
+<text x="509.6" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">7</text>
+<text x="588" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">8</text>
+<text x="313.6" y="256" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">多重度（同時に動かすプログラム数）</text>
+<text x="16" y="-4" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="start" font-weight="600">スループット（相対値）</text>
+<line x1="188.6" y1="278" x2="208.6" y2="278" stroke="#2563eb" stroke-width="2.6"/>
+<text x="214.6" y="282.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">実メモリそのまま</text>
+<line x1="328.6" y1="278" x2="348.6" y2="278" stroke="#6b7280" stroke-width="2.6"/>
+<text x="354.6" y="282.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">実メモリを増設</text>
+</g>
+<text x="320" y="334" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">多重度がある点を越えるとスループットが崖のように落ちる。実メモリを増やすとその点が右へずれる。</text>
+</svg>

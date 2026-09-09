@@ -1,0 +1,34 @@
+{
+  "topic_id": 397,
+  "term": "仮想化（ホスト型，ハイパーバイザー型，コンテナ型）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 3方式の構造",
+      "caption": "積む層で見分ける。コンテナ型だけゲスト OS が無く、ハイパーバイザー型だけホスト OS が無い。",
+      "nodes": [
+        {"id": "h0", "label": "ホスト型", "row": 0, "col": 0, "shape": "round"},
+        {"id": "v0", "label": "ハイパーバイザー型", "row": 0, "col": 1, "shape": "round"},
+        {"id": "c0", "label": "コンテナ型", "row": 0, "col": 2, "shape": "round"},
+
+        {"id": "h1", "label": "ゲスト OS", "row": 1, "col": 0},
+        {"id": "v1", "label": "ゲスト OS", "row": 1, "col": 1},
+        {"id": "c1", "label": "アプリ＋ライブラリ\nゲスト OS なし", "row": 1, "col": 2, "emphasis": true},
+
+        {"id": "h2", "label": "仮想化ソフト", "row": 2, "col": 0},
+        {"id": "v2", "label": "ハイパーバイザー", "row": 2, "col": 1},
+        {"id": "c2", "label": "コンテナエンジン", "row": 2, "col": 2},
+
+        {"id": "h3", "label": "ホスト OS", "row": 3, "col": 0},
+        {"id": "v3", "label": "ホスト OS なし", "row": 3, "col": 1, "emphasis": true},
+        {"id": "c3", "label": "ホスト OS\nカーネルを共有", "row": 3, "col": 2},
+
+        {"id": "h4", "label": "ハードウェア", "row": 4, "col": 0},
+        {"id": "v4", "label": "ハードウェア", "row": 4, "col": 1},
+        {"id": "c4", "label": "ハードウェア", "row": 4, "col": 2}
+      ],
+      "edges": []
+    }
+  ]
+}

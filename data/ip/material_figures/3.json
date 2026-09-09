@@ -1,0 +1,24 @@
+{
+  "topic_id": 3,
+  "term": "コーポレートガバナンス",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### なぜ監視の枠組みが要るのか",
+      "caption": "外から経営者を監視するのがガバナンス、経営者が業務に組み込むのが内部統制で向きが逆。",
+      "nodes": [
+        {"id": "kabu", "label": "株主\n出資する", "row": 0, "col": 0},
+        {"id": "tori", "label": "取締役会\n社外取締役を入れる", "row": 0, "col": 1, "emphasis": true},
+        {"id": "kei", "label": "経営者\n執行役員", "row": 0, "col": 2},
+        {"id": "gyo", "label": "業務・現場", "row": 0, "col": 3}
+      ],
+      "edges": [
+        {"from": "kabu", "to": "tori", "label": "株主総会で選任"},
+        {"from": "tori", "to": "kei", "label": "監視・監督する"},
+        {"from": "kei", "to": "gyo", "label": "内部統制を組み込む"},
+        {"from": "kei", "to": "kabu", "label": "ディスクロージャーで情報を開示"}
+      ]
+    }
+  ]
+}

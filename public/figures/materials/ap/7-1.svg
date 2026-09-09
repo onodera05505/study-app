@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="331" viewBox="0 0 714.4 370" role="img">
+<title>権威DNSサーバが秘密鍵で署名し、キャッシュサーバが公開鍵で検証する。守れるのは出所と改ざんの検知だけで、通信は暗号化しない。</title>
+<rect x="0.5" y="0.5" width="713.4" height="369" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<line x1="55" y1="34" x2="55" y2="286" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="332.65" y1="34" x2="332.65" y2="286" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="614.85" y1="34" x2="614.85" y2="286" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="110" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="55" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">クライアント</text>
+<rect x="252.1" y="0" width="161.1" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="332.65" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">キャッシュDNSサーバ</text>
+<rect x="555.3" y="0" width="119.1" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="614.85" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">権威DNSサーバ</text>
+<polyline points="58,68 329.65,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="329.65,68 321.65,71.6 321.65,64.4" fill="#1f2937"/>
+<text x="193.82" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 名前解決の問合せ</text>
+<polyline points="335.65,108 611.85,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="611.85,108 603.85,111.6 603.85,104.4" fill="#1f2937"/>
+<text x="473.75" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. リソースレコードの問合せ</text>
+<polyline points="611.85,148 335.65,148" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="335.65,148 343.65,144.4 343.65,151.6" fill="#1f2937"/>
+<text x="473.75" y="141" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. レコード ＋ 秘密鍵で付けた署名 ＋ 公開鍵</text>
+<rect x="315.25" y="153" width="317" height="16" rx="3" fill="#ffffff"/>
+<text x="473.75" y="166.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">署名する対象はリソースレコード（DKIM は電子メール）</text>
+<polyline points="332.65,196 358.65,196 358.65,210 334.65,210" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="334.65,210 342.65,206.4 342.65,213.6" fill="#1f2937"/>
+<text x="366.65" y="204" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. 公開鍵で署名を検証</text>
+<rect x="142.65" y="215" width="380" height="16" rx="3" fill="#ffffff"/>
+<text x="332.65" y="228.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">通らなければ偽の応答として捨てる＝キャッシュポイズニングを防ぐ</text>
+<polyline points="329.65,254 58,254" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="58,254 66,250.4 66,257.6" fill="#1f2937"/>
+<text x="193.82" y="247" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. 検証済みの応答（中身は暗号化されない）</text>
+</g>
+<text x="357.2" y="334" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">権威DNSサーバが秘密鍵で署名し、キャッシュサーバが公開鍵で検証する。守れるのは出所と改ざんの検知だけで、通信は暗</text>
+<text x="357.2" y="350" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">号化しない。</text>
+</svg>

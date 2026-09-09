@@ -1,0 +1,25 @@
+{
+  "topic_id": 160,
+  "term": "スタースキーマ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 星形になる理由",
+      "caption": "中心にあって数値を持つのがファクト、周りにあって切り口の属性を持つのがディメンジョン。",
+      "nodes": [
+        {"id": "d_time", "label": "期間ディメンジョン\n年・月・日", "row": 0, "col": 1},
+        {"id": "d_item", "label": "商品ディメンジョン\n商品名・単価", "row": 1, "col": 0},
+        {"id": "fact", "label": "売上ファクト\n商品コード・店舗コード\n顧客コード・数量・金額", "row": 1, "col": 1, "emphasis": true},
+        {"id": "d_shop", "label": "販売店ディメンジョン\n店舗名・所在地", "row": 1, "col": 2},
+        {"id": "d_cust", "label": "顧客ディメンジョン\n氏名・住所", "row": 2, "col": 1}
+      ],
+      "edges": [
+        {"from": "fact", "to": "d_time"},
+        {"from": "fact", "to": "d_item", "label": "外部キーで1段結合"},
+        {"from": "fact", "to": "d_shop"},
+        {"from": "fact", "to": "d_cust"}
+      ]
+    }
+  ]
+}

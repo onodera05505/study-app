@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="308" viewBox="0 0 640 308" role="img">
+<title>暗号化に使うのは受信者の公開鍵。復号できるのは、対になる秘密鍵をもつ受信者だけ。</title>
+<rect x="0.5" y="0.5" width="639" height="307" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(192.1 20)">
+<line x1="48" y1="34" x2="48" y2="240" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="207.8" y1="34" x2="207.8" y2="240" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">送信者</text>
+<rect x="159.8" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="207.8" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">受信者</text>
+<polyline points="204.8,68 51,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,68 59,64.4 59,71.6" fill="#1f2937"/>
+<text x="127.9" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 受信者の公開鍵を渡す</text>
+<rect x="51.9" y="73" width="152" height="16" rx="3" fill="#ffffff"/>
+<text x="127.9" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">公開鍵は誰に配ってもよい</text>
+<polyline points="48,116 74,116 74,130 50,130" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="50,130 58,126.4 58,133.6" fill="#1f2937"/>
+<text x="82" y="124" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2. 受信者の公開鍵で暗号化する</text>
+<polyline points="51,158 204.8,158" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="204.8,158 196.8,161.6 196.8,154.4" fill="#1f2937"/>
+<text x="127.9" y="151" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 暗号文を送る</text>
+<rect x="9.9" y="163" width="236" height="16" rx="3" fill="#ffffff"/>
+<text x="127.9" y="176.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">盗み見られても秘密鍵がなければ読めない</text>
+<polyline points="207.8,206 233.8,206 233.8,220 209.8,220" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="209.8,220 217.8,216.4 217.8,223.6" fill="#1f2937"/>
+<text x="241.8" y="214" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. 受信者の秘密鍵で元に戻す</text>
+</g>
+<text x="320" y="288" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">暗号化に使うのは受信者の公開鍵。復号できるのは、対になる秘密鍵をもつ受信者だけ。</text>
+</svg>

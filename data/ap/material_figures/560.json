@@ -1,0 +1,29 @@
+{
+  "topic_id": 560,
+  "term": "ハフマン符号",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 符号の作り方",
+      "caption": "根から枝の 0 / 1 をたどった並びが符号で、文字は葉にしか置かないので、どの符号も他の符号の先頭にならない。",
+      "nodes": [
+        {"id": "r", "label": "根", "row": 0, "col": 0, "shape": "round"},
+        {"id": "a", "label": "a　0\n50％", "row": 1, "col": 0, "emphasis": true},
+        {"id": "n1", "label": "節点", "row": 1, "col": 1, "shape": "round"},
+        {"id": "b", "label": "b　10\n30％", "row": 2, "col": 1},
+        {"id": "n2", "label": "節点", "row": 2, "col": 2, "shape": "round"},
+        {"id": "c", "label": "c　110\n10％", "row": 3, "col": 2},
+        {"id": "d", "label": "d　111\n10％", "row": 3, "col": 3}
+      ],
+      "edges": [
+        {"from": "r", "to": "a", "label": "0"},
+        {"from": "r", "to": "n1", "label": "1"},
+        {"from": "n1", "to": "b", "label": "0"},
+        {"from": "n1", "to": "n2", "label": "1"},
+        {"from": "n2", "to": "c", "label": "0"},
+        {"from": "n2", "to": "d", "label": "1"}
+      ]
+    }
+  ]
+}

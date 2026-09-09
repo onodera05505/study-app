@@ -1,0 +1,54 @@
+{
+  "topic_id": 177,
+  "term": "SDN（Software-Defined Networking）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "従来は1台の機器に同居していた制御機能をソフトウェアへ分離し、転送機器を集中制御するのが SDN。",
+      "nodes": [
+        {
+          "id": "ctl",
+          "label": "SDN コントローラー\n（制御機能＝経路を決める）",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "sw1",
+          "label": "ルータ／スイッチ\n（転送機能だけ）",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "sw2",
+          "label": "ルータ／スイッチ\n（転送機能だけ）",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "sw3",
+          "label": "ルータ／スイッチ\n（転送機能だけ）",
+          "row": 1,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "ctl",
+          "to": "sw1",
+          "label": "OpenFlow"
+        },
+        {
+          "from": "ctl",
+          "to": "sw2"
+        },
+        {
+          "from": "ctl",
+          "to": "sw3"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,906 @@
+{
+  "exam": "ip",
+  "batch": 2,
+  "results": [
+    {
+      "topic_id": 231,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "事後の調査という定義と似た名前の用語の区別が中心。図にできる構造や流れがない",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 233,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "長さの違う3つのデータが同じ関数で同じ長さの値になる図。戻る矢印に×を付ける",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 235,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "3つのブロックを鎖で並べ、各ブロックが直前のハッシュ値を含む形と、1つ書き換えると以降が食い違う印を示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 239,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "暗号化・MACアドレスフィルタリング・ステルスを守る対象と効果と限界の3列で並べる表",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 241,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "目的を選ばせる用語問題。FAQ自体に構造も流れもなく、混同用語は文章のままで足りる",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 266,
+      "type": "B",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "上段に仕様→設計→製品、下段に製品→設計→仕様と逆向きの矢印を並べ、名前の由来を見せる",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 271,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "入力層・中間層・出力層に素子を並べ重み付きの結合線を描く。中間層を深くしたものが深層学習と注記",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 278,
+      "type": "A",
+      "template": "table",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "受注表の例で主キー列を強調し、重複行と空値行に×、受注番号＋明細番号の複合キーも並べる",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 280,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "デバイス→エッジ→クラウドの3段を描き、エッジで捨てる・集計する分と上へ送る量の差を示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 291,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "機器が攻撃者の手に渡る前提という定義と用語の区別だけ。図にする構造がない",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 294,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "インシデント・問題・構成・変更・リリースの5つを目的と扱う対象の2列で並べる表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 296,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "水位→センサ→通信部→サーバ→通信部→アクチュエータ→水門と矢印を描き、a・bの位置を示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 315,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "法律の対象範囲と手続名を覚える論点。事例の選別は文章のままで足りる",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 318,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "業務提携・資本提携・合弁・買収を資本関係と投資額と意思決定への関与度で並べる表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 333,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "顧客―注文を1対多の記法で結んだE-R図を描き、条件文からどちらが多か読む手順を添える",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 345,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "ベストプラクティス集という定義と、共通フレーム・CMMI・PMBOKとの対応を覚えるだけ",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 359,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "ホスト型・ハイパーバイザー型・コンテナ型をハード／OS／仮想化層／アプリの積層で描き分ける",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 362,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "ルートからd1・d2と枝分かれする木を描き、節＝ディレクトリ、葉＝ファイル又は空ディレクトリを注記",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 369,
+      "type": "A",
+      "template": "table",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "商品表と受注表を並べ、共通フィールドの値で結び付く線を引き、行＝レコード列＝フィールドを注記",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 374,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "IPv4とIPv6をビット数・表記・個数で対比し、グローバルとプライベートの使い分けも並べる表",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 377,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 0,
+      "idea": "装飾・リンク・画像・スクリプト・添付・署名の6行でテキスト形式とHTML形式を対比する表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 386,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "端末→AP→プロバイダ→Webサーバの経路を描き、WPA2が守る無線区間とTLSが守る全区間を帯で重ねる",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 390,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "処理・データフロー・データストア・源泉と吸収の4記号で受注業務の小さなDFDを描き記号名を注記",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 401,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "場面ごとに通知・同意が要るかを覚える法律の論点。事例の判断は文章のままで足りる",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 402,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "守る対象の広さを覚えるだけの論点。図にできる構造も流れもない",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 432,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "CPU→1次→2次→主記憶→補助記憶を積み、各段に速さ・容量とSRAM／DRAMの別を併記する",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 12,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "期首＋当期仕入の積み上げ棒を期末棚卸高と売上原価に分け、期末が増えると原価が減る様子を示す",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 20,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "8つの品質特性を何を測るかで並べ、使用性は人が直接使う場面かで切り分ける旨を添える表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 31,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "画像から文字を取り出す技術という定義と他装置との区別だけ。図は解答に効かない",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 46,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "横軸に閾値、FARの右下がりとFRRの右上がりの2本を交差させ、安全性重視と利便性重視の位置を示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 48,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 0,
+      "idea": "CEO・COO・CFO・CIO・CTOを担当領域の1列で並べる表。CIOは情報、CTOは技術と対比",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 52,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "単なるIT化との違いを覚える論点。誤答はデジタルで始まる別語で、図では区別できない",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 55,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "CSRとISO26000の結び付きを覚えるだけ。図にできる構造がない",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 56,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "解析して知見を得る職種という定義と他職種との区別だけ。図は解答に効かない",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 60,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "4原則を覚えて進め方の適否を判定する論点。原則は箇条書きのままが読みやすい",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 64,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "在庫量の推移を階段状に描き、定期発注は時点固定で量可変、定量発注は発注点で一定量、と重ねる",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 67,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "左に資産、右に負債と純資産を積んだ箱を高さをそろえて描き、自己資本比率の分母分子を示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 73,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "特許・実用新案・意匠・商標を対象・審査の有無・保護期間で並べ、方法とプログラムは対象外と注記",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 80,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "請負と準委任を完成義務・報酬の時期・再委託・契約不適合責任の4行で対比する表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 85,
+      "type": "B",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "市場全体の四角を細分化し、1区画を選び、その中に2軸のマップを置く3段でS→T→Pを示す",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 89,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "ERP・CRM・SCM・SFA・MRPを扱う対象と範囲の2列で並べる表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 103,
+      "type": "C",
+      "template": "matrix",
+      "benefit": 2,
+      "weakness": 1,
+      "idea": "横軸に能力の範囲（特化型／汎用）、縦軸に理解の有無（弱い／強い）を取り、実用化済みの位置を示す",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 105,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "機械やロボットを結合して製造を柔軟にする仕組みという定義と略語の区別だけ",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 106,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "言い換えから用語を選ぶ問題。引き取りの流れの図は259かんばん方式の側で足りる",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 107,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "仕様・製作図・工程図・製作の4本の帯を、直列に並べた図と開始をずらして重ねた図で並べる",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 108,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "ムリ・ムラ・ムダを意味と具体例の2列で並べ、作りすぎと手待ちがムダに入る点を明記する表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 111,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "無料と有料の二段構えという定義を覚えるだけ。誤答はフリーで始まる別語で図では分けられない",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 118,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "遊休資産の仲介という定義を覚えるだけ。誤答はシェアの付く別語で図では分けられない",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 124,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "累積の効果額の折れ線が投資額の水平線と交わる点として回収期間を示し、効果額の内訳も積み上げる",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 125,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "利用部門から聴取→整理→利用部門の責任者と合意、の順に並べ、合意で完了になる点を示す",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 129,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "導入計画書の作成→合意→導入作業→導入報告書と時系列に並べ、計画書が作業の前である点を示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 134,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "横軸に工程を取り、要員数の山型の曲線と訂正1件あたりコストの右肩上がりの曲線を重ねて描く",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 144,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "横軸に日数、計画の直線と実績の折れ線を描き、20日時点の予定50本と実績40本の差を示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 148,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "変更要求→変更管理で可否を判断→リリース及び展開管理が計画・テスト・本番配置→利用者、と並べる",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 152,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "独立した立場でリスクマネジメントを検証するという定義と、他の監査との区別だけ",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 169,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "半導体・磁気・光の3列に媒体名を振り分け、DVD-RAMは光、RAMとフラッシュは半導体と示す表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 170,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 0,
+      "idea": "揮発性と不揮発性の2列にDRAM・SRAM・ROM・フラッシュ・SSD・DVD-RAMを振り分ける。169の表と共用",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 176,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "主記憶と補助記憶の箱を並べ、論理アドレス空間から実アドレスへの変換と退避・読み戻しの矢印を描く",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 184,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "誰でも使える状態にするという定義と、語尾の似た用語との区別だけ。図は解答に効かない",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 192,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "検索を速くするために必要に応じて設定する情報、という定義を選ぶ問題。索引の図は解答に効かない",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 195,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 2,
+      "idea": "「_」と「%」の意味と0文字可否を対比し、6つの氏名にパターンを当てはめた該当・非該当の表を添える",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 203,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "1台のサーバの中にWeb80・SMTP25・POP110・DNS53の箱を置き、IPアドレス＋ポート番号で届く矢印を描く",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 205,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "更新情報を配る書式という定義とCSSなどとの区別だけ。図では字面の似た語を分けられない",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 206,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "1回目にサーバがブラウザへcookieを書き込み、2回目に自動送信して同一利用者と分かる往復を描く",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 207,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "複数の周波数帯を束ねるという語義がそのまま答え。図にしても用語の選び分けには効かない",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 208,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "URLとメールアドレスを部分ごとに分解して名前を注記し、ドメイン名が両方に現れることを示す",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 211,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "利用者→DNSサーバの問合せに攻撃者が偽応答を先回りし、汚染キャッシュ経由で偽サイトへ行く順を描く",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 212,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "脆弱性の判明・攻撃・修正プログラムの公開・適用を時間軸に並べ、無防備な期間を帯で示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 216,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "事故対応を担う組織という定義と略語の区別だけ。SOCとの関係も一文で足りる",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 217,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "ISMS認証に上乗せする制度という定義と対象範囲を覚えるだけ。図にする構造がない",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 219,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "経営者向けの指針という位置づけと三原則を覚えるだけ。図では選択肢を分けられない",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 220,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "事象→評価→インシデントの判定の流れと、感染時の隔離→報告→CSIRTの指示という初動を並べる",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 223,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "インターネット→FW→内部の経路にIDSを置き、通過した通信を監視して管理者へ通知する矢印を描く",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 240,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "技術的・人的・物理的の3列に例を配置し、遠隔地バックアップは物理的、手口の周知は人的と明記",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 242,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "第1次から第4次までを時期・動力や中心技術・生産の特徴の3列で並べる表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 246,
+      "type": "D",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "利益÷資本＝（利益÷売上高）×（売上高÷資本）を分数で並べ、売上高が約分される様子を示す",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 256,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "電波で非接触に読み書きするという定義と、QRコードなど他方式との区別だけ",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 259,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "後工程から前工程へ戻るかんばんの矢印と、前から後へ流れる部品の矢印を重ね、消費が合図になる形を示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 260,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "資金洗浄を防ぐ取組みという定義と、攻撃手口の名前との区別だけ。図は解答に効かない",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 267,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "リファクタリング・デバッグ・機能追加・リバースエンジニアリングを外から見た振る舞いが変わるかで並べる表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 269,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "k・M・G・T・Pとm・μ・n・pを指数付きで一列に並べ、隣は1000倍、2進接頭語はKiB・MiBと注記",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 277,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "人のミスへの備え（フールプルーフ）と故障への備え（フェールセーフ・ソフト・トレラント）を2列に分け例を振る",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 282,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "音声をパケット化する技術という定義と思い込みの正誤判定だけ。図は解答に効かない",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 283,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "32ビットの帯を1が並ぶ部分と0の部分に塗り分け、IPアドレスに重ねてネットワーク部とホスト部の境目を示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 285,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "攻撃者が正規サイトを改ざん→利用者が閲覧→脆弱性を突かれ背後でマルウェアが落ちる順を描く",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 297,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "カード情報保護の基準という位置づけを覚えるだけ。PCI Expressとの区別も図では付かない",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 298,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "平常時にそろえる備えを選別する論点。事例の当てはめは箇条書きのままで足りる",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 311,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "番号の決まり方と使える範囲を覚える法律の論点。図にする構造がない",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 314,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "対象が行政文書に限られることを覚える法律の論点。図にする構造がない",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 316,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "ISO・IEC・ITU・IEEEとANSI・CEN・JISを国際か国地域かと担当分野で並べ、ICANNは対象外と注記",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 324,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "KGI（ゴール）→CSF（重要成功要因）→KPI（測る指標）のつながりを描き、先行指標と結果指標の位置も示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 327,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "JANコードとQRコードを次元・桁数や容量・扱える文字・読取り向きの4行で対比する表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 334,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "アプリ／ミドル／OS／ハードの4層を積み、オンプレミス・IaaS・PaaS・SaaSで事業者の担当範囲を塗り分ける",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 337,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "RFI→RFP→提案書・見積書→契約→納品書→検収書→請求書→支払を一本の時間軸に並べ契約の位置を示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 341,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "設計20人月と製造30人月の積み上げ棒で合計50人月を示し、生産性を平均して出した24人月と並べる",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 344,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "中央にプロジェクトの箱を置き、発注側経営者・利用部門・受注側PM・メンバー・協力会社を周囲に並べる",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 360,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "イニシャルコストとランニングコストに費目を振り分け、商品の仕入や配送は枠外に置く表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 368,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "アクセス権管理・障害回復・同時実行制御の3役割と、DBMSの役割でない性能保証を並べる表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 384,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "許可した端末のMACアドレスだけ通すという定義と、ESSIDやWPA2との役割の区別だけ",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 385,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "送信PC→自社サーバ→相手サーバ→受信PCの区間を並べ、TLSやWPA2が守る区間とS/MIMEの全区間を帯で重ねる",
+      "confidence": "high"
+    }
+  ]
+}

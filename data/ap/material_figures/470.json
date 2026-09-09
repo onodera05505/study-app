@@ -1,0 +1,23 @@
+{
+  "topic_id": 470,
+  "term": "メモリインタリーブ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 混同しやすい用語",
+      "caption": "インタリーブは主記憶の内部を分ける話で、キャッシュは CPU との間、ディスクキャッシュと仮想記憶はディスクとの間、DMA は入出力装置との間の話。",
+      "nodes": [
+        {"id": "cpu", "label": "CPU", "row": 0, "col": 0},
+        {"id": "mem", "label": "主記憶\nバンク 0〜3 に分割\n＝ メモリインタリーブ", "row": 1, "col": 0, "emphasis": true},
+        {"id": "io", "label": "入出力装置", "row": 1, "col": 1},
+        {"id": "disk", "label": "磁気ディスク装置", "row": 2, "col": 0, "shape": "cylinder"}
+      ],
+      "edges": [
+        {"from": "cpu", "to": "mem", "label": "キャッシュメモリ", "arrow": "both"},
+        {"from": "mem", "to": "io", "label": "DMA", "arrow": "both"},
+        {"from": "mem", "to": "disk", "label": "ディスクキャッシュ／仮想記憶", "arrow": "both"}
+      ]
+    }
+  ]
+}

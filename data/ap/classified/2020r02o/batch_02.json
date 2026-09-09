@@ -1,0 +1,249 @@
+{
+  "exam": "2020r02o",
+  "range": "28-54",
+  "classifications": [
+    {
+      "number": 28,
+      "syllabus_item": 29,
+      "topic_term": "正規化",
+      "topic_is_new": false,
+      "related_terms": ["推移関数従属", "部分関数従属", "完全関数従属", "主キー"],
+      "confidence": "high",
+      "notes": "関数従属性①〜⑥に基づいて第3正規形まで分解し、関係“注文明細”を選ばせる問題。既存論点「正規化」（項目29、2021r03a 問28・2022r04h 問28 と同型）にそのまま合流させた。「正規化」は項目44の用語例にある語なので topic_is_new は false。"
+    },
+    {
+      "number": 29,
+      "syllabus_item": 30,
+      "topic_term": "UNION",
+      "topic_is_new": true,
+      "related_terms": ["UNION ALL", "関係代数", "問合せ（クエリ）", "和集合"],
+      "confidence": "high",
+      "notes": "UNION ALL の結果表を選ばせる問題（重複行が残る＝6行のエではなく、東京3行＋大阪3行がそのまま並ぶ）。既存論点「UNION」（項目30、2021r03a 問29）と同一概念なので表記を合わせて合流させ、重複除去の有無という論点差は related_terms の「UNION ALL」で表した。別表記で新規登録すると集合演算の出題頻度が分散するため。項目30の用語例には UNION が無いので topic_is_new は true（既存論点も同じ扱い）。"
+    },
+    {
+      "number": 30,
+      "syllabus_item": 28,
+      "topic_term": "ACID特性",
+      "topic_is_new": false,
+      "related_terms": ["原子性", "一貫性", "独立性", "耐久性"],
+      "confidence": "high",
+      "notes": "ACID 特性のうち耐久性（durability）の説明を選ばせる問題。項目31（トランザクション処理）に置く読み方もあるが、用語例「ACID特性」は項目28にあり、既存論点「ACID特性」も項目28（2022r04a 問30）なので、そちらに合流させた。"
+    },
+    {
+      "number": 31,
+      "syllabus_item": 34,
+      "topic_term": "PoE（Power over Ethernet）",
+      "topic_is_new": true,
+      "related_terms": ["電力線通信（PLC）", "UPS", "USB", "無線 LAN アクセスポイント"],
+      "confidence": "high",
+      "notes": "LAN ケーブルで給電も行う仕組み（PoE）を選ばせる用語問題。項目34の用語例に PoE は無いが、既存論点「PoE（Power over Ethernet）」（項目34）があるので表記をそのままコピーして合流させた。用語例に無い語なので topic_is_new は true（既存論点も同じ）。"
+    },
+    {
+      "number": 32,
+      "syllabus_item": 17,
+      "topic_term": "ターンアラウンドタイム",
+      "topic_is_new": false,
+      "related_terms": ["転送速度（伝送速度）", "レスポンスタイム（応答時間）", "回線速度", "伝送時間"],
+      "confidence": "medium",
+      "notes": "端末A（1Gビット/秒）と端末B（100Mビット/秒）のターンアラウンドタイムの差からホスト処理時間を消去し、片道伝送時間を求める計算問題。ターンアラウンドタイムの構成（往復の伝送時間＋処理時間）を理解していることが解の中心なので項目17の用語例「ターンアラウンドタイム」を採り、既存論点（2021r03h 問16）に合流させた。回線速度と伝送時間の関係を問うと読めば項目33「転送速度（伝送速度）」も候補で、そちらは related_terms に入れた。"
+    },
+    {
+      "number": 33,
+      "syllabus_item": 34,
+      "topic_term": "スイッチングハブ",
+      "topic_is_new": false,
+      "related_terms": ["レイヤー2（L2）スイッチ", "物理アドレス", "リピータ", "ゲートウェイ"],
+      "confidence": "high",
+      "notes": "スイッチングハブ（レイヤ2スイッチ）の機能を選ばせる問題。MAC アドレスを見て必要なポートにだけ流す点が答え。項目34の用語例「スイッチングハブ」をそのままコピーした。選択肢のルータ（IPアドレス）・リピータ（物理層）・ゲートウェイ（トランスポート層以上）は related_terms に回した。"
+    },
+    {
+      "number": 34,
+      "syllabus_item": 42,
+      "topic_term": "IP マスカレード",
+      "topic_is_new": false,
+      "related_terms": ["NAT", "ポート番号", "プライベートIP アドレス", "グローバル IP アドレス"],
+      "confidence": "medium",
+      "notes": "ポート番号を併用してプライベート IP アドレス群が1つのグローバル IP アドレスを共有する仕組み（NAPT）を選ばせる問題。項目33（ネットワーク方式）の用語例にも「IP マスカレード」「NAT」があり項目33に置く読み方もあるが、既存論点「IP マスカレード」は項目42（用語例「IP マスカレード（NAPT）」）に3問（2021r03a 問33 ほか）集約されているので、頻度を割らないよう項目42・同表記に合流させた。表記も既存に合わせて短い「IP マスカレード」とした。"
+    },
+    {
+      "number": 35,
+      "syllabus_item": 35,
+      "topic_term": "DHCP",
+      "topic_is_new": false,
+      "related_terms": ["ブロードキャスト", "IP アドレス", "サブネットマスク", "パケット"],
+      "confidence": "high",
+      "notes": "DHCPDISCOVER の送信元（まだ IP アドレスが無いので 0.0.0.0）と宛先（リミテッドブロードキャスト 255.255.255.255）の組合せを選ばせる問題。項目35の用語例「DHCP」をそのままコピーし、既存論点に合流させた。"
+    },
+    {
+      "number": 36,
+      "syllabus_item": 38,
+      "topic_term": "CRL（Certificate Revocation List：証明書失効リスト）",
+      "topic_is_new": false,
+      "related_terms": ["OCSP", "デジタル証明書（公開鍵証明書）", "CA（Certification Authority：認証局）", "PKI（Public Key Infrastructure：公開鍵基盤）"],
+      "confidence": "high",
+      "notes": "CRL の内容（有効期限内で失効した証明書のシリアル番号と失効日時）を問う問題。項目38の用語例を括弧ごとそのままコピーした。リアルタイム確認のプロトコルである OCSP は誤答選択肢の題材なので related_terms に入れた（同回の問38が OCSP 本体を問うている）。"
+    },
+    {
+      "number": 37,
+      "syllabus_item": 42,
+      "topic_term": "IPsec",
+      "topic_is_new": false,
+      "related_terms": ["IPv6", "SSL/TLS", "SSH", "VPN"],
+      "confidence": "high",
+      "notes": "IPv6 通信でネットワーク層の暗号化に使うものを選ばせる問題。項目42の用語例「IPsec」をそのままコピーし、既存論点に合流させた。比較対象の PPP（データリンク層）・SSH・TLS（より上位層）は related_terms に回した。"
+    },
+    {
+      "number": 38,
+      "syllabus_item": 38,
+      "topic_term": "OCSP",
+      "topic_is_new": false,
+      "related_terms": ["CRL（Certificate Revocation List：証明書失効リスト）", "デジタル証明書（公開鍵証明書）", "タイムスタンプ（時刻認証）", "ハッシュ関数"],
+      "confidence": "high",
+      "notes": "OCSP クライアントとレスポンダのやり取り（証明書全体ではなくシリアル番号や発行者 DN のハッシュ値を送り、有効性の応答を得る）を問う問題。項目38の用語例「OCSP」をそのままコピーし、既存論点に合流させた。"
+    },
+    {
+      "number": 39,
+      "syllabus_item": 38,
+      "topic_term": "SEO ポイズニング",
+      "topic_is_new": false,
+      "related_terms": ["ドライブバイダウンロード", "IDS（Intrusion Detection System：侵入検知システム）", "無線 LAN アクセスポイント", "サイバー攻撃"],
+      "confidence": "high",
+      "notes": "SEO ポイズニングの説明を選ばせる用語問題。項目38の用語例に「SEO ポイズニング」がある（PDF 抽出の都合で後続語と『・』で連結された1エントリになっているが、IPA が挙げている語そのものなので topic_is_new は false）。誤答のウォードライビング・IDS・マルウェア対策ソフトの脆弱性悪用は related_terms に回した。"
+    },
+    {
+      "number": 40,
+      "syllabus_item": 38,
+      "topic_term": "デジタル署名（署名鍵，検証鍵）",
+      "topic_is_new": false,
+      "related_terms": ["メッセージダイジェスト", "ハッシュ関数", "公開鍵暗号方式", "否認防止（Non-Repudiation）"],
+      "confidence": "high",
+      "notes": "署名検証鍵 X だけを持つ受信者ができること（改ざんの無いことと、署名生成鍵 Y による生成の確認。ただし改ざん箇所の特定はできない）を問う問題。問題文は「ディジタル署名」表記だが、表記揺れで頻度が割れないよう項目38の用語例「デジタル署名（署名鍵，検証鍵）」をそのままコピーし、既存論点に合流させた。"
+    },
+    {
+      "number": 41,
+      "syllabus_item": 38,
+      "topic_term": "クリプトジャッキング",
+      "topic_is_new": false,
+      "related_terms": ["ランサムウェア", "コンピュータウイルス", "ブロックチェーン", "金銭奪取"],
+      "confidence": "high",
+      "notes": "クリプトジャッキング（PC の処理能力を不正利用して暗号資産のマイニングを行い報酬を得る）の説明を選ばせる用語問題。項目38の用語例にある語（抽出上は後続語と『・』で連結された1エントリ）なので topic_is_new は false。誤答のスキミング・ランサムウェアは related_terms に回した。"
+    },
+    {
+      "number": 42,
+      "syllabus_item": 38,
+      "topic_term": "共通鍵暗号方式",
+      "topic_is_new": true,
+      "related_terms": ["公開鍵暗号方式", "AES（Advanced Encryption Standard）", "RSA 暗号", "鍵管理"],
+      "confidence": "medium",
+      "notes": "暗号方式に関する正しい記述を選ぶ問題で、正解は「共通鍵暗号方式では暗号化と復号に同一の鍵を使う」。項目38の用語例は「暗号方式（暗号化（暗号鍵），復号（復号鍵），共通鍵暗号方式（共通鍵），公開鍵暗号方式（公開鍵，秘密鍵））」という括弧内に別概念が並ぶ形なので、仕様に従い設問の主題1語だけを採った。単独で載っている項目が他に無いため topic_is_new は true（兄弟語の既存論点「公開鍵暗号方式」は false で登録されているが、設問の主題は共通鍵側なので同一論点にはまとめなかった）。総称の「暗号方式」を採る読み方もあるため medium。"
+    },
+    {
+      "number": 43,
+      "syllabus_item": 38,
+      "topic_term": "C&C サーバ",
+      "topic_is_new": true,
+      "related_terms": ["ボット（ボットネット，遠隔操作型ウイルス（RAT：Remote Access Trojan），C&C サーバ）", "踏み台", "ボットハーダー", "マルウェア"],
+      "confidence": "high",
+      "notes": "ボットネットにおける C&C サーバの役割（乗っ取った端末へ攻撃命令を出し応答を受け取る）を問う問題。用語例「ボット（ボットネット，…，C&C サーバ）」は括弧内が別概念の列挙なので、仕様に従い主題の1語「C&C サーバ」だけを採り、既存論点（項目38）と同表記で合流させた。単独エントリではないため topic_is_new は true（既存論点も同じ扱い）。"
+    },
+    {
+      "number": 44,
+      "syllabus_item": 41,
+      "topic_term": "TPM（Trusted Platform Module）",
+      "topic_is_new": true,
+      "related_terms": ["セキュアブート（UEFI：Unified Extensible Firmware Interface）", "耐タンパ性", "UTM（Unified Threat Management：統合脅威管理）", "SIEM（Security Information and Event Management）"],
+      "confidence": "high",
+      "notes": "TPM に該当するもの（鍵生成・ハッシュ演算・暗号処理を行うセキュリティチップ）を選ばせる用語問題。用語例「ハードウェアのセキュリティ（セキュアエレメント，TPM（Trusted Platform Module））」の括弧内は別概念の列挙なので主題の1語を採り、既存論点（項目41）と同表記で合流させた。誤答の送信ドメイン認証・UTM・SIEM は related_terms に回した。"
+    },
+    {
+      "number": 45,
+      "syllabus_item": 42,
+      "topic_term": "IMAPS",
+      "topic_is_new": true,
+      "related_terms": ["IMAP4", "POP3", "SSL/TLS", "サブミッションポート"],
+      "confidence": "medium",
+      "notes": "スマートフォンでのメール受信をヘッダーだけでなく本文まで暗号化するプロトコル（IMAP over TLS）を選ばせる問題。APOP は認証部分しか守らず、SMTP Submission は送信側という切り分けが要る。用語例に IMAPS が無いため新規論点にした。メールプロトコルとして項目37（ネットワーク応用、用語例 IMAP4・POP3・SMTP）に置く読み方もあるが、問われているのは通信路の暗号化なので、既存論点「サブミッションポート」（メール系のセキュリティ実装）と同じ項目42に置いた。項目の判断が割れうるため medium。"
+    },
+    {
+      "number": 46,
+      "syllabus_item": 43,
+      "topic_term": "アクティビティ図",
+      "topic_is_new": false,
+      "related_terms": ["UML", "クラス図", "コミュニケーション図", "コンポーネント図"],
+      "confidence": "high",
+      "notes": "UML のアクティビティ図の特徴（並行処理を含む振る舞いの記述）を選ばせる問題。項目43の用語例「アクティビティ図」をそのままコピーし、既存論点（項目43、2021r03a 問47）に合流させた。誤答のコラボレーション（コミュニケーション図）・クラス図・コンポーネント図は related_terms に回した。"
+    },
+    {
+      "number": 47,
+      "syllabus_item": 7,
+      "topic_term": "流れ図",
+      "topic_is_new": true,
+      "related_terms": ["判断", "処理", "ユークリッドの互除法", "トレース"],
+      "confidence": "medium",
+      "notes": "減算による最大公約数アルゴリズムの流れ図を、指定された実行順①→②→③→⑤→②→③→④→②→⑥ になるよう初期値の関係（a＝2b）を逆算する問題。解く中心は流れ図のトレースなので既存論点「流れ図」（項目7、2024r06h 問5）に合流させた。アルゴリズムの中身に着目して「ユークリッドの互除法」を新規論点にする読み方もあるため medium。用語例に「流れ図」自体は無く（判断・処理などの部品のみ）topic_is_new は true。"
+    },
+    {
+      "number": 48,
+      "syllabus_item": 48,
+      "topic_term": "完全化保守",
+      "topic_is_new": false,
+      "related_terms": ["予防保守", "是正保守", "適応保守", "改良保守"],
+      "confidence": "medium",
+      "notes": "訂正/改良 × 顕在化前/発見時/環境変化 のマトリクスに、予防保守・完全化保守・是正保守・適応保守を当てはめる問題（正解はエ）。保守タイプ4種の区別が論点で、既存論点「完全化保守」（項目48、2022r04h 問48・2023r05a 問48）が同じ区別を扱っているため、頻度を割らないようそこへ合流させた。設問自体は4種を横断するので、いずれか1語を代表に選ぶ判断が入る点で medium。"
+    },
+    {
+      "number": 49,
+      "syllabus_item": 49,
+      "topic_term": "スクラム",
+      "topic_is_new": false,
+      "related_terms": ["プロダクトオーナー", "スプリントレビュー", "プロダクトバックログ", "XP（エクストリームプログラミング）"],
+      "confidence": "high",
+      "notes": "アジャイル開発手法のうちスクラムの説明（役割・イベント・作成物・ルールから成るフレームワーク）を選ばせる問題。項目49の用語例「スクラム」をそのままコピーし、既存論点に合流させた。誤答の XP・ASD・FDD は related_terms と notes に残した。"
+    },
+    {
+      "number": 50,
+      "syllabus_item": 50,
+      "topic_term": "特許権",
+      "topic_is_new": false,
+      "related_terms": ["通常実施権", "専用実施権", "ライセンシー", "先使用権"],
+      "confidence": "high",
+      "notes": "実施許諾（ライセンス）が必要になる場合を選ばせる問題。存続期間経過後・先使用権・家庭内の個人利用は許諾不要で、国内製造して米国へ輸出する場合は日本の特許権が及ぶため許諾が要る（正解エ）。項目50の用語例「特許権」をそのままコピーし、既存論点に合流させた。分野は公式値どおりテクノロジ系（項目50は知的財産適用管理）。"
+    },
+    {
+      "number": 51,
+      "syllabus_item": 56,
+      "topic_term": "スコープ規定書",
+      "topic_is_new": false,
+      "related_terms": ["WBS", "スコープ（作業及び成果物）", "成果物", "受入基準"],
+      "confidence": "high",
+      "notes": "PMBOK 第6版のプロジェクト・スコープ記述書に記述する項目（プロジェクトからの除外事項）を選ばせる問題。JIS Q 21500 系の用語例「スコープ規定書」が同じ文書を指すので、表記揺れを避けるため既存論点（項目56、2023r05a 問51）に合流させた。誤答の WBS・コスト見積額・ステークホルダー分類は related_terms に回した。"
+    },
+    {
+      "number": 52,
+      "syllabus_item": 59,
+      "topic_term": "EVM（Earned Value Management）",
+      "topic_is_new": false,
+      "related_terms": ["コスト管理", "スケジュール", "差異分析", "進捗管理"],
+      "confidence": "high",
+      "notes": "EVM の管理対象がコストとスケジュールであることを問う問題。用語例としての「EVM（Earned Value Management）」は項目58（プロジェクトの時間）にあるが、既存論点は項目59（プロジェクトのコスト）に4問（2022r04h 問51 ほか）集約されているので、頻度を割らないよう項目59に合わせた。"
+    },
+    {
+      "number": 53,
+      "syllabus_item": 58,
+      "topic_term": "PDM（Precedence Diagramming Method：プレシデンスダイアグラム法）",
+      "topic_is_new": false,
+      "related_terms": ["リード", "ラグ", "クリティカルパス", "アローダイアグラム"],
+      "confidence": "high",
+      "notes": "終了－開始関係（リード2日）と開始－開始関係（ラグ3日）から全作業完了日数を求める問題。A6日→リード2日でBは4日目開始・10日目終了、Bの開始からラグ3日でCは7日目開始・11日目終了となり、最長は11日ではなくBの終了とCの終了の遅い方で12日（イ）。項目58の用語例を括弧ごとそのままコピーし、既存論点に合流させた。"
+    },
+    {
+      "number": 54,
+      "syllabus_item": 60,
+      "topic_term": "脅威への戦略",
+      "topic_is_new": false,
+      "related_terms": ["好機への戦略", "受容", "回避", "転嫁"],
+      "confidence": "medium",
+      "notes": "PMBOK 第6版で脅威と好機の双方に採用されるリスク対応戦略（＝受容）を選ばせる問題。回避・転嫁は脅威側、共有は好機側に固有。項目60の用語例「脅威への戦略」をそのままコピーした（既存論点「好機への戦略」は好機側4戦略を扱う 2021r03h 問54 に対応しており、本問は脅威側との対比が主題なので別論点にした。2語は同綴りではなく別エントリなので統合事故の懸念は無い）。どちらの既存論点に寄せるかで割れうるため medium。"
+    }
+  ]
+}

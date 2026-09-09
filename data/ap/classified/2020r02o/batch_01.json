@@ -1,0 +1,249 @@
+{
+  "exam": "2020r02o",
+  "range": "1-27",
+  "classifications": [
+    {
+      "number": 1,
+      "syllabus_item": 1,
+      "topic_term": "基数",
+      "topic_is_new": true,
+      "related_terms": ["対数", "固定小数点数", "2 分探索法", "オーバーフロー（あふれ）"],
+      "confidence": "high",
+      "notes": "2^B ≒ 10^D から D ≒ B log10 2 を導く，基数と桁数の関係の問題。項目1の用語例に「基数」は無いが，既存の新規論点「基数」（項目1，2022r04a 問1・問24＝2進数のビット数／英大文字コードの桁数）が同じ論点なので表記をそのままコピーした。項目2の用語例「対数」とも迷ったが，対数は解法の道具で，問われているのは基数と桁数の対応なので項目1とした"
+    },
+    {
+      "number": 2,
+      "syllabus_item": 2,
+      "topic_term": "乗法定理",
+      "topic_is_new": false,
+      "related_terms": ["加法定理", "同時確率", "階乗", "ベルヌーイ分布"],
+      "confidence": "medium",
+      "notes": "独立事象の積を3通り足し合わせる問題で，乗法定理と加法定理の両方を使う。既存論点「乗法定理」（項目2，2022r04a 問3＝抜取検査の確率）と同じ型なので表記を揃え，加法定理は related に回した。用語例「乗法定理」をそのままコピー"
+    },
+    {
+      "number": 3,
+      "syllabus_item": 3,
+      "topic_term": "逆ポーランド表記法",
+      "topic_is_new": false,
+      "related_terms": ["プッシュダウンオートマトン", "構文解析", "LIFO", "中間言語"],
+      "confidence": "high",
+      "notes": "2024r06a 問3 と同一の問題文。既存論点「逆ポーランド表記法」（項目3）に一致。用語例をそのままコピー"
+    },
+    {
+      "number": 4,
+      "syllabus_item": 3,
+      "topic_term": "ハフマン符号",
+      "topic_is_new": false,
+      "related_terms": ["情報源符号化（データ圧縮）", "ランレングス", "可逆圧縮", "圧縮率"],
+      "confidence": "medium",
+      "notes": "出現頻度に応じた可変長符号で，一意復号可能（語頭条件）かつ平均符号長が最短になるものを選ぶ問題。用語例「ハフマン符号」は項目3（情報源符号化）と項目4（通信に関する理論）の双方にあり，項目7には「ハフマン法」がある。データ圧縮の符号化理論として項目3を採った。表記は用語例のまま"
+    },
+    {
+      "number": 5,
+      "syllabus_item": 6,
+      "topic_term": "線形リスト",
+      "topic_is_new": false,
+      "related_terms": ["リンク付リスト", "単方向リスト", "動的配列", "2 分探索法"],
+      "confidence": "high",
+      "notes": "ポインタで実現した線形リストの挿入計算量が一定であることを問う。既存論点「線形リスト」（項目6，2022r04h 問5＝配列で実現した場合の特徴）の裏返しで同じ論点。用語例をそのままコピー"
+    },
+    {
+      "number": 6,
+      "syllabus_item": 2,
+      "topic_term": "モンテカルロ法",
+      "topic_is_new": true,
+      "related_terms": ["近似解法", "数値積分", "収束", "シミュレーション"],
+      "confidence": "medium",
+      "notes": "一様乱数で正方形内に点を打ち，内接円に入る点の比から π を求める方法。項目2・項目7のどちらの用語例にも「モンテカルロ法」は無い。総称の「近似解法」（項目2の用語例，既存論点は 2025r07h 問2＝二分法）に寄せる案もあったが，乱数を使う点で逐次近似とは別概念で，教材が混ざるため独立した論点にした。名前付きの数値解法である「ニュートン法」が単独論点になっているのと粒度を揃えている。項目は，数値解法を項目2に置く既存の運用に合わせた（項目7の用語例「近似計算」とは迷った）"
+    },
+    {
+      "number": 7,
+      "syllabus_item": 9,
+      "topic_term": "Python",
+      "topic_is_new": false,
+      "related_terms": ["Ruby", "Perl", "ECMAScript", "オブジェクト指向言語"],
+      "confidence": "high",
+      "notes": "インデントでブロック範囲を指定するオブジェクト指向言語。既存論点「Python」（項目9，2022r04h 問7＝ほぼ同一の問題）に一致。用語例をそのままコピー"
+    },
+    {
+      "number": 8,
+      "syllabus_item": 11,
+      "topic_term": "スタックポインタ",
+      "topic_is_new": false,
+      "related_terms": ["命令アドレスレジスタ（命令カウンター，プログラムカウンター，逐次制御カウンター）", "IR（Instruction Register：命令レジスタ）", "GR（General Register：汎用レジスタ）", "LIFO"],
+      "confidence": "high",
+      "notes": "各レジスタの役割の区別を問う問題で，主題はスタックポインタ。用語例「スタックポインタ」（項目11）をそのままコピー。既存論点には無いが用語例にある語なので topic_is_new は false"
+    },
+    {
+      "number": 9,
+      "syllabus_item": 12,
+      "topic_term": "メモリインタリーブ",
+      "topic_is_new": true,
+      "related_terms": ["バンク", "キャッシュメモリ", "ディスクキャッシュ", "SDRAM"],
+      "confidence": "high",
+      "notes": "2021r03a 問9 とほぼ同一の問題文。既存の新規論点「メモリインタリーブ」（項目12）に表記を合わせた。項目12の用語例には「バンク」はあるが「メモリインタリーブ」は無いため topic_is_new は true"
+    },
+    {
+      "number": 10,
+      "syllabus_item": 4,
+      "topic_term": "ハミング符号",
+      "topic_is_new": false,
+      "related_terms": ["パリティチェック", "チェックサム", "CRC", "ECC"],
+      "confidence": "medium",
+      "notes": "メモリの誤り検出訂正という文脈だが，2ビット検出・1ビット訂正という性質は符号理論の知識。既存論点「ハミング符号」（項目4，2022r04h 問4・2024r06h 問4）に合わせて項目4とした（項目12の用語例「ECC（誤り検出訂正）」に寄せる案もあったが，既存の集約先を優先）"
+    },
+    {
+      "number": 11,
+      "syllabus_item": 27,
+      "topic_term": "3 次元映像",
+      "topic_is_new": false,
+      "related_terms": ["アクティブシャッタ方式", "偏光方式", "アナグリフ方式", "裸眼立体視"],
+      "confidence": "medium",
+      "notes": "アクティブシャッタ方式の仕組みを問う問題。個別の方式名は用語例に無いため，項目27の用語例「3 次元映像」（半角スペースを含む表記をそのままコピー）を論点にし，方式名は related に置いた。用語例より狭い「アクティブシャッタ方式」を新規論点にすると立体視の教材が方式ごとに分散するため避けた"
+    },
+    {
+      "number": 12,
+      "syllabus_item": 11,
+      "topic_term": "FLOPS",
+      "topic_is_new": false,
+      "related_terms": ["マルチコアプロセッサ", "クラスタ", "超並列プロセッサ", "サイクルタイム"],
+      "confidence": "high",
+      "notes": "2025r07a 問11 と同一の問題文（HPC のノード数と総理論ピーク演算性能）。既存論点「FLOPS」（項目11）に一致。用語例をそのままコピー"
+    },
+    {
+      "number": 13,
+      "syllabus_item": 16,
+      "topic_term": "サーバコンソリデーション",
+      "topic_is_new": false,
+      "related_terms": ["仮想化（ホスト型，ハイパーバイザー型，コンテナ型）", "VM（Virtual Machine：仮想マシン）", "TCO", "マイグレーション（ライブマイグレーションほか）"],
+      "confidence": "high",
+      "notes": "用語の意味を問う問題。用語例「サーバコンソリデーション」（項目16）をそのままコピー"
+    },
+    {
+      "number": 14,
+      "syllabus_item": 17,
+      "topic_term": "MTTR",
+      "topic_is_new": true,
+      "related_terms": ["MTBF", "稼働率", "バスタブ曲線", "予防保守"],
+      "confidence": "high",
+      "notes": "2022r04h 問14 と同一の問題文。既存の新規論点「MTTR」（項目17）に表記を合わせた。項目17の用語例に MTTR は無いため topic_is_new は true"
+    },
+    {
+      "number": 15,
+      "syllabus_item": 17,
+      "topic_term": "使用率",
+      "topic_is_new": true,
+      "related_terms": ["負荷", "スループット", "サイジング", "レスポンスタイム（応答時間）"],
+      "confidence": "high",
+      "notes": "ピーク時間帯のトランザクション数から CPU 使用率（10,800 件×200 ミリ秒÷3,600 秒＝60％）を求める。既存の新規論点「使用率」（項目17，2023r05h 問14＝CPU と磁気ディスクの使用率）と同じ論点なので表記を合わせた。項目17の用語例に「使用率」は無いため topic_is_new は true"
+    },
+    {
+      "number": 16,
+      "syllabus_item": 18,
+      "topic_term": "ガベージコレクション",
+      "topic_is_new": false,
+      "related_terms": ["ヒープ", "フラグメンテーション", "メモリコンパクション", "記憶域管理アルゴリズム（ファーストフィット，ベストフィット，ワーストフィット）"],
+      "confidence": "high",
+      "notes": "問題文の表記は「ガーベジコレクション」だが，用語例（項目9）および既存論点（項目18，2021r03h 問18）の表記「ガベージコレクション」をそのままコピーした。表記を揺らすと頻度が分散するため。項目は既存論点に合わせて18（主記憶管理）"
+    },
+    {
+      "number": 17,
+      "syllabus_item": 18,
+      "topic_term": "デッドロック",
+      "topic_is_new": false,
+      "related_terms": ["排他制御", "資源の占有順序", "プロセス", "セマフォ"],
+      "confidence": "high",
+      "notes": "2024r06h 問17 と同一の問題文（資源 X〜Z の占有順序表）。既存論点「デッドロック」（項目18）に一致。用語例をそのままコピー"
+    },
+    {
+      "number": 18,
+      "syllabus_item": 18,
+      "topic_term": "デマンドページング",
+      "topic_is_new": false,
+      "related_terms": ["プリページング", "ページイン", "ページフォールト", "仮想記憶管理"],
+      "confidence": "medium",
+      "notes": "問題の主題はプリページングだが，項目18の用語例には「デマンドページング」しか無い。ページの読込み契機という同一論点の対概念なので，用語例の「デマンドページング」を論点名にし，プリページングを related の先頭に置いた（新規論点「プリページング」を作ると同じ論点が2つに割れる）。命名の判断が割れやすい箇所なので medium にした"
+    },
+    {
+      "number": 19,
+      "syllabus_item": 22,
+      "topic_term": "ディストリビュータ",
+      "topic_is_new": true,
+      "related_terms": ["Linux", "オープンソースライブラリ", "インテグレータ", "Open Source Initiative（OSI）"],
+      "confidence": "medium",
+      "notes": "OSS を取り巻く関係者（開発者，ディストリビュータ，インテグレータ）の役割の区別を問う。項目22の用語例は個別のソフトウェア名とライセンス名が中心で，役割を表す語が無いため新規論点にした。既存論点に大文字小文字だけが違う同綴りの語は無い（Docker・Linux カーネル・Swagger・コピーレフトのみ）"
+    },
+    {
+      "number": 20,
+      "syllabus_item": 12,
+      "topic_term": "DRAM",
+      "topic_is_new": false,
+      "related_terms": ["SRAM", "リフレッシュ", "キャッシュメモリ", "SDRAM"],
+      "confidence": "high",
+      "notes": "SRAM と比較した DRAM の特徴。問題文が主題としている DRAM を論点にし，比較対象の SRAM は related に置いた。用語例「DRAM」（項目12）をそのままコピー"
+    },
+    {
+      "number": 21,
+      "syllabus_item": 23,
+      "topic_term": "HDL（Hardware Description Language：ハードウェア記述言語）",
+      "topic_is_new": false,
+      "related_terms": ["FPGA（Field Programmable Gate Array）", "論理合成", "ASIC（Application Specific IC）", "DDL（Data Definition Language：データ定義言語）"],
+      "confidence": "high",
+      "notes": "括弧の中は語自身の英語表記・訳語なので，用語例（項目23）を丸ごとコピーした。既存論点も同じ表記"
+    },
+    {
+      "number": 22,
+      "syllabus_item": 23,
+      "topic_term": "PWM（Pulse Width Modulation：パルス幅変調）制御",
+      "topic_is_new": false,
+      "related_terms": ["アクチュエーター", "ブラシレス DC モーター", "デューティ比", "フィルター（ローパスフィルター，ハイパスフィルター，バンドパスフィルター，デジタルフィルター）"],
+      "confidence": "medium",
+      "notes": "同じ用語例が項目5（計測・制御に関する理論）と項目23（ハードウェア）の双方にある。モータ駆動回路を扱った既存論点（Hブリッジ回路＝2021r03h 問23，パワー半導体＝2024r06h 問20）がいずれも項目23なので，それに合わせた。括弧内は英語表記・訳語なので丸ごとコピー"
+    },
+    {
+      "number": 23,
+      "syllabus_item": 23,
+      "topic_term": "真理値表",
+      "topic_is_new": false,
+      "related_terms": ["論理式", "排他的論理和", "組合せ回路", "FPGA（Field Programmable Gate Array）"],
+      "confidence": "high",
+      "notes": "LUT の格納値（アドレス→値）は3入力の真理値表そのもので，等価な論理回路（c XOR (a AND b)）を求める問題。既存論点「真理値表」（項目23，2023r05a 問23＝真理値表に示す3入力多数決回路）と同じ論点。用語例をそのままコピー"
+    },
+    {
+      "number": 24,
+      "syllabus_item": 23,
+      "topic_term": "D/A コンバータ",
+      "topic_is_new": false,
+      "related_terms": ["A/Dコンバータ", "分解能", "LSB", "基数"],
+      "confidence": "high",
+      "notes": "2025r07h 問18 と同一の問題文（16進 82＝130，130×10＝1,300 ミリV）。既存論点「D/A コンバータ」（項目23）に一致。項目5の用語例「D/A変換」とは表記が違うが，既存論点と用語例（項目23）の「D/A コンバータ」をそのままコピーした"
+    },
+    {
+      "number": 25,
+      "syllabus_item": 26,
+      "topic_term": "動画像のデータ量",
+      "topic_is_new": true,
+      "related_terms": ["圧縮率", "非可逆圧縮", "MPEG", "ストリーミング"],
+      "confidence": "high",
+      "notes": "2024r06a 問26 と同一の問題文（800×600×24×30 ≒ 345.6M ビット／秒）。既存の新規論点「動画像のデータ量」（項目26）に表記を合わせた。用語例に該当語が無いため topic_is_new は true"
+    },
+    {
+      "number": 26,
+      "syllabus_item": 30,
+      "topic_term": "アクセス権",
+      "topic_is_new": false,
+      "related_terms": ["GRANT 文", "REVOKE 文", "ビュー表", "データ機密保護機能"],
+      "confidence": "medium",
+      "notes": "GRANT 文が表への操作権限を付与するものであることを問う。項目30で「GRANT文」は本文中（その他のデータ操作言語）に出るだけで単独の用語例ではないため，用語例「アクセス権」を論点名にし，GRANT 文は related に置いた。新規論点「GRANT 文」を作る案もあったので medium"
+    },
+    {
+      "number": 27,
+      "syllabus_item": 29,
+      "topic_term": "論理データ構造のマッピング",
+      "topic_is_new": false,
+      "related_terms": ["多重度", "外部キー", "リレーションシップ", "一意性制約"],
+      "confidence": "high",
+      "notes": "2025r07h 問25（UML のデータモデルを関係データベース上に実装する際の解釈）とほぼ同一の型で，既存論点「論理データ構造のマッピング」（項目29）に一致。用語例をそのままコピー。多重度・外部キーは既存論点にもあるが，本問はモデルから表定義への変換全体を問うているので related に置いた"
+    }
+  ]
+}

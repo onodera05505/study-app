@@ -1,0 +1,82 @@
+{
+  "topic_id": 8,
+  "term": "EVM（Earned Value Management）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "chart",
+      "after": "### 3つの値",
+      "caption": "5日目時点で EV が PV より下なら進捗の遅れ（SV －10）、AC より下ならコストの超過（CV －20）。",
+      "kind": "line",
+      "x": {
+        "label": "経過日数（日）",
+        "values": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "y": {
+        "label": "金額（万円）",
+        "min": 0,
+        "max": 70
+      },
+      "series": [
+        {
+          "label": "PV 計画価値",
+          "values": [
+            0,
+            10,
+            20,
+            30,
+            40,
+            50
+          ]
+        },
+        {
+          "label": "EV 出来高",
+          "values": [
+            0,
+            8,
+            16,
+            24,
+            32,
+            40
+          ],
+          "emphasis": true
+        },
+        {
+          "label": "AC 実コスト",
+          "values": [
+            0,
+            12,
+            24,
+            36,
+            48,
+            60
+          ]
+        }
+      ],
+      "annotations": [
+        {
+          "x": 5,
+          "y": 60,
+          "text": "AC 60"
+        },
+        {
+          "x": 5,
+          "y": 50,
+          "text": "PV 50"
+        },
+        {
+          "x": 5,
+          "y": 40,
+          "text": "EV 40"
+        }
+      ]
+    }
+  ]
+}

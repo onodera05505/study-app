@@ -1,0 +1,25 @@
+{
+  "topic_id": 196,
+  "term": "選択・結合",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 3つの関係演算",
+      "caption": "行を横に切るのが選択、列を縦に切るのが射影、共通の列を手掛かりに2つの表をつなぐのが結合。",
+      "nodes": [
+        {"id": "s1", "label": "元の表", "row": 0, "col": 0},
+        {"id": "s2", "label": "条件に合う\n行だけの表", "row": 0, "col": 1, "emphasis": true},
+        {"id": "p1", "label": "元の表", "row": 1, "col": 0},
+        {"id": "p2", "label": "必要な\n列だけの表", "row": 1, "col": 1},
+        {"id": "j1", "label": "表A と 表B", "row": 2, "col": 0},
+        {"id": "j2", "label": "2つが1つに\nなった表", "row": 2, "col": 1, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "s1", "to": "s2", "label": "選択（行を取り出す）"},
+        {"from": "p1", "to": "p2", "label": "射影（列を取り出す）"},
+        {"from": "j1", "to": "j2", "label": "結合（共通の列でつなぐ）"}
+      ]
+    }
+  ]
+}

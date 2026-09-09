@@ -1,0 +1,30 @@
+{
+  "topic_id": 487,
+  "term": "アクティビティ図",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 何を主役にした図か",
+      "caption": "移り変わるのは状態ではなく処理。フォークとジョインで並行して進む処理を書けるのが特徴。",
+      "nodes": [
+        {"id": "st", "label": "開始", "row": 0, "col": 0, "shape": "round"},
+        {"id": "a1", "label": "受注を登録する", "row": 0, "col": 1},
+        {"id": "fk", "label": "フォーク\n並行に分ける", "row": 0, "col": 2, "emphasis": true},
+        {"id": "a2", "label": "在庫を引き当てる", "row": 1, "col": 1},
+        {"id": "a3", "label": "請求書を作成する", "row": 1, "col": 3},
+        {"id": "jn", "label": "ジョイン\n両方の完了を待つ", "row": 2, "col": 2, "emphasis": true},
+        {"id": "en", "label": "終了", "row": 2, "col": 3, "shape": "round"}
+      ],
+      "edges": [
+        {"from": "st", "to": "a1"},
+        {"from": "a1", "to": "fk"},
+        {"from": "fk", "to": "a2"},
+        {"from": "fk", "to": "a3"},
+        {"from": "a2", "to": "jn"},
+        {"from": "a3", "to": "jn"},
+        {"from": "jn", "to": "en"}
+      ]
+    }
+  ]
+}

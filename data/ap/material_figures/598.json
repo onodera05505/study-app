@@ -1,0 +1,79 @@
+{
+  "topic_id": 598,
+  "term": "パケットフィルタリング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### どの層の情報で判断するのか",
+      "caption": "パケットフィルタリングが見るのは IP アドレスとポート番号だけ。上の層の中身も下の層の MAC アドレスも判断材料にしない。",
+      "nodes": [
+        {
+          "id": "app",
+          "label": "アプリケーション層\nURL・POST データ",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "tr",
+          "label": "トランスポート層\nポート番号",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "ip",
+          "label": "インターネット層\nIP アドレス",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "lk",
+          "label": "データリンク層\nMAC アドレス",
+          "row": 3,
+          "col": 0
+        },
+        {
+          "id": "waf",
+          "label": "WAF・プロキシ",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "pf",
+          "label": "パケット\nフィルタリング",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "mf",
+          "label": "MAC アドレス\nフィルタリング",
+          "row": 3,
+          "col": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": "waf",
+          "to": "app",
+          "label": "中身を検査"
+        },
+        {
+          "from": "pf",
+          "to": "tr",
+          "label": "ポート番号で判定"
+        },
+        {
+          "from": "pf",
+          "to": "ip",
+          "label": "IP アドレスで判定"
+        },
+        {
+          "from": "mf",
+          "to": "lk",
+          "label": "MAC アドレスで判定"
+        }
+      ]
+    }
+  ]
+}

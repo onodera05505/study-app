@@ -1,0 +1,240 @@
+{
+  "exam": "2025r07h",
+  "range": "55-80",
+  "classifications": [
+    {
+      "number": 55,
+      "syllabus_item": 64,
+      "topic_term": "サービス可用性",
+      "topic_is_new": false,
+      "related_terms": ["SLA", "SLO", "サービス時間"],
+      "confidence": "medium",
+      "notes": "SLA の目標値に対する可用性の計算。項目65（サービス可用性管理／サービスレベル管理）とも取れるが、可用性と SLA の定義そのものを問うているので項目64を選んだ。"
+    },
+    {
+      "number": 56,
+      "syllabus_item": 65,
+      "topic_term": "IaaSなどのクラウドサービスの利用",
+      "topic_is_new": false,
+      "related_terms": ["PaaS", "SaaS", "オンプレミス", "システム運用管理"],
+      "confidence": "medium",
+      "notes": "IaaS／PaaS がどこまでを担うか（責任範囲）が中心。項目67（サービスの運用）とも取れるが、クラウドサービス利用の用語例がある項目65を選んだ。用語例の文字列をそのまま採用している。"
+    },
+    {
+      "number": 57,
+      "syllabus_item": 66,
+      "topic_term": "CSF（Critical Success Factors：重要成功要因）",
+      "topic_is_new": false,
+      "related_terms": ["KGI（Key Goal Indicator：重要目標達成指標）", "KPI（KeyPerformance Indicator：重要業績評価指標）", "継続的改善"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 58,
+      "syllabus_item": 69,
+      "topic_term": "ウォークスルー法",
+      "topic_is_new": false,
+      "related_terms": ["ドキュメントレビュー法（文書及び記録の収集・閲覧）", "インタビュー法（質問書・調査票）", "テストデータ法", "監査技法"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 59,
+      "syllabus_item": 69,
+      "topic_term": "監査証拠の入手と評価",
+      "topic_is_new": false,
+      "related_terms": ["監査手続", "監査調書の作成と保管", "個別監査計画", "監査報告書の作成と報告"],
+      "confidence": "medium",
+      "notes": "問うているのは「監査手続」の定義。用語例に「監査手続」は無く、正解が述べる内容（十分かつ適切な証拠の入手）に最も近い用語例「監査証拠の入手と評価」を採用した。"
+    },
+    {
+      "number": 60,
+      "syllabus_item": 69,
+      "topic_term": "システム管理基準",
+      "topic_is_new": true,
+      "related_terms": ["開発・運用・保守プロセスの信頼性・効率性", "受入れテスト", "運用テスト", "業務要件定義"],
+      "confidence": "medium",
+      "notes": "システム管理基準（令和5年）のユーザ受入テストの監査チェックポイント。項目69の用語例に「システム管理基準」は無いため新設（項目71・95の用語例には同一表記があり、問65と同じ論点名にそろえた）。"
+    },
+    {
+      "number": 61,
+      "syllabus_item": 89,
+      "topic_term": "DX認定制度",
+      "topic_is_new": true,
+      "related_terms": ["デジタルガバナンス・コード 2.0", "デジタルトランスフォーメーション（DX）", "経営ビジョン", "ビジネスモデル"],
+      "confidence": "medium",
+      "notes": "DX 認定制度は用語例に無いため新設。項目71（情報システム戦略／DX 推進指標）とも取れるが、デジタルガバナンス・コードと DX を用語例に持つ項目89を選んだ。"
+    },
+    {
+      "number": 62,
+      "syllabus_item": 73,
+      "topic_term": "CRM ソリューション",
+      "topic_is_new": false,
+      "related_terms": ["ソリューションプロバイダ", "ワントゥワンマーケティング", "SFA", "SCM"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 63,
+      "syllabus_item": 73,
+      "topic_term": "プロビジョニング",
+      "topic_is_new": true,
+      "related_terms": ["システムインテグレーション", "プライベートクラウド", "オンプレミス", "クラウドサービス（SaaS，PaaS，IaaS など）"],
+      "confidence": "high",
+      "notes": "誤答選択肢がいずれも項目73の用語例（SI、共同利用型クラウド、オンプレミス）なので項目は確定的。プロビジョニング自体は用語例に無いため新設。"
+    },
+    {
+      "number": 64,
+      "syllabus_item": 91,
+      "topic_term": "ABC（Activity Based Costing：活動基準原価計算）",
+      "topic_is_new": false,
+      "related_terms": ["原価管理", "配賦", "開発効果の算定"],
+      "confidence": "medium",
+      "notes": "システム構築の効果算定という文脈なので項目75（開発効果の算定）とも取れるが、計算の中心は活動基準原価計算による人件費の配賦。"
+    },
+    {
+      "number": 65,
+      "syllabus_item": 71,
+      "topic_term": "システム管理基準",
+      "topic_is_new": false,
+      "related_terms": ["業務モデル", "業務プロセス標準化", "情報システムのあるべき姿（To-beモデル）", "業務分析"],
+      "confidence": "medium",
+      "notes": "システム管理基準（令和5年）の企画プロセス・ビジネス分析の達成目標。内容は企画（項目75 システム化計画）寄りだが、「システム管理基準」を用語例に持つ項目71を選んだ。"
+    },
+    {
+      "number": 66,
+      "syllabus_item": 77,
+      "topic_term": "情報システム・モデル取引・契約書",
+      "topic_is_new": false,
+      "related_terms": ["（準）委任契約", "請負契約", "ソフトウェア開発委託モデル契約"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 67,
+      "syllabus_item": 78,
+      "topic_term": "PPM",
+      "topic_is_new": true,
+      "related_terms": ["市場成長率", "相対的市場シェア", "経営資源配分の最適化", "クロス SWOT分析"],
+      "confidence": "high",
+      "notes": "用語例には PPM の構成要素（市場成長率、相対的市場シェア、花形製品ほか）はあるが「PPM」そのものが無いため新設。"
+    },
+    {
+      "number": 68,
+      "syllabus_item": 79,
+      "topic_term": "プライスライニング戦略",
+      "topic_is_new": true,
+      "related_terms": ["スキミングプライシング", "ペネトレーションプライシング", "その他の価格設定方法（コストプラス法ほか）"],
+      "confidence": "high",
+      "notes": "価格設定方法の一つ。用語例に個別の記載が無いため新設（用語例の「その他の価格設定方法（コストプラス法ほか）」は論点名として広すぎる）。"
+    },
+    {
+      "number": 69,
+      "syllabus_item": 80,
+      "topic_term": "ビジネスモデルキャンバス",
+      "topic_is_new": false,
+      "related_terms": ["MVV（ミッション，ビジョン，バリュー）", "バリュープロポジション", "顧客価値"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 70,
+      "syllabus_item": 86,
+      "topic_term": "フリーミアム",
+      "topic_is_new": false,
+      "related_terms": ["マネタイズ", "ロングテール", "インターネット広告"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 71,
+      "syllabus_item": 87,
+      "topic_term": "エッジ AI",
+      "topic_is_new": false,
+      "related_terms": ["エッジコンピューティング", "機械学習", "教師あり学習", "強化学習"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 72,
+      "syllabus_item": 88,
+      "topic_term": "マシンビジョン",
+      "topic_is_new": false,
+      "related_terms": ["スマートファクトリー", "AI による認識", "品質管理"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 73,
+      "syllabus_item": 89,
+      "topic_term": "コンピテンシー",
+      "topic_is_new": false,
+      "related_terms": ["MBO（Management byObjectives and self-control：目標管理制度）", "SL（Situational Leadership）理論", "マズロの欲求段階説", "業績評価"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 74,
+      "syllabus_item": 90,
+      "topic_term": "指数平滑法",
+      "topic_is_new": false,
+      "related_terms": ["移動平均法", "時系列分析", "需要予測"],
+      "confidence": "medium",
+      "notes": "移動平均法と指数平滑法を比較させる問題で、正解は指数平滑法の性質。問題文の主題は「時系列モデル」だが用語例に無く、正解の中心となる指数平滑法を論点にした。"
+    },
+    {
+      "number": 75,
+      "syllabus_item": 89,
+      "topic_term": "親和図",
+      "topic_is_new": false,
+      "related_terms": ["ブレーンストーミング", "グループダイナミクス", "水平思考"],
+      "confidence": "medium",
+      "notes": "収束技法としての親和図法。項目90の用語例では「新 QC 七つ道具（親和図法…）」の一部になっており、選択肢が発想法（NM 法、ゴードン法、ブレーンストーミング）で構成されることから、親和図とブレーンストーミングを単独の用語例に持つ項目89を選んだ。"
+    },
+    {
+      "number": 76,
+      "syllabus_item": 91,
+      "topic_term": "資本回転率",
+      "topic_is_new": false,
+      "related_terms": ["売上高利益率", "ROA（Return On Assets：総資産利益率）", "収益性指標", "外部分析"],
+      "confidence": "medium",
+      "notes": "総資産回転率と総資産営業利益率の比較。「総資産回転率」は用語例に無いため、対応する用語例「資本回転率」を採用した。"
+    },
+    {
+      "number": 77,
+      "syllabus_item": 91,
+      "topic_term": "損益分岐点",
+      "topic_is_new": false,
+      "related_terms": ["費用分解原価計算", "変動損益計算書", "目標利益売上高"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 78,
+      "syllabus_item": 92,
+      "topic_term": "著作権",
+      "topic_is_new": false,
+      "related_terms": ["情報解析", "私的使用", "二次的著作物", "非享受利用"],
+      "confidence": "high",
+      "notes": "生成 AI の学習・生成物の利用と著作権侵害の関係。論点は著作権（著作権法の適用範囲）。"
+    },
+    {
+      "number": 79,
+      "syllabus_item": 86,
+      "topic_term": "暗号資産（仮想通貨）",
+      "topic_is_new": false,
+      "related_terms": ["電子マネー", "資金決済法", "中央銀行発行デジタル通貨（CBDC）", "フィンテック（FinTech）"],
+      "confidence": "medium",
+      "notes": "資金決済法上の定義を問うので項目94（資金決済法）とも取れるが、選択肢はいずれも暗号資産そのものの性質を述べており、項目86を選んだ。"
+    },
+    {
+      "number": 80,
+      "syllabus_item": 95,
+      "topic_term": "RoHS指令",
+      "topic_is_new": false,
+      "related_terms": ["CE マーク", "リサイクル法", "廃棄物処理法", "外国為替及び外国貿易法（外為法）"],
+      "confidence": "high",
+      "notes": null
+    }
+  ]
+}

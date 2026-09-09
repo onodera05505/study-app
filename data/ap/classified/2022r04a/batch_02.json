@@ -1,0 +1,374 @@
+{
+ "exam": "2022r04a",
+ "range": "28-54",
+ "classifications": [
+  {
+   "number": 28,
+   "syllabus_item": 30,
+   "topic_term": "副問合せ",
+   "topic_is_new": false,
+   "related_terms": [
+    "集合関数",
+    "DISTINCT",
+    "SELECT 文"
+   ],
+   "confidence": "medium",
+   "notes": "AVG を使った副問合せの結果と比較して DISTINCT で仕入先コード数を数える問題。中心は副問合せの読み取りとしたが、既存論点「集合関数」（項目30）とも取り得る。"
+  },
+  {
+   "number": 29,
+   "syllabus_item": 31,
+   "topic_term": "フォワードリカバリ（ロールフォワード）",
+   "topic_is_new": false,
+   "related_terms": [
+    "チェックポイント",
+    "バックワードリカバリ（ロールバック）",
+    "コミット",
+    "ジャーナルファイル（ログファイル）"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 30,
+   "syllabus_item": 28,
+   "topic_term": "ACID特性",
+   "topic_is_new": false,
+   "related_terms": [
+    "原子性",
+    "一貫性",
+    "耐久性",
+    "可用性"
+   ],
+   "confidence": "high",
+   "notes": "ACID特性はトランザクションの性質だが、用語例としては項目28（データベース方式）に載っているためそこに置いた。"
+  },
+  {
+   "number": 31,
+   "syllabus_item": 35,
+   "topic_term": "DHCP",
+   "topic_is_new": false,
+   "related_terms": [
+    "IP アドレス",
+    "サブネットマスク",
+    "デフォルトゲートウェイ",
+    "リース"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 32,
+   "syllabus_item": 35,
+   "topic_term": "ポート番号",
+   "topic_is_new": false,
+   "related_terms": [
+    "FTP",
+    "POP3",
+    "SMTP",
+    "SNMP"
+   ],
+   "confidence": "medium",
+   "notes": "2025r07h 問33 と同一問題。以前は「FTP」（項目37）を新規論点にしていたが、同一問題が別論点に割れて頻度が分散していたため、用語例にある「ポート番号」（項目35、2025r07h 問33 の分類）へ寄せた（2026-08-31）"
+  },
+  {
+   "number": 33,
+   "syllabus_item": 35,
+   "topic_term": "サブネットマスク",
+   "topic_is_new": false,
+   "related_terms": [
+    "CIDR（Classless Inter Domain Routing）",
+    "ネットワークアドレス",
+    "ホストアドレス"
+   ],
+   "confidence": "high",
+   "notes": "/29 のプレフィックス表記からサブネットマスクと使用可能ホスト数を判断する問題。既存論点「サブネットマスク」（項目35）と同一表記。"
+  },
+  {
+   "number": 34,
+   "syllabus_item": 35,
+   "topic_term": "UDP",
+   "topic_is_new": true,
+   "related_terms": [
+    "TCP",
+    "ICMP（Internet Control Message Protocol）",
+    "PPP",
+    "コネクションレス方式"
+   ],
+   "confidence": "high",
+   "notes": "UDP 単独はシラバス用語例に無い。既存論点「UDP」（項目35・新規扱い）と同一表記を使用。"
+  },
+  {
+   "number": 35,
+   "syllabus_item": 37,
+   "topic_term": "URL",
+   "topic_is_new": false,
+   "related_terms": [
+    "ポート番号",
+    "HTTP over TLS（HTTPS）",
+    "クエリ文字列"
+   ],
+   "confidence": "high",
+   "notes": "URL 中でポート番号を指定する位置（ホスト名の直後）を問う。URL は項目37の用語例にある。"
+  },
+  {
+   "number": 36,
+   "syllabus_item": 38,
+   "topic_term": "リフレクション攻撃",
+   "topic_is_new": false,
+   "related_terms": [
+    "オープンリゾルバ",
+    "DNS",
+    "IP スプーフィング",
+    "DDoS 攻撃"
+   ],
+   "confidence": "medium",
+   "notes": "オープンリゾルバを悪用した攻撃＝送信元を偽装した DNS 問合せによるリフレクション（DNS アンプ）攻撃。用語例には「サービス及びソフトウェアの機能の悪用（オープンリゾルバの悪用ほか）」もあるが、単独で載っている「リフレクション攻撃」を論点にした。"
+  },
+  {
+   "number": 37,
+   "syllabus_item": 38,
+   "topic_term": "サイドチャネル攻撃（テンペスト攻撃，プローブ攻撃，タイミング攻撃，電力解析攻撃など）",
+   "topic_is_new": false,
+   "related_terms": [
+    "電力解析攻撃",
+    "ソーシャルエンジニアリング",
+    "中間者（Man-in-the-middle）攻撃",
+    "SQL インジェクション"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 38,
+   "syllabus_item": 38,
+   "topic_term": "OCSP",
+   "topic_is_new": false,
+   "related_terms": [
+    "CRL（Certificate Revocation List：証明書失効リスト）",
+    "デジタル証明書（公開鍵証明書）",
+    "CA（Certification Authority：認証局）",
+    "LDAP"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 39,
+   "syllabus_item": 39,
+   "topic_term": "JPCERT コーディネーションセンター",
+   "topic_is_new": false,
+   "related_terms": [
+    "CSIRT",
+    "組織における内部不正防止ガイドライン",
+    "証拠保全ガイドライン"
+   ],
+   "confidence": "medium",
+   "notes": "正解は CSIRT マテリアルだが、問うているのは JPCERT/CC の作成物という知識なので、単独で用語例にある「JPCERT コーディネーションセンター」を論点にした。既存論点「CSIRT」（項目39）とも取り得る。"
+  },
+  {
+   "number": 40,
+   "syllabus_item": 39,
+   "topic_term": "JVN（Japan Vulnerability Notes）",
+   "topic_is_new": false,
+   "related_terms": [
+    "JPCERT コーディネーションセンター",
+    "IPA セキュリティセンター",
+    "CVSS（Common Vulnerability Scoring System：共通脆弱性評価システム）",
+    "CWE（Common Weakness Enumeration：共通脆弱性タイプ）"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 41,
+   "syllabus_item": 39,
+   "topic_term": "リスクアセスメントのプロセス（リスク特定，リスク分析，リスク評価）",
+   "topic_is_new": false,
+   "related_terms": [
+    "リスクマネジメント（JIS Q 31000）",
+    "リスク対応",
+    "リスク受容"
+   ],
+   "confidence": "high",
+   "notes": "リスクアセスメントを構成する3プロセスの組合せを問うので、用語例のエントリを丸ごとコピーした（設問の主題は括弧内の1語ではなく全体）。"
+  },
+  {
+   "number": 42,
+   "syllabus_item": 41,
+   "topic_term": "WAF（Web Application Firewall）",
+   "topic_is_new": false,
+   "related_terms": [
+    "DNS キャッシュポイズニング",
+    "第三者中継（オープンリレー）",
+    "IPS（Intrusion Prevention System：侵入防止システム）"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 43,
+   "syllabus_item": 42,
+   "topic_term": "IP マスカレード",
+   "topic_is_new": false,
+   "related_terms": [
+    "NAT",
+    "PPPoE（Point to Point Protocol over Ethernet）",
+    "WPA2",
+    "WPS"
+   ],
+   "confidence": "medium",
+   "notes": "無線 LAN ルータで期待できるセキュリティ効果＝IP マスカレードによる外部からの侵入防止。セキュリティ効果を問うので項目42としたが（項目42の用語例は「IP マスカレード（NAPT）」）、表記は既存論点「IP マスカレード」（項目33）に揃えて頻度を分散させない。"
+  },
+  {
+   "number": 44,
+   "syllabus_item": 42,
+   "topic_term": "SPF",
+   "topic_is_new": false,
+   "related_terms": [
+    "DKIM",
+    "DMARC",
+    "送信元ドメイン認証",
+    "デジタル署名（署名鍵，検証鍵）"
+   ],
+   "confidence": "high",
+   "notes": "用語例「スパム対策（…SPF，DKIM…ほか）」の括弧内列挙のうち、設問の主題である SPF を採用。既存論点「SPF」（項目42）と同一表記。"
+  },
+  {
+   "number": 45,
+   "syllabus_item": 42,
+   "topic_term": "ファジング",
+   "topic_is_new": false,
+   "related_terms": [
+    "脆弱性診断",
+    "パスワードリスト攻撃（クレデンシャルスタッフィング）",
+    "サニタイジング"
+   ],
+   "confidence": "medium",
+   "notes": "脆弱性を発見する検査技術の文脈なので項目42（用語例「脆弱性検査技術（…ファジングほか）」）としたが、ファジングが単独で載っている項目46とも取り得る。表記は既存論点「ファジング」（項目46）と同一。"
+  },
+  {
+   "number": 46,
+   "syllabus_item": 44,
+   "topic_term": "ウォークスルー",
+   "topic_is_new": false,
+   "related_terms": [
+    "インスペクション",
+    "トップダウンテスト",
+    "サンドイッチテスト"
+   ],
+   "confidence": "high",
+   "notes": "成果物のレビュー手法としてのウォークスルー（項目44・45の用語例に単独である）。既存論点「ウォークスルー法」（項目69・システム監査の技法）は別概念なので統合しない。"
+  },
+  {
+   "number": 47,
+   "syllabus_item": 48,
+   "topic_term": "FTA",
+   "topic_is_new": true,
+   "related_terms": [
+    "FMEA",
+    "なぜなぜ分析",
+    "故障モード",
+    "ODC 分析"
+   ],
+   "confidence": "medium",
+   "notes": "用語例「システム信頼性のための解析技法（FTA，FMEA，STAMP/STPA ほか）」（項目48）の括弧内列挙のうち、設問の主題である FTA を採用。単独表記は他項目に無いため新規論点。信頼性設計の文脈なので項目44とも取り得る。"
+  },
+  {
+   "number": 48,
+   "syllabus_item": 45,
+   "topic_term": "網羅率",
+   "topic_is_new": false,
+   "related_terms": [
+    "命令網羅",
+    "判定条件網羅（decisioncoverage）",
+    "ホワイトボックステスト",
+    "テストケース"
+   ],
+   "confidence": "medium",
+   "notes": "C0（命令網羅）と C1（分岐網羅）の両方の網羅率を計算させる問題。片方に寄せず、用語例に単独である「網羅率」を論点にした。「命令網羅」とも取り得る。"
+  },
+  {
+   "number": 49,
+   "syllabus_item": 49,
+   "topic_term": "テスト駆動開発（TDD）",
+   "topic_is_new": false,
+   "related_terms": [
+    "XP（エクストリームプログラミング）",
+    "ペアプログラミング",
+    "リファクタリング",
+    "継続的インテグレーション（CI）"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 50,
+   "syllabus_item": 49,
+   "topic_term": "KPT（Keep，Problem，Try）",
+   "topic_is_new": false,
+   "related_terms": [
+    "スプリントレトロスペクティブ",
+    "ふりかえり（レトロスペクティブ）",
+    "スクラム",
+    "ペアプログラミング"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 51,
+   "syllabus_item": 56,
+   "topic_term": "スコープ（作業及び成果物）",
+   "topic_is_new": false,
+   "related_terms": [
+    "WBS",
+    "プロジェクトスコープのクリープ",
+    "変更管理"
+   ],
+   "confidence": "medium",
+   "notes": "スコープの管理に該当する活動（作業を別プロジェクトへ切り出す＝スコープの変更）を選ぶ問題。管理活動そのものは用語例に無いため、既存論点「スコープ（作業及び成果物）」（項目56）に寄せた。"
+  },
+  {
+   "number": 52,
+   "syllabus_item": 58,
+   "topic_term": "PDM（Precedence Diagramming Method：プレシデンスダイアグラム法）",
+   "topic_is_new": false,
+   "related_terms": [
+    "リード",
+    "ラグ",
+    "アローダイアグラム",
+    "CPM（Critical Path Method：クリティカルパス法）"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 53,
+   "syllabus_item": 59,
+   "topic_term": "工数見積り",
+   "topic_is_new": true,
+   "related_terms": [
+    "人月",
+    "生産性",
+    "要員割当て",
+    "進捗管理"
+   ],
+   "confidence": "medium",
+   "notes": "見積工数（人月）・要員数・生産性から工程期間の短縮を計算する問題。用語例に該当語が無いため、既存論点「工数見積り」（項目59・新規扱い）と同一表記を使用。期間短縮の計算なので項目58（プロジェクトの時間）とも取り得る。"
+  },
+  {
+   "number": 54,
+   "syllabus_item": 62,
+   "topic_term": "加重総和法",
+   "topic_is_new": true,
+   "related_terms": [
+    "多基準意思決定分析",
+    "調達計画",
+    "重み付け評価"
+   ],
+   "confidence": "medium",
+   "notes": "多基準意思決定分析の加重総和法で調達候補のパッケージ製品を評価する問題。用語例に該当語が無いため新規論点。公式分野がマネジメント系で、調達候補の選定なので項目62（プロジェクトの調達）に置いた。"
+  }
+ ]
+}

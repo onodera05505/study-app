@@ -1,0 +1,25 @@
+{
+  "topic_id": 416,
+  "term": "サービスデスク",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 計算の解き方",
+      "caption": "週40時間と比べるのは休憩を除いた労働時間7.5時間。勤務8.5時間で割ると14人の誤答になる。",
+      "nodes": [
+        {"id": "day", "label": "1日のシフト枠\n早番2＋日中4＋遅番2\n＝8枠", "row": 0, "col": 0},
+        {"id": "week", "label": "1週間の枠\n8枠 × 7日\n＝56枠", "row": 0, "col": 1},
+        {"id": "ans", "label": "必要な要員\n56 ÷ 5 ＝ 11.2\n切り上げて 12人", "row": 0, "col": 2, "emphasis": true},
+        {"id": "hour", "label": "1シフトの労働時間\n勤務8.5 − 休憩1\n＝7.5時間", "row": 1, "col": 0},
+        {"id": "cap", "label": "1人が担当できる枠\n40 ÷ 7.5 ＝ 5.33…\n＝週5シフトまで", "row": 1, "col": 1}
+      ],
+      "edges": [
+        {"from": "day", "to": "week"},
+        {"from": "week", "to": "ans"},
+        {"from": "hour", "to": "cap"},
+        {"from": "cap", "to": "ans"}
+      ]
+    }
+  ]
+}

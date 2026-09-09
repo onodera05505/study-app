@@ -1,0 +1,293 @@
+{
+  "bundle": "expl_01",
+  "explanations": [
+    {
+      "question_id": "2026r08-q97",
+      "content_key": "50bfe9f96eabc25f",
+      "correct": "イ",
+      "correct_reason": "OSS は有償で配ってもよく、不具合を直したソースコードを自分で公開することも再配布の自由の範囲です。一方、使える分野を限る提供は「分野や人を差別しない」という条件に反するので、これを含まない組合せが答えになります。",
+      "choices": [
+        {"label": "ア", "term": null, "note": "修正したソースコードの公開を落としています。これは再配布の自由に沿った行為です"},
+        {"label": "イ", "term": null, "note": "正解。"},
+        {"label": "ウ", "term": null, "note": "利用分野を限る提供を含みます。分野を差別しないという OSS の条件に反します"},
+        {"label": "エ", "term": null, "note": "有償での提供を落としています。OSS を有償で配ることは禁じられていません"}
+      ]
+    },
+    {
+      "question_id": "2025r07-q96",
+      "content_key": "ce1a903fbef3595a",
+      "correct": "ウ",
+      "correct_reason": "OSS を開発しているのは個人だけでなく企業や団体もあり、入手したものを再配布する自由も保証されています。著作権は放棄されず開発者が持ち続けるので、著作権放棄を含む組合せは誤りです。",
+      "choices": [
+        {"label": "ア", "term": null, "note": "著作権が放棄されているという記述を含みます。OSS の著作権は開発者が持ったままです"},
+        {"label": "イ", "term": null, "note": "著作権が放棄されているという記述を含みます。再配布が自由なことと著作権が無いことは別です"},
+        {"label": "ウ", "term": null, "note": "正解。"},
+        {"label": "エ", "term": null, "note": "著作権放棄の記述を含み、開発者に企業や団体もいるという正しい記述を落としています"}
+      ]
+    },
+    {
+      "question_id": "2024r06-q80",
+      "content_key": "57cda3e1539cc9f0",
+      "correct": "ア",
+      "correct_reason": "OSS を使って作ったソフトウェアを販売することは認められています。一方、ソースコードが公開されていれば全て OSS というわけではなく、著作権も放棄されていないため、正しいのは販売できるという記述だけです。",
+      "choices": [
+        {"label": "ア", "term": null, "note": "正解。"},
+        {"label": "イ", "term": null, "note": "公開されていれば全て OSS という記述を含みます。公開は条件の一つにすぎません"},
+        {"label": "ウ", "term": null, "note": "公開＝OSS という記述と著作権放棄の記述を含み、どちらも誤りです"},
+        {"label": "エ", "term": null, "note": "著作権が放棄されているという記述だけを挙げています。著作権は開発者が持ち続けます"}
+      ]
+    },
+    {
+      "question_id": "2024r06-q97",
+      "content_key": "98fad15fd0b4e37b",
+      "correct": "イ",
+      "correct_reason": "Android、FreeBSD、Linux はいずれも OSS の OS です。iOS だけは Apple が権利を持ちソースコードを公開していないので、これを含まない組合せが答えになります。",
+      "choices": [
+        {"label": "ア", "term": null, "note": "Linux を落としています。Linux は OSS の OS の代表例です"},
+        {"label": "イ", "term": null, "note": "正解。"},
+        {"label": "ウ", "term": null, "note": "Android を落としています。Android は Linux をもとにした OSS の OS です"},
+        {"label": "エ", "term": null, "note": "iOS を含みます。iOS はソースコードが公開されていない Apple 独自の OS です"}
+      ]
+    },
+    {
+      "question_id": "2023r05-q82",
+      "content_key": "ec9a088ae2d53427",
+      "correct": "ア",
+      "correct_reason": "改変したうえで再配布できることは OSS の基本的な自由なので、この記述だけが適切です。有償サポートは付いている製品があるだけで義務ではなく、著作権も放棄されていません。",
+      "choices": [
+        {"label": "ア", "term": null, "note": "正解。"},
+        {"label": "イ", "term": null, "note": "著作権が放棄されているという記述を含みます。著作権は開発者が保持しています"},
+        {"label": "ウ", "term": null, "note": "有償サポートが必須という記述です。サポート契約は義務ではありません"},
+        {"label": "エ", "term": null, "note": "著作権放棄の記述です。著作権を放棄したものは[[パブリックドメインソフトウェア]]です"}
+      ]
+    },
+    {
+      "question_id": "2022r04-q63",
+      "content_key": "be37b2caac9b1329",
+      "correct": "ア",
+      "correct_reason": "スマートフォンやタブレットで広く使われ、ソースコードが公開されている OS は Android です。Linux をもとに作られており、誰でも入手して改変できます。",
+      "choices": [
+        {"label": "ア", "term": null, "note": "正解。"},
+        {"label": "イ", "term": "iOS", "note": "Apple の携帯端末向け OS。ソースコードは公開されておらず OSS ではない"},
+        {"label": "ウ", "term": "Safari", "note": "Apple が提供する Web ブラウザ。OS ではない"},
+        {"label": "エ", "term": "Windows", "note": "マイクロソフトの PC 向け OS。ソースコードは公開されておらず OSS ではない"}
+      ]
+    },
+    {
+      "question_id": "2021r03-q78",
+      "content_key": "a2b562aba2c95dfa",
+      "correct": "エ",
+      "correct_reason": "OSS は無償で入手できますが、それとは別に有償のサポートを付けて売られている製品があります。「無償でなければならない」という決まりが無いことがポイントです。",
+      "choices": [
+        {"label": "ア", "term": null, "note": "ソースコードの公開は条件の一つで、改変と再配布の自由も満たして初めて OSS です"},
+        {"label": "イ", "term": "パブリックドメインソフトウェア", "note": "著作権が放棄され、誰でも自由に使えるソフトウェアのこと。OSS は著作権を放棄しない"},
+        {"label": "ウ", "term": null, "note": "企業や団体が業務として開発に参加している OSS も多くあります"},
+        {"label": "エ", "term": null, "note": "正解。"}
+      ]
+    },
+    {
+      "question_id": "2020r02o-q96",
+      "content_key": "3853171cfab852f2",
+      "correct": "ア",
+      "correct_reason": "OSS の開発は個人の趣味に限りません。企業が社員を業務として開発に参加させている製品も多く、誰が開発するかに制限が無いことがポイントです。",
+      "choices": [
+        {"label": "ア", "term": null, "note": "正解。"},
+        {"label": "イ", "term": null, "note": "OSS は実行形式でも配布できます。ソースコードだけという制限はありません"},
+        {"label": "ウ", "term": null, "note": "ライセンスは製品ごとに異なります。ISO が定めた共通のライセンスはありません"},
+        {"label": "エ", "term": null, "note": "用途による制限は OSS の条件に反します。業務や商用でも利用できます"}
+      ]
+    },
+    {
+      "question_id": "2019r01a-q89",
+      "content_key": "bbcdbb20c93d6d1f",
+      "correct": "ア",
+      "correct_reason": "Web サーバとして広く使われている Apache HTTP Server は OSS なので、この記述だけが適切です。Internet Explorer はマイクロソフトの製品で OSS ではなく、オフィスソフト一式の OSS も実際に開発されています。",
+      "choices": [
+        {"label": "ア", "term": null, "note": "正解。"},
+        {"label": "イ", "term": null, "note": "Internet Explorer が OSS という記述を含みます。これはマイクロソフトの製品です"},
+        {"label": "ウ", "term": null, "note": "誤った記述だけを挙げています。オフィスソフト一式の OSS も開発されています"},
+        {"label": "エ", "term": null, "note": "オフィスソフトの OSS が無いという記述です。ワープロや表計算を含む OSS があります"}
+      ]
+    },
+    {
+      "question_id": "2019h31h-q67",
+      "content_key": "08581241d7ad4e0b",
+      "correct": "ウ",
+      "correct_reason": "データベースを管理するソフトウェア（[[DBMS]]）で OSS なのは MySQL です。名前を選ぶ問題は、OSS かどうかと、ソフトの種類が合っているかを二段階で確かめます。",
+      "choices": [
+        {"label": "ア", "term": "Android", "note": "携帯端末向けの OSS の OS。Linux をもとに作られている"},
+        {"label": "イ", "term": "Firefox", "note": "OSS として開発されている Web ブラウザ"},
+        {"label": "ウ", "term": null, "note": "正解。"},
+        {"label": "エ", "term": "Thunderbird", "note": "OSS として開発されているメールソフト"}
+      ]
+    },
+    {
+      "question_id": "2018h30a-q81",
+      "content_key": "d8988484a6a17e14",
+      "correct": "ア",
+      "correct_reason": "携帯端末向けの OSS の OS は Android だけです。iOS と Windows Phone は OSS ではなく、Thunderbird は OSS ですが OS ではなくメールソフトなので外れます。",
+      "choices": [
+        {"label": "ア", "term": null, "note": "正解。"},
+        {"label": "イ", "term": null, "note": "iOS と Thunderbird を含みます。iOS は OSS ではなく、Thunderbird は OS ではありません"},
+        {"label": "ウ", "term": null, "note": "iOS と Windows Phone を挙げています。どちらも OSS ではありません"},
+        {"label": "エ", "term": null, "note": "Thunderbird は OSS ですが OS ではなく、Windows Phone は OSS ではありません"}
+      ]
+    },
+    {
+      "question_id": "2018h30h-q78",
+      "content_key": "9eb146813dd72582",
+      "correct": "イ",
+      "correct_reason": "OSS の Web ブラウザは Firefox です。同じ OSS でも Web サーバ用や OS、メールソフトが並ぶので、種類が問われているものと合うかどうかで絞ります。",
+      "choices": [
+        {"label": "ア", "term": "Apache HTTP Server", "note": "OSS として広く使われている Web サーバ用のソフトウェア"},
+        {"label": "イ", "term": null, "note": "正解。"},
+        {"label": "ウ", "term": "Linux", "note": "OSS の代表的な OS。サーバから組込み機器まで幅広く使われている"},
+        {"label": "エ", "term": "Thunderbird", "note": "OSS として開発されているメールソフト"}
+      ]
+    },
+    {
+      "question_id": "2026r08-q35",
+      "content_key": "f2a5f713fcf9f499",
+      "correct": "エ",
+      "correct_reason": "効果の達成度を確かめる情報集めはモニタ、責任と要員の割当ては指示、将来像を専門家に分析させて見極めるのは評価に当たり、いずれも経営陣の活動です。戦略づくりからモニタリングまで丸ごと外部に任せると経営陣の責任が果たせないため、それだけが外れます。",
+      "choices": [
+        {"label": "ア", "term": null, "note": "外部への全面委譲を含みます。任せきりでは経営陣が責任を果たせません"},
+        {"label": "イ", "term": null, "note": "外部への全面委譲を含み、モニタに当たる情報収集も落としています"},
+        {"label": "ウ", "term": null, "note": "外部の専門家に分析を依頼して評価する活動を落としています。依頼自体は適切です"},
+        {"label": "エ", "term": null, "note": "正解。"}
+      ]
+    },
+    {
+      "question_id": "2026r08-q41",
+      "content_key": "5a66c4d2cf106a1b",
+      "correct": "ウ",
+      "correct_reason": "経営層が自ら規範を作り、進んで守ってみせることで、組織全体に倫理的な行動が根づきます。率先しないこと自体がリスクになる、という向きで書かれた記述が正解です。",
+      "choices": [
+        {"label": "ア", "term": null, "note": "策定を任せても最終的な責任は取締役会等が負うので、担当部門に負わせる考えは誤りです"},
+        {"label": "イ", "term": null, "note": "成果への期待値の設定は経営層が関与すべき事柄で、関与することがリスクにはなりません"},
+        {"label": "ウ", "term": null, "note": "正解。"},
+        {"label": "エ", "term": null, "note": "方針を明示するのは経営層の役割で、それ自体が偏りを生むわけではありません"}
+      ]
+    },
+    {
+      "question_id": "2024r06-q53",
+      "content_key": "d662bc5a3d8169af",
+      "correct": "ウ",
+      "correct_reason": "経営者が評価するのは、今の IT 利用と、これから先の IT 利用です。既に終わった実績を振り返る活動ではないので、過去を含む語も、片方だけの語も入りません。",
+      "choices": [
+        {"label": "ア", "term": null, "note": "評価の対象に過去は含みません。これから先の IT 利用を見ることが要点です"},
+        {"label": "イ", "term": null, "note": "現在だけでは足りません。将来の IT 利用も合わせて評価します"},
+        {"label": "ウ", "term": null, "note": "正解。"},
+        {"label": "エ", "term": null, "note": "将来だけでは足りません。現在の IT 利用も合わせて評価します"}
+      ]
+    },
+    {
+      "question_id": "2023r05-q53",
+      "content_key": "2bb5c6805f246a32",
+      "correct": "ア",
+      "correct_reason": "投資してよいかどうかを判断するものさしを定めることは、ルールそのものを決める活動です。これは経営者の仕事で、決まったルールに沿って日々の管理や推進を行う活動とは分かれます。",
+      "choices": [
+        {"label": "ア", "term": null, "note": "正解。"},
+        {"label": "イ", "term": "SLA", "note": "サービスの品質水準を利用者と提供者で取り決めた合意。守るための運用は動く側の活動"},
+        {"label": "ウ", "term": null, "note": "決められた枠の中で費用を管理する作業で、ルールに従って行動する側の活動です"},
+        {"label": "エ", "term": null, "note": "定められた手法どおりに個別案件を進める作業で、ルールに従って行動する側の活動です"}
+      ]
+    },
+    {
+      "question_id": "2022r04-q40",
+      "content_key": "df7cebaebe2b0f44",
+      "correct": "ウ",
+      "correct_reason": "IT ガバナンスは、経営陣が情報システム戦略を作り実現するために発揮する組織の力です。「経営陣が行う」「戦略の策定と実現」という二つの手がかりがそろう記述を選びます。",
+      "choices": [
+        {"label": "ア", "term": "ITIL", "note": "IT サービスの運用に関する成功事例を集めた指針。運用のやり方をまとめたもの"},
+        {"label": "イ", "term": "共通フレーム", "note": "ソフトウェアの開発と取引で行う作業を一つずつ定義し、標準化した共通の枠組み"},
+        {"label": "ウ", "term": null, "note": "正解。"},
+        {"label": "エ", "term": "プロジェクトマネジメント", "note": "プロジェクトの要求を満たすため、知識や技法を計画・実行・管理に用いる活動"}
+      ]
+    },
+    {
+      "question_id": "2021r03-q49",
+      "content_key": "cf46ddaba170db00",
+      "correct": "ウ",
+      "correct_reason": "現在と将来の IT 利用を評価し、IT の使い方が事業の目的に合うことを確かなものにする役割は経営者が担います。IT ガバナンスの主語は常に経営者だと覚えます。",
+      "choices": [
+        {"label": "ア", "term": "株主", "note": "会社に出資して株式を持つ人。経営を監視する立場だが、IT 利用を統制する役割はない"},
+        {"label": "イ", "term": "監査人", "note": "対象が適切かどうかを独立した立場で調べて評価する人。統制する側ではない"},
+        {"label": "ウ", "term": null, "note": "正解。"},
+        {"label": "エ", "term": "情報システム部門の責任者", "note": "決まった方針に沿って部門内の役割分担や進捗管理を行う立場。方針を定める側ではない"}
+      ]
+    },
+    {
+      "question_id": "2020r02o-q45",
+      "content_key": "7cc9f1f288d46647",
+      "correct": "ア",
+      "correct_reason": "IT 戦略を作って実行する過程を統制し、企業をあるべき方向へ導く組織の力を指す記述が正解です。誰が何をする活動なのかで、よく似た用語と見分けます。",
+      "choices": [
+        {"label": "ア", "term": null, "note": "正解。"},
+        {"label": "イ", "term": "ITサービスマネジメント", "note": "事業のニーズに合う良質な IT サービスを提供し続けるための、運用側の管理活動"},
+        {"label": "ウ", "term": "システム監査", "note": "情報システムのリスク対策が適切に整えられ運用されているかを、第三者が評価すること"},
+        {"label": "エ", "term": "情報セキュリティマネジメント", "note": "技術・物理・人・組織の面から対策を組み立て、情報セキュリティを保ち続ける活動"}
+      ]
+    },
+    {
+      "question_id": "2019r01a-q53",
+      "content_key": "e7288e1c59ffc08d",
+      "correct": "イ",
+      "correct_reason": "IT ガバナンスを構築し、推し進める責任者は経営者です。IT の方向づけを決めるのは経営の仕事であり、外から会社を見る立場の人や、実務を担う人ではありません。",
+      "choices": [
+        {"label": "ア", "term": "株主", "note": "会社に出資して株式を持つ人。経営を監視する立場だが、IT 利用を統制する役割はない"},
+        {"label": "イ", "term": null, "note": "正解。"},
+        {"label": "ウ", "term": "従業員", "note": "会社に雇われて業務を行う人。定められた方針に従って働く立場"},
+        {"label": "エ", "term": null, "note": "IT の実務を担う立場です。全社の方針を定める役割ではありません"}
+      ]
+    },
+    {
+      "question_id": "2019h31h-q39",
+      "content_key": "b558da8ce244149b",
+      "correct": "ア",
+      "correct_reason": "情報システム戦略の策定と実行を統制し、企業の競争力を高める仕組みが IT ガバナンスです。「戦略そのものを統制する」という言い方が出たらこれを選びます。",
+      "choices": [
+        {"label": "ア", "term": null, "note": "正解。"},
+        {"label": "イ", "term": "コンプライアンス", "note": "法令や社内規則、社会の規範を守ること。IT の方向づけを統制する話ではない"},
+        {"label": "ウ", "term": "システム監査", "note": "情報システムのリスク対策が適切に整えられ運用されているかを、第三者が評価すること"},
+        {"label": "エ", "term": "プロジェクトマネジメント", "note": "プロジェクトの要求を満たすため、知識や技法を計画・実行・管理に用いる活動"}
+      ]
+    },
+    {
+      "question_id": "2018h30a-q41",
+      "content_key": "3b9053785fefbc01",
+      "correct": "ア",
+      "correct_reason": "方針を明確にすることと、投資を決めるときの原則を定めることは、ルールを決める側である経営者の仕事です。部門内の役割分担と、計画に沿った開発の進捗管理は、ルールに従って動かす情報システム部門の責任者の仕事になります。",
+      "choices": [
+        {"label": "ア", "term": null, "note": "正解。"},
+        {"label": "イ", "term": null, "note": "部門内の役割分担は責任者の仕事で、投資の原則を定めるのは経営者の仕事です"},
+        {"label": "ウ", "term": null, "note": "方針の明確化は経営者の仕事で、部門内の役割分担は責任者の仕事です"},
+        {"label": "エ", "term": null, "note": "開発の進捗管理は責任者の仕事で、方針の明確化は経営者の仕事です"}
+      ]
+    },
+    {
+      "question_id": "2018h30h-q40",
+      "content_key": "bbed4777a86d1a4b",
+      "correct": "ウ",
+      "correct_reason": "経営者が IT に関する原則や方針を決め、それに沿って各部署が動く形が正しい姿です。決める側と動く側が分かれている記述かどうかが見分けの決め手になります。",
+      "choices": [
+        {"label": "ア", "term": null, "note": "IT を使う組織すべてに必要な取組みで、特定の業種に限った話ではありません"},
+        {"label": "イ", "term": null, "note": "全社の原則やルールを定めるのは経営者で、一つの部門が独自に決めるものではありません"},
+        {"label": "ウ", "term": null, "note": "正解。"},
+        {"label": "エ", "term": null, "note": "経営者の責任ですが、実際の活動まで全て経営者が行うわけではありません"}
+      ]
+    },
+    {
+      "question_id": "2018h30h-q49",
+      "content_key": "547a54ded3627784",
+      "correct": "イ",
+      "correct_reason": "IT ガバナンスは、IT 戦略を作って実行する過程を組織として統制する能力です。個人の能力でも、特定の仕組みや制度そのものでもない点に注意します。",
+      "choices": [
+        {"label": "ア", "term": "ITIL", "note": "IT サービスの運用に関する成功事例を集めた指針。運用のやり方をまとめたもの"},
+        {"label": "イ", "term": null, "note": "正解。"},
+        {"label": "ウ", "term": "情報リテラシー", "note": "IT や情報を目的に応じて使いこなす個人の能力。組織の統制の話ではない"},
+        {"label": "エ", "term": "電子政府", "note": "行政の手続をオンライン化し、効率よく行えるようにした仕組み"}
+      ]
+    }
+  ]
+}

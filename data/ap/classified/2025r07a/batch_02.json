@@ -1,0 +1,383 @@
+{
+ "exam": "2025r07a",
+ "range": "28-54",
+ "classifications": [
+  {
+   "number": 28,
+   "syllabus_item": 30,
+   "topic_term": "ビュー表",
+   "topic_is_new": false,
+   "related_terms": [
+    "実表",
+    "問合せ（クエリ）",
+    "表の結合",
+    "関係代数"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 29,
+   "syllabus_item": 31,
+   "topic_term": "MVCC",
+   "topic_is_new": true,
+   "related_terms": [
+    "2 相ロッキングプロトコル",
+    "共有ロック",
+    "専有ロック",
+    "隔離性水準"
+   ],
+   "confidence": "high",
+   "notes": "用語例に多版同時実行制御に相当する語がないため MVCC を新設。項目は同時実行制御を扱う31で確実。"
+  },
+  {
+   "number": 30,
+   "syllabus_item": 33,
+   "topic_term": "転送速度（伝送速度）",
+   "topic_is_new": false,
+   "related_terms": [
+    "bps（bit per second：ビット／秒）",
+    "回線容量",
+    "パケット",
+    "性能評価"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 31,
+   "syllabus_item": 34,
+   "topic_term": "リバースプロキシサーバ",
+   "topic_is_new": false,
+   "related_terms": [
+    "プロキシサーバ",
+    "VPN",
+    "IDS（Intrusion Detection System：侵入検知システム）",
+    "ゲートウェイ"
+   ],
+   "confidence": "medium",
+   "notes": "項目42にも「リバースプロキシ」があるが、設問はセキュリティ実装ではなく通信の中継装置の説明を問うているため34を選択した。"
+  },
+  {
+   "number": 32,
+   "syllabus_item": 35,
+   "topic_term": "CIDR（Classless Inter Domain Routing）",
+   "topic_is_new": false,
+   "related_terms": [
+    "サブネットマスク",
+    "IP アドレス",
+    "DHCP",
+    "NAT"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 33,
+   "syllabus_item": 35,
+   "topic_term": "TCP",
+   "topic_is_new": true,
+   "related_terms": [
+    "UDP",
+    "ポート番号",
+    "ヘッダー",
+    "チェックサム"
+   ],
+   "confidence": "medium",
+   "notes": "項目35の用語例に TCP／UDP 単体の語がなく（「ヘッダー」「ポート番号」は粒度が粗い）、論点名を TCP として新設した。命名が他バッチと揺れる可能性があるため medium。"
+  },
+  {
+   "number": 34,
+   "syllabus_item": 34,
+   "topic_term": "スパニングツリー",
+   "topic_is_new": false,
+   "related_terms": [
+    "レイヤー2（L2）スイッチ",
+    "ブリッジ",
+    "衝突",
+    "ルーティング制御"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 35,
+   "syllabus_item": 33,
+   "topic_term": "ビット誤り率",
+   "topic_is_new": false,
+   "related_terms": [
+    "パケット",
+    "パリティチェック",
+    "CRC",
+    "性能評価"
+   ],
+   "confidence": "medium",
+   "notes": "「ビット誤り率」は項目33と34の双方の用語例にある。誤り制御方式ではなく回線品質の確率計算を問うため、性能評価を扱う33を選択した。"
+  },
+  {
+   "number": 36,
+   "syllabus_item": 38,
+   "topic_term": "サイバーキルチェーン",
+   "topic_is_new": false,
+   "related_terms": [
+    "標的型攻撃",
+    "エクスプロイトコード",
+    "脆ぜい弱性",
+    "情報漏えい"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 37,
+   "syllabus_item": 38,
+   "topic_term": "コードサイニング証明書",
+   "topic_is_new": false,
+   "related_terms": [
+    "デジタル署名（署名鍵，検証鍵）",
+    "サーバ証明書",
+    "クライアント証明書",
+    "CA（Certification Authority：認証局）"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 38,
+   "syllabus_item": 38,
+   "topic_term": "サイドチャネル攻撃（テンペスト攻撃，プローブ攻撃，タイミング攻撃，電力解析攻撃など）",
+   "topic_is_new": false,
+   "related_terms": [
+    "耐タンパ性",
+    "ソーシャルエンジニアリング",
+    "暗号方式",
+    "盗み見"
+   ],
+   "confidence": "high",
+   "notes": "用語例の文字列をそのままコピーした（括弧内は攻撃手法自身の例示のため切り落とさない）。"
+  },
+  {
+   "number": 39,
+   "syllabus_item": 38,
+   "topic_term": "CRL（Certificate Revocation List：証明書失効リスト）",
+   "topic_is_new": false,
+   "related_terms": [
+    "OCSP",
+    "デジタル証明書（公開鍵証明書）",
+    "CA（Certification Authority：認証局）",
+    "サーバ証明書"
+   ],
+   "confidence": "high",
+   "notes": "用語例の文字列をそのままコピーした（「CertificateRevocation」の空白欠落もシラバス本文どおり）。"
+  },
+  {
+   "number": 40,
+   "syllabus_item": 39,
+   "topic_term": "PSIRT",
+   "topic_is_new": false,
+   "related_terms": [
+    "CSIRT",
+    "SOC（Security Operation Center）",
+    "情報セキュリティインシデント",
+    "インシデントハンドリング"
+   ],
+   "confidence": "medium",
+   "notes": "用語例は「情報セキュリティ関連組織（CSIRT，PSIRT，SOC（Security Operation Center））」という総称。設問の主題は列挙内の PSIRT 単体なので、総称ではなく PSIRT を論点にした。総称側を採る流儀と揺れる可能性がある。"
+  },
+  {
+   "number": 41,
+   "syllabus_item": 38,
+   "topic_term": "真正性（Authenticity）",
+   "topic_is_new": false,
+   "related_terms": [
+    "信頼性（Reliability）",
+    "可用性（Availability）",
+    "機密性（Confidentiality）",
+    "JIS Q27001（ISO/IEC 27001）"
+   ],
+   "confidence": "medium",
+   "notes": "真正性と信頼性の2語を同時に問う組合せ問題。用語例は両者を別項目として挙げているため、先に問われる真正性を論点とし信頼性を related に回した。"
+  },
+  {
+   "number": 42,
+   "syllabus_item": 41,
+   "topic_term": "CSPM（Cloud Security Posture Management）",
+   "topic_is_new": true,
+   "related_terms": [
+    "CASB（Cloud Access Security Broker）",
+    "クラウドサービスのセキュリティ",
+    "UTM（Unified Threat Management：統合脅威管理）",
+    "アクセス権の設定"
+   ],
+   "confidence": "high",
+   "notes": "用語例に CSPM がないため新設。CASB や UTM と同じ「セキュリティ製品・サービス」の並びなので項目41で確実。"
+  },
+  {
+   "number": 43,
+   "syllabus_item": 38,
+   "topic_term": "ポートスキャン",
+   "topic_is_new": false,
+   "related_terms": [
+    "フットプリンティング",
+    "脆弱性診断",
+    "ICMP（Internet Control Message Protocol）",
+    "ポート番号"
+   ],
+   "confidence": "medium",
+   "notes": "「ポートスキャン」は項目38の用語例（攻撃の準備）に所在するため38としたが、設問の文脈は脆弱性検査であり項目40（脆弱性診断／ペネトレーションテスト）の可能性もある。"
+  },
+  {
+   "number": 44,
+   "syllabus_item": 41,
+   "topic_term": "デジタルフォレンジックス（証拠保全ほか）",
+   "topic_is_new": false,
+   "related_terms": [
+    "ログ管理",
+    "SIEM（Security Information and Event Management）",
+    "不正アクセス対策",
+    "侵入検知"
+   ],
+   "confidence": "high",
+   "notes": "用語例の文字列をそのままコピーした。"
+  },
+  {
+   "number": 45,
+   "syllabus_item": 42,
+   "topic_term": "DKIM",
+   "topic_is_new": false,
+   "related_terms": [
+    "SPF",
+    "DMARC",
+    "S/MIME（Secure MIME）",
+    "OP25B"
+   ],
+   "confidence": "medium",
+   "notes": "用語例は「スパム対策（…SPF，DKIM，DMARC…ほか）」という総称。設問の主題は DKIM 単体なので列挙内の語を論点にした。総称側を採る流儀と揺れる可能性がある。"
+  },
+  {
+   "number": 46,
+   "syllabus_item": 49,
+   "topic_term": "ペルソナ",
+   "topic_is_new": false,
+   "related_terms": [
+    "ユーザーストーリー",
+    "エピック",
+    "プロダクトオーナー",
+    "UX デザイン"
+   ],
+   "confidence": "medium",
+   "notes": "設問の文脈は要件定義（項目43）だが、「ペルソナ」を用語例に持つのは項目49のみ。表記の一貫性を優先して49を選んだ。"
+  },
+  {
+   "number": 47,
+   "syllabus_item": 10,
+   "topic_term": "オブジェクト図",
+   "topic_is_new": false,
+   "related_terms": [
+    "クラス図",
+    "アクティビティ図",
+    "コンポーネント図",
+    "ユースケース図"
+   ],
+   "confidence": "high",
+   "notes": "UML の各図は項目10（その他の言語）の用語例に列挙されており、「オブジェクト図」もそのまま存在する。"
+  },
+  {
+   "number": 48,
+   "syllabus_item": 45,
+   "topic_term": "エラー埋込法",
+   "topic_is_new": false,
+   "related_terms": [
+    "バグ管理図",
+    "欠陥密度（バグ密度）",
+    "テストの網羅度",
+    "テスト設計と管理手法"
+   ],
+   "confidence": "high",
+   "notes": "問題文は「エラー埋込み法」だが、用語例の表記「エラー埋込法」をそのままコピーした。"
+  },
+  {
+   "number": 49,
+   "syllabus_item": 49,
+   "topic_term": "PWA（Progressive Web Apps：プログレッシブウェブアプリ）",
+   "topic_is_new": false,
+   "related_terms": [
+    "ネイティブアプリケーションソフトウェア",
+    "ハイブリッドアプリケーションソフトウェア",
+    "モバイル用 Web アプリケーションソフトウェア",
+    "マッシュアップ"
+   ],
+   "confidence": "high",
+   "notes": "用語例の文字列をそのままコピーした（「ProgressiveWeb」の空白欠落もシラバス本文どおり）。"
+  },
+  {
+   "number": 50,
+   "syllabus_item": 50,
+   "topic_term": "著作者人格権",
+   "topic_is_new": true,
+   "related_terms": [
+    "プログラムの著作者",
+    "職務著作",
+    "ソフトウェア開発委託契約",
+    "著作権の移転"
+   ],
+   "confidence": "high",
+   "notes": "用語例に著作者人格権がないため新設。項目50（知的財産適用管理）は確実。"
+  },
+  {
+   "number": 51,
+   "syllabus_item": 56,
+   "topic_term": "WBS",
+   "topic_is_new": false,
+   "related_terms": [
+    "ワークパッケージ",
+    "要素分解",
+    "活動所用期間見積り",
+    "コストベースライン"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 52,
+   "syllabus_item": 57,
+   "topic_term": "タックマンモデル（成立期，動乱期，安定期，遂行期，解散期）",
+   "topic_is_new": false,
+   "related_terms": [
+    "コンフリクトマネジメント",
+    "プロジェクトチーム",
+    "資源計画"
+   ],
+   "confidence": "high",
+   "notes": "用語例の文字列をそのままコピーした。"
+  },
+  {
+   "number": 53,
+   "syllabus_item": 59,
+   "topic_term": "工数見積り",
+   "topic_is_new": true,
+   "related_terms": [
+    "人月",
+    "実コスト",
+    "ボトムアップ見積り",
+    "資源計画"
+   ],
+   "confidence": "medium",
+   "notes": "人月単価から人件費の増加分を求める計算。項目57（資源）の要員計画とも読めるが、問われているのはコストなので59とした。用語例に該当語がないため「工数見積り」を新設。"
+  },
+  {
+   "number": 54,
+   "syllabus_item": 60,
+   "topic_term": "期待金額価値（EMV）",
+   "topic_is_new": true,
+   "related_terms": [
+    "デシジョンツリー",
+    "リスクの定量的分析技法",
+    "感度分析",
+    "リスク対応計画"
+   ],
+   "confidence": "medium",
+   "notes": "デシジョンツリーによる EMV の計算。リスクの定量的分析技法として項目60としたが、投資判断とみて項目59（コスト）に寄せる読み方もある。用語例に EMV もデシジョンツリーもないため新設。"
+  }
+ ]
+}

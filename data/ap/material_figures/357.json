@@ -1,0 +1,18 @@
+{
+  "topic_id": 357,
+  "term": "UDP",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 主要プロトコルの層の対応",
+      "caption": "トランスポート層は TCP と UDP の2つだけ。HTTP・SMTP は上の層、ICMP は IP と同じ下の層。",
+      "nodes": [
+        {"id": "app", "label": "アプリケーション層\nHTTP／SMTP／FTP／DNS", "row": 0, "col": 0},
+        {"id": "tra", "label": "トランスポート層\nTCP／UDP（ポート番号で識別）", "row": 1, "col": 0, "emphasis": true},
+        {"id": "net", "label": "ネットワーク層\nIP／ICMP（IP アドレスで識別）", "row": 2, "col": 0},
+        {"id": "lnk", "label": "データリンク層\nイーサネットなど", "row": 3, "col": 0}
+      ]
+    }
+  ]
+}

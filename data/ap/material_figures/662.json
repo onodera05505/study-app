@@ -1,0 +1,26 @@
+{
+  "topic_id": 662,
+  "term": "ソフトウェア方式設計",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### ソフトウェア実装プロセスの並び",
+      "caption": "方式設計が決めるのは部品の境界まで。中を割るのは詳細設計、結合のテスト要求事項はここで定義する。",
+      "nodes": [
+        {"id": "req", "label": "①要件定義", "row": 0, "col": 0},
+        {"id": "arc", "label": "②方式設計\n最上位レベルの\n構造とインタフェース", "row": 0, "col": 1, "emphasis": true},
+        {"id": "det", "label": "③詳細設計\nユニットに分割", "row": 0, "col": 2},
+        {"id": "bld", "label": "④構築\nコード作成", "row": 0, "col": 3},
+        {"id": "int", "label": "⑤結合", "row": 0, "col": 4}
+      ],
+      "edges": [
+        {"from": "req", "to": "arc"},
+        {"from": "arc", "to": "det"},
+        {"from": "det", "to": "bld"},
+        {"from": "bld", "to": "int"},
+        {"from": "arc", "to": "int", "label": "暫定的なテスト要求事項を定義", "style": "dashed"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "topic_id": 362,
+  "term": "ディレクトリ構造",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 相対パスの組み立て方",
+      "caption": "d1 から .. でルートへ上がって d2 へ下るので ../d2/f2.html となり、節はディレクトリ、葉はファイル又は空ディレクトリ（d3）になる。",
+      "nodes": [
+        {
+          "id": "rt",
+          "label": "ルートディレクトリ\n（根）",
+          "row": 0,
+          "col": 1,
+          "shape": "round"
+        },
+        {
+          "id": "d1",
+          "label": "d1\nカレント（節）",
+          "row": 1,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "d3",
+          "label": "d3\n空なので葉",
+          "row": 1,
+          "col": 3
+        },
+        {
+          "id": "d2",
+          "label": "d2\n（節）",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "f1",
+          "label": "f1.html\n（葉）",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "f2",
+          "label": "f2.html\n目的のファイル（葉）",
+          "row": 2,
+          "col": 2,
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "d1",
+          "to": "rt",
+          "label": "①  .. で1階層上へ"
+        },
+        {
+          "from": "rt",
+          "to": "d2",
+          "label": "②  d2 へ下る"
+        },
+        {
+          "from": "d2",
+          "to": "f2",
+          "label": "③  f2.html"
+        },
+        {
+          "from": "rt",
+          "to": "d3",
+          "arrow": "none"
+        },
+        {
+          "from": "d1",
+          "to": "f1",
+          "arrow": "none"
+        }
+      ]
+    }
+  ]
+}

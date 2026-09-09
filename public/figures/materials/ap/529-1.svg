@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="348" viewBox="0 0 724.4 394" role="img">
+<title>盗まれた ID が使えなくなるのは、サーバが自分の持つセッションを破棄した時点。</title>
+<rect x="0.5" y="0.5" width="723.4" height="393" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<line x1="48" y1="34" x2="48" y2="326" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="342.2" y1="34" x2="342.2" y2="326" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="636.4" y1="34" x2="636.4" y2="326" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">利用者</text>
+<rect x="292.8" y="0" width="98.8" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="342.2" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">Web サーバ</text>
+<rect x="588.4" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="636.4" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">攻撃者</text>
+<polyline points="51,68 339.2,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="339.2,68 331.2,71.6 331.2,64.4" fill="#1f2937"/>
+<text x="195.1" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. ログイン（ID とパスワード）</text>
+<polyline points="339.2,108 51,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,108 59,104.4 59,111.6" fill="#1f2937"/>
+<text x="195.1" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. セッション ID を発行し cookie に入れる</text>
+<polyline points="51,148 633.4,148" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="633.4,148 625.4,151.6 625.4,144.4" fill="#1f2937"/>
+<text x="342.2" y="141" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. XSS や盗聴で ID が漏れる</text>
+<rect x="189.7" y="153" width="305" height="16" rx="3" fill="#ffffff"/>
+<text x="342.2" y="166.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">cookie に HttpOnly と Secure を付けて漏れを防ぐ</text>
+<polyline points="633.4,204 345.2,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="345.2,204 353.2,200.4 353.2,207.6" fill="#1f2937"/>
+<text x="489.3" y="197" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 盗んだ ID を付けて要求すると本人として通る</text>
+<polyline points="51,244 339.2,244" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="339.2,244 331.2,247.6 331.2,240.4" fill="#1f2937"/>
+<text x="195.1" y="237" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. ログアウト</text>
+<polyline points="342.2,276 368.2,276 368.2,290 344.2,290" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="344.2,290 352.2,286.4 352.2,293.6" fill="#1f2937"/>
+<text x="376.2" y="284" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">6. この ID を無効にする</text>
+<rect x="112.6" y="295" width="459.2" height="16" rx="3" fill="#ffffff"/>
+<text x="342.2" y="308.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ブラウザの cookie 削除やキャッシュ消去では、サーバに残った ID は有効なまま</text>
+</g>
+<text x="362.2" y="374" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">盗まれた ID が使えなくなるのは、サーバが自分の持つセッションを破棄した時点。</text>
+</svg>

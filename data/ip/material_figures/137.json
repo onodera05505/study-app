@@ -1,0 +1,27 @@
+{
+  "topic_id": 137,
+  "term": "アローダイアグラム",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 図の読み方と余裕時間",
+      "caption": "3つの経路のうち合計が最大の C→F（8日）が全体の所要日数。ほかの経路には余裕があり、少し遅れても全体は遅れない。",
+      "nodes": [
+        {"id": "st", "label": "開始\n0日", "row": 1, "col": 0, "shape": "round"},
+        {"id": "p1", "label": "②\n最早 2日", "row": 0, "col": 1},
+        {"id": "p2", "label": "③\n最早 4日", "row": 1, "col": 1},
+        {"id": "p3", "label": "④\n最早 7日", "row": 2, "col": 1},
+        {"id": "ed", "label": "完了\n最早 8日", "row": 1, "col": 2, "shape": "round", "emphasis": true}
+      ],
+      "edges": [
+        {"from": "st", "to": "p1", "label": "A（2日）", "style": "dashed"},
+        {"from": "p1", "to": "ed", "label": "D（4日）", "style": "dashed"},
+        {"from": "st", "to": "p2", "label": "B（4日）", "style": "dashed"},
+        {"from": "p2", "to": "ed", "label": "E（3日）", "style": "dashed"},
+        {"from": "st", "to": "p3", "label": "C（7日）"},
+        {"from": "p3", "to": "ed", "label": "F（1日）"}
+      ]
+    }
+  ]
+}

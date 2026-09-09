@@ -1,0 +1,906 @@
+{
+ "exam": "ap",
+ "batch": 1,
+ "results": [
+  {
+   "topic_id": 4,
+   "type": "D",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "時間軸に稼働と停止の帯を並べ、MTBF・MTTR・1サイクルの位置と、冗長構成で止まるのが切替時間だけと示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 38,
+   "type": "B",
+   "template": "blocks",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "結合点と作業矢印のネットワークを描き、各結合点の最早時刻の求め方、ダミー作業、クリティカルパスを示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 31,
+   "type": "D",
+   "template": "blocks",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "32ビットを箱で並べ、マスクとのANDとネットワーク部/ホスト部の境界、ブロックの先頭と末尾を示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 1,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "保護される/されないの線引きは語句の暗記で決まり、図にしても判別は近づかない",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 8,
+   "type": "D",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "時間軸にPV・EV・ACの3本の線を引き、現時点の縦の差がSVとCV、比がSPIとCPIになると示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 12,
+   "type": "D",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "売上高線と（固定費＋変動費）線を引き、交点が損益分岐点、傾きの差が限界利益率になると示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 22,
+   "type": "A",
+   "template": "blocks",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "2プロセスと2資源を箱にし、占有と待ちの矢印が輪になる図と、獲得順序を揃えて輪が切れる図を並べる",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 43,
+   "type": "C",
+   "template": "table",
+   "benefit": 1,
+   "weakness": 1,
+   "idea": "改善計画の策定・実施・進捗管理・モニタリングを、監査対象部門と監査人のどちらの役割かで2列に並べる",
+   "confidence": "medium"
+  },
+  {
+   "topic_id": 2,
+   "type": "D",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "横軸ρ、縦軸待ち時間のρ/(1−ρ)曲線を描き、0.25・0.5・0.8での倍率を点で示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 5,
+   "type": "D",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 1,
+   "idea": "パケットの送信時間と送信間隔を時間軸の帯で並べ、1パケットあたりの所要時間と回線差を示す",
+   "confidence": "medium"
+  },
+  {
+   "topic_id": 9,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "出題は語句の言い換えの見分けだけで、部品の図を足しても選択肢の判別には効かない",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 35,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "問われるのは物理的解析への抵抗力かどうかの判断で、図にしても選択肢は絞れない",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 40,
+   "type": "D",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "月の全時間を帯で描き、計画停止を先に除いて合意サービス時間を作り、許容停止時間の位置を示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 162,
+   "type": "B",
+   "template": "sequence",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "端末→ルータ→サーバの行きと応答を並べ、各パケットで書き換わるIPとポートを吹き出しで示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 292,
+   "type": "A",
+   "template": "blocks",
+   "benefit": 3,
+   "weakness": 1,
+   "idea": "学習と成長→内部プロセス→顧客→財務の4層を縦に積み、施策から目標への矢印で戦略マップを示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 442,
+   "type": "C",
+   "template": "table",
+   "benefit": 1,
+   "weakness": 1,
+   "idea": "第1〜第3正規形について、条件・試験での言い換え・分割する対象を1行ずつ並べる表にする",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 23,
+   "type": "A",
+   "template": "blocks",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "実行・実行可能・待ちの3状態を箱にし、プリエンプションの行き先が実行可能状態だと矢印で示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 32,
+   "type": "B",
+   "template": "sequence",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "問合せから正規応答が返るまでの時間軸に偽応答を割り込ませ、ID・ポートが一致すると受理される様子を示す",
+   "confidence": "medium"
+  },
+  {
+   "topic_id": 142,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "VR用語4つの言い換えの見分けで、描画処理の図を足しても選択肢の判別には効かない",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 177,
+   "type": "A",
+   "template": "blocks",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "制御と転送が同居した従来機器と、制御をコントローラーへ集約したSDNを並べ、OpenFlowの位置を示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 201,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "守備範囲がWebアプリか否かの知識で決まり、設置位置の図では攻撃の判別に効かない",
+   "confidence": "medium"
+  },
+  {
+   "topic_id": 220,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "定義文から名称を選ぶ一問一答で、図にしても限界値分析やロードテストとの差は出ない",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 256,
+   "type": "B",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "時間軸にフル・差分・増分の取得範囲を帯で描き、復旧に要るバックアップの組合せを矢印で示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 275,
+   "type": "C",
+   "template": "table",
+   "benefit": 1,
+   "weakness": 1,
+   "idea": "アクティビティ図・クラス図・状態マシン図・ユースケース図を「何を表す図か」で1行ずつ並べる",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 302,
+   "type": "D",
+   "template": "blocks",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "A→a→bの構成ツリーを描き、直下とa経由の2経路が合流する様子と各階層での在庫控除を示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 326,
+   "type": "D",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 1,
+   "idea": "損益分岐図に目標利益の水平線を足し、固定費＋目標利益を賄う点が必要売上高になると示す",
+   "confidence": "medium"
+  },
+  {
+   "topic_id": 372,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "定義文から技法名を選ぶ形で、反復の図を足してもブレーンストーミング等との差は語句で決まる",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 11,
+   "type": "C",
+   "template": "matrix",
+   "benefit": 1,
+   "weakness": 1,
+   "idea": "縦に市場、横に製品を既存/新規で取った2×2に4戦略を置き、事例の当てはめ方を添える",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 17,
+   "type": "B",
+   "template": "table",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "参照列を横、4枠を縦にした置換え追跡表を載せ、ヒット時も最新に更新される点を印で示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 18,
+   "type": "D",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 1,
+   "idea": "横軸ヒット率、縦軸実効アクセス時間の直線を引き、両端がキャッシュと主記憶の時間だと示す",
+   "confidence": "medium"
+  },
+  {
+   "topic_id": 25,
+   "type": "A",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "A・B・Yの波形を区間ごとに並べ、両方1の区間だけYが0になることを真理値表と対応づける",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 28,
+   "type": "B",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "時間軸にチェックポイントと障害点を引き、各トランザクションの帯をロールフォワード/バック/対象外で描き分ける",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 42,
+   "type": "C",
+   "template": "table",
+   "benefit": 1,
+   "weakness": 1,
+   "idea": "企画・開発・運用・保守の各プロセスと、その達成目標・チェックポイントを1行ずつ対応させる表",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 62,
+   "type": "D",
+   "template": "blocks",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "7ビットを箱で並べ、c0・c1・c2が見るビットを線で結び、重み付けの和が誤り位置になると示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 104,
+   "type": "D",
+   "template": "blocks",
+   "benefit": 3,
+   "weakness": 1,
+   "idea": "主記憶と補助記憶の間のページインとページアウトを矢印で描き、伴う場合だけ時間が延びると示す",
+   "confidence": "medium"
+  },
+  {
+   "topic_id": 125,
+   "type": "A",
+   "template": "blocks",
+   "benefit": 3,
+   "weakness": 1,
+   "idea": "センサー→コントローラー→アクチュエーター→対象のフィードバックの輪を描き、各段の入出力を示す",
+   "confidence": "medium"
+  },
+  {
+   "topic_id": 154,
+   "type": "A",
+   "template": "none",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "重なりを示すにはベン図が要るが描けない。Rの行を「Sにもある」「Sに無い」の2群に分ける表で代替する",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 242,
+   "type": "D",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "月を横軸に要員数を積み上げた帯を描き、離脱・引継ぎ・増員の期間と人月の面積を対応づける",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 250,
+   "type": "C",
+   "template": "table",
+   "benefit": 1,
+   "weakness": 1,
+   "idea": "インシデント管理・問題管理・サービス要求管理・変更管理を、目的と担当する場面で並べる表",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 263,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "監査手続の定義を選ぶ一問一答で、図にしても計画立案や報告書作成との差は語句で決まる",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 280,
+   "type": "C",
+   "template": "chart",
+   "benefit": 1,
+   "weakness": 1,
+   "idea": "開発フェーズを左から帯で並べ、準委任型・請負型・どちらもあり得るを塗り分けて両端と中間を示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 348,
+   "type": "D",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "CPUとディスクの処理をガントチャートで並べ、装置が空いて待つ時間と全体経過時間を示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 470,
+   "type": "A",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "4バンクへのアクセスと回復待ちを時間軸で重ねて描き、待ち時間が隠れて実効速度が上がると示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 560,
+   "type": "A",
+   "template": "blocks",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "頻度から作った二分木を描き、枝の0/1をたどった符号と、葉にしか文字が来ない語頭条件を示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 572,
+   "type": "B",
+   "template": "sequence",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "秘匿（公開鍵で暗号化→秘密鍵で復号）と署名（秘密鍵で署名→公開鍵で検証）の2本の流れを並べる",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 6,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "攻撃名と測定対象の対応を覚える知識で、装置の図を足しても選択肢の判別には効かない",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 7,
+   "type": "B",
+   "template": "sequence",
+   "benefit": 3,
+   "weakness": 1,
+   "idea": "権威サーバが秘密鍵で署名し、キャッシュサーバが公開鍵で検証する流れと信頼の連鎖を矢印で示す",
+   "confidence": "medium"
+  },
+  {
+   "topic_id": 10,
+   "type": "D",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 1,
+   "idea": "年を横軸に4案の累積キャッシュインを折れ線で引き、投資額の水平線と交わる年が回収期間と示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 13,
+   "type": "B",
+   "template": "sequence",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "ABCD−×＋を左から読み、スタックに積み下ろしする様子を段階で並べて演算の順序と向きを示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 14,
+   "type": "B",
+   "template": "sequence",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "6要素の列が1走査ごとに末尾から確定していく途中経過を段階で並べ、選択・挿入ソートと見比べる",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 41,
+   "type": "C",
+   "template": "table",
+   "benefit": 1,
+   "weakness": 1,
+   "idea": "ウォークスルー・ドキュメントレビュー・インタビュー・突合照合・テストデータ法を作業内容で並べる",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 49,
+   "type": "D",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "xy平面に2本の制約直線と実行可能領域を描き、端点ごとの利益を書いて交点が最大だと示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 58,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "説明文を選ぶ一問一答で、決め手は多層かどうかの語句。層の図を足しても判別には効かない",
+   "confidence": "medium"
+  },
+  {
+   "topic_id": 69,
+   "type": "B",
+   "template": "sequence",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "A・B・Cのpushとpopを段階図で並べ、5通りの出力順とCABが作れない理由を頂上の位置で示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 72,
+   "type": "D",
+   "template": "none",
+   "benefit": 3,
+   "weakness": 0,
+   "idea": "衝突条件は差がnの倍数という式の理解で決まり、チェイン法の図は解答に効かない",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 74,
+   "type": "B",
+   "template": "sequence",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "ループ端の図と判断記号の図を並べ、判断に来た時点でnが1つ進んでいることを値付きで示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 83,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "まとめる時点と主体が語句で問われる一問一答で、命令の図はスーパースカラとの差を示せない",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 85,
+   "type": "B",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "縦に命令、横にクロックを取り5段をずらして並べ、段の順序と1クロック1命令完了の様子を示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 98,
+   "type": "D",
+   "template": "blocks",
+   "benefit": 3,
+   "weakness": 1,
+   "idea": "サーバと回線を直列に並べ、それぞれの毎秒件数を書き込んで小さい方が全体になると示す",
+   "confidence": "medium"
+  },
+  {
+   "topic_id": 124,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "チップが1個かどうかの知識で決まり、SiPとの差は語句で判別できるので図は飾りになる",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 152,
+   "type": "C",
+   "template": "table",
+   "benefit": 1,
+   "weakness": 1,
+   "idea": "CASCADE・RESTRICT・SET NULL・SET DEFAULT・NO ACTIONを削除時の動きで並べる表",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 215,
+   "type": "C",
+   "template": "table",
+   "benefit": 1,
+   "weakness": 1,
+   "idea": "弱い順に6段階を並べ、受渡しの形（引数・構造体・フラグ・単一大域・共通領域・内部直接）を対比",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 249,
+   "type": "C",
+   "template": "table",
+   "benefit": 1,
+   "weakness": 1,
+   "idea": "サービスレベル管理・容量能力管理・予算会計・サービス継続管理・可用性管理を目的で並べる表",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 255,
+   "type": "C",
+   "template": "table",
+   "benefit": 1,
+   "weakness": 1,
+   "idea": "誤りの修正・帳票の出力停止・原票の保管について、業務部門と情報システム部門の役割を2列で並べる",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 268,
+   "type": "A",
+   "template": "blocks",
+   "benefit": 3,
+   "weakness": 1,
+   "idea": "ポートフォリオ＞プログラム＞プロジェクトの入れ子を描き、PMOを支援組織として脇に置く",
+   "confidence": "medium"
+  },
+  {
+   "topic_id": 278,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "ファブレスとの説明の入替えを見分ける知識で、分業の図を足しても選択肢の判別には効かない",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 299,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "センサー・デジタル空間・シミュレーションの3語で決まる一問一答で、図は飾りになる",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 332,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "定義文の言い回しをそのまま覚える形で、図にしても著作権・意匠権との差は語句で決まる",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 343,
+   "type": "C",
+   "template": "table",
+   "benefit": 1,
+   "weakness": 1,
+   "idea": "ライトスルーとライトバックを、書込み先・速度・内容の一致・追い出し時の書戻しの4観点で並べる",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 377,
+   "type": "B",
+   "template": "sequence",
+   "benefit": 3,
+   "weakness": 1,
+   "idea": "RFI→RFP→提案の評価→契約締結を矢印で並べ、各段階で何の提出を依頼するかを書き分ける",
+   "confidence": "medium"
+  },
+  {
+   "topic_id": 390,
+   "type": "D",
+   "template": "none",
+   "benefit": 3,
+   "weakness": 0,
+   "idea": "r^k≧N の不等式1本で解け、図にしても桁数の求め方は近づかない",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 427,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "動産かどうかの線引きの知識で、組込み機器の図を足しても対象/対象外の判別には効かない",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 440,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "再配置可能・再帰可能・再使用可能との名前の区別で、図にしても差は語句で決まる",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 471,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "パッシブが電波から電力を得る点を覚える知識で、図を足しても誤答との差は語句で決まる",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 520,
+   "type": "D",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 1,
+   "idea": "アナログ波形に標本化の間隔と量子化の段階を格子で重ね、1標本のビット数と秒数の積を示す",
+   "confidence": "medium"
+  },
+  {
+   "topic_id": 562,
+   "type": "C",
+   "template": "table",
+   "benefit": 1,
+   "weakness": 1,
+   "idea": "DRAMとSRAMを、セル構造・リフレッシュ・速度・単価・用途の5観点で並べる表にする",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 577,
+   "type": "C",
+   "template": "table",
+   "benefit": 1,
+   "weakness": 1,
+   "idea": "企画・要件定義・開発・運用・保守を並べ、各プロセスの代表的な作業を1行ずつ対応させる表",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 621,
+   "type": "A",
+   "template": "blocks",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "根から葉への分岐と、値順に並んだ葉が横につながる様子を描き、範囲検索が葉をたどるだけと示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 668,
+   "type": "C",
+   "template": "table",
+   "benefit": 1,
+   "weakness": 1,
+   "idea": "構成管理・変更管理・リリース展開管理・資産管理・インシデント管理を担当する内容で並べる表",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 3,
+   "type": "A",
+   "template": "blocks",
+   "benefit": 3,
+   "weakness": 1,
+   "idea": "ディレクトリ階層をたどるファイル方式と、識別子で直接指すフラットなオブジェクト方式を並べる",
+   "confidence": "medium"
+  },
+  {
+   "topic_id": 15,
+   "type": "D",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "処理時間を逐次部分と並列部分の帯で描き、台数を増やしても逐次部分が残り1/(1−r)で頭打ちと示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 21,
+   "type": "A",
+   "template": "blocks",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "2台並列・1台と2台並列の直列・2直列の2系統並列の3構成を並べ、a＝0.5の稼働率を添える",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 24,
+   "type": "B",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "到着時刻と処理時間をガントチャートに並べ、選ばれる順とターンアラウンドタイムの引き算を示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 26,
+   "type": "C",
+   "template": "table",
+   "benefit": 1,
+   "weakness": 1,
+   "idea": "列の抽出・WHERE・集約関数・GROUP BY・DISTINCT・結合について更新可否と理由を並べる表",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 29,
+   "type": "D",
+   "template": "none",
+   "benefit": 3,
+   "weakness": 0,
+   "idea": "掛け算1本で解け、図にしても手数は減らない。バイト→ビットと%→小数の換算は文章で足りる",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 30,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "ARP・DHCP・SNMP等との用途の区別で、図を足してもプロトコル名の判別には効かない",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 44,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "監査調書の役割と作成・保管の決まりを覚える形で、図にしても報告書との差は語句で決まる",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 45,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "ワントゥワンマーケティングの語で決まる一問一答で、図を足してもSCM等との差は出ない",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 46,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "投資前に実現性を評価するという語句で決まる形で、図にしてもデルファイ法等との差は出ない",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 50,
+   "type": "A",
+   "template": "blocks",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "派遣元・派遣先・労働者の三角形に雇用と指揮命令の線を引き、請負・出向の図と並べて比べる",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 56,
+   "type": "D",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 1,
+   "idea": "数直線上で区間が半分ずつ縮む様子を段階で描き、n回後の幅が1/2^nになることを示す",
+   "confidence": "medium"
+  },
+  {
+   "topic_id": 73,
+   "type": "B",
+   "template": "sequence",
+   "benefit": 3,
+   "weakness": 1,
+   "idea": "3の階乗の呼出しが0まで下り、戻りながら掛け合わされる様子を段階で描き、基底が1の理由を示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 75,
+   "type": "D",
+   "template": "blocks",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "n個をm個ずつのブロックに分けた図を描き、ブロック探しとブロック内で対象件数が違うと示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 79,
+   "type": "E",
+   "template": "none",
+   "benefit": 0,
+   "weakness": 0,
+   "idea": "XMLで記述するW3Cの仕様という語句で決まる形で、図にしてもPNG等との差は出ない",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 82,
+   "type": "D",
+   "template": "blocks",
+   "benefit": 3,
+   "weakness": 1,
+   "idea": "ノードとコアの入れ子を描き、総コア数＝1ノードのコア数×ノード数の掛け算の位置を示す",
+   "confidence": "medium"
+  },
+  {
+   "topic_id": 92,
+   "type": "D",
+   "template": "blocks",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "画素の並びとアドレスの進み方を格子で描き、(y×横の画素数＋x)×バイト数の各項の位置を示す",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 95,
+   "type": "A",
+   "template": "blocks",
+   "benefit": 3,
+   "weakness": 1,
+   "idea": "信頼性設計をアボイダンスとトレランスに二分し、トレランス側にフェールセーフ等をぶら下げる木",
+   "confidence": "high"
+  },
+  {
+   "topic_id": 100,
+   "type": "D",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 1,
+   "idea": "横軸に多重度、縦軸にスループットを取り、ある点から崖のように急落する曲線を描く",
+   "confidence": "medium"
+  },
+  {
+   "topic_id": 102,
+   "type": "B",
+   "template": "sequence",
+   "benefit": 3,
+   "weakness": 1,
+   "idea": "カウンタを持つ資源の箱に獲得と解放の矢印を描き、0のとき待ち行列に入る様子を段階で示す",
+   "confidence": "medium"
+  },
+  {
+   "topic_id": 107,
+   "type": "D",
+   "template": "chart",
+   "benefit": 3,
+   "weakness": 2,
+   "idea": "到着時刻と処理時間を時間軸に並べ、多重度1と2で並走する帯を描いて所要時間の差を示す",
+   "confidence": "high"
+  }
+ ]
+}

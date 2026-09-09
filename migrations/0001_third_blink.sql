@@ -1,0 +1,1 @@
+ALTER TABLE `past_questions` ADD `figure_image` text;

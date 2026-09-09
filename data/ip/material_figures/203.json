@@ -1,0 +1,25 @@
+{
+  "topic_id": 203,
+  "term": "ポート番号",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "1 台のサーバに届いたデータを、その中のどのアプリに渡すかを決めるのがポート番号。",
+      "nodes": [
+        {"id": "pc", "label": "端末", "row": 1, "col": 0},
+        {"id": "sv", "label": "サーバ（1 台）\nIP アドレスは 1 つ", "row": 1, "col": 1, "emphasis": true},
+        {"id": "web", "label": "Web の機能", "row": 0, "col": 2},
+        {"id": "smtp", "label": "メール送信の機能", "row": 1, "col": 2},
+        {"id": "pop", "label": "メール受信の機能", "row": 2, "col": 2}
+      ],
+      "edges": [
+        {"from": "pc", "to": "sv", "label": "IP アドレス"},
+        {"from": "sv", "to": "web", "label": "ポート 80"},
+        {"from": "sv", "to": "smtp", "label": "ポート 25"},
+        {"from": "sv", "to": "pop", "label": "ポート 110"}
+      ]
+    }
+  ]
+}

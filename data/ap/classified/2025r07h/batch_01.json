@@ -1,0 +1,377 @@
+{
+ "exam": "2025r07h",
+ "range": "1-27",
+ "classifications": [
+  {
+   "number": 1,
+   "syllabus_item": 1,
+   "topic_term": "命題論理",
+   "topic_is_new": false,
+   "related_terms": [
+    "否定",
+    "論理和",
+    "論理積",
+    "真理値表"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 2,
+   "syllabus_item": 2,
+   "topic_term": "近似解法",
+   "topic_is_new": false,
+   "related_terms": [
+    "収束",
+    "ニュートン法",
+    "2 分探索法",
+    "打切り誤差"
+   ],
+   "confidence": "medium",
+   "notes": "区間を半分に分けて解を挟み込む二分法の反復回数を問う問題。数値解析（項目2「近似解法」）と見たが、アルゴリズム（項目7「近似計算」「2 分探索法」）とも迷った。"
+  },
+  {
+   "number": 3,
+   "syllabus_item": 3,
+   "topic_term": "過学習",
+   "topic_is_new": false,
+   "related_terms": [
+    "凡化性能",
+    "学習（訓練）データ",
+    "テストデータ",
+    "正則化"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 4,
+   "syllabus_item": 18,
+   "topic_term": "リアルタイム OS",
+   "topic_is_new": false,
+   "related_terms": [
+    "組込み OS",
+    "応答特性",
+    "イベントドリブン方式"
+   ],
+   "confidence": "medium",
+   "notes": "「制限時間内に応答する」というリアルタイム性の定義を問う問題。項目18（用語例「リアルタイム OS」）を採ったが、項目5「計測・制御に関する理論」にも同じ用語例があり迷った。"
+  },
+  {
+   "number": 5,
+   "syllabus_item": 6,
+   "topic_term": "LIFO",
+   "topic_is_new": false,
+   "related_terms": [
+    "プッシュ",
+    "ポップ",
+    "FIFO",
+    "スタック"
+   ],
+   "confidence": "medium",
+   "notes": "スタックの入出力順序を数える問題。項目6の用語例に「スタック」が無いため、後入れ先出しを表す用語例「LIFO」を論点にした。"
+  },
+  {
+   "number": 6,
+   "syllabus_item": 6,
+   "topic_term": "AVL 木",
+   "topic_is_new": false,
+   "related_terms": [
+    "2分探索木",
+    "バランス木",
+    "根",
+    "葉"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 7,
+   "syllabus_item": 7,
+   "topic_term": "再帰",
+   "topic_is_new": false,
+   "related_terms": [
+    "階乗",
+    "再帰呼出し",
+    "分割統治法"
+   ],
+   "confidence": "medium",
+   "notes": "階乗の再帰的定義を選ばせる問題。項目7の用語例「再帰」を採ったが、項目9「プログラム言語」の用語例「再帰呼出し」とも迷った。"
+  },
+  {
+   "number": 8,
+   "syllabus_item": 11,
+   "topic_term": "CPI（Cycles Per Instruction）",
+   "topic_is_new": true,
+   "related_terms": [
+    "サイクルタイム",
+    "命令ミックス",
+    "クロック周波数",
+    "MIPS"
+   ],
+   "confidence": "medium",
+   "notes": "クロック周期と CPI から処理時間比を求める問題。項目11の用語例に CPI が無いため新設した（近い用語例は「サイクルタイム」）。"
+  },
+  {
+   "number": 9,
+   "syllabus_item": 14,
+   "topic_term": "DMA（Direct Memory Access：直接記憶アクセス）方式",
+   "topic_is_new": false,
+   "related_terms": [
+    "プログラム制御方式",
+    "入出力割込み",
+    "チャネル制御方式"
+   ],
+   "confidence": "medium",
+   "notes": "入出力の転送方式として項目14を採ったが、項目18「オペレーティングシステム」にも同じ DMA の用語例があり迷った。"
+  },
+  {
+   "number": 10,
+   "syllabus_item": 16,
+   "topic_term": "オブジェクトストレージ",
+   "topic_is_new": false,
+   "related_terms": [
+    "ブロックストレージ",
+    "IP-SAN",
+    "FC-SAN"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 11,
+   "syllabus_item": 11,
+   "topic_term": "アムダールの法則",
+   "topic_is_new": false,
+   "related_terms": [
+    "マルチコアプロセッサ",
+    "並列処理",
+    "マルチプロセッサシステム"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 12,
+   "syllabus_item": 17,
+   "topic_term": "稼働率",
+   "topic_is_new": true,
+   "related_terms": [
+    "MTBF",
+    "MTTR",
+    "バスタブ曲線",
+    "信頼性ブロック図"
+   ],
+   "confidence": "medium",
+   "notes": "稼働率と MTBF・MTTR の関係を問う問題。項目17の用語例に稼働率・MTBF・MTTR が無いため新設した。項目16「システムの構成」とも迷った。"
+  },
+  {
+   "number": 13,
+   "syllabus_item": 16,
+   "topic_term": "信頼性ブロック図",
+   "topic_is_new": false,
+   "related_terms": [
+    "稼働率",
+    "並列運転",
+    "予備切替",
+    "フォールトトレラントシステム"
+   ],
+   "confidence": "medium",
+   "notes": "並列＋直列構成の稼働率グラフを選ぶ問題。図が信頼性ブロック図そのものなので項目16の用語例を採ったが、稼働率計算として項目17に寄せる解釈もあり得る（問12との整合が課題）。"
+  },
+  {
+   "number": 14,
+   "syllabus_item": 18,
+   "topic_term": "プリエンプティブ方式",
+   "topic_is_new": false,
+   "related_terms": [
+    "実行可能状態",
+    "待ち状態",
+    "ディスパッチ",
+    "ラウンドロビン"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 15,
+   "syllabus_item": 18,
+   "topic_term": "LRU",
+   "topic_is_new": false,
+   "related_terms": [
+    "ページリプレースメント",
+    "FIFO",
+    "ページイン",
+    "仮想記憶管理"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 16,
+   "syllabus_item": 22,
+   "topic_term": "コピーレフト（Copyleft）",
+   "topic_is_new": false,
+   "related_terms": [
+    "GPL（General Public License）",
+    "MPL（Mozilla Public License）",
+    "BSDL（Berkeley Software Distribution License）",
+    "動的リンキング"
+   ],
+   "confidence": "medium",
+   "notes": "GPL・LGPL・MPL・BSD のソースコード公開義務の強弱を比較させる問題。公開義務の強さを決める概念として用語例「コピーレフト（Copyleft）」を論点にしたが、個別ライセンス名（GPL）を論点にする解釈もある。"
+  },
+  {
+   "number": 17,
+   "syllabus_item": 22,
+   "topic_term": "Swagger",
+   "topic_is_new": true,
+   "related_terms": [
+    "OpenAPI Specification",
+    "Web API",
+    "API仕様",
+    "curl"
+   ],
+   "confidence": "medium",
+   "notes": "項目22の用語例に Swagger が無いため新設した。API 仕様という観点では項目19「ミドルウェア」の用語例「API仕様」「Web API」も候補だが、選択肢が全て OSS 名なので項目22とした。"
+  },
+  {
+   "number": 18,
+   "syllabus_item": 23,
+   "topic_term": "D/A コンバータ",
+   "topic_is_new": false,
+   "related_terms": [
+    "A/Dコンバータ",
+    "分解能",
+    "16進数"
+   ],
+   "confidence": "medium",
+   "notes": "8ビット D/A 変換器の出力電圧を求める問題。項目23の用語例「D/A コンバータ」を採ったが、項目5「計測・制御に関する理論」にも「D/A変換」の用語例があり迷った。"
+  },
+  {
+   "number": 19,
+   "syllabus_item": 23,
+   "topic_term": "PLC（Programmable Logic Controller）",
+   "topic_is_new": true,
+   "related_terms": [
+    "シーケンス制御",
+    "ラダー図",
+    "フィードバック制御",
+    "リレーシーケンス"
+   ],
+   "confidence": "medium",
+   "notes": "PLC という用語の説明を問う問題なので用語そのものを論点にしたが、項目23の用語例に PLC もラダー図も無いため新設した（近い用語例は「シーケンス制御」）。"
+  },
+  {
+   "number": 20,
+   "syllabus_item": 23,
+   "topic_term": "HDL（Hardware Description Language：ハードウェア記述言語）",
+   "topic_is_new": false,
+   "related_terms": [
+    "FPGA（Field Programmable Gate Array）",
+    "論理合成",
+    "ASIC（Application Specific IC）"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 21,
+   "syllabus_item": 23,
+   "topic_term": "低消費電力化",
+   "topic_is_new": false,
+   "related_terms": [
+    "間欠動作",
+    "エネルギーハーベスティング",
+    "パワーゲーティング",
+    "センサー"
+   ],
+   "confidence": "medium",
+   "notes": "IoT センサーノードの間欠動作から平均電流を求める計算問題。用語例「低消費電力化」を論点にしたが、計算問題としての論点名としては広めで、項目5（センサー）と見る解釈もある。"
+  },
+  {
+   "number": 22,
+   "syllabus_item": 25,
+   "topic_term": "ヒューリスティック評価",
+   "topic_is_new": false,
+   "related_terms": [
+    "思考発話法",
+    "認知的ウォークスルー",
+    "回顧法",
+    "ユーザビリティテスト"
+   ],
+   "confidence": "medium",
+   "notes": "ユーザビリティ評価手法を「利用者が参加する／専門家だけで実施する」で分類させる問題。単一の主題語が無いため、専門家評価の代表である用語例「ヒューリスティック評価」を論点にした。"
+  },
+  {
+   "number": 23,
+   "syllabus_item": 10,
+   "topic_term": "SVG（Scalable Vector Graphics）",
+   "topic_is_new": false,
+   "related_terms": [
+    "XML",
+    "ベクターデータ",
+    "PNG",
+    "TIFF"
+   ],
+   "confidence": "medium",
+   "notes": "XML で図形を記述する画像フォーマット。SVG が用語例として載っているのは項目10「その他の言語」なのでそちらを選んだが、選択肢が画像フォーマットの比較なので項目26「マルチメディア技術」とも迷った。"
+  },
+  {
+   "number": 24,
+   "syllabus_item": 28,
+   "topic_term": "列指向データベース",
+   "topic_is_new": false,
+   "related_terms": [
+    "ワイドカラム",
+    "ドキュメント指向データベース",
+    "グラフデータベース",
+    "キーバリュー型データベース"
+   ],
+   "confidence": "medium",
+   "notes": "ワイドカラム型のデータモデルを問う問題。項目28の用語例に「ワイドカラム」が無いため、対応する用語例「列指向データベース」を論点にした（厳密には別概念とする文献もある）。"
+  },
+  {
+   "number": 25,
+   "syllabus_item": 29,
+   "topic_term": "論理データ構造のマッピング",
+   "topic_is_new": false,
+   "related_terms": [
+    "リレーションシップ",
+    "参照制約",
+    "エンティティ",
+    "多重度"
+   ],
+   "confidence": "low",
+   "notes": "UML クラス図（多重度・コンポジション）を関係データベースの表と参照制約にどう写すかを問う問題。項目29の用語例「論理データ構造のマッピング」を採ったが、解答の決め手は参照制約の向きなので項目30「データ操作」の用語例「参照制約」に寄せる解釈もあり、項目・論点とも確信が持てない。"
+  },
+  {
+   "number": 26,
+   "syllabus_item": 29,
+   "topic_term": "推移関数従属",
+   "topic_is_new": false,
+   "related_terms": [
+    "第3正規形",
+    "第2正規形",
+    "部分関数従属",
+    "完全関数従属"
+   ],
+   "confidence": "medium",
+   "notes": "第2正規形から第3正規形への変換手順。項目29の用語例に「正規化」「第3正規形」が無いため、3NF の判定基準そのものである用語例「推移関数従属」を論点にした。"
+  },
+  {
+   "number": 27,
+   "syllabus_item": 30,
+   "topic_term": "参照制約",
+   "topic_is_new": false,
+   "related_terms": [
+    "CASCADE",
+    "外部キー",
+    "一意性制約",
+    "検査制約"
+   ],
+   "confidence": "high",
+   "notes": null
+  }
+ ]
+}

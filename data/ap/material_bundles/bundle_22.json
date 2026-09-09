@@ -1,0 +1,244 @@
+{
+  "bundle": 22,
+  "topics": [
+    {
+      "topic_id": 169,
+      "term": "CIDR（Classless Inter Domain Routing）",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "通信プロトコル",
+      "question_count": 1,
+      "related_terms": [
+        "サブネットマスク",
+        "IP アドレス",
+        "DHCP",
+        "NAT"
+      ],
+      "questions": [
+        {
+          "exam": "令和7年度 秋期",
+          "number": 32,
+          "text": "IPv4のアドレス割当てを行う際に，クラスA〜Cといった区分にとらわれずに，ネットワークアドレス部とホストアドレス部を任意のブロック単位に区切り，IPアドレスを無駄なく効率的に割り当てる方式はどれか。",
+          "choices": {
+            "ア": "CIDR",
+            "イ": "DHCP",
+            "ウ": "DNS",
+            "エ": "NAPT"
+          },
+          "answer": "ア",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 170,
+      "term": "MTU（Maximum Transmission Unit）",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "通信プロトコル",
+      "question_count": 1,
+      "related_terms": [
+        "パケット",
+        "ヘッダー",
+        "IP アドレス",
+        "ポート番号"
+      ],
+      "questions": [
+        {
+          "exam": "令和7年度 春期",
+          "number": 30,
+          "text": "MTU（Maximum Transmission Unit）が 1,500 バイトに設定された IPv4 ネットワークで，2,000 バイトのデータを TCP を用いて送信するときに，二つ目に送信されるパケットに含まれるデータは何バイトか。ここで，TCP ヘッダー長は 20 バイト，IP ヘッダー長は 20 バイト，イーサネットのヘッダー長とトレーラー長は，それぞれ 14 バイトと 4 バイトとする。また，データを複数パケットに分割して送信するときは，先に送信するパケットに格納できる上限までデータを含めて送信するものとする。",
+          "choices": {
+            "ア": "500",
+            "イ": "540",
+            "ウ": "580",
+            "エ": "598"
+          },
+          "answer": "イ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 171,
+      "term": "TCP",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "通信プロトコル",
+      "question_count": 1,
+      "related_terms": [
+        "UDP",
+        "ポート番号",
+        "ヘッダー",
+        "チェックサム"
+      ],
+      "questions": [
+        {
+          "exam": "令和7年度 秋期",
+          "number": 33,
+          "text": "UDPのヘッダーフィールドにはないが，TCPのヘッダーフィールドには含まれる情報はどれか。",
+          "choices": {
+            "ア": "宛先ポート番号",
+            "イ": "シーケンス番号",
+            "ウ": "送信元ポート番号",
+            "エ": "チェックサム"
+          },
+          "answer": "イ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 172,
+      "term": "VLAN",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "通信プロトコル",
+      "question_count": 1,
+      "related_terms": [
+        "ブロードキャスト",
+        "レイヤー3（L3）スイッチ",
+        "IEEE 802.1Q",
+        "MAC アドレス（Media Access Control address）フィルタリング"
+      ],
+      "questions": [
+        {
+          "exam": "令和6年度 秋期",
+          "number": 45,
+          "text": "VLAN 機能をもった 1 台のレイヤー 3 スイッチに 40 台の PC を接続している。スイッチのポートをグループ化して複数のセグメントに分けたとき，スイッチのポートをセグメントに分けない場合に比べて得られるセキュリティ上の効果の一つはどれか。",
+          "choices": {
+            "ア": "スイッチが，PC から送出される ICMP パケットを同一セグメント内も含め，全て遮断するので，PC 間のマルウェア感染のリスクを低減できる。",
+            "イ": "スイッチが，PC からのブロードキャストパケットの到達範囲を制限するので，アドレス情報の不要な流出のリスクを低減できる。",
+            "ウ": "スイッチが，PC の MAC アドレスから接続可否を判別するので，PC の不正接続のリスクを低減できる。",
+            "エ": "スイッチが，物理ポートごとに，決まった IP アドレスをもつ PC の接続だけを許可するので，PC の不正接続のリスクを低減できる。"
+          },
+          "answer": "イ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 173,
+      "term": "VRRP",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "通信プロトコル",
+      "question_count": 1,
+      "related_terms": [
+        "PPP",
+        "RARP（Reverse Address Resolution Protocol：逆アドレス解決プロトコル）",
+        "SNMP エージェント",
+        "ルータ"
+      ],
+      "questions": [
+        {
+          "exam": "令和6年度 春期",
+          "number": 32,
+          "text": "ルータを冗長化するために用いられるプロトコルはどれか。",
+          "choices": {
+            "ア": "PPP",
+            "イ": "RARP",
+            "ウ": "SNMP",
+            "エ": "VRRP"
+          },
+          "answer": "エ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 174,
+      "term": "ポート番号",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "通信プロトコル",
+      "question_count": 1,
+      "related_terms": [
+        "TELNET",
+        "IMAP",
+        "SMTP",
+        "SNMP エージェント"
+      ],
+      "questions": [
+        {
+          "exam": "令和7年度 春期",
+          "number": 33,
+          "text": "TCP/IP ネットワークで，データ転送用と制御用とに異なるウェルノウンポート番号が割り当てられているプロトコルはどれか。",
+          "choices": {
+            "ア": "FTP",
+            "イ": "POP3",
+            "ウ": "SMTP",
+            "エ": "SNMP"
+          },
+          "answer": "ア",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 175,
+      "term": "マルチキャスト",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "通信プロトコル",
+      "question_count": 1,
+      "related_terms": [
+        "ブロードキャスト",
+        "ユニキャスト",
+        "DHCP",
+        "ルーティング"
+      ],
+      "questions": [
+        {
+          "exam": "令和5年度 秋期",
+          "number": 35,
+          "text": "IPv4 ネットワークにおけるマルチキャストの使用例に関する記述として，適切なものはどれか。",
+          "choices": {
+            "ア": "LAN に初めて接続する PC が，DHCP プロトコルを使用して，自分自身に割り当てられる IP アドレスを取得する際に使用する。",
+            "イ": "ネットワーク機器が，ARP プロトコルを使用して，宛先 IP アドレスから MAC アドレスを得るためのリクエストを送信する際に使用する。",
+            "ウ": "メーリングリストの利用者が，SMTP プロトコルを使用して，メンバー全員に対し，同一内容の電子メールを一斉送信する際に使用する。",
+            "エ": "ルータが RIP-2 プロトコルを使用して，隣接するルータのグループに，経路の更新情報を送信する際に使用する。"
+          },
+          "answer": "エ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 176,
+      "term": "ルーティング",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "通信プロトコル",
+      "question_count": 1,
+      "related_terms": [
+        "サブネットマスク",
+        "CIDR（Classless Inter Domain Routing）",
+        "IP アドレス"
+      ],
+      "questions": [
+        {
+          "exam": "令和7年度 春期",
+          "number": 31,
+          "text": "次のルーティングテーブルをもつルータが宛先 IP アドレス 192.168.1.1 のパケットを受信したとき，選択されるネクストホップはどれか。ここで，宛先 IP アドレスの条件を満たす宛先ネットワークが複数あるときは，それらのうちで，サブネットマスクが最も長い宛先ネットワークのネクストホップを選択する。",
+          "choices": {
+            "ア": "10.1.0.1",
+            "イ": "10.1.0.2",
+            "ウ": "10.1.0.3",
+            "エ": "10.1.0.4"
+          },
+          "answer": "エ",
+          "figure_description": "ルーティングテーブル。\n\n| 宛先ネットワーク | ネクストホップ |\n| --- | --- |\n| 0.0.0.0/0 | 10.1.0.1 |\n| 192.168.0.0/16 | 10.1.0.2 |\n| 192.168.1.0/24 | 10.1.0.3 |\n| 192.168.1.0/26 | 10.1.0.4 |"
+        }
+      ]
+    }
+  ]
+}

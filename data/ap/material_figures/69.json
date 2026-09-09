@@ -1,0 +1,35 @@
+{
+  "topic_id": 69,
+  "term": "LIFO",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 数え上げの手順",
+      "caption": "最初に出す要素で場合分けすると 2＋2＋1＝5 通り。C の次は頂上の B しか出せないので C A B は作れない。",
+      "nodes": [
+        {"id": "root", "label": "入力は A → B → C\n出す時点は自由", "row": 0, "col": 2},
+        {"id": "fa", "label": "最初に A", "row": 1, "col": 0},
+        {"id": "fb", "label": "最初に B", "row": 1, "col": 2},
+        {"id": "fc", "label": "最初に C", "row": 1, "col": 4},
+        {"id": "o1", "label": "A B C", "row": 2, "col": 0},
+        {"id": "o2", "label": "A C B", "row": 2, "col": 1},
+        {"id": "o3", "label": "B A C", "row": 2, "col": 2},
+        {"id": "o4", "label": "B C A", "row": 2, "col": 3},
+        {"id": "o5", "label": "C B A", "row": 2, "col": 4},
+        {"id": "ng", "label": "C A B は不可\nC の下は B", "row": 2, "col": 5, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "root", "to": "fa"},
+        {"from": "root", "to": "fb"},
+        {"from": "root", "to": "fc"},
+        {"from": "fa", "to": "o1"},
+        {"from": "fa", "to": "o2"},
+        {"from": "fb", "to": "o3"},
+        {"from": "fb", "to": "o4"},
+        {"from": "fc", "to": "o5"},
+        {"from": "fc", "to": "ng", "style": "dashed", "arrow": "none"}
+      ]
+    }
+  ]
+}

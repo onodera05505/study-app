@@ -1,0 +1,23 @@
+{
+  "topic_id": 19,
+  "term": "EA（Enterprise Architecture）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 4つの階層と進め方",
+      "caption": "現状と理想像を同じ4階層で描き、その差を埋める道筋を移行計画として定義するのが EA。",
+      "nodes": [
+        {"id": "as", "label": "現状（As-Is）\nビジネス／データ／\nアプリ／技術の4階層", "row": 0, "col": 0},
+        {"id": "gap", "label": "ギャップ分析\n乖離を明確にする", "row": 0, "col": 1, "emphasis": true},
+        {"id": "to", "label": "理想像（To-Be）\n同じ4階層で\n目指す姿を描く", "row": 0, "col": 2},
+        {"id": "plan", "label": "移行計画\n差を埋める改善活動", "row": 1, "col": 1, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "as", "to": "gap", "label": "①現状を把握"},
+        {"from": "to", "to": "gap", "label": "②理想像を設定"},
+        {"from": "gap", "to": "plan", "label": "③差から計画へ"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "name": "study-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:api": "wrangler dev",
+    "build": "vite build",
+    "preview": "npm run build && wrangler dev",
+    "deploy": "bash scripts/deploy-pages.sh",
+    "db:generate": "drizzle-kit generate",
+    "db:apply:local": "wrangler d1 migrations apply study-app-db --local",
+    "db:apply:remote": "wrangler d1 migrations apply study-app-db --remote",
+    "db:seed:local": "node scripts/seed.mjs --local",
+    "typecheck": "tsc --noEmit",
+    "check:render": "bash scripts/check_render.sh",
+    "audit:screens": "bash scripts/audit_screens.sh"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.45.2",
+    "hono": "^4.13.3",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260823.1",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@vitejs/plugin-react": "^6.1.0",
+    "axe-core": "^4.13.0",
+    "drizzle-kit": "^0.31.10",
+    "jsdom": "^27.0.0",
+    "playwright": "^1.62.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.2",
+    "tsx": "^4.20.6",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.2",
+    "wrangler": "^4.125.0"
+  }
+}

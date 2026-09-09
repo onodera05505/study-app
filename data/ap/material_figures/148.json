@@ -1,0 +1,22 @@
+{
+  "topic_id": 148,
+  "term": "論理データモデル",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 実際の問題での判断",
+      "caption": "日付をもつのは右の表だけで、そこに顧客IDが無いので、購入者数を日別に見ることはできない。",
+      "nodes": [
+        {"id": "cust", "label": "顧客\n顧客ID・氏名\n性別・生年月日", "row": 0, "col": 0, "emphasis": true},
+        {"id": "buy", "label": "商品購入\n顧客ID・代理店ID\n商品ID・購入数量", "row": 0, "col": 1},
+        {"id": "sale", "label": "販売代理店別日別販売\n代理店ID・日付\n商品ID・販売数量", "row": 0, "col": 2, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "cust", "to": "buy", "label": "顧客ID", "arrow": "none"},
+        {"from": "buy", "to": "sale", "label": "商品ID・代理店ID", "arrow": "none"},
+        {"from": "cust", "to": "sale", "label": "顧客IDが無く、日別に購入者を数えられない", "arrow": "none", "style": "dashed"}
+      ]
+    }
+  ]
+}

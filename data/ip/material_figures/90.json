@@ -1,0 +1,61 @@
+{
+  "topic_id": 90,
+  "term": "SCM（Supply Chain Management：供給連鎖管理）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "調達から販売までを会社をまたいで一つの流れとして管理するのが SCM。自社の中だけをまとめる ERP とは範囲が違う。",
+      "nodes": [
+        {
+          "id": "b",
+          "label": "部品メーカー\n調達",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "m",
+          "label": "自社工場\n製造",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "d",
+          "label": "物流会社\n配送",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "s",
+          "label": "小売店\n販売",
+          "row": 0,
+          "col": 3
+        }
+      ],
+      "edges": [
+        {
+          "from": "b",
+          "to": "m",
+          "label": "モノ"
+        },
+        {
+          "from": "m",
+          "to": "d",
+          "label": "モノ"
+        },
+        {
+          "from": "d",
+          "to": "s",
+          "label": "モノ"
+        },
+        {
+          "from": "s",
+          "to": "m",
+          "label": "売れた数・在庫の情報を共有",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

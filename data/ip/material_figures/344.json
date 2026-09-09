@@ -1,0 +1,25 @@
+{
+  "topic_id": 344,
+  "term": "ステークホルダ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 範囲の広さ",
+      "caption": "発注側も受注側も、直接の契約が無い協力会社も全部ステークホルダ。メンバーはその一部にすぎない。",
+      "nodes": [
+        {"id": "ceo", "label": "発注側の経営者", "row": 0, "col": 0},
+        {"id": "usr", "label": "発注側の利用部門", "row": 0, "col": 2},
+        {"id": "prj", "label": "プロジェクト", "row": 1, "col": 1, "emphasis": true},
+        {"id": "pm", "label": "受注側の PM\nメンバー", "row": 2, "col": 0},
+        {"id": "sub", "label": "受注側を支援する\n協力会社", "row": 2, "col": 2}
+      ],
+      "edges": [
+        {"from": "ceo", "to": "prj", "label": "費用を出す", "arrow": "both"},
+        {"from": "usr", "to": "prj", "label": "完成後に使う", "arrow": "both"},
+        {"from": "pm", "to": "prj", "label": "作る", "arrow": "both"},
+        {"from": "sub", "to": "prj", "label": "作業を手伝う", "arrow": "both"}
+      ]
+    }
+  ]
+}

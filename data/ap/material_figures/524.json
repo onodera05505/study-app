@@ -1,0 +1,25 @@
+{
+  "topic_id": 524,
+  "term": "データレイク",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### ためてから使い道を決める",
+      "caption": "整形するのが格納の前か後かで分かれる。データレイクは素のままためて、使うときに加工する。",
+      "nodes": [
+        {"id": "src", "label": "発生した\nログ・画像・表", "row": 0, "col": 0},
+        {"id": "etl", "label": "ETL で整形", "row": 0, "col": 1},
+        {"id": "dwh", "label": "データ\nウェアハウス", "row": 0, "col": 2, "shape": "cylinder"},
+        {"id": "lake", "label": "データレイク\n発生した形のまま", "row": 1, "col": 1, "shape": "cylinder", "emphasis": true},
+        {"id": "use", "label": "必要な分だけ\n取り出して加工", "row": 1, "col": 2}
+      ],
+      "edges": [
+        {"from": "src", "to": "etl"},
+        {"from": "etl", "to": "dwh", "label": "入れる前に整える"},
+        {"from": "src", "to": "lake", "label": "素のまま格納"},
+        {"from": "lake", "to": "use", "label": "使うときに加工"}
+      ]
+    }
+  ]
+}

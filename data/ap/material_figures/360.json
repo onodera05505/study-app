@@ -1,0 +1,23 @@
+{
+  "topic_id": 360,
+  "term": "C&C サーバ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### ボットネットのしくみ",
+      "caption": "C&C サーバは感染端末へ命令を配る攻撃側の指令塔。通信を遮断する防御側の装置ではない。",
+      "nodes": [
+        {"id": "at", "label": "攻撃者", "row": 0, "col": 0},
+        {"id": "cc", "label": "C&C サーバ\n（指令塔）", "row": 0, "col": 1, "emphasis": true},
+        {"id": "bt", "label": "感染端末（ボット）\n多数＝ボットネット", "row": 0, "col": 2},
+        {"id": "tg", "label": "標的の Web サイト\n窃取された情報", "row": 0, "col": 3}
+      ],
+      "edges": [
+        {"from": "at", "to": "cc", "label": "命令を投入"},
+        {"from": "cc", "to": "bt", "label": "攻撃・情報収集を指示", "arrow": "both"},
+        {"from": "bt", "to": "tg", "label": "DDoS 攻撃・情報の送信"}
+      ]
+    }
+  ]
+}

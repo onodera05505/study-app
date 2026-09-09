@@ -1,0 +1,85 @@
+{
+  "topic_id": 697,
+  "term": "オートマトン",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 解き方",
+      "caption": "初期状態 a から 110 を 1 文字ずつ読むと a→b→d→c と移るので、受理状態は c になる。",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "a\n初期状態",
+          "row": 0,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "b",
+          "label": "b\n末尾が 1",
+          "row": 0,
+          "col": 1,
+          "shape": "round"
+        },
+        {
+          "id": "d",
+          "label": "d\n末尾が 11",
+          "row": 0,
+          "col": 2,
+          "shape": "round"
+        },
+        {
+          "id": "c",
+          "label": "c\n末尾が 10",
+          "row": 1,
+          "col": 2,
+          "shape": "round",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "a",
+          "label": "0"
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "label": "1"
+        },
+        {
+          "from": "b",
+          "to": "d",
+          "label": "1"
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "label": "0"
+        },
+        {
+          "from": "d",
+          "to": "d",
+          "label": "1"
+        },
+        {
+          "from": "d",
+          "to": "c",
+          "label": "0"
+        },
+        {
+          "from": "c",
+          "to": "b",
+          "label": "1"
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "label": "0"
+        }
+      ]
+    }
+  ]
+}

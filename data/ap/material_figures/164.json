@@ -1,0 +1,29 @@
+{
+  "topic_id": 164,
+  "term": "グローバル IP アドレス",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 判定の手順",
+      "caption": "上から順に除外していき、どれにも当てはまらなければグローバルアドレスと判断する。",
+      "nodes": [
+        {"id": "q1", "label": "先頭バイトが 224〜239", "row": 0, "col": 0},
+        {"id": "q2", "label": "10 / 172.16〜31 / 192.168\nで始まる", "row": 1, "col": 0},
+        {"id": "q3", "label": "ホスト部が全て 1", "row": 2, "col": 0},
+        {"id": "g", "label": "グローバルアドレス\n例 208.77.188.166", "row": 3, "col": 0, "emphasis": true},
+        {"id": "m", "label": "マルチキャスト", "row": 0, "col": 1, "shape": "round"},
+        {"id": "p", "label": "プライベート", "row": 1, "col": 1, "shape": "round"},
+        {"id": "b", "label": "ブロードキャスト", "row": 2, "col": 1, "shape": "round"}
+      ],
+      "edges": [
+        {"from": "q1", "to": "m", "label": "該当"},
+        {"from": "q2", "to": "p", "label": "該当"},
+        {"from": "q3", "to": "b", "label": "該当"},
+        {"from": "q1", "to": "q2", "label": "いいえ"},
+        {"from": "q2", "to": "q3", "label": "いいえ"},
+        {"from": "q3", "to": "g", "label": "いいえ"}
+      ]
+    }
+  ]
+}

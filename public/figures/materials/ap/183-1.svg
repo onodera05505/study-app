@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="308" viewBox="0 0 640 308" role="img">
+<title>OCSP が答えるのは失効しているかどうかの状態だけで、鍵の再発行や証明書更新の進捗は扱わない。</title>
+<rect x="0.5" y="0.5" width="639" height="307" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(116.65 20)">
+<line x1="74.25" y1="34" x2="74.25" y2="240" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="332.45" y1="34" x2="332.45" y2="240" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="148.5" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="74.25" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">OCSP クライアント</text>
+<rect x="258.2" y="0" width="148.5" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="332.45" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">OCSP レスポンダー</text>
+<polyline points="77.25,68 329.45,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="329.45,68 321.45,71.6 321.45,64.4" fill="#1f2937"/>
+<text x="203.35" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. シリアル番号と発行者 DN のハッシュ値</text>
+<rect x="91.35" y="73" width="224" height="16" rx="3" fill="#ffffff"/>
+<text x="203.35" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">証明書そのものを丸ごと送るのではない</text>
+<polyline points="332.45,116 358.45,116 358.45,130 334.45,130" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="334.45,130 342.45,126.4 342.45,133.6" fill="#1f2937"/>
+<text x="366.45" y="124" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2. 失効情報から判定</text>
+<polyline points="329.45,158 77.25,158" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="77.25,158 85.25,154.4 85.25,161.6" fill="#1f2937"/>
+<text x="203.35" y="151" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 有効／失効済み／不明 ＋ 署名</text>
+<rect x="67.35" y="163" width="272" height="16" rx="3" fill="#ffffff"/>
+<text x="203.35" y="176.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">署名が付くので応答自体が本物かを確かめられる</text>
+<polyline points="74.25,206 100.25,206 100.25,220 76.25,220" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="76.25,220 84.25,216.4 84.25,223.6" fill="#1f2937"/>
+<text x="108.25" y="214" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. 失効なら信頼せず接続を中止</text>
+</g>
+<text x="320" y="288" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">OCSP が答えるのは失効しているかどうかの状態だけで、鍵の再発行や証明書更新の進捗は扱わない。</text>
+</svg>

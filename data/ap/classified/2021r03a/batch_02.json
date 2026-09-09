@@ -1,0 +1,384 @@
+{
+  "exam": "2021r03a",
+  "range": "28-54",
+  "classifications": [
+    {
+      "number": 28,
+      "syllabus_item": 29,
+      "topic_term": "正規化",
+      "topic_is_new": false,
+      "related_terms": [
+        "部分関数従属",
+        "推移関数従属",
+        "完全関数従属",
+        "非正規化"
+      ],
+      "confidence": "high",
+      "notes": "受注番号＋項番が主キーで、単価が商品コードに推移関数従属している表の正規形を判定させる問題。既存論点「正規化」（項目29）と同一表記。"
+    },
+    {
+      "number": 29,
+      "syllabus_item": 30,
+      "topic_term": "UNION",
+      "topic_is_new": true,
+      "related_terms": [
+        "関係代数",
+        "表の結合",
+        "副問合せ",
+        "問合せ（クエリ）"
+      ],
+      "confidence": "medium",
+      "notes": "横持ちの表を縦持ちに変換する SQL を選ばせる問題で、正解は UNION。項目30の用語例に UNION／集合演算の語が無いため新規論点にした。既存論点「関係代数」に寄せる読み方もあり得る。"
+    },
+    {
+      "number": 30,
+      "syllabus_item": 32,
+      "topic_term": "透過性",
+      "topic_is_new": false,
+      "related_terms": [
+        "レプリケーション",
+        "分散データベース",
+        "表の分散（水平，垂直）",
+        "分散問合せ"
+      ],
+      "confidence": "high",
+      "notes": "分散データベースの「複製に対する透過性」の説明を選ばせる問題。項目32の用語例「透過性」をそのままコピーした。"
+    },
+    {
+      "number": 31,
+      "syllabus_item": 35,
+      "topic_term": "ブロードキャスト",
+      "topic_is_new": false,
+      "related_terms": [
+        "マルチキャスト",
+        "ユニキャスト",
+        "イーサネットフレーム",
+        "パケット"
+      ],
+      "confidence": "high",
+      "notes": "同一セグメントの全ノードへ一度の送信で伝送する、というブロードキャストの定義を問う問題。項目35の用語例「ブロードキャスト」をそのままコピーした（既存論点「マルチキャスト」も項目35にある）。"
+    },
+    {
+      "number": 32,
+      "syllabus_item": 35,
+      "topic_term": "ARP（アドレス解決プロトコル）",
+      "topic_is_new": true,
+      "related_terms": [
+        "RARP（Reverse Address Resolution Protocol：逆アドレス解決プロトコル）",
+        "物理アドレス",
+        "IP アドレス",
+        "ICMP（Internet Control Message Protocol）"
+      ],
+      "confidence": "medium",
+      "notes": "IP アドレスから MAC アドレスを得るプロトコル ARP の説明を問う問題。用語例には RARP しかなく ARP 単独が無いため新規論点にした。項目36に「arp」があるが、これは障害切分けに使うコマンドを指す用語例（既存論点 arp も 2024r06a 問36 のコマンド問題）なので、プロトコルの ARP とは別論点とした。 ／ 論点名を「ARP（アドレス解決プロトコル）」としたのは、2024r06a 問36 の論点「arp」（MACアドレスを調べるコマンド）と大小文字だけの違いで機械的に統合されてしまうため。プロトコルとコマンドは別物。"
+    },
+    {
+      "number": 33,
+      "syllabus_item": 42,
+      "topic_term": "IP マスカレード",
+      "topic_is_new": false,
+      "related_terms": [
+        "NAT",
+        "ポート番号",
+        "プライベートIP アドレス",
+        "ヘッダー"
+      ],
+      "confidence": "high",
+      "notes": "NAPT が書き換えるのは送信元 IP アドレスと送信元ポート番号、というアドレス変換の仕組みを問う問題。用語例は項目42が「IP マスカレード（NAPT）」、項目33が「IP マスカレード」。既存論点（項目42・2件）が「IP マスカレード」表記なので、頻度を分散させないようその表記に合わせた。"
+    },
+    {
+      "number": 34,
+      "syllabus_item": 35,
+      "topic_term": "TCP",
+      "topic_is_new": true,
+      "related_terms": [
+        "UDP",
+        "ポート番号",
+        "ヘッダー",
+        "コネクション方式"
+      ],
+      "confidence": "medium",
+      "notes": "UDP のヘッダには無く TCP のヘッダにある情報（シーケンス番号）を選ばせる問題。TCP と UDP のどちらを主題に採るか迷うが、TCP 固有のフィールドを問うているので既存論点「TCP」（項目35）に寄せ、UDP を related_terms に入れた。TCP・UDP とも用語例には単独で載っていない（既存論点も is_new）ため topic_is_new: true。"
+    },
+    {
+      "number": 35,
+      "syllabus_item": 35,
+      "topic_term": "サブネットマスク",
+      "topic_is_new": false,
+      "related_terms": [
+        "ブロードキャスト",
+        "サブネットアドレス",
+        "IP アドレス",
+        "CIDR（Classless Inter Domain Routing）"
+      ],
+      "confidence": "high",
+      "notes": "IP アドレスとサブネットマスクからブロードキャストアドレスを求める手順（マスクのビット反転との論理和）を問う計算問題。既存論点「サブネットマスク」（項目35・4件）と同一表記。"
+    },
+    {
+      "number": 36,
+      "syllabus_item": 35,
+      "topic_term": "IPv6",
+      "topic_is_new": false,
+      "related_terms": [
+        "IPsec",
+        "ヘッダー",
+        "IPv4",
+        "パケット"
+      ],
+      "confidence": "medium",
+      "notes": "IPv6 の拡張ヘッダで実現できるセキュリティ機能（暗号化通信＝IPsec）を問う問題。正解の用語から「IPsec」を論点に採る読み方もあるが、問題文の主題は IPv6 の拡張ヘッダなので既存論点「IPv6」（項目35）にした。IPsec そのものは同じ回の問43にある。"
+    },
+    {
+      "number": 37,
+      "syllabus_item": 39,
+      "topic_term": "IoT セキュリティガイドライン",
+      "topic_is_new": false,
+      "related_terms": [
+        "IoT のセキュリティ",
+        "脆弱性管理",
+        "セキュリティバイデザイン（セキュアバイデザイン）",
+        "IoT"
+      ],
+      "confidence": "high",
+      "notes": "“IoT セキュリティガイドライン（Ver 1.0）”の要点17（出荷・リリース後の維持）の対策例を選ばせる問題。項目39の用語例をそのままコピーした。"
+    },
+    {
+      "number": 38,
+      "syllabus_item": 39,
+      "topic_term": "情報セキュリティ早期警戒パートナーシップ",
+      "topic_is_new": false,
+      "related_terms": [
+        "JPCERT コーディネーションセンター",
+        "JVN（Japan Vulnerability Notes）",
+        "ソフトウェア等の脆弱性関連情報に関する届出制度",
+        "IPA セキュリティセンター"
+      ],
+      "confidence": "high",
+      "notes": "脆弱性の届出を受けた製品開発者の対応をガイドラインに照らして選ばせる問題。項目39の用語例をそのままコピーした。"
+    },
+    {
+      "number": 39,
+      "syllabus_item": 38,
+      "topic_term": "否認防止（Non-Repudiation）",
+      "topic_is_new": false,
+      "related_terms": [
+        "真正性（Authenticity）",
+        "責任追跡性（Accountability）",
+        "可用性（Availability）",
+        "機密性（Confidentiality）"
+      ],
+      "confidence": "high",
+      "notes": "JIS Q 27000 の情報セキュリティ特性のうち否認防止の説明を選ばせる問題。項目38の用語例をそのままコピーした（既存論点「機密性（Confidentiality）」「真正性（Authenticity）」と同じ表記形式）。"
+    },
+    {
+      "number": 40,
+      "syllabus_item": 40,
+      "topic_term": "耐タンパ性",
+      "topic_is_new": false,
+      "related_terms": [
+        "IoT のセキュリティ",
+        "ハードウェアのセキュリティ（セキュアエレメント，TPM（Trusted Platform Module））",
+        "サイドチャネル攻撃（テンペスト攻撃，プローブ攻撃，タイミング攻撃，電力解析攻撃など）",
+        "IoT"
+      ],
+      "confidence": "high",
+      "notes": "ケースを開けられたら秘密情報を消去する、という耐タンパ性の実装技術と効果を問う問題。既存論点「耐タンパ性」（項目40・3件）と同一表記。"
+    },
+    {
+      "number": 41,
+      "syllabus_item": 40,
+      "topic_term": "CVSS（Common Vulnerability Scoring System：共通脆弱性評価システム）",
+      "topic_is_new": false,
+      "related_terms": [
+        "CVE（Common Vulnerabilities and Exposures：共通脆弱性識別子）",
+        "PCI DSS",
+        "ISMS 認証",
+        "脆弱性診断"
+      ],
+      "confidence": "high",
+      "notes": "基本評価基準・現状評価基準・環境評価基準の三つで深刻度を評価するもの＝CVSS。項目40の用語例をそのままコピーした。"
+    },
+    {
+      "number": 42,
+      "syllabus_item": 38,
+      "topic_term": "EMV 3-Dセキュア（3D セキュア 2.0）",
+      "topic_is_new": false,
+      "related_terms": [
+        "リスクベース認証",
+        "PIN コード",
+        "IC カード",
+        "多要素認証（記憶，所有，生体）"
+      ],
+      "confidence": "high",
+      "notes": "オンラインショッピングでのクレジットカード不正利用防止に有効なのは 3D セキュアによる本人確認。既存論点「EMV 3-Dセキュア（3D セキュア 2.0）」（項目38）と同一表記。"
+    },
+    {
+      "number": 43,
+      "syllabus_item": 42,
+      "topic_term": "IPsec",
+      "topic_is_new": false,
+      "related_terms": [
+        "S/MIME（Secure MIME）",
+        "SSH",
+        "VPN",
+        "ネットワーク層"
+      ],
+      "confidence": "high",
+      "notes": "ネットワーク層で動作し AH と ESP を含むプロトコル＝IPsec。既存論点「IPsec」（項目42）と同一表記。"
+    },
+    {
+      "number": 44,
+      "syllabus_item": 38,
+      "topic_term": "オープンリダイレクトの悪用",
+      "topic_is_new": true,
+      "related_terms": [
+        "フィッシング（スミッシングほか）",
+        "リフレクション攻撃",
+        "第三者中継（オープンリレー）",
+        "DNS キャッシュポイズニング"
+      ],
+      "confidence": "medium",
+      "notes": "オープンリダイレクトを悪用した攻撃（自動遷移機能を悪用して偽サイトへ誘導）を選ばせる問題。項目38の該当エントリは「オープンリダイレクトの悪用・中間者（Man-in-the-middle）攻撃」と別概念が中黒で連結された形で、そのままコピーすると別概念が混ざるため、設問の主題である「オープンリダイレクトの悪用」だけを採り、単独表記が他項目に無いので topic_is_new: true とした。"
+    },
+    {
+      "number": 45,
+      "syllabus_item": 41,
+      "topic_term": "DMZ（非武装地帯）",
+      "topic_is_new": false,
+      "related_terms": [
+        "制御システムのセキュリティ",
+        "脆弱性管理（OS アップデート，脆弱性修正プログラム（セキュリティパッチ）の適用，SBOM（Software Bill ofMaterials）を利用した脆弱性管理ほか）",
+        "ファイアウォール",
+        "ネットワーク監視"
+      ],
+      "confidence": "medium",
+      "notes": "制御ネットワークと情報ネットワークの境界に置く DMZ に何を移すか（パッチ管理サーバ）を問う問題。「制御システムのセキュリティ」（同じ項目41の用語例）を論点に採る読み方もあるが、解答に中心的に必要なのは DMZ に置くべき機器の考え方なので DMZ を採った。"
+    },
+    {
+      "number": 46,
+      "syllabus_item": 43,
+      "topic_term": "CRUDマトリクス",
+      "topic_is_new": false,
+      "related_terms": [
+        "決定表（デシジョンテーブル）",
+        "DFD",
+        "E-R 図",
+        "エンティティ"
+      ],
+      "confidence": "high",
+      "notes": "CRUD マトリクスの説明を選ばせる用語問題。項目43の用語例「CRUDマトリクス」をそのままコピーした（用語例は中黒・空白なしの表記）。"
+    },
+    {
+      "number": 47,
+      "syllabus_item": 43,
+      "topic_term": "アクティビティ図",
+      "topic_is_new": false,
+      "related_terms": [
+        "シーケンス図",
+        "ユースケース図",
+        "ステートマシン図",
+        "UML"
+      ],
+      "confidence": "high",
+      "notes": "UML の振る舞い図のうちアクティビティ図の説明を選ばせる問題。項目43の用語例をそのままコピーした（項目10にも同名の用語例があるが、公式の分野はテクノロジ系で、UML の各図が並ぶのは項目43）。"
+    },
+    {
+      "number": 48,
+      "syllabus_item": 44,
+      "topic_term": "継承（インヘリタンス）",
+      "topic_is_new": false,
+      "related_terms": [
+        "クラス図",
+        "リファクタリング",
+        "汎化",
+        "集約"
+      ],
+      "confidence": "medium",
+      "notes": "リファクタリング“継承の分割”を行った後のクラス図を選ばせる問題。形状と線種の二軸を継承で掛け合わせず、線種を別クラスとして関連で持たせる、というクラス設計の知識が中心なので項目44の「継承（インヘリタンス）」にした。項目49の用語例「リファクタリング」を論点に採る読み方もある。"
+    },
+    {
+      "number": 49,
+      "syllabus_item": 49,
+      "topic_term": "バーンダウンチャート",
+      "topic_is_new": false,
+      "related_terms": [
+        "ベロシティ",
+        "スプリント",
+        "タイムボックス",
+        "スクラム"
+      ],
+      "confidence": "high",
+      "notes": "残作業量を縦軸、時間を横軸にとるグラフ＝バーンダウンチャート。項目49の用語例をそのままコピーした。"
+    },
+    {
+      "number": 50,
+      "syllabus_item": 49,
+      "topic_term": "スクラムマスター",
+      "topic_is_new": true,
+      "related_terms": [
+        "スクラム",
+        "プロダクトバックログ",
+        "スプリント",
+        "インクリメント"
+      ],
+      "confidence": "medium",
+      "notes": "スクラムマスタの役割（スクラムの理論とプラクティスの理解を支援する）を問う問題。項目49の該当用語例は「スクラムチーム（プロダクトオーナー，開発者，スクラムマスター）」と括弧内に3つの役割が列挙された形なので、仕様に従い主題の1語「スクラムマスター」だけを採り、単独表記が他項目に無いので topic_is_new: true とした。既存論点「スクラム」に寄せる読み方もある。"
+    },
+    {
+      "number": 51,
+      "syllabus_item": 54,
+      "topic_term": "フェーズ・ゲート",
+      "topic_is_new": true,
+      "related_terms": [
+        "プロジェクトライフサイクル",
+        "プロジェクト又はフェーズの終結報告書",
+        "プロジェクト評価",
+        "ベースライン"
+      ],
+      "confidence": "medium",
+      "notes": "PMBOK のフェーズ・ゲートの目的（プロジェクトの継続・中止の判断）を問う問題。公式の分野はマネジメント系で、フェーズの終結に関わる用語例が並ぶ項目54に置いたが、「フェーズ・ゲート」自体は用語例に無いため新規論点にした。項目53（プロジェクトライフサイクル）に置く読み方もある。"
+    },
+    {
+      "number": 52,
+      "syllabus_item": 58,
+      "topic_term": "アローダイアグラム",
+      "topic_is_new": false,
+      "related_terms": [
+        "PDM（Precedence Diagramming Method：プレシデンスダイアグラム法）",
+        "ダミー作業",
+        "スケジュールネットワーク分析",
+        "PERT"
+      ],
+      "confidence": "medium",
+      "notes": "プレシデンスダイアグラムをアローダイアグラムに書き直す問題。ダミー作業で依存関係を表すアローダイアグラムの記法が解答の鍵なので既存論点「アローダイアグラム」（項目58・3件）にした。出発点の記法である既存論点「PDM（…）」を主題に採る読み方もある。"
+    },
+    {
+      "number": 53,
+      "syllabus_item": 60,
+      "topic_term": "リスクの定量的分析技法",
+      "topic_is_new": false,
+      "related_terms": [
+        "リスクの定性的分析技法",
+        "感度分析",
+        "リスク登録簿",
+        "優先順位付けされたリスク"
+      ],
+      "confidence": "high",
+      "notes": "PMBOK のリスクの定量的分析で実施すること（個別リスクと不確実性要因の複合影響を数量的に分析）を問う問題。項目60の用語例「リスクの定量的分析技法」をそのままコピーした（項目39にも「リスクの定量的分析」があるが、公式の分野はマネジメント系なので53〜70から選んだ）。"
+    },
+    {
+      "number": 54,
+      "syllabus_item": 65,
+      "topic_term": "問題管理",
+      "topic_is_new": false,
+      "related_terms": [
+        "既知の誤り",
+        "根本原因",
+        "傾向分析",
+        "インシデント管理"
+      ],
+      "confidence": "high",
+      "notes": "サービスマネジメントシステムの問題管理の活動（インシデントのデータ及び傾向を分析して問題を特定する）を問う問題。既存論点「問題管理」（項目65・2件）と同一表記。"
+    }
+  ]
+}

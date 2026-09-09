@@ -1,0 +1,456 @@
+{
+  "exam": "2018h30a",
+  "range": "51-100",
+  "classifications": [
+    {
+      "number": 51,
+      "syllabus_item": 29,
+      "topic_term": "サービス可用性管理",
+      "topic_is_new": false,
+      "related_terms": ["SLA", "サービスレベル管理（SLM）", "機密性", "完全性"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 52,
+      "syllabus_item": 27,
+      "topic_term": "プロジェクト統合マネジメント",
+      "topic_is_new": false,
+      "related_terms": ["プロジェクトコストマネジメント", "プロジェクトスケジュールマネジメント", "プロジェクト資源マネジメント", "クリティカルパス"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 53,
+      "syllabus_item": 31,
+      "topic_term": "システム監査人",
+      "topic_is_new": false,
+      "related_terms": ["システム監査", "独立性", "内部統制"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 54,
+      "syllabus_item": 27,
+      "topic_term": "WBS（Work Breakdown Structure）",
+      "topic_is_new": false,
+      "related_terms": ["プロジェクトスコープマネジメント", "PPM（Product Portfolio Management）", "ERP（Enterprise Resource Planning：企業資源計画）パッケージ"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 55,
+      "syllabus_item": 32,
+      "topic_term": "内部統制",
+      "topic_is_new": false,
+      "related_terms": ["コンプライアンス", "業務の有効性と効率性", "財務報告の信頼性", "資産の保全"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 56,
+      "syllabus_item": 29,
+      "topic_term": "継続的改善（PDCA など）",
+      "topic_is_new": false,
+      "related_terms": ["サービスレベル管理（SLM）", "サービスデスク", "顧客満足"],
+      "confidence": "medium",
+      "notes": "SLM の文脈だが問われているのは PDCA 各フェーズの区別。論点を「サービスレベル管理（SLM）」にするか迷った。"
+    },
+    {
+      "number": 57,
+      "syllabus_item": 60,
+      "topic_term": "Web メール",
+      "topic_is_new": true,
+      "related_terms": ["電子メールのプロトコル", "IMAP", "メールボックス"],
+      "confidence": "medium",
+      "notes": "用語例に Web メールが無く新設。項目は電子メール関連が並ぶ60（ネットワーク応用）としたが、59（通信プロトコル）とも迷う。"
+    },
+    {
+      "number": 58,
+      "syllabus_item": 44,
+      "topic_term": "バスタブ曲線",
+      "topic_is_new": true,
+      "related_terms": ["故障率", "MTBF（平均故障間動作時間）", "信頼度成長曲線", "ガントチャート"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 59,
+      "syllabus_item": 45,
+      "topic_term": "マルチスレッド",
+      "topic_is_new": true,
+      "related_terms": ["並列処理", "マルチコアプロセッサ", "仮想記憶", "RAID"],
+      "confidence": "medium",
+      "notes": "OS のタスク／スレッド管理として項目45とした（仮想記憶と同じ扱い）が、並列処理の観点では項目43も候補。"
+    },
+    {
+      "number": 60,
+      "syllabus_item": 61,
+      "topic_term": "MITB（Man In The Browser）攻撃",
+      "topic_is_new": true,
+      "related_terms": ["マルウェア", "SQL インジェクション", "ソーシャルエンジニアリング", "総当たり（ブルートフォース）攻撃"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 61,
+      "syllabus_item": 62,
+      "topic_term": "継続的改善（PDCA など）",
+      "topic_is_new": false,
+      "related_terms": ["ISMS", "情報セキュリティポリシー（情報セキュリティ方針）", "修正プログラム"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 62,
+      "syllabus_item": 63,
+      "topic_term": "デジタル証明書",
+      "topic_is_new": false,
+      "related_terms": ["CA （Certification Authority：認証局）", "CRL（Certificate Revocation List：証明書失効リスト）", "公開鍵暗号方式", "PKI（Public Key Infrastructure：公開鍵基盤）"],
+      "confidence": "medium",
+      "notes": "秘密鍵漏えい時の失効申請が要点で、論点を「CRL（Certificate Revocation List：証明書失効リスト）」や「CA （Certification Authority：認証局）」にするか迷った。"
+    },
+    {
+      "number": 63,
+      "syllabus_item": 57,
+      "topic_term": "バックワードリカバリ（ロールバック）",
+      "topic_is_new": true,
+      "related_terms": ["トランザクション", "コミット", "排他制御", "選択・結合"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 64,
+      "syllabus_item": 58,
+      "topic_term": "プロキシ",
+      "topic_is_new": false,
+      "related_terms": ["DNS", "NAT", "DHCP"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 65,
+      "syllabus_item": 41,
+      "topic_term": "キャッシュメモリ",
+      "topic_is_new": false,
+      "related_terms": ["主記憶", "レジスタ", "CPU"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 66,
+      "syllabus_item": 42,
+      "topic_term": "NFC",
+      "topic_is_new": false,
+      "related_terms": ["RFID（IC タグ）", "Bluetooth", "IrDA", "GPS（Global Positioning System：全地球測位システム）応用システム"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 67,
+      "syllabus_item": 61,
+      "topic_term": "脅威と脆弱性",
+      "topic_is_new": false,
+      "related_terms": ["情報資産", "リスクアセスメント（リスク特定，リスク分析，リスク評価）", "災害"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 68,
+      "syllabus_item": 62,
+      "topic_term": "リスクアセスメント（リスク特定，リスク分析，リスク評価）",
+      "topic_is_new": false,
+      "related_terms": ["リスク対応（リスク回避，リスク共有（リスク移転，リスク分散），リスク保有）", "情報資産", "費用対効果"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 69,
+      "syllabus_item": 63,
+      "topic_term": "マトリクス認証",
+      "topic_is_new": true,
+      "related_terms": ["シングルサインオン", "ワンタイムパスワード", "バイオメトリクス認証", "チャレンジレスポンス認証"],
+      "confidence": "medium",
+      "notes": "複数の認証方式を取り違えさせる問題。正解肢の用語であるマトリクス認証を論点にしたが、用語例には無く新設。"
+    },
+    {
+      "number": 70,
+      "syllabus_item": 62,
+      "topic_term": "情報セキュリティポリシー（情報セキュリティ方針）",
+      "topic_is_new": false,
+      "related_terms": ["ISMS", "情報セキュリティ管理基準", "個人情報取扱事業者"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 71,
+      "syllabus_item": 63,
+      "topic_term": "SSL/TLS（Secure Sockets Layer/Transport Layer Security）",
+      "topic_is_new": false,
+      "related_terms": ["HTTP over TLS（HTTPS）", "公開鍵暗号方式", "デジタル証明書"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 72,
+      "syllabus_item": 63,
+      "topic_term": "MDM（Mobile Device Management）",
+      "topic_is_new": false,
+      "related_terms": ["BYOD（Bring Your Own Device）", "デジタルフォレンジックス", "リモートロック"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 73,
+      "syllabus_item": 55,
+      "topic_term": "外部キー",
+      "topic_is_new": false,
+      "related_terms": ["主キー", "参照整合性", "一意性制約"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 74,
+      "syllabus_item": 60,
+      "topic_term": "オンラインストレージ",
+      "topic_is_new": false,
+      "related_terms": ["クラウドコンピューティング", "VPN（Virtual Private Network）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 75,
+      "syllabus_item": 57,
+      "topic_term": "トランザクション",
+      "topic_is_new": false,
+      "related_terms": ["ACID 特性", "バックワードリカバリ（ロールバック）", "コミット", "インデックス"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 76,
+      "syllabus_item": 36,
+      "topic_term": "スタック",
+      "topic_is_new": false,
+      "related_terms": ["キュー", "LIFO", "リスト"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 77,
+      "syllabus_item": 61,
+      "topic_term": "クロスサイトスクリプティング",
+      "topic_is_new": true,
+      "related_terms": ["ボット", "トロイの木馬", "cookie", "標的型攻撃"],
+      "confidence": "medium",
+      "notes": "三つの脅威の組合せ問題。①の XSS を論点にしたが、ボット・トロイの木馬も同格に問われている。"
+    },
+    {
+      "number": 78,
+      "syllabus_item": 62,
+      "topic_term": "情報資産の管理",
+      "topic_is_new": true,
+      "related_terms": ["情報セキュリティポリシー（情報セキュリティ方針）", "安全管理措置", "情報資産"],
+      "confidence": "medium",
+      "notes": "情報の保護レベル（格付け）による分類管理。用語例に該当語が無いため論点を新設した。"
+    },
+    {
+      "number": 79,
+      "syllabus_item": 33,
+      "topic_term": "論理演算",
+      "topic_is_new": true,
+      "related_terms": ["論理積（AND）", "2進数", "ビット演算", "基数変換"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 80,
+      "syllabus_item": 47,
+      "topic_term": "絶対参照・相対参照",
+      "topic_is_new": false,
+      "related_terms": ["オフィスツール", "表計算ソフト", "セルの複写"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 81,
+      "syllabus_item": 48,
+      "topic_term": "オープンソースソフトウェア",
+      "topic_is_new": false,
+      "related_terms": ["Android", "携帯端末（スマートフォン，タブレット端末，ウェアラブル端末，スマートデバイスほか）", "GPL（GNU General Public License）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 82,
+      "syllabus_item": 62,
+      "topic_term": "情報セキュリティの要素（機密性，完全性，可用性，真正性，責任追跡性，否認防止，信頼性）",
+      "topic_is_new": false,
+      "related_terms": ["改ざん", "デュプレックスシステム", "稼働率", "アクセス制御"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 83,
+      "syllabus_item": 60,
+      "topic_term": "SIMカード",
+      "topic_is_new": true,
+      "related_terms": ["eSIM（embedded SIM）", "MNP（Mobile Number Portability）", "IC カード", "仮想移動体通信事業者（MVNO：Mobile Virtual Network Operator）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 84,
+      "syllabus_item": 63,
+      "topic_term": "ハッシュ関数",
+      "topic_is_new": false,
+      "related_terms": ["マルウェア", "ハッシュ値", "デジタル署名（署名鍵，検証鍵）"],
+      "confidence": "medium",
+      "notes": "マルウェア調査の文脈だが、解く鍵はハッシュ値でファイルの同一性を判定する知識。項目61（マルウェア）とも迷った。"
+    },
+    {
+      "number": 85,
+      "syllabus_item": 55,
+      "topic_term": "外部キー",
+      "topic_is_new": false,
+      "related_terms": ["主キー", "選択・結合", "関係データベース"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 86,
+      "syllabus_item": 52,
+      "topic_term": "GIF",
+      "topic_is_new": true,
+      "related_terms": ["JPEG", "MPEG（Moving Picture Experts Group）", "MIDI", "可逆圧縮"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 87,
+      "syllabus_item": 63,
+      "topic_term": "MAC アドレスフィルタリング",
+      "topic_is_new": false,
+      "related_terms": ["MAC アドレス", "ESSID（Extended Service Set Identifier）", "無線LANのセキュリティ", "アクセス制御"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 88,
+      "syllabus_item": 59,
+      "topic_term": "NTP （Network Time Protocol）",
+      "topic_is_new": false,
+      "related_terms": ["FTP", "POP", "SMTP"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 89,
+      "syllabus_item": 63,
+      "topic_term": "WPA2",
+      "topic_is_new": false,
+      "related_terms": ["無線LANのセキュリティ", "ESSID（Extended Service Set Identifier）", "cookie", "MIME"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 90,
+      "syllabus_item": 63,
+      "topic_term": "バイオメトリクス認証",
+      "topic_is_new": false,
+      "related_terms": ["静脈パターン認証", "多要素認証", "顔認証", "CAPTCHA"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 91,
+      "syllabus_item": 58,
+      "topic_term": "WAN",
+      "topic_is_new": true,
+      "related_terms": ["有線LAN", "VPN（Virtual Private Network）", "通信回線", "Wi-Fi 4/5/6/6E"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 92,
+      "syllabus_item": 49,
+      "topic_term": "ディスプレイの解像度",
+      "topic_is_new": true,
+      "related_terms": ["ディスプレイ（液晶ディスプレイ，有機EL ディスプレイ，ヘッドマウントディスプレイほか）", "ppi（pixels per inch）", "クロック周波数"],
+      "confidence": "medium",
+      "notes": "SXGA／QVGA はディスプレイの仕様なので項目49としたが、解像度そのものは項目53（マルチメディア応用）の dpi／ppi とも関わる。"
+    },
+    {
+      "number": 93,
+      "syllabus_item": 63,
+      "topic_term": "公開鍵暗号方式",
+      "topic_is_new": false,
+      "related_terms": ["デジタル署名（署名鍵，検証鍵）", "SSL/TLS（Secure Sockets Layer/Transport Layer Security）", "秘密鍵", "検証鍵"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 94,
+      "syllabus_item": 43,
+      "topic_term": "バッチ処理",
+      "topic_is_new": true,
+      "related_terms": ["リアルタイム処理", "対話型処理", "分散処理", "並列処理"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 95,
+      "syllabus_item": 40,
+      "topic_term": "クロック周波数",
+      "topic_is_new": false,
+      "related_terms": ["ターボブースト", "マルチコアプロセッサ", "キャッシュメモリ", "グリッドコンピューティング"],
+      "confidence": "medium",
+      "notes": "ターボブーストという用語の意味を問う問題。用語例にある「クロック周波数」を論点にしたが、「ターボブースト」を新設する選択肢もあった。"
+    },
+    {
+      "number": 96,
+      "syllabus_item": 58,
+      "topic_term": "無線LAN",
+      "topic_is_new": false,
+      "related_terms": ["2.4GHz帯", "5GHz帯", "電波干渉", "WPA2"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 97,
+      "syllabus_item": 60,
+      "topic_term": "サブネットマスク",
+      "topic_is_new": false,
+      "related_terms": ["IP アドレス（IPv6，IPv4，グローバル，プライベート）", "NAT", "DHCP", "MAC アドレス"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 98,
+      "syllabus_item": 62,
+      "topic_term": "CSIRT",
+      "topic_is_new": false,
+      "related_terms": ["情報セキュリティインシデント", "ISMS", "SOC（Security Operation Center）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 99,
+      "syllabus_item": 62,
+      "topic_term": "リスクアセスメント（リスク特定，リスク分析，リスク評価）",
+      "topic_is_new": false,
+      "related_terms": ["ISMS", "リスク対応（リスク回避，リスク共有（リスク移転，リスク分散），リスク保有）", "情報資産"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 100,
+      "syllabus_item": 54,
+      "topic_term": "関係データベース",
+      "topic_is_new": false,
+      "related_terms": ["主キー", "外部キー", "RDBMS", "NoSQL（キーバリューストア（KVS），ドキュメント指向データベース，グラフ指向データベース）"],
+      "confidence": "high",
+      "notes": null
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="301" viewBox="0 0 680.7 320" role="img">
+<title>毒はキャッシュに仕込まれるので、利用者が正しい URL を入力しても偽サイトへつながる。</title>
+<rect x="0.5" y="0.5" width="679.7" height="319" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<line x1="52.55" y1="34" x2="52.55" y2="252" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="296.9" y1="34" x2="296.9" y2="252" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="564.7" y1="34" x2="564.7" y2="252" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="105.1" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="52.55" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">利用者の PC</text>
+<rect x="247.5" y="0" width="98.8" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="296.9" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">DNS サーバ</text>
+<rect x="488.7" y="0" width="152" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="564.7" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">攻撃者（偽サイト）</text>
+<polyline points="561.7,68 299.9,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="299.9,68 307.9,64.4 307.9,71.6" fill="#1f2937"/>
+<text x="430.8" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 偽の対応情報をキャッシュに覚え込ませる</text>
+<rect x="294.8" y="73" width="272" height="16" rx="3" fill="#ffffff"/>
+<text x="430.8" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ここが攻撃の本体。利用者はまだ何もしていない</text>
+<polyline points="55.55,124 293.9,124" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="293.9,124 285.9,127.6 285.9,120.4" fill="#1f2937"/>
+<text x="174.73" y="117" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 正しいドメイン名を問い合わせる</text>
+<polyline points="293.9,164 55.55,164" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="55.55,164 63.55,160.4 63.55,167.6" fill="#1f2937"/>
+<text x="174.73" y="157" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 偽の IP アドレスを回答</text>
+<polyline points="55.55,204 561.7,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="561.7,204 553.7,207.6 553.7,200.4" fill="#1f2937"/>
+<text x="308.62" y="197" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 偽サイトに接続して ID とパスワードを入力</text>
+<rect x="159.43" y="209" width="298.4" height="16" rx="3" fill="#ffffff"/>
+<text x="308.62" y="222.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">URL の文字列は正しいままなので利用者は気づけない</text>
+</g>
+<text x="340.35" y="300" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">毒はキャッシュに仕込まれるので、利用者が正しい URL を入力しても偽サイトへつながる。</text>
+</svg>

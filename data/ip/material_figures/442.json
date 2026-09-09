@@ -1,0 +1,21 @@
+{
+  "topic_id": 442,
+  "term": "伝送速度（bps：bits per second（ビット／秒））",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 計算の解き方",
+      "caption": "バイトを8倍してビットにそろえ、速度に効率を掛けてから割る。この3手順を順に通せば解ける。",
+      "nodes": [
+        {"id": "s1", "label": "① ビットに直す\n1000M バイト × 8\n＝ 8000M ビット", "row": 0, "col": 0},
+        {"id": "s2", "label": "② 実効速度を出す\n20 × 0.8\n＝ 16M ビット／秒", "row": 0, "col": 1},
+        {"id": "s3", "label": "③ 割る\n8000 ÷ 16\n＝ 500 秒", "row": 0, "col": 2, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "s1", "to": "s2", "label": "データ量"},
+        {"from": "s2", "to": "s3", "label": "速さで割る"}
+      ]
+    }
+  ]
+}

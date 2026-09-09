@@ -1,0 +1,456 @@
+{
+  "exam": "2025r07",
+  "range": "1-50",
+  "classifications": [
+    {
+      "number": 1,
+      "syllabus_item": 6,
+      "topic_term": "偽装請負",
+      "topic_is_new": true,
+      "related_terms": ["（準）委任契約", "雇用契約", "労働者派遣", "指揮命令"],
+      "confidence": "high",
+      "notes": "請負契約と指揮命令関係を問う問題。用語例に「偽装請負」が無いため新規論点とした。"
+    },
+    {
+      "number": 2,
+      "syllabus_item": 8,
+      "topic_term": "ISO/IEC 27000（情報セキュリティマネジメントシステム）",
+      "topic_is_new": false,
+      "related_terms": ["ISO 9000（品質マネジメントシステム）", "ISO 14000（環境マネジメントシステム）", "JIS Q 15001"],
+      "confidence": "medium",
+      "notes": "正解は ISO/IEC 27017 だが用語例に無いため、同ファミリーの「ISO/IEC 27000（情報セキュリティマネジメントシステム）」に寄せた。"
+    },
+    {
+      "number": 3,
+      "syllabus_item": 1,
+      "topic_term": "官民データ活用推進基本法",
+      "topic_is_new": false,
+      "related_terms": ["デジタル社会形成基本法", "データ駆動型社会", "オープンデータ"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 4,
+      "syllabus_item": 9,
+      "topic_term": "VRIO 分析",
+      "topic_is_new": false,
+      "related_terms": ["SWOT 分析", "PPM（Product Portfolio Management）", "4P・4C", "コアコンピタンス"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 5,
+      "syllabus_item": 3,
+      "topic_term": "原価",
+      "topic_is_new": false,
+      "related_terms": ["売上原価", "期末棚卸高", "利益"],
+      "confidence": "medium",
+      "notes": "棚卸資産の評価方法が売上原価に与える影響を問う問題。用語例に棚卸関連の語が無く「原価」に寄せた。"
+    },
+    {
+      "number": 6,
+      "syllabus_item": 5,
+      "topic_term": "特定電子メール法",
+      "topic_is_new": false,
+      "related_terms": ["オプトイン", "オプトアウト", "迷惑メール（スパム）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 7,
+      "syllabus_item": 13,
+      "topic_term": "PoC（Proof of Concept：概念実証）",
+      "topic_is_new": false,
+      "related_terms": ["PoV（Proof of Value：価値実証）", "CRM（Customer Relationship Management：顧客関係管理）", "SLA"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 8,
+      "syllabus_item": 14,
+      "topic_term": "学習データの品質とバイアス",
+      "topic_is_new": true,
+      "related_terms": ["AI 利活用ガイドライン（AI 利活用原則）", "アルゴリズムのバイアス", "AI 利用者の関与によるバイアス", "機械学習（教師あり学習，教師なし学習，強化学習）"],
+      "confidence": "medium",
+      "notes": "AI の学習データ取扱いにおけるバイアス低減・品質確保が主題。用語例に該当語が無いため新規論点とした。項目35（情報に関する理論）とも迷ったが、AI 利活用上の留意点を問う内容なので項目14とした。"
+    },
+    {
+      "number": 9,
+      "syllabus_item": 13,
+      "topic_term": "ハッカソン",
+      "topic_is_new": false,
+      "related_terms": ["ゲーミフィケーション", "デザイン思考", "オープンイノベーション"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 10,
+      "syllabus_item": 14,
+      "topic_term": "ハルシネーション",
+      "topic_is_new": false,
+      "related_terms": ["生成 AI", "ディープフェイク", "エコーチェンバー"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 11,
+      "syllabus_item": 15,
+      "topic_term": "FMS（Flexible Manufacturing System：フレキシブル生産システム）",
+      "topic_is_new": false,
+      "related_terms": ["MRP（Material Requirements Planning：資材所要量計画）", "JIT（Just In Time：ジャストインタイム）", "スマートファクトリー", "MOT（Management Of Technology：技術経営）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 12,
+      "syllabus_item": 4,
+      "topic_term": "サービスマーク",
+      "topic_is_new": false,
+      "related_terms": ["商標法", "トレードマーク"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 13,
+      "syllabus_item": 24,
+      "topic_term": "RFI",
+      "topic_is_new": true,
+      "related_terms": ["RFP", "調達計画", "EDI（Electronic Data Interchange：電子データ交換）"],
+      "confidence": "high",
+      "notes": "調達プロセスの情報提供依頼。項目24の用語例に RFI/RFP が無いため新規論点とした。"
+    },
+    {
+      "number": 14,
+      "syllabus_item": 13,
+      "topic_term": "IPランドスケープ",
+      "topic_is_new": true,
+      "related_terms": ["特許戦略", "MOT（Management Of Technology：技術経営）", "技術ポートフォリオ", "SWOT 分析"],
+      "confidence": "medium",
+      "notes": "用語の意味を問う問題なのでその用語を論点にした。用語例の「特許戦略」に近いが同一ではないため新規論点とし、項目選択（9か13か）も迷った。"
+    },
+    {
+      "number": 15,
+      "syllabus_item": 1,
+      "topic_term": "カンパニー制",
+      "topic_is_new": false,
+      "related_terms": ["事業部制", "機能別組織", "プロジェクト組織", "マトリックス組織"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 16,
+      "syllabus_item": 5,
+      "topic_term": "不正アクセス禁止法",
+      "topic_is_new": true,
+      "related_terms": ["不正指令電磁的記録に関する罪（ウイルス作成罪）", "ログイン（利用者ID とパスワード）", "なりすまし"],
+      "confidence": "high",
+      "notes": "項目5（セキュリティ関連法規）の範囲だが用語例に無いため新規論点とした。"
+    },
+    {
+      "number": 17,
+      "syllabus_item": 19,
+      "topic_term": "プロセスマイニング",
+      "topic_is_new": true,
+      "related_terms": ["BPM（Business Process Management）", "BPR（Business Process Reengineering）", "テキストマイニング", "ワークフロー"],
+      "confidence": "high",
+      "notes": "用語例に無いため新規論点とした。"
+    },
+    {
+      "number": 18,
+      "syllabus_item": 50,
+      "topic_term": "アクセシビリティ",
+      "topic_is_new": false,
+      "related_terms": ["ユーザビリティ", "UX デザイン（User Experience デザイン）", "CRM（Customer Relationship Management：顧客関係管理）", "アクセス制御"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 19,
+      "syllabus_item": 53,
+      "topic_term": "仮想現実（VR： Virtual Reality）",
+      "topic_is_new": false,
+      "related_terms": ["拡張現実（AR:Augmented Reality）", "複合現実（MR：Mixed Reality）", "VR ゴーグル"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 20,
+      "syllabus_item": 22,
+      "topic_term": "企画プロセス",
+      "topic_is_new": false,
+      "related_terms": ["システム化構想の立案", "システムライフサイクル", "費用対効果", "RFI"],
+      "confidence": "medium",
+      "notes": "システム化構想の立案時にベンダーから収集する情報が主題。用語例では「企画プロセス」が最も近いが粒度がやや広い。"
+    },
+    {
+      "number": 21,
+      "syllabus_item": 16,
+      "topic_term": "フリーミアム",
+      "topic_is_new": false,
+      "related_terms": ["ロングテール", "サブスクリプション", "フリーソフトウェア"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 22,
+      "syllabus_item": 47,
+      "topic_term": "オフィスツール",
+      "topic_is_new": true,
+      "related_terms": ["表計算ソフト", "グラフ", "BI（Business Intelligence）", "ビッグデータ"],
+      "confidence": "medium",
+      "notes": "項目47の用語例が空で、論点名が項目名と同じになった。粒度としては広めだが、問題自体が「オフィスツールで足りる業務か」を問うている。"
+    },
+    {
+      "number": 23,
+      "syllabus_item": 32,
+      "topic_term": "コーポレートガバナンス",
+      "topic_is_new": true,
+      "related_terms": ["内部統制報告制度", "モニタリング", "社外取締役", "TOB（Take Over Bid：公開買付け）"],
+      "confidence": "medium",
+      "notes": "企業統治の強化策を問う問題。項目1（経営・組織論）とも迷ったが、内部統制・ガバナンスの観点なので項目32とした。用語例に無いため新規論点。"
+    },
+    {
+      "number": 24,
+      "syllabus_item": 19,
+      "topic_term": "RPA（Robotic Process Automation）",
+      "topic_is_new": false,
+      "related_terms": ["アウトソーシング", "BPR（Business Process Reengineering）", "産業用ロボット"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 25,
+      "syllabus_item": 63,
+      "topic_term": "ブロックチェーン",
+      "topic_is_new": false,
+      "related_terms": ["暗号資産", "ハッシュ関数", "改ざん", "NFT（Non-Fungible Token）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 26,
+      "syllabus_item": 3,
+      "topic_term": "売掛金",
+      "topic_is_new": true,
+      "related_terms": ["資産（純資産，流動資産，固定資産，繰延資産，有形資産，無形資産）", "貸借対照表", "売上計上", "キャッシュフロー計算書"],
+      "confidence": "high",
+      "notes": "売掛金残高の計算。用語例に「売掛金」が無いため新規論点とした。"
+    },
+    {
+      "number": 27,
+      "syllabus_item": 18,
+      "topic_term": "EA（Enterprise Architecture）",
+      "topic_is_new": false,
+      "related_terms": ["BI（Business Intelligence）", "MOT（Management Of Technology：技術経営）", "SOA", "BPR（Business Process Reengineering）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 28,
+      "syllabus_item": 14,
+      "topic_term": "生成 AI",
+      "topic_is_new": false,
+      "related_terms": ["大規模言語モデル（LLM）", "RPA（Robotic Process Automation）", "ハルシネーション", "事前学習"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 29,
+      "syllabus_item": 1,
+      "topic_term": "MVV（ミッション，ビジョン，バリュー）",
+      "topic_is_new": false,
+      "related_terms": ["経営理念（企業理念）", "パーパス経営", "KPI （Key Performance Indicator：重要業績評価指標）", "CSF（Critical Success Factors：重要成功要因）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 30,
+      "syllabus_item": 4,
+      "topic_term": "著作権法",
+      "topic_is_new": true,
+      "related_terms": ["ソースプログラム", "アルゴリズム", "特許法", "オープンソースソフトウェア"],
+      "confidence": "high",
+      "notes": "項目4（知的財産権）の範囲だが用語例に「著作権法」が無いため新規論点とした。"
+    },
+    {
+      "number": 31,
+      "syllabus_item": 12,
+      "topic_term": "ERP（Enterprise Resource Planning：企業資源計画）パッケージ",
+      "topic_is_new": false,
+      "related_terms": ["CRM（Customer Relationship Management：顧客関係管理）", "SCM（Supply Chain Management：供給連鎖管理）", "ナレッジマネジメント", "営業支援システム（SFA：Sales Force Automation）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 32,
+      "syllabus_item": 19,
+      "topic_term": "ライフログ",
+      "topic_is_new": false,
+      "related_terms": ["PDS（Personal Data Store）", "情報銀行", "人の行動ログデータ"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 33,
+      "syllabus_item": 17,
+      "topic_term": "自動運転レベル",
+      "topic_is_new": false,
+      "related_terms": ["自動運転", "コネクテッドカー", "CASE（Connected， Autonomous，Shared & Services，Electric）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 34,
+      "syllabus_item": 3,
+      "topic_term": "損益分岐点",
+      "topic_is_new": false,
+      "related_terms": ["変動費", "固定費", "変動費率", "利益"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 35,
+      "syllabus_item": 10,
+      "topic_term": "ポジショニング",
+      "topic_is_new": false,
+      "related_terms": ["セグメントマーケティング", "ターゲティング", "販売促進", "4P・4C"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 36,
+      "syllabus_item": 29,
+      "topic_term": "サービス可用性管理",
+      "topic_is_new": false,
+      "related_terms": ["品質特性（機能性，効率性，使用性，信頼性など）", "SLA", "稼働率", "情報セキュリティの要素（機密性，完全性，可用性，真正性，責任追跡性，否認防止，信頼性）"],
+      "confidence": "medium",
+      "notes": "選択肢は品質特性（機能性・効率性・使用性）だが、問題文はサービス提供時間帯における可用性を問うため項目29とした。項目25（品質特性）や項目44（稼働率）とも迷った。"
+    },
+    {
+      "number": 37,
+      "syllabus_item": 28,
+      "topic_term": "SLA",
+      "topic_is_new": false,
+      "related_terms": ["サービスレベル管理（SLM）", "SLO", "SLI", "SCM（Supply Chain Management：供給連鎖管理）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 38,
+      "syllabus_item": 31,
+      "topic_term": "情報セキュリティ監査",
+      "topic_is_new": false,
+      "related_terms": ["システム監査", "業務監査", "リスクアセスメント（リスク特定，リスク分析，リスク評価）", "JIS Q 38500（IT ガバナンス）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 39,
+      "syllabus_item": 26,
+      "topic_term": "アジャイル",
+      "topic_is_new": true,
+      "related_terms": ["ウォーターフォールモデル", "スクラム", "XP（エクストリームプログラミング）", "スプリント"],
+      "confidence": "high",
+      "notes": "アジャイル開発の特徴を問う問題。項目26の用語例に「アジャイル」単体が無いため新規論点とした。"
+    },
+    {
+      "number": 40,
+      "syllabus_item": 27,
+      "topic_term": "変更管理（プロジェクト）",
+      "topic_is_new": true,
+      "related_terms": ["プロジェクトスコープマネジメント", "プロジェクトマネージャ", "ステークホルダ", "プロジェクト憲章"],
+      "confidence": "medium",
+      "notes": "変更管理委員会による変更要求の審議が主題。用語例に該当語が無く新規論点とした。サービスマネジメントの「変更管理」と混同しないよう括弧付きの名称にした。"
+    },
+    {
+      "number": 41,
+      "syllabus_item": 27,
+      "topic_term": "プロジェクトスケジュールマネジメント",
+      "topic_is_new": true,
+      "related_terms": ["アローダイアグラム", "クリティカルパス分析", "プレシデンスダイアグラム法", "ガントチャート"],
+      "confidence": "medium",
+      "notes": "スケジュール作成技法の識別が主題。用語例には個別技法（アローダイアグラム等）しか無く、技法群を束ねる論点名を新規に作った。"
+    },
+    {
+      "number": 42,
+      "syllabus_item": 30,
+      "topic_term": "フリーアクセスフロア",
+      "topic_is_new": true,
+      "related_terms": ["無停電電源装置（UPS：Uninterruptible Power Supply）", "フリーアドレス", "ファシリティマネジメント"],
+      "confidence": "high",
+      "notes": "項目30の用語例に無いため新規論点とした。"
+    },
+    {
+      "number": 43,
+      "syllabus_item": 32,
+      "topic_term": "職務分掌",
+      "topic_is_new": true,
+      "related_terms": ["内部統制", "モニタリング", "相互けん制", "システム監査"],
+      "confidence": "high",
+      "notes": "組織間の相互けん制＝職務分掌。用語例に無いため新規論点とした。"
+    },
+    {
+      "number": 44,
+      "syllabus_item": 26,
+      "topic_term": "プロトタイピングモデル",
+      "topic_is_new": false,
+      "related_terms": ["ウォーターフォールモデル", "スパイラルモデル", "RAD （Rapid Application Development）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 45,
+      "syllabus_item": 27,
+      "topic_term": "進捗管理",
+      "topic_is_new": true,
+      "related_terms": ["プロジェクトスケジュールマネジメント", "プロジェクトコストマネジメント", "EVM", "ガントチャート"],
+      "confidence": "medium",
+      "notes": "評価式に沿ってスケジュールとコストの達成度を算出する問題。EVM 相当だが問題文に用語は出ず、用語例にも無いため「進捗管理」を新規論点とした。"
+    },
+    {
+      "number": 46,
+      "syllabus_item": 25,
+      "topic_term": "ソフトウェア導入",
+      "topic_is_new": true,
+      "related_terms": ["移行", "受入れテスト", "妥当性確認テスト", "利用者マニュアル"],
+      "confidence": "medium",
+      "notes": "用語例の「移行」が近いが、共通フレーム上は導入と移行が別工程のため新規論点とした。"
+    },
+    {
+      "number": 47,
+      "syllabus_item": 25,
+      "topic_term": "品質特性（機能性，効率性，使用性，信頼性など）",
+      "topic_is_new": false,
+      "related_terms": ["使用性", "ユーザビリティ", "非機能要件", "機能要件"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 48,
+      "syllabus_item": 27,
+      "topic_term": "プロジェクトスコープマネジメント",
+      "topic_is_new": false,
+      "related_terms": ["WBS（Work Breakdown Structure）", "プロジェクト憲章", "成果物"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 49,
+      "syllabus_item": 29,
+      "topic_term": "チャットボット",
+      "topic_is_new": false,
+      "related_terms": ["FAQ", "SPOC", "サービスレベル管理（SLM）", "サービス要求管理"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 50,
+      "syllabus_item": 29,
+      "topic_term": "チャットボット",
+      "topic_is_new": false,
+      "related_terms": ["FAQ", "RPA（Robotic Process Automation）", "IoT（Internet of Things）", "AIOps"],
+      "confidence": "high",
+      "notes": null
+    }
+  ]
+}

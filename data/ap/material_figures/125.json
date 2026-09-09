@@ -1,0 +1,24 @@
+{
+  "topic_id": 125,
+  "term": "アクチュエーター",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 制御系の中での位置",
+      "caption": "エネルギーを動きに変えるのがアクチュエーターで、測るのはセンサー、操作量を決めるのはコントローラー。",
+      "nodes": [
+        {"id": "ctl", "label": "コントローラー\n操作量を決める", "row": 0, "col": 0},
+        {"id": "act", "label": "アクチュエーター\n動きに変える", "row": 0, "col": 1, "emphasis": true},
+        {"id": "obj", "label": "制御対象", "row": 0, "col": 2},
+        {"id": "sen", "label": "センサー\n電気信号に変える", "row": 1, "col": 1}
+      ],
+      "edges": [
+        {"from": "ctl", "to": "act", "label": "操作量"},
+        {"from": "act", "to": "obj", "label": "回転・直進"},
+        {"from": "obj", "to": "sen", "label": "位置・速度・温度"},
+        {"from": "sen", "to": "ctl", "label": "測った値"}
+      ]
+    }
+  ]
+}

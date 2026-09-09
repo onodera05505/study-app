@@ -1,0 +1,24 @@
+{
+  "topic_id": 433,
+  "term": "スケールアウト",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 二つの性能向上策",
+      "caption": "台数を横に増やして分担させるのがスケールアウト、1台を高性能なものに替えるのがスケールアップ。",
+      "nodes": [
+        {"id": "lo", "label": "スケールアウト\n台数を増やす", "row": 0, "col": 0},
+        {"id": "o1", "label": "サーバ", "row": 0, "col": 1},
+        {"id": "o2", "label": "サーバ", "row": 0, "col": 2},
+        {"id": "o3", "label": "サーバ\n（追加）", "row": 0, "col": 3, "emphasis": true},
+        {"id": "lu", "label": "スケールアップ\n1台を強くする", "row": 1, "col": 0},
+        {"id": "u1", "label": "サーバ", "row": 1, "col": 1},
+        {"id": "u2", "label": "高性能サーバ\nCPU・主記憶を強化", "row": 1, "col": 2}
+      ],
+      "edges": [
+        {"from": "u1", "to": "u2", "label": "交換"}
+      ]
+    }
+  ]
+}

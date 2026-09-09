@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="394" viewBox="0 0 652.4 402" role="img">
+<title>偽の応答が正規の応答より先に届き ID と送信元ポートが一致すると受理されるので、この2つのランダム化が対策になる。</title>
+<rect x="0.5" y="0.5" width="651.4" height="401" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<line x1="48" y1="34" x2="48" y2="318" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="306.2" y1="34" x2="306.2" y2="318" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="564.4" y1="34" x2="564.4" y2="318" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">攻撃者</text>
+<rect x="242.8" y="0" width="126.8" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="306.2" y="11.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">DNS キャッシュ</text>
+<text x="306.2" y="31.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">サーバ</text>
+<rect x="516.4" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="564.4" y="11.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">権威 DNS</text>
+<text x="564.4" y="31.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">サーバ</text>
+<polyline points="51,68 303.2,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="303.2,68 295.2,71.6 295.2,64.4" fill="#1f2937"/>
+<text x="177.1" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 未キャッシュの名前を問い合わせる</text>
+<polyline points="309.2,108 561.4,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="561.4,108 553.4,111.6 553.4,104.4" fill="#1f2937"/>
+<text x="435.3" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 外向きの問合せ（ID ＋ 送信元ポート）</text>
+<polyline points="51,148 303.2,148" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="303.2,148 295.2,151.6 295.2,144.4" fill="#1f2937"/>
+<text x="177.1" y="141" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 偽の応答を先に送り込む</text>
+<rect x="76.5" y="153" width="201.2" height="16" rx="3" fill="#ffffff"/>
+<text x="177.1" y="166.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ID・送信元アドレス・宛先ポートが</text>
+<rect x="65.1" y="169" width="224" height="16" rx="3" fill="#ffffff"/>
+<text x="177.1" y="182.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">一致すれば正しい応答として受理される</text>
+<polyline points="561.4,220 309.2,220" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="309.2,220 317.2,216.4 317.2,223.6" fill="#1f2937"/>
+<text x="435.3" y="213" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 正規の応答（後着なので捨てられる）</text>
+<polyline points="306.2,252 332.2,252 332.2,266 308.2,266" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="308.2,266 316.2,262.4 316.2,269.6" fill="#1f2937"/>
+<text x="340.2" y="260" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. 偽のアドレスをキャッシュ</text>
+<rect x="152.2" y="271" width="308" height="16" rx="3" fill="#ffffff"/>
+<text x="306.2" y="284.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">有効期限が切れるまで、このサーバを使う利用者全員が</text>
+<rect x="189.7" y="287" width="233" height="16" rx="3" fill="#ffffff"/>
+<text x="306.2" y="300.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">本来とは異なる Web サーバへ誘導される</text>
+</g>
+<text x="326.2" y="366" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">偽の応答が正規の応答より先に届き ID と送信元ポートが一致すると受理されるので、この2つのランダム化が対</text>
+<text x="326.2" y="382" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">策になる。</text>
+</svg>

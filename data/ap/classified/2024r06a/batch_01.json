@@ -1,0 +1,372 @@
+{
+ "exam": "2024r06a",
+ "range": "1-27",
+ "classifications": [
+  {
+   "number": 1,
+   "syllabus_item": 2,
+   "topic_term": "待ち行列理論",
+   "topic_is_new": true,
+   "related_terms": [
+    "平均到着率",
+    "平均サービス率",
+    "サービス時間",
+    "到着間隔"
+   ],
+   "confidence": "high",
+   "notes": "M/M/1 の平均待ち時間 ρ/(1-ρ)。項目2の用語例に待ち行列関連語（平均到着率など）はあるが理論名そのものが無いため新設。2025r07a 問2 と同じ論点名に揃えた。"
+  },
+  {
+   "number": 2,
+   "syllabus_item": 3,
+   "topic_term": "交差検証",
+   "topic_is_new": false,
+   "related_terms": [
+    "過学習",
+    "正則化",
+    "アンサンブル学習",
+    "ホールドアウト検証"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 3,
+   "syllabus_item": 3,
+   "topic_term": "逆ポーランド表記法",
+   "topic_is_new": false,
+   "related_terms": [
+    "プッシュダウンオートマトン",
+    "構文解析"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 4,
+   "syllabus_item": 5,
+   "topic_term": "車載センサー",
+   "topic_is_new": true,
+   "related_terms": [
+    "ミリ波レーダー",
+    "LiDAR（Light Detection And Ranging：レーザーレーダー）",
+    "超音波センサー",
+    "イメージセンサー"
+   ],
+   "confidence": "medium",
+   "notes": "先進運転支援システムで使う複数センサーの特性比較で、中心となる単一の用語例が無い。個別センサー名（ミリ波レーダー等）を論点にすると比較問題の実態と合わないため、括る論点を新設した。"
+  },
+  {
+   "number": 5,
+   "syllabus_item": 6,
+   "topic_term": "2分探索木",
+   "topic_is_new": false,
+   "related_terms": [
+    "探索木",
+    "中間順",
+    "根",
+    "葉"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 6,
+   "syllabus_item": 7,
+   "topic_term": "ハッシュ表探索法",
+   "topic_is_new": false,
+   "related_terms": [
+    "シノニム対策",
+    "ハッシング"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 7,
+   "syllabus_item": 9,
+   "topic_term": "R",
+   "topic_is_new": false,
+   "related_terms": [
+    "スクリプト言語",
+    "Go",
+    "Python"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 8,
+   "syllabus_item": 11,
+   "topic_term": "命令パイプライン",
+   "topic_is_new": false,
+   "related_terms": [
+    "フェッチ",
+    "スーパーパイプライン",
+    "スーパースカラ",
+    "パイプラインハザード"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 9,
+   "syllabus_item": 11,
+   "topic_term": "量子コンピュータ（量子ゲート型，量子アニーリング型）",
+   "topic_is_new": false,
+   "related_terms": [
+    "量子ビット（Quantum bit）",
+    "量子超越性"
+   ],
+   "confidence": "high",
+   "notes": "問われている語は「量子超越性」だが、用語例にある「量子コンピュータ（量子ゲート型，量子アニーリング型）」を論点名としてそのまま採用した。"
+  },
+  {
+   "number": 10,
+   "syllabus_item": 12,
+   "topic_term": "キャッシュメモリ",
+   "topic_is_new": true,
+   "related_terms": [
+    "ヒット率",
+    "実効メモリアクセス時間",
+    "ライトスルー",
+    "ライトバック"
+   ],
+   "confidence": "high",
+   "notes": "項目12の用語例は命令キャッシュ・データキャッシュ等の細分語しか無く、実効アクセス時間の計算を括る論点が無いため新設。"
+  },
+  {
+   "number": 11,
+   "syllabus_item": 14,
+   "topic_term": "FC（ファイバチャネル）",
+   "topic_is_new": false,
+   "related_terms": [
+    "ANSI-X3.131（SCSI）",
+    "FC-SAN",
+    "シリアル ATA"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 12,
+   "syllabus_item": 16,
+   "topic_term": "クラスタリング",
+   "topic_is_new": false,
+   "related_terms": [
+    "アクティブ-スタンバイ構成",
+    "アクティブ-アクティブ構成",
+    "コールドサイト",
+    "従系（待機系）"
+   ],
+   "confidence": "medium",
+   "notes": "コールドスタンバイ構成とクラスタ構成（セッション共有の有無）を比較する問題。中心はクラスタ構成の可用性だが、冗長構成全般の論点とも取れる。"
+  },
+  {
+   "number": 13,
+   "syllabus_item": 16,
+   "topic_term": "オブジェクトストレージ",
+   "topic_is_new": false,
+   "related_terms": [
+    "ブロックストレージ",
+    "メタデータ",
+    "FC-SAN"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 14,
+   "syllabus_item": 16,
+   "topic_term": "信頼性ブロック図",
+   "topic_is_new": false,
+   "related_terms": [
+    "並列運転",
+    "予備切替",
+    "稼働率"
+   ],
+   "confidence": "medium",
+   "notes": "装置の直列・並列構成図から全体の稼働率を比較する問題。項目17の「稼働率」とも取れるが、構成図から読み取る形式の同型問題（2025r07h 問13）が項目16「信頼性ブロック図」に分類済みなので揃えた。"
+  },
+  {
+   "number": 15,
+   "syllabus_item": 17,
+   "topic_term": "スループット",
+   "topic_is_new": false,
+   "related_terms": [
+    "負荷",
+    "サイジング",
+    "MIPS",
+    "データ転送速度"
+   ],
+   "confidence": "high",
+   "notes": "サーバ性能とネットワーク転送速度のうち小さい方（ボトルネック）で処理件数が決まる。"
+  },
+  {
+   "number": 16,
+   "syllabus_item": 18,
+   "topic_term": "処理時間順方式",
+   "topic_is_new": false,
+   "related_terms": [
+    "リソーススタベーション",
+    "ラウンドロビン",
+    "FCFS（First Come First Served）",
+    "動的優先順位方式"
+   ],
+   "confidence": "medium",
+   "notes": "複数のスケジューリング方式を比較させる問題。正解が処理時間順方式（SJF）でのスタベーションなので主題語をこれとしたが、方式全体の比較とも読める。"
+  },
+  {
+   "number": 17,
+   "syllabus_item": 18,
+   "topic_term": "スラッシング",
+   "topic_is_new": false,
+   "related_terms": [
+    "ページフォールト",
+    "ページリプレースメント",
+    "スワップアウト",
+    "ワーキングセット"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 18,
+   "syllabus_item": 18,
+   "topic_term": "ページング方式",
+   "topic_is_new": true,
+   "related_terms": [
+    "セグメント方式",
+    "セグメントページング方式",
+    "コンパクション",
+    "デマンドページング"
+   ],
+   "confidence": "medium",
+   "notes": "ページング方式とセグメンテーション方式の比較。用語例には「セグメント方式」「セグメントページング方式」はあるがページング方式単体が無いため新設。"
+  },
+  {
+   "number": 19,
+   "syllabus_item": 21,
+   "topic_term": "バージョン管理ツール",
+   "topic_is_new": false,
+   "related_terms": [
+    "Git",
+    "Subversion",
+    "分散型バージョン管理",
+    "リポジトリ"
+   ],
+   "confidence": "medium",
+   "notes": "項目22（オープンソースソフトウェア）の用語例にも Git・Subversion があり、そちらに寄せる判断もあり得る。問われているのは分散型バージョン管理ツールの特徴なので開発ツール側を採った。"
+  },
+  {
+   "number": 20,
+   "syllabus_item": 21,
+   "topic_term": "コンパイラ",
+   "topic_is_new": false,
+   "related_terms": [
+    "字句解析",
+    "構文解析",
+    "意味解析",
+    "最適化"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 21,
+   "syllabus_item": 23,
+   "topic_term": "タイミングチャート",
+   "topic_is_new": false,
+   "related_terms": [
+    "論理積",
+    "真理値表",
+    "論理式",
+    "正論理"
+   ],
+   "confidence": "high",
+   "notes": "スイッチ A・B の直列接続＝論理積。答えの形式がタイミングチャートなので主題語をこれとした。"
+  },
+  {
+   "number": 22,
+   "syllabus_item": 23,
+   "topic_term": "SoC（System on a Chip）",
+   "topic_is_new": false,
+   "related_terms": [
+    "LSI",
+    "ASIC（Application Specific IC）",
+    "マイクロコントローラー",
+    "FPGA（Field Programmable Gate Array）"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 23,
+   "syllabus_item": 23,
+   "topic_term": "アクチュエーター",
+   "topic_is_new": false,
+   "related_terms": [
+    "センサー",
+    "フィードバック制御",
+    "ステッピングモーター",
+    "ソレノイド"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 24,
+   "syllabus_item": 40,
+   "topic_term": "耐タンパ性",
+   "topic_is_new": false,
+   "related_terms": [
+    "サイドチャネル攻撃",
+    "IC カード",
+    "セキュアエレメント"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 25,
+   "syllabus_item": 25,
+   "topic_term": "カルーセル",
+   "topic_is_new": false,
+   "related_terms": [
+    "アコーディオン",
+    "モーダルウィンドウ",
+    "レスポンシブ Web デザイン",
+    "画面構成"
+   ],
+   "confidence": "medium",
+   "notes": "「カルーセル」は項目25の用語例にあるが、選択肢のアコーディオン等は項目24（ユーザーインタフェース技術）の用語例で、UI 部品としては項目24 とも取れる。"
+  },
+  {
+   "number": 26,
+   "syllabus_item": 26,
+   "topic_term": "動画像のデータ量",
+   "topic_is_new": true,
+   "related_terms": [
+    "圧縮率",
+    "非可逆圧縮",
+    "4K／8K",
+    "帯域幅"
+   ],
+   "confidence": "medium",
+   "notes": "解像度×色深度×フレームレートからビットレートを求める計算。項目26 に該当する用語例が無いため新設。帯域幅という切り口ではネットワーク系項目とも読めるが、動画像のデータ量算出が中心と判断した。"
+  },
+  {
+   "number": 27,
+   "syllabus_item": 31,
+   "topic_term": "2 相コミットメント",
+   "topic_is_new": false,
+   "related_terms": [
+    "補償トランザクション",
+    "バックワードリカバリ（ロールバック）",
+    "ジャーナルファイル（ログファイル）"
+   ],
+   "confidence": "high",
+   "notes": null
+  }
+ ]
+}

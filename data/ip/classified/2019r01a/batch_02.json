@@ -1,0 +1,456 @@
+{
+  "exam": "2019r01a",
+  "range": "51-100",
+  "classifications": [
+    {
+      "number": 51,
+      "syllabus_item": 27,
+      "topic_term": "プロジェクトスコープマネジメント",
+      "topic_is_new": false,
+      "related_terms": ["WBS（Work Breakdown Structure）", "プロジェクト憲章", "プロジェクトコストマネジメント", "プロジェクト資源マネジメント"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 52,
+      "syllabus_item": 26,
+      "topic_term": "アジャイル開発",
+      "topic_is_new": false,
+      "related_terms": ["スクラム", "ペアプログラミング", "プロトタイピングモデル", "スプリント"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 53,
+      "syllabus_item": 32,
+      "topic_term": "ITガバナンス",
+      "topic_is_new": false,
+      "related_terms": ["コーポレートガバナンス", "内部統制", "CxO（Chief x Officer（最高経営責任者（CEO：Chief Executive Officer），最高情報責任者（CIO：Chief Information Officer）など））"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 54,
+      "syllabus_item": 29,
+      "topic_term": "チャットボット",
+      "topic_is_new": false,
+      "related_terms": ["FAQ", "エスカレーション", "RPA（Robotic Process Automation）", "サービスデスク"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 55,
+      "syllabus_item": 26,
+      "topic_term": "DevOps",
+      "topic_is_new": false,
+      "related_terms": ["継続的インテグレーション（CI）", "アジャイル開発", "ウォーターフォールモデル", "プロトタイピングモデル"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 56,
+      "syllabus_item": 62,
+      "topic_term": "リスクアセスメント（リスク特定，リスク分析，リスク評価）",
+      "topic_is_new": false,
+      "related_terms": ["リスク対応（リスク回避，リスク共有（リスク移転，リスク分散），リスク保有）", "情報セキュリティリスク"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 57,
+      "syllabus_item": 43,
+      "topic_term": "マイグレーション（ライブマイグレーションほか）",
+      "topic_is_new": false,
+      "related_terms": ["仮想化（ホスト型，ハイパーバイザー型，コンテナ型）", "VM（Virtual Machine：仮想マシン）", "ストリーミング"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 58,
+      "syllabus_item": 45,
+      "topic_term": "デバイスドライバ",
+      "topic_is_new": true,
+      "related_terms": ["OS", "プリンター", "周辺装置", "インストール"],
+      "confidence": "high",
+      "notes": "項目45（オペレーティングシステム）の用語例が空のため論点名を新設した。"
+    },
+    {
+      "number": 59,
+      "syllabus_item": 63,
+      "topic_term": "ブロックチェーン",
+      "topic_is_new": false,
+      "related_terms": ["ハッシュ関数", "暗号資産", "改ざん", "耐タンパ性"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 60,
+      "syllabus_item": 41,
+      "topic_term": "キャッシュメモリ",
+      "topic_is_new": false,
+      "related_terms": ["主記憶", "補助記憶", "RAM", "SSD"],
+      "confidence": "medium",
+      "notes": "記憶階層（キャッシュ・主記憶・補助記憶）全体を問う問題。用語例にある「キャッシュメモリ」を論点としたが「主記憶」「補助記憶」との切り分けに迷いあり。"
+    },
+    {
+      "number": 61,
+      "syllabus_item": 63,
+      "topic_term": "組織における内部不正防止ガイドライン",
+      "topic_is_new": false,
+      "related_terms": ["内部不正", "職務分掌", "アクセス権", "情報セキュリティ啓発"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 62,
+      "syllabus_item": 36,
+      "topic_term": "スタック",
+      "topic_is_new": false,
+      "related_terms": ["キュー", "リスト", "LIFO", "PUSH・POP"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 63,
+      "syllabus_item": 7,
+      "topic_term": "チェーンメール",
+      "topic_is_new": false,
+      "related_terms": ["ネチケット（ネットマナー）", "迷惑メール（スパム）", "フェイクニュース"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 64,
+      "syllabus_item": 57,
+      "topic_term": "排他制御",
+      "topic_is_new": true,
+      "related_terms": ["トランザクション", "デッドロック", "ACID 特性", "データの不整合"],
+      "confidence": "high",
+      "notes": "項目57の用語例に「排他制御」は無いが，他回の分類でも同名の論点を項目57で使用しており表記を合わせた。"
+    },
+    {
+      "number": 65,
+      "syllabus_item": 60,
+      "topic_term": "NAT",
+      "topic_is_new": true,
+      "related_terms": ["IP アドレス（IPv6，IPv4，グローバル，プライベート）", "MAC アドレス", "ドメイン名", "ルーター"],
+      "confidence": "high",
+      "notes": "用語例に NAT は無いが，プライベート／グローバル IP アドレスの変換という独立した論点のため新設した。"
+    },
+    {
+      "number": 66,
+      "syllabus_item": 55,
+      "topic_term": "主キー",
+      "topic_is_new": false,
+      "related_terms": ["外部キー", "レコード", "テーブル（表）", "インデックス"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 67,
+      "syllabus_item": 63,
+      "topic_term": "入退室管理",
+      "topic_is_new": false,
+      "related_terms": ["監視カメラ", "施錠管理", "物理的セキュリティ対策", "アクセス制御"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 68,
+      "syllabus_item": 62,
+      "topic_term": "継続的改善（PDCA など）",
+      "topic_is_new": false,
+      "related_terms": ["情報セキュリティポリシー（情報セキュリティ方針）", "ISMS", "ISMS内部監査"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 69,
+      "syllabus_item": 19,
+      "topic_term": "ブログ",
+      "topic_is_new": false,
+      "related_terms": ["トラックバック", "ソーシャルブックマーク", "SNS（Social Networking Service）", "Web コンテンツ"],
+      "confidence": "medium",
+      "notes": "問われているのはトラックバックだが用語例に無いため，用語例の「ブログ」を論点とした。粒度の判断に迷いあり。"
+    },
+    {
+      "number": 70,
+      "syllabus_item": 33,
+      "topic_term": "剰余演算",
+      "topic_is_new": true,
+      "related_terms": ["文字番号", "暗号化", "逆変換", "手順のトレース"],
+      "confidence": "medium",
+      "notes": "26で割った余りを使う変換手順を逆にたどる問題。項目33（離散数学）の用語例が空で論点名を新設した。項目35（情報に関する理論）や暗号（項目63）とも取れる。"
+    },
+    {
+      "number": 71,
+      "syllabus_item": 58,
+      "topic_term": "エッジコンピューティング",
+      "topic_is_new": false,
+      "related_terms": ["IoT（Internet of Things）", "LPWA（Low Power Wide Area）", "SDN（Software-Defined Networking）", "レプリケーション"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 72,
+      "syllabus_item": 34,
+      "topic_term": "場合の数",
+      "topic_is_new": true,
+      "related_terms": ["確率", "組合せ", "積の法則"],
+      "confidence": "high",
+      "notes": "用語例に無いため新設。既存論点「確率」が項目34のため同じ項目に置いた。"
+    },
+    {
+      "number": 73,
+      "syllabus_item": 63,
+      "topic_term": "TPM （Trusted Platform Module：セキュリティチップ）",
+      "topic_is_new": false,
+      "related_terms": ["耐タンパ性", "暗号化", "セキュアブート", "IoT機器のセキュリティ対策"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 74,
+      "syllabus_item": 43,
+      "topic_term": "仮想化（ホスト型，ハイパーバイザー型，コンテナ型）",
+      "topic_is_new": false,
+      "related_terms": ["VM（Virtual Machine：仮想マシン）", "ブレードサーバ", "デュアルシステム", "シンクライアント"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 75,
+      "syllabus_item": 49,
+      "topic_term": "ウェアラブル端末",
+      "topic_is_new": true,
+      "related_terms": ["携帯端末（スマートフォン，タブレット端末，ウェアラブル端末，スマートデバイスほか）", "加速度センサー", "ファームウェア", "IoT（Internet of Things）"],
+      "confidence": "medium",
+      "notes": "項目49（ハードウェア）の用語例にウェアラブル端末があるため49としたが，項目17（IoT システム・組込みシステム）とも取れる。"
+    },
+    {
+      "number": 76,
+      "syllabus_item": 47,
+      "topic_term": "絶対参照・相対参照",
+      "topic_is_new": false,
+      "related_terms": ["合計", "個数", "複写（コピー）", "オフィスツール"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 77,
+      "syllabus_item": 58,
+      "topic_term": "無線LAN",
+      "topic_is_new": true,
+      "related_terms": ["AP（アクセスポイント）", "WPA2", "無線LANのセキュリティ", "Wi-Fi 4/5/6/6E"],
+      "confidence": "high",
+      "notes": "他回の分類でも「無線LAN」を項目58の論点として使用しており表記を合わせた。"
+    },
+    {
+      "number": 78,
+      "syllabus_item": 63,
+      "topic_term": "アクセス制御",
+      "topic_is_new": false,
+      "related_terms": ["アクセス権", "情報セキュリティの要素（機密性，完全性，可用性，真正性，責任追跡性，否認防止，信頼性）", "デジタル署名（署名鍵，検証鍵）", "タイムスタンプ（時刻認証）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 79,
+      "syllabus_item": 60,
+      "topic_term": "bcc",
+      "topic_is_new": false,
+      "related_terms": ["cc", "同報メール", "メールボックス"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 80,
+      "syllabus_item": 61,
+      "topic_term": "総当たり（ブルートフォース）攻撃",
+      "topic_is_new": false,
+      "related_terms": ["・辞書攻撃", "パスワードリスト攻撃（クレデンシャルスタッフィング）", "ログイン（利用者ID とパスワード）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 81,
+      "syllabus_item": 58,
+      "topic_term": "LPWA（Low Power Wide Area）",
+      "topic_is_new": false,
+      "related_terms": ["IoT エリアネットワーク", "SDN（Software-Defined Networking）", "MDM（Mobile Device Management）", "WPA2"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 82,
+      "syllabus_item": 34,
+      "topic_term": "場合の数",
+      "topic_is_new": true,
+      "related_terms": ["積の法則", "桁数", "確率"],
+      "confidence": "medium",
+      "notes": "電話番号の桁数設計を組合せ数で求める問題。項目33（離散数学）とも取れるが，既存論点「確率」と同じ項目34に揃えた。"
+    },
+    {
+      "number": 83,
+      "syllabus_item": 46,
+      "topic_term": "ディレクトリ構造",
+      "topic_is_new": false,
+      "related_terms": ["ルートディレクトリ", "カレントディレクトリ", "絶対パス", "相対パス"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 84,
+      "syllabus_item": 62,
+      "topic_term": "情報セキュリティポリシー（情報セキュリティ方針）",
+      "topic_is_new": false,
+      "related_terms": ["基本方針", "対策基準", "実施手順", "情報資産"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 85,
+      "syllabus_item": 63,
+      "topic_term": "デジタル署名（署名鍵，検証鍵）",
+      "topic_is_new": false,
+      "related_terms": ["S/MIME", "ハッシュ関数", "SMTP", "IMAP"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 86,
+      "syllabus_item": 62,
+      "topic_term": "リスク対応（リスク回避，リスク共有（リスク移転，リスク分散），リスク保有）",
+      "topic_is_new": false,
+      "related_terms": ["リスクアセスメント（リスク特定，リスク分析，リスク評価）", "ディスク暗号化", "サイバー保険"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 87,
+      "syllabus_item": 55,
+      "topic_term": "正規化",
+      "topic_is_new": false,
+      "related_terms": ["射影", "選択・結合", "排他制御", "テーブル（表）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 88,
+      "syllabus_item": 63,
+      "topic_term": "バイオメトリクス認証",
+      "topic_is_new": false,
+      "related_terms": ["静脈パターン認証", "デジタル証明書", "ワンタイムパスワード", "多要素認証"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 89,
+      "syllabus_item": 48,
+      "topic_term": "オープンソースソフトウェア",
+      "topic_is_new": false,
+      "related_terms": ["GPL（GNU General Public License）", "Apache HTTP Server", "コピーレフト"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 90,
+      "syllabus_item": 10,
+      "topic_term": "デジタルサイネージ",
+      "topic_is_new": false,
+      "related_terms": ["インターネット広告", "cookie", "RSS", "デジタルディバイド"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 91,
+      "syllabus_item": 60,
+      "topic_term": "DNS",
+      "topic_is_new": false,
+      "related_terms": ["ドメイン名", "IP アドレス（IPv6，IPv4，グローバル，プライベート）", "DHCP", "FTP"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 92,
+      "syllabus_item": 63,
+      "topic_term": "DMZ（非武装地帯）",
+      "topic_is_new": false,
+      "related_terms": ["ファイアウォール", "踏み台", "アクセス制御", "検疫ネットワーク"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 93,
+      "syllabus_item": 63,
+      "topic_term": "ハッシュ関数",
+      "topic_is_new": false,
+      "related_terms": ["デジタル署名（署名鍵，検証鍵）", "ブロックチェーン", "ハッシュ値", "改ざん"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 94,
+      "syllabus_item": 59,
+      "topic_term": "NTP （Network Time Protocol）",
+      "topic_is_new": false,
+      "related_terms": ["TCP/IP", "DHCP", "時刻同期"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 95,
+      "syllabus_item": 40,
+      "topic_term": "GPU",
+      "topic_is_new": false,
+      "related_terms": ["CPU", "GPGPU", "VRAM", "マルチコアプロセッサ"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 96,
+      "syllabus_item": 44,
+      "topic_term": "TCO（Total Cost of Ownership）",
+      "topic_is_new": false,
+      "related_terms": ["初期コスト", "運用コスト", "ソフトウェア保守", "費用対効果"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 97,
+      "syllabus_item": 62,
+      "topic_term": "情報セキュリティの要素（機密性，完全性，可用性，真正性，責任追跡性，否認防止，信頼性）",
+      "topic_is_new": false,
+      "related_terms": ["バックアップ", "アクセス制御", "冗長化"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 98,
+      "syllabus_item": 61,
+      "topic_term": "ランサムウェア",
+      "topic_is_new": false,
+      "related_terms": ["マルウェア（コンピュータウイルス，ボット，スパイウェア，ランサムウェア）", "キーロガー", "RAT", "二重脅迫（ダブルエクストーション）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 99,
+      "syllabus_item": 56,
+      "topic_term": "データの抽出",
+      "topic_is_new": false,
+      "related_terms": ["ワイルドカード", "検索条件", "文字列検索", "選択・結合"],
+      "confidence": "medium",
+      "notes": "項目56（データ操作）に用語例が無い。ワイルドカードによる文字列検索が主題で，既存論点「データの抽出」に寄せたが項目47（オフィスツール）とも取れる。"
+    },
+    {
+      "number": 100,
+      "syllabus_item": 61,
+      "topic_term": "DDoS 攻撃",
+      "topic_is_new": true,
+      "related_terms": ["ボット", "IoT機器のセキュリティ対策", "マルウェア（コンピュータウイルス，ボット，スパイウェア，ランサムウェア）", "サイバー攻撃"],
+      "confidence": "high",
+      "notes": "項目61の用語例に DDoS 攻撃は無いため新設した。"
+    }
+  ]
+}

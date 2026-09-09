@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="286" viewBox="0 0 640 286" role="img">
+<title>総コア数を先に確定させれば、総演算性能は掛け算、ノード数は割り算だけで出る。</title>
+<rect x="0.5" y="0.5" width="639" height="285" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(115.4 20)">
+<polyline points="163.3,48 271.1,48" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="271.1,48 263.1,51.6 263.1,44.4" fill="#1f2937"/>
+<polyline points="340.15,76 340.15,109 81.65,109 81.65,142" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="81.65,142 78.05,134 85.25,134" fill="#1f2937"/>
+<polyline points="340.15,76 340.15,142" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="340.15,142 336.55,134 343.75,134" fill="#1f2937"/>
+<rect x="0" y="0" width="163.3" height="96" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="81.65" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">現状</text>
+<text x="81.65" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">1コア 10 GFLOPS</text>
+<text x="81.65" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">8 コア×1,000 ノード</text>
+<text x="81.65" y="82.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">＝総コア数 8,000</text>
+<rect x="271.1" y="20" width="138.1" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="340.15" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">更新後の総コア数</text>
+<text x="340.15" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">8,000×4＝32,000</text>
+<rect x="8.05" y="142" width="147.2" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="81.65" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">総演算性能</text>
+<text x="81.65" y="184.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">20 GFLOPS×32,000</text>
+<text x="81.65" y="204.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">＝640 TFLOPS</text>
+<rect x="292.15" y="142" width="96" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="340.15" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ノード数</text>
+<text x="340.15" y="184.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">32,000÷16</text>
+<text x="340.15" y="204.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">＝2,000</text>
+<rect x="167.3" y="31" width="99.8" height="16" rx="3" fill="#ffffff"/>
+<text x="217.2" y="44.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">総コア数を 4 倍</text>
+<rect x="160.4" y="95" width="101" height="16" rx="3" fill="#ffffff"/>
+<text x="210.9" y="108.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">×1コアの性能 20</text>
+<rect x="277.65" y="100" width="125" height="16" rx="3" fill="#ffffff"/>
+<text x="340.15" y="113.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">÷1ノードのコア数 16</text>
+</g>
+<text x="320" y="266" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">総コア数を先に確定させれば、総演算性能は掛け算、ノード数は割り算だけで出る。</text>
+</svg>

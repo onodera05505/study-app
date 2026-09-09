@@ -1,0 +1,21 @@
+{
+  "topic_id": 32,
+  "term": "外部キー",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 外部キーを見つける手順",
+      "caption": "外部キーは参照する側の成績表にある。参照される側の学生番号は主キーであって外部キーではない。",
+      "nodes": [
+        {"id": "g", "label": "学生表\n学生番号（主キー）\n学生名", "row": 0, "col": 0, "shape": "cylinder"},
+        {"id": "k", "label": "科目表\n科目コード（主キー）\n科目名", "row": 0, "col": 2, "shape": "cylinder"},
+        {"id": "s", "label": "成績表\n学生番号・科目コード\n＝外部キー", "row": 1, "col": 1, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "s", "to": "g", "label": "学生番号で参照"},
+        {"from": "s", "to": "k", "label": "科目コードで参照"}
+      ]
+    }
+  ]
+}

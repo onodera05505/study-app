@@ -1,0 +1,22 @@
+{
+  "topic_id": 534,
+  "term": "SSL/TLS",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### ハンドシェイクの流れ",
+      "caption": "公開鍵暗号は共通鍵を渡すためだけに使い、本文の暗号化は共通鍵で行う。",
+      "actors": [
+        {"id": "c", "label": "クライアント"},
+        {"id": "s", "label": "サーバ"}
+      ],
+      "steps": [
+        {"from": "c", "to": "s", "label": "ClientHello（使える暗号方式を提示）"},
+        {"from": "s", "to": "c", "label": "ServerHello ＋ サーバ証明書", "note": "証明書の正当性を認証局の公開鍵で確認する"},
+        {"from": "c", "to": "s", "label": "共通鍵の素をサーバの公開鍵で暗号化して送付"},
+        {"from": "s", "to": "c", "label": "Finished（以降は共通鍵で暗号化）"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "topic_id": 3,
+  "term": "オブジェクトストレージ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 3つのアクセス方式の違い",
+      "caption": "ファイル方式は階層をたどって目的のデータに届くが、オブジェクト方式は階層を持たず識別子で直接指す。",
+      "nodes": [
+        {"id": "r", "label": "ファイル方式\nルート", "row": 0, "col": 0},
+        {"id": "d1", "label": "ディレクトリ", "row": 0, "col": 1},
+        {"id": "d2", "label": "サブ\nディレクトリ", "row": 0, "col": 2},
+        {"id": "fl", "label": "ファイル", "row": 0, "col": 3},
+        {"id": "oid", "label": "オブジェクト方式\n固有の識別子", "row": 1, "col": 0, "emphasis": true},
+        {"id": "ob", "label": "オブジェクト\nデータ＋メタデータ", "row": 1, "col": 3, "shape": "cylinder"}
+      ],
+      "edges": [
+        {"from": "r", "to": "d1", "label": "階層をたどる"},
+        {"from": "d1", "to": "d2"},
+        {"from": "d2", "to": "fl"},
+        {"from": "oid", "to": "ob", "label": "階層は無く、識別子で直接指す"}
+      ]
+    }
+  ]
+}

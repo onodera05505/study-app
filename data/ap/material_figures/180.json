@@ -1,0 +1,55 @@
+{
+  "topic_id": 180,
+  "term": "CRL（Certificate Revocation List：証明書失効リスト）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### 検証の手順",
+      "caption": "期限内でも失効した証明書はシリアル番号が CRL に載り、検証者はこれを照合して弾く。",
+      "actors": [
+        {
+          "id": "srv",
+          "label": "Web サーバ"
+        },
+        {
+          "id": "cli",
+          "label": "検証者（ブラウザ）"
+        },
+        {
+          "id": "ca",
+          "label": "認証局（CA）"
+        }
+      ],
+      "steps": [
+        {
+          "from": "srv",
+          "to": "cli",
+          "label": "サーバ証明書を提示"
+        },
+        {
+          "from": "cli",
+          "to": "cli",
+          "label": "署名と有効期限を確認"
+        },
+        {
+          "from": "cli",
+          "to": "ca",
+          "label": "CRL を取得",
+          "note": "CRL は CA が署名して公開する一覧"
+        },
+        {
+          "from": "ca",
+          "to": "cli",
+          "label": "失効したシリアル番号と失効日時"
+        },
+        {
+          "from": "cli",
+          "to": "cli",
+          "label": "証明書のシリアル番号を照合",
+          "note": "載っていれば期限内でも信頼しない\n期限切れの証明書は載せない"
+        }
+      ]
+    }
+  ]
+}

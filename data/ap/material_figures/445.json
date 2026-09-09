@@ -1,0 +1,25 @@
+{
+  "topic_id": 445,
+  "term": "データマイニング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 貯める層と分析する層",
+      "caption": "上の段は貯める・切り出す仕組み。データマイニングはそこから隠れた規則を掘り出す行為の方を指す。",
+      "nodes": [
+        {"id": "db", "label": "業務システム\nのデータベース", "row": 0, "col": 0, "shape": "cylinder"},
+        {"id": "dwh", "label": "データウェアハウス\n時系列で貯める倉庫", "row": 0, "col": 1, "shape": "cylinder"},
+        {"id": "mart", "label": "データマート\n用途・部門別の切り出し", "row": 0, "col": 2, "shape": "cylinder"},
+        {"id": "dm", "label": "データマイニング\n統計・機械学習で掘る", "row": 1, "col": 1, "emphasis": true},
+        {"id": "out", "label": "隠れた規則・相関\n同時に買われる組合せ", "row": 1, "col": 2, "shape": "round"}
+      ],
+      "edges": [
+        {"from": "db", "to": "dwh", "label": "履歴を蓄積（更新しない）"},
+        {"from": "dwh", "to": "mart", "label": "切り出して別に持つ"},
+        {"from": "dwh", "to": "dm", "label": "貯まったデータを掘る"},
+        {"from": "dm", "to": "out", "label": "人が思い付いていない発見"}
+      ]
+    }
+  ]
+}

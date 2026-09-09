@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="432" viewBox="0 0 640 432" role="img">
+<title>従来は SQL 文と中間結果が何度も往復するが、プロシージャなら名前と引数を送って最終結果を受け取る1往復で済む。</title>
+<rect x="0.5" y="0.5" width="639" height="431" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(150.2 20)">
+<line x1="69" y1="34" x2="69" y2="348" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="276.2" y1="34" x2="276.2" y2="348" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="138" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="69" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">アプリケーション</text>
+<rect x="212.8" y="0" width="126.8" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="276.2" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">DBMS（サーバ）</text>
+<polyline points="72,68 273.2,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="273.2,68 265.2,71.6 265.2,64.4" fill="#1f2937"/>
+<text x="172.6" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. SQL 文① を送る</text>
+<polyline points="273.2,108 72,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="72,108 80,104.4 80,111.6" fill="#1f2937"/>
+<text x="172.6" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 結果① を返す</text>
+<polyline points="72,148 273.2,148" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="273.2,148 265.2,151.6 265.2,144.4" fill="#1f2937"/>
+<text x="172.6" y="141" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 結果① を見て SQL 文② を送る</text>
+<polyline points="273.2,188 72,188" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="72,188 80,184.4 80,191.6" fill="#1f2937"/>
+<text x="172.6" y="181" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 結果② を返す</text>
+<rect x="-6.6" y="193" width="358.4" height="16" rx="3" fill="#ffffff"/>
+<text x="172.6" y="206.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ここまでが従来。SQL 文と中間結果が毎回ネットワークを流れる</text>
+<polyline points="72,244 273.2,244" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="273.2,244 265.2,247.6 265.2,240.4" fill="#1f2937"/>
+<text x="172.6" y="237" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. CALL プロシージャ名（引数）</text>
+<rect x="26.1" y="249" width="293" height="16" rx="3" fill="#ffffff"/>
+<text x="172.6" y="262.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ストアドプロシージャなら 1〜4 がこの1往復で済む</text>
+<polyline points="273.2,300 72,300" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="72,300 80,296.4 80,303.6" fill="#1f2937"/>
+<text x="172.6" y="293" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">6. 最終結果だけを返す</text>
+<rect x="23.4" y="305" width="298.4" height="16" rx="3" fill="#ffffff"/>
+<text x="172.6" y="318.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">減るのは通信量。I/O 回数やバッファ数は変わらない</text>
+</g>
+<text x="320" y="396" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">従来は SQL 文と中間結果が何度も往復するが、プロシージャなら名前と引数を送って最終結果を受け取る1往</text>
+<text x="320" y="412" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">復で済む。</text>
+</svg>

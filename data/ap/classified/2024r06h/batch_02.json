@@ -1,0 +1,249 @@
+{
+ "exam": "2024r06h",
+ "range": "28-54",
+ "classifications": [
+  {
+   "number": 28,
+   "syllabus_item": 32,
+   "topic_term": "スタースキーマ",
+   "topic_is_new": true,
+   "related_terms": ["ファクトテーブル", "ディメンジョンテーブル", "ETL（Extract/Transform/Load）", "ビッグデータ"],
+   "confidence": "medium",
+   "notes": "データウェアハウスのスキーマ設計。どの項目の用語例にも「データウェアハウス」「スタースキーマ」が無いため新設した。ETL・データレイク・ビッグデータなど分析基盤の用語例を持つ項目32を選んだが、設計の観点から項目29（データベース設計）に寄せる読み方もあり得る。"
+  },
+  {
+   "number": 29,
+   "syllabus_item": 28,
+   "topic_term": "NoSQL データベース（Apache Cassandra，Apache CouchDB，MongoDB，Redis，Neo4j ほか）",
+   "topic_is_new": false,
+   "related_terms": ["キーバリュー型データベース", "ドキュメント指向データベース", "列指向データベース", "ビッグデータ"],
+   "confidence": "high",
+   "notes": "括弧内は NoSQL の製品例（概念自身の例示）なので用語例の文字列をそのままコピーした。項目44 にある単独表記「NoSQL データベース」に寄せる流儀と揺れる可能性がある。正解の内容はキーバリュー型データベースなので related に置いた。"
+  },
+  {
+   "number": 30,
+   "syllabus_item": 34,
+   "topic_term": "CSMA/CD",
+   "topic_is_new": false,
+   "related_terms": ["CSMA/CA", "トークンパッシング", "衝突", "コンテンション方式"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 31,
+   "syllabus_item": 33,
+   "topic_term": "グローバル IP アドレス",
+   "topic_is_new": false,
+   "related_terms": ["プライベート IP アドレス", "ブロードキャスト", "マルチキャスト", "アドレスクラス"],
+   "confidence": "high",
+   "notes": "用語例の表記（半角空白入り）をそのままコピーした。"
+  },
+  {
+   "number": 32,
+   "syllabus_item": 35,
+   "topic_term": "VRRP",
+   "topic_is_new": true,
+   "related_terms": ["PPP", "RARP（Reverse Address Resolution Protocol：逆アドレス解決プロトコル）", "SNMP エージェント", "ルータ"],
+   "confidence": "medium",
+   "notes": "VRRP はどの項目の用語例にも無いため新設した。誤答の PPP・RARP が項目35の用語例にあり、プロトコルを問う設問なので項目35としたが、ルータの冗長構成という観点で項目34（データ通信と制御）に寄せる読み方もあり得る。"
+  },
+  {
+   "number": 33,
+   "syllabus_item": 33,
+   "topic_term": "ビット誤り率",
+   "topic_is_new": false,
+   "related_terms": ["パケット", "回線容量", "CRC", "パリティチェック"],
+   "confidence": "medium",
+   "notes": "「ビット誤り率」は項目33と34の双方の用語例にある。誤り制御方式ではなく回線品質からの確率計算を問うため、性能評価を扱う33を選択した（2025r07a 問35 と同じ扱い）。"
+  },
+  {
+   "number": 34,
+   "syllabus_item": 36,
+   "topic_term": "SDN（Software-Defined Networking）",
+   "topic_is_new": false,
+   "related_terms": ["OpenFlow", "NFV（Network Functions Virtualization）", "SD-WAN（Software DefinedWAN）", "仮想スイッチ"],
+   "confidence": "high",
+   "notes": "設問の主題は SDN で、OpenFlow は実現手段として related に置いた。用語例の文字列をそのままコピーした。"
+  },
+  {
+   "number": 35,
+   "syllabus_item": 38,
+   "topic_term": "EMV 3-Dセキュア（3D セキュア 2.0）",
+   "topic_is_new": false,
+   "related_terms": ["リスクベース認証", "多段階認証", "CAPTCHA", "デジタル署名（署名鍵，検証鍵）"],
+   "confidence": "high",
+   "notes": "用語例の文字列（空白の入り方を含む）をそのままコピーした。正解の中身はリスクベース認証なので related に置いた。"
+  },
+  {
+   "number": 36,
+   "syllabus_item": 38,
+   "topic_term": "DNS キャッシュポイズニング",
+   "topic_is_new": false,
+   "related_terms": ["DNS", "ファーミング", "DMZ（非武装地帯）", "DNSSEC"],
+   "confidence": "high",
+   "notes": "攻撃の仕組みと直接の被害を問う設問なので、攻撃名が用語例にある項目38とした。"
+  },
+  {
+   "number": 37,
+   "syllabus_item": 42,
+   "topic_term": "DNSSEC",
+   "topic_is_new": false,
+   "related_terms": ["デジタル署名（署名鍵，検証鍵）", "DNS キャッシュポイズニング", "権威 DNS サーバ", "リソースレコード"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 38,
+   "syllabus_item": 38,
+   "topic_term": "公開鍵暗号方式",
+   "topic_is_new": false,
+   "related_terms": ["共通鍵暗号方式", "公開鍵", "秘密鍵", "鍵管理"],
+   "confidence": "medium",
+   "notes": "用語例は「暗号方式（暗号化（暗号鍵），復号（復号鍵），共通鍵暗号方式（共通鍵），公開鍵暗号方式（公開鍵，秘密鍵））」という総称で、括弧内は別概念の列挙。設問の主題は公開鍵暗号方式なので列挙内の1語を論点にした。総称側を採る流儀と揺れる可能性がある。"
+  },
+  {
+   "number": 39,
+   "syllabus_item": 39,
+   "topic_term": "PSIRT",
+   "topic_is_new": false,
+   "related_terms": ["CSIRT", "SOC（Security Operation Center）", "脆弱性管理", "JVN（Japan Vulnerability Notes）"],
+   "confidence": "medium",
+   "notes": "用語例は「情報セキュリティ関連組織（CSIRT，PSIRT，SOC（Security Operation Center））」という総称。設問の主題は列挙内の PSIRT 単体なので PSIRT を論点にした（2025r07a 問40 と同じ表記にそろえた）。総称側を採る流儀と揺れる可能性がある。"
+  },
+  {
+   "number": 40,
+   "syllabus_item": 39,
+   "topic_term": "リスク特定",
+   "topic_is_new": false,
+   "related_terms": ["リスク分析", "リスク評価", "リスクマネジメント（JIS Q 31000）", "残留リスク"],
+   "confidence": "medium",
+   "notes": "項目39は「リスクマネジメント（JIS Q 31000）」を用語例に持つので確実。論点は用語例「リスクアセスメントのプロセス（リスク特定，リスク分析，リスク評価）」の括弧内（別概念の列挙）から、設問の主題であるリスク特定だけを採った。総称側を採る流儀と揺れる可能性がある。"
+  },
+  {
+   "number": 41,
+   "syllabus_item": 41,
+   "topic_term": "WAF（Web Application Firewall）",
+   "topic_is_new": false,
+   "related_terms": ["ファイアウォール", "IPS（Intrusion Prevention System：侵入防止システム）", "SQL インジェクション", "クロスサイトスクリプティング"],
+   "confidence": "high",
+   "notes": "用語例の文字列をそのままコピーした。"
+  },
+  {
+   "number": 42,
+   "syllabus_item": 42,
+   "topic_term": "IPsec",
+   "topic_is_new": false,
+   "related_terms": ["SSL/TLS", "SSH", "VPN", "ネットワーク層"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 43,
+   "syllabus_item": 42,
+   "topic_term": "SPF",
+   "topic_is_new": false,
+   "related_terms": ["DKIM", "DMARC", "SMTP-AUTH", "送信元ドメイン認証"],
+   "confidence": "medium",
+   "notes": "用語例は「スパム対策（…SPF，DKIM，DMARC…ほか）」という総称で、括弧内は別概念の列挙。設問の主題は SPF 単体なので列挙内の語を論点にした（2025r07a 問45 の DKIM と同じ扱い）。総称側を採る流儀と揺れる可能性がある。"
+  },
+  {
+   "number": 44,
+   "syllabus_item": 40,
+   "topic_term": "耐タンパ性",
+   "topic_is_new": false,
+   "related_terms": ["IC カード", "サイドチャネル攻撃", "セキュアエレメント", "TPM（Trusted Platform Module）"],
+   "confidence": "high",
+   "notes": "「耐タンパ性」の用語例は項目40 にだけある（2024r06a 問24 と同じ扱い）。"
+  },
+  {
+   "number": 45,
+   "syllabus_item": 44,
+   "topic_term": "継承（インヘリタンス）",
+   "topic_is_new": false,
+   "related_terms": ["オーバーライド", "スーパークラス", "サブクラス", "集約"],
+   "confidence": "medium",
+   "notes": "クラス間の関連・集約・継承を比較させる問題で、正解はサブクラスによる操作の再定義（オーバーライド）。オブジェクト指向設計の用語例を持つ項目44の「継承（インヘリタンス）」を論点にしたが、「オーバーライド」を論点にして項目8（プログラミング）を選ぶ判断もあり得る。"
+  },
+  {
+   "number": 46,
+   "syllabus_item": 44,
+   "topic_term": "モジュール結合度",
+   "topic_is_new": true,
+   "related_terms": ["共通結合", "制御結合", "データ結合", "モジュール分割"],
+   "confidence": "medium",
+   "notes": "項目44の用語例には「データ結合」「制御結合」「機能的結束性」など個別の結合・結束の語しかなく、結合度という総称が無いため新設した。項目自体は構造化設計・モジュール分割を扱う44で確実。"
+  },
+  {
+   "number": 47,
+   "syllabus_item": 45,
+   "topic_term": "信頼度成長モデル",
+   "topic_is_new": true,
+   "related_terms": ["ゴンペルツ曲線", "バグ曲線", "バグ管理図", "テストの網羅度"],
+   "confidence": "medium",
+   "notes": "用語例に「信頼度成長モデル」「ゴンペルツ曲線」が無いため新設した。テスト管理手法（バグ曲線・バグ管理図）の用語例を持つ項目45としたが、テスト工程全体という観点で項目46（統合・テスト）に寄せる読み方もあり得る。"
+  },
+  {
+   "number": 48,
+   "syllabus_item": 49,
+   "topic_term": "バリューストリームマップ",
+   "topic_is_new": true,
+   "related_terms": ["リーンソフトウェア開発", "バーンダウンチャート", "スプリントバックログ", "ユーザーストーリー"],
+   "confidence": "medium",
+   "notes": "項目49は「リーンソフトウェア開発」を用語例に持つので確実。正解のバリューストリームマップが用語例に無いため新設した。設問の枠組みである「リーンソフトウェア開発」を論点にする判断もあり得る。"
+  },
+  {
+   "number": 49,
+   "syllabus_item": 49,
+   "topic_term": "プロセスアセスメント",
+   "topic_is_new": true,
+   "related_terms": ["JIS X 33001", "JIS X 33020", "プロセス改善", "CMMI"],
+   "confidence": "medium",
+   "notes": "JIS X 33002 の位置付け（プロセスアセスメント実施の要求事項）を問う設問。項目49の用語例には JIS X 33001／33020 はあるが 33002 もプロセスアセスメントも無いため、規格番号ではなく概念名で新設した。"
+  },
+  {
+   "number": 50,
+   "syllabus_item": 21,
+   "topic_term": "ドキュメント生成ツール",
+   "topic_is_new": false,
+   "related_terms": ["ジェネレーター", "ソースコード解析ツール", "コンパイラ", "プリプロセッサ"],
+   "confidence": "high",
+   "notes": "設問の表記は「ドキュメンテーションジェネレーター」だが、用語例の表記「ドキュメント生成ツール」に合わせた。"
+  },
+  {
+   "number": 51,
+   "syllabus_item": 59,
+   "topic_term": "EVM（Earned Value Management）",
+   "topic_is_new": false,
+   "related_terms": ["予算", "実コスト", "予想コスト", "コストベースライン"],
+   "confidence": "high",
+   "notes": "EVM は項目58・59の双方の用語例にあるが、完成時のコスト見通しが中心なので59とした（2025r07h 問52 と同じ扱い）。スケジュール効率も併せて問われている点で項目58を選ぶ判断もあり得る。"
+  },
+  {
+   "number": 52,
+   "syllabus_item": 58,
+   "topic_term": "アローダイアグラム",
+   "topic_is_new": false,
+   "related_terms": ["最早結合点時刻", "ダミー作業", "CPM（Critical Path Method：クリティカルパス法）", "PERT"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 53,
+   "syllabus_item": 60,
+   "topic_term": "リスク管理",
+   "topic_is_new": false,
+   "related_terms": ["リスク登録簿", "リスクの定量的分析技法", "脅威への戦略", "JIS Q 21500"],
+   "confidence": "medium",
+   "notes": "JIS Q 21500 のリスク関連プロセス（特定・評価・対応・管理）の目的を区別させる設問。内容がプロジェクトリスクなので項目60としたが、項目60の用語例に該当語が無いため、単独で載っている項目53の表記「リスク管理」をそのまま採用した。項目53を選ぶ判断もあり得る。"
+  },
+  {
+   "number": 54,
+   "syllabus_item": 60,
+   "topic_term": "期待金額価値（EMV）",
+   "topic_is_new": true,
+   "related_terms": ["リスクの定量的分析技法", "デシジョンツリー分析", "感度分析", "投資額"],
+   "confidence": "medium",
+   "notes": "デシジョンツリーによる期待金額価値の計算。リスクの定量的分析技法として項目60としたが、投資判断とみて項目59（コスト）に寄せる読み方もある。用語例に EMV もデシジョンツリーも無いため新設（2025r07a 問54 と同じ論点名にそろえた）。"
+  }
+ ]
+}

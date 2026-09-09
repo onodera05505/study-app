@@ -1,0 +1,25 @@
+{
+  "topic_id": 333,
+  "term": "E-R 図（Entity Relationship Diagram）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 1対多の読み取り手順",
+      "caption": "「1 側から多側へ矢印」と定義された問題では、出版社→著者→本と矢印の向きがそろう。",
+      "nodes": [
+        {"id": "pub", "label": "出版社", "row": 0, "col": 0},
+        {"id": "aut", "label": "著者", "row": 0, "col": 1, "emphasis": true},
+        {"id": "bok", "label": "本", "row": 0, "col": 2},
+        {"id": "c1", "label": "出版社は複数の著者と契約\n著者は 1 社とだけ契約", "row": 1, "col": 0},
+        {"id": "c2", "label": "著者は複数の本を書く\n1 冊を書くのは 1 人", "row": 1, "col": 2}
+      ],
+      "edges": [
+        {"from": "pub", "to": "aut", "label": "1 対 多"},
+        {"from": "aut", "to": "bok", "label": "1 対 多"},
+        {"from": "c1", "to": "pub", "style": "dashed", "arrow": "none"},
+        {"from": "c2", "to": "bok", "style": "dashed", "arrow": "none"}
+      ]
+    }
+  ]
+}

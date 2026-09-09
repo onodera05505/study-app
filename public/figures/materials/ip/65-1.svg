@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="346" viewBox="0 0 640 346" role="img">
+<title>売上計上から入金までの間だけ売掛金として残る。受注しただけの取引は数えない。</title>
+<rect x="0.5" y="0.5" width="639" height="345" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(174.1 20)">
+<line x1="48" y1="34" x2="48" y2="278" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="243.8" y1="34" x2="243.8" y2="278" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">自社</text>
+<rect x="195.8" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="243.8" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">取引先</text>
+<polyline points="240.8,68 51,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,68 59,64.4 59,71.6" fill="#1f2937"/>
+<text x="145.9" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 受注（契約が成立）</text>
+<rect x="33.9" y="73" width="224" height="16" rx="3" fill="#ffffff"/>
+<text x="145.9" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">まだ売上ではないので売掛金にならない</text>
+<polyline points="51,124 240.8,124" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="240.8,124 232.8,127.6 232.8,120.4" fill="#1f2937"/>
+<text x="145.9" y="117" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 商品を引き渡して売上を計上</text>
+<rect x="57.9" y="129" width="176" height="16" rx="3" fill="#ffffff"/>
+<text x="145.9" y="142.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">同時に売掛金が資産として立つ</text>
+<polyline points="48,172 74,172 74,186 50,186" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="50,186 58,182.4 58,189.6" fill="#1f2937"/>
+<text x="82" y="180" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">3. 月末に残高を集計</text>
+<rect x="-73.3" y="191" width="242.6" height="16" rx="3" fill="#ffffff"/>
+<text x="48" y="204.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">未回収の 1,300 ＋ 1,000 ＝ 2,300 万円</text>
+<polyline points="240.8,230 51,230" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,230 59,226.4 59,233.6" fill="#1f2937"/>
+<text x="145.9" y="223" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 現金を回収（入金）</text>
+<rect x="27.9" y="235" width="236" height="16" rx="3" fill="#ffffff"/>
+<text x="145.9" y="248.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">売掛金を減らして現金・預金に振り替える</text>
+</g>
+<text x="320" y="326" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">売上計上から入金までの間だけ売掛金として残る。受注しただけの取引は数えない。</text>
+</svg>

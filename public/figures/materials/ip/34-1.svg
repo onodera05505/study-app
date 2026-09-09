@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="376" viewBox="0 0 640 376" role="img">
+<title>出金と入金をひとまとまりにして、両方成功したらコミットで確定、途中で失敗したらロールバックで開始前に戻す。</title>
+<rect x="0.5" y="0.5" width="639" height="375" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(122.6 20)">
+<line x1="48" y1="34" x2="48" y2="292" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="339.8" y1="34" x2="339.8" y2="292" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">振込の処理</text>
+<rect x="284.8" y="0" width="110" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="339.8" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">データベース</text>
+<polyline points="51,68 336.8,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="336.8,68 328.8,71.6 328.8,64.4" fill="#1f2937"/>
+<text x="193.9" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 処理の開始（ここからひとまとまり）</text>
+<polyline points="51,108 336.8,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="336.8,108 328.8,111.6 328.8,104.4" fill="#1f2937"/>
+<text x="193.9" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. A の口座から1万円を引く</text>
+<polyline points="51,148 336.8,148" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="336.8,148 328.8,151.6 328.8,144.4" fill="#1f2937"/>
+<text x="193.9" y="141" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. B の口座に1万円を足す</text>
+<polyline points="51,188 336.8,188" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="336.8,188 328.8,191.6 328.8,184.4" fill="#1f2937"/>
+<text x="193.9" y="181" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 全部成功したらコミット＝更新を確定</text>
+<rect x="111.9" y="193" width="164" height="16" rx="3" fill="#ffffff"/>
+<text x="193.9" y="206.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">両方そろって初めて確定する</text>
+<polyline points="336.8,244 51,244" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,244 59,240.4 59,247.6" fill="#1f2937"/>
+<text x="193.9" y="237" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. 途中で失敗したらロールバック＝開始前に戻す</text>
+<rect x="75.9" y="249" width="236" height="16" rx="3" fill="#ffffff"/>
+<text x="193.9" y="262.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">引いただけ、足しただけの状態は残らない</text>
+</g>
+<text x="320" y="340" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">出金と入金をひとまとまりにして、両方成功したらコミットで確定、途中で失敗したらロールバックで開始前に</text>
+<text x="320" y="356" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">戻す。</text>
+</svg>

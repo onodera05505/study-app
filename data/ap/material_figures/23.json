@@ -1,0 +1,23 @@
+{
+  "topic_id": 23,
+  "term": "プリエンプティブ方式",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### タスクの状態と遷移",
+      "caption": "CPU を横取りされたタスクは何も待っていないので、待ち状態ではなく実行可能状態へ戻る。",
+      "nodes": [
+        {"id": "rdy", "label": "実行可能状態\nCPU の順番待ち", "row": 0, "col": 0, "emphasis": true},
+        {"id": "run", "label": "実行状態\nCPU を使用中", "row": 0, "col": 1},
+        {"id": "wt", "label": "待ち状態\n入出力の完了待ち", "row": 0, "col": 2}
+      ],
+      "edges": [
+        {"from": "rdy", "to": "run", "label": "ディスパッチ"},
+        {"from": "run", "to": "rdy", "label": "プリエンプション（横取り）"},
+        {"from": "run", "to": "wt", "label": "自分から入出力を待つ"},
+        {"from": "wt", "to": "rdy", "label": "入出力が完了"}
+      ]
+    }
+  ]
+}

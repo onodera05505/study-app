@@ -1,0 +1,456 @@
+{
+  "exam": "2019h31h",
+  "range": "1-50",
+  "classifications": [
+    {
+      "number": 1,
+      "syllabus_item": 62,
+      "topic_term": "リスクアセスメント（リスク特定，リスク分析，リスク評価）",
+      "topic_is_new": false,
+      "related_terms": ["リスク対応（リスク回避，リスク共有（リスク移転，リスク分散），リスク保有）", "情報セキュリティリスク", "リスク基準"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 2,
+      "syllabus_item": 19,
+      "topic_term": "ワークフロー",
+      "topic_is_new": false,
+      "related_terms": ["グループウェア", "Web 会議", "電子掲示板", "BPM（Business Process Management）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 3,
+      "syllabus_item": 12,
+      "topic_term": "ERP（Enterprise Resource Planning：企業資源計画）パッケージ",
+      "topic_is_new": false,
+      "related_terms": ["MRP（Material Requirements Planning：資材所要量計画）", "SCM（Supply Chain Management：供給連鎖管理）", "営業支援システム（SFA：Sales Force Automation）", "経営資源"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 4,
+      "syllabus_item": 7,
+      "topic_term": "公益通報者保護法",
+      "topic_is_new": false,
+      "related_terms": ["コンプライアンス", "内部統制報告制度", "内部通報制度"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 5,
+      "syllabus_item": 10,
+      "topic_term": "アンゾフの成長マトリクス",
+      "topic_is_new": false,
+      "related_terms": ["市場浸透戦略", "市場開発戦略", "製品開発戦略", "多角化戦略"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 6,
+      "syllabus_item": 22,
+      "topic_term": "企画プロセス",
+      "topic_is_new": false,
+      "related_terms": ["システム化構想の立案", "要件定義プロセス", "適用範囲", "システムライフサイクル"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 7,
+      "syllabus_item": 11,
+      "topic_term": "BSC（Balanced Scorecard：バランススコアカード）",
+      "topic_is_new": false,
+      "related_terms": ["CSF（Critical Success Factors：重要成功要因）", "KPI （Key Performance Indicator：重要業績評価指標）", "PPM（Product Portfolio Management）", "SWOT 分析"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 8,
+      "syllabus_item": 14,
+      "topic_term": "CMS（コンテンツマネジメントシステム）",
+      "topic_is_new": true,
+      "related_terms": ["Web コンテンツ", "業務別ソフトウェアパッケージ（会計，営業支援，販売管理ソフトウェア）", "CAD", "CRM（Customer Relationship Management：顧客関係管理）"],
+      "confidence": "medium",
+      "notes": "CMS はシラバスの用語例に無く既存論点にも無いため新設。項目は業務用ソフトウェアという観点で14（ビジネスシステム）としたが、Web コンテンツの観点で52（マルチメディア技術）とも解釈できる。"
+    },
+    {
+      "number": 9,
+      "syllabus_item": 4,
+      "topic_term": "著作権法",
+      "topic_is_new": false,
+      "related_terms": ["プログラム著作権", "アルゴリズム", "インタフェース規約", "特許法"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 10,
+      "syllabus_item": 9,
+      "topic_term": "ベンチマーキング",
+      "topic_is_new": false,
+      "related_terms": ["コアコンピタンス", "BPR（Business Process Reengineering）", "ベストプラクティス", "競争優位"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 11,
+      "syllabus_item": 8,
+      "topic_term": "標準化",
+      "topic_is_new": false,
+      "related_terms": ["デファクトスタンダード", "デジュレスタンダード", "コモディティ化", "JIS（Japanese Industrial Standards）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 12,
+      "syllabus_item": 15,
+      "topic_term": "MRP（Material Requirements Planning：資材所要量計画）",
+      "topic_is_new": false,
+      "related_terms": ["部品表（BOM）", "所要量計算", "生産計画", "在庫管理"],
+      "confidence": "medium",
+      "notes": "原材料表からの所要量計算。過去の同種問題（2019r01a 問26、2023r05 問33）が MRP に紐づいている前例に合わせたが、単純な比例計算のため項目2（業務分析・データ利活用）とも解釈できる。"
+    },
+    {
+      "number": 13,
+      "syllabus_item": 3,
+      "topic_term": "損益分岐点",
+      "topic_is_new": false,
+      "related_terms": ["固定費", "変動費", "利益", "費用対効果"],
+      "confidence": "high",
+      "notes": "固定費・変動費から目標利益に必要な数量を求める計算。同型の 2020r02o 問33 も損益分岐点に紐づいている。"
+    },
+    {
+      "number": 14,
+      "syllabus_item": 13,
+      "topic_term": "MOT（Management Of Technology：技術経営）",
+      "topic_is_new": false,
+      "related_terms": ["イノベーション", "技術ポートフォリオ", "BPR（Business Process Reengineering）", "HRM（Human Resource Management）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 15,
+      "syllabus_item": 15,
+      "topic_term": "リーン生産方式",
+      "topic_is_new": false,
+      "related_terms": ["JIT（Just In Time：ジャストインタイム）", "かんばん方式", "ファブレス", "セル生産方式"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 16,
+      "syllabus_item": 24,
+      "topic_term": "RFP",
+      "topic_is_new": false,
+      "related_terms": ["RFI", "調達の流れ", "ベンダ", "システム要件"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 17,
+      "syllabus_item": 23,
+      "topic_term": "要件定義プロセス",
+      "topic_is_new": false,
+      "related_terms": ["業務要件定義", "利害関係者", "企画プロセス", "業務ルール"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 18,
+      "syllabus_item": 3,
+      "topic_term": "貸借対照表",
+      "topic_is_new": false,
+      "related_terms": ["損益計算書", "キャッシュフロー計算書", "資産（純資産，流動資産，固定資産，繰延資産，有形資産，無形資産）", "負債（流動負債，固定負債）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 19,
+      "syllabus_item": 19,
+      "topic_term": "RPA（Robotic Process Automation）",
+      "topic_is_new": false,
+      "related_terms": ["定型業務の自動化", "アウトソーシング", "EUC（End User Computing）", "産業用ロボット"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 20,
+      "syllabus_item": 4,
+      "topic_term": "実用新案法",
+      "topic_is_new": false,
+      "related_terms": ["特許法", "ビジネスモデル特許", "意匠法", "著作権法"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 21,
+      "syllabus_item": 1,
+      "topic_term": "コーポレートブランド",
+      "topic_is_new": false,
+      "related_terms": ["経営理念（企業理念）", "コアコンピタンス", "ブランド戦略", "ステークホルダ"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 22,
+      "syllabus_item": 12,
+      "topic_term": "バリューチェーンマネジメント",
+      "topic_is_new": false,
+      "related_terms": ["主活動と支援活動", "HRM（Human Resource Management）", "CRM（Customer Relationship Management：顧客関係管理）", "営業支援システム（SFA：Sales Force Automation）"],
+      "confidence": "medium",
+      "notes": "問題文は「バリューチェーン分析」だが、シラバス用語例では項目12の「バリューチェーンマネジメント」が対応語。項目9（経営戦略手法）に分類する解釈もありうる。"
+    },
+    {
+      "number": 23,
+      "syllabus_item": 14,
+      "topic_term": "特化型AI",
+      "topic_is_new": false,
+      "related_terms": ["汎用AI", "機械学習（教師あり学習，教師なし学習，強化学習）", "ディープラーニング", "AI による自動化"],
+      "confidence": "medium",
+      "notes": "正解は「AI」そのもので粒度が非常に粗い。将棋という特定用途である点から特化型AI に寄せたが、項目35（機械学習・ディープラーニング）に分類する解釈もありうる。"
+    },
+    {
+      "number": 24,
+      "syllabus_item": 5,
+      "topic_term": "不正指令電磁的記録に関する罪（ウイルス作成罪）",
+      "topic_is_new": false,
+      "related_terms": ["マルウェア（コンピュータウイルス，ボット，スパイウェア，ランサムウェア）", "不正アクセス禁止法", "著作権法", "個人情報保護法"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 25,
+      "syllabus_item": 3,
+      "topic_term": "総資本回転率",
+      "topic_is_new": false,
+      "related_terms": ["資本利益率", "売上高利益率", "収益性", "ROE（自己資本利益率）"],
+      "confidence": "medium",
+      "notes": "論点は「資本利益率＝売上高利益率×資本回転率」の分解。新表記を作ると財務指標系が分散するため、既存論点「総資本回転率」に寄せた。"
+    },
+    {
+      "number": 26,
+      "syllabus_item": 9,
+      "topic_term": "PPM（Product Portfolio Management）",
+      "topic_is_new": false,
+      "related_terms": ["金のなる木", "花形", "問題児", "負け犬"],
+      "confidence": "high",
+      "notes": "図の軸が通常と入れ替わっている（縦軸＝市場占有率，横軸＝市場成長率）点に注意。"
+    },
+    {
+      "number": 27,
+      "syllabus_item": 7,
+      "topic_term": "コンプライアンス",
+      "topic_is_new": false,
+      "related_terms": ["社会規範", "社内規則", "業界ガイドライン", "内部統制"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 28,
+      "syllabus_item": 2,
+      "topic_term": "ビッグデータ",
+      "topic_is_new": false,
+      "related_terms": ["データマイニング", "非構造化データ", "コアコンピタンス", "クラウドファンディング"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 29,
+      "syllabus_item": 5,
+      "topic_term": "不正アクセス禁止法",
+      "topic_is_new": false,
+      "related_terms": ["フィッシング", "識別符号", "要配慮個人情報", "不正指令電磁的記録に関する罪（ウイルス作成罪）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 30,
+      "syllabus_item": 20,
+      "topic_term": "オンプレミス",
+      "topic_is_new": false,
+      "related_terms": ["クラウドコンピューティング", "アウトソーシング", "ホスティングサービス", "ハウジングサービス"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 31,
+      "syllabus_item": 18,
+      "topic_term": "EA（Enterprise Architecture）",
+      "topic_is_new": false,
+      "related_terms": ["ギャップ分析", "As-Is と To-Be", "バリューチェーン分析", "パレート分析"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 32,
+      "syllabus_item": 6,
+      "topic_term": "請負契約",
+      "topic_is_new": false,
+      "related_terms": ["再委託", "（準）委任契約", "著作権の帰属", "偽装請負"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 33,
+      "syllabus_item": 21,
+      "topic_term": "ゲーミフィケーション",
+      "topic_is_new": false,
+      "related_terms": ["動機付け", "利用者満足度調査", "データマイニング", "ゲーム理論"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 34,
+      "syllabus_item": 3,
+      "topic_term": "営業利益",
+      "topic_is_new": false,
+      "related_terms": ["変動費", "固定費", "販売単価", "損益分岐点"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 35,
+      "syllabus_item": 16,
+      "topic_term": "ロングテール",
+      "topic_is_new": false,
+      "related_terms": ["EC（Electronic Commerce：電子商取引）", "オンラインモール", "アフィリエイト", "ABC 分析"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 36,
+      "syllabus_item": 29,
+      "topic_term": "サービスデスク",
+      "topic_is_new": false,
+      "related_terms": ["インシデント管理", "SPOC", "構成管理", "変更管理"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 37,
+      "syllabus_item": 27,
+      "topic_term": "プロジェクトリスクマネジメント",
+      "topic_is_new": false,
+      "related_terms": ["リスクの対応策（回避，軽減，受容，転嫁）", "発生確率と影響度", "リスクの優先順位付け", "プロジェクト憲章"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 38,
+      "syllabus_item": 62,
+      "topic_term": "情報セキュリティの要素（機密性，完全性，可用性，真正性，責任追跡性，否認防止，信頼性）",
+      "topic_is_new": false,
+      "related_terms": ["アクセス制御", "サービス可用性管理", "サービス継続管理", "SLA"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 39,
+      "syllabus_item": 32,
+      "topic_term": "ITガバナンス",
+      "topic_is_new": false,
+      "related_terms": ["情報システム戦略", "コンプライアンス", "システム監査", "JIS Q 38500（IT ガバナンス）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 40,
+      "syllabus_item": 27,
+      "topic_term": "プロジェクト調達マネジメント",
+      "topic_is_new": false,
+      "related_terms": ["請負契約", "オフショア開発", "知的財産権", "仕様変更ルール"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 41,
+      "syllabus_item": 2,
+      "topic_term": "パレート図",
+      "topic_is_new": false,
+      "related_terms": ["ABC 分析", "特性要因図（フィッシュボーンチャート）", "ヒストグラム", "散布図"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 42,
+      "syllabus_item": 27,
+      "topic_term": "プロジェクトスコープマネジメント",
+      "topic_is_new": false,
+      "related_terms": ["WBS（Work Breakdown Structure）", "プロジェクトコストマネジメント", "プロジェクトスケジュールマネジメント", "プロジェクト資源マネジメント"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 43,
+      "syllabus_item": 32,
+      "topic_term": "内部統制",
+      "topic_is_new": false,
+      "related_terms": ["コンプライアンス", "職務分掌", "モニタリング", "内部統制報告制度"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 44,
+      "syllabus_item": 31,
+      "topic_term": "システム監査",
+      "topic_is_new": false,
+      "related_terms": ["システム監査人", "情報システム戦略", "業務監査", "システム監査計画"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 45,
+      "syllabus_item": 27,
+      "topic_term": "変更管理（プロジェクト）",
+      "topic_is_new": false,
+      "related_terms": ["プロジェクトスコープマネジメント", "スコープのベースライン", "プロジェクトコストマネジメント", "プロジェクトマネージャ"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 46,
+      "syllabus_item": 29,
+      "topic_term": "チャットボット",
+      "topic_is_new": false,
+      "related_terms": ["FAQ", "サービスデスク", "エスカレーション", "AI アシスタント"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 47,
+      "syllabus_item": 26,
+      "topic_term": "アジャイル開発",
+      "topic_is_new": false,
+      "related_terms": ["ウォーターフォールモデル", "XP（エクストリームプログラミング）", "スクラム", "ユーザーストーリー"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 48,
+      "syllabus_item": 26,
+      "topic_term": "オフショア開発",
+      "topic_is_new": true,
+      "related_terms": ["アウトソーシング", "請負契約", "ラピッドアプリケーション開発（RAD）", "プロトタイピングモデル"],
+      "confidence": "medium",
+      "notes": "オフショア開発はシラバスの用語例に無く既存論点にも無いため新設。開発形態を問う問題として項目26に置いたが、委託先選定の観点で項目24（調達計画・実施）とも解釈できる。"
+    },
+    {
+      "number": 49,
+      "syllabus_item": 30,
+      "topic_term": "ファシリティマネジメント",
+      "topic_is_new": false,
+      "related_terms": ["グリーンIT（Green of IT）", "無停電電源装置（UPS：Uninterruptible Power Supply）", "電力消費量のモニタリング", "サージ防護"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 50,
+      "syllabus_item": 31,
+      "topic_term": "情報セキュリティ監査",
+      "topic_is_new": false,
+      "related_terms": ["情報資産", "システム監査", "情報セキュリティ管理基準", "リスクアセスメント（リスク特定，リスク分析，リスク評価）"],
+      "confidence": "high",
+      "notes": null
+    }
+  ]
+}

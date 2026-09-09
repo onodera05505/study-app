@@ -1,0 +1,25 @@
+{
+  "topic_id": 24,
+  "term": "処理時間順方式",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 計算の解き方",
+      "caption": "処理時間の短い順に選ぶと実行順は A→C→E→D→B となり、時刻12に終わる B のターンアラウンドタイムは 12－1＝11 秒になる。",
+      "nodes": [
+        {"id": "a", "label": "A\n0→2", "row": 0, "col": 0},
+        {"id": "c", "label": "C\n2→5", "row": 0, "col": 1},
+        {"id": "e", "label": "E\n5→6", "row": 0, "col": 2},
+        {"id": "d", "label": "D\n6→8", "row": 0, "col": 3},
+        {"id": "b", "label": "B\n8→12\n到着 1", "row": 0, "col": 4, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "a", "to": "c"},
+        {"from": "c", "to": "e"},
+        {"from": "e", "to": "d"},
+        {"from": "d", "to": "b"}
+      ]
+    }
+  ]
+}

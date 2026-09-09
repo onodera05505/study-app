@@ -1,0 +1,22 @@
+{
+  "topic_id": 386,
+  "term": "SSL/TLS（Secure Sockets Layer/Transport Layer Security）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 守る区間の違い",
+      "caption": "WPA2 が守るのは無線区間だけで、SSL/TLS はブラウザと Web サーバの間を通しで守る。",
+      "nodes": [
+        {"id": "pc", "label": "端末のブラウザ\nPC・スマホ", "row": 0, "col": 0, "emphasis": true},
+        {"id": "ap", "label": "無線 LAN\nアクセスポイント", "row": 0, "col": 1},
+        {"id": "web", "label": "Web サーバ\nサーバ証明書", "row": 0, "col": 2, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "pc", "to": "ap", "label": "WPA2 が守るのはここだけ", "arrow": "both"},
+        {"from": "ap", "to": "web", "label": "インターネット（WPA2 の対象外）", "arrow": "both", "style": "dashed"},
+        {"from": "pc", "to": "web", "label": "SSL/TLS が守る区間", "arrow": "both"}
+      ]
+    }
+  ]
+}

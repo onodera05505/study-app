@@ -1,0 +1,25 @@
+{
+  "topic_id": 240,
+  "term": "クラッシング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 混同しやすい技法",
+      "caption": "資源を追加して作業自体を速くするのがクラッシング、順番の作業を重ねるのがファストトラッキング。",
+      "nodes": [
+        {"id": "base", "label": "作業 A → B → C\nクリティカルパス 計 10 日", "row": 0, "col": 1},
+        {"id": "cr", "label": "クラッシング\nB に要員を追加\n5 日 → 3 日", "row": 1, "col": 0, "emphasis": true},
+        {"id": "ft", "label": "ファストトラッキング\nB と C を並行実施", "row": 1, "col": 2},
+        {"id": "cro", "label": "計 8 日\nコストが増える", "row": 2, "col": 0},
+        {"id": "fto", "label": "計 7 日\n手戻りリスク", "row": 2, "col": 2}
+      ],
+      "edges": [
+        {"from": "base", "to": "cr", "label": "資源を追加"},
+        {"from": "base", "to": "ft", "label": "並行化"},
+        {"from": "cr", "to": "cro"},
+        {"from": "ft", "to": "fto"}
+      ]
+    }
+  ]
+}

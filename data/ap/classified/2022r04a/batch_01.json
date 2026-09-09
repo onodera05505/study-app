@@ -1,0 +1,348 @@
+{
+ "exam": "2022r04a",
+ "range": "1-27",
+ "classifications": [
+  {
+   "number": 1,
+   "syllabus_item": 1,
+   "topic_term": "基数",
+   "topic_is_new": true,
+   "related_terms": [
+    "2進数",
+    "対数",
+    "オーバーフロー（あふれ）"
+   ],
+   "confidence": "medium",
+   "notes": "a^2 を 2 進数で表すと最大何ビットかを問う。中心は基数 r・n 桁で表せる数の範囲（桁数）の知識だが，項目 1（離散数学）の用語例に基数・2進数に当たる語が無いため新規論点にした"
+  },
+  {
+   "number": 2,
+   "syllabus_item": 1,
+   "topic_term": "論理関数",
+   "topic_is_new": false,
+   "related_terms": [
+    "カルノー図",
+    "論理積",
+    "論理和",
+    "否定"
+   ],
+   "confidence": "high",
+   "notes": "2025r07a 問1 と同一問題。以前は「カルノー図」を新規論点にしていたが、同一問題が別論点に割れて頻度が分散していたため、用語例にある「論理関数」（2025r07a 問1 の分類）へ寄せた（2026-08-31）"
+  },
+  {
+   "number": 3,
+   "syllabus_item": 2,
+   "topic_term": "乗法定理",
+   "topic_is_new": false,
+   "related_terms": [
+    "同時確率",
+    "条件付き確率"
+   ],
+   "confidence": "medium",
+   "notes": "非復元抽出で 3 個連続良品となる確率（90/100・89/99・88/98）。組合せでも解けるが，中心は確率の乗法定理と判断した"
+  },
+  {
+   "number": 4,
+   "syllabus_item": 3,
+   "topic_term": "過学習",
+   "topic_is_new": false,
+   "related_terms": [
+    "転移学習",
+    "強化学習",
+    "バックプロパゲーション（誤差逆伝播ぱ法）"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 5,
+   "syllabus_item": 7,
+   "topic_term": "ハッシュ表探索法",
+   "topic_is_new": false,
+   "related_terms": [
+    "シノニム対策",
+    "衝突"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 6,
+   "syllabus_item": 7,
+   "topic_term": "バブルソート",
+   "topic_is_new": false,
+   "related_terms": [
+    "選択ソート",
+    "挿入ソート",
+    "クイックソート"
+   ],
+   "confidence": "high",
+   "notes": "流れ図は隣接要素の比較・交換を繰り返す整列で，正解はバブルソート"
+  },
+  {
+   "number": 7,
+   "syllabus_item": 10,
+   "topic_term": "XML",
+   "topic_is_new": true,
+   "related_terms": [
+    "Unicode",
+    "UTF-16",
+    "シフトJISコード"
+   ],
+   "confidence": "medium",
+   "notes": "XML 宣言で符号化宣言を省略できる文字コード（UTF-8/UTF-16）を問う。項目 10 の用語例は DTD や XML Schema など周辺語のみで XML そのものが無いため新規論点にした。文字コード側（項目 3）とも迷ったが，中心は XML の仕様の知識と判断した"
+  },
+  {
+   "number": 8,
+   "syllabus_item": 11,
+   "topic_term": "GPU",
+   "topic_is_new": false,
+   "related_terms": [
+    "GPGPU",
+    "SIMD",
+    "AIチップ"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 9,
+   "syllabus_item": 12,
+   "topic_term": "ライトスルー",
+   "topic_is_new": false,
+   "related_terms": [
+    "ライトバック",
+    "キャッシュメモリ"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 10,
+   "syllabus_item": 12,
+   "topic_term": "キャッシュメモリ",
+   "topic_is_new": true,
+   "related_terms": [
+    "ヒット率",
+    "実効アクセス時間"
+   ],
+   "confidence": "high",
+   "notes": "L1・L2 の 2 段キャッシュ全体のヒット率計算。用語例に「ヒット率」に当たる語が無く，既存論点のキャッシュメモリに束ねた"
+  },
+  {
+   "number": 11,
+   "syllabus_item": 15,
+   "topic_term": "電子ペーパー",
+   "topic_is_new": false,
+   "related_terms": [
+    "液晶ディスプレイ",
+    "有機 EL ディスプレイ"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 12,
+   "syllabus_item": 16,
+   "topic_term": "仮想化（ホスト型，ハイパーバイザー型，コンテナ型）",
+   "topic_is_new": false,
+   "related_terms": [
+    "VM（Virtual Machine：仮想マシン）",
+    "Docker"
+   ],
+   "confidence": "medium",
+   "notes": "主題はコンテナ型仮想化だが，正誤判断には 3 方式（ホスト型・ハイパーバイザー型・コンテナ型）の対比が必要。括弧内の 1 語「コンテナ型」だけでは意味が立たないため，用語例のエントリを丸ごと採った"
+  },
+  {
+   "number": 13,
+   "syllabus_item": 16,
+   "topic_term": "フォールトアボイダンス",
+   "topic_is_new": false,
+   "related_terms": [
+    "フェールセーフ",
+    "フェールソフト",
+    "フォールトトレラントシステム"
+   ],
+   "confidence": "medium",
+   "notes": "4 つの信頼性設計の概念を比較する問題で主題が一意でない。正解（ウ）が説明するフォールトアボイダンスを論点にした"
+  },
+  {
+   "number": 14,
+   "syllabus_item": 17,
+   "topic_term": "稼働率",
+   "topic_is_new": true,
+   "related_terms": [
+    "MTBF",
+    "MTTR"
+   ],
+   "confidence": "high",
+   "notes": "MTBF と MTTR がともに 1.5 倍になると稼働率 MTBF/(MTBF＋MTTR) は変わらない"
+  },
+  {
+   "number": 15,
+   "syllabus_item": 17,
+   "topic_term": "スループット",
+   "topic_is_new": false,
+   "related_terms": [
+    "MIPS",
+    "データ転送速度",
+    "ボトルネック"
+   ],
+   "confidence": "high",
+   "notes": "サーバ（100 件/秒）とネットワーク（50 件/秒）のうち小さい方がシステムのスループットを決める"
+  },
+  {
+   "number": 16,
+   "syllabus_item": 18,
+   "topic_term": "デッドロック",
+   "topic_is_new": false,
+   "related_terms": [
+    "排他制御",
+    "リソーススタベーション"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 17,
+   "syllabus_item": 18,
+   "topic_term": "ページング方式",
+   "topic_is_new": true,
+   "related_terms": [
+    "ページフォールト",
+    "スラッシング",
+    "仮想記憶管理"
+   ],
+   "confidence": "medium",
+   "notes": "ページサイズを半分にしたときの影響（ページフォールト回数の増加）を問う。既存論点のページフォールトとも迷ったが，中心はページサイズとページング動作の関係の理解なのでページング方式に束ねた"
+  },
+  {
+   "number": 18,
+   "syllabus_item": 18,
+   "topic_term": "リアルタイム OS",
+   "topic_is_new": false,
+   "related_terms": [
+    "割込み",
+    "プリエンプティブ方式",
+    "タスク管理"
+   ],
+   "confidence": "medium",
+   "notes": "プリエンプティブなリアルタイム OS における割込み処理ルーチンとタスクの優先関係を問う。用語例の「割込み」とも迷ったが，リアルタイム OS の挙動の理解が中心と判断した"
+  },
+  {
+   "number": 19,
+   "syllabus_item": 17,
+   "topic_term": "シミュレーション",
+   "topic_is_new": true,
+   "related_terms": [
+    "待ち行列",
+    "スループット"
+   ],
+   "confidence": "low",
+   "notes": "3 台のプリンターへの印刷データ割当てを時系列に追跡する問題。特定の用語知識ではなく処理の手順追跡（シミュレーション）が中心で，どの項目にも用語例が無い。既存論点シミュレーション（項目 17）に合わせたが，項目の帰属自体に迷いがある"
+  },
+  {
+   "number": 20,
+   "syllabus_item": 23,
+   "topic_term": "アクチュエーター",
+   "topic_is_new": false,
+   "related_terms": [
+    "センサー",
+    "A/Dコンバータ"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 21,
+   "syllabus_item": 23,
+   "topic_term": "ダイオード",
+   "topic_is_new": false,
+   "related_terms": [
+    "回路素子（抵抗，コンデンサ，コイル，トランスほか）",
+    "整流回路"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 22,
+   "syllabus_item": 12,
+   "topic_term": "フラッシュメモリ（NAND，NOR）",
+   "topic_is_new": false,
+   "related_terms": [
+    "EEPROM（ Electrically Erasable Programmable Read Only Memory ）",
+    "DRAM",
+    "リフレッシュ"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 23,
+   "syllabus_item": 23,
+   "topic_term": "NAND 回路",
+   "topic_is_new": false,
+   "related_terms": [
+    "NOR 回路",
+    "XOR 回路",
+    "真理値表"
+   ],
+   "confidence": "medium",
+   "notes": "X＝Y のときだけ 1 を出力する（XNOR 相当の）回路を 4 種類の素子構成から選ぶ問題で主題が一意でない。正解（ウ）を構成する NAND 回路を論点にした"
+  },
+  {
+   "number": 24,
+   "syllabus_item": 1,
+   "topic_term": "基数",
+   "topic_is_new": true,
+   "related_terms": [
+    "等比数列",
+    "重複順列"
+   ],
+   "confidence": "medium",
+   "notes": "26 種類の文字 n 桁で 26^n 通りを表せるという桁数の考え方が中心。問 1 と同じ「基数」に束ねた。項目 1 の用語例に該当語が無いため新規論点。応用数学（項目 2）とも迷った"
+  },
+  {
+   "number": 25,
+   "syllabus_item": 26,
+   "topic_term": "H.264",
+   "topic_is_new": false,
+   "related_terms": [
+    "MPEG",
+    "HEVC",
+    "ストリーミング"
+   ],
+   "confidence": "high",
+   "notes": "用語例の表記は「H.264」。問題文の H.264/MPEG-4 AVC はこれに当たる"
+  },
+  {
+   "number": 26,
+   "syllabus_item": 29,
+   "topic_term": "データディクショナリ",
+   "topic_is_new": false,
+   "related_terms": [
+    "メタデータ",
+    "異音同義語",
+    "同音異義語",
+    "ドメイン"
+   ],
+   "confidence": "medium",
+   "notes": "データ項目の命名規約で回避できない事象（値域の不統一）を問う。用語例に「命名規約」が無く，問題文の「データ項目名と意味を登録した辞書」に当たるデータディクショナリを論点にした"
+  },
+  {
+   "number": 27,
+   "syllabus_item": 30,
+   "topic_term": "関係代数",
+   "topic_is_new": false,
+   "related_terms": [
+    "差集合",
+    "和集合",
+    "射影",
+    "選択"
+   ],
+   "confidence": "high",
+   "notes": null
+  }
+ ]
+}

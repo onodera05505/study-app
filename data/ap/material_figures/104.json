@@ -1,0 +1,21 @@
+{
+  "topic_id": 104,
+  "term": "ページフォールト",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 計算の解き方",
+      "caption": "ページインは毎回起きるがページアウトは空きが無いときだけで、平均 30 ミリ秒は 20 と 60 の加重平均になる。",
+      "nodes": [
+        {"id": "pf", "label": "ページフォールト\n発生", "row": 0, "col": 0},
+        {"id": "pin", "label": "補助記憶から\n読み込むだけ\n20 ミリ秒", "row": 1, "col": 0},
+        {"id": "pout", "label": "追い出す相手を選び\n補助記憶へ書き戻して\nから読み込む\n60 ミリ秒", "row": 1, "col": 1, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "pf", "to": "pin", "label": "空きあり"},
+        {"from": "pf", "to": "pout", "label": "空き無し", "style": "dashed"}
+      ]
+    }
+  ]
+}

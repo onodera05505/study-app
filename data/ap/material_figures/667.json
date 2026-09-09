@@ -1,0 +1,24 @@
+{
+  "topic_id": 667,
+  "term": "PDCA",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 四つの段階が何をする段階か",
+      "caption": "動詞で見分ける。導入・運用が実行、監視・測定・報告が点検、改善の処置が処置。",
+      "nodes": [
+        {"id": "p", "label": "計画 Plan\nSMS を確立し\n文書化して合意する", "row": 0, "col": 0},
+        {"id": "d", "label": "実行 Do\nSMS を導入し\n運用する", "row": 0, "col": 1, "emphasis": true},
+        {"id": "c", "label": "点検 Check\n監視・測定・レビューし\n結果を報告する", "row": 1, "col": 1},
+        {"id": "a", "label": "処置 Act\n継続的な改善のための\n処置を実施する", "row": 1, "col": 0}
+      ],
+      "edges": [
+        {"from": "p", "to": "d"},
+        {"from": "d", "to": "c"},
+        {"from": "c", "to": "a"},
+        {"from": "a", "to": "p"}
+      ]
+    }
+  ]
+}

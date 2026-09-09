@@ -1,0 +1,212 @@
+{
+  "bundle": 52,
+  "topics": [
+    {
+      "topic_id": 398,
+      "term": "H.264",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "情報メディア",
+      "syllabus_item_name": "マルチメディア技術",
+      "question_count": 1,
+      "related_terms": [
+        "MPEG",
+        "HEVC",
+        "ストリーミング"
+      ],
+      "questions": [
+        {
+          "exam": "2022r04a",
+          "number": 25,
+          "text": "H.264/MPEG-4 AVC の説明として，適切なものはどれか。",
+          "choices": {
+            "ア": "インターネットで動画や音声データのストリーミング配信を制御するための通信方式",
+            "イ": "テレビ会議やテレビ電話で双方向のビデオ配信を制御するための通信方式",
+            "ウ": "テレビの電子番組案内で使用される番組内容のメタデータを記述する方式",
+            "エ": "ワンセグやインターネットで用いられる動画データの圧縮符号化方式"
+          },
+          "answer": "エ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 399,
+      "term": "ACID特性",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "データベース",
+      "syllabus_item_name": "データベース方式",
+      "question_count": 1,
+      "related_terms": [
+        "原子性",
+        "一貫性",
+        "耐久性",
+        "可用性"
+      ],
+      "questions": [
+        {
+          "exam": "2022r04a",
+          "number": 30,
+          "text": "ACID 特性の四つの性質に含まれないものはどれか。",
+          "choices": {
+            "ア": "一貫性",
+            "イ": "可用性",
+            "ウ": "原子性",
+            "エ": "耐久性"
+          },
+          "answer": "イ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 400,
+      "term": "データディクショナリ",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "データベース",
+      "syllabus_item_name": "データベース設計",
+      "question_count": 1,
+      "related_terms": [
+        "メタデータ",
+        "異音同義語",
+        "同音異義語",
+        "ドメイン"
+      ],
+      "questions": [
+        {
+          "exam": "2022r04a",
+          "number": 26,
+          "text": "データ項目の命名規約を設ける場合，次の命名規約だけでは回避できない事象はどれか。\n〔命名規約〕\n(1) データ項目名の末尾には必ず “名”，“コード”，“数”，“金額”，“年月日” などの区分語を付与し，区分語ごとに定めたデータ型にする。\n(2) データ項目名と意味を登録した辞書を作成し，異音同義語や同音異義語が発生しないようにする。",
+          "choices": {
+            "ア": "データ項目 “受信年月日” のデータ型として，日付型と文字列型が混在する。",
+            "イ": "データ項目 “受注金額” の取り得る値の範囲がテーブルによって異なる。",
+            "ウ": "データ項目 “賞与金額” と同じ意味で “ボーナス金額” というデータ項目がある。",
+            "エ": "データ項目 “取引先” が，“取引先コード” か “取引先名” か，判別できない。"
+          },
+          "answer": "イ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 401,
+      "term": "副問合せ",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "データベース",
+      "syllabus_item_name": "データ操作",
+      "question_count": 1,
+      "related_terms": [
+        "集合関数",
+        "DISTINCT",
+        "SELECT 文"
+      ],
+      "questions": [
+        {
+          "exam": "2022r04a",
+          "number": 28,
+          "text": "“商品” 表に対して，次の SQL 文を実行して得られる仕入先コード数は幾つか。",
+          "choices": {
+            "ア": "1",
+            "イ": "2",
+            "ウ": "3",
+            "エ": "4"
+          },
+          "answer": "ウ",
+          "figure_description": "〔SQL 文〕\n\nSELECT DISTINCT 仕入先コード FROM 商品\n  WHERE (販売単価 - 仕入単価) >\n        (SELECT AVG (販売単価 - 仕入単価) FROM 商品)\n\n商品\n\n| 商品コード | 商品名 | 販売単価 | 仕入先コード | 仕入単価 |\n| --- | --- | --- | --- | --- |\n| A001 | A | 1,000 | S1 | 800 |\n| B002 | B | 2,500 | S2 | 2,300 |\n| C003 | C | 1,500 | S2 | 1,400 |\n| D004 | D | 2,500 | S1 | 1,600 |\n| E005 | E | 2,000 | S1 | 1,600 |\n| F006 | F | 3,000 | S3 | 2,800 |\n| G007 | G | 2,500 | S3 | 2,200 |\n| H008 | H | 2,500 | S4 | 2,000 |\n| I009 | I | 2,500 | S5 | 2,000 |\n| J010 | J | 1,300 | S6 | 1,000 |"
+        }
+      ]
+    },
+    {
+      "topic_id": 402,
+      "term": "DHCP",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "通信プロトコル",
+      "question_count": 1,
+      "related_terms": [
+        "IP アドレス",
+        "サブネットマスク",
+        "デフォルトゲートウェイ",
+        "リース"
+      ],
+      "questions": [
+        {
+          "exam": "2022r04a",
+          "number": 31,
+          "text": "IP アドレスの自動設定をするために DHCP サーバが設置された LAN 環境の説明のうち，適切なものはどれか。",
+          "choices": {
+            "ア": "DHCP による自動設定を行う PC では，IP アドレスは自動設定できるが，サブネットマスクやデフォルトゲートウェイアドレスは自動設定できない。",
+            "イ": "DHCP による自動設定を行う PC と，IP アドレスが固定の PC を混在させることはできない。",
+            "ウ": "DHCP による自動設定を行う PC に，DHCP サーバのアドレスを設定しておく必要はない。",
+            "エ": "一度 IP アドレスを割り当てられた PC は，その後電源が切られた期間があっても必ず同じ IP アドレスを割り当てられる。"
+          },
+          "answer": "ウ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 404,
+      "term": "URL",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "ネットワーク応用",
+      "question_count": 1,
+      "related_terms": [
+        "ポート番号",
+        "HTTP over TLS（HTTPS）",
+        "クエリ文字列"
+      ],
+      "questions": [
+        {
+          "exam": "2022r04a",
+          "number": 35,
+          "text": "次の URL に対し，受理する Web サーバのポート番号(8080)を指定できる箇所はどれか。\nhttps://www.example.com/member/login?id=user",
+          "choices": {
+            "ア": "クエリ文字列(id=user)の直後\nhttps://www.example.com/member/login?id=user:8080",
+            "イ": "スキーム(https)の直後\nhttps:8080://www.example.com/member/login?id=user",
+            "ウ": "パス(/member/login)の直後\nhttps://www.example.com/member/login:8080?id=user",
+            "エ": "ホスト名(www.example.com)の直後\nhttps://www.example.com:8080/member/login?id=user"
+          },
+          "answer": "エ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 405,
+      "term": "リフレクション攻撃",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ",
+      "question_count": 1,
+      "related_terms": [
+        "オープンリゾルバ",
+        "DNS",
+        "IP スプーフィング",
+        "DDoS 攻撃"
+      ],
+      "questions": [
+        {
+          "exam": "2022r04a",
+          "number": 36,
+          "text": "オープンリゾルバを悪用した攻撃はどれか。",
+          "choices": {
+            "ア": "ICMP パケットの送信元を偽装し，多数の宛先に送ることによって，攻撃対象のコンピュータに大量の偽の ICMP パケットの応答を送る。",
+            "イ": "PC 内の hosts ファイルにある，ドメインと IP アドレスとの対応付けを大量に書き換え，偽の Web サイトに誘導し，大量のコンテンツをダウンロードさせる。",
+            "ウ": "送信元 IP アドレスを偽装した DNS 問合せを多数の DNS サーバに送ることによって，攻撃対象のコンピュータに大量の応答を送る。",
+            "エ": "誰でも電子メールの送信ができるメールサーバを踏み台にして，電子メールの送信元アドレスを詐称したなりすましメールを大量に送信する。"
+          },
+          "answer": "ウ",
+          "figure_description": null
+        }
+      ]
+    }
+  ]
+}

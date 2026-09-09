@@ -1,0 +1,358 @@
+{
+ "exam": "2025r07a",
+ "range": "55-80",
+ "classifications": [
+  {
+   "number": 55,
+   "syllabus_item": 65,
+   "topic_term": "サービス可用性管理",
+   "topic_is_new": false,
+   "related_terms": [
+    "サービス可用性",
+    "信頼性",
+    "MTBF",
+    "MTTR"
+   ],
+   "confidence": "high",
+   "notes": "選択肢のFTA・FMEA・CFIA・SPOF分析は用語例に無いが、可用性管理の分析技法として周辺知識に置く。"
+  },
+  {
+   "number": 56,
+   "syllabus_item": 65,
+   "topic_term": "問題管理",
+   "topic_is_new": false,
+   "related_terms": [
+    "根本原因",
+    "インシデント管理",
+    "サービス要求管理",
+    "既知の誤り"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 57,
+   "syllabus_item": 68,
+   "topic_term": "液浸冷却",
+   "topic_is_new": true,
+   "related_terms": [
+    "空調設備（空調機器，エアフロー，コールドアイル，ホットアイルほか）",
+    "データセンター総合エネルギー効率指標（GEC，PUE，ITEE，ITEU ほか）",
+    "グリーン IT"
+   ],
+   "confidence": "medium",
+   "notes": "データセンターの冷却方式。用語例には空調設備までしか無く、液体冷却／液浸冷却は新設。"
+  },
+  {
+   "number": 58,
+   "syllabus_item": 69,
+   "topic_term": "監査の独立性と客観性の保持",
+   "topic_is_new": false,
+   "related_terms": [
+    "監査人の倫理",
+    "正当な注意と秘密の保持",
+    "システム監査人の権限と責任等"
+   ],
+   "confidence": "medium",
+   "notes": "所見・正当な懐疑心・正当な注意・独立性の4語を比較させる問題。正解が独立性なのでこの用語を論点にしたが、「監査人の倫理」を論点にする選択もあり得る。"
+  },
+  {
+   "number": 59,
+   "syllabus_item": 69,
+   "topic_term": "フォローアップ",
+   "topic_is_new": false,
+   "related_terms": [
+    "改善提案のフォローアップ",
+    "改善提案",
+    "改善計画",
+    "システム監査報告書"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 60,
+   "syllabus_item": 69,
+   "topic_term": "コントロール",
+   "topic_is_new": false,
+   "related_terms": [
+    "リスク",
+    "情報システムの利活用に係る検証・評価",
+    "内部統制",
+    "IT 統制"
+   ],
+   "confidence": "medium",
+   "notes": "システム監査基準（令和5年）のガバナンス／マネジメント／コントロールの3視点を問う。用語例の「コントロール」は単語としてやや広く、項目70（内部統制）に寄せる余地もある。"
+  },
+  {
+   "number": 61,
+   "syllabus_item": 71,
+   "topic_term": "プログラムマネジメント",
+   "topic_is_new": false,
+   "related_terms": [
+    "プログラム統合",
+    "PMO（Program Management Office：プログラムマネジメントオフィス）",
+    "経営戦略との整合性"
+   ],
+   "confidence": "medium",
+   "notes": "「プログラムマネジメント」は用語例としては項目53（マネジメント系）にあるが、公式分野がストラテジ系なので53は選べない。候補内では項目71に「PMO」「プログラム統合」があるためここに置き、表記は用語例に合わせた。"
+  },
+  {
+   "number": 62,
+   "syllabus_item": 73,
+   "topic_term": "SOA（Service Oriented Architecture：サービス指向アーキテクチャ）",
+   "topic_is_new": false,
+   "related_terms": [
+    "ERPパッケージ",
+    "BPR（Business Process Reengineering：ビジネスプロセスリエンジニアリング）",
+    "PDCA"
+   ],
+   "confidence": "high",
+   "notes": "SOAは項目71・77の用語例にもあるが、ソリューションビジネス（73）の表記を採用した。"
+  },
+  {
+   "number": 63,
+   "syllabus_item": 90,
+   "topic_term": "アソシエーション分析",
+   "topic_is_new": false,
+   "related_terms": [
+    "リフト値",
+    "データマイニング",
+    "最小二乗法",
+    "クラスタ分析法"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 64,
+   "syllabus_item": 75,
+   "topic_term": "PBP",
+   "topic_is_new": false,
+   "related_terms": [
+    "投資回収期間",
+    "NPV（Net Present Value：正味現在価値）",
+    "DCF法"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 65,
+   "syllabus_item": 75,
+   "topic_term": "開発効果の算定",
+   "topic_is_new": false,
+   "related_terms": [
+    "投資効果",
+    "評価指標",
+    "重み付け評価"
+   ],
+   "confidence": "medium",
+   "notes": "定性項目に重み付き評価点を与えてシステムの目標達成度を算出する問題。項目74（システム活用促進・評価）の「投資対効果分析」に寄せる読み方もあり、項目の決め手が弱い。"
+  },
+  {
+   "number": 66,
+   "syllabus_item": 77,
+   "topic_term": "定額契約",
+   "topic_is_new": false,
+   "related_terms": [
+    "実費償還契約（CPIF，CPFF）",
+    "請負契約",
+    "契約条件"
+   ],
+   "confidence": "medium",
+   "notes": "定額契約と実費償還契約のどちらを中心論点にするか迷った。追加費用をB社が負担する決め手はA-B間の定額契約なのでこちらを採用。"
+  },
+  {
+   "number": 67,
+   "syllabus_item": 79,
+   "topic_term": "マーケティングの 4C（Customer Value，Customer Cost，Convenience，Communication）",
+   "topic_is_new": false,
+   "related_terms": [
+    "マーケティングの 4P（Product，Price，Place，Promotion）",
+    "顧客価値"
+   ],
+   "confidence": "medium",
+   "notes": "4Pと4Cの対応を問う問題。選択肢が全て4Cの構成要素なので4Cを論点にしたが、4Pを論点にする読み方もある。"
+  },
+  {
+   "number": 68,
+   "syllabus_item": 80,
+   "topic_term": "バランススコアカード",
+   "topic_is_new": true,
+   "related_terms": [
+    "財務の視点",
+    "顧客の視点",
+    "業務プロセスの視点",
+    "学習と成長の視点"
+   ],
+   "confidence": "medium",
+   "notes": "用語例には4つの視点しか無く、バランススコアカード／戦略マップという語自体が無いため新設。"
+  },
+  {
+   "number": 69,
+   "syllabus_item": 80,
+   "topic_term": "フィージビリティスタディ",
+   "topic_is_new": false,
+   "related_terms": [
+    "デルファイ法",
+    "ブレーンストーミング",
+    "必要性（ニーズ）"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 70,
+   "syllabus_item": 78,
+   "topic_term": "製品・市場マトリクス",
+   "topic_is_new": false,
+   "related_terms": [
+    "市場浸透戦略",
+    "市場開拓戦略",
+    "製品開発戦略",
+    "多角化戦略"
+   ],
+   "confidence": "high",
+   "notes": "アンゾフの成長マトリクス。用語例の表記「製品・市場マトリクス」を採用。"
+  },
+  {
+   "number": 71,
+   "syllabus_item": 85,
+   "topic_term": "MES （ Manufacturing Execution System ）",
+   "topic_is_new": false,
+   "related_terms": [
+    "工程管理",
+    "生産性指標",
+    "FMS（Flexible Manufacturing System ）",
+    "CIM"
+   ],
+   "confidence": "high",
+   "notes": "用語例の文字列（空白を含む）をそのままコピーした。"
+  },
+  {
+   "number": 72,
+   "syllabus_item": 85,
+   "topic_term": "PLM（Product Life cycle Management）",
+   "topic_is_new": false,
+   "related_terms": [
+    "PDM（Product Data Management）",
+    "MRP",
+    "FMS（Flexible Manufacturing System ）",
+    "SCM"
+   ],
+   "confidence": "medium",
+   "notes": "PLMの用語例は項目79（マーケティング）側にある。ただし問題文も選択肢（FMS・MRP・SCM）も生産管理システムなので項目85に置いた。表記は用語例からコピー。"
+  },
+  {
+   "number": 73,
+   "syllabus_item": 87,
+   "topic_term": "LPWA",
+   "topic_is_new": true,
+   "related_terms": [
+    "IoT（Internet of Things）",
+    "センサーネットワーク",
+    "BLE ビーコン",
+    "エッジコンピューティング"
+   ],
+   "confidence": "low",
+   "notes": "LPWAは本来テクノロジ系のネットワーク方式の用語だが、公式分野がストラテジ系なので候補内で最も近いIoT機器の無線通信（87 民生機器）に置いた。項目84・88の可能性も残る。"
+  },
+  {
+   "number": 74,
+   "syllabus_item": 90,
+   "topic_term": "EOQ（Economic Ordering Quantity：経済的発注量）",
+   "topic_is_new": false,
+   "related_terms": [
+    "発注費用",
+    "在庫費用",
+    "発注点",
+    "安全在庫"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 75,
+   "syllabus_item": 90,
+   "topic_term": "配分問題",
+   "topic_is_new": false,
+   "related_terms": [
+    "シンプレックス法",
+    "線形計画法",
+    "最適化"
+   ],
+   "confidence": "medium",
+   "notes": "限られた部品数の下で利益を最大化する線形計画法の問題。用語例に「線形計画法」が無いため、同義の「配分問題」を採用した。"
+  },
+  {
+   "number": 76,
+   "syllabus_item": 91,
+   "topic_term": "自己資本比率",
+   "topic_is_new": false,
+   "related_terms": [
+    "貸借対照表",
+    "純資産",
+    "株主資本",
+    "流動比率"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 77,
+   "syllabus_item": 91,
+   "topic_term": "限界利益",
+   "topic_is_new": true,
+   "related_terms": [
+    "変動損益計算書",
+    "損益分岐点",
+    "限界利益図表",
+    "原価計算"
+   ],
+   "confidence": "medium",
+   "notes": "制約時間当たりの限界利益で製品を選ぶ問題。用語例は「限界利益図表」しか無く、論点としては図表ではなく限界利益そのものなので新設した。"
+  },
+  {
+   "number": 78,
+   "syllabus_item": 92,
+   "topic_term": "著作権",
+   "topic_is_new": false,
+   "related_terms": [
+    "著作財産権（複製権，公衆送信権，展示権，頒布権，譲渡権，貸与権）",
+    "職務著作",
+    "二次的著作物"
+   ],
+   "confidence": "high",
+   "notes": "プログラム言語・規約・解法が著作権法の保護対象外であることを問う。"
+  },
+  {
+   "number": 79,
+   "syllabus_item": 92,
+   "topic_term": "意匠権",
+   "topic_is_new": false,
+   "related_terms": [
+    "産業財産権",
+    "特許権",
+    "商標権",
+    "ビジネス方法の特許"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 80,
+   "syllabus_item": 94,
+   "topic_term": "労働施策総合推進法（パワハラ防止法）",
+   "topic_is_new": false,
+   "related_terms": [
+    "労働契約法",
+    "労働安全衛生法",
+    "男女雇用機会均等法",
+    "公益通報者保護法"
+   ],
+   "confidence": "high",
+   "notes": null
+  }
+ ]
+}

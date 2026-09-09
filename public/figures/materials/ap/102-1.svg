@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="416" viewBox="0 0 640 416" role="img">
+<title>上限 1 のセマフォは、値が 0 の間ほかのタスクを待たせ、1 本のバスに同時に 1 タスクだけを通す。</title>
+<rect x="0.5" y="0.5" width="639" height="415" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(105.3 20)">
+<line x1="48" y1="34" x2="48" y2="348" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="214.7" y1="34" x2="214.7" y2="348" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="381.4" y1="34" x2="381.4" y2="348" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">タスクA</text>
+<rect x="152" y="0" width="125.4" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="214.7" y="11.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">セマフォ</text>
+<text x="214.7" y="31.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">（値の上限 1）</text>
+<rect x="333.4" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="381.4" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">タスクB</text>
+<polyline points="51,68 211.7,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="211.7,68 203.7,71.6 203.7,64.4" fill="#1f2937"/>
+<text x="131.35" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 獲得（値 1→0）</text>
+<rect x="-0.45" y="73" width="263.6" height="16" rx="3" fill="#ffffff"/>
+<text x="131.35" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">値が 1 以上なら 1 減らしてそのまま先へ進む</text>
+<polyline points="211.7,124 51,124" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,124 59,120.4 59,127.6" fill="#1f2937"/>
+<text x="131.35" y="117" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. I2C バスの使用を許可</text>
+<polyline points="378.4,164 217.7,164" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="217.7,164 225.7,160.4 225.7,167.6" fill="#1f2937"/>
+<text x="298.05" y="157" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 獲得を要求（値は 0）</text>
+<polyline points="217.7,204 378.4,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="378.4,204 370.4,207.6 370.4,200.4" fill="#1f2937"/>
+<text x="298.05" y="197" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 待ち行列へ入れて停止</text>
+<rect x="110.15" y="209" width="375.8" height="16" rx="3" fill="#ffffff"/>
+<text x="298.05" y="222.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ここで止めないと 2 タスクが同じバスを同時に読み書きしてしまう</text>
+<polyline points="51,260 211.7,260" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="211.7,260 203.7,263.6 203.7,256.4" fill="#1f2937"/>
+<text x="131.35" y="253" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. 解放（値 0→1）</text>
+<rect x="39.45" y="265" width="183.8" height="16" rx="3" fill="#ffffff"/>
+<text x="131.35" y="278.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">解放を忘れると B は永久に待つ</text>
+<polyline points="217.7,316 378.4,316" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="378.4,316 370.4,319.6 370.4,312.4" fill="#1f2937"/>
+<text x="298.05" y="309" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">6. 待ちを解除（値 1→0）</text>
+</g>
+<text x="320" y="396" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">上限 1 のセマフォは、値が 0 の間ほかのタスクを待たせ、1 本のバスに同時に 1 タスクだけを通す。</text>
+</svg>

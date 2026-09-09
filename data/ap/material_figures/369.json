@@ -1,0 +1,24 @@
+{
+  "topic_id": 369,
+  "term": "スクラム",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### スプリント内のイベントの流れ",
+      "caption": "計画 → 毎日 → 成果物の確認 → 進め方の反省。レビューが先、レトロスペクティブが最後。",
+      "nodes": [
+        {"id": "p", "label": "①\nスプリント\nプランニング", "row": 0, "col": 0},
+        {"id": "d", "label": "②\nデイリー\nスクラム", "row": 0, "col": 1},
+        {"id": "r", "label": "③\nスプリントレビュー\n成果物を確認", "row": 0, "col": 2},
+        {"id": "t", "label": "④\nレトロスペクティブ\n進め方を改善", "row": 0, "col": 3, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "p", "to": "d", "label": "毎日繰り返す"},
+        {"from": "d", "to": "r"},
+        {"from": "r", "to": "t"},
+        {"from": "t", "to": "p", "label": "次のスプリントへ", "style": "dashed"}
+      ]
+    }
+  ]
+}

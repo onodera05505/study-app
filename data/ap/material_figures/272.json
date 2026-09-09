@@ -1,0 +1,45 @@
+{
+  "topic_id": 272,
+  "term": "BPR（Business Process Reengineering：ビジネスプロセスリエンジニアリング）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "chart",
+      "after": "### 計算の解き方",
+      "caption": "委託で増える利益 400 万円より委託費 700 万円が高く、委託しない 4 人体制が最大になる。",
+      "kind": "bar",
+      "x": {
+        "label": "シナリオ",
+        "values": [
+          "a 4人・委託",
+          "b 4人",
+          "c 5人・委託",
+          "d 5人"
+        ]
+      },
+      "y": {
+        "label": "年間の効果（万円）",
+        "min": 0
+      },
+      "series": [
+        {
+          "label": "空き時間の利益 ＋ 人件費削減 − 委託費",
+          "values": [
+            340,
+            640,
+            100,
+            400
+          ],
+          "emphasis": true
+        }
+      ],
+      "annotations": [
+        {
+          "x": "b 4人",
+          "y": 640,
+          "text": "最大 640 万円"
+        }
+      ]
+    }
+  ]
+}

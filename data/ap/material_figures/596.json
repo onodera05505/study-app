@@ -1,0 +1,23 @@
+{
+  "topic_id": 596,
+  "term": "サンドボックス",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 隔離して動かすことの意味",
+      "caption": "隔離した領域の中だけで実際に動かして観察するので、未知のものでも判定でき、本番環境には影響が及ばない。",
+      "nodes": [
+        {"id": "f", "label": "受け取った\n添付ファイル", "row": 0, "col": 0},
+        {"id": "sb", "label": "サンドボックス\n隔離された特別な領域", "row": 0, "col": 1, "emphasis": true},
+        {"id": "obs", "label": "振る舞いを観察\n（動的解析）", "row": 0, "col": 2},
+        {"id": "prod", "label": "本番環境\nファイル・ネットワーク", "row": 1, "col": 1}
+      ],
+      "edges": [
+        {"from": "f", "to": "sb", "label": "開く前にこの中で実行"},
+        {"from": "sb", "to": "obs", "label": "何をするか見る"},
+        {"from": "sb", "to": "prod", "label": "外へは伝わらない", "style": "dashed", "arrow": "none"}
+      ]
+    }
+  ]
+}

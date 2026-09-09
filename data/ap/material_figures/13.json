@@ -1,0 +1,29 @@
+{
+  "topic_id": 13,
+  "term": "逆ポーランド表記法",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 計算の解き方",
+      "caption": "演算子が来たら頂上の2つを下ろし、下にあった方を左辺にして計算する。ABCD－×＋は 16＋8×(4－2)＝32 になる。",
+      "nodes": [
+        {"id": "a0", "label": "2 ← 頂上", "row": 0, "col": 0},
+        {"id": "a1", "label": "4", "row": 1, "col": 0},
+        {"id": "a2", "label": "8", "row": 2, "col": 0},
+        {"id": "a3", "label": "16", "row": 3, "col": 0},
+        {"id": "b1", "label": "2\n＝4－2", "row": 1, "col": 1, "emphasis": true},
+        {"id": "b2", "label": "8", "row": 2, "col": 1},
+        {"id": "b3", "label": "16", "row": 3, "col": 1},
+        {"id": "c2", "label": "16\n＝8×2", "row": 2, "col": 2},
+        {"id": "c3", "label": "16", "row": 3, "col": 2},
+        {"id": "d3", "label": "32\n＝16＋16", "row": 3, "col": 3, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "a0", "to": "b1", "label": "－"},
+        {"from": "b1", "to": "c2", "label": "×"},
+        {"from": "c2", "to": "d3", "label": "＋"}
+      ]
+    }
+  ]
+}

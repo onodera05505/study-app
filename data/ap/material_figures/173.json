@@ -1,0 +1,24 @@
+{
+  "topic_id": 173,
+  "term": "VRRP",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 切り替わりの流れ",
+      "caption": "端末は仮想 IP だけを見ているので、マスタが停止して待機機が引き継いでも設定を変えずに済む。",
+      "nodes": [
+        {"id": "pc", "label": "端末\nデフォルト GW ＝\n192.168.1.1（仮想 IP）", "row": 0, "col": 0},
+        {"id": "m", "label": "ルータ A（マスタ）\n優先度 高", "row": 0, "col": 1, "emphasis": true},
+        {"id": "net", "label": "インターネット", "row": 0, "col": 2, "shape": "cloud"},
+        {"id": "b", "label": "ルータ B（バックアップ）\n優先度 低", "row": 1, "col": 1}
+      ],
+      "edges": [
+        {"from": "pc", "to": "m", "label": "仮想 IP 宛ての通信"},
+        {"from": "m", "to": "net"},
+        {"from": "m", "to": "b", "label": "VRRP 広告が途切れると昇格", "style": "dashed"},
+        {"from": "b", "to": "net", "style": "dashed"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "topic_id": 318,
+  "term": "オペレーションスケジューリング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 計算の解き方",
+      "caption": "合計に入るのは隣り合う移り変わり3回分だけ。b→a→c→d なら 1＋1＋2＝4 時間で最小になる。",
+      "nodes": [
+        {"id": "b", "label": "仕事 b\n最初は段取りなし", "row": 0, "col": 0},
+        {"id": "a", "label": "仕事 a", "row": 0, "col": 1},
+        {"id": "c", "label": "仕事 c", "row": 0, "col": 2},
+        {"id": "d", "label": "仕事 d\n最後で終わり", "row": 0, "col": 3}
+      ],
+      "edges": [
+        {"from": "b", "to": "a", "label": "段取り 1 時間"},
+        {"from": "a", "to": "c", "label": "1 時間"},
+        {"from": "c", "to": "d", "label": "2 時間"}
+      ]
+    }
+  ]
+}

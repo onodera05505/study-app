@@ -1,0 +1,77 @@
+{
+  "topic_id": 283,
+  "term": "サブネットマスク",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "サブネットマスクの 1 が並ぶ長さが、IP アドレスのネットワーク部とホスト部の境目を決める。",
+      "nodes": [
+        {
+          "id": "ip1",
+          "label": "IP アドレス\n先頭 24 ビット",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "ip2",
+          "label": "IP アドレス\n残り 8 ビット",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "m1",
+          "label": "サブネットマスク\n255.255.255\n2 進数で 1 が 24 個",
+          "row": 1,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "m2",
+          "label": "サブネットマスク\n.0\n2 進数で 0 が 8 個",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "n1",
+          "label": "ネットワークアドレス部\nどのネットワークか",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "n2",
+          "label": "ホストアドレス部\nその中のどの機器か",
+          "row": 2,
+          "col": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": "ip1",
+          "to": "m1",
+          "label": "重ねる",
+          "style": "dashed",
+          "arrow": "none"
+        },
+        {
+          "from": "ip2",
+          "to": "m2",
+          "label": "重ねる",
+          "style": "dashed",
+          "arrow": "none"
+        },
+        {
+          "from": "m1",
+          "to": "n1",
+          "label": "1 の部分"
+        },
+        {
+          "from": "m2",
+          "to": "n2",
+          "label": "0 の部分"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "topic_id": 619,
+  "term": "サイジング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "chart",
+      "after": "### 計算の解き方",
+      "caption": "時間帯ごとに全業務を合計して 3,600 で割り、最大の 18 TPS が必要な CPU 数を決める。",
+      "kind": "bar",
+      "x": {"label": "時間帯", "values": ["9〜10 時", "11〜12 時", "13〜14 時"]},
+      "y": {"label": "TPS（件／秒）", "min": 0},
+      "series": [
+        {"label": "全業務を合計した TPS", "values": [5, 18, 10]}
+      ],
+      "annotations": [{"x": "11〜12 時", "y": 18, "text": "ピーク 18 TPS → CPU 2 台"}]
+    }
+  ]
+}

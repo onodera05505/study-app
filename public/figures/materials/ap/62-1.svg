@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="327" viewBox="0 0 642.1 328" role="img">
+<title>検査式を 1・2・4 の重みで足した値がそのまま誤りビットの位置になる（すべて 0 なら誤り無し）。</title>
+<rect x="0.5" y="0.5" width="641.1" height="327" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<polyline points="76.75,56 76.75,79 301.05,79 301.05,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="301.05,102 297.45,94 304.65,94" fill="#1f2937"/>
+<polyline points="301.05,56 301.05,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="301.05,102 297.45,94 304.65,94" fill="#1f2937"/>
+<polyline points="525.35,56 525.35,79 301.05,79 301.05,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="301.05,102 297.45,94 304.65,94" fill="#1f2937"/>
+<polyline points="301.05,158 301.05,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="301.05,204 297.45,196 304.65,196" fill="#1f2937"/>
+<rect x="0" y="0" width="153.5" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="76.75" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">c0 ＝ x1+x3+x5+x7</text>
+<text x="76.75" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">（mod 2）</text>
+<rect x="224.3" y="0" width="153.5" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="301.05" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">c1 ＝ x2+x3+x6+x7</text>
+<text x="301.05" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">（mod 2）</text>
+<rect x="448.6" y="0" width="153.5" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="525.35" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">c2 ＝ x4+x5+x6+x7</text>
+<text x="525.35" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">（mod 2）</text>
+<rect x="233.4" y="102" width="135.3" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="301.05" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">誤り位置 i</text>
+<text x="301.05" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">＝ c0＋2c1＋4c2</text>
+<rect x="193.5" y="204" width="215.1" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="301.05" y="226.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">左から i 番目のビットを反転</text>
+<text x="301.05" y="246.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">＝ 訂正完了</text>
+<rect x="166.3" y="65" width="45.2" height="16" rx="3" fill="#ffffff"/>
+<text x="188.9" y="78.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1 の位</text>
+<rect x="278.45" y="70" width="45.2" height="16" rx="3" fill="#ffffff"/>
+<text x="301.05" y="83.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2 の位</text>
+<rect x="390.6" y="65" width="45.2" height="16" rx="3" fill="#ffffff"/>
+<text x="413.2" y="78.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4 の位</text>
+</g>
+<text x="321.05" y="308" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">検査式を 1・2・4 の重みで足した値がそのまま誤りビットの位置になる（すべて 0 なら誤り無し）。</text>
+</svg>

@@ -1,0 +1,21 @@
+{
+  "topic_id": 130,
+  "term": "フリップフロップ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 状態の追い方",
+      "caption": "S＝R＝1 は保持なので、S を 0 に下げてセットした後 1 に戻しても X＝1・Y＝0 のままで初期状態には戻らない。",
+      "nodes": [
+        {"id": "s0", "label": "初期状態\nS＝1, R＝1\nX＝0, Y＝1", "row": 0, "col": 0},
+        {"id": "s1", "label": "S を 0 に下げる\nX が 1 になり\nY が 0 になる", "row": 0, "col": 1},
+        {"id": "s2", "label": "S を 1 に戻す\nX＝1, Y＝0 のまま", "row": 0, "col": 2, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "s0", "to": "s1", "label": "セット"},
+        {"from": "s1", "to": "s2", "label": "保持（S＝R＝1）"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,456 @@
+{
+  "exam": "2024r06",
+  "range": "1-50",
+  "classifications": [
+    {
+      "number": 1,
+      "syllabus_item": 10,
+      "topic_term": "マーケティングオートメーション（MA）",
+      "topic_is_new": true,
+      "related_terms": ["ダイレクトマーケティング", "RPA（Robotic Process Automation）", "POS（Point of Sales：販売時点情報管理）システム", "BI（Business Intelligence）"],
+      "confidence": "high",
+      "notes": "MA は用語例に無いため新規論点とした。営業・見込み顧客育成の効率化なのでマーケティング（項目10）とした。"
+    },
+    {
+      "number": 2,
+      "syllabus_item": 5,
+      "topic_term": "サイバーセキュリティ基本法",
+      "topic_is_new": true,
+      "related_terms": ["不正アクセス禁止法", "公益通報者保護法", "プロバイダ責任制限法"],
+      "confidence": "high",
+      "notes": "用語例に無いが、セキュリティ関連法規（項目5）が該当項目。"
+    },
+    {
+      "number": 3,
+      "syllabus_item": 13,
+      "topic_term": "バックキャスティング",
+      "topic_is_new": false,
+      "related_terms": ["PoC（Proof of Concept：概念実証）", "PoV（Proof of Value：価値実証）", "フォアキャスティング"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 4,
+      "syllabus_item": 16,
+      "topic_term": "フィンテック（FinTech）",
+      "topic_is_new": false,
+      "related_terms": ["ブロックチェーン", "オムニチャネル", "金融情報システム"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 5,
+      "syllabus_item": 13,
+      "topic_term": "VC（Venture Capital：ベンチャーキャピタル）",
+      "topic_is_new": false,
+      "related_terms": ["CVC（Corporate Venture Capital：コーポレートベンチャーキャピタル）", "オープンイノベーション", "プロジェクト組織", "アライアンス"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 6,
+      "syllabus_item": 1,
+      "topic_term": "CxO（Chief x Officer（最高経営責任者（CEO：Chief Executive Officer），最高情報責任者（CIO：Chief Information Officer）など））",
+      "topic_is_new": false,
+      "related_terms": ["CEO", "CFO", "COO", "MOT（Management Of Technology：技術経営）"],
+      "confidence": "medium",
+      "notes": "CTO の役割を問う問題。技術経営（項目13 MOT）とも関わるが、役職体系の知識なので項目1とした。"
+    },
+    {
+      "number": 7,
+      "syllabus_item": 19,
+      "topic_term": "業務プロセスのモデリング",
+      "topic_is_new": true,
+      "related_terms": ["BPMN （Business Process Model and Notation）", "DFD（Data Flow Diagram）", "E-R 図（Entity Relationship Diagram）", "BPM（Business Process Management）"],
+      "confidence": "medium",
+      "notes": "特定の記法ではなくモデリングの目的そのものを問うため、用語例に該当語が無く新規論点とした。"
+    },
+    {
+      "number": 8,
+      "syllabus_item": 3,
+      "topic_term": "損益計算書",
+      "topic_is_new": false,
+      "related_terms": ["当期純利益", "販売費及び一般管理費", "営業利益"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 9,
+      "syllabus_item": 2,
+      "topic_term": "フェルミ推定",
+      "topic_is_new": true,
+      "related_terms": ["デルファイ法", "フィールドワーク", "回帰分析", "推定"],
+      "confidence": "high",
+      "notes": "用語例に無いため新規論点とした。"
+    },
+    {
+      "number": 10,
+      "syllabus_item": 4,
+      "topic_term": "不正競争防止法",
+      "topic_is_new": true,
+      "related_terms": ["限定提供データ", "営業秘密"],
+      "confidence": "high",
+      "notes": "用語例に不正競争防止法が無いため新規論点。限定提供データは論点として細かすぎるので related に入れた。"
+    },
+    {
+      "number": 11,
+      "syllabus_item": 8,
+      "topic_term": "ISO 9000（品質マネジメントシステム）",
+      "topic_is_new": false,
+      "related_terms": ["ISO/IEC 27000（情報セキュリティマネジメントシステム）", "ITIL", "プライバシーマーク"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 12,
+      "syllabus_item": 14,
+      "topic_term": "人間中心のAI 社会原則（人間中心の原則，公平性・説明責任・透明性の原則ほか）",
+      "topic_is_new": false,
+      "related_terms": ["AI 利活用ガイドライン（AI 利活用原則）", "説明可能なAI（XAI：Explainable AI）", "AI サービスの責任論"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 13,
+      "syllabus_item": 2,
+      "topic_term": "名寄せ",
+      "topic_is_new": true,
+      "related_terms": ["アカウントアグリゲーション", "データの結合", "データクレンジング", "金融情報システム"],
+      "confidence": "medium",
+      "notes": "顧客データの集約・一元化の用語。用語例に無く新規論点。金融業務の文脈なので項目14（ビジネスシステム）とも取れるが、データ利活用の知識として項目2とした。出題位置（問13）からストラテジ系。"
+    },
+    {
+      "number": 14,
+      "syllabus_item": 2,
+      "topic_term": "回帰分析",
+      "topic_is_new": false,
+      "related_terms": ["最小二乗法", "相関と因果", "線形計画法", "デルファイ法"],
+      "confidence": "high",
+      "notes": "項目34（応用数学）にも同語があるが、出題位置からストラテジ系の項目2とした。"
+    },
+    {
+      "number": 15,
+      "syllabus_item": 15,
+      "topic_term": "JIT（Just In Time：ジャストインタイム）",
+      "topic_is_new": false,
+      "related_terms": ["かんばん方式", "リーン生産方式", "MRP（Material Requirements Planning：資材所要量計画）", "OEM（Original Equipment Manufacturer：相手先ブランド製造）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 16,
+      "syllabus_item": 19,
+      "topic_term": "RPA（Robotic Process Automation）",
+      "topic_is_new": false,
+      "related_terms": ["ワークフロー", "産業用ロボット", "データマイニング", "AI による自動化"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 17,
+      "syllabus_item": 13,
+      "topic_term": "技術ロードマップ",
+      "topic_is_new": true,
+      "related_terms": ["技術ポートフォリオ", "技術予測手法", "MOT（Management Of Technology：技術経営）"],
+      "confidence": "high",
+      "notes": "用語例に無いため新規論点とした。"
+    },
+    {
+      "number": 18,
+      "syllabus_item": 1,
+      "topic_term": "コーポレートガバナンス",
+      "topic_is_new": true,
+      "related_terms": ["社外取締役", "株主総会", "ディスクロージャー", "ステークホルダ"],
+      "confidence": "medium",
+      "notes": "用語例に無いため新規論点。項目32（内部統制）とも関連するが、出題位置がストラテジ系のため項目1とした。"
+    },
+    {
+      "number": 19,
+      "syllabus_item": 13,
+      "topic_term": "API エコノミー",
+      "topic_is_new": false,
+      "related_terms": ["オープン API", "WebAPI", "フィンテック（FinTech）", "BPO"],
+      "confidence": "medium",
+      "notes": "正解の語は「オープン API」だが用語例に無いため、同一論点として用語例の「API エコノミー」に寄せた。"
+    },
+    {
+      "number": 20,
+      "syllabus_item": 22,
+      "topic_term": "費用対効果",
+      "topic_is_new": false,
+      "related_terms": ["投資利益率", "回収期間", "運用コスト", "TCO（Total Cost of Ownership）"],
+      "confidence": "medium",
+      "notes": "投資回収期間の計算。項目21の「費用対効果分析」とも取れるが、再構築の企画段階の判断なので項目22とした。"
+    },
+    {
+      "number": 21,
+      "syllabus_item": 4,
+      "topic_term": "サブスクリプション",
+      "topic_is_new": false,
+      "related_terms": ["アクティベーション", "ボリュームライセンス契約", "使用許諾契約"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 22,
+      "syllabus_item": 19,
+      "topic_term": "シェアリングエコノミー",
+      "topic_is_new": false,
+      "related_terms": ["クラウドソーシング", "e マーケットプレイス", "ライフログ"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 23,
+      "syllabus_item": 13,
+      "topic_term": "PoC（Proof of Concept：概念実証）",
+      "topic_is_new": false,
+      "related_terms": ["PoV（Proof of Value：価値実証）", "RPA（Robotic Process Automation）", "企画プロセス"],
+      "confidence": "medium",
+      "notes": "計画策定フェーズで概念検証を行うことが解答の鍵。RPA 導入の進め方（項目19）や企画プロセス（項目22）とも取れる。"
+    },
+    {
+      "number": 24,
+      "syllabus_item": 2,
+      "topic_term": "発注方式",
+      "topic_is_new": false,
+      "related_terms": ["在庫管理", "定期発注方式", "安全在庫量", "調達期間"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 25,
+      "syllabus_item": 17,
+      "topic_term": "拡張現実（AR:Augmented Reality）",
+      "topic_is_new": false,
+      "related_terms": ["仮想現実（VR： Virtual Reality）", "メタバース", "AR グラス", "スマートグラス"],
+      "confidence": "medium",
+      "notes": "論点名は項目53の用語例をそのまま使用。ただし本問はストラテジ系の出題位置（問1〜35）にあり、項目53（テクノロジ系）ではなく AR 応用を扱う項目17とした。"
+    },
+    {
+      "number": 26,
+      "syllabus_item": 2,
+      "topic_term": "データサイエンティスト",
+      "topic_is_new": false,
+      "related_terms": ["ビッグデータ", "データマイニング", "機械学習（教師あり学習，教師なし学習，強化学習）", "データサイエンスのサイクル"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 27,
+      "syllabus_item": 5,
+      "topic_term": "第三者提供",
+      "topic_is_new": false,
+      "related_terms": ["個人情報取扱事業者", "オプトイン", "要配慮個人情報"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 28,
+      "syllabus_item": 14,
+      "topic_term": "AI による認識",
+      "topic_is_new": false,
+      "related_terms": ["AI による自動化", "チャットボット", "RPA（Robotic Process Automation）", "RFID（IC タグ）"],
+      "confidence": "medium",
+      "notes": "AI 活用事例と RPA・RFID 活用事例の区別が論点。用語例のどの語を中心に据えるか幅があるため medium。"
+    },
+    {
+      "number": 29,
+      "syllabus_item": 1,
+      "topic_term": "デジタルディスラプション",
+      "topic_is_new": true,
+      "related_terms": ["デジタルトランスフォーメーション（DX）", "デジタルディバイド", "デジタルサイネージ", "イノベーション"],
+      "confidence": "medium",
+      "notes": "用語例に無いため新規論点。DX 関連語が項目1に集まっているため項目1としたが、項目9（経営戦略手法）とも取れる。"
+    },
+    {
+      "number": 30,
+      "syllabus_item": 3,
+      "topic_term": "損益計算書",
+      "topic_is_new": false,
+      "related_terms": ["売上高利益率", "自己資本利益率", "貸借対照表", "収益性"],
+      "confidence": "medium",
+      "notes": "損益計算書だけから算出できる指標の判別が論点。収益性分析の指標（項目3内の別論点）に寄せる選択肢もあるが、問8と同じ「損益計算書」に統一した。"
+    },
+    {
+      "number": 31,
+      "syllabus_item": 18,
+      "topic_term": "SoR（Systems of Record）",
+      "topic_is_new": false,
+      "related_terms": ["SoE（Systems of Engagement）", "EA（Enterprise Architecture）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 32,
+      "syllabus_item": 6,
+      "topic_term": "労働者派遣契約",
+      "topic_is_new": true,
+      "related_terms": ["雇用契約", "（準）委任契約", "請負契約", "指揮命令"],
+      "confidence": "high",
+      "notes": "用語例に無いため新規論点とした。"
+    },
+    {
+      "number": 33,
+      "syllabus_item": 23,
+      "topic_term": "業務要件定義",
+      "topic_is_new": true,
+      "related_terms": ["機能要件", "非機能要件", "受入れテスト", "企画プロセス"],
+      "confidence": "high",
+      "notes": "項目23は用語例が空のため新規論点とした。"
+    },
+    {
+      "number": 34,
+      "syllabus_item": 14,
+      "topic_term": "営業支援システム（SFA：Sales Force Automation）",
+      "topic_is_new": false,
+      "related_terms": ["CRM（Customer Relationship Management：顧客関係管理）", "SCM（Supply Chain Management：供給連鎖管理）", "MRP（Material Requirements Planning：資材所要量計画）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 35,
+      "syllabus_item": 4,
+      "topic_term": "実用新案法",
+      "topic_is_new": false,
+      "related_terms": ["特許法", "意匠法", "商標法"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 36,
+      "syllabus_item": 27,
+      "topic_term": "プロジェクトの定義",
+      "topic_is_new": true,
+      "related_terms": ["プロジェクト憲章", "有期性", "独自性", "サービスマネジメントシステム"],
+      "confidence": "high",
+      "notes": "プロジェクトの有期性・独自性の理解を問う。用語例に該当語が無いため新規論点とした。"
+    },
+    {
+      "number": 37,
+      "syllabus_item": 27,
+      "topic_term": "プロジェクト統合マネジメント",
+      "topic_is_new": true,
+      "related_terms": ["プロジェクト憲章", "プロジェクトスコープマネジメント", "教訓", "プロジェクトの終結"],
+      "confidence": "high",
+      "notes": "用語例には個別の知識エリアしか無いため新規論点とした。"
+    },
+    {
+      "number": 38,
+      "syllabus_item": 28,
+      "topic_term": "SLA",
+      "topic_is_new": false,
+      "related_terms": ["稼働率", "SLO", "サービス可用性管理", "サービスレベル管理（SLM）"],
+      "confidence": "high",
+      "notes": "計算自体は稼働率だが、SLA で合意した稼働率から許容停止時間を求める問題であり、出題位置もマネジメント系。"
+    },
+    {
+      "number": 39,
+      "syllabus_item": 29,
+      "topic_term": "サービスデスク",
+      "topic_is_new": true,
+      "related_terms": ["SPOC", "エスカレーション", "インシデント管理", "SLA"],
+      "confidence": "high",
+      "notes": "サービスデスクの KPI を問う。用語例に「サービスデスク」が無いため新規論点とした。"
+    },
+    {
+      "number": 40,
+      "syllabus_item": 26,
+      "topic_term": "アジャイル開発",
+      "topic_is_new": true,
+      "related_terms": ["スクラム", "スプリント", "ウォーターフォールモデル", "プロトタイピングモデル"],
+      "confidence": "high",
+      "notes": "用語例は個別手法のみのため、上位概念のアジャイル開発を新規論点とした。"
+    },
+    {
+      "number": 41,
+      "syllabus_item": 27,
+      "topic_term": "アローダイアグラム",
+      "topic_is_new": false,
+      "related_terms": ["クリティカルパス分析", "最遅開始日", "余裕時間", "ガントチャート"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 42,
+      "syllabus_item": 31,
+      "topic_term": "システム監査人",
+      "topic_is_new": false,
+      "related_terms": ["システム監査計画", "システム監査報告書の作成と報告", "改善提案のフォローアップ", "モニタリング"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 43,
+      "syllabus_item": 30,
+      "topic_term": "ファシリティマネジメント",
+      "topic_is_new": true,
+      "related_terms": ["入退室管理", "施錠管理", "無停電電源装置（UPS：Uninterruptible Power Supply）", "監視カメラ"],
+      "confidence": "medium",
+      "notes": "論点が「FM の対象範囲そのもの」であり項目名と同じ粒度になる。用語例には個別設備しか無いため新規論点とした。"
+    },
+    {
+      "number": 44,
+      "syllabus_item": 28,
+      "topic_term": "IT サービスマネジメント",
+      "topic_is_new": true,
+      "related_terms": ["サービス", "SLA", "継続的改善", "ファシリティマネジメント"],
+      "confidence": "medium",
+      "notes": "IT サービスマネジメントの定義を問う。項目29（サービスマネジメントシステム）とも取れる。用語例に無いため新規論点。"
+    },
+    {
+      "number": 45,
+      "syllabus_item": 25,
+      "topic_term": "利用者マニュアル",
+      "topic_is_new": false,
+      "related_terms": ["FAQ", "SLA", "サービスカタログ", "移行"],
+      "confidence": "medium",
+      "notes": "サービス運用の文脈での出題だが、用語例としては項目25（システム開発技術）にある「利用者マニュアル」が該当するため項目25とした。"
+    },
+    {
+      "number": 46,
+      "syllabus_item": 29,
+      "topic_term": "リリース及び展開管理",
+      "topic_is_new": false,
+      "related_terms": ["問題管理", "構成管理", "変更管理", "インシデント管理"],
+      "confidence": "medium",
+      "notes": "3つの管理プロセスの識別問題で単一論点に絞りにくい。設問 a に対応する「リリース及び展開管理」を代表論点とした。"
+    },
+    {
+      "number": 47,
+      "syllabus_item": 26,
+      "topic_term": "DevOps",
+      "topic_is_new": false,
+      "related_terms": ["継続的インテグレーション（CI）", "アジャイル開発", "ウォーターフォールモデル"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 48,
+      "syllabus_item": 31,
+      "topic_term": "システム管理基準",
+      "topic_is_new": true,
+      "related_terms": ["システム監査基準", "監査手続", "システム監査計画", "判断尺度"],
+      "confidence": "high",
+      "notes": "用語例には「システム監査基準」しか無いため、判断尺度として使う「システム管理基準」を新規論点とした。"
+    },
+    {
+      "number": 49,
+      "syllabus_item": 25,
+      "topic_term": "ファンクションポイント（FP：Function Point）法",
+      "topic_is_new": false,
+      "related_terms": ["類推見積法", "積み上げ法", "相対見積"],
+      "confidence": "medium",
+      "notes": "3つの見積手法の対応付け問題で単一論点に絞りにくい。用語例にある代表的手法の FP 法を論点とした。"
+    },
+    {
+      "number": 50,
+      "syllabus_item": 25,
+      "topic_term": "品質特性（機能性，効率性，使用性，信頼性など）",
+      "topic_is_new": false,
+      "related_terms": ["使用性", "移植性", "保守性", "RPA（Robotic Process Automation）"],
+      "confidence": "high",
+      "notes": null
+    }
+  ]
+}

@@ -1,0 +1,852 @@
+{
+  "exam": "ap",
+  "batch": 4,
+  "results": [
+    {
+      "topic_id": 552,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "用語の位置付けと混同語の識別だけで、図にすべき構造も流れも数量関係も無い",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 557,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "法律上の義務の範囲と混同語の識別が中心で、図にする構造が無い",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 561,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "呼出し前後のスタックを縦の箱で積み、SP が指す位置が上下する動きを矢印で示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 564,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "デマンドページングとプリページングを、読み込む時点・長所・短所で対比する表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 566,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "デューティ比の異なる矩形波を2本並べ、オン時間÷周期と平均電圧の対応を示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 568,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "利用者・ビュー・実表を箱で並べ、権限をビューに与えると範囲が絞れることを示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 570,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "攻撃者が上位表示させる→利用者が検索してクリック→誘導先で被害、の順を矢印で",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 578,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "主活動5つを左から右へ並べ、その上に支援活動4つを横帯で重ねた図",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 580,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "各社の特許をプールに集め、許諾の窓口が1つにまとまる前後を線の束で対比する",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 583,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "法律が挙げた場合だけ扱えるという制約の理解が中心で、図にする構造が無い",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 592,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "フェールセーフ・フェールソフト・フールプルーフ・冗長化を故障時の振る舞いで対比",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 593,
+      "type": "D",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "時間軸に依頼・応答開始・完了を置き、応答時間とターンアラウンドの区間を分ける",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 594,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "順番・区分・桁別・表意の各コードを、付け方の規則と例・欠点で並べた表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 596,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "本番環境と隔離領域を枠で分け、疑わしいプログラムが隔離側だけで動くことを示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 598,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "TCP/IP の層を縦に積み、パケットフィルタ・WAF・MAC フィルタが見る層に印を付ける",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 605,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "SEO・リスティング広告・アフィリエイトを、対象と費用の発生条件で対比する表",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 609,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "在庫量を縦軸・時間を横軸にのこぎり波を描き、発注点・調達期間・安全在庫を示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 618,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "2台の物理サーバを箱で描き、稼働したままの仮想マシンが移る矢印を示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 625,
+      "type": "A",
+      "template": "matrix",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "ハード〜データの層を縦に積み、IaaS・PaaS・SaaS の3列で責任の境界線を引く",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 627,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "WEP・WPA・WPA2・WPA3 を行に、暗号化方式・アルゴリズム・鍵長を列にした表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 632,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "設計→実装→テストの一巡を短い箱で並べ、固定長で繰り返す様子を矢印で示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 636,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "24時間の帯に3拠点の日勤帯を時差でずらして並べ、引継ぎの矢印で夜勤なしを示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 645,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "横軸に不良率・縦軸に合格確率の右下がり曲線を描き、生産者危険と消費者危険を示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 661,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "設置主体と対象とする脅威の識別が中心で、図にする構造が無い",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 662,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "要件定義→方式設計→詳細設計→コード作成→結合テストを並べ、最上位レベルの範囲を示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 664,
+      "type": "E",
+      "template": "none",
+      "benefit": 0,
+      "weakness": 0,
+      "idea": "許諾の根拠が著作権であることの理解が中心で、図にする構造が無い",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 667,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "P・D・C・A を円環に並べ、各段階が SMS に対して何をする段階かを添える",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 672,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "ノード5個のグラフを2例描き、辺が n−1 本で連結なら木、閉路があると増えると示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 675,
+      "type": "A",
+      "template": "none",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "OR との図記号の描き分けが要るが回路図は扱えない。G=0/1 の反転は表で補う",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 681,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "クライアントとサーバで、サーバ認証→鍵交換→利用者認証→暗号化通信を往復の矢印で",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 694,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "パワーゲーティング・クロックゲーティング・DVFS を、切るものとリーク電流で対比",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 65,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "パルス列とクロックを時間軸に並べ、1周期のカウント数と1回転のパルス数の関係を示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 67,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "木を描き、左部分木の最大値と右部分木の最小値の位置、削除位置への移動を矢印で示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 68,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "高さの差が2になった木と回転後の木を並べ、回転の中心になる最も深い節を示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 70,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "値・next・prev の3欄の箱を並べ、X の直後に Y を挿入するとき書き換える4本を矢印で",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 71,
+      "type": "B",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "同じ2分木に先行順・中間順・後行順の出力番号を振り、自分を出す位置の違いを示す",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 118,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 2,
+      "idea": "GPL・LGPL・MPL・BSD を行、改変・静的リンク・動的リンクを列に公開義務の有無を埋める",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 122,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "電源電圧を1本の横棒で表し、LED の順方向電圧と抵抗の分に分けて電力比を示す",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 126,
+      "type": "B",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "直列（AND）と並列（OR）それぞれの入力波形と出力波形を時間軸に並べて照合させる",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 131,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "電流を縦軸・時間を横軸に動作区間と待機区間の矩形を描き、面積÷周期が平均電流と示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 137,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "表示領域の箱に左右の矢印とページを示す丸を並べ、タブ・アコーディオンと見た目を比べる",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 148,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "表を箱で並べ、共通の属性を線でつなぎ、集計の軸と値が結合でたどれるかを示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 150,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "元の表の行を PARTITION ごとに囲み、ORDER BY 順に 1,2,3 と番号が振られる様子を示す",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 176,
+      "type": "B",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "宛先IPと各経路のネットワークアドレスを2進で縦にそろえ、一致長の長い経路を選ぶ",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 195,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "機密性・完全性・可用性・真正性・信頼性・責任追跡性を定義文と対にした表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 196,
+      "type": "C",
+      "template": "matrix",
+      "benefit": 1,
+      "weakness": 2,
+      "idea": "接続元が社内／社外、宛先が自社／社外の2×2に、通常の送受信と第三者中継を埋める",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 197,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "6種類の CSIRT を行に、機能とサービス対象を列にして組合せを並べた表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 219,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "横軸にテスト項目消化数・縦軸に累積誤り検出数のS字を描き、右端の水平＝収束を示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 245,
+      "type": "C",
+      "template": "matrix",
+      "benefit": 1,
+      "weakness": 2,
+      "idea": "横軸テスト密度・縦軸欠陥密度を基準範囲で4領域に分け、領域ごとの取るべき活動を書く",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 257,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "スコープ1・2・3を行に、直接／間接の別と具体例（自家発電・購入電力・委託先）を列に",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 272,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "案ごとに時間が生む利益と浮いた人件費をプラス、委託費をマイナスに積む階段棒で比べる",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 293,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "9ブロックを定位置に並べたキャンバスを描き、価値提案が中央で両側を橋渡しすると示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 327,
+      "type": "D",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "貸借対照表を左右の箱で描き、右側を他人資本と自己資本に分けて比率の分子分母を示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 328,
+      "type": "D",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "ROA を売上高利益率×総資産回転率に分解する樹形図を描き、業種ごとの高低を添える",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 349,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "参照列を横に並べ、3つのページ枠の中身が1手ごとにどう変わるかを FIFO と LRU で対比",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 353,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "キーバリュー・カラム指向・ドキュメント・グラフを、格納の単位と向くデータで対比",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 366,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "各対策と実際に得られる効果・限界（MAC は偽装可、SSID は暗号化しない）を並べた表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 368,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 2,
+      "idea": "条件指定部と動作指定部の2段構造の決定表を、列ごとの読み方を添えて示す",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 401,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "内側の SELECT で平均を出す→外側の WHERE で絞る→DISTINCT で重複を除く順を矢印で",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 410,
+      "type": "D",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "分岐を含む小さな流れ図に、C0 で数える命令と C1 で数える真偽の枝に印を付ける",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 415,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "案ごとに評価項目の（重み×点数）を積み上げた棒を並べ、合計の高さで選ぶことを示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 416,
+      "type": "D",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "1週間を曜日×時間帯の格子で描き、総シフト数÷1人が担当できるシフト数を示す",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 437,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "時間軸にジョブの生起と実行を帯で並べ、多重度の枠と待ち行列、同時存在数を示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 443,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "時間軸にチェックポイントと障害を置き、更新前情報で戻す／更新後情報で進むを矢印で",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 453,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 2,
+      "idea": "命令網羅・判定条件網羅・条件網羅・複数条件網羅を、何の真偽をそろえるかで比べる表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 467,
+      "type": "D",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "8ビットの元の値とマスクを上下にそろえ、OR で指定ビットだけ1になり他が残ると示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 473,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "シーク時間・回転待ち・転送時間を横に並べた帯で示し、平均回転待ちが半回転分と添える",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 496,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "別々に作った合計コストと一緒に作ったコストを棒で並べ、単価の比較とは分けて示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 511,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "命令種別ごとに（実行時間×出現頻度）を積み上げた棒で平均を作り、MIPS 換算を添える",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 517,
+      "type": "A",
+      "template": "none",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "4スイッチの回路図が読めないと解けないが回路図は扱えない。対角の組は表で補う",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 535,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "状態を丸・イベントを矢印にした遷移図を描き、表の空欄が自分に留まる意味だと示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 536,
+      "type": "D",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "分岐が直列に並ぶ流れ図を描き、各段の枝数の最大値が最小テストケース数だと示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 540,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 2,
+      "idea": "アクティビティを行・要員を列に R/A/C/I を埋め、A が1人でない行の見つけ方を添える",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 582,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "品目を降順の棒で並べ、累計構成比の折れ線を重ねて 70% 到達点で A 群を切る位置を示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 608,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "3領域を行に、担う内容と具体的スキル例（分析手法の選択、システム実装）を対応させた表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 610,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "6つの手続を一列に並べ、実際原価の計算が差額の計算より前に来ることを示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 614,
+      "type": "B",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "整列済みの表を帯で描き、中央と比較して探索範囲が半分ずつ狭まる様子を3段重ねる",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 619,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "時間帯ごとのトランザクション件数を棒で並べ、最大の時間帯の TPS が規模を決めると示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 622,
+      "type": "C",
+      "template": "matrix",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "先行と後続の共有／専有の2×2で、両立するのが共有どうしの1か所だけだと示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 635,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 1,
+      "idea": "戦略→設計→移行→運用を一列に並べ、全体にかかる改善と JIS の呼称の対応を添える",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 652,
+      "type": "B",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "クロックとデータの波形を並べ、各立上りで取り込んだビットがずれる様子を段ごとに示す",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 653,
+      "type": "D",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "発振器→逓倍器→分岐→分周器のブロック図に、各点の周波数が何倍・何分の1かを書き込む",
+      "confidence": "medium"
+    },
+    {
+      "topic_id": 695,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "論理和・論理積・排他的論理和を行、交換則・結合則・分配則を列に成立の可否を埋めた表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 697,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "状態を丸・入力記号を矢印にした遷移図を描き、遷移表の行と列の読む向きを対応付ける",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 701,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "呼出し側と手続側の変数を箱で描き、値呼出しは別の箱、参照呼出しは同じ箱を指す矢印で",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 706,
+      "type": "A",
+      "template": "blocks",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "番地を縦に並べたメモリに ABCD1234 を1バイトずつ置き、リトルとビッグを左右で比べる",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 733,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 2,
+      "idea": "データごとに各条件式の真偽と判定の真偽を並べ、両方の基準を満たす組を見分ける表",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 738,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "横軸に使用年数・縦軸に累計費用の直線を案ごとに引き、交差点で順位が入れ替わると示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 749,
+      "type": "C",
+      "template": "matrix",
+      "benefit": 1,
+      "weakness": 2,
+      "idea": "R を横軸・F を縦軸の格子に分け、セルごとの顧客像と打つべき施策を書き込む",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 751,
+      "type": "C",
+      "template": "matrix",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "コンバージョン率の高低とリテンション率の高低の2×2に、取るべき打ち手を書き込む",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 756,
+      "type": "B",
+      "template": "sequence",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "設計→生産技術→製造を直列に並べた従来と、重ねて並行に進める形を上下で比べて示す",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 763,
+      "type": "C",
+      "template": "table",
+      "benefit": 1,
+      "weakness": 1,
+      "idea": "3つの社会の姿を行に、代表的な指標（テレワーカ数・短時間勤務・育休取得率）を対応",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 767,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "時間を横軸・故障率を縦軸のバスタブ曲線を描き、3期間の名前と各対策を書き込む",
+      "confidence": "high"
+    },
+    {
+      "topic_id": 768,
+      "type": "D",
+      "template": "chart",
+      "benefit": 3,
+      "weakness": 2,
+      "idea": "品目ごとに需要数と仕入数の棒を並べ、需要が上回る分だけを機会損失として数えると示す",
+      "confidence": "high"
+    }
+  ]
+}

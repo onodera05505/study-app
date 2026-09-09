@@ -1,0 +1,242 @@
+{
+  "bundle": 23,
+  "topics": [
+    {
+      "topic_id": 177,
+      "term": "SDN（Software-Defined Networking）",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "ネットワーク管理",
+      "question_count": 1,
+      "related_terms": [
+        "OpenFlow",
+        "NFV（Network Functions Virtualization）",
+        "SD-WAN（Software DefinedWAN）",
+        "仮想スイッチ"
+      ],
+      "questions": [
+        {
+          "exam": "令和6年度 春期",
+          "number": 34,
+          "text": "OpenFlow を使った SDN（Software-Defined Networking）の説明として，適切なものはどれか。",
+          "choices": {
+            "ア": "単一の物理サーバ内の仮想サーバ同士が，外部のネットワーク機器を経由せずに，物理サーバ内部のソフトウェアで実現された仮想スイッチを経由して，通信する方式",
+            "イ": "データを転送するネットワーク機器とは分離したソフトウェアによって，ネットワーク機器を集中的に制御，管理するアーキテクチャ",
+            "ウ": "プロトコルの文法を形式言語を使って厳密に定義する，ISO で標準化された通信プロトコルの規格",
+            "エ": "ルータやスイッチの機器内部で動作するソフトウェアを，オープンソースソフトウェア（OSS）で実現する方式"
+          },
+          "answer": "イ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 178,
+      "term": "arp",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "ネットワーク管理",
+      "question_count": 1,
+      "related_terms": [
+        "ping",
+        "netstat",
+        "ifconfig",
+        "物理アドレス"
+      ],
+      "questions": [
+        {
+          "exam": "令和6年度 秋期",
+          "number": 36,
+          "text": "IPv4 の LAN に接続されているプリンターの MAC アドレスを，同一 LAN 上の PC から調べるときに使用するコマンドはどれか。ここで，PC はこのプリンターを直前に使用しており，プリンターの IP アドレスは分かっているものとする。",
+          "choices": {
+            "ア": "arp",
+            "イ": "ipconfig 又は ifconfig",
+            "ウ": "netstat",
+            "エ": "ping"
+          },
+          "answer": "ア",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 179,
+      "term": "base64",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "ネットワーク応用",
+      "question_count": 1,
+      "related_terms": [
+        "MIME",
+        "SMTP",
+        "HTMLメール（MHTML）"
+      ],
+      "questions": [
+        {
+          "exam": "令和7年度 春期",
+          "number": 34,
+          "text": "30k バイトの JPEG ファイルを電子メールに添付するとき，実際の転送データはおよそ何 k バイトになるか。ここで，添付ファイルは MIME base64 を用いてエンコーディングされるものとする。",
+          "choices": {
+            "ア": "20",
+            "イ": "30",
+            "ウ": "40",
+            "エ": "60"
+          },
+          "answer": "ウ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 180,
+      "term": "CRL（Certificate Revocation List：証明書失効リスト）",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ",
+      "question_count": 1,
+      "related_terms": [
+        "OCSP",
+        "デジタル証明書（公開鍵証明書）",
+        "CA（Certification Authority：認証局）",
+        "サーバ証明書"
+      ],
+      "questions": [
+        {
+          "exam": "令和7年度 秋期",
+          "number": 39,
+          "text": "CRLに関する記述のうち，適切なものはどれか。",
+          "choices": {
+            "ア": "RFC 5280では，認証局は，発行したデジタル証明書のうち失効したものについては，シリアル番号を失効後1年間CRLに記載するよう義務付けている。",
+            "イ": "Webサイトの利用者のWebブラウザは，そのWebサイトにサーバ証明書を発行した認証局の公開鍵がWebブラウザに組み込まれていれば，CRLを参照しなくてもよい。",
+            "ウ": "認証局は，発行した全てのデジタル証明書の有効期限をCRLに記載する。",
+            "エ": "認証局は，有効期限内のデジタル証明書が失効されたとき，そのシリアル番号をCRLに記載する。"
+          },
+          "answer": "エ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 181,
+      "term": "CRYPTREC 暗号リスト",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ",
+      "question_count": 1,
+      "related_terms": [
+        "暗号方式（暗号化（暗号鍵），復号（復号鍵），共通鍵暗号方式（共通鍵），公開鍵暗号方式（公開鍵，秘密鍵））",
+        "危殆たい化"
+      ],
+      "questions": [
+        {
+          "exam": "令和7年度 春期",
+          "number": 35,
+          "text": "デジタル庁，総務省及び経済産業省が策定した“電子政府における調達のために参照すべき暗号のリスト（CRYPTREC 暗号リスト）”を構成する暗号リストの説明のうち，適切なものはどれか。",
+          "choices": {
+            "ア": "推奨候補暗号リストとは，CRYPTREC によって安全性及び実装性能が確認された暗号技術のうち，市場における利用実績が十分であるか今後の普及が見込まれると判断され，当該技術の利用を推奨するもののリストである。",
+            "イ": "推奨候補暗号リストとは，候補段階に格下げされ，互換性維持目的で利用する暗号技術のリストである。",
+            "ウ": "電子政府推奨暗号リストとは，CRYPTREC によって安全性及び実装性能が確認された暗号技術のうち，市場における利用実績が十分であるか今後の普及が見込まれると判断され，当該技術の利用を推奨するもののリストである。",
+            "エ": "電子政府推奨暗号リストとは，推奨段階に格下げされ，互換性維持目的で利用する暗号技術のリストである。"
+          },
+          "answer": "ウ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 182,
+      "term": "EMV 3-Dセキュア（3D セキュア 2.0）",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ",
+      "question_count": 1,
+      "related_terms": [
+        "リスクベース認証",
+        "多段階認証",
+        "CAPTCHA",
+        "デジタル署名（署名鍵，検証鍵）"
+      ],
+      "questions": [
+        {
+          "exam": "令和6年度 春期",
+          "number": 35,
+          "text": "3D セキュア 2.0（EMV 3-D セキュア）は，オンラインショッピングにおけるクレジットカード決済時に，不正取引を防止するための本人認証サービスである。3D セキュア 2.0 で利用される本人認証の特徴はどれか。",
+          "choices": {
+            "ア": "利用者がカード会社による本人認証に用いるパスワードを忘れた場合でも，安全にパスワードを再発行することができる。",
+            "イ": "利用者の過去の取引履歴や決済に用いているデバイスの情報から不正利用や高リスクと判断される場合に，カード会社が追加の本人認証を行う。",
+            "ウ": "利用者の過去の取引履歴や決済に用いているデバイスの情報にかかわらず，カード会社がパスワードと生体認証を併用した本人認証を行う。",
+            "エ": "利用者の過去の取引履歴や決済に用いているデバイスの情報に加えて，操作しているのが人間であることを確認した上で，カード会社が追加の本人認証を行う。"
+          },
+          "answer": "イ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 183,
+      "term": "OCSP",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ",
+      "question_count": 1,
+      "related_terms": [
+        "CRL（Certificate Revocation List：証明書失効リスト）",
+        "PKI（Public Key Infrastructure：公開鍵基盤）",
+        "デジタル証明書（公開鍵証明書）",
+        "CA（Certification Authority：認証局）"
+      ],
+      "questions": [
+        {
+          "exam": "令和7年度 春期",
+          "number": 38,
+          "text": "PKI を構成する OCSP を利用する目的はどれか。",
+          "choices": {
+            "ア": "誤って破棄してしまった秘密鍵の再発行処理の進捗状況を問い合わせる。",
+            "イ": "デジタル証明書から生成した鍵情報の交換が OCSP クライアントと OCSP レスポンダーの間で失敗した際，認証状態を確認する。",
+            "ウ": "デジタル証明書が失効しているかどうかの状態を問い合わせる。",
+            "エ": "有効期限が切れたデジタル証明書の更新処理の進捗状況を確認する。"
+          },
+          "answer": "ウ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 184,
+      "term": "OS コマンドインジェクション",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ",
+      "question_count": 1,
+      "related_terms": [
+        "SQL インジェクション",
+        "クロスサイトスクリプティング",
+        "ディレクトリトラバーサル",
+        "CGI"
+      ],
+      "questions": [
+        {
+          "exam": "令和7年度 春期",
+          "number": 36,
+          "text": "Web サーバのログを分析したところ，Web サーバへの攻撃と思われる HTTP リクエストヘッダーが記録されていた。次の HTTP リクエストヘッダーから推測できる，攻撃者が悪用しようとしていた可能性が高い脆弱性はどれか。ここで，HTTP リクエストヘッダー中の“%20”は空白を意味する。\n〔HTTP リクエストヘッダーの一部〕\nGET /cgi-bin/submit.cgi?user=;cat%20/etc/passwd HTTP/1.1\nAccept: */*\nAccept-Language: ja\nUA-CPU: x86\nAccept-Encoding: gzip, deflate\nUser-Agent: （省略）\nHost: test.example.com\nConnection: Keep-Alive",
+          "choices": {
+            "ア": "HTTP ヘッダーインジェクション（HTTP Response Splitting）",
+            "イ": "OS コマンドインジェクション",
+            "ウ": "SQL インジェクション",
+            "エ": "クロスサイトスクリプティング"
+          },
+          "answer": "イ",
+          "figure_description": null
+        }
+      ]
+    }
+  ]
+}

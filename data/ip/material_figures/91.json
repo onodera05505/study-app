@@ -1,0 +1,23 @@
+{
+  "topic_id": 91,
+  "term": "API エコノミー",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "自社の機能を API として外部に公開すると、他社のサービスから呼び出され、企業をまたいだ新しい価値が生まれる。",
+      "nodes": [
+        {"id": "s", "label": "自社のシステム\n例：銀行の口座", "row": 0, "col": 0},
+        {"id": "a", "label": "オープン API\n接続仕様を外部に公開", "row": 0, "col": 1, "emphasis": true},
+        {"id": "c1", "label": "家計簿アプリ\n（他社）", "row": 0, "col": 2},
+        {"id": "c2", "label": "決済サービス\n（他社）", "row": 1, "col": 2}
+      ],
+      "edges": [
+        {"from": "s", "to": "a", "label": "機能を公開"},
+        {"from": "a", "to": "c1", "label": "残高を取得", "arrow": "both"},
+        {"from": "a", "to": "c2", "label": "支払を依頼", "arrow": "both"}
+      ]
+    }
+  ]
+}

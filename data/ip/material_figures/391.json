@@ -1,0 +1,23 @@
+{
+  "topic_id": 391,
+  "term": "場合の数",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 計算の解き方（電話番号の桁数）",
+      "caption": "020 の3桁も桁数に含めるので、8通りの1桁と10通りの9桁を足して13桁になる。",
+      "nodes": [
+        {"id": "p", "label": "020\n固定の3桁", "row": 0, "col": 0},
+        {"id": "d1", "label": "□\n1〜3・5〜9\n8通り", "row": 0, "col": 1},
+        {"id": "dn", "label": "□□…□\n各桁 0〜9\n10通りが 9桁", "row": 0, "col": 2},
+        {"id": "t", "label": "3 ＋ 1 ＋ 9 ＝ 13桁", "row": 1, "col": 2, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "p", "to": "d1", "arrow": "none"},
+        {"from": "d1", "to": "dn", "arrow": "none"},
+        {"from": "dn", "to": "t", "label": "8 × 10の9乗 ＝ 80億個", "style": "dashed"}
+      ]
+    }
+  ]
+}

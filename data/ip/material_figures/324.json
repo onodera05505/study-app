@@ -1,0 +1,71 @@
+{
+  "topic_id": 324,
+  "term": "KPI （Key Performance Indicator：重要業績評価指標）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### KGI・CSF との関係",
+      "caption": "KGI はゴールそのもの、KPI は途中経過を測る指標。自分の行動で動かせる数字が先行指標。",
+      "nodes": [
+        {
+          "id": "kgi",
+          "label": "KGI\n最終ゴールの数値\n例）売上高",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "csf",
+          "label": "CSF\n達成に効く要因\n例）新規顧客の開拓",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "kpi",
+          "label": "KPI\n途中経過の数値\n例）訪問件数",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "res",
+          "label": "結果指標\n後から出る成果\n例）売上高",
+          "row": 1,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "lead",
+          "label": "先行指標\n今日動かせる活動\n例）訪問件数",
+          "row": 1,
+          "col": 2,
+          "shape": "round"
+        }
+      ],
+      "edges": [
+        {
+          "from": "kgi",
+          "to": "csf",
+          "label": "そのために何が要る？"
+        },
+        {
+          "from": "csf",
+          "to": "kpi",
+          "label": "何の数字で測る？"
+        },
+        {
+          "from": "kgi",
+          "to": "res",
+          "style": "dashed",
+          "arrow": "none"
+        },
+        {
+          "from": "kpi",
+          "to": "lead",
+          "style": "dashed",
+          "arrow": "none"
+        }
+      ]
+    }
+  ]
+}

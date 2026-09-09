@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="348" viewBox="0 0 640 348" role="img">
+<title>ファイルをブロックに分けて複製し、データのある各ノードで Map、その結果を Reduce で集約する。</title>
+<rect x="0.5" y="0.5" width="639" height="347" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(96 20)">
+<polyline points="122,38 162,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="162,38 154,41.6 154,34.4" fill="#1f2937"/>
+<polyline points="230,76 230,99 61,99 61,122" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="61,122 57.4,114 64.6,114" fill="#1f2937"/>
+<polyline points="230,76 230,122" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="230,122 226.4,114 233.6,114" fill="#1f2937"/>
+<polyline points="230,76 230,99 393,99 393,122" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="393,122 389.4,114 396.6,114" fill="#1f2937"/>
+<polyline points="61,178 61,201 230,201 230,224" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="230,224 226.4,216 233.6,216" fill="#1f2937"/>
+<polyline points="230,178 230,224" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="230,224 226.4,216 233.6,216" fill="#1f2937"/>
+<polyline points="393,178 393,201 230,201 230,224" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="230,224 226.4,216 233.6,216" fill="#1f2937"/>
+<polyline points="278,252 345,252" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="345,252 337,255.6 337,248.4" fill="#1f2937"/>
+<rect x="0" y="15" width="122" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="61" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">大きなファイル</text>
+<path d="M 162 9 A 68 9 0 0 0 298 9 L 298 67 A 68 9 0 0 1 162 67 Z" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<path d="M 162 9 A 68 9 0 0 1 298 9" fill="none" stroke="#2563eb" stroke-width="1.8"/>
+<text x="230" y="24.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">HDFS</text>
+<text x="230" y="44.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">ブロックに分割し</text>
+<text x="230" y="64.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">3 か所へ複製</text>
+<rect x="13" y="122" width="96" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="61" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ノード1</text>
+<text x="61" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">Map</text>
+<rect x="182" y="122" width="96" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="230" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ノード2</text>
+<text x="230" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">Map</text>
+<rect x="345" y="122" width="96" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="393" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ノード3</text>
+<text x="393" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">Map</text>
+<rect x="182" y="224" width="96" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="230" y="246.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">Reduce</text>
+<text x="230" y="266.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">結果を集約</text>
+<rect x="345" y="229" width="96" height="46" rx="23" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="393" y="256.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">集計結果</text>
+<rect x="160" y="90" width="140" height="16" rx="3" fill="#ffffff"/>
+<text x="230" y="103.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">データのある場所で処理</text>
+</g>
+<text x="320" y="328" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ファイルをブロックに分けて複製し、データのある各ノードで Map、その結果を Reduce で集約する。</text>
+</svg>

@@ -1,0 +1,23 @@
+{
+  "topic_id": 490,
+  "term": "自己資本比率",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 計算の解き方",
+      "caption": "分母は負債ではなく総資本（＝資産合計 600）。自己資本 240 を総資本で割って 40％になる。",
+      "nodes": [
+        {"id": "h1", "label": "資産の部", "row": 0, "col": 0, "shape": "round"},
+        {"id": "h2", "label": "負債・純資産の部", "row": 0, "col": 1, "shape": "round"},
+        {"id": "a1", "label": "流動資産 100\n固定資産 500", "row": 1, "col": 0},
+        {"id": "b1", "label": "流動負債 160\n固定負債 200", "row": 1, "col": 1},
+        {"id": "a2", "label": "資産合計 600\n＝ 総資本", "row": 2, "col": 0},
+        {"id": "b2", "label": "株主資本 240\n＝ 自己資本", "row": 2, "col": 1, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "b2", "to": "a2", "label": "240 ÷ 600 ＝ 40％"}
+      ]
+    }
+  ]
+}

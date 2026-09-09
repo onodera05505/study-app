@@ -1,0 +1,21 @@
+{
+  "topic_id": 708,
+  "term": "3 層クライアントサーバシステム",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "業務処理をアプリケーションサーバに集めるので、クライアントは画面だけを持てばよい。",
+      "nodes": [
+        {"id": "cl", "label": "クライアント\nプレゼンテーション層", "row": 0, "col": 0},
+        {"id": "ap", "label": "アプリサーバ\nファンクション層", "row": 0, "col": 1, "emphasis": true},
+        {"id": "db", "label": "DB サーバ\nデータ層", "row": 0, "col": 2, "shape": "cylinder"}
+      ],
+      "edges": [
+        {"from": "cl", "to": "ap", "label": "画面の入力", "arrow": "both"},
+        {"from": "ap", "to": "db", "label": "SQL", "arrow": "both"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "topic_id": 354,
+  "term": "多重度",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 多重度の読み方",
+      "caption": "相手を1個に固定して数えた個数を、数えた側の線の端に書く。矢印は数える向きで、逆に読むと答えが入れ替わる。",
+      "nodes": [
+        {"id": "bu", "label": "部門\n部門コード・部門名", "row": 0, "col": 0},
+        {"id": "ri", "label": "所属履歴\n開始日・終了日", "row": 0, "col": 1, "emphasis": true},
+        {"id": "sh", "label": "社員\n社員コード・氏名", "row": 0, "col": 2}
+      ],
+      "edges": [
+        {"from": "bu", "to": "ri", "label": "1 部門あたり 1..*（a）"},
+        {"from": "sh", "to": "ri", "label": "1 社員あたり 1..*（b）"}
+      ]
+    }
+  ]
+}

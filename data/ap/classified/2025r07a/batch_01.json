@@ -1,0 +1,249 @@
+{
+ "exam": "2025r07a",
+ "range": "1-27",
+ "classifications": [
+  {
+   "number": 1,
+   "syllabus_item": 1,
+   "topic_term": "論理関数",
+   "topic_is_new": false,
+   "related_terms": ["カルノー図", "論理積", "論理和", "否定"],
+   "confidence": "medium",
+   "notes": "問うているのはカルノー図の読み方だが、用語例に「カルノー図」が無いため項目1の用語例「論理関数」に丸めた。項目23（ハードウェア）の「論理式」も候補だが、純粋な論理関数の簡単化なので基礎理論側を採用。"
+  },
+  {
+   "number": 2,
+   "syllabus_item": 2,
+   "topic_term": "待ち行列理論",
+   "topic_is_new": true,
+   "related_terms": ["M/M/1", "平均到着率", "平均サービス率", "利用率"],
+   "confidence": "high",
+   "notes": "項目2の用語例に「サービス時間」「到着間隔」「平均到着率」「平均サービス率」があり待ち行列理論の範囲であることは確実だが、論点名になる語が無いため新設。"
+  },
+  {
+   "number": 3,
+   "syllabus_item": 3,
+   "topic_term": "ROC 曲線",
+   "topic_is_new": false,
+   "related_terms": ["偽陽性率", "適合率（Precision）", "再現率（Recall）", "AUC（Area Under the Curve）"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 4,
+   "syllabus_item": 4,
+   "topic_term": "CRC",
+   "topic_is_new": false,
+   "related_terms": ["生成多項式", "パリティチェック", "チェックサム", "ハミング符号"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 5,
+   "syllabus_item": 18,
+   "topic_term": "記憶域管理アルゴリズム（ファーストフィット，ベストフィット，ワーストフィット）",
+   "topic_is_new": false,
+   "related_terms": ["フラグメンテーション", "メモリコンパクション", "実アドレス方式"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 6,
+   "syllabus_item": 7,
+   "topic_term": "線形探索法",
+   "topic_is_new": false,
+   "related_terms": ["平均比較回数", "2 分探索法", "ハッシュ表探索法", "インデックス"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 7,
+   "syllabus_item": 9,
+   "topic_term": "Scala",
+   "topic_is_new": true,
+   "related_terms": ["オブジェクト指向言語", "関数型言語", "スクリプト言語", "Java"],
+   "confidence": "medium",
+   "notes": "OSS として公開されている言語という前置きがあるため項目22（オープンソースソフトウェア）とも取れるが、問うている知識は言語の型付けやパラダイムなので項目9を採用。Scala は用語例に無いため新設。"
+  },
+  {
+   "number": 8,
+   "syllabus_item": 11,
+   "topic_term": "VLIW",
+   "topic_is_new": false,
+   "related_terms": ["スーパースカラ", "命令パイプライン", "MIMD", "RISC"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 9,
+   "syllabus_item": 15,
+   "topic_term": "ユニファイドメモリ方式",
+   "topic_is_new": true,
+   "related_terms": ["フレームバッファ", "主記憶", "グラフィックスモード", "GPU"],
+   "confidence": "medium",
+   "notes": "表示装置まわりの構成なので項目15にしたが、主記憶の共有という観点では項目12（メモリ）も成り立つ。用語例に「フレームバッファ」「ユニファイドメモリ」いずれも無いため新設。"
+  },
+  {
+   "number": 10,
+   "syllabus_item": 5,
+   "topic_term": "パルス計測",
+   "topic_is_new": true,
+   "related_terms": ["回転センサー", "速度センサー", "クロック周波数", "カウンター"],
+   "confidence": "medium",
+   "notes": "センサー出力パルスの周期をクロックでカウントして回転数を求める計測の問題。項目5の用語例にはセンサーの種類しか無く該当語が無いため新設。項目23（ハードウェア）とも迷った。"
+  },
+  {
+   "number": 11,
+   "syllabus_item": 11,
+   "topic_term": "FLOPS",
+   "topic_is_new": false,
+   "related_terms": ["マルチコアプロセッサ", "クラスタ", "スケールアウト", "超並列プロセッサ"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 12,
+   "syllabus_item": 16,
+   "topic_term": "IaC（Infrastructure as Code)",
+   "topic_is_new": false,
+   "related_terms": ["クラウドコンピューティング", "プロビジョニング", "仮想化（ホスト型，ハイパーバイザー型，コンテナ型）", "IaaS"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 13,
+   "syllabus_item": 17,
+   "topic_term": "稼働率",
+   "topic_is_new": true,
+   "related_terms": ["MTBF", "MTTR", "バスタブ曲線", "信頼性ブロック図"],
+   "confidence": "high",
+   "notes": "MTBF/MTTR/稼働率は項目17（システムの評価指標）の範囲だが用語例に無いため「稼働率」を新設。"
+  },
+  {
+   "number": 14,
+   "syllabus_item": 17,
+   "topic_term": "容量・能力管理",
+   "topic_is_new": false,
+   "related_terms": ["キャパシティプランニング", "サイジング", "モニタリング", "スループット"],
+   "confidence": "medium",
+   "notes": "問題文の語は「キャパシティプランニング」。用語例に同語が無く、意味の対応する「容量・能力管理」を採用したので表記の当てはめに迷いがある。"
+  },
+  {
+   "number": 15,
+   "syllabus_item": 18,
+   "topic_term": "処理時間順方式",
+   "topic_is_new": false,
+   "related_terms": ["ターンアラウンドタイム", "SJF（Short Job First）", "ラウンドロビン", "ジョブスケジューラー"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 16,
+   "syllabus_item": 18,
+   "topic_term": "セマフォ",
+   "topic_is_new": true,
+   "related_terms": ["排他制御", "リアルタイム OS", "デッドロック", "タスク管理"],
+   "confidence": "high",
+   "notes": "項目18の用語例に「排他制御」はあるが「セマフォ」は無いため新設。排他制御の具体的手段として粒度が適切と判断。"
+  },
+  {
+   "number": 17,
+   "syllabus_item": 18,
+   "topic_term": "スレッドセーフ",
+   "topic_is_new": true,
+   "related_terms": ["スレッド", "排他制御", "リエントラント", "軽量プロセス"],
+   "confidence": "high",
+   "notes": "用語の意味を問う問題。用語例に無いため新設。"
+  },
+  {
+   "number": 18,
+   "syllabus_item": 18,
+   "topic_term": "デッドロック",
+   "topic_is_new": false,
+   "related_terms": ["排他制御", "資源獲得順序", "タスク管理", "優先順"],
+   "confidence": "high",
+   "notes": "タスクと資源の話なので項目18（OS）。「デッドロック」は項目28・31の用語例にある IPA の用語なので topic_is_new は false とした。"
+  },
+  {
+   "number": 19,
+   "syllabus_item": 12,
+   "topic_term": "LRU",
+   "topic_is_new": false,
+   "related_terms": ["FIFO", "LFU", "命令キャッシュ", "ページリプレースメント"],
+   "confidence": "medium",
+   "notes": "対象がキャッシュメモリなので項目12にしたが、「LRU」自体は項目18の用語例（ページリプレースメント）に載っている語であり、項目18も成り立つ。"
+  },
+  {
+   "number": 20,
+   "syllabus_item": 23,
+   "topic_term": "LED",
+   "topic_is_new": false,
+   "related_terms": ["順方向電圧", "回路素子（抵抗，コンデンサ，コイル，トランスほか）", "消費電力", "電源回路"],
+   "confidence": "medium",
+   "notes": "実際に問うているのは直列回路の電圧配分と消費電力の計算。用語例で最も近いのが「LED」なのでこれを採用したが、論点名としての粒度に迷いがある。"
+  },
+  {
+   "number": 21,
+   "syllabus_item": 23,
+   "topic_term": "論理式",
+   "topic_is_new": false,
+   "related_terms": ["論理積", "否定", "立上りエッジ検出", "チャタリング"],
+   "confidence": "medium",
+   "notes": "組込みシステムの入力処理を論理式で表す問題。項目1（離散数学）の「論理関数」とも取れるが、スイッチ入力という組込みハードウェア寄りの文脈なので項目23を採用。"
+  },
+  {
+   "number": 22,
+   "syllabus_item": 23,
+   "topic_term": "NAND 回路",
+   "topic_is_new": false,
+   "related_terms": ["タイミングチャート", "真理値表", "NOR 回路", "XOR 回路"],
+   "confidence": "medium",
+   "notes": "タイミングチャートから論理回路を特定する問題で、答えが NAND。論点を「タイミングチャート」にする選び方もあり、どちらを主題と見るかで迷った。"
+  },
+  {
+   "number": 23,
+   "syllabus_item": 23,
+   "topic_term": "ハードウェアタイマー",
+   "topic_is_new": true,
+   "related_terms": ["分周", "クロック周波数", "ダウンカウンター", "割込み"],
+   "confidence": "medium",
+   "notes": "クロックの分周とカウント値から時間を求める組込みハードウェアの問題。用語例に該当語が無いため新設。項目11（プロセッサ）・項目5（計測・制御）とも迷った。"
+  },
+  {
+   "number": 24,
+   "syllabus_item": 24,
+   "topic_term": "ハンバーガーメニュー",
+   "topic_is_new": true,
+   "related_terms": ["アコーディオン", "プルダウンメニュー", "ポップアップメニュー", "ナビゲーション"],
+   "confidence": "high",
+   "notes": "用語例に無いため新設。項目24の GUI 部品の並び（アコーディオン、プルダウンメニューなど）と同じ粒度。"
+  },
+  {
+   "number": 25,
+   "syllabus_item": 5,
+   "topic_term": "サンプリング定理",
+   "topic_is_new": false,
+   "related_terms": ["A/D変換", "標本化周波数", "PCM（Pulse Code Modulation：パルス符号変調）", "量子化ビット数"],
+   "confidence": "medium",
+   "notes": "オーディオ信号のデジタル化という題材なので項目26（マルチメディア技術：標本化周波数、サンプリング）も候補。問うている知識が標本化定理そのものなので項目5を採用。"
+  },
+  {
+   "number": 26,
+   "syllabus_item": 32,
+   "topic_term": "BASE特性",
+   "topic_is_new": false,
+   "related_terms": ["結果整合性", "CAP定理", "NoSQL データベース（Apache Cassandra，Apache CouchDB，MongoDB，Redis，Neo4j ほか）", "2 相コミットメント"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 27,
+   "syllabus_item": 31,
+   "topic_term": "ハッシュインデックス",
+   "topic_is_new": false,
+   "related_terms": ["B-tree インデックス", "ユニークインデックス", "クラスタ化インデックス", "ビットマップインデックス"],
+   "confidence": "high",
+   "notes": null
+  }
+ ]
+}

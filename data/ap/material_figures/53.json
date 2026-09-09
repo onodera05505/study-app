@@ -1,0 +1,179 @@
+{
+  "topic_id": 53,
+  "term": "論理関数",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 例で確かめる",
+      "caption": "1が並ぶマスを大きな矩形で囲むと、AB＝00 の行の両端（左端と右端は隣どうし）が ¬A・¬B・¬D、中央の4マスが B・D となり、和が ¬A・¬B・¬D＋B・D になる。",
+      "nodes": [
+        {
+          "id": "h",
+          "label": "AB＼CD",
+          "row": 0,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "c0",
+          "label": "00",
+          "row": 0,
+          "col": 1,
+          "shape": "round"
+        },
+        {
+          "id": "c1",
+          "label": "01",
+          "row": 0,
+          "col": 2,
+          "shape": "round"
+        },
+        {
+          "id": "c2",
+          "label": "11",
+          "row": 0,
+          "col": 3,
+          "shape": "round"
+        },
+        {
+          "id": "c3",
+          "label": "10",
+          "row": 0,
+          "col": 4,
+          "shape": "round"
+        },
+        {
+          "id": "r0",
+          "label": "00",
+          "row": 1,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "m00",
+          "label": "1",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "m01",
+          "label": "0",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "m02",
+          "label": "0",
+          "row": 1,
+          "col": 3
+        },
+        {
+          "id": "m03",
+          "label": "1",
+          "row": 1,
+          "col": 4,
+          "emphasis": true
+        },
+        {
+          "id": "r1",
+          "label": "01",
+          "row": 2,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "m10",
+          "label": "0",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "m11",
+          "label": "1",
+          "row": 2,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "m12",
+          "label": "1",
+          "row": 2,
+          "col": 3,
+          "emphasis": true
+        },
+        {
+          "id": "m13",
+          "label": "0",
+          "row": 2,
+          "col": 4
+        },
+        {
+          "id": "r2",
+          "label": "11",
+          "row": 3,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "m20",
+          "label": "0",
+          "row": 3,
+          "col": 1
+        },
+        {
+          "id": "m21",
+          "label": "1",
+          "row": 3,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "m22",
+          "label": "1",
+          "row": 3,
+          "col": 3,
+          "emphasis": true
+        },
+        {
+          "id": "m23",
+          "label": "0",
+          "row": 3,
+          "col": 4
+        },
+        {
+          "id": "r3",
+          "label": "10",
+          "row": 4,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "m30",
+          "label": "0",
+          "row": 4,
+          "col": 1
+        },
+        {
+          "id": "m31",
+          "label": "0",
+          "row": 4,
+          "col": 2
+        },
+        {
+          "id": "m32",
+          "label": "0",
+          "row": 4,
+          "col": 3
+        },
+        {
+          "id": "m33",
+          "label": "0",
+          "row": 4,
+          "col": 4
+        }
+      ]
+    }
+  ]
+}

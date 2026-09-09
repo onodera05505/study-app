@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="370" viewBox="0 0 640 370" role="img">
+<title>訓練データの精度は上がり続けるのに未知データの精度が下がり始める、この乖離が過学習で、増やすべきは学習量ではなく訓練データの量。</title>
+<rect x="0.5" y="0.5" width="639" height="369" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<line x1="45.8" y1="216" x2="588" y2="216" stroke="#e5e7eb" stroke-width="1"/>
+<text x="37.8" y="220.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">0.5</text>
+<line x1="45.8" y1="174" x2="588" y2="174" stroke="#e5e7eb" stroke-width="1"/>
+<text x="37.8" y="178.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">0.6</text>
+<line x1="45.8" y1="132" x2="588" y2="132" stroke="#e5e7eb" stroke-width="1"/>
+<text x="37.8" y="136.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">0.7</text>
+<line x1="45.8" y1="90" x2="588" y2="90" stroke="#e5e7eb" stroke-width="1"/>
+<text x="37.8" y="94.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">0.8</text>
+<line x1="45.8" y1="48" x2="588" y2="48" stroke="#e5e7eb" stroke-width="1"/>
+<text x="37.8" y="52.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">0.9</text>
+<line x1="45.8" y1="6" x2="588" y2="6" stroke="#e5e7eb" stroke-width="1"/>
+<text x="37.8" y="10.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">1</text>
+<line x1="45.8" y1="6" x2="45.8" y2="216" stroke="#1f2937" stroke-width="1.2"/>
+<line x1="45.8" y1="216" x2="588" y2="216" stroke="#1f2937" stroke-width="1.2"/>
+<line x1="262.68" y1="6" x2="262.68" y2="216" stroke="#2563eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="264.68" y="5" width="90" height="17" rx="3" fill="#ffffff"/>
+<text x="267.68" y="18" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="start">ここから過学習</text>
+<path d="M 45.8 165.6 L 154.24 73.2 L 262.68 39.6 L 371.12 22.8 L 479.56 14.4 L 588 10.2" fill="none" stroke="#1f2937" stroke-width="1.8"/>
+<circle cx="45.8" cy="165.6" r="2.6" fill="#1f2937"/>
+<circle cx="154.24" cy="73.2" r="2.6" fill="#1f2937"/>
+<circle cx="262.68" cy="39.6" r="2.6" fill="#1f2937"/>
+<circle cx="371.12" cy="22.8" r="2.6" fill="#1f2937"/>
+<circle cx="479.56" cy="14.4" r="2.6" fill="#1f2937"/>
+<circle cx="588" cy="10.2" r="2.6" fill="#1f2937"/>
+<path d="M 45.8 174 L 154.24 90 L 262.68 64.8 L 371.12 73.2 L 479.56 98.4 L 588 127.8" fill="none" stroke="#2563eb" stroke-width="2.6"/>
+<circle cx="45.8" cy="174" r="2.6" fill="#2563eb"/>
+<circle cx="154.24" cy="90" r="2.6" fill="#2563eb"/>
+<circle cx="262.68" cy="64.8" r="2.6" fill="#2563eb"/>
+<circle cx="371.12" cy="73.2" r="2.6" fill="#2563eb"/>
+<circle cx="479.56" cy="98.4" r="2.6" fill="#2563eb"/>
+<circle cx="588" cy="127.8" r="2.6" fill="#2563eb"/>
+<text x="45.8" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">0</text>
+<text x="154.24" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">20</text>
+<text x="262.68" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">40</text>
+<text x="371.12" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">60</text>
+<text x="479.56" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">80</text>
+<text x="588" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">100</text>
+<text x="316.9" y="256" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">学習の進み（回数）</text>
+<text x="16" y="-4" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="start" font-weight="600">正解率</text>
+<line x1="173.9" y1="278" x2="193.9" y2="278" stroke="#1f2937" stroke-width="2.6"/>
+<text x="199.9" y="282.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">訓練データでの精度</text>
+<line x1="325.9" y1="278" x2="345.9" y2="278" stroke="#2563eb" stroke-width="2.6"/>
+<text x="351.9" y="282.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">未知データでの精度</text>
+</g>
+<text x="320" y="334" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">訓練データの精度は上がり続けるのに未知データの精度が下がり始める、この乖離が過学習で、増やすべきは学</text>
+<text x="320" y="350" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">習量ではなく訓練データの量。</text>
+</svg>

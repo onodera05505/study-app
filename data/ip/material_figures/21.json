@@ -1,0 +1,78 @@
+{
+  "topic_id": 21,
+  "term": "プロジェクトスケジュールマネジメント",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 計算の解き方",
+      "caption": "要員が3名なので、2名ずつ要る B と C は同時に着手できない。A→B→（C と D）→E→F の5段で15日。",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "A\n1名・3日",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "b",
+          "label": "B\n2名・3日",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "c",
+          "label": "C\n2名・3日",
+          "row": 2,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "d",
+          "label": "D\n1名・3日",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "e",
+          "label": "E\n2名・3日",
+          "row": 2,
+          "col": 2
+        },
+        {
+          "id": "f",
+          "label": "F\n1名・3日",
+          "row": 1,
+          "col": 3
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "b"
+        },
+        {
+          "from": "a",
+          "to": "c"
+        },
+        {
+          "from": "b",
+          "to": "d"
+        },
+        {
+          "from": "c",
+          "to": "e"
+        },
+        {
+          "from": "d",
+          "to": "f"
+        },
+        {
+          "from": "e",
+          "to": "f"
+        }
+      ]
+    }
+  ]
+}

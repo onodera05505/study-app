@@ -1,0 +1,23 @@
+{
+  "topic_id": 431,
+  "term": "スタック",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### LIFO のしくみ",
+      "caption": "PUSH も POP も一番上だけに効くので、下にある a を b より先に取り出すことはできない。",
+      "nodes": [
+        {"id": "op", "label": "PUSH（積む）\nPOP（取り出す）", "row": 0, "col": 1, "shape": "round"},
+        {"id": "c", "label": "c ← 最後に入れた", "row": 0, "col": 0, "emphasis": true},
+        {"id": "b", "label": "b", "row": 1, "col": 0},
+        {"id": "a", "label": "a ← 最初に入れた", "row": 2, "col": 0}
+      ],
+      "edges": [
+        {"from": "op", "to": "c", "label": "出し入れは上端だけ", "arrow": "both"},
+        {"from": "c", "to": "b", "arrow": "none"},
+        {"from": "b", "to": "a", "arrow": "none"}
+      ]
+    }
+  ]
+}

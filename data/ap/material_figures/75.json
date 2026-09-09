@@ -1,0 +1,23 @@
+{
+  "topic_id": 75,
+  "term": "線形探索法",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 計算の解き方",
+      "caption": "第1段の対象はブロックの個数 n/m 件で平均 n/(2m) 回、第2段の対象はブロック内の m 件で平均 m/2 回、足すと m/2＋n/(2m) 回。",
+      "nodes": [
+        {"id": "g1", "label": "ブロック1\nm 個", "row": 0, "col": 0},
+        {"id": "g2", "label": "…\nブロックは\n全部で n/m 個", "row": 0, "col": 1},
+        {"id": "g3", "label": "ブロック n/m\nm 個", "row": 0, "col": 2},
+        {"id": "d", "label": "この中を線形探索\n平均 m/2 回", "row": 1, "col": 2, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "g1", "to": "g2", "label": "最後尾を比較"},
+        {"from": "g2", "to": "g3", "label": "平均 n/(2m) 回"},
+        {"from": "g3", "to": "d", "label": "見つかった"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="354" viewBox="0 0 640 354" role="img">
+<title>サイト側が書き込んだ cookie を次のアクセスで送り返すので、同じ利用者だと分かる。</title>
+<rect x="0.5" y="0.5" width="639" height="353" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(120.5 20)">
+<line x1="70.4" y1="34" x2="70.4" y2="286" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="349.6" y1="34" x2="349.6" y2="286" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="140.8" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="70.4" y="11.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">利用者の PC</text>
+<text x="70.4" y="31.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">（Web ブラウザ）</text>
+<rect x="300.2" y="0" width="98.8" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="349.6" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">Web サイト</text>
+<polyline points="73.4,68 346.6,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="346.6,68 338.6,71.6 338.6,64.4" fill="#1f2937"/>
+<text x="210" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 1 回目のアクセス</text>
+<polyline points="346.6,108 73.4,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="73.4,108 81.4,104.4 81.4,111.6" fill="#1f2937"/>
+<text x="210" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. cookie（識別用のデータ）を渡す</text>
+<rect x="134" y="113" width="152" height="16" rx="3" fill="#ffffff"/>
+<text x="210" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">書き込ませるのはサイト側</text>
+<polyline points="70.4,156 96.4,156 96.4,170 72.4,170" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="72.4,170 80.4,166.4 80.4,173.6" fill="#1f2937"/>
+<text x="104.4" y="164" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">3. PC に保存</text>
+<polyline points="73.4,198 346.6,198" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="346.6,198 338.6,201.6 338.6,194.4" fill="#1f2937"/>
+<text x="210" y="191" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 2 回目のアクセス（cookie を自動で送信）</text>
+<polyline points="346.6,238 73.4,238" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="73.4,238 81.4,234.4 81.4,241.6" fill="#1f2937"/>
+<text x="210" y="231" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. 同じ利用者だと分かる</text>
+<rect x="104" y="243" width="212" height="16" rx="3" fill="#ffffff"/>
+<text x="210" y="256.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ログイン状態やカートの中身を保てる</text>
+</g>
+<text x="320" y="334" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">サイト側が書き込んだ cookie を次のアクセスで送り返すので、同じ利用者だと分かる。</text>
+</svg>

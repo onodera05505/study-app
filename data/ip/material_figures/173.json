@@ -1,0 +1,121 @@
+{
+  "topic_id": 173,
+  "term": "RAID",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 3つの方式の違い",
+      "caption": "1台500Gバイトの4台構成でも使える容量は方式で変わり、RAID5 はパリティ1台分を引いて500G×3＝1.5Tバイト。",
+      "nodes": [
+        {
+          "id": "r0",
+          "label": "RAID0\nストライピング\n使える容量 2T",
+          "row": 0,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "r0a",
+          "label": "A",
+          "row": 0,
+          "col": 1,
+          "shape": "cylinder"
+        },
+        {
+          "id": "r0b",
+          "label": "B",
+          "row": 0,
+          "col": 2,
+          "shape": "cylinder"
+        },
+        {
+          "id": "r0c",
+          "label": "C",
+          "row": 0,
+          "col": 3,
+          "shape": "cylinder"
+        },
+        {
+          "id": "r0d",
+          "label": "D",
+          "row": 0,
+          "col": 4,
+          "shape": "cylinder"
+        },
+        {
+          "id": "r1",
+          "label": "RAID1\nミラーリング\n使える容量 1T",
+          "row": 1,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "r1a",
+          "label": "A",
+          "row": 1,
+          "col": 1,
+          "shape": "cylinder"
+        },
+        {
+          "id": "r1b",
+          "label": "A",
+          "row": 1,
+          "col": 2,
+          "shape": "cylinder"
+        },
+        {
+          "id": "r1c",
+          "label": "B",
+          "row": 1,
+          "col": 3,
+          "shape": "cylinder"
+        },
+        {
+          "id": "r1d",
+          "label": "B",
+          "row": 1,
+          "col": 4,
+          "shape": "cylinder"
+        },
+        {
+          "id": "r5",
+          "label": "RAID5\nパリティを分散\n使える容量 1.5T",
+          "row": 2,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "r5a",
+          "label": "A",
+          "row": 2,
+          "col": 1,
+          "shape": "cylinder"
+        },
+        {
+          "id": "r5b",
+          "label": "B",
+          "row": 2,
+          "col": 2,
+          "shape": "cylinder"
+        },
+        {
+          "id": "r5c",
+          "label": "C",
+          "row": 2,
+          "col": 3,
+          "shape": "cylinder"
+        },
+        {
+          "id": "r5d",
+          "label": "パリティ",
+          "row": 2,
+          "col": 4,
+          "shape": "cylinder",
+          "emphasis": true
+        }
+      ],
+      "edges": []
+    }
+  ]
+}

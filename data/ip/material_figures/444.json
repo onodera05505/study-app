@@ -1,0 +1,48 @@
+{
+  "topic_id": 444,
+  "term": "NAT",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "ルーターが LAN 側のプライベート IP アドレスをインターネット側のグローバル IP に書き換える。",
+      "nodes": [
+        {
+          "id": "pc",
+          "label": "社内の PC\n192.168.0.2",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "rt",
+          "label": "ルーター\n（NAT）",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "net",
+          "label": "インターネット\n203.0.113.5",
+          "row": 0,
+          "col": 2,
+          "shape": "cloud"
+        }
+      ],
+      "edges": [
+        {
+          "from": "pc",
+          "to": "rt",
+          "label": "プライベート IP",
+          "arrow": "both"
+        },
+        {
+          "from": "rt",
+          "to": "net",
+          "label": "グローバル IP",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "topic_id": 535,
+  "term": "状態遷移表",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### たどり方の手順",
+      "caption": "表の空欄は自分に留まる意味。② で高速運転のまま留まるのを取り違えなければ、最後は一時停止になる。",
+      "nodes": [
+        {
+          "id": "rd",
+          "label": "レディ\n（1）",
+          "row": 0,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "hi",
+          "label": "高速運転\n（2）",
+          "row": 0,
+          "col": 1,
+          "shape": "round"
+        },
+        {
+          "id": "lo",
+          "label": "低速運転\n（3）",
+          "row": 0,
+          "col": 2,
+          "shape": "round"
+        },
+        {
+          "id": "ps",
+          "label": "一時停止\n（4）",
+          "row": 1,
+          "col": 2,
+          "shape": "round",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "rd",
+          "to": "hi",
+          "label": "① メッセージ1：運転開始"
+        },
+        {
+          "from": "hi",
+          "to": "hi",
+          "label": "② 表が空欄：変化なし"
+        },
+        {
+          "from": "hi",
+          "to": "lo",
+          "label": "③ 50℃以上：減速"
+        },
+        {
+          "from": "lo",
+          "to": "ps",
+          "label": "④⑥ メッセージ2：一時停止"
+        },
+        {
+          "from": "ps",
+          "to": "lo",
+          "label": "⑤ 40℃未満"
+        }
+      ]
+    }
+  ]
+}

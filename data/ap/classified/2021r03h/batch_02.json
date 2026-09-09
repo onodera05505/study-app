@@ -1,0 +1,384 @@
+{
+  "exam": "2021r03h",
+  "range": "28-54",
+  "classifications": [
+    {
+      "number": 28,
+      "syllabus_item": 28,
+      "topic_term": "グラフデータベース",
+      "topic_is_new": false,
+      "related_terms": [
+        "NoSQL データベース（Apache Cassandra，Apache CouchDB，MongoDB，Redis，Neo4j ほか）",
+        "ドキュメント指向データベース",
+        "キーバリュー型データベース",
+        "列指向データベース"
+      ],
+      "confidence": "high",
+      "notes": "NoSQL の四つの型を比較させ、ノード・リレーション・プロパティで構造化するグラフ指向 DB を選ばせる問題。項目28の用語例「グラフデータベース」をそのままコピーした。既存論点「ドキュメント指向データベース」「列指向データベース」と同じ粒度で並ぶ。"
+    },
+    {
+      "number": 29,
+      "syllabus_item": 29,
+      "topic_term": "概念データモデル",
+      "topic_is_new": false,
+      "related_terms": [
+        "多重度",
+        "エンティティ",
+        "リレーションシップ",
+        "UML"
+      ],
+      "confidence": "medium",
+      "notes": "顧客・注文・注文明細・商品を UML クラス図の a〜d に当てはめる問題。問題文自身が「概念データモデルで表現する」と言っており、項目29の用語例「概念データモデル」をそのままコピーした。解く鍵は 1 と * の読み取りなので既存論点「多重度」（項目29）に寄せる読み方もあり、そちらは related_terms に入れた。"
+    },
+    {
+      "number": 30,
+      "syllabus_item": 29,
+      "topic_term": "実行計画",
+      "topic_is_new": true,
+      "related_terms": [
+        "統計情報",
+        "コストベースオプティマイザ",
+        "索引",
+        "性能改善ポイント"
+      ],
+      "confidence": "medium",
+      "notes": "コストベースのオプティマイザが SQL の実行計画を作るのに必要なものを選ばせる問題（正解は統計情報）。項目29・30のどちらの用語例にも「実行計画」「オプティマイザ」「統計情報」が無いため新規論点にした。物理設計・性能改善の知識なので項目29（用語例に性能評価・性能改善ポイントがある）を選んだが、SQL 処理として項目30に置く読み方もある。"
+    },
+    {
+      "number": 31,
+      "syllabus_item": 32,
+      "topic_term": "データレイク",
+      "topic_is_new": false,
+      "related_terms": [
+        "データウェアハウス",
+        "データマート",
+        "非構造化データ",
+        "ETL（Extract/Transform/Load）"
+      ],
+      "confidence": "high",
+      "notes": "データを発生したままの形で格納する、という特徴を選ばせる問題。項目32の用語例「データレイク」をそのままコピーした。項目90（業務分析・データ利活用）にも同語があるが、分野がテクノロジ系と公式に決まっているため項目32を選んだ。"
+    },
+    {
+      "number": 32,
+      "syllabus_item": 14,
+      "topic_term": "BLE（Bluetooth Low Energy）",
+      "topic_is_new": false,
+      "related_terms": [
+        "無線 PAN",
+        "LTE",
+        "電力線通信（PLC）",
+        "PPP"
+      ],
+      "confidence": "high",
+      "notes": "無線 PAN に使う IoT 向け近距離無線を選ばせる問題。項目14の用語例に「無線 PAN」と「BLE（Bluetooth Low Energy）」が並んで載っているため項目14とし、用語例の表記をそのままコピーした。選択肢の LTE は項目37、PLC は項目34、PPP は項目35 に散っているが、正解の中心知識は項目14 にある。"
+    },
+    {
+      "number": 33,
+      "syllabus_item": 35,
+      "topic_term": "IEEE 802.11a/b/g/n/ac/ax",
+      "topic_is_new": false,
+      "related_terms": [
+        "CSMA/CA",
+        "Wi-Fi 4/5/6/6E",
+        "MIMO",
+        "無線 LAN アクセスポイント"
+      ],
+      "confidence": "high",
+      "notes": "IEEE 802.11ac の周波数帯（5 GHz）・最大速度・アクセス制御方式を問う問題。項目35の用語例は規格をスラッシュでまとめた1エントリなので、表記を揺らさないため「IEEE 802.11a/b/g/n/ac/ax」を丸ごとコピーした。括弧内の別概念列挙ではないので分割していない。"
+    },
+    {
+      "number": 34,
+      "syllabus_item": 35,
+      "topic_term": "サブネットマスク",
+      "topic_is_new": false,
+      "related_terms": [
+        "IP アドレス",
+        "サブネットアドレス",
+        "CIDR（Classless Inter Domain Routing）",
+        "ネットワークアドレス"
+      ],
+      "confidence": "high",
+      "notes": "ホストアドレスを a ＆ 〜m で求めることを問うビット演算の問題。マスクのビット反転との論理積という知識が中心なので、項目35の用語例「サブネットマスク」（既存論点、頻出）をそのまま使った。"
+    },
+    {
+      "number": 35,
+      "syllabus_item": 36,
+      "topic_term": "SDN（Software-Defined Networking）",
+      "topic_is_new": false,
+      "related_terms": [
+        "OpenFlow",
+        "NFV（Network Functions Virtualization）",
+        "MIB（Management Information Base：管理情報ベース）",
+        "SD-WAN（Software DefinedWAN）"
+      ],
+      "confidence": "high",
+      "notes": "OpenFlow を用いた SDN の説明を選ばせる問題（制御機能とデータ転送機能の分離＋コントローラによる集中制御）。項目36の用語例をそのままコピーし、既存論点「SDN（Software-Defined Networking）」に合流させた。"
+    },
+    {
+      "number": 36,
+      "syllabus_item": 33,
+      "topic_term": "無線 LAN アクセスポイント",
+      "topic_is_new": false,
+      "related_terms": [
+        "電波干渉",
+        "SSID",
+        "インフラストラクチャモード",
+        "隠れ端末問題"
+      ],
+      "confidence": "medium",
+      "notes": "2.4 GHz 帯で複数 AP を分散設置するときのチャネル番号の割当て方（1・6・11 のように離す）を問う問題。「周波数チャネル」「電波干渉」に相当する用語例が無いため、項目33の用語例「無線 LAN アクセスポイント」（半角空白込みでコピー）を論点にした。規格そのものを問う問29の「IEEE 802.11a/b/g/n/ac/ax」（項目35）とは別論点として分けている。"
+    },
+    {
+      "number": 37,
+      "syllabus_item": 38,
+      "topic_term": "クリックジャッキング",
+      "topic_is_new": false,
+      "related_terms": [
+        "X-Frame-Options",
+        "クロスサイトスクリプティング対策",
+        "Same Origin Policy",
+        "Web システムのセキュリティ対策"
+      ],
+      "confidence": "high",
+      "notes": "クリックジャッキング攻撃の対策（X-Frame-Options の設定）を選ばせる問題。対策なので項目42（セキュリティ実装技術）も候補だが、項目42の用語例に「クリックジャッキング対策」は無く、攻撃名は項目38の用語例に単独で載っているため項目38にした。"
+    },
+    {
+      "number": 38,
+      "syllabus_item": 38,
+      "topic_term": "フットプリンティング",
+      "topic_is_new": true,
+      "related_terms": [
+        "ポートスキャン",
+        "サイバーキルチェーン",
+        "ソーシャルエンジニアリング",
+        "事前調査"
+      ],
+      "confidence": "high",
+      "notes": "攻撃前の情報収集を指す語を選ばせる問題。項目38の用語例は「プロンプトインジェクション・攻撃の準備（フットプリンティング，ポートスキャンほか）」で、括弧内が別概念の列挙にあたるため、設問の主題である「フットプリンティング」1語だけを論点にした（既存論点「ポートスキャン」が同じ括弧から単独で切り出されているのと同じ扱い）。単独表記の用語例が無いので topic_is_new: true。"
+    },
+    {
+      "number": 39,
+      "syllabus_item": 38,
+      "topic_term": "リスクベース認証",
+      "topic_is_new": false,
+      "related_terms": [
+        "多要素認証",
+        "追加認証",
+        "ハードウェアトークン",
+        "可用性"
+      ],
+      "confidence": "high",
+      "notes": "普段と異なる利用条件のときだけ追加の本人認証を求める、という特徴を選ばせる問題。項目38の用語例「リスクベース認証」をそのままコピーした。"
+    },
+    {
+      "number": 40,
+      "syllabus_item": 38,
+      "topic_term": "一方向性",
+      "topic_is_new": true,
+      "related_terms": [
+        "ハッシュ関数（SHA-256（SHA-2），SHA-3，一方向性，第二原像発見困難性，衝突発見困難性ほか）",
+        "原像計算困難性",
+        "衝突発見困難性",
+        "第二原像発見困難性"
+      ],
+      "confidence": "medium",
+      "notes": "暗号学的ハッシュ関数の性質のうち原像計算困難性＝一方向性の説明を選ばせる問題。項目38の用語例は「ハッシュ関数（SHA-256（SHA-2），SHA-3，一方向性，第二原像発見困難性，衝突発見困難性ほか）」で、括弧内はアルゴリズム名と性質名という別概念の列挙なので、設問が主題にしている「一方向性」1語を論点にした。単独表記の用語例が無いので topic_is_new: true。総称の「ハッシュ関数」を採る読み方もあるため confidence は medium。なお項目7の「ハッシュ表探索法」、項目31の「ハッシュインデックス」は別概念で、綴りも異なるため混同の恐れはない。"
+    },
+    {
+      "number": 41,
+      "syllabus_item": 39,
+      "topic_term": "サイバーセキュリティ経営ガイドライン",
+      "topic_is_new": false,
+      "related_terms": [
+        "経営者が認識すべき3原則",
+        "重要10項目",
+        "ISMS",
+        "サイバーセキュリティ基本法"
+      ],
+      "confidence": "high",
+      "notes": "経済産業省と IPA の“サイバーセキュリティ経営ガイドライン（Ver2.0）”の説明を選ばせる問題（3原則と重要10項目）。項目39の用語例をそのままコピーした。"
+    },
+    {
+      "number": 42,
+      "syllabus_item": 39,
+      "topic_term": "JPCERT コーディネーションセンター",
+      "topic_is_new": false,
+      "related_terms": [
+        "CSIRT",
+        "情報セキュリティ早期警戒パートナーシップ",
+        "CRYPTREC 暗号リスト",
+        "NISC"
+      ],
+      "confidence": "high",
+      "notes": "JPCERT/CC の説明（政府機関や企業から独立し、国内のインシデント報告受付・対応支援を行う）を選ばせる問題。項目39の用語例をそのままコピーし、既存論点「JPCERT コーディネーションセンター」に合流させた。"
+    },
+    {
+      "number": 43,
+      "syllabus_item": 38,
+      "topic_term": "IC カード",
+      "topic_is_new": false,
+      "related_terms": [
+        "PIN コード",
+        "磁気ストライプ",
+        "EMV 3-Dセキュア（3D セキュア 2.0）",
+        "オーソリモニタリング"
+      ],
+      "confidence": "medium",
+      "notes": "クレジットカードの対面決済での不正利用対策として、IC チップ搭載カードでサインではなくオフライン PIN を照合する、を選ばせる問題。シラバスに「クレジットカード決済」「オーソリ」の用語例が無く、正解の中心にある項目38の用語例「IC カード」を論点にした（用語例の半角空白込みでコピー）。項目38の用語例「PIN コード」を採る読み方もあるため medium。分野がテクノロジ系と公式に決まっているので、項目86（e-ビジネス）の決済系用語は選べない。"
+    },
+    {
+      "number": 44,
+      "syllabus_item": 38,
+      "topic_term": "セッションハイジャック",
+      "topic_is_new": false,
+      "related_terms": [
+        "セッション ID",
+        "cookie",
+        "ログアウト処理",
+        "Web システムのセキュリティ対策"
+      ],
+      "confidence": "medium",
+      "notes": "ログアウト時に Web サーバ側でセッション ID を無効にする、を選ばせる問題。対策側なので項目42（用語例「Web システムのセキュリティ対策」）も候補だが、問われている中心知識は攻撃の成立条件なので、単独の用語例がある項目38「セッションハイジャック」にした。項目37の用語例「セッション ID」は関連語に留めている。"
+    },
+    {
+      "number": 45,
+      "syllabus_item": 42,
+      "topic_term": "SSL/TLS",
+      "topic_is_new": false,
+      "related_terms": [
+        "クライアント証明書",
+        "サーバ証明書",
+        "ハンドシェイク",
+        "EAP-TLS"
+      ],
+      "confidence": "medium",
+      "notes": "TLS のクライアント認証で、サーバ証明書送付 → クライアント証明書送付 → クライアント認証、の順序を選ばせる問題。「クライアント認証」に相当する用語例が無いため、項目42の用語例「SSL/TLS」をそのままコピーした。項目4にも「SSL/TLS」があるが、実装・手順の知識なので項目42を選んだ。粒度がやや広いので medium。"
+    },
+    {
+      "number": 46,
+      "syllabus_item": 40,
+      "topic_term": "耐タンパ性",
+      "topic_is_new": false,
+      "related_terms": [
+        "IC カード",
+        "プローブ攻撃",
+        "サイドチャネル攻撃（テンペスト攻撃，プローブ攻撃，タイミング攻撃，電力解析攻撃など）",
+        "セキュアエレメント"
+      ],
+      "confidence": "high",
+      "notes": "読出し用プローブの取付けを検出したら保存情報を消去する回路、という対策を選ばせる問題。項目40の用語例「耐タンパ性」をそのままコピーし、既存論点（頻出）に合流させた。"
+    },
+    {
+      "number": 47,
+      "syllabus_item": 43,
+      "topic_term": "状態遷移表",
+      "topic_is_new": false,
+      "related_terms": [
+        "状態遷移図",
+        "イベント",
+        "決定表（デシジョンテーブル）",
+        "組込みシステムの状態管理"
+      ],
+      "confidence": "high",
+      "notes": "状態遷移表を①〜⑥のイベント順にたどって最後の状態を求める問題。項目43の用語例「状態遷移表」をそのままコピーした。項目44・49にも「状態遷移図」があるが、表そのものが単独の用語例として載っているのは項目43。"
+    },
+    {
+      "number": 48,
+      "syllabus_item": 45,
+      "topic_term": "命令網羅",
+      "topic_is_new": false,
+      "related_terms": [
+        "判定条件網羅（decisioncoverage）",
+        "網羅率",
+        "テストケース",
+        "流れ図"
+      ],
+      "confidence": "high",
+      "notes": "3分岐・2分岐・3分岐が直列する流れ図で命令網羅に必要な最小テストケース数を求める問題（各段の枝を最も多い3本に合わせるので3）。項目45の用語例「命令網羅」をそのままコピーした。既存論点「判定条件網羅（decisioncoverage）」と対になる論点。"
+    },
+    {
+      "number": 49,
+      "syllabus_item": 49,
+      "topic_term": "プロダクトオーナー",
+      "topic_is_new": true,
+      "related_terms": [
+        "スクラムチーム",
+        "スクラムマスター",
+        "プロダクトバックログ",
+        "インクリメント"
+      ],
+      "confidence": "high",
+      "notes": "スクラムチームでプロダクトバックログの優先順位を決める役割を選ばせる問題。項目49の用語例は「スクラムチーム（プロダクトオーナー，開発者，スクラムマスター）」で括弧内が別概念（役割）の列挙なので、設問の主題である1語を論点にした。既存論点「スクラムマスター」が同じ括弧から単独で切り出されているのと同じ扱い。単独表記の用語例が無いので topic_is_new: true。問題文の表記は「プロダクトオーナ」だが、表記を揺らさないためシラバス側の「プロダクトオーナー」に統一した。"
+    },
+    {
+      "number": 50,
+      "syllabus_item": 49,
+      "topic_term": "ペアプログラミング",
+      "topic_is_new": true,
+      "related_terms": [
+        "XP（エクストリームプログラミング）",
+        "テスト駆動開発（TDD）",
+        "リファクタリング",
+        "コードレビュー"
+      ],
+      "confidence": "high",
+      "notes": "2人のプログラマが相談・レビューしながら一つのプログラムを開発する、という説明を選ばせる問題。項目49の用語例は「開発のプラクティス（テスト駆動開発（TDD），ペアプログラミング，リファクタリング，…）」で括弧内が別概念の列挙なので1語だけを論点にした。既存論点「テスト駆動開発（TDD）」が同じ括弧から単独で切り出されている。単独表記の用語例が無いので topic_is_new: true。"
+    },
+    {
+      "number": 51,
+      "syllabus_item": 53,
+      "topic_term": "JIS Q 21500",
+      "topic_is_new": false,
+      "related_terms": [
+        "計画のプロセス群",
+        "スコープの定義",
+        "プロジェクト憲章",
+        "PMBOK（Project Management Body of Knowledge：プロジェクトマネジメント知識体系）"
+      ],
+      "confidence": "high",
+      "notes": "JIS Q 21500:2018 で計画のプロセス群に属するプロセス（スコープの定義）を選ばせる問題。「プロセス群」に相当する用語例が無く、規格そのものの構成を問うているので項目53の用語例「JIS Q 21500」をそのままコピーした。マネジメント系（53〜70）の範囲内。"
+    },
+    {
+      "number": 52,
+      "syllabus_item": 57,
+      "topic_term": "RAM（Responsibility Assignment Matrix：責任分担マトリックス）",
+      "topic_is_new": false,
+      "related_terms": [
+        "RACI チャート",
+        "実行責任者",
+        "説明責任者",
+        "OBS（Organizational Breakdown Structure：組織ブレークダウンストラクチャ）"
+      ],
+      "confidence": "high",
+      "notes": "RACI チャートで各アクティビティの実行責任者1人以上・説明責任者1人という条件を満たす見直しを選ばせる問題。項目57の用語例は括弧内がその語自身の英語表記・訳語なので丸ごとコピーした。RACI チャートは RAM の一形式なので related_terms に置いた。マネジメント系（53〜70）の範囲内。"
+    },
+    {
+      "number": 53,
+      "syllabus_item": 58,
+      "topic_term": "アローダイアグラム",
+      "topic_is_new": false,
+      "related_terms": [
+        "CPM（Critical Path Method：クリティカルパス法）",
+        "ダミー作業",
+        "最早結合点時刻",
+        "ファストトラッキング"
+      ],
+      "confidence": "high",
+      "notes": "作業 E を E1・E2・E3 に分割した後のアローダイアグラムから、全体の短縮日数を求める問題。項目58の用語例「アローダイアグラム」をそのままコピーし、既存論点（頻出）に合流させた。項目90にも同語があるが、分野がマネジメント系と公式に決まっているので項目58。"
+    },
+    {
+      "number": 54,
+      "syllabus_item": 60,
+      "topic_term": "好機への戦略",
+      "topic_is_new": false,
+      "related_terms": [
+        "強化",
+        "活用",
+        "共有",
+        "脅威への戦略"
+      ],
+      "confidence": "high",
+      "notes": "PMBOK のプラスのリスク（好機）に対する“強化”の戦略（発生確率や影響度を増大させる）を選ばせる問題。項目60の用語例「好機への戦略」をそのままコピーした。選択肢の「受容」「活用」「共有」は同じ戦略群の別項目なので related_terms に入れた。マネジメント系（53〜70）の範囲内。"
+    }
+  ]
+}

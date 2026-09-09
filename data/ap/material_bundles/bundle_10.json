@@ -1,0 +1,242 @@
+{
+  "bundle": 10,
+  "topics": [
+    {
+      "topic_id": 73,
+      "term": "再帰",
+      "field": "テクノロジ系",
+      "major": "基礎理論",
+      "middle": "アルゴリズムとプログラミング",
+      "syllabus_item_name": "アルゴリズム",
+      "question_count": 1,
+      "related_terms": [
+        "階乗",
+        "再帰呼出し",
+        "分割統治法"
+      ],
+      "questions": [
+        {
+          "exam": "令和7年度 春期",
+          "number": 7,
+          "text": "fact(n)は，非負の整数 n に対して n の階乗を返す。fact(n)の再帰的な定義はどれか。",
+          "choices": {
+            "ア": "if n＝0 then return 0 else return n×fact(n－1)",
+            "イ": "if n＝0 then return 0 else return n×fact(n＋1)",
+            "ウ": "if n＝0 then return 1 else return n×fact(n－1)",
+            "エ": "if n＝0 then return 1 else return n×fact(n＋1)"
+          },
+          "answer": "ウ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 74,
+      "term": "流れ図",
+      "field": "テクノロジ系",
+      "major": "基礎理論",
+      "middle": "アルゴリズムとプログラミング",
+      "syllabus_item_name": "アルゴリズム",
+      "question_count": 1,
+      "related_terms": [
+        "ループ端",
+        "判断",
+        "繰返し",
+        "処理"
+      ],
+      "questions": [
+        {
+          "exam": "令和6年度 春期",
+          "number": 5,
+          "text": "正の整数Mに対して，次の二つの流れ図に示すアルゴリズムを実行したとき，結果xの値が等しくなるようにしたい。a に入れる条件として，適切なものはどれか。",
+          "choices": {
+            "ア": "n＜M",
+            "イ": "n＞M－1",
+            "ウ": "n＞M",
+            "エ": "n＞M＋1"
+          },
+          "answer": "ウ",
+          "figure_description": "二つの流れ図が左右に並ぶ。\n\n左の流れ図（上から順に）:\n1. 端子「開始」\n2. 処理「x ← 1」\n3. ループ始端「演算」（内側に「n：M，－1，1」）\n4. 処理「x ← (x × n)」\n5. ループ終端「演算」\n6. 端子「終了」\n\n左の流れ図のループ始端の右に注記「ループ端の繰返し指定は，変数名：初期値，増分，終値を示す。」がある。\n\n右の流れ図（上から順に）:\n1. 端子「開始」\n2. 処理「x ← 1」\n3. 処理「n ← 1」\n4. 処理「x ← (x × n)」\n5. 処理「n ← (n + 1)」\n6. 判断「 a 」（空欄の枠）\n7. 端子「終了」\n\n右の流れ図の判断の分岐は，「No」が左へ出て上に回り込み，3.「n ← 1」と4.「x ← (x × n)」の間に合流する矢印になっている。「Yes」は下へ出て「終了」へつながる。"
+        }
+      ]
+    },
+    {
+      "topic_id": 75,
+      "term": "線形探索法",
+      "field": "テクノロジ系",
+      "major": "基礎理論",
+      "middle": "アルゴリズムとプログラミング",
+      "syllabus_item_name": "アルゴリズム",
+      "question_count": 1,
+      "related_terms": [
+        "平均比較回数",
+        "2 分探索法",
+        "ハッシュ表探索法",
+        "インデックス"
+      ],
+      "questions": [
+        {
+          "exam": "令和7年度 秋期",
+          "number": 6,
+          "text": "異なる n 個のデータが昇順に整列された表がある。この表を m 個のデータごとのブロックに分割し，各ブロックの最後尾のデータだけを線形探索することによって，目的のデータの存在するブロックを探し出す。次に，当該ブロック内を線形探索して目的のデータを探し出す。このときの平均比較回数を表す式はどれか。ここで，m は十分に大きく，n は m の倍数とし，目的のデータは必ず表の中に存在するものとする。",
+          "choices": {
+            "ア": "m＋n/m",
+            "イ": "m/2＋n/(2m)",
+            "ウ": "n/m",
+            "エ": "n/(2m)"
+          },
+          "answer": "イ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 76,
+      "term": "R 言語",
+      "field": "テクノロジ系",
+      "major": "基礎理論",
+      "middle": "アルゴリズムとプログラミング",
+      "syllabus_item_name": "プログラム言語",
+      "question_count": 1,
+      "related_terms": [
+        "スクリプト言語",
+        "Go",
+        "Python"
+      ],
+      "questions": [
+        {
+          "exam": "令和6年度 秋期",
+          "number": 7,
+          "text": "次の特徴をもつプログラム言語及び実行環境であって，オープンソースソフトウェアとして提供されているものはどれか。\n〔特徴〕\n・統計解析や機械学習に適している。\n・データ分析，グラフ描画などの，多数のソフトウェアパッケージが提供されている。\n・変数自体には型がなく，変数に代入されるオブジェクトの型は実行時に決まる。",
+          "choices": {
+            "ア": "Go",
+            "イ": "Kotlin",
+            "ウ": "R",
+            "エ": "Scala"
+          },
+          "answer": "ウ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 77,
+      "term": "Scala",
+      "field": "テクノロジ系",
+      "major": "基礎理論",
+      "middle": "アルゴリズムとプログラミング",
+      "syllabus_item_name": "プログラム言語",
+      "question_count": 1,
+      "related_terms": [
+        "オブジェクト指向言語",
+        "関数型言語",
+        "スクリプト言語",
+        "Java"
+      ],
+      "questions": [
+        {
+          "exam": "令和7年度 秋期",
+          "number": 7,
+          "text": "OSS として公開されているプログラム言語である Scala の特徴はどれか。",
+          "choices": {
+            "ア": "オブジェクト指向プログラミングと関数型プログラミングの両方が可能である。",
+            "イ": "クラスの多重継承が可能である。",
+            "ウ": "実行前にコンパイルして，ネイティブコードを生成する必要がある。",
+            "エ": "変数の型が，参照する実際の値によって実行時に決定される動的型付け言語である。"
+          },
+          "answer": "ア",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 78,
+      "term": "JSON（JavaScript Object Notation）",
+      "field": "テクノロジ系",
+      "major": "基礎理論",
+      "middle": "アルゴリズムとプログラミング",
+      "syllabus_item_name": "その他の言語",
+      "question_count": 1,
+      "related_terms": [
+        "DOM（Document Object Model）",
+        "SOAP",
+        "YAML"
+      ],
+      "questions": [
+        {
+          "exam": "令和5年度 秋期",
+          "number": 7,
+          "text": "JavaScript のオブジェクトの表記法などを基にして規定したものであって，“名前と値との組みの集まり”と“値の順序付きリスト”の二つの構造に基づいてオブジェクトを表現する，データ記述の仕様はどれか。",
+          "choices": {
+            "ア": "DOM",
+            "イ": "JSON",
+            "ウ": "SOAP",
+            "エ": "XML"
+          },
+          "answer": "イ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 79,
+      "term": "SVG（Scalable Vector Graphics）",
+      "field": "テクノロジ系",
+      "major": "基礎理論",
+      "middle": "アルゴリズムとプログラミング",
+      "syllabus_item_name": "その他の言語",
+      "question_count": 1,
+      "related_terms": [
+        "XML",
+        "ベクターデータ",
+        "PNG",
+        "TIFF"
+      ],
+      "questions": [
+        {
+          "exam": "令和7年度 春期",
+          "number": 23,
+          "text": "W3C で仕様が定義され，矩形や円，直線，文字列などの図形オブジェクトを XML 形式で記述し，Web ページでの図形描画にも使うことができる画像フォーマットはどれか。",
+          "choices": {
+            "ア": "OpenGL",
+            "イ": "PNG",
+            "ウ": "SVG",
+            "エ": "TIFF"
+          },
+          "answer": "ウ",
+          "figure_description": null
+        }
+      ]
+    },
+    {
+      "topic_id": 80,
+      "term": "オブジェクト図",
+      "field": "テクノロジ系",
+      "major": "基礎理論",
+      "middle": "アルゴリズムとプログラミング",
+      "syllabus_item_name": "その他の言語",
+      "question_count": 1,
+      "related_terms": [
+        "クラス図",
+        "アクティビティ図",
+        "コンポーネント図",
+        "ユースケース図"
+      ],
+      "questions": [
+        {
+          "exam": "令和7年度 秋期",
+          "number": 47,
+          "text": "UML のダイアグラムのうち，インスタンス間の関係を表現するものはどれか。",
+          "choices": {
+            "ア": "アクティビティ図",
+            "イ": "オブジェクト図",
+            "ウ": "コンポーネント図",
+            "エ": "ユースケース図"
+          },
+          "answer": "イ",
+          "figure_description": null
+        }
+      ]
+    }
+  ]
+}

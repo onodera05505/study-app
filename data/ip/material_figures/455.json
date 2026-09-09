@@ -1,0 +1,23 @@
+{
+  "topic_id": 455,
+  "term": "アクセス権",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 出題パターン",
+      "caption": "開けて編集できたのにファイルの上書きだけ拒否された、という現象からファイル書込み権限だけが無いと分かる。",
+      "nodes": [
+        {"id": "u", "label": "利用者", "row": 0, "col": 0},
+        {"id": "d", "label": "フォルダ\n読取り：あり", "row": 0, "col": 1},
+        {"id": "f", "label": "文書ファイル\n読取り：あり\n書込み：なし", "row": 0, "col": 2, "emphasis": true},
+        {"id": "sv", "label": "上書き保存\nできない", "row": 1, "col": 2}
+      ],
+      "edges": [
+        {"from": "u", "to": "d", "label": "たどれる"},
+        {"from": "d", "to": "f", "label": "開いて編集できる"},
+        {"from": "f", "to": "sv", "label": "書込み権限が無い", "style": "dashed"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "topic_id": 352,
+  "term": "帰納推論",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 帰納と演繹は向きが逆",
+      "caption": "帰納は事例から規則へ積み上げる向きで、得られた規則は成立しないことがある（演繹は逆向きで常に成立）。",
+      "nodes": [
+        {"id": "rule", "label": "共通する規則\n（一般的な法則）", "row": 0, "col": 0},
+        {"id": "case", "label": "個々の事例\n事例1・事例2・事例3", "row": 1, "col": 0, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "case", "to": "rule", "label": "帰納推論"},
+        {"from": "rule", "to": "case", "label": "演繹推論"}
+      ]
+    }
+  ]
+}

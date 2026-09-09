@@ -1,0 +1,25 @@
+{
+  "topic_id": 516,
+  "term": "ガベージコレクション",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### ヒープと回収のしくみ",
+      "caption": "どこからも参照されないヒープ領域だけを処理系が回収して空きに戻す。",
+      "nodes": [
+        {"id": "prog", "label": "実行中のプログラム\n（変数・スタック）", "row": 0, "col": 1},
+        {"id": "a", "label": "オブジェクト A\n参照あり", "row": 1, "col": 0},
+        {"id": "b", "label": "オブジェクト B\n参照あり", "row": 1, "col": 1},
+        {"id": "c", "label": "オブジェクト C\nどこからも\n参照されない", "row": 1, "col": 2, "emphasis": true},
+        {"id": "free", "label": "空き領域へ回収\n再び割当て可能", "row": 2, "col": 2}
+      ],
+      "edges": [
+        {"from": "prog", "to": "a", "label": "参照"},
+        {"from": "prog", "to": "b", "label": "参照"},
+        {"from": "prog", "to": "c", "label": "参照が切れた", "style": "dashed", "arrow": "none"},
+        {"from": "c", "to": "free", "label": "処理系が回収"}
+      ]
+    }
+  ]
+}

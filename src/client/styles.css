@@ -1,0 +1,1118 @@
+/* ============================================================
+   トークン
+
+   アクセントは藍（#1E4C8A）。既定の明るい青（#2563eb）は本文と competing して、
+   どこを見ればよいか分からなくなっていた。彩度を落とすと、数字とボタンだけが立つ。
+
+   グレーは無彩色ではなく、わずかに藍へ寄せている。無彩色の灰は「選んでいない色」
+   に見えるため。
+
+   理解度の色（灰・橙・藍）は変えない。意味を覚え直させないため。
+   ============================================================ */
+
+:root {
+  --bg: #eef1f5;
+  --panel: #ffffff;
+  --border: #d9dfe7;
+  --border-soft: #e8ecf1;
+  --text: #10151c;
+  --muted: #5b6673;
+  --accent: #1e4c8a;
+  --accent-deep: #17406f;
+  --accent-soft: #e6edf7;
+  --on-accent: #ffffff;
+
+  --s1: #c3cad4; /* 未理解 */
+  --s2: #b8720f; /* やや理解 */
+  --s3: #1e4c8a; /* 理解 */
+  --ok: #1c7a46;
+  --ng: #ab2a20;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --radius-lg: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1117;
+    --panel: #161b22;
+    --border: #29313c;
+    --border-soft: #21272f;
+    --text: #e8ecf2;
+    --muted: #98a3b1;
+    --accent: #7fa9e8;
+    --accent-deep: #a8c6f2;
+    --accent-soft: #16283f;
+    --on-accent: #0d1117;
+
+    --s1: #39414d;
+    --s2: #e0a253;
+    --s3: #7fa9e8;
+    --ok: #4cb277;
+    --ng: #e2685c;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+  line-height: 1.75;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+/* 本文にまぎれたリンクは下線でも示す。色だけで地の文と区別すると、
+   色の見分けがつきにくい人には見つけられない（axe の link-in-text-block）。
+   ナビ・行全体のリンク・ボタン風のリンクは面と枠で区別できているので付けない。 */
+p a:not(.btn), .md li a, .md-table a { text-decoration: underline; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ---- ヘッダー ---------------------------------------------- */
+
+.header {
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0.6rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.brand { font-weight: 800; font-size: 1rem; letter-spacing: 0.01em; }
+.nav { display: flex; gap: 0.2rem; flex-wrap: wrap; margin-left: auto; order: 2; }
+.nav a {
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.nav a:hover { text-decoration: none; color: var(--text); }
+.nav a.active { background: var(--accent-soft); color: var(--accent); }
+
+/* アカウント。ログアウトはここに畳む。ナビに並べると誤タップで飛ぶ。 */
+.account { position: relative; order: 3; }
+.account-btn {
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--muted);
+  border-radius: var(--radius-sm);
+  padding: 0.3rem 0.7rem;
+  min-height: 34px;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.account-btn:hover, .account-btn[aria-expanded='true'] { border-color: var(--accent); color: var(--accent); }
+.account-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.4rem);
+  min-width: 10rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 12%);
+  padding: 0.3rem;
+  z-index: 20;
+}
+.account-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.88rem;
+  padding: 0.6rem 0.7rem;
+  border-radius: var(--radius-sm);
+  min-height: 44px;
+  cursor: pointer;
+}
+.account-menu button:hover { background: var(--bg); color: var(--ng); }
+
+main { max-width: 960px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+
+/* ---- タイポグラフィ ------------------------------------------
+   差をつける場所を絞る。見出しと本文の差より、数字と補助ラベルの差を大きく取る。
+   ------------------------------------------------------------ */
+
+h1 { font-size: 1.7rem; font-weight: 800; line-height: 1.35; margin: 0 0 0.4rem; letter-spacing: 0.01em; text-wrap: balance; }
+/* 見出しとして見せる文字が無い画面（ホーム・出題中）でも、支援技術には
+   ページの名前が要る（axe の page-has-heading-one）。読み上げにだけ出す。
+
+   よくある「1px の箱に押し込んで overflow:hidden」は使わない。
+   画面の検査（audit_screens.mjs）が「文字が枠からはみ出した要素」として
+   数えてしまい、本物の崩れが埋もれる。位置だけ流し込みから外し、
+   clip-path で描画を落とす。読み上げの対象からは外れない。 */
+.sr-only {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  pointer-events: none;
+}
+h2 { font-size: 1.2rem; font-weight: 800; margin: 2rem 0 0.7rem; text-wrap: balance; }
+h3 { font-size: 1rem; font-weight: 700; margin: 0 0 0.3rem; }
+.lead { color: var(--muted); margin: 0 0 1.5rem; font-size: 0.95rem; }
+.kicker {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin: 0 0 0.4rem;
+  font-weight: 600;
+}
+
+/* ---- 面 ----------------------------------------------------
+   読ませる面（card）と束ねる面（row）で枠線の濃さを変える。
+   全部同じ枠だと情報の階層が出ない。
+   ------------------------------------------------------------ */
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+}
+.card.flat { border-color: var(--border-soft); }
+.card.accent { border-color: var(--accent); }
+/* 練習テストの分野カードは button なので、進行中があると disabled になる。
+   .btn:disabled と同じ見た目にしないと、押せないことが分からない。 */
+.card:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.grid { display: grid; gap: 0.75rem; }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.stack { display: flex; flex-direction: column; gap: 1rem; }
+
+/* ---- ボタン ------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  border-radius: var(--radius);
+  padding: 0.5rem 1rem;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn:hover { border-color: var(--accent); }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn-primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+.btn-block { width: 100%; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+input, select {
+  font: inherit;
+  padding: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  color: var(--text);
+  width: 100%;
+  min-height: 44px;
+}
+label { display: block; margin-bottom: 0.75rem; font-size: 0.9rem; color: var(--muted); }
+label span { display: block; margin-bottom: 0.2rem; }
+
+/* ---- 絞り込みチップ ------------------------------------------
+   プルダウンはスマホで開くたびにネイティブ UI が全画面を覆い、
+   今どれで絞っているのかが見えなくなる。チップなら状態が見えたまま切り替わる。
+   ------------------------------------------------------------ */
+
+.chips { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-bottom: 0.6rem; }
+.chip-f {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 36px;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.chip-f:hover { border-color: var(--accent); }
+.chip-f[aria-pressed='true'] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.chip-f small { font-weight: 400; font-size: 0.72rem; font-variant-numeric: tabular-nums; }
+.chips-label { font-size: 0.75rem; color: var(--muted); align-self: center; margin-right: 0.15rem; }
+
+/* 理解度は複数選べる。単独選択のチップと区別が付くよう、チェックの形を出す。 */
+.chip-f.check .box {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  flex: none;
+  position: relative;
+}
+.chip-f.check.on .box::after {
+  content: '';
+  position: absolute;
+  inset: 2px 3px 3px 2px;
+  border-left: 2px solid var(--on-accent);
+  border-bottom: 2px solid var(--on-accent);
+  transform: rotate(-45deg);
+}
+.chip-f.check.on .box.s1 { background: var(--s1); border-color: var(--s1); }
+.chip-f.check.on .box.s2 { background: var(--s2); border-color: var(--s2); }
+.chip-f.check.on .box.s3 { background: var(--s3); border-color: var(--s3); }
+.chip-f.check.on { color: var(--text); border-color: var(--border); background: var(--panel); }
+.chip-f.check[aria-pressed='false'] { opacity: 0.65; }
+
+/* ---- 連続記録 ------------------------------------------------
+   数字だけを見せる。升目やヒートマップは、続いた日数を読み取るのに
+   一手かかるうえ、途切れた過去が目に入って気分を削ぐ。
+   知りたいのは「今、何日続いているか」の1つだけ。
+   ------------------------------------------------------------ */
+
+.streak {
+  text-align: center;
+  padding: 2.5rem 1rem 2rem;
+  position: relative;
+}
+/* 数字の後ろの淡い光。輪郭を作らずに中心を作る。 */
+.streak::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  width: 15rem;
+  height: 15rem;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, var(--accent-soft) 0%, transparent 68%);
+  pointer-events: none;
+}
+.streak > * { position: relative; }
+
+.streak-label {
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  font-weight: 600;
+  margin: 0 0 0.4rem;
+}
+.streak-figure {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.15rem;
+  margin: 0;
+  animation: streak-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.streak-num {
+  font-size: 5.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+}
+/* 単位は数字の右下に、控えめに添える。 */
+.streak-unit {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent);
+  opacity: 0.75;
+  align-self: flex-end;
+  padding-bottom: 0.5rem;
+}
+.streak-sub {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  margin: 0.7rem 0 0;
+}
+.streak-sub b { color: var(--text); font-size: 0.92rem; }
+
+@keyframes streak-in {
+  from { opacity: 0; transform: translateY(0.4rem) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+
+/* 前回の続き。次の一歩を1つだけ置く。 */
+.resume {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--panel);
+  color: inherit;
+}
+.resume:hover { background: var(--accent-soft); text-decoration: none; }
+.resume-label { font-size: 0.72rem; letter-spacing: 0.08em; color: var(--accent); font-weight: 700; }
+.resume-term { font-size: 1.05rem; font-weight: 700; line-height: 1.4; overflow-wrap: anywhere; }
+.resume-meta { font-size: 0.75rem; color: var(--muted); }
+
+/* 連続記録が中央にあるので、その下の導線も中央に置く。
+   左寄せだと視線が数字から離れたところに飛ぶ。 */
+.go-study { margin: 0.6rem auto 0; display: flex; }
+.resume { max-width: 26rem; margin: 0 auto; }
+
+/* ---- 一覧の行 ------------------------------------------------
+   出題頻度＝重要度、がこのアプリの設計の中核。
+   その数字だけを大きく組み、他は締める。
+   ------------------------------------------------------------ */
+
+.list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.4rem; }
+.list > li { min-width: 0; }
+
+.row {
+  display: flex;
+  align-items: stretch;
+  gap: 0.75rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.75rem;
+  min-height: 56px;
+  color: inherit;
+}
+a.row:hover { border-color: var(--accent); text-decoration: none; }
+
+/* 次の一手フッター。頻出未理解の先頭へ。アクセント地で「進む先」を強調する。 */
+.next-move { margin: 1.2rem 0 0.4rem; }
+.next-move-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 0.7rem 0.85rem;
+  color: inherit;
+}
+.next-move-link:hover { border-color: var(--accent-deep); text-decoration: none; }
+.next-move-label { font-size: 0.72rem; font-weight: 700; color: var(--accent); white-space: nowrap; }
+.next-move-term { flex: 1; min-width: 0; font-weight: 700; line-height: 1.4; }
+.next-move-arrow { color: var(--accent); font-weight: 700; }
+/* 尽きたときはグレーアウト調。もう追う先が無いことを静かに伝える。 */
+.next-move-done {
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 0.7rem 0.85rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.next-move-done a { margin-left: 0.4rem; }
+
+.freq {
+  flex: none;
+  width: 46px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-right: 1px solid var(--border-soft);
+  padding-right: 0.6rem;
+}
+.freq b {
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+.freq small { font-size: 0.62rem; color: var(--muted); letter-spacing: 0.04em; }
+/* 正答率を出す行（履歴）。単位のぶん桁が増えるので枠を広げる。 */
+.freq.pct { width: 62px; }
+.freq b i { font-style: normal; font-size: 0.58em; font-weight: 700; margin-left: 0.06em; }
+
+.row .grow { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
+.row .term { font-weight: 700; line-height: 1.4; }
+.row .meta { font-size: 0.75rem; color: var(--muted); }
+/* 受験した日。行の右端に小さく添える。 */
+.row .when { flex: none; align-self: center; font-size: 0.75rem; color: var(--muted); white-space: nowrap; }
+
+/* 理解度の3段メーター。文字バッジより、段階が形で分かる。
+   本数で段階を示す（1本＝未理解／2本＝やや理解／3本＝理解）ので、
+   本数が違っても行の右端が揃うよう幅は3本ぶんで固定する。 */
+.steps {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  justify-content: flex-end;
+  flex: none;
+  align-self: center;
+  width: 24px;
+}
+.steps i { width: 6px; height: 22px; border-radius: 2px; background: var(--s1); display: block; }
+.steps.s2 i:nth-child(-n + 2) { background: var(--s2); }
+.steps.s3 i { background: var(--s3); }
+
+.pill {
+  font-size: 0.75rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  white-space: nowrap;
+}
+.status-1 { color: var(--muted); }
+.status-2 { color: var(--s2); }
+.status-3 { color: var(--s3); }
+
+/* ---- 進捗の帯 ------------------------------------------------ */
+
+.track { display: flex; height: 10px; border-radius: 999px; overflow: hidden; background: var(--s1); }
+.track i { display: block; }
+.track .t3, .bar .b3 { background: var(--s3); }
+.track .t2, .bar .b2 { background: var(--s2); }
+.track .t1, .bar .b1 { background: var(--s1); }
+.bar { display: flex; height: 10px; border-radius: 999px; overflow: hidden; background: var(--s1); }
+.bar i { display: block; }
+
+.legend { display: flex; gap: 0.9rem; font-size: 0.74rem; color: var(--muted); margin-top: 0.5rem; flex-wrap: wrap; }
+.legend b { color: var(--text); font-variant-numeric: tabular-nums; }
+.legend i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; margin-right: 0.3rem; }
+
+/* 分野ごとの到達度。合否は分野ごとの基準と総合点の両方で決まるので、
+   総計だけでなく分野が並んで見える必要がある。 */
+.fieldrow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+.fieldrow:last-child { border-bottom: 0; }
+.fieldrow .fn { flex: none; width: 6.2rem; font-size: 0.82rem; font-weight: 700; }
+.fieldrow .fb { flex: 1; min-width: 0; }
+.fieldrow .fv { flex: none; font-size: 0.74rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.fieldrow .fv b { font-size: 0.95rem; color: var(--text); }
+
+.stat { font-size: 1.5rem; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.stat small { font-size: 0.85rem; font-weight: 400; color: var(--muted); }
+
+/* ---- 体系（中分類の箱）---------------------------------------
+   中分類はプルダウンの1項目ではなく、学習の地図。
+   箱にすると「セキュリティが 209 問で最大」といった配分が見える。
+   ------------------------------------------------------------ */
+
+.major-head { display: flex; align-items: baseline; gap: 0.5rem; margin: 1.3rem 0 0.5rem; }
+.major-head b { font-size: 0.95rem; }
+.major-head span { font-size: 0.74rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.cats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.5rem; }
+.cat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.7rem 0.75rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  min-height: 82px;
+  color: inherit;
+}
+.cat:hover { border-color: var(--accent); text-decoration: none; }
+.cat .n { font-weight: 700; font-size: 0.88rem; line-height: 1.35; }
+.cat .q { font-size: 0.73rem; color: var(--muted); font-variant-numeric: tabular-nums; margin-top: auto; }
+.cat .q b { font-size: 1.1rem; color: var(--text); font-weight: 800; }
+.cat .track { height: 5px; }
+.cat.lead-cat { grid-column: 1 / -1; }
+.cat.lead-cat .q b { font-size: 1.4rem; color: var(--accent); }
+.cat a:hover { text-decoration: none; }
+/* 箱から直接その範囲を演習する。読む（論点）と解く（演習）を中分類の中で閉じる。 */
+.cat-drill {
+  margin-top: 0.15rem;
+  min-height: 34px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--panel);
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.cat-drill:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ---- 下部固定バー --------------------------------------------
+   理解度は解説を読み終えた直後に押すもの。本文の上にあると戻る操作が要る。
+   ------------------------------------------------------------ */
+
+.dock {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 1.5rem;
+  box-shadow: 0 -2px 12px rgb(0 0 0 / 6%);
+}
+.dock .lab { font-size: 0.74rem; color: var(--muted); flex: none; }
+.seg { display: flex; flex: 1; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.seg button {
+  flex: 1;
+  min-height: 40px;
+  border: 0;
+  border-right: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.seg button:last-child { border-right: 0; }
+.seg button[aria-pressed='true'] { background: var(--accent); color: var(--on-accent); }
+
+/* ---- 教材本文（Markdown.tsx が出す要素だけを想定）------------- */
+
+.md > :first-child { margin-top: 0; }
+.md > :last-child { margin-bottom: 0; }
+.md p { margin: 0.7rem 0; }
+.md h3 {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  margin: 1.5rem 0 0.5rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--border-soft);
+  line-height: 1.4;
+}
+.md ul, .md ol { margin: 0.7rem 0; padding-left: 1.35rem; }
+.md li { margin: 0.35rem 0; }
+.md li::marker { color: var(--muted); }
+.md b { font-weight: 700; }
+.md-detail { margin-top: 1.1rem; }
+
+/* 教材の中の表。一覧の .table に合わせる（見た目を2種類に増やさない）。
+   1列目は用語が長いので nowrap にしない。折り返して縦に伸びるほうがまだ読める。 */
+.md .table-wrap { margin: 0.9rem 0; }
+.md-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.md-table th, .md-table td {
+  text-align: left;
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--border-soft);
+  vertical-align: top;
+}
+.md-table th { color: var(--muted); font-weight: 600; font-size: 0.8rem; }
+.md-table b { font-weight: 700; }
+
+/* 論点ごとの図（scripts が差し込む SVG）。
+   SVG は白背景を焼き込んであるので、ダークテーマでも白いカードとして出す。
+   問題の切り出し画像（.figure-image）と同じ扱い。 */
+.md-figure {
+  max-width: 100%;
+  margin: 1rem 0;
+  padding: 0.75rem;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow-x: auto;
+}
+.md-figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+/* 原寸表示。画面幅に収まらない分は md-figure 側の横スクロールで見る
+   （過去問の図 .figure-image と同じ扱い）。 */
+.md-figure.zoomed img { max-width: none; }
+.md-figure.zoomed .figure-zoom { cursor: zoom-out; width: auto; }
+.md-figure figcaption {
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 0.4rem;
+}
+
+/* ---- 出題画面 ------------------------------------------------ */
+
+.exam-top {
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.9rem;
+  margin: -1.5rem -1rem 1rem;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.8rem;
+}
+.exam-top .idx { font-weight: 800; font-variant-numeric: tabular-nums; flex: none; }
+.exam-top .prog { flex: 1; height: 4px; background: var(--border); border-radius: 999px; overflow: hidden; }
+.exam-top .prog i { display: block; height: 100%; background: var(--accent); }
+.exam-top .timer { font-variant-numeric: tabular-nums; font-weight: 800; flex: none; }
+.exam-top .timer.low { color: var(--ng); }
+
+.question { font-size: 1rem; line-height: 1.75; white-space: pre-wrap; }
+
+.choices { display: flex; flex-direction: column; gap: 0.45rem; margin: 1.1rem 0; }
+.choice {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 52px;
+  width: 100%;
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+button.choice:hover:not(:disabled) { border-color: var(--accent); }
+/* 読むだけの選択肢（論点詳細の過去問）。押せるボタンと同じ体裁だと触ってしまうので、
+   枠を一段淡くし、カーソルも指に変えない。正誤の色付けは .choice.correct が勝つ。 */
+.choice-static { cursor: default; border-color: var(--border-soft); }
+.choice b {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+/* 組合せを問う選択肢は「項目名：値」ごとに改行して縦に並べる（lib/choice.ts）。
+   選択肢どうしで同じ項目が同じ位置に来るので、違いだけを見比べられる。 */
+.choice-line { display: block; }
+.choice-line + .choice-line { margin-top: 0.15rem; }
+
+/* 正誤は枠線と記号の塗りの両方で示す。色だけに頼らない。 */
+.choice.correct { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 10%, transparent); }
+.choice.correct b { background: var(--ok); border-color: var(--ok); color: #fff; }
+.choice.wrong { border-color: var(--ng); background: color-mix(in srgb, var(--ng) 10%, transparent); }
+.choice.wrong b { background: var(--ng); border-color: var(--ng); color: #fff; }
+
+.verdict { font-weight: 700; }
+.verdict.ok { color: var(--ok); }
+.verdict.ng { color: var(--ng); }
+
+.progressbar { display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: var(--muted); }
+.progressbar .track { flex: 1; height: 6px; }
+.progressbar .fill { height: 100%; background: var(--accent); }
+.timer { font-variant-numeric: tabular-nums; font-weight: 700; }
+.timer.low { color: var(--ng); }
+
+/* ---- 図表 ---------------------------------------------------- */
+
+.figure {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem 0.9rem;
+  margin: 0.9rem 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+/* 書き起こしの中の表。パイプ記号のまま出さず、教材の表（.md-table）と
+   同じ体裁にする。等幅は解かない — 表の中身は文章なので、地の文と同じ書体の
+   ほうが読める。 */
+.fig-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: system-ui, -apple-system, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+  font-size: 0.88rem;
+  white-space: normal;
+  background: var(--panel);
+}
+.fig-table th, .fig-table td {
+  text-align: left;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--border);
+  vertical-align: top;
+}
+.fig-table th { color: var(--muted); font-weight: 600; font-size: 0.8rem; background: var(--bg); }
+.figure .table-wrap { margin: 0.7rem 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.figure .table-wrap:first-child { margin-top: 0; }
+.figure .table-wrap:last-child { margin-bottom: 0; }
+
+/* 擬似言語プログラムなど。字下げに意味があるので折り返さず横スクロールさせる。 */
+.fig-code {
+  margin: 0.7rem 0;
+  padding: 0.6rem 0.7rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  white-space: pre;
+  overflow-x: auto;
+}
+.fig-code:first-child { margin-top: 0; }
+.fig-code:last-child { margin-bottom: 0; }
+
+/* 表でもコードでもない説明文。従来どおり等幅・pre-wrap で出す。 */
+.fig-text { white-space: pre-wrap; }
+.fig-text + .fig-text { margin-top: 0.5rem; }
+
+.figure-image {
+  max-width: 100%;
+  margin: 0.9rem 0;
+  padding: 0.75rem;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow-x: auto;
+}
+.figure-image img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+/* 原寸表示。画面幅に収まらない分は figure-image 側の横スクロールで見る。 */
+.figure-image.zoomed img { max-width: none; }
+.figure-zoom { display: block; border: 0; padding: 0; background: none; cursor: zoom-in; width: 100%; }
+.figure-image.zoomed .figure-zoom { cursor: zoom-out; width: auto; }
+.figure-hint { display: none; font-size: 0.72rem; color: var(--muted); text-align: center; margin-top: 0.4rem; }
+
+/* ---- その他 -------------------------------------------------- */
+
+.citation { font-size: 0.78rem; color: var(--muted); margin-top: 1rem; }
+/* 原文の記号や表の構造を書き換えて載せている問題に添える（IPA の利用条件）。
+   出典と同じ行に続けて出す。 */
+.modified-note { margin-left: 0.3rem; }
+.notice {
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 0.75rem 0.9rem;
+  font-size: 0.9rem;
+}
+
+/* 同一内容の過去問をまとめて出していることの表示。
+   問題文の直前に置く。使い回されている問題は、それだけ問われ続けている論点だという
+   意味でもあるので、見落とされない強さが要る。.notice より強く（左の太い縦線＋太字）、
+   ただし1〜2行に収めて本文を押しのけないようにしてある。 */
+.dup-badge {
+  background: var(--accent-soft);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.7rem;
+  margin-bottom: 0.7rem;
+}
+.dup-badge b { display: block; font-size: 0.86rem; color: var(--accent); }
+.dup-badge small { display: block; font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem; }
+.error { color: var(--ng); font-size: 0.9rem; }
+.muted { color: var(--muted); }
+.center { max-width: 380px; margin: 3rem auto; }
+.tabs { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.tabs button.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.table th, .table td { text-align: left; padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--border-soft); }
+.table th { color: var(--muted); font-weight: 600; font-size: 0.8rem; }
+.table td { font-variant-numeric: tabular-nums; }
+.right { text-align: right; }
+
+/* 戻るボタン。画面の左上、本文より先に来る位置に置く。
+   矢印だけだと何のアイコンか一瞬迷うので、行き先の名前を必ず添える。 */
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 44px;
+  padding: 0.35rem 0.9rem 0.35rem 0.65rem;
+  margin-bottom: 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--text);
+  font-size: 0.86rem;
+  font-weight: 600;
+  max-width: 100%;
+}
+.back:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.back svg { width: 18px; height: 18px; flex: none; color: var(--accent); }
+.back span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.crumb { font-size: 0.75rem; color: var(--muted); margin: 0; }
+.crumb a { color: var(--muted); }
+.crumb a:hover { color: var(--accent); }
+
+
+/* ============================================================
+   PC 対応
+
+   設計はスマホ幅（390px）で行った。そのまま 960px に引き伸ばすと、
+   本文が1行 55字前後になって読み物として辛くなり、ボタンや下部バーが
+   間延びする。**幅が広いぶんを行長ではなく余白と段組に使う。**
+
+   日本語の快適な行長は 35〜45字。ここでは 40em を上限にしている。
+   ============================================================ */
+
+@media (min-width: 641px) {
+  main { padding: 2rem 1rem 5rem; }
+
+  /* 読ませるものは行長を詰める。カードの幅ではなく、文字の幅を決める。 */
+  .md p, .md li, .lead, .question, .notice, .crumb { max-width: 40em; }
+  .choices { max-width: 46em; }
+  .card .md h3 { max-width: 40em; }
+
+  /* 全幅ボタンはスマホの都合。PC では内容ぶんの幅に留める。 */
+  .btn-block { width: auto; min-width: 13rem; }
+
+  /* 面も文字幅に合わせる。カードだけ画面幅いっぱいだと、右側が空いて締まらない。 */
+  .card, .list > li.card { max-width: 48em; }
+
+  /* 下部バーは本文の上に浮くので、影を強めて「重なっている」と分かる形にする。
+     中途半端な影だとレイアウト崩れに見える。 */
+  .dock {
+    max-width: 26rem;
+    bottom: 1.25rem;
+    border-radius: 999px;
+    padding: 0.5rem 0.9rem;
+    box-shadow: 0 6px 24px rgb(0 0 0 / 14%);
+  }
+  .dock .seg { border-radius: 999px; }
+
+  /* 帯は長すぎると割合が読み取りにくい。 */
+  .card > .track, .fieldrow .fb { max-width: 30rem; }
+
+  /* 体系の箱は3列で固定する。auto-fit だと列数が増えすぎ、
+     中分類が1つだけの大分類で箱が細くなって不揃いに見える。 */
+  .cats { grid-template-columns: repeat(3, 1fr); }
+  .cat.lead-cat { grid-column: span 2; }
+
+  /* ホームは2段組。1カラムのまま伸ばすと右半分が空いて間延びする。 */
+  .home-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 1.75rem;
+    align-items: start;
+  }
+  .home-grid > section > h2:first-child { margin-top: 0; }
+}
+
+
+/* ============================================================
+   スマホ対応
+
+   想定は iPhone の 390px 幅。ここで破綻しやすいのは次の4つ。
+
+   1. ヘッダーのナビが折り返して縦に伸び、本文が押し下げられる
+   2. 論点一覧の行（出題回数・論点名・理解度）が横に収まらない
+   3. 分野別スコアの表がはみ出して横スクロールを起こす
+   4. ボタンや選択肢が指で押すには小さい
+
+   タップ領域は最低 44px を確保する。移動中の片手操作を想定しているため。
+   ============================================================ */
+
+@media (max-width: 640px) {
+  main { padding: 1rem 0.85rem 3.5rem; }
+
+  h1 { font-size: 1.35rem; }
+  h2 { font-size: 1.05rem; margin: 1.6rem 0 0.6rem; }
+  .lead { font-size: 0.9rem; margin-bottom: 1.1rem; }
+
+  /* ヘッダー: ブランドを1行目、ナビを2行目の横スクロールにする。
+     折り返すとヘッダーが3段になって本文が見えなくなるため。 */
+  .header-inner { padding: 0.5rem 0.85rem; gap: 0.4rem; }
+  /* 1段目はブランドとアカウント、2段目がナビ。アカウントを横スクロールする
+     ナビの中に入れると、流れていって押せなくなる。 */
+  .brand { font-size: 0.95rem; flex: 1; }
+  .account { order: 1; }
+  .nav {
+    order: 2;
+    margin-left: 0;
+    width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a { flex: none; padding: 0.4rem 0.6rem; font-size: 0.85rem; }
+
+  .card { padding: 0.85rem 0.9rem; }
+  .md p, .md li { font-size: 0.95rem; }
+  .md ul, .md ol { padding-left: 1.2rem; }
+
+  .row { padding: 0.6rem 0.7rem; gap: 0.6rem; }
+  .freq { width: 42px; padding-right: 0.5rem; }
+  .freq b { font-size: 1.3rem; }
+  .row .term { font-size: 0.95rem; }
+  .row .meta { font-size: 0.72rem; }
+
+  .cats { grid-template-columns: 1fr 1fr; }
+  .cat { min-height: 76px; padding: 0.6rem 0.65rem; }
+  .cat .n { font-size: 0.82rem; }
+
+  .fieldrow .fn { width: 5.4rem; font-size: 0.78rem; }
+
+  /* 表は必ず横スクロールに閉じ込める。ページ全体が横に伸びるのを防ぐ。 */
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .table { min-width: 20rem; font-size: 0.85rem; }
+  .table th, .table td { padding: 0.4rem 0.5rem; }
+  /* 教材の表も同じ。列が4つあると 20rem では潰れるので少し詰める。 */
+  .md-table { min-width: 18rem; font-size: 0.83rem; }
+  .md-table th, .md-table td { padding: 0.4rem 0.45rem; }
+  .md-figure { padding: 0.5rem; }
+
+  .grid-3 { grid-template-columns: 1fr; }
+  .stat { font-size: 1.35rem; }
+
+  .exam-top { margin: -1rem -0.85rem 1rem; padding: 0.55rem 0.85rem; }
+  .question { font-size: 0.98rem; }
+  .figure { font-size: 0.78rem; padding: 0.6rem 0.7rem; }
+  .fig-table { min-width: 16rem; font-size: 0.8rem; }
+  .fig-table th, .fig-table td { padding: 0.35rem 0.4rem; }
+  .fig-code { font-size: 0.78rem; }
+  .figure-image { padding: 0.5rem; }
+  /* スマホでは図が小さくなりすぎるので、拡大できることを明示する */
+  .figure-hint { display: block; }
+
+  .center { margin: 1.5rem auto; max-width: 100%; }
+  .dock { margin-left: -0.85rem; margin-right: -0.85rem; border-radius: 0; border-left: 0; border-right: 0; }
+}
+
+/* さらに狭い端末（iPhone SE の 375px 以下）。 */
+@media (max-width: 400px) {
+  main { padding: 0.85rem 0.7rem 3.5rem; }
+  /* 上部バーは main の左右パディングを負のマージンで打ち消して端まで伸ばしている。
+     この幅で main のパディングだけ 0.7rem に変わるため、640px 用の -0.85rem が
+     残っていると左右に 0.15rem ずつはみ出し、ページ全体が横スクロールしていた。 */
+  .exam-top { margin: -0.85rem -0.7rem 1rem; padding: 0.55rem 0.7rem; }
+  .freq { width: 38px; }
+  .freq b { font-size: 1.2rem; }
+  .nav a { padding: 0.35rem 0.5rem; font-size: 0.8rem; }
+  .dock { margin-left: -0.7rem; margin-right: -0.7rem; }
+}
+
+/* 長い論点名や英字の羅列でページが横に伸びないようにする。
+   「情報セキュリティの要素（機密性，完全性，…）」のような長い名前がある。 */
+.row .term, .question, .choice span, .figure, .cat .n { overflow-wrap: anywhere; }
+/* コードは横スクロールで読ませる。途中で折ると字下げが崩れて読めなくなる。 */
+.fig-code { overflow-wrap: normal; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* ---- 用語のポップ -------------------------------------------- */
+
+/* 本文中の `[[用語]]`。押すと1行の説明が出る（ページは移らない）。
+   色だけだと押せることが伝わらないので、点線の下線を添える。
+   用語集に無い用語はこのボタンにならず、ただの文字として出る。 */
+.term-btn {
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--accent);
+  text-decoration: underline dotted;
+  text-underline-offset: 0.2em;
+  /* 行の高さは変えずに、指で押せる範囲だけ広げる */
+  padding: 0.2em 0.05em;
+  margin: -0.2em -0.05em;
+  touch-action: manipulation;
+  cursor: pointer;
+}
+.term-btn:hover { color: var(--accent-deep); }
+
+/* ポップは body に出す（TermPop がポータルで描く）。座標は JS が入れる。
+   本文の中に置くと、教材の表（横スクロールのため overflow を持つ）の中の
+   用語でカードが切り落とされるため。 */
+.term-card {
+  position: fixed;
+  z-index: 60;
+  display: block;
+  width: max-content;
+  max-width: min(20rem, calc(100vw - 1.6rem));
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  font-weight: 400;
+  text-align: left;
+  white-space: normal;
+  color: var(--text);
+}
+.term-card > b { display: block; font-size: 0.9rem; }
+.term-brief { display: block; margin-top: 0.2rem; }
+/* 「この論点を学ぶ →」だけが移動する導線。小さく、最後に置く。 */
+.term-link { display: inline-block; margin-top: 0.45rem; font-size: 0.78rem; }
+
+/* ---- 問題ごとの解説 ------------------------------------------ */
+
+/* 論点の教材（定義・見分け方）に対して、こちらは「この問題でなぜこの選択肢か」。
+   問題カードの中に入るので、カードの中でもう1段の面として区切る。 */
+.expl {
+  margin: 0.9rem 0 0;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+.expl-head {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+.expl .md p { margin: 0.35rem 0; font-size: 0.9rem; }
+.expl-choices { margin-top: 0.7rem; display: flex; flex-direction: column; gap: 0.4rem; }
+/* 選択肢の行。記号は .choice と同じ丸で出して、上の選択肢と対応が取れるようにする。 */
+.expl-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.87rem;
+  line-height: 1.65;
+}
+.expl-choice > b {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin-top: 0.15rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+/* 正解の行だけ塗る。誤答は同じ重さで並べる（4語まとめて覚えるのが狙いなので、
+   誤答を薄くすると読み飛ばされる）。 */
+.expl-choice.correct > b { background: var(--ok); border-color: var(--ok); color: #fff; }
+.expl-choice.correct { font-weight: 600; }
+.expl-dash { color: var(--muted); }

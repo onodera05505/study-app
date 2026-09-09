@@ -1,0 +1,22 @@
+{
+  "topic_id": 413,
+  "term": "テスト駆動開発（TDD）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "実装より先にテストを書き、通してから整える。眼目は網羅率ではなく書く順序の逆転。",
+      "nodes": [
+        {"id": "t1", "label": "① テストコードを書く\n実装が無いので失敗する", "row": 0, "col": 0, "emphasis": true},
+        {"id": "t2", "label": "② テストが通る\n最小限の実装を書く", "row": 0, "col": 1},
+        {"id": "t3", "label": "③ リファクタリング\n振る舞いは変えずに整理", "row": 0, "col": 2}
+      ],
+      "edges": [
+        {"from": "t1", "to": "t2"},
+        {"from": "t2", "to": "t3"},
+        {"from": "t3", "to": "t1", "label": "次の機能へ繰り返す", "style": "dashed"}
+      ]
+    }
+  ]
+}

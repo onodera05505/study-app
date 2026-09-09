@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="352" viewBox="0 0 640 352" role="img">
+<title>署名鍵は送信者の秘密鍵、検証鍵は送信者の公開鍵。どちらも送信者側の鍵ペアを使う。</title>
+<rect x="0.5" y="0.5" width="639" height="351" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(173.5 20)">
+<line x1="48" y1="34" x2="48" y2="284" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="245" y1="34" x2="245" y2="284" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">送信者 A</text>
+<rect x="197" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="245" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">受信者 B</text>
+<polyline points="48,60 74,60 74,74 50,74" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="50,74 58,70.4 58,77.6" fill="#1f2937"/>
+<text x="82" y="68" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">1. メッセージをハッシュ化 → ダイジェスト</text>
+<polyline points="48,94 74,94 74,108 50,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="50,108 58,104.4 58,111.6" fill="#1f2937"/>
+<text x="82" y="102" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2. 署名鍵（A の秘密鍵）で署名を作成</text>
+<rect x="-91.9" y="113" width="279.8" height="16" rx="3" fill="#ffffff"/>
+<text x="48" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">秘密鍵をもつ A しか作れない＝本人の証拠になる</text>
+<polyline points="51,152 242,152" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="242,152 234,155.6 234,148.4" fill="#1f2937"/>
+<text x="146.5" y="145" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. メッセージ ＋ デジタル署名</text>
+<polyline points="245,184 271,184 271,198 247,198" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="247,198 255,194.4 255,201.6" fill="#1f2937"/>
+<text x="279" y="192" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. 検証鍵で署名を復号</text>
+<rect x="75.1" y="203" width="339.8" height="16" rx="3" fill="#ffffff"/>
+<text x="245" y="216.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">検証鍵＝送信者 A の公開鍵。公開鍵なので誰でも検証できる</text>
+<polyline points="245,234 271,234 271,248 247,248" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="247,248 255,244.4 255,251.6" fill="#1f2937"/>
+<text x="279" y="242" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. ダイジェストを照合</text>
+<rect x="123.1" y="253" width="243.8" height="16" rx="3" fill="#ffffff"/>
+<text x="245" y="266.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">一致すれば A 本人が作成し、改ざんも無い</text>
+</g>
+<text x="320" y="332" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">署名鍵は送信者の秘密鍵、検証鍵は送信者の公開鍵。どちらも送信者側の鍵ペアを使う。</text>
+</svg>

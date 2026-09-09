@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="278" viewBox="0 0 736.7 320" role="img">
+<title>書き換わるのは内部の PC を指す側だけで、行きは送信元、応答は宛先の IP とポートが変わる。</title>
+<rect x="0.5" y="0.5" width="735.7" height="319" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<line x1="55.35" y1="34" x2="55.35" y2="252" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="354.3" y1="34" x2="354.3" y2="252" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="647.3" y1="34" x2="647.3" y2="252" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="110.7" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="55.35" y="11.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">PC</text>
+<text x="55.35" y="31.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">192.168.1.5</text>
+<rect x="306.3" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="354.3" y="11.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ルータ</text>
+<text x="354.3" y="31.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">NAPT</text>
+<rect x="597.9" y="0" width="98.8" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="647.3" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">Web サーバ</text>
+<polyline points="58.35,68 351.3,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="351.3,68 343.3,71.6 343.3,64.4" fill="#1f2937"/>
+<text x="204.82" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 送信元 192.168.1.5:3000／宛先 サーバ:80</text>
+<polyline points="357.3,108 644.3,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="644.3,108 636.3,111.6 636.3,104.4" fill="#1f2937"/>
+<text x="500.8" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 送信元を 203.0.113.1:50000 に書き換え</text>
+<rect x="399.6" y="113" width="202.4" height="16" rx="3" fill="#ffffff"/>
+<text x="500.8" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">行きは送信元 IP とポートが変わる</text>
+<polyline points="644.3,164 357.3,164" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="357.3,164 365.3,160.4 365.3,167.6" fill="#1f2937"/>
+<text x="500.8" y="157" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 送信元 サーバ:80／宛先 203.0.113.1:50000</text>
+<polyline points="351.3,204 58.35,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="58.35,204 66.35,200.4 66.35,207.6" fill="#1f2937"/>
+<text x="204.82" y="197" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 宛先を 192.168.1.5:3000 に書き戻す</text>
+<rect x="103.62" y="209" width="202.4" height="16" rx="3" fill="#ffffff"/>
+<text x="204.82" y="222.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">応答で変わるのは宛先 IP とポート</text>
+</g>
+<text x="368.35" y="300" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">書き換わるのは内部の PC を指す側だけで、行きは送信元、応答は宛先の IP とポートが変わる。</text>
+</svg>

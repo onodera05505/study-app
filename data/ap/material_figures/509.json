@@ -1,0 +1,29 @@
+{
+  "topic_id": 509,
+  "term": "幅優先探索",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 配列表現と巡回の順序",
+      "caption": "添字の順に読むと深さ 1 → 2 → 3、同じ深さでは左から右。これが幅優先の順序。",
+      "nodes": [
+        {"id": "n1", "label": "A[1]\n深さ 1", "row": 0, "col": 1, "emphasis": true},
+        {"id": "n2", "label": "A[2]\n深さ 2", "row": 1, "col": 0},
+        {"id": "n3", "label": "A[3]\n深さ 2", "row": 1, "col": 2},
+        {"id": "n4", "label": "A[4]\n深さ 3", "row": 2, "col": 0},
+        {"id": "n5", "label": "A[5]\n深さ 3", "row": 2, "col": 1},
+        {"id": "n6", "label": "A[6]\n深さ 3", "row": 2, "col": 2},
+        {"id": "n7", "label": "A[7]\n深さ 3", "row": 2, "col": 3}
+      ],
+      "edges": [
+        {"from": "n1", "to": "n2", "arrow": "none"},
+        {"from": "n1", "to": "n3", "arrow": "none"},
+        {"from": "n2", "to": "n4", "arrow": "none"},
+        {"from": "n2", "to": "n5", "arrow": "none"},
+        {"from": "n3", "to": "n6", "arrow": "none"},
+        {"from": "n3", "to": "n7", "arrow": "none"}
+      ]
+    }
+  ]
+}

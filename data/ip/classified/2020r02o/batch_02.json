@@ -1,0 +1,456 @@
+{
+  "exam": "2020r02o",
+  "range": "51-100",
+  "classifications": [
+    {
+      "number": 51,
+      "syllabus_item": 26,
+      "topic_term": "リバースエンジニアリング",
+      "topic_is_new": false,
+      "related_terms": ["アジャイル開発", "プロトタイピングモデル", "ウォーターフォールモデル"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 52,
+      "syllabus_item": 32,
+      "topic_term": "内部統制",
+      "topic_is_new": false,
+      "related_terms": ["財務報告に係る内部統制", "職務分掌", "モニタリング"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 53,
+      "syllabus_item": 2,
+      "topic_term": "親和図法",
+      "topic_is_new": true,
+      "related_terms": ["ブレーンストーミング", "インタビュー（構造化，半構造化，非構造化）", "KJ法"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 54,
+      "syllabus_item": 27,
+      "topic_term": "リスクの対応策（回避，軽減，受容，転嫁）",
+      "topic_is_new": true,
+      "related_terms": ["プロジェクトリスクマネジメント", "コンティンジェンシー予備"],
+      "confidence": "medium",
+      "notes": "プロジェクトマネジメント文脈のためシラバス項目27の用語例を採用したが、項目62の既存論点「リスク対応（リスク回避，リスク共有（リスク移転，リスク分散），リスク保有）」と内容が近い。統合するか要レビュー"
+    },
+    {
+      "number": 55,
+      "syllabus_item": 27,
+      "topic_term": "アローダイアグラム",
+      "topic_is_new": false,
+      "related_terms": ["クリティカルパス分析", "PERT（アローダイアグラム）", "所要日数"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 56,
+      "syllabus_item": 60,
+      "topic_term": "電子メールの形式（テキスト形式，HTML 形式）",
+      "topic_is_new": false,
+      "related_terms": ["クロスサイトスクリプティング", "スクリプト", "DoS 攻撃", "辞書攻撃"],
+      "confidence": "medium",
+      "notes": "HTML メールの仕様を知っていることが解答の中心なので項目60としたが、攻撃手法を問う面では項目61（情報セキュリティ）も候補"
+    },
+    {
+      "number": 57,
+      "syllabus_item": 55,
+      "topic_term": "正規化",
+      "topic_is_new": false,
+      "related_terms": ["導出項目", "冗長性", "フィールド（項目）", "テーブル（表）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 58,
+      "syllabus_item": 61,
+      "topic_term": "マクロウイルス",
+      "topic_is_new": true,
+      "related_terms": ["マルウェア", "SQL インジェクション", "クロスサイトスクリプティング", "ショルダーハッキング"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 59,
+      "syllabus_item": 45,
+      "topic_term": "仮想記憶",
+      "topic_is_new": false,
+      "related_terms": ["主記憶", "補助記憶", "スラッシング", "ページング"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 60,
+      "syllabus_item": 61,
+      "topic_term": "クリプトジャッキング",
+      "topic_is_new": true,
+      "related_terms": ["暗号資産", "マイニング", "ソーシャルエンジニアリング", "バッファオーバーフロー"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 61,
+      "syllabus_item": 43,
+      "topic_term": "スケールアウト",
+      "topic_is_new": true,
+      "related_terms": ["スケールアップ", "ダウンサイジング", "並列処理", "分散処理"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 62,
+      "syllabus_item": 33,
+      "topic_term": "基数変換",
+      "topic_is_new": true,
+      "related_terms": ["2 進数", "10 進数", "16 進数"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 63,
+      "syllabus_item": 44,
+      "topic_term": "レスポンスタイム（応答時間）",
+      "topic_is_new": true,
+      "related_terms": ["クライアントサーバシステム", "スループット", "ターンアラウンドタイム"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 64,
+      "syllabus_item": 54,
+      "topic_term": "DBMS",
+      "topic_is_new": false,
+      "related_terms": ["排他制御", "一貫性", "トランザクション", "同時アクセス"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 65,
+      "syllabus_item": 40,
+      "topic_term": "GPU",
+      "topic_is_new": false,
+      "related_terms": ["GPGPU", "CPU", "ディープラーニング", "MPEG（Moving Picture Experts Group）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 66,
+      "syllabus_item": 63,
+      "topic_term": "バイオメトリクス認証",
+      "topic_is_new": false,
+      "related_terms": ["経年変化", "他人受入率（FAR）", "本人拒否率（FRR）", "静脈パターン認証"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 67,
+      "syllabus_item": 59,
+      "topic_term": "ポート番号",
+      "topic_is_new": false,
+      "related_terms": ["TCP/IP", "IP アドレス（IPv6，IPv4，グローバル，プライベート）", "MAC アドレス", "ESSID（Extended Service Set Identifier）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 68,
+      "syllabus_item": 62,
+      "topic_term": "リスク対応（リスク回避，リスク共有（リスク移転，リスク分散），リスク保有）",
+      "topic_is_new": false,
+      "related_terms": ["クリアデスク・クリアスクリーン", "リスク低減", "情報漏えい"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 69,
+      "syllabus_item": 62,
+      "topic_term": "ISMS",
+      "topic_is_new": false,
+      "related_terms": ["リスクアセスメント（リスク特定，リスク分析，リスク評価）", "ISMS内部監査", "利害関係者", "継続的改善（PDCA など）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 70,
+      "syllabus_item": 58,
+      "topic_term": "LPWA（Low Power Wide Area）",
+      "topic_is_new": false,
+      "related_terms": ["IoT エリアネットワーク", "機械学習（教師あり学習，教師なし学習，強化学習）", "ブロックチェーン", "WPA2"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 71,
+      "syllabus_item": 47,
+      "topic_term": "条件付個数",
+      "topic_is_new": true,
+      "related_terms": ["絶対参照・相対参照", "IF 関数", "セルの複写"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 72,
+      "syllabus_item": 57,
+      "topic_term": "排他制御",
+      "topic_is_new": true,
+      "related_terms": ["トランザクション", "更新の喪失", "デッドロック", "ロック"],
+      "confidence": "medium",
+      "notes": "「排他制御」はシラバスの用語例に無いため新設。並行更新による更新の喪失を問う問題で、項目57（トランザクション処理）を選んだが項目46（ファイルシステム）とも解釈できる"
+    },
+    {
+      "number": 73,
+      "syllabus_item": 56,
+      "topic_term": "集合演算",
+      "topic_is_new": true,
+      "related_terms": ["積集合", "和集合", "差集合", "選択・結合"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 74,
+      "syllabus_item": 17,
+      "topic_term": "エネルギーハーベスティング",
+      "topic_is_new": true,
+      "related_terms": ["ワイヤレス給電", "PLC（電力線通信）", "PoE", "スマートグリッド"],
+      "confidence": "medium",
+      "notes": "「エネルギーハーベスティング」はシラバスの用語例に無い。IoT デバイスへの給電技術として項目17（IoT システム・組込みシステム）に置いたが、項目58（ネットワーク方式）とも迷う"
+    },
+    {
+      "number": 75,
+      "syllabus_item": 60,
+      "topic_term": "IP アドレス（IPv6，IPv4，グローバル，プライベート）",
+      "topic_is_new": false,
+      "related_terms": ["MAC アドレス", "ドメイン名", "URL"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 76,
+      "syllabus_item": 63,
+      "topic_term": "MDM（Mobile Device Management）",
+      "topic_is_new": true,
+      "related_terms": ["DMZ（非武装地帯）", "SDN（Software-Defined Networking）", "VPN（Virtual Private Network）", "リモートワイプ"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 77,
+      "syllabus_item": 60,
+      "topic_term": "IP電話",
+      "topic_is_new": false,
+      "related_terms": ["VoIP", "IP-VPN", "公衆電話網", "パケット通信"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 78,
+      "syllabus_item": 63,
+      "topic_term": "VPN（Virtual Private Network）",
+      "topic_is_new": true,
+      "related_terms": ["IP-VPN", "インターネットVPN", "通信品質の保証", "TCP/IP"],
+      "confidence": "medium",
+      "notes": "シラバスでは VPN は項目63の用語例だが、本問が問うのは通信品質保証というネットワーク寄りの内容で、項目60（ネットワーク応用）とも迷う"
+    },
+    {
+      "number": 79,
+      "syllabus_item": 41,
+      "topic_term": "揮発性メモリ",
+      "topic_is_new": false,
+      "related_terms": ["RAM", "ROM", "SSD", "不揮発性メモリ（フラッシュメモリ）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 80,
+      "syllabus_item": 52,
+      "topic_term": "ハイパーメディア",
+      "topic_is_new": true,
+      "related_terms": ["ハイパテキスト", "HTML（Hyper Text Markup Language）", "Web コンテンツ", "リンク"],
+      "confidence": "medium",
+      "notes": "設問の主題は HyperText だが、シラバスの用語例には「ハイパーメディア」しか無いためそちらを論点にした。表記の妥当性は要レビュー"
+    },
+    {
+      "number": 81,
+      "syllabus_item": 60,
+      "topic_term": "cookie",
+      "topic_is_new": false,
+      "related_terms": ["RSS", "CSS（Cascading Style Sheets）", "CGI", "メタデータ"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 82,
+      "syllabus_item": 63,
+      "topic_term": "ゾーニング",
+      "topic_is_new": true,
+      "related_terms": ["物理的セキュリティ対策", "入退室管理", "サニタイジング", "セキュリティエリア"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 83,
+      "syllabus_item": 53,
+      "topic_term": "プロジェクションマッピング",
+      "topic_is_new": true,
+      "related_terms": ["コンピュータグラフィックス（CG：Computer Graphics）", "仮想現実（VR： Virtual Reality）", "ディジタルサイネージ", "ポリゴン"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 84,
+      "syllabus_item": 62,
+      "topic_term": "人的セキュリティ管理策",
+      "topic_is_new": true,
+      "related_terms": ["ISMS", "秘密保持契約（NDA）", "懲戒手続", "委託先管理"],
+      "confidence": "medium",
+      "notes": "ISMS の人的資源に関する管理策を問う問題だが、該当する用語例が無いため論点名を新設した。表記は要レビュー"
+    },
+    {
+      "number": 85,
+      "syllabus_item": 63,
+      "topic_term": "アクセス権",
+      "topic_is_new": true,
+      "related_terms": ["アクセス制御", "アクセス管理", "読取り権限", "書込み権限"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 86,
+      "syllabus_item": 63,
+      "topic_term": "多要素認証",
+      "topic_is_new": false,
+      "related_terms": ["所有物・記憶・生体情報", "シングルサインオン", "バイオメトリクス認証", "ワンタイムパスワード"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 87,
+      "syllabus_item": 62,
+      "topic_term": "情報セキュリティの要素（機密性，完全性，可用性，真正性，責任追跡性，否認防止，信頼性）",
+      "topic_is_new": false,
+      "related_terms": ["ISMS", "完全性", "真正性"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 88,
+      "syllabus_item": 58,
+      "topic_term": "無線LAN",
+      "topic_is_new": true,
+      "related_terms": ["ESSID（Extended Service Set Identifier）", "電波干渉", "伝送速度（bps：bits per second（ビット／秒））", "AP（アクセスポイント）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 89,
+      "syllabus_item": 62,
+      "topic_term": "継続的改善（PDCA など）",
+      "topic_is_new": false,
+      "related_terms": ["ISMS", "情報セキュリティポリシー（情報セキュリティ方針）", "内部監査"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 90,
+      "syllabus_item": 63,
+      "topic_term": "耐タンパ性",
+      "topic_is_new": false,
+      "related_terms": ["可用性", "信頼性", "責任追跡性", "TPM （Trusted Platform Module：セキュリティチップ）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 91,
+      "syllabus_item": 14,
+      "topic_term": "GPS（Global Positioning System：全地球測位システム）応用システム",
+      "topic_is_new": true,
+      "related_terms": ["準天頂衛星", "人工衛星", "位置情報", "IoT（Internet of Things）"],
+      "confidence": "medium",
+      "notes": "GPS はシラバスでは項目14（ビジネスシステム）の用語例。設問は IoT 機器の測位の仕組みなので項目17 とも迷ったが、用語例の所在に合わせた"
+    },
+    {
+      "number": 92,
+      "syllabus_item": 60,
+      "topic_term": "bcc",
+      "topic_is_new": false,
+      "related_terms": ["cc", "同報メール", "メーリングリスト"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 93,
+      "syllabus_item": 63,
+      "topic_term": "WPA2",
+      "topic_is_new": false,
+      "related_terms": ["無線LANのセキュリティ", "MAC アドレスフィルタリング", "ESSID（Extended Service Set Identifier）", "盗聴"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 94,
+      "syllabus_item": 62,
+      "topic_term": "情報セキュリティの要素（機密性，完全性，可用性，真正性，責任追跡性，否認防止，信頼性）",
+      "topic_is_new": false,
+      "related_terms": ["情報セキュリティインシデント", "IoT（Internet of Things）", "暗号化"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 95,
+      "syllabus_item": 58,
+      "topic_term": "伝送速度（bps：bits per second（ビット／秒））",
+      "topic_is_new": true,
+      "related_terms": ["伝送効率", "通信回線", "SI接頭語"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 96,
+      "syllabus_item": 48,
+      "topic_term": "オープンソースソフトウェア",
+      "topic_is_new": false,
+      "related_terms": ["GPL（GNU General Public License）", "コピーレフト", "ソースコード", "ライセンス"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 97,
+      "syllabus_item": 63,
+      "topic_term": "公開鍵暗号方式",
+      "topic_is_new": false,
+      "related_terms": ["公開鍵", "秘密鍵", "共通鍵暗号方式", "復号"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 98,
+      "syllabus_item": 58,
+      "topic_term": "IoT エリアネットワーク",
+      "topic_is_new": true,
+      "related_terms": ["BLE（Bluetooth Low Energy）", "PLC（電力線通信）", "ZigBee", "無線LAN"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 99,
+      "syllabus_item": 42,
+      "topic_term": "アクチュエーター（DC モーター，油圧シリンダ，空気圧シリンダほか）",
+      "topic_is_new": false,
+      "related_terms": ["温度センサー", "IoT（Internet of Things）", "センサー"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 100,
+      "syllabus_item": 63,
+      "topic_term": "デジタル証明書",
+      "topic_is_new": true,
+      "related_terms": ["CA （Certification Authority：認証局）", "デジタル署名（署名鍵，検証鍵）", "PKI（Public Key Infrastructure：公開鍵基盤）", "S/MIME"],
+      "confidence": "medium",
+      "notes": "自己署名証明書と認証局発行の証明書の違いを問う問題。論点を「デジタル証明書」としたが、既存論点「CA （Certification Authority：認証局）」への統合も考えられる"
+    }
+  ]
+}

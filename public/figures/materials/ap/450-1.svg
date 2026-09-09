@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="364" viewBox="0 0 640 364" role="img">
+<title>経路を流れるのは毎回変わるチャレンジと演算結果だけで、パスワードそのものは送らない。</title>
+<rect x="0.5" y="0.5" width="639" height="363" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(152.6 20)">
+<line x1="55" y1="34" x2="55" y2="296" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="286.8" y1="34" x2="286.8" y2="296" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="110" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="55" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">クライアント</text>
+<rect x="238.8" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="286.8" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">サーバ</text>
+<polyline points="58,68 283.8,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="283.8,68 275.8,71.6 275.8,64.4" fill="#1f2937"/>
+<text x="170.9" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 利用者 ID を送る</text>
+<polyline points="283.8,108 58,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="58,108 66,104.4 66,111.6" fill="#1f2937"/>
+<text x="170.9" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. チャレンジ（毎回異なる乱数）</text>
+<rect x="28.9" y="113" width="284" height="16" rx="3" fill="#ffffff"/>
+<text x="170.9" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">乱数が毎回変わるので盗んだ結果の再送は通らない</text>
+<polyline points="55,156 81,156 81,170 57,170" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="57,170 65,166.4 65,173.6" fill="#1f2937"/>
+<text x="89" y="164" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">3. パスワードと合わせて演算</text>
+<rect x="-75" y="175" width="260" height="16" rx="3" fill="#ffffff"/>
+<text x="55" y="188.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ここで作った値からパスワードは逆算できない</text>
+<polyline points="58,214 283.8,214" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="283.8,214 275.8,217.6 275.8,210.4" fill="#1f2937"/>
+<text x="170.9" y="207" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. レスポンス（演算結果）だけを送る</text>
+<polyline points="286.8,246 312.8,246 312.8,260 288.8,260" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="288.8,260 296.8,256.4 296.8,263.6" fill="#1f2937"/>
+<text x="320.8" y="254" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. 同じ計算をして突合</text>
+<rect x="132.8" y="265" width="308" height="16" rx="3" fill="#ffffff"/>
+<text x="286.8" y="278.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">サーバは自分が送った乱数と保管情報から同じ値を作る</text>
+</g>
+<text x="320" y="344" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">経路を流れるのは毎回変わるチャレンジと演算結果だけで、パスワードそのものは送らない。</text>
+</svg>

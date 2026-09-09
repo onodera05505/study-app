@@ -1,0 +1,24 @@
+{
+  "topic_id": 146,
+  "term": "サービスレベル管理（SLM）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### PDCA のどこで何をするか",
+      "caption": "監視・測定してサービス報告書を作るまでが C、改善計画を作るのは A。",
+      "nodes": [
+        {"id": "p", "label": "P 計画\n目標を合意し\nSLA を作る", "row": 0, "col": 0},
+        {"id": "d", "label": "D 提供\nSLA に沿って\nサービスを提供", "row": 0, "col": 1},
+        {"id": "c", "label": "C 点検\n監視・測定し\nサービス報告書", "row": 1, "col": 1, "emphasis": true},
+        {"id": "a", "label": "A 改善\nサービスの\n改善計画を作る", "row": 1, "col": 0, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "p", "to": "d"},
+        {"from": "d", "to": "c"},
+        {"from": "c", "to": "a"},
+        {"from": "a", "to": "p"}
+      ]
+    }
+  ]
+}

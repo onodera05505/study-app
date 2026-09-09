@@ -1,0 +1,50 @@
+{
+  "topic_id": 204,
+  "term": "電子メールのプロトコル",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### 届くまでの流れ",
+      "caption": "送るのも運ぶのも SMTP。POP3 や IMAP4 が働くのは、受信者が取り出す最後の区間だけ。",
+      "actors": [
+        {
+          "id": "pc1",
+          "label": "送信者の PC"
+        },
+        {
+          "id": "sv1",
+          "label": "送信メールサーバ"
+        },
+        {
+          "id": "sv2",
+          "label": "受信メールサーバ"
+        },
+        {
+          "id": "pc2",
+          "label": "受信者の PC"
+        }
+      ],
+      "steps": [
+        {
+          "from": "pc1",
+          "to": "sv1",
+          "label": "SMTP（送信）",
+          "note": "端末からサーバへ預ける"
+        },
+        {
+          "from": "sv1",
+          "to": "sv2",
+          "label": "SMTP（転送）",
+          "note": "サーバ同士の受け渡しも SMTP"
+        },
+        {
+          "from": "sv2",
+          "to": "pc2",
+          "label": "POP3 / IMAP4（受信）",
+          "note": "POP3 は端末に取り込む\nIMAP4 は置いたまま"
+        }
+      ]
+    }
+  ]
+}

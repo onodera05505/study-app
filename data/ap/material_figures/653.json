@@ -1,0 +1,27 @@
+{
+  "topic_id": 653,
+  "term": "分周器",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 計算の解き方",
+      "caption": "分周器に入るのは分岐点の 120 MHz であって、PLL2 を通った後の 240 MHz ではない。",
+      "nodes": [
+        {"id": "osc", "label": "発振器", "row": 0, "col": 0},
+        {"id": "pll1", "label": "PLL1\n8 逓倍", "row": 0, "col": 1},
+        {"id": "pll2", "label": "PLL2\n2 逓倍", "row": 0, "col": 2},
+        {"id": "cpu", "label": "CPU", "row": 0, "col": 3},
+        {"id": "div", "label": "分周器\n1／2 の 10 乗", "row": 1, "col": 2, "emphasis": true},
+        {"id": "sio", "label": "SIO", "row": 1, "col": 3}
+      ],
+      "edges": [
+        {"from": "osc", "to": "pll1", "label": "15 MHz"},
+        {"from": "pll1", "to": "pll2", "label": "120 MHz"},
+        {"from": "pll2", "to": "cpu", "label": "240 MHz"},
+        {"from": "pll1", "to": "div", "label": "120 MHz（分岐）"},
+        {"from": "div", "to": "sio", "label": "117.2 kHz"}
+      ]
+    }
+  ]
+}

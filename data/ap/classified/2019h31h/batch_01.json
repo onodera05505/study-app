@@ -1,0 +1,249 @@
+{
+  "exam": "2019h31h",
+  "range": "1-27",
+  "classifications": [
+    {
+      "number": 1,
+      "syllabus_item": 1,
+      "topic_term": "論理積",
+      "topic_is_new": false,
+      "related_terms": ["論理和", "論理シフト", "オーバーフロー（あふれ）", "命題論理"],
+      "confidence": "high",
+      "notes": "2023r05h 問1 と問題文・選択肢まで同一。既存論点「論理積」（項目1，2023r05h 問1）に一致するので用語例の表記をそのままコピーした。255（下位8ビットが全て1）との桁ごとの論理積によるマスクが中心の知識"
+    },
+    {
+      "number": 2,
+      "syllabus_item": 1,
+      "topic_term": "桁落ち",
+      "topic_is_new": false,
+      "related_terms": ["情報落ち", "丸め", "打切り", "オーバーフロー（あふれ）"],
+      "confidence": "high",
+      "notes": "2021r03h 問2 と同型の誤差の用語判別問題。既存論点「桁落ち」（項目1）に一致。related も既存論点に合わせ，選択肢に出る情報落ち・丸め・打切りを置いた"
+    },
+    {
+      "number": 3,
+      "syllabus_item": 3,
+      "topic_term": "ディープラーニング",
+      "topic_is_new": true,
+      "related_terms": ["ニューラルネットワーク", "多層パーセプトロン", "エキスパートシステム", "データマイニング"],
+      "confidence": "high",
+      "notes": "既存論点「ディープラーニング」（項目3，2021r03a 問3・2024r06h 問3）と同じ用語説明問題。表記をそのままコピーした。項目3の用語例には「ディープラーニング」という語自体が無い（ニューラルネットワーク等はある）ため，既存論点と同じく topic_is_new は true。選択肢イはデータマイニング，エはエキスパートシステムの説明なので related に入れた"
+    },
+    {
+      "number": 4,
+      "syllabus_item": 5,
+      "topic_term": "ToF（Time of Flight）センサー",
+      "topic_is_new": false,
+      "related_terms": ["LiDAR（Light Detection And Ranging：レーザーレーダー）", "距離センサー", "イメージセンサー", "GPS"],
+      "confidence": "high",
+      "notes": "項目5の用語例「ToF（Time of Flight）センサー」をそのままコピー。設問の表記は「TOF」だが用語例の表記を優先した。既存論点に ToF は無く新規レコードになるが，用語例にある語なので topic_is_new は false。選択肢エは GPS の説明"
+    },
+    {
+      "number": 5,
+      "syllabus_item": 18,
+      "topic_term": "記憶域管理アルゴリズム（ファーストフィット，ベストフィット，ワーストフィット）",
+      "topic_is_new": false,
+      "related_terms": ["2分探索木", "片方向連結リスト", "ビットマップ", "実アドレス方式"],
+      "confidence": "high",
+      "notes": "2023r05h 問5 と問題文・選択肢まで同一。その問が既に既存論点「記憶域管理アルゴリズム（ファーストフィット，ベストフィット，ワーストフィット）」（項目18）に割り当てられているので同じ表記・同じ項目に揃えた。選択肢は全てデータ構造なので項目6「2分探索木」も考えたが，先行の同一問と分散させないことを優先した"
+    },
+    {
+      "number": 6,
+      "syllabus_item": 7,
+      "topic_term": "シェルソート",
+      "topic_is_new": false,
+      "related_terms": ["挿入ソート", "クイックソート", "バブルソート", "マージソート"],
+      "confidence": "high",
+      "notes": "項目7の用語例「シェルソート」をそのままコピー。手順(3)の繰返し回数（H＝3→1→0）を追う問題で，シェルソートの間隔縮小の仕組みが中心の知識"
+    },
+    {
+      "number": 7,
+      "syllabus_item": 10,
+      "topic_term": "JSON（JavaScript Object Notation）",
+      "topic_is_new": false,
+      "related_terms": ["DOM（Document Object Model）", "SOAP", "YAML", "XML"],
+      "confidence": "high",
+      "notes": "既存論点「JSON（JavaScript Object Notation）」（項目10，2023r05a 問7）に一致。表記をそのままコピーした"
+    },
+    {
+      "number": 8,
+      "syllabus_item": 11,
+      "topic_term": "スーパースカラ",
+      "topic_is_new": false,
+      "related_terms": ["VLIW", "命令パイプライン", "SIMD", "マルチスレッディング"],
+      "confidence": "high",
+      "notes": "設問の表記は「スーパスカラ」だが，項目11の用語例「スーパースカラ」をそのままコピーした（表記揺れを避けるため用語例を優先）。選択肢アはマルチコア，イはマルチスレッディング，ウは SIMD の説明"
+    },
+    {
+      "number": 9,
+      "syllabus_item": 11,
+      "topic_term": "転送命令",
+      "topic_is_new": false,
+      "related_terms": ["ブロック転送", "アドレス部（オペランド）", "DMA（Direct Memory Access：直接記憶アクセス）方式", "アドレス方式"],
+      "confidence": "high",
+      "notes": "2024r06h 問8（方向フラグ付きブロック転送）と同一の型で，その問は既存論点「転送命令」（項目11）に割り当て済み。表記をそのままコピーした。転送元と転送先が重なるため降順転送が必要，という点が中心の知識"
+    },
+    {
+      "number": 10,
+      "syllabus_item": 12,
+      "topic_term": "メモリの転送速度",
+      "topic_is_new": true,
+      "related_terms": ["データ転送速度", "メモリバス", "サイクルタイム", "データバス"],
+      "confidence": "medium",
+      "notes": "バス幅16ビット（2バイト）÷ メモリサイクルタイム80ns＝25Mバイト／秒を求める問題。項目13（バス）も考えたが，連続動作できるメモリの性能を問うているので項目12とした。既存論点「データ転送時間」（項目12，2024r06h 問11）はフラッシュメモリからの転送＋展開時間を求める別型なので統合せず，新規論点「メモリの転送速度」を立てた。項目の選択で迷ったため medium"
+    },
+    {
+      "number": 11,
+      "syllabus_item": 14,
+      "topic_term": "ZigBee",
+      "topic_is_new": false,
+      "related_terms": ["Bluetooth", "BLE（Bluetooth Low Energy）", "IrDA", "Wi-SUN"],
+      "confidence": "high",
+      "notes": "項目14の用語例「ZigBee」をそのままコピー。選択肢アは Bluetooth，イは IrDA の説明なので related に置いた"
+    },
+    {
+      "number": 12,
+      "syllabus_item": 16,
+      "topic_term": "タイムアウト",
+      "topic_is_new": true,
+      "related_terms": ["Webサーバ", "データベースアクセス層", "クライアントサーバシステム", "ファンクション層"],
+      "confidence": "medium",
+      "notes": "Web／AP／DB の3階層で，外側の階層ほどタイムアウトを長く設定するという設計の知識。項目16の用語例に該当する語が無いため新規論点「タイムアウト」を立てた（既存の論点マスタにもタイムアウトの論点は無い）。項目44（設計）も候補だったが，出題位置・内容とも3層システムの構成の話なので項目16とした。項目と新規論点名の両方で迷ったため medium"
+    },
+    {
+      "number": 13,
+      "syllabus_item": 17,
+      "topic_term": "稼働率",
+      "topic_is_new": true,
+      "related_terms": ["信頼性ブロック図", "並列運転", "MTBF", "フォールトトレラントシステム"],
+      "confidence": "high",
+      "notes": "既存論点「稼働率」（項目17，6問）と同じ直列・並列の組合せ計算。表記をそのままコピーした。項目17の用語例に「稼働率」は無いので，既存論点と同じく topic_is_new は true。図は信頼性ブロック図なので項目16「信頼性ブロック図」も候補だが，問われているのは稼働率の大小比較なので既存の割当てに合わせた"
+    },
+    {
+      "number": 14,
+      "syllabus_item": 17,
+      "topic_term": "レスポンスタイム（応答時間）",
+      "topic_is_new": false,
+      "related_terms": ["ヒット率", "キャッシュメモリ", "スループット", "ターンアラウンドタイム"],
+      "confidence": "medium",
+      "notes": "ヒット率から平均応答時間を逆算し，ヒット率が半分になった場合を求める問題（現状のヒット率0.6→0.3，答え1.6秒）。計算の形は実効アクセス時間と同じだが対象はキャッシュサーバなので，項目17の用語例「レスポンスタイム（応答時間）」をそのままコピーした。項目12「キャッシュメモリ」との切り分けで迷ったため medium"
+    },
+    {
+      "number": 15,
+      "syllabus_item": 17,
+      "topic_term": "スループット",
+      "topic_is_new": false,
+      "related_terms": ["ボトルネック", "MIPS", "データ転送速度", "レスポンスタイム（応答時間）"],
+      "confidence": "high",
+      "notes": "2022r04a 問15・2024r06a 問15 と同型（サーバの MIPS とネットワーク転送速度のうち小さい方が処理能力を決める）。それらは既存論点「スループット」（項目17）に割当て済みなので表記を揃えた"
+    },
+    {
+      "number": 16,
+      "syllabus_item": 18,
+      "topic_term": "処理時間順方式",
+      "topic_is_new": false,
+      "related_terms": ["ターンアラウンドタイム", "SJF（Short Job First）", "多重（マルチ）プログラミング", "FCFS（First Come First Served）"],
+      "confidence": "high",
+      "notes": "処理時間順（SJF）でジョブの実行順を決めてからターンアラウンドタイムを求める問題。実行順の決定が中心の知識なので，既存論点「処理時間順方式」（項目18，2024r06a 問16・2025r07a 問15）に合わせた。項目17「ターンアラウンドタイム」は related に回した"
+    },
+    {
+      "number": 17,
+      "syllabus_item": 9,
+      "topic_term": "ヒープ",
+      "topic_is_new": false,
+      "related_terms": ["スタックポインタ", "ガベージコレクション", "自動変数", "LIFO"],
+      "confidence": "medium",
+      "notes": "スタック領域（戻り番地の退避，LIFO）とヒープ領域（割当てと解放の順序が任意）の違いを問う。項目9の用語例「ヒープ」をそのままコピーした。項目18（記憶管理）も候補で，類題 2021r03h 問18 は項目18「ガベージコレクション」に割り当てられているが，本問は実行時の変数・記憶域の性質を問うており項目9の用語例群（静的変数・自動変数・ヒープ・ガベージコレクション）に合致するので項目9とした。項目の選択で迷ったため medium"
+    },
+    {
+      "number": 18,
+      "syllabus_item": 18,
+      "topic_term": "デッドロック",
+      "topic_is_new": false,
+      "related_terms": ["排他制御", "資源獲得順序", "セマフォ", "リソーススタベーション"],
+      "confidence": "high",
+      "notes": "既存論点「デッドロック」（項目18，4問）に一致。資源獲得の順序を揃えるという定番の防止策を問うている。表記をそのままコピーした"
+    },
+    {
+      "number": 19,
+      "syllabus_item": 12,
+      "topic_term": "LRU",
+      "topic_is_new": false,
+      "related_terms": ["ページリプレースメント", "FIFO", "ページイン", "仮想記憶管理"],
+      "confidence": "medium",
+      "notes": "2025r07h 問15 と問題文・選択肢まで同一。その問は既存論点「LRU」（項目12）に割り当て済みなので，論点名も項目も同じにして頻度を分散させないようにした。内容だけを見れば仮想記憶のページ置換えなので項目18が自然（用語例「LRU」は項目18にあり項目12には無い）だが，既存の割当てとの整合を優先した。この点で迷ったため medium"
+    },
+    {
+      "number": 20,
+      "syllabus_item": 12,
+      "topic_term": "DRAM",
+      "topic_is_new": false,
+      "related_terms": ["SRAM", "リフレッシュ", "フリップフロップ", "コンデンサ"],
+      "confidence": "high",
+      "notes": "既存論点「DRAM」（項目12，2020r02o 問20）に一致。メモリセルがコンデンサで，電荷が抜けるためリフレッシュが要るという点が中心。SRAM はフリップフロップなので related に置いた"
+    },
+    {
+      "number": 21,
+      "syllabus_item": 23,
+      "topic_term": "アクチュエーター",
+      "topic_is_new": false,
+      "related_terms": ["センサー", "A/Dコンバータ", "D/A コンバータ", "ステッピングモーター"],
+      "confidence": "high",
+      "notes": "既存論点「アクチュエーター」（項目23，3問）と同じ機能判別問題。設問の表記は「アクチュエータ」だが用語例・既存論点の表記「アクチュエーター」をそのままコピーした。選択肢アは A/D コンバータ，エはセンサーの説明"
+    },
+    {
+      "number": 22,
+      "syllabus_item": 26,
+      "topic_term": "音声のデータ量",
+      "topic_is_new": true,
+      "related_terms": ["標本化周波数", "量子化ビット数", "圧縮率", "PCM（Pulse Code Modulation：パルス符号変調）"],
+      "confidence": "high",
+      "notes": "10kHz×16ビット×4秒÷8×1/4＝20kバイト。既存論点「音声のデータ量」（項目26，2021r03h 問3）と同じ計算型なので，既存の表記をそのままコピーして統合した（用語例には無い論点なので既存論点と同じく topic_is_new は true）。ADPCM は圧縮率の条件として出るだけなので related の圧縮率に含めた"
+    },
+    {
+      "number": 23,
+      "syllabus_item": 23,
+      "topic_term": "真理値表",
+      "topic_is_new": false,
+      "related_terms": ["論理式", "組合せ回路", "NAND 回路", "論理積"],
+      "confidence": "medium",
+      "notes": "同じ結線の AND 回路と OR 回路に入力を与え，AND 側でだけ成立する入出力の組合せを選ぶ問題。回路の入出力対応を突き合わせる知識なので，既存論点「真理値表」（項目23，2020r02o 問23・2023r05a 問23）に合わせた。項目1「論理積」も候補だが，本問はハードウェアの論理回路図を読む問題なので項目23とした。この切り分けで迷ったため medium"
+    },
+    {
+      "number": 24,
+      "syllabus_item": 25,
+      "topic_term": "表意コード",
+      "topic_is_new": false,
+      "related_terms": ["順番コード", "区分コード（分類コード）", "桁別コード", "合成コード"],
+      "confidence": "medium",
+      "notes": "設問の「ニモニックコード」は項目25の用語例「表意コード」と同じ概念で，用語例の表記をそのままコピーした。選択肢のシーケンスコード＝順番コード，ブロックコード＝区分コードも用語例の表記で related に入れた。論点名が設問の語（ニモニックコード）と異なる点で迷ったため medium"
+    },
+    {
+      "number": 25,
+      "syllabus_item": 27,
+      "topic_term": "レンダリング",
+      "topic_is_new": false,
+      "related_terms": ["シェーディング（フォンシェーディング，グローシェーディング）", "レイトレーシング法", "テクスチャマッピング", "ディザリング"],
+      "confidence": "high",
+      "notes": "既存論点「レンダリング」（項目27，3問）と同じ用語説明問題。表記をそのままコピーした。選択肢アはディザリング，エはモデリングの説明"
+    },
+    {
+      "number": 26,
+      "syllabus_item": 28,
+      "topic_term": "内部スキーマ（記憶スキーマ）",
+      "topic_is_new": false,
+      "related_terms": ["概念スキーマ", "外部スキーマ（副スキーマ）", "3層スキーマ", "物理データモデル"],
+      "confidence": "high",
+      "notes": "2022r04h 問27 と同型で，既存論点「内部スキーマ（記憶スキーマ）」（項目28）に一致。用語例の表記をそのままコピーした。選択肢ウのサブスキーマは外部スキーマの別名"
+    },
+    {
+      "number": 27,
+      "syllabus_item": 30,
+      "topic_term": "アクセス権",
+      "topic_is_new": false,
+      "related_terms": ["GRANT 文", "REVOKE 文", "ビュー表", "参照制約"],
+      "confidence": "medium",
+      "notes": "2020r02o 問26（GRANT 文で権限を付与する）とほぼ同一で，その問は既存論点「アクセス権」（項目30）に割当て済み。項目30の用語例では「GRANT文」が本文中に出るだけで単独の用語例ではないため，先例どおり「アクセス権」を論点名にし GRANT 文は related に置いた。新規論点「GRANT 文」を作る案もあったので medium"
+    }
+  ]
+}

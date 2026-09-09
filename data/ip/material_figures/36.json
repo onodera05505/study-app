@@ -1,0 +1,25 @@
+{
+  "topic_id": 36,
+  "term": "プロキシ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 代理で外につなぐしくみ",
+      "caption": "PC は直接外へ出ず、プロキシが代わりに取りに行く。Web サーバから見える相手はプロキシだけ。",
+      "nodes": [
+        {"id": "pc", "label": "社内の PC", "row": 0, "col": 0},
+        {"id": "px", "label": "プロキシサーバ", "row": 0, "col": 1, "emphasis": true},
+        {"id": "net", "label": "インターネット", "row": 0, "col": 2, "shape": "cloud"},
+        {"id": "web", "label": "Web サーバ", "row": 0, "col": 3},
+        {"id": "log", "label": "アクセス先の記録\n業務外サイトの遮断", "row": 1, "col": 1}
+      ],
+      "edges": [
+        {"from": "pc", "to": "px", "label": "ページを頼む", "arrow": "both"},
+        {"from": "px", "to": "net", "label": "PC に代わって接続", "arrow": "both"},
+        {"from": "net", "to": "web", "arrow": "both"},
+        {"from": "px", "to": "log", "style": "dashed", "arrow": "none"}
+      ]
+    }
+  ]
+}

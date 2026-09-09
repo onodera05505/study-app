@@ -1,0 +1,383 @@
+{
+ "exam": "2024r06a",
+ "range": "28-54",
+ "classifications": [
+  {
+   "number": 28,
+   "syllabus_item": 29,
+   "topic_term": "論理データモデル",
+   "topic_is_new": false,
+   "related_terms": [
+    "概念データモデル",
+    "エンティティ",
+    "属性",
+    "データモデル"
+   ],
+   "confidence": "medium",
+   "notes": "三つの表の項目設計から得られる情報／得られない情報を判断させる問題。表（関係）レベルの設計を読む力を問うているので項目29の「論理データモデル」とした。問29が同じ項目の「概念データモデル」なので論点を分けている。「データモデル」を採る読み方もある。"
+  },
+  {
+   "number": 29,
+   "syllabus_item": 29,
+   "topic_term": "概念データモデル",
+   "topic_is_new": false,
+   "related_terms": [
+    "リレーションシップ",
+    "エンティティ",
+    "UML",
+    "オブジェクト図"
+   ],
+   "confidence": "high",
+   "notes": "表記は UML だが、問われているのはオブジェクト図のインスタンス数から多重度を読み取ることなので、項目10（その他の言語）ではなく項目29の概念データモデルとした。"
+  },
+  {
+   "number": 30,
+   "syllabus_item": 30,
+   "topic_term": "ウィンドウ関数",
+   "topic_is_new": false,
+   "related_terms": [
+    "副問合せ",
+    "表の結合",
+    "グループ化",
+    "問合せ（クエリ）"
+   ],
+   "confidence": "high",
+   "notes": "ROW_NUMBER() OVER (PARTITION BY … ORDER BY …) の指定を問う問題。項目30の用語例では「ウィンドウ関数（c）その他のデータ操作言語INSERT文」と後続の説明文が1エントリに連結してしまっているため、用語部分の「ウィンドウ関数」だけを採った（単独で載っている「ウィンドウ」は GUI のウィンドウと紛れるので採らない）。"
+  },
+  {
+   "number": 31,
+   "syllabus_item": 31,
+   "topic_term": "チェックポイント",
+   "topic_is_new": false,
+   "related_terms": [
+    "フォワードリカバリ（ロールフォワード）",
+    "バックワードリカバリ（ロールバック）",
+    "ジャーナルファイル（ログファイル）",
+    "2 相コミットメント"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 32,
+   "syllabus_item": 33,
+   "topic_term": "転送速度（伝送速度）",
+   "topic_is_new": false,
+   "related_terms": [
+    "bps（bit per second：ビット／秒）",
+    "回線容量",
+    "伝送効率"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 33,
+   "syllabus_item": 33,
+   "topic_term": "DNS",
+   "topic_is_new": false,
+   "related_terms": [
+    "ドメイン",
+    "MX レコード",
+    "NS レコード",
+    "逆引き"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 34,
+   "syllabus_item": 35,
+   "topic_term": "ICMP（Internet Control Message Protocol）",
+   "topic_is_new": false,
+   "related_terms": [
+    "RARP（Reverse Address Resolution Protocol：逆アドレス解決プロトコル）",
+    "NAT",
+    "DHCP",
+    "ping"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 35,
+   "syllabus_item": 33,
+   "topic_term": "アドレスクラス",
+   "topic_is_new": false,
+   "related_terms": [
+    "マルチキャスト",
+    "ユニキャスト",
+    "プライベート IP アドレス",
+    "IPv4"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 36,
+   "syllabus_item": 36,
+   "topic_term": "arp",
+   "topic_is_new": false,
+   "related_terms": [
+    "ping",
+    "netstat",
+    "ifconfig",
+    "物理アドレス"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 37,
+   "syllabus_item": 38,
+   "topic_term": "アイデンティティ連携（OpenID Connect，SAML）",
+   "topic_is_new": false,
+   "related_terms": [
+    "シングルサインオン",
+    "IdP（Identity Provider）",
+    "IDaaS（Identity as a Service）",
+    "認証サーバ"
+   ],
+   "confidence": "medium",
+   "notes": "SAML 単独の用語例が無く、項目38の「アイデンティティ連携（OpenID Connect，SAML）」をそのまま採った。同じ項目の「シングルサインオン」を論点にする案もある。OAuth が項目42にあることから項目42へ寄せる読み方もあり得るが、SAML／OpenID Connect が載っているのは項目38なので38とした。"
+  },
+  {
+   "number": 38,
+   "syllabus_item": 38,
+   "topic_term": "ポートスキャン",
+   "topic_is_new": false,
+   "related_terms": [
+    "攻撃の準備",
+    "IoT のセキュリティ",
+    "サイバー攻撃",
+    "不正アクセス"
+   ],
+   "confidence": "medium",
+   "notes": "いわゆるダークネット（未使用 IP アドレス空間）に届くパケットを問う問題だが、「ダークネット」はどの項目の用語例にも無い。正解の内容が攻撃対象の探索なので、項目38の用語例「攻撃の準備（フットプリンティング，ポートスキャンほか）」から「ポートスキャン」を採った（2025r07a 問43 と同じ表記に揃えている）。"
+  },
+  {
+   "number": 39,
+   "syllabus_item": 38,
+   "topic_term": "ディープフェイク",
+   "topic_is_new": false,
+   "related_terms": [
+    "AI を悪用した攻撃",
+    "ビジネスメール詐欺（BEC）",
+    "なりすまし",
+    "ソーシャルエンジニアリング"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 40,
+   "syllabus_item": 38,
+   "topic_term": "パスワードリスト攻撃（クレデンシャルスタッフィング）",
+   "topic_is_new": false,
+   "related_terms": [
+    "辞書攻撃",
+    "総当たり（ブルートフォース）攻撃",
+    "レインボーテーブル攻撃",
+    "リバースブルートフォース攻撃"
+   ],
+   "confidence": "high",
+   "notes": "項目38の用語例では「パスワードリスト攻撃（クレデンシャルスタッフィング）・クロスサイトスクリプティング」と次の用語が連結しているため、該当部分だけを採った。"
+  },
+  {
+   "number": 41,
+   "syllabus_item": 40,
+   "topic_term": "CVE（Common Vulnerabilities and Exposures：共通脆弱性識別子）",
+   "topic_is_new": false,
+   "related_terms": [
+    "CVSS（Common Vulnerability Scoring System：共通脆弱性評価システム）",
+    "CWE（Common Weakness Enumeration：共通脆弱性タイプ）",
+    "JVN（Japan Vulnerability Notes）",
+    "脆弱性診断"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 42,
+   "syllabus_item": 38,
+   "topic_term": "DNS キャッシュポイズニング",
+   "topic_is_new": false,
+   "related_terms": [
+    "DNSSEC",
+    "サービス及びソフトウェアの機能の悪用（オープンリゾルバの悪用ほか）",
+    "DNS",
+    "ポート番号"
+   ],
+   "confidence": "medium",
+   "notes": "問われているのは対策だが、対策を選ぶには攻撃の仕組み（問合せ ID・送信元ポートの推測）の理解が中心なので、攻撃名が用語例にある項目38とした。対策側の論点として項目41／42に寄せる読み方もあり得る（DNSSEC は問44 で項目42に取っている）。"
+  },
+  {
+   "number": 43,
+   "syllabus_item": 41,
+   "topic_term": "SBOM（Software Bill of Materials）",
+   "topic_is_new": false,
+   "related_terms": [
+    "脆弱性管理",
+    "SIEM（Security Information and Event Management）",
+    "情報資産台帳",
+    "コンポーネント"
+   ],
+   "confidence": "medium",
+   "notes": "設問が「ソフトウェアのセキュリティ管理に使用される SBOM」と限定しているので項目41とした。項目41の用語例では SBOM が「脆弱性管理（…SBOM を利用した脆弱性管理ほか）」という長い1エントリに埋め込まれているため、同じ語が単独で載っている項目52（構成管理・変更管理）の表記をそのまま採用した（2025r07h 問40 と同じ扱い）。項目52を選ぶ判断もあり得る。"
+  },
+  {
+   "number": 44,
+   "syllabus_item": 42,
+   "topic_term": "DNSSEC",
+   "topic_is_new": false,
+   "related_terms": [
+    "デジタル署名（署名鍵，検証鍵）",
+    "SPF",
+    "DKIM",
+    "DNS キャッシュポイズニング"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 45,
+   "syllabus_item": 35,
+   "topic_term": "VLAN",
+   "topic_is_new": false,
+   "related_terms": [
+    "ブロードキャスト",
+    "レイヤー3（L3）スイッチ",
+    "IEEE 802.1Q",
+    "MAC アドレス（Media Access Control address）フィルタリング"
+   ],
+   "confidence": "medium",
+   "notes": "セキュリティ上の効果を問うているが、正解を選ぶのに必要なのは VLAN がブロードキャストの到達範囲を分ける仕組みの理解なので、VLAN が用語例にある項目35とした。セキュリティ対策側（項目41）に寄せる読み方もあり得る。"
+  },
+  {
+   "number": 46,
+   "syllabus_item": 38,
+   "topic_term": "エクスプロイトコード",
+   "topic_is_new": false,
+   "related_terms": [
+    "エクスプロイトキット",
+    "ゼロデイ攻撃",
+    "セキュリティホール",
+    "脆弱性診断"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 47,
+   "syllabus_item": 44,
+   "topic_term": "マイクロサービスアーキテクチャ",
+   "topic_is_new": false,
+   "related_terms": [
+    "疎結合",
+    "API",
+    "コンテナ",
+    "モジュール分割"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 48,
+   "syllabus_item": 43,
+   "topic_term": "使用性（usability）",
+   "topic_is_new": false,
+   "related_terms": [
+    "品質特性",
+    "品質要件",
+    "非機能要件",
+    "可用性"
+   ],
+   "confidence": "medium",
+   "notes": "品質特性としての使用性に対する目標設定（達成基準の立て方）を問う問題なので、品質要件を扱う項目43とした。同じ「使用性（usability）」は項目45にもあり、項目44には「使用性（習得性，運用操作性，アクセシビリティほか）」がある。項目44／45を選ぶ判断もあり得る。"
+  },
+  {
+   "number": 49,
+   "syllabus_item": 49,
+   "topic_term": "インセプションデッキ",
+   "topic_is_new": false,
+   "related_terms": [
+    "プランニングポーカー",
+    "ユーザーストーリーマッピング",
+    "アジャイルソフトウェア開発",
+    "アジャイルモデリング"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 50,
+   "syllabus_item": 25,
+   "topic_term": "レスポンシブ Web デザイン",
+   "topic_is_new": false,
+   "related_terms": [
+    "メディアクエリ",
+    "モバイルファースト",
+    "クロスブラウザ",
+    "ワイヤーフレーム"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 51,
+   "syllabus_item": 56,
+   "topic_term": "スコープ（作業及び成果物）",
+   "topic_is_new": false,
+   "related_terms": [
+    "スコープ規定書",
+    "プロジェクトスコープのクリープ",
+    "WBS",
+    "変更管理"
+   ],
+   "confidence": "medium",
+   "notes": "スコープ管理に当たる活動を選ぶ問題。項目56で確定だが、論点名の候補が「スコープ規定書」「スコープ（作業及び成果物）」など複数あり、包括的な「スコープ（作業及び成果物）」を採った。"
+  },
+  {
+   "number": 52,
+   "syllabus_item": 56,
+   "topic_term": "ワークパッケージ",
+   "topic_is_new": false,
+   "related_terms": [
+    "WBS",
+    "WBS 辞書",
+    "要素分解",
+    "活動リスト"
+   ],
+   "confidence": "high",
+   "notes": "設問の表記は「ワーク・パッケージ」だが、用語例の表記「ワークパッケージ」に合わせた。"
+  },
+  {
+   "number": 53,
+   "syllabus_item": 57,
+   "topic_term": "コロケーション",
+   "topic_is_new": true,
+   "related_terms": [
+    "タックマンモデル（成立期，動乱期，安定期，遂行期，解散期）",
+    "プロジェクトチーム",
+    "資源計画",
+    "コミュニケーションチャネル"
+   ],
+   "confidence": "medium",
+   "notes": "コロケーションはどの項目の用語例にも無いので新設した。チームのパフォーマンス向上策（PMBOK ではチーム育成のツール）なので項目57としたが、項目63（プロジェクトのコミュニケーション）に寄せる読み方もあり得る。"
+  },
+  {
+   "number": 54,
+   "syllabus_item": 58,
+   "topic_term": "ファストトラッキング",
+   "topic_is_new": false,
+   "related_terms": [
+    "クラッシング",
+    "CPM（Critical Path Method：クリティカルパス法）",
+    "スケジュールネットワーク分析",
+    "リード"
+   ],
+   "confidence": "high",
+   "notes": null
+  }
+ ]
+}

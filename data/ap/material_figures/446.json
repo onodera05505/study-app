@@ -1,0 +1,23 @@
+{
+  "topic_id": 446,
+  "term": "IPv6",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### アドレスの表記規則",
+      "caption": "表記の正誤は、区切りがコロンであることと、二重コロンが 1 か所だけであることで決まる。",
+      "nodes": [
+        {"id": "full", "label": "16 ビット×8 ブロック\n2001:0db8:0000:0000:\n0000:0000:03ab:ff01", "row": 0, "col": 0},
+        {"id": "zero", "label": "先頭の 0 は省略できる\n2001:db8:0:0:0:0:3ab:ff01", "row": 1, "col": 0},
+        {"id": "ok", "label": "0 の連続を :: で省略\n（1 か所だけ）\n2001:db8::3ab:ff01", "row": 2, "col": 0, "emphasis": true},
+        {"id": "ng", "label": ":: が 2 か所\n何ブロック省いたか\n復元できず誤り\n2001:db8::3ab::ff01", "row": 2, "col": 1}
+      ],
+      "edges": [
+        {"from": "full", "to": "zero", "label": "先頭の 0 を省略"},
+        {"from": "zero", "to": "ok", "label": "1 か所だけ"},
+        {"from": "zero", "to": "ng", "label": "2 か所使うと不可", "style": "dashed"}
+      ]
+    }
+  ]
+}

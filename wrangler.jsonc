@@ -1,0 +1,65 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "study-app",
+  "main": "src/server/index.ts",
+  "compatibility_date": "2026-01-15",
+  "compatibility_flags": ["nodejs_compat"],
+  // API と静的アセットを同じ Worker から配信する。Pages との2デプロイをやめて1つに。
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "study-app-db",
+      "database_id": "e3e81476-6afe-4144-a938-ce8e461a2ed4",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": {
+    "APP_NAME": "study-app",
+    "EXAM": "ip"
+  },
+  // JWT_SECRET は wrangler secret put で設定する。vars には置かない。
+
+  // 試験ごとに別の D1・別の Pages プロジェクトへ出す。コードは同じもの。
+  // named environment は vars と d1_databases を継承しないので、各 env に書き切る。
+  // 使い方: scripts/deploy-pages.sh ip|ap
+  "env": {
+    "ip": {
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "study-app-db",
+          "database_id": "e3e81476-6afe-4144-a938-ce8e461a2ed4",
+          "migrations_dir": "migrations"
+        }
+      ],
+      "vars": { "APP_NAME": "study-app", "EXAM": "ip" },
+      "assets": {
+        "directory": "./dist",
+        "binding": "ASSETS",
+        "not_found_handling": "single-page-application"
+      }
+    },
+    "ap": {
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "study-app-ap-db",
+          // 作成後に `npx wrangler d1 create study-app-ap-db` が出す ID を入れる
+          "database_id": "79eac147-5fa1-47d3-a0c8-2715aaebeaf7",
+          "migrations_dir": "migrations"
+        }
+      ],
+      "vars": { "APP_NAME": "study-app-ap", "EXAM": "ap" },
+      "assets": {
+        "directory": "./dist",
+        "binding": "ASSETS",
+        "not_found_handling": "single-page-application"
+      }
+    }
+  }
+}

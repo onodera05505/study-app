@@ -1,0 +1,24 @@
+{
+  "topic_id": 96,
+  "term": "技術ロードマップ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 何のための図か",
+      "caption": "横軸は必ず時間で、技術がいつ完成し、いつ商品化・事業化するかを時間の流れに沿って並べる。",
+      "nodes": [
+        {"id": "m", "label": "市場", "row": 0, "col": 0, "shape": "round"},
+        {"id": "p", "label": "商品", "row": 1, "col": 0, "shape": "round"},
+        {"id": "t", "label": "技術", "row": 2, "col": 0, "shape": "round"},
+        {"id": "m3", "label": "3年目\n市場が広がる", "row": 0, "col": 3},
+        {"id": "p2", "label": "2年目\n商品として発売", "row": 1, "col": 2},
+        {"id": "t1", "label": "1年目\n要素技術が完成", "row": 2, "col": 1}
+      ],
+      "edges": [
+        {"from": "t1", "to": "p2", "label": "商品化"},
+        {"from": "p2", "to": "m3", "label": "事業化"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="319" viewBox="0 0 698.9 348" role="img">
+<title>回線を渡る 0.08 ミリ秒が 3 回と、スイッチの処理 0.2 ミリ秒が 2 回で、合計 0.64 ミリ秒になる。</title>
+<rect x="0.5" y="0.5" width="697.9" height="347" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<line x1="48" y1="34" x2="48" y2="280" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="235.4" y1="34" x2="235.4" y2="280" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="423.5" y1="34" x2="423.5" y2="280" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="610.9" y1="34" x2="610.9" y2="280" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">端末 A</text>
+<rect x="186.7" y="0" width="97.4" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="235.4" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">スイッチ 1</text>
+<rect x="374.8" y="0" width="97.4" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="423.5" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">スイッチ 2</text>
+<rect x="562.9" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="610.9" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">端末 B</text>
+<polyline points="51,68 232.4,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="232.4,68 224.4,71.6 224.4,64.4" fill="#1f2937"/>
+<text x="141.7" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. フレーム送信 0.08 ミリ秒</text>
+<rect x="-0.3" y="73" width="284" height="16" rx="3" fill="#ffffff"/>
+<text x="141.7" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">1,000 バイト＝8,000 ビット ÷ 100M ビット／秒</text>
+<polyline points="235.4,116 261.4,116 261.4,130 237.4,130" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="237.4,130 245.4,126.4 245.4,133.6" fill="#1f2937"/>
+<text x="269.4" y="124" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2. 処理 0.2 ミリ秒</text>
+<rect x="51.4" y="135" width="368" height="16" rx="3" fill="#ffffff"/>
+<text x="235.4" y="148.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">受信し終えてから送信を始めるので、区間ごとに時間が積み上がる</text>
+<polyline points="238.4,174 420.5,174" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="420.5,174 412.5,177.6 412.5,170.4" fill="#1f2937"/>
+<text x="329.45" y="167" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 転送 0.08 ミリ秒</text>
+<polyline points="423.5,206 449.5,206 449.5,220 425.5,220" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="425.5,220 433.5,216.4 433.5,223.6" fill="#1f2937"/>
+<text x="457.5" y="214" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. 処理 0.2 ミリ秒</text>
+<polyline points="426.5,248 607.9,248" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="607.9,248 599.9,251.6 599.9,244.4" fill="#1f2937"/>
+<text x="517.2" y="241" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. 転送 0.08 ミリ秒</text>
+</g>
+<text x="349.45" y="328" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">回線を渡る 0.08 ミリ秒が 3 回と、スイッチの処理 0.2 ミリ秒が 2 回で、合計 0.64 ミリ秒になる。</text>
+</svg>

@@ -1,0 +1,27 @@
+{
+  "topic_id": 268,
+  "term": "プログラムマネジメント",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 混同しやすい用語",
+      "caption": "プログラムは複数のプロジェクトを束ねて事業目標につなぐ層。PMO は支援する組織であって、束ねる主体ではない。",
+      "nodes": [
+        {"id": "pf", "label": "ポートフォリオ\n投資対象を選ぶ", "row": 0, "col": 1},
+        {"id": "pg", "label": "プログラム\n複数を束ねて\n事業目標を実現", "row": 1, "col": 1, "emphasis": true},
+        {"id": "pmo", "label": "PMO\n支援する専門組織", "row": 1, "col": 2, "shape": "round"},
+        {"id": "p1", "label": "プロジェクト\nシステム開発", "row": 2, "col": 0},
+        {"id": "p2", "label": "プロジェクト\n業務プロセス変更", "row": 2, "col": 1},
+        {"id": "p3", "label": "プロジェクト\n人材育成", "row": 2, "col": 2}
+      ],
+      "edges": [
+        {"from": "pf", "to": "pg", "label": "資源を配分"},
+        {"from": "pg", "to": "p1"},
+        {"from": "pg", "to": "p2", "label": "連携・統合"},
+        {"from": "pg", "to": "p3"},
+        {"from": "pmo", "to": "pg", "label": "支援", "style": "dashed"}
+      ]
+    }
+  ]
+}

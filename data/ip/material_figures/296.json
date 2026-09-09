@@ -1,0 +1,25 @@
+{
+  "topic_id": 296,
+  "term": "アクチュエーター（DC モーター，油圧シリンダ，空気圧シリンダほか）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 図の問題の見分け方",
+      "caption": "現実世界からデバイスへ入る側がセンサ、デバイスから現実世界へ働きかける側がアクチュエータ。",
+      "nodes": [
+        {"id": "lv", "label": "水田の水位\n（現実世界）", "row": 0, "col": 0, "shape": "round"},
+        {"id": "sen", "label": "センサ\n測って電気信号に", "row": 0, "col": 1},
+        {"id": "srv", "label": "IoT サーバ\n分析して判断", "row": 0, "col": 2},
+        {"id": "gate", "label": "水田の水門\n（現実世界）", "row": 1, "col": 0, "shape": "round"},
+        {"id": "act", "label": "アクチュエータ\n指示を受けて動かす", "row": 1, "col": 1, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "lv", "to": "sen", "label": "水位"},
+        {"from": "sen", "to": "srv", "label": "水位データ"},
+        {"from": "srv", "to": "act", "label": "開閉の指示"},
+        {"from": "act", "to": "gate", "label": "開ける・閉める"}
+      ]
+    }
+  ]
+}

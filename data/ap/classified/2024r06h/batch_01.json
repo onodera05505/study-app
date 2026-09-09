@@ -1,0 +1,378 @@
+{
+ "exam": "2024r06h",
+ "range": "1-27",
+ "classifications": [
+  {
+   "number": 1,
+   "syllabus_item": 2,
+   "topic_term": "ベイズの定理",
+   "topic_is_new": false,
+   "related_terms": [
+    "条件付き確率",
+    "同時確率",
+    "乗法定理"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 2,
+   "syllabus_item": 2,
+   "topic_term": "待ち行列理論",
+   "topic_is_new": true,
+   "related_terms": [
+    "平均到着率",
+    "平均サービス率",
+    "サービス時間",
+    "到着間隔"
+   ],
+   "confidence": "high",
+   "notes": "M/M/1 の平均待ち時間。項目2の用語例に理論名そのものが無いため新設だが、2024r06a 問1・2025r07a 問2 と同じ論点名に揃えた。"
+  },
+  {
+   "number": 3,
+   "syllabus_item": 3,
+   "topic_term": "ディープラーニング",
+   "topic_is_new": true,
+   "related_terms": [
+    "ニューラルネットワーク",
+    "多層パーセプトロン",
+    "エキスパートシステム",
+    "パターン認識"
+   ],
+   "confidence": "medium",
+   "notes": "用語例に「ディープラーニング」が無い。近い語は「ニューラルネットワーク」「多層パーセプトロン」だが、設問の主題は深層学習そのものなので新設した。"
+  },
+  {
+   "number": 4,
+   "syllabus_item": 4,
+   "topic_term": "ハミング符号",
+   "topic_is_new": false,
+   "related_terms": [
+    "パリティチェック",
+    "CRC",
+    "ECC",
+    "符号理論"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 5,
+   "syllabus_item": 7,
+   "topic_term": "流れ図",
+   "topic_is_new": true,
+   "related_terms": [
+    "ループ端",
+    "判断",
+    "繰返し",
+    "処理"
+   ],
+   "confidence": "medium",
+   "notes": "前判定ループと後判定ループの等価性を問う。項目7の用語例は流れ図記号（端子・処理・判断・ループ端）が個別に並ぶだけで、学習単位としての語が無いため総称の「流れ図」を新設した。"
+  },
+  {
+   "number": 6,
+   "syllabus_item": 6,
+   "topic_term": "後行順",
+   "topic_is_new": false,
+   "related_terms": [
+    "2分木",
+    "深さ優先探索",
+    "再帰",
+    "逆ポーランド表記法"
+   ],
+   "confidence": "medium",
+   "notes": "右の子を先にたどる鏡像の後行順（出力は ED－CB×÷A＋）。通常の後行順（左→右→節）とは走査順が左右逆なので、論点名を「後行順」に寄せてよいか迷いが残る。"
+  },
+  {
+   "number": 7,
+   "syllabus_item": 7,
+   "topic_term": "バブルソート",
+   "topic_is_new": false,
+   "related_terms": [
+    "クイックソート",
+    "マージソート",
+    "選択ソート"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 8,
+   "syllabus_item": 11,
+   "topic_term": "転送命令",
+   "topic_is_new": false,
+   "related_terms": [
+    "アドレス方式",
+    "オペランド",
+    "DMA（Direct Memory Access：直接記憶アクセス）方式"
+   ],
+   "confidence": "medium",
+   "notes": "重なり合う領域のブロック転送で方向フラグと開始アドレスをどう指定するかを問う。命令セットの知識（項目11）としたが、設問の中心は転送方向の判断であり用語例の「転送命令」ではやや広い。"
+  },
+  {
+   "number": 9,
+   "syllabus_item": 11,
+   "topic_term": "量子コンピュータ（量子ゲート型，量子アニーリング型）",
+   "topic_is_new": false,
+   "related_terms": [
+    "量子ビット（Quantum bit）",
+    "重ね合わせ",
+    "量子アニーリング型"
+   ],
+   "confidence": "high",
+   "notes": "括弧内は方式の列挙だが、設問は量子ゲート方式の説明を通じて量子コンピュータ全般を問うており、2024r06a 問9 と同じく用語例を丸ごとコピーした。"
+  },
+  {
+   "number": 10,
+   "syllabus_item": 12,
+   "topic_term": "キャッシュメモリ",
+   "topic_is_new": true,
+   "related_terms": [
+    "実効アクセス時間",
+    "ヒット率",
+    "主記憶",
+    "命令キャッシュ"
+   ],
+   "confidence": "high",
+   "notes": "実効アクセス時間からヒット率を逆算する計算問題。用語例には「命令キャッシュ」「データキャッシュ」しか無いため新設だが、2024r06a 問10 と同じ論点名に揃えた。"
+  },
+  {
+   "number": 11,
+   "syllabus_item": 12,
+   "topic_term": "データ転送時間",
+   "topic_is_new": true,
+   "related_terms": [
+    "フラッシュメモリ（NAND，NOR）",
+    "データ転送速度",
+    "圧縮率",
+    "主記憶"
+   ],
+   "confidence": "medium",
+   "notes": "フラッシュメモリからの転送時間と展開時間の合算。デバイス側（項目12 メモリ）か項目15（入出力装置：データ転送時間・データ転送速度の用語例あり）かで迷った。設問がフラッシュメモリ→主記憶の話なので項目12を採り、論点名は項目15の用語例に合わせた。"
+  },
+  {
+   "number": 12,
+   "syllabus_item": 16,
+   "topic_term": "フォールトアボイダンス",
+   "topic_is_new": false,
+   "related_terms": [
+    "フェールセーフ",
+    "フェールソフト",
+    "フォールトトレラントシステム",
+    "フールプルーフ"
+   ],
+   "confidence": "medium",
+   "notes": "信頼性設計の4用語を比較させる問題で、問題文に単一の主題語が無い。正答が指す「フォールトアボイダンス」を論点にし、残りを related_terms に置いた。"
+  },
+  {
+   "number": 13,
+   "syllabus_item": 16,
+   "topic_term": "オブジェクトストレージ",
+   "topic_is_new": false,
+   "related_terms": [
+    "ブロックストレージ",
+    "FC-SAN",
+    "IP-SAN",
+    "RAID0"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 14,
+   "syllabus_item": 11,
+   "topic_term": "アムダールの法則",
+   "topic_is_new": false,
+   "related_terms": [
+    "マルチコアプロセッサ",
+    "密結合マルチプロセッサシステム",
+    "同期"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 15,
+   "syllabus_item": 17,
+   "topic_term": "シミュレーション",
+   "topic_is_new": true,
+   "related_terms": [
+    "ベンチマーク",
+    "システムモニタ",
+    "モニタリング",
+    "待ち行列理論"
+   ],
+   "confidence": "medium",
+   "notes": "性能評価手法としてのシミュレーションと解析的手法の比較。項目17の用語例に該当語が無く新設した（「シミュレーション」は項目47に単独で載るが文脈が異なる）。"
+  },
+  {
+   "number": 16,
+   "syllabus_item": 18,
+   "topic_term": "ノンプリエンプティブ方式",
+   "topic_is_new": false,
+   "related_terms": [
+    "プリエンプティブ方式",
+    "ディスパッチ",
+    "実行可能状態",
+    "静的優先順位方式"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 17,
+   "syllabus_item": 18,
+   "topic_term": "デッドロック",
+   "topic_is_new": false,
+   "related_terms": [
+    "排他制御",
+    "プロセス",
+    "資源の占有順序",
+    "リソーススタベーション"
+   ],
+   "confidence": "high",
+   "notes": "「デッドロック」は用語例上は項目28・31（データベース）に載るが、本問は OS のプロセスと資源占有順序の話なので項目18とした（2025r07a 問18 と同じ扱い）。"
+  },
+  {
+   "number": 18,
+   "syllabus_item": 18,
+   "topic_term": "多重（マルチ）プログラミング",
+   "topic_is_new": false,
+   "related_terms": [
+    "タスク管理",
+    "タイムスライス方式",
+    "FCFS（First Come First Served）",
+    "ターンアラウンドタイム"
+   ],
+   "confidence": "medium",
+   "notes": "タスクの多重度1と2で全処理完了までの時間差を求める計算問題。タスク管理（項目18）の知識としたが、評価指標（項目17 ターンアラウンドタイム）とも読める。"
+  },
+  {
+   "number": 19,
+   "syllabus_item": 21,
+   "topic_term": "プロファイラ",
+   "topic_is_new": true,
+   "related_terms": [
+    "デバッガ",
+    "エミュレーター",
+    "シミュレーター",
+    "トレーサー"
+   ],
+   "confidence": "high",
+   "notes": "項目21の用語例に「プロファイラ」が無いため新設。他の選択肢（エミュレーター・シミュレーター・トレーサー）は同項目の用語例にある。"
+  },
+  {
+   "number": 20,
+   "syllabus_item": 23,
+   "topic_term": "パワー半導体",
+   "topic_is_new": false,
+   "related_terms": [
+    "インバータ",
+    "コンバータ",
+    "PWM（Pulse Width Modulation：パルス幅変調）制御",
+    "電源回路"
+   ],
+   "confidence": "medium",
+   "notes": "設問の主題は「インバータ」だが用語例に無く、また論理回路のインバータ（NOT）と紛らわしいため、用語例にある上位語「パワー半導体」を論点にした。"
+  },
+  {
+   "number": 21,
+   "syllabus_item": 23,
+   "topic_term": "NAND 回路",
+   "topic_is_new": false,
+   "related_terms": [
+    "タイミングチャート",
+    "真理値表",
+    "NOR 回路",
+    "XOR 回路"
+   ],
+   "confidence": "high",
+   "notes": "A=B=1 のときだけ Y=0 になるタイムチャートなので NAND。用語例の表記（半角空白入り）をそのままコピーした。"
+  },
+  {
+   "number": 22,
+   "syllabus_item": 15,
+   "topic_term": "画素へのメモリ割当て",
+   "topic_is_new": true,
+   "related_terms": [
+    "液晶ディスプレイ",
+    "グラフィックスモード",
+    "パックトピクセル方式",
+    "VGA"
+   ],
+   "confidence": "medium",
+   "notes": "グラフィック LCD の画素とメモリアドレスの対応から特定画素の先頭番地を計算する。項目15（入出力装置：ディスプレイ）としたが用語例に該当語が無く新設。項目26（マルチメディア技術）とも迷った。"
+  },
+  {
+   "number": 23,
+   "syllabus_item": 23,
+   "topic_term": "直流給電",
+   "topic_is_new": true,
+   "related_terms": [
+    "電源回路",
+    "電力損失",
+    "低消費電力化",
+    "UPS"
+   ],
+   "confidence": "medium",
+   "notes": "データセンターの給電方式。テクノロジ系の候補にファシリティ関連の項目が無いため、電源回路を扱う項目23（ハードウェア）に寄せた。用語例に該当語が無く新設。"
+  },
+  {
+   "number": 24,
+   "syllabus_item": 26,
+   "topic_term": "アウトラインフォント",
+   "topic_is_new": true,
+   "related_terms": [
+    "ビットマップフォント",
+    "ベクターデータ",
+    "ラスターデータ（ビットマップデータ）"
+   ],
+   "confidence": "medium",
+   "notes": "拡大時の品質＝ベクターデータかラスターデータかの違い。項目26（マルチメディア技術：ベクターデータ／ラスターデータ）としたが、項目25（UX/UI デザイン：タイポグラフィ）とも迷った。用語例にフォント種別が無く新設。"
+  },
+  {
+   "number": 25,
+   "syllabus_item": 30,
+   "topic_term": "ストアドプロシージャ",
+   "topic_is_new": true,
+   "related_terms": [
+    "埋込みSQL",
+    "DBMS",
+    "実行計画",
+    "会話型SQL"
+   ],
+   "confidence": "medium",
+   "notes": "シラバスの用語例に「ストアドプロシージャ」がどの項目にも無い。サーバ側にまとめた SQL 処理という性質から項目30（データ操作）に置いたが、項目19（ミドルウェア：DBMS）とも迷った。"
+  },
+  {
+   "number": 26,
+   "syllabus_item": 30,
+   "topic_term": "集合関数",
+   "topic_is_new": false,
+   "related_terms": [
+    "表の結合",
+    "グループ化",
+    "NULL",
+    "副問合せ"
+   ],
+   "confidence": "medium",
+   "notes": "外部結合で在庫が無い部品の集約結果が NULL になるため COALESCE(SUM(…),0) を選ぶ問題。中心の知識を集合関数（SUM）とみたが、外部結合と NULL の扱いも同程度に効いており論点の絞り込みに迷いがある。"
+  },
+  {
+   "number": 27,
+   "syllabus_item": 31,
+   "topic_term": "フォワードリカバリ（ロールフォワード）",
+   "topic_is_new": false,
+   "related_terms": [
+    "バックワードリカバリ（ロールバック）",
+    "チェックポイント",
+    "ジャーナルファイル（ログファイル）",
+    "シャドウページ法"
+   ],
+   "confidence": "high",
+   "notes": "括弧内は同義語なので用語例を丸ごとコピーした。"
+  }
+ ]
+}

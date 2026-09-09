@@ -1,0 +1,24 @@
+{
+  "topic_id": 22,
+  "term": "デッドロック",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### なぜ止まってしまうのか",
+      "caption": "互いに相手が握る資源の解放を待って矢印が輪になった状態がデッドロックで、獲得順序を両方で揃えれば輪はできない。",
+      "nodes": [
+        {"id": "ta", "label": "トランザクション A\n先に a を取る", "row": 0, "col": 0},
+        {"id": "rb", "label": "資源 b", "row": 0, "col": 1, "shape": "cylinder"},
+        {"id": "ra", "label": "資源 a", "row": 1, "col": 0, "shape": "cylinder"},
+        {"id": "tb", "label": "トランザクション B\n先に b を取る", "row": 1, "col": 1}
+      ],
+      "edges": [
+        {"from": "ta", "to": "rb", "label": "解放を待つ", "style": "dashed"},
+        {"from": "rb", "to": "tb", "label": "B がロック中"},
+        {"from": "tb", "to": "ra", "label": "解放を待つ", "style": "dashed"},
+        {"from": "ra", "to": "ta", "label": "A がロック中"}
+      ]
+    }
+  ]
+}

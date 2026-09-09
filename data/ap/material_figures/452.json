@@ -1,0 +1,23 @@
+{
+  "topic_id": 452,
+  "term": "Webアイソレーション",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### なぜ未知のマルウェアに効くのか",
+      "caption": "PC に届くのは描画済みの画面だけなので、危険かどうかを判定しなくても未知のマルウェアが渡らない。",
+      "nodes": [
+        {"id": "web", "label": "インターネットの\nWeb サイト", "row": 0, "col": 0, "shape": "cloud"},
+        {"id": "vdi", "label": "VDI（閲覧用）サーバ\nDMZ に設置", "row": 0, "col": 1, "emphasis": true},
+        {"id": "pc", "label": "内部ネットワークの PC", "row": 0, "col": 2},
+        {"id": "iso", "label": "受信データの処理も\nマルウェアの実行もここで完結", "row": 1, "col": 1, "shape": "round"}
+      ],
+      "edges": [
+        {"from": "web", "to": "vdi", "label": "実行できる形のデータ", "arrow": "both"},
+        {"from": "vdi", "to": "pc", "label": "画面の画像と操作情報だけ", "arrow": "both"},
+        {"from": "vdi", "to": "iso", "label": "セッションごとに破棄", "style": "dashed", "arrow": "none"}
+      ]
+    }
+  ]
+}

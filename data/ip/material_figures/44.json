@@ -1,0 +1,25 @@
+{
+  "topic_id": 44,
+  "term": "情報セキュリティポリシー（情報セキュリティ方針）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 三階層の役割",
+      "caption": "上ほど抽象的で、最上位の基本方針はトップマネジメントが組織全体で一つ定める。設定値のような具体物は下の層に書く。",
+      "nodes": [
+        {"id": "top", "label": "トップ\nマネジメント", "row": 0, "col": 0, "shape": "round"},
+        {"id": "kihon", "label": "基本方針\nなぜ守るのか\n組織の意図と方向付け", "row": 0, "col": 1, "emphasis": true},
+        {"id": "kijun", "label": "対策基準\n分野ごとに\n守るべきルール", "row": 1, "col": 1},
+        {"id": "tejun", "label": "実施手順\n担当者向けの\n具体的な進め方", "row": 2, "col": 1},
+        {"id": "rei", "label": "例）サーバの設定値\n個人情報の取扱い手順", "row": 2, "col": 2, "shape": "round"}
+      ],
+      "edges": [
+        {"from": "top", "to": "kihon", "label": "確立する"},
+        {"from": "kihon", "to": "kijun"},
+        {"from": "kijun", "to": "tejun"},
+        {"from": "tejun", "to": "rei", "style": "dashed", "arrow": "none"}
+      ]
+    }
+  ]
+}

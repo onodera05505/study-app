@@ -1,0 +1,372 @@
+{
+ "exam": "2025r07h",
+ "range": "28-54",
+ "classifications": [
+  {
+   "number": 28,
+   "syllabus_item": 30,
+   "topic_term": "関係代数",
+   "topic_is_new": false,
+   "related_terms": [
+    "差演算",
+    "共通演算",
+    "和両立"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 29,
+   "syllabus_item": 34,
+   "topic_term": "PoE（Power over Ethernet）",
+   "topic_is_new": true,
+   "related_terms": [
+    "電力線通信（PLC）",
+    "UPS",
+    "無線 LAN アクセスポイント",
+    "VoIP（Voice over Internet Protocol）"
+   ],
+   "confidence": "medium",
+   "notes": "PoE はどの項目の用語例にも無い。誤答選択肢の PLC（電力線通信）が項目34の用語例にあること、LAN の伝送媒体・回線に関わる話であることから項目34とした。項目33（ネットワーク方式）の伝送媒体に寄せる読み方もあり得る。"
+  },
+  {
+   "number": 30,
+   "syllabus_item": 35,
+   "topic_term": "MTU（Maximum Transmission Unit）",
+   "topic_is_new": true,
+   "related_terms": [
+    "パケット",
+    "ヘッダー",
+    "IP アドレス",
+    "ポート番号"
+   ],
+   "confidence": "medium",
+   "notes": "TCP/IP のヘッダー長を踏まえたパケット分割の計算問題。項目35（通信プロトコル）で確定だが、MTU が用語例に無いため新設した。"
+  },
+  {
+   "number": 31,
+   "syllabus_item": 35,
+   "topic_term": "ルーティング",
+   "topic_is_new": false,
+   "related_terms": [
+    "サブネットマスク",
+    "CIDR（Classless Inter Domain Routing）",
+    "IP アドレス"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 32,
+   "syllabus_item": 35,
+   "topic_term": "サブネットマスク",
+   "topic_is_new": false,
+   "related_terms": [
+    "サブネットアドレス",
+    "CIDR（Classless Inter Domain Routing）",
+    "ブロードキャスト",
+    "IP アドレス"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 33,
+   "syllabus_item": 35,
+   "topic_term": "ポート番号",
+   "topic_is_new": false,
+   "related_terms": [
+    "TELNET",
+    "IMAP",
+    "SMTP",
+    "SNMP エージェント"
+   ],
+   "confidence": "medium",
+   "notes": "正解が FTP のため、FTP のアクティブモード／パッシブモードを扱う項目37（ネットワーク応用）に寄せる読み方もある。ただし問われているのはウェルノウンポート番号の割当てなので項目35のポート番号とした。"
+  },
+  {
+   "number": 34,
+   "syllabus_item": 37,
+   "topic_term": "base64",
+   "topic_is_new": false,
+   "related_terms": [
+    "MIME",
+    "SMTP",
+    "HTMLメール（MHTML）"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 35,
+   "syllabus_item": 38,
+   "topic_term": "CRYPTREC 暗号リスト",
+   "topic_is_new": false,
+   "related_terms": [
+    "暗号方式（暗号化（暗号鍵），復号（復号鍵），共通鍵暗号方式（共通鍵），公開鍵暗号方式（公開鍵，秘密鍵））",
+    "危殆たい化"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 36,
+   "syllabus_item": 38,
+   "topic_term": "OS コマンドインジェクション",
+   "topic_is_new": false,
+   "related_terms": [
+    "SQL インジェクション",
+    "クロスサイトスクリプティング",
+    "ディレクトリトラバーサル",
+    "CGI"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 37,
+   "syllabus_item": 38,
+   "topic_term": "サイドチャネル攻撃（テンペスト攻撃，プローブ攻撃，タイミング攻撃，電力解析攻撃など）",
+   "topic_is_new": false,
+   "related_terms": [
+    "総当たり（ブルートフォース）攻撃",
+    "IoT",
+    "ブロック暗号（AES（Advanced Encryption Standard）ほか）"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 38,
+   "syllabus_item": 38,
+   "topic_term": "OCSP",
+   "topic_is_new": false,
+   "related_terms": [
+    "CRL（Certificate Revocation List：証明書失効リスト）",
+    "PKI（Public Key Infrastructure：公開鍵基盤）",
+    "デジタル証明書（公開鍵証明書）",
+    "CA（Certification Authority：認証局）"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 39,
+   "syllabus_item": 41,
+   "topic_term": "セキュリティクリアランス",
+   "topic_is_new": false,
+   "related_terms": [
+    "クリアデスク",
+    "ネットワーク分離",
+    "アクセス権の管理"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 40,
+   "syllabus_item": 41,
+   "topic_term": "SBOM（Software Bill of Materials）",
+   "topic_is_new": false,
+   "related_terms": [
+    "脆弱性管理",
+    "脆弱性修正プログラム（セキュリティパッチ）の適用",
+    "サプライチェーンリスク"
+   ],
+   "confidence": "medium",
+   "notes": "SBOM は項目41の用語例では「脆弱性管理（…SBOM を利用した脆弱性管理ほか）」という長い1エントリに埋め込まれているため、同じ語が単独で載っている項目52（構成管理・変更管理）の表記をそのまま採用した。設問が「ソフトウェアの情報セキュリティ対策のうち」と限定し正解も脆弱性管理なので、項目は41とした。項目52を選ぶ判断もあり得る。"
+  },
+  {
+   "number": 41,
+   "syllabus_item": 42,
+   "topic_term": "cookie",
+   "topic_is_new": false,
+   "related_terms": [
+    "HTTP over TLS（HTTPS）",
+    "Web システムのセキュリティ対策",
+    "セッション ID",
+    "Same Origin Policy"
+   ],
+   "confidence": "medium",
+   "notes": "cookie の用語例が載っているのは項目37（ネットワーク応用）だが、設問は Secure 属性というセキュリティ設定の効果を問うており、項目42の「Web システムのセキュリティ対策」に当たると判断した。項目37を選ぶ判断もあり得る。"
+  },
+  {
+   "number": 42,
+   "syllabus_item": 42,
+   "topic_term": "OS コマンドインジェクション対策",
+   "topic_is_new": true,
+   "related_terms": [
+    "セキュアプログラミング",
+    "SQL インジェクション対策（プレースホルダほか）",
+    "バッファオーバーフロー対策",
+    "クロスサイトスクリプティング対策"
+   ],
+   "confidence": "medium",
+   "notes": "項目42には SQL インジェクション対策・XSS 対策・バッファオーバーフロー対策はあるが OS コマンドインジェクション対策が無いので、同じ命名規則で新設した。攻撃そのものを問う問36（項目38「OS コマンドインジェクション」）とは別論点として分けている。"
+  },
+  {
+   "number": 43,
+   "syllabus_item": 42,
+   "topic_term": "VPN",
+   "topic_is_new": false,
+   "related_terms": [
+    "IPsec",
+    "SSL/TLS",
+    "L2TP",
+    "OSI 基本参照モデル"
+   ],
+   "confidence": "medium",
+   "notes": "IPsec／L2TP／TLS の3プロトコルを比較させる問題で、単独の主題語を決めにくい。設問文が主題としている「VPN で使用されるプロトコル」から VPN を採ったが、IPsec を主題とみなす判断もあり得る。"
+  },
+  {
+   "number": 44,
+   "syllabus_item": 42,
+   "topic_term": "パスワードクラック対策（ソルト，ストレッチングほか）",
+   "topic_is_new": false,
+   "related_terms": [
+    "ハッシュ関数（SHA-256（SHA-2），SHA-3，一方向性，第二原像発見困難性，衝突発見困難性ほか）",
+    "リスクベース認証",
+    "総当たり（ブルートフォース）攻撃"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 45,
+   "syllabus_item": 44,
+   "topic_term": "デザインレビュー",
+   "topic_is_new": false,
+   "related_terms": [
+    "ウォークスルー",
+    "インスペクション",
+    "ピアレビュー",
+    "共同レビュー"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 46,
+   "syllabus_item": 47,
+   "topic_term": "ブルーグリーンデプロイメント",
+   "topic_is_new": false,
+   "related_terms": [
+    "カナリアリリース",
+    "一斉移行",
+    "段階移行",
+    "並行稼働対応"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 47,
+   "syllabus_item": 44,
+   "topic_term": "保守性",
+   "topic_is_new": false,
+   "related_terms": [
+    "品質特性",
+    "JIS X 25010",
+    "信頼性",
+    "カバレージ"
+   ],
+   "confidence": "medium",
+   "notes": "ソフトウェア品質特性の定量評価を問う問題。項目44の用語例に「保守性」「品質特性」「JIS X 25010」があるので項目44としたが、運用期間中の不具合を指標にしている点から項目48（保守・廃棄）を選ぶ判断もあり得る（項目48の用語例には品質指標が無い）。"
+  },
+  {
+   "number": 48,
+   "syllabus_item": 49,
+   "topic_term": "XP（エクストリームプログラミング）",
+   "topic_is_new": false,
+   "related_terms": [
+    "ペアプログラミング",
+    "テスト駆動開発（TDD）",
+    "リファクタリング",
+    "継続的インテグレーション（CI）"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 49,
+   "syllabus_item": 49,
+   "topic_term": "カオスエンジニアリング",
+   "topic_is_new": false,
+   "related_terms": [
+    "分散システム",
+    "本番環境",
+    "実験の自動化"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 50,
+   "syllabus_item": 49,
+   "topic_term": "スプリントレビュー",
+   "topic_is_new": false,
+   "related_terms": [
+    "スクラム",
+    "スプリントプランニング",
+    "デイリースクラム",
+    "スプリントレトロスペクティブ"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 51,
+   "syllabus_item": 54,
+   "topic_term": "プロジェクト憲章",
+   "topic_is_new": false,
+   "related_terms": [
+    "プロジェクトマネジメント計画書",
+    "プロジェクトスコープ記述書",
+    "WBS（Work Breakdown Structure）"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 52,
+   "syllabus_item": 59,
+   "topic_term": "EVM（Earned Value Management）",
+   "topic_is_new": false,
+   "related_terms": [
+    "コンティンジェンシー予備",
+    "コストベースライン",
+    "クラッシング",
+    "ファストトラッキング"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 53,
+   "syllabus_item": 58,
+   "topic_term": "クラッシング",
+   "topic_is_new": false,
+   "related_terms": [
+    "ファストトラッキング",
+    "CPM（Critical Path Method：クリティカルパス法）",
+    "スケジュールネットワーク分析"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 54,
+   "syllabus_item": 61,
+   "topic_term": "テスト密度",
+   "topic_is_new": true,
+   "related_terms": [
+    "欠陥密度",
+    "品質管理測定値",
+    "品質要求事項",
+    "是正処置"
+   ],
+   "confidence": "medium",
+   "notes": "分野がマネジメント系なので項目61（プロジェクトの品質）を選んだが、テスト密度・欠陥密度の用語例はテクノロジ系の項目45にある。項目61の用語例には該当語が無いため topic_is_new を true にした。項目61の「品質管理測定値」を論点にする案もあったが、粒度が粗すぎるので採らなかった。"
+  }
+ ]
+}

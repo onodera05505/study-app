@@ -1,0 +1,23 @@
+{
+  "topic_id": 425,
+  "term": "プロジェクト調達マネジメント",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 請負契約と指揮命令権",
+      "caption": "請負では発注元が管理するのは成果物と契約であり、委託先の要員に直接指示することはできない。",
+      "nodes": [
+        {"id": "cl", "label": "発注元\nプロジェクトマネージャ", "row": 0, "col": 0},
+        {"id": "vd", "label": "委託先の会社", "row": 0, "col": 1, "emphasis": true},
+        {"id": "st", "label": "委託先の要員", "row": 1, "col": 1}
+      ],
+      "edges": [
+        {"from": "cl", "to": "vd", "label": "請負契約を結ぶ"},
+        {"from": "vd", "to": "cl", "label": "進捗報告と成果物"},
+        {"from": "vd", "to": "st", "label": "指揮命令"},
+        {"from": "cl", "to": "st", "label": "直接の指示はできない", "style": "dashed", "arrow": "none"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,356 @@
+{
+  "exam": "2022r04a",
+  "range": "55-80",
+  "classifications": [
+    {
+      "number": 55,
+      "syllabus_item": 65,
+      "topic_term": "問題管理",
+      "topic_is_new": false,
+      "related_terms": [
+        "根本原因",
+        "インシデント管理",
+        "サービスレベル管理",
+        "変更管理"
+      ],
+      "confidence": "high",
+      "notes": "問題管理の目的（未知の根本原因の特定と再発防止）を問う定義問題。ア＝インシデント管理，ウ＝サービス継続管理，エ＝変更管理の説明。既存論点「問題管理」（2025r07a 問56）に合流。"
+    },
+    {
+      "number": 56,
+      "syllabus_item": 67,
+      "topic_term": "サービスデスク",
+      "topic_is_new": false,
+      "related_terms": [
+        "運用の資源管理（要員などの人的資源及びハードウェア，ソフトウェア，データ，ネットワークなどインフラストラクチャの技術的資源）",
+        "シフト制",
+        "労働時間"
+      ],
+      "confidence": "medium",
+      "notes": "サービスデスクのシフト勤務表から必要要員数を求める計算問題。中心知識は運用要員の要員計画だが，対応する個別の用語例が無いため，題材である「サービスデスク」（項目67の用語例）を論点にした。"
+    },
+    {
+      "number": 57,
+      "syllabus_item": 67,
+      "topic_term": "データ管理",
+      "topic_is_new": false,
+      "related_terms": [
+        "アウトプットの管理",
+        "職務分掌",
+        "業務運用マニュアル",
+        "利用者の管理"
+      ],
+      "confidence": "medium",
+      "notes": "入出力データの管理方針（帳票の授受管理など）の適否を問う問題。運用における入出力管理の統制なので項目70（内部統制）と採る余地もあるが，既存論点「データ管理」（2024r06a 問57，同型の問題）に合流させた。"
+    },
+    {
+      "number": 58,
+      "syllabus_item": 69,
+      "topic_term": "情報セキュリティ監査",
+      "topic_is_new": false,
+      "related_terms": [
+        "JIS Q 27001",
+        "内部監査",
+        "指摘事項",
+        "リスクアセスメント"
+      ],
+      "confidence": "medium",
+      "notes": "ISMS 内部監査で指摘事項とすべき状況（リスクアセスメント後にリスク受容基準を決めるのは順序が逆）を問う。実質的に JIS Q 27001 の要求事項の知識を問うており，論点を「JIS Q 27001」と採る余地もあるが，設問の枠組みが監査なので項目69の用語例「情報セキュリティ監査」とした。"
+    },
+    {
+      "number": 59,
+      "syllabus_item": 69,
+      "topic_term": "監査証拠の入手と評価",
+      "topic_is_new": false,
+      "related_terms": [
+        "監査手続",
+        "監査証拠",
+        "監査調書の作成と保管",
+        "個別監査計画"
+      ],
+      "confidence": "medium",
+      "notes": "「監査手続」の定義（十分かつ適切な証拠を入手するための手順）を問う問題。「監査手続」は用語例に無く，既存論点「監査証拠の入手と評価」（2025r07h 問59，related_terms に監査手続を含む）に合流させた。"
+    },
+    {
+      "number": 60,
+      "syllabus_item": 69,
+      "topic_term": "システム監査基準",
+      "topic_is_new": true,
+      "related_terms": [
+        "システム監査",
+        "システム管理基準",
+        "システム監査上の判断尺度",
+        "監査人の倫理"
+      ],
+      "confidence": "high",
+      "notes": "システム監査基準の意義（システム監査人の行為規範）を問う定義問題。エはシステム管理基準の説明。既存の新規論点「システム監査基準」（2024r06h 問59）に合流。"
+    },
+    {
+      "number": 61,
+      "syllabus_item": 89,
+      "topic_term": "BCP（Business Continuity Plan：事業継続計画）",
+      "topic_is_new": false,
+      "related_terms": [
+        "BCM（Business Continuity Management：事業継続マネジメント）",
+        "レジリエンス",
+        "JIS Q 22301（ISO 22301）"
+      ],
+      "confidence": "medium",
+      "notes": "BCP の定義を問う問題。ア＝バランススコアカード，イ＝BPM，ウ＝BPO の説明。用語例は項目71と項目89の両方にあるが，BCM・JIS Q 22301 とともに事業継続を扱う項目89（経営・組織論）とした。表記は用語例をそのままコピー。"
+    },
+    {
+      "number": 62,
+      "syllabus_item": 71,
+      "topic_term": "デジタル経営改革のための評価指標（DX 推進指標）",
+      "topic_is_new": false,
+      "related_terms": [
+        "デジタルトランスフォーメーション（DX）",
+        "IT 投資マネジメント",
+        "スケーラビリティ（将来の成長への対応）"
+      ],
+      "confidence": "high",
+      "notes": "既存論点（2024r06a 問61）に合流。"
+    },
+    {
+      "number": 63,
+      "syllabus_item": 71,
+      "topic_term": "エンタープライズアーキテクチャ",
+      "topic_is_new": true,
+      "related_terms": [
+        "ザックマンフレームワーク",
+        "TOGAF（The Open Group Architecture Framework）",
+        "業務・システム最適化",
+        "DFD"
+      ],
+      "confidence": "high",
+      "notes": "EA の定義（4つのアーキテクチャ体系による全体最適化）を問う問題。「エンタープライズアーキテクチャ」そのものは用語例に無いため新規論点。ア＝UML，イ＝E-R 図，エ＝DFD の説明。"
+    },
+    {
+      "number": 64,
+      "syllabus_item": 75,
+      "topic_term": "NPV（Net Present Value：正味現在価値）",
+      "topic_is_new": false,
+      "related_terms": [
+        "DCF法",
+        "PBP",
+        "投資回収期間"
+      ],
+      "confidence": "medium",
+      "notes": "投資シナリオを正味現在価値法で比較する計算問題。用語例は項目75と項目91（NPV法）の両方にあるが，投資効果の評価という文脈から項目75（システム化計画）とし，表記は項目75の用語例をコピーした。"
+    },
+    {
+      "number": 65,
+      "syllabus_item": 75,
+      "topic_term": "コンティンジェンシープラン",
+      "topic_is_new": true,
+      "related_terms": [
+        "リスク対応（リスク回避，損失予防，損失軽減，リスク移転，リスク保有など）",
+        "リスクの発生頻度・影響・範囲"
+      ],
+      "confidence": "medium",
+      "notes": "リスク顕在化時に備えた対処計画の策定がコンティンジェンシープランであることを問う問題。ア・イ・ウはリスク低減・予防の説明。用語例に無いが，既存の新規論点「コンティンジェンシープラン」（2024r06h 問66，項目75）に合流させた。"
+    },
+    {
+      "number": 66,
+      "syllabus_item": 77,
+      "topic_term": "情報システム・モデル取引・契約書",
+      "topic_is_new": false,
+      "related_terms": [
+        "請負契約",
+        "（準）委任契約",
+        "ソフトウェア開発委託モデル契約",
+        "ウォーターフォールモデル"
+      ],
+      "confidence": "high",
+      "notes": "モデル取引・契約書で請負型が適切とされるフェーズ（システム内部設計〜システム結合）を問う問題。既存論点（2025r07h 問66）に合流。"
+    },
+    {
+      "number": 67,
+      "syllabus_item": 78,
+      "topic_term": "デューデリジェンス",
+      "topic_is_new": true,
+      "related_terms": [
+        "M&A（Mergersand Acquisitions）",
+        "TOB（Take Over Bid：公開買付け）",
+        "企業価値"
+      ],
+      "confidence": "high",
+      "notes": "デューデリジェンスの意味を問う用語問題。用語例に無いため新規論点。M&A を扱う項目78（経営戦略手法）とした。"
+    },
+    {
+      "number": 68,
+      "syllabus_item": 79,
+      "topic_term": "ターゲットリターン価格設定",
+      "topic_is_new": true,
+      "related_terms": [
+        "その他の価格設定方法（コストプラス法ほか）",
+        "スキミングプライシング",
+        "バリュープライシング",
+        "需要の価格弾力性"
+      ],
+      "confidence": "high",
+      "notes": "目標投資収益率を実現する価格設定（ターゲットリターン価格設定）を問う用語問題。用語例に無いため新規論点。"
+    },
+    {
+      "number": 69,
+      "syllabus_item": 79,
+      "topic_term": "コンジョイント分析",
+      "topic_is_new": false,
+      "related_terms": [
+        "市場調査（マーケティングリサーチ）",
+        "RFM 分析（Recency，Frequency，Monetary Analysis）",
+        "コーホート分析",
+        "ポジショニング"
+      ],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 70,
+      "syllabus_item": 82,
+      "topic_term": "APIエコノミー",
+      "topic_is_new": false,
+      "related_terms": [
+        "オープンAPI",
+        "EAI（Enterprise Application Integration）",
+        "BI（Business Intelligence）"
+      ],
+      "confidence": "high",
+      "notes": "他社公開 API を自社サービスに組み込んで価値を生む事例（エ）が API エコノミー。ア・イ・ウは自社・組織内利用にとどまる。"
+    },
+    {
+      "number": 71,
+      "syllabus_item": 85,
+      "topic_term": "ファブレス",
+      "topic_is_new": false,
+      "related_terms": [
+        "ファウンドリ",
+        "生産方式（かんばん方式，リーン生産方式，セル生産方式）",
+        "JIT（Just In Time：ジャストインタイム）"
+      ],
+      "confidence": "medium",
+      "notes": "ファブレス（生産設備をもたない生産形態）の特徴を問う問題。用語例は項目77と項目85の両方にあるが，選択肢がセル生産方式・かんばん方式・ファウンドリなど生産方式・生産形態で構成されているため項目85（エンジニアリングシステム）とした。調達の文脈で項目77と採る余地もある。"
+    },
+    {
+      "number": 72,
+      "syllabus_item": 85,
+      "topic_term": "MRP",
+      "topic_is_new": false,
+      "related_terms": [
+        "部品表（BOM）",
+        "正味所要量",
+        "在庫管理"
+      ],
+      "confidence": "high",
+      "notes": "部品構成表と在庫から正味所要量を計算する問題。既存論点「MRP」（2024r06a 問73，同型の問題）に合流。"
+    },
+    {
+      "number": 73,
+      "syllabus_item": 84,
+      "topic_term": "サイバーフィジカルシステム（CPS）",
+      "topic_is_new": false,
+      "related_terms": [
+        "デジタルツイン",
+        "IoT（Internet ofThings）",
+        "仮想化",
+        "暗号資産（仮想通貨）"
+      ],
+      "confidence": "high",
+      "notes": "既存論点（2023r05a 問71）に合流。表記は項目84の用語例をコピー。"
+    },
+    {
+      "number": 74,
+      "syllabus_item": 89,
+      "topic_term": "SL（Situational Leadership）理論",
+      "topic_is_new": false,
+      "related_terms": [
+        "マズロの欲求段階説",
+        "PM理論",
+        "ジョハリの窓",
+        "SECIモデル"
+      ],
+      "confidence": "high",
+      "notes": "ア＝ジョハリの窓，ウ＝SECI モデル，エ＝マズローの欲求段階説の説明。"
+    },
+    {
+      "number": 75,
+      "syllabus_item": 90,
+      "topic_term": "デルファイ法",
+      "topic_is_new": false,
+      "related_terms": [
+        "時系列分析",
+        "クロスセクションデータ",
+        "モデル化（確定モデル，確率モデル）"
+      ],
+      "confidence": "high",
+      "notes": "予測手法としてのデルファイ法（専門家アンケートの繰返しと回答の収束）を問う定義問題。分野がストラテジ系なので，用語例にデルファイ法をもつ項目90とした。項目60（プロジェクトのリスク）に同名の既存論点があるが，そちらはリスクマネジメントの文脈。"
+    },
+    {
+      "number": 76,
+      "syllabus_item": 89,
+      "topic_term": "親和図",
+      "topic_is_new": false,
+      "related_terms": [
+        "ブレーンストーミング",
+        "NM 法",
+        "ゴードン法",
+        "新 QC 七つ道具（親和図法，連関図法，系統図法，マトリックス図法，マトリックスデータ解析法，PDPC（Process Decision Program Chart：プロセス決定計画図）法，アローダイアグラム法）"
+      ],
+      "confidence": "high",
+      "notes": "事実やアイディアを類似性でグルーピングする収束技法（親和図法）を問う問題。既存論点「親和図」（2025r07h 問75，項目89）に合流させた。"
+    },
+    {
+      "number": 77,
+      "syllabus_item": 91,
+      "topic_term": "限界利益",
+      "topic_is_new": true,
+      "related_terms": [
+        "損益分岐点",
+        "変動損益計算書",
+        "機会損失"
+      ],
+      "confidence": "high",
+      "notes": "機械使用時間の制約下で営業利益を最大化する計算問題。単位時間当たりの限界利益で比較する（乙のみ製造が最大）。既存の新規論点「限界利益」（2025r07a 問77）に合流。"
+    },
+    {
+      "number": 78,
+      "syllabus_item": 92,
+      "topic_term": "著作権",
+      "topic_is_new": false,
+      "related_terms": [
+        "職務著作",
+        "著作権法",
+        "請負契約"
+      ],
+      "confidence": "high",
+      "notes": "多段階委託で開発したプログラムの著作権の帰属（特段の取決めが無ければ実際に創作した C 社の職務著作）を問う問題。既存論点「著作権」に合流。"
+    },
+    {
+      "number": 79,
+      "syllabus_item": 94,
+      "topic_term": "請負契約",
+      "topic_is_new": false,
+      "related_terms": [
+        "指揮命令",
+        "雇用契約",
+        "偽装請負",
+        "労働者派遣契約"
+      ],
+      "confidence": "high",
+      "notes": "請負契約では発注者に指揮命令権が無く，新たな雇用契約も不要であることを問う問題。労働者派遣との対比だが，主題は請負契約なので項目94の用語例「請負契約」を論点にした。"
+    },
+    {
+      "number": 80,
+      "syllabus_item": 94,
+      "topic_term": "製造物責任法",
+      "topic_is_new": true,
+      "related_terms": [
+        "組込みソフトウェア",
+        "欠陥",
+        "損害賠償請求"
+      ],
+      "confidence": "medium",
+      "notes": "製造物責任法の対象（動産である ROM 化ソフトウェア内蔵の組込み機器）を問う問題。用語例に無いため新規論点。取引関連の消費者保護法制（特定商取引法・割賦販売法など）を扱う項目94としたが，項目95（その他の法律）と採る余地もある。"
+    }
+  ]
+}

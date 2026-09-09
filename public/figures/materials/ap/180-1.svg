@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="364" viewBox="0 0 640 364" role="img">
+<title>期限内でも失効した証明書はシリアル番号が CRL に載り、検証者はこれを照合して弾く。</title>
+<rect x="0.5" y="0.5" width="639" height="363" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(50.8 20)">
+<line x1="49.4" y1="34" x2="49.4" y2="296" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="262.9" y1="34" x2="262.9" y2="296" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="482.7" y1="34" x2="482.7" y2="296" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="98.8" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="49.4" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">Web サーバ</text>
+<rect x="186.9" y="0" width="152" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="262.9" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">検証者（ブラウザ）</text>
+<rect x="427" y="0" width="111.4" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="482.7" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">認証局（CA）</text>
+<polyline points="52.4,68 259.9,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="259.9,68 251.9,71.6 251.9,64.4" fill="#1f2937"/>
+<text x="156.15" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. サーバ証明書を提示</text>
+<polyline points="262.9,100 288.9,100 288.9,114 264.9,114" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="264.9,114 272.9,110.4 272.9,117.6" fill="#1f2937"/>
+<text x="296.9" y="108" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2. 署名と有効期限を確認</text>
+<polyline points="265.9,142 479.7,142" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="479.7,142 471.7,145.6 471.7,138.4" fill="#1f2937"/>
+<text x="372.8" y="135" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. CRL を取得</text>
+<rect x="270.4" y="147" width="204.8" height="16" rx="3" fill="#ffffff"/>
+<text x="372.8" y="160.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">CRL は CA が署名して公開する一覧</text>
+<polyline points="479.7,198 265.9,198" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="265.9,198 273.9,194.4 273.9,201.6" fill="#1f2937"/>
+<text x="372.8" y="191" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 失効したシリアル番号と失効日時</text>
+<polyline points="262.9,230 288.9,230 288.9,244 264.9,244" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="264.9,244 272.9,240.4 272.9,247.6" fill="#1f2937"/>
+<text x="296.9" y="238" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. 証明書のシリアル番号を照合</text>
+<rect x="162.9" y="249" width="200" height="16" rx="3" fill="#ffffff"/>
+<text x="262.9" y="262.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">載っていれば期限内でも信頼しない</text>
+<rect x="180.9" y="265" width="164" height="16" rx="3" fill="#ffffff"/>
+<text x="262.9" y="278.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">期限切れの証明書は載せない</text>
+</g>
+<text x="320" y="344" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">期限内でも失効した証明書はシリアル番号が CRL に載り、検証者はこれを照合して弾く。</text>
+</svg>

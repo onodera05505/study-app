@@ -1,0 +1,249 @@
+{
+  "exam": "2023r05a",
+  "range": "1-27",
+  "classifications": [
+    {
+      "number": 1,
+      "syllabus_item": 1,
+      "topic_term": "論理シフト",
+      "topic_is_new": false,
+      "related_terms": ["算術シフト", "固定小数点数"],
+      "confidence": "medium",
+      "notes": "主題は2進数の桁の入替えを整数の式で表すこと。int(x/2)が1ビット右シフト，2xが1ビット左シフトに当たるため論理シフトを採った。用語例に「2進数の位取り」に当たる語が無い"
+    },
+    {
+      "number": 2,
+      "syllabus_item": 2,
+      "topic_term": "主成分分析",
+      "topic_is_new": false,
+      "related_terms": ["因子分析", "回帰分析（単回帰分析，重回帰分析，ロジスティック回帰分析）", "相関分析"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 3,
+      "syllabus_item": 3,
+      "topic_term": "逆ポーランド表記法",
+      "topic_is_new": false,
+      "related_terms": ["プッシュダウンオートマトン", "LIFO"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 4,
+      "syllabus_item": 4,
+      "topic_term": "パリティチェック",
+      "topic_is_new": false,
+      "related_terms": ["ハミング符号", "CRC", "符号理論"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 5,
+      "syllabus_item": 6,
+      "topic_term": "双方向リスト",
+      "topic_is_new": false,
+      "related_terms": ["線形リスト", "単方向リスト", "リンク付リスト"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 6,
+      "syllabus_item": 7,
+      "topic_term": "バブルソート",
+      "topic_is_new": false,
+      "related_terms": ["クイックソート", "挿入ソート", "ヒープソート"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 7,
+      "syllabus_item": 10,
+      "topic_term": "JSON（JavaScript Object Notation）",
+      "topic_is_new": false,
+      "related_terms": ["DOM（Document Object Model）", "SOAP", "YAML"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 8,
+      "syllabus_item": 11,
+      "topic_term": "ヘテロジニアスマルチコア",
+      "topic_is_new": false,
+      "related_terms": ["マルチコアプロセッサ", "スーパースカラ", "big.LITTLE"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 9,
+      "syllabus_item": 11,
+      "topic_term": "投機実行",
+      "topic_is_new": true,
+      "related_terms": ["命令パイプライン", "パイプラインハザード", "制御ハザード"],
+      "confidence": "high",
+      "notes": "用語例に「投機実行」「分岐予測」「アウトオブオーダー実行」が無いため新設。上位語の命令パイプラインは広すぎると判断した"
+    },
+    {
+      "number": 10,
+      "syllabus_item": 12,
+      "topic_term": "ウェアレベリング",
+      "topic_is_new": false,
+      "related_terms": ["フラッシュメモリ（NAND，NOR）", "SSD（ソリッドステートドライブ）", "デフラグメンテーション"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 11,
+      "syllabus_item": 15,
+      "topic_term": "ユニファイドメモリ方式",
+      "topic_is_new": true,
+      "related_terms": ["グラフィックスモード", "パックトピクセル方式", "GPU"],
+      "confidence": "high",
+      "notes": "フレームバッファの実装方式。用語例に無いため新設。2025r07a 問9 で同名の論点が新設済みで表記を合わせた"
+    },
+    {
+      "number": 12,
+      "syllabus_item": 16,
+      "topic_term": "FC-SAN",
+      "topic_is_new": false,
+      "related_terms": ["IP-SAN", "ブロックストレージ", "FC（ファイバチャネル）", "NFS（Network File System）"],
+      "confidence": "medium",
+      "notes": "設問の主題は SAN 全般だが用語例に SAN 単独の語が無く，正解が「ファイバチャネルなどによる専用ネットワーク」なので FC-SAN を採った"
+    },
+    {
+      "number": 13,
+      "syllabus_item": 17,
+      "topic_term": "スケールアウト",
+      "topic_is_new": false,
+      "related_terms": ["スケールアップ", "サイジング", "水平負荷分散システム"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 14,
+      "syllabus_item": 16,
+      "topic_term": "IaC（Infrastructure as Code)",
+      "topic_is_new": false,
+      "related_terms": ["クラウドコンピューティング", "Ansible", "継続的インテグレーション"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 15,
+      "syllabus_item": 17,
+      "topic_term": "稼働率",
+      "topic_is_new": true,
+      "related_terms": ["MTBF", "MTTR", "アクティブ-スタンバイ構成", "信頼性ブロック図"],
+      "confidence": "high",
+      "notes": "用語例に無いが 2025r07a 問13・2025r07h 問12 で項目17に新設済みの論点。表記をそのまま合わせた"
+    },
+    {
+      "number": 16,
+      "syllabus_item": 18,
+      "topic_term": "ページフォールト",
+      "topic_is_new": false,
+      "related_terms": ["ページイン", "ページアウト", "デマンドページング", "仮想記憶管理"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 17,
+      "syllabus_item": 18,
+      "topic_term": "プリエンプティブ方式",
+      "topic_is_new": false,
+      "related_terms": ["静的優先順位方式", "リアルタイム OS", "タスク管理", "優先順"],
+      "confidence": "medium",
+      "notes": "周期タスクが周期内に完了するかを判定する問題。優先度ベースのプリエンプティブスケジューリングが中心だが，静的優先順位方式とも重なり一意に決めにくい"
+    },
+    {
+      "number": 18,
+      "syllabus_item": 21,
+      "topic_term": "クロスコンパイラ",
+      "topic_is_new": false,
+      "related_terms": ["コンパイラ", "エミュレーター", "目的プログラム", "ジェネレーター"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 19,
+      "syllabus_item": 22,
+      "topic_term": "Linux カーネル",
+      "topic_is_new": false,
+      "related_terms": ["Linux", "モノリシックカーネル", "BShell", "プロセス管理"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 20,
+      "syllabus_item": 23,
+      "topic_term": "FPGA（Field Programmable Gate Array）",
+      "topic_is_new": false,
+      "related_terms": ["ASIC（Application Specific IC）", "HDL（Hardware Description Language：ハードウェア記述言語）", "EEPROM（ Electrically Erasable Programmable Read Only Memory ）"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 21,
+      "syllabus_item": 23,
+      "topic_term": "トランジスタ",
+      "topic_is_new": false,
+      "related_terms": ["CMOS", "ダイオード", "LED", "フォトトランジスタ"],
+      "confidence": "medium",
+      "notes": "主題は MOS トランジスタだが用語例に無い。上位語の「トランジスタ」を採り，MOS 構造は周辺知識で扱う想定"
+    },
+    {
+      "number": 22,
+      "syllabus_item": 23,
+      "topic_term": "フリップフロップ",
+      "topic_is_new": false,
+      "related_terms": ["NOR 回路", "NAND 回路", "順序回路", "タイミングチャート"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 23,
+      "syllabus_item": 23,
+      "topic_term": "真理値表",
+      "topic_is_new": false,
+      "related_terms": ["論理式", "加法標準形", "組合せ回路", "NAND 回路"],
+      "confidence": "medium",
+      "notes": "真理値表から組合せ回路（3入力多数決回路＝AB＋BC＋CA）を選ぶ問題。「論理式」「加法標準形」とも重なるため，設問が起点にしている「真理値表」を採った"
+    },
+    {
+      "number": 24,
+      "syllabus_item": 24,
+      "topic_term": "アイコン",
+      "topic_is_new": false,
+      "related_terms": ["ユーザビリティ", "シグニファイア", "ヒューマンインタフェース"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 25,
+      "syllabus_item": 27,
+      "topic_term": "レンダリング",
+      "topic_is_new": false,
+      "related_terms": ["VR（Virtual Reality：仮想現実）", "テクスチャマッピング", "シェーディング（フォンシェーディング，グローシェーディング）", "モーションキャプチャ"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 26,
+      "syllabus_item": 31,
+      "topic_term": "ハッシュインデックス",
+      "topic_is_new": false,
+      "related_terms": ["B-tree インデックス", "ユニークインデックス", "索引"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 27,
+      "syllabus_item": 28,
+      "topic_term": "外部キー",
+      "topic_is_new": true,
+      "related_terms": ["関係モデル", "関係（リレーション）", "タプル（行，組）", "参照制約"],
+      "confidence": "medium",
+      "notes": "「外部キー」「候補キー」「主キー」がどの項目の用語例にも無い。関係モデルの基礎概念なので項目28（データベース方式）に置いたが，項目29（データベース設計）とも迷った"
+    }
+  ]
+}

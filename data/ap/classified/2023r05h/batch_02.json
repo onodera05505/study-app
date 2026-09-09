@@ -1,0 +1,249 @@
+{
+  "exam": "2023r05h",
+  "range": "28-54",
+  "classifications": [
+    {
+      "number": 28,
+      "syllabus_item": 31,
+      "topic_term": "べき等（idempotent）",
+      "topic_is_new": true,
+      "related_terms": ["原子性（Atomicity）", "直列化可能性", "レプリケーション"],
+      "confidence": "medium",
+      "notes": "べき等はシラバス用語例に無いため新規論点。選択肢が原子性・直列化可能性などトランザクション特性との対比なので項目31（トランザクション処理）としたが、項目28（データベース方式）とも取り得る。"
+    },
+    {
+      "number": 29,
+      "syllabus_item": 29,
+      "topic_term": "多重度",
+      "topic_is_new": true,
+      "related_terms": ["UML", "クラス図", "概念データモデル", "E-R 図"],
+      "confidence": "medium",
+      "notes": "UML クラス図で表したデータモデルの多重度を業務条件から読み取る問題。「多重度」はシラバス用語例に無いため新規論点。既存論点「概念データモデル」（項目29）より粒度を絞った。"
+    },
+    {
+      "number": 30,
+      "syllabus_item": 30,
+      "topic_term": "参照制約",
+      "topic_is_new": false,
+      "related_terms": ["外部キー", "主キー", "CASCADE"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 31,
+      "syllabus_item": 34,
+      "topic_term": "電力線通信（PLC）",
+      "topic_is_new": false,
+      "related_terms": ["VoIP", "IEEE 802.11", "無線通信の暗号化"],
+      "confidence": "high",
+      "notes": "既存論点「PLC（Programmable Logic Controller）」（項目23）は別概念。本問は通信技術の PLC＝電力線通信で、項目34の用語例をそのまま使用。"
+    },
+    {
+      "number": 32,
+      "syllabus_item": 33,
+      "topic_term": "転送速度（伝送速度）",
+      "topic_is_new": false,
+      "related_terms": ["パケット", "LAN", "送信時間の計算"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 33,
+      "syllabus_item": 35,
+      "topic_term": "イーサネットフレーム",
+      "topic_is_new": true,
+      "related_terms": ["MAC アドレス", "IP アドレス", "ポート番号", "カプセル化"],
+      "confidence": "medium",
+      "notes": "フレーム→IP ヘッダー→TCP ヘッダーというカプセル化の順序を問う。用語例には「パケット」「ヘッダー」しか無く粒度が合わないため新規論点。"
+    },
+    {
+      "number": 34,
+      "syllabus_item": 35,
+      "topic_term": "UDP",
+      "topic_is_new": true,
+      "related_terms": ["TCP", "トランスポート層", "ICMP（Internet Control Message Protocol）", "HTTP"],
+      "confidence": "high",
+      "notes": "UDP 単独はシラバス用語例に無いため新規論点。既存論点 TCP（項目35・新規扱い）と同じ流儀でプロトコル名を論点にした。"
+    },
+    {
+      "number": 35,
+      "syllabus_item": 37,
+      "topic_term": "ハンドオーバー",
+      "topic_is_new": false,
+      "related_terms": ["ローミング", "テザリング", "フォールバック"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 36,
+      "syllabus_item": 38,
+      "topic_term": "C&C サーバ",
+      "topic_is_new": true,
+      "related_terms": ["ボットネット", "遠隔操作型ウイルス（RAT：Remote Access Trojan）", "マルウェア"],
+      "confidence": "high",
+      "notes": "用語例「ボット（ボットネット，遠隔操作型ウイルス（RAT：Remote Access Trojan），C&C サーバ）」の括弧内列挙のうち、設問の主題である C&C サーバを採用。単独表記は他項目に無いため新規論点。"
+    },
+    {
+      "number": 37,
+      "syllabus_item": 42,
+      "topic_term": "セキュアOS",
+      "topic_is_new": true,
+      "related_terms": ["MAC（Mandatory Access Control：強制アクセス制御）", "トラステッドOS", "改ざん防止"],
+      "confidence": "medium",
+      "notes": "セキュアOS はシラバス用語例に無いため新規論点。強制アクセス制御（MAC）・トラステッドOS が項目42にあるためここに置いたが、項目41（情報セキュリティ対策）とも取り得る。"
+    },
+    {
+      "number": 38,
+      "syllabus_item": 38,
+      "topic_term": "デジタル署名（署名鍵，検証鍵）",
+      "topic_is_new": false,
+      "related_terms": ["公開鍵暗号方式", "RSA", "メッセージダイジェスト"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 39,
+      "syllabus_item": 39,
+      "topic_term": "ISMAP（政府情報システムのためのセキュリティ評価制度）",
+      "topic_is_new": false,
+      "related_terms": ["クラウドサービス", "プライバシーマーク制度", "ISMS クラウドセキュリティ認証"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 40,
+      "syllabus_item": 40,
+      "topic_term": "CVE（Common Vulnerabilities and Exposures：共通脆弱性識別子）",
+      "topic_is_new": false,
+      "related_terms": ["CVSS（Common Vulnerability Scoring System：共通脆弱性評価システム）", "CWE（Common Weakness Enumeration：共通脆弱性タイプ）", "CCE"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 41,
+      "syllabus_item": 41,
+      "topic_term": "TPM（Trusted Platform Module）",
+      "topic_is_new": true,
+      "related_terms": ["セキュアエレメント", "鍵生成", "ハッシュ演算", "セキュリティチップ"],
+      "confidence": "high",
+      "notes": "用語例「ハードウェアのセキュリティ（セキュアエレメント，TPM（Trusted Platform Module））」の括弧内列挙のうち、設問の主題である TPM を採用。単独表記は他項目に無いため新規論点。"
+    },
+    {
+      "number": 42,
+      "syllabus_item": 41,
+      "topic_term": "デジタルフォレンジックス（証拠保全ほか）",
+      "topic_is_new": false,
+      "related_terms": ["ログ解析", "ハードディスクの復元", "不正アクセスの痕跡"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 43,
+      "syllabus_item": 42,
+      "topic_term": "無線LANセキュリティ",
+      "topic_is_new": true,
+      "related_terms": ["SSID", "MAC アドレスフィルタリング", "プライバシーセパレーター", "アクセスポイント"],
+      "confidence": "medium",
+      "notes": "公衆無線 LAN アクセスポイントの対策と効果の組合せを問う。用語例には WPA2/WPA3 しか無く、総称の論点が無いため新規論点。項目41とも取り得るが、無線 LAN 実装技術として項目42とした。"
+    },
+    {
+      "number": 44,
+      "syllabus_item": 42,
+      "topic_term": "サブミッションポート",
+      "topic_is_new": true,
+      "related_terms": ["SMTP-AUTH", "OP25B", "POP before SMTP", "SPF"],
+      "confidence": "medium",
+      "notes": "設問の主題はサブミッションポート（587）の導入目的。用語例のスパム対策の括弧内列挙（SMTP-AUTH，OP25B ほか）にサブミッションポート自体は無いため新規論点にした。"
+    },
+    {
+      "number": 45,
+      "syllabus_item": 42,
+      "topic_term": "認証 VLAN",
+      "topic_is_new": false,
+      "related_terms": ["スタティック VLAN", "IDS", "IP マスカレード"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 46,
+      "syllabus_item": 44,
+      "topic_term": "モジュール結合度",
+      "topic_is_new": true,
+      "related_terms": ["データ結合", "共通結合", "制御結合", "モジュールの独立性"],
+      "confidence": "high",
+      "notes": "既存論点「モジュール結合度」（2024r06h 問46 で新規作成、項目44）と同一表記を使用。"
+    },
+    {
+      "number": 47,
+      "syllabus_item": 43,
+      "topic_term": "決定表（デシジョンテーブル）",
+      "topic_is_new": false,
+      "related_terms": ["条件指定部", "動作指定部"],
+      "confidence": "medium",
+      "notes": "決定表は項目43・44・76 の用語例にある。値引き条件の仕様を表に整理する分析技法として項目43としたが、項目44（設計）とも取り得る。"
+    },
+    {
+      "number": 48,
+      "syllabus_item": 49,
+      "topic_term": "スクラム",
+      "topic_is_new": false,
+      "related_terms": ["スプリント", "デイリースクラム", "スプリントレビュー", "スプリントレトロスペクティブ"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 49,
+      "syllabus_item": 50,
+      "topic_term": "特許権",
+      "topic_is_new": false,
+      "related_terms": ["実施許諾", "先使用権", "存続期間"],
+      "confidence": "high",
+      "notes": "公式分野がテクノロジ系なので項目50（知的財産適用管理）。同一表記の既存論点「特許権」は項目92（ストラテジ系の問題）に付いているが、表記を揃えて頻度を分散させない。"
+    },
+    {
+      "number": 50,
+      "syllabus_item": 17,
+      "topic_term": "プロビジョニング",
+      "topic_is_new": false,
+      "related_terms": ["IaC（Infrastructure as Code)", "構成管理", "サーバの自動構成"],
+      "confidence": "medium",
+      "notes": "サーバプロビジョニングツールの目的（構成の記述による自動構成）。用語例「プロビジョニング」がある項目17としたが、内容的には項目16の IaC とも取り得る。既存論点「プロビジョニング」（項目73）と表記を揃えた。"
+    },
+    {
+      "number": 51,
+      "syllabus_item": 54,
+      "topic_term": "プロジェクト憲章",
+      "topic_is_new": false,
+      "related_terms": ["プロジェクトマネジメント計画書", "プロジェクトスコープ記述書", "WBS"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 52,
+      "syllabus_item": 58,
+      "topic_term": "プロジェクトバッファ／合流バッファ",
+      "topic_is_new": false,
+      "related_terms": ["CCPM（Critical Chain Project Management）", "クリティカルチェーン", "資源バッファ"],
+      "confidence": "high",
+      "notes": "設問の主題は合流バッファだが、用語例は「プロジェクトバッファ／合流バッファ」で1エントリなので丸ごとコピーした。"
+    },
+    {
+      "number": 53,
+      "syllabus_item": 58,
+      "topic_term": "作業配分モデル",
+      "topic_is_new": true,
+      "related_terms": ["期間比", "工数比", "進捗管理", "スケジュール"],
+      "confidence": "medium",
+      "notes": "作業配分モデルの期間比から残り日数を求める計算問題。用語例に該当語が無いため新規論点。進捗予測なので項目58（プロジェクトの時間）としたが、項目53（進捗管理）とも取り得る。"
+    },
+    {
+      "number": 54,
+      "syllabus_item": 60,
+      "topic_term": "デルファイ法",
+      "topic_is_new": false,
+      "related_terms": ["リスクの特定", "ブレーンストーミング", "チェックリスト", "モンテカルロシミュレーション"],
+      "confidence": "high",
+      "notes": "デルファイ法は項目90の用語例に単独で載っているため、その表記をコピー。項目は公式分野（マネジメント系）とリスク特定の文脈から60。"
+    }
+  ]
+}

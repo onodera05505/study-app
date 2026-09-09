@@ -1,0 +1,249 @@
+{
+  "exam": "2021r03a",
+  "range": "1-27",
+  "classifications": [
+    {
+      "number": 1,
+      "syllabus_item": 2,
+      "topic_term": "ニュートン法",
+      "topic_is_new": false,
+      "related_terms": ["近似解法", "収束", "シンプソン法", "数値積分"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 2,
+      "syllabus_item": 2,
+      "topic_term": "待ち行列理論",
+      "topic_is_new": true,
+      "related_terms": ["M/M/1", "サービス時間", "平均到着率", "平均サービス率"],
+      "confidence": "high",
+      "notes": "利用率が 2ρ になることを踏まえ 2ρ/(1-2ρ)×Ts を導く。用語例に待ち行列モデルの総称が無いため既存の新規論点「待ち行列理論」に合わせた"
+    },
+    {
+      "number": 3,
+      "syllabus_item": 3,
+      "topic_term": "ディープラーニング",
+      "topic_is_new": true,
+      "related_terms": ["ニューラルネットワーク", "多層パーセプトロン", "エキスパートシステム", "強化学習"],
+      "confidence": "high",
+      "notes": "用語例には多層パーセプトロン等はあるがディープラーニング単体が無い。既存の新規論点「ディープラーニング」に合わせた"
+    },
+    {
+      "number": 4,
+      "syllabus_item": 4,
+      "topic_term": "パリティチェック",
+      "topic_is_new": false,
+      "related_terms": ["水平パリティ", "垂直パリティ", "ハミング符号", "誤り訂正"],
+      "confidence": "high",
+      "notes": "水平垂直パリティで訂正できるのは 1 ビットまで。既存論点「パリティチェック」（項目4）に合わせた"
+    },
+    {
+      "number": 5,
+      "syllabus_item": 7,
+      "topic_term": "バブルソート",
+      "topic_is_new": false,
+      "related_terms": ["シェルソート", "クイックソート", "ヒープソート", "挿入ソート"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 6,
+      "syllabus_item": 18,
+      "topic_term": "リエントラント",
+      "topic_is_new": false,
+      "related_terms": ["再使用可能プログラム", "再帰的プログラム", "再配置可能プログラム", "ロードモジュール"],
+      "confidence": "medium",
+      "notes": "正解肢の主題は再使用可能プログラムだが，プログラム4特性のうち用語例にあるのはリエントラントのみ。既存論点（2022r04h 問6）と同じ項目18・同じ表記に揃えた"
+    },
+    {
+      "number": 7,
+      "syllabus_item": 9,
+      "topic_term": "スクリプト言語",
+      "topic_is_new": false,
+      "related_terms": ["TypeScript", "ECMAScript", "JavaScript", "静的型付け"],
+      "confidence": "medium",
+      "notes": "正解の TypeScript は用語例に無い。用語例にある「スクリプト言語」を論点にし，個別言語は related_terms に回した"
+    },
+    {
+      "number": 8,
+      "syllabus_item": 1,
+      "topic_term": "オーバーフロー（あふれ）",
+      "topic_is_new": false,
+      "related_terms": ["2 の補数", "固定小数点数", "算術シフト", "符号付き整数"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 9,
+      "syllabus_item": 12,
+      "topic_term": "メモリインタリーブ",
+      "topic_is_new": true,
+      "related_terms": ["バンク", "DRAM", "ディスクキャッシュ", "DMA（Direct Memory Access：直接記憶アクセス）"],
+      "confidence": "high",
+      "notes": "用語例に「バンク」はあるがメモリインタリーブ自体が無いため新規論点にした"
+    },
+    {
+      "number": 10,
+      "syllabus_item": 14,
+      "topic_term": "USB",
+      "topic_is_new": false,
+      "related_terms": ["USB Type-C", "Thunderbolt", "HDMI", "コネクタ形状"],
+      "confidence": "high",
+      "notes": "コネクタ断面図を選ばせる問題。入出力インタフェースの知識なので項目14の用語例「USB」をそのまま採った"
+    },
+    {
+      "number": 11,
+      "syllabus_item": 15,
+      "topic_term": "磁気ディスクのアクセス時間",
+      "topic_is_new": true,
+      "related_terms": ["シークタイム", "サーチタイム", "データ転送時間", "回転待ち時間"],
+      "confidence": "medium",
+      "notes": "シーク＋回転待ち＋転送の合計を求める問題。用語例は 3 要素が別々に並ぶだけで合計を指す語が無いため新規論点にした"
+    },
+    {
+      "number": 12,
+      "syllabus_item": 17,
+      "topic_term": "スケールイン",
+      "topic_is_new": true,
+      "related_terms": ["スケールアウト", "スケールアップ", "スケールダウン", "容量・能力管理"],
+      "confidence": "high",
+      "notes": "用語例にはスケールアウト／スケールアップのみ。既存の新規論点「スケールイン」に合わせた"
+    },
+    {
+      "number": 13,
+      "syllabus_item": 16,
+      "topic_term": "フールプルーフ",
+      "topic_is_new": false,
+      "related_terms": ["インタロック", "フェールセーフ", "フェールソフト", "フォールトトレラントシステム"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 14,
+      "syllabus_item": 16,
+      "topic_term": "仮想化（ホスト型，ハイパーバイザー型，コンテナ型）",
+      "topic_is_new": false,
+      "related_terms": ["Docker", "ゲスト OS", "VDI（Virtual Desktop Infrastructure：デスクトップ仮想化）", "シンクライアント"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 15,
+      "syllabus_item": 17,
+      "topic_term": "スループット",
+      "topic_is_new": false,
+      "related_terms": ["ボトルネック", "多重（マルチ）プログラミング", "ターンアラウンドタイム", "レスポンスタイム（応答時間）"],
+      "confidence": "high",
+      "notes": "最も遅い書込み 50 ミリ秒がボトルネックとなり 1 分で 1,200 件。既存論点「スループット」（項目17）と同型"
+    },
+    {
+      "number": 16,
+      "syllabus_item": 18,
+      "topic_term": "スラッシング",
+      "topic_is_new": false,
+      "related_terms": ["ページフォールト", "ページリプレースメント", "ワーキングセット", "スワップアウト"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 17,
+      "syllabus_item": 18,
+      "topic_term": "ページフォールト",
+      "topic_is_new": false,
+      "related_terms": ["デマンドページング", "オーバヘッド", "ページイン", "仮想記憶管理"],
+      "confidence": "high",
+      "notes": null
+    },
+    {
+      "number": 18,
+      "syllabus_item": 21,
+      "topic_term": "バージョン管理ツール",
+      "topic_is_new": false,
+      "related_terms": ["Git", "Subversion", "分散型バージョン管理", "リポジトリ"],
+      "confidence": "high",
+      "notes": "2024r06a 問19 と同一問題。既存論点（項目21・バージョン管理ツール）にそのまま合わせた"
+    },
+    {
+      "number": 19,
+      "syllabus_item": 18,
+      "topic_term": "仮想記憶管理",
+      "topic_is_new": false,
+      "related_terms": ["ページアウト", "ページイン", "スワップ領域", "補助記憶"],
+      "confidence": "medium",
+      "notes": "補助記憶がページアウト先になることを問う。ページアウト単体でも採れるが，仮想記憶方式全般を問う設問なので既存論点「仮想記憶管理」に寄せた"
+    },
+    {
+      "number": 20,
+      "syllabus_item": 14,
+      "topic_term": "RFID",
+      "topic_is_new": true,
+      "related_terms": ["パッシブタグ", "アクティブタグ", "NFC", "IC タグ"],
+      "confidence": "low",
+      "notes": "シラバスの用語例で RFID が載るのは項目86（e-ビジネス／ストラテジ系）だけで，公式分野のテクノロジ系（項目1〜52）に該当語が無い。近距離無線通信を扱う項目14を最も近いものとして選んだが要レビュー"
+    },
+    {
+      "number": 21,
+      "syllabus_item": 23,
+      "topic_term": "ウォッチドッグタイマー",
+      "topic_is_new": true,
+      "related_terms": ["監視回路", "ハードウェアタイマー", "システムリセット", "組込みシステム"],
+      "confidence": "medium",
+      "notes": "用語例に該当語が無い。項目23の「監視回路」，既存の新規論点「ハードウェアタイマー」とは別概念と判断して新規にした"
+    },
+    {
+      "number": 22,
+      "syllabus_item": 23,
+      "topic_term": "半加算器",
+      "topic_is_new": true,
+      "related_terms": ["排他的論理和", "論理積", "真理値表", "全加算器"],
+      "confidence": "medium",
+      "notes": "桁上げに AND，和に XOR を使う半加算器の構成を問う。用語例に加算器が無いため新規にした。論理回路の図選択という形式は既存論点「真理値表」（2023r05a 問23）と似るが，問うている概念は別"
+    },
+    {
+      "number": 23,
+      "syllabus_item": 1,
+      "topic_term": "論理和",
+      "topic_is_new": false,
+      "related_terms": ["論理積", "ビットマスク", "汎用入出力ポート", "16 進数"],
+      "confidence": "medium",
+      "notes": "他ビットを変えずに特定ビットを 1 にするには論理和。組込みの回路図が付くが，解答に必要な中心知識はビット単位の論理演算。ビットマスクを問う既存論点「論理積」（2023r05h 問1）と同じ項目1に揃えた"
+    },
+    {
+      "number": 24,
+      "syllabus_item": 26,
+      "topic_term": "アウトラインフォント",
+      "topic_is_new": true,
+      "related_terms": ["ビットマップフォント", "ベクターデータ", "ラスターデータ（ビットマップデータ）", "拡大・縮小"],
+      "confidence": "high",
+      "notes": "用語例に無いため既存の新規論点「アウトラインフォント」（項目26）に合わせた"
+    },
+    {
+      "number": 25,
+      "syllabus_item": 27,
+      "topic_term": "レンダリング",
+      "topic_is_new": false,
+      "related_terms": ["ラジオシティ法", "レイトレーシング法", "テクスチャマッピング", "メタボール"],
+      "confidence": "medium",
+      "notes": "正解はラジオシティ法だが，設問は「コンピュータグラフィックスに関する記述」で単一の主題が示されていない。CG のレンダリング手法の比較なので既存論点「レンダリング」（項目27）に寄せた。レイトレーシング法など一部の手法は項目7の用語例にもあり項目の切り分けが曖昧"
+    },
+    {
+      "number": 26,
+      "syllabus_item": 30,
+      "topic_term": "関係代数",
+      "topic_is_new": false,
+      "related_terms": ["和", "差", "直積", "結合"],
+      "confidence": "high",
+      "notes": "R と S の和集合演算。既存論点「関係代数」（項目30）と同型"
+    },
+    {
+      "number": 27,
+      "syllabus_item": 31,
+      "topic_term": "チェックポイント",
+      "topic_is_new": false,
+      "related_terms": ["フォワードリカバリ（ロールフォワード）", "バックワードリカバリ（ロールバック）", "ジャーナルファイル（ログファイル）", "媒体障害"],
+      "confidence": "high",
+      "notes": "正解肢はチェックポイント取得以前に終了したトランザクションの回復が不要であること。既存論点「チェックポイント」（項目31）に合わせた"
+    }
+  ]
+}
