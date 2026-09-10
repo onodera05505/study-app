@@ -111,13 +111,15 @@ npm run deploy      # scripts/deploy-pages.sh を実行する
 データ（過去問・論点・教材）を更新したときは、DB への反映を別途行う:
 
 ```bash
-scripts/backup_d1.sh ip                        # 先に本番を吸い出しておく
 python3 scripts/build_seed.py --data data/ip
-python3 scripts/check_seed.py --data data/ip   # 投入前に中身を見る
-npx wrangler d1 execute study-app-db --env ip --remote --file=data/ip/seed.sql
+bash scripts/seed_remote.sh ip                 # check_seed → backup → --remote で投入 → 投入後の突き合わせ
+bash scripts/seed_remote.sh ip --local         # ローカル D1 でのリハーサル（バックアップは省く）
 ```
 
-**`--remote` を付け忘れるとローカルの D1 に入るだけで本番は変わらない。**
+`seed_remote.sh` は投入の前後に門を置いた1本道で、どれか1つ落ちれば止まる。
+以前は 4 つのコマンドを手で打っていて、`--remote` の付け忘れ（ローカルだけ変わる）と
+バックアップの飛ばしが起きうる形だった。投入後は `scripts/verify_seed_remote.py` が
+件数と代表値を DB から SELECT して seed と突き合わせる（投入が通ることと中身が正しいことは別）。
 
 #### バックアップ
 
