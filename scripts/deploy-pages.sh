@@ -36,6 +36,10 @@ echo "▶ 描画検査（実データ全件を jsdom で描いて見る。落ち
 # 何を見ているかは scripts/check_render.tsx の先頭。
 bash scripts/check_render.sh "$EXAM"
 
+echo "▶ 文書の索引と「不変条件と門」の対応表が現物と合っているか"
+# 索引に無い文書は無いのと同じ。表が名指しするスクリプトが消えていたら表が嘘になる。
+python3 scripts/check_docs.py
+
 echo "▶ フロントをビルド"
 # 試験名とタイトルは .env / .env.ap から読ませる（--mode で切り替わる）
 npx vite build --mode "$EXAM"
