@@ -18,6 +18,9 @@
 - **門の実在** — `docs/不変条件と門.md` がバッククォートで名指しするパス
   （scripts/ src/ .claude/ docs/ brain/ 配下）が実在するか。`<試験>` のような
   プレースホルダを含むものは見ない
+- **作業ログの還元行** — `docs/作業ログ_YYYY-MM-DD*.md` のうち 2026-09-11 以降のものに
+  `ブレイン:` で始まる行があるか（型を中央ブレインへ還したかの申告。2026-09-11 まで
+  中央のアプローチにこのプロジェクトの型が 1 本も無かった反省から）
 """
 
 from __future__ import annotations
@@ -61,6 +64,22 @@ def check_gate_paths(root: Path, errors: list[str]) -> int:
     return len(seen)
 
 
+BRAIN_LINE_FROM = "2026-09-11"
+WORKLOG = re.compile(r"^作業ログ_(\d{4}-\d{2}-\d{2}).*\.md$")
+
+
+def check_worklog_brain_line(root: Path, errors: list[str]) -> int:
+    n = 0
+    for f in sorted((root / "docs").glob("作業ログ_*.md")) if (root / "docs").exists() else []:
+        m = WORKLOG.match(f.name)
+        if not m or m.group(1) < BRAIN_LINE_FROM:
+            continue
+        n += 1
+        if not re.search(r"^\s*(?:[-*]\s*)?(?:\*\*)?ブレイン(?:\*\*)?\s*[:：]", f.read_text(encoding="utf-8"), re.M):
+            errors.append(f"還元行が無い: docs/{f.name} に「ブレイン: …」の行が無い（型を中央へ還したか、無しの理由を書く）")
+    return n
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", default=str(Path(__file__).resolve().parent.parent))
@@ -71,10 +90,11 @@ def main() -> int:
     n_docs = check_index(root, "CLAUDE.md", "docs", errors)
     n_brain = check_index(root, "brain/INDEX.md", "brain/reports", errors)
     n_gates = check_gate_paths(root, errors)
+    n_logs = check_worklog_brain_line(root, errors)
 
     for e in errors:
         print(f"✘ {e}")
-    print(f"docs {n_docs} 件 / brain 報告書 {n_brain} 件 / 門の名指し {n_gates} 件を確認"
+    print(f"docs {n_docs} 件 / brain 報告書 {n_brain} 件 / 門の名指し {n_gates} 件 / 還元行の対象 {n_logs} 件を確認"
           f"{'' if not errors else f'、問題 {len(errors)} 件'}")
     if errors:
         return 1
