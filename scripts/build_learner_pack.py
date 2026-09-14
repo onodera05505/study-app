@@ -18,8 +18,9 @@ def main() -> int:
     for mp in sorted((d / "materials").glob("bundle_*.json")):
         for x in json.loads(mp.read_text(encoding="utf-8"))["materials"]: mats[x["topic_id"]] = x
     qs = []
+    unit_ids = {u["topic_id"] for u in rm["units"]}
     for qp in sorted((d / "questions").glob("bundle_*.json")):
-        qs += json.loads(qp.read_text(encoding="utf-8"))["questions"]
+        qs += [q for q in json.loads(qp.read_text(encoding="utf-8"))["questions"] if q["topic_id"] in unit_ids]  # ロードマップ外（除外済み）の問題は渡さない
     lines = [f"# 学習ロードマップ: {rm['target']}", "", f"1 日 {rm['per_day']} 単位、全 {rm['days']} 日、{rm['unit_count']} 単位。1 単位は 5 分が目安。順番どおりに読む。", ""]
     day = 0
     for u in rm["units"]:
