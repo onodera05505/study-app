@@ -3,7 +3,7 @@
 
     python3 scripts/build_roadmap.py --data data/itc [--max 40] [--per-day 3]
 
-入力 `topics_candidates.json`: {"candidates": [{"id", "term", "field", "middle", "summary", "source_count", "sources", "interview_count", "prereq": [term...], "goals": [1..6]}]}
+入力 `roadmap_config.json`（値: max / per_day / min_per_goal / must_include / exclude / prereq_add / prereq_replace。無ければ引数の既定）と `topics_candidates.json`: {"candidates": [{"id", "term", "field", "middle", "summary", "source_count", "sources", "interview_count", "prereq": [term...], "goals": [1..6]}]}
 出力 `roadmap.json`（順序つき単位）と `material_bundles/bundle_NN.json`（8 論点ずつ）
 
 優先信号（§13）: score = 一次資料の交差数（主）+ 0.5 × 面接で問われる頻度（副）。
@@ -18,11 +18,21 @@ def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--max", type=int, default=40); ap.add_argument("--per-day", type=int, default=3); ap.add_argument("--min-per-goal", type=int, default=4)
     a = ap.parse_args(); d = Path(a.data)
     cands = json.loads((d / "topics_candidates.json").read_text(encoding="utf-8"))["candidates"]
+    cfg = json.loads((d / "roadmap_config.json").read_text(encoding="utf-8")) if (d / "roadmap_config.json").exists() else {}
+    a.max = cfg.get("max", a.max); a.per_day = cfg.get("per_day", a.per_day); a.min_per_goal = cfg.get("min_per_goal", a.min_per_goal)
+    excl = set(cfg.get("exclude", [])); must = set(cfg.get("must_include", []))
+    for c in cands:
+        if c["term"] in cfg.get("prereq_replace", {}): c["prereq"] = list(cfg["prereq_replace"][c["term"]])
+        for pt in cfg.get("prereq_add", {}).get(c["term"], []):
+            if pt not in c.setdefault("prereq", []): c["prereq"].append(pt)
+    cands = [c for c in cands if c["term"] not in excl]
+    missing_must = must - {c["term"] for c in cands}
+    if missing_must: print("must_include が候補に無い:", missing_must); return 1
     for c in cands: c["score"] = c.get("source_count", 0) + 0.5 * c.get("interview_count", 0)
     linked = [c for c in cands if c.get("goals")]
     dropped = [c["term"] for c in cands if not c.get("goals")]
     linked.sort(key=lambda c: (-c["score"], c["term"]))
-    chosen = linked[: a.max]
+    chosen = [c for c in linked if c["term"] in must] + [c for c in linked if c["term"] not in must][: max(0, a.max - len(must))]
     all_by_term = {c["term"]: c for c in linked}
     def ensure_goals():
         for g in range(1, 7):
@@ -43,7 +53,7 @@ def main() -> int:
         # 上限に収める: 前提として要らず、到達基準の最低数を割らない単位を、score の低い順に外す
         while len(chosen) > a.max:
             removable = [c for c in sorted(chosen, key=lambda c: (c["score"], c["term"]))
-                         if not needed_by_others(c) and all(len([x for x in chosen if g in x["goals"]]) - 1 >= a.min_per_goal for g in c["goals"])]
+                         if c["term"] not in must and not needed_by_others(c) and all(len([x for x in chosen if g in x["goals"]]) - 1 >= a.min_per_goal for g in c["goals"])]
             if not removable: break
             chosen.remove(removable[0])
     ensure_goals(); ensure_prereqs(); trim(); ensure_prereqs()

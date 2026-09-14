@@ -2,6 +2,72 @@
   "bundle": "bundle_05",
   "topics": [
     {
+      "topic_id": 5,
+      "term": "要件定義",
+      "field": "業界と仕事",
+      "middle": "案件の流れ",
+      "summary": "やりたいことを作れる形の要件に落とす",
+      "goals": [
+        1,
+        3
+      ],
+      "prereq": [
+        "案件の流れ（提案から定着まで）"
+      ],
+      "sources": [
+        "i コンピテンシ ディクショナリ（iCD）",
+        "BABOK ガイド v3（A Guide to the Business Analysis Body of Knowledge, version 3）",
+        "アクセンチュア（新卒採用 5職種／採用案内PDF）",
+        "NTTデータ（SE／コンサルティング職・新卒）",
+        "日立製作所（システムエンジニア職・新卒）"
+      ],
+      "source_count": 5,
+      "interview_count": 1
+    },
+    {
+      "topic_id": 46,
+      "term": "DX戦略と経営ビジョン",
+      "field": "ITと業務の基礎知識",
+      "middle": "DXと政策",
+      "summary": "経営の狙いとIT施策を繋ぐ考え方",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "DXとは（デジタル化との違い）"
+      ],
+      "sources": [
+        "DXレポート2（中間取りまとめ）",
+        "DXレポート2.2（概要）",
+        "デジタルガバナンス・コード3.0 ～DX経営による企業価値向上に向けて～",
+        "アクセンチュア（新卒採用 5職種／採用案内PDF）",
+        "PwCコンサルティング（新卒5職種／選考情報）"
+      ],
+      "source_count": 5,
+      "interview_count": 0
+    },
+    {
+      "topic_id": 65,
+      "term": "グループディスカッション",
+      "field": "論理思考とケース",
+      "middle": "伝え方",
+      "summary": "議論の構造化と対人姿勢の両方を見る",
+      "goals": [
+        4,
+        5
+      ],
+      "prereq": [
+        "論理思考（結論から話す）"
+      ],
+      "sources": [
+        "PwCコンサルティング（新卒5職種／選考情報）",
+        "KPMGコンサルティング（新卒 募集要項・選考フロー）",
+        "日本IBM（新卒採用プロセス／IBMコンサルティング事業本部）"
+      ],
+      "source_count": 3,
+      "interview_count": 4
+    },
+    {
       "topic_id": 7,
       "term": "システム設計",
       "field": "業界と仕事",
@@ -47,79 +113,6 @@
       "interview_count": 0
     },
     {
-      "topic_id": 17,
-      "term": "総合系ファームの特徴",
-      "field": "業界と仕事",
-      "middle": "業界地図と主要企業",
-      "summary": "戦略から実行まで一社で担う体制",
-      "goals": [
-        2
-      ],
-      "prereq": [
-        "コンサル業界地図"
-      ],
-      "sources": [
-        "アクセンチュア（新卒採用 5職種／採用案内PDF）",
-        "デロイト トーマツ コンサルティング（コンサルタント職）",
-        "PwCコンサルティング（新卒5職種／選考情報）",
-        "KPMGコンサルティング（新卒 募集要項・選考フロー）"
-      ],
-      "source_count": 4,
-      "interview_count": 2
-    },
-    {
-      "topic_id": 57,
-      "term": "フェルミ推定",
-      "field": "論理思考とケース",
-      "middle": "ケースの型",
-      "summary": "調べられない数を仮定を置いて概算する",
-      "goals": [
-        4
-      ],
-      "prereq": [
-        "ケース面接とは"
-      ],
-      "sources": [],
-      "source_count": 0,
-      "interview_count": 5
-    },
-    {
-      "topic_id": 59,
-      "term": "売上分解と利益改善",
-      "field": "論理思考とケース",
-      "middle": "ケースの型",
-      "summary": "売上＝客数×単価から施策を出す型",
-      "goals": [
-        4
-      ],
-      "prereq": [
-        "フェルミ推定"
-      ],
-      "sources": [],
-      "source_count": 0,
-      "interview_count": 6
-    },
-    {
-      "topic_id": 60,
-      "term": "新規事業・成長戦略のケース",
-      "field": "論理思考とケース",
-      "middle": "ケースの型",
-      "summary": "既存企業の次の一手を考える型",
-      "goals": [
-        4
-      ],
-      "prereq": [
-        "売上分解と利益改善"
-      ],
-      "sources": [
-        "アクセンチュア（新卒採用 5職種／採用案内PDF）",
-        "野村総合研究所（経営コンサルタント／アプリケーションエンジニア・テクニカルエンジニア）",
-        "NTTデータ（SE／コンサルティング職・新卒）"
-      ],
-      "source_count": 3,
-      "interview_count": 2
-    },
-    {
       "topic_id": 74,
       "term": "最終面接・パートナー面接",
       "field": "選考と自己理解",
@@ -154,6 +147,20 @@
       "sources": [],
       "source_count": 0,
       "interview_count": 9
+    },
+    {
+      "topic_id": 87,
+      "term": "経験の棚卸し（課題→打ち手→結果→学び）",
+      "field": "選考と自己理解",
+      "middle": "自己分析の材料",
+      "summary": "自分の話を4段で並べ直す作業",
+      "goals": [
+        6
+      ],
+      "prereq": [],
+      "sources": [],
+      "source_count": 0,
+      "interview_count": 2
     }
   ]
 }

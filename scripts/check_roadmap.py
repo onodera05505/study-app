@@ -7,7 +7,7 @@
 - 教材: 全単位に教材があり、担当バンドルと topic_id/term が一致する（自己申告を信じない）。sources が 1 件以上。
   explanation / detail の長さが仕様の範囲（下限は落とす、上限は警告）。見分けワードの行がある。記法が 5 つ以外でない（`**`/`###`/`- `/`1. `/表）。
   `[[用語]]` はロードマップ内の論点名だけ。会社の評価・年収・「最新」「近年」を含まない
-- 問題: 1 論点 2 問、四択、answer が選択肢にある、qid 一意、正解位置が 1 つに偏りすぎない（1 位置が 45% 超で警告）、tests_goal が 1〜6
+- 問題: 1 論点 2 問、四択、answer が選択肢にある、qid 一意、正解位置が 1 つに偏りすぎない（1 位置が 45% 超で警告）、tests_goal が 1〜6。\n  正解の選択肢が教材と 14 字以上連続一致するものを数えて警告（サイクル 1 で独立解答 2 体が「再認で当たる」と指摘）
 - 独立解答（--solutions）: 教材だけで解いた担当の答えと answer を比べ、不一致を列挙する。不一致率 20% 超でエラー
 """
 from __future__ import annotations
@@ -15,6 +15,13 @@ import argparse, glob, json, re, sys
 from pathlib import Path
 
 NG = re.compile(r"激務|ブラック(?!ボックス)|年収|万円|最新|近年")
+VERBATIM = 14
+
+def verbatim(choice: str, text: str) -> bool:
+    """正解の選択肢が教材本文と VERBATIM 字以上連続で一致するか（記号・空白は除いて比べる）。"""
+    norm = lambda t: re.sub(r"[\s、。・「」『』（）()\[\]*#\-|]", "", t)
+    c, t = norm(choice), norm(text)
+    return any(c[i:i + VERBATIM] in t for i in range(0, max(1, len(c) - VERBATIM + 1)))
 ALLOWED_INLINE = re.compile(r"^(#{3} |- |\d+\. |\||!\[)")
 
 def main() -> int:
@@ -25,14 +32,14 @@ def main() -> int:
     units = {u["topic_id"]: u for u in rm["units"]}; terms = {u["term"] for u in rm["units"]}
     # 教材
     mats: dict[int, dict] = {}
-    for bp in sorted((d / "material_bundles").glob("bundle_*.json")):
-        b = json.loads(bp.read_text(encoding="utf-8")); mp = d / "materials" / bp.name
-        if not mp.exists(): errors.append(f"教材が無い: {mp.name}"); continue
+    for mp in sorted((d / "materials").glob("*.json")):
         m = json.loads(mp.read_text(encoding="utf-8"))
-        bb = [(t["topic_id"], t["term"]) for t in b["topics"]]; mm = [(x["topic_id"], x["term"]) for x in m.get("materials", [])]
-        if bb != mm: errors.append(f"{bp.name}: 担当バンドルと出力の論点が不一致 {bb} vs {mm}")
         for x in m.get("materials", []):
-            tid = x["topic_id"]; mats[tid] = x; tag = f"教材 {tid} {x['term']}"
+            tid = x["topic_id"]; tag = f"教材 {tid} {x['term']}"
+            if tid in mats: errors.append(f"{tag}: 教材が重複（{mp.name}）"); continue
+            mats[tid] = x
+            if tid not in units: warns.append(f"{tag}: ロードマップ外の教材（{mp.name}。害は無いが除外済みの単位）"); continue
+            if units[tid]["term"] != x["term"]: errors.append(f"{tag}: 論点名がロードマップと不一致（{units[tid]['term']}）")
             if not x.get("sources"): errors.append(f"{tag}: 出典が無い")
             ex, de = x.get("explanation", ""), x.get("detail", "")
             if len(ex) < 120: errors.append(f"{tag}: explanation が短すぎる {len(ex)} 字")
@@ -50,7 +57,7 @@ def main() -> int:
     for tid in units:
         if tid not in mats: errors.append(f"教材が無い論点: {tid} {units[tid]['term']}")
     # 問題
-    qs: dict[str, dict] = {}; per_topic: dict[int, int] = {}; pos: dict[str, int] = {}
+    qs: dict[str, dict] = {}; per_topic: dict[int, int] = {}; pos: dict[str, int] = {}; verb: list[str] = []
     for qp in sorted((d / "questions").glob("bundle_*.json")):
         for q in json.loads(qp.read_text(encoding="utf-8")).get("questions", []):
             if q["qid"] in qs: errors.append(f"qid 重複: {q['qid']}")
@@ -58,11 +65,15 @@ def main() -> int:
             if set(q["choices"].keys()) != {"ア", "イ", "ウ", "エ"}: errors.append(f"{q['qid']}: 選択肢がア〜エでない")
             if q["answer"] not in q["choices"]: errors.append(f"{q['qid']}: 正解が選択肢に無い")
             if q.get("tests_goal") not in range(1, 7): errors.append(f"{q['qid']}: tests_goal が 1〜6 でない")
-            if q["topic_id"] not in units: errors.append(f"{q['qid']}: ロードマップに無い論点 {q['topic_id']}")
+            if q["topic_id"] not in units: warns.append(f"{q['qid']}: ロードマップ外の問題（除外済みの単位）"); continue
             pos[q["answer"]] = pos.get(q["answer"], 0) + 1
+            m = mats.get(q["topic_id"])
+            if m and verbatim(q["choices"][q["answer"]], m.get("explanation", "") + "\n" + m.get("detail", "")):
+                verb.append(q["qid"])
     if qs:
         for tid in units:
             if per_topic.get(tid, 0) != 2: errors.append(f"論点 {tid} {units[tid]['term']} の問題が {per_topic.get(tid,0)} 問（2 問）")
+        if verb: warns.append(f"正解の選択肢が教材と {VERBATIM} 字以上連続一致（読んだ文の再認で当たる）: {len(verb)} 問 {verb[:12]}{'…' if len(verb) > 12 else ''}")
         top = max(pos.values()) / len(qs)
         if top > 0.45: warns.append(f"正解位置が偏っている: {pos}")
     # 独立解答

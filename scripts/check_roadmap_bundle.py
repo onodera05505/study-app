@@ -38,6 +38,15 @@ def main() -> int:
         for hit in NG.findall(ex + de): warns.append(f"{tag}: 避ける語「{hit}」")
         for line in (ex + "\n" + de).splitlines():
             if line.startswith("#") and not line.startswith("### "): errs.append(f"{tag}: 見出しは ### だけ: {line[:30]}")
+    qp = d / "questions" / f"{a.bundle}.json"
+    if qp.exists():
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("cr", Path(__file__).with_name("check_roadmap.py")); cr = importlib.util.module_from_spec(spec); spec.loader.exec_module(cr)
+        mm_by = {x["topic_id"]: x for x in m.get("materials", [])}
+        for q in json.loads(qp.read_text(encoding="utf-8")).get("questions", []):
+            x = mm_by.get(q["topic_id"])
+            if x and cr.verbatim(q["choices"][q["answer"]], x.get("explanation", "") + "\n" + x.get("detail", "")):
+                warns.append(f"{q['qid']}: 正解の選択肢が教材と {cr.VERBATIM} 字以上連続一致（言い換えるか場面適用にする）")
     for w in warns: print(f"警告: {w}")
     for e in errs: print(f"✘ {e}")
     print(f"{a.bundle}: 論点 {len(mm)} / 警告 {len(warns)} / 問題点 {len(errs)}")
