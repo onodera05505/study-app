@@ -84,11 +84,13 @@ def main() -> int:
             s = json.loads(Path(f).read_text(encoding="utf-8"))
             ans = s.get("answers", {}); n = 0; bad = []
             for qid, q in qs.items():
+                if q["topic_id"] not in units: continue  # ロードマップ外（除外済み）の問題は学習者パックに無い
                 if qid not in ans: bad.append((qid, "未回答")); continue
                 n += 1
                 if ans[qid] != q["answer"]: bad.append((qid, f"{ans[qid]}≠{q['answer']}"))
-            rate = len(bad) / max(1, len(qs))
-            print(f"独立解答 {Path(f).name}: {len(qs) - len(bad)}/{len(qs)} 一致（不一致 {rate:.0%}）")
+            n_in = sum(1 for q in qs.values() if q["topic_id"] in units)
+            rate = len(bad) / max(1, n_in)
+            print(f"独立解答 {Path(f).name}: {n_in - len(bad)}/{n_in} 一致（不一致 {rate:.0%}）")
             for qid, why in bad: print(f"   不一致 {qid} {qs[qid]['term']}: {why}")
             if rate > 0.20: errors.append(f"{Path(f).name}: 不一致率 {rate:.0%} が 20% を超えている（教材で解けない問題か、教材の穴）")
             mism += bad
