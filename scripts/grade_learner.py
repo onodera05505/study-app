@@ -20,6 +20,7 @@ def main() -> int:
     per_unit = {tid: {"term": u["term"], "field": u["field"], "correct": 0, "total": 0} for tid, u in units.items()}
     by_goal = {g: [0, 0] for g in range(1, 7)}; by_field = {}
     wrong = []
+    qs = {k: q for k, q in qs.items() if q["topic_id"] in units}  # ロードマップ外（除外済み）の問題は採点しない
     for qid, q in qs.items():
         ok = ans.get(qid) == q["answer"]; pu = per_unit[q["topic_id"]]; pu["total"] += 1; pu["correct"] += ok
         g = by_goal[q["tests_goal"]]; g[1] += 1; g[0] += ok

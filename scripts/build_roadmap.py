@@ -7,7 +7,7 @@
 出力 `roadmap.json`（順序つき単位）と `material_bundles/bundle_NN.json`（8 論点ずつ）
 
 優先信号（§13）: score = 一次資料の交差数（主）+ 0.5 × 面接で問われる頻度（副）。
-順序: score 降順を骨格にし、前提（prereq）が後ろに来る場合は前提を前に出す。到達基準（goals）に繋がらない候補は落とす。
+順序: score 降順を骨格にし、前提（prereq）が後ろに来る場合は前提を前に出す。cluster に挙げた単位は先頭の位置に連続で並べる。到達基準（goals）に繋がらない候補は落とす。
 到達基準 6（自己理解）に属する単位は最後に置く（練習として。§13）。各到達基準に最低 --min-per-goal 単位（既定 4）を確保し、選んだ単位の前提（prereq）は必ず含める。上限超過は前提として要らない低スコアから外す。
 """
 from __future__ import annotations
@@ -71,6 +71,15 @@ def main() -> int:
     last_units = [c for c in chosen if c["goals"] == [6]]
     for c in main_units: visit(c)
     for c in last_units: visit(c)
+    # cluster: 先頭の単位の位置に、残りを順に並べて連続させる（学習者が「工程が 5〜12 日目に散った」と報告したため）
+    for group in cfg.get("cluster", []):
+        members = [by_term[t] for t in group if t in by_term]
+        if len(members) < 2: continue
+        first = min(ordered.index(m) for m in members)
+        rest = [m for m in ordered if m not in members]
+        ordered = rest[:first] + members + rest[first:]
+    for c in ordered:
+        if c["term"] in cfg.get("summary_override", {}): c["summary"] = cfg["summary_override"][c["term"]]
     units = []
     for i, c in enumerate(ordered, 1):
         units.append({"order": i, "day": math.ceil(i / a.per_day), "topic_id": c["id"], "term": c["term"], "field": c["field"], "middle": c.get("middle", ""),
