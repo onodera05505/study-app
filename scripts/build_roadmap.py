@@ -57,6 +57,7 @@ def main() -> int:
             if not removable: break
             chosen.remove(removable[0])
     ensure_goals(); ensure_prereqs(); trim(); ensure_prereqs()
+    chosen.sort(key=lambda c: (-c["score"], c["term"]))  # must_include を先頭に置いた並びを score 順に戻す（順序は前提とスコアだけで決める）
     by_term = {c["term"]: c for c in chosen}
     # 前提を前に出す（トポロジカル。前提が選外なら無視）
     ordered: list[dict] = []; seen: set[str] = set()
