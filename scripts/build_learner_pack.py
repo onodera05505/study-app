@@ -39,6 +39,13 @@ def main() -> int:
     for q in sorted(qs, key=lambda q: (order.get(q["topic_id"], 999), q["qid"])):
         q_lines += [f"## {q['qid']}（単位 {order.get(q['topic_id'])}: {q['term']}）", q["stem"], ""] + [f"- {k}. {v}" for k, v in q["choices"].items()] + [""]
     (out / "quiz.md").write_text("\n".join(q_lines) + "\n", encoding="utf-8")
+    et = d / "explain_terms.json"
+    if et.exists():
+        terms = json.loads(et.read_text(encoding="utf-8"))["terms"]
+        e_lines = ["# 説明テスト（全部読み終えた後、教材を読み返さずに書く）", "",
+                   "次の語を、IT に詳しくない友人に向けて 1〜2 文で説明してください。分からなければ「分からない」と正直に書きます。",
+                   "答えは `explain_answers.json` に `{\"answers\": {\"語\": \"説明\", ...}}` の形で。", ""] + [f"- {t['term']}" for t in terms]
+        (out / "explain.md").write_text("\n".join(e_lines) + "\n", encoding="utf-8")
     print(f"パック: {out} / 単位 {len(rm['units'])} / 教材あり {sum(1 for u in rm['units'] if u['topic_id'] in mats)} / 問題 {len(qs)}")
     return 0
 

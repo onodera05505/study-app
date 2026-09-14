@@ -10,7 +10,7 @@ import argparse, json, sys
 from pathlib import Path
 
 def main() -> int:
-    ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--answers", required=True); ap.add_argument("--cycle", type=int, required=True)
+    ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--answers", required=True); ap.add_argument("--cycle", type=int, required=True); ap.add_argument("--explain", help="採点担当が書いた説明テストの採点 JSON（{\"grades\": {\"語\": 0|1|2, ...}}）")
     a = ap.parse_args(); d = Path(a.data)
     rm = json.loads((d / "roadmap.json").read_text(encoding="utf-8")); units = {u["topic_id"]: u for u in rm["units"]}
     qs = {}
@@ -39,11 +39,16 @@ def main() -> int:
            "overconfident_units": [per_unit[t]["term"] for t in overconfident],
            "unknown_terms": sorted({w for pu in per_unit.values() for w in (pu["unknown_terms"] or [])}),
            "wrong": wrong, "overall": L.get("overall", {}), "per_unit": per_unit}
+    if a.explain:
+        gr = json.loads(Path(a.explain).read_text(encoding="utf-8")).get("grades", {})
+        res["explain"] = {"grades": gr, "rate": round(sum(gr.values()) / max(1, 2 * len(gr)), 3), "can_explain": sum(1 for v in gr.values() if v == 2), "n": len(gr)}
     prev = d / "eval" / f"cycle_{a.cycle - 1}.json"
     if prev.exists():
         p = json.loads(prev.read_text(encoding="utf-8")); res["delta_rate"] = round(res["rate"] - p["rate"], 3); res["delta_understood"] = round(res["avg_understood"] - p["avg_understood"], 2)
     (d / "eval").mkdir(exist_ok=True); (d / "eval" / f"cycle_{a.cycle}.json").write_text(json.dumps(res, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"サイクル {a.cycle}: 正答 {res['score']}（{res['rate']:.0%}） 自己申告の理解度 平均 {res['avg_understood']} 詰まった単位 {len(stuck)} 過信 {len(overconfident)} 未説明の語 {len(res['unknown_terms'])}" + (f" 前回比 {res['delta_rate']:+.0%}" if "delta_rate" in res else ""))
+    if "explain" in res:
+        ex = res["explain"]; print(f"説明テスト: 説明できた {ex['can_explain']}/{ex['n']} 語（得点率 {ex['rate']:.0%}）")
     print("到達基準別:", res["by_goal"]); print("分野別:", res["by_field"])
     for w in wrong: print(f"   誤答 {w['qid']} {w['term']}: 選 {w['picked']} 正 {w['answer']}")
     return 0
