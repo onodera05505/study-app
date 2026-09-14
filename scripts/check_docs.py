@@ -20,15 +20,22 @@
   プレースホルダを含むものは見ない
 - **作業ログの還元行** — `docs/作業ログ_YYYY-MM-DD*.md` のうち 2026-09-11 以降のものに
   `ブレイン:` で始まる行があるか（型を中央ブレインへ還したかの申告。2026-09-11 まで
+  ここで行の有無だけを見ていたが、2026-09-14 から中央の `~/.claude/brain/check_return_line.py`
+  を呼んで文法（「参照した型」に索引を引いた証拠があるか）まで同じ基準で見る。中央の門を
+  ここに複製すると両者がずれるので、呼ぶだけにする。中央が無い環境では有無の検査だけで通す。
   中央のアプローチにこのプロジェクトの型が 1 本も無かった反省から）
 """
 
 from __future__ import annotations
 
 import argparse
+import os
 import re
+import subprocess
 import sys
 from pathlib import Path
+
+CENTRAL_RETURN_LINE = Path(os.path.expanduser("~/.claude/brain/check_return_line.py"))
 
 INVARIANTS_DOC = "docs/不変条件と門.md"
 PATH_IN_BACKTICKS = re.compile(r"`((?:scripts|src|\.claude|docs|brain|data|public)/[^`\s]+)`")
@@ -91,6 +98,11 @@ def main() -> int:
     n_brain = check_index(root, "brain/INDEX.md", "brain/reports", errors)
     n_gates = check_gate_paths(root, errors)
     n_logs = check_worklog_brain_line(root, errors)
+    if CENTRAL_RETURN_LINE.exists():
+        r = subprocess.run([sys.executable, str(CENTRAL_RETURN_LINE), "--root", str(root), "--quiet"],
+                           capture_output=True, text=True)
+        if r.returncode != 0:
+            errors.append("還元行の文法（中央の check_return_line.py）:\n" + (r.stdout + r.stderr).strip())
 
     for e in errors:
         print(f"✘ {e}")

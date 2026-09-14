@@ -31,6 +31,9 @@ esac
 # macOS 標準の bash 3.2 は $VAR 直後の全角文字を変数名に巻き込むので ${VAR} で区切る
 echo "▶ 対象: ${EXAM}（Pages: $PROJECT / D1: ${DB}）"
 
+echo "▶ ソースの静的な門（PBKDF2 の反復回数の上限・一覧の空配列初期化。不変条件 O5 / D11）"
+python3 scripts/check_source.py
+
 echo "▶ 描画検査（実データ全件を jsdom で描いて見る。落ちたらデプロイしない）"
 # データ側の検査が通っても画面だけ壊れることがある（2026-09-01 の用語ポップ）。
 # 何を見ているかは scripts/check_render.tsx の先頭。
