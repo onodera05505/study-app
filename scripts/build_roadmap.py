@@ -8,14 +8,14 @@
 
 優先信号（§13）: score = 一次資料の交差数（主）+ 0.5 × 面接で問われる頻度（副）。
 順序: score 降順を骨格にし、前提（prereq）が後ろに来る場合は前提を前に出す。到達基準（goals）に繋がらない候補は落とす。
-到達基準 6（自己理解）に属する単位は最後に置く（練習として。§13）。各到達基準に最低 2 単位を確保する。
+到達基準 6（自己理解）に属する単位は最後に置く（練習として。§13）。各到達基準に最低 --min-per-goal 単位（既定 4）を確保し、選んだ単位の前提（prereq）は必ず含める。上限超過は前提として要らない低スコアから外す。
 """
 from __future__ import annotations
 import argparse, json, math, sys
 from pathlib import Path
 
 def main() -> int:
-    ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--max", type=int, default=40); ap.add_argument("--per-day", type=int, default=3)
+    ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--max", type=int, default=40); ap.add_argument("--per-day", type=int, default=3); ap.add_argument("--min-per-goal", type=int, default=4)
     a = ap.parse_args(); d = Path(a.data)
     cands = json.loads((d / "topics_candidates.json").read_text(encoding="utf-8"))["candidates"]
     for c in cands: c["score"] = c.get("source_count", 0) + 0.5 * c.get("interview_count", 0)
@@ -23,14 +23,30 @@ def main() -> int:
     dropped = [c["term"] for c in cands if not c.get("goals")]
     linked.sort(key=lambda c: (-c["score"], c["term"]))
     chosen = linked[: a.max]
-    # 各到達基準に最低 2 単位
-    for g in range(1, 7):
-        have = [c for c in chosen if g in c["goals"]]
-        if len(have) < 2:
+    all_by_term = {c["term"]: c for c in linked}
+    def ensure_goals():
+        for g in range(1, 7):
             for c in linked:
-                if c not in chosen and g in c["goals"]:
-                    chosen.append(c)
-                    if len([x for x in chosen if g in x["goals"]]) >= 2: break
+                if len([x for x in chosen if g in x["goals"]]) >= a.min_per_goal: break
+                if c not in chosen and g in c["goals"]: chosen.append(c)
+    def ensure_prereqs():
+        changed = True
+        while changed:
+            changed = False
+            for c in list(chosen):
+                for pt in c.get("prereq", []):
+                    if pt in all_by_term and all_by_term[pt] not in chosen:
+                        chosen.append(all_by_term[pt]); changed = True
+    def needed_by_others(c):
+        return any(c["term"] in x.get("prereq", []) for x in chosen if x is not c)
+    def trim():
+        # 上限に収める: 前提として要らず、到達基準の最低数を割らない単位を、score の低い順に外す
+        while len(chosen) > a.max:
+            removable = [c for c in sorted(chosen, key=lambda c: (c["score"], c["term"]))
+                         if not needed_by_others(c) and all(len([x for x in chosen if g in x["goals"]]) - 1 >= a.min_per_goal for g in c["goals"])]
+            if not removable: break
+            chosen.remove(removable[0])
+    ensure_goals(); ensure_prereqs(); trim(); ensure_prereqs()
     by_term = {c["term"]: c for c in chosen}
     # 前提を前に出す（トポロジカル。前提が選外なら無視）
     ordered: list[dict] = []; seen: set[str] = set()
