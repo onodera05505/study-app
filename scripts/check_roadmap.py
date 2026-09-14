@@ -21,6 +21,7 @@ def verbatim(choice: str, text: str) -> bool:
     """正解の選択肢が教材本文と VERBATIM 字以上連続で一致するか（記号・空白は除いて比べる）。"""
     norm = lambda t: re.sub(r"[\s、。・「」『』（）()\[\]*#\-|]", "", t)
     c, t = norm(choice), norm(text)
+    if len(c) < VERBATIM: return False  # 用語そのものを選ばせる短い選択肢は対象外（語が教材に出るのは当然）
     return any(c[i:i + VERBATIM] in t for i in range(0, max(1, len(c) - VERBATIM + 1)))
 ALLOWED_INLINE = re.compile(r"^(#{3} |- |\d+\. |\||!\[)")
 
