@@ -89,7 +89,7 @@ def main() -> int:
                "dropped_no_goal": dropped, "units": units}
     (d / "roadmap.json").write_text(json.dumps(roadmap, ensure_ascii=False, indent=2), encoding="utf-8")
     bdir = d / "material_bundles"; bdir.mkdir(exist_ok=True)
-    for p in bdir.glob("bundle_*.json"): p.unlink()
+    for p in bdir.glob("bundle_[0-9][0-9].json"): p.unlink()  # 連番のバンドルだけ作り直す。手で作った追加バンドル（bundle_c2_new_a 等）は消さない（担当が読んでいる入力を消した事故 2026-09-15）
     for n, i in enumerate(range(0, len(units), 8), 1):
         chunk = units[i:i + 8]
         (bdir / f"bundle_{n:02d}.json").write_text(json.dumps({"bundle": f"bundle_{n:02d}", "topics": [
