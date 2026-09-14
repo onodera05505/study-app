@@ -14,7 +14,7 @@ from __future__ import annotations
 import argparse, glob, json, re, sys
 from pathlib import Path
 
-NG = re.compile(r"激務|ブラック|年収|万円|最新|近年")
+NG = re.compile(r"激務|ブラック(?!ボックス)|年収|万円|最新|近年")
 ALLOWED_INLINE = re.compile(r"^(#{3} |- |\d+\. |\||!\[)")
 
 def main() -> int:

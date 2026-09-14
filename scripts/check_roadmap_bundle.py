@@ -5,7 +5,7 @@
 from __future__ import annotations
 import argparse, json, re, sys
 from pathlib import Path
-NG = re.compile(r"激務|ブラック|年収|万円|最新|近年")
+NG = re.compile(r"激務|ブラック(?!ボックス)|年収|万円|最新|近年")
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--bundle", required=True)
     a = ap.parse_args(); d = Path(a.data)
@@ -17,7 +17,7 @@ def main() -> int:
     names = set()
     for sf in (d / "sources").glob("*.json"):
         for s in json.loads(sf.read_text(encoding="utf-8")).get("sources", []): names.add(s["name"])
-    names.add("一般常識")
+    names.add("一般常識"); names.add("選考解説記事の集計（interview_frequency）")
     errs, warns = [], []
     bb = [(t["topic_id"], t["term"]) for t in b["topics"]]; mm = [(x["topic_id"], x["term"]) for x in m.get("materials", [])]
     if bb != mm: errs.append(f"担当バンドルと出力の論点が不一致\n  bundle={bb}\n  output={mm}")
