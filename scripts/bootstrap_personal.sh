@@ -14,7 +14,8 @@ WANT=$(python3 -c "import json;print(json.load(open('$CFG'))['account_id'])")
 HAVE=$(npx wrangler whoami 2>/dev/null | grep -oE '[0-9a-f]{32}' | head -1 || true)
 [ "$HAVE" = "$WANT" ] || { echo "ログイン中のアカウント（${HAVE:-不明}）が想定（${WANT}）と違う。npx wrangler login で個人アカウントを選び直す"; exit 1; }
 
-for EXAM in "${@:-ip ap itc}"; do
+EXAMS=("$@"); [ $# -eq 0 ] && EXAMS=(ip ap itc)
+for EXAM in "${EXAMS[@]}"; do
   read -r PROJECT DB CODE < <(python3 -c "import json;c=json.load(open('$CFG'))['$EXAM'];print(c['project'],c['db'],c['signup_code'])")
   echo "▶ ${EXAM}: Pages ${PROJECT}"
   if npx wrangler pages project list 2>/dev/null | grep -q "│ ${PROJECT} "; then
