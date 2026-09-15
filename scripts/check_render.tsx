@@ -262,12 +262,16 @@ async function main(): Promise<number> {
     warnings.push({ where, what, excerpt: ex })
 
   // === 7. 用語集が未取得（null）でも `[[` が文字として出ない ==============
-  const sample = [...materials.values()].find((m) => termRefs(m.explanation ?? '').length > 0)
+  // explanation に [[用語]] が 1 つも無い対象（mkt。用語は detail 側だけ）で fetch 未検出の誤報が出たので、
+  // explanation → detail の順で用語を含む本文を探す（2026-09-15）
+  const sampleText = (m: Material) =>
+    termRefs(m.explanation ?? '').length > 0 ? m.explanation ?? '' : m.detail ?? ''
+  const sample = [...materials.values()].find((m) => termRefs(sampleText(m)).length > 0)
   if (sample) {
-    await draw(h(Markdown, { source: sample.explanation ?? '' }))
+    await draw(h(Markdown, { source: sampleText(sample) }))
     if (container.textContent!.includes('[[')) {
       err(`論点 ${sample.topic_id}`, '用語集が未取得の間に [[ が文字として出ている',
-        excerpt(sample.explanation ?? ''))
+        excerpt(sampleText(sample)))
     }
     if (container.querySelectorAll('button.term-btn').length > 0) {
       err(`論点 ${sample.topic_id}`, '用語集が未取得なのにボタンが出ている', '')
