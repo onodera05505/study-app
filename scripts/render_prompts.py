@@ -10,7 +10,7 @@ from __future__ import annotations
 import argparse, json, re, sys
 from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
-TEMPLATES = ("roadmap_materials.md", "roadmap_questions.md", "roadmap_learner.md")
+TEMPLATES = ("roadmap_materials.md", "roadmap_questions.md", "roadmap_learner.md", "roadmap_explain_grader.md")
 
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True, type=Path)
