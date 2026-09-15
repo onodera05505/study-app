@@ -10,7 +10,7 @@ IT コンサルの就活を考え始めたところで、業界の言葉は聞�
 1. `roadmap.md` を読み、日ごとの単位の順に `units/` の教材を読む
 2. 各単位を読んだ直後に、その単位の確認問題（`quiz.md`）に答える。**答えは教材から探してよい**が、分からなければ推測で選ぶ（空欄にしない）
 3. 全部終えたら、次の 2 つのファイルを書く
-   - `learner_answers.json`: `{"answers": {"t1-1": "ア", ...}, "units": [{"topic_id": 1, "understood": 3, "minutes": 5, "confusing": "分からなかった点（無ければ空）", "unknown_terms": ["説明が無いのに出てきた語"], "note": "気づいたこと"}], "overall": {"order_ok": true, "order_issue": "順番で困った点", "too_long": [topic_id], "too_short": [topic_id], "most_useful": [topic_id], "least_useful": [topic_id], "would_you_continue": true, "comment": "2 週間続けられるか、面接で話せる気がするか、率直に"}}`
+   - `learner_answers.json`: `{"answers": {"t1-1": "ア", ...}, "units": [{"topic_id": 1, "understood": 3, "minutes": 5, "confusing": "分からなかった点（無ければ空）", "unknown_terms": ["説明が無いのに出てきた語"], "note": "気づいたこと"}], "overall": {"order_ok": true, "order_issue": "順番で困った点", "too_long": [topic_id], "too_short": [topic_id], "most_useful": [topic_id], "least_useful": [topic_id], "would_you_continue": true, "comment": "14 日続けられるか、面接で示せる気がするか、率直に"}}`
    - `learner_report.md`: 学んだ立場からの率直なレポート（何が分かって何が分からなかったか、どこで詰まったか、順番・長さ・言葉遣いの感想。褒める必要はない）
 4. `understood` は 1（分からない）/ 2（なんとなく）/ 3（人に説明できる）
 
