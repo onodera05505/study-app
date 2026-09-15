@@ -38,10 +38,8 @@ backup_one () {
 }
 
 case "${1:-all}" in
-  ip)  backup_one ip study-app-db ;;
-  ap)  backup_one ap study-app-ap-db ;;
-  itc) backup_one itc study-app-itc-db ;;
-  all) backup_one ip study-app-db; backup_one ap study-app-ap-db ;;
+  all) for k in $(python3 scripts/targets.py keys); do backup_one "$k" "$(python3 scripts/targets.py db "$k")"; done ;;
+  *) [ "$(python3 scripts/targets.py has "$1")" = yes ] || { echo "第1引数は対象の ID か all"; exit 1; }; backup_one "$1" "$(python3 scripts/targets.py db "$1")" ;;
   *)   echo "第1引数は ip か ap（省略で両方）"; exit 1 ;;
 esac
 

@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-"""ロードマップ試作（data/itc）を、既存の投入経路（build_seed.py → check_seed.py → seed_remote.sh）が読む形に変換する。
+"""ロードマップ型の対象（data/<対象>）を、既存の投入経路（build_seed.py → check_seed.py → seed_remote.sh）が読む形に変換する。
+対象ごとの値（分野の並び・補足の分野名・回のラベル）は登録簿 src/shared/targets.json の roadmapSpec から読む。
 
-    python3 scripts/build_itc_dataset.py --data data/itc
+    python3 scripts/build_target_dataset.py --data data/itc
 
 入力: roadmap.json / materials/*.json / questions/bundle_*.json / topics_candidates.json
 出力（すべて data/itc/ 直下。手で編集しない）:
   syllabus.json         自前の階層。分野（4）→ 中分類 を syllabus_items に写す（major は分野名と同じ）
   topics.json           単位＝論点。id は候補 id で固定（topic_ids.json にも書く）。sort_order がロードマップの順
-  exam_labels.json      「回」＝日。itc-d01 … itc-d14 → 「1 日目」…
+  exam_labels.json      「回」＝日。<対象>-d01 … → roadmapSpec.roundLabel（例「1 日目」）
   answer_keys.json      確認問題の正解
-  questions/itc-dNN.json  1 日 3 単位 × 2 問 = 6 問を「回」として持つ（past_questions に入る。出典は自作の確認問題）
+  questions/<対象>-dNN.json  1 日 per_day 単位 × 2 問を「回」として持つ（past_questions に入る。出典は自作の確認問題）
   question_explanations/roadmap.json  問題の reason を correct_reason に、choice_notes を選択肢ごとの note に
   materials_v3/roadmap.json           教材に「### 出典」を足した版（build_seed は後の世代を優先して読む）
 
@@ -21,7 +22,11 @@ from pathlib import Path
 
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", default="data/itc", type=Path)
-    a = ap.parse_args(); d = a.data
+    a = ap.parse_args(); d = a.data; key = d.name
+    sys.path.insert(0, str(Path(__file__).parent)); from targets import target
+    spec = target(key).get("roadmapSpec") or {}
+    EXTRA_FIELD, EXTRA_MIDDLE = spec.get("extraField", "補足（ロードマップ外）"), spec.get("extraMiddle", "ロードマップ外")
+    EXTRA_ROUND, EXTRA_LABEL, ROUND_LABEL = spec.get("extraRoundId", f"{key}-ex"), spec.get("extraRoundLabel", "補足（ロードマップ外）"), spec.get("roundLabel", "{day} 日目")
     rm = json.loads((d / "roadmap.json").read_text(encoding="utf-8")); units = rm["units"]
     cands = {c["id"]: c for c in json.loads((d / "topics_candidates.json").read_text(encoding="utf-8"))["candidates"]}
     mats: dict[int, dict] = {}
@@ -39,11 +44,11 @@ def main() -> int:
     day_ex = rm["days"] + 1
     for i, tid in enumerate(extra_ids, 1):
         m = mats[tid]
-        units.append({"order": len(units) + 1, "day": day_ex, "topic_id": tid, "term": m["term"], "field": "補足（ロードマップ外）", "middle": "ロードマップ外",
+        units.append({"order": len(units) + 1, "day": day_ex, "topic_id": tid, "term": m["term"], "field": EXTRA_FIELD, "middle": EXTRA_MIDDLE,
                       "summary": "", "goals": [], "prereq": [], "sources": [], "_extra": True})
 
     # --- 階層: 分野 → 中分類 ---
-    fields = ["業界と仕事", "ITと業務の基礎知識", "論理思考とケース", "選考と自己理解", "補足（ロードマップ外）"]
+    fields = list(target(key)["fields"])  # 登録簿の並び（補足の分野を含む）
     items: list[dict] = []; item_no: dict[tuple[str, str], int] = {}
     for fi, fld in enumerate(fields, 1):
         mids = []
@@ -53,14 +58,14 @@ def main() -> int:
             n = len(items) + 1; item_no[(fld, mid)] = n
             items.append({"number": n, "name": mid, "field": fld, "major_no": fi, "major": fld, "middle_no": n, "middle": mid,
                           "terms": [u["term"] for u in units if u["field"] == fld and u["middle"] == mid]})
-    (d / "syllabus.json").write_text(json.dumps({"version": "roadmap-itc-2026-09-15", "source": "自前の階層（要件定義書 §13）", "item_count": len(items),
+    (d / "syllabus.json").write_text(json.dumps({"version": f"roadmap-{key}-2026-09-15", "source": "自前の階層（要件定義書 §13）", "item_count": len(items),
                                                  "term_count": len(units), "items": items}, ensure_ascii=False, indent=1), encoding="utf-8")
 
     # --- 回＝日。問題番号は日の中で 1..6 ---
     per_day = rm["per_day"]; labels: dict[str, str] = {}; keys: dict[str, dict] = {}; qfiles: dict[str, list] = {}
     qid_of: dict[str, str] = {}  # 元の qid → 新しい question_id
     for u in units:
-        exam = "itc-ex" if u.get("_extra") else f"itc-d{u['day']:02d}"; labels[exam] = "補足（ロードマップ外）" if u.get("_extra") else f"{u['day']} 日目"
+        exam = EXTRA_ROUND if u.get("_extra") else f"{key}-d{u['day']:02d}"; labels[exam] = EXTRA_LABEL if u.get("_extra") else ROUND_LABEL.format(day=u["day"])
         for q in sorted(qs.get(u["topic_id"], []), key=lambda q: q["qid"]):
             lst = qfiles.setdefault(exam, []); n = len(lst) + 1
             lst.append({"number": n, "page": None, "text": q["stem"], "choices": q["choices"], "has_figure": False, "figure_description": None,

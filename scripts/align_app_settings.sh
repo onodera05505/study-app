@@ -10,17 +10,15 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 EXAM="${1:?第1引数: ip か ap か itc}"
-case "$EXAM" in
-  ip) DB=study-app-db ;; ap) DB=study-app-ap-db ;; itc) DB=study-app-itc-db ;;
-  *) echo "第1引数は ip か ap か itc"; exit 1 ;;
-esac
+[ "$(python3 scripts/targets.py has "$EXAM")" = yes ] || { echo "第1引数は対象の ID（$(python3 scripts/targets.py keys)）"; exit 1; }
+DB=$(python3 scripts/targets.py db "$EXAM")
 WHERE="--remote"; [ "${2:-}" = "--local" ] && WHERE="--local"
 if [ "$WHERE" = "--remote" ]; then
   WANT=$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['account_id'])")
   HAVE=$(npx wrangler whoami 2>/dev/null | grep -oE '[0-9a-f]{32}' | head -1 || true)
   [ "$HAVE" = "$WANT" ] || { echo "ログイン中のアカウント（${HAVE:-不明}）が想定（${WANT}）と違う。npx wrangler login で個人アカウントを選び直す"; exit 1; }
 fi
-read -r SIZE SEC < <(python3 -c "import sys; sys.path.insert(0,'scripts'); from build_seed import EXAM_SETTINGS as E; print(*E['$EXAM'])")
+read -r SIZE SEC < <(python3 -c "import sys; sys.path.insert(0,'scripts'); from targets import exam_settings as E; print(*E()['$EXAM'])")
 echo "▶ ${DB} ${WHERE}: app_settings を mock_size=${SIZE} / mock_time_limit_sec=${SEC} に"
 echo "  変更前:"; npx wrangler d1 execute "$DB" --env "$EXAM" "$WHERE" --json --command "SELECT mock_size, mock_time_limit_sec FROM app_settings WHERE id='default'" | python3 -c "import json,sys;d=json.load(sys.stdin);sys.exit('   D1 エラー: '+json.dumps(d['error'],ensure_ascii=False)[:300]) if isinstance(d,dict) else print('   ', d[0]['results'])"
 npx wrangler d1 execute "$DB" --env "$EXAM" "$WHERE" --command "UPDATE app_settings SET mock_size=${SIZE}, mock_time_limit_sec=${SEC}, updated_at=unixepoch() WHERE id='default'" >/dev/null

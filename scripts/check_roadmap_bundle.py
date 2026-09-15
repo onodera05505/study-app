@@ -19,6 +19,8 @@ def main() -> int:
         for s in json.loads(sf.read_text(encoding="utf-8")).get("sources", []): names.add(s["name"])
     names.add("一般常識"); names.add("選考解説記事の集計（interview_frequency）")
     errs, warns = [], []
+    sys.path.insert(0, str(Path(__file__).parent)); from targets import target
+    USAGE = (target(d.name).get("roadmapSpec") or {}).get("usageSection", "面接で話すなら")
     bb = [(t["topic_id"], t["term"]) for t in b["topics"]]; mm = [(x["topic_id"], x["term"]) for x in m.get("materials", [])]
     if bb != mm: errs.append(f"担当バンドルと出力の論点が不一致\n  bundle={bb}\n  output={mm}")
     for x in m.get("materials", []):
@@ -32,7 +34,7 @@ def main() -> int:
         if len(de) > 800: warns.append(f"{tag}: detail が長い {len(de)}（目安 300〜500）")
         if "見分けワード" not in ex: errs.append(f"{tag}: 見分けワードの行が無い")
         if "### しくみ" not in de: errs.append(f"{tag}: 「### しくみ」が無い")
-        if "### 面接で話すなら" not in de: warns.append(f"{tag}: 「### 面接で話すなら」が無い")
+        if f"### {USAGE}" not in de: warns.append(f"{tag}: 「### {USAGE}」が無い")
         for t in re.findall(r"\[\[([^\]]+)\]\]", ex + de):
             if t not in terms: errs.append(f"{tag}: [[{t}]] はロードマップに無い論点名（`[[` を外す）")
         for hit in NG.findall(ex + de): warns.append(f"{tag}: 避ける語「{hit}」")

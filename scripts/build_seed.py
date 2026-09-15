@@ -36,16 +36,12 @@ EXPLANATION_DIR = "question_explanations"
 PBKDF2_ITERATIONS = 100_000  # src/server/lib/auth.ts と揃える。
 # Cloudflare Workers の PBKDF2 は 100,000 回が上限。超えると実行時エラーになる。
 
-# 出典表示に入れる試験名。データディレクトリ名で引く。
-# 試験を増やしたらここに足す（足し忘れると seed 生成が止まるので気づける）。
-# 模試（通し受験）の問題数と制限時間（秒）。src/shared/exam.ts の mockSize / mockMinutes と揃える。
-EXAM_SETTINGS = {"ip": (100, 120 * 60), "ap": (80, 150 * 60), "itc": (42, 40 * 60)}
-
-EXAM_NAMES = {
-    "ip": "ITパスポート試験",
-    "ap": "応用情報技術者試験 午前",
-    "itc": "ITコンサル就活ロードマップ 確認問題",  # 自作の確認問題。過去問ではないが出典欄に「自作」と分かる名を出す
-}
+# 出典表示に入れる試験名と模試設定は対象の登録簿（src/shared/targets.json）から引く。
+# 以前はここに辞書で持ち、対象を足すたびに書き足していた（足し忘れると seed 生成が止まる）。
+sys.path.insert(0, str(Path(__file__).parent))
+from targets import exam_names as _exam_names, exam_settings as _exam_settings  # noqa: E402
+EXAM_NAMES = _exam_names()
+EXAM_SETTINGS = _exam_settings()
 
 # 原文を書き換えている箇所の目印。ここに当たれば `modified` を立て、
 # 画面に「一部改変」を併記する（IPA の利用条件）。

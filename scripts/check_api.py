@@ -890,11 +890,12 @@ def check_session_flow(c: Client, r: Report, got: dict, other_token: str):
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--exam", default="ip", choices=["ip", "ap", "itc"])
+    sys.path.insert(0, str(Path(__file__).parent)); from targets import keys as _keys, deploy as _deploy
+    ap.add_argument("--exam", default="ip", choices=_keys())
     ap.add_argument("--base", default="http://127.0.0.1:8788")
     ap.add_argument("--db", default=None, help="ローカル D1 の名前（既定は試験から決める）")
     args = ap.parse_args()
-    db_name = args.db or {"ip": "study-app-db", "ap": "study-app-ap-db", "itc": "study-app-itc-db"}[args.exam]
+    db_name = args.db or _deploy(args.exam)["db"]
 
     c = Client(args.base)
     r = Report()

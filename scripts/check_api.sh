@@ -15,10 +15,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 EXAM="${1:-ip}"
-case "$EXAM" in
-  ip|ap|itc) ;;
-  *) echo "第1引数は ip か ap か itc"; exit 1 ;;
-esac
+[ "$(python3 scripts/targets.py has "$EXAM")" = yes ] || { echo "第1引数は対象の ID（$(python3 scripts/targets.py keys)）"; exit 1; }
 
 PORT=8788
 BASE="http://127.0.0.1:${PORT}"

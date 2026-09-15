@@ -98,6 +98,9 @@ def main() -> int:
     n_brain = check_index(root, "brain/INDEX.md", "brain/reports", errors)
     n_gates = check_gate_paths(root, errors)
     n_logs = check_worklog_brain_line(root, errors)
+    # 対象の登録簿と .env / wrangler env / pages_projects / kickoff の整合（対象を足す場所は 1 か所、の門）
+    r = subprocess.run([sys.executable, str(root / "scripts" / "new_target.py"), "--check"], capture_output=True, text=True)
+    if r.returncode != 0: errors.append("対象の登録簿の整合（scripts/new_target.py --check）:\n" + (r.stdout + r.stderr).strip())
     if CENTRAL_RETURN_LINE.exists():
         r = subprocess.run([sys.executable, str(CENTRAL_RETURN_LINE), "--root", str(root), "--quiet"],
                            capture_output=True, text=True)

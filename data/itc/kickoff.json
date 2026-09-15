@@ -2,7 +2,12 @@
   "_note": "対象ごとの質疑応答の答え。生成の前に埋め、`python3 ~/.claude/brain/check_target_kickoff.py --file data/itc/kickoff.json` で未回答 0 を確かめる。itc は初回の対象なので、実際は生成後に本人と決めた答えを後追いで記録した（手戻り台帳 brain/rework/2026-09-15_itc.md）",
   "target": "itc",
   "answered_at": "2026-09-15",
-  "approaches": ["学習ロードマップの企画", "学習コンテンツの仕様を決める", "教材の説明文の設計と監査", "図をスクリプトで描く"],
+  "approaches": [
+    "学習ロードマップの企画",
+    "学習コンテンツの仕様を決める",
+    "教材の説明文の設計と監査",
+    "図をスクリプトで描く"
+  ],
   "answers": {
     "学習ロードマップの企画/goal": "現場の会話に付いていけるキャッチアップ＋就活の選考で示せること。到達基準は要件定義書 §13 の 6 件（面接で説明できる・業界地図・用語・ケースの型・選考の流れ・経験の言語化）",
     "学習ロードマップの企画/schedule": "2 週間。1 日 3 単位（1 単位 5 分）。粒度は日",
@@ -37,6 +42,12 @@
     "図をスクリプトで描く/style": "資格版と同じ（render_material_figures.py の様式）。白いカード",
     "図をスクリプトで描く/renderer": "check_render.sh（jsdom）で画像パスの実在を見る。目視は本人がログイン後の画面で",
     "図をスクリプトで描く/illustration": "該当せず: 人物の挿絵は使わない",
-    "図をスクリプトで描く/figure-priority": "学ぶ順（sort_order）と到達基準に繋がる数、本文が手順・対比になっている単位から。上限は 1 対象 20 枚から始める（値は figure_plan に）"
+    "図をスクリプトで描く/figure-priority": "学ぶ順（sort_order）と到達基準に繋がる数、本文が手順・対比になっている単位から。上限は 1 対象 20 枚から始める（値は figure_plan に）",
+    "学習ロードマップの企画/identity": "ID itc、名前「IT コンサル就活 ロードマップ」、分野は 業界と仕事／ITと業務の基礎知識／論理思考とケース／選考と自己理解（＋補足）、1 日 3 単位 × 14 日",
+    "学習コンテンツの仕様を決める/duplicate-items": "該当せず: 自作の確認問題なので同一内容は作らない",
+    "学習コンテンツの仕様を決める/mock-composition": "1 日分（回）をそのまま と 全単位から 1 問ずつ（42 問）の両方",
+    "学習コンテンツの仕様を決める/pass-estimate": "合否は無し。到達基準ごとの正答率を見せる（passRule に明記）",
+    "学習コンテンツの仕様を決める/merge-criteria": "名寄せ担当が一般名で束ね、同綴りで別概念は分ける（aliases に元の表記）。到達基準に繋がらない候補は goals 空で落とす。見送った判断は topics_candidates.json の aliases と手戻り台帳",
+    "図をスクリプトで描く/spec-file-collection": "図の仕様は data/itc/material_figures/<topic_id>.json（1 単位 1 ファイル）。再生成は render_material_figures.py → build_target_dataset.py が attach。写しは作らない"
   }
 }

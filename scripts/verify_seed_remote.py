@@ -30,7 +30,9 @@ import subprocess
 import sys
 from pathlib import Path
 
-DB_OF = {"ip": "study-app-db", "ap": "study-app-ap-db", "itc": "study-app-itc-db"}
+sys.path.insert(0, str(Path(__file__).parent))
+from targets import deploy as _deploy, keys as _keys  # 対象と DB の対応は登録簿から
+DB_OF = {k: _deploy(k)["db"] for k in _keys()}
 
 # 表ごとの比較のしかた。"eq" は seed が作り直す表、"ge" は UPSERT だけの表（古い行が残ってよい）
 TABLES = {

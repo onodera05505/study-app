@@ -29,6 +29,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--solutions", nargs="*", default=[])
     a = ap.parse_args(); d = Path(a.data)
     errors: list[str] = []; warns: list[str] = []
+    sys.path.insert(0, str(Path(__file__).parent)); from targets import target
+    USAGE = (target(d.name).get("roadmapSpec") or {}).get("usageSection", "面接で話すなら")
     rm = json.loads((d / "roadmap.json").read_text(encoding="utf-8"))
     units = {u["topic_id"]: u for u in rm["units"]}; terms = {u["term"] for u in rm["units"]}
     # 教材
@@ -49,7 +51,7 @@ def main() -> int:
             if len(de) > 800: warns.append(f"{tag}: detail が長い {len(de)} 字（目安 300〜500）")
             if "見分けワード" not in ex: errors.append(f"{tag}: 見分けワードの行が無い")
             if "### しくみ" not in de: errors.append(f"{tag}: detail に「### しくみ」が無い")
-            if "### 面接で話すなら" not in de: warns.append(f"{tag}: detail に「### 面接で話すなら」が無い")
+            if f"### {USAGE}" not in de: warns.append(f"{tag}: detail に「### {USAGE}」が無い")
             for term in re.findall(r"\[\[([^\]]+)\]\]", ex + de):
                 if term not in terms: errors.append(f"{tag}: [[{term}]] はロードマップに無い論点")
             for hit in NG.findall(ex + de): warns.append(f"{tag}: 避ける語「{hit}」")

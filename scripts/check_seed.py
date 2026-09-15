@@ -55,9 +55,11 @@ from pathlib import Path
 EXAM_CODE = re.compile(r"^\d{4}[hr]\d{2}[hao]?$")
 
 # 1回あたりの問題数。ここから外れたら読み取りか分類の取りこぼし。
-QUESTIONS_PER_EXAM = {"ip": 100, "ap": 80, "itc": 6}  # itc は 1 日（＝回）3 単位 × 確認問題 2
-# 回ごとの問題数の例外（回 ID → 何問でもよい）。itc の「補足（ロードマップ外）」は単位数が固定でない
-QUESTIONS_EXEMPT = {"itc-ex"}
+sys.path.insert(0, str(Path(__file__).parent))
+from targets import targets as _targets  # 対象ごとの値は登録簿（src/shared/targets.json）から
+QUESTIONS_PER_EXAM = {k: v["questionsPerRound"] for k, v in _targets().items()}
+# 回ごとの問題数の例外（回 ID → 何問でもよい）。ロードマップ型の「補足」は単位数が固定でない
+QUESTIONS_EXEMPT = {r for v in _targets().values() for r in v.get("exemptRounds", [])}
 
 INSERT_UPSERT = re.compile(
     r"INSERT INTO (\w+) \(([^)]*)\)[^;]*?ON CONFLICT\(([^)]*)\) DO UPDATE SET (.*?);", re.S

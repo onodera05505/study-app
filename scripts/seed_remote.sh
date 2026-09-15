@@ -19,12 +19,8 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 EXAM="${1:-}"
-case "$EXAM" in
-  ip) DB=study-app-db ;;
-  ap) DB=study-app-ap-db ;;
-  itc) DB=study-app-itc-db ;;
-  *)  echo "第1引数は ip か ap か itc"; exit 1 ;;
-esac
+[ "$(python3 scripts/targets.py has "$EXAM")" = yes ] || { echo "第1引数は対象の ID（$(python3 scripts/targets.py keys)）"; exit 1; }
+DB=$(python3 scripts/targets.py db "$EXAM")
 WHERE="--remote"
 if [ "${2:-}" = "--local" ]; then WHERE="--local"; fi
 SEED="data/${EXAM}/seed.sql"
