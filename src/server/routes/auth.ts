@@ -16,11 +16,24 @@ const registration = credentials.extend({
   signupCode: z.string().max(100).optional(),
 })
 
+/** 検証エラーを項目名つきの文にする。「入力が正しくありません」だけだと、合言葉を疑って詰まる
+ *  （実際はメールアドレスに `.` が無かった。2026-09-15）。 */
+const FIELD_LABEL: Record<string, string> = {
+  email: 'メールアドレスの形式が正しくありません（例: name@example.com）',
+  password: 'パスワードは 8 文字以上にしてください',
+  name: 'お名前を入力してください（50 文字まで）',
+  signupCode: '合言葉が長すぎます',
+}
+function validationMessage(err: z.ZodError): string {
+  const field = String(err.issues[0]?.path?.[0] ?? '')
+  return FIELD_LABEL[field] ?? '入力が正しくありません'
+}
+
 export const authRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
 authRoutes.post('/register', async (c) => {
   const parsed = registration.safeParse(await c.req.json().catch(() => null))
-  if (!parsed.success) return c.json({ error: '入力が正しくありません' }, 400)
+  if (!parsed.success) return c.json({ error: validationMessage(parsed.error) }, 400)
   const { email, password, name, signupCode } = parsed.data
 
   // 身内向けなので合言葉方式。未設定なら誰でも登録できる。
@@ -48,7 +61,7 @@ authRoutes.post('/register', async (c) => {
 
 authRoutes.post('/login', async (c) => {
   const parsed = credentials.safeParse(await c.req.json().catch(() => null))
-  if (!parsed.success) return c.json({ error: '入力が正しくありません' }, 400)
+  if (!parsed.success) return c.json({ error: validationMessage(parsed.error) }, 400)
 
   const db = getDb(c.env)
   const user = await db.query.users.findFirst({

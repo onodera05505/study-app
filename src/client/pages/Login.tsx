@@ -35,7 +35,9 @@ export function Login({ onDone }: { onDone: () => void }) {
     <div className="center">
       <h1>{exam.brand}</h1>
       <p className="lead">
-        過去問を起点に、頻出の論点から順に潰していく学習アプリです。
+        {exam.roadmap
+          ? 'ロードマップの順に 1 日 3 単位を読み、確認問題で確かめる学習アプリです。'
+          : '過去問を起点に、頻出の論点から順に潰していく学習アプリです。'}
       </p>
       {expired && (
         <div className="notice">
