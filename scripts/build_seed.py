@@ -38,6 +38,9 @@ PBKDF2_ITERATIONS = 100_000  # src/server/lib/auth.ts と揃える。
 
 # 出典表示に入れる試験名。データディレクトリ名で引く。
 # 試験を増やしたらここに足す（足し忘れると seed 生成が止まるので気づける）。
+# 模試（通し受験）の問題数と制限時間（秒）。src/shared/exam.ts の mockSize / mockMinutes と揃える。
+EXAM_SETTINGS = {"ip": (100, 120 * 60), "ap": (80, 150 * 60), "itc": (42, 40 * 60)}
+
 EXAM_NAMES = {
     "ip": "ITパスポート試験",
     "ap": "応用情報技術者試験 午前",
@@ -497,7 +500,14 @@ def main() -> int:
         )
 
     # --- 設定と管理ユーザ -----------------------------------------------
-    lines.append("INSERT INTO app_settings (id) VALUES ('default') ON CONFLICT(id) DO NOTHING;")
+    # 模試の問題数と制限時間は試験ごとに違うが、app_settings の列の既定値は 100 問 / 7200 秒（IT パスポート）。
+    # 新しい D1 に最初に流すとき、その試験の値で行を作る（既にある行は触らない。運用で変えた値を上書きしない）。
+    # 2026-09-15: itc（42 問 / 40 分）で 84 問になっていたのを受入で検出して追加。
+    mock_size, mock_sec = EXAM_SETTINGS[d.name]
+    lines.append(
+        f"INSERT INTO app_settings (id, mock_size, mock_time_limit_sec) VALUES ('default', {mock_size}, {mock_sec})"
+        " ON CONFLICT(id) DO NOTHING;"
+    )
 
     # 管理ユーザは --admin-password を渡したときだけ作る。
     #
