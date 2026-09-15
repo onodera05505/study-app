@@ -1,0 +1,23 @@
+{
+  "topic_id": 21,
+  "term": "STP",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "分けないと選べず、選ばないと位置が決まらないので、3 手順が空欄のまま広告文だけ磨いても誰にも刺さらない。",
+      "nodes": [
+        {"id": "s", "label": "S 分ける\n市場を切り口で分ける\n例: 従業員の規模 × 今使う道具", "row": 0, "col": 0},
+        {"id": "t", "label": "T 選ぶ\n狙う 1 マスを決める", "row": 0, "col": 1},
+        {"id": "p", "label": "P 位置を決める\n顧客が比べる軸で位置取り", "row": 0, "col": 2, "emphasis": true},
+        {"id": "mix", "label": "打ち手\n価格・売り方・広告文", "row": 1, "col": 1}
+      ],
+      "edges": [
+        {"from": "s", "to": "t"},
+        {"from": "t", "to": "p"},
+        {"from": "p", "to": "mix", "label": "ここが決まってから"}
+      ]
+    }
+  ]
+}

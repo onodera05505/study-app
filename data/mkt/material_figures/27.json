@@ -1,0 +1,24 @@
+{
+  "topic_id": 27,
+  "term": "マーケティング・ミックス（4P）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "4 つは独立していないので、高い価格を選ぶなら中身・売り場・伝え方もそれに揃える。",
+      "nodes": [
+        {"id": "prod", "label": "製品\n価格に見合う中身", "row": 0, "col": 0},
+        {"id": "price", "label": "価格\n競合の 1.5 倍", "row": 0, "col": 1, "emphasis": true},
+        {"id": "place", "label": "流通\n値引きの多い売り場を避ける", "row": 1, "col": 0},
+        {"id": "promo", "label": "販促\n値段の理由を語る", "row": 1, "col": 1}
+      ],
+      "edges": [
+        {"from": "prod", "to": "price", "arrow": "both", "label": "見合うか"},
+        {"from": "price", "to": "promo", "arrow": "both", "label": "値引きは逆を向く"},
+        {"from": "place", "to": "promo", "arrow": "both"},
+        {"from": "prod", "to": "place", "arrow": "both"}
+      ]
+    }
+  ]
+}

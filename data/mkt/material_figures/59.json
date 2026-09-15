@@ -1,0 +1,91 @@
+{
+  "topic_id": 59,
+  "term": "CAC（顧客獲得コスト）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "広告費だけで割った CPA は 2,500 円だが、人件費と代理店費まで入れた CAC は 8,750 円で、1 件の粗利 5,000 円を上回る。",
+      "nodes": [
+        {
+          "id": "ad",
+          "label": "広告費\n100,000 円",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "cpa",
+          "label": "CPA\n2,500 円／件",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "hr",
+          "label": "人件費\n200,000 円",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "total",
+          "label": "獲得の費用の総額\n350,000 円",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "cac",
+          "label": "CAC\n8,750 円／件",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "agency",
+          "label": "代理店費\n50,000 円",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "gross",
+          "label": "1 件の粗利\n5,000 円",
+          "row": 2,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "ad",
+          "to": "cpa",
+          "label": "÷ 新規 40 件"
+        },
+        {
+          "from": "ad",
+          "to": "total",
+          "label": "＋"
+        },
+        {
+          "from": "hr",
+          "to": "total",
+          "label": "＋"
+        },
+        {
+          "from": "agency",
+          "to": "total",
+          "label": "＋"
+        },
+        {
+          "from": "total",
+          "to": "cac",
+          "label": "÷ 新規 40 件"
+        },
+        {
+          "from": "cac",
+          "to": "gross",
+          "label": "1 件ごとに赤字",
+          "style": "dashed",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

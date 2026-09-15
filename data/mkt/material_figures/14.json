@@ -1,0 +1,23 @@
+{
+  "topic_id": 14,
+  "term": "カスタマージャーニー",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### しくみ",
+      "caption": "接点を時間の順に並べると、落ちているのがメール本文（1.5％）だと名指しできる。",
+      "actors": [
+        {"id": "own", "label": "自社の接点"},
+        {"id": "cust", "label": "顧客"}
+      ],
+      "steps": [
+        {"from": "own", "to": "cust", "label": "メールが届く（開封 22％）", "note": "持ち主は宣伝担当"},
+        {"from": "cust", "to": "own", "label": "本文のリンクを押す（1.5％）", "note": "次にしてほしい行動の案内（CTA）が無いと、ここで落ちる"},
+        {"from": "own", "to": "cust", "label": "LP で中身を見せる"},
+        {"from": "cust", "to": "own", "label": "フォームを送る", "note": "持ち主は開発担当。継ぎ目は担当者から見えない"},
+        {"from": "own", "to": "cust", "label": "初回の連絡", "note": "持ち主は営業担当"}
+      ]
+    }
+  ]
+}

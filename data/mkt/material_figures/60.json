@@ -1,0 +1,29 @@
+{
+  "topic_id": 60,
+  "term": "LTV（顧客生涯価値）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "月の粗利 3,000 円 × 継続 20 か月 ＝ LTV 60,000 円で、売上で数えた 100,000 円とは払える獲得費が変わる。",
+      "nodes": [
+        {"id": "price", "label": "月額\n5,000 円", "row": 0, "col": 0},
+        {"id": "cost", "label": "原価・サポート費\n2,000 円", "row": 0, "col": 1},
+        {"id": "gross", "label": "月の粗利\n3,000 円", "row": 0, "col": 2},
+        {"id": "churn", "label": "月次解約率\n5%", "row": 1, "col": 0},
+        {"id": "months", "label": "続く月数\n1 ÷ 5% ＝ 20 か月", "row": 1, "col": 1},
+        {"id": "ltv", "label": "LTV\n60,000 円", "row": 1, "col": 2, "emphasis": true},
+        {"id": "sales", "label": "売上で数えると\n100,000 円", "row": 2, "col": 2}
+      ],
+      "edges": [
+        {"from": "price", "to": "cost", "label": "−"},
+        {"from": "cost", "to": "gross"},
+        {"from": "churn", "to": "months"},
+        {"from": "gross", "to": "ltv", "label": "×"},
+        {"from": "months", "to": "ltv"},
+        {"from": "ltv", "to": "sales", "label": "1.7 倍に見誤る", "style": "dashed"}
+      ]
+    }
+  ]
+}

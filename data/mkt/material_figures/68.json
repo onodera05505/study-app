@@ -1,0 +1,68 @@
+{
+  "topic_id": 68,
+  "term": "アトリビューションの限界",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 現場で判断するなら",
+      "caption": "媒体ごとの成果を足すと 110 件だが社内の受注は 80 件で、同じ 1 件の重複と、経路に乗らない接点の両方がずれを生む。",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "媒体 A の管理画面\n60 件",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "b",
+          "label": "媒体 B の管理画面\n50 件",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "sum",
+          "label": "媒体側の合計\n110 件",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "miss",
+          "label": "経路に乗らない接点\n紹介・展示会・メール",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "real",
+          "label": "社内の受注\n80 件",
+          "row": 2,
+          "col": 0,
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "sum",
+          "label": "＋"
+        },
+        {
+          "from": "b",
+          "to": "sum",
+          "label": "＋"
+        },
+        {
+          "from": "sum",
+          "to": "real",
+          "label": "差 30 件（二重計上）"
+        },
+        {
+          "from": "miss",
+          "to": "real",
+          "label": "数に出ない",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

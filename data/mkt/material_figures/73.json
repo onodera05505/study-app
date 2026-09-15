@@ -1,0 +1,25 @@
+{
+  "topic_id": 73,
+  "term": "KGI から KPI への分解",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "掛け合わせると KGI になる中間の数字へ割るので、1 つの数字に 1.5 倍を背負わせず、段ごとに別の担当が週次で追える。",
+      "nodes": [
+        {"id": "kgi", "label": "KGI 受注\n月 8 件", "row": 0, "col": 1, "emphasis": true},
+        {"id": "visit", "label": "訪問数\n10,000", "row": 1, "col": 0},
+        {"id": "req", "label": "資料請求率\n2％", "row": 1, "col": 1},
+        {"id": "meet", "label": "商談化率\n20％", "row": 1, "col": 2},
+        {"id": "win", "label": "受注率\n20％", "row": 1, "col": 3}
+      ],
+      "edges": [
+        {"from": "kgi", "to": "visit", "label": "×"},
+        {"from": "kgi", "to": "req"},
+        {"from": "kgi", "to": "meet", "label": "×"},
+        {"from": "kgi", "to": "win", "label": "×"}
+      ]
+    }
+  ]
+}

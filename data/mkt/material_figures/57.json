@@ -1,0 +1,42 @@
+{
+  "topic_id": 57,
+  "term": "CVR（コンバージョン率）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "CVR は成果の件数を訪問数で割った割合で、訪問 2,000・成果 40 なら 2% になる。",
+      "nodes": [
+        {"id": "visit", "label": "訪問\n2,000", "row": 0, "col": 0},
+        {"id": "cv", "label": "成果\n40 件", "row": 0, "col": 1},
+        {"id": "cvr", "label": "CVR\n2%", "row": 0, "col": 2, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "visit", "to": "cv", "label": "成果と決めた行動"},
+        {"from": "cv", "to": "cvr", "label": "÷ 訪問 × 100"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 現場で判断するなら",
+      "caption": "CVR が 3% から 2% に下がっても成果の件数は 2 倍で、割合だけで止めると効いている流入元まで止めてしまう。",
+      "nodes": [
+        {"id": "v1", "label": "先月の訪問\n1,000", "row": 0, "col": 0},
+        {"id": "c1", "label": "成果\n30 件", "row": 0, "col": 1},
+        {"id": "r1", "label": "CVR\n3%", "row": 0, "col": 2},
+        {"id": "v2", "label": "今月の訪問\n3,000", "row": 1, "col": 0},
+        {"id": "c2", "label": "成果\n60 件", "row": 1, "col": 1, "emphasis": true},
+        {"id": "r2", "label": "CVR\n2%", "row": 1, "col": 2}
+      ],
+      "edges": [
+        {"from": "v1", "to": "c1"},
+        {"from": "c1", "to": "r1", "label": "÷ 訪問"},
+        {"from": "v2", "to": "c2"},
+        {"from": "c2", "to": "r2", "label": "÷ 訪問"},
+        {"from": "c1", "to": "c2", "label": "件数は 2 倍", "style": "dashed"}
+      ]
+    }
+  ]
+}

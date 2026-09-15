@@ -1,0 +1,25 @@
+{
+  "topic_id": 15,
+  "term": "ファネル（認知・比較検討・獲得）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "一番落ちている段の通過率を上げれば、入口の量を増やさなくても下の段が倍になる。",
+      "nodes": [
+        {"id": "visit", "label": "訪問\n10,000", "row": 0, "col": 0},
+        {"id": "lead", "label": "資料請求\n200", "row": 1, "col": 0, "emphasis": true},
+        {"id": "meet", "label": "商談\n40", "row": 2, "col": 0},
+        {"id": "win", "label": "受注\n8", "row": 3, "col": 0},
+        {"id": "fix", "label": "資料請求率を 2％ → 4％\n受注は 8 → 16 件", "row": 1, "col": 1, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "visit", "to": "lead", "label": "通過率 2％"},
+        {"from": "lead", "to": "meet", "label": "20％"},
+        {"from": "meet", "to": "win", "label": "20％"},
+        {"from": "lead", "to": "fix", "label": "手を寄せる段", "style": "dashed"}
+      ]
+    }
+  ]
+}

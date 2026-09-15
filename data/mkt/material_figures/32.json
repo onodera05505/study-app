@@ -1,0 +1,23 @@
+{
+  "topic_id": 32,
+  "term": "価格設定の方法",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "原価が下限・競合が目安・価値が上限と並べておけば、値引きを求められてもどこまで下げてよいかを数字で言える。",
+      "nodes": [
+        {"id": "cost", "label": "原価基準\n原価 3,000 円 ＋ 6 割\n＝ 4,800 円", "row": 0, "col": 0},
+        {"id": "comp", "label": "競合基準\n相場に合わせる\n＝ 4,500 円", "row": 0, "col": 1},
+        {"id": "value", "label": "価値基準\n月 2 時間 × 2,000 円\n＝ 月 4,000 円の値打ち", "row": 0, "col": 2},
+        {"id": "pick", "label": "決めた値段 4,800 円\n減る時間を根拠に示す", "row": 1, "col": 1, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "cost", "to": "pick", "label": "下限"},
+        {"from": "comp", "to": "pick", "label": "目安"},
+        {"from": "value", "to": "pick", "label": "上限"}
+      ]
+    }
+  ]
+}
