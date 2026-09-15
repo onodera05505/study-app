@@ -100,8 +100,13 @@ def main() -> int:
                "dropped_no_goal": dropped, "units": units}
     (d / "roadmap.json").write_text(json.dumps(roadmap, ensure_ascii=False, indent=2), encoding="utf-8")
     bdir = d / "material_bundles"; bdir.mkdir(exist_ok=True)
-    for p in bdir.glob("bundle_[0-9][0-9].json"): p.unlink()  # 連番のバンドルだけ作り直す。手で作った追加バンドル（bundle_c2_new_a 等）は消さない（担当が読んでいる入力を消した事故 2026-09-15）
-    for n, i in enumerate(range(0, len(units), 8), 1):
+    if any((d / "materials").glob("bundle_*.json")):
+        # 教材が書かれた後は割り当て（執筆用バンドル）を作り直さない。並びが変わると materials/bundle_NN と組がずれ、
+        # 門 check_roadmap_bundle が落ちる（mkt 1 周目、中央 reports/22 の再発 2026-09-15）。単位の追加は手で追加バンドルを作る
+        print("注: materials/ が既にあるので material_bundles/ は作り直さない（順序の変更は roadmap.json だけに反映）")
+    else:
+      for p in bdir.glob("bundle_[0-9][0-9].json"): p.unlink()  # 連番のバンドルだけ作り直す。手で作った追加バンドル（bundle_c2_new_a 等）は消さない（担当が読んでいる入力を消した事故 2026-09-15）
+      for n, i in enumerate(range(0, len(units), 8), 1):
         chunk = units[i:i + 8]
         (bdir / f"bundle_{n:02d}.json").write_text(json.dumps({"bundle": f"bundle_{n:02d}", "topics": [
             {k: u[k] for k in ("topic_id", "term", "field", "middle", "summary", "goals", "prereq", "sources", "source_count", "interview_count")} for u in chunk]},
