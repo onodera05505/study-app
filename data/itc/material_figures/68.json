@@ -1,0 +1,86 @@
+{
+  "topic_id": 68,
+  "term": "選考の全体像",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "前半の書類と適性検査はどの社もほぼ共通で、分かれるのはその場で考えさせる段と、別入口のジョブ型選考。",
+      "nodes": [
+        {
+          "id": "es",
+          "label": "ES\n志望動機と経験を書く",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "web",
+          "label": "Web テスト\n速さ・正確さ・性格",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "doc",
+          "label": "書類選考",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "gd",
+          "label": "グループ\nディスカッション\n議論の進め方を見る",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "case",
+          "label": "ケース面接\n筋道を口で説明する",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "fin",
+          "label": "個人面接\n最終選考",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "job",
+          "label": "ジョブ型選考\n数日の実務体験からの\n別の入口",
+          "row": 2,
+          "col": 0
+        }
+      ],
+      "edges": [
+        {
+          "from": "es",
+          "to": "web",
+          "label": "社によっては逆順",
+          "arrow": "both"
+        },
+        {
+          "from": "web",
+          "to": "doc"
+        },
+        {
+          "from": "doc",
+          "to": "gd"
+        },
+        {
+          "from": "gd",
+          "to": "case"
+        },
+        {
+          "from": "case",
+          "to": "fin"
+        },
+        {
+          "from": "job",
+          "to": "fin",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

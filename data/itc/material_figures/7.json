@@ -1,0 +1,24 @@
+{
+  "topic_id": 7,
+  "term": "システム設計",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "画面やデータの形を具体的に決めるところからが設計で、外側が決まらないと内側の量が読めないため外から内へ進む。",
+      "nodes": [
+        {"id": "yk", "label": "要件定義\n何をするかを決める\n（設計の手前）", "row": 0, "col": 0},
+        {"id": "kh", "label": "基本設計\n外から見える形\n画面・帳票・データの持ち方", "row": 0, "col": 1, "emphasis": true},
+        {"id": "sh", "label": "詳細設計\n内側の処理の手順\nデータの細かい形", "row": 0, "col": 2, "emphasis": true},
+        {"id": "kc", "label": "開発・テスト\n図面どおりに作る", "row": 0, "col": 3}
+      ],
+      "edges": [
+        {"from": "yk", "to": "kh", "label": "ここからが設計"},
+        {"from": "kh", "to": "sh", "label": "外から内へ"},
+        {"from": "sh", "to": "kc"},
+        {"from": "yk", "to": "kc", "label": "要件定義が曖昧だと作り直しになる", "style": "dashed", "arrow": "none"}
+      ]
+    }
+  ]
+}

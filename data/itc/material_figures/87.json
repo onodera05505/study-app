@@ -1,0 +1,77 @@
+{
+  "topic_id": 87,
+  "term": "経験の棚卸し（課題→打ち手→結果→学び）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "4 段に並べ直すと、打ち手が自分の行動になっているか・結果が測れているかを自分で確かめられる。",
+      "nodes": [
+        {
+          "id": "issue",
+          "label": "課題\n新入部員が半年で\n3 割辞めていた",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "act",
+          "label": "打ち手\n練習後に 1 対 1 で\n話す時間を作った",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "res",
+          "label": "結果\n翌年の離脱が\n1 割になった",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "learn",
+          "label": "学び\n人は辞める前に\n兆しを出す",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "own",
+          "label": "自分の行動で書く\nチームの話にしない",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "num",
+          "label": "できれば数字で",
+          "row": 1,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "issue",
+          "to": "act"
+        },
+        {
+          "from": "act",
+          "to": "res"
+        },
+        {
+          "from": "res",
+          "to": "learn"
+        },
+        {
+          "from": "act",
+          "to": "own",
+          "style": "dashed",
+          "arrow": "none"
+        },
+        {
+          "from": "res",
+          "to": "num",
+          "style": "dashed",
+          "arrow": "none"
+        }
+      ]
+    }
+  ]
+}

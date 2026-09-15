@@ -1,0 +1,68 @@
+{
+  "topic_id": 51,
+  "term": "ロジックツリー",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "どの枝で数字が動いたかまで下ろすと、打ち手を新規の集客に絞れる。",
+      "nodes": [
+        {
+          "id": "sales",
+          "label": "売上\n前年より 10% 減",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "cnt",
+          "label": "客数\n1,000 → 900 人",
+          "row": 1,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "price",
+          "label": "単価\n1,000 円のまま",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "new",
+          "label": "新規\n300 → 200 人",
+          "row": 2,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "old",
+          "label": "既存\n700 人のまま",
+          "row": 2,
+          "col": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": "sales",
+          "to": "cnt",
+          "label": "×"
+        },
+        {
+          "from": "sales",
+          "to": "price",
+          "label": "×"
+        },
+        {
+          "from": "cnt",
+          "to": "new",
+          "label": "＋"
+        },
+        {
+          "from": "cnt",
+          "to": "old",
+          "label": "＋"
+        }
+      ]
+    }
+  ]
+}

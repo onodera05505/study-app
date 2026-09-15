@@ -1,0 +1,79 @@
+{
+  "topic_id": 57,
+  "term": "フェルミ推定",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "式を宣言して各項に数を置き、掛けた答えを別の道筋で検算して桁が合うかを確かめる。",
+      "nodes": [
+        {
+          "id": "pop",
+          "label": "人口\n1.2 億人",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "shop",
+          "label": "店舗数\n60,000 店",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "visit",
+          "label": "1 店の来店\n800 人／日",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "per",
+          "label": "1 店 1 日\n200 個",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "ans",
+          "label": "販売個数\n1,200 万個／日",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "check",
+          "label": "検算\n1.2 億 ÷ 7\n≒ 1,700 万個／日",
+          "row": 2,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "pop",
+          "to": "shop",
+          "label": "÷ 1 店 2,000 人"
+        },
+        {
+          "from": "visit",
+          "to": "per",
+          "label": "× 買う割合 25%"
+        },
+        {
+          "from": "shop",
+          "to": "ans",
+          "label": "×"
+        },
+        {
+          "from": "per",
+          "to": "ans"
+        },
+        {
+          "from": "ans",
+          "to": "check",
+          "label": "桁が同じか",
+          "style": "dashed",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

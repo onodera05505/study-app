@@ -1,0 +1,27 @@
+{
+  "topic_id": 30,
+  "term": "ERP",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "部署ごとのソフトを 1 つの基幹システムにまとめると数字が 1 か所に集まるが、既製品なので仕事のやり方を製品の型に合わせて決め直す判断が要る。",
+      "nodes": [
+        {"id": "kaikei", "label": "会計", "row": 0, "col": 0},
+        {"id": "jinji", "label": "人事", "row": 0, "col": 1},
+        {"id": "hanbai", "label": "販売・在庫", "row": 0, "col": 2},
+        {"id": "betsu", "label": "部署ごとに別のソフト\n同じ売上でも数字が違う\n全体を出すのに何日もかかる", "row": 1, "col": 1, "shape": "cylinder"},
+        {"id": "erp", "label": "ERP（基幹システム）\n1 つにまとめて動かす\n数字が 1 か所に集まる", "row": 2, "col": 1, "emphasis": true},
+        {"id": "kime", "label": "製品の型に合わせて\n承認の手順や帳簿の付け方を\n変える判断（コンサルの持ち場）", "row": 2, "col": 2, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "kaikei", "to": "betsu"},
+        {"from": "jinji", "to": "betsu"},
+        {"from": "hanbai", "to": "betsu"},
+        {"from": "betsu", "to": "erp", "label": "1 つにまとめる（ERP 導入）"},
+        {"from": "erp", "to": "kime", "style": "dashed", "arrow": "none"}
+      ]
+    }
+  ]
+}

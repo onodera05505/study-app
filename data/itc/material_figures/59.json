@@ -1,0 +1,127 @@
+{
+  "topic_id": 59,
+  "term": "売上分解と利益改善",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "売上を掛け算の要素まで割っておくと、詰められても戻る場所ができる。",
+      "nodes": [
+        {
+          "id": "sales",
+          "label": "売上",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "cnt",
+          "label": "客数",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "price",
+          "label": "客単価",
+          "row": 1,
+          "col": 3
+        },
+        {
+          "id": "seat",
+          "label": "席数",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "turn",
+          "label": "回転数\n1 席が 1 日に\n何回使われるか",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "rate",
+          "label": "稼働率\n席がどれだけ\n埋まっているか",
+          "row": 2,
+          "col": 2
+        },
+        {
+          "id": "item",
+          "label": "1 品の値段\n× 買う点数",
+          "row": 2,
+          "col": 3
+        }
+      ],
+      "edges": [
+        {
+          "from": "sales",
+          "to": "cnt",
+          "label": "×"
+        },
+        {
+          "from": "sales",
+          "to": "price",
+          "label": "×"
+        },
+        {
+          "from": "cnt",
+          "to": "seat"
+        },
+        {
+          "from": "cnt",
+          "to": "turn"
+        },
+        {
+          "from": "cnt",
+          "to": "rate"
+        },
+        {
+          "from": "price",
+          "to": "item"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "chart",
+      "after": "### しくみ",
+      "caption": "同じ「1 割ほど改善する」施策でも、回転を上げる方が効き幅が大きい。",
+      "kind": "bar",
+      "x": {
+        "label": "動かす要素",
+        "values": [
+          "今のまま",
+          "回転 3 → 3.5 回",
+          "客単価 1,200 → 1,300 円"
+        ]
+      },
+      "y": {
+        "label": "売上（円／日）",
+        "min": 0
+      },
+      "series": [
+        {
+          "label": "1 日の売上",
+          "values": [
+            100800,
+            117600,
+            109200
+          ],
+          "emphasis": true
+        }
+      ],
+      "annotations": [
+        {
+          "x": "回転 3 → 3.5 回",
+          "y": 117600,
+          "text": "＋16%"
+        },
+        {
+          "x": "客単価 1,200 → 1,300 円",
+          "y": 109200,
+          "text": "＋8%"
+        }
+      ]
+    }
+  ]
+}
