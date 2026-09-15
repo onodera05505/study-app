@@ -1,6 +1,8 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "study-app",
+  // 個人アカウント（2026-09-15 に社用アカウントから移した）。別アカウントのログインでは wrangler が明示的に止まる
+  "account_id": "6408e560f74d14fa46bd410ef28bf52b",
   "main": "src/server/index.ts",
   "compatibility_date": "2026-01-15",
   "compatibility_flags": ["nodejs_compat"],
@@ -14,7 +16,7 @@
     {
       "binding": "DB",
       "database_name": "study-app-db",
-      "database_id": "e3e81476-6afe-4144-a938-ce8e461a2ed4",
+      "database_id": "bcf31b51-d926-4aa9-9aaa-213868de2de3",
       "migrations_dir": "migrations"
     }
   ],
@@ -33,7 +35,7 @@
         {
           "binding": "DB",
           "database_name": "study-app-db",
-          "database_id": "e3e81476-6afe-4144-a938-ce8e461a2ed4",
+          "database_id": "bcf31b51-d926-4aa9-9aaa-213868de2de3",
           "migrations_dir": "migrations"
         }
       ],
@@ -49,8 +51,7 @@
         {
           "binding": "DB",
           "database_name": "study-app-ap-db",
-          // 作成後に `npx wrangler d1 create study-app-ap-db` が出す ID を入れる
-          "database_id": "79eac147-5fa1-47d3-a0c8-2715aaebeaf7",
+                  "database_id": "0b515505-9177-43db-a65b-e742d08b6e11",
           "migrations_dir": "migrations"
         }
       ],
@@ -62,13 +63,12 @@
       }
     },
     // 3 つ目: IT コンサル就活ロードマップ（試作。要件定義書 §13）。資格ではないがコードは同じ。
-    // database_id は scripts/setup_itc_remote.sh が `wrangler d1 create` の結果で埋める。
     "itc": {
       "d1_databases": [
         {
           "binding": "DB",
           "database_name": "study-app-itc-db",
-          "database_id": "PLACEHOLDER-run-scripts/setup_itc_remote.sh",
+          "database_id": "3ce45c40-2a3a-48ac-b540-08f56c233cc1",
           "migrations_dir": "migrations"
         }
       ],

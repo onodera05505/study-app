@@ -22,12 +22,15 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 EXAM="${1:-ip}"
-case "$EXAM" in
-  ip) PROJECT=itpass-study;  DB=study-app-db;    URL=https://itpass-study-c91.pages.dev ;;
-  ap) PROJECT=ap-am-study;   DB=study-app-ap-db; URL=https://ap-am-study.pages.dev ;;
-  itc) PROJECT=itc-roadmap;  DB=study-app-itc-db; URL=https://itc-roadmap.pages.dev ;;
-  *)  echo "第1引数は ip か ap か itc"; exit 1 ;;
-esac
+case "$EXAM" in ip|ap|itc) ;; *) echo "第1引数は ip か ap か itc"; exit 1 ;; esac
+# プロジェクト名と DB は scripts/pages_projects.json が正本（2026-09-15 に個人アカウントへ移した際に 1 か所に集約）
+read -r PROJECT DB < <(python3 -c "import json;c=json.load(open('scripts/pages_projects.json'))['$EXAM'];print(c['project'],c['db'])")
+URL="https://${PROJECT}.pages.dev"
+
+# アカウントの取り違えを止める門（同じ Mac で別アカウントのログインに差し替わることがある）
+WANT=$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['account_id'])")
+HAVE=$(npx wrangler whoami 2>/dev/null | grep -oE '[0-9a-f]{32}' | head -1 || true)
+[ "$HAVE" = "$WANT" ] || { echo "ログイン中のアカウント（${HAVE:-不明}）が想定（${WANT}）と違う。npx wrangler login で個人アカウントを選び直す"; exit 1; }
 
 # macOS 標準の bash 3.2 は $VAR 直後の全角文字を変数名に巻き込むので ${VAR} で区切る
 echo "▶ 対象: ${EXAM}（Pages: $PROJECT / D1: ${DB}）"

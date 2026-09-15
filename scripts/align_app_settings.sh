@@ -16,12 +16,9 @@ case "$EXAM" in
 esac
 WHERE="--remote"; [ "${2:-}" = "--local" ] && WHERE="--local"
 if [ "$WHERE" = "--remote" ]; then
-  # アカウントの取り違えを止める門（2026-09-15: 同じ Mac で別プロジェクトが別アカウントでログインし、
-  # study-app の D1 が「無い（7404）」と言われた）。study-app の本番 Pages が見えるアカウントでなければ進めない。
-  if ! npx wrangler pages project list 2>/dev/null | grep -q "itpass-study"; then
-    echo "このログインのアカウントには study-app の本番（itpass-study）が無い。study-app と同じアカウントで npx wrangler login をやり直す（今のアカウント: $(npx wrangler whoami 2>/dev/null | grep -o '[^ ]*@[^ ]*' | head -1)）"
-    exit 1
-  fi
+  WANT=$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['account_id'])")
+  HAVE=$(npx wrangler whoami 2>/dev/null | grep -oE '[0-9a-f]{32}' | head -1 || true)
+  [ "$HAVE" = "$WANT" ] || { echo "ログイン中のアカウント（${HAVE:-不明}）が想定（${WANT}）と違う。npx wrangler login で個人アカウントを選び直す"; exit 1; }
 fi
 read -r SIZE SEC < <(python3 -c "import sys; sys.path.insert(0,'scripts'); from build_seed import EXAM_SETTINGS as E; print(*E['$EXAM'])")
 echo "▶ ${DB} ${WHERE}: app_settings を mock_size=${SIZE} / mock_time_limit_sec=${SEC} に"
