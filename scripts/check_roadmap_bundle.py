@@ -17,7 +17,9 @@ def main() -> int:
     names = set()
     for sf in (d / "sources").glob("*.json"):
         for s in json.loads(sf.read_text(encoding="utf-8")).get("sources", []): names.add(s["name"])
-    names.add("一般常識"); names.add("選考解説記事の集計（interview_frequency）")
+    names.add("一般常識")
+    import re as _re
+    FREQ = _re.compile(r"記事の集計（[a-z_]+_frequency）$")  # 頻度の集計（選考解説記事の集計（interview_frequency）／実務記事の集計（practice_frequency）など）は出典名として認める
     errs, warns = [], []
     sys.path.insert(0, str(Path(__file__).parent)); from targets import target
     USAGE = (target(d.name).get("roadmapSpec") or {}).get("usageSection", "面接で話すなら")
@@ -27,7 +29,7 @@ def main() -> int:
         tag = f"{x['topic_id']} {x['term']}"; ex, de = x.get("explanation", ""), x.get("detail", "")
         if not x.get("sources"): errs.append(f"{tag}: 出典が無い")
         for s in x.get("sources", []):
-            if s.get("name") not in names: errs.append(f"{tag}: 出典名が sources/*.json に無い: {s.get('name')}")
+            if s.get("name") not in names and not FREQ.search(s.get("name") or ""): errs.append(f"{tag}: 出典名が sources/*.json に無い: {s.get('name')}")
         if len(ex) < 120: errs.append(f"{tag}: explanation が短い {len(ex)}")
         if len(ex) > 420: warns.append(f"{tag}: explanation が長い {len(ex)}（目安 200〜300）")
         if len(de) < 150: errs.append(f"{tag}: detail が短い {len(de)}")
