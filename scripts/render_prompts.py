@@ -18,6 +18,8 @@ def main() -> int:
     sys.path.insert(0, str(ROOT / "scripts")); from targets import target
     spec = dict(target(key).get("roadmapSpec") or {})
     spec.setdefault("targetName", target(key)["brand"])
+    rm = target(key).get("roadmap") or {}
+    spec.setdefault("days", rm.get("days", 14)); spec.setdefault("perDay", rm.get("perDay", 3))  # 期間は roadmap 設定から（学習者役の文言が「2 週間・面接」決め打ちだった 2026-09-15）
     for k in ("reader", "taboo"):
         if isinstance(spec.get(k), list): spec[k] = "\n".join(f"- {x}" for x in spec[k])
     out = a.data / "prompts"; out.mkdir(parents=True, exist_ok=True)
