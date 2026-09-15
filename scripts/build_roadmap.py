@@ -73,7 +73,7 @@ def main() -> int:
     for c in last_units: visit(c)
     # cluster: 先頭の単位の位置に、残りを順に並べて連続させる（学習者が「工程が 5〜12 日目に散った」と報告したため）
     for group in cfg.get("cluster", []):
-        members = [by_term[t] for t in group if t in by_term]
+        members = sorted((by_term[t] for t in group if t in by_term), key=ordered.index)  # 設定の列挙順ではなく前提順（itc: ES が前提の棚卸しより前に列挙されていた）
         if len(members) < 2: continue
         rest = [m for m in ordered if m not in members]
         first = min(ordered.index(m) for m in members)
