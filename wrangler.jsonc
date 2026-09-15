@@ -78,6 +78,13 @@
         "binding": "ASSETS",
         "not_found_handling": "single-page-application"
       }
+    },
+    "mkt": {
+      "d1_databases": [
+        { "binding": "DB", "database_name": "study-app-mkt-db", "database_id": "PLACEHOLDER-run-scripts/bootstrap_personal.sh", "migrations_dir": "migrations" }
+      ],
+      "vars": { "APP_NAME": "study-app-mkt", "EXAM": "mkt" },
+      "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application" }
     }
   }
 }
