@@ -200,10 +200,12 @@ export function Result() {
               </div>
             )}
             {openExpl[i.idx] && <Explanation data={i.explanation} answer={i.answer} />}
-            <p className="citation">
-              {i.citation}
-              {i.modified && <span className="modified-note">（一部改変）</span>}
-            </p>
+            {!exam.roadmap && (
+              <p className="citation">
+                {i.citation}
+                {i.modified && <span className="modified-note">（一部改変）</span>}
+              </p>
+            )}
           </li>
         ))}
         {items.length === 0 && <li className="muted">間違えた問題はありません。</li>}

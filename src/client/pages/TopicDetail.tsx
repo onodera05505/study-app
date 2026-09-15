@@ -220,10 +220,13 @@ export function TopicDetail() {
               {open && openExpl[q.id] && (
                 <Explanation data={q.explanation} answer={q.answer} />
               )}
-              <p className="citation">
-                {q.citation}
-                {!!q.modified && <span className="modified-note">（一部改変）</span>}
-              </p>
+              {/* 自作の確認問題（ロードマップ型）は出典を出さない。データは持っている（本人の決定 2026-09-15） */}
+              {!exam.roadmap && (
+                <p className="citation">
+                  {q.citation}
+                  {!!q.modified && <span className="modified-note">（一部改変）</span>}
+                </p>
+              )}
             </li>
           )
         })}

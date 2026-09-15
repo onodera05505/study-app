@@ -1,3 +1,4 @@
+import { exam } from '../exam'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { DupBadge } from '../components/DupBadge'
@@ -278,10 +279,12 @@ export function Session() {
             </button>
           </>
         )}
-        <p className="citation">
-          {q.citation}
-          {q.modified && <span className="modified-note">（一部改変）</span>}
-        </p>
+        {!exam.roadmap && (
+          <p className="citation">
+            {q.citation}
+            {q.modified && <span className="modified-note">（一部改変）</span>}
+          </p>
+        )}
       </div>
 
       <div className="btn-row" style={{ marginTop: '1rem' }}>

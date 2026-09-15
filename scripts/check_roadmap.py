@@ -68,6 +68,9 @@ def main() -> int:
             if q.get("tests_goal") not in range(1, 7): errors.append(f"{q['qid']}: tests_goal が 1〜6 でない")
             if q["topic_id"] not in units: warns.append(f"{q['qid']}: ロードマップ外の問題（除外済みの単位）"); continue
             pos[q["answer"]] = pos.get(q["answer"], 0) + 1
+            cn = q.get("choice_notes") or {}
+            if set(cn) != {"ア", "イ", "ウ", "エ"} or any(not (v or "").strip() for v in cn.values()): errors.append(f"{q['qid']}: choice_notes が 4 つ揃っていない")
+            elif not cn[q["answer"]].startswith("正解"): errors.append(f"{q['qid']}: 正解の note が「正解。」で始まっていない")
             m = mats.get(q["topic_id"])
             if m and verbatim(q["choices"][q["answer"]], m.get("explanation", "") + "\n" + m.get("detail", "")):
                 verb.append(q["qid"])
