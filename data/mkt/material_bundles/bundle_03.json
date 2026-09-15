@@ -2,6 +2,110 @@
   "bundle": "bundle_03",
   "topics": [
     {
+      "topic_id": 38,
+      "term": "広告",
+      "field": "戦略と打ち手（STP・4P）",
+      "middle": "流通とプロモーション",
+      "summary": "費用を払って広く伝える手段の性質",
+      "goals": [
+        4
+      ],
+      "prereq": [
+        "施策の向き不向き（即効性と資産型）"
+      ],
+      "sources": [
+        "マーケティング・ビジネス実務検定 各級の出題傾向比較（A級／B級／C級）",
+        "J-Net21 起業マニュアル（目次。第2章・第5章・第7章がマーケティング相当）",
+        "OpenStax Principles of Marketing（全19章の目次）"
+      ],
+      "source_count": 3,
+      "interview_count": 0
+    },
+    {
+      "topic_id": 47,
+      "term": "メールマーケティング",
+      "field": "デジタルと計測",
+      "middle": "デジタル施策の選択肢",
+      "summary": "既に接点のある人へ繰り返し届ける手段",
+      "goals": [
+        4
+      ],
+      "prereq": [
+        "デジタルマーケティングの全体像"
+      ],
+      "sources": [
+        "Inbound Certification Course（HubSpot Academy 無料講座）",
+        "Fundamentals of Digital Marketing（Google デジタルワークショップ / Skillshop）",
+        "Email Marketing Benchmarks（Mailchimp 公開ガイド）",
+        "OpenStax Principles of Marketing（全19章の目次）"
+      ],
+      "source_count": 4,
+      "interview_count": 0
+    },
+    {
+      "topic_id": 49,
+      "term": "LP と CTA の設計",
+      "field": "デジタルと計測",
+      "middle": "デジタル施策の選択肢",
+      "summary": "来た人が迷わず次の行動へ進む導線",
+      "goals": [
+        4
+      ],
+      "prereq": [
+        "ファネル（認知・比較検討・獲得）"
+      ],
+      "sources": [
+        "J-Net21 経営ハンドブック（目次）",
+        "J-Net21 起業マニュアル（目次。第2章・第5章・第7章がマーケティング相当）",
+        "アナリティクスのディメンションと指標（Google アナリティクス ヘルプ / GA4）",
+        "Fundamentals of Digital Marketing（Google デジタルワークショップ / Skillshop）",
+        "Email Marketing Benchmarks（Mailchimp 公開ガイド）",
+        "A/B Testing（Optimizely Optimization Glossary 公開ガイド）",
+        "中小企業とDX 取組事例（J-Net21 / 中小企業基盤整備機構）"
+      ],
+      "source_count": 7,
+      "interview_count": 0
+    },
+    {
+      "topic_id": 79,
+      "term": "効果検証の運用（PDCA・定点観測）",
+      "field": "実務の判断と評価",
+      "middle": "効果検証と実験",
+      "summary": "見直す場と頻度を決めて回し続ける",
+      "goals": [
+        5
+      ],
+      "prereq": [
+        "計測設計（何を成果とみなすか）"
+      ],
+      "sources": [
+        "中小企業とDX 取組事例（J-Net21 / 中小企業基盤整備機構）",
+        "瞬時に何もかも分かる地方ホームセンターのデータ分析経営（株式会社グッデイ / J-Net21 公開事例）"
+      ],
+      "source_count": 2,
+      "interview_count": 9
+    },
+    {
+      "topic_id": 57,
+      "term": "CVR（コンバージョン率）",
+      "field": "デジタルと計測",
+      "middle": "指標の定義",
+      "summary": "訪問のうち成果に至った割合",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "計測設計（何を成果とみなすか）"
+      ],
+      "sources": [
+        "目標に合わせた入札戦略を選択する（Google 広告 ヘルプ）",
+        "アナリティクスのディメンションと指標（Google アナリティクス ヘルプ / GA4）",
+        "A/B Testing（Optimizely Optimization Glossary 公開ガイド）"
+      ],
+      "source_count": 3,
+      "interview_count": 6
+    },
+    {
       "topic_id": 58,
       "term": "CPA（獲得単価）",
       "field": "デジタルと計測",
@@ -56,102 +160,6 @@
       "sources": [],
       "source_count": 0,
       "interview_count": 3
-    },
-    {
-      "topic_id": 66,
-      "term": "リテンションと解約率（チャーン）",
-      "field": "デジタルと計測",
-      "middle": "指標の定義",
-      "summary": "獲得した顧客がどれだけ残ったか",
-      "goals": [
-        3
-      ],
-      "prereq": [
-        "LTV（顧客生涯価値）"
-      ],
-      "sources": [
-        "アナリティクスのディメンションと指標（Google アナリティクス ヘルプ / GA4）"
-      ],
-      "source_count": 1,
-      "interview_count": 4
-    },
-    {
-      "topic_id": 60,
-      "term": "LTV（顧客生涯価値）",
-      "field": "デジタルと計測",
-      "middle": "指標の定義",
-      "summary": "1人の顧客が生涯に残す利益の総額",
-      "goals": [
-        3
-      ],
-      "prereq": [
-        "リテンションと解約率（チャーン）"
-      ],
-      "sources": [
-        "アナリティクスのディメンションと指標（Google アナリティクス ヘルプ / GA4）"
-      ],
-      "source_count": 1,
-      "interview_count": 3
-    },
-    {
-      "topic_id": 61,
-      "term": "LTV:CAC と回収期間",
-      "field": "デジタルと計測",
-      "middle": "指標の定義",
-      "summary": "獲得にいくらまで払えるかの判断基準",
-      "goals": [
-        3,
-        5
-      ],
-      "prereq": [
-        "LTV（顧客生涯価値）",
-        "CAC（顧客獲得コスト）"
-      ],
-      "sources": [],
-      "source_count": 0,
-      "interview_count": 3
-    },
-    {
-      "topic_id": 19,
-      "term": "マーケティング・リサーチの進め方",
-      "field": "市場と顧客の理解",
-      "middle": "調査とリサーチ",
-      "summary": "問いを決めてから調べる手順",
-      "goals": [
-        1
-      ],
-      "prereq": [],
-      "sources": [
-        "マーケティング検定 3級試験（試験内容と評価方法＝出題範囲）",
-        "マーケティング・ビジネス実務検定 各級の出題傾向比較（A級／B級／C級）",
-        "関西大学 シラバス「マーケティング論」（全15回の授業計画）",
-        "法政大学 シラバス「マーケティング論」（授業計画）",
-        "AMA Definitions of Marketing / What Is Marketing?",
-        "OpenStax Principles of Marketing（全19章の目次）"
-      ],
-      "source_count": 6,
-      "interview_count": 0
-    },
-    {
-      "topic_id": 41,
-      "term": "デジタルマーケティングの全体像",
-      "field": "デジタルと計測",
-      "middle": "デジタル施策の選択肢",
-      "summary": "オンラインの施策を目的別に俯瞰する",
-      "goals": [
-        4
-      ],
-      "prereq": [
-        "マーケティング・ミックス（4P）"
-      ],
-      "sources": [
-        "マーケティング・ビジネス実務検定 各級の出題傾向比較（A級／B級／C級）",
-        "関西大学 シラバス「マーケティング論」（全15回の授業計画）",
-        "法政大学 シラバス「マーケティング論」（授業計画）",
-        "Fundamentals of Digital Marketing（Google デジタルワークショップ / Skillshop）"
-      ],
-      "source_count": 4,
-      "interview_count": 0
     }
   ]
 }
