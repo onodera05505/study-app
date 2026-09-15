@@ -107,6 +107,10 @@ def main() -> int:
         v3.append(m)
     (d / "materials_v3").mkdir(exist_ok=True)
     (d / "materials_v3" / "roadmap.json").write_text(json.dumps({"bundle": "roadmap", "materials": v3}, ensure_ascii=False, indent=1), encoding="utf-8")
+    # 図があれば教材 v3 に画像行を差し込む（attach は materials_v2/v3 を編集する。source の materials/ は触らない）
+    if any((d / "material_figures").glob("*.json")):
+        import subprocess
+        subprocess.run([sys.executable, str(Path(__file__).with_name("attach_material_figures.py")), "--data", str(d)], check=True)
     print(f"項目 {len(items)} / 論点 {len(topics)}（補足 {len(extra_ids)}）/ 回 {len(qfiles)}（日は各 {per_day * 2} 問）/ 問題 {sum(len(v) for v in qfiles.values())} / 解説 {len(expl)} / 教材 v3 {len(v3)}")
     return 0
 
