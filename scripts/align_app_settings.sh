@@ -15,9 +15,17 @@ case "$EXAM" in
   *) echo "第1引数は ip か ap か itc"; exit 1 ;;
 esac
 WHERE="--remote"; [ "${2:-}" = "--local" ] && WHERE="--local"
+if [ "$WHERE" = "--remote" ]; then
+  # アカウントの取り違えを止める門（2026-09-15: 同じ Mac で別プロジェクトが別アカウントでログインし、
+  # study-app の D1 が「無い（7404）」と言われた）。study-app の本番 Pages が見えるアカウントでなければ進めない。
+  if ! npx wrangler pages project list 2>/dev/null | grep -q "itpass-study"; then
+    echo "このログインのアカウントには study-app の本番（itpass-study）が無い。study-app と同じアカウントで npx wrangler login をやり直す（今のアカウント: $(npx wrangler whoami 2>/dev/null | grep -o '[^ ]*@[^ ]*' | head -1)）"
+    exit 1
+  fi
+fi
 read -r SIZE SEC < <(python3 -c "import sys; sys.path.insert(0,'scripts'); from build_seed import EXAM_SETTINGS as E; print(*E['$EXAM'])")
 echo "▶ ${DB} ${WHERE}: app_settings を mock_size=${SIZE} / mock_time_limit_sec=${SEC} に"
-echo "  変更前:"; npx wrangler d1 execute "$DB" --env "$EXAM" "$WHERE" --json --command "SELECT mock_size, mock_time_limit_sec FROM app_settings WHERE id='default'" | python3 -c "import json,sys;print('   ', json.load(sys.stdin)[0]['results'])"
+echo "  変更前:"; npx wrangler d1 execute "$DB" --env "$EXAM" "$WHERE" --json --command "SELECT mock_size, mock_time_limit_sec FROM app_settings WHERE id='default'" | python3 -c "import json,sys;d=json.load(sys.stdin);sys.exit('   D1 エラー: '+json.dumps(d['error'],ensure_ascii=False)[:300]) if isinstance(d,dict) else print('   ', d[0]['results'])"
 npx wrangler d1 execute "$DB" --env "$EXAM" "$WHERE" --command "UPDATE app_settings SET mock_size=${SIZE}, mock_time_limit_sec=${SEC}, updated_at=unixepoch() WHERE id='default'" >/dev/null
-echo "  変更後:"; npx wrangler d1 execute "$DB" --env "$EXAM" "$WHERE" --json --command "SELECT mock_size, mock_time_limit_sec FROM app_settings WHERE id='default'" | python3 -c "import json,sys;r=json.load(sys.stdin)[0]['results'][0];print('   ', r);import sys as s; s.exit(0 if r['mock_size']==${SIZE} and r['mock_time_limit_sec']==${SEC} else 1)"
+echo "  変更後:"; npx wrangler d1 execute "$DB" --env "$EXAM" "$WHERE" --json --command "SELECT mock_size, mock_time_limit_sec FROM app_settings WHERE id='default'" | python3 -c "import json,sys;d=json.load(sys.stdin);sys.exit('   D1 エラー: '+json.dumps(d['error'],ensure_ascii=False)[:300]) if isinstance(d,dict) else None;r=d[0]['results'][0];print('   ', r);sys.exit(0 if r['mock_size']==${SIZE} and r['mock_time_limit_sec']==${SEC} else 1)"
 echo "✓ 揃った"

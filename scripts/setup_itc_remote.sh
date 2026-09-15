@@ -20,6 +20,13 @@ DB=study-app-itc-db; PROJECT=itc-roadmap
 echo "▶ 0/6 ログイン状態"
 npx wrangler whoami >/dev/null 2>&1 || { echo "wrangler にログインしていない。対話端末で npx wrangler login を実行してから再実行"; exit 1; }
 
+# アカウントの取り違えを止める門（2026-09-15: 同じ Mac で別プロジェクトが別アカウントでログインし、
+# study-app の D1 が「無い（7404）」と言われた）。study-app の本番 Pages が見えるアカウントでなければ進めない。
+if ! npx wrangler pages project list 2>/dev/null | grep -q "itpass-study"; then
+  echo "このログインのアカウントには study-app の本番（itpass-study）が無い。study-app と同じアカウントで npx wrangler login をやり直す（今のアカウント: $(npx wrangler whoami 2>/dev/null | grep -o '[^ ]*@[^ ]*' | head -1)）"
+  exit 1
+fi
+
 echo "▶ 1/6 D1 ${DB}"
 if grep -q "PLACEHOLDER-run-scripts/setup_itc_remote.sh" wrangler.jsonc; then
   ID=$(npx wrangler d1 list --json | python3 -c "import json,sys;print(next((d['uuid'] for d in json.load(sys.stdin) if d['name']=='$DB'),''))")
