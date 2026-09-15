@@ -75,9 +75,18 @@ def main() -> int:
     for group in cfg.get("cluster", []):
         members = [by_term[t] for t in group if t in by_term]
         if len(members) < 2: continue
-        first = min(ordered.index(m) for m in members)
         rest = [m for m in ordered if m not in members]
-        ordered = rest[:first] + members + rest[first:]
+        first = min(ordered.index(m) for m in members)
+        # クラスタの外にある前提より後ろに置く（先頭の位置に寄せただけだと、後ろの単位の前提を飛び越える。
+        # mkt 1 周目: SEO・SNS・メールが前提の「全体像」より 13 単位先に出た 2026-09-15）
+        pre_idx = [rest.index(by_term[p]) for m in members for p in m.get("prereq", []) if p in by_term and by_term[p] in rest]
+        first_in_rest = len([x for x in ordered[:first] if x not in members])
+        pos = max(first_in_rest, (max(pre_idx) + 1) if pre_idx else 0)
+        ordered = rest[:pos] + members + rest[pos:]
+    # 並べ終えたら前提が前にあるかを確かめる（門は check_roadmap にもある）
+    pos_of = {c["term"]: i for i, c in enumerate(ordered)}
+    bad = [(c["term"], p) for c in ordered for p in c.get("prereq", []) if p in pos_of and pos_of[p] > pos_of[c["term"]]]
+    if bad: print(f"警告: 前提が後ろにある {len(bad)} 件: " + "; ".join(f"{t} ← {p}" for t, p in bad[:5]))
     for c in ordered:
         if c["term"] in cfg.get("summary_override", {}): c["summary"] = cfg["summary_override"][c["term"]]
     units = []

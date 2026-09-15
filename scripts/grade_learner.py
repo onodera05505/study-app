@@ -28,6 +28,16 @@ def main() -> int:
         if not ok: wrong.append({"qid": qid, "term": q["term"], "picked": ans.get(qid), "answer": q["answer"]})
     total = len(qs); correct = sum(1 for qid, q in qs.items() if ans.get(qid) == q["answer"])
     self_rep = {u["topic_id"]: u for u in L.get("units", [])}
+    # 学習者パックは topic_id を見せず順番の番号だけを出すので、学習者は順番で報告してくる（mkt 1 周目: 42 件中 17 件しか一致せず
+    # 理解度が 1.12 と出た 2026-09-15）。報告の番号が topic_id より順番に多く一致するなら順番→topic_id に写す
+    order_to_tid = {u["order"]: tid for tid, u in units.items() if "order" in u}
+    rep_ids = set(self_rep)
+    if order_to_tid and len(rep_ids & set(order_to_tid)) > len(rep_ids & set(units)):
+        print(f"注: 学習者の単位番号を順番として読む（topic_id 一致 {len(rep_ids & set(units))} / 順番一致 {len(rep_ids & set(order_to_tid))}）")
+        self_rep = {order_to_tid[o]: u for o, u in self_rep.items() if o in order_to_tid}
+        for lst in ("too_long", "too_short", "most_useful", "least_useful"):
+            ov = L.get("overall", {}).get(lst)
+            if isinstance(ov, list): L["overall"][lst] = [order_to_tid.get(o, o) for o in ov]
     for tid, pu in per_unit.items():
         s = self_rep.get(tid, {}); pu["understood"] = s.get("understood"); pu["confusing"] = s.get("confusing", ""); pu["unknown_terms"] = s.get("unknown_terms", []); pu["minutes"] = s.get("minutes")
     stuck = [tid for tid, pu in per_unit.items() if (pu["understood"] or 3) <= 1 or (pu["total"] and pu["correct"] == 0)]

@@ -34,6 +34,12 @@ def main() -> int:
     NG = re.compile("|".join((target(d.name).get("roadmapSpec") or {}).get("ngWords", NG_DEFAULT)))
     rm = json.loads((d / "roadmap.json").read_text(encoding="utf-8"))
     units = {u["topic_id"]: u for u in rm["units"]}; terms = {u["term"] for u in rm["units"]}
+    # 前提はロードマップ上で前に置かれているか（クラスタ寄せで前提を飛び越えた mkt 1 周目の再発防止 2026-09-15）
+    order_of = {u["term"]: u["order"] for u in rm["units"]}
+    for u in rm["units"]:
+        for pt in u.get("prereq", []):
+            if pt in order_of and order_of[pt] > u["order"]:
+                errors.append(f"順序 {u['order']} {u['term']}: 前提『{pt}』が後ろ（{order_of[pt]}）にある")
     # 教材
     mats: dict[int, dict] = {}
     for mp in sorted((d / "materials").glob("*.json")):
