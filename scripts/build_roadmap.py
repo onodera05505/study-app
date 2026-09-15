@@ -85,7 +85,9 @@ def main() -> int:
         units.append({"order": i, "day": math.ceil(i / a.per_day), "topic_id": c["id"], "term": c["term"], "field": c["field"], "middle": c.get("middle", ""),
                       "summary": c.get("summary", ""), "score": c["score"], "source_count": c.get("source_count", 0), "interview_count": c.get("interview_count", 0),
                       "prereq": c.get("prereq", []), "goals": c["goals"], "sources": c.get("sources", [])})
-    roadmap = {"target": "IT コンサルになる（就活の目線）", "per_day": a.per_day, "days": math.ceil(len(units) / a.per_day), "unit_count": len(units),
+    sys.path.insert(0, str(Path(__file__).parent)); from targets import target as _target
+    tname = (_target(d.name).get("roadmapSpec") or {}).get("targetName", _target(d.name)["brand"])  # 対象名は登録簿から（決め打ちで mkt に itc の名が出た 2026-09-15）
+    roadmap = {"target": tname, "per_day": a.per_day, "days": math.ceil(len(units) / a.per_day), "unit_count": len(units),
                "dropped_no_goal": dropped, "units": units}
     (d / "roadmap.json").write_text(json.dumps(roadmap, ensure_ascii=False, indent=2), encoding="utf-8")
     bdir = d / "material_bundles"; bdir.mkdir(exist_ok=True)
