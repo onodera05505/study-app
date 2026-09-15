@@ -17,6 +17,11 @@ def main() -> int:
     for qp in sorted((d / "roadmap_questions").glob("bundle_*.json")):
         for q in json.loads(qp.read_text(encoding="utf-8"))["questions"]: qs[q["qid"]] = q
     L = json.loads(Path(a.answers).read_text(encoding="utf-8")); ans = L.get("answers", {})
+    if rm.get("answer_key"):  # パック時点の正解表があればそれで採点（学習者が見た問題と今の問題が違いうる）
+        changed = [q for q, v in rm["answer_key"].items() if q in qs and qs[q]["answer"] != v]
+        for q, v in rm["answer_key"].items():
+            if q in qs: qs[q] = dict(qs[q], answer=v)
+        if changed: print(f"注: パック作成後に正解が変わった問題 {len(changed)} 件はパック時点の正解で採点: {', '.join(changed)}")
     per_unit = {tid: {"term": u["term"], "field": u["field"], "correct": 0, "total": 0} for tid, u in units.items()}
     by_goal = {g: [0, 0] for g in range(1, 7)}; by_field = {}
     wrong = []
