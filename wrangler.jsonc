@@ -60,6 +60,24 @@
         "binding": "ASSETS",
         "not_found_handling": "single-page-application"
       }
+    },
+    // 3 つ目: IT コンサル就活ロードマップ（試作。要件定義書 §13）。資格ではないがコードは同じ。
+    // database_id は scripts/setup_itc_remote.sh が `wrangler d1 create` の結果で埋める。
+    "itc": {
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "study-app-itc-db",
+          "database_id": "PLACEHOLDER-run-scripts/setup_itc_remote.sh",
+          "migrations_dir": "migrations"
+        }
+      ],
+      "vars": { "APP_NAME": "study-app-itc", "EXAM": "itc" },
+      "assets": {
+        "directory": "./dist",
+        "binding": "ASSETS",
+        "not_found_handling": "single-page-application"
+      }
     }
   }
 }

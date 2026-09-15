@@ -9,7 +9,7 @@
  * クライアントは VITE_EXAM、サーバは env.EXAM で選ぶ。未指定なら ip。
  */
 
-export type ExamKey = 'ip' | 'ap'
+export type ExamKey = 'ip' | 'ap' | 'itc'
 
 export type ExamConfig = {
   key: ExamKey
@@ -39,6 +39,16 @@ export type ExamConfig = {
    * テクノロジ50・ストラテジ20・マネジメント10 で完全に一定だった。目安ではなく実測値。
    */
   fieldRatio: Record<string, number>
+  /** 分野の並び順（画面と API で揃える）。資格版は IPA の 3 分野、ロードマップ型は自前の分野 */
+  fields: string[]
+  /**
+   * ロードマップ型か。資格版は「出題頻度＝重要度」で並べるが、ロードマップ型は
+   * 一次資料の交差数と前提関係で決めた順（topics.sort_order）で並べ、問題は自作の確認問題。
+   * 画面の文言（過去問／確認問題、出題頻度／学ぶ順）と API の並び順がここで切り替わる。
+   */
+  roadmap: boolean
+  /** 画面の文言。試験の種類で変わる語だけ */
+  words: { question: string; questions: string; mock: string; nextUp: string }
 }
 
 export const EXAMS: Record<ExamKey, ExamConfig> = {
@@ -54,6 +64,9 @@ export const EXAMS: Record<ExamKey, ExamConfig> = {
       'ただし IPA の採点は項目応答理論（IRT）で行われ換算式が非公開のため、' +
       'このアプリの点数は素点による目安です。',
     fieldRatio: { ストラテジ系: 35, マネジメント系: 20, テクノロジ系: 45 },
+    fields: ['ストラテジ系', 'マネジメント系', 'テクノロジ系'],
+    roadmap: false,
+    words: { question: '過去問', questions: '過去問', mock: '過去問実践', nextUp: '頻出なのにまだ理解できていない論点' },
   },
   ap: {
     key: 'ap',
@@ -66,6 +79,25 @@ export const EXAMS: Record<ExamKey, ExamConfig> = {
       '午前試験は80問すべて配点が同じで，60%（48問）以上の正解で突破です。' +
       '分野ごとの足切りはありません。分野別の内訳は，どこから手を付けるかの目安として出しています。',
     fieldRatio: { ストラテジ系: 20, マネジメント系: 10, テクノロジ系: 50 },
+    fields: ['ストラテジ系', 'マネジメント系', 'テクノロジ系'],
+    roadmap: false,
+    words: { question: '過去問', questions: '過去問', mock: '過去問実践', nextUp: '頻出なのにまだ理解できていない論点' },
+  },
+  itc: {
+    key: 'itc',
+    brand: 'IT コンサル就活 ロードマップ',
+    title: 'IT コンサル就活 ロードマップ',
+    // 通しの確認テスト。1 単位 1 問 = 42 問。時間は 1 問 1 分弱の目安
+    mockSize: 42,
+    mockMinutes: 40,
+    fieldThreshold: false,
+    passRule:
+      '確認テストです。合否はありません。到達基準（面接で何を示せるか）ごとの正答率を見て、弱い分野の単位に戻ります。' +
+      '問題は教材から作った自作の確認問題で、過去問ではありません。',
+    fieldRatio: { 業界と仕事: 14, ITと業務の基礎知識: 9, 論理思考とケース: 9, 選考と自己理解: 10 },
+    fields: ['業界と仕事', 'ITと業務の基礎知識', '論理思考とケース', '選考と自己理解'],
+    roadmap: true,
+    words: { question: '確認問題', questions: '確認問題', mock: '確認テスト', nextUp: 'ロードマップの順で、まだ理解できていない単位' },
   },
 }
 

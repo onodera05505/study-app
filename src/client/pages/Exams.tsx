@@ -54,9 +54,11 @@ export function Exams() {
 
   return (
     <>
-      <h1>過去問実践</h1>
+      <h1>{exam.words.mock}</h1>
       <p className="lead">
-        本番と同じ {exam.mockSize}問・{exam.mockMinutes}分 で通しで解きます。途中で中断しても、時間内なら再開できます。
+        {exam.roadmap
+          ? `${exam.mockSize}問・${exam.mockMinutes}分 で通しで解きます。途中で中断しても、時間内なら再開できます。`
+          : `本番と同じ ${exam.mockSize}問・${exam.mockMinutes}分 で通しで解きます。途中で中断しても、時間内なら再開できます。`}
       </p>
 
       <div className="notice">
@@ -64,7 +66,7 @@ export function Exams() {
       </div>
       {error && <p className="error">{error}</p>}
 
-      <h2>公開回をそのまま解く</h2>
+      <h2>{exam.roadmap ? '1 日分（3 単位・6 問）を解く' : '公開回をそのまま解く'}</h2>
       <ul className="list">
         {(exams ?? []).map((e) => (
           <li key={e.exam} className="row">
@@ -98,16 +100,16 @@ export function Exams() {
         )}
         {exams === null && !loadError && <li className="muted">読み込み中…</li>}
         {exams !== null && exams.length === 0 && (
-          <li className="muted">取り込み済みの回がありません。</li>
+          <li className="muted">{exam.roadmap ? '取り込み済みの日がありません。' : '取り込み済みの回がありません。'}</li>
         )}
       </ul>
 
       <h2>全範囲からランダム</h2>
       <div className="card">
         <p style={{ marginTop: 0 }}>
-          取り込み済みの全回から、本番の分野比率（
+          {exam.roadmap ? '全 42 単位から 1 問ずつ、分野の単位数（' : '取り込み済みの全回から、本番の分野比率（'}
           {Object.entries(exam.fieldRatio)
-            .map(([f, n]) => `${f.replace('系', '')}${n}`)
+            .map(([f, n]) => `${exam.roadmap ? f : f.replace('系', '')}${n}`)
             .join('・')}
           ）に寄せて{exam.mockSize}問を構成します。繰り返し受験できます。
         </p>

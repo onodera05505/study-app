@@ -55,7 +55,7 @@ from pathlib import Path
 EXAM_CODE = re.compile(r"^\d{4}[hr]\d{2}[hao]?$")
 
 # 1回あたりの問題数。ここから外れたら読み取りか分類の取りこぼし。
-QUESTIONS_PER_EXAM = {"ip": 100, "ap": 80}
+QUESTIONS_PER_EXAM = {"ip": 100, "ap": 80, "itc": 6}  # itc は 1 日（＝回）3 単位 × 確認問題 2
 
 INSERT_UPSERT = re.compile(
     r"INSERT INTO (\w+) \(([^)]*)\)[^;]*?ON CONFLICT\(([^)]*)\) DO UPDATE SET (.*?);", re.S

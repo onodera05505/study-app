@@ -30,7 +30,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-DB_OF = {"ip": "study-app-db", "ap": "study-app-ap-db"}
+DB_OF = {"ip": "study-app-db", "ap": "study-app-ap-db", "itc": "study-app-itc-db"}
 
 # 表ごとの比較のしかた。"eq" は seed が作り直す表、"ge" は UPSERT だけの表（古い行が残ってよい）
 TABLES = {

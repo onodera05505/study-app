@@ -98,7 +98,7 @@ export function App() {
             <NavLink to="/" end>ホーム</NavLink>
             <NavLink to="/topics">学習</NavLink>
             <NavLink to="/practice">練習テスト</NavLink>
-            <NavLink to="/exams">過去問実践</NavLink>
+            <NavLink to="/exams">{exam.words.mock}</NavLink>
             <NavLink to="/history">履歴</NavLink>
           </nav>
         </div>

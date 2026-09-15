@@ -41,6 +41,7 @@ PBKDF2_ITERATIONS = 100_000  # src/server/lib/auth.ts と揃える。
 EXAM_NAMES = {
     "ip": "ITパスポート試験",
     "ap": "応用情報技術者試験 午前",
+    "itc": "ITコンサル就活ロードマップ 確認問題",  # 自作の確認問題。過去問ではないが出典欄に「自作」と分かる名を出す
 }
 
 # 原文を書き換えている箇所の目印。ここに当たれば `modified` を立て、
@@ -423,17 +424,19 @@ def main() -> int:
         if m and m.get("term") and m["term"] != t["term"]:
             material_mismatch.append(f"id={tid} 教材『{m['term']}』 ⇔ 論点『{t['term']}』")
             m = None
+        # sort_order はロードマップ型（data/itc）だけが持つ。資格版の topics.json に無いときは列そのものを出さない
+        # （資格版の D1 に列が無くても投入できる。列は migrations/0005 で足す）。
+        has_order = any("sort_order" in x for x in topics["topics"])
+        cols = "id, term, syllabus_item_id, is_new, explanation, detail, question_count" + (", sort_order" if has_order else "")
+        vals = [tid, t["term"], t["syllabus_item"], bool(t["is_new"]), (m or {}).get("explanation"), (m or {}).get("detail"), len(valid)]
+        if has_order: vals.append(t.get("sort_order"))
         lines.append(
-            "INSERT INTO topics (id, term, syllabus_item_id, is_new, explanation, detail, question_count)"
-            " VALUES ("
-            + ", ".join(q(x) for x in (
-                tid, t["term"], t["syllabus_item"], bool(t["is_new"]),
-                (m or {}).get("explanation"), (m or {}).get("detail"), len(valid),
-            ))
+            f"INSERT INTO topics ({cols}) VALUES ("
+            + ", ".join(q(x) for x in vals)
             + ") ON CONFLICT(id) DO UPDATE SET term=excluded.term,"
             " syllabus_item_id=excluded.syllabus_item_id, is_new=excluded.is_new,"
             " explanation=excluded.explanation, detail=excluded.detail,"
-            " question_count=excluded.question_count, updated_at=(unixepoch());"
+            " question_count=excluded.question_count," + (" sort_order=excluded.sort_order," if has_order else "") + " updated_at=(unixepoch());"
         )
         for qid in valid:
             lines.append(

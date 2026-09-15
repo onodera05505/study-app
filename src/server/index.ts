@@ -1,3 +1,4 @@
+import { examOf } from '../shared/exam'
 import { Hono } from 'hono'
 import { HTTPException } from 'hono/http-exception'
 import { secureHeaders } from 'hono/secure-headers'
@@ -82,7 +83,7 @@ api.get('/me', async (c) => {
       JOIN syllabus_items s ON s.id = t.syllabus_item_id
       LEFT JOIN progress p ON p.topic_id = t.id AND p.user_id = ${userId}
      WHERE COALESCE(p.status, 1) < 3 AND t.question_count > 0
-     ORDER BY t.question_count DESC, t.term
+     ${examOf(c.env.EXAM).roadmap ? sql`ORDER BY COALESCE(t.sort_order, 999999) ASC, t.term` : sql`ORDER BY t.question_count DESC, t.term`}
      LIMIT 10
   `)
   // 記録そのものは認証ミドルウェアで入れている。ここでは集計するだけ。

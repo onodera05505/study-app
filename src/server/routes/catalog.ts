@@ -1,3 +1,4 @@
+import { examOf } from '../../shared/exam'
 import { and, eq, sql } from 'drizzle-orm'
 import { Hono } from 'hono'
 import { z } from 'zod'
@@ -31,8 +32,8 @@ catalogRoutes.get('/fields', async (c) => {
       LEFT JOIN progress p ON p.topic_id = t.id AND p.user_id = ${userId}
      GROUP BY s.field
   `)
-  // 試験の並び順（ストラテジ→マネジメント→テクノロジ）に揃える
-  const order = ['ストラテジ系', 'マネジメント系', 'テクノロジ系']
+  // 試験の並び順（資格版はストラテジ→マネジメント→テクノロジ、ロードマップ型は自前の分野）に揃える
+  const order = examOf(c.env.EXAM).fields
   rows.sort((a, b) => order.indexOf(a.field) - order.indexOf(b.field))
   return c.json({ fields: rows })
 })
@@ -101,12 +102,19 @@ catalogRoutes.get('/topics', async (c) => {
       : sql``,
   ]
   // recommended = 「頻出なのに、まだ理解できていない」順。これが最短経路の実体。
+  // ロードマップ型は出題頻度が一定（確認問題 2 問）なので、学ぶ順（sort_order）で並べる。
+  // 資格版の SQL は変えない（列を参照しないので、資格版の D1 に列が無くても動く）。
+  const byRoadmap = examOf(c.env.EXAM).roadmap
   const ordering =
     sort === 'name'
       ? sql`ORDER BY t.term`
       : sort === 'recommended'
-        ? sql`ORDER BY COALESCE(p.status, 1) ASC, t.question_count DESC, t.term`
-        : sql`ORDER BY t.question_count DESC, t.term`
+        ? byRoadmap
+          ? sql`ORDER BY COALESCE(p.status, 1) ASC, COALESCE(t.sort_order, 999999) ASC, t.term`
+          : sql`ORDER BY COALESCE(p.status, 1) ASC, t.question_count DESC, t.term`
+        : byRoadmap
+          ? sql`ORDER BY COALESCE(t.sort_order, 999999) ASC, t.term`
+          : sql`ORDER BY t.question_count DESC, t.term`
 
   const rows = await db.all<{
     id: number

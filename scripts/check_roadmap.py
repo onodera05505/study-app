@@ -59,7 +59,7 @@ def main() -> int:
         if tid not in mats: errors.append(f"教材が無い論点: {tid} {units[tid]['term']}")
     # 問題
     qs: dict[str, dict] = {}; per_topic: dict[int, int] = {}; pos: dict[str, int] = {}; verb: list[str] = []
-    for qp in sorted((d / "questions").glob("bundle_*.json")):
+    for qp in sorted((d / "roadmap_questions").glob("bundle_*.json")):
         for q in json.loads(qp.read_text(encoding="utf-8")).get("questions", []):
             if q["qid"] in qs: errors.append(f"qid 重複: {q['qid']}")
             qs[q["qid"]] = q; per_topic[q["topic_id"]] = per_topic.get(q["topic_id"], 0) + 1

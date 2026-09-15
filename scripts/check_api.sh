@@ -16,8 +16,8 @@ cd "$(dirname "$0")/.."
 
 EXAM="${1:-ip}"
 case "$EXAM" in
-  ip|ap) ;;
-  *) echo "第1引数は ip か ap"; exit 1 ;;
+  ip|ap|itc) ;;
+  *) echo "第1引数は ip か ap か itc"; exit 1 ;;
 esac
 
 PORT=8788

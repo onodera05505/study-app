@@ -38,7 +38,7 @@ def main() -> int:
         for hit in NG.findall(ex + de): warns.append(f"{tag}: 避ける語「{hit}」")
         for line in (ex + "\n" + de).splitlines():
             if line.startswith("#") and not line.startswith("### "): errs.append(f"{tag}: 見出しは ### だけ: {line[:30]}")
-    qp = d / "questions" / f"{a.bundle}.json"
+    qp = d / "roadmap_questions" / f"{a.bundle}.json"
     if qp.exists():
         import importlib.util
         spec = importlib.util.spec_from_file_location("cr", Path(__file__).with_name("check_roadmap.py")); cr = importlib.util.module_from_spec(spec); spec.loader.exec_module(cr)

@@ -19,7 +19,7 @@
 - `reason` に正解の根拠を 1〜2 文と、**教材のどの段（explanation / しくみ / 面接で話すなら / 混同）に書いてあるか**を書く
 
 ## 出力
-`data/itc/questions/bundle_NN.json`:
+`data/itc/roadmap_questions/bundle_NN.json`:
 `{"bundle": "bundle_NN", "questions": [{"qid": "t<topic_id>-1", "topic_id": 1, "term": "…", "stem": "…", "choices": {"ア": "…", "イ": "…", "ウ": "…", "エ": "…"}, "answer": "ア", "reason": "…", "tests_goal": 1}]}`
 - `tests_goal` は到達基準 1〜6 のどれを確かめるか
 - 正解の位置（ア〜エ）は偏らせない

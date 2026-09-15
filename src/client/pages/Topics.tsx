@@ -1,3 +1,4 @@
+import { exam } from '../exam'
 import { useCallback, useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { BackLink } from '../components/BackLink'
@@ -19,7 +20,7 @@ const SORTS = [
   { key: 'name', label: '名前順' },
 ] as const
 
-const FIELD_ORDER = ['ストラテジ系', 'マネジメント系', 'テクノロジ系']
+const FIELD_ORDER = exam.fields
 
 /** 学習。2階層で見せる。
  *
@@ -109,7 +110,7 @@ export function Topics() {
         </p>
         <h1>{category.middle}</h1>
         <p className="lead">
-          {category.topics} 論点 · 過去問 {category.questions} 問
+          {category.topics} 論点 · {exam.words.questions} {category.questions} 問
         </p>
 
         <div className="chips">

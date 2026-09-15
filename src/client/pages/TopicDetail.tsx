@@ -1,3 +1,4 @@
+import { exam } from '../exam'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { BackLink } from '../components/BackLink'
@@ -134,7 +135,11 @@ export function TopicDetail() {
       </p>
       <h1>{t.term}</h1>
       <p className="lead">
-        過去問で <b>{t.questionCount} 回</b> 出題されています。
+        {exam.roadmap ? (
+          <>ロードマップの単位です。読み終えたら下の確認問題 <b>{t.questionCount} 問</b>で確かめます。</>
+        ) : (
+          <>過去問で <b>{t.questionCount} 回</b> 出題されています。</>
+        )}
       </p>
 
       {t.explanation ? (
@@ -155,7 +160,7 @@ export function TopicDetail() {
         </div>
       ) : (
         <div className="notice">
-          この論点の解説はまだ作成されていません。下の過去問と解答で学習できます。
+          この論点の解説はまだ作成されていません。下の{exam.words.question}と解答で学習できます。
         </div>
       )}
 
@@ -166,7 +171,7 @@ export function TopicDetail() {
       </div>
       {drillError && <p className="error">{drillError}</p>}
 
-      <h2>この論点が出題された過去問</h2>
+      <h2>{exam.roadmap ? 'この単位の確認問題' : 'この論点が出題された過去問'}</h2>
       <ul className="list">
         {shownQuestions.map((q) => {
           const open = openQuestions[q.id]
@@ -222,7 +227,7 @@ export function TopicDetail() {
             </li>
           )
         })}
-        {data.questions.length === 0 && <li className="muted">紐づく過去問がありません。</li>}
+        {data.questions.length === 0 && <li className="muted">{exam.roadmap ? '確認問題がありません。' : '紐づく過去問がありません。'}</li>}
       </ul>
       {hiddenQuestions > 0 && (
         <div className="btn-row" style={{ marginTop: '0.6rem' }}>

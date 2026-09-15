@@ -25,7 +25,8 @@ EXAM="${1:-ip}"
 case "$EXAM" in
   ip) PROJECT=itpass-study;  DB=study-app-db;    URL=https://itpass-study-c91.pages.dev ;;
   ap) PROJECT=ap-am-study;   DB=study-app-ap-db; URL=https://ap-am-study.pages.dev ;;
-  *)  echo "第1引数は ip か ap"; exit 1 ;;
+  itc) PROJECT=itc-roadmap;  DB=study-app-itc-db; URL=https://itc-roadmap.pages.dev ;;
+  *)  echo "第1引数は ip か ap か itc"; exit 1 ;;
 esac
 
 # macOS 標準の bash 3.2 は $VAR 直後の全角文字を変数名に巻き込むので ${VAR} で区切る

@@ -14,7 +14,7 @@ def main() -> int:
     a = ap.parse_args(); d = Path(a.data)
     rm = json.loads((d / "roadmap.json").read_text(encoding="utf-8")); units = {u["topic_id"]: u for u in rm["units"]}
     qs = {}
-    for qp in sorted((d / "questions").glob("bundle_*.json")):
+    for qp in sorted((d / "roadmap_questions").glob("bundle_*.json")):
         for q in json.loads(qp.read_text(encoding="utf-8"))["questions"]: qs[q["qid"]] = q
     L = json.loads(Path(a.answers).read_text(encoding="utf-8")); ans = L.get("answers", {})
     per_unit = {tid: {"term": u["term"], "field": u["field"], "correct": 0, "total": 0} for tid, u in units.items()}

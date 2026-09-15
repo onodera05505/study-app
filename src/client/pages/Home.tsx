@@ -1,3 +1,4 @@
+import { exam } from '../exam'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { api, getLastTopic } from '../lib/api'
@@ -169,7 +170,7 @@ export function Home() {
         <section className="next-up">
           <h2>次の一手</h2>
           <p className="muted" style={{ fontSize: '0.82rem', margin: '-0.4rem 0 0.6rem' }}>
-            頻出なのにまだ理解できていない論点
+            {exam.words.nextUp}
           </p>
           <ul className="list">
             {next.slice(0, 5).map((t) => (

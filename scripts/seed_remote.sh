@@ -22,7 +22,8 @@ EXAM="${1:-}"
 case "$EXAM" in
   ip) DB=study-app-db ;;
   ap) DB=study-app-ap-db ;;
-  *)  echo "第1引数は ip か ap"; exit 1 ;;
+  itc) DB=study-app-itc-db ;;
+  *)  echo "第1引数は ip か ap か itc"; exit 1 ;;
 esac
 WHERE="--remote"
 if [ "${2:-}" = "--local" ]; then WHERE="--local"; fi

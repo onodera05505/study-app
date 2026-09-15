@@ -40,6 +40,7 @@ backup_one () {
 case "${1:-all}" in
   ip)  backup_one ip study-app-db ;;
   ap)  backup_one ap study-app-ap-db ;;
+  itc) backup_one itc study-app-itc-db ;;
   all) backup_one ip study-app-db; backup_one ap study-app-ap-db ;;
   *)   echo "第1引数は ip か ap（省略で両方）"; exit 1 ;;
 esac

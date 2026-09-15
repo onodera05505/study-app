@@ -36,6 +36,8 @@ export const topics = sqliteTable(
     detail: text('detail'),
     /** topic_questions の件数キャッシュ。並べ替えのたびに数えないための非正規化。 */
     questionCount: integer('question_count').notNull().default(0),
+    /** ロードマップ型（itc）の学ぶ順。資格版は NULL（出題頻度で並べる）。migrations/0005 */
+    sortOrder: integer('sort_order'),
     createdAt: integer('created_at').notNull().default(now),
     updatedAt: integer('updated_at').notNull().default(now),
   },
