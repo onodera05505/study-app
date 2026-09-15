@@ -83,7 +83,7 @@ npx wrangler dev
 
 ### 本番
 
-**公開先: https://itpass-study-c91.pages.dev**
+**公開先: https://itpass-study-d02.pages.dev**
 
 新規登録には合言葉（`SIGNUP_CODE`）が要る。身内以外が勝手に登録できないようにするため。
 

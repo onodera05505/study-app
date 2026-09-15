@@ -32,4 +32,4 @@ fi
 echo "▶ 5/5 模試設定を試験に合わせる"
 bash scripts/align_app_settings.sh "$EXAM"
 echo
-echo "完了: https://${PROJECT}.pages.dev"
+echo "完了: $(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['$EXAM'].get('url','https://${PROJECT}.pages.dev'))")"

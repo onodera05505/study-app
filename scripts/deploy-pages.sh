@@ -25,7 +25,7 @@ EXAM="${1:-ip}"
 case "$EXAM" in ip|ap|itc) ;; *) echo "第1引数は ip か ap か itc"; exit 1 ;; esac
 # プロジェクト名と DB は scripts/pages_projects.json が正本（2026-09-15 に個人アカウントへ移した際に 1 か所に集約）
 read -r PROJECT DB < <(python3 -c "import json;c=json.load(open('scripts/pages_projects.json'))['$EXAM'];print(c['project'],c['db'])")
-URL="https://${PROJECT}.pages.dev"
+URL=$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['$EXAM'].get('url','https://${PROJECT}.pages.dev'))")
 
 # アカウントの取り違えを止める門（同じ Mac で別アカウントのログインに差し替わることがある）
 WANT=$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['account_id'])")
