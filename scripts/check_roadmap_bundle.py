@@ -5,7 +5,7 @@
 from __future__ import annotations
 import argparse, json, re, sys
 from pathlib import Path
-NG = re.compile(r"激務|ブラック(?!ボックス)|年収|万円|最新|近年")
+NG_DEFAULT = ["激務", "ブラック(?!ボックス)", "年収", "万円", "最新", "近年"]  # 対象の登録簿 roadmapSpec.ngWords で上書き（2026-09-15: マーケの金額例に「万円」が要る）
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--bundle", required=True)
     a = ap.parse_args(); d = Path(a.data)
@@ -23,6 +23,7 @@ def main() -> int:
     errs, warns = [], []
     sys.path.insert(0, str(Path(__file__).parent)); from targets import target
     USAGE = (target(d.name).get("roadmapSpec") or {}).get("usageSection", "面接で話すなら")
+    NG = re.compile("|".join((target(d.name).get("roadmapSpec") or {}).get("ngWords", NG_DEFAULT)))
     bb = [(t["topic_id"], t["term"]) for t in b["topics"]]; mm = [(x["topic_id"], x["term"]) for x in m.get("materials", [])]
     if bb != mm: errs.append(f"担当バンドルと出力の論点が不一致\n  bundle={bb}\n  output={mm}")
     for x in m.get("materials", []):

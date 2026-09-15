@@ -14,7 +14,7 @@ from __future__ import annotations
 import argparse, glob, json, re, sys
 from pathlib import Path
 
-NG = re.compile(r"激務|ブラック(?!ボックス)|年収|万円|最新|近年")
+NG_DEFAULT = ["激務", "ブラック(?!ボックス)", "年収", "万円", "最新", "近年"]  # 対象の登録簿 roadmapSpec.ngWords で上書き（2026-09-15: マーケの金額例に「万円」が要る）
 VERBATIM = 14
 
 def verbatim(choice: str, text: str) -> bool:
@@ -31,6 +31,7 @@ def main() -> int:
     errors: list[str] = []; warns: list[str] = []
     sys.path.insert(0, str(Path(__file__).parent)); from targets import target
     USAGE = (target(d.name).get("roadmapSpec") or {}).get("usageSection", "面接で話すなら")
+    NG = re.compile("|".join((target(d.name).get("roadmapSpec") or {}).get("ngWords", NG_DEFAULT)))
     rm = json.loads((d / "roadmap.json").read_text(encoding="utf-8"))
     units = {u["topic_id"]: u for u in rm["units"]}; terms = {u["term"] for u in rm["units"]}
     # 教材
