@@ -16,7 +16,7 @@ def main() -> int:
     rm = json.loads((d / "roadmap.json").read_text(encoding="utf-8"))
     # パックを作った時点の並びを残す（作った後に roadmap.json の並びが変わると、学習者の「順番の番号」を採点で写せない。
     # mkt 2 周目で発生 2026-09-15）。採点は grade_learner.py --roadmap <この写し> で読む
-    snap = d / "eval" / f"roadmap_{a.out.name}.json"; snap.parent.mkdir(exist_ok=True); snap.write_text(json.dumps(rm, ensure_ascii=False, indent=2), encoding="utf-8")
+    snap = d / "eval" / f"roadmap_{Path(a.out).name}.json"; snap.parent.mkdir(exist_ok=True); snap.write_text(json.dumps(rm, ensure_ascii=False, indent=2), encoding="utf-8")
     mats = {}
     for mp in sorted((d / "materials").glob("bundle_*.json")):
         for x in json.loads(mp.read_text(encoding="utf-8"))["materials"]: mats[x["topic_id"]] = x
