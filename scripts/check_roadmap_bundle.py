@@ -6,9 +6,14 @@ from __future__ import annotations
 import argparse, json, re, sys
 from pathlib import Path
 NG_DEFAULT = ["激務", "ブラック(?!ボックス)", "年収", "万円", "最新", "近年"]  # 対象の登録簿 roadmapSpec.ngWords で上書き（2026-09-15: マーケの金額例に「万円」が要る）
+def _kw(key: str) -> str:
+    sys.path.insert(0, str(Path(__file__).resolve().parent)); from targets import target
+    return (target(key).get("roadmapSpec") or {}).get("keywordLabel", "見分けワード")  # 資格版の「見分けワード」は対象ごとに呼び方を変える（mkt は「キーワード」2026-09-15）
+
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--bundle", required=True)
     a = ap.parse_args(); d = Path(a.data)
+    KW = _kw(d.name)
     b = json.loads((d / "material_bundles" / f"{a.bundle}.json").read_text(encoding="utf-8"))
     mp = d / "materials" / f"{a.bundle}.json"
     if not mp.exists(): print(f"✘ 出力が無い: {mp}"); return 1
@@ -35,7 +40,7 @@ def main() -> int:
         if len(ex) > 420: warns.append(f"{tag}: explanation が長い {len(ex)}（目安 200〜300）")
         if len(de) < 150: errs.append(f"{tag}: detail が短い {len(de)}")
         if len(de) > 800: warns.append(f"{tag}: detail が長い {len(de)}（目安 300〜500）")
-        if "見分けワード" not in ex: errs.append(f"{tag}: 見分けワードの行が無い")
+        if KW not in ex: errs.append(f"{tag}: {KW}の行が無い")
         if "### しくみ" not in de: errs.append(f"{tag}: 「### しくみ」が無い")
         if f"### {USAGE}" not in de: warns.append(f"{tag}: 「### {USAGE}」が無い")
         for t in re.findall(r"\[\[([^\]]+)\]\]", ex + de):

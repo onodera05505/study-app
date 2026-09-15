@@ -25,9 +25,14 @@ def verbatim(choice: str, text: str) -> bool:
     return any(c[i:i + VERBATIM] in t for i in range(0, max(1, len(c) - VERBATIM + 1)))
 ALLOWED_INLINE = re.compile(r"^(#{3} |- |\d+\. |\||!\[)")
 
+def _kw(key: str) -> str:
+    sys.path.insert(0, str(Path(__file__).resolve().parent)); from targets import target
+    return (target(key).get("roadmapSpec") or {}).get("keywordLabel", "見分けワード")  # 資格版の「見分けワード」は対象ごとに呼び方を変える（mkt は「キーワード」2026-09-15）
+
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--solutions", nargs="*", default=[])
     a = ap.parse_args(); d = Path(a.data)
+    KW = _kw(d.name)
     errors: list[str] = []; warns: list[str] = []
     sys.path.insert(0, str(Path(__file__).parent)); from targets import target
     USAGE = (target(d.name).get("roadmapSpec") or {}).get("usageSection", "面接で話すなら")
@@ -56,7 +61,7 @@ def main() -> int:
             if len(ex) > 420: warns.append(f"{tag}: explanation が長い {len(ex)} 字（目安 200〜300）")
             if len(de) < 150: errors.append(f"{tag}: detail が短すぎる {len(de)} 字")
             if len(de) > 800: warns.append(f"{tag}: detail が長い {len(de)} 字（目安 300〜500）")
-            if "見分けワード" not in ex: errors.append(f"{tag}: 見分けワードの行が無い")
+            if KW not in ex: errors.append(f"{tag}: {KW}の行が無い")
             if "### しくみ" not in de: errors.append(f"{tag}: detail に「### しくみ」が無い")
             if f"### {USAGE}" not in de: warns.append(f"{tag}: detail に「### {USAGE}」が無い")
             for term in re.findall(r"\[\[([^\]]+)\]\]", ex + de):
