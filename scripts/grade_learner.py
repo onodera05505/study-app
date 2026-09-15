@@ -10,9 +10,9 @@ import argparse, json, sys
 from pathlib import Path
 
 def main() -> int:
-    ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--answers", required=True); ap.add_argument("--cycle", type=int, required=True); ap.add_argument("--explain", help="採点担当が書いた説明テストの採点 JSON（{\"grades\": {\"語\": 0|1|2, ...}}）")
+    ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--answers", required=True); ap.add_argument("--cycle", type=int, required=True); ap.add_argument("--roadmap", help="学習者パックを作った時点の roadmap.json（順番→ID の写しに使う。作った後に並びが変わったとき。既定は data/<key>/roadmap.json）"); ap.add_argument("--explain", help="採点担当が書いた説明テストの採点 JSON（{\"grades\": {\"語\": 0|1|2, ...}}）")
     a = ap.parse_args(); d = Path(a.data)
-    rm = json.loads((d / "roadmap.json").read_text(encoding="utf-8")); units = {u["topic_id"]: u for u in rm["units"]}
+    rm = json.loads(Path(a.roadmap or (d / "roadmap.json")).read_text(encoding="utf-8")); units = {u["topic_id"]: u for u in rm["units"]}
     qs = {}
     for qp in sorted((d / "roadmap_questions").glob("bundle_*.json")):
         for q in json.loads(qp.read_text(encoding="utf-8"))["questions"]: qs[q["qid"]] = q

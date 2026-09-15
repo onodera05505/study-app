@@ -231,28 +231,6 @@
     {
       "order": 10,
       "day": 4,
-      "topic_id": 16,
-      "term": "ペルソナ",
-      "field": "市場と顧客の理解",
-      "middle": "顧客と購買行動",
-      "summary": "狙う一人を課題と動機まで具体で書く",
-      "score": 6.5,
-      "source_count": 2,
-      "interview_count": 9,
-      "prereq": [
-        "セグメンテーション"
-      ],
-      "goals": [
-        1
-      ],
-      "sources": [
-        "Inbound Certification Course（HubSpot Academy 無料講座）",
-        "Fundamentals of Digital Marketing（Google デジタルワークショップ / Skillshop）"
-      ]
-    },
-    {
-      "order": 11,
-      "day": 4,
       "topic_id": 24,
       "term": "ポジショニング",
       "field": "戦略と打ち手（STP・4P）",
@@ -272,6 +250,28 @@
         "マーケティング・ビジネス実務検定 各級の出題傾向比較（A級／B級／C級）",
         "法政大学 シラバス「マーケティング論」（授業計画）",
         "OpenStax Principles of Marketing（全19章の目次）"
+      ]
+    },
+    {
+      "order": 11,
+      "day": 4,
+      "topic_id": 16,
+      "term": "ペルソナ",
+      "field": "市場と顧客の理解",
+      "middle": "顧客と購買行動",
+      "summary": "狙う一人を課題と動機まで具体で書く",
+      "score": 6.5,
+      "source_count": 2,
+      "interview_count": 9,
+      "prereq": [
+        "セグメンテーション"
+      ],
+      "goals": [
+        1
+      ],
+      "sources": [
+        "Inbound Certification Course（HubSpot Academy 無料講座）",
+        "Fundamentals of Digital Marketing（Google デジタルワークショップ / Skillshop）"
       ]
     },
     {
@@ -572,33 +572,75 @@
     {
       "order": 25,
       "day": 9,
-      "topic_id": 49,
-      "term": "LP と CTA の設計",
+      "topic_id": 43,
+      "term": "SEO（検索からの流入）",
       "field": "デジタルと計測",
       "middle": "デジタル施策の選択肢",
-      "summary": "来た人が迷わず次の行動へ進む導線",
-      "score": 7.0,
-      "source_count": 7,
+      "summary": "検索で見つけてもらうための作り方",
+      "score": 3.0,
+      "source_count": 3,
       "interview_count": 0,
       "prereq": [
-        "ファネル（認知・比較検討・獲得）"
+        "デジタルマーケティングの全体像"
       ],
       "goals": [
         4
       ],
       "sources": [
-        "J-Net21 経営ハンドブック（目次）",
         "J-Net21 起業マニュアル（目次。第2章・第5章・第7章がマーケティング相当）",
-        "アナリティクスのディメンションと指標（Google アナリティクス ヘルプ / GA4）",
         "Fundamentals of Digital Marketing（Google デジタルワークショップ / Skillshop）",
-        "Email Marketing Benchmarks（Mailchimp 公開ガイド）",
-        "A/B Testing（Optimizely Optimization Glossary 公開ガイド）",
-        "中小企業とDX 取組事例（J-Net21 / 中小企業基盤整備機構）"
+        "SEO スターター ガイド（Google 検索セントラル 公式ドキュメント）"
       ]
     },
     {
       "order": 26,
       "day": 9,
+      "topic_id": 46,
+      "term": "SNSマーケティング",
+      "field": "デジタルと計測",
+      "middle": "デジタル施策の選択肢",
+      "summary": "関係と話題で広がる場の使い方",
+      "score": 3.0,
+      "source_count": 3,
+      "interview_count": 0,
+      "prereq": [
+        "デジタルマーケティングの全体像"
+      ],
+      "goals": [
+        4
+      ],
+      "sources": [
+        "J-Net21 起業マニュアル（目次。第2章・第5章・第7章がマーケティング相当）",
+        "Fundamentals of Digital Marketing（Google デジタルワークショップ / Skillshop）",
+        "OpenStax Principles of Marketing（全19章の目次）"
+      ]
+    },
+    {
+      "order": 27,
+      "day": 9,
+      "topic_id": 38,
+      "term": "広告",
+      "field": "戦略と打ち手（STP・4P）",
+      "middle": "流通とプロモーション",
+      "summary": "費用を払って広く伝える手段の性質",
+      "score": 3.0,
+      "source_count": 3,
+      "interview_count": 0,
+      "prereq": [
+        "施策の向き不向き（即効性と資産型）"
+      ],
+      "goals": [
+        4
+      ],
+      "sources": [
+        "マーケティング・ビジネス実務検定 各級の出題傾向比較（A級／B級／C級）",
+        "J-Net21 起業マニュアル（目次。第2章・第5章・第7章がマーケティング相当）",
+        "OpenStax Principles of Marketing（全19章の目次）"
+      ]
+    },
+    {
+      "order": 28,
+      "day": 10,
       "topic_id": 47,
       "term": "メールマーケティング",
       "field": "デジタルと計測",
@@ -621,72 +663,30 @@
       ]
     },
     {
-      "order": 27,
-      "day": 9,
-      "topic_id": 43,
-      "term": "SEO（検索からの流入）",
-      "field": "デジタルと計測",
-      "middle": "デジタル施策の選択肢",
-      "summary": "検索で見つけてもらうための作り方",
-      "score": 3.0,
-      "source_count": 3,
-      "interview_count": 0,
-      "prereq": [
-        "デジタルマーケティングの全体像"
-      ],
-      "goals": [
-        4
-      ],
-      "sources": [
-        "J-Net21 起業マニュアル（目次。第2章・第5章・第7章がマーケティング相当）",
-        "Fundamentals of Digital Marketing（Google デジタルワークショップ / Skillshop）",
-        "SEO スターター ガイド（Google 検索セントラル 公式ドキュメント）"
-      ]
-    },
-    {
-      "order": 28,
-      "day": 10,
-      "topic_id": 46,
-      "term": "SNSマーケティング",
-      "field": "デジタルと計測",
-      "middle": "デジタル施策の選択肢",
-      "summary": "関係と話題で広がる場の使い方",
-      "score": 3.0,
-      "source_count": 3,
-      "interview_count": 0,
-      "prereq": [
-        "デジタルマーケティングの全体像"
-      ],
-      "goals": [
-        4
-      ],
-      "sources": [
-        "J-Net21 起業マニュアル（目次。第2章・第5章・第7章がマーケティング相当）",
-        "Fundamentals of Digital Marketing（Google デジタルワークショップ / Skillshop）",
-        "OpenStax Principles of Marketing（全19章の目次）"
-      ]
-    },
-    {
       "order": 29,
       "day": 10,
-      "topic_id": 38,
-      "term": "広告",
-      "field": "戦略と打ち手（STP・4P）",
-      "middle": "流通とプロモーション",
-      "summary": "費用を払って広く伝える手段の性質",
-      "score": 3.0,
-      "source_count": 3,
+      "topic_id": 49,
+      "term": "LP と CTA の設計",
+      "field": "デジタルと計測",
+      "middle": "デジタル施策の選択肢",
+      "summary": "来た人が迷わず次の行動へ進む導線",
+      "score": 7.0,
+      "source_count": 7,
       "interview_count": 0,
       "prereq": [
-        "施策の向き不向き（即効性と資産型）"
+        "ファネル（認知・比較検討・獲得）"
       ],
       "goals": [
         4
       ],
       "sources": [
-        "マーケティング・ビジネス実務検定 各級の出題傾向比較（A級／B級／C級）",
+        "J-Net21 経営ハンドブック（目次）",
         "J-Net21 起業マニュアル（目次。第2章・第5章・第7章がマーケティング相当）",
-        "OpenStax Principles of Marketing（全19章の目次）"
+        "アナリティクスのディメンションと指標（Google アナリティクス ヘルプ / GA4）",
+        "Fundamentals of Digital Marketing（Google デジタルワークショップ / Skillshop）",
+        "Email Marketing Benchmarks（Mailchimp 公開ガイド）",
+        "A/B Testing（Optimizely Optimization Glossary 公開ガイド）",
+        "中小企業とDX 取組事例（J-Net21 / 中小企業基盤整備機構）"
       ]
     },
     {
@@ -781,28 +781,6 @@
     {
       "order": 34,
       "day": 12,
-      "topic_id": 54,
-      "term": "アトリビューション",
-      "field": "デジタルと計測",
-      "middle": "計測の設計",
-      "summary": "複数接点の成果をどう配分するかの考え方",
-      "score": 3.5,
-      "source_count": 2,
-      "interview_count": 3,
-      "prereq": [
-        "計測設計（何を成果とみなすか）"
-      ],
-      "goals": [
-        5
-      ],
-      "sources": [
-        "アナリティクスのディメンションと指標（Google アナリティクス ヘルプ / GA4）",
-        "アトリビューションのスタートガイド（Google アナリティクス ヘルプ / GA4）"
-      ]
-    },
-    {
-      "order": 35,
-      "day": 12,
       "topic_id": 75,
       "term": "A/Bテストの進め方",
       "field": "実務の判断と評価",
@@ -821,6 +799,28 @@
         "Inbound Certification Course（HubSpot Academy 無料講座）",
         "Email Marketing Benchmarks（Mailchimp 公開ガイド）",
         "A/B Testing（Optimizely Optimization Glossary 公開ガイド）"
+      ]
+    },
+    {
+      "order": 35,
+      "day": 12,
+      "topic_id": 54,
+      "term": "アトリビューション",
+      "field": "デジタルと計測",
+      "middle": "計測の設計",
+      "summary": "複数接点の成果をどう配分するかの考え方",
+      "score": 3.5,
+      "source_count": 2,
+      "interview_count": 3,
+      "prereq": [
+        "計測設計（何を成果とみなすか）"
+      ],
+      "goals": [
+        5
+      ],
+      "sources": [
+        "アナリティクスのディメンションと指標（Google アナリティクス ヘルプ / GA4）",
+        "アトリビューションのスタートガイド（Google アナリティクス ヘルプ / GA4）"
       ]
     },
     {
@@ -889,29 +889,6 @@
     {
       "order": 39,
       "day": 13,
-      "topic_id": 82,
-      "term": "経営への説明（投資判断の言葉に翻訳）",
-      "field": "実務の判断と評価",
-      "middle": "予算配分と投資判断",
-      "summary": "増収額と回収期間で投資として語る",
-      "score": 3.5,
-      "source_count": 1,
-      "interview_count": 5,
-      "prereq": [
-        "LTV:CAC と回収期間",
-        "予算配分の優先順位"
-      ],
-      "goals": [
-        5,
-        6
-      ],
-      "sources": [
-        "法政大学 シラバス「マーケティング論」（授業計画）"
-      ]
-    },
-    {
-      "order": 40,
-      "day": 14,
       "topic_id": 84,
       "term": "失敗の型: ターゲット不在",
       "field": "実務の判断と評価",
@@ -930,7 +907,7 @@
       "sources": []
     },
     {
-      "order": 41,
+      "order": 40,
       "day": 14,
       "topic_id": 86,
       "term": "失敗の型: 単一指標での判断",
@@ -950,7 +927,7 @@
       "sources": []
     },
     {
-      "order": 42,
+      "order": 41,
       "day": 14,
       "topic_id": 87,
       "term": "営業とマーケティングの連携",
@@ -967,6 +944,29 @@
         6
       ],
       "sources": []
+    },
+    {
+      "order": 42,
+      "day": 14,
+      "topic_id": 82,
+      "term": "経営への説明（投資判断の言葉に翻訳）",
+      "field": "実務の判断と評価",
+      "middle": "予算配分と投資判断",
+      "summary": "増収額と回収期間で投資として語る",
+      "score": 3.5,
+      "source_count": 1,
+      "interview_count": 5,
+      "prereq": [
+        "LTV:CAC と回収期間",
+        "予算配分の優先順位"
+      ],
+      "goals": [
+        5,
+        6
+      ],
+      "sources": [
+        "法政大学 シラバス「マーケティング論」（授業計画）"
+      ]
     }
   ]
 }

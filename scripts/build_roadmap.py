@@ -73,7 +73,16 @@ def main() -> int:
     for c in last_units: visit(c)
     # cluster: 先頭の単位の位置に、残りを順に並べて連続させる（学習者が「工程が 5〜12 日目に散った」と報告したため）
     for group in cfg.get("cluster", []):
-        members = sorted((by_term[t] for t in group if t in by_term), key=ordered.index)  # 設定の列挙順ではなく前提順（itc: ES が前提の棚卸しより前に列挙されていた）
+        members = [by_term[t] for t in group if t in by_term]
+        # 設定の列挙順を基本にし、クラスタ内の前提が後ろにある単位だけをその前提の直後へ送る（安定な並べ替え。
+        # 全体を前提順に並べ替えると、意図した順（構想策定→要件定義→設計）が崩れた 2026-09-15）
+        for _ in range(len(members)):
+            moved = False
+            for m in list(members):
+                later = [members.index(by_term[p]) for p in m.get("prereq", []) if p in by_term and by_term[p] in members and members.index(by_term[p]) > members.index(m)]
+                if later:
+                    members.remove(m); members.insert(max(later), m); moved = True; break
+            if not moved: break
         if len(members) < 2: continue
         rest = [m for m in ordered if m not in members]
         first = min(ordered.index(m) for m in members)
