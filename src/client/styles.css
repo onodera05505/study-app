@@ -25,6 +25,10 @@
   --s1: #c3cad4; /* 未理解 */
   --s2: #b8720f; /* やや理解 */
   --s3: #1e4c8a; /* 理解 */
+  /* バッジの文字色。--s1/--s2 を明地の薄い塗りに載せると 4.5:1 を割る（受入で実測 3.2）ので、文字だけ濃い版 */
+  --s1-ink: #4a5460;
+  --s2-ink: #8a5300;
+  --s3-ink: #1e4c8a;
   --ok: #1c7a46;
   --ng: #ab2a20;
 
@@ -49,6 +53,9 @@
     --s1: #39414d;
     --s2: #e0a253;
     --s3: #7fa9e8;
+    --s1-ink: #b3bcc8;
+    --s2-ink: #e0a253;
+    --s3-ink: #7fa9e8;
     --ok: #4cb277;
     --ng: #e2685c;
   }
@@ -1157,9 +1164,9 @@ button.choice:hover:not(:disabled) { border-color: var(--accent); }
   white-space: nowrap;
 }
 /* color-mix が無いブラウザ（古い Safari）向けの代替を先に書き、対応環境だけ上書きする */
-.status-badge.st-1 { color: var(--muted); background: rgba(150, 160, 175, 0.25); border-color: var(--s1); }
-.status-badge.st-2 { color: var(--s2); background: rgba(184, 114, 15, 0.14); border-color: var(--s2); }
-.status-badge.st-3 { color: var(--s3); background: rgba(30, 76, 138, 0.14); border-color: var(--s3); }
+.status-badge.st-1 { color: var(--s1-ink); background: rgba(150, 160, 175, 0.25); border-color: var(--s1); }
+.status-badge.st-2 { color: var(--s2-ink); background: rgba(184, 114, 15, 0.14); border-color: var(--s2); }
+.status-badge.st-3 { color: var(--s3-ink); background: rgba(30, 76, 138, 0.14); border-color: var(--s3); }
 .row.st-3 { border-left: 4px solid var(--s3); background: rgba(30, 76, 138, 0.06); }
 @supports (background: color-mix(in srgb, red 10%, transparent)) {
 .status-badge.st-1 { background: color-mix(in srgb, var(--s1) 45%, transparent); }
