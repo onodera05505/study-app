@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { STATUS_LABEL, api } from '../lib/api'
+import { api } from '../lib/api'
 import { exam } from '../exam'
+import { StatusBadge, statusRowClass } from '../components/StatusBadge'
 
 type Unit = {
   id: number
@@ -88,6 +89,11 @@ export function Roadmap() {
           <section key={d} className="rm-day">
             <h2 className={done ? 'rm-day-head done' : 'rm-day-head'}>
               {d === 0 ? '順序なし' : `${d} 日目`}
+              <span className="rm-dots" aria-label={`理解 ${list.filter((u) => u.status === 3).length} / ${list.length}`}>
+                {list.map((u) => (
+                  <i key={u.id} className={`st-${u.status ?? 1}`} />
+                ))}
+              </span>
               {done && <small>完了</small>}
             </h2>
             <ul className="list">
@@ -96,14 +102,14 @@ export function Roadmap() {
                 const here = current?.id === u.id
                 return (
                   <li key={u.id}>
-                    <Link to={`/topics/${u.id}`} className={here ? 'row rm-here' : 'row'}>
+                    <Link to={`/topics/${u.id}`} className={statusRowClass(st, here ? 'rm-here' : '')}>
                       <span className="rm-order">{u.sortOrder ?? '-'}</span>
                       <span className="grow">
                         <span className="term">{u.term}</span>
                         <span className="meta">{u.middle}</span>
                       </span>
                       {here && <span className="rm-here-label">ここから</span>}
-                      <span className={`rm-status status-${st}`}>{STATUS_LABEL[st]}</span>
+                      <StatusBadge status={st} />
                     </Link>
                   </li>
                 )
@@ -124,13 +130,13 @@ export function Roadmap() {
               const st = u.status ?? 1
               return (
                 <li key={u.id}>
-                  <Link to={`/topics/${u.id}`} className="row">
+                  <Link to={`/topics/${u.id}`} className={statusRowClass(st)}>
                     <span className="rm-order">＋</span>
                     <span className="grow">
                       <span className="term">{u.term}</span>
                       <span className="meta">{u.middle}</span>
                     </span>
-                    <span className={`rm-status status-${st}`}>{STATUS_LABEL[st]}</span>
+                    <StatusBadge status={st} />
                   </Link>
                 </li>
               )

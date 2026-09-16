@@ -1145,3 +1145,32 @@ button.choice:hover:not(:disabled) { border-color: var(--accent); }
 .rm-home-progress { font-size: 0.95rem; color: var(--muted); margin: 0.6rem 0 1rem; }
 .account-name { margin: 0 0 0.4rem; padding: 0.3rem 0.6rem; font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
 
+/* ---- 理解度のバッジと行の色（2026-09-16） ---- */
+.status-badge {
+  flex: none;
+  align-self: center;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+/* color-mix が無いブラウザ（古い Safari）向けの代替を先に書き、対応環境だけ上書きする */
+.status-badge.st-1 { color: var(--muted); background: rgba(150, 160, 175, 0.25); border-color: var(--s1); }
+.status-badge.st-2 { color: var(--s2); background: rgba(184, 114, 15, 0.14); border-color: var(--s2); }
+.status-badge.st-3 { color: var(--s3); background: rgba(30, 76, 138, 0.14); border-color: var(--s3); }
+.row.st-3 { border-left: 4px solid var(--s3); background: rgba(30, 76, 138, 0.06); }
+@supports (background: color-mix(in srgb, red 10%, transparent)) {
+.status-badge.st-1 { background: color-mix(in srgb, var(--s1) 45%, transparent); }
+.status-badge.st-2 { background: color-mix(in srgb, var(--s2) 16%, transparent); }
+.status-badge.st-3 { background: color-mix(in srgb, var(--s3) 16%, transparent); }
+.row.st-3 { background: color-mix(in srgb, var(--s3) 7%, transparent); }
+}
+.row.st-2 { border-left: 4px solid var(--s2); }
+.row.st-3 .term { color: var(--s3); }
+.rm-dots { display: inline-flex; gap: 3px; align-items: center; }
+.rm-dots i { width: 10px; height: 10px; border-radius: 999px; background: var(--s1); display: block; }
+.rm-dots i.st-2 { background: var(--s2); }
+.rm-dots i.st-3 { background: var(--s3); }
+

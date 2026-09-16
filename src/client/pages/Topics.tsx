@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { BackLink } from '../components/BackLink'
 import { STATUS_LABEL, api, apiCached } from '../lib/api'
+import { StatusBadge, statusRowClass } from '../components/StatusBadge'
 import type { Field, TopicRow } from '../lib/api'
 
 type Category = {
@@ -148,7 +149,7 @@ export function Topics() {
             const status = t.status ?? 1
             return (
             <li key={t.id}>
-              <Link to={`/topics/${t.id}`} className="row">
+              <Link to={`/topics/${t.id}`} className={statusRowClass(status)}>
                 <span className="freq">
                   <b>{t.questionCount}</b>
                   <small>回</small>
@@ -159,13 +160,9 @@ export function Topics() {
                       一覧の高さが倍になるだけで、行を見分ける手がかりにならない。 */}
                   {t.itemName !== category.middle && <span className="meta">{t.itemName}</span>}
                 </span>
-                {/* 段数は色だけでなく**本数**でも示す。色だけだと、未理解の行も
-                    3本塗られていて満タン（理解済み）に見えていた。 */}
-                <span className={`steps s${status}`} aria-label={STATUS_LABEL[status]}>
-                  {Array.from({ length: status }, (_, i) => (
-                    <i key={i} />
-                  ))}
-                </span>
+                {/* 理解度は文字＋色＋塗りのバッジ（2026-09-16。以前の 3 本の棒は「分かりづらい」と指摘された。
+                    色だけに頼らず文字を持つのは、未理解の行が満タンに見えた過去の教訓）。 */}
+                <StatusBadge status={status} />
               </Link>
             </li>
             )
