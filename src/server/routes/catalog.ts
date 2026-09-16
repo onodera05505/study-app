@@ -276,6 +276,9 @@ catalogRoutes.put('/topics/:id/progress', async (c) => {
   }
   const db = getDb(c.env)
   const userId = c.get('user').id
+  // 存在しない論点は 404（外部キーで 500 になっていた。受入の所見 2026-09-16）
+  const exists = await db.get<{ id: number }>(sql`SELECT id FROM topics WHERE id = ${id}`)
+  if (!exists) return c.json({ error: '論点が見つかりません' }, 404)
   await db
     .insert(schema.progress)
     .values({ userId, topicId: id, status: parsed.data.status })

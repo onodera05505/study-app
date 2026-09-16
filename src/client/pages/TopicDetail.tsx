@@ -7,7 +7,7 @@ import { DupBadge } from '../components/DupBadge'
 import { Explanation, type ExplanationData } from '../components/Explanation'
 import { Figure } from '../components/Figure'
 import { Markdown } from '../components/Markdown'
-import { STATUS_LABEL, api, setLastTopic } from '../lib/api'
+import { STATUS_LABEL, api, setLastTopic, invalidateCached } from '../lib/api'
 import { formatChoice } from '../lib/choice'
 
 type Detail = {
@@ -96,6 +96,7 @@ export function TopicDetail() {
     setMarkError('')
     try {
       await api(`/topics/${id}/progress`, { method: 'PUT', body: { status: next } })
+      invalidateCached() // 単元一覧の「理解した数」は覚えたものを出しているので捨てる
     } catch (e: any) {
       // 保存できていないのに押したままの見た目にすると、記録されたと誤解する。
       // 表示を元の値に戻したうえで、その場で失敗したことを言う。
@@ -286,6 +287,17 @@ export function TopicDetail() {
             <Link to="/topics">単元の一覧へ</Link>
           </div>
         )}
+      </div>
+
+      {/* 読み終えた位置から戻れるようにする。戻るリンクは上にもあるが、教材を読み切った後は画面の下端にいる
+          （利用者のフィードバック「学習した後に画面を戻るのがやりづらい」2026-09-16）。 */}
+      <div className="btn-row" style={{ margin: '0.8rem 0 1rem' }}>
+        <Link className="btn" to={`/topics?middleNo=${t.middleNo}`}>
+          {t.middle} の一覧に戻る
+        </Link>
+        <Link className="btn" to="/">
+          ホームへ
+        </Link>
       </div>
 
       {/* 理解度は解説を読み終えた直後に押すもの。下部に固定して、

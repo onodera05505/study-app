@@ -634,6 +634,7 @@ def check_failure_shapes(c: Client, r: Report, code: str | None):
         ("topics?sort が範囲外", "GET", "/topics?sort=nonsense", None, 400),
         ("存在しないセッション", "GET", "/sessions/" + str(uuid.uuid4()), None, 404),
         ("progress に範囲外の status", "PUT", "/topics/1/progress", {"status": 9}, 400),
+        ("存在しない論点の progress", "PUT", "/topics/99999999/progress", {"status": 2}, 404),
         ("セッション作成が空ボディ", "POST", "/sessions", {}, 400),
         ("フィードバックが空ボディ", "POST", "/feedback", {}, 400),
         ("フィードバックが空文", "POST", "/feedback", {"body": "   "}, 400),

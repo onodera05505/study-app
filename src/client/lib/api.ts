@@ -100,6 +100,14 @@ export async function api<T = any>(
  *  内容が変わりうるもの（論点一覧・進捗・受験履歴）には使わないこと。 */
 const memo = new Map<string, Promise<unknown>>()
 
+/** 覚えたものを捨てる。進捗を変えた直後に呼ぶ。
+ *  /fields と /categories は分野・単元の構造だけでなく「理解した数」も返す（進捗の集計を含む）。
+ *  理解度を付けて一覧へ戻っても古い数が出続け、再読み込みで直る、という不具合の原因だった
+ *  （利用者のフィードバック 2026-09-16）。 */
+export function invalidateCached() {
+  memo.clear()
+}
+
 export function apiCached<T = any>(path: string): Promise<T> {
   const hit = memo.get(path)
   if (hit) return hit as Promise<T>
