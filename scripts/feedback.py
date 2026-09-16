@@ -6,6 +6,7 @@
     python3 scripts/feedback.py mark mkt <id> [<id>…] --status done --note "単位 66 の説明を直した（コミット abc123）"
     python3 scripts/feedback.py fetch --every          # 4 対象ぶんまとめて
     python3 scripts/feedback.py fetch mkt --local      # ローカル D1（リハーサル）
+    python3 scripts/feedback.py summary                # 未処理の件数だけ（定期確認。0 件なら黙る運用）
 
 利用者側には一覧 API を作らない。ここが唯一の読み口。改善フェーズの手順は .claude/skills/improve-from-feedback/SKILL.md。
 wrangler は登録簿の account_id のアカウントでログインしている必要がある（別アカウントなら止まる）。
@@ -69,10 +70,16 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
     f = sub.add_parser("fetch"); f.add_argument("exam", nargs="?"); f.add_argument("--all", action="store_true"); f.add_argument("--every", action="store_true", help="全対象")
+    sub.add_parser("summary", help="未処理の件数だけを 1 行で（定期確認用）")
     m = sub.add_parser("mark"); m.add_argument("exam"); m.add_argument("ids", nargs="+"); m.add_argument("--status", choices=STATUSES, required=True); m.add_argument("--note", default="")
     for sp in (f, m): sp.add_argument("--local", action="store_true", help="ローカル D1 を読む（リハーサル）")
     a = ap.parse_args()
-    global LOCAL; LOCAL = a.local
+    global LOCAL; LOCAL = getattr(a, "local", False)
+    if a.cmd == "summary":
+        counts = {exam: len(d1(exam, "SELECT id FROM feedback WHERE status = 'new'")) for exam in keys()}
+        total = sum(counts.values())
+        print("未処理 " + str(total) + " 件" + ("（" + " / ".join(f"{k} {v}" for k, v in counts.items() if v) + "）" if total else ""))
+        return 0
     if a.cmd == "fetch":
         exams = list(keys()) if a.every else [a.exam]
         if not a.every and not a.exam: ap.error("対象の ID か --every")

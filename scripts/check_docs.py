@@ -100,6 +100,8 @@ def main() -> int:
     n_logs = check_worklog_brain_line(root, errors)
     # 対象の登録簿と .env / wrangler env / pages_projects / kickoff の整合（対象を足す場所は 1 か所、の門）
     r = subprocess.run([sys.executable, str(root / "scripts" / "new_target.py"), "--check"], capture_output=True, text=True)
+    r2 = subprocess.run([sys.executable, str(root / "scripts" / "check_feedback_ledger.py")], capture_output=True, text=True)
+    if r2.returncode != 0: errors.append("フィードバックの審議台帳（scripts/check_feedback_ledger.py）:\n" + (r2.stdout + r2.stderr).strip())
     if r.returncode != 0: errors.append("対象の登録簿の整合（scripts/new_target.py --check）:\n" + (r.stdout + r.stderr).strip())
     if CENTRAL_RETURN_LINE.exists():
         r = subprocess.run([sys.executable, str(CENTRAL_RETURN_LINE), "--root", str(root), "--quiet"],

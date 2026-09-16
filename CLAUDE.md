@@ -42,6 +42,7 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 | --- | --- |
 | **トラブル・不具合・原因不明のエラーに当たったら、調査の前に必ずここ**（過去の全事例の索引。解決したら報告書を1枚還す） | [`brain/INDEX.md`](brain/INDEX.md) |
 | **着手前に毎回読む未決・本人の指示・開始時の質疑応答**（決定と制約は本ファイルに集約し、ここには置かない） | [`brain/PREMISES.md`](brain/PREMISES.md) |
+| **フィードバックの採否の規則と判定の実例**（審議で毎回名指しする。規則が安定したら自動採用へ） | [`brain/feedback/判断基準.md`](brain/feedback/判断基準.md) / [`brain/feedback/審議台帳.md`](brain/feedback/審議台帳.md) |
 | このプロジェクト固有の作業の型の索引（中央にない値・実例つきの手順。今は空。中央は `~/.claude/brain/APPROACHES.md`） | [`brain/APPROACHES.md`](brain/APPROACHES.md) |
 | **壊してはいけないことと、何がそれを守っているか**（門の無い行＝バックログ。不変条件を足したら行を足す） | [`docs/不変条件と門.md`](docs/不変条件と門.md) |
 | 何を作っているか・どう動かすか | [`README.md`](README.md) |
