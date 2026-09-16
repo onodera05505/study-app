@@ -75,6 +75,7 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 - 公開されている **29回のうち11回・1,100問**を取り込み済み（38%）
 - 論点 532件、うち全件に教材（解説・周辺知識）あり。**全件が v2（2026-08-24 に書き直し済み）**
 - **Cloudflare は個人アカウント**（2026-09-15 に社用から移した。account_id・Pages 名・URL・合言葉は `scripts/pages_projects.json`。別アカウントでログインしていると wrangler と各スクリプトが止まる）
+- 入口「まなびば」（4 つの学びの一覧。静的 1 ページ、`scripts/deploy_portal.sh`）: **https://manabiba-5oz.pages.dev**
 - 本番稼働中: **https://itpass-study-d02.pages.dev**
 - 応用情報（午前）も同コード・別データ・別デプロイで稼働中: **https://ap-am-study-2px.pages.dev**
   （**18回・1,440問・論点772件**、全件教材あり。手順と落とし穴は `docs/応用情報を追加する.md`）
