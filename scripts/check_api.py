@@ -710,6 +710,12 @@ def check_counts(c: Client, r: Report, got: dict, exam: str, db_name: str):
 
     exams = (got.get("/exams") or {}).get("exams") or []
     same("/exams の回数", len(exams), rows["exams"])
+    # 並び: ロードマップ型は 1 日目が先（学ぶ順）、資格版は新しい回が先。本人の指摘（2026-09-16、mkt で 14 日目が先頭に出た）
+    if exams:
+        sys.path.insert(0, str(Path(__file__).parent)); from targets import target as _target
+        first = exams[0]["exam"]; want_first = min(e["exam"] for e in exams) if _target(exam).get("roadmap") else max(e["exam"] for e in exams)
+        if first != want_first:
+            r.error(f"/exams の並び: 先頭が {first}（{'学ぶ順なら 1 日目' if _target(exam).get('roadmap') else '新しい回'} {want_first} のはず）")
     same("/exams の問題数の合計", sum(x["questions"] for x in exams), rows["questions"])
     for e in exams:
         same(f"/exams {e['exam']} の問題数", e["questions"], per_exam.get(e["exam"]))

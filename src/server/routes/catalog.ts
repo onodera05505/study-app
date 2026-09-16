@@ -323,7 +323,9 @@ catalogRoutes.get('/exams', async (c) => {
                              AS bestScore
       FROM past_questions q
      GROUP BY q.exam, q.exam_label
-     ORDER BY q.exam DESC
+     ${examOf(c.env.EXAM).roadmap
+       ? sql`ORDER BY q.exam ASC` /* ロードマップ型は 1 日目から（本人の指摘 2026-09-16。資格版の「新しい回が先」が掛かっていた） */
+       : sql`ORDER BY q.exam DESC`}
   `)
   return c.json({ exams: rows })
 })
