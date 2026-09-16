@@ -14,13 +14,27 @@ import { Result } from './pages/Result'
 import { History } from './pages/History'
 import { Feedback } from './pages/Feedback'
 import { setLastPage } from './lib/lastPage'
+import { CHECK_INTERVAL_MS, checkForUpdate, rememberBuild } from './lib/version'
 import { exam } from './exam'
 
 export function App() {
   const [authed, setAuthed] = useState(!!getToken())
   const [menuOpen, setMenuOpen] = useState(false)
+  const [updateReady, setUpdateReady] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
+
+  // 新しい版の検知（要件 §5.6）。最初に版を覚え、画面を移るときと 5 分おきに見比べる
+  useEffect(() => {
+    rememberBuild()
+    const id = setInterval(() => {
+      checkForUpdate().then((v) => v && setUpdateReady(true))
+    }, CHECK_INTERVAL_MS)
+    return () => clearInterval(id)
+  }, [])
+  useEffect(() => {
+    checkForUpdate().then((v) => v && setUpdateReady(true))
+  }, [location.pathname])
 
   // 「直前に開いていた画面」を覚える（フィードバックに自動で添える）。/feedback 自身は記録しない
   useEffect(() => {
@@ -70,6 +84,14 @@ export function App() {
 
   return (
     <>
+      {updateReady && (
+        <div className="update-bar" role="status">
+          <span>新しい版があります。</span>
+          <button type="button" className="btn btn-primary" onClick={() => window.location.reload()}>
+            更新
+          </button>
+        </div>
+      )}
       <header className="header">
         <div className="header-inner">
           <span className="brand">{exam.brand}</span>
