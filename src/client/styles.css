@@ -27,7 +27,7 @@
   --s3: #1e4c8a; /* 理解 */
   /* バッジの文字色。--s1/--s2 を明地の薄い塗りに載せると 4.5:1 を割る（受入で実測 3.2）ので、文字だけ濃い版 */
   --s1-ink: #4a5460;
-  --s2-ink: #8a5300;
+  --s2-ink: #7a4900; /* 再受入の最小 4.53:1（ここからの行）に余裕を持たせる */
   --s3-ink: #1e4c8a;
   --ok: #1c7a46;
   --ng: #ab2a20;
@@ -1175,7 +1175,7 @@ button.choice:hover:not(:disabled) { border-color: var(--accent); }
 .row.st-3 { background: color-mix(in srgb, var(--s3) 7%, transparent); }
 }
 .row.st-2 { border-left: 4px solid var(--s2); }
-.row.st-3 .term { color: var(--s3); }
+.row.st-3 .term { color: var(--s3-ink); }
 .rm-dots { display: inline-flex; gap: 3px; align-items: center; }
 .rm-dots i { width: 10px; height: 10px; border-radius: 999px; background: var(--s1); display: block; }
 .rm-dots i.st-2 { background: var(--s2); }
