@@ -9,6 +9,7 @@ import { getDb, getSecret } from './lib/db'
 import { authRoutes } from './routes/auth'
 import { catalogRoutes } from './routes/catalog'
 import { sessionRoutes } from './routes/sessions'
+import { feedbackRoutes } from './routes/feedback'
 
 const app = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
@@ -149,6 +150,7 @@ function longestStreak(days: string[]): number {
 
 api.route('/', catalogRoutes)
 api.route('/sessions', sessionRoutes)
+api.route('/feedback', feedbackRoutes)
 
 app.route('/api', api)
 

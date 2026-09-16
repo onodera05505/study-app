@@ -417,6 +417,7 @@ PROTECTED = [
     ("GET", "/sessions/00000000-0000-4000-8000-000000000000/current"),
     ("POST", "/sessions/00000000-0000-4000-8000-000000000000/answer"),
     ("POST", "/sessions/00000000-0000-4000-8000-000000000000/finish"),
+    ("POST", "/feedback"),
 ]
 
 
@@ -634,6 +635,9 @@ def check_failure_shapes(c: Client, r: Report, code: str | None):
         ("存在しないセッション", "GET", "/sessions/" + str(uuid.uuid4()), None, 404),
         ("progress に範囲外の status", "PUT", "/topics/1/progress", {"status": 9}, 400),
         ("セッション作成が空ボディ", "POST", "/sessions", {}, 400),
+        ("フィードバックが空ボディ", "POST", "/feedback", {}, 400),
+        ("フィードバックが空文", "POST", "/feedback", {"body": "   "}, 400),
+        ("フィードバックが長すぎ", "POST", "/feedback", {"body": "あ" * 2001}, 400),
     ]:
         st, data, _ = c.call(method, path, body)
         if r.status(label, st, want, data):
@@ -888,6 +892,30 @@ def check_session_flow(c: Client, r: Report, got: dict, other_token: str):
     r.notes.append(f"セッションの流れ: {total} 問を作成 → 回答 → 中断 → 再開 → finish → 結果 まで通過")
 
 
+
+def check_feedback(c: Client, r: Report, exam: str, db_name: str):
+    """フィードバック（要件 §5.5-4）。送信が保存されること、開発側の読み口（feedback 表）に届くこと。
+    利用者向けの一覧 API は無いので、保存の確認はローカル D1 を直接読む。検査で入れた行は消す。"""
+    marker = f"apicheck {uuid.uuid4()}"
+    st, data, text = c.call("POST", "/feedback", {"body": marker, "page": "/topics/1", "topicId": 1})
+    if not r.status("POST /feedback", st, 201, None if st == 201 else text[:200]):
+        return
+    fid = (data or {}).get("id")
+    if not isinstance(fid, str) or not fid:
+        r.error("POST /feedback: 本文に id（文字列）が無い")
+        return
+    rows = d1(exam, db_name, f"SELECT body, status, page, topic_id FROM feedback WHERE id = '{fid}'")
+    if not rows:
+        r.error("POST /feedback: 201 が返ったのに feedback 表に行が無い")
+    else:
+        row = rows[0]
+        if row.get("body") != marker: r.error(f"feedback.body が送った本文と違う: {row.get('body')!r}")
+        if row.get("status") != "new": r.error(f"feedback.status の初期値が new でない: {row.get('status')!r}")
+        if row.get("topic_id") != 1 or row.get("page") != "/topics/1": r.error("feedback の page / topic_id が送った値と違う")
+        r.notes.append("フィードバック: 送信 → feedback 表に保存（status=new）を確認")
+    d1(exam, db_name, f"DELETE FROM feedback WHERE id = '{fid}'")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     sys.path.insert(0, str(Path(__file__).parent)); from targets import keys as _keys, deploy as _deploy
@@ -921,6 +949,7 @@ def main() -> int:
     check_counts(c, r, got, args.exam, db_name)
     check_empty_lists(c, r, other)
     check_session_flow(c, r, got, other)
+    check_feedback(c, r, args.exam, db_name)
 
     # --- 結果 -------------------------------------------------------------
     print(f"{args.base}  試験『{args.exam}』  D1『{db_name}』")

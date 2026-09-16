@@ -1116,3 +1116,20 @@ button.choice:hover:not(:disabled) { border-color: var(--accent); }
 .expl-choice.correct > b { background: var(--ok); border-color: var(--ok); color: #fff; }
 .expl-choice.correct { font-weight: 600; }
 .expl-dash { color: var(--muted); }
+
+/* フィードバック（要件 §5.5-4） */
+.feedback-text {
+  width: 100%;
+  box-sizing: border-box;
+  font: inherit;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elev, #fff);
+  color: inherit;
+  resize: vertical;
+}
+.feedback-text:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.feedback-attach { display: flex; gap: 0.4rem; align-items: flex-start; color: inherit; }
+.feedback-attach input { margin-top: 0.2rem; }
+

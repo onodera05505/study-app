@@ -264,3 +264,30 @@ export const glossary = sqliteTable(
   },
   (t) => [index('idx_glossary_topic').on(t.topicId)],
 )
+
+/** 利用者からのフィードバック（要件 §5.5-4、2026-09-16）。
+ *  自由記述（kind='text'）と、後から足す 1 タップの「分かりにくい」（kind='unclear'）を同じ表に置く。
+ *  その場で AI は応答しない。開発側が scripts/feedback.py で取り出して改善フェーズを回し、status を進める。
+ *  seed の投入はこの表に触らないので消えない。 */
+export const feedback = sqliteTable(
+  'feedback',
+  {
+    id: text('id').primaryKey(),
+    userId: text('user_id')
+      .notNull()
+      .references(() => users.id),
+    kind: text('kind').notNull().default('text'), // text | unclear
+    /** 送ったときに開いていた画面のパス（/topics/57 など）。 */
+    page: text('page'),
+    topicId: integer('topic_id'),
+    questionId: text('question_id'),
+    body: text('body').notNull(),
+    status: text('status').notNull().default('new'), // new | triaged | done
+    /** 開発側のメモ（どう対応したか）。 */
+    note: text('note'),
+    createdAt: integer('created_at').notNull().default(now),
+    handledAt: integer('handled_at'),
+  },
+  (t) => [index('idx_feedback_status').on(t.status, t.createdAt)],
+)
+

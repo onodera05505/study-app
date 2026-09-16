@@ -36,6 +36,7 @@
 | 教材の説明文の設計と監査 | 済 | 由来 PJ。読者像と教材の役割分担は `scripts/prompts/write_materials.md`（入門者・試験に直結する部分だけ）と `docs/作業ログ_2026-09-01_問題解説と教材v3.md`。原文写しは `check_materials.py` の 30 字一致で止める |
 | 学習コンテンツの仕様を決める | 済 | 由来 PJ。答えは対象ごとの `data/<key>/kickoff.json`（itc・mkt は 40 問）と `src/shared/targets.json` の roadmapSpec。説明テストの採点規則は `scripts/prompts/roadmap_explain_grader.md`（2026-09-15） |
 | 操作の保護と認証の設計 | 済 | 由来 PJ。合言葉・Pages の secret・account_id の守りは `scripts/pages_projects.json`・`scripts/bootstrap_personal.sh`・CLAUDE.md「忘れやすい落とし穴」（2026-09-15） |
+| 利用者のフィードバックを改善に繋ぐ | 済 | 画面の「フィードバック」→ `feedback` 表 → `scripts/feedback.py fetch` → Skill `improve-from-feedback`。その場の AI 応答はしない（本人 2026-09-16）。1 日 20 件・2,000 字 |
 | 作業の規模と編集履歴 | 済 | 着手前トリアージ（質問／バグ修正／仕様変更）は CLAUDE.md。記録は `docs/作業ログ_*`（点）＋還元行。落とし穴は CLAUDE.md「忘れやすい落とし穴」に集約する運用（中央の型「コードの現場に書く」とは別の選択。続けるかは「コードコメントの方針」の行で決める） |
 | 仕様書駆動で挙動を変える | 済 | 一次資料は `docs/要件定義書_draft.md`。矛盾は提示して止まる。受入は `qa-acceptance`（別コンテキスト）。空回り 3 回で新コンテキスト（CLAUDE.md） |
 | 画面と入力の設計で先に決めること | 済 | 一覧は null＝未取得／[]＝空。スマホ幅は `scripts/audit_screens.sh`（状態の行列）。コントラストは 2026-09-02 の一斉検査で実測（`docs/改善候補_2026-09-02.md`） |

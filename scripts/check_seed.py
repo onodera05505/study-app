@@ -322,6 +322,13 @@ def main() -> int:
     print(f"問題解説 {len(expl)} 本 / 用語集 {len(gloss)} 語"
           f"（うち論点に結び付いた用語 {sum(1 for r in gloss if r.get('topic_id') is not None)}）")
 
+    # D16: seed は利用者データ（users / progress / sessions / feedback）に触らない。触ると再投入で消える
+    sql_text = sql_path.read_text(encoding="utf-8")
+    for tbl in ("feedback", "users", "progress", "sessions", "session_questions", "daily_visits"):
+        import re as _re
+        if _re.search(rf"\b(DELETE\s+FROM|INSERT\s+INTO|UPDATE)\s+`?{tbl}`?\b", sql_text):
+            problems.append(f"seed が利用者データの表 {tbl} に触っている（再投入で消える。D16）")
+
     if warnings:
         print(f"\n警告 {len(warnings)} 件:")
         for w in warnings:

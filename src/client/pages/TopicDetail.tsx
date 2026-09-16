@@ -1,5 +1,6 @@
 import { exam } from '../exam'
 import { useEffect, useState } from 'react'
+import { annotateLastPage } from '../lib/lastPage'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { BackLink } from '../components/BackLink'
 import { DupBadge } from '../components/DupBadge'
@@ -76,6 +77,8 @@ export function TopicDetail() {
       .then((d) => {
         setData(d)
         setStatus(d.topic.status ?? 1)
+        // フィードバックに添える（どの単位を読んでいたか）
+        annotateLastPage({ topicId: d.topic.id, label: `学習の単位「${d.topic.term}」` })
         // ホームに「前回の続き」を出すために控えておく
         setLastTopic({
           id: d.topic.id,

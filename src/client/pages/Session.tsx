@@ -6,6 +6,7 @@ import { Explanation, type ExplanationData } from '../components/Explanation'
 import { Figure } from '../components/Figure'
 import { api } from '../lib/api'
 import { formatChoice } from '../lib/choice'
+import { annotateLastPage } from '../lib/lastPage'
 
 type Current = {
   session: {
@@ -82,6 +83,8 @@ export function Session() {
     try {
       const d = await api<Current>(`/sessions/${id}/current`)
       setData(d)
+      // フィードバックに添える（どのテストの何問目か。問題 ID は見せない設計なのでセッション ID と番号で引く）
+      if (d.question) annotateLastPage({ questionId: `${d.session.id}#${d.question.idx}`, label: `${d.session.scopeLabel} の ${d.question.idx + 1} 問目` })
       setRemaining(d.remainingSec)
       setPicked(null)
       setJudged(null)
