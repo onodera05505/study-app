@@ -298,12 +298,12 @@ export function TopicDetail() {
           {data.neighbors?.prev ? (
             <Link className="btn" to={`/topics/${data.neighbors.prev.id}`}>← 前の単位（{data.neighbors.prev.term}）</Link>
           ) : (
-            <span className="btn" aria-disabled="true" style={{ opacity: 0.5 }}>← 前の単位（最初）</span>
+            <button type="button" className="btn" disabled>← 前の単位（最初）</button>
           )}
           {data.neighbors?.next ? (
             <Link className="btn btn-primary" to={`/topics/${data.neighbors.next.id}`}>次の単位（{data.neighbors.next.term}）→</Link>
           ) : (
-            <span className="btn" aria-disabled="true" style={{ opacity: 0.5 }}>次の単位（最後）</span>
+            <button type="button" className="btn" disabled>次の単位（最後）</button>
           )}
         </div>
       )}
