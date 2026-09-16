@@ -11,7 +11,7 @@ import { getDb } from '../lib/db'
 export const feedbackRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
 const body = z.object({
-  body: z.string({ error: '本文を入れてください' }).trim().min(1, '本文を入れてください').max(2000, '2,000 字以内にしてください'),
+  body: z.string().trim().min(1, '本文を入れてください').max(2000, '2,000 字以内にしてください'),
   kind: z.enum(['text', 'unclear']).default('text'),
   page: z.string().max(200).optional(),
   topicId: z.number().int().positive().optional(),
@@ -24,7 +24,11 @@ const DAILY_LIMIT = 20
 feedbackRoutes.post('/', async (c) => {
   const parsed = body.safeParse(await c.req.json().catch(() => null))
   if (!parsed.success) {
-    return c.json({ error: parsed.error.issues[0]?.message ?? '入力が正しくありません' }, 400)
+    // 本文の欠け・長さは利用者が直せるので具体に。それ以外（型違い・不正な kind）は他の経路と同じ固定文
+    // （zod の既定メッセージは英語で、そのまま画面に出る。受入の所見 2026-09-16）
+    const issue = parsed.error.issues[0]
+    const onBody = issue?.path?.[0] === 'body' && issue.code !== 'invalid_type'
+    return c.json({ error: onBody ? issue.message : '入力が正しくありません' }, 400)
   }
   const db = getDb(c.env)
   const userId = c.get('user').id

@@ -543,6 +543,7 @@ function buildSpecs(fx, reps, middleNo) {
       expectFailure: a.done === bogus,
     },
     { key: 'history', path: '/history' },
+    { key: 'feedback', path: '/feedback', note: 'フィードバック（要件 §5.5-4）。直前の画面を添えるチェックは /topics/:id の後に開くと出る' },
     { key: 'notfound', path: '/no-such-page-xyz', note: '存在しない URL（SPA のフォールバック）' },
   ]
 

@@ -638,6 +638,8 @@ def check_failure_shapes(c: Client, r: Report, code: str | None):
         ("フィードバックが空ボディ", "POST", "/feedback", {}, 400),
         ("フィードバックが空文", "POST", "/feedback", {"body": "   "}, 400),
         ("フィードバックが長すぎ", "POST", "/feedback", {"body": "あ" * 2001}, 400),
+        ("フィードバックの kind が不正", "POST", "/feedback", {"body": "x", "kind": "nope"}, 400),
+        ("フィードバックの topicId が文字列", "POST", "/feedback", {"body": "x", "topicId": "1"}, 400),
     ]:
         st, data, _ = c.call(method, path, body)
         if r.status(label, st, want, data):

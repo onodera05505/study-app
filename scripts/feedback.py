@@ -70,7 +70,7 @@ def main() -> int:
     sub = ap.add_subparsers(dest="cmd", required=True)
     f = sub.add_parser("fetch"); f.add_argument("exam", nargs="?"); f.add_argument("--all", action="store_true"); f.add_argument("--every", action="store_true", help="全対象")
     m = sub.add_parser("mark"); m.add_argument("exam"); m.add_argument("ids", nargs="+"); m.add_argument("--status", choices=STATUSES, required=True); m.add_argument("--note", default="")
-    ap.add_argument("--local", action="store_true", help="ローカル D1 を読む（リハーサル）")
+    for sp in (f, m): sp.add_argument("--local", action="store_true", help="ローカル D1 を読む（リハーサル）")
     a = ap.parse_args()
     global LOCAL; LOCAL = a.local
     if a.cmd == "fetch":

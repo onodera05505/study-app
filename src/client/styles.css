@@ -1124,9 +1124,9 @@ button.choice:hover:not(:disabled) { border-color: var(--accent); }
   font: inherit;
   padding: 0.6rem 0.7rem;
   border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: var(--bg-elev, #fff);
-  color: inherit;
+  border-radius: var(--radius);
+  background: var(--panel);
+  color: var(--text);
   resize: vertical;
 }
 .feedback-text:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
