@@ -224,6 +224,7 @@ TOPICS = {
             "*middle": "str",
             "*itemName": "str",
             "*isNew": "int",
+            "*sortOrder": "int?",
         }
     ]
 }

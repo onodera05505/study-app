@@ -131,7 +131,7 @@ export function TopicDetail() {
 
   return (
     <>
-      <BackLink to={`/topics?middleNo=${t.middleNo}`} label={`${t.middle} に戻る`} />
+      <BackLink to={exam.roadmap ? '/topics' : `/topics?middleNo=${t.middleNo}`} label={exam.roadmap ? 'ロードマップに戻る' : `${t.middle} に戻る`} />
       {/* パンくずは押せるようにする。1論点を読んだあと、同じ単元の隣へ進めるため。 */}
       <p className="crumb">
         <Link to="/topics">学習</Link> / {t.field} / {t.major} /{' '}
@@ -273,7 +273,7 @@ export function TopicDetail() {
       <div className="next-move">
         {data.nextTopic ? (
           <Link to={`/topics/${data.nextTopic.id}`} className="next-move-link">
-            <span className="next-move-label">次の一手</span>
+            <span className="next-move-label">次に学ぶ</span>
             <span className="next-move-term">{data.nextTopic.term}</span>
             <span className="freq">
               <b>{data.nextTopic.questionCount}</b>
@@ -292,8 +292,8 @@ export function TopicDetail() {
       {/* 読み終えた位置から戻れるようにする。戻るリンクは上にもあるが、教材を読み切った後は画面の下端にいる
           （利用者のフィードバック「学習した後に画面を戻るのがやりづらい」2026-09-16）。 */}
       <div className="btn-row" style={{ margin: '0.8rem 0 1rem' }}>
-        <Link className="btn" to={`/topics?middleNo=${t.middleNo}`}>
-          {t.middle} の一覧に戻る
+        <Link className="btn" to={exam.roadmap ? '/topics' : `/topics?middleNo=${t.middleNo}`}>
+          {exam.roadmap ? 'ロードマップに戻る' : `${t.middle} の一覧に戻る`}
         </Link>
         <Link className="btn" to="/">
           ホームへ

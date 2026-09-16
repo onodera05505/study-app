@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { api } from '../lib/api'
 import { getLastPage } from '../lib/lastPage'
@@ -7,11 +7,16 @@ import { getLastPage } from '../lib/lastPage'
  *  その場で AI は応答しない（溜めて開発側が改善フェーズで読む）。 */
 export function Feedback() {
   const last = getLastPage()
-  const [text, setText] = useState('')
+  // 途中の入力は遷移しても消さない（利用者の指摘 2026-09-16。警告ではなく下書きの保持で応える。送信で消す）
+  const [text, setText] = useState(() => readDraft())
   const [attach, setAttach] = useState(!!last)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [done, setDone] = useState(false)
+
+  useEffect(() => {
+    writeDraft(text)
+  }, [text])
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -29,6 +34,7 @@ export function Feedback() {
         },
       })
       setDone(true)
+      writeDraft('')
     } catch (err: any) {
       setError(err.message)
     } finally {
@@ -101,3 +107,21 @@ export function Feedback() {
     </>
   )
 }
+
+const DRAFT_KEY = 'study-app:feedback-draft'
+function readDraft(): string {
+  try {
+    return sessionStorage.getItem(DRAFT_KEY) ?? ''
+  } catch {
+    return ''
+  }
+}
+function writeDraft(v: string) {
+  try {
+    if (v) sessionStorage.setItem(DRAFT_KEY, v)
+    else sessionStorage.removeItem(DRAFT_KEY)
+  } catch {
+    /* 使えない環境では保持しないだけ */
+  }
+}
+

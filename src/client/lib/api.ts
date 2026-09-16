@@ -6,6 +6,21 @@ export function getToken(): string | null {
 export function setToken(token: string) {
   localStorage.setItem(TOKEN_KEY, token)
 }
+/** ログインしている人の名前。トークン（JWT）の中身から読む。サーバに聞かない。
+ *  「ログインしている私が誰か分からない」（利用者のフィードバック 2026-09-16）に応えてヘッダーに出す。 */
+export function getUserName(): string | null {
+  const token = getToken()
+  if (!token) return null
+  try {
+    const payload = token.split('.')[1]
+    const json = atob(payload.replace(/-/g, '+').replace(/_/g, '/'))
+    const name = (JSON.parse(decodeURIComponent(escape(json))) as { name?: string }).name
+    return typeof name === 'string' && name ? name : null
+  } catch {
+    return null
+  }
+}
+
 export function clearToken() {
   localStorage.removeItem(TOKEN_KEY)
   // 「前回の続き」は端末に残る。消さないと、次にログインした別のアカウントに

@@ -1133,3 +1133,15 @@ button.choice:hover:not(:disabled) { border-color: var(--accent); }
 .feedback-attach { display: flex; gap: 0.4rem; align-items: flex-start; color: inherit; }
 .feedback-attach input { margin-top: 0.2rem; }
 
+/* ロードマップ型の学習画面（日ごとの一覧）とホーム */
+.rm-day { margin-top: 1.2rem; }
+.rm-day-head { display: flex; align-items: baseline; gap: 0.6rem; font-size: 1rem; margin: 0 0 0.4rem; }
+.rm-day-head small { font-size: 0.72rem; color: var(--s3); font-weight: 700; }
+.rm-day-head.done { color: var(--muted); }
+.rm-order { flex: none; width: 2rem; text-align: center; font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; }
+.rm-status { flex: none; align-self: center; font-size: 0.75rem; white-space: nowrap; }
+.rm-here { border-color: var(--accent); background: var(--accent-soft); }
+.rm-here-label { flex: none; align-self: center; font-size: 0.72rem; font-weight: 700; color: var(--accent); white-space: nowrap; }
+.rm-home-progress { font-size: 0.95rem; color: var(--muted); margin: 0.6rem 0 1rem; }
+.account-name { margin: 0 0 0.4rem; padding: 0.3rem 0.6rem; font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
+

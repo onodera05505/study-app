@@ -125,6 +125,7 @@ catalogRoutes.get('/topics', async (c) => {
     middle: string
     itemName: string
     isNew: number
+    sortOrder: number | null
   }>(sql`
     SELECT t.id            AS id,
            t.term          AS term,
@@ -133,7 +134,8 @@ catalogRoutes.get('/topics', async (c) => {
            s.field         AS field,
            s.middle        AS middle,
            s.name          AS itemName,
-           t.is_new        AS isNew
+           t.is_new        AS isNew,
+           t.sort_order    AS sortOrder
       FROM topics t
       JOIN syllabus_items s ON s.id = t.syllabus_item_id
       LEFT JOIN progress p ON p.topic_id = t.id AND p.user_id = ${userId}

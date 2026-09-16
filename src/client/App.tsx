@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { NavLink, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
-import { clearToken, getToken } from './lib/api'
+import { clearToken, getToken, getUserName } from './lib/api'
 import { ensureGlossary } from './lib/glossary'
 import { Login } from './pages/Login'
 import { Home } from './pages/Home'
 import { Topics } from './pages/Topics'
+import { Roadmap } from './pages/Roadmap'
 import { TopicDetail } from './pages/TopicDetail'
 import { Practice } from './pages/Practice'
 import { Exams } from './pages/Exams'
@@ -83,10 +84,13 @@ export function App() {
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen((v) => !v)}
             >
-              アカウント
+              {getUserName() ?? 'アカウント'}
             </button>
             {menuOpen && (
               <div className="account-menu" role="menu">
+                <p className="account-name">
+                  {getUserName() ?? 'ログイン中'} としてログイン中
+                </p>
                 <button
                   type="button"
                   role="menuitem"
@@ -116,7 +120,7 @@ export function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/topics" element={<Topics />} />
+          <Route path="/topics" element={exam.roadmap ? <Roadmap /> : <Topics />} />
           <Route path="/topics/:id" element={<TopicDetail />} />
           <Route path="/practice" element={<Practice />} />
           <Route path="/exams" element={<Exams />} />
@@ -135,7 +139,7 @@ export function App() {
 function pageLabel(path: string): string {
   if (path === '/') return 'ホーム'
   if (path.startsWith('/topics/')) return '学習の単位'
-  if (path.startsWith('/topics')) return '学習の一覧'
+  if (path.startsWith('/topics')) return exam.roadmap ? 'ロードマップ' : '学習の一覧'
   if (path.startsWith('/practice')) return '練習テスト'
   if (path.startsWith('/exams')) return exam.words.mock
   if (path.startsWith('/sessions/') && path.endsWith('/result')) return 'テストの結果'

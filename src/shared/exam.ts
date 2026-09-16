@@ -24,8 +24,11 @@ export type ExamConfig = {
   roadmap: boolean
   words: { question: string; questions: string; mock: string; nextUp: string }
   /** ロードマップ型だけが持つ。ログイン画面の説明文など */
-  roadmapSpec?: { loginLead?: string }
+  roadmapSpec?: RoadmapSpec
 }
+
+/** ロードマップ型だけが持つ公開値。ログイン画面の説明文・1 日の単位数・補足の分野名など */
+export type RoadmapSpec = { loginLead?: string; perDay?: number; extraField?: string; targetName?: string }
 
 type Raw = Omit<ExamConfig, 'key'> & { kind: string; examName: string; questionsPerRound: number; exemptRounds: string[] }
 
@@ -37,7 +40,7 @@ export const EXAMS: Record<string, ExamConfig> = Object.fromEntries(
       return [k, {
         key: k, brand: r.brand, title: r.title, mockSize: r.mockSize, mockMinutes: r.mockMinutes,
         fieldThreshold: r.fieldThreshold, passRule: r.passRule, fieldRatio: r.fieldRatio, fields: r.fields,
-        roadmap: r.roadmap, words: r.words, roadmapSpec: (v as { roadmapSpec?: { loginLead?: string } }).roadmapSpec,
+        roadmap: r.roadmap, words: r.words, roadmapSpec: (v as { roadmapSpec?: RoadmapSpec }).roadmapSpec,
       } satisfies ExamConfig]
     }),
 )

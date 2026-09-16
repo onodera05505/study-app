@@ -13,20 +13,29 @@ description: 利用者が画面から送ったフィードバック（feedback �
 1. **取り出す**: `python3 scripts/feedback.py fetch --every`（対象ごとなら `fetch mkt`）。
    未処理（status=new）が `data/<key>/feedback/inbox_<日付>.json` に保存され、画面に一覧が出る。
    `page` / 論点名 / `question_id`（`<セッション ID>#<番号>`）で、どの画面についての意見かが分かる。
-2. **分ける**: 1 件ずつ CLAUDE.md の三分類に置く。
+2. **審議する**（直す前に必ず。本人の指示 2026-09-16「全部真に受けて改善するのではなく審議のフェーズを」）。1 件ずつ、次の 5 点を表にして本人に出す。
+   - **事実確認**: 再現するか。データなら原本と照合（誤報が 7/8 の実績。CLAUDE.md）
+   - **意図との整合**: 要件定義書・「設計の中核」・不変条件に反しないか。反するなら、意図を変える提案として扱う
+   - **一般性**: 誰にでも起きるか、その人の好み・環境か。1 人の声でも所有者の判断なら重い
+   - **費用と副作用**: 直す範囲、他の対象（ip / ap / itc / mkt）への影響、既存の門への影響
+   - **採否の案**: 採用／条件付き採用（範囲を絞る・別の形で応える）／保留／不採用。理由を 1 行
+   採否は**本人が決める**。決まったら `mark <id> --status triaged --note "<採否>: <理由>"`。不採用・保留も note に理由を残す（次回の審議の材料）。
+3. **分ける**: 採用したものを CLAUDE.md の三分類に置く。
    - **質問**（使い方が分からない等）→ 答えを教材か画面の文言で解消できるか考える。本人への返信経路は無いので、画面側で分かるようにするのが答え
    - **バグ**（表示・データの誤り）→ `brain/INDEX.md` を症状で grep。データなら原本と照合してから直す
    - **仕様変更**（欲しい機能・意図の変更）→ 本人に提示して合意。台帳 `brain/approaches/学習アプリの充実の検討事項.md` に採否の行を足す
    分けた時点で `mark <id> --status triaged --note "<分類>: <一言>"`。
-3. **直す**: 教材なら該当の `data/<key>/materials/bundle_*.json` → 門（`check_roadmap.py` か `check_materials.py`）→ `build_target_dataset.py`（ロードマップ型）→ `build_seed.py` → `check_seed.py`。
+4. **直す**: 教材なら該当の `data/<key>/materials/bundle_*.json` → 門（`check_roadmap.py` か `check_materials.py`）→ `build_target_dataset.py`（ロードマップ型）→ `build_seed.py` → `check_seed.py`。
    画面なら実装 → `tsc` → `check_render.sh` → `check_api.sh` → **受入は `qa-acceptance`（別コンテキスト）**。
-4. **出す**: `bash scripts/finish_remote.sh <key>`（seed とデプロイ。feedback 表と進捗は消えない）。
-5. **閉じる**: `python3 scripts/feedback.py mark <key> <id> --status done --note "<何を直したか（コミット）>"`。
+5. **出す**: `bash scripts/finish_remote.sh <key>`（seed とデプロイ。feedback 表と進捗は消えない）。
+6. **閉じる**: `python3 scripts/feedback.py mark <key> <id> --status done --note "<何を直したか（コミット）>"`。
    同じ指摘が複数なら全部の id を渡す。
-6. **還す**: 直した内容が「事前に聞けた質問」に当たるなら `brain/rework/<日付>_<key>.md` に 1 行（`〔q: id〕` を名指し）。
+7. **還す**: 直した内容が「事前に聞けた質問」に当たるなら `brain/rework/<日付>_<key>.md` に 1 行（`〔q: id〕` を名指し）。
    他の対象でも起きる型なら中央のアプローチへ。作業ログを書いたら末尾に還元行。
 
 ## 守ること
+
+- **審議を飛ばさない。** 最初の 1 件（2026-09-16）は 3 点を鵜呑みで直し、本人から「審議のフェーズがあるべき」と指摘された。直すのは速いが、意図に反する変更や好みの押し付けを本番に出す
 
 - 送った本人の意図を推測で広げない。書いてあることだけに答え、広げるなら仕様変更として本人へ
 - fetch した JSON は点の記録（追記のみ）。直した後に消さない
