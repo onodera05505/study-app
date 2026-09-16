@@ -235,11 +235,28 @@ catalogRoutes.get('/topics/:id', async (c) => {
      LIMIT 1
   `)
 
-  const [topic, questions, siblings, next] = await Promise.all([
+  // ロードマップ型: 学ぶ順の前後（sort_order）。資格版は sort_order を参照しない（D13）ので null。
+  // 「他の論点」「次に学ぶ（次の未理解）」は道を散らすと指摘され、ロードマップ型では前後の単位だけを出す（2026-09-16 審議で採用）
+  const roadmap = examOf(c.env.EXAM).roadmap
+  const neighborsP: Promise<{ prev: { id: number; term: string } | null; next: { id: number; term: string } | null } | null> = roadmap
+    ? Promise.all([
+        db.get<{ id: number; term: string }>(sql`
+          SELECT id, term FROM topics
+           WHERE sort_order IS NOT NULL AND sort_order < (SELECT sort_order FROM topics WHERE id = ${id})
+           ORDER BY sort_order DESC LIMIT 1`),
+        db.get<{ id: number; term: string }>(sql`
+          SELECT id, term FROM topics
+           WHERE sort_order IS NOT NULL AND sort_order > (SELECT sort_order FROM topics WHERE id = ${id})
+           ORDER BY sort_order ASC LIMIT 1`),
+      ]).then(([prev, next]) => ({ prev: prev ?? null, next: next ?? null }))
+    : Promise.resolve(null)
+
+  const [topic, questions, siblings, next, neighbors] = await Promise.all([
     topicP,
     questionsP,
     siblingsP,
     nextP,
+    neighborsP,
   ])
   if (!topic) return c.json({ error: '論点が見つかりません' }, 404)
 
@@ -264,6 +281,8 @@ catalogRoutes.get('/topics/:id', async (c) => {
     siblings,
     // 頻出未理解が尽きたら null（画面は「ひととおり学べました」でグレーアウト）。
     nextTopic: next ?? null,
+    // ロードマップ型だけ。学ぶ順の前後の単位（資格版は null）
+    neighbors,
   })
 })
 

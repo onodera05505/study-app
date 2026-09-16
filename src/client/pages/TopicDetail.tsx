@@ -45,6 +45,7 @@ type Detail = {
   /** 頻出なのに未理解の論点の先頭（＝ホームの「次の一手」と同じ定義）。
    *  尽きたら null で、画面はグレーアウトの完了表示にする。 */
   nextTopic: { id: number; term: string; questionCount: number } | null
+  neighbors: { prev: { id: number; term: string } | null; next: { id: number; term: string } | null } | null
 }
 
 export function TopicDetail() {
@@ -244,7 +245,7 @@ export function TopicDetail() {
         </div>
       )}
 
-      {data.siblings.length > 0 && (
+      {!exam.roadmap && data.siblings.length > 0 && (
         <>
           <h2>{t.itemName} の他の論点</h2>
           <p className="muted" style={{ fontSize: '0.82rem', marginTop: '-0.4rem' }}>
@@ -270,6 +271,7 @@ export function TopicDetail() {
       {/* 次の一手。順序はホームの nextTopics と同じ（頻出×未理解）。ここで別の並びを
           作らない——"次" の意味をアプリ全体で1つに保つため。この論点を「理解」にすると
           候補から外れて次が繰り上がる。尽きたらグレーアウトの完了表示。 */}
+      {!exam.roadmap && (
       <div className="next-move">
         {data.nextTopic ? (
           <Link to={`/topics/${data.nextTopic.id}`} className="next-move-link">
@@ -288,6 +290,23 @@ export function TopicDetail() {
           </div>
         )}
       </div>
+      )}
+
+      {/* ロードマップ型: 順番で前後へ。「他の論点」「次に学ぶ」は出さない（審議で採用 2026-09-16） */}
+      {exam.roadmap && (
+        <div className="btn-row rm-nav" style={{ margin: '1.2rem 0 0.4rem' }}>
+          {data.neighbors?.prev ? (
+            <Link className="btn" to={`/topics/${data.neighbors.prev.id}`}>← 前の単位（{data.neighbors.prev.term}）</Link>
+          ) : (
+            <span className="btn" aria-disabled="true" style={{ opacity: 0.5 }}>← 前の単位（最初）</span>
+          )}
+          {data.neighbors?.next ? (
+            <Link className="btn btn-primary" to={`/topics/${data.neighbors.next.id}`}>次の単位（{data.neighbors.next.term}）→</Link>
+          ) : (
+            <span className="btn" aria-disabled="true" style={{ opacity: 0.5 }}>次の単位（最後）</span>
+          )}
+        </div>
+      )}
 
       {/* 読み終えた位置から戻れるようにする。戻るリンクは上にもあるが、教材を読み切った後は画面の下端にいる
           （利用者のフィードバック「学習した後に画面を戻るのがやりづらい」2026-09-16）。 */}
