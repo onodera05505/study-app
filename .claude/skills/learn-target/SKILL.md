@@ -22,6 +22,11 @@ description: 「この学びをしたい」と対象（資格・分野・職種�
 ## 3. 本番（個人アカウント）
 `build_target_dataset.py` で投入経路の形に変換 → ローカルで `seed_remote.sh <対象> --local` と `check_api.sh` → `bootstrap_personal.sh <対象>`（人）→ `finish_remote.sh <対象>`
 
+## 3.5 出した後（利用者の声で回す）
+- フィードバックの受け口は全対象に共通で付いている（上部メニュー。要件 §5.5-4）。対象ごとに作らない
+- 届いたら Skill `improve-from-feedback`: `scripts/feedback.py fetch --every` → **審議**（事実確認・意図との整合・一般性・費用・採否の案。採否は本人）→ 直す → 受入（別コンテキスト。**資格版も起こす**）→ `finish_remote.sh <key>` → `mark --status done`
+- 学習者役 3 周で出ない層の欠陥（画面の不具合・解説の型の単調さ・並びの向き）は、本人以外の利用者 1 人の声で出る。投入直後の数件は必ず審議に掛ける
+
 ## 4. 手戻り台帳（締めに必ず）
 生成の後に判明して直したこと・本人が後から決めたことを `brain/rework/<日付>_<対象>.md`（書式 `~/.claude/brain/TEMPLATE_REWORK.md`）に全部書く。各行に「事前に聞けた質問」と反映先の質問 ID。
 ID が無ければ中央のアプローチに質問を足して ID を付ける。門: `python3 ~/.claude/brain/check_rework.py --root .`。作業ログの末尾に還元行。
