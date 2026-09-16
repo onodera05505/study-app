@@ -109,7 +109,7 @@ export function App() {
 
           <nav className="nav">
             <NavLink to="/" end>ホーム</NavLink>
-            <NavLink to="/topics">学習</NavLink>
+            <NavLink to="/topics">{exam.roadmap ? 'ロードマップ' : '学習'}</NavLink>
             <NavLink to="/practice">練習テスト</NavLink>
             <NavLink to="/exams">{exam.words.mock}</NavLink>
             <NavLink to="/history">履歴</NavLink>

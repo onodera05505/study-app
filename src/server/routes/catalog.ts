@@ -135,7 +135,7 @@ catalogRoutes.get('/topics', async (c) => {
            s.middle        AS middle,
            s.name          AS itemName,
            t.is_new        AS isNew,
-           t.sort_order    AS sortOrder
+           ${byRoadmap ? sql`t.sort_order` : sql`NULL`} AS sortOrder
       FROM topics t
       JOIN syllabus_items s ON s.id = t.syllabus_item_id
       LEFT JOIN progress p ON p.topic_id = t.id AND p.user_id = ${userId}
