@@ -7,7 +7,8 @@
 やること（冪等。既にあるものは触らない）:
   1. src/shared/targets.json に対象を登録（ロードマップ型の既定値と roadmapSpec の骨組み）
   2. scripts/pages_projects.json に Pages 名・DB 名・合言葉（読み違えにくい 10 文字）を登録
-  3. .env.<key>、wrangler.jsonc の env.<key>（database_id は PLACEHOLDER。bootstrap_personal.sh が D1 を作って埋める）
+  3. .env.<key>、wrangler.jsonc の env.<key>（database_id は対象ごとに違う PLACEHOLDER-<key>-…。bootstrap_personal.sh が D1 を作って埋める。
+     同じ文字列にするとローカル D1 のファイルを共有し、前の対象の行が混ざる。中央 reports/06 の再発 2026-09-17）
   4. data/<key>/ に kickoff.json（既定の答えを写し、対象ごとに聞く質問は空）、roadmap_config.json、explain_terms.json、prompts/
   5. 未回答の質問を一覧で出す（本人と答えてから生成へ）
 """
@@ -64,7 +65,7 @@ def main() -> int:
     if f'"{key}": {{' not in w:
         block = f'''    "{key}": {{
       "d1_databases": [
-        {{ "binding": "DB", "database_name": "study-app-{key}-db", "database_id": "PLACEHOLDER-run-scripts/bootstrap_personal.sh", "migrations_dir": "migrations" }}
+        {{ "binding": "DB", "database_name": "study-app-{key}-db", "database_id": "PLACEHOLDER-{key}-run-scripts/bootstrap_personal.sh", "migrations_dir": "migrations" }}
       ],
       "vars": {{ "APP_NAME": "study-app-{key}", "EXAM": "{key}", "SSO_PORTAL_URL": "https://manabiba-5oz.pages.dev" }},
       "assets": {{ "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application" }}
