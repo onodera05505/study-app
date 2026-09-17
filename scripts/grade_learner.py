@@ -32,6 +32,17 @@ def main() -> int:
         f = by_field.setdefault(units[q["topic_id"]]["field"], [0, 0]); f[1] += 1; f[0] += ok
         if not ok: wrong.append({"qid": qid, "term": q["term"], "picked": ans.get(qid), "answer": q["answer"]})
     total = len(qs); correct = sum(1 for qid, q in qs.items() if ans.get(qid) == q["answer"])
+    # 記録のずれの疑い: 連続する誤答の「選んだ答え」が、隣の問題の正解を 1 つずらした並びになっていないか。
+    # 理解の失敗ではなく、学習者役が答えを書き写すときに 1 問ずらした記録の誤り（msg 2 周目: 最後の 4 問が
+    # 正解イ・ウ・ア・エに対し エ・イ・ウ・ア と記録され、本人のメモは正しく理解していた 2026-09-17）。
+    order_q = list(qs.keys())
+    shift_suspect: list[str] = []
+    for i in range(len(order_q) - 2):
+        run = order_q[i:i + 3]
+        if all(ans.get(x) != qs[x]["answer"] for x in run):
+            picked = [ans.get(x) for x in run]; truth = [qs[x]["answer"] for x in run]
+            if picked[1:] == truth[:-1] or picked[:-1] == truth[1:]:
+                shift_suspect.extend(x for x in run if x not in shift_suspect)
     self_rep = {u["topic_id"]: u for u in L.get("units", [])}
     # 学習者パックは topic_id を見せず順番の番号だけを出すので、学習者は順番で報告してくる（mkt 1 周目: 42 件中 17 件しか一致せず
     # 理解度が 1.12 と出た 2026-09-15）。報告の番号が topic_id より順番に多く一致するなら順番→topic_id に写す
@@ -49,6 +60,7 @@ def main() -> int:
     overconfident = [tid for tid, pu in per_unit.items() if (pu["understood"] or 0) == 3 and pu["total"] and pu["correct"] < pu["total"]]
     res = {"cycle": a.cycle, "score": f"{correct}/{total}", "rate": round(correct / max(1, total), 3),
            "by_goal": {g: f"{c}/{n}" for g, (c, n) in by_goal.items()}, "by_field": {f: f"{c}/{n}" for f, (c, n) in by_field.items()},
+           "shift_suspect": shift_suspect,
            "avg_understood": round(sum((pu["understood"] or 0) for pu in per_unit.values()) / max(1, len(per_unit)), 2),
            "stuck_units": [{"topic_id": t, "term": per_unit[t]["term"], "confusing": per_unit[t]["confusing"]} for t in stuck],
            "overconfident_units": [per_unit[t]["term"] for t in overconfident],
@@ -61,6 +73,8 @@ def main() -> int:
     if prev.exists():
         p = json.loads(prev.read_text(encoding="utf-8")); res["delta_rate"] = round(res["rate"] - p["rate"], 3); res["delta_understood"] = round(res["avg_understood"] - p["avg_understood"], 2)
     (d / "eval").mkdir(exist_ok=True); (d / "eval" / f"cycle_{a.cycle}.json").write_text(json.dumps(res, ensure_ascii=False, indent=2), encoding="utf-8")
+    if shift_suspect:
+        print(f"注: 記録のずれの疑い {len(shift_suspect)} 問（連続する誤答が隣の正解を 1 つずらした並び）: {', '.join(shift_suspect)}。理解の失敗として教材を直す前に、学習者のメモと突き合わせる")
     print(f"サイクル {a.cycle}: 正答 {res['score']}（{res['rate']:.0%}） 自己申告の理解度 平均 {res['avg_understood']} 詰まった単位 {len(stuck)} 過信 {len(overconfident)} 未説明の語 {len(res['unknown_terms'])}" + (f" 前回比 {res['delta_rate']:+.0%}" if "delta_rate" in res else ""))
     if "explain" in res:
         ex = res["explain"]; print(f"説明テスト: 説明できた {ex['can_explain']}/{ex['n']} 語（得点率 {ex['rate']:.0%}）")
