@@ -583,7 +583,7 @@ def check_auth_boundary(c: Client, r: Report):
     # SSO の設定（公開。要件 §15）。ローカルは未設定なので sso=false（パスワードの経路がそのまま検査できる）
     st, data, _ = c.call("GET", "/auth/config", token=None)
     r.status("GET /auth/config（公開）", st, 200)
-    r.shape("GET /auth/config", data, {"*sso": "bool", "*portal": "str?", "*app": "str"})
+    r.shape("GET /auth/config", data, {"*sso": "bool", "*portal": "str?", "*app": "str", "*secretSet": "bool"})
     if isinstance(data, dict) and data.get("sso"):
         r.warn("この環境は SSO が有効（SSO_PORTAL_URL / SSO_SECRET あり）。パスワードの登録・ログインは 404 になるので、以降の検査は成立しない")
     # SSO 未設定の環境では /auth/sso は 404（有効な環境の一巡は scripts/check_sso_flow.py を受入で回す）

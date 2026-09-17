@@ -16,7 +16,7 @@ export function SsoCallback({ onDone }: { onDone: () => void }) {
   }, [])  // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <div className="center">
-      <h1>ログイン中…</h1>
+      <h1>{error ? 'ログインできませんでした' : 'ログイン中…'}</h1>
       {error ? (
         <>
           <p className="error">{error}</p>

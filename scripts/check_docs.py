@@ -68,6 +68,13 @@ def check_gate_paths(root: Path, errors: list[str]) -> int:
         seen.add(p)
         if not (root / p).exists():
             errors.append(f"門が無い: {INVARIANTS_DOC} が名指しする {p} が存在しない")
+        elif p.endswith(".py"):
+            # 存在しても壊れていれば門ではない（docstring の閉じ忘れで 1 度も走らない門があった。2026-09-17 受入の所見）
+            import ast
+            try:
+                ast.parse((root / p).read_text(encoding="utf-8"))
+            except SyntaxError as e:
+                errors.append(f"門が壊れている: {p} が Python として読めない（{e.msg}, line {e.lineno}）")
     return len(seen)
 
 

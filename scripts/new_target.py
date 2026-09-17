@@ -66,7 +66,7 @@ def main() -> int:
       "d1_databases": [
         {{ "binding": "DB", "database_name": "study-app-{key}-db", "database_id": "PLACEHOLDER-run-scripts/bootstrap_personal.sh", "migrations_dir": "migrations" }}
       ],
-      "vars": {{ "APP_NAME": "study-app-{key}", "EXAM": "{key}" }},
+      "vars": {{ "APP_NAME": "study-app-{key}", "EXAM": "{key}", "SSO_PORTAL_URL": "https://manabiba-5oz.pages.dev" }},
       "assets": {{ "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application" }}
     }}
   }}

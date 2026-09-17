@@ -32,14 +32,16 @@ function validationMessage(err: z.ZodError): string {
 export const authRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
 /** SSO（まなびば。要件 §15）が設定された環境か。設定されていればパスワードのログイン・登録は受けない。 */
-const ssoOn = (env: Bindings) => !!env.SSO_PORTAL_URL && !!env.SSO_SECRET
+// 秘密が欠けても「開く」側（パスワード登録の復活）に倒さない。URL があれば SSO 環境と見なし、秘密が無ければ /auth/sso が 503 で止まる（受入の所見 2026-09-17、D17）
+const ssoOn = (env: Bindings) => !!env.SSO_PORTAL_URL
 
 /** 画面がログインの形を決めるための設定（公開）。 */
-authRoutes.get('/config', (c) => c.json({ sso: ssoOn(c.env), portal: c.env.SSO_PORTAL_URL ?? null, app: c.env.EXAM }))
+authRoutes.get('/config', (c) => c.json({ sso: ssoOn(c.env), portal: c.env.SSO_PORTAL_URL ?? null, app: c.env.EXAM, secretSet: !!c.env.SSO_SECRET }))
 
 /** まなびばから戻ってきた使い捨てコードを、まなびばのサーバでメールと名前に交換し、この学びのトークンを出す。 */
 authRoutes.post('/sso', async (c) => {
   if (!ssoOn(c.env)) return c.json({ error: 'この環境では SSO が設定されていません' }, 404)
+  if (!c.env.SSO_SECRET) return c.json({ error: 'SSO の共有秘密が設定されていません。管理者に連絡してください' }, 503)
   const body = (await c.req.json().catch(() => null)) as { code?: string } | null
   if (!body?.code || typeof body.code !== 'string' || body.code.length > 100) return c.json({ error: '入力が正しくありません' }, 400)
   let res: Response

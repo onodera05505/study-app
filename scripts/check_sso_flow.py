@@ -5,6 +5,7 @@
     npx wrangler dev --env mkt --port 8788 --var SSO_PORTAL_URL:http://127.0.0.1:8790 --var SSO_SECRET:testsecret
     python3 scripts/portal_migrate_accounts.py --admin apicheck@example.com --local
     python3 scripts/check_sso_flow.py
+"""
 import json, sys, urllib.request, urllib.error, urllib.parse, http.cookiejar
 
 PORTAL = "http://127.0.0.1:8790"; APP = "http://127.0.0.1:8788"

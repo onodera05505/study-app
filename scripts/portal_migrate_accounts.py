@@ -43,6 +43,7 @@ def main() -> int:
     a = ap.parse_args()
     where = "--local" if a.local else "--remote"
     skip = {s.strip().lower() for s in a.skip.split(",") if s.strip()}
+    if a.admin.lower() in skip: sys.exit(f"--admin {a.admin} は移さないメール（--skip）に含まれている。既定パスワードの管理者は使わない（brain 04）")
 
     accounts: dict[str, dict] = {}  # email -> {id, name, hash, created, grants:set}
     for k in keys():
