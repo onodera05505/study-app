@@ -1,0 +1,81 @@
+{
+  "topic_id": 80,
+  "term": "ハムストリングと腰の関係",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "太ももの裏が縮んだままだと前にかがむぶんを腰が補うので、腰だけ緩めても張りが戻りやすい。",
+      "nodes": [
+        {
+          "id": "hs",
+          "label": "太ももの裏の筋が\n縮んだまま",
+          "row": 0,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "pull",
+          "label": "坐骨結節を\n膝の側へ引き続ける",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "pel",
+          "label": "骨盤が\n後ろ下がりになる",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "bend",
+          "label": "前にかがむと骨盤が回らず\n腰の骨の曲がりで補う",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "es",
+          "label": "脊柱起立筋が\n伸ばされたまま働く",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "back",
+          "label": "腰だけ緩めても\n張りが戻りやすい",
+          "row": 1,
+          "col": 0,
+          "shape": "round"
+        }
+      ],
+      "edges": [
+        {
+          "from": "hs",
+          "to": "pull"
+        },
+        {
+          "from": "pull",
+          "to": "pel"
+        },
+        {
+          "from": "pel",
+          "to": "bend"
+        },
+        {
+          "from": "bend",
+          "to": "es"
+        },
+        {
+          "from": "es",
+          "to": "back"
+        },
+        {
+          "from": "back",
+          "to": "hs",
+          "label": "太ももの裏も手を当てる候補",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

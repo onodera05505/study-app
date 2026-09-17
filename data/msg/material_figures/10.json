@@ -1,0 +1,23 @@
+{
+  "topic_id": 10,
+  "term": "やめる合図（痛み・息の止まり・しびれ）",
+  "figures": [
+    {
+      "id": 1, "type": "blocks", "after": "explanation",
+      "caption": "3 つの合図のどれが出ても、強さを落として続けるのではなく手を離す。合図を決めるのは相手の側。",
+      "nodes": [
+        {"id": "pain", "label": "「痛い」と言う", "row": 0, "col": 0},
+        {"id": "breath", "label": "息を詰めて\n体が固まる", "row": 1, "col": 0},
+        {"id": "numb", "label": "「ビリビリする」\nしびれ（神経からの合図）", "row": 2, "col": 0},
+        {"id": "off", "label": "手を離して\nその回を終える", "row": 1, "col": 1, "emphasis": true},
+        {"id": "ask", "label": "「今のは強かった？」\nと聞いて返事を待つ", "row": 1, "col": 2}
+      ],
+      "edges": [
+        {"from": "pain", "to": "off"},
+        {"from": "breath", "to": "off"},
+        {"from": "numb", "to": "off"},
+        {"from": "off", "to": "ask"}
+      ]
+    }
+  ]
+}

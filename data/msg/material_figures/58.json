@@ -1,0 +1,27 @@
+{
+  "topic_id": 58,
+  "term": "後頭下筋群",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 施すときに意識すること",
+      "caption": "後頭骨の下のくぼみは動脈と神経の通り道なので、指でたどるのは骨の縁までにして、頭の重さを手のひらで受ける。",
+      "nodes": [
+        {"id": "edge", "label": "後頭骨の下の縁\n指でたどるのはここまで", "row": 0, "col": 0},
+        {"id": "hollow", "label": "縁と首の骨の間のくぼみ\n（後頭下三角）", "row": 0, "col": 1, "emphasis": true},
+        {"id": "pass", "label": "脳へ向かう動脈\n（椎骨動脈）\n後頭部へ行く神経", "row": 0, "col": 2},
+        {"id": "instead", "label": "頭を手のひらに預けてもらい\n首の力が抜けるのを待つ", "row": 1, "col": 0, "shape": "round", "emphasis": true},
+        {"id": "no", "label": "指を立てて差し込まない\n引っぱる・急に回すもしない", "row": 1, "col": 1},
+        {"id": "stop", "label": "ふらつき・めまい・吐き気\nが出たら中止して医療へ", "row": 1, "col": 2}
+      ],
+      "edges": [
+        {"from": "edge", "to": "hollow", "label": "その下"},
+        {"from": "hollow", "to": "pass", "label": "通り道"},
+        {"from": "hollow", "to": "no", "label": "だから"},
+        {"from": "no", "to": "instead", "label": "代わりに"},
+        {"from": "no", "to": "stop", "label": "それでも出たら", "style": "dashed"}
+      ]
+    }
+  ]
+}

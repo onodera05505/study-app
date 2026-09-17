@@ -1,0 +1,24 @@
+{
+  "topic_id": 29,
+  "term": "筋が張るとは何が起きているか",
+  "figures": [
+    {
+      "id": 1, "type": "blocks", "after": "### しくみ",
+      "caption": "硬い所は壊れた組織ではなく縮んだ筋で、痛みがまた筋を縮ませるので張りが続く。",
+      "nodes": [
+        {"id": "pose", "label": "同じ姿勢が続く", "row": 0, "col": 0},
+        {"id": "short", "label": "筋が縮んだまま", "row": 0, "col": 1},
+        {"id": "knot", "label": "硬い部分（硬結）\n押すと痛む点", "row": 0, "col": 2},
+        {"id": "blood", "label": "血流と酸素が\n足りない", "row": 1, "col": 2},
+        {"id": "pain", "label": "張り／痛み", "row": 1, "col": 1, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "pose", "to": "short"},
+        {"from": "short", "to": "knot"},
+        {"from": "knot", "to": "blood"},
+        {"from": "blood", "to": "pain"},
+        {"from": "pain", "to": "short", "label": "痛みが筋を縮ませる"}
+      ]
+    }
+  ]
+}

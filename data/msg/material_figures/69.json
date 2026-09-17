@@ -1,0 +1,28 @@
+{
+  "topic_id": 69,
+  "term": "骨盤の目印",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "四つの骨の目印を先に確かめると、そこに付く筋の位置を言葉で言えるので、骨の上は押す所ではなく目印に使う。",
+      "nodes": [
+        {"id": "ic", "label": "腸骨稜\n腰の高さで\n左右に張り出す縁", "row": 0, "col": 0, "emphasis": true},
+        {"id": "sa", "label": "仙骨\n左右の縁の間の\n平たい骨", "row": 0, "col": 1},
+        {"id": "gt", "label": "大転子\n脚の付け根の外側の\n丸い出っぱり", "row": 0, "col": 2},
+        {"id": "is", "label": "坐骨結節\n座るとイスに当たる\n硬い骨", "row": 0, "col": 3},
+        {"id": "ic2", "label": "縁の少し上＝腰の筋\n縁の下＝殿部の筋", "row": 1, "col": 0, "shape": "round"},
+        {"id": "sa2", "label": "左右の大きな骨と\n組んで骨盤になる", "row": 1, "col": 1, "shape": "round"},
+        {"id": "gt2", "label": "殿部の筋が\n集まる所", "row": 1, "col": 2, "shape": "round"},
+        {"id": "is2", "label": "腰と殿部の筋の\n下側が付く所", "row": 1, "col": 3, "shape": "round"}
+      ],
+      "edges": [
+        {"from": "ic", "to": "ic2"},
+        {"from": "sa", "to": "sa2"},
+        {"from": "gt", "to": "gt2"},
+        {"from": "is", "to": "is2"}
+      ]
+    }
+  ]
+}
