@@ -123,6 +123,14 @@
     me = data.account
     grants = data.grants
     $('#who').textContent = `${me.name} としてログイン中`
+    if (me.role === 'ADMIN') {
+      // 管理の欄は学びの一覧の下にあり、スクロールしないと見えない（本人「管理ボタンがどこ」2026-09-17）
+      const link = document.createElement('a')
+      link.href = '#admin'
+      link.className = 'admin-link'
+      link.textContent = '管理（アカウントを作る）'
+      $('#who').append(' ', link)
+    }
     show('#who', true)
     show('#login', false)
     if (next && next.startsWith('/sso/start')) {
