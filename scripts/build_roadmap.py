@@ -16,10 +16,18 @@ from pathlib import Path
 
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--max", type=int, default=40); ap.add_argument("--per-day", type=int, default=3); ap.add_argument("--min-per-goal", type=int, default=4)
+    sys.path.insert(0, str(Path(__file__).parent))
+    from targets import target as _target
     a = ap.parse_args(); d = Path(a.data)
     cands = json.loads((d / "topics_candidates.json").read_text(encoding="utf-8"))["candidates"]
     cfg = json.loads((d / "roadmap_config.json").read_text(encoding="utf-8")) if (d / "roadmap_config.json").exists() else {}
     a.max = cfg.get("max", a.max); a.per_day = cfg.get("per_day", a.per_day); a.min_per_goal = cfg.get("min_per_goal", a.min_per_goal)
+    # 分野ごとの最低数。分野が「部位」のように意味を持つ対象では、副の信号の偏りで分野が空になる
+    # （msg: 肩と首 6 / 腰と背中 6 まで削られた 2026-09-17）。無ければ分野の最低数は掛けない
+    min_per_field = cfg.get("min_per_field", {})
+    # 分野の読む順。分野が「安全 → 仕組み → 部位」のように順序そのものを表す対象で使う（msg 2026-09-17）。
+    # 設定すると前提を守ったまま分野の順に並べ、到達基準 6 を最後に回す規約は使わない
+    field_order = cfg.get("field_order", [])
     excl = set(cfg.get("exclude", [])); must = set(cfg.get("must_include", []))
     for c in cands:
         if c["term"] in cfg.get("prereq_replace", {}): c["prereq"] = list(cfg["prereq_replace"][c["term"]])
@@ -28,7 +36,12 @@ def main() -> int:
     cands = [c for c in cands if c["term"] not in excl]
     missing_must = must - {c["term"] for c in cands}
     if missing_must: print("must_include が候補に無い:", missing_must); return 1
-    for c in cands: c["score"] = c.get("source_count", 0) + 0.5 * c.get("interview_count", 0)
+    # 副の信号のキー名は対象ごとに違う（itc/mkt: interview_count、msg: care_count）。登録簿から読む。
+    # 読まないと副の信号が 0 として黙って無視される（msg の名寄せ担当が指摘 2026-09-17）
+    sig = (_target(d.name).get("roadmapSpec") or {}).get("secondarySignal", "interview_count")
+    if not any(sig in c for c in cands):
+        print(f"警告: 副の信号 {sig} を持つ候補が無い（登録簿 roadmapSpec.secondarySignal を確かめる）")
+    for c in cands: c["score"] = c.get("source_count", 0) + 0.5 * c.get(sig, 0)
     linked = [c for c in cands if c.get("goals")]
     dropped = [c["term"] for c in cands if not c.get("goals")]
     linked.sort(key=lambda c: (-c["score"], c["term"]))
@@ -39,6 +52,11 @@ def main() -> int:
             for c in linked:
                 if len([x for x in chosen if g in x["goals"]]) >= a.min_per_goal: break
                 if c not in chosen and g in c["goals"]: chosen.append(c)
+    def ensure_fields():
+        for f, n in min_per_field.items():
+            for c in linked:
+                if len([x for x in chosen if x["field"] == f]) >= n: break
+                if c not in chosen and c["field"] == f: chosen.append(c)
     def ensure_prereqs():
         changed = True
         while changed:
@@ -53,10 +71,18 @@ def main() -> int:
         # 上限に収める: 前提として要らず、到達基準の最低数を割らない単位を、score の低い順に外す
         while len(chosen) > a.max:
             removable = [c for c in sorted(chosen, key=lambda c: (c["score"], c["term"]))
-                         if c["term"] not in must and not needed_by_others(c) and all(len([x for x in chosen if g in x["goals"]]) - 1 >= a.min_per_goal for g in c["goals"])]
+                         if c["term"] not in must and not needed_by_others(c)
+                         and all(len([x for x in chosen if g in x["goals"]]) - 1 >= a.min_per_goal for g in c["goals"])
+                         and len([x for x in chosen if x["field"] == c["field"]]) - 1 >= min_per_field.get(c["field"], 0)]
             if not removable: break
             chosen.remove(removable[0])
-    ensure_goals(); ensure_prereqs(); trim(); ensure_prereqs()
+    # trim の後に前提を補うと上限を超え直すので、変わらなくなるまで回す（min_per_field の合計は max より小さくしておく）
+    ensure_goals(); ensure_fields(); ensure_prereqs()
+    for _ in range(10):
+        before = len(chosen); trim(); ensure_prereqs()
+        if len(chosen) <= a.max or len(chosen) == before: break
+    if len(chosen) > a.max:
+        print(f"警告: 上限 {a.max} に収まらない（{len(chosen)} 件）。min_per_field の合計か must_include を見直す")
     chosen.sort(key=lambda c: (-c["score"], c["term"]))  # must_include を先頭に置いた並びを score 順に戻す（順序は前提とスコアだけで決める）
     by_term = {c["term"]: c for c in chosen}
     # 前提を前に出す（トポロジカル。前提が選外なら無視）
@@ -67,10 +93,14 @@ def main() -> int:
         for p in c.get("prereq", []):
             if p in by_term: visit(by_term[p], stack + (c["term"],))
         seen.add(c["term"]); ordered.append(c)
-    main_units = [c for c in chosen if 6 not in c["goals"] or len(c["goals"]) > 1]
-    last_units = [c for c in chosen if c["goals"] == [6]]
-    for c in main_units: visit(c)
-    for c in last_units: visit(c)
+    if field_order:
+        fi = {f: i for i, f in enumerate(field_order)}
+        for c in sorted(chosen, key=lambda c: (fi.get(c["field"], len(fi)), -c["score"], c["term"])): visit(c)
+    else:
+        main_units = [c for c in chosen if 6 not in c["goals"] or len(c["goals"]) > 1]
+        last_units = [c for c in chosen if c["goals"] == [6]]
+        for c in main_units: visit(c)
+        for c in last_units: visit(c)
     # cluster: 先頭の単位の位置に、残りを順に並べて連続させる（学習者が「工程が 5〜12 日目に散った」と報告したため）
     for group in cfg.get("cluster", []):
         members = [by_term[t] for t in group if t in by_term]
