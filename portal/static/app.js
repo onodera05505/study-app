@@ -111,7 +111,7 @@
     const fs = $('#new-grants')
     fs.innerHTML =
       '<legend>開ける学び</legend>' +
-      learnings.map((l) => `<label class="inline"><input type="checkbox" name="grants" value="${esc(l.key)}" checked> ${esc(l.brand)}</label>`).join('')
+      learnings.map((l) => `<label class="inline"><input type="checkbox" name="grants" value="${esc(l.key)}"> ${esc(l.brand)}</label>`).join('')
   }
 
   async function loadAdmin() {

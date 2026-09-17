@@ -46,17 +46,17 @@
 
   <section id="admin" hidden>
     <h2>管理（アカウントと権限）</h2>
-    <p class="muted small">列のチェックが「その学びを開ける」。変えるとすぐ保存されます。</p>
-    <div class="table-wrap"><table id="acc-table" class="table"><thead></thead><tbody></tbody></table></div>
     <form id="new-form" class="card form">
       <h3>アカウントを作る</h3>
       <label><span>メールアドレス</span><input name="email" type="email" required></label>
-      <label><span>名前</span><input name="name" maxlength="50" required></label>
+      <label><span>名前</span><input name="name" type="text" maxlength="50" required></label>
       <label><span>初期パスワード（8 文字以上。本人に伝えて、変えてもらう）</span><input name="password" type="text" minlength="8" required></label>
       <fieldset id="new-grants"><legend>開ける学び</legend></fieldset>
       <p id="new-msg" class="small" hidden></p>
       <button type="submit" class="btn btn-primary">作る</button>
     </form>
+    <p class="muted small">列のチェックが「その学びを開ける」。変えるとすぐ保存されます。</p>
+    <div class="table-wrap"><table id="acc-table" class="table"><thead></thead><tbody></tbody></table></div>
   </section>
 
   <p class="note">意見や不具合は各学びの「フィードバック」から。</p>
