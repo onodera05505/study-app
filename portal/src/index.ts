@@ -245,7 +245,12 @@ app.get('/sso/start', async (c) => {
   return c.redirect(`${learning.url}/sso/callback?code=${encodeURIComponent(code)}`)
 })
 
-// 残りは静的ファイル（SPA）
-app.all('*', (c) => c.env.ASSETS.fetch(c.req.raw))
+// 残りは静的ファイル（SPA）。ASSETS の応答はヘッダーが変更不可なので、写してから返す。
+// そのまま返すと secureHeaders がヘッダーを足そうとして TypeError（Can't modify immutable headers）→ 画面が全部 500。
+// ローカルの wrangler dev では再現せず、本番だけで落ちた（2026-09-17。API は Hono が作る応答なので無事だった）
+app.all('*', async (c) => {
+  const res = await c.env.ASSETS.fetch(c.req.raw)
+  return new Response(res.body, res)
+})
 
 export default app
