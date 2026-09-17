@@ -580,6 +580,15 @@ def check_auth_boundary(c: Client, r: Report):
     st, data, _ = c.call("GET", "/health", token=None)
     r.status("GET /health（公開）", st, 200)
     r.shape("GET /health", data, {"*ok": "bool"})
+    # SSO の設定（公開。要件 §15）。ローカルは未設定なので sso=false（パスワードの経路がそのまま検査できる）
+    st, data, _ = c.call("GET", "/auth/config", token=None)
+    r.status("GET /auth/config（公開）", st, 200)
+    r.shape("GET /auth/config", data, {"*sso": "bool", "*portal": "str?", "*app": "str"})
+    if isinstance(data, dict) and data.get("sso"):
+        r.warn("この環境は SSO が有効（SSO_PORTAL_URL / SSO_SECRET あり）。パスワードの登録・ログインは 404 になるので、以降の検査は成立しない")
+    # SSO 未設定の環境では /auth/sso は 404（有効な環境の一巡は scripts/check_sso_flow.py を受入で回す）
+    st, data, _ = c.call("POST", "/auth/sso", {"code": "x"}, token=None)
+    r.status("POST /auth/sso（未設定の環境では 404）", st, 404, data)
 
 
 def check_failure_shapes(c: Client, r: Report, code: str | None):

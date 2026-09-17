@@ -7,6 +7,9 @@ export type Bindings = {
   JWT_SECRET?: string
   /** 新規登録に必要な合言葉。未設定なら登録は誰でもできる（身内向けの想定）。 */
   SIGNUP_CODE?: string
+  /** まなびば（SSO）。設定された環境ではパスワードのログイン・登録を受けない（要件 §15） */
+  SSO_PORTAL_URL?: string
+  SSO_SECRET?: string
   APP_NAME?: string
   /** どの試験のデプロイか（'ip' | 'ap'）。未設定なら ip。src/shared/exam.ts を参照 */
   EXAM?: string

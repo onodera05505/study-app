@@ -31,7 +31,44 @@ function validationMessage(err: z.ZodError): string {
 
 export const authRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
+/** SSO（まなびば。要件 §15）が設定された環境か。設定されていればパスワードのログイン・登録は受けない。 */
+const ssoOn = (env: Bindings) => !!env.SSO_PORTAL_URL && !!env.SSO_SECRET
+
+/** 画面がログインの形を決めるための設定（公開）。 */
+authRoutes.get('/config', (c) => c.json({ sso: ssoOn(c.env), portal: c.env.SSO_PORTAL_URL ?? null, app: c.env.EXAM }))
+
+/** まなびばから戻ってきた使い捨てコードを、まなびばのサーバでメールと名前に交換し、この学びのトークンを出す。 */
+authRoutes.post('/sso', async (c) => {
+  if (!ssoOn(c.env)) return c.json({ error: 'この環境では SSO が設定されていません' }, 404)
+  const body = (await c.req.json().catch(() => null)) as { code?: string } | null
+  if (!body?.code || typeof body.code !== 'string' || body.code.length > 100) return c.json({ error: '入力が正しくありません' }, 400)
+  let res: Response
+  try {
+    res = await fetch(`${c.env.SSO_PORTAL_URL!.replace(/\/$/, '')}/api/sso/exchange`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: body.code, app: c.env.EXAM, secret: c.env.SSO_SECRET }),
+    })
+  } catch {
+    return c.json({ error: 'まなびばに繋がりませんでした。もう一度お試しください' }, 502)
+  }
+  const data = (await res.json().catch(() => null)) as { email?: string; name?: string; error?: string } | null
+  if (!res.ok || !data?.email) return c.json({ error: data?.error ?? 'ログインに失敗しました。まなびばからやり直してください' }, res.status === 403 ? 403 : 401)
+
+  const db = getDb(c.env)
+  const email = data.email.trim().toLowerCase()
+  let user = await db.query.users.findFirst({ where: eq(schema.users.email, email) })
+  if (!user) {
+    // この学びでは初めての人。パスワード列は使わない印（sso）。進捗・受験履歴はこの行に付く
+    user = { id: crypto.randomUUID(), email, name: (data.name ?? email).slice(0, 50), passwordHash: 'sso', role: 'MEMBER', createdAt: Math.floor(Date.now() / 1000) }
+    await db.insert(schema.users).values(user)
+  }
+  const token = await issueToken(getSecret(c.env), user)
+  return c.json({ token, user: { id: user.id, name: user.name, role: user.role } })
+})
+
 authRoutes.post('/register', async (c) => {
+  if (ssoOn(c.env)) return c.json({ error: 'アカウントはまなびばで作ります' }, 404)
   const parsed = registration.safeParse(await c.req.json().catch(() => null))
   if (!parsed.success) return c.json({ error: validationMessage(parsed.error) }, 400)
   const { email, password, name, signupCode } = parsed.data
@@ -60,6 +97,7 @@ authRoutes.post('/register', async (c) => {
 })
 
 authRoutes.post('/login', async (c) => {
+  if (ssoOn(c.env)) return c.json({ error: 'まなびばからログインしてください' }, 404)
   const parsed = credentials.safeParse(await c.req.json().catch(() => null))
   if (!parsed.success) return c.json({ error: validationMessage(parsed.error) }, 400)
 

@@ -1,6 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { api, setToken, takeSessionExpired } from '../lib/api'
 import { exam } from '../exam'
+import { portal } from '../../shared/exam'
+
+type AuthConfig = { sso: boolean; portal: string | null; app: string }
 
 export function Login({ onDone }: { onDone: () => void }) {
   const [mode, setMode] = useState<'login' | 'register'>('login')
@@ -13,6 +16,12 @@ export function Login({ onDone }: { onDone: () => void }) {
   const [signupCode, setSignupCode] = useState('')
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
+  // SSO（まなびば。要件 §15）が設定された環境ではパスワードの欄を出さず、まなびばへ送る 1 ボタンにする。
+  // null は「まだ取得していない」。取れなければ従来のフォーム（ローカルの検査用）
+  const [cfg, setCfg] = useState<AuthConfig | null>(null)
+  useEffect(() => {
+    api<AuthConfig>('/auth/config').then(setCfg).catch(() => setCfg({ sso: false, portal: null, app: exam.key }))
+  }, [])
 
   async function submit(e: React.FormEvent) {
     e.preventDefault()
@@ -42,6 +51,17 @@ export function Login({ onDone }: { onDone: () => void }) {
           ログインの有効期限が切れました。もう一度ログインしてください。
         </div>
       )}
+      {cfg === null && <p className="muted">読み込み中…</p>}
+      {cfg?.sso && (
+        <div className="card">
+          <p style={{ marginTop: 0 }}>ログインは「{portal.name}」でまとめて行います。1 つのアカウントで、権限のある学びをすべて開けます。</p>
+          <a className="btn btn-primary btn-block" href={`${(cfg.portal ?? portal.url).replace(/\/$/, '')}/sso/start?app=${encodeURIComponent(cfg.app)}`}>
+            {portal.name}でログイン
+          </a>
+          <p className="muted small" style={{ marginTop: '0.8rem' }}>アカウントは管理者が作ります。パスワードを忘れたら管理者に再設定を頼んでください。</p>
+        </div>
+      )}
+      {cfg !== null && !cfg.sso && (
       <div className="card">
         {/* type を省くと submit 扱いになる。タブは下のフォームの外にあるが、
             将来フォームの中に入れたときに切り替えたつもりで送信されるので明示する。 */}
@@ -106,6 +126,7 @@ export function Login({ onDone }: { onDone: () => void }) {
           パスワードを忘れたときは管理者に連絡してください。
         </p>
       </div>
+      )}
     </div>
   )
 }

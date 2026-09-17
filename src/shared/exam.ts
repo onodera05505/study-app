@@ -9,6 +9,9 @@
  */
 import targets from './targets.json'
 
+/** 入口「まなびば」（認証と権限の正本。要件 §15）。URL は公開情報。 */
+export const portal: { url: string; name: string } = (targets as unknown as { _portal: { url: string; name: string } })._portal
+
 export type ExamKey = string
 
 export type ExamConfig = {

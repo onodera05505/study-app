@@ -3,6 +3,7 @@ import { NavLink, Navigate, Route, Routes, useLocation, useNavigate } from 'reac
 import { clearToken, getToken, getUserName } from './lib/api'
 import { ensureGlossary } from './lib/glossary'
 import { Login } from './pages/Login'
+import { SsoCallback } from './pages/SsoCallback'
 import { Home } from './pages/Home'
 import { Topics } from './pages/Topics'
 import { Roadmap } from './pages/Roadmap'
@@ -75,6 +76,14 @@ export function App() {
   }, [])
 
   if (!authed) {
+    // まなびばから戻ってきた（要件 §15）。コードをトークンに換えてからホームへ
+    if (location.pathname === '/sso/callback') {
+      return (
+        <main>
+          <SsoCallback onDone={() => { setAuthed(true); navigate('/', { replace: true }) }} />
+        </main>
+      )
+    }
     return (
       <main>
         <Login onDone={() => setAuthed(true)} />
