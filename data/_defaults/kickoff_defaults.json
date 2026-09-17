@@ -40,6 +40,11 @@
     "図をスクリプトで描く/illustration": "該当せず: 人物の挿絵は使わない",
     "図をスクリプトで描く/figure-priority": "学ぶ順と到達基準、本文が手順・対比・計算の単位から。1 対象 16〜20 枚から始める",
     "学習ロードマップの企画/identity": "",
-    "図をスクリプトで描く/spec-file-collection": "図の仕様は data/<対象>/material_figures/<topic_id>.json（1 単位 1 ファイル）。再生成は render → build_target_dataset.py が attach。写しは作らない"
+    "図をスクリプトで描く/spec-file-collection": "図の仕様は data/<対象>/material_figures/<topic_id>.json（1 単位 1 ファイル）。再生成は render → build_target_dataset.py が attach。写しは作らない",
+    "学習ロードマップの企画/forward-reference": "後の単位で定義する語を前提にしない。使うなら平易に言い換えて「（後の単位で扱う）」を添える。順序は roadmap.json の order で確かめる（mkt 1 周目の指摘 2026-09-16）",
+    "学習コンテンツの仕様を決める/neighbor-boundary": "取り違えやすい隣の単位の持ち場を設問がなぞらない。混同の選択肢を置くときは、設問文が隣の単位の定義や作業を言っていないか読み返す。判断問題は教材の「利用場面」の段落の写しにせず、別の場面（逆向きの状況・やらない判断）に置く",
+    "学習コンテンツの仕様を決める/explain-grading": "芯を言えたうえで周辺の一点だけ「教材に無い」と断った答えは芯の点（2 か 1）を付け、語ごと 0 点にしない。断った点は honest_unknown と material_gaps に分ける（scripts/prompts/roadmap_explain_grader.md）",
+    "教材の説明文の設計と監査/formula-reason": "式や数値の手順を出すときは、なぜその式になるか（仮定）を 1〜2 文添え、式の語と例の数字を一致させる。手順の起点になる数は読者が自分で出せる形で書く（mkt 2〜3 周目の指摘 2026-09-16）",
+    "教材の説明文の設計と監査/term-consistency": "同じものを指す語は 1 つに揃える。定義はそれを扱う単位で 1 回だけ置き、以後の単位は同じ語を使う"
   }
 }
