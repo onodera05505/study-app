@@ -9,7 +9,7 @@ cd "$(dirname "$0")/.."
 [ -s .sso_secret.local ] || { echo ".sso_secret.local が無い。先に bash scripts/deploy_portal.sh --setup" >&2; exit 1; }
 for k in $(python3 scripts/targets.py keys); do
   P="$(python3 scripts/targets.py project "$k")"
-  echo "▶ $k（Pages $P）"
+  echo "▶ ${k}（Pages ${P}）"
   npx wrangler pages secret put SSO_SECRET --project-name "$P" < .sso_secret.local
 done
 echo "完了。次: 各学びを bash scripts/deploy-pages.sh <key> で出し直す"

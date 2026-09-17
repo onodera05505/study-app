@@ -9,7 +9,7 @@
   "compatibility_flags": ["nodejs_compat"],
   "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application" },
   "d1_databases": [
-    { "binding": "DB", "database_name": "manabiba-db", "database_id": "PLACEHOLDER-run-scripts/deploy_portal.sh", "migrations_dir": "migrations" }
+    { "binding": "DB", "database_name": "manabiba-db", "database_id": "fdaa53c4-47e0-4b6c-8138-90190dbd367b", "migrations_dir": "migrations" }
   ],
   "vars": { "APP_NAME": "manabiba" }
   // SSO_SECRET は wrangler pages secret put で設定する。vars には置かない。
