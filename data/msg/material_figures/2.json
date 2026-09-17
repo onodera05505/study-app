@@ -3,18 +3,53 @@
   "term": "医療へ回す合図（受診のサイン）",
   "figures": [
     {
-      "id": 1, "type": "blocks", "after": "### しくみ",
-      "caption": "合図は触る前に確かめ、一つでも当たれば手を当てずに医療へ回す。するのは病名当てではなく振り分けだけ。",
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "聞き取りの答えに合図が一つでも当たれば、手を当てずに医療へ回す。長年の肩こりやいつもの腰の重さは当たらない。",
       "nodes": [
-        {"id": "ask", "label": "触る前に\n訴えを聞く", "row": 0, "col": 0},
-        {"id": "sign", "label": "受診の合図（腰）\n安静でも軽くならない\nだんだん悪化する\n熱がある\n脚のしびれ／力が入らない\n尿漏れがする", "row": 0, "col": 1},
-        {"id": "med", "label": "手を当てない\n医療へ回す", "row": 0, "col": 2, "emphasis": true},
-        {"id": "ok", "label": "疲れた筋に\n手を当てられる相手", "row": 1, "col": 2}
+        {
+          "id": "ask",
+          "label": "触る前の\n聞き取りの答え",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "sign",
+          "label": "受診の合図（腰）\n安静でも軽くならない\nだんだん悪化する\n熱がある\n脚のしびれ／力が入らない\n尿漏れがする",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "med",
+          "label": "手を当てない\n医療へ回す",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "ok",
+          "label": "いつもの張りなど\n疲れた筋に\n手を当てられる相手",
+          "row": 1,
+          "col": 2
+        }
       ],
       "edges": [
-        {"from": "ask", "to": "sign"},
-        {"from": "sign", "to": "med", "label": "一つでも当たる"},
-        {"from": "sign", "to": "ok", "label": "どれも当たらない", "style": "dashed"}
+        {
+          "from": "ask",
+          "to": "sign"
+        },
+        {
+          "from": "sign",
+          "to": "med",
+          "label": "一つでも当たる"
+        },
+        {
+          "from": "sign",
+          "to": "ok",
+          "label": "どれも当たらない",
+          "style": "dashed"
+        }
       ]
     }
   ]
