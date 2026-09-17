@@ -120,8 +120,17 @@ def main() -> int:
         # mkt 1 周目: SEO・SNS・メールが前提の「全体像」より 13 単位先に出た 2026-09-15）
         pre_idx = [rest.index(by_term[p]) for m in members for p in m.get("prereq", []) if p in by_term and by_term[p] in rest]
         first_in_rest = len([x for x in ordered[:first] if x not in members])
-        pos = max(first_in_rest, (max(pre_idx) + 1) if pre_idx else 0)
-        ordered = rest[:pos] + members + rest[pos:]
+        lo = max(first_in_rest, (max(pre_idx) + 1) if pre_idx else 0)
+        # クラスタの外から**クラスタ内の単位を前提にしている**単位より前に置く。
+        # 前（前提）だけを見て後ろ（依存）を見ていなかったので、寄せた先で依存を追い越した
+        # （msg: 僧帽筋を含むクラスタが、僧帽筋を前提にする「肩こりとは何か」より後ろへ動いた 2026-09-17）
+        mterms = {m["term"] for m in members}
+        dep_idx = [i for i, x in enumerate(rest) if any(p in mterms for p in x.get("prereq", []))]
+        hi = min(dep_idx) if dep_idx else len(rest)
+        if lo > hi:
+            print(f"注: クラスタ {group[0]}… は前提と依存に挟まれて動かせないので元の順のまま")
+            continue
+        ordered = rest[:lo] + members + rest[lo:]
     # 並べ終えたら前提が前にあるかを確かめる（門は check_roadmap にもある）
     pos_of = {c["term"]: i for i, c in enumerate(ordered)}
     bad = [(c["term"], p) for c in ordered for p in c.get("prereq", []) if p in pos_of and pos_of[p] > pos_of[c["term"]]]
