@@ -30,7 +30,12 @@ def learning(key: str, t: dict) -> dict:
 def main() -> int:
     ts = targets()
     keys = [k for k in ORDER if k in ts] + [k for k in ts if k not in ORDER]
+    # まだ本番に出していない対象（登録簿に url が無い）は一覧に出さない。出すと「開く」が壊れたリンクになる
+    # （msg を登録した時点で入口の生成が KeyError で落ちた。2026-09-17）
+    pending = [k for k in keys if "url" not in deploy(k)]
+    keys = [k for k in keys if k not in pending]
     ls = [learning(k, ts[k]) for k in keys]
+    if pending: print(f"注: まだ本番に出していないので一覧に出さない: {', '.join(pending)}（finish_remote.sh の後にもう一度 deploy_portal.sh）")
     (ROOT / "portal/src/learnings.json").write_text(json.dumps(ls, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     out = ROOT / "portal/dist"
     if out.exists(): shutil.rmtree(out)
