@@ -91,6 +91,12 @@ def main() -> int:
             cn = q.get("choice_notes") or {}
             if set(cn) != {"ア", "イ", "ウ", "エ"} or any(not (v or "").strip() for v in cn.values()): errors.append(f"{q['qid']}: choice_notes が 4 つ揃っていない")
             elif not cn[q["answer"]].startswith("正解"): errors.append(f"{q['qid']}: 正解の note が「正解。」で始まっていない")
+            # 正解（と正解の解説・問題文）に禁じた書き方が出たら落とす。誤答に出るのは見分けさせる使い方なので許す
+            # （msg: 正解が「体重をかけて 30 秒押す」だと危ない手当てを教えることになる 2026-09-17）
+            ans_text = q["choices"][q["answer"]] + "\n" + (cn.get(q["answer"]) or "") + "\n" + q.get("reason", "")
+            for rx, why in BANNED:
+                for hit in rx.findall(ans_text):
+                    errors.append(f"{q['qid']}: 正解の側に禁じた書き方「{hit if isinstance(hit, str) else ''.join(hit)}」— {why}")
             m = mats.get(q["topic_id"])
             if m and verbatim(q["choices"][q["answer"]], m.get("explanation", "") + "\n" + m.get("detail", "")):
                 verb.append(q["qid"])
