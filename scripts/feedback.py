@@ -12,7 +12,7 @@
 wrangler は登録簿の account_id のアカウントでログインしている必要がある（別アカウントなら止まる）。
 """
 from __future__ import annotations
-import argparse, datetime as dt, json, subprocess, sys
+import argparse, datetime as dt, json, subprocess, sys, time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -27,12 +27,19 @@ LOCAL = False  # --local でローカル D1（リハーサル）
 
 def d1(exam: str, command: str) -> list[dict]:
     db = deploy(exam)["db"]
-    out = subprocess.run(
-        ["npx", "wrangler", "d1", "execute", db, "--env", exam, "--local" if LOCAL else "--remote", "--json", "--command", command],
-        capture_output=True, text=True, cwd=ROOT,
-    )
-    if out.returncode != 0:
-        sys.exit(f"{exam}: wrangler が失敗\n{out.stderr[-800:]}")
+    # 定期確認（1 時間おき）の最初の呼び出しだけが一時的に落ちることがある（2026-09-17 に 3 回。直後の再実行は通る）。
+    # 2 回まで待って取り直す。--json のとき wrangler はエラーを stdout に出すので、落ちたときは両方を見せる
+    for attempt in range(3):
+        out = subprocess.run(
+            ["npx", "wrangler", "d1", "execute", db, "--env", exam, "--local" if LOCAL else "--remote", "--json", "--command", command],
+            capture_output=True, text=True, cwd=ROOT,
+        )
+        if out.returncode == 0:
+            break
+        if attempt < 2:
+            time.sleep(5 * (attempt + 1))
+    else:
+        sys.exit(f"{exam}: wrangler が 3 回失敗\n[stdout] {out.stdout[-800:]}\n[stderr] {out.stderr[-800:]}")
     text = out.stdout[out.stdout.find("[") :]  # 起動メッセージが混ざることがあるので JSON 部分だけ
     data = json.loads(text)
     return data[0].get("results", []) if data else []
