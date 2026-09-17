@@ -37,6 +37,9 @@ def main() -> int:
     sys.path.insert(0, str(Path(__file__).parent)); from targets import target
     USAGE = (target(d.name).get("roadmapSpec") or {}).get("usageSection", "面接で話すなら")
     NG = re.compile("|".join((target(d.name).get("roadmapSpec") or {}).get("ngWords", NG_DEFAULT)))
+    # 対象ごとに禁じる「書き方」（語ではなく形）。登録簿 roadmapSpec.bannedPatterns に {正規表現: 説明}。
+    # msg（マッサージ）: 力の強さ・秒数を数値で断定させない（資料に無い。相手の反応で書く。2026-09-17）
+    BANNED = [(re.compile(rx), why) for rx, why in ((target(d.name).get("roadmapSpec") or {}).get("bannedPatterns") or {}).items()]
     rm = json.loads((d / "roadmap.json").read_text(encoding="utf-8"))
     units = {u["topic_id"]: u for u in rm["units"]}; terms = {u["term"] for u in rm["units"]}
     # 前提はロードマップ上で前に置かれているか（クラスタ寄せで前提を飛び越えた mkt 1 周目の再発防止 2026-09-15）
@@ -67,6 +70,9 @@ def main() -> int:
             for term in re.findall(r"\[\[([^\]]+)\]\]", ex + de):
                 if term not in terms: errors.append(f"{tag}: [[{term}]] はロードマップに無い論点")
             for hit in NG.findall(ex + de): warns.append(f"{tag}: 避ける語「{hit}」")
+            for rx, why in BANNED:
+                for hit in rx.findall(ex + de):
+                    errors.append(f"{tag}: 禁じた書き方「{hit if isinstance(hit, str) else ''.join(hit)}」— {why}")
             for line in (ex + "\n" + de).splitlines():
                 if line.startswith("#") and not line.startswith("### "): errors.append(f"{tag}: 見出しは ### だけ: {line[:30]}")
     for tid in units:
