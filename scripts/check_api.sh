@@ -50,7 +50,10 @@ else
   fi
 
   echo "▶ wrangler dev を起動（--env ${EXAM} / port ${PORT}）"
-  npx wrangler dev --env "$EXAM" --port "$PORT" --ip 127.0.0.1 \
+  # wrangler.jsonc の env は本番どおり SSO_PORTAL_URL を持つ（学び側のパスワード登録・ログインは 404）。
+  # この検査はパスワードの経路で検査用アカウントを作るので、SSO を空で上書きして切る。
+  # SSO が有効な経路は scripts/check_sso_flow.py（ローカル）と check_sso_prod.sh（本番）が見る（2026-09-17 msg で発覚）
+  npx wrangler dev --env "$EXAM" --port "$PORT" --ip 127.0.0.1 --var "SSO_PORTAL_URL:" \
     --show-interactive-dev-session=false >"$LOG" 2>&1 &
   PID=$!
 
