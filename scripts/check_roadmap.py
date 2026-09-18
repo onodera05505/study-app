@@ -127,6 +127,11 @@ def main() -> int:
         if len(qs) >= 20 and top2 / len(qs) > 0.75:
             warns.append(f"正解が長い方の 2 つに入る問題が {top2}/{len(qs)} 問（偶然なら半分）。短い枝を捨てるだけで 2 択になる")
         # 断定語が誤答の目印になっていないか（同 C の指摘。37/38 が誤答だった）
+        # 読点の多さも「慎重で長い枝＝正解」の目印になる（eca 3 周目の学習者: 正解 38% 対 誤答 4% 2026-09-18）
+        ok_c = [q["choices"][q["answer"]].count("、") for q in qs.values()]
+        ng_c = [v.count("、") for q in qs.values() for k, v in q["choices"].items() if k != q["answer"]]
+        if len(qs) >= 20 and ng_c and sum(ok_c) / len(ok_c) > 2 * max(0.2, sum(ng_c) / len(ng_c)):
+            warns.append(f"正解の読点が誤答より多い（正解 平均 {sum(ok_c)/len(ok_c):.1f} 対 誤答 {sum(ng_c)/len(ng_c):.1f}）。句読点の多さで当てられる")
         ABS = ("必ず", "すべて", "全部", "いっさい", "絶対", "だけ見れば", "見なくてよい", "しなくてよい", "放っておく", "そのまま信じ")
         hit = [(qid, k == q["answer"]) for qid, q in qs.items() for k, v in q["choices"].items() if any(w in v for w in ABS)]
         if len(hit) >= 15:
