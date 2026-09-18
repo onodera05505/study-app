@@ -154,26 +154,39 @@ export function App() {
             )}
           </div>
 
+          {/* ロードマップ型は「ロードマップ」「フィードバック」の 2 つだけ（要件 §13.6、2026-09-18 決定）。
+              1 単位 2 問しかなく、同じ問題が単位の下にあるので、練習テストとドリルは重複だった。
+              確認テストは日ごとにロードマップの中へ、履歴は各日の結果表示へ移した。資格版は据え置き。 */}
           <nav className="nav">
-            <NavLink to="/" end>ホーム</NavLink>
-            <NavLink to="/topics">{exam.roadmap ? 'ロードマップ' : '学習'}</NavLink>
-            <NavLink to="/practice">練習テスト</NavLink>
-            <NavLink to="/exams">{exam.words.mock}</NavLink>
-            <NavLink to="/history">履歴</NavLink>
-            <NavLink to="/feedback">フィードバック</NavLink>
+            {exam.roadmap ? (
+              <>
+                <NavLink to="/topics">ロードマップ</NavLink>
+                <NavLink to="/feedback">フィードバック</NavLink>
+              </>
+            ) : (
+              <>
+                <NavLink to="/" end>ホーム</NavLink>
+                <NavLink to="/topics">学習</NavLink>
+                <NavLink to="/practice">練習テスト</NavLink>
+                <NavLink to="/exams">{exam.words.mock}</NavLink>
+                <NavLink to="/history">履歴</NavLink>
+                <NavLink to="/feedback">フィードバック</NavLink>
+              </>
+            )}
           </nav>
         </div>
       </header>
       <main>
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* ロードマップ型にホームは無い（要件 §13.6）。進捗と続きはロードマップの先頭に出す */}
+          <Route path="/" element={exam.roadmap ? <Navigate to="/topics" replace /> : <Home />} />
           <Route path="/topics" element={exam.roadmap ? <Roadmap /> : <Topics />} />
           <Route path="/topics/:id" element={<TopicDetail />} />
-          <Route path="/practice" element={<Practice />} />
-          <Route path="/exams" element={<Exams />} />
+          <Route path="/practice" element={exam.roadmap ? <Navigate to="/topics" replace /> : <Practice />} />
+          <Route path="/exams" element={exam.roadmap ? <Navigate to="/topics" replace /> : <Exams />} />
           <Route path="/sessions/:id" element={<Session />} />
           <Route path="/sessions/:id/result" element={<Result />} />
-          <Route path="/history" element={<History />} />
+          <Route path="/history" element={exam.roadmap ? <Navigate to="/topics" replace /> : <History />} />
           <Route path="/feedback" element={<Feedback />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

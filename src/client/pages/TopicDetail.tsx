@@ -169,12 +169,18 @@ export function TopicDetail() {
         </div>
       )}
 
-      <div className="btn-row" style={{ marginTop: '1rem' }}>
-        <button className="btn" onClick={drill} disabled={t.questionCount === 0}>
-          この論点でドリル（{t.questionCount}問）
-        </button>
-      </div>
-      {drillError && <p className="error">{drillError}</p>}
+      {/* ロードマップ型はドリルを出さない（要件 §13.6）。1 単位 2 問で、同じ問題がすぐ下に並んでいるため。
+          資格版は 1 論点に過去問が多数あり、時間を測って記録に残る演習として働くので残す */}
+      {!exam.roadmap && (
+        <>
+          <div className="btn-row" style={{ marginTop: '1rem' }}>
+            <button className="btn" onClick={drill} disabled={t.questionCount === 0}>
+              この論点でドリル（{t.questionCount}問）
+            </button>
+          </div>
+          {drillError && <p className="error">{drillError}</p>}
+        </>
+      )}
 
       <h2>{exam.roadmap ? 'この単位の確認問題' : 'この論点が出題された過去問'}</h2>
       <ul className="list">

@@ -1,8 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { api } from '../lib/api'
+import { Link, useNavigate } from 'react-router-dom'
+import { api, getLastTopic } from '../lib/api'
+import type { LastTopic } from '../lib/api'
 import { exam } from '../exam'
 import { StatusBadge, statusRowClass } from '../components/StatusBadge'
+
+/** その日の確認テスト。1 日＝1 回（過去問の「回」を日に割り当ててある） */
+type DayExam = { exam: string; examLabel: string; questions: number; attempts: number; bestScore: number | null }
 
 type Unit = {
   id: number
@@ -24,6 +28,12 @@ export function Roadmap() {
   // null は「まだ取得していない」、[] は「取得した結果が空」
   const [units, setUnits] = useState<Unit[] | null>(null)
   const [error, setError] = useState('')
+  // 日ごとの確認テスト（要件 §13.6）。上部メニューから独立した画面を無くし、ここに置いた
+  const [exams, setExams] = useState<DayExam[] | null>(null)
+  const [visits, setVisits] = useState<{ streak: number } | null>(null)
+  const [last, setLast] = useState<LastTopic | null>(null)
+  const [busy, setBusy] = useState(false)
+  const navigate = useNavigate()
   const perDay = exam.roadmapSpec?.perDay ?? 3
   const extraField = exam.roadmapSpec?.extraField ?? '補足（ロードマップ外）'
 
@@ -33,11 +43,34 @@ export function Roadmap() {
     api<{ topics: Unit[] }>('/topics?limit=500')
       .then((d) => setUnits(d.topics))
       .catch((e) => setError(e.message))
+    // 確認テストと連続日数は補助。取れなくても本体（一覧）は出す
+    api<{ exams: DayExam[] }>('/exams').then((d) => setExams(d.exams)).catch(() => setExams([]))
+    api<{ visits: { streak: number } }>('/me').then((d) => setVisits(d.visits)).catch(() => setVisits(null))
   }, [])
 
   useEffect(() => {
     load()
+    setLast(getLastTopic())
   }, [load])
+
+  /** その日の確認テストを始める。範囲はその日の単位だけ（通しで受ける形は §13.6 で無くした） */
+  async function startDay(e: DayExam) {
+    if (busy) return
+    if (!window.confirm(`${e.examLabel}の確認（${e.questions} 問）を始めます。よろしいですか？`)) return
+    setBusy(true)
+    try {
+      const s = await api<{ id: string }>('/sessions', { method: 'POST', body: { kind: 'mock', exam: e.exam } })
+      navigate(`/sessions/${s.id}`)
+    } catch (err: any) {
+      setError(
+        err.status === 409
+          ? '進行中のテストがあります。終えるか、やめてから始めてください。'
+          : err.message,
+      )
+    } finally {
+      setBusy(false)
+    }
+  }
 
   if (error)
     return (
@@ -64,8 +97,16 @@ export function Roadmap() {
   return (
     <>
       <h1>ロードマップ</h1>
+      {/* ホームを無くしたので、続きの導線と連続日数はここが受け皿（要件 §13.6） */}
+      <Link
+        to={last ? `/topics/${last.id}` : current ? `/topics/${current.id}` : '/topics'}
+        className="btn btn-primary btn-block go-study"
+      >
+        {last ? `前回の続きから（${last.term}）` : current ? `ここから（${current.term}）` : '最初の単位から始める'}
+      </Link>
       <p className="lead">
         1 日 {perDay} 単位、全 {days.size} 日。順番どおりに読み、読んだら理解度を付けます。
+        {visits && <> 連続 <b>{visits.streak}</b> 日。</>}
         {units && (
           <>
             {' '}
@@ -96,6 +137,23 @@ export function Roadmap() {
               </span>
               {done && <small>完了</small>}
             </h2>
+            {/* その日の確認テスト（要件 §13.6）。範囲はこの日の単位だけ */}
+            {(() => {
+              const ex = (exams ?? []).find((e) => e.examLabel === `${d} 日目`)
+              if (!ex) return null
+              return (
+                <p className="rm-day-exam">
+                  <button type="button" className="btn small" disabled={busy} onClick={() => startDay(ex)}>
+                    この日の確認（{ex.questions} 問）
+                  </button>
+                  {ex.attempts > 0 && (
+                    <span className="rm-day-score">
+                      受けた {ex.attempts} 回 · 最高 <b>{ex.bestScore ?? 0}</b> / {ex.questions}
+                    </span>
+                  )}
+                </p>
+              )
+            })()}
             <ul className="list">
               {list.map((u) => {
                 const st = u.status ?? 1

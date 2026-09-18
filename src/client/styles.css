@@ -1206,3 +1206,7 @@ button.choice:hover:not(:disabled) { border-color: var(--accent); }
 }
 .update-bar .btn { padding: 0.3rem 0.9rem; min-height: 0; }
 
+
+/* 日ごとの確認テスト（要件 §13.6）。上部メニューから独立した画面を無くし、日の見出しの下に置いた */
+.rm-day-exam { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin: 0.2rem 0 0.5rem; }
+.rm-day-score { color: var(--muted); font-size: 0.82rem; }
