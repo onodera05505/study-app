@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { NavLink, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
-import { clearToken, getToken, getUserName } from './lib/api'
+import { api, clearToken, getToken, getUserName } from './lib/api'
 import { ensureGlossary } from './lib/glossary'
 import { Login } from './pages/Login'
 import { SsoCallback } from './pages/SsoCallback'
@@ -22,10 +22,19 @@ export function App() {
   const [authed, setAuthed] = useState(!!getToken())
   const [menuOpen, setMenuOpen] = useState(false)
   const [updateReady, setUpdateReady] = useState(false)
+  // 入口（まなびば）の URL。SSO が有効な環境だけ返る
+  const [portal, setPortal] = useState<string | null>(null)
   const navigate = useNavigate()
   const location = useLocation()
 
   // 新しい版の検知（要件 §5.6）。最初に版を覚え、画面を移るときと 5 分おきに見比べる
+  useEffect(() => {
+    // 入口の URL は公開の設定から取る（学び側は SSO_PORTAL_URL を知っているが、画面には焼き込まない）
+    api<{ sso: boolean; portal: string | null }>('/auth/config')
+      .then((c) => setPortal(c.sso ? c.portal : null))
+      .catch(() => setPortal(null))
+  }, [])
+
   useEffect(() => {
     rememberBuild()
     const id = setInterval(() => {
@@ -104,6 +113,13 @@ export function App() {
       <header className="header">
         <div className="header-inner">
           <span className="brand">{exam.brand}</span>
+
+          {/* まなびば（入口）へ戻る。SSO が有効なときだけ出す。本人の依頼 2026-09-18 */}
+          {portal && (
+            <a className="portal-link" href={portal}>
+              ← まなびば
+            </a>
+          )}
 
           {/* ログアウトはナビに並べない。スマホではナビが横スクロールするため、
               移動のつもりで触ってログアウトしてしまう。メニューに畳んで2手にする。 */}

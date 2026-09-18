@@ -99,6 +99,17 @@ p a:not(.btn), .md li a, .md-table a { text-decoration: underline; }
   flex-wrap: wrap;
 }
 .brand { font-weight: 800; font-size: 1rem; letter-spacing: 0.01em; }
+/* 入口（まなびば）へ戻る。学びを離れる動きなので、ナビとは別の見た目にする */
+.portal-link {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+.portal-link:hover { color: var(--text); text-decoration: none; background: var(--panel); }
 .nav { display: flex; gap: 0.2rem; flex-wrap: wrap; margin-left: auto; order: 2; }
 .nav a {
   padding: 0.35rem 0.65rem;
@@ -951,6 +962,7 @@ button.choice:hover:not(:disabled) { border-color: var(--accent); }
   /* 1段目はブランドとアカウント、2段目がナビ。アカウントを横スクロールする
      ナビの中に入れると、流れていって押せなくなる。 */
   .brand { font-size: 0.95rem; flex: 1; }
+  .portal-link { order: 1; font-size: 0.78rem; padding: 0.25rem 0.5rem; }
   .account { order: 1; }
   .nav {
     order: 2;
