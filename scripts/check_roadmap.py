@@ -106,6 +106,22 @@ def main() -> int:
         if verb: warns.append(f"正解の選択肢が教材と {VERBATIM} 字以上連続一致（読んだ文の再認で当たる）: {len(verb)} 問 {verb[:12]}{'…' if len(verb) > 12 else ''}")
         top = max(pos.values()) / len(qs)
         if top > 0.45: warns.append(f"正解位置が偏っている: {pos}")
+        # 記号の並びで当てられる抜け道 2 つ（eca 2 周目の学習者が発見 2026-09-18）。
+        # (1) 同じ論点の 2 問で正解記号が一度も重ならないと、1 問目を答えた時点で 2 問目の枝が 1 つ減る（偶然なら 4 分の 1 は重なる）
+        by_topic: dict[int, list[str]] = {}
+        for q in qs.values(): by_topic.setdefault(q["topic_id"], []).append(q["answer"])
+        pairs = [v for v in by_topic.values() if len(v) == 2]
+        same = sum(1 for v in pairs if v[0] == v[1])
+        if len(pairs) >= 20 and same / len(pairs) < 0.10:
+            warns.append(f"同じ論点の 2 問で正解記号が重なるのが {same}/{len(pairs)} 件（偶然なら 4 分の 1 ほど）。1 問目から 2 問目を絞れる")
+        # (2) 正解がいつも他より長いと、中身を読まずに「長く慎重な枝」を選べる
+        longer = 0
+        for q in qs.values():
+            ok = len(q["choices"][q["answer"]])
+            other = [len(v) for k, v in q["choices"].items() if k != q["answer"]]
+            if other and ok > max(other): longer += 1
+        if len(qs) >= 20 and longer / len(qs) > 0.60:
+            warns.append(f"正解がいちばん長い選択肢になっている問題が {longer}/{len(qs)} 問（6 割超）。長さで当てられる")
     # 独立解答
     mism = []
     for sp in a.solutions:
