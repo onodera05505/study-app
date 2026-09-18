@@ -1,0 +1,760 @@
+{
+  "cycle": 2,
+  "score": "130/130",
+  "rate": 1.0,
+  "by_goal": {
+    "1": "16/16",
+    "2": "15/15",
+    "3": "18/18",
+    "4": "25/25",
+    "5": "38/38",
+    "6": "18/18"
+  },
+  "by_field": {
+    "ミクロ（価格と市場）": "30/30",
+    "企業と競争": "20/20",
+    "マクロ（生産と物価）": "30/30",
+    "金融と財政": "30/30",
+    "国際と成長": "20/20"
+  },
+  "shift_suspect": [],
+  "avg_understood": 2.65,
+  "stuck_units": [
+    {
+      "topic_id": 96,
+      "term": "長く続いた大規模な緩和は何に効いたか",
+      "confusing": "両方の立場が『測り方が違う』で終わり、数字が一つも無い。読み終えても、効いたのか傷めたのかについて自分の見当がまったく立たなかった。『判断が進むのは数え方が揃ったとき』と言われても、揃えるのは自分ではない"
+    }
+  ],
+  "overconfident_units": [],
+  "unknown_terms": [
+    "オペ",
+    "ドーマー条件（式の形）",
+    "予想物価上昇率（測り方）",
+    "加工統計",
+    "暮らし編",
+    "死荷重",
+    "準備預金制度",
+    "第一次所得収支",
+    "自己資本",
+    "自然独占",
+    "資金過不足",
+    "購買力平価（計算のしかた）"
+  ],
+  "wrong": [],
+  "overall": {
+    "order_ok": false,
+    "order_issue": "ミクロ（1〜25）の順番は文句なし。前の単位の例をそのまま次で使い回すので、積み上がる感じがあった。困ったのは金融まわりで、43（中央銀行）と44（目標の置き方）が22日目に来るのに、金利そのものの単位（47）と政策金利（48）が24日目。43の本文では『公開市場操作で短い期間の金利を導く』と説明されるのに、その金利が期間ごとに別だと習うのは2日後になる。47→48→43→44→49 の順なら素直だった。もう一つは27（名目と実質）が14日目、29（物価指数）が15日目で、割る物差しを知らないまま割り算を読んだこと。それから33（投資）が17日目で金利3%と6%を使うので、金利の単位はもっと前でよかった。42（貸出が無ければ預金は増えない）と54（量を目標に置く）は6日離れていて、噛み合わないまま残った。",
+    "too_long": [
+      22,
+      49,
+      54,
+      60,
+      48,
+      24
+    ],
+    "too_short": [
+      37,
+      99,
+      75,
+      96
+    ],
+    "most_useful": [
+      2,
+      35,
+      18,
+      102,
+      81,
+      77,
+      70,
+      91,
+      78,
+      24
+    ],
+    "least_useful": [
+      109,
+      17,
+      75,
+      96
+    ],
+    "would_you_continue": true,
+    "comment": "1日2単位・10分前後なら33日は続けられる。実際、最後まで飽きずに読めた。議論の筋を追える気は、半分は付いた。付いたのは『聞き返す言葉』で、名目か実質か、どの期間の金利か、フローかストックか、線の上を滑ったのか線ごと動いたのか、全体の得の話か誰が損したかの話か、をその場で言えるようになった。付かなかったのは見立てで、たとえば今の物価の上がりが需要側なのか費用側なのかを、自分で数字を取ってきて判断できるとは思えない。見方が分かれる論点は、13・53・65・57は納得、25・40は判断がつかず、55は読む前と何も変わらなかった。追加分だった為替（60・61）と物価の原因（35・38）のうち、60は全65単位で一番ありがたかった。35と38は内容は要るのに数字も図も無く、言葉だけで二本の線を描かされたのが一番きつかった。確認問題の記号は、数えていないが偏っている感じはしなかった。ただ別の癖はあって、『二つを確かめる』『AとBを分けて置く』と書いてある慎重で長い選択肢がほぼ当たりだった。教材を読んでいなくても、一番言葉数の多い枝を選べば相当拾えると思う。"
+  },
+  "per_unit": {
+    "1": {
+      "term": "経済学は何を扱うか（希少性と選択）",
+      "field": "ミクロ（価格と市場）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "2": {
+      "term": "機会費用",
+      "field": "ミクロ（価格と市場）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "「二番目以下は足さない」は言われて納得したが、最初は足しそうになった",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "5": {
+      "term": "需要（買いたい量は何で決まるか）",
+      "field": "ミクロ（価格と市場）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "6": {
+      "term": "供給（売りたい量は何で決まるか）",
+      "field": "ミクロ（価格と市場）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "7": {
+      "term": "市場均衡（値段が落ち着くところ）",
+      "field": "ミクロ（価格と市場）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "13": {
+      "term": "あと一つ増やすとどうなるか（限界の考え方）",
+      "field": "ミクロ（価格と市場）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "21": {
+      "term": "労働市場（賃金はどう決まるか）",
+      "field": "ミクロ（価格と市場）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "「雇う側が賃金を決める力を持つ場合がある」がここでは一行だけで、なぜそうなるのかは分からなかった（13で回収された）",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "20": {
+      "term": "値段の上限と下限を決めると何が起きるか",
+      "field": "ミクロ（価格と市場）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "16": {
+      "term": "買う側と売る側の得（余剰）",
+      "field": "ミクロ（価格と市場）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "17": {
+      "term": "全体の得で仕組みを比べる（厚生の見方）",
+      "field": "ミクロ（価格と市場）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "死荷重"
+      ],
+      "minutes": 6
+    },
+    "9": {
+      "term": "需要の価格弾力性",
+      "field": "ミクロ（価格と市場）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "3": {
+      "term": "あれもこれもは選べない（生産可能性の限界）",
+      "field": "ミクロ（価格と市場）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "「線が外へ張り出して曲がる」のが数字で追えたのは良かったが、図が無いので頭の中で描くのに時間がかかった",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "24": {
+      "term": "最低賃金を上げると雇用は減るか",
+      "field": "ミクロ（価格と市場）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 8
+    },
+    "18": {
+      "term": "税は誰が負担するか（税の帰着）",
+      "field": "ミクロ（価格と市場）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "22": {
+      "term": "稼ぎの散らばりをどう測るか（分配と格差）",
+      "field": "ミクロ（価格と市場）",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "測り方が三つ、限界が四つ、立場が二つと詰まりすぎて、読み終えたときに手元に残ったのは『測り方を確かめる』だけだった",
+      "unknown_terms": [],
+      "minutes": 8
+    },
+    "27": {
+      "term": "作る量と入れる元手の関係（生産）",
+      "field": "企業と競争",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "29": {
+      "term": "かかり続ける費用と、作るほど増える費用",
+      "field": "企業と競争",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "30": {
+      "term": "あと一つ作る費用と、一つあたりの費用",
+      "field": "企業と競争",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "31": {
+      "term": "どこまで作ると儲かるか",
+      "field": "企業と競争",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "32": {
+      "term": "完全競争（値段を決められない売り手）",
+      "field": "企業と競争",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "34": {
+      "term": "独占（売り手が一社のとき）",
+      "field": "企業と競争",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "35": {
+      "term": "独占で失われるもの",
+      "field": "企業と競争",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "39": {
+      "term": "数社が互いの出方を見る（寡占）",
+      "field": "企業と競争",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "37": {
+      "term": "競争をどう守るか（独占禁止の考え方）",
+      "field": "企業と競争",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "自然独占への手当て（競わせる代わりに値段を規制する）が一行しかなく、なぜそれで良いのかが分からない。確認問題ではそこが問われたので、記述の薄さがそのまま出た",
+      "unknown_terms": [
+        "自然独占"
+      ],
+      "minutes": 5
+    },
+    "48": {
+      "term": "大きな会社や場の提供者をどう扱うか",
+      "field": "企業と競争",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "両方の前提は並べてあるが、実際にどちらが起きているのかの手がかりが無いまま終わる。読んだ後も自分の見方が決まらなかった",
+      "unknown_terms": [],
+      "minutes": 8
+    },
+    "49": {
+      "term": "GDP（国内で新たに生まれた値打ちの合計）",
+      "field": "マクロ（生産と物価）",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "付加価値と中古・国内の線引きはすぐ分かったが、後半の統計の作り（加工統計・速報と改定・基準改定・不突合）が一気に来て、そこで息切れした",
+      "unknown_terms": [
+        "加工統計"
+      ],
+      "minutes": 9
+    },
+    "51": {
+      "term": "金額の伸びと量の伸び（名目と実質）",
+      "field": "マクロ（生産と物価）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "本文に『（暮らし編と同じ形）』と書いてあり、この学習パックには暮らし編が無いので何を指しているか分からなかった",
+      "unknown_terms": [
+        "暮らし編"
+      ],
+      "minutes": 6
+    },
+    "53": {
+      "term": "一人当たりで見る・伸び率で見る",
+      "field": "マクロ（生産と物価）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "54": {
+      "term": "値段の動きを比率で測る（物価指数）",
+      "field": "マクロ（生産と物価）",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "買い物かごの考え方は分かる。品質が良くなった分を値上がりとして数えない、が一番効く話なのに一文で流れていて、確認問題でそこを問われて焦った",
+      "unknown_terms": [],
+      "minutes": 8
+    },
+    "60": {
+      "term": "働いた人・探した人・探さなかった人",
+      "field": "マクロ（生産と物価）",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "完全失業者の三条件は覚えた。ただ『働く力が使いきれていない状態をまとめた指標』が名前なしで出てきて、何を見ればいいのか分からない",
+      "unknown_terms": [],
+      "minutes": 8
+    },
+    "50": {
+      "term": "同じ額を三つの側から数える（生産・分配・支出）",
+      "field": "マクロ（生産と物価）",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "売れ残りを『作った側が自分で買ったと見なして、使われた側に数える』の直後に括弧で『在庫は作った側の取り分として残る』と書かれていて、在庫が支出の側なのか生産の側なのか、読み返しても決めきれなかった",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "66": {
+      "term": "使うか残すか（消費と貯蓄）",
+      "field": "マクロ（生産と物価）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "67": {
+      "term": "設備にお金を回すかどうか（投資）",
+      "field": "マクロ（生産と物価）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "68": {
+      "term": "皆が使う量から所得が決まる筋",
+      "field": "マクロ（生産と物価）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "70": {
+      "term": "全体の買いたい量と作れる量（総需要と総供給）",
+      "field": "マクロ（生産と物価）",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "二本の線を頭で描くのに一番苦労した。数字の例が一つも無く、図も無い。『作れる量の近くでほとんど立った線になる』は言葉だけでは絵にしにくい",
+      "unknown_terms": [],
+      "minutes": 8
+    },
+    "58": {
+      "term": "値段が続けて上がる・下がる（インフレとデフレ）",
+      "field": "マクロ（生産と物価）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "64": {
+      "term": "良い時と悪い時の波（景気の循環）",
+      "field": "マクロ（生産と物価）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "65": {
+      "term": "無理なく作れる量との差（需給の締まり具合）",
+      "field": "マクロ（生産と物価）",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "『無理なく作れる量は誰にも直に観測できない』と正直に書いてあるのは良いが、では何を見ればいいのかが推計・求人倍率・アンケートと散らばって、結局どれを見るのか決まらなかった",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "69": {
+      "term": "支出が次の所得を生む（波及の重なり）",
+      "field": "マクロ（生産と物価）",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "100→80→64→51と細っていくのは追えたが、結局合計がいくらになるのかが『100より大きいところで止まる』としか書かれておらず、宙ぶらりんで終わった。掛け算の形が一つ欲しかった",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "75": {
+      "term": "GDPで豊かさを測れるか",
+      "field": "マクロ（生産と物価）",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "両方の立場が『混ぜるか混ぜないか』の一点に見えて、議論の重さが伝わってこなかった",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "76": {
+      "term": "お金の三つの働き",
+      "field": "金融と財政",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "78": {
+      "term": "銀行の働きと、お金が増えるしくみ",
+      "field": "金融と財政",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "『損に耐える自己資本』が説明なしで出てくる。何のことかは雰囲気で分かるが、歯止めの一つとして挙げられているのに中身が無い",
+      "unknown_terms": [
+        "自己資本",
+        "準備預金制度"
+      ],
+      "minutes": 7
+    },
+    "79": {
+      "term": "中央銀行とは何をするところか",
+      "field": "金融と財政",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "手段の説明で『公開市場操作』『短い期間の金利』が先に出てくるが、金利そのものの単位（47）と政策金利の単位（48）は1週間後。順番が逆に感じた",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "82": {
+      "term": "物価の落ち着きを数字で示す（目標の置き方）",
+      "field": "金融と財政",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "基調・需給ギャップ・予想物価上昇率・賃金の四つを合わせて見る、までは分かった。ただ『予想物価上昇率』をどうやって知るのかが書かれていないので、自分では確かめられない",
+      "unknown_terms": [
+        "予想物価上昇率（測り方）"
+      ],
+      "minutes": 6
+    },
+    "86": {
+      "term": "財政とは何か（入りと出）",
+      "field": "金融と財政",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "88": {
+      "term": "政府の支出と税で需要を動かす",
+      "field": "金融と財政",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "77": {
+      "term": "金利はどう決まるか",
+      "field": "金融と財政",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "80": {
+      "term": "政策の金利と、市場への働きかけ",
+      "field": "金融と財政",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "『資金過不足』という言葉が括弧で一度出るだけで、紙幣の出回りや政府の受け払いがなぜ預け金を動かすのかは分からなかった",
+      "unknown_terms": [
+        "資金過不足"
+      ],
+      "minutes": 6
+    },
+    "81": {
+      "term": "金融政策はどこを通って届くか",
+      "field": "金融と財政",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "90": {
+      "term": "国が借りるということ（国債の種類）",
+      "field": "金融と財政",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "建設国債・特例国債・借換債の三区分と60年の決まりが一度に来て、60年で償還するというのが三つのどれにかかるのか読み返した",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "91": {
+      "term": "借金の重さをどう測るか",
+      "field": "金融と財政",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "プライマリーバランスと財政収支の差が利払い、という関係は分かった。残高の比が金利と成長率で動くところは、1%と2%の例だけで、どれくらい動くのかの感覚が持てなかった",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "92": {
+      "term": "金利が上がると財政はどうなるか",
+      "field": "金融と財政",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "98": {
+      "term": "政府の借金はどこまで続けられるか",
+      "field": "金融と財政",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "ドーマー条件の側は前提まで示されているのに、自国通貨で出せる側の立場は『返せなくなることが起きない』の一文で、なぜそう言えるのかが書かれていない。片方だけ薄いので、比べたつもりになれなかった",
+      "unknown_terms": [
+        "ドーマー条件（式の形）"
+      ],
+      "minutes": 7
+    },
+    "83": {
+      "term": "金利を下げきった後の手立て",
+      "field": "金融と財政",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "42で『土台のお金が増えても貸出が伸びなければ預金は増えない』と読んだ直後に、ここで『マネタリーベースを増やすことを目標に置くやり方』が手立てとして出てくる。42の話と噛み合わないままで、なぜそれが緩和になるのか分からなかった",
+      "unknown_terms": [
+        "オペ"
+      ],
+      "minutes": 7
+    },
+    "96": {
+      "term": "長く続いた大規模な緩和は何に効いたか",
+      "field": "金融と財政",
+      "correct": 2,
+      "total": 2,
+      "understood": 1,
+      "confusing": "両方の立場が『測り方が違う』で終わり、数字が一つも無い。読み終えても、効いたのか傷めたのかについて自分の見当がまったく立たなかった。『判断が進むのは数え方が揃ったとき』と言われても、揃えるのは自分ではない",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "99": {
+      "term": "得手が違う相手と分けて作る（比較優位）",
+      "field": "国際と成長",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "料理人と相棒のたとえで筋は通った。ただ数字が一つも無いので、『諦める物の大小』を自分で比べる練習ができていない。ここは表と数字が欲しかった単位",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "100": {
+      "term": "貿易で得をする人と損をする人",
+      "field": "国際と成長",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "101": {
+      "term": "関税で守るときに失うもの",
+      "field": "国際と成長",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "106": {
+      "term": "よその国とのやり取りを記録する（国際収支）",
+      "field": "国際と成長",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "キーワードに『第一次所得収支』が挙がっているのに、本文にその語が一度も出てこない。経常収支の中身として括弧で『配当や利子』とあるのがそれだと推測したが、確信が無い",
+      "unknown_terms": [
+        "第一次所得収支"
+      ],
+      "minutes": 7
+    },
+    "102": {
+      "term": "円高・円安とは何が起きていることか",
+      "field": "国際と成長",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "103": {
+      "term": "為替はどう決まるか（金利の差・物価の差）",
+      "field": "国際と成長",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "三つの経路の構えは分かる。ただ〈金利の経路〉という名前が49（金融政策）でも使われていて、そこでは『借りる費用が下がって支出が動く』話だった。ここでは『高い金利の通貨に資金が向かう』話で中身が違うので、読みながら一瞬混ざった",
+      "unknown_terms": [
+        "購買力平価（計算のしかた）"
+      ],
+      "minutes": 7
+    },
+    "109": {
+      "term": "経済が伸びるとはどういうことか",
+      "field": "国際と成長",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "112": {
+      "term": "一人・一時間あたりどれだけ生めるか（生産性）",
+      "field": "国際と成長",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "114": {
+      "term": "働き手の数と働き方が伸びを左右する",
+      "field": "国際と成長",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "116": {
+      "term": "自由な貿易の利益は誰に回るか",
+      "field": "国際と成長",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "三つの立場（全体の得・分配の損・主因ではない）が並ぶが、三つ目だけ『推計を根拠にする』とあって数字が出てこない。何割なのかが分からないと、三つ目を重く見るべきかどうかが決められない",
+      "unknown_terms": [],
+      "minutes": 6
+    }
+  },
+  "delta_rate": 0.0,
+  "delta_understood": -0.1
+}
