@@ -115,13 +115,24 @@ def main() -> int:
         if len(pairs) >= 20 and same / len(pairs) < 0.10:
             warns.append(f"同じ論点の 2 問で正解記号が重なるのが {same}/{len(pairs)} 件（偶然なら 4 分の 1 ほど）。1 問目から 2 問目を絞れる")
         # (2) 正解がいつも他より長いと、中身を読まずに「長く慎重な枝」を選べる
-        longer = 0
+        longer = top2 = 0
         for q in qs.values():
             ok = len(q["choices"][q["answer"]])
-            other = [len(v) for k, v in q["choices"].items() if k != q["answer"]]
-            if other and ok > max(other): longer += 1
+            other = sorted((len(v) for k, v in q["choices"].items() if k != q["answer"]), reverse=True)
+            if other and ok > other[0]: longer += 1
+            if len(other) >= 2 and ok > other[1]: top2 += 1  # 長さの順位が 1 位か 2 位
         if len(qs) >= 20 and longer / len(qs) > 0.60:
             warns.append(f"正解がいちばん長い選択肢になっている問題が {longer}/{len(qs)} 問（6 割超）。長さで当てられる")
+        # 「短い 2 つを捨てる」で 2 択に絞れる癖（独立解答 C が ecl で 81/84 と指摘 2026-09-18）。偶然なら半分
+        if len(qs) >= 20 and top2 / len(qs) > 0.75:
+            warns.append(f"正解が長い方の 2 つに入る問題が {top2}/{len(qs)} 問（偶然なら半分）。短い枝を捨てるだけで 2 択になる")
+        # 断定語が誤答の目印になっていないか（同 C の指摘。37/38 が誤答だった）
+        ABS = ("必ず", "すべて", "全部", "いっさい", "絶対", "だけ見れば", "見なくてよい", "しなくてよい", "放っておく", "そのまま信じ")
+        hit = [(qid, k == q["answer"]) for qid, q in qs.items() for k, v in q["choices"].items() if any(w in v for w in ABS)]
+        if len(hit) >= 15:
+            wrong = sum(1 for _, is_ok in hit if not is_ok)
+            if wrong / len(hit) > 0.85:
+                warns.append(f"言い切る語（必ず・すべて・〜だけ見れば 等）を含む選択肢 {len(hit)} 件のうち {wrong} 件が誤答。語だけで消去できる")
     # 独立解答
     mism = []
     for sp in a.solutions:
