@@ -19,6 +19,12 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 from targets import deploy, keys  # noqa: E402
 
+
+def live_keys() -> list[str]:
+    """本番に出してある対象だけ（登録簿に url がある）。出していない対象は D1 がまだ無く、
+    取りに行くと wrangler が Route not found で落ちる（ecl・eca を登録した時点で発生 2026-09-18）。"""
+    return [k for k in keys() if "url" in deploy(k)]
+
 STATUSES = ("new", "triaged", "done")
 
 
@@ -83,12 +89,12 @@ def main() -> int:
     a = ap.parse_args()
     global LOCAL; LOCAL = getattr(a, "local", False)
     if a.cmd == "summary":
-        counts = {exam: len(d1(exam, "SELECT id FROM feedback WHERE status = 'new'")) for exam in keys()}
+        counts = {exam: len(d1(exam, "SELECT id FROM feedback WHERE status = 'new'")) for exam in live_keys()}
         total = sum(counts.values())
         print("未処理 " + str(total) + " 件" + ("（" + " / ".join(f"{k} {v}" for k, v in counts.items() if v) + "）" if total else ""))
         return 0
     if a.cmd == "fetch":
-        exams = list(keys()) if a.every else [a.exam]
+        exams = live_keys() if a.every else [a.exam]
         if not a.every and not a.exam: ap.error("対象の ID か --every")
         total = 0
         for exam in exams:
