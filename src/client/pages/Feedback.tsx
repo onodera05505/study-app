@@ -9,6 +9,8 @@ export function Feedback() {
   const last = getLastPage()
   // 途中の入力は遷移しても消さない（利用者の指摘 2026-09-16。警告ではなく下書きの保持で応える。送信で消す）
   const [text, setText] = useState(() => readDraft())
+  // 種類（良かった／改善の提案／その他）。どれか 1 つを選んでから送る（本人の指摘 2026-09-18）
+  const [kind, setKind] = useState<'good' | 'improve' | 'other' | ''>('')
   const [attach, setAttach] = useState(!!last)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
@@ -28,12 +30,14 @@ export function Feedback() {
         method: 'POST',
         body: {
           body: text,
+          kind,
           ...(attach && last
             ? { page: last.path, topicId: last.topicId, questionId: last.questionId }
             : {}),
         },
       })
       setDone(true)
+      setKind('')
       writeDraft('')
     } catch (err: any) {
       setError(err.message)
@@ -78,6 +82,21 @@ export function Feedback() {
         いただいた内容は開発側で読んで、教材や画面の改善に使います（その場での返信はありません）。
       </p>
       <form onSubmit={submit} className="card flat" style={{ padding: '1rem' }}>
+        <span className="fb-kinds-label">どれについてですか</span>
+        <div className="fb-kinds" role="radiogroup" aria-label="フィードバックの種類">
+          {KINDS.map((k) => (
+            <label key={k.value} className={kind === k.value ? 'fb-kind on' : 'fb-kind'}>
+              <input
+                type="radio"
+                name="kind"
+                value={k.value}
+                checked={kind === k.value}
+                onChange={() => setKind(k.value)}
+              />
+              {k.label}
+            </label>
+          ))}
+        </div>
         <label>
           <span>内容</span>
           <textarea
@@ -99,7 +118,7 @@ export function Feedback() {
         )}
         {error && <p className="error">{error}</p>}
         <div className="btn-row">
-          <button type="submit" className="btn btn-primary" disabled={busy || text.trim() === ''}>
+          <button type="submit" className="btn btn-primary" disabled={busy || text.trim() === '' || kind === ''}>
             {busy ? '送信中…' : '送信する'}
           </button>
         </div>
@@ -107,6 +126,12 @@ export function Feedback() {
     </>
   )
 }
+
+const KINDS = [
+  { value: 'good' as const, label: '良かった' },
+  { value: 'improve' as const, label: '改善の提案' },
+  { value: 'other' as const, label: 'その他' },
+]
 
 const DRAFT_KEY = 'study-app:feedback-draft'
 function readDraft(): string {

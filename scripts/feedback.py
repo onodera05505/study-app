@@ -72,7 +72,8 @@ def show(exam: str, rows: list[dict]) -> None:
     print(f"▶ {exam}: {len(rows)} 件")
     for r in rows:
         where = " / ".join(x for x in (r.get("page") or "", r.get("topic") or "", r.get("question_id") or "") if x)
-        print(f"  [{r['status']}] {r['id'][:8]}  {r['created']}  {r['user_name']}  {where}")
+        kind = {"good": "良かった", "improve": "改善の提案", "other": "その他"}.get(r.get("kind") or "", r.get("kind") or "")
+        print(f"  [{r['status']}] {r['id'][:8]}  {r['created']}  {r['user_name']}  〈{kind}〉  {where}")
         for line in (r["body"] or "").splitlines():
             print(f"      {line}")
         if r.get("note"):

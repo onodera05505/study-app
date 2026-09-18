@@ -12,7 +12,9 @@ export const feedbackRoutes = new Hono<{ Bindings: Bindings; Variables: Variable
 
 const body = z.object({
   body: z.string().trim().min(1, '本文を入れてください').max(2000, '2,000 字以内にしてください'),
-  kind: z.enum(['text', 'unclear']).default('text'),
+  // good=良かった / improve=改善の提案 / other=その他（画面で選ばせる。本人 2026-09-18）。
+  // text・unclear は前の版で入った行の値。読み出し側が落ちないよう受け付けたままにする
+  kind: z.enum(['text', 'unclear', 'good', 'improve', 'other']).default('text'),
   page: z.string().max(200).optional(),
   topicId: z.number().int().positive().optional(),
   questionId: z.string().max(64).optional(),

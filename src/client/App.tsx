@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { NavLink, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { api, clearToken, getToken, getUserName } from './lib/api'
 import { ensureGlossary } from './lib/glossary'
@@ -27,7 +27,19 @@ export function App() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  // 新しい版の検知（要件 §5.6）。最初に版を覚え、画面を移るときと 5 分おきに見比べる
+  // ナビがスマホ幅で収まらないとき、右端をぼかして「続きがある」と分かるようにする
+  // （資格版は 6 項目あり、iPhone 幅で最後の「フィードバック」が切れて見えるだけだった。本人 2026-09-18）
+  const navRef = useRef<HTMLElement | null>(null)
+  const [navScroll, setNavScroll] = useState(false)
+  useEffect(() => {
+    const el = navRef.current
+    if (!el) return
+    const check = () => setNavScroll(el.scrollWidth > el.clientWidth + 1)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  })
+
   useEffect(() => {
     // 入口の URL は公開の設定から取る（学び側は SSO_PORTAL_URL を知っているが、画面には焼き込まない）
     api<{ sso: boolean; portal: string | null }>('/auth/config')
@@ -35,6 +47,7 @@ export function App() {
       .catch(() => setPortal(null))
   }, [])
 
+  // 新しい版の検知（要件 §5.6）。最初に版を覚え、画面を移るときと 5 分おきに見比べる
   useEffect(() => {
     rememberBuild()
     const id = setInterval(() => {
@@ -157,7 +170,7 @@ export function App() {
           {/* ロードマップ型は「ロードマップ」「フィードバック」の 2 つだけ（要件 §13.6、2026-09-18 決定）。
               1 単位 2 問しかなく、同じ問題が単位の下にあるので、練習テストとドリルは重複だった。
               確認テストは日ごとにロードマップの中へ、履歴は各日の結果表示へ移した。資格版は据え置き。 */}
-          <nav className="nav">
+          <nav className={navScroll ? 'nav nav-scroll' : 'nav'} ref={navRef}>
             {exam.roadmap ? (
               <>
                 <NavLink to="/topics">ロードマップ</NavLink>
