@@ -95,14 +95,14 @@
     },
     "ecl": {
       "d1_databases": [
-        { "binding": "DB", "database_name": "study-app-ecl-db", "database_id": "PLACEHOLDER-ecl-run-scripts/bootstrap_personal.sh", "migrations_dir": "migrations" }
+        { "binding": "DB", "database_name": "study-app-ecl-db", "database_id": "cb509df6-8e38-4ebd-8c97-d2d485d3bb34", "migrations_dir": "migrations" }
       ],
       "vars": { "APP_NAME": "study-app-ecl", "EXAM": "ecl", "SSO_PORTAL_URL": "https://manabiba-5oz.pages.dev" },
       "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application" }
     },
     "eca": {
       "d1_databases": [
-        { "binding": "DB", "database_name": "study-app-eca-db", "database_id": "PLACEHOLDER-eca-run-scripts/bootstrap_personal.sh", "migrations_dir": "migrations" }
+        { "binding": "DB", "database_name": "study-app-eca-db", "database_id": "2cfbb7a7-a4b8-4769-9775-89296ee92a77", "migrations_dir": "migrations" }
       ],
       "vars": { "APP_NAME": "study-app-eca", "EXAM": "eca", "SSO_PORTAL_URL": "https://manabiba-5oz.pages.dev" },
       "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application" }
