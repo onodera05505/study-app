@@ -1,0 +1,178 @@
+{
+  "bundle": "bundle_03",
+  "topics": [
+    {
+      "topic_id": 29,
+      "term": "かかり続ける費用と、作るほど増える費用",
+      "field": "企業と競争",
+      "middle": "つくる側の費用",
+      "summary": "作る量に関わらずかかる分と、作るほど増える分に分けて費用を見る",
+      "goals": [
+        2
+      ],
+      "prereq": [
+        "作る量と入れる元手の関係（生産）"
+      ],
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "費用の構造：固定費・可変費・限界費用（costs, marginal cost）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 5
+    },
+    {
+      "topic_id": 30,
+      "term": "あと一つ作る費用と、一つあたりの費用",
+      "field": "企業と競争",
+      "middle": "つくる側の費用",
+      "summary": "もう一つ作るのにかかる額と、平均した一つあたりの額は別物である",
+      "goals": [
+        2
+      ],
+      "prereq": [
+        "かかり続ける費用と、作るほど増える費用",
+        "あと一つ増やすとどうなるか（限界の考え方）"
+      ],
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "費用の構造：固定費・可変費・限界費用（costs, marginal cost）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 5
+    },
+    {
+      "topic_id": 31,
+      "term": "どこまで作ると儲かるか",
+      "field": "企業と競争",
+      "middle": "つくる側の費用",
+      "summary": "あと一つ売って入る額と、あと一つ作る費用が並ぶところで止める",
+      "goals": [
+        2
+      ],
+      "prereq": [
+        "あと一つ作る費用と、一つあたりの費用"
+      ],
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "利潤最大化（profit maximisation）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 4
+    },
+    {
+      "topic_id": 32,
+      "term": "完全競争（値段を決められない売り手）",
+      "field": "企業と競争",
+      "middle": "競争のかたち",
+      "summary": "売り手がたくさんいるため、値段は市場任せで一社では動かせない状態",
+      "goals": [
+        1,
+        3
+      ],
+      "prereq": [
+        "どこまで作ると儲かるか",
+        "市場均衡（値段が落ち着くところ）"
+      ],
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "完全競争市場（perfect competition）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 5
+    },
+    {
+      "topic_id": 34,
+      "term": "独占（売り手が一社のとき）",
+      "field": "企業と競争",
+      "middle": "独占と寡占",
+      "summary": "売り手が一社だけだと、出す量を絞って高い値段を付けることができる",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "完全競争（値段を決められない売り手）",
+        "需要の価格弾力性"
+      ],
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "独占（monopoly）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 8
+    },
+    {
+      "topic_id": 35,
+      "term": "独占で失われるもの",
+      "field": "企業と競争",
+      "middle": "独占と寡占",
+      "summary": "高くて買えない人が出るため、全体の得が小さくなってしまうこと",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "独占（売り手が一社のとき）",
+        "全体の得で仕組みを比べる（厚生の見方）"
+      ],
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "独占（独占と競争均衡の比較）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 8
+    },
+    {
+      "topic_id": 39,
+      "term": "数社が互いの出方を見る（寡占）",
+      "field": "企業と競争",
+      "middle": "独占と寡占",
+      "summary": "少数の会社が、相手の値段や量をうかがいながら決めていく状態のこと",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "独占（売り手が一社のとき）"
+      ],
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "独占的競争と寡占（oligopoly。相互依存）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 5
+    },
+    {
+      "topic_id": 37,
+      "term": "競争をどう守るか（独占禁止の考え方）",
+      "field": "企業と競争",
+      "middle": "独占と寡占",
+      "summary": "値段の申し合わせや囲い込みを止めて、競う状態を保つための決まり",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "独占で失われるもの"
+      ],
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "自然独占・価格規制と独占禁止政策（antitrust）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 4
+    }
+  ]
+}

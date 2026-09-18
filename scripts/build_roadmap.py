@@ -140,7 +140,7 @@ def main() -> int:
     units = []
     for i, c in enumerate(ordered, 1):
         units.append({"order": i, "day": math.ceil(i / a.per_day), "topic_id": c["id"], "term": c["term"], "field": c["field"], "middle": c.get("middle", ""),
-                      "summary": c.get("summary", ""), "score": c["score"], "source_count": c.get("source_count", 0), "interview_count": c.get("interview_count", 0),
+                      "summary": c.get("summary", ""), "score": c["score"], "source_count": c.get("source_count", 0), sig: c.get(sig, 0),
                       "prereq": c.get("prereq", []), "goals": c["goals"], "sources": c.get("sources", [])})
     sys.path.insert(0, str(Path(__file__).parent)); from targets import target as _target
     tname = (_target(d.name).get("roadmapSpec") or {}).get("targetName", _target(d.name)["brand"])  # 対象名は登録簿から（決め打ちで mkt に itc の名が出た 2026-09-15）
@@ -157,7 +157,9 @@ def main() -> int:
       for n, i in enumerate(range(0, len(units), 8), 1):
         chunk = units[i:i + 8]
         (bdir / f"bundle_{n:02d}.json").write_text(json.dumps({"bundle": f"bundle_{n:02d}", "topics": [
-            {k: u[k] for k in ("topic_id", "term", "field", "middle", "summary", "goals", "prereq", "sources", "source_count", "interview_count")} for u in chunk]},
+            # 副の信号のキーは対象ごとに違う（interview_count / care_count / life_count / syllabus_weight）。
+            # 決め打ちで写すと、執筆バンドルに 0 が渡って担当が重みを見られない（eca の名寄せの指摘 2026-09-18）
+            {k: u[k] for k in ("topic_id", "term", "field", "middle", "summary", "goals", "prereq", "sources", "source_count", sig)} for u in chunk]},
             ensure_ascii=False, indent=2), encoding="utf-8")
     goals = {g: sum(1 for u in units if g in u["goals"]) for g in range(1, 7)}
     fields = {}

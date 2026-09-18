@@ -1,0 +1,181 @@
+{
+  "bundle": "bundle_01",
+  "topics": [
+    {
+      "topic_id": 1,
+      "term": "経済学は何を扱うか（希少性と選択）",
+      "field": "ミクロ（価格と市場）",
+      "middle": "経済の見方",
+      "summary": "足りない元手を何に使うかを選ぶ場面を扱う学問だ、という出発点",
+      "goals": [
+        1
+      ],
+      "prereq": [],
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "経済学とは・希少性と選択（scarcity and choice）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 10
+    },
+    {
+      "topic_id": 2,
+      "term": "機会費用",
+      "field": "ミクロ（価格と市場）",
+      "middle": "経済の見方",
+      "summary": "それを選んだために諦めた、いちばん良い別の使い道の値打ちのこと",
+      "goals": [
+        1,
+        2
+      ],
+      "prereq": [
+        "経済学は何を扱うか（希少性と選択）"
+      ],
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "機会費用・トレードオフと生産可能性フロンティア"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 4
+    },
+    {
+      "topic_id": 5,
+      "term": "需要（買いたい量は何で決まるか）",
+      "field": "ミクロ（価格と市場）",
+      "middle": "需要と供給",
+      "summary": "値段が下がると買う量が増える関係と、それを押し動かす他の事情",
+      "goals": [
+        1
+      ],
+      "prereq": [
+        "経済学は何を扱うか（希少性と選択）",
+        "機会費用"
+      ],
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "需要と供給（demand and supply）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 9
+    },
+    {
+      "topic_id": 6,
+      "term": "供給（売りたい量は何で決まるか）",
+      "field": "ミクロ（価格と市場）",
+      "middle": "需要と供給",
+      "summary": "値段が上がると売る量が増える関係と、それを動かす費用や天候などの事情",
+      "goals": [
+        1
+      ],
+      "prereq": [
+        "経済学は何を扱うか（希少性と選択）",
+        "需要（買いたい量は何で決まるか）"
+      ],
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "需要と供給（demand and supply）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 9
+    },
+    {
+      "topic_id": 7,
+      "term": "市場均衡（値段が落ち着くところ）",
+      "field": "ミクロ（価格と市場）",
+      "middle": "需要と供給",
+      "summary": "買いたい量と売りたい量が釣り合う値段へ、自然に落ち着いていくしくみ",
+      "goals": [
+        1
+      ],
+      "prereq": [
+        "需要（買いたい量は何で決まるか）",
+        "供給（売りたい量は何で決まるか）"
+      ],
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "市場均衡と価格の決まり方（market equilibrium）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 8
+    },
+    {
+      "topic_id": 21,
+      "term": "労働市場（賃金はどう決まるか）",
+      "field": "ミクロ（価格と市場）",
+      "middle": "働く場と分配",
+      "summary": "働きたい人と雇いたい側の釣り合いで、賃金と雇う数が決まる見方",
+      "goals": [
+        1,
+        5
+      ],
+      "prereq": [
+        "市場均衡（値段が落ち着くところ）"
+      ],
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "労働市場：労働の需給と賃金（labour market, wages）"
+        },
+        {
+          "name": "令和7年度 年次経済財政報告（経済財政白書）",
+          "where": "第2章第3節 労働市場の長期的な変化と課題"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 7
+    },
+    {
+      "topic_id": 13,
+      "term": "あと一つ増やすとどうなるか（限界の考え方）",
+      "field": "ミクロ（価格と市場）",
+      "middle": "弾力性と限界",
+      "summary": "全体をまとめて見ず、あと一つ増える分の損と得を見比べて決める見方",
+      "goals": [
+        2
+      ],
+      "prereq": [
+        "機会費用"
+      ],
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "消費者行動の理論・効用最大化と需要曲線の導出（限界分析）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 8
+    },
+    {
+      "topic_id": 20,
+      "term": "値段の上限と下限を決めると何が起きるか",
+      "field": "ミクロ（価格と市場）",
+      "middle": "税と価格規制",
+      "summary": "上限を決めると品不足、下限を決めると売れ残りが生まれやすくなる",
+      "goals": [
+        1,
+        3
+      ],
+      "prereq": [
+        "市場均衡（値段が落ち着くところ）"
+      ],
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "市場均衡と価格の決まり方（価格の上限・下限）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 8
+    }
+  ]
+}

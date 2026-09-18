@@ -1,0 +1,3430 @@
+{
+  "built_at": "2026-09-18",
+  "source_files": [
+    "data/eca/sources/syllabus.json",
+    "data/eca/sources/public_official.json",
+    "data/eca/sources/debated.json",
+    "data/eca/kickoff.json"
+  ],
+  "candidates": [
+    {
+      "id": 1,
+      "term": "経済学は何を扱うか（希少性と選択）",
+      "field": "ミクロ（価格と市場）",
+      "middle": "経済の見方",
+      "summary": "足りない元手を何に使うかを選ぶ場面を扱う学問だ、という出発点",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "経済学とは・希少性と選択（scarcity and choice）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 10,
+      "prereq": [],
+      "prereq_ids": [],
+      "goals": [
+        1
+      ],
+      "debated": ""
+    },
+    {
+      "id": 2,
+      "term": "機会費用",
+      "field": "ミクロ（価格と市場）",
+      "middle": "経済の見方",
+      "summary": "それを選んだために諦めた、いちばん良い別の使い道の値打ちのこと",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "機会費用・トレードオフと生産可能性フロンティア"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 4,
+      "prereq": [
+        "経済学は何を扱うか（希少性と選択）"
+      ],
+      "prereq_ids": [
+        1
+      ],
+      "goals": [
+        1,
+        2
+      ],
+      "debated": ""
+    },
+    {
+      "id": 3,
+      "term": "あれもこれもは選べない（生産可能性の限界）",
+      "field": "ミクロ（価格と市場）",
+      "middle": "経済の見方",
+      "summary": "片方を増やせば片方が減るという関係を、作れる量の限りの線として見る",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "機会費用・トレードオフと生産可能性フロンティア"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 4,
+      "prereq": [
+        "機会費用"
+      ],
+      "prereq_ids": [
+        2
+      ],
+      "goals": [
+        1
+      ],
+      "debated": ""
+    },
+    {
+      "id": 4,
+      "term": "事実の話と価値判断の話（実証と規範）",
+      "field": "ミクロ（価格と市場）",
+      "middle": "経済の見方",
+      "summary": "どうなっているかの話と、どうすべきかの話を分けて聞き分ける習慣",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "経済学の考え方：モデル・実証と規範（positive and normative economics）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 6,
+      "prereq": [
+        "経済学は何を扱うか（希少性と選択）"
+      ],
+      "prereq_ids": [
+        1
+      ],
+      "goals": [
+        1,
+        3
+      ],
+      "debated": ""
+    },
+    {
+      "id": 5,
+      "term": "需要（買いたい量は何で決まるか）",
+      "field": "ミクロ（価格と市場）",
+      "middle": "需要と供給",
+      "summary": "値段が下がると買う量が増える関係と、それを押し動かす他の事情",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "需要と供給（demand and supply）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 9,
+      "prereq": [
+        "経済学は何を扱うか（希少性と選択）"
+      ],
+      "prereq_ids": [
+        1
+      ],
+      "goals": [
+        1
+      ],
+      "debated": ""
+    },
+    {
+      "id": 6,
+      "term": "供給（売りたい量は何で決まるか）",
+      "field": "ミクロ（価格と市場）",
+      "middle": "需要と供給",
+      "summary": "値段が上がると売る量が増える関係と、それを動かす費用や天候などの事情",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "需要と供給（demand and supply）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 9,
+      "prereq": [
+        "経済学は何を扱うか（希少性と選択）"
+      ],
+      "prereq_ids": [
+        1
+      ],
+      "goals": [
+        1
+      ],
+      "debated": ""
+    },
+    {
+      "id": 7,
+      "term": "市場均衡（値段が落ち着くところ）",
+      "field": "ミクロ（価格と市場）",
+      "middle": "需要と供給",
+      "summary": "買いたい量と売りたい量が釣り合う値段へ、自然に落ち着いていくしくみ",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "市場均衡と価格の決まり方（market equilibrium）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 8,
+      "prereq": [
+        "需要（買いたい量は何で決まるか）",
+        "供給（売りたい量は何で決まるか）"
+      ],
+      "prereq_ids": [
+        5,
+        6
+      ],
+      "goals": [
+        1
+      ],
+      "debated": ""
+    },
+    {
+      "id": 8,
+      "term": "値段が動いたのか、事情が変わったのか",
+      "field": "ミクロ（価格と市場）",
+      "middle": "需要と供給",
+      "summary": "値段が原因で量が動いた場合と、他の事情で線ごと動いた場合を分ける",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "需要と供給（demand and supply）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 9,
+      "prereq": [
+        "市場均衡（値段が落ち着くところ）"
+      ],
+      "prereq_ids": [
+        7
+      ],
+      "goals": [
+        1
+      ],
+      "debated": ""
+    },
+    {
+      "id": 9,
+      "term": "需要の価格弾力性",
+      "field": "ミクロ（価格と市場）",
+      "middle": "弾力性と限界",
+      "summary": "値段が一割動いたとき、買う量が何割動くかという敏感さの度合い",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "需要の価格弾力性（price elasticity of demand）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 6,
+      "prereq": [
+        "需要（買いたい量は何で決まるか）",
+        "市場均衡（値段が落ち着くところ）"
+      ],
+      "prereq_ids": [
+        5,
+        7
+      ],
+      "goals": [
+        2
+      ],
+      "debated": ""
+    },
+    {
+      "id": 10,
+      "term": "値上げは売上を増やすか減らすか",
+      "field": "ミクロ（価格と市場）",
+      "middle": "弾力性と限界",
+      "summary": "買う量の敏感さの大小で、値上げが売上を押し上げるか下げるかが変わる",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "需要の価格弾力性（price elasticity of demand）"
+        },
+        {
+          "name": "令和7年度 年次経済財政報告（経済財政白書）",
+          "where": "コラム1-1 関税引上げの影響と需要の価格弾力性について"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 6,
+      "prereq": [
+        "需要の価格弾力性"
+      ],
+      "prereq_ids": [
+        9
+      ],
+      "goals": [
+        2
+      ],
+      "debated": ""
+    },
+    {
+      "id": 11,
+      "term": "すぐには増やせない（売る側の敏感さと時間）",
+      "field": "ミクロ（価格と市場）",
+      "middle": "弾力性と限界",
+      "summary": "作る側がすぐ増やせるかどうかで、値段の振れ方の大きさが変わる",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "需要の価格弾力性（price elasticity of demand。供給側にも同じ考え方を当てる扱い）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 6,
+      "prereq": [
+        "需要の価格弾力性",
+        "供給（売りたい量は何で決まるか）"
+      ],
+      "prereq_ids": [
+        9,
+        6
+      ],
+      "goals": [
+        1,
+        2
+      ],
+      "debated": ""
+    },
+    {
+      "id": 12,
+      "term": "代わりになる物と、一緒に使う物",
+      "field": "ミクロ（価格と市場）",
+      "middle": "弾力性と限界",
+      "summary": "別の物の値段が動くと、その物の売れ方まで一緒に動いてしまう関係",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "消費者行動の理論・効用最大化と需要曲線の導出（代替財と補完財）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 8,
+      "prereq": [
+        "需要（買いたい量は何で決まるか）"
+      ],
+      "prereq_ids": [
+        5
+      ],
+      "goals": [
+        1,
+        2
+      ],
+      "debated": ""
+    },
+    {
+      "id": 13,
+      "term": "あと一つ増やすとどうなるか（限界の考え方）",
+      "field": "ミクロ（価格と市場）",
+      "middle": "弾力性と限界",
+      "summary": "全体をまとめて見ず、あと一つ増える分の損と得を見比べて決める見方",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "消費者行動の理論・効用最大化と需要曲線の導出（限界分析）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 8,
+      "prereq": [
+        "機会費用"
+      ],
+      "prereq_ids": [
+        2
+      ],
+      "goals": [
+        2
+      ],
+      "debated": ""
+    },
+    {
+      "id": 14,
+      "term": "満足の増え方と選び方（効用）",
+      "field": "ミクロ（価格と市場）",
+      "middle": "選ぶ側のしくみ",
+      "summary": "満足の増え方を見比べながら、限られたお金の使い先を決めていく筋",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "消費者行動の理論・効用最大化と需要曲線の導出"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 8,
+      "prereq": [
+        "あと一つ増やすとどうなるか（限界の考え方）"
+      ],
+      "prereq_ids": [
+        13
+      ],
+      "goals": [
+        1,
+        2
+      ],
+      "debated": ""
+    },
+    {
+      "id": 15,
+      "term": "安くなったときに働く二つの力",
+      "field": "ミクロ（価格と市場）",
+      "middle": "選ぶ側のしくみ",
+      "summary": "他の物から乗り換える力と、同じお金でより多く買える力が同時に働く",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "所得効果と代替効果・スルツキー分解（income and substitution effects）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 3,
+      "prereq": [
+        "満足の増え方と選び方（効用）"
+      ],
+      "prereq_ids": [
+        14
+      ],
+      "goals": [
+        1,
+        2
+      ],
+      "debated": ""
+    },
+    {
+      "id": 16,
+      "term": "買う側と売る側の得（余剰）",
+      "field": "ミクロ（価格と市場）",
+      "middle": "余剰と効率",
+      "summary": "払ってもよかった額との差、売れてもよかった額との差が双方の得",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "消費者余剰と生産者余剰（consumer and producer surplus）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 5,
+      "prereq": [
+        "需要（買いたい量は何で決まるか）",
+        "供給（売りたい量は何で決まるか）",
+        "市場均衡（値段が落ち着くところ）"
+      ],
+      "prereq_ids": [
+        5,
+        6,
+        7
+      ],
+      "goals": [
+        1,
+        3
+      ],
+      "debated": ""
+    },
+    {
+      "id": 17,
+      "term": "全体の得で仕組みを比べる（厚生の見方）",
+      "field": "ミクロ（価格と市場）",
+      "middle": "余剰と効率",
+      "summary": "買う側と売る側の得を足した大きさで、やり方の良し悪しを比べる",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "厚生経済学と社会的余剰（welfare economics, social surplus）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 6,
+      "prereq": [
+        "買う側と売る側の得（余剰）"
+      ],
+      "prereq_ids": [
+        16
+      ],
+      "goals": [
+        3
+      ],
+      "debated": ""
+    },
+    {
+      "id": 18,
+      "term": "税は誰が負担するか（税の帰着）",
+      "field": "ミクロ（価格と市場）",
+      "middle": "税と価格規制",
+      "summary": "税を納める人と、実際に負担が回る人は同じとは限らないという話",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "課税と税の帰着（taxation, tax incidence）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 4,
+      "prereq": [
+        "需要の価格弾力性",
+        "市場均衡（値段が落ち着くところ）"
+      ],
+      "prereq_ids": [
+        9,
+        7
+      ],
+      "goals": [
+        2,
+        3
+      ],
+      "debated": ""
+    },
+    {
+      "id": 19,
+      "term": "税で消える取引（死荷重）",
+      "field": "ミクロ（価格と市場）",
+      "middle": "税と価格規制",
+      "summary": "税がかかると取引そのものが減り、誰の得にもならない分が生まれる",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "課税と税の帰着（taxation, tax incidence）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 4,
+      "prereq": [
+        "税は誰が負担するか（税の帰着）",
+        "全体の得で仕組みを比べる（厚生の見方）"
+      ],
+      "prereq_ids": [
+        18,
+        17
+      ],
+      "goals": [
+        3
+      ],
+      "debated": ""
+    },
+    {
+      "id": 20,
+      "term": "値段の上限と下限を決めると何が起きるか",
+      "field": "ミクロ（価格と市場）",
+      "middle": "税と価格規制",
+      "summary": "上限を決めると品不足、下限を決めると売れ残りが生まれやすくなる",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "市場均衡と価格の決まり方（価格の上限・下限）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 8,
+      "prereq": [
+        "市場均衡（値段が落ち着くところ）"
+      ],
+      "prereq_ids": [
+        7
+      ],
+      "goals": [
+        1,
+        3
+      ],
+      "debated": ""
+    },
+    {
+      "id": 21,
+      "term": "労働市場（賃金はどう決まるか）",
+      "field": "ミクロ（価格と市場）",
+      "middle": "働く場と分配",
+      "summary": "働きたい人と雇いたい側の釣り合いで、賃金と雇う数が決まる見方",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "労働市場：労働の需給と賃金（labour market, wages）"
+        },
+        {
+          "name": "令和7年度 年次経済財政報告（経済財政白書）",
+          "where": "第2章第3節 労働市場の長期的な変化と課題"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 7,
+      "prereq": [
+        "市場均衡（値段が落ち着くところ）"
+      ],
+      "prereq_ids": [
+        7
+      ],
+      "goals": [
+        1,
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 22,
+      "term": "稼ぎの散らばりをどう測るか（分配と格差）",
+      "field": "ミクロ（価格と市場）",
+      "middle": "働く場と分配",
+      "summary": "稼ぎの散らばり具合をどう測り、何を行き過ぎと呼ぶのかという見方",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "所得分配・格差と貧困（income distribution, inequality）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 4,
+      "prereq": [
+        "労働市場（賃金はどう決まるか）"
+      ],
+      "prereq_ids": [
+        21
+      ],
+      "goals": [
+        1,
+        3
+      ],
+      "debated": ""
+    },
+    {
+      "id": 23,
+      "term": "人は理屈どおりに選ぶのか（行動経済学の知見）",
+      "field": "ミクロ（価格と市場）",
+      "middle": "選び方の前提",
+      "summary": "実際の選び方は理屈どおりにならない、という観察の積み上がりを見る",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "行動経済学（behavioural economics）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 2,
+      "prereq": [
+        "満足の増え方と選び方（効用）"
+      ],
+      "prereq_ids": [
+        14
+      ],
+      "goals": [
+        2
+      ],
+      "debated": ""
+    },
+    {
+      "id": 24,
+      "term": "最低賃金を上げると雇用は減るか",
+      "field": "ミクロ（価格と市場）",
+      "middle": "見方が分かれる論点",
+      "summary": "賃金の下限を上げたとき雇う数が減るかどうかで、見方が分かれる",
+      "sources": [
+        {
+          "name": "RIETI「最低賃金の引き上げは雇用を奪うのか－望ましい最低賃金政策について考える－」（経済産業研究所の一般向け解説）",
+          "where": "雇用への影響を調べた実証の整理"
+        },
+        {
+          "name": "Monopsony and the Minimum Wage（大学入門課程のミクロ経済学教科書・公開版）",
+          "where": "買い手独占のもとでの最低賃金"
+        },
+        {
+          "name": "CBO「The Minimum Wage in Competitive Markets and Markets with Monopsony」",
+          "where": "競争的な市場と買い手独占の市場の比較"
+        }
+      ],
+      "source_count": 3,
+      "syllabus_weight": 0,
+      "prereq": [
+        "労働市場（賃金はどう決まるか）",
+        "値段の上限と下限を決めると何が起きるか"
+      ],
+      "prereq_ids": [
+        21,
+        20
+      ],
+      "goals": [
+        1,
+        3
+      ],
+      "debated": "最低賃金の引き上げと雇用"
+    },
+    {
+      "id": 25,
+      "term": "家賃の上限を決めることの功罪",
+      "field": "ミクロ（価格と市場）",
+      "middle": "見方が分かれる論点",
+      "summary": "いま住む人を守れるか、貸す部屋が減るか、どちらを重く見るかで分かれる",
+      "sources": [
+        {
+          "name": "Why do economists dislike rent control?（Scioto Analysis。多数派の理由と反論側の実証の両方を整理）",
+          "where": "多数派の理由と、近年の実証からの反論"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 0,
+      "prereq": [
+        "値段の上限と下限を決めると何が起きるか",
+        "すぐには増やせない（売る側の敏感さと時間）"
+      ],
+      "prereq_ids": [
+        20,
+        11
+      ],
+      "goals": [
+        1,
+        3
+      ],
+      "debated": "価格の上限を法律で決めること（家賃規制など）"
+    },
+    {
+      "id": 26,
+      "term": "人が理屈どおりに選ぶという前提をどこまで保つか",
+      "field": "ミクロ（価格と市場）",
+      "middle": "見方が分かれる論点",
+      "summary": "土台の前提を置き換えるか、補って使い続けるかで見方が分かれる",
+      "sources": [
+        {
+          "name": "瀧澤弘和「行動経済学と神経経済学は標準的経済学を変えるのか」（学術誌掲載のサーベイ。標準的経済学側の批判と反批判の両方を整理）",
+          "where": "標準的な枠を保つ側と、置き換えを説く側の対立"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 0,
+      "prereq": [
+        "人は理屈どおりに選ぶのか（行動経済学の知見）",
+        "事実の話と価値判断の話（実証と規範）"
+      ],
+      "prereq_ids": [
+        23,
+        4
+      ],
+      "goals": [
+        2
+      ],
+      "debated": "人は合理的に選ぶという前提をどこまで保つか"
+    },
+    {
+      "id": 27,
+      "term": "作る量と入れる元手の関係（生産）",
+      "field": "企業と競争",
+      "middle": "つくる側の費用",
+      "summary": "人や設備をどれだけ入れると、どれだけ作れるかという結びつきの形",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "生産関数と生産の理論・規模に関する収穫（production function, returns to scale）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 6,
+      "prereq": [
+        "あと一つ増やすとどうなるか（限界の考え方）"
+      ],
+      "prereq_ids": [
+        13
+      ],
+      "goals": [
+        2
+      ],
+      "debated": ""
+    },
+    {
+      "id": 28,
+      "term": "足すほど効きが鈍る（収穫の逓減）",
+      "field": "企業と競争",
+      "middle": "つくる側の費用",
+      "summary": "同じ設備に人を足し続けると、増える分がだんだん小さくなること",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "生産関数と生産の理論・規模に関する収穫（限界収穫逓減の法則）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 6,
+      "prereq": [
+        "作る量と入れる元手の関係（生産）"
+      ],
+      "prereq_ids": [
+        27
+      ],
+      "goals": [
+        2
+      ],
+      "debated": ""
+    },
+    {
+      "id": 29,
+      "term": "かかり続ける費用と、作るほど増える費用",
+      "field": "企業と競争",
+      "middle": "つくる側の費用",
+      "summary": "作る量に関わらずかかる分と、作るほど増える分に分けて費用を見る",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "費用の構造：固定費・可変費・限界費用（costs, marginal cost）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 5,
+      "prereq": [
+        "作る量と入れる元手の関係（生産）"
+      ],
+      "prereq_ids": [
+        27
+      ],
+      "goals": [
+        2
+      ],
+      "debated": ""
+    },
+    {
+      "id": 30,
+      "term": "あと一つ作る費用と、一つあたりの費用",
+      "field": "企業と競争",
+      "middle": "つくる側の費用",
+      "summary": "もう一つ作るのにかかる額と、平均した一つあたりの額は別物である",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "費用の構造：固定費・可変費・限界費用（costs, marginal cost）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 5,
+      "prereq": [
+        "かかり続ける費用と、作るほど増える費用",
+        "あと一つ増やすとどうなるか（限界の考え方）"
+      ],
+      "prereq_ids": [
+        29,
+        13
+      ],
+      "goals": [
+        2
+      ],
+      "debated": ""
+    },
+    {
+      "id": 31,
+      "term": "どこまで作ると儲かるか",
+      "field": "企業と競争",
+      "middle": "つくる側の費用",
+      "summary": "あと一つ売って入る額と、あと一つ作る費用が並ぶところで止める",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "利潤最大化（profit maximisation）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 4,
+      "prereq": [
+        "あと一つ作る費用と、一つあたりの費用"
+      ],
+      "prereq_ids": [
+        30
+      ],
+      "goals": [
+        2
+      ],
+      "debated": ""
+    },
+    {
+      "id": 32,
+      "term": "完全競争（値段を決められない売り手）",
+      "field": "企業と競争",
+      "middle": "競争のかたち",
+      "summary": "売り手がたくさんいるため、値段は市場任せで一社では動かせない状態",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "完全競争市場（perfect competition）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 5,
+      "prereq": [
+        "どこまで作ると儲かるか",
+        "市場均衡（値段が落ち着くところ）"
+      ],
+      "prereq_ids": [
+        31,
+        7
+      ],
+      "goals": [
+        1,
+        3
+      ],
+      "debated": ""
+    },
+    {
+      "id": 33,
+      "term": "入ってくる力と出ていく力（参入と退出）",
+      "field": "企業と競争",
+      "middle": "競争のかたち",
+      "summary": "儲かれば入り、損なら出ていく動きで、長い目には利益が均される",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "完全競争市場（参入と退出、短期と長期の均衡）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 5,
+      "prereq": [
+        "完全競争（値段を決められない売り手）"
+      ],
+      "prereq_ids": [
+        32
+      ],
+      "goals": [
+        1,
+        3
+      ],
+      "debated": ""
+    },
+    {
+      "id": 34,
+      "term": "独占（売り手が一社のとき）",
+      "field": "企業と競争",
+      "middle": "独占と寡占",
+      "summary": "売り手が一社だけだと、出す量を絞って高い値段を付けることができる",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "独占（monopoly）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 8,
+      "prereq": [
+        "完全競争（値段を決められない売り手）",
+        "需要の価格弾力性"
+      ],
+      "prereq_ids": [
+        32,
+        9
+      ],
+      "goals": [
+        3
+      ],
+      "debated": ""
+    },
+    {
+      "id": 35,
+      "term": "独占で失われるもの",
+      "field": "企業と競争",
+      "middle": "独占と寡占",
+      "summary": "高くて買えない人が出るため、全体の得が小さくなってしまうこと",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "独占（独占と競争均衡の比較）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 8,
+      "prereq": [
+        "独占（売り手が一社のとき）",
+        "全体の得で仕組みを比べる（厚生の見方）"
+      ],
+      "prereq_ids": [
+        34,
+        17
+      ],
+      "goals": [
+        3
+      ],
+      "debated": ""
+    },
+    {
+      "id": 36,
+      "term": "一社の方が安くなる分野（自然独占と価格の規制）",
+      "field": "企業と競争",
+      "middle": "独占と寡占",
+      "summary": "設備の負担が重く一社にまとめた方が安い分野での、値段の決め方",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "自然独占・価格規制と独占禁止政策（natural monopoly, antitrust）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 4,
+      "prereq": [
+        "独占（売り手が一社のとき）",
+        "かかり続ける費用と、作るほど増える費用"
+      ],
+      "prereq_ids": [
+        34,
+        29
+      ],
+      "goals": [
+        3
+      ],
+      "debated": ""
+    },
+    {
+      "id": 37,
+      "term": "競争をどう守るか（独占禁止の考え方）",
+      "field": "企業と競争",
+      "middle": "独占と寡占",
+      "summary": "値段の申し合わせや囲い込みを止めて、競う状態を保つための決まり",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "自然独占・価格規制と独占禁止政策（antitrust）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 4,
+      "prereq": [
+        "独占で失われるもの"
+      ],
+      "prereq_ids": [
+        35
+      ],
+      "goals": [
+        3
+      ],
+      "debated": ""
+    },
+    {
+      "id": 38,
+      "term": "似ているが少し違う商品で競う（独占的競争）",
+      "field": "企業と競争",
+      "middle": "競争のかたち",
+      "summary": "多くの売り手が、少しずつ違う商品を出して客を分け合っている状態",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "独占的競争と寡占（monopolistic competition）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 5,
+      "prereq": [
+        "完全競争（値段を決められない売り手）",
+        "独占（売り手が一社のとき）"
+      ],
+      "prereq_ids": [
+        32,
+        34
+      ],
+      "goals": [
+        3
+      ],
+      "debated": ""
+    },
+    {
+      "id": 39,
+      "term": "数社が互いの出方を見る（寡占）",
+      "field": "企業と競争",
+      "middle": "独占と寡占",
+      "summary": "少数の会社が、相手の値段や量をうかがいながら決めていく状態のこと",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "独占的競争と寡占（oligopoly。相互依存）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 5,
+      "prereq": [
+        "独占（売り手が一社のとき）"
+      ],
+      "prereq_ids": [
+        34
+      ],
+      "goals": [
+        3
+      ],
+      "debated": ""
+    },
+    {
+      "id": 40,
+      "term": "相手の出方を読む（ゲームの考え方）",
+      "field": "企業と競争",
+      "middle": "競争のかたち",
+      "summary": "互いに読み合い、誰も変えたくない組み合わせに落ち着くという見方",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "ゲーム理論とナッシュ均衡（game theory, Nash equilibrium）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 5,
+      "prereq": [
+        "数社が互いの出方を見る（寡占）"
+      ],
+      "prereq_ids": [
+        39
+      ],
+      "goals": [
+        3
+      ],
+      "debated": ""
+    },
+    {
+      "id": 41,
+      "term": "市場に任せるとうまくいかない場合",
+      "field": "企業と競争",
+      "middle": "市場の失敗",
+      "summary": "任せるだけでは具合が悪くなる型を並べ、政府の出番の理由を見分ける",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "市場の失敗と政府の役割（market failure, role of government）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 4,
+      "prereq": [
+        "全体の得で仕組みを比べる（厚生の見方）"
+      ],
+      "prereq_ids": [
+        17
+      ],
+      "goals": [
+        3
+      ],
+      "debated": ""
+    },
+    {
+      "id": 42,
+      "term": "取引の外に及ぶ影響（外部性）",
+      "field": "企業と競争",
+      "middle": "市場の失敗",
+      "summary": "当事者以外に及ぶ迷惑や恵みが、値段に入っていないという食い違い",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "外部性（externalities）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 6,
+      "prereq": [
+        "市場に任せるとうまくいかない場合"
+      ],
+      "prereq_ids": [
+        41
+      ],
+      "goals": [
+        3
+      ],
+      "debated": ""
+    },
+    {
+      "id": 43,
+      "term": "外部への影響をどう直すか",
+      "field": "企業と競争",
+      "middle": "市場の失敗",
+      "summary": "迷惑の分を費用に入れる課税や、出せる量の割り当てで直す手立て",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "外部性への対処：ピグー税・環境政策（Pigouvian tax）"
+        },
+        {
+          "name": "国立環境研究所 地球環境研究センター「ココが知りたい地球温暖化 Q9 カーボンプライシング」",
+          "where": "炭素への値付けの手立ての整理"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 3,
+      "prereq": [
+        "取引の外に及ぶ影響（外部性）"
+      ],
+      "prereq_ids": [
+        42
+      ],
+      "goals": [
+        3
+      ],
+      "debated": ""
+    },
+    {
+      "id": 44,
+      "term": "皆で使う物とただ乗り（公共財）",
+      "field": "企業と競争",
+      "middle": "市場の失敗",
+      "summary": "皆で一緒に使えて締め出せない物は、売って作るのが難しいという話",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "公共財とフリーライダー（public goods）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 5,
+      "prereq": [
+        "市場に任せるとうまくいかない場合"
+      ],
+      "prereq_ids": [
+        41
+      ],
+      "goals": [
+        3
+      ],
+      "debated": ""
+    },
+    {
+      "id": 45,
+      "term": "片方だけが中身を知っている（情報の偏り）",
+      "field": "企業と競争",
+      "middle": "情報とリスク",
+      "summary": "売り手だけが中身を知っていると、良い物のほうから取引が消えていく",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "不確実性・リスクと保険、情報の非対称性（asymmetric information）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 3,
+      "prereq": [
+        "市場に任せるとうまくいかない場合"
+      ],
+      "prereq_ids": [
+        41
+      ],
+      "goals": [
+        3
+      ],
+      "debated": ""
+    },
+    {
+      "id": 46,
+      "term": "見えない手抜きと、中身を示す合図",
+      "field": "企業と競争",
+      "middle": "情報とリスク",
+      "summary": "約束を交わした後の手抜きと、資格や保証で中身を示そうとする工夫",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "不確実性・リスクと保険、情報の非対称性（moral hazard, signalling）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 3,
+      "prereq": [
+        "片方だけが中身を知っている（情報の偏り）"
+      ],
+      "prereq_ids": [
+        45
+      ],
+      "goals": [
+        3
+      ],
+      "debated": ""
+    },
+    {
+      "id": 47,
+      "term": "値段を決めるか、量を決めるか（炭素税と排出量取引）",
+      "field": "企業と競争",
+      "middle": "見方が分かれる論点",
+      "summary": "出す量に値を付けるとき、税で価格を決めるか割り当てで量を決めるか",
+      "sources": [
+        {
+          "name": "環境省 中央環境審議会「排出量取引と炭素税の組み合わせについて」（小委員会の議事録から意見を整理した資料）",
+          "where": "税と取引のどちらを軸にするかの意見の対立"
+        },
+        {
+          "name": "国立環境研究所 地球環境研究センター「ココが知りたい地球温暖化 Q9 カーボンプライシング」",
+          "where": "価格を決める方法と量を決める方法の違い"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 0,
+      "prereq": [
+        "外部への影響をどう直すか"
+      ],
+      "prereq_ids": [
+        43
+      ],
+      "goals": [
+        3
+      ],
+      "debated": "外部性への手当て（炭素税か排出量取引か）"
+    },
+    {
+      "id": 48,
+      "term": "大きな会社や場の提供者をどう扱うか",
+      "field": "企業と競争",
+      "middle": "見方が分かれる論点",
+      "summary": "大きいこと自体を問題と見るか、やり方だけを問うかで見方が分かれる",
+      "sources": [
+        {
+          "name": "国立国会図書館『調査と情報』No.1088「デジタル・プラットフォーマーと競争政策」",
+          "where": "規模それ自体を問う立場と行為を問う立場"
+        },
+        {
+          "name": "令和7年度 年次経済財政報告（経済財政白書）",
+          "where": "コラム3-3 国内市場において企業の寡占化は進んでいるのか"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 0,
+      "prereq": [
+        "競争をどう守るか（独占禁止の考え方）",
+        "数社が互いの出方を見る（寡占）"
+      ],
+      "prereq_ids": [
+        37,
+        39
+      ],
+      "goals": [
+        3
+      ],
+      "debated": "大きな企業・プラットフォームをどう扱うか"
+    },
+    {
+      "id": 49,
+      "term": "GDP（国内で新たに生まれた値打ちの合計）",
+      "field": "マクロ（生産と物価）",
+      "middle": "経済の大きさを測る",
+      "summary": "国内で新しく生み出された値打ちを足した額。中古の売買は入らない",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "GDP と国民経済計算（GDP, national income accounting）"
+        },
+        {
+          "name": "国民経済計算とは／国民経済計算（GDP統計）よくある質問（FAQ）",
+          "where": "FAQ qa14 GDPとGNI（GNP）の違いについて"
+        },
+        {
+          "name": "国民経済計算の作成方法（2020年（令和2年）基準）",
+          "where": "Ⅰ 国民経済計算の概要（加工統計であること・速報と改定）"
+        }
+      ],
+      "source_count": 3,
+      "syllabus_weight": 9,
+      "prereq": [
+        "市場均衡（値段が落ち着くところ）"
+      ],
+      "prereq_ids": [
+        7
+      ],
+      "goals": [
+        4
+      ],
+      "debated": ""
+    },
+    {
+      "id": 50,
+      "term": "同じ額を三つの側から数える（生産・分配・支出）",
+      "field": "マクロ（生産と物価）",
+      "middle": "経済の大きさを測る",
+      "summary": "作った・配った・使ったのどこから数えても同じ額になるという見方",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "三面等価の原則と所得の循環（circular flow of income）"
+        },
+        {
+          "name": "国民経済計算の作成方法（2020年（令和2年）基準）",
+          "where": "Ⅱ（ⅰ）1（2）（3）支出側・生産側・分配側の国内総生産"
+        },
+        {
+          "name": "国民経済計算推計手法解説書（年次推計編）2020年（令和2年）基準版",
+          "where": "第1章 脚注1 統計上の不突合"
+        }
+      ],
+      "source_count": 3,
+      "syllabus_weight": 4,
+      "prereq": [
+        "GDP（国内で新たに生まれた値打ちの合計）"
+      ],
+      "prereq_ids": [
+        49
+      ],
+      "goals": [
+        4
+      ],
+      "debated": ""
+    },
+    {
+      "id": 51,
+      "term": "金額の伸びと量の伸び（名目と実質）",
+      "field": "マクロ（生産と物価）",
+      "middle": "経済の大きさを測る",
+      "summary": "金額の増え方から値段の動きを取り除くと、量の増え方が見えてくる",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "実質と名目・物価指数（real and nominal, price index）"
+        },
+        {
+          "name": "国民経済計算とは／国民経済計算（GDP統計）よくある質問（FAQ）",
+          "where": "FAQ qa1 名目値と実質値の違いは？"
+        },
+        {
+          "name": "国民経済計算推計手法解説書（年次推計編）2020年（令和2年）基準版",
+          "where": "第8章1 実質化の意味とデフレーター"
+        }
+      ],
+      "source_count": 3,
+      "syllabus_weight": 7,
+      "prereq": [
+        "GDP（国内で新たに生まれた値打ちの合計）"
+      ],
+      "prereq_ids": [
+        49
+      ],
+      "goals": [
+        4
+      ],
+      "debated": ""
+    },
+    {
+      "id": 52,
+      "term": "国の中で生んだ分と、国の人が受け取った分",
+      "field": "マクロ（生産と物価）",
+      "middle": "経済の大きさを測る",
+      "summary": "どこで生んだかで区切る数え方と、誰が受け取ったかで区切る数え方の違い",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "GDP と国民経済計算（国内概念と国民概念）"
+        },
+        {
+          "name": "国民経済計算とは／国民経済計算（GDP統計）よくある質問（FAQ）",
+          "where": "FAQ qa14 GDPとGNIの違い（海外からの所得の純受取）"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 9,
+      "prereq": [
+        "GDP（国内で新たに生まれた値打ちの合計）"
+      ],
+      "prereq_ids": [
+        49
+      ],
+      "goals": [
+        4,
+        6
+      ],
+      "debated": ""
+    },
+    {
+      "id": 53,
+      "term": "一人当たりで見る・伸び率で見る",
+      "field": "マクロ（生産と物価）",
+      "middle": "経済の大きさを測る",
+      "summary": "人数でならして国どうしを比べ、前の年からの伸びで勢いを見る読み方",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "GDP と国民経済計算（一人当たりGDP・成長率）"
+        },
+        {
+          "name": "国民経済計算とは／国民経済計算（GDP統計）よくある質問（FAQ）",
+          "where": "FAQ qa7 一人当たりGDPを参照したい"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 9,
+      "prereq": [
+        "GDP（国内で新たに生まれた値打ちの合計）",
+        "金額の伸びと量の伸び（名目と実質）"
+      ],
+      "prereq_ids": [
+        49,
+        51
+      ],
+      "goals": [
+        4,
+        6
+      ],
+      "debated": ""
+    },
+    {
+      "id": 54,
+      "term": "値段の動きを比率で測る（物価指数）",
+      "field": "マクロ（生産と物価）",
+      "middle": "物価を測る",
+      "summary": "多くの品の値段の動きを、ある時点を基準にして比率でまとめた数字",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "実質と名目・物価指数（price index）"
+        },
+        {
+          "name": "消費者物価指数のしくみと見方 ―2020年基準消費者物価指数―（令和3年8月）",
+          "where": "1（1）消費者物価指数とは何か"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 7,
+      "prereq": [
+        "金額の伸びと量の伸び（名目と実質）"
+      ],
+      "prereq_ids": [
+        51
+      ],
+      "goals": [
+        4
+      ],
+      "debated": ""
+    },
+    {
+      "id": 55,
+      "term": "消費者物価指数のつくり方と限界",
+      "field": "マクロ（生産と物価）",
+      "middle": "物価を測る",
+      "summary": "買物かご全体の費用の変化で測る。平均の姿なので実感とはずれる",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "実質と名目・物価指数（消費者物価指数）"
+        },
+        {
+          "name": "消費者物価指数のしくみと見方 ―2020年基準消費者物価指数―（令和3年8月）",
+          "where": "2 作成方法（品目・ウエイト・ラスパイレス式）／3（4）指数と実感"
+        },
+        {
+          "name": "消費者物価指数（CPI）に関するQ&A",
+          "where": "G-5 上方バイアス／D-2 5年固定ウエイトの限界"
+        }
+      ],
+      "source_count": 3,
+      "syllabus_weight": 7,
+      "prereq": [
+        "値段の動きを比率で測る（物価指数）"
+      ],
+      "prereq_ids": [
+        54
+      ],
+      "goals": [
+        4
+      ],
+      "debated": ""
+    },
+    {
+      "id": 56,
+      "term": "値上がりの流れをどう見分けるか（振れを除いて見る）",
+      "field": "マクロ（生産と物価）",
+      "middle": "物価を測る",
+      "summary": "天候や燃料で振れる品を外し、続いている値上がりの流れを見る工夫",
+      "sources": [
+        {
+          "name": "消費者物価指数のしくみと見方 ―2020年基準消費者物価指数―（令和3年8月）",
+          "where": "3（1）生鮮食品を除く総合／生鮮食品及びエネルギーを除く総合"
+        },
+        {
+          "name": "日本銀行の金融政策（金融政策の基本的な考え方／教えて！にちぎん 金融政策カテゴリ）",
+          "where": "b45 物価をみるときに、何を判断材料にしていますか（刈込平均値・加重中央値）"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 0,
+      "prereq": [
+        "消費者物価指数のつくり方と限界"
+      ],
+      "prereq_ids": [
+        55
+      ],
+      "goals": [
+        4,
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 57,
+      "term": "良くなった分と、量を減らした値上げ",
+      "field": "マクロ（生産と物価）",
+      "middle": "物価を測る",
+      "summary": "中身が良くなった分は値上がりに数えず、量を減らした分は数える",
+      "sources": [
+        {
+          "name": "消費者物価指数（CPI）に関するQ&A",
+          "where": "F 質的調整（品質調整・ヘドニック法）／G-10 容量を少なくする「隠れた値上げ」"
+        },
+        {
+          "name": "消費者物価指数のしくみと見方 ―2020年基準消費者物価指数―（令和3年8月）",
+          "where": "3（4）品質向上分による価格上昇はCPIに反映されない"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 0,
+      "prereq": [
+        "消費者物価指数のつくり方と限界"
+      ],
+      "prereq_ids": [
+        55
+      ],
+      "goals": [
+        4
+      ],
+      "debated": ""
+    },
+    {
+      "id": 58,
+      "term": "値段が続けて上がる・下がる（インフレとデフレ）",
+      "field": "マクロ（生産と物価）",
+      "middle": "物価を測る",
+      "summary": "値段が続けて上がる・下がる状態と、それが暮らしや商いに与える痛み",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "インフレとデフレとその費用（inflation, deflation）"
+        },
+        {
+          "name": "日本銀行の金融政策（金融政策の基本的な考え方／教えて！にちぎん 金融政策カテゴリ）",
+          "where": "b29 「物価の安定」についての考え方"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 5,
+      "prereq": [
+        "値段の動きを比率で測る（物価指数）"
+      ],
+      "prereq_ids": [
+        54
+      ],
+      "goals": [
+        4,
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 59,
+      "term": "これから上がると思うかどうか（先行きの見込み）",
+      "field": "マクロ（生産と物価）",
+      "middle": "物価を測る",
+      "summary": "先も上がると思えば、今の値付けと買い方のほうが先に変わってしまう",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "フィリップス曲線とインフレ期待（inflation expectations）"
+        },
+        {
+          "name": "日本銀行の金融政策（金融政策の基本的な考え方／教えて！にちぎん 金融政策カテゴリ）",
+          "where": "b45 予想物価上昇率"
+        },
+        {
+          "name": "令和7年度 年次経済財政報告（経済財政白書）",
+          "where": "第2章第1節3 予想物価上昇率はどのような経路で消費を押し下げるのか"
+        }
+      ],
+      "source_count": 3,
+      "syllabus_weight": 4,
+      "prereq": [
+        "値段が続けて上がる・下がる（インフレとデフレ）"
+      ],
+      "prereq_ids": [
+        58
+      ],
+      "goals": [
+        4,
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 60,
+      "term": "働いた人・探した人・探さなかった人",
+      "field": "マクロ（生産と物価）",
+      "middle": "働く人を測る",
+      "summary": "15歳以上の人を、働いた・仕事を探した・探さなかったで分ける",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "失業の測り方と種類（unemployment: measurement and types）"
+        },
+        {
+          "name": "労働力調査 用語の解説（結果表の利用に関する参考資料）",
+          "where": "1 15歳以上人口について＜就業状態＞（労働力人口・非労働力人口）"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 6,
+      "prereq": [
+        "GDP（国内で新たに生まれた値打ちの合計）"
+      ],
+      "prereq_ids": [
+        49
+      ],
+      "goals": [
+        4
+      ],
+      "debated": ""
+    },
+    {
+      "id": 61,
+      "term": "完全失業率の測り方と限界",
+      "field": "マクロ（生産と物価）",
+      "middle": "働く人を測る",
+      "summary": "探すのをやめた人は数に入らないなど、外れる人がいる物差しである",
+      "sources": [
+        {
+          "name": "労働力調査 用語の解説（結果表の利用に関する参考資料）",
+          "where": "1 完全失業者の三つの条件／完全失業率"
+        },
+        {
+          "name": "労働力調査に関するQ&A",
+          "where": "F-4 1時間でも働けば就業者／F-9 職探しをやめた人の扱い"
+        },
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "失業の測り方と種類（measurement）"
+        }
+      ],
+      "source_count": 3,
+      "syllabus_weight": 6,
+      "prereq": [
+        "働いた人・探した人・探さなかった人"
+      ],
+      "prereq_ids": [
+        60
+      ],
+      "goals": [
+        4
+      ],
+      "debated": ""
+    },
+    {
+      "id": 62,
+      "term": "なぜ仕事に就けないのか（失業の種類）",
+      "field": "マクロ（生産と物価）",
+      "middle": "働く人を測る",
+      "summary": "移り変わりの間、技能や場所のずれ、仕事そのものの不足に分けて見る",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "失業の測り方と種類（types of unemployment）"
+        },
+        {
+          "name": "労働力調査 用語の解説（結果表の利用に関する参考資料）",
+          "where": "3 失業者及び完全失業者について＜求職理由＞（非自発的・自発的）"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 6,
+      "prereq": [
+        "働いた人・探した人・探さなかった人",
+        "労働市場（賃金はどう決まるか）"
+      ],
+      "prereq_ids": [
+        60,
+        21
+      ],
+      "goals": [
+        4,
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 63,
+      "term": "季節の波を除く・一年前と比べる",
+      "field": "マクロ（生産と物価）",
+      "middle": "働く人を測る",
+      "summary": "季節で決まった波を除くか、一年前と比べるかで数字の見え方が変わる",
+      "sources": [
+        {
+          "name": "労働力調査に関するQ&A",
+          "where": "F-7 なぜ完全失業率は季節調整値を主に公表するのか"
+        },
+        {
+          "name": "消費者物価指数のしくみと見方 ―2020年基準消費者物価指数―（令和3年8月）",
+          "where": "3（2）変化率（前月比・前年同月比・前年比）"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 0,
+      "prereq": [
+        "完全失業率の測り方と限界",
+        "消費者物価指数のつくり方と限界"
+      ],
+      "prereq_ids": [
+        61,
+        55
+      ],
+      "goals": [
+        4
+      ],
+      "debated": ""
+    },
+    {
+      "id": 64,
+      "term": "良い時と悪い時の波（景気の循環）",
+      "field": "マクロ（生産と物価）",
+      "middle": "景気の動き",
+      "summary": "良い時と悪い時が波のように繰り返す動きと、その見分けどころを見る",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "景気循環と経済変動（business cycle）"
+        },
+        {
+          "name": "令和7年度 年次経済財政報告（経済財政白書）",
+          "where": "第1章第1節 2025年半ばまでの経済の動向"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 4,
+      "prereq": [
+        "GDP（国内で新たに生まれた値打ちの合計）",
+        "完全失業率の測り方と限界"
+      ],
+      "prereq_ids": [
+        49,
+        61
+      ],
+      "goals": [
+        4
+      ],
+      "debated": ""
+    },
+    {
+      "id": 65,
+      "term": "無理なく作れる量との差（需給の締まり具合）",
+      "field": "マクロ（生産と物価）",
+      "middle": "景気の動き",
+      "summary": "無理なく作れる量と実際の差が、値段と雇いの圧力になるという見方",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "短期と長期・期待の役割（potential output）"
+        },
+        {
+          "name": "日本銀行の金融政策（金融政策の基本的な考え方／教えて！にちぎん 金融政策カテゴリ）",
+          "where": "b45 マクロ的な需給ギャップ・労働需給"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 3,
+      "prereq": [
+        "GDP（国内で新たに生まれた値打ちの合計）",
+        "良い時と悪い時の波（景気の循環）"
+      ],
+      "prereq_ids": [
+        49,
+        64
+      ],
+      "goals": [
+        4,
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 66,
+      "term": "使うか残すか（消費と貯蓄）",
+      "field": "マクロ（生産と物価）",
+      "middle": "総需要のしくみ",
+      "summary": "入った収入の何割を使い何割を残すかを決める事情と、先行きの不安",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "消費と貯蓄の決まり方（consumption and saving）"
+        },
+        {
+          "name": "令和7年度 年次経済財政報告（経済財政白書）",
+          "where": "第2章第1節 個人消費の回復に向けて（将来不安と貯蓄）"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 5,
+      "prereq": [
+        "GDP（国内で新たに生まれた値打ちの合計）"
+      ],
+      "prereq_ids": [
+        49
+      ],
+      "goals": [
+        4,
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 67,
+      "term": "設備にお金を回すかどうか（投資）",
+      "field": "マクロ（生産と物価）",
+      "middle": "総需要のしくみ",
+      "summary": "先の見込みと借りる費用を見比べて、設備や建物にお金を回すか決める",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "投資の決まり方（investment）"
+        },
+        {
+          "name": "令和7年度 年次経済財政報告（経済財政白書）",
+          "where": "第1章第1節3 国内民間最終需要（設備投資）等の動向"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 5,
+      "prereq": [
+        "使うか残すか（消費と貯蓄）"
+      ],
+      "prereq_ids": [
+        66
+      ],
+      "goals": [
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 68,
+      "term": "皆が使う量から所得が決まる筋",
+      "field": "マクロ（生産と物価）",
+      "middle": "総需要のしくみ",
+      "summary": "使う量の合計に合わせて作る量が決まり、それが所得になるという筋",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "総需要と財市場の均衡・45度線モデル（goods market, income determination）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 5,
+      "prereq": [
+        "使うか残すか（消費と貯蓄）",
+        "設備にお金を回すかどうか（投資）"
+      ],
+      "prereq_ids": [
+        66,
+        67
+      ],
+      "goals": [
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 69,
+      "term": "支出が次の所得を生む（波及の重なり）",
+      "field": "マクロ（生産と物価）",
+      "middle": "総需要のしくみ",
+      "summary": "誰かの支出が別の人の所得になり、最初の額より大きく広がること",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "乗数効果（the multiplier）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 3,
+      "prereq": [
+        "皆が使う量から所得が決まる筋"
+      ],
+      "prereq_ids": [
+        68
+      ],
+      "goals": [
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 70,
+      "term": "全体の買いたい量と作れる量（総需要と総供給）",
+      "field": "マクロ（生産と物価）",
+      "middle": "総需要のしくみ",
+      "summary": "国全体の買いたい量と作れる量から、物価と生産量を同時に見る枠",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "総需要・総供給分析（AD-AS model）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 4,
+      "prereq": [
+        "皆が使う量から所得が決まる筋",
+        "無理なく作れる量との差（需給の締まり具合）"
+      ],
+      "prereq_ids": [
+        68,
+        65
+      ],
+      "goals": [
+        4,
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 71,
+      "term": "短い目と長い目で答えが変わる理由",
+      "field": "マクロ（生産と物価）",
+      "middle": "総需要のしくみ",
+      "summary": "値段や賃金がすぐには動かないので、短い目と長い目で結論が変わる",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "短期と長期・期待の役割（short run and long run）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 3,
+      "prereq": [
+        "全体の買いたい量と作れる量（総需要と総供給）"
+      ],
+      "prereq_ids": [
+        70
+      ],
+      "goals": [
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 72,
+      "term": "物価と失業の間の関係（フィリップス曲線）",
+      "field": "マクロ（生産と物価）",
+      "middle": "総需要のしくみ",
+      "summary": "人手が足りなくなると値上がりしやすい、という経験から得られた関係",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "フィリップス曲線とインフレ期待（Phillips curve）"
+        },
+        {
+          "name": "日本銀行『日銀レビュー』2020-J-3「フィリップス曲線と日本銀行」",
+          "where": "関係の形と、その変わり方の整理"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 4,
+      "prereq": [
+        "完全失業率の測り方と限界",
+        "値段が続けて上がる・下がる（インフレとデフレ）",
+        "これから上がると思うかどうか（先行きの見込み）"
+      ],
+      "prereq_ids": [
+        61,
+        58,
+        59
+      ],
+      "goals": [
+        4,
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 73,
+      "term": "給料の増え方と値上がり（実質で見る賃金）",
+      "field": "マクロ（生産と物価）",
+      "middle": "物価を測る",
+      "summary": "給料の増え方から値上がり分を引くと、買える量の変化のほうが見える",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "実質と名目・物価指数（実質化・デフレーター）"
+        },
+        {
+          "name": "令和7年度 年次経済財政報告（経済財政白書）",
+          "where": "第1章第2節 物価・賃金の動向／第2章第2節 なぜ賃金上昇が実感されにくいのか"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 7,
+      "prereq": [
+        "金額の伸びと量の伸び（名目と実質）",
+        "労働市場（賃金はどう決まるか）"
+      ],
+      "prereq_ids": [
+        51,
+        21
+      ],
+      "goals": [
+        4,
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 74,
+      "term": "物価と失業の関係は今も使えるか",
+      "field": "マクロ（生産と物価）",
+      "middle": "見方が分かれる論点",
+      "summary": "関係が平たくなったのか、枠として手放せないのかで見方が分かれる",
+      "sources": [
+        {
+          "name": "日本銀行『日銀レビュー』2020-J-3「フィリップス曲線と日本銀行」",
+          "where": "関係が平たくなったかどうかの評価"
+        },
+        {
+          "name": "RIETI「二重労働市場と「フィリップス曲線の謎」」",
+          "where": "関係が見えにくくなった理由の別の説明"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 0,
+      "prereq": [
+        "物価と失業の間の関係（フィリップス曲線）"
+      ],
+      "prereq_ids": [
+        72
+      ],
+      "goals": [
+        4,
+        5
+      ],
+      "debated": "インフレと失業のトレードオフ（フィリップス曲線）"
+    },
+    {
+      "id": 75,
+      "term": "GDPで豊かさを測れるか",
+      "field": "マクロ（生産と物価）",
+      "middle": "見方が分かれる論点",
+      "summary": "測れていない物が多いと見るか、別の物差しは粗いと見るかで分かれる",
+      "sources": [
+        {
+          "name": "内閣府 経済社会総合研究所『ESR』No.44「Well-being “beyond GDP” を巡る国際的な議論の動向と日本の取組」",
+          "where": "GDPを補う物差しを巡る議論"
+        },
+        {
+          "name": "家事活動等の評価について／無償労働の貨幣評価（令和5年7月）",
+          "where": "第1章1 無償労働は中枢体系の勘定に記録されない（生産の境界）"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 0,
+      "prereq": [
+        "GDP（国内で新たに生まれた値打ちの合計）",
+        "同じ額を三つの側から数える（生産・分配・支出）"
+      ],
+      "prereq_ids": [
+        49,
+        50
+      ],
+      "goals": [
+        4
+      ],
+      "debated": "GDP は豊かさを測れるか"
+    },
+    {
+      "id": 76,
+      "term": "お金の三つの働き",
+      "field": "金融と財政",
+      "middle": "お金と銀行",
+      "summary": "支払いに使う・値段を測る物差しにする・貯めておく、という三つの役目",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "貨幣の役割と貨幣需要（money, demand for money）"
+        },
+        {
+          "name": "日本銀行の金融政策（金融政策の基本的な考え方／教えて！にちぎん 金融政策カテゴリ）",
+          "where": "h06 「マネタリーベース」とは何ですか"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 8,
+      "prereq": [
+        "市場均衡（値段が落ち着くところ）"
+      ],
+      "prereq_ids": [
+        7
+      ],
+      "goals": [
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 77,
+      "term": "金利はどう決まるか",
+      "field": "金融と財政",
+      "middle": "お金と銀行",
+      "summary": "手元に置いておく便利さと、貸して受け取る見返りの釣り合いで決まる",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "利子率の決まり方（determination of interest rates）"
+        },
+        {
+          "name": "日本銀行の金融政策（金融政策の基本的な考え方／教えて！にちぎん 金融政策カテゴリ）",
+          "where": "b32 無担保コールレート（オーバーナイト物）とは何ですか"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 5,
+      "prereq": [
+        "お金の三つの働き"
+      ],
+      "prereq_ids": [
+        76
+      ],
+      "goals": [
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 78,
+      "term": "銀行の働きと、お金が増えるしくみ",
+      "field": "金融と財政",
+      "middle": "お金と銀行",
+      "summary": "預かった分を貸し出すことで、世の中で使えるお金が増えていく筋道",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "銀行と信用創造（banks, money creation）"
+        },
+        {
+          "name": "日本銀行の金融政策（金融政策の基本的な考え方／教えて！にちぎん 金融政策カテゴリ）",
+          "where": "b33 準備預金制度とは何ですか／h06 マネタリーベース"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 5,
+      "prereq": [
+        "お金の三つの働き"
+      ],
+      "prereq_ids": [
+        76
+      ],
+      "goals": [
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 79,
+      "term": "中央銀行とは何をするところか",
+      "field": "金融と財政",
+      "middle": "中央銀行と金融政策",
+      "summary": "値段の落ち着きを保つ役目を負い、政府から独立して決める仕組み",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "中央銀行と金融政策（central bank, monetary policy）"
+        },
+        {
+          "name": "日本銀行の金融政策（金融政策の基本的な考え方／教えて！にちぎん 金融政策カテゴリ）",
+          "where": "金融政策の目的／中央銀行の独立性／透明性（説明責任）"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 9,
+      "prereq": [
+        "銀行の働きと、お金が増えるしくみ"
+      ],
+      "prereq_ids": [
+        78
+      ],
+      "goals": [
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 80,
+      "term": "政策の金利と、市場への働きかけ",
+      "field": "金融と財政",
+      "middle": "中央銀行と金融政策",
+      "summary": "短い期間の金利を目標に置き、資金の出し入れでそこへ導く手立て",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "中央銀行と金融政策（金融市場調節）"
+        },
+        {
+          "name": "日本銀行の金融政策（金融政策の基本的な考え方／教えて！にちぎん 金融政策カテゴリ）",
+          "where": "b31 金融市場調節／b34 オペレーション（公開市場操作）の種類"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 9,
+      "prereq": [
+        "中央銀行とは何をするところか",
+        "金利はどう決まるか"
+      ],
+      "prereq_ids": [
+        79,
+        77
+      ],
+      "goals": [
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 81,
+      "term": "金融政策はどこを通って届くか",
+      "field": "金融と財政",
+      "middle": "中央銀行と金融政策",
+      "summary": "金利が下がると借りやすくなり、設備や住宅の支出が動くという筋道",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "中央銀行と金融政策（波及経路）"
+        },
+        {
+          "name": "日本銀行の金融政策（金融政策の基本的な考え方／教えて！にちぎん 金融政策カテゴリ）",
+          "where": "b28 金融政策は景気や物価にどのように影響を及ぼすのですか"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 9,
+      "prereq": [
+        "政策の金利と、市場への働きかけ",
+        "設備にお金を回すかどうか（投資）"
+      ],
+      "prereq_ids": [
+        80,
+        67
+      ],
+      "goals": [
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 82,
+      "term": "物価の落ち着きを数字で示す（目標の置き方）",
+      "field": "金融と財政",
+      "middle": "中央銀行と金融政策",
+      "summary": "値段の動きに振り回されずに決められる状態を、数字の目安にする",
+      "sources": [
+        {
+          "name": "日本銀行の金融政策（金融政策の基本的な考え方／教えて！にちぎん 金融政策カテゴリ）",
+          "where": "b29 「物価安定の目標」（消費者物価の前年比上昇率2％）"
+        },
+        {
+          "name": "消費者物価指数のしくみと見方 ―2020年基準消費者物価指数―（令和3年8月）",
+          "where": "1（2）利用（物価安定の目標と金融政策の判断材料）"
+        },
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "中央銀行と金融政策（物価安定の目標）"
+        }
+      ],
+      "source_count": 3,
+      "syllabus_weight": 9,
+      "prereq": [
+        "中央銀行とは何をするところか",
+        "値段が続けて上がる・下がる（インフレとデフレ）"
+      ],
+      "prereq_ids": [
+        79,
+        58
+      ],
+      "goals": [
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 83,
+      "term": "金利を下げきった後の手立て",
+      "field": "金融と財政",
+      "middle": "中央銀行と金融政策",
+      "summary": "金利を下げる余地が無いとき、量や先行きの約束で働きかけるやり方",
+      "sources": [
+        {
+          "name": "日本銀行の金融政策（金融政策の基本的な考え方／教えて！にちぎん 金融政策カテゴリ）",
+          "where": "b35 国債買入オペ／h06 マネタリーベース／b42 金融市場調節方針の変遷"
+        },
+        {
+          "name": "日本銀行「金融政策の多角的レビュー」（2024年12月の取りまとめ。効果と副作用の評価、寄せられた意見の整理を含む）",
+          "where": "非伝統的な手立ての整理"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 0,
+      "prereq": [
+        "政策の金利と、市場への働きかけ"
+      ],
+      "prereq_ids": [
+        80
+      ],
+      "goals": [
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 84,
+      "term": "物とお金の二つの釣り合いを同時に見る",
+      "field": "金融と財政",
+      "middle": "中央銀行と金融政策",
+      "summary": "物の売り買いとお金の貸し借りが同時に釣り合う点を探す、という枠",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "IS-LM 分析：財市場と貨幣市場の同時均衡（IS-LM model）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 6,
+      "prereq": [
+        "皆が使う量から所得が決まる筋",
+        "金利はどう決まるか"
+      ],
+      "prereq_ids": [
+        68,
+        77
+      ],
+      "goals": [
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 85,
+      "term": "金利が動くと持ち物の値段が動く",
+      "field": "金融と財政",
+      "middle": "お金と銀行",
+      "summary": "先の見込みと金利が変わると、債券や株の値段のほうが先に動くこと",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "金融市場・資産価格と期待（financial markets, asset pricing）"
+        },
+        {
+          "name": "令和7年度 年次経済財政報告（経済財政白書）",
+          "where": "コラム1-5 我が国の長期金利、超長期金利の動向について"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 4,
+      "prereq": [
+        "金利はどう決まるか"
+      ],
+      "prereq_ids": [
+        77
+      ],
+      "goals": [
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 86,
+      "term": "財政とは何か（入りと出）",
+      "field": "金融と財政",
+      "middle": "財政のしくみ",
+      "summary": "税などで集め、社会保障や公共の仕事に配っていく国の入りと出のこと",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "財政政策：政府支出と税（fiscal policy）"
+        },
+        {
+          "name": "日本の財政関係資料（令和8年4月）",
+          "where": "第1部Ⅰ1 令和8年度一般会計予算（歳出内訳・歳入内訳）"
+        },
+        {
+          "name": "これからの日本のために財政を考える",
+          "where": "日本の財政構造（財政とは／予算はどのような分野に使われているのか）"
+        }
+      ],
+      "source_count": 3,
+      "syllabus_weight": 9,
+      "prereq": [
+        "GDP（国内で新たに生まれた値打ちの合計）"
+      ],
+      "prereq_ids": [
+        49
+      ],
+      "goals": [
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 87,
+      "term": "税はどこから集まっているか",
+      "field": "金融と財政",
+      "middle": "財政のしくみ",
+      "summary": "所得・消費・会社の儲けなど、どこから幾ら集まるかの組み合わせ",
+      "sources": [
+        {
+          "name": "日本の財政関係資料（令和8年4月）",
+          "where": "第1部Ⅰ1（2）歳入内訳（所得税・消費税・法人税）"
+        },
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "課税と税の帰着（taxation）"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 4,
+      "prereq": [
+        "財政とは何か（入りと出）",
+        "税は誰が負担するか（税の帰着）"
+      ],
+      "prereq_ids": [
+        86,
+        18
+      ],
+      "goals": [
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 88,
+      "term": "政府の支出と税で需要を動かす",
+      "field": "金融と財政",
+      "middle": "財政のしくみ",
+      "summary": "公共の支出や税を変えて、皆が使う量を押したり引いたりする手立て",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "財政政策：政府支出と税（fiscal policy）"
+        },
+        {
+          "name": "日本の財政関係資料（令和8年4月）",
+          "where": "第2部 令和8年度予算等について（予算フレーム）"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 9,
+      "prereq": [
+        "財政とは何か（入りと出）",
+        "支出が次の所得を生む（波及の重なり）"
+      ],
+      "prereq_ids": [
+        86,
+        69
+      ],
+      "goals": [
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 89,
+      "term": "景気に応じて自動で効く部分",
+      "field": "金融と財政",
+      "middle": "財政のしくみ",
+      "summary": "景気が悪くなると税が減り給付が増え、放っておいても支えになる",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "財政政策：政府支出と税（自動安定化装置）"
+        },
+        {
+          "name": "令和7年度 年次経済財政報告（経済財政白書）",
+          "where": "第1章第3節 財政の現状と課題"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 9,
+      "prereq": [
+        "政府の支出と税で需要を動かす"
+      ],
+      "prereq_ids": [
+        88
+      ],
+      "goals": [
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 90,
+      "term": "国が借りるということ（国債の種類）",
+      "field": "金融と財政",
+      "middle": "財政の持続性",
+      "summary": "足りない分を国が借りるための仕組みと、使い道による二つの区分の違い",
+      "sources": [
+        {
+          "name": "債務管理リポート2026 －国の債務管理と公的債務の現状－",
+          "where": "第Ⅰ編第1章 国債の発行目的別分類（建設国債・特例国債・借換債）"
+        },
+        {
+          "name": "日本の財政関係資料（令和8年4月）",
+          "where": "第1部Ⅰ1（2）公債金（特例公債・建設公債）"
+        },
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "財政赤字・国債と政府の借入（budget deficit）"
+        }
+      ],
+      "source_count": 3,
+      "syllabus_weight": 4,
+      "prereq": [
+        "財政とは何か（入りと出）"
+      ],
+      "prereq_ids": [
+        86
+      ],
+      "goals": [
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 91,
+      "term": "借金の重さをどう測るか",
+      "field": "金融と財政",
+      "middle": "財政の持続性",
+      "summary": "借入を除いた収支と、経済の大きさに対する残高の比で重さを見る",
+      "sources": [
+        {
+          "name": "日本の財政関係資料（令和8年4月）",
+          "where": "第1部Ⅰ11〜14 プライマリーバランス・債務残高対GDP比"
+        },
+        {
+          "name": "これからの日本のために財政を考える",
+          "where": "財政健全化に向けて（プライマリーバランスとは何か）"
+        },
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "財政赤字・国債と政府の借入（government borrowing）"
+        }
+      ],
+      "source_count": 3,
+      "syllabus_weight": 4,
+      "prereq": [
+        "国が借りるということ（国債の種類）",
+        "GDP（国内で新たに生まれた値打ちの合計）"
+      ],
+      "prereq_ids": [
+        90,
+        49
+      ],
+      "goals": [
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 92,
+      "term": "金利が上がると財政はどうなるか",
+      "field": "金融と財政",
+      "middle": "財政の持続性",
+      "summary": "借りた額が大きいほど、金利の上がりが毎年の利払いを押し上げていく",
+      "sources": [
+        {
+          "name": "日本の財政関係資料（令和8年4月）",
+          "where": "第1部Ⅱ16 金利動向と財政運営"
+        },
+        {
+          "name": "これからの日本のために財政を考える",
+          "where": "厳しい財政事情（金利動向と財政運営）"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 0,
+      "prereq": [
+        "国が借りるということ（国債の種類）",
+        "金利はどう決まるか"
+      ],
+      "prereq_ids": [
+        90,
+        77
+      ],
+      "goals": [
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 93,
+      "term": "金融と財政の役割分担と、効くまでの間",
+      "field": "金融と財政",
+      "middle": "財政のしくみ",
+      "summary": "効き始めるまでの時間と得手不得手が違うので、役割を分けて考える",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "財政政策：政府支出と税（政策の組み合わせ）"
+        },
+        {
+          "name": "日本銀行の金融政策（金融政策の基本的な考え方／教えて！にちぎん 金融政策カテゴリ）",
+          "where": "中央銀行の独立性（財政政策との整合性のための連携）"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 9,
+      "prereq": [
+        "金融政策はどこを通って届くか",
+        "政府の支出と税で需要を動かす"
+      ],
+      "prereq_ids": [
+        81,
+        88
+      ],
+      "goals": [
+        5
+      ],
+      "debated": ""
+    },
+    {
+      "id": 94,
+      "term": "消費税は所得の低い人に重いか",
+      "field": "金融と財政",
+      "middle": "見方が分かれる論点",
+      "summary": "何を分母に負担を測るかで、重いかどうかの答えが変わってしまう",
+      "sources": [
+        {
+          "name": "国立国会図書館『調査と情報』No.749「消費税の逆進性とその緩和策―消費税をめぐる論点①―」",
+          "where": "一時点の所得で見る立場と生涯で見る立場"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 0,
+      "prereq": [
+        "税はどこから集まっているか",
+        "税は誰が負担するか（税の帰着）"
+      ],
+      "prereq_ids": [
+        87,
+        18
+      ],
+      "goals": [
+        3,
+        5
+      ],
+      "debated": "消費税の逆進性と、その緩和のしかた"
+    },
+    {
+      "id": 95,
+      "term": "政府が支出を増やすとどれだけ効くか",
+      "field": "金融と財政",
+      "middle": "見方が分かれる論点",
+      "summary": "支出の広がり方を大きく見るか小さく見るかで、対策の評価が分かれる",
+      "sources": [
+        {
+          "name": "参議院『経済のプリズム』No.79「マクロモデルからみた財政政策の効果 ～「政府支出乗数」に関する整理と考察～」",
+          "where": "支出の広がり方の見積もりの幅"
+        },
+        {
+          "name": "内閣府 平成9年度 年次経済報告 第5節「財政政策の現状と課題」",
+          "where": "効果が小さくなる理由の整理"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 0,
+      "prereq": [
+        "支出が次の所得を生む（波及の重なり）",
+        "政府の支出と税で需要を動かす"
+      ],
+      "prereq_ids": [
+        69,
+        88
+      ],
+      "goals": [
+        5
+      ],
+      "debated": "景気対策は需要側か供給側か（財政支出の効き方）"
+    },
+    {
+      "id": 96,
+      "term": "長く続いた大規模な緩和は何に効いたか",
+      "field": "金融と財政",
+      "middle": "見方が分かれる論点",
+      "summary": "全体では役に立ったと見るか、傷んだ所のほうを重く見るかで分かれる",
+      "sources": [
+        {
+          "name": "日本銀行「金融政策の多角的レビュー」（2024年12月の取りまとめ。効果と副作用の評価、寄せられた意見の整理を含む）",
+          "where": "効果と副作用の公式の評価"
+        },
+        {
+          "name": "日本銀行 企画局「非伝統的金融政策の効果と副作用」（多角的レビュー ワークショップ第1回 第4セッション資料）",
+          "where": "波及の経路ごとの評価"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 0,
+      "prereq": [
+        "金利を下げきった後の手立て",
+        "金融政策はどこを通って届くか"
+      ],
+      "prereq_ids": [
+        83,
+        81
+      ],
+      "goals": [
+        5
+      ],
+      "debated": "大規模な金融緩和の効果と副作用"
+    },
+    {
+      "id": 97,
+      "term": "目標は2%でよいか、誰が決めるか",
+      "field": "金融と財政",
+      "middle": "見方が分かれる論点",
+      "summary": "数字の水準と、政府と中央銀行のどちらが決めるかで見方が分かれる",
+      "sources": [
+        {
+          "name": "内閣府 ESRI 経済政策フォーラム「2％インフレ・ターゲットとアコードをどう見直すか」（河野龍太郎。目標の水準と政府との取り決めを問い直す側）",
+          "where": "水準と取り決めの見直しを説く側"
+        },
+        {
+          "name": "IMF ブログ「世界経済を保護するために、中央銀行の独立を強化する」",
+          "where": "独立性を守るべきとする側"
+        },
+        {
+          "name": "日本銀行「金融政策の多角的レビュー」（2% 目標のもとでの政策運営の総括。公式側の評価）",
+          "where": "目標のもとでの運営の総括"
+        }
+      ],
+      "source_count": 3,
+      "syllabus_weight": 0,
+      "prereq": [
+        "物価の落ち着きを数字で示す（目標の置き方）",
+        "中央銀行とは何をするところか"
+      ],
+      "prereq_ids": [
+        82,
+        79
+      ],
+      "goals": [
+        5
+      ],
+      "debated": "インフレ目標 2% と中央銀行の独立性"
+    },
+    {
+      "id": 98,
+      "term": "政府の借金はどこまで続けられるか",
+      "field": "金融と財政",
+      "middle": "見方が分かれる論点",
+      "summary": "何を続けられる条件と考えるかで、答えそのものがはっきり分かれる",
+      "sources": [
+        {
+          "name": "財務省 財務総合政策研究所『フィナンシャル・レビュー』第150号「財政の持続可能性とは何か？―横断性条件，ドーマー条件，物価水準の財政理論―」（江口允崇・畑農鋭矢）",
+          "where": "続けられる条件の置き方の違い"
+        },
+        {
+          "name": "内閣府 年次経済財政報告 第3節「財政を巡る論点」（国内消化・金利・世代間の負担・財政再建の進め方）",
+          "where": "国内での消化・金利・世代間の負担"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 0,
+      "prereq": [
+        "借金の重さをどう測るか",
+        "金利が上がると財政はどうなるか"
+      ],
+      "prereq_ids": [
+        91,
+        92
+      ],
+      "goals": [
+        5
+      ],
+      "debated": "財政赤字と政府債務の持続可能性"
+    },
+    {
+      "id": 99,
+      "term": "得手が違う相手と分けて作る（比較優位）",
+      "field": "国際と成長",
+      "middle": "貿易",
+      "summary": "諦める物が少ない側が引き受けて交換すると、双方の取り分が増える",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "比較優位と貿易の利益（comparative advantage and gains from trade）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 4,
+      "prereq": [
+        "機会費用",
+        "あれもこれもは選べない（生産可能性の限界）"
+      ],
+      "prereq_ids": [
+        2,
+        3
+      ],
+      "goals": [
+        6
+      ],
+      "debated": ""
+    },
+    {
+      "id": 100,
+      "term": "貿易で得をする人と損をする人",
+      "field": "国際と成長",
+      "middle": "貿易",
+      "summary": "国全体の得が増えても、輸入と競う仕事のほうでは失う人が出てしまう",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "国際貿易と保護貿易・貿易政策（international trade）"
+        },
+        {
+          "name": "令和7年度 年次経済財政報告（経済財政白書）",
+          "where": "第3章第1節3 外需が減少した場合の各産業への影響"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 6,
+      "prereq": [
+        "得手が違う相手と分けて作る（比較優位）",
+        "買う側と売る側の得（余剰）"
+      ],
+      "prereq_ids": [
+        99,
+        16
+      ],
+      "goals": [
+        6
+      ],
+      "debated": ""
+    },
+    {
+      "id": 101,
+      "term": "関税で守るときに失うもの",
+      "field": "国際と成長",
+      "middle": "貿易",
+      "summary": "輸入に税をかけて国内を守る手立てと、その代わりに失ってしまう物",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "国際貿易と保護貿易・貿易政策（protectionism）"
+        },
+        {
+          "name": "通商白書2026（令和8年版通商白書）",
+          "where": "第Ⅰ部第1章 動乱の中の世界経済（不確実性の高まり）"
+        },
+        {
+          "name": "令和7年度 年次経済財政報告（経済財政白書）",
+          "where": "コラム1-1 関税引上げの影響と需要の価格弾力性について"
+        }
+      ],
+      "source_count": 3,
+      "syllabus_weight": 6,
+      "prereq": [
+        "貿易で得をする人と損をする人",
+        "税は誰が負担するか（税の帰着）"
+      ],
+      "prereq_ids": [
+        100,
+        18
+      ],
+      "goals": [
+        6
+      ],
+      "debated": ""
+    },
+    {
+      "id": 102,
+      "term": "円高・円安とは何が起きていることか",
+      "field": "国際と成長",
+      "middle": "為替と国際収支",
+      "summary": "通貨を交換する比率のこと。輸入が安くなる側と輸出が有利な側がある",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "為替レートの決まり方（exchange rate determination）"
+        },
+        {
+          "name": "通商白書2026（令和8年版通商白書）",
+          "where": "第Ⅱ部第2章第1節 輸出入の動向（価格要因と数量要因）"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 6,
+      "prereq": [
+        "市場均衡（値段が落ち着くところ）"
+      ],
+      "prereq_ids": [
+        7
+      ],
+      "goals": [
+        6
+      ],
+      "debated": ""
+    },
+    {
+      "id": 103,
+      "term": "為替はどう決まるか（金利の差・物価の差）",
+      "field": "国際と成長",
+      "middle": "為替と国際収支",
+      "summary": "金利の差や値段の差、そして先の見込みで通貨の人気が動いていく",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "為替レートの決まり方（金利差・購買力平価）"
+        },
+        {
+          "name": "令和7年度 年次経済財政報告（経済財政白書）",
+          "where": "コラム3-2 経常収支と為替レートの双方向の関係について"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 6,
+      "prereq": [
+        "円高・円安とは何が起きていることか",
+        "金利はどう決まるか"
+      ],
+      "prereq_ids": [
+        102,
+        77
+      ],
+      "goals": [
+        6
+      ],
+      "debated": ""
+    },
+    {
+      "id": 104,
+      "term": "同じ物の値段で通貨を比べる（購買力平価）",
+      "field": "国際と成長",
+      "middle": "為替と国際収支",
+      "summary": "同じ物が同じ額になる水準を目安にして、通貨の高さ安さを測る考え方",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "為替レートの決まり方（PPP）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 6,
+      "prereq": [
+        "為替はどう決まるか（金利の差・物価の差）",
+        "値段の動きを比率で測る（物価指数）"
+      ],
+      "prereq_ids": [
+        103,
+        54
+      ],
+      "goals": [
+        6
+      ],
+      "debated": ""
+    },
+    {
+      "id": 105,
+      "term": "市場に任せるか、一定に保つか（相場の決め方）",
+      "field": "国際と成長",
+      "middle": "為替と国際収支",
+      "summary": "相場を市場に任せるか一定に保つかで、政策の自由度が変わってくる",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "為替相場制度：固定と変動（exchange rate regimes）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 4,
+      "prereq": [
+        "為替はどう決まるか（金利の差・物価の差）"
+      ],
+      "prereq_ids": [
+        103
+      ],
+      "goals": [
+        6
+      ],
+      "debated": ""
+    },
+    {
+      "id": 106,
+      "term": "よその国とのやり取りを記録する（国際収支）",
+      "field": "国際と成長",
+      "middle": "為替と国際収支",
+      "summary": "国とよその国との間のやり取りを、いくつかの帳面に分けて記録する",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "国際収支と開放経済（balance of payments）"
+        },
+        {
+          "name": "通商白書2026（令和8年版通商白書）",
+          "where": "第Ⅱ部第2章第1節 経常収支の動向"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 6,
+      "prereq": [
+        "GDP（国内で新たに生まれた値打ちの合計）"
+      ],
+      "prereq_ids": [
+        49
+      ],
+      "goals": [
+        6
+      ],
+      "debated": ""
+    },
+    {
+      "id": 107,
+      "term": "経常収支の中身（物・サービス・投資の稼ぎ）",
+      "field": "国際と成長",
+      "middle": "為替と国際収支",
+      "summary": "物の売買、旅行や運賃、外に置いた資産からの受け取りに分けて見る",
+      "sources": [
+        {
+          "name": "通商白書2026（令和8年版通商白書）",
+          "where": "第Ⅱ部第2章第1節 1〜4（貿易収支・サービス収支・第一次所得収支）"
+        },
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "国際収支と開放経済（current account）"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 6,
+      "prereq": [
+        "よその国とのやり取りを記録する（国際収支）"
+      ],
+      "prereq_ids": [
+        106
+      ],
+      "goals": [
+        6
+      ],
+      "debated": ""
+    },
+    {
+      "id": 108,
+      "term": "国境を越えて資金が動くときの政策",
+      "field": "国際と成長",
+      "middle": "為替と国際収支",
+      "summary": "資金が国境を越えると、金利と為替を通じて政策の効き方が変わる",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "国際収支と開放経済（開放経済における財市場・マンデル＝フレミング・モデル）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 6,
+      "prereq": [
+        "物とお金の二つの釣り合いを同時に見る",
+        "市場に任せるか、一定に保つか（相場の決め方）"
+      ],
+      "prereq_ids": [
+        84,
+        105
+      ],
+      "goals": [
+        5,
+        6
+      ],
+      "debated": ""
+    },
+    {
+      "id": 109,
+      "term": "経済が伸びるとはどういうことか",
+      "field": "国際と成長",
+      "middle": "成長",
+      "summary": "一人当たりで生み出す量が増えると、暮らしの水準が上がっていく",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "経済成長の事実と要因（economic growth）"
+        },
+        {
+          "name": "令和7年度 年次経済財政報告（経済財政白書）",
+          "where": "第1章第1節 マクロ経済の動き"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 7,
+      "prereq": [
+        "一人当たりで見る・伸び率で見る"
+      ],
+      "prereq_ids": [
+        53
+      ],
+      "goals": [
+        6
+      ],
+      "debated": ""
+    },
+    {
+      "id": 110,
+      "term": "設備を積み上げる伸びには限りがある",
+      "field": "国際と成長",
+      "middle": "成長",
+      "summary": "設備を増やすほど伸びは鈍り、やがて一定の水準に落ち着いていく",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "貯蓄と資本蓄積・定常状態（capital accumulation, steady state）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 3,
+      "prereq": [
+        "経済が伸びるとはどういうことか",
+        "使うか残すか（消費と貯蓄）"
+      ],
+      "prereq_ids": [
+        109,
+        66
+      ],
+      "goals": [
+        6
+      ],
+      "debated": ""
+    },
+    {
+      "id": 111,
+      "term": "同じ元手からより多く生む工夫（技術の進歩）",
+      "field": "国際と成長",
+      "middle": "成長",
+      "summary": "同じ元手からより多く生み出す工夫が、長い目での伸びを支えている",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "技術進歩とイノベーション（technological progress, innovation）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 5,
+      "prereq": [
+        "設備を積み上げる伸びには限りがある"
+      ],
+      "prereq_ids": [
+        110
+      ],
+      "goals": [
+        6
+      ],
+      "debated": ""
+    },
+    {
+      "id": 112,
+      "term": "一人・一時間あたりどれだけ生めるか（生産性）",
+      "field": "国際と成長",
+      "middle": "成長",
+      "summary": "投じた元手に対してどれだけ生み出せたか、という割合で見る考え方",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "経済成長の事実と要因（生産性）"
+        },
+        {
+          "name": "令和7年度 年次経済財政報告（経済財政白書）",
+          "where": "第3章第2節 我が国の企業行動における長期的な変化と課題"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 7,
+      "prereq": [
+        "経済が伸びるとはどういうことか"
+      ],
+      "prereq_ids": [
+        109
+      ],
+      "goals": [
+        4,
+        6
+      ],
+      "debated": ""
+    },
+    {
+      "id": 113,
+      "term": "遅れて始めた国は追いつくのか（差の開き）",
+      "field": "国際と成長",
+      "middle": "成長",
+      "summary": "後から始めた国が速く伸びる場合と、差が開いたままの場合がある",
+      "sources": [
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "経済成長の事実と要因（収束と国ごとの差）"
+        }
+      ],
+      "source_count": 1,
+      "syllabus_weight": 7,
+      "prereq": [
+        "設備を積み上げる伸びには限りがある"
+      ],
+      "prereq_ids": [
+        110
+      ],
+      "goals": [
+        6
+      ],
+      "debated": ""
+    },
+    {
+      "id": 114,
+      "term": "働き手の数と働き方が伸びを左右する",
+      "field": "国際と成長",
+      "middle": "成長",
+      "summary": "働ける人の数と働き方の変化が、国全体の生み出す量を左右していく",
+      "sources": [
+        {
+          "name": "令和7年度 年次経済財政報告（経済財政白書）",
+          "where": "第2章第3節 過去30年にわたり労働供給・需要はどのように変化したか"
+        },
+        {
+          "name": "シラバスの集計（syllabus_weight）",
+          "where": "経済成長の事実と要因（成長の要因）"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 7,
+      "prereq": [
+        "経済が伸びるとはどういうことか",
+        "働いた人・探した人・探さなかった人"
+      ],
+      "prereq_ids": [
+        109,
+        60
+      ],
+      "goals": [
+        4,
+        6
+      ],
+      "debated": ""
+    },
+    {
+      "id": 115,
+      "term": "国をまたいで連なる作り方（供給の連なり）",
+      "field": "国際と成長",
+      "middle": "貿易",
+      "summary": "部品や工程が国をまたいで連なるため、一か所の止まりが広く響く",
+      "sources": [
+        {
+          "name": "通商白書2026（令和8年版通商白書）",
+          "where": "第Ⅰ部第2章第3節 新興国を取り巻くグローバル・バリューチェーン／第Ⅲ部 施策編"
+        },
+        {
+          "name": "令和7年度 年次経済財政報告（経済財政白書）",
+          "where": "第3章第1節2 我が国企業とグローバルバリューチェーンとの関わり"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 0,
+      "prereq": [
+        "貿易で得をする人と損をする人"
+      ],
+      "prereq_ids": [
+        100
+      ],
+      "goals": [
+        6
+      ],
+      "debated": ""
+    },
+    {
+      "id": 116,
+      "term": "自由な貿易の利益は誰に回るか",
+      "field": "国際と成長",
+      "middle": "見方が分かれる論点",
+      "summary": "全体の得を重く見るか、失う人の痛みのほうを重く見るかで分かれる",
+      "sources": [
+        {
+          "name": "RIETI「貿易自由化と所得格差」（経済産業研究所のコラム）",
+          "where": "自由化と稼ぎの散らばりの関係"
+        },
+        {
+          "name": "RIETI「第6回 適切な再分配施策は実施困難」（やさしい経済学）",
+          "where": "損をする人への手当ての難しさ"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 0,
+      "prereq": [
+        "貿易で得をする人と損をする人",
+        "稼ぎの散らばりをどう測るか（分配と格差）"
+      ],
+      "prereq_ids": [
+        100,
+        22
+      ],
+      "goals": [
+        6
+      ],
+      "debated": "自由貿易の利益と、その分配"
+    },
+    {
+      "id": 117,
+      "term": "外から働き手を迎えると賃金はどうなるか",
+      "field": "国際と成長",
+      "middle": "見方が分かれる論点",
+      "summary": "同じ仕事を取り合うと見るか、足りない所を補い合うと見るかで分かれる",
+      "sources": [
+        {
+          "name": "参議院『経済のプリズム』No.176「外国人労働者の我が国経済への影響 ―外国人との共生社会に向けて―」",
+          "where": "賃金と雇用への影響の整理"
+        },
+        {
+          "name": "内閣府 第83回 ESRI 政策フォーラム「労働力不足と外国人労働者」（橋本由紀・RIETI）",
+          "where": "人手不足の中身の問い直し"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 0,
+      "prereq": [
+        "労働市場（賃金はどう決まるか）",
+        "働き手の数と働き方が伸びを左右する"
+      ],
+      "prereq_ids": [
+        21,
+        114
+      ],
+      "goals": [
+        1,
+        6
+      ],
+      "debated": "外国人労働者の受け入れと賃金・雇用"
+    },
+    {
+      "id": 118,
+      "term": "散らばりは伸びを促すか妨げるか",
+      "field": "国際と成長",
+      "middle": "見方が分かれる論点",
+      "summary": "稼ぎの開きが伸びを促すか妨げるかで、実証も見方も割れたままにある",
+      "sources": [
+        {
+          "name": "国立国会図書館『レファレンス』2015年2月号「格差と経済成長の関係についてどのように考えるか」（深澤映司。両方の見方と実証の膠着を整理）",
+          "where": "両方の見方と実証のかみ合わなさ"
+        },
+        {
+          "name": "内閣府 年次経済財政報告 第4節「経済成長と格差の関係」",
+          "where": "国内の分析の整理"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 0,
+      "prereq": [
+        "稼ぎの散らばりをどう測るか（分配と格差）",
+        "経済が伸びるとはどういうことか"
+      ],
+      "prereq_ids": [
+        22,
+        109
+      ],
+      "goals": [
+        6
+      ],
+      "debated": "格差と成長の関係"
+    },
+    {
+      "id": 119,
+      "term": "円安は国全体にとって得か損か",
+      "field": "国際と成長",
+      "middle": "見方が分かれる論点",
+      "summary": "輸出の追い風を重く見るか、輸入の値上がりを重く見るかで分かれる",
+      "sources": [
+        {
+          "name": "日本経済研究センター「円安が日本経済に与える影響」（齋藤潤の経済バーズアイ）",
+          "where": "得をする側と損をする側の整理"
+        },
+        {
+          "name": "通商白書2026（令和8年版通商白書）",
+          "where": "第Ⅱ部第2章 経常収支及び対内外直接投資の動向"
+        }
+      ],
+      "source_count": 2,
+      "syllabus_weight": 0,
+      "prereq": [
+        "円高・円安とは何が起きていることか",
+        "経常収支の中身（物・サービス・投資の稼ぎ）"
+      ],
+      "prereq_ids": [
+        102,
+        107
+      ],
+      "goals": [
+        6
+      ],
+      "debated": "円安は日本経済に得か損か"
+    }
+  ]
+}
