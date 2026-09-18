@@ -21,10 +21,19 @@ def main() -> int:
     terms = {u["term"] for u in json.loads((d / "roadmap.json").read_text(encoding="utf-8"))["units"]}
     names = set()
     for sf in (d / "sources").glob("*.json"):
-        for s in json.loads(sf.read_text(encoding="utf-8")).get("sources", []): names.add(s["name"])
+        raw = json.loads(sf.read_text(encoding="utf-8"))
+        for s in raw.get("sources", []): names.add(s["name"])
+        # 資料が入れ子で入っているファイルも拾う（eca の debated.json は topics[].sources[]、
+        # 頻度の集計は themes[].examples[]）。拾わないと、集めた資料を出典に書いた教材を門が落とす（2026-09-18）
+        for key in ("topics", "themes", "weights"):
+            for item in raw.get(key, []) or []:
+                for s in (item.get("sources") or item.get("examples") or []):
+                    if isinstance(s, dict) and s.get("name"): names.add(s["name"])
     names.add("一般常識")
     import re as _re
-    FREQ = _re.compile(r"記事の集計（[a-z_]+_frequency）$")  # 頻度の集計（選考解説記事の集計（interview_frequency）／実務記事の集計（practice_frequency）など）は出典名として認める
+    # 集計を出典名にした書き方を認める: 「記事の集計（interview_frequency）」「シラバスの集計（syllabus_weight）」など。
+    # 括弧の中は副の信号のキー（登録簿 roadmapSpec.secondarySignal）と同じ綴り
+    FREQ = _re.compile(r"[^（]+の集計（[a-z_]+）$")
     errs, warns = [], []
     sys.path.insert(0, str(Path(__file__).parent)); from targets import target
     USAGE = (target(d.name).get("roadmapSpec") or {}).get("usageSection", "面接で話すなら")
