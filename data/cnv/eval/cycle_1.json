@@ -1,0 +1,809 @@
+{
+  "cycle": 1,
+  "score": "126/126",
+  "rate": 1.0,
+  "by_goal": {
+    "1": "23/23",
+    "2": "21/21",
+    "3": "14/14",
+    "4": "29/29",
+    "5": "12/12",
+    "6": "27/27"
+  },
+  "by_field": {
+    "受け取る": "24/24",
+    "確かめる": "22/22",
+    "変換する": "28/28",
+    "届ける": "34/34",
+    "立て直す": "18/18"
+  },
+  "shift_suspect": [],
+  "avg_understood": 2.57,
+  "stuck_units": [
+    {
+      "topic_id": 54,
+      "term": "順のまま短くするのと、芯だけ言い直すのは別",
+      "confusing": "いちばん分からなかった単位。『要約する』が順のまま短くする側、『言い換える』が芯だけ言い直す側、という言葉の割り当てが覚えられない。単位33では四つの手順のほうを『要約する』と呼んでいるように読めて、どちらの意味か分からなくなった"
+    },
+    {
+      "topic_id": 85,
+      "term": "伝わる言い方の四点検",
+      "confusing": "四つが二組出てきて（本当か・分かりやすいか・場に合うか・敬意／うそを言わない・量・関係・はっきり）、どちらを覚えればいいのか分からなくなった。会話の例も一往復だけで短い"
+    }
+  ],
+  "overconfident_units": [],
+  "unknown_terms": [
+    "なぜ高さなのかは分からない）",
+    "ふさわしさ",
+    "ナラティブ（出典の欄）",
+    "パラフレージング（出典の欄）",
+    "ファーストエイド（出典の欄）",
+    "リフレクション",
+    "係留（出典の題）",
+    "労働政策審議会",
+    "名札",
+    "告示",
+    "土台（共通基盤の言い換え）",
+    "大意的要約",
+    "心理的安全性（カッコで説明あり）",
+    "文化審議会の国語分科会",
+    "格率（出典の欄）",
+    "業務上必要かつ相当な範囲",
+    "歪み（読み方でつまずいた）",
+    "産業医",
+    "総合労働相談",
+    "芯",
+    "芯（ここで初めて説明された。単位3で先に使われていた）",
+    "要旨的要約（出典の欄）",
+    "親和図（カッコで説明あり）",
+    "訊く",
+    "透明性の錯覚（出典の題にだけ出てくる）",
+    "閉じた問い",
+    "開いた問い（言葉としては説明されている）",
+    "高さが上の言葉",
+    "高さ（大まか・細かいの言い換えだと書いてあるが"
+  ],
+  "wrong": [],
+  "overall": {
+    "order_ok": true,
+    "order_issue": "順そのもの（受け取る→確かめる→変換する→届ける→立て直す）は納得できた。困ったのは三つ。(1)『芯』が単位3で使われ、説明されるのは単位28。『高さ』は単位26で出て、単位31で『芯より高さが上の言葉』と使われるが、間が5日空いていて戻って読み直した。(2)相手に返す技が、単位12・13・14（4〜5日目）と単位29・30（10日目）、単位32・33（11日目）、単位44（15日目）に散っていて、後のものを読むたびに前のものが分からなくなった。近いものは近い日に置いてほしい。(3)単位19が四つの順を示すのに、その真ん中二つ（単位21・22）はまだ読んでいない。先に名前だけ出て『後の単位で扱う』が続くと、覚える気が落ちる。あと、確認問題の番号（t8-1 が単位1）が単位の番号と全く違うので、自分がどこの問題を解いているのか毎回タイトルの『単位N』を読み直した",
+    "too_long": [
+      94,
+      121,
+      115,
+      85,
+      55,
+      53,
+      118
+    ],
+    "too_short": [
+      56,
+      90,
+      32
+    ],
+    "most_useful": [
+      21,
+      89,
+      43,
+      113,
+      45,
+      84,
+      88,
+      119,
+      114,
+      95
+    ],
+    "least_useful": [
+      85,
+      80,
+      83,
+      54,
+      94,
+      1
+    ],
+    "would_you_continue": true,
+    "comment": "14日でなく21日と書いてあったが、1日3単位なら続けられると思う。実際は5分では終わらず、平均6分・長い日は25分かかった。明日の会話で使える気がするものは十個くらいある（五分だけ・目的を先に言う／いまの『いつもの形』はどれですかと止める／薬と通帳と夕方までと声に出して戻す／うなずきが止まったら続きを言わずに聞き返す／確認して明日返します）。逆に、話を短くまとめる側（単位28〜34）は読んだだけで身に付いていない。要約する・言い換えるの言葉の割り当ては、たぶん明日には消えている。全体としては『話がうまい人になる』本ではなく『困らなくなる』本で、自分が求めていたのはこちらだった"
+  },
+  "per_unit": {
+    "8": {
+      "term": "良い悪いを決めずに受け取る",
+      "field": "受け取る",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "9": {
+      "term": "自分の考えと違う答えでも受け取る",
+      "field": "受け取る",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "20": {
+      "term": "相手の言いたいことと、自分が知りたいことは別",
+      "field": "受け取る",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "「芯」という言葉がいきなり出てきた。カッコで（芯）と書いてあるだけで、どういうものを芯と呼ぶのかは単位28まで分からなかった",
+      "unknown_terms": [
+        "芯"
+      ],
+      "minutes": 6
+    },
+    "21": {
+      "term": "聞いた話を頭の中で絵にする",
+      "field": "受け取る",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "1": {
+      "term": "聞くと問いただすは別のこと",
+      "field": "受け取る",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "「聴く」「聞く」「訊く」の漢字三つが最後まで頭に残らなかった。話の向きで分けるという説明のほうは分かった",
+      "unknown_terms": [
+        "訊く"
+      ],
+      "minutes": 7
+    },
+    "19": {
+      "term": "話を三つに分けて聞く（言いたいこと・例・理由）",
+      "field": "受け取る",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "26": {
+      "term": "言葉にしていない気持ちを表情や声から受け取る",
+      "field": "受け取る",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "「気持ちを当てにいかない」までは分かったが、では実際に何と言えばいいのかは、会話の例の一つしか手元に残らなかった",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "27": {
+      "term": "「分かりました」が分かっていないことがある",
+      "field": "受け取る",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "10": {
+      "term": "聴いていることが伝わる姿勢と表情",
+      "field": "受け取る",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "5": {
+      "term": "話を遮らずに最後まで聴く",
+      "field": "受け取る",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "7": {
+      "term": "助言はあとに回す",
+      "field": "受け取る",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "16": {
+      "term": "相手の言葉をそのまま返す",
+      "field": "受け取る",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "リフレクション",
+        "パラフレージング（出典の欄）"
+      ],
+      "minutes": 5
+    },
+    "45": {
+      "term": "言い直して確かめる",
+      "field": "確かめる",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "単位14との違いが、読んだ直後は分からなかった。両方とも話の区切りで、両方とも合っているか確かめる。混同しやすい用語の欄を三回読んで、やっと『言い換えるかどうか』が線だと分かった",
+      "unknown_terms": [],
+      "minutes": 8
+    },
+    "47": {
+      "term": "復唱してから次に進む",
+      "field": "確かめる",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "単位13と入れ替えて覚えていないか、いまも自信がない。日付や数を言葉のまま戻すのが復唱、という覚え方で押さえた",
+      "unknown_terms": [],
+      "minutes": 8
+    },
+    "42": {
+      "term": "聞いてよい約束を先に作る",
+      "field": "確かめる",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "43": {
+      "term": "分からないまま流さない",
+      "field": "確かめる",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "28": {
+      "term": "答えの幅を決めない問い",
+      "field": "確かめる",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "開いた問い（言葉としては説明されている）"
+      ],
+      "minutes": 5
+    },
+    "29": {
+      "term": "はい・いいえで終わる問いの使いどき",
+      "field": "確かめる",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "閉じた問い"
+      ],
+      "minutes": 5
+    },
+    "30": {
+      "term": "広い問いから始め、狭い問いは後に置く",
+      "field": "確かめる",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "四つの順（広く→相手の言葉で深める→だれなに→閉じた問い）を覚えるのが大変だった。真ん中の二つはまだ読んでいない段階で出てくる",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "34": {
+      "term": "だれ・なに・どこ・いつ・どのようにの問い",
+      "field": "確かめる",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "五つの語のうち『なに』と『どのように』の使い分けは分からないままだった。『なぜ』を使わない、はよく分かった",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "32": {
+      "term": "話を広げる問い（「そのあとは？」）",
+      "field": "確かめる",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "ナラティブ（出典の欄）"
+      ],
+      "minutes": 3
+    },
+    "33": {
+      "term": "相手の言った言葉を使って深める問い",
+      "field": "確かめる",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "36": {
+      "term": "聞き方で答えを引っぱってしまう",
+      "field": "確かめる",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "79": {
+      "term": "事実と気持ちを分けて言う",
+      "field": "変換する",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "60": {
+      "term": "専門語を使わずに言う",
+      "field": "変換する",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "64": {
+      "term": "相手がどこまで知っているか分からないときの言い方",
+      "field": "変換する",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "言葉の細かさを「高さ」と呼ぶのが最後まで馴染めなかった。高いほうが大まか、という向きを何度も確かめ直した",
+      "unknown_terms": [
+        "高さ（大まか・細かいの言い換えだと書いてあるが",
+        "なぜ高さなのかは分からない）"
+      ],
+      "minutes": 7
+    },
+    "67": {
+      "term": "相手の知っていることに寄せて言う",
+      "field": "変換する",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "53": {
+      "term": "言いたいことの芯を一文にする",
+      "field": "変換する",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "五つの手順は多すぎて、読んだ直後に順番を言えなかった。『例と理由をよそに置く』の一つだけ覚えた",
+      "unknown_terms": [
+        "芯（ここで初めて説明された。単位3で先に使われていた）"
+      ],
+      "minutes": 8
+    },
+    "58": {
+      "term": "自分の言葉に置き換える",
+      "field": "変換する",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "単位13（言い直して確かめる）とどう違うのか、読んでいる間ずっと迷った。混同の欄には13と12が並んでいるが、13との差の説明が一行しかない",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "80": {
+      "term": "自分の理解を口に出すと土台がそろう",
+      "field": "変換する",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "単位13・29・44とほとんど同じことを言っているように読めた。『土台がそろう』という理由の話だと最後に分かったが、新しく覚えることは無かった",
+      "unknown_terms": [
+        "土台（共通基盤の言い換え）"
+      ],
+      "minutes": 5
+    },
+    "59": {
+      "term": "似た話を束ねて見出しを付ける",
+      "field": "変換する",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "「見出しは芯より高さが上の言葉になります」の一行が分からなかった。高さの話が単位26から離れていて、戻って読み直した",
+      "unknown_terms": [
+        "高さが上の言葉",
+        "親和図（カッコで説明あり）"
+      ],
+      "minutes": 7
+    },
+    "54": {
+      "term": "順のまま短くするのと、芯だけ言い直すのは別",
+      "field": "変換する",
+      "correct": 2,
+      "total": 2,
+      "understood": 1,
+      "confusing": "いちばん分からなかった単位。『要約する』が順のまま短くする側、『言い換える』が芯だけ言い直す側、という言葉の割り当てが覚えられない。単位33では四つの手順のほうを『要約する』と呼んでいるように読めて、どちらの意味か分からなくなった",
+      "unknown_terms": [
+        "大意的要約",
+        "要旨的要約（出典の欄）"
+      ],
+      "minutes": 9
+    },
+    "55": {
+      "term": "拾う・削る・つなぐ・歪みを見る",
+      "field": "変換する",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "四つの手順のうち『つなぐ』と『歪みを見る』が、実際の会話でどう見えるのか像が持てなかった",
+      "unknown_terms": [
+        "歪み（読み方でつまずいた）"
+      ],
+      "minutes": 8
+    },
+    "56": {
+      "term": "削っていいところの見分け方",
+      "field": "変換する",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "72": {
+      "term": "ねぎらいを先に置く",
+      "field": "変換する",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "61": {
+      "term": "カタカナ語をその場で言い換える",
+      "field": "変換する",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "78": {
+      "term": "初対面で話すことを先に用意しておく",
+      "field": "変換する",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "89": {
+      "term": "先に目的と終わりを言う",
+      "field": "届ける",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "87": {
+      "term": "話が飛ばないように順を組む",
+      "field": "届ける",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "『名札』という言い方が何を指すのか迷った。芯を先に置く、はよく分かった",
+      "unknown_terms": [
+        "名札"
+      ],
+      "minutes": 6
+    },
+    "81": {
+      "term": "伝えたつもりは通じていない",
+      "field": "届ける",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "実験の話（飲み物・うそ）が長く、途中で読むのをやめて会話の例に飛んだ。『言わなくても分かるはずと感じたら、その感じが当てにならない』の一行は残った",
+      "unknown_terms": [
+        "透明性の錯覚（出典の題にだけ出てくる）"
+      ],
+      "minutes": 7
+    },
+    "85": {
+      "term": "伝わる言い方の四点検",
+      "field": "届ける",
+      "correct": 2,
+      "total": 2,
+      "understood": 1,
+      "confusing": "四つが二組出てきて（本当か・分かりやすいか・場に合うか・敬意／うそを言わない・量・関係・はっきり）、どちらを覚えればいいのか分からなくなった。会話の例も一往復だけで短い",
+      "unknown_terms": [
+        "文化審議会の国語分科会",
+        "ふさわしさ",
+        "格率（出典の欄）"
+      ],
+      "minutes": 9
+    },
+    "84": {
+      "term": "同じ言葉で違う絵を見ている",
+      "field": "届ける",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "82": {
+      "term": "自分が知っていることは相手も知っていると思う癖",
+      "field": "届ける",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "単位40と何が違うのか、読み終えるまで分からなかった。『なじみのある話題で強く出る』という部分だけの話、と最後に書いてあって分かった",
+      "unknown_terms": [
+        "係留（出典の題）"
+      ],
+      "minutes": 6
+    },
+    "83": {
+      "term": "情報を足すより、確かめる",
+      "field": "届ける",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "単位13・30と同じ『合っていますか』の一往復。順序の話だと書いてあるが、新しい単位として立っている理由が分からなかった",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "93": {
+      "term": "言いにくいことを提案の形で言う",
+      "field": "届ける",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "95": {
+      "term": "人柄を責めずに、事柄を言う",
+      "field": "届ける",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "94": {
+      "term": "強く言ってよい場合と、踏み越える場合の境目",
+      "field": "届ける",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "法律の文（必要性が明らかにない、目的から大きく外れている…）が続いて、途中で読む気が失せた。結局『二つ自分に問う』だけ拾った",
+      "unknown_terms": [
+        "業務上必要かつ相当な範囲",
+        "告示"
+      ],
+      "minutes": 10
+    },
+    "91": {
+      "term": "相手の速さに合わせる",
+      "field": "届ける",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "92": {
+      "term": "急かさない・決断を迫らない",
+      "field": "届ける",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "88": {
+      "term": "長い話は区切って渡す",
+      "field": "届ける",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "90": {
+      "term": "ゆっくり、はっきり話す",
+      "field": "届ける",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 3
+    },
+    "101": {
+      "term": "分からないことは分からないと言う",
+      "field": "届ける",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "86": {
+      "term": "話す量を多すぎず少なすぎずにする",
+      "field": "届ける",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "格率（出典の欄）"
+      ],
+      "minutes": 5
+    },
+    "96": {
+      "term": "長さ・繰り返し・人前かどうかで受け取り方が変わる",
+      "field": "届ける",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "単位47と近すぎて、どちらが何の話か混ざった。こちらは渡し方（短く・一度・二人で）だと最後に分かった",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "108": {
+      "term": "伝わっていない合図に気づく",
+      "field": "立て直す",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "118": {
+      "term": "重い話を受け取ったときにできること",
+      "field": "立て直す",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "読むのに構えた。『死にたい』が出てくると思っていなかったので、途中で手が止まった。自分の役目を三つに絞る、という置き方は納得した",
+      "unknown_terms": [
+        "ファーストエイド（出典の欄）"
+      ],
+      "minutes": 8
+    },
+    "121": {
+      "term": "一人で受けとめない",
+      "field": "立て直す",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "長い。窓口や制度の名前が並ぶところで読むのが止まった。『誰と受けるか、どこにつなぐか』という芯は分かった",
+      "unknown_terms": [
+        "総合労働相談",
+        "産業医",
+        "労働政策審議会"
+      ],
+      "minutes": 9
+    },
+    "113": {
+      "term": "かみ合わないときは、合っている所に戻る",
+      "field": "立て直す",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "122": {
+      "term": "意見が違う相手と話を続ける",
+      "field": "立て直す",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "128": {
+      "term": "言いにくい空気そのものに手を打つ",
+      "field": "立て直す",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "会議の話が中心で、自分の場面（二人で話す）から遠かった。子どもとの例は分かった",
+      "unknown_terms": [
+        "心理的安全性（カッコで説明あり）"
+      ],
+      "minutes": 7
+    },
+    "114": {
+      "term": "言い過ぎたと思ったときの戻し方",
+      "field": "立て直す",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "119": {
+      "term": "怒っている相手の前でまずすること",
+      "field": "立て直す",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "115": {
+      "term": "善意の一言が相手を追い込む",
+      "field": "立て直す",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "十例と四つの型が出てくるが、どの言い方がどの型かを覚えられなかった。問題では選べたが、自分の口から出そうな言い方はもっと別のものだと思う",
+      "unknown_terms": [],
+      "minutes": 8
+    }
+  },
+  "explain": {
+    "grades": {
+      "聞くと問いただすは別のこと": 2,
+      "話を三つに分けて聞く（言いたいこと・例・理由）": 2,
+      "言い直して確かめる": 2,
+      "広い問いから始め、狭い問いは後に置く": 2,
+      "言いたいことの芯を一文にする": 2,
+      "順のまま短くするのと、芯だけ言い直すのは別": 1,
+      "先に目的と終わりを言う": 2,
+      "人柄を責めずに、事柄を言う": 2,
+      "伝わっていない合図に気づく": 2,
+      "かみ合わないときは、合っている所に戻る": 2,
+      "言い過ぎたと思ったときの戻し方": 2,
+      "善意の一言が相手を追い込む": 2
+    },
+    "rate": 0.958,
+    "can_explain": 11,
+    "n": 12
+  }
+}
