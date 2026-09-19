@@ -77,6 +77,22 @@ def main() -> int:
                 if line.startswith("#") and not line.startswith("### "): errors.append(f"{tag}: 見出しは ### だけ: {line[:30]}")
     for tid in units:
         if tid not in mats: errors.append(f"教材が無い論点: {tid} {units[tid]['term']}")
+    # 文体のずれ（cnv 1 周目: バンドルを分けたら 1 つだけ常体で、他の 7 つは敬体だった 2026-09-20）。
+    # どちらが正かは対象によるので、多数と違う単位だけを警告する。台詞の行（「相手: 」等）は話し言葉なので数えない
+    KEIGO = re.compile(r"(?:です|ます|ません|ましょう|でした)(?:。|$)")
+    JOTAI = re.compile(r"(?:だ|である|ない|した|いる)(?:。|$)")
+    style: dict[int, tuple[int, int]] = {}
+    for tid, m in mats.items():
+        body = "\n".join(l for l in (m.get("explanation", "") + "\n" + m.get("detail", "")).splitlines()
+                         if not re.match(r"^[-*\s]*(?:相手|自分|こちら)[:：]", l.strip().lstrip("-* ")))
+        style[tid] = (len(KEIGO.findall(body)), len(JOTAI.findall(body)))
+    if len(style) >= 10:
+        keigo_units = [t for t, (k, j) in style.items() if k >= j]
+        major_keigo = len(keigo_units) * 2 >= len(style)
+        odd = [t for t, (k, j) in style.items() if (k < j) is major_keigo and (k != j or not major_keigo)]
+        if odd and len(odd) * 4 < len(style):  # 少数派だけを言う（全体が常体の対象を責めない）
+            warns.append(f"文体が他の単位と違う（多数は{'敬体（です・ます）' if major_keigo else '常体（だ・である）'}）: "
+                         + " / ".join(f"{t} {units[t]['term']}" for t in odd[:10] if t in units))
     # 問題
     qs: dict[str, dict] = {}; per_topic: dict[int, int] = {}; pos: dict[str, int] = {}; verb: list[str] = []
     for qp in sorted((d / "roadmap_questions").glob("bundle_*.json")):
