@@ -43,7 +43,21 @@ def main() -> int:
             picked = [ans.get(x) for x in run]; truth = [qs[x]["answer"] for x in run]
             if picked[1:] == truth[:-1] or picked[:-1] == truth[1:]:
                 shift_suspect.extend(x for x in run if x not in shift_suspect)
-    self_rep = {u["topic_id"]: u for u in L.get("units", [])}
+    # 自己申告のキー名は、学習者役に渡す指示文によって揺れる（cnv 2 周目: unit / understanding / unclear_terms で来て
+    # KeyError で落ちた 2026-09-20）。別名を正規の名前に写してから読む
+    ALIAS = {"unit": "topic_id", "no": "topic_id", "order": "topic_id",
+             "understanding": "understood", "understand": "understood",
+             "unclear_terms": "unknown_terms", "unexplained_terms": "unknown_terms",
+             "confusing_with": "confusing"}
+    def _norm(u: dict) -> dict:
+        v = dict(u)
+        for a, k in ALIAS.items():
+            if a in v and k not in v: v[k] = v.pop(a)
+        return v
+    rep = [_norm(u) for u in L.get("units", [])]
+    missing = [u for u in rep if "topic_id" not in u]
+    if missing: print(f"✘ 自己申告に単位の番号が無い行が {len(missing)} 件（キー名は topic_id / unit のどれか）"); return 1
+    self_rep = {u["topic_id"]: u for u in rep}
     # 学習者パックは topic_id を見せず順番の番号だけを出すので、学習者は順番で報告してくる（mkt 1 周目: 42 件中 17 件しか一致せず
     # 理解度が 1.12 と出た 2026-09-15）。報告の番号が topic_id より順番に多く一致するなら順番→topic_id に写す
     order_to_tid = {u["order"]: tid for tid, u in units.items() if "order" in u}

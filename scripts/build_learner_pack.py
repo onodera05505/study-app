@@ -42,7 +42,14 @@ def main() -> int:
             body += ["---", "出典: " + "、".join(f"{s['name']}（{s.get('where','')}）" for s in m["sources"])]
         (out / "units" / fn).write_text("\n".join(body) + "\n", encoding="utf-8")
     (out / "roadmap.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
-    q_lines = ["# 確認問題（各単位を読んだ直後に答える。答えは learner_answers.json の answers に qid → ア/イ/ウ/エ で）", ""]
+    q_lines = ["# 確認問題（各単位を読んだ直後に答える）", "",
+               "答えと自己申告は `learner_answers.json` に、次の形で書く（採点はこのキー名で読む）:", "",
+               "```json",
+               '{"answers": {"<qid>": "ア|イ|ウ|エ"},',
+               ' "units": [{"topic_id": <単位の番号>, "minutes": <読んだ分数>, "understood": 3|2|1,',
+               '            "confusing": "どの単位と混ざったか", "unknown_terms": ["説明が無くて分からなかった語"]}]}',
+               "```", "",
+               "- `topic_id` はロードマップに出ている単位の番号。`understood` は 3＝人に説明できる / 2＝分かった気がする / 1＝分からなかった", ""]
     order = {u["topic_id"]: u["order"] for u in rm["units"]}
     for q in sorted(qs, key=lambda q: (order.get(q["topic_id"], 999), q["qid"])):
         q_lines += [f"## {q['qid']}（単位 {order.get(q['topic_id'])}: {q['term']}）", q["stem"], ""] + [f"- {k}. {v}" for k, v in q["choices"].items()] + [""]
