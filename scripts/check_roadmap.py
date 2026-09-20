@@ -77,6 +77,19 @@ def main() -> int:
                 if line.startswith("#") and not line.startswith("### "): errors.append(f"{tag}: 見出しは ### だけ: {line[:30]}")
     for tid in units:
         if tid not in mats: errors.append(f"教材が無い論点: {tid} {units[tid]['term']}")
+    # 要約（学習者が最初に見る 1 行）も本文と同じ決まりで見る。cnv 3 周目: 本文は直したのに roadmap.json の
+    # summary が前の版のまま残り、本文と食い違うのが 11 件（断定形 2 件、向きが逆 3 件）2026-09-20
+    for tid, u in units.items():
+        sm = u.get("summary", "")
+        tag = f"要約 {tid} {u['term']}"
+        if not sm: errors.append(f"{tag}: 要約が無い"); continue
+        for rx, why in BANNED:
+            for hit in rx.findall(sm):
+                errors.append(f"{tag}: 禁じた書き方「{hit if isinstance(hit, str) else ''.join(hit)}」— {why}")
+        for hit in NG.findall(sm): warns.append(f"{tag}: 避ける語「{hit}」")
+        # 本文との食い違い（向きが逆・古い三つ組）は字の重なりでは出ない（cnv 3 周目に測った: 取り残された
+        # 要約ほど語が重なり 0.85〜0.92、良い要約が 0.54）。機械では見分けられないので、本文を書き直したら
+        # 要約も直す（決まりの側で守る。common_rules の「要約も一緒に直す」）
     # 文体のずれ（cnv 1 周目: バンドルを分けたら 1 つだけ常体で、他の 7 つは敬体だった 2026-09-20）。
     # どちらが正かは対象によるので、多数と違う単位だけを警告する。台詞の行（「相手: 」等）は話し言葉なので数えない
     KEIGO = re.compile(r"(?:です|ます|ません|ましょう|でした)(?:。|$)")

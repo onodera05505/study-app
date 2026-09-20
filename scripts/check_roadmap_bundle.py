@@ -33,7 +33,8 @@ def main() -> int:
     import re as _re
     # 集計を出典名にした書き方を認める: 「記事の集計（interview_frequency）」「シラバスの集計（syllabus_weight）」など。
     # 括弧の中は副の信号のキー（登録簿 roadmapSpec.secondarySignal）と同じ綴り
-    FREQ = _re.compile(r"[^（]+の集計（[a-z_]+）$")
+    # 括弧の中の鍵は任意（学習者に出典が見えるので、読者向けの対象では英語を出さない。cnv 3 周目の学習者役が指摘 2026-09-20）
+    FREQ = _re.compile(r"[^（]+の集計(?:（[a-z_]+）)?$")
     errs, warns = [], []
     sys.path.insert(0, str(Path(__file__).parent)); from targets import target
     USAGE = (target(d.name).get("roadmapSpec") or {}).get("usageSection", "面接で話すなら")
