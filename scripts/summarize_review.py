@@ -14,7 +14,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SEV = ("高", "中", "低")
+SEV = ("高", "中", "低", "照合")
 
 def main() -> int:
     ap = argparse.ArgumentParser()
@@ -36,7 +36,9 @@ def main() -> int:
         key = d.get("key") or Path(f).parts[-3]
         for p in d.get("patterns", []): patterns[key].append(p)
         for x in d.get("findings", []):
-            kind, sev = x.get("kind", "その他"), x.get("severity", "中")
+            kind = x.get("kind", "その他")
+            # 「原本と照合したい」は severity を付けずに出す決まり（指示書の資格版の補足）。中に混ぜず別枠で数える
+            sev = x.get("severity") or "照合"
             if a.kind and kind != a.kind: continue
             if a.severity and sev != a.severity: continue
             by_key_kind[key][kind] += 1; by_key_sev[key][sev] += 1
@@ -52,7 +54,7 @@ def main() -> int:
     for kd in kinds:
         row = [by_key_kind[k][kd] for k in keys]
         print(kd.ljust(8) + "".join(str(v).rjust(6) for v in row) + str(sum(row)).rjust(6))
-    print("重さ".ljust(8) + "".join(("/".join(str(by_key_sev[k][s]) for s in SEV)).rjust(6) for k in keys) + "   （高/中/低）")
+    print("重さ".ljust(8) + "".join(("/".join(str(by_key_sev[k][s]) for s in SEV)).rjust(6) for k in keys) + "   （高/中/低/照合）")
     print()
     print("== 型ごとの代表例（対象 topic 重さ 場所 | 引用 | なぜ）")
     for kd in kinds:

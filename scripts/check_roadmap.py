@@ -74,6 +74,17 @@ def main() -> int:
             for term in re.findall(r"\[\[([^\]]+)\]\]", ex + de):
                 if term not in terms: errors.append(f"{tag}: [[{term}]] はロードマップに無い論点")
             for hit in NG.findall(ex + de): warns.append(f"{tag}: 避ける語「{hit}」")
+            # 出典の where は読者に見える。章節番号・略号・英字（2026-09-24 セルフフィードバック）
+            import ast as _ast
+            srcs = x.get("sources"); srcs = srcs if isinstance(srcs, list) else (_ast.literal_eval(srcs) if isinstance(srcs, str) and srcs.startswith("[") else [])
+            for sdef in srcs:
+                w = (sdef.get("where") or "") if isinstance(sdef, dict) else ""
+                if re.search(r"[A-Za-z]{3,}|[①-⑳Ⅰ-Ⅹ]|第[0-9０-９]+[章節条]|\b[0-9]+[.．][0-9]+\b|[a-z][0-9]{2}\b", w):
+                    warns.append(f"{tag}: 出典 where に記号・英字・章節番号「{w[:30]}」"); break
+            m_sh = re.search(r"### しくみ\n(.*?)(?=\n### |\Z)", de, flags=re.S)
+            if m_sh:
+                n_sent = len([t for t in re.split(r"[。！？]", re.sub(r"^[-\d].*$", "", m_sh.group(1), flags=re.M)) if t.strip()])
+                if n_sent > 10: warns.append(f"{tag}: しくみが {n_sent} 文（目安 8 文まで）")
             for rx, why in BANNED:
                 for hit in rx.findall(ex + de):
                     errors.append(f"{tag}: 禁じた書き方「{hit if isinstance(hit, str) else ''.join(hit)}」— {why}")
@@ -147,6 +158,20 @@ def main() -> int:
         same = sum(1 for v in pairs if v[0] == v[1])
         if len(pairs) >= 20 and same / len(pairs) < 0.10:
             warns.append(f"同じ論点の 2 問で正解記号が重なるのが {same}/{len(pairs)} 件（偶然なら 4 分の 1 ほど）。1 問目から 2 問目を絞れる")
+        # セルフフィードバック（2026-09-24）で 6 対象に共通して出た形の癖を足す
+        kyozai = [q["qid"] for q in qs.values() if "教材" in q.get("stem", "")]
+        if kyozai: warns.append(f"設問に「教材」が出る（再認の合図）: {len(kyozai)} 問 {kyozai[:8]}")
+        quote1 = [q["qid"] for q in qs.values() if sum(1 for v in q["choices"].values() if "「" in v) == 1 and "「" in q["choices"][q["answer"]]]
+        if quote1: warns.append(f"かぎ括弧の台詞が正解の枝にだけある: {len(quote1)} 問 {quote1[:8]}（4 本そろえる）")
+        both_longest: dict[int, int] = {}
+        for q in qs.values():
+            ok = len(q["choices"][q["answer"]])
+            if all(ok > len(v) for k, v in q["choices"].items() if k != q["answer"]): both_longest[q["topic_id"]] = both_longest.get(q["topic_id"], 0) + 1
+        bl = [t for t, n in both_longest.items() if n >= 2]
+        if len(bl) >= 3: warns.append(f"同じ単位の 2 問とも正解が最長: {len(bl)} 単位 {bl[:8]}")
+        # 正解が要約（一覧で最初に見える 1 行）の写し
+        sm_hit = [q["qid"] for q in qs.values() if q["topic_id"] in units and verbatim(q["choices"][q["answer"]], units[q["topic_id"]].get("summary", ""))]
+        if sm_hit: warns.append(f"正解の選択肢が要約と {VERBATIM} 字以上連続一致: {len(sm_hit)} 問 {sm_hit[:8]}")
         # (2) 正解がいつも他より長いと、中身を読まずに「長く慎重な枝」を選べる
         longer = top2 = 0
         for q in qs.values():
