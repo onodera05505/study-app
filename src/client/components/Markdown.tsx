@@ -139,7 +139,7 @@ function inline(text: string): ReactNode {
     if (mo.index > last) {
       out.push(<Fragment key={out.length}>{text.slice(last, mo.index)}</Fragment>)
     }
-    // 太字の中にも `[[用語]]` が来る（教材の「似た単位との違い」（資格版は「混同しやすい用語」）は `- **[[用語]]** — 説明` の形）。
+    // 太字の中にも `[[用語]]` が来る（教材の「関連用語」（資格版は「混同しやすい用語」）は `- **[[用語]]** — 説明` の形）。
     // 中身をもう一度この関数に通さないと、太字の中では [[…]] が文字のまま出てしまう。
     // INLINE は共有の正規表現なので、再帰から戻ったあとに lastIndex を戻す。
     if (mo[1] !== undefined) {

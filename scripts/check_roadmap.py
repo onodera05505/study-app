@@ -48,6 +48,10 @@ def main() -> int:
         for pt in u.get("prereq", []):
             if pt in order_of and order_of[pt] > u["order"]:
                 errors.append(f"順序 {u['order']} {u['term']}: 前提『{pt}』が後ろ（{order_of[pt]}）にある")
+            elif pt not in order_of:
+                # 名寄せで単位名が変わると前提だけ古い名前で残り、並びの計算では黙って無視される
+                # （セルフフィードバックの読む段で eca 1・msg 6 件が見つかった 2026-09-24）
+                warns.append(f"順序 {u['order']} {u['term']}: 前提『{pt}』という単位がロードマップに無い（名寄せ後の古い名前か）")
     # 教材
     mats: dict[int, dict] = {}
     for mp in sorted((d / "materials").glob("*.json")):
