@@ -20,7 +20,19 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--key"); ap.add_argument("--kind"); ap.add_argument("--severity", choices=SEV)
     ap.add_argument("--examples", type=int, default=2, help="型ごとに見せる代表例の数")
+    ap.add_argument("--bundle", help="1 バンドルの高・中を一覧する（直す段の担当への申し送り用）")
     a = ap.parse_args()
+    if a.bundle:
+        if not a.key: print("--bundle には --key が要る"); return 1
+        f = ROOT / "data" / a.key / "review" / f"{a.bundle}.json"
+        d = json.loads(f.read_text(encoding="utf-8"))
+        c = Counter(x.get("severity") or "照合" for x in d.get("findings", []))
+        print(f"{a.key}/{a.bundle}: " + " ".join(f"{s}{c[s]}" for s in SEV if c[s]))
+        for x in d.get("findings", []):
+            sev = x.get("severity") or "照合"
+            if sev in ("高", "中", "照合"):
+                print(f"  {x.get('topic_id')} {sev} {x.get('kind')} {x.get('where','')} | {(x.get('why') or '')[:110]}")
+        return 0
     files = sorted(glob.glob(str(ROOT / "data" / (a.key or "*") / "review" / "*.json")))
     if not files: print("review の JSON が無い"); return 1
     by_key_kind: dict[str, Counter] = defaultdict(Counter)
