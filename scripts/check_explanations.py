@@ -98,6 +98,11 @@ def main() -> int:
     problems: list[str] = []
     warnings: list[str] = []
     no_term_wrong = 0
+    # 2026-09-25 の読み直しで出た型: 同じ term に別の note（用語集で 1 つに畳まれる）、
+    # 「この値にはなりません」で終わる計算の note（どの誤りでその値になるかが無い）、文末の型の混在
+    notes_by_term: dict[str, set[str]] = {}
+    DEAD_END = re.compile(r"(には|は)なりません。?$|出ない値です。?$")
+    POLITE = re.compile(r"(です|ます|ません|でしょう|ました)[。）)]*$")
 
     for ck in sorted(explanations):
         e = explanations[ck]
@@ -146,6 +151,9 @@ def main() -> int:
             warnings.append(f"{where}: correct_reason が {len(reason)}字"
                             f"（目安 {REASON_RANGE[0]}〜{REASON_RANGE[1]}）")
 
+        wrong_polite = {bool(POLITE.search((c.get("note") or "").strip())) for c in choices if c.get("label") != e.get("correct") and (c.get("note") or "").strip()}
+        if len(wrong_polite) > 1:
+            warnings.append(f"{where}: 誤答の note の文末が敬体と常体で混在")
         for c in choices:
             lab = c.get("label")
             note = (c.get("note") or "").strip()
@@ -153,6 +161,10 @@ def main() -> int:
             if not note:
                 problems.append(f"{where} {lab}: note が空")
                 continue
+            if term and lab != e.get("correct"):
+                notes_by_term.setdefault(term, set()).add(note)
+            if lab != e.get("correct") and DEAD_END.search(note):
+                warnings.append(f"{where} {lab}: note が「この値にはなりません」型で終わる（どの誤りでその値になるかを 1 つ書く）")
             if len(note) > NOTE_MAX:
                 warnings.append(f"{where} {lab}: note が {len(note)}字（1行に収める。目安 {NOTE_MAX} 字）")
             if lab == e.get("correct"):
@@ -209,6 +221,9 @@ def main() -> int:
                 f"（書かれていない {sorted(missing)[:5]} / 担当外 {sorted(extra)[:5]}）"
             )
 
+    multi = {t: n for t, n in notes_by_term.items() if len(n) > 1}
+    if multi:
+        warnings.append(f"同じ term に別の note が {len(multi)} 語（用語集では 1 つに畳まれる）: {sorted(multi)[:5]}")
     print(f"解説 {len(explanations)} 本 / 用語集 {len(glossary)} 語")
     print(f"  担当バンドルと突合できたファイル: {covered_files}")
     if no_term_wrong:

@@ -53,7 +53,15 @@ FORBIDDEN_V2 = [
     (re.compile(r"^\s*>", re.M), "引用"),
     (re.compile(r"^\s*(---+|___+|\*\*\*+)\s*$", re.M), "水平線"),
     (re.compile(r"^\s*[*+]\s", re.M), "箇条書きの * / +（- を使う）"),
+    (re.compile(r"\^"), "べき乗の ^（画面で記号のまま出る。「M の n 乗」と書く）"),
+    (re.compile(r"~~"), "取り消し線 ~~"),
 ]
+# v3 の読み直し（2026-09-25）で最多だった「役割分担の戻り」。誤答のケアは解説 note の持ち場
+SOLVING_HINT = re.compile(r"ではありません|限定もありません|絞れません|絞れます|落とせます|見分けられます|仕分けてください|判断材料になりません|決め手になりません|引っかけは|選択肢")
+POLITE_END = re.compile(r"(です|ます|ません|でしょう|ました|ください|でした)[。）)]*$")
+TERM_BOLD = re.compile(r"\*\*([^*\[\]]{2,30})\*\*")
+COMPARE_ITEM = re.compile(r"^-\s+\*\*\[?\[?[^*]+?\]?\]?\*\*\s*[—―-]", re.M)
+SHINGLE = 16
 HEADING = re.compile(r"^###\s+(.*\S)\s*$", re.M)
 LIST_ITEM = re.compile(r"^(?:-\s|\d+[.)]\s)")
 
@@ -205,6 +213,30 @@ def check_notation_v2(
             out.append(f"{where}: v3 なのに出題パターンの見出しが残っている（問題解説側へ）")
         if "見分けワード" not in ex:
             out.append(f"{where}: explanation に見分けワードの行が無い")
+        # 2026-09-25 の読み直しで出た型（資格版 1,806 件のうち役割分担 438・文体 168・記法）
+        for mo in SOLVING_HINT.finditer(ex + "\n" + det):
+            out.append(f"{where}: 選択肢の消し方が教材に残っている『…{(ex + chr(10) + det)[max(0, mo.start() - 12): mo.end()]}』（解説 note の持ち場）")
+            break
+        first = ex.split("。")[0]
+        if not first.lstrip().startswith("**"):
+            out.append(f"{where}: explanation の 1 文目が **論点名** で始まっていない")
+        for line in (ex + "\n" + det).split("\n"):
+            st = line.strip()
+            if LIST_ITEM.match(st) and st.endswith("。") and not POLITE_END.search(st):
+                out.append(f"{where}: 箇条書きが常体で終わる『{st[:24]}…』（敬体で）")
+                break
+        n_compare = len(COMPARE_ITEM.findall(det))
+        if n_compare > 2:
+            out.append(f"{where}: 比較の項目（- **用語** — …）が {n_compare} 件（2 つまで。見出し名を変えても数える）")
+        bare = {t for t in TERM_BOLD.findall(det) if f"[[{t}]]" not in ex + det}
+        popped = set(re.findall(r"\[\[([^\]]+)\]\]", ex + det))
+        both = bare & popped
+        if both:
+            out.append(f"{where}: 同じ語が [[ ]] と素の太字で混在『{sorted(both)[0]}』（一度ポップにした語は以後も [[ ]]）")
+        for row in det.split("\n"):
+            if is_row(row) and any(len(cell) > 40 for cell in split_row(row)):
+                out.append(f"{where}: 表のセルが 40 字超（スマホで横に伸びる）")
+                break
     else:
         if not HEADING_RANGE_V2[0] <= len(headings) <= HEADING_RANGE_V2[1]:
             out.append(f"{where}: detail の見出しが {len(headings)} 個（目安 3〜4）")

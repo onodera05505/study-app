@@ -1,0 +1,132 @@
+{
+ "key": "ap",
+ "bundle": "expl_82",
+ "reviewer": "fable",
+ "findings": [
+  {
+   "topic_id": 601,
+   "term": "適応保守",
+   "kind": "食い違い",
+   "severity": "中",
+   "where": "detail",
+   "quote": "判断の分かれ目は**変化したのがソフトウェアの外側か内側か**の一点で",
+   "why": "同じ段の 4 分類では、性能や保守性を高める完全化保守も内側の事情なのに改良保守に入る。この一点を規則として覚えた読者は完全化保守を訂正保守と取り違える。",
+   "fix_hint": "「訂正保守と改良保守の境目は、潜在していた誤りを直すためかどうか」に置き換える。"
+  },
+  {
+   "topic_id": 600,
+   "term": "DOA（Data Oriented Approach：データ中心アプローチ）",
+   "kind": "役割分担",
+   "severity": "低",
+   "where": "detail",
+   "quote": "見落としやすいのは、DOA が見ているのが処理効率ではなく",
+   "why": "2019h31h-q46 の誤答エ（物理設計）を外すための注意で、解説の note と同内容。教材は「業務上のデータの意味と構造から考える」で足りている。",
+   "fix_hint": "この段を落とし、物理設計との対比は解説の note に任せる。"
+  },
+  {
+   "topic_id": 600,
+   "term": "DOA（Data Oriented Approach：データ中心アプローチ）",
+   "kind": "その他",
+   "severity": "低",
+   "where": "detail",
+   "quote": "**[[プロセス中心アプローチ]]（構造化手法）** — 業務の機能を段階的に",
+   "why": "explanation の最後の項目が同じ 2 語を同じ切り口で並べているので、「詳しく解説」を開くと同じ比較をもう一度読むことになる。",
+   "fix_hint": "explanation 側は名前を挙げるだけにし、違いの説明は detail に一本化する。"
+  },
+  {
+   "topic_id": 603,
+   "term": "サブスクリプションモデル",
+   "kind": "役割分担",
+   "severity": "低",
+   "where": "explanation",
+   "quote": "クラウドかどうか、人数分かどうかは判断材料になりません",
+   "why": "解説の correct_reason と同文の誤答外し。しかも「唯一の判断基準です」「だけを見ます」と 2 行続けて言い切っている。",
+   "fix_hint": "「期間に対して払う契約です」と肯定形だけ残し、外し方は解説に任せる。"
+  },
+  {
+   "topic_id": 604,
+   "term": "コアコンピタンス",
+   "kind": "役割分担",
+   "severity": "低",
+   "where": "explanation",
+   "quote": "成長率・市場シェア・競合状況は市場の状態や結果であって",
+   "why": "2019h31h-q67 の誤答ア・ウ・エの列挙で、解説の note が 1 行ずつ同じことを書いている。教材は「能力かどうか」で足りている。",
+   "fix_hint": "列挙を落とし、3 条件（価値・模倣困難・複数事業へ展開）だけ残す。"
+  },
+  {
+   "topic_id": 606,
+   "term": "SECI（Socialization（共同化），Externalization（表出化），Combination（連結化），Internalization（内面化））モデル",
+   "kind": "その他",
+   "severity": "中",
+   "where": "explanation",
+   "quote": "SECI（Socialization（共同化），Externalization（表出化）",
+   "why": "論点名が入れ子の括弧つきで 60 字を超え、見出し・解説の本文・用語ポップに毎回そのまま出る。末尾が「モデル」なので表示側の「末尾の（…）を落とす」処理も効かない。",
+   "fix_hint": "topics.json の表示名を「SECI モデル」にし、正式表記は本文の初出に回す（原因は教材ではなく topics.json）。"
+  },
+  {
+   "topic_id": 606,
+   "term": "SECI（Socialization（共同化），Externalization（表出化），Combination（連結化），Internalization（内面化））モデル",
+   "kind": "断定",
+   "severity": "低",
+   "where": "explanation",
+   "quote": "問われるのは**変換の向き**だけなので、名前と矢印の対応を覚えれば",
+   "why": "「だけ」「確実に取れます」と言い切っているため、段階の順序や具体例で問われた読者は準備が無いまま外す。",
+   "fix_hint": "「まず問われるのは変換の向きです」と程度を落とす。"
+  },
+  {
+   "topic_id": 608,
+   "term": "データサイエンティスト",
+   "kind": "不自然",
+   "severity": "低",
+   "where": "detail",
+   "quote": "事業の主たる課題を**自力で**構造的に理解し",
+   "why": "出題側の言い回しを表のセルに持ち込んでおり、「自力で」を太字にする理由が本文から読み取れない。",
+   "fix_hint": "「何を解くべきかを自分で組み立てる」のように意味で言い直す。"
+  },
+  {
+   "topic_id": 608,
+   "term": "データサイエンティスト",
+   "kind": "その他",
+   "severity": "低",
+   "where": "detail",
+   "quote": "ビジネス力は、事業モデルやバリューチェーンを理解して",
+   "why": "3 領域の定義が explanation の箇条書き・この文章・表の 3 か所で繰り返され、同じ内容を 3 回読む。",
+   "fix_hint": "表を残し、文章は「何を解くか／どう解くか／どう動かすか」の筋だけにする。"
+  },
+  {
+   "topic_id": 607,
+   "term": "PDM（Product Data Management）",
+   "kind": "不自然",
+   "severity": "低",
+   "where": "explanation",
+   "quote": "綴りが同じだけの**無関係な別概念**です",
+   "why": "一致しているのは略語で、detail では「同じ略語ですが」と言い換えている。同じ単位の中で言い方が変わる。",
+   "fix_hint": "「略語が同じだけの別概念」にそろえる。"
+  },
+  {
+   "topic_id": 604,
+   "term": "コアコンピタンス",
+   "kind": "文体",
+   "severity": "低",
+   "where": "question:2019h31h-q67",
+   "quote": "参入先の競合状況は外部環境を調べた情報であり",
+   "why": "term のある note は体言止め（「能力ではない」）、term が null のこの note だけ敬体で、同じ問題の 4 行が揃わない（2019h31h-q63 ウも同じ）。",
+   "fix_hint": "note の文末の型を write_question_explanations.md で 1 つに決める。"
+  }
+ ],
+ "patterns": [
+  "論点名（topics.json）が長すぎて画面で読めないものがある（SECI（Socialization（共同化），…）モデル）。表示側の「末尾の（…）を落とす」処理は末尾が括弧で終わる名前にしか効かないので、括弧が語中にある名前は素通りする。論点名の長さに上限を置き、正式表記は本文の初出に回す",
+  "explanation で挙げた対比を detail が見出しごと繰り返す形が多い（DOA の 2 アプローチ、データサイエンティストの 3 領域、相変化メモリのリフレッシュ、MVC と MVCC）。「explanation は名前まで、違いは detail に一本化」を write_materials.md に書く",
+  "term のある note は体言止め、term が null の note は敬体、と同じ問題の 4 行で文末が混ざる（expl_01 の review と同じ。2019h31h-q67・q63）。write_question_explanations.md で文末の型を 1 つに決める"
+ ],
+ "good": [
+  "コールドスタンバイ: 「復旧作業が機器の設置やセットアップから始まると書かれていれば目印」と、問題文の見え方で言い切っている。ITIL の 5 つを平時に何を持っているかの順に並べたのも読みやすい",
+  "PDM: 同じ略語の別概念（Precedence Diagramming Method）を先に切り離してから本題に入る構成。MVC／MVCC と同じ型なので、略語が衝突する論点はこの形にそろえられる",
+  "適応保守: 「直す内容ではなく直す理由で分類する」の一文を軸に 4 種類を並べており、丸暗記にならない"
+ ],
+ "counts": {
+  "高": 0,
+  "中": 2,
+  "低": 9
+ }
+}
