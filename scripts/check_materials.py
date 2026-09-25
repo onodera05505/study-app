@@ -268,6 +268,7 @@ def main() -> int:
     ap.add_argument("--dir", action="append", help="検査するディレクトリ（既定は materials・materials_v2・materials_v3。後勝ち）")
     # 教材に差し込んだ図の実体を確かめる先。/figures/… はこの下からの絶対パス。
     ap.add_argument("--public", default="public", type=Path)
+    ap.add_argument("--all", action="store_true", help="警告・問題を上位 20 件で打ち切らず全件出す（並行担当が自分のバンドル分を grep するとき）")
     args = ap.parse_args()
     d = args.data
     dirs = [Path(x) for x in args.dir] if args.dir else [d / "materials", d / "materials_v2", d / "materials_v3"]
@@ -389,16 +390,17 @@ def main() -> int:
     if duplicates:
         warnings.append(f"複数ファイルに重複している論点: {sorted(set(duplicates))[:10]}（後勝ちで採用）")
 
+    limit = None if args.all else 20
     if warnings:
         print(f"\n警告 {len(warnings)} 件:")
-        for w in warnings[:20]:
+        for w in warnings[:limit]:
             print(f"  - {w}")
-        if len(warnings) > 20:
-            print(f"  … 他 {len(warnings) - 20} 件")
+        if limit and len(warnings) > limit:
+            print(f"  … 他 {len(warnings) - limit} 件（--all で全件）")
 
     if problems:
         print(f"\n問題 {len(problems)} 件:", file=sys.stderr)
-        for p in problems[:20]:
+        for p in problems[:limit]:
             print(f"  - {p}", file=sys.stderr)
         return 1
 

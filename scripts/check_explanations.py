@@ -64,6 +64,7 @@ def main() -> int:
     # 別名で作り直したときは、ここにも同じディレクトリを渡す。
     ap.add_argument("--bundles", default=None, type=Path,
                     help="入力バンドルの置き場。既定は <data>/explanation_bundles")
+    ap.add_argument("--all", action="store_true", help="警告・問題を上位 20 件で打ち切らず全件出す（並行担当が自分のバンドル分を grep するとき）")
     args = ap.parse_args()
     d = args.data
     bundles = args.bundles or (d / "explanation_bundles")
@@ -236,19 +237,20 @@ def main() -> int:
             "（誤答の term に足すか glossary_overrides.json に書く）"
         )
 
+    limit = None if args.all else 20
     if warnings:
         print(f"\n警告 {len(warnings)} 件:")
-        for w in warnings[:20]:
+        for w in warnings[:limit]:
             print(f"  - {w}")
-        if len(warnings) > 20:
-            print(f"  … 他 {len(warnings) - 20} 件")
+        if limit and len(warnings) > limit:
+            print(f"  … 他 {len(warnings) - limit} 件（--all で全件）")
 
     if problems:
         print(f"\n問題 {len(problems)} 件:", file=sys.stderr)
-        for p in problems[:20]:
+        for p in problems[:limit]:
             print(f"  - {p}", file=sys.stderr)
-        if len(problems) > 20:
-            print(f"  … 他 {len(problems) - 20} 件", file=sys.stderr)
+        if limit and len(problems) > limit:
+            print(f"  … 他 {len(problems) - limit} 件", file=sys.stderr)
         return 1
 
     print("\n検証: 問題なし")
