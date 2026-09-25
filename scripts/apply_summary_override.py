@@ -22,8 +22,10 @@ def main() -> int:
     it = units.values() if isinstance(units, dict) else units
     by_term = {u["term"]: u for u in it}
     ov = cfg.setdefault("summary_override", {})
+    # 名前を全部先に確かめる（途中で止まると、表示だけ出て何も書かれない事故が 2026-09-25 に起きた）
+    missing = [t for t in a.term if t not in by_term]
+    if missing: print("roadmap.json に無い単位（何も書いていない）:", *missing, sep="\n  "); return 1
     for t, s in zip(a.term, a.summary):
-        if t not in by_term: print(f"単位『{t}』が roadmap.json に無い"); return 1
         old = by_term[t].get("summary", "")
         if old == s and ov.get(t) == s: print(f"{t}: 変更なし"); continue
         ov[t] = s; by_term[t]["summary"] = s
