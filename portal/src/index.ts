@@ -85,6 +85,7 @@ api.post('/login', async (c) => {
   const email = (body?.email ?? '').trim().toLowerCase()
   const password = body?.password ?? ''
   if (!emailOk(email) || !password) return c.json({ error: 'メールアドレスとパスワードを入れてください' }, 400)
+  if (password.length > 200) return c.json({ error: 'メールアドレスまたはパスワードが違います' }, 401)
   const acc = await c.env.DB.prepare(`SELECT id, email, name, role, password_hash FROM accounts WHERE email = ?`).bind(email).first<Account>()
   const ok = acc && (await verifyPassword(password, acc.password_hash!))
   if (!acc || !ok) return c.json({ error: 'メールアドレスまたはパスワードが違います' }, 401)
@@ -134,7 +135,7 @@ api.post('/me/password', async (c) => {
   const a = c.get('account')
   const body = (await c.req.json().catch(() => null)) as { current?: string; next?: string } | null
   if (!body?.current || !body?.next) return c.json({ error: '現在のパスワードと新しいパスワードを入れてください' }, 400)
-  if (body.next.length < 8) return c.json({ error: '新しいパスワードは 8 文字以上にしてください' }, 400)
+  if (body.next.length < 8 || body.next.length > 200) return c.json({ error: '新しいパスワードは 8 文字以上 200 文字以内にしてください' }, 400)
   const row = await c.env.DB.prepare(`SELECT password_hash FROM accounts WHERE id = ?`).bind(a.id).first<{ password_hash: string }>()
   if (!row || !(await verifyPassword(body.current, row.password_hash))) return c.json({ error: '現在のパスワードが違います' }, 401)
   await c.env.DB.prepare(`UPDATE accounts SET password_hash = ?, updated_at = ? WHERE id = ?`).bind(await hashPassword(body.next), now(), a.id).run()
@@ -171,7 +172,7 @@ admin.post('/accounts', async (c) => {
   const grants = validGrants(body?.grants ?? [])
   if (!emailOk(email)) return c.json({ error: 'メールアドレスの形式が正しくありません' }, 400)
   if (!name || name.length > 50) return c.json({ error: '名前を 50 文字以内で入れてください' }, 400)
-  if (!body?.password || body.password.length < 8) return c.json({ error: '初期パスワードは 8 文字以上にしてください' }, 400)
+  if (!body?.password || body.password.length < 8 || body.password.length > 200) return c.json({ error: '初期パスワードは 8 文字以上 200 文字以内にしてください' }, 400)
   if (!grants) return c.json({ error: '権限の学びが正しくありません' }, 400)
   const role = body?.role === 'ADMIN' ? 'ADMIN' : 'MEMBER'
   const dup = await c.env.DB.prepare(`SELECT id FROM accounts WHERE email = ?`).bind(email).first()
@@ -211,7 +212,7 @@ admin.put('/accounts/:id', async (c) => {
 admin.post('/accounts/:id/password', async (c) => {
   const id = c.req.param('id')
   const body = (await c.req.json().catch(() => null)) as { password?: string } | null
-  if (!body?.password || body.password.length < 8) return c.json({ error: '新しいパスワードは 8 文字以上にしてください' }, 400)
+  if (!body?.password || body.password.length < 8 || body.password.length > 200) return c.json({ error: '新しいパスワードは 8 文字以上 200 文字以内にしてください' }, 400)
   const r = await c.env.DB.prepare(`UPDATE accounts SET password_hash = ?, updated_at = ? WHERE id = ?`).bind(await hashPassword(body.password), now(), id).run()
   if (!r.meta.changes) return c.json({ error: 'アカウントが見つかりません' }, 404)
   // 再設定したら開いているセッションは切る
