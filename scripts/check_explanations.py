@@ -152,9 +152,10 @@ def main() -> int:
             warnings.append(f"{where}: correct_reason が {len(reason)}字"
                             f"（目安 {REASON_RANGE[0]}〜{REASON_RANGE[1]}）")
 
-        wrong_polite = {bool(POLITE.search((c.get("note") or "").strip())) for c in choices if c.get("label") != e.get("correct") and (c.get("note") or "").strip()}
-        if len(wrong_polite) > 1:
-            warnings.append(f"{where}: 誤答の note の文末が敬体と常体で混在")
+        # note の文末は敬体で統一（2026-09-25 の決定）。問題の中で全部常体だと「混在」には当たらず素通りしたので、常体を 1 件でも数える
+        plain = [c.get("label") for c in choices if c.get("label") != e.get("correct") and (c.get("note") or "").strip() and not POLITE.search((c.get("note") or "").strip())]
+        if plain:
+            warnings.append(f"{where} {'・'.join(map(str, plain))}: 誤答の note の文末が常体（敬体で統一。体言止めにしない）")
         for c in choices:
             lab = c.get("label")
             note = (c.get("note") or "").strip()
