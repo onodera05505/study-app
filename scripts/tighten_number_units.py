@@ -18,7 +18,9 @@ def walk(x, cnt):
     if isinstance(x, str):
         y, n = RX.subn(r"\1\2", x); cnt[0] += n; return y
     if isinstance(x, list): return [walk(v, cnt) for v in x]
-    if isinstance(x, dict): return {k: walk(v, cnt) for k, v in x.items()}
+    if isinstance(x, dict):
+        # 出典の name は sources/*.json の登録名と突き合わせるので触らない（2026-09-25 に「No.2662 年末調整」が詰まって門が落ちた）
+        return {k: (v if k == "name" else walk(v, cnt)) for k, v in x.items()}
     return x
 
 def main() -> int:
