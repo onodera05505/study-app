@@ -6,10 +6,10 @@
       "id": 1,
       "type": "blocks",
       "after": "### 既定の出口という意味",
-      "caption": "宛先が自分の LAN の外なら、まず同じ LAN にいるルータへ渡す。そのルータの IP アドレスを設定する。",
+      "caption": "宛先が自分の LAN の外なら、まず同じ LAN にいるルーターへ渡す。そのルーターの IP アドレスを設定する。",
       "nodes": [
         {"id": "pc", "label": "PC1", "row": 0, "col": 0},
-        {"id": "rt", "label": "ルータ\n（LAN 側の口）", "row": 0, "col": 1, "emphasis": true},
+        {"id": "rt", "label": "ルーター\n（LAN 側の口）", "row": 0, "col": 1, "emphasis": true},
         {"id": "fw", "label": "ファイア\nウォール", "row": 0, "col": 2},
         {"id": "net", "label": "インターネット", "row": 0, "col": 3, "shape": "cloud"},
         {"id": "dh", "label": "DHCP サーバ", "row": 1, "col": 0}
