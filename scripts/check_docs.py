@@ -18,6 +18,9 @@
 - **門の実在** — `docs/不変条件と門.md` がバッククォートで名指しするパス
   （scripts/ src/ .claude/ docs/ brain/ 配下）が実在するか。`<試験>` のような
   プレースホルダを含むものは見ない
+- **PREMISES の決定行の反映先** — `brain/PREMISES.md` の 2026-09-27 以降の「決定」行に
+  `→ 反映: \`<線のファイル>\`` があり、そのパスが実在するか（決めたことが担当の読む仕様書に
+  落ちず、生成プロンプトに効いていなかった 2026-09-27 の反省。中央 reports/134）
 - **作業ログの還元行** — `docs/作業ログ_YYYY-MM-DD*.md` のうち 2026-09-11 以降のものに
   `ブレイン:` で始まる行があるか（型を中央ブレインへ還したかの申告。2026-09-11 まで
   ここで行の有無だけを見ていたが、2026-09-14 から中央の `~/.claude/brain/check_return_line.py`
@@ -94,6 +97,35 @@ def check_worklog_brain_line(root: Path, errors: list[str]) -> int:
     return n
 
 
+DECISION_FROM = "2026-09-27"
+DECISION_LINE = re.compile(r"^- \*{0,2}(\d{4}-\d{2}-\d{2})[^\n]*?決定")
+
+
+def check_premises_decisions(root: Path, errors: list[str]) -> int:
+    """PREMISES の「決定」行（2026-09-27 以降）は `→ 反映: <線のファイル>` を持ち、その path が実在するか。
+
+    決めたことを作業ログ（点）と PREMISES にだけ書き、担当が読む仕様書（線）に書かないと、
+    次の生成に効かない（2026-09-27、図の caption の決まりが生成プロンプトに落ちていなかった。中央 reports/134）。
+    線のファイルを名指しさせ、実在を見る。決定でない行・古い行は見ない。"""
+    f = root / "brain" / "PREMISES.md"
+    if not f.exists():
+        return 0
+    n = 0
+    for line in f.read_text(encoding="utf-8").splitlines():
+        m = DECISION_LINE.match(line)
+        if not m or m.group(1) < DECISION_FROM:
+            continue
+        n += 1
+        mm = re.search(r"→\s*反映:\s*(.+?)(?:。|$)", line)
+        if not mm:
+            errors.append(f"PREMISES の決定行に反映先が無い（`→ 反映: <仕様書や門のパス>` を書く。無いなら `→ 反映: 無し（理由）`）: {line[:60]}…")
+            continue
+        for path in re.findall(r"`([^`]+)`", mm.group(1)):
+            if not (root / path).exists():
+                errors.append(f"PREMISES の決定行の反映先が実在しない: {path}")
+    return n
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", default=str(Path(__file__).resolve().parent.parent))
@@ -105,6 +137,7 @@ def main() -> int:
     n_brain = check_index(root, "brain/INDEX.md", "brain/reports", errors)
     n_gates = check_gate_paths(root, errors)
     n_logs = check_worklog_brain_line(root, errors)
+    n_dec = check_premises_decisions(root, errors)
     # 対象の登録簿と .env / wrangler env / pages_projects / kickoff の整合（対象を足す場所は 1 か所、の門）
     r = subprocess.run([sys.executable, str(root / "scripts" / "new_target.py"), "--check"], capture_output=True, text=True)
     r2 = subprocess.run([sys.executable, str(root / "scripts" / "check_feedback_ledger.py")], capture_output=True, text=True)
@@ -118,7 +151,7 @@ def main() -> int:
 
     for e in errors:
         print(f"✘ {e}")
-    print(f"docs {n_docs} 件 / brain 報告書 {n_brain} 件 / 門の名指し {n_gates} 件 / 還元行の対象 {n_logs} 件を確認"
+    print(f"docs {n_docs} 件 / brain 報告書 {n_brain} 件 / 門の名指し {n_gates} 件 / 還元行の対象 {n_logs} 件 / 決定行の反映先 {n_dec} 件を確認"
           f"{'' if not errors else f'、問題 {len(errors)} 件'}")
     if errors:
         return 1

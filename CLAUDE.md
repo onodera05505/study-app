@@ -135,6 +135,13 @@ Agent ツールの `subagent_type` に型の名前を渡す。型に無い臨時
 **呼び出し時のプロンプトには回ごとの可変部分だけを書く**：試験ID、担当範囲、入出力パス、
 手本のパス、その回で判明している注意点。型と重複する指示を書き直さない。
 
+**親が作業中に決めた決まりを、担当への指示に直書きしない。** 先に仕様書（下の一覧の、担当が最初に
+読むファイル）に書き、指示では「読め」で渡す。指示に決まりを 3 行以上書いていたら仕様書が足りない信号。
+決まりが仕様書に無いと次の生成に効かない（2026-09-27、図の caption の決まりが 8 体の指示に直書きされ
+`material_figures_spec.md` に落ちていなかった。中央 `reports/134`）。決めたら同じ作業で
+①仕様書 ②門（見られるなら）③`brain/PREMISES.md` の決定行に `→ 反映: \`<線のファイル>\``（`check_docs.py` が実在を見る）
+④生成後の決定は `brain/rework/<日付>_<対象>.md`（資格版は `2026-08_ip-ap.md`。`check_rework.py`）の 4 つに書く。
+
 読み取り・分類・執筆はページや論点の範囲で分担するため、**担当ごとに流儀がずれる**。
 1件ずつ見ても気づけないので、仕様を文書に固定してある。**担当には必ず最初に読ませること**
 （型がそう指示している）。
@@ -142,6 +149,10 @@ Agent ツールの `subagent_type` に型の名前を渡す。型に無い臨時
 - `scripts/prompts/extract_questions.md` — 画像から問題を読み取る
 - `scripts/prompts/classify_questions.md` — シラバス項目と論点に紐づける
 - `scripts/prompts/write_materials.md` — 教材を書く
+- `scripts/prompts/write_question_explanations.md` — 問題解説（誤答の note は用語ポップに流用される）
+- `scripts/prompts/material_figures_spec.md` — 教材の図の仕様 JSON（caption・after・4 つの型）
+- `scripts/prompts/self_review.md` / `self_fix.md` / `self_fix_shikaku.md` / `self_crosscheck.md` — 読み直し（セルフフィードバック）の 4 段
+- ロードマップ型は `scripts/prompts/roadmap_*.md` をテンプレートに `render_prompts.py` が `data/<対象>/prompts/` へ描出する
 
 1バッチの大きさを守る（教材は8論点まで）。超えると出力量オーバーで落ちる。
 **実行中の担当が読んでいるファイルを上書きしない。** やり直すときは新しい名前にする。
