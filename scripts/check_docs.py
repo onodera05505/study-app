@@ -18,6 +18,8 @@
 - **門の実在** — `docs/不変条件と門.md` がバッククォートで名指しするパス
   （scripts/ src/ .claude/ docs/ brain/ 配下）が実在するか。`<試験>` のような
   プレースホルダを含むものは見ない
+- **仕様書の本文が現在形か** — `SPEC_CURRENT_FORM` の仕様書の本文（`## 改訂履歴` より前）に
+  日付・「廃止」「以前は」「方針変更」・版の名前が無いか（決まりは足さず書き換える。2026-09-27）
 - **PREMISES の決定行の反映先** — `brain/PREMISES.md` の 2026-09-27 以降の「決定」行に
   `→ 反映: \`<線のファイル>\`` があり、そのパスが実在するか（決めたことが担当の読む仕様書に
   落ちず、生成プロンプトに効いていなかった 2026-09-27 の反省。中央 reports/134）
@@ -101,6 +103,37 @@ DECISION_FROM = "2026-09-27"
 DECISION_LINE = re.compile(r"^- \*{0,2}(\d{4}-\d{2}-\d{2})[^\n]*?決定")
 
 
+# 本文を現在形だけにした仕様書（統合が済んだものから足す。2026-09-27 本人「保つ前提で可能な限り統合していく」）
+SPEC_CURRENT_FORM = [
+    "scripts/prompts/material_figures_spec.md",
+]
+SPEC_HISTORY_HEADING = re.compile(r"^## 改訂履歴", re.M)
+SPEC_STALE = re.compile(r"20\d\d-\d\d-\d\d|廃止|以前は|これまでは|方針変更|\bv[123]\b|v1 → v2|v2 → v3")
+
+
+def check_spec_current_form(root: Path, errors: list[str]) -> int:
+    """仕様書の本文（`## 改訂履歴` より前）に、日付・「廃止」「以前は」・版の名前が無いか。
+
+    決まりを「足す」と本文に経緯が積もり、同じ値が 2 か所で食い違って担当が推測で選ぶ
+    （2026-09-25 の読み直しで自己矛盾が出た）。変えるときは該当の文を書き換え、経緯は履歴へ。"""
+    n = 0
+    for rel in SPEC_CURRENT_FORM:
+        f = root / rel
+        if not f.exists():
+            errors.append(f"現在形の仕様書が無い: {rel}")
+            continue
+        n += 1
+        text = f.read_text(encoding="utf-8")
+        m = SPEC_HISTORY_HEADING.search(text)
+        if not m:
+            errors.append(f"{rel}: 末尾に `## 改訂履歴` の節が無い（経緯はそこへ）")
+        body = text[: m.start()] if m else text
+        for i, line in enumerate(body.splitlines(), 1):
+            if SPEC_STALE.search(line):
+                errors.append(f"{rel}:{i}: 本文に経緯が残っている（書き換えて履歴へ）: {line.strip()[:70]}")
+    return n
+
+
 def check_premises_decisions(root: Path, errors: list[str]) -> int:
     """PREMISES の「決定」行（2026-09-27 以降）は `→ 反映: <線のファイル>` を持ち、その path が実在するか。
 
@@ -138,6 +171,7 @@ def main() -> int:
     n_gates = check_gate_paths(root, errors)
     n_logs = check_worklog_brain_line(root, errors)
     n_dec = check_premises_decisions(root, errors)
+    n_specs = check_spec_current_form(root, errors)
     # 対象の登録簿と .env / wrangler env / pages_projects / kickoff の整合（対象を足す場所は 1 か所、の門）
     r = subprocess.run([sys.executable, str(root / "scripts" / "new_target.py"), "--check"], capture_output=True, text=True)
     r2 = subprocess.run([sys.executable, str(root / "scripts" / "check_feedback_ledger.py")], capture_output=True, text=True)
@@ -151,7 +185,7 @@ def main() -> int:
 
     for e in errors:
         print(f"✘ {e}")
-    print(f"docs {n_docs} 件 / brain 報告書 {n_brain} 件 / 門の名指し {n_gates} 件 / 還元行の対象 {n_logs} 件 / 決定行の反映先 {n_dec} 件を確認"
+    print(f"docs {n_docs} 件 / brain 報告書 {n_brain} 件 / 門の名指し {n_gates} 件 / 還元行の対象 {n_logs} 件 / 決定行の反映先 {n_dec} 件 / 現在形の仕様書 {n_specs} 本を確認"
           f"{'' if not errors else f'、問題 {len(errors)} 件'}")
     if errors:
         return 1
