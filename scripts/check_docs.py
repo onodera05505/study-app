@@ -106,6 +106,11 @@ DECISION_LINE = re.compile(r"^- \*{0,2}(\d{4}-\d{2}-\d{2})[^\n]*?決定")
 # 本文を現在形だけにした仕様書（統合が済んだものから足す。2026-09-27 本人「保つ前提で可能な限り統合していく」）
 SPEC_CURRENT_FORM = [
     "scripts/prompts/material_figures_spec.md",
+    "scripts/prompts/write_question_explanations.md",
+    "scripts/prompts/self_fix_shikaku.md",
+    "scripts/prompts/write_materials.md",
+    "scripts/prompts/roadmap_materials.md",
+    "scripts/prompts/roadmap_questions.md",
 ]
 SPEC_HISTORY_HEADING = re.compile(r"^## 改訂履歴", re.M)
 SPEC_STALE = re.compile(r"20\d\d-\d\d-\d\d|廃止|以前は|これまでは|方針変更|\bv[123]\b|v1 → v2|v2 → v3")
@@ -129,7 +134,8 @@ def check_spec_current_form(root: Path, errors: list[str]) -> int:
             errors.append(f"{rel}: 末尾に `## 改訂履歴` の節が無い（経緯はそこへ）")
         body = text[: m.start()] if m else text
         for i, line in enumerate(body.splitlines(), 1):
-            if SPEC_STALE.search(line):
+            # `…` の中（ファイル名・コマンド）は名指しなので見ない（作業ログのファイル名に日付が入る）
+            if SPEC_STALE.search(re.sub(r"`[^`]*`", "", line)):
                 errors.append(f"{rel}:{i}: 本文に経緯が残っている（書き換えて履歴へ）: {line.strip()[:70]}")
     return n
 

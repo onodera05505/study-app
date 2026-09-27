@@ -208,7 +208,7 @@ def check_notation_v2(
     if "materials_v3" in where:
         # v3（2026-09-01）: 出題パターンの見出しは廃止。代わりに explanation に見分けワードの行を置く
         if len(headings) > HEADING_RANGE_V2[1]:
-            out.append(f"{where}: detail の見出しが {len(headings)} 個（v3 は 1〜3 個が目安）")
+            out.append(f"{where}: detail の見出しが {len(headings)} 個（目安 IP 1〜3・AP 3〜4。5 個まで）")
         if any("出題" in h for h in headings):
             out.append(f"{where}: v3 なのに出題パターンの見出しが残っている（問題解説側へ）")
         if "見分けワード" not in ex:
