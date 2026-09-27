@@ -49,6 +49,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import math
 import sys
 from pathlib import Path
@@ -793,15 +794,48 @@ def _need(d, keys, where, problems) -> bool:
     return ok
 
 
+CAPTION_POLITE = re.compile(r"(です|ます|ません|でしょう|ました)[。）)]*$")
+CAPTION_BANNED = re.compile(r"誤答|選択肢|正解(?!率)|問\d|\d+年度|令和|平成|引っかけ|[\^²³]|[，．]")
+FIGURE_BANNED = re.compile(r"誤答|正解(?!率)|（正）|（誤）|問\d+|\d+年度|令和|平成|引っかけ|[\^²³]|[，．]")
+
+
+def _figure_texts(fig) -> list:
+    """図の中身の文字列（ラベル・セル・注釈・note）を平らに集める。禁止語の検査に使う。"""
+    out = []
+    def walk(v):
+        if isinstance(v, str):
+            out.append(v)
+        elif isinstance(v, dict):
+            for k, x in v.items():
+                if k in ("caption", "after", "type", "id", "kind", "shape", "style", "arrow", "color"):
+                    continue
+                walk(x)
+        elif isinstance(v, list):
+            for x in v:
+                walk(x)
+    walk({k: v for k, v in fig.items() if k not in ("caption", "after")})
+    return out
+
+
 def validate_figure(fig, where, problems) -> None:
     t = fig.get("type")
     if t not in FIGURE_TYPES:
         problems.append(f"{where}: 未知の type {t!r}（{'/'.join(FIGURE_TYPES)} のいずれか）")
         return
-    if not str(fig.get("caption", "")).strip():
+    cap = str(fig.get("caption", "")).strip()
+    if not cap:
         problems.append(f"{where}: caption が空")
+    else:
+        # 2026-09-27 の決定: caption は敬体で、答え・誤答の否定・選択肢の記号・回と問番号を書かない
+        if not CAPTION_POLITE.search(cap):
+            problems.append(f"{where}: caption の文末が敬体（です・ます）でない: {cap[-20:]!r}")
+        if CAPTION_BANNED.search(cap):
+            problems.append(f"{where}: caption に答え・誤答・選択肢・問の名指しか禁止記法（^ 上付き ，．）: {cap[:40]!r}")
     if not str(fig.get("after", "")).strip():
         problems.append(f"{where}: after が空")
+    for txt in _figure_texts(fig):
+        if FIGURE_BANNED.search(txt):
+            problems.append(f"{where}: 図の中身に誤答の否定・正誤の印・問の名指しか禁止記法: {txt[:40]!r}")
 
     if t == "blocks":
         if not _need(fig, ["nodes"], where, problems):
@@ -960,6 +994,20 @@ def main() -> int:
 
     problems: list = []
     docs = load(paths, problems)
+    # after の見出しが教材（materials_v3）に実在するか。無いと attach が explanation 末尾へ黙って逃がす（2026-09-27）
+    heads = {}
+    for mp in sorted((args.data / "materials_v3").glob("*.json")) if (args.data / "materials_v3").exists() else []:
+        try:
+            for m in json.loads(mp.read_text(encoding="utf-8")).get("materials", []):
+                heads[m["topic_id"]] = {l.strip() for l in (m.get("detail") or "").split("\n") if l.strip().startswith("### ")}
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
+    if heads:
+        for p, d in docs:
+            for fig in d.get("figures", []):
+                a = str(fig.get("after", "")).strip()
+                if a and a != "explanation" and d.get("topic_id") in heads and a not in heads[d["topic_id"]]:
+                    problems.append(f"[{p.name}] 論点 {d['topic_id']} 図 {fig.get('id')}: after {a!r} が教材の見出しに無い（explanation 末尾へ逃げる）")
     if args.only is not None:
         docs = [(p, d) for p, d in docs if d.get("topic_id") in args.only]
 
