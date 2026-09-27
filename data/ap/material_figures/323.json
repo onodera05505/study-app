@@ -6,23 +6,76 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "要因を原因→結果の矢印で網の目につなぐと、多くの矢印の元にある要因が根本原因として浮かび上がる。",
+      "caption": "要因を原因から結果へ矢印でつなぐと、多くの矢印の元にある要因が根本原因の候補として浮かび上がります。",
       "nodes": [
-        {"id": "root", "label": "手順書が\n更新されない", "row": 0, "col": 1, "emphasis": true},
-        {"id": "edu", "label": "教育が\n追いつかない", "row": 0, "col": 0},
-        {"id": "chk", "label": "点検表が\n実態と合わない", "row": 0, "col": 2},
-        {"id": "var", "label": "作業手順が\nばらつく", "row": 1, "col": 0},
-        {"id": "miss", "label": "確認が\n漏れる", "row": 1, "col": 2},
-        {"id": "prob", "label": "不良品が増える", "row": 2, "col": 1, "shape": "round"}
+        {
+          "id": "root",
+          "label": "手順書が\n更新されない",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "edu",
+          "label": "教育が\n追いつかない",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "chk",
+          "label": "点検表が\n実態と合わない",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "var",
+          "label": "作業手順が\nばらつく",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "miss",
+          "label": "確認が\n漏れる",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "prob",
+          "label": "不良品が増える",
+          "row": 2,
+          "col": 1,
+          "shape": "round"
+        }
       ],
       "edges": [
-        {"from": "root", "to": "edu"},
-        {"from": "root", "to": "chk"},
-        {"from": "root", "to": "var"},
-        {"from": "edu", "to": "var"},
-        {"from": "chk", "to": "miss"},
-        {"from": "var", "to": "prob"},
-        {"from": "miss", "to": "prob"}
+        {
+          "from": "root",
+          "to": "edu"
+        },
+        {
+          "from": "root",
+          "to": "chk"
+        },
+        {
+          "from": "root",
+          "to": "var"
+        },
+        {
+          "from": "edu",
+          "to": "var"
+        },
+        {
+          "from": "chk",
+          "to": "miss"
+        },
+        {
+          "from": "var",
+          "to": "prob"
+        },
+        {
+          "from": "miss",
+          "to": "prob"
+        }
       ]
     }
   ]

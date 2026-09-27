@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="262" viewBox="0 0 640 262" role="img">
-<title>値呼出しの仮引数は別の箱なので手続の中の 4 は戻らず、参照呼出しの仮引数は同じ箱なので 6 がそのまま残る。</title>
+<title>値呼出しの仮引数は別の箱なので手続の中の書き換えは戻らず、参照呼出しの仮引数は同じ箱なので呼出し側にも残ります。</title>
 <rect x="0.5" y="0.5" width="639" height="261" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(103.9 20)">
 <polyline points="68,56 68,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
@@ -29,6 +29,6 @@
 <rect x="140" y="123" width="138.2" height="16" rx="3" fill="#ffffff"/>
 <text x="209.1" y="136.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">更新後の X で Y＝X＋Y</text>
 </g>
-<text x="320" y="226" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">値呼出しの仮引数は別の箱なので手続の中の 4 は戻らず、参照呼出しの仮引数は同じ箱なので 6 がそのまま</text>
-<text x="320" y="242" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">残る。</text>
+<text x="320" y="226" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">値呼出しの仮引数は別の箱なので手続の中の書き換えは戻らず、参照呼出しの仮引数は同じ箱なので呼出し側に</text>
+<text x="320" y="242" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">も残ります。</text>
 </svg>

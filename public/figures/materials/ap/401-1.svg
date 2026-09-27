@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="374" viewBox="0 0 640 374" role="img">
-<title>内側の平均を先に確定させ、その値で外側を絞り、最後に DISTINCT で重複を除く。数えるのは行数ではなく重複を除いた仕入先の数。</title>
-<rect x="0.5" y="0.5" width="639" height="373" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="342" viewBox="0 0 640 342" role="img">
+<title>内側の平均を先に確定させ、その値で外側の行を絞り、最後に重複を除く、という評価の順序を表しています。</title>
+<rect x="0.5" y="0.5" width="639" height="341" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(153.52 20)">
-<line x1="55" y1="34" x2="55" y2="290" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="266.4" y1="34" x2="266.4" y2="290" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="55" y1="34" x2="55" y2="274" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="266.4" y1="34" x2="266.4" y2="274" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
 <rect x="0" y="0" width="110" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
 <text x="55" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">外側の問合せ</text>
 <rect x="199.85" y="0" width="133.1" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
@@ -22,14 +22,11 @@
 <polyline points="55,190 81,190 81,204 57,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="57,204 65,200.4 65,207.6" fill="#1f2937"/>
 <text x="89" y="198" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. 差 &gt; 360 の行だけ残す（4 行）</text>
-<rect x="-64.8" y="209" width="239.6" height="16" rx="3" fill="#ffffff"/>
-<text x="55" y="222.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ちょうど 360 の行は「&gt;」なので含めない</text>
+<rect x="-40.8" y="209" width="191.6" height="16" rx="3" fill="#ffffff"/>
+<text x="55" y="222.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">「&gt;」は 360 ちょうどを含まない</text>
 <polyline points="55,240 81,240 81,254 57,254" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="57,254 65,250.4 65,257.6" fill="#1f2937"/>
 <text x="89" y="248" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. DISTINCT 仕入先コードで重複を除く（3）</text>
-<rect x="-60.9" y="259" width="231.8" height="16" rx="3" fill="#ffffff"/>
-<text x="55" y="272.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ここを飛ばすと行数の 4 を選んでしまう</text>
 </g>
-<text x="320" y="338" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">内側の平均を先に確定させ、その値で外側を絞り、最後に DISTINCT で重複を除く。数えるのは行数ではなく</text>
-<text x="320" y="354" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">重複を除いた仕入先の数。</text>
+<text x="320" y="322" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">内側の平均を先に確定させ、その値で外側の行を絞り、最後に重複を除く、という評価の順序を表しています。</text>
 </svg>

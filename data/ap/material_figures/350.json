@@ -6,18 +6,57 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "ページテーブルは仮想空間の全ページ分をもつ。実記憶に無いページはページフォールトで補助記憶から読み込み、追い出したページは補助記憶に置く。",
+      "caption": "ページテーブルは仮想空間の全ページ分をもちます。実記憶に無いページは補助記憶から読み込み、追い出したページを預けます。",
       "nodes": [
-        {"id": "va", "label": "仮想アドレス空間\n全ページ", "row": 0, "col": 0},
-        {"id": "pt", "label": "ページテーブル\n全ページ分の対応表", "row": 0, "col": 1, "emphasis": true},
-        {"id": "rm", "label": "実記憶\nページ枠は少数", "row": 0, "col": 2},
-        {"id": "aux", "label": "補助記憶\n追い出したページ", "row": 1, "col": 2, "shape": "cylinder", "emphasis": true}
+        {
+          "id": "va",
+          "label": "仮想アドレス空間\n全ページ",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "pt",
+          "label": "ページテーブル\n全ページ分の対応表",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "rm",
+          "label": "実記憶\nページ枠は少数",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "aux",
+          "label": "補助記憶\n追い出したページ",
+          "row": 1,
+          "col": 2,
+          "shape": "cylinder",
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "va", "to": "pt", "label": "仮想アドレス"},
-        {"from": "pt", "to": "rm", "label": "実アドレス"},
-        {"from": "rm", "to": "aux", "label": "ページアウト（LRU）"},
-        {"from": "aux", "to": "rm", "label": "ページイン"}
+        {
+          "from": "va",
+          "to": "pt",
+          "label": "仮想アドレス"
+        },
+        {
+          "from": "pt",
+          "to": "rm",
+          "label": "実アドレス"
+        },
+        {
+          "from": "rm",
+          "to": "aux",
+          "label": "ページアウト（LRU）"
+        },
+        {
+          "from": "aux",
+          "to": "rm",
+          "label": "ページイン"
+        }
       ]
     }
   ]

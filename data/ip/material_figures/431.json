@@ -6,7 +6,7 @@
       "id": 1,
       "type": "blocks",
       "after": "### LIFO のしくみ",
-      "caption": "PUSH も POP も一番上だけに効くので、下にある a を b より先に取り出すことはできない。",
+      "caption": "出し入れできるのは一番上だけです。最後に入れたものから取り出す後入れ先出しになります。",
       "nodes": [
         {"id": "op", "label": "PUSH（積む）\nPOP（取り出す）", "row": 0, "col": 1, "shape": "round"},
         {"id": "c", "label": "c ← 最後に入れた", "row": 0, "col": 0, "emphasis": true},

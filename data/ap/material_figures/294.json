@@ -6,22 +6,77 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "複数の企業をまたぐ調達〜販売の連鎖全体を統合するのが SCM、その中の1社に閉じた基幹業務の統合が ERP。",
+      "caption": "企業をまたぐ調達から販売までの連鎖全体を統合するのが SCM で、1 社の中の基幹業務の統合が ERP です。",
       "nodes": [
-        {"id": "scm", "label": "SCM\n調達から販売までを\n企業をまたいで統合", "row": 0, "col": 0, "emphasis": true},
-        {"id": "buy", "label": "部品メーカー\n調達", "row": 1, "col": 0},
-        {"id": "mfg", "label": "自社工場\n生産", "row": 1, "col": 1},
-        {"id": "log", "label": "卸・物流", "row": 1, "col": 2},
-        {"id": "sell", "label": "小売\n販売", "row": 1, "col": 3},
-        {"id": "erp", "label": "ERP\n1社の中の基幹業務\n（生産・在庫・会計・人事）", "row": 2, "col": 1}
+        {
+          "id": "scm",
+          "label": "SCM\n調達から販売までを\n企業をまたいで統合",
+          "row": 0,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "buy",
+          "label": "部品メーカー\n調達",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "mfg",
+          "label": "自社工場\n生産",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "log",
+          "label": "卸・物流",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "sell",
+          "label": "小売\n販売",
+          "row": 1,
+          "col": 3
+        },
+        {
+          "id": "erp",
+          "label": "ERP\n1社の中の基幹業務\n（生産・在庫・会計・人事）",
+          "row": 2,
+          "col": 1
+        }
       ],
       "edges": [
-        {"from": "buy", "to": "mfg"},
-        {"from": "mfg", "to": "log"},
-        {"from": "log", "to": "sell"},
-        {"from": "scm", "to": "buy", "style": "dashed", "arrow": "none"},
-        {"from": "scm", "to": "sell", "style": "dashed", "arrow": "none"},
-        {"from": "erp", "to": "mfg", "style": "dashed", "arrow": "none"}
+        {
+          "from": "buy",
+          "to": "mfg"
+        },
+        {
+          "from": "mfg",
+          "to": "log"
+        },
+        {
+          "from": "log",
+          "to": "sell"
+        },
+        {
+          "from": "scm",
+          "to": "buy",
+          "style": "dashed",
+          "arrow": "none"
+        },
+        {
+          "from": "scm",
+          "to": "sell",
+          "style": "dashed",
+          "arrow": "none"
+        },
+        {
+          "from": "erp",
+          "to": "mfg",
+          "style": "dashed",
+          "arrow": "none"
+        }
       ]
     }
   ]

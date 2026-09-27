@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="87" viewBox="0 0 907.6 124" role="img">
-<title>分周は割り算なので1カウントが2マイクロ秒に伸び、初期値150との積300マイクロ秒が割込みまでの時間になる。</title>
+<title>分周で1カウントの時間が伸びます。その時間にカウンタの初期値を掛けた分だけ待って割込みが起きます。</title>
 <rect x="0.5" y="0.5" width="906.6" height="123" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(20 20)">
 <polyline points="109,28 243.6,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
@@ -25,5 +25,5 @@
 <rect x="628.15" y="11" width="125.6" height="16" rx="3" fill="#ffffff"/>
 <text x="690.95" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2μs × 150 ＝ 300μs</text>
 </g>
-<text x="453.8" y="104" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">分周は割り算なので1カウントが2マイクロ秒に伸び、初期値150との積300マイクロ秒が割込みまでの時間になる。</text>
+<text x="453.8" y="104" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">分周で1カウントの時間が伸びます。その時間にカウンタの初期値を掛けた分だけ待って割込みが起きます。</text>
 </svg>

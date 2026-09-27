@@ -6,7 +6,7 @@
       "id": 1,
       "type": "blocks",
       "after": "### 守る区間の違い",
-      "caption": "WPA2 が守るのは無線区間だけで、SSL/TLS はブラウザと Web サーバの間を通しで守る。",
+      "caption": "暗号化には守る範囲があります。SSL/TLS が守るのは、ブラウザと Web サーバの間の全経路です。",
       "nodes": [
         {"id": "pc", "label": "端末のブラウザ\nPC・スマホ", "row": 0, "col": 0, "emphasis": true},
         {"id": "ap", "label": "無線 LAN\nアクセスポイント", "row": 0, "col": 1},

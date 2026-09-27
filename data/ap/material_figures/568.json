@@ -6,7 +6,7 @@
       "id": 1,
       "type": "blocks",
       "after": "### 列や行を絞りたいときはビューと組み合わせる",
-      "caption": "GRANT は表の単位でしか効かないので、見せる範囲を絞りたいときはビューを作ってそのビューに権限を与える。",
+      "caption": "GRANT は表の単位でしか効かないので、見せる範囲を絞りたいときはビューを作り、そのビューに権限を与えます。",
       "nodes": [
         {"id": "u", "label": "利用者", "row": 0, "col": 0},
         {"id": "v", "label": "ビュー\n必要な行と列だけ", "row": 0, "col": 1, "emphasis": true},
@@ -15,7 +15,7 @@
       "edges": [
         {"from": "u", "to": "v", "label": "GRANT で操作を許可"},
         {"from": "v", "to": "t", "label": "定義した範囲だけ参照"},
-        {"from": "u", "to": "t", "label": "実表への権限は与えない", "style": "dashed", "arrow": "none"}
+        {"from": "u", "to": "t", "label": "アクセスはビュー経由だけ", "style": "dashed", "arrow": "none"}
       ]
     }
   ]

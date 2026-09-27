@@ -6,16 +6,49 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "演算リソースをセンサー端末の近傍に置くので、応答が速くなり、クラウドへ流す通信量も減る。",
+      "caption": "演算リソースをセンサー端末の近傍に置くので、応答が速くなり、クラウドへ流す通信量も減ります。",
       "nodes": [
-        {"id": "dev", "label": "センサー端末\n自動運転車・監視カメラ", "row": 0, "col": 0},
-        {"id": "edge", "label": "エッジ\n端末の近傍に置く演算リソース", "row": 0, "col": 1, "emphasis": true},
-        {"id": "cloud", "label": "クラウド\nデータセンター", "row": 0, "col": 2, "shape": "cloud"}
+        {
+          "id": "dev",
+          "label": "センサー端末\n自動運転車・監視カメラ",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "edge",
+          "label": "エッジ\n端末の近傍に置く演算リソース",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "cloud",
+          "label": "クラウド\nデータセンター",
+          "row": 0,
+          "col": 2,
+          "shape": "cloud"
+        }
       ],
       "edges": [
-        {"from": "dev", "to": "edge", "label": "その場で処理して即応答", "arrow": "both"},
-        {"from": "edge", "to": "cloud", "label": "要約した結果だけ送る", "arrow": "both"},
-        {"from": "dev", "to": "cloud", "label": "全部送ると遅延と輻輳", "style": "dashed", "arrow": "none"}
+        {
+          "from": "dev",
+          "to": "edge",
+          "label": "その場で処理して即応答",
+          "arrow": "both"
+        },
+        {
+          "from": "edge",
+          "to": "cloud",
+          "label": "要約した結果だけ送る",
+          "arrow": "both"
+        },
+        {
+          "from": "dev",
+          "to": "cloud",
+          "label": "全部送ると遅延と輻輳",
+          "style": "dashed",
+          "arrow": "none"
+        }
       ]
     }
   ]

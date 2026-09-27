@@ -5,8 +5,8 @@
     {
       "id": 1,
       "type": "sequence",
-      "after": "### ポートの状態の判定",
-      "caption": "TCP は SYN/ACK なら開・RST/ACK なら閉、UDP は ICMP port unreachable が返ったときだけ閉と判定する。",
+      "after": "explanation",
+      "caption": "応答の種類から、そのポートが開いているか閉じているかを判定する流れです。TCP と UDP で見分け方が変わります。",
       "actors": [
         {"id": "s", "label": "検査側\n（スキャン）"},
         {"id": "h", "label": "対象ホスト"}

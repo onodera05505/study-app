@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="370" viewBox="0 0 640 370" role="img">
-<title>割る対象も掛ける対象も圧縮後の6Mバイト。元の15Mバイトで数えると転送も展開も大きくなり、誤答の1.20秒になる。</title>
+<title>転送時間と展開時間は、どちらも圧縮後のサイズで数えて足します。どのサイズに対する速度かで結果が変わります。</title>
 <rect x="0.5" y="0.5" width="639" height="369" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(20 20)">
 <line x1="52.4" y1="216" x2="588" y2="216" stroke="#e5e7eb" stroke-width="1"/>
@@ -25,11 +25,11 @@
 <text x="498.73" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">合計</text>
 <text x="320.2" y="256" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">内訳（転送と展開は同時に行われないので足す）</text>
 <text x="16" y="-4" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="start" font-weight="600">時間（秒）</text>
-<line x1="117.5" y1="278" x2="137.5" y2="278" stroke="#2563eb" stroke-width="2.6"/>
-<text x="143.5" y="282.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">圧縮後 6M バイトで計算（正）</text>
+<line x1="153.5" y1="278" x2="173.5" y2="278" stroke="#2563eb" stroke-width="2.6"/>
+<text x="179.5" y="282.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">圧縮後 6M バイトで計算</text>
 <line x1="331.9" y1="278" x2="351.9" y2="278" stroke="#6b7280" stroke-width="2.6"/>
-<text x="357.9" y="282.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">元の 15M バイトで計算（誤）</text>
+<text x="357.9" y="282.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">元の 15M バイトで計算</text>
 </g>
-<text x="320" y="334" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">割る対象も掛ける対象も圧縮後の6Mバイト。元の15Mバイトで数えると転送も展開も大きくなり、誤答の1.20秒</text>
-<text x="320" y="350" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">になる。</text>
+<text x="320" y="334" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">転送時間と展開時間は、どちらも圧縮後のサイズで数えて足します。どのサイズに対する速度かで結果が変わり</text>
+<text x="320" y="350" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ます。</text>
 </svg>

@@ -6,12 +6,12 @@
       "id": 1,
       "type": "blocks",
       "after": "### 誰が監査人になれるか",
-      "caption": "監査人になれるのは経営者直轄など監査の対象から独立した人で、開発・運用・利用の当事者や委託先の関係者はなれない。",
+      "caption": "その案件に関わっていない、監査の対象から独立した立場の人が監査を担うという関係を表します。",
       "nodes": [
         {"id": "boss", "label": "経営者", "row": 0, "col": 1},
-        {"id": "audit", "label": "監査部門\n（経営者の直轄）\n○ 監査人になれる", "row": 1, "col": 0, "emphasis": true},
+        {"id": "audit", "label": "監査部門\n（経営者の直轄）\n○ 独立した立場", "row": 1, "col": 0, "emphasis": true},
         {"id": "target", "label": "監査される部門", "row": 1, "col": 1},
-        {"id": "member", "label": "開発・運用の担当者、利用者、委託先の人\n× 当事者なので監査人になれない", "row": 2, "col": 1}
+        {"id": "member", "label": "開発・運用の担当者、利用者、委託先の人\n× 当事者の立場", "row": 2, "col": 1}
       ],
       "edges": [
         {"from": "boss", "to": "audit", "arrow": "none"},

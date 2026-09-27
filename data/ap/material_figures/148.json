@@ -5,8 +5,8 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 実際の問題での判断",
-      "caption": "日付をもつのは右の表だけで、そこに顧客IDが無いので、購入者数を日別に見ることはできない。",
+      "after": "explanation",
+      "caption": "必要な属性がどの表にあるかを線でたどります。共通の属性でつながらなければ、その組合せの情報は得られません。",
       "nodes": [
         {"id": "cust", "label": "顧客\n顧客ID・氏名\n性別・生年月日", "row": 0, "col": 0, "emphasis": true},
         {"id": "buy", "label": "商品購入\n顧客ID・代理店ID\n商品ID・購入数量", "row": 0, "col": 1},
@@ -15,7 +15,7 @@
       "edges": [
         {"from": "cust", "to": "buy", "label": "顧客ID", "arrow": "none"},
         {"from": "buy", "to": "sale", "label": "商品ID・代理店ID", "arrow": "none"},
-        {"from": "cust", "to": "sale", "label": "顧客IDが無く、日別に購入者を数えられない", "arrow": "none", "style": "dashed"}
+        {"from": "cust", "to": "sale", "label": "顧客IDが無い", "arrow": "none", "style": "dashed"}
       ]
     }
   ]

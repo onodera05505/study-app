@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="354" viewBox="0 0 640 354" role="img">
-<title>区間幅 1/2^n が 0.001 を下回る条件は 2^n＞1000。n＝9 では足りず、n＝10 で初めて満たす。</title>
-<rect x="0.5" y="0.5" width="639" height="353" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="388" viewBox="0 0 640 388" role="img">
+<title>区間を半分にするごとに幅が縮みます。2 の累乗が基準の値を超える最小の回数が、繰返しの回数になります。</title>
+<rect x="0.5" y="0.5" width="639" height="387" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(20 20)">
 <line x1="52.4" y1="216" x2="588" y2="216" stroke="#e5e7eb" stroke-width="1"/>
 <text x="44.4" y="220.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">0</text>
@@ -45,10 +45,11 @@
 <text x="588" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">11</text>
 <text x="320.2" y="256" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">半分にした回数 n</text>
 <text x="16" y="-4" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="start" font-weight="600">2 の n 乗</text>
-<line x1="92" y1="278" x2="112" y2="278" stroke="#2563eb" stroke-width="2.6"/>
-<text x="118" y="282.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2^n（このとき区間幅は 1/2^n）</text>
-<line x1="315.4" y1="278" x2="335.4" y2="278" stroke="#6b7280" stroke-width="2.6"/>
-<text x="341.4" y="282.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">1000＝初期の幅 1 ÷ 許容誤差 0.001</text>
+<line x1="173.7" y1="278" x2="193.7" y2="278" stroke="#2563eb" stroke-width="2.6"/>
+<text x="199.7" y="282.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2 の n 乗（このとき区間幅は 1 ÷ 2 の n 乗）</text>
+<line x1="203.7" y1="296" x2="223.7" y2="296" stroke="#6b7280" stroke-width="2.6"/>
+<text x="229.7" y="300.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">1000＝初期の幅 1 ÷ 許容誤差 0.001</text>
 </g>
-<text x="320" y="334" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">区間幅 1/2^n が 0.001 を下回る条件は 2^n＞1000。n＝9 では足りず、n＝10 で初めて満たす。</text>
+<text x="320" y="352" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">区間を半分にするごとに幅が縮みます。2 の累乗が基準の値を超える最小の回数が、繰返しの回数になります</text>
+<text x="320" y="368" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">。</text>
 </svg>

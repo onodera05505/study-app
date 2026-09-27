@@ -6,15 +6,38 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "利益率が低くても回転率が高ければ ROA は高い。卸売業A社がその型。",
+      "caption": "売上高利益率と総資産回転率を掛けると ROA になるので、利益率が低くても回転率が高ければ ROA は高くなります。",
       "nodes": [
-        {"id": "pm", "label": "売上高利益率\n利益 ÷ 売上高\nA社 2.5％ ＜ B社 9％", "row": 0, "col": 0},
-        {"id": "tt", "label": "総資産回転率\n売上高 ÷ 総資産\nA社 8回 ≫ B社 1.1回", "row": 0, "col": 2, "emphasis": true},
-        {"id": "roa", "label": "総資産利益率 ROA\n利益 ÷ 総資産\nA社 20％ ＞ B社 10％", "row": 1, "col": 1}
+        {
+          "id": "pm",
+          "label": "売上高利益率\n利益 ÷ 売上高\nA社 2.5％ ＜ B社 9％",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "tt",
+          "label": "総資産回転率\n売上高 ÷ 総資産\nA社 8回 ≫ B社 1.1回",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "roa",
+          "label": "総資産利益率 ROA\n利益 ÷ 総資産\nA社 20％ ＞ B社 10％",
+          "row": 1,
+          "col": 1
+        }
       ],
       "edges": [
-        {"from": "pm", "to": "roa", "label": "掛け合わせると"},
-        {"from": "tt", "to": "roa"}
+        {
+          "from": "pm",
+          "to": "roa",
+          "label": "掛け合わせると"
+        },
+        {
+          "from": "tt",
+          "to": "roa"
+        }
       ]
     }
   ]

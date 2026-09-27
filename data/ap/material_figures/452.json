@@ -6,7 +6,7 @@
       "id": 1,
       "type": "blocks",
       "after": "### なぜ未知のマルウェアに効くのか",
-      "caption": "PC に届くのは描画済みの画面だけなので、危険かどうかを判定しなくても未知のマルウェアが渡らない。",
+      "caption": "閲覧用のサーバで受信データの処理を完結させ、PC へ渡すのは描画済みの画面だけという分け方を表しています。",
       "nodes": [
         {"id": "web", "label": "インターネットの\nWeb サイト", "row": 0, "col": 0, "shape": "cloud"},
         {"id": "vdi", "label": "VDI（閲覧用）サーバ\nDMZ に設置", "row": 0, "col": 1, "emphasis": true},

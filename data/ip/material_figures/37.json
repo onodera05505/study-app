@@ -6,7 +6,7 @@
       "id": 1,
       "type": "sequence",
       "after": "### 名前解決のしくみ",
-      "caption": "DNS は通信を始める前に名前を IP アドレスへ変換する係で、通信そのものは運ばない。",
+      "caption": "ドメイン名から IP アドレスを教えるのが DNS の役目で、そのあとの通信は相手のサーバと直接やり取りします。",
       "actors": [
         {"id": "pc", "label": "PC（ブラウザ）"},
         {"id": "dns", "label": "DNS サーバ"},
@@ -15,7 +15,7 @@
       "steps": [
         {"from": "pc", "to": "dns", "label": "このドメイン名の IP アドレスは？"},
         {"from": "dns", "to": "pc", "label": "203.0.113.10 です", "note": "IP アドレスからドメイン名を引く逆向きも DNS の役割"},
-        {"from": "pc", "to": "web", "label": "その IP アドレスあてに接続", "note": "配るのは DHCP、代わりに行くのはプロキシ"},
+        {"from": "pc", "to": "web", "label": "その IP アドレスあてに接続"},
         {"from": "web", "to": "pc", "label": "ページを返す"}
       ]
     }

@@ -6,19 +6,58 @@
       "id": 1,
       "type": "blocks",
       "after": "### フェーズと契約形態の対応",
-      "caption": "両端の要件定義と運用テストが準委任型、仕様が固まった中間が請負型。",
+      "caption": "フェーズごとの契約形態の対応です。両端の要件定義と運用テストが準委任型、仕様が固まった中間が請負型です。",
       "nodes": [
-        {"id": "req", "label": "要件定義\n準委任型", "row": 0, "col": 0, "emphasis": true},
-        {"id": "ext", "label": "システム外部設計\n準委任型／請負型", "row": 0, "col": 1},
-        {"id": "mid", "label": "内部設計〜\nシステム結合\n請負型", "row": 0, "col": 2},
-        {"id": "sys", "label": "システムテスト\n準委任型／請負型", "row": 0, "col": 3},
-        {"id": "opr", "label": "運用テスト\n準委任型", "row": 0, "col": 4, "emphasis": true}
+        {
+          "id": "req",
+          "label": "要件定義\n準委任型",
+          "row": 0,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "ext",
+          "label": "システム外部設計\n準委任型／請負型",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "mid",
+          "label": "内部設計〜\nシステム結合\n請負型",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "sys",
+          "label": "システムテスト\n準委任型／請負型",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "opr",
+          "label": "運用テスト\n準委任型",
+          "row": 0,
+          "col": 4,
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "req", "to": "ext"},
-        {"from": "ext", "to": "mid"},
-        {"from": "mid", "to": "sys"},
-        {"from": "sys", "to": "opr"}
+        {
+          "from": "req",
+          "to": "ext"
+        },
+        {
+          "from": "ext",
+          "to": "mid"
+        },
+        {
+          "from": "mid",
+          "to": "sys"
+        },
+        {
+          "from": "sys",
+          "to": "opr"
+        }
       ]
     }
   ]

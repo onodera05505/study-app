@@ -164,7 +164,9 @@ def main() -> int:
                 problems.append(f"{where} {lab}: note が空")
                 continue
             if term and lab != e.get("correct"):
-                notes_by_term.setdefault(term, set()).add(note)
+                # 用語集に入るのは 1 文目だけ（build_seed.note_brief と同じ切り方）なので、割れも 1 文目で見る
+                first = re.search(r"^(.+?[。．])", note)
+                notes_by_term.setdefault(term, set()).add((first.group(1) if first else note).strip())
             if lab != e.get("correct") and DEAD_END.search(note):
                 warnings.append(f"{where} {lab}: note が「この値にはなりません」型で終わる（どの誤りでその値になるかを 1 つ書く）")
             if len(note) > NOTE_MAX:
@@ -225,7 +227,7 @@ def main() -> int:
 
     multi = {t: n for t, n in notes_by_term.items() if len(n) > 1}
     if multi:
-        warnings.append(f"同じ term に別の note が {len(multi)} 語（用語集では 1 つに畳まれる）: {sorted(multi)[:5]}")
+        warnings.append(f"同じ term に別の note（1 文目）が {len(multi)} 語（用語集では最新の回の 1 文目だけを採る）: {sorted(multi)[:5]}")
     print(f"解説 {len(explanations)} 本 / 用語集 {len(glossary)} 語")
     print(f"  担当バンドルと突合できたファイル: {covered_files}")
     if no_term_wrong:

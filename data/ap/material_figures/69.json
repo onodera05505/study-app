@@ -6,7 +6,7 @@
       "id": 1,
       "type": "blocks",
       "after": "### 数え上げの手順",
-      "caption": "最初に出す要素で場合分けすると 2＋2＋1＝5 通り。C の次は頂上の B しか出せないので C A B は作れない。",
+      "caption": "最初に出す要素で場合分けして数え上げます。先に積まれた要素は、上に積まれた要素より後にしか出せません。",
       "nodes": [
         {"id": "root", "label": "入力は A → B → C\n出す時点は自由", "row": 0, "col": 2},
         {"id": "fa", "label": "最初に A", "row": 1, "col": 0},
@@ -17,7 +17,7 @@
         {"id": "o3", "label": "B A C", "row": 2, "col": 2},
         {"id": "o4", "label": "B C A", "row": 2, "col": 3},
         {"id": "o5", "label": "C B A", "row": 2, "col": 4},
-        {"id": "ng", "label": "C A B は不可\nC の下は B", "row": 2, "col": 5, "emphasis": true}
+        {"id": "ng", "label": "C の下は B\n出せるのは B → A", "row": 2, "col": 5, "emphasis": true}
       ],
       "edges": [
         {"from": "root", "to": "fa"},

@@ -6,7 +6,7 @@
       "id": 1,
       "type": "blocks",
       "after": "### どのサーバをどちらに置くか",
-      "caption": "外部と通信するサーバだけを DMZ に置き、社外秘のファイルサーバは企業内 LAN に置く。",
+      "caption": "外から接続を受けるサーバを DMZ に置き、社内だけで使うサーバは企業内 LAN に置きます。",
       "nodes": [
         {"id": "net", "label": "インターネット", "row": 0, "col": 0, "shape": "cloud"},
         {"id": "dmz", "label": "DMZ", "row": 0, "col": 1, "emphasis": true},

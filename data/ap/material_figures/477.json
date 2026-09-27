@@ -6,7 +6,7 @@
       "id": 1,
       "type": "blocks",
       "after": "### 横に並んだ列を縦に並べ直す",
-      "caption": "UNION は列ではなく行を増やす。3 行の表から 2 本の SELECT を積んで 6 行になる。",
+      "caption": "同じ列構成の SELECT を UNION でつなぐと、結果に行が縦に積まれて増えることを表しています。",
       "nodes": [
         {"id": "src", "label": "部門別売上\n3 行", "row": 1, "col": 0},
         {"id": "s1", "label": "第 1 期を取り出す\nSELECT", "row": 0, "col": 1},

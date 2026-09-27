@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="335" viewBox="0 0 687.2 360" role="img">
-<title>空いていれば許可を得ずに送信し、衝突したらランダムな時間だけ待って再送するのが CSMA/CD。</title>
-<rect x="0.5" y="0.5" width="686.2" height="359" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="320" viewBox="0 0 687.2 344" role="img">
+<title>伝送路が空いていればそのまま送信し、衝突したらランダムな時間だけ待って送り直します。</title>
+<rect x="0.5" y="0.5" width="686.2" height="343" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(20 20)">
-<line x1="48" y1="34" x2="48" y2="292" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="323.6" y1="34" x2="323.6" y2="292" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="599.2" y1="34" x2="599.2" y2="292" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="48" y1="34" x2="48" y2="276" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="323.6" y1="34" x2="323.6" y2="276" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="599.2" y1="34" x2="599.2" y2="276" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
 <rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
 <text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ノード A</text>
 <rect x="275.6" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
@@ -17,19 +17,17 @@
 <polyline points="51,108 320.6,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="320.6,108 312.6,111.6 312.6,104.4" fill="#1f2937"/>
 <text x="185.8" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 空いていたのでそのまま送信</text>
-<rect x="103.8" y="113" width="164" height="16" rx="3" fill="#ffffff"/>
-<text x="185.8" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">許可の取得や順番待ちは無い</text>
-<polyline points="596.2,164 326.6,164" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="326.6,164 334.6,160.4 334.6,167.6" fill="#1f2937"/>
-<text x="461.4" y="157" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. B も同時に送信を始める</text>
-<polyline points="320.6,204 51,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="51,204 59,200.4 59,207.6" fill="#1f2937"/>
-<text x="185.8" y="197" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 信号が重なり衝突（A・B とも送信を中止）</text>
-<polyline points="51,244 320.6,244" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="320.6,244 312.6,247.6 312.6,240.4" fill="#1f2937"/>
-<text x="185.8" y="237" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. ランダムな時間だけ待って再送</text>
-<rect x="49.8" y="249" width="272" height="16" rx="3" fill="#ffffff"/>
-<text x="185.8" y="262.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">待ち時間が固定だと同時に再送してまた衝突する</text>
+<polyline points="596.2,148 326.6,148" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="326.6,148 334.6,144.4 334.6,151.6" fill="#1f2937"/>
+<text x="461.4" y="141" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. B も同時に送信を始める</text>
+<polyline points="320.6,188 51,188" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,188 59,184.4 59,191.6" fill="#1f2937"/>
+<text x="185.8" y="181" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 信号が重なり衝突（A・B とも送信を中止）</text>
+<polyline points="51,228 320.6,228" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="320.6,228 312.6,231.6 312.6,224.4" fill="#1f2937"/>
+<text x="185.8" y="221" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. ランダムな時間だけ待って再送</text>
+<rect x="67.8" y="233" width="236" height="16" rx="3" fill="#ffffff"/>
+<text x="185.8" y="246.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">待ち時間をランダムにして再衝突を避ける</text>
 </g>
-<text x="343.6" y="340" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">空いていれば許可を得ずに送信し、衝突したらランダムな時間だけ待って再送するのが CSMA/CD。</text>
+<text x="343.6" y="324" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">伝送路が空いていればそのまま送信し、衝突したらランダムな時間だけ待って送り直します。</text>
 </svg>

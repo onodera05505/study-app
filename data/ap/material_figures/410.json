@@ -6,19 +6,19 @@
       "id": 1,
       "type": "blocks",
       "after": "### 計算の解き方（過去問の数値で）",
-      "caption": "内側の判定は真の枝しか通らず、偽の枝が 2 本残る。命令は全部通るので C0 は 100%、分岐は 8/10 で C1 は 80%。",
+      "caption": "ネストされた判定は外側が真のとき内側に到達しないので、通らない枝が残りやすいことを表しています。",
       "nodes": [
         {"id": "j1", "label": "判定\n(W＝0) and (X＝0)", "row": 0, "col": 1, "shape": "round"},
-        {"id": "i2", "label": "命令2\nケース1 で実行", "row": 1, "col": 0},
+        {"id": "i2", "label": "命令2", "row": 1, "col": 0},
         {"id": "j2", "label": "内側の判定\n(W≠0) and (X≠0)", "row": 1, "col": 2, "shape": "round"},
-        {"id": "i3", "label": "命令3\nケース2 で実行", "row": 2, "col": 1},
-        {"id": "skip", "label": "何もせず合流\nどちらのケースでも\n通らない枝", "row": 2, "col": 2, "emphasis": true}
+        {"id": "i3", "label": "命令3", "row": 2, "col": 1},
+        {"id": "skip", "label": "何もせず合流\n通らない枝が残る", "row": 2, "col": 2, "emphasis": true}
       ],
       "edges": [
-        {"from": "j1", "to": "i2", "label": "真：ケース1"},
-        {"from": "j1", "to": "j2", "label": "偽：ケース2"},
-        {"from": "j2", "to": "i3", "label": "真：ケース2"},
-        {"from": "j2", "to": "skip", "label": "偽：未通過", "style": "dashed"}
+        {"from": "j1", "to": "i2", "label": "真"},
+        {"from": "j1", "to": "j2", "label": "偽"},
+        {"from": "j2", "to": "i3", "label": "真"},
+        {"from": "j2", "to": "skip", "label": "偽", "style": "dashed"}
       ]
     }
   ]

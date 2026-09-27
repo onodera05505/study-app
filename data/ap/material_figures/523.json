@@ -6,7 +6,7 @@
       "id": 1,
       "type": "blocks",
       "after": "### HDFS と MapReduce",
-      "caption": "ファイルをブロックに分けて複製し、データのある各ノードで Map、その結果を Reduce で集約する。",
+      "caption": "ファイルをブロックに分けて複製し、データのある各ノードで Map、その結果を Reduce で集約する流れを表しています。",
       "nodes": [
         {"id": "f", "label": "大きなファイル", "row": 0, "col": 0},
         {"id": "hd", "label": "HDFS\nブロックに分割し\n3 か所へ複製", "row": 0, "col": 1, "shape": "cylinder", "emphasis": true},

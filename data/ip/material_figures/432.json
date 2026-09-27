@@ -6,7 +6,7 @@
       "id": 1,
       "type": "blocks",
       "after": "### 記憶階層のしくみ",
-      "caption": "CPU は1次→2次→主記憶の順に探し、CPU に近いほど速くて容量が小さい。",
+      "caption": "CPU は近い階層から順に探します。近いほど速くて容量が小さく、遠いほど遅くて大容量です。",
       "nodes": [
         {"id": "cpu", "label": "CPU", "row": 0, "col": 0},
         {"id": "l1", "label": "1次キャッシュ\nSRAM・最も速い", "row": 0, "col": 1, "emphasis": true},

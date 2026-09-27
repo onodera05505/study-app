@@ -156,6 +156,14 @@ def strip_marks(text: str) -> str:
     return body.strip()
 
 
+def note_brief(note: str) -> str:
+    """誤答 note のうち用語集（ポップ）に使う部分＝1 文目。「〜です。〜ではありません」の 2 文目は
+    その問題の正解との対比で、他の問題のポップに出ると浮くので落とす（2026-09-27）。"""
+    body = note.strip()
+    mo = re.search(r"^(.+?[。．])", body)
+    return (mo.group(1) if mo else body).strip()
+
+
 def first_sentence(text: str) -> str:
     """教材の explanation の第1文。用語集の穴埋めに使う。"""
     body = strip_marks(text).split("\n")[0].strip()
@@ -209,6 +217,9 @@ def build_glossary(
             note = strip_marks(c.get("note") or "")
             # 正解の行は「正解。〜」で始まる約束。用語の説明としては要らない
             note = re.sub(r"^正解[。．，、]?\s*", "", note).strip()
+            # ポップの説明は note の 1 文目だけ（2026-09-27 本人の決定）。2 文目は「正解と違う点」で
+            # その問題の文脈に寄るため、用語集に持ち込まない
+            note = note_brief(note)
             if not term or not note:
                 continue
             cur = gl.get(term)

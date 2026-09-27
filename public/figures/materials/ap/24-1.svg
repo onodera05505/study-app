@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="123" viewBox="0 0 750 144" role="img">
-<title>処理時間の短い順に選ぶと実行順は A→C→E→D→B となり、時刻12に終わる B のターンアラウンドタイムは 12－1＝11 秒になる。</title>
+<title>その時点で待っているもののうち処理時間の短いものを選んでいく実行順を、時刻の線に沿って並べています。</title>
 <rect x="0.5" y="0.5" width="749" height="143" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(20 20)">
 <polyline points="103,38 157,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
@@ -27,5 +27,5 @@
 <text x="655" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">8→12</text>
 <text x="655" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">到着 1</text>
 </g>
-<text x="375" y="124" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">処理時間の短い順に選ぶと実行順は A→C→E→D→B となり、時刻12に終わる B のターンアラウンドタイムは 12－1＝11 秒になる。</text>
+<text x="375" y="124" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">その時点で待っているもののうち処理時間の短いものを選んでいく実行順を、時刻の線に沿って並べています。</text>
 </svg>

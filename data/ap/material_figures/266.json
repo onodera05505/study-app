@@ -6,20 +6,63 @@
       "id": 1,
       "type": "blocks",
       "after": "### IT の統制の構造",
-      "caption": "IT への対応は環境への対応と利用及び統制に分かれ、統制は全般統制と業務処理統制の2つから成る。",
+      "caption": "IT への対応が環境への対応と利用及び統制に分かれ、統制が全般統制と業務処理統制の 2 つから成る構造です。",
       "nodes": [
-        {"id": "ita", "label": "IT への対応\n内部統制の6要素の1つ", "row": 0, "col": 1, "emphasis": true},
-        {"id": "env", "label": "IT 環境への対応\n社会・市場の浸透度も含む", "row": 1, "col": 0},
-        {"id": "use", "label": "IT の利用及び統制", "row": 1, "col": 2},
-        {"id": "gen", "label": "IT に係る全般統制\n開発・保守／運用／\nセキュリティ／委託管理", "row": 2, "col": 1},
-        {"id": "app", "label": "IT に係る業務処理統制\n入力チェックなど\n業務アプリ内の統制", "row": 2, "col": 2}
+        {
+          "id": "ita",
+          "label": "IT への対応\n内部統制の6要素の1つ",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "env",
+          "label": "IT 環境への対応\n社会・市場の浸透度も含む",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "use",
+          "label": "IT の利用及び統制",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "gen",
+          "label": "IT に係る全般統制\n開発・保守／運用／\nセキュリティ／委託管理",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "app",
+          "label": "IT に係る業務処理統制\n入力チェックなど\n業務アプリ内の統制",
+          "row": 2,
+          "col": 2
+        }
       ],
       "edges": [
-        {"from": "ita", "to": "env"},
-        {"from": "ita", "to": "use"},
-        {"from": "use", "to": "gen"},
-        {"from": "use", "to": "app"},
-        {"from": "gen", "to": "app", "label": "土台になる", "style": "dashed"}
+        {
+          "from": "ita",
+          "to": "env"
+        },
+        {
+          "from": "ita",
+          "to": "use"
+        },
+        {
+          "from": "use",
+          "to": "gen"
+        },
+        {
+          "from": "use",
+          "to": "app"
+        },
+        {
+          "from": "gen",
+          "to": "app",
+          "label": "土台になる",
+          "style": "dashed"
+        }
       ]
     }
   ]

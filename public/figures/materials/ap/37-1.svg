@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="346" viewBox="0 0 654 354" role="img">
-<title>署名するのは送信側のメールサーバで、検証用の公開鍵は送信元ドメインの DNS から受信側が取得する。</title>
-<rect x="0.5" y="0.5" width="653" height="353" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="331" viewBox="0 0 654 338" role="img">
+<title>送信側のメールサーバが署名を付け、受信側が送信元ドメインの DNS から公開鍵を取得して検証する流れです。</title>
+<rect x="0.5" y="0.5" width="653" height="337" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(20 20)">
-<line x1="55" y1="34" x2="55" y2="286" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="300" y1="34" x2="300" y2="286" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="552" y1="34" x2="552" y2="286" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="55" y1="34" x2="55" y2="270" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="300" y1="34" x2="300" y2="270" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="552" y1="34" x2="552" y2="270" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
 <rect x="0" y="0" width="110" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
 <text x="55" y="11.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">送信側</text>
 <text x="55" y="31.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">メールサーバ</text>
@@ -20,8 +20,8 @@
 <polyline points="58,108 297,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="297,108 289,111.6 289,104.4" fill="#1f2937"/>
 <text x="177.5" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. ② 本文とヘッダーの署名を付けて送信</text>
-<rect x="-8.9" y="113" width="372.8" height="16" rx="3" fill="#ffffff"/>
-<text x="177.5" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">署名するのはメールサーバ。差出人本人が署名する S/MIME とは別</text>
+<rect x="101.5" y="113" width="152" height="16" rx="3" fill="#ffffff"/>
+<text x="177.5" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">署名するのはメールサーバ</text>
 <polyline points="303,164 549,164" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="549,164 541,167.6 541,160.4" fill="#1f2937"/>
 <text x="426" y="157" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. ③ 公開鍵を問い合わせる</text>
@@ -31,8 +31,6 @@
 <polyline points="300,236 326,236 326,250 302,250" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="302,250 310,246.4 310,253.6" fill="#1f2937"/>
 <text x="334" y="244" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. ⑤ 署名を検証（なりすまし・改ざんを検知）</text>
-<rect x="139.1" y="255" width="321.8" height="16" rx="3" fill="#ffffff"/>
-<text x="300" y="268.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">IP アドレスの照合は SPF、失敗時の扱いの表明は DMARC</text>
 </g>
-<text x="327" y="334" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">署名するのは送信側のメールサーバで、検証用の公開鍵は送信元ドメインの DNS から受信側が取得する。</text>
+<text x="327" y="318" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">送信側のメールサーバが署名を付け、受信側が送信元ドメインの DNS から公開鍵を取得して検証する流れです。</text>
 </svg>

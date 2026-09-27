@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="296" viewBox="0 0 640 296" role="img">
-<title>1周ごとに値を書き出す。2周目まで合えば式は正しく、回数は繰返しの指定で決まる。</title>
+<title>繰返しの1周ごとに変数がどう変わるかを書き出した表です。式が合っているかは途中の値を追って確かめます。</title>
 <rect x="0.5" y="0.5" width="639" height="295" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(158.73 20)">
-<line x1="67.95" y1="34" x2="67.95" y2="228" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="274.55" y1="34" x2="274.55" y2="228" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="67.95" y1="34" x2="67.95" y2="212" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="274.55" y1="34" x2="274.55" y2="212" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
 <rect x="0" y="0" width="135.9" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
 <text x="67.95" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">繰返し i＝1,2,3</text>
 <rect x="226.55" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
@@ -16,13 +16,12 @@
 <polyline points="70.95,124 271.55,124" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="271.55,124 263.55,127.6 263.55,120.4" fill="#1f2937"/>
 <text x="171.25" y="117" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. i＝2　num ← 3 ＋ 2×2 ＝ 7</text>
-<rect x="79.65" y="129" width="183.2" height="16" rx="3" fill="#ffffff"/>
-<text x="171.25" y="142.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">2×num ＋ i では 8 で合わない</text>
-<polyline points="70.95,180 271.55,180" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="271.55,180 263.55,183.6 263.55,176.4" fill="#1f2937"/>
-<text x="171.25" y="173" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. i＝3　num ← 7 ＋ 2×3 ＝ 13</text>
-<rect x="102.75" y="185" width="137" height="16" rx="3" fill="#ffffff"/>
-<text x="171.25" y="198.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">3回で終わり 13 が残る</text>
+<polyline points="70.95,164 271.55,164" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="271.55,164 263.55,167.6 263.55,160.4" fill="#1f2937"/>
+<text x="171.25" y="157" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. i＝3　num ← 7 ＋ 2×3 ＝ 13</text>
+<rect x="102.75" y="169" width="137" height="16" rx="3" fill="#ffffff"/>
+<text x="171.25" y="182.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">3回で終わり 13 が残る</text>
 </g>
-<text x="320" y="276" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">1周ごとに値を書き出す。2周目まで合えば式は正しく、回数は繰返しの指定で決まる。</text>
+<text x="320" y="260" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">繰返しの1周ごとに変数がどう変わるかを書き出した表です。式が合っているかは途中の値を追って確かめます</text>
+<text x="320" y="276" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">。</text>
 </svg>

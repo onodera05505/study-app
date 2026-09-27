@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="370" viewBox="0 0 640 370" role="img">
-<title>出発点は盗んだハッシュ値で、事前に作った対応表から元のパスワードを逆引きする。</title>
+<title>あらかじめ候補をハッシュ化した表を作り、盗んだハッシュ値と突き合わせて元のパスワードを見つけます。</title>
 <rect x="0.5" y="0.5" width="639" height="369" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(24.2 20)">
 <line x1="48" y1="34" x2="48" y2="302" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
@@ -25,13 +25,13 @@
 <polyline points="512.6,204 51,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="51,204 59,200.4 59,207.6" fill="#1f2937"/>
 <text x="281.8" y="197" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 元の平文パスワードが判明</text>
-<rect x="127.8" y="209" width="308" height="16" rx="3" fill="#ffffff"/>
-<text x="281.8" y="222.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ログインを試行しない点が総当たり・リスト攻撃と違う</text>
+<rect x="157.8" y="209" width="248" height="16" rx="3" fill="#ffffff"/>
+<text x="281.8" y="222.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ログインを試行せずに元のパスワードを得る</text>
 <polyline points="267.8,252 293.8,252 293.8,266 269.8,266" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="269.8,266 277.8,262.4 277.8,269.6" fill="#1f2937"/>
 <text x="301.8" y="260" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. 対策：利用者ごとにソルトを足す</text>
 <rect x="59.8" y="271" width="416" height="16" rx="3" fill="#ffffff"/>
 <text x="267.8" y="284.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">同じパスワードでもハッシュ値が人ごとに変わり、共通の表が使えなくなる</text>
 </g>
-<text x="320" y="350" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">出発点は盗んだハッシュ値で、事前に作った対応表から元のパスワードを逆引きする。</text>
+<text x="320" y="350" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">あらかじめ候補をハッシュ化した表を作り、盗んだハッシュ値と突き合わせて元のパスワードを見つけます。</text>
 </svg>

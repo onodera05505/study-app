@@ -1,0 +1,65 @@
+{
+  "topic_id": 476,
+  "term": "半加算器",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 真理値表から2つの式を導く",
+      "caption": "入力 A と B を 2 つの素子に分けて入れ、排他的論理和の出力が和 S、論理積の出力が桁上がり C です。",
+      "nodes": [
+        {
+          "id": "in",
+          "label": "入力 A と B\n1 桁の 2 進数",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "x",
+          "label": "排他的論理和",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "n",
+          "label": "論理積",
+          "row": 2,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "s",
+          "label": "和 S\n1 桁目",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "c",
+          "label": "桁上がり C\n2 桁目",
+          "row": 2,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "in",
+          "to": "x"
+        },
+        {
+          "from": "in",
+          "to": "n"
+        },
+        {
+          "from": "x",
+          "to": "s",
+          "label": "一方だけ 1 なら 1"
+        },
+        {
+          "from": "n",
+          "to": "c",
+          "label": "両方 1 なら 1"
+        }
+      ]
+    }
+  ]
+}

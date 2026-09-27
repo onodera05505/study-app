@@ -1,30 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="182" viewBox="0 0 864.1 246" role="img">
-<title>並列2台をまず 0.96 にまとめ、直列の 0.9 を掛けて 0.86。0.96 で止めるのが引っかけ。</title>
-<rect x="0.5" y="0.5" width="863.1" height="245" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="168" viewBox="0 0 938.5 246" role="img">
+<title>並列につないだ部分をまず1つにまとめ、直列部分と掛け合わせて全体の稼働率を出す順序を表します。</title>
+<rect x="0.5" y="0.5" width="937.5" height="245" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(20 20)">
-<polyline points="103.4,38 334.6,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="334.6,38 326.6,41.6 326.6,34.4" fill="#1f2937"/>
-<polyline points="55,122 55,94 382.6,94 382.6,66" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="382.6,66 386.2,74 379,74" fill="#1f2937"/>
-<polyline points="430.6,38 655.2,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="655.2,38 647.2,41.6 647.2,34.4" fill="#1f2937"/>
+<polyline points="103.4,38 371.8,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="371.8,38 363.8,41.6 363.8,34.4" fill="#1f2937"/>
+<polyline points="55,122 55,94 419.8,94 419.8,66" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="419.8,66 423.4,74 416.2,74" fill="#1f2937"/>
+<polyline points="467.8,38 729.6,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="729.6,38 721.6,41.6 721.6,34.4" fill="#1f2937"/>
 <rect x="6.6" y="10" width="96.8" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
 <text x="55" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">Web サーバ</text>
 <text x="55" y="52.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">0.8</text>
 <rect x="6.6" y="122" width="96.8" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
 <text x="55" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">Web サーバ</text>
 <text x="55" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">0.8</text>
-<rect x="334.6" y="10" width="96" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="382.6" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">DB サーバ</text>
-<text x="382.6" y="52.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">0.9</text>
-<rect x="655.2" y="0" width="168.9" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="739.65" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">システム全体</text>
-<text x="739.65" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">0.96 × 0.9 ＝ 0.864</text>
-<text x="739.65" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">→ 0.86</text>
-<rect x="114.2" y="21" width="209.6" height="16" rx="3" fill="#ffffff"/>
-<text x="219" y="34.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">並列は 1 －（1 － 0.8）² ＝ 0.96</text>
-<rect x="502.9" y="21" width="80" height="16" rx="3" fill="#ffffff"/>
-<text x="542.9" y="34.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">直列は掛け算</text>
+<rect x="371.8" y="10" width="96" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="419.8" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">DB サーバ</text>
+<text x="419.8" y="52.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">0.9</text>
+<rect x="729.6" y="0" width="168.9" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="814.05" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">システム全体</text>
+<text x="814.05" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">0.96 × 0.9 ＝ 0.864</text>
+<text x="814.05" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">→ 0.86</text>
+<rect x="114.2" y="21" width="246.8" height="16" rx="3" fill="#ffffff"/>
+<text x="237.6" y="34.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">並列は 1 －（1 － 0.8）の 2 乗 ＝ 0.96</text>
+<rect x="558.7" y="21" width="80" height="16" rx="3" fill="#ffffff"/>
+<text x="598.7" y="34.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">直列は掛け算</text>
 </g>
-<text x="432.05" y="226" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">並列2台をまず 0.96 にまとめ、直列の 0.9 を掛けて 0.86。0.96 で止めるのが引っかけ。</text>
+<text x="469.25" y="226" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">並列につないだ部分をまず1つにまとめ、直列部分と掛け合わせて全体の稼働率を出す順序を表します。</text>
 </svg>

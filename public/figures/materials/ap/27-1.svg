@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="318" viewBox="0 0 640 318" role="img">
-<title>値が近くても格納先はばらばらになるので、値を1つに指定する検索だけが速く、範囲や前方一致は辿れない。</title>
-<rect x="0.5" y="0.5" width="639" height="317" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="334" viewBox="0 0 640 334" role="img">
+<title>値をハッシュ関数で変換した位置へ格納するので、並び順は値の大小と無関係になります。等価検索だけが速くなります。</title>
+<rect x="0.5" y="0.5" width="639" height="333" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(115 20)">
 <polyline points="55,56 55,79 205,79 205,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="205,102 201.4,94 208.6,94" fill="#1f2937"/>
@@ -40,5 +40,6 @@
 <rect x="54" y="157" width="152" height="16" rx="3" fill="#ffffff"/>
 <text x="130" y="170.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">値の大小と無関係な位置へ</text>
 </g>
-<text x="320" y="298" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">値が近くても格納先はばらばらになるので、値を1つに指定する検索だけが速く、範囲や前方一致は辿れない。</text>
+<text x="320" y="298" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">値をハッシュ関数で変換した位置へ格納するので、並び順は値の大小と無関係になります。等価検索だけが速く</text>
+<text x="320" y="314" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">なります。</text>
 </svg>

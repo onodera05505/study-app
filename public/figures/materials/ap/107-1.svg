@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="354" viewBox="0 0 640 354" role="img">
-<title>1秒間隔で到着する4件（処理時間4秒）は多重度1なら16秒、多重度2なら9秒で終わり、差は7秒になる。</title>
-<rect x="0.5" y="0.5" width="639" height="353" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="370" viewBox="0 0 640 370" role="img">
+<title>多重度を上げると待ちが減り、全体の終了時刻が早まります。処理は、到着時刻と空きができた時刻の遅い方から始まります。</title>
+<rect x="0.5" y="0.5" width="639" height="369" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(20 20)">
 <line x1="39.2" y1="216" x2="588" y2="216" stroke="#e5e7eb" stroke-width="1"/>
 <text x="31.2" y="220.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">0</text>
@@ -37,5 +37,6 @@
 <line x1="328.6" y1="278" x2="348.6" y2="278" stroke="#2563eb" stroke-width="2.6"/>
 <text x="354.6" y="282.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">多重度 2（同時に2件）</text>
 </g>
-<text x="320" y="334" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">1秒間隔で到着する4件（処理時間4秒）は多重度1なら16秒、多重度2なら9秒で終わり、差は7秒になる。</text>
+<text x="320" y="334" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">多重度を上げると待ちが減り、全体の終了時刻が早まります。処理は、到着時刻と空きができた時刻の遅い方か</text>
+<text x="320" y="350" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ら始まります。</text>
 </svg>

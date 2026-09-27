@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="226" viewBox="0 0 640 226" role="img">
-<title>初期状態 a から 110 を 1 文字ずつ読むと a→b→d→c と移るので、受理状態は c になる。</title>
-<rect x="0.5" y="0.5" width="639" height="225" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="242" viewBox="0 0 640 242" role="img">
+<title>初期状態から入力を 1 文字ずつ読み、表を引いて移った先をたどります。最後に立っている状態が読み終わりの状態です。</title>
+<rect x="0.5" y="0.5" width="639" height="241" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(68.5 20)">
 <polyline points="103,19 127,19 127,37 106,37" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="106,37 114,33.4 114,40.6" fill="#1f2937"/>
@@ -47,5 +47,6 @@
 <rect x="222.9" y="65" width="14.6" height="16" rx="3" fill="#ffffff"/>
 <text x="230.2" y="78.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">0</text>
 </g>
-<text x="320" y="206" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">初期状態 a から 110 を 1 文字ずつ読むと a→b→d→c と移るので、受理状態は c になる。</text>
+<text x="320" y="206" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">初期状態から入力を 1 文字ずつ読み、表を引いて移った先をたどります。最後に立っている状態が読み終わり</text>
+<text x="320" y="222" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">の状態です。</text>
 </svg>

@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="416" viewBox="0 0 640 416" role="img">
-<title>呼出しは n−1 で 0 まで下り、基底の 1 から掛け戻して 6 になる。基底を 0 にすると全体が 0 になる。</title>
+<title>呼出しは引数を 1 つ小さくしながら終了条件まで下り、そこから戻り値を掛け戻して答えになる流れです。</title>
 <rect x="0.5" y="0.5" width="639" height="415" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(44 20)">
 <line x1="48" y1="34" x2="48" y2="348" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
@@ -20,16 +20,16 @@
 <polyline points="203,108 349,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="349,108 341,111.6 341,104.4" fill="#1f2937"/>
 <text x="276" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. n−1 を渡して呼ぶ</text>
-<rect x="85.7" y="113" width="380.6" height="16" rx="3" fill="#ffffff"/>
-<text x="276" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">引数を n−1 にすると基底の 0 へ近づく。n＋1 では永久に届かない</text>
+<rect x="161.6" y="113" width="228.8" height="16" rx="3" fill="#ffffff"/>
+<text x="276" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">引数を n−1 にすると基底の 0 へ近づく</text>
 <polyline points="355,164 501,164" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="501,164 493,167.6 493,160.4" fill="#1f2937"/>
 <text x="428" y="157" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. n−1 を渡して呼ぶ</text>
 <polyline points="501,204 355,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="355,204 363,200.4 363,207.6" fill="#1f2937"/>
 <text x="428" y="197" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 終了条件：1 を返す</text>
-<rect x="335.5" y="209" width="185" height="16" rx="3" fill="#ffffff"/>
-<text x="428" y="222.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">0 を返すと答えが常に 0 になる</text>
+<rect x="334" y="209" width="188" height="16" rx="3" fill="#ffffff"/>
+<text x="428" y="222.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">基底の値が掛け戻しの起点になる</text>
 <polyline points="349,260 203,260" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="203,260 211,256.4 211,263.6" fill="#1f2937"/>
 <text x="276" y="253" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. 1×1＝1 を返す</text>
@@ -39,5 +39,5 @@
 <rect x="-5.7" y="305" width="259.4" height="16" rx="3" fill="#ffffff"/>
 <text x="124" y="318.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">呼出し元で 3×2＝6 となり 3 の階乗が求まる</text>
 </g>
-<text x="320" y="396" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">呼出しは n−1 で 0 まで下り、基底の 1 から掛け戻して 6 になる。基底を 0 にすると全体が 0 になる。</text>
+<text x="320" y="396" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">呼出しは引数を 1 つ小さくしながら終了条件まで下り、そこから戻り値を掛け戻して答えになる流れです。</text>
 </svg>
