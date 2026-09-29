@@ -438,6 +438,9 @@ def main() -> int:
         # （資格版の D1 に列が無くても投入できる。列は migrations/0005 で足す）。
         has_order = any("sort_order" in x for x in topics["topics"])
         cols = "id, term, syllabus_item_id, is_new, explanation, detail, question_count" + (", sort_order" if has_order else "")
+        # 出題頻度（question_count）と topic_questions は同一内容（content_key）の重複を畳まずに数える。
+        # 1 問にまとめるのは学習側の出題だけ。
+        # @implements REQ-029
         vals = [tid, t["term"], t["syllabus_item"], bool(t["is_new"]), (m or {}).get("explanation"), (m or {}).get("detail"), len(valid)]
         if has_order: vals.append(t.get("sort_order"))
         lines.append(

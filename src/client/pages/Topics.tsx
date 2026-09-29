@@ -30,6 +30,7 @@ const FIELD_ORDER = exam.fields
  *  単元を選んで初めて論点の一覧に入る。
  *
  *  「中分類」はシラバスの用語で、学習者には通じない。画面では「単元」と呼ぶ。 */
+// @implements REQ-010, REQ-011, REQ-015
 export function Topics() {
   const [params, setParams] = useSearchParams()
   // null は「まだ取得していない」、[] は「取得した結果が空」。区別しないと

@@ -14,7 +14,9 @@
     "db:seed:local": "node scripts/seed.mjs --local",
     "typecheck": "tsc --noEmit",
     "check:render": "bash scripts/check_render.sh",
-    "audit:screens": "bash scripts/audit_screens.sh"
+    "audit:screens": "bash scripts/audit_screens.sh",
+    "test": "bash scripts/trace_check && vitest run && python3 scripts/check_source.py && python3 scripts/check_docs.py",
+    "test:unit": "vitest run"
   },
   "dependencies": {
     "drizzle-orm": "^0.45.2",
@@ -36,6 +38,7 @@
     "tsx": "^4.20.6",
     "typescript": "^7.0.2",
     "vite": "^8.2.2",
+    "vitest": "^5.0.2",
     "wrangler": "^4.125.0"
   }
 }

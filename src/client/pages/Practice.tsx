@@ -13,6 +13,7 @@ type Current = {
   } | null
 }
 
+// @implements REQ-015, REQ-019, REQ-025
 export function Practice() {
   // null は「まだ取得していない」、[] は「取得した結果が空」。[] で初期化すると
   // 読み込み中に分野が1つも無いように見える。

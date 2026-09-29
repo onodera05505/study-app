@@ -36,9 +36,11 @@ export const authRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>
 const ssoOn = (env: Bindings) => !!env.SSO_PORTAL_URL
 
 /** 画面がログインの形を決めるための設定（公開）。 */
+// @implements REQ-005
 authRoutes.get('/config', (c) => c.json({ sso: ssoOn(c.env), portal: c.env.SSO_PORTAL_URL ?? null, app: c.env.EXAM }))
 
 /** まなびばから戻ってきた使い捨てコードを、まなびばのサーバでメールと名前に交換し、この学びのトークンを出す。 */
+// @implements REQ-004
 authRoutes.post('/sso', async (c) => {
   if (!ssoOn(c.env)) return c.json({ error: 'この環境では SSO が設定されていません' }, 404)
   if (!c.env.SSO_SECRET) return c.json({ error: 'SSO の共有秘密が設定されていません。管理者に連絡してください' }, 503)
@@ -69,6 +71,7 @@ authRoutes.post('/sso', async (c) => {
   return c.json({ token, user: { id: user.id, name: user.name, role: user.role } })
 })
 
+// @implements REQ-005, REQ-034
 authRoutes.post('/register', async (c) => {
   if (ssoOn(c.env)) return c.json({ error: 'アカウントはまなびばで作ります' }, 404)
   const parsed = registration.safeParse(await c.req.json().catch(() => null))
@@ -98,6 +101,7 @@ authRoutes.post('/register', async (c) => {
   return c.json({ token, user: { id: user.id, name: user.name, role: user.role } }, 201)
 })
 
+// @implements REQ-005, REQ-034
 authRoutes.post('/login', async (c) => {
   if (ssoOn(c.env)) return c.json({ error: 'まなびばからログインしてください' }, 404)
   const parsed = credentials.safeParse(await c.req.json().catch(() => null))

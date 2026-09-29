@@ -37,6 +37,7 @@ const createBody = z.object({
   size: z.number().int().min(1).max(100).optional(),
 })
 
+// @implements REQ-019, REQ-023
 sessionRoutes.post('/', async (c) => {
   const parsed = createBody.safeParse(await c.req.json().catch(() => null))
   if (!parsed.success) return c.json({ error: '入力が正しくありません' }, 400)
@@ -118,6 +119,7 @@ sessionRoutes.post('/', async (c) => {
 })
 
 /** 進行中のセッション。中断からの復帰に使う。 */
+// @implements REQ-025
 sessionRoutes.get('/current', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -132,6 +134,7 @@ sessionRoutes.get('/current', async (c) => {
 })
 
 /** 進行中のセッションを破棄する。 */
+// @implements REQ-025
 sessionRoutes.delete('/current', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -143,6 +146,8 @@ sessionRoutes.delete('/current', async (c) => {
   return c.json({ ok: true })
 })
 
+// 他人のセッション ID は 404 になる（user_id で絞る）。
+// @implements REQ-026
 async function loadSession(db: ReturnType<typeof getDb>, userId: string, id: string) {
   return db.query.sessions.findFirst({
     where: and(eq(schema.sessions.id, id), eq(schema.sessions.userId, userId)),
@@ -156,6 +161,7 @@ function isExpired(s: { timeLimitSec: number | null; startedAt: number }): boole
 }
 
 /** 現在の問題（未回答の最小 idx）。 */
+// @implements REQ-023, REQ-025
 sessionRoutes.get('/:id/current', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -222,6 +228,7 @@ const answerBody = z.object({
 })
 
 /** 1問回答する。採点は**出題時スナップショット**に対して行う。 */
+// @implements REQ-022
 sessionRoutes.post('/:id/answer', async (c) => {
   const parsed = answerBody.safeParse(await c.req.json().catch(() => null))
   if (!parsed.success) return c.json({ error: '入力が正しくありません' }, 400)
@@ -299,6 +306,7 @@ async function finalize(db: ReturnType<typeof getDb>, sessionId: string) {
   return { byField: rows.filter((r) => r.field), total: total ?? { total: 0, correct: 0 } }
 }
 
+// @implements REQ-025
 sessionRoutes.post('/:id/finish', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -320,6 +328,7 @@ sessionRoutes.post('/:id/finish', async (c) => {
 })
 
 /** 結果の詳細。間違えた問題から論点へ戻れるようにする。 */
+// @implements REQ-024
 sessionRoutes.get('/:id', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -419,6 +428,7 @@ sessionRoutes.get('/:id', async (c) => {
 })
 
 /** 受験履歴。 */
+// @implements REQ-025
 sessionRoutes.get('/', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id

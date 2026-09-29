@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
  *  予測できない。「どこへ戻るか」をラベルに出しておけば迷わない。
  *
  *  タップ領域は 44px を確保する。片手操作で最初に触る場所になるため。 */
+// @implements REQ-055
 export function BackLink({ to, label }: { to: string; label: string }) {
   return (
     <Link to={to} className="back">

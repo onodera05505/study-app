@@ -24,12 +24,14 @@ async function fetchStamp(): Promise<Stamp> {
 }
 
 /** 最初の印を覚える（何度呼んでも取りに行くのは 1 回）。 */
+// @implements REQ-032
 export function rememberBuild(): Promise<Stamp> {
   if (!initialP) initialP = fetchStamp()
   return initialP
 }
 
 /** 新しい版が出ていれば true。取れないときは false（帯を誤って出さない）。 */
+// @implements REQ-032
 export async function checkForUpdate(): Promise<boolean> {
   const initial = await rememberBuild()
   const now = await fetchStamp()

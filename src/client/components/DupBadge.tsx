@@ -6,6 +6,7 @@
  *
  *  過去問の通し受験（原本どおり全問出す）では出さない。呼び出し側で出し分ける。
  */
+// @implements REQ-021
 export function DupBadge({
   timesAsked,
   otherCitations,

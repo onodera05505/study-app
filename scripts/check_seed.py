@@ -155,6 +155,8 @@ def main() -> int:
     warnings: list[str] = []
 
     # --- 出典と年度ラベル -------------------------------------------------
+    # 出典は「出典：<年度ラベル> <試験名> 問N」。試験名の取り違えと内部コードの素通しを止める
+    # @verifies REQ-027
     per_exam: dict[str, int] = defaultdict(int)
     labels: dict[str, set[str]] = defaultdict(set)
     wrong_name: list[str] = []
@@ -191,6 +193,7 @@ def main() -> int:
             problems.append(f"{exam}: 年度ラベルが複数ある {sorted(ls)}")
 
     # --- 回ごとの問題数 ---------------------------------------------------
+    # @verifies REQ-038
     want_n = QUESTIONS_PER_EXAM.get(d.name)
     if want_n:
         for exam, n in sorted(per_exam.items()):
@@ -239,6 +242,7 @@ def main() -> int:
     # --- 教材に差し込んだ図 -------------------------------------------------
     # figure_image と同じで、無くてもエラーにはならず画面が空欄になるだけ。
     # 置き場所は試験ごとに分ける（同じ論点 ID が試験をまたいでぶつかるため）。
+    # @verifies REQ-017
     material_images = sorted(set(MATERIAL_IMAGE.findall(sql)))
     want_prefix = f"/figures/materials/{d.name}/"
     stray_mat = [p for p in material_images if not p.startswith(want_prefix)]
@@ -261,6 +265,8 @@ def main() -> int:
     # IPA は同じ問題を別の回で使い回す。DB には全問そのまま持つが、学習側では
     # content_key で1問にまとめて出す。まとめる以上、グループの中で正解が
     # 割れていてはいけない（どちらかの読み取りが間違っている）。
+    # @implements REQ-029
+    # @verifies REQ-029
     dup_groups: dict[str, list[dict]] = defaultdict(list)
     rows_full = question_values(sql)
     for row in rows_full:
@@ -323,6 +329,7 @@ def main() -> int:
           f"（うち論点に結び付いた用語 {sum(1 for r in gloss if r.get('topic_id') is not None)}）")
 
     # D16: seed は利用者データ（users / progress / sessions / feedback）に触らない。触ると再投入で消える
+    # @verifies REQ-030
     sql_text = sql_path.read_text(encoding="utf-8")
     for tbl in ("feedback", "users", "progress", "sessions", "session_questions", "daily_visits"):
         import re as _re

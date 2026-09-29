@@ -128,6 +128,8 @@ def main() -> int:
     else:
         print(f"  ✓ 論点 {topic[0]} = {topic[1]!r}")
 
+    # 先頭の過去問の出典（回・年度ラベル）が DB でも同じ値か
+    # @verifies REQ-027
     row = results[len(TABLES) + 1]
     got_q = (row[0]["id"], row[0]["exam"], row[0]["exam_label"]) if row else None
     if got_q != question:
@@ -135,6 +137,8 @@ def main() -> int:
     else:
         print(f"  ✓ 過去問 {question[0]} の年度ラベル = {question[2]!r}")
 
+    # 年度ラベルが内部コード（exam と同じ値）のまま残っている行は 0
+    # @verifies REQ-027
     n_raw = results[len(TABLES) + 2][0]["n"]
     if n_raw:
         problems.append(f"年度ラベルが内部コードのままの過去問が {n_raw} 件（exam_labels.json の足し忘れ）")

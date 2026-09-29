@@ -33,3 +33,7 @@ portal/dist/
 portal/.worker-build/
 .sso_secret.local
 portal/.migrate_accounts.sql
+
+# Stop フック（trace の門）の状態と記録
+.trace-gate/
+.trace-reservations.json

@@ -35,6 +35,7 @@ export type QuestionRow = {
  *  辞書順だと a < h で秋のほうが古いことになってしまう。 */
 const SEASON_RANK: Record<string, number> = { h: 0, o: 1, a: 2 }
 
+// @implements REQ-021
 export function compareExam(a: string, b: string): number {
   const year = (x: string) => Number(x.slice(0, 4)) || 0
   // 末尾が h/o/a ならその時期。無ければ通年（年内で最後）。
@@ -56,6 +57,7 @@ type Dedupable = { id: string; exam: string; contentKey: string | null; citation
  *
  *  グループの並びは元の並びのまま（最初に現れた位置に代表を置く）。呼び出し側が
  *  付けた順序（新しい回が先、など）を壊さないため。 */
+// @implements REQ-021
 export function dedupe<T extends Dedupable>(
   rows: T[],
 ): (T & { timesAsked: number; otherCitations: string[] })[] {
@@ -159,6 +161,7 @@ export type BuildResult = {
 }
 
 /** セッションの出題内容を組み立てる。 */
+// @implements REQ-019, REQ-020, REQ-021
 export async function buildQuestions(
   db: Db,
   userId: string,
@@ -299,6 +302,7 @@ async function annotateTimesAsked(db: Db, rows: QuestionRow[]): Promise<Question
 }
 
 /** 出題時スナップショット。教材を後から直しても当時の内容で採点・表示するため。 */
+// @implements REQ-027, REQ-028
 export function snapshotOf(q: QuestionRow) {
   return {
     text: q.text,

@@ -1,13 +1,16 @@
 const TOKEN_KEY = 'study-app.token'
 
+// @implements REQ-050
 export function getToken(): string | null {
   return localStorage.getItem(TOKEN_KEY)
 }
+// @implements REQ-050
 export function setToken(token: string) {
   localStorage.setItem(TOKEN_KEY, token)
 }
 /** ログインしている人の名前。トークン（JWT）の中身から読む。サーバに聞かない。
  *  「ログインしている私が誰か分からない」（利用者のフィードバック 2026-09-16）に応えてヘッダーに出す。 */
+// @implements REQ-053
 export function getUserName(): string | null {
   const token = getToken()
   if (!token) return null
@@ -21,6 +24,7 @@ export function getUserName(): string | null {
   }
 }
 
+// @implements REQ-050
 export function clearToken() {
   localStorage.removeItem(TOKEN_KEY)
   // 「前回の続き」は端末に残る。消さないと、次にログインした別のアカウントに
@@ -45,6 +49,7 @@ function markSessionExpired() {
 }
 
 /** 印が立っていれば true を返し、同時に消す（出すのは一度だけ）。 */
+// @implements REQ-052
 export function takeSessionExpired(): boolean {
   try {
     const hit = sessionStorage.getItem(EXPIRED_KEY) === '1'
@@ -55,6 +60,7 @@ export function takeSessionExpired(): boolean {
   }
 }
 
+// @implements REQ-051
 export class ApiError extends Error {
   constructor(
     message: string,
@@ -66,6 +72,7 @@ export class ApiError extends Error {
   }
 }
 
+// @implements REQ-050, REQ-051
 export async function api<T = any>(
   path: string,
   init: { method?: string; body?: unknown } = {},
@@ -119,10 +126,12 @@ const memo = new Map<string, Promise<unknown>>()
  *  /fields と /categories は分野・単元の構造だけでなく「理解した数」も返す（進捗の集計を含む）。
  *  理解度を付けて一覧へ戻っても古い数が出続け、再読み込みで直る、という不具合の原因だった
  *  （利用者のフィードバック 2026-09-16）。 */
+// @implements REQ-054
 export function invalidateCached() {
   memo.clear()
 }
 
+// @implements REQ-054
 export function apiCached<T = any>(path: string): Promise<T> {
   const hit = memo.get(path)
   if (hit) return hit as Promise<T>
@@ -143,6 +152,7 @@ const LAST_TOPIC_KEY = 'study-app.lastTopic'
 
 export type LastTopic = { id: number; term: string; middle: string; middleNo: number }
 
+// @implements REQ-040
 export function getLastTopic(): LastTopic | null {
   try {
     const raw = localStorage.getItem(LAST_TOPIC_KEY)
@@ -152,6 +162,7 @@ export function getLastTopic(): LastTopic | null {
   }
 }
 
+// @implements REQ-040
 export function setLastTopic(t: LastTopic) {
   try {
     localStorage.setItem(LAST_TOPIC_KEY, JSON.stringify(t))

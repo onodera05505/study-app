@@ -1,0 +1,11 @@
+#!/bin/sh
+# pre-commit — コミットの前に速い門を回す（依存なし。Node と Python だけ）。
+#
+# 有効化（クローンごとに一度）:  bash scripts/install_githooks.sh
+# 見るもの: 仕様⇔コード⇔テストの対応（scripts/trace_check）と静的な門（check_source・check_docs）。
+# 単体テスト込みの全部は `npm test`（Stop フックと CI が回す）。--no-verify で回避できるので CI にも同じ検査がある。
+set -eu
+cd "$(git rev-parse --show-toplevel)"
+bash scripts/trace_check
+python3 scripts/check_source.py
+python3 scripts/check_docs.py

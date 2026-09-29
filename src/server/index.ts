@@ -13,6 +13,7 @@ import { feedbackRoutes } from './routes/feedback'
 
 const app = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
+// @implements REQ-035
 app.use(
   '*',
   secureHeaders({
@@ -35,11 +36,13 @@ app.use(
 
 const api = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
+// @implements REQ-047
 api.get('/health', (c) => c.json({ ok: true }))
 
 api.route('/auth', authRoutes)
 
-/** 認証。/api/auth/* 以外は Bearer トークンを要求する。 */
+/** 認証。/api/auth/* 以外は Bearer トークンを要求する。
+ *  @implements REQ-033 */
 api.use('*', async (c, next) => {
   if (c.req.path.startsWith('/api/auth/') || c.req.path === '/api/health') return next()
   const header = c.req.header('Authorization') ?? ''
@@ -60,6 +63,7 @@ api.use('*', async (c, next) => {
   await next()
 })
 
+// @implements REQ-014
 api.get('/me', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id

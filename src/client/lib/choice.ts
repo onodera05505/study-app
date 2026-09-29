@@ -19,6 +19,7 @@ const KEY_BREAK = /，(?=[^，／：]{1,14}：)/
 /** これより短い選択肢は、1行でも十分読める。 */
 const MIN_LEN = 30
 
+// @implements REQ-044
 export function formatChoice(v: string): string[] {
   // 「／」は書き起こしで項目グループの区切りに使っている。
   // 「：」も含むときだけ組合せと見なす（分数や単位の「／」を割らない）。

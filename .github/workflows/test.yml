@@ -1,0 +1,21 @@
+# test — 仕様⇔コード⇔テストの門（trace_check）→ 単体テスト → 静的な門 を、フックを回避しても止まる層として回す。
+# pre-commit は --no-verify で通れるので、同じ npm test を CI でも走らせる（回避不能な層）。
+name: test
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: npm ci
+      - run: npm test

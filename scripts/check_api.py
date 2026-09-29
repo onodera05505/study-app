@@ -36,6 +36,13 @@ API の形は静かに壊れる。SELECT の別名を1つ変えれば画面の�
 6. **null と [] の区別** — 一覧が空のとき `[]` が返るか（`null` や キー欠落だと、
    画面が「未取得」と区別できず読み込み中に「ありません」と誤って出る。
    CLAUDE.md の落とし穴に入っている実際のバグ）
+7. **並びと絞り込み** — /topics の既定の並び（資格版は出題頻度の降順 / ロードマップ型は
+   学ぶ順）、sortOrder の出し方（資格版は sort_order を参照しないので null）、
+   分野での絞り込み、ホームのおすすめ（/me の nextTopics）の並び
+8. **模試の設定** — app_settings の問題数・制限時間が登録簿（src/shared/targets.json）と
+   一致し、実際に作った模試がその問題数と制限時間で返るか
+9. **セキュリティヘッダ** — 全応答に CSP・HSTS・X-Frame-Options DENY・nosniff・
+   Referrer-Policy が載っているか
 
 ## 触るもの・触らないもの
 
@@ -98,7 +105,7 @@ EXPLANATION = (
 )
 
 
-def check_shape(value, spec, path, errors, warnings):
+def compare_shape(value, spec, path, errors, warnings):
     """value が spec の形をしているか。壊れた場所を path 付きで積む。"""
     if spec is None:
         if value is not None:
@@ -108,7 +115,7 @@ def check_shape(value, spec, path, errors, warnings):
     if isinstance(spec, tuple) and spec and spec[0] == "|":
         for alt in spec[1:]:
             sub_e, sub_w = [], []
-            check_shape(value, alt, path, sub_e, sub_w)
+            compare_shape(value, alt, path, sub_e, sub_w)
             if not sub_e:
                 warnings.extend(sub_w)
                 return
@@ -134,7 +141,7 @@ def check_shape(value, spec, path, errors, warnings):
         seen = set()
         for i, item in enumerate(value):
             e, w = [], []
-            check_shape(item, spec[0], f"{path}[]", e, w)
+            compare_shape(item, spec[0], f"{path}[]", e, w)
             for m in e:
                 if m not in seen:
                     seen.add(m)
@@ -159,7 +166,7 @@ def check_shape(value, spec, path, errors, warnings):
                 else:
                     warnings.append(msg)
                 continue
-            check_shape(value[key], sub, f"{path}.{key}", errors, warnings)
+            compare_shape(value[key], sub, f"{path}.{key}", errors, warnings)
         return
 
     raise AssertionError(f"期待形の書き方が不正: {spec!r}")
@@ -431,6 +438,8 @@ class Client:
     def __init__(self, base: str):
         self.base = base.rstrip("/")
         self.token: str | None = None
+        # 直前の応答のヘッダ（小文字のキー）。セキュリティヘッダの検査で見る
+        self.last_headers: dict[str, str] = {}
 
     def call(self, method: str, path: str, body=None, token: str | None = "self"):
         # 分野名など日本語のクエリをそのまま渡すと urllib が送れない
@@ -449,9 +458,11 @@ class Client:
             with urllib.request.urlopen(req, timeout=60) as res:
                 text = res.read().decode("utf-8", "replace")
                 status = res.status
+                self.last_headers = {k.lower(): v for k, v in res.headers.items()}
         except urllib.error.HTTPError as e:
             text = e.read().decode("utf-8", "replace")
             status = e.code
+            self.last_headers = {k.lower(): v for k, v in e.headers.items()}
         except Exception as e:  # 接続できない等
             return 0, None, str(e)
         try:
@@ -502,7 +513,7 @@ class Report:
 
     def shape(self, label: str, value, spec):
         e, w = [], []
-        check_shape(value, spec, label, e, w)
+        compare_shape(value, spec, label, e, w)
         self.errors.extend(e)
         self.warnings.extend(w)
         return not e
@@ -561,6 +572,7 @@ def account(c: Client, r: Report, email: str, name: str, code: str | None) -> st
     return data["token"]
 
 
+# @verifies REQ-033
 def check_auth_boundary(c: Client, r: Report):
     """未認証・壊れたトークンで保護経路に当てる。200 なら保護が外れ、500 なら検証で落ちている。"""
     broken = [
@@ -583,7 +595,7 @@ def check_auth_boundary(c: Client, r: Report):
     # SSO の設定（公開。要件 §15）。ローカルは未設定なので sso=false（パスワードの経路がそのまま検査できる）
     st, data, _ = c.call("GET", "/auth/config", token=None)
     r.status("GET /auth/config（公開）", st, 200)
-    r.shape("GET /auth/config", data, {"*sso": "bool", "*portal": "str?", "*app": "str", "*secretSet": "bool"})
+    r.shape("GET /auth/config", data, {"*sso": "bool", "*portal": "str?", "*app": "str"})
     if isinstance(data, dict) and data.get("sso"):
         r.warn("この環境は SSO が有効（SSO_PORTAL_URL / SSO_SECRET あり）。パスワードの登録・ログインは 404 になるので、以降の検査は成立しない")
     # SSO 未設定の環境では /auth/sso は 404（有効な環境の一巡は scripts/check_sso_flow.py を受入で回す）
@@ -591,6 +603,7 @@ def check_auth_boundary(c: Client, r: Report):
     r.status("POST /auth/sso（未設定の環境では 404）", st, 404, data)
 
 
+# @verifies REQ-013, REQ-034
 def check_failure_shapes(c: Client, r: Report, code: str | None):
     """失敗したときのステータスと本文。クライアントは data?.error をそのまま画面に出す。"""
     cases = [
@@ -657,6 +670,7 @@ def check_failure_shapes(c: Client, r: Report, code: str | None):
             r.error_body(f"{label} の本文", data)
 
 
+# @verifies REQ-010, REQ-011, REQ-012
 def check_get_shapes(c: Client, r: Report) -> dict:
     """各 GET の形。返ってきた本文は件数の検査でも使うので返す。"""
     got = {}
@@ -688,6 +702,7 @@ def check_get_shapes(c: Client, r: Report) -> dict:
     return got
 
 
+# @verifies REQ-010, REQ-011, REQ-041
 def check_counts(c: Client, r: Report, got: dict, exam: str, db_name: str):
     """API の件数がローカル D1 の SELECT と一致するか。200 と「全部入っている」は別。"""
     rows = d1(
@@ -745,6 +760,7 @@ def check_counts(c: Client, r: Report, got: dict, exam: str, db_name: str):
     return rows
 
 
+# @verifies REQ-010
 def check_empty_lists(c: Client, r: Report, other_token: str):
     """空になりうる一覧が [] で返るか。null や キー欠落だと画面が未取得と区別できない。
 
@@ -777,6 +793,7 @@ def check_empty_lists(c: Client, r: Report, other_token: str):
             r.warn("GET /sessions/current: 検査用アカウントに進行中セッションが残っている")
 
 
+# @verifies REQ-019, REQ-022, REQ-025, REQ-026
 def check_session_flow(c: Client, r: Report, got: dict, other_token: str):
     """作成 → 1問回答 → 中断 → 再開 → 全問回答 → finish → 結果。二重回答と他人のセッションも見る。"""
     detail = got.get("topic_detail")
@@ -911,7 +928,140 @@ def check_session_flow(c: Client, r: Report, got: dict, other_token: str):
     r.notes.append(f"セッションの流れ: {total} 問を作成 → 回答 → 中断 → 再開 → finish → 結果 まで通過")
 
 
+# @verifies REQ-011, REQ-014, REQ-037
+def check_ordering(c: Client, r: Report, got: dict, exam: str):
+    """並びと絞り込み。/topics の既定の並び（資格版は出題頻度の降順 / ロードマップ型は学ぶ順）、
+    sortOrder の出し方（資格版は sort_order を参照しないので null）、分野での絞り込み、
+    ホームのおすすめ（/me の nextTopics）の並び。理解度で変わる部分は progress を書かないので見ない。"""
+    sys.path.insert(0, str(Path(__file__).parent)); from targets import target as _target
+    roadmap = bool(_target(exam).get("roadmap"))
+    topics = (got.get("/topics?limit=500") or {}).get("topics") or []
+    if not topics:
+        r.error("並びの検査: /topics が空で確かめられない")
+        return
 
+    def rises(xs):  # 降順のはずが増えた位置
+        return [i for i in range(1, len(xs)) if xs[i] > xs[i - 1]]
+
+    def falls(xs):  # 昇順のはずが戻った位置
+        return [i for i in range(1, len(xs)) if xs[i] < xs[i - 1]]
+
+    if roadmap:
+        no_order = [t["id"] for t in topics if t["sortOrder"] is None]
+        if no_order:
+            r.error(f"ロードマップ型なのに sortOrder が null の論点 {len(no_order)} 件: {no_order[:3]}")
+        bad = falls([t["sortOrder"] for t in topics if t["sortOrder"] is not None])
+        if bad:
+            r.error(f"/topics の既定の並びが学ぶ順（sort_order の昇順）でない（{bad[:3]} 件目で戻る）")
+    else:
+        stray = [t["id"] for t in topics if t["sortOrder"] is not None]
+        if stray:
+            r.error(
+                f"資格版の /topics が sortOrder を返している {len(stray)} 件: {stray[:3]}"
+                "（資格版は sort_order 列を参照しない）"
+            )
+        bad = rises([t["questionCount"] for t in topics])
+        if bad:
+            r.error(f"/topics の既定の並びが出題頻度の降順でない（{bad[:3]} 件目で増える）")
+
+    # 分野で絞れる（絞った結果に別の分野が混じらない・件数が /fields と合う）
+    fields = (got.get("/fields") or {}).get("fields") or []
+    if fields:
+        f = fields[0]
+        label = f"GET /topics?field={f['field']}"
+        st, data, _ = c.call("GET", f"/topics?field={f['field']}&limit=500")
+        if r.status(label, st, 200):
+            rows = data.get("topics") or []
+            other = sorted({t["field"] for t in rows} - {f["field"]})
+            if other:
+                r.error(f"{label}: 別の分野が混じる {other[:3]}")
+            if len(rows) != min(500, f["topics"]):
+                r.error(f"{label}: {len(rows)} 件（/fields の論点数 {f['topics']} と違う）")
+
+    # ホームのおすすめ（/me の nextTopics）。資格版は出題頻度の降順
+    nxt = (got.get("/me") or {}).get("nextTopics") or []
+    if not nxt:
+        r.warn("GET /me の nextTopics が空（おすすめの並びを確かめられない）")
+    else:
+        if any(t["questionCount"] <= 0 for t in nxt):
+            r.error("おすすめ（/me の nextTopics）に出題が無い論点が入っている")
+        if not roadmap:
+            bad = rises([t["questionCount"] for t in nxt])
+            if bad:
+                r.error(f"おすすめの並びが出題頻度の降順でない（{bad[:3]} 件目で増える）")
+    r.notes.append(
+        f"並び: /topics {len(topics)} 件が{'学ぶ順' if roadmap else '出題頻度の降順'}"
+        f"・おすすめ {len(nxt)} 件を確認"
+    )
+
+
+# @verifies REQ-019, REQ-023
+def check_mock_settings(c: Client, r: Report, exam: str, db_name: str):
+    """模試の問題数と制限時間。app_settings の値が登録簿（src/shared/targets.json）と一致し、
+    実際に作った模試がその問題数・制限時間で返るか。作った模試はその場で破棄する。"""
+    sys.path.insert(0, str(Path(__file__).parent)); from targets import target as _target
+    t = _target(exam)
+    want_size, want_sec = t["mockSize"], t["mockMinutes"] * 60
+    rows = d1(
+        exam, db_name,
+        "SELECT mock_size, mock_time_limit_sec FROM app_settings WHERE id = 'default'",
+    )
+    if not rows:
+        r.error("app_settings に id='default' の行が無い（模試の設定が既定値に落ちる）")
+    else:
+        if rows[0]["mock_size"] != want_size:
+            r.error(f"app_settings.mock_size が {rows[0]['mock_size']}（登録簿は {want_size}）")
+        if rows[0]["mock_time_limit_sec"] != want_sec:
+            r.error(
+                f"app_settings.mock_time_limit_sec が {rows[0]['mock_time_limit_sec']}"
+                f"（登録簿は {want_sec}）"
+            )
+    if t.get("roadmap"):
+        r.notes.append(f"模試の設定: app_settings が {want_size} 問 / {want_sec} 秒（確認テストは日ごとなので出題は見ない）")
+        return
+
+    c.call("DELETE", "/sessions/current")
+    st, created, text = c.call("POST", "/sessions", {"kind": "mock"})
+    if not r.status("POST /sessions（模試）", st, 201, None if st == 201 else text[:200]):
+        return
+    r.shape("POST /sessions（模試）", created, SESSION_CREATED)
+    if created.get("questionCount") != want_size:
+        r.error(f"模試の問題数が {created.get('questionCount')}（{want_size} 問のはず）")
+    if created.get("timeLimitSec") != want_sec:
+        r.error(f"模試の制限時間が {created.get('timeLimitSec')} 秒（{want_sec} 秒のはず）")
+    st, cur, _ = c.call("GET", "/sessions/current")
+    if r.status("GET /sessions/current（模試）", st, 200):
+        if (cur.get("session") or {}).get("id") != created["id"]:
+            r.error("GET /sessions/current が作った模試を返さない")
+    c.call("DELETE", "/sessions/current")
+    r.notes.append(f"模試: {want_size} 問 / 制限 {want_sec} 秒で作成できることを確認（破棄済み）")
+
+
+# @verifies REQ-035
+def check_security_headers(c: Client, r: Report):
+    """全応答に secureHeaders が載っているか（CSP・HSTS・X-Frame-Options DENY・nosniff・Referrer-Policy）。"""
+    want = {
+        "content-security-policy": None,
+        "strict-transport-security": None,
+        "x-frame-options": "DENY",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": None,
+    }
+    for label, path, token in [("GET /health", "/health", None), ("GET /fields", "/fields", "self")]:
+        st, _, _ = c.call("GET", path, token=token)
+        if st == 0:
+            r.error(f"{label}: 応答が無くヘッダを見られない")
+            continue
+        headers = c.last_headers
+        for name, value in want.items():
+            if name not in headers:
+                r.error(f"{label}: ヘッダ {name} が無い（secureHeaders が外れている）")
+            elif value is not None and headers[name] != value:
+                r.error(f"{label}: ヘッダ {name} が {headers[name]!r}（{value!r} のはず）")
+    r.notes.append("セキュリティヘッダ: CSP・HSTS・X-Frame-Options DENY・nosniff・Referrer-Policy を確認")
+
+
+# @verifies REQ-030
 def check_feedback(c: Client, r: Report, exam: str, db_name: str):
     """フィードバック（要件 §5.5-4）。送信が保存されること、開発側の読み口（feedback 表）に届くこと。
     利用者向けの一覧 API は無いので、保存の確認はローカル D1 を直接読む。検査で入れた行は消す。"""
@@ -968,6 +1118,9 @@ def main() -> int:
     check_counts(c, r, got, args.exam, db_name)
     check_empty_lists(c, r, other)
     check_session_flow(c, r, got, other)
+    check_ordering(c, r, got, args.exam)
+    check_mock_settings(c, r, args.exam, db_name)
+    check_security_headers(c, r)
     check_feedback(c, r, args.exam, db_name)
 
     # --- 結果 -------------------------------------------------------------

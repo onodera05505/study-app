@@ -48,6 +48,7 @@ type Detail = {
   neighbors: { prev: { id: number; term: string } | null; next: { id: number; term: string } | null } | null
 }
 
+// @implements REQ-012, REQ-013, REQ-027, REQ-028, REQ-040
 export function TopicDetail() {
   const { id } = useParams()
   const navigate = useNavigate()

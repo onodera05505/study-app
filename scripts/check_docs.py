@@ -20,6 +20,7 @@
   プレースホルダを含むものは見ない
 - **仕様書の本文が現在形か** — `SPEC_CURRENT_FORM` の仕様書の本文（`## 改訂履歴` より前）に
   日付・「廃止」「以前は」「方針変更」・版の名前が無いか（決まりは足さず書き換える。2026-09-27）
+- **trace の道具の複製が正本と同じか** — `scripts/trace/*.mjs` が `~/.claude/brain/tools/trace/` と一致するか（中央が無い環境では見ない。2026-09-28）
 - **PREMISES の決定行の反映先** — `brain/PREMISES.md` の 2026-09-27 以降の「決定」行に
   `→ 反映: \`<線のファイル>\`` があり、そのパスが実在するか（決めたことが担当の読む仕様書に
   落ちず、生成プロンプトに効いていなかった 2026-09-27 の反省。中央 reports/134）
@@ -140,6 +141,27 @@ def check_spec_current_form(root: Path, errors: list[str]) -> int:
     return n
 
 
+CENTRAL_TRACE = Path(os.path.expanduser("~/.claude/brain/tools/trace"))
+TRACE_COPIES = ["scripts/trace/trace_check.mjs", "scripts/trace/stop_gate.mjs"]
+
+
+def check_trace_copies(root: Path, errors: list[str]) -> int:
+    """複製した trace の道具が中央の正本と同じか（正本を直して複製し忘れると、この PJ だけ古い検査で通る）。
+    中央が無い環境（CI）では見ない。"""
+    if not CENTRAL_TRACE.exists():
+        return 0
+    n = 0
+    for rel in TRACE_COPIES:
+        f = root / rel
+        if not f.exists():
+            continue
+        n += 1
+        src = CENTRAL_TRACE / f.name
+        if src.exists() and src.read_bytes() != f.read_bytes():
+            errors.append(f"{rel} が中央の正本（{src}）と違う（正本を直したなら cp で複製し直す。複製側だけ直したなら正本へ戻す）")
+    return n
+
+
 def check_premises_decisions(root: Path, errors: list[str]) -> int:
     """PREMISES の「決定」行（2026-09-27 以降）は `→ 反映: <線のファイル>` を持ち、その path が実在するか。
 
@@ -178,6 +200,7 @@ def main() -> int:
     n_logs = check_worklog_brain_line(root, errors)
     n_dec = check_premises_decisions(root, errors)
     n_specs = check_spec_current_form(root, errors)
+    check_trace_copies(root, errors)
     # 対象の登録簿と .env / wrangler env / pages_projects / kickoff の整合（対象を足す場所は 1 か所、の門）
     r = subprocess.run([sys.executable, str(root / "scripts" / "new_target.py"), "--check"], capture_output=True, text=True)
     r2 = subprocess.run([sys.executable, str(root / "scripts" / "check_feedback_ledger.py")], capture_output=True, text=True)

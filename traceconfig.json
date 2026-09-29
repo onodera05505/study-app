@@ -1,0 +1,90 @@
+{
+  "_comment": "trace_check（scripts/trace/trace_check.mjs、正本は ~/.claude/brain/tools/trace/）の設定。source は公開単位と @implements、tests は test_pattern と @verifies を見る。除外は scripts/trace_ignore に理由つきで（本人の許可なく足さない）。commands.test は Stop フックが回す。",
+  "spec": "docs/spec.yaml",
+  "ignore": "scripts/trace_ignore",
+  "source": [
+    {
+      "dirs": [
+        "src/server",
+        "src/shared",
+        "src/client",
+        "portal/src"
+      ],
+      "extensions": [
+        ".ts",
+        ".tsx"
+      ],
+      "exclude": [
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/*.d.ts",
+        "portal/.worker-build/**",
+        "portal/dist/**"
+      ],
+      "tag_lookback": 6,
+      "public_patterns": [
+        {
+          "pattern": "^export\\s+(?:default\\s+)?(?:async\\s+)?function\\s+(\\w+)",
+          "kind": "function"
+        },
+        {
+          "pattern": "^export\\s+(?:default\\s+)?class\\s+(\\w+)",
+          "kind": "class"
+        },
+        {
+          "pattern": "^export\\s+const\\s+(\\w+)\\s*(?::[^=]+)?=\\s*(?:async\\s*)?(?:\\([^)]*\\)|\\w+)\\s*(?::[^=]+)?=>",
+          "kind": "function"
+        },
+        {
+          "pattern": "^\\s*\\w+\\.(?:get|post|put|delete|patch)\\(\\s*['\"]([^'\"]*)['\"]",
+          "kind": "route"
+        }
+      ]
+    },
+    {
+      "_comment": "seed の門は不変条件の実装でもある（REQ-029 など）。公開単位の検査はしない（Python は第 2 段）",
+      "files": [
+        "scripts/check_seed.py",
+        "scripts/build_seed.py"
+      ],
+      "extensions": [
+        ".py"
+      ],
+      "public_patterns": []
+    }
+  ],
+  "tests": [
+    {
+      "dirs": [
+        "tests"
+      ],
+      "extensions": [
+        ".ts",
+        ".tsx"
+      ],
+      "test_pattern": "^\\s*(?:it|test)\\(\\s*['\"`](.+?)['\"`]",
+      "tag_lookback": 6
+    },
+    {
+      "files": [
+        "scripts/check_api.py",
+        "scripts/check_source.py",
+        "scripts/check_seed.py",
+        "scripts/verify_seed_remote.py",
+        "scripts/check_sso_prod.sh",
+        "scripts/check_render.tsx",
+        "scripts/check_portal_api.py"
+      ],
+      "extensions": [
+        ".py",
+        ".sh",
+        ".tsx"
+      ],
+      "test_pattern": "^def (check_\\w+|verify_\\w+)\\(",
+      "tag_lookback": 6
+    }
+  ],
+  "commands": {
+    "test": "npm test"
+  }
+}

@@ -40,6 +40,28 @@ type ResultData = {
   }[]
 }
 
+/** 合否の目安の見せ方。判定そのものは /api/sessions/:id が返す passed
+ *  （基準は criteria: 総合の割合と分野の割合）。画面は文言と色だけを決める。 */
+// @implements REQ-024
+export function verdict(passed: boolean): { label: string; color: string } {
+  return passed
+    ? { label: '合格ライン', color: 'var(--ok)' }
+    : { label: '未達', color: 'var(--ng)' }
+}
+
+/** 分野別の正答率に付ける色。分野ごとの基準点がある試験でだけ色を付ける。
+ *  基準点の無い試験（応用情報の午前）で色を付けると、落ちると誤解させる。 */
+// @implements REQ-024
+export function fieldPctColor(
+  pct: number,
+  fieldPct: number,
+  hasFieldThreshold: boolean,
+): string | undefined {
+  if (!hasFieldThreshold) return undefined
+  return pct >= fieldPct ? 'var(--ok)' : 'var(--ng)'
+}
+
+// @implements REQ-024, REQ-027, REQ-028
 export function Result() {
   const { id } = useParams()
   const [data, setData] = useState<ResultData | null>(null)
@@ -77,8 +99,8 @@ export function Result() {
         </div>
         {isMock && (
           <div className="card">
-            <div className="stat" style={{ color: data.passed ? 'var(--ok)' : 'var(--ng)' }}>
-              {data.passed ? '合格ライン' : '未達'}
+            <div className="stat" style={{ color: verdict(data.passed).color }}>
+              {verdict(data.passed).label}
             </div>
             <div className="muted" style={{ fontSize: '0.85rem' }}>
               目安: 総合{data.criteria.overallPct}%
@@ -114,13 +136,9 @@ export function Result() {
                   </td>
                   <td
                     className="right"
-                    style={
-                      // 分野ごとの基準点がある試験でだけ、合否の色を付ける。
-                      // 応用情報の午前に足切りは無いので、色を付けると落ちると誤解させる
-                      exam.fieldThreshold
-                        ? { color: f.pct >= data.criteria.fieldPct ? 'var(--ok)' : 'var(--ng)' }
-                        : undefined
-                    }
+                    style={{
+                      color: fieldPctColor(f.pct, data.criteria.fieldPct, exam.fieldThreshold),
+                    }}
                   >
                     {f.pct}%
                   </td>
