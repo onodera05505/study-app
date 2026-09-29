@@ -45,6 +45,47 @@ const MASTERED = /ROW_NUMBER\(\) OVER/
 const FETCH = /SELECT DISTINCT q\.id/
 const REVIEW = /MAX\(sq\.answered_at\)/
 const TIMES = /SELECT id, content_key AS contentKey/
+/** 理解度の表（progress）とその段階（status）を引く SQL ＝ 理解度が低い論点の過去問。 */
+const WEAK = /(progress[\s\S]*status)|(status[\s\S]*progress)/
+
+/** 論点名・中分類名の引き当て（範囲の名前に使われる）。 */
+const TERM: Handler = { match: /SELECT term FROM topics/, rows: [{ term: '損益分岐点' }] }
+const MIDDLE: Handler = { match: /SELECT middle FROM syllabus_items/, rows: [{ middle: '基礎理論' }] }
+
+/** 発行された SQL の ? にパラメータを順に埋め、空白と引用符を落とした文字列。
+ *  条件の境目の値（理解度の段階・正誤の値）を、書き方の差を越えて見るために使う。 */
+function condition(call: { sql: string; params: unknown[] }): string {
+  let i = 0
+  return call.sql.replace(/\?/g, () => String(call.params[i++])).replace(/["`\s]+/g, '')
+}
+
+/** 理解度が「理解」（3 段目）の論点を範囲から外している条件か。
+ *  status<3 / status<=2 / status in (1,2) / status<>3 / status not in (3) のいずれかを認める。 */
+function excludesUnderstood(cond: string): boolean {
+  return (
+    /status(<3|<=2|<>3|!=3)/i.test(cond) ||
+    /statusin\(1,2\)/i.test(cond) ||
+    /statusin\(2,1\)/i.test(cond) ||
+    /statusnotin\(3\)/i.test(cond)
+  )
+}
+
+/** 出題頻度（論点に紐づく過去問の件数）の多い論点から並べているか。
+ *  件数の持ち方は要件が決めていないので、列（question_count）でも集計（COUNT(…)）でも認める。 */
+function ordersByFrequencyDesc(sql: string): boolean {
+  const order = sql.replace(/["`\s]+/g, '').match(/ORDERBY([\s\S]*)/i)?.[1] ?? ''
+  return /question_count|COUNT\(/i.test(order) && /DESC/i.test(order)
+}
+
+/** 本人が正解した（result=1）記録のある過去問を範囲から外している条件か。
+ *  result<>1 / result!=1 / result not in (1) / result=2 / NOT EXISTS(... result=1 ...) を認める。 */
+function excludesCorrect(cond: string): boolean {
+  return (
+    /result(<>1|!=1|=2)/i.test(cond) ||
+    /resultnotin\(1\)/i.test(cond) ||
+    (/notexists\(/i.test(cond) && /result=1/i.test(cond))
+  )
+}
 
 const base = { size: 20, masteredStreak: 3, fieldRatio: { テクノロジ系: 45 } }
 
@@ -202,31 +243,67 @@ describe('buildQuestions（出題の組み立て）', () => {
   })
 
   // @verifies REQ-020
-  it('直近 N 回連続で正解した問題は出さない', async () => {
-    const rows = [
-      row({ id: 'q-1', exam: '2024r06', contentKey: 'ck-1', field: 'テクノロジ系' }),
-      row({ id: 'q-2', exam: '2024r06', contentKey: 'ck-2', field: 'テクノロジ系' }),
-      row({ id: 'q-3', exam: '2024r06', contentKey: 'ck-3', field: 'テクノロジ系' }),
+  it('drill・field・middle・弱点復習・回を指定しない模試で、直近 N 回連続で正解した問題は出さない', async () => {
+    const rows = [1, 2, 3].map((n) => row({ id: `q-${n}`, exam: '2024r06', contentKey: `ck-${n}`, field: 'テクノロジ系' }))
+    /** 定着済み（ck-2）を返す偽 db で組み立て、出題に残った id を返す。 */
+    const idsOf = async (handlers: Handler[], input: Parameters<typeof buildQuestions>[2]) => {
+      const { db, find } = fakeDb([{ match: MASTERED, rows: [{ qkey: 'ck-2' }] }, ...handlers])
+      const built = await buildQuestions(db, 'u-1', input)
+      // 連続正解の回数は呼び出し側の設定値を使う
+      expect(find(MASTERED)[0].params).toContain(3)
+      return built.questions.map((q) => q.id).sort()
+    }
+    const scoped: Handler[] = [{ match: FETCH, rows }]
+    expect(await idsOf([...scoped, TERM], { ...base, kind: 'drill', topicId: 42 })).toEqual(['q-1', 'q-3'])
+    expect(await idsOf(scoped, { ...base, kind: 'field', field: 'テクノロジ系' })).toEqual(['q-1', 'q-3'])
+    expect(await idsOf([...scoped, MIDDLE], { ...base, kind: 'middle', middleNo: 7 })).toEqual(['q-1', 'q-3'])
+    // 回を指定しない模試（ランダム構成）も除外する
+    expect(await idsOf(scoped, { ...base, kind: 'mock' })).toEqual(['q-1', 'q-3'])
+    // 弱点復習は、誤答から来た問題も理解度が低い論点から来た問題も除外の対象
+    const review: Handler[] = [
+      { match: REVIEW, rows: [rows[0], rows[1]] },
+      { match: WEAK, rows: [rows[2]] },
+      { match: TIMES, rows: [] },
     ]
-    const { db, find } = fakeDb([
-      { match: MASTERED, rows: [{ qkey: 'ck-2' }] },
-      { match: FETCH, rows },
-    ])
-    const built = await buildQuestions(db, 'u-1', { ...base, kind: 'field', field: 'テクノロジ系' })
-    expect(built.questions.map((q) => q.id).sort()).toEqual(['q-1', 'q-3'])
-    // 連続正解の回数は呼び出し側の設定値を使う
-    expect(find(MASTERED)[0].params).toContain(3)
+    expect(await idsOf(review, { ...base, kind: 'review' })).toEqual(['q-1', 'q-3'])
   })
 
   // @verifies REQ-020
-  it('全部が定着済みなら除外せず復習として出す', async () => {
-    const rows = [row({ id: 'q-1', exam: '2024r06', contentKey: 'ck-1', field: 'テクノロジ系' })]
+  it('回を指定した模試（公開回の通し受験）では連続正解した問題も原本どおり出す', async () => {
+    const rows = [1, 2].map((n) => row({ id: `q-${n}`, exam: '2024r06', number: n, contentKey: `ck-${n}` }))
     const { db } = fakeDb([
+      { match: MASTERED, rows: [{ qkey: 'ck-1' }, { qkey: 'ck-2' }] },
+      { match: FETCH, rows },
+    ])
+    const built = await buildQuestions(db, 'u-1', { ...base, kind: 'mock', exam: '2024r06', size: 100 })
+    expect(built.questions.map((q) => q.id)).toEqual(['q-1', 'q-2'])
+  })
+
+  // @verifies REQ-020
+  it('範囲の問題が除外で全部無くなるときは除外しない（弱点復習は誤答と理解度由来を合わせて見る）', async () => {
+    const rows = [row({ id: 'q-1', exam: '2024r06', contentKey: 'ck-1', field: 'テクノロジ系' })]
+    const f = fakeDb([
       { match: MASTERED, rows: [{ qkey: 'ck-1' }] },
       { match: FETCH, rows },
     ])
-    const built = await buildQuestions(db, 'u-1', { ...base, kind: 'field', field: 'テクノロジ系' })
-    expect(built.questions.map((q) => q.id)).toEqual(['q-1'])
+    const byField = await buildQuestions(f.db, 'u-1', { ...base, kind: 'field', field: 'テクノロジ系' })
+    expect(byField.questions.map((q) => q.id)).toEqual(['q-1'])
+
+    const wrong = row({ id: 'w-1', exam: '2024r06', contentKey: 'ck-w' })
+    const weak = row({ id: 'k-1', exam: '2024r06', contentKey: 'ck-k' })
+    const reviewDb = (mastered: { qkey: string }[]) =>
+      fakeDb([
+        { match: MASTERED, rows: mastered },
+        { match: REVIEW, rows: [wrong] },
+        { match: WEAK, rows: [weak] },
+        { match: TIMES, rows: [] },
+      ]).db
+    // 誤答と理解度由来を合わせて全部が定着済みなら、外さずそのまま出す
+    const all = await buildQuestions(reviewDb([{ qkey: 'ck-w' }, { qkey: 'ck-k' }]), 'u-1', { ...base, kind: 'review' })
+    expect(all.questions.map((q) => q.id)).toEqual(['w-1', 'k-1'])
+    // 片方が残るなら、定着済みの方は外す
+    const some = await buildQuestions(reviewDb([{ qkey: 'ck-w' }]), 'u-1', { ...base, kind: 'review' })
+    expect(some.questions.map((q) => q.id)).toEqual(['k-1'])
   })
 
   // @verifies REQ-194
@@ -243,6 +320,98 @@ describe('buildQuestions（出題の組み立て）', () => {
     expect(q.params).toContain('u-1')
     expect(built.scopeLabel).toBe('間違えた問題の復習')
     expect(built.questions.map((q2) => q2.id)).toEqual(['q-1'])
+  })
+
+  // @verifies REQ-042, REQ-194
+  it('弱点復習は誤答を新しい順に先に詰め、余りを理解度が低い論点の過去問で埋める', async () => {
+    const wrong = [1, 2].map((n) => row({ id: `w-${n}`, exam: '2024r06', contentKey: `ck-w${n}` }))
+    const weak = [1, 2].map((n) => row({ id: `k-${n}`, exam: '2024r06', contentKey: `ck-k${n}` }))
+    const { db, find } = fakeDb([
+      { match: REVIEW, rows: wrong },
+      { match: WEAK, rows: weak },
+      { match: TIMES, rows: [] },
+    ])
+    const built = await buildQuestions(db, 'u-1', { ...base, kind: 'review', size: 20 })
+    // 誤答（最後に間違えた時刻の新しい順）が先頭、そのあとに理解度が低い論点の過去問
+    expect(find(REVIEW)[0].sql).toContain('ORDER BY MAX(sq.answered_at) DESC')
+    expect(built.questions.map((q) => q.id)).toEqual(['w-1', 'w-2', 'k-1', 'k-2'])
+    // 理解度は本人の記録から引く
+    expect(find(WEAK)[0].params).toContain('u-1')
+  })
+
+  // @verifies REQ-042
+  it('理解度が低い論点の過去問は出題頻度の高い論点から取る', async () => {
+    const { db, find } = fakeDb([
+      { match: REVIEW, rows: [row({ id: 'w-1', exam: '2024r06', contentKey: 'ck-w1' })] },
+      { match: WEAK, rows: [row({ id: 'k-1', exam: '2024r06', contentKey: 'ck-k1' })] },
+      { match: TIMES, rows: [] },
+    ])
+    const built = await buildQuestions(db, 'u-1', { ...base, kind: 'review', size: 20 })
+    expect(built.questions.map((q) => q.id)).toEqual(['w-1', 'k-1'])
+    // 出題頻度＝その論点に紐づく過去問の件数。多い論点から順に取る
+    expect(ordersByFrequencyDesc(find(WEAK)[0].sql)).toBe(true)
+  })
+
+  // @verifies REQ-042
+  it('理解度 3 の論点と、理解度の記録が無い論点の過去問は、誤答でなければ入らない', async () => {
+    const { db, find } = fakeDb([
+      { match: REVIEW, rows: [row({ id: 'w-1', exam: '2024r06', contentKey: 'ck-w1' })] },
+      { match: WEAK, rows: [] },
+      { match: TIMES, rows: [] },
+    ])
+    const built = await buildQuestions(db, 'u-1', { ...base, kind: 'review', size: 20 })
+    // 理解度が低い論点が無ければ、弱点復習は誤答だけになる
+    expect(built.questions.map((q) => q.id)).toEqual(['w-1'])
+    // 誤答だけでは問題数に足りないので、理解度が低い論点の過去問を引きに行く
+    expect(find(WEAK)).toHaveLength(1)
+    const cond = condition(find(WEAK)[0])
+    // 理解（3 段目）にした論点は範囲に入らない
+    expect(excludesUnderstood(cond)).toBe(true)
+    // 記録の無い論点も入らない（理解度の表に行がある論点だけを見る）
+    expect(cond).not.toMatch(/statusisnull/i)
+    // 誤答の側は理解度で絞らない（間違えた問題は理解度に関わらず入る）
+    expect(excludesUnderstood(condition(find(REVIEW)[0]))).toBe(false)
+  })
+
+  // @verifies REQ-042, REQ-194
+  it('正解した問題を外すのは誤答の側だけで、理解度が低い論点の過去問には正解したことのある問題も入る', async () => {
+    const { db, find } = fakeDb([
+      { match: REVIEW, rows: [row({ id: 'w-1', exam: '2024r06', contentKey: 'ck-w1' })] },
+      { match: WEAK, rows: [row({ id: 'k-1', exam: '2024r06', contentKey: 'ck-k1' })] },
+      { match: TIMES, rows: [] },
+    ])
+    const built = await buildQuestions(db, 'u-1', { ...base, kind: 'review', size: 20 })
+    expect(find(REVIEW)).toHaveLength(1)
+    expect(find(WEAK)).toHaveLength(1)
+    // 誤答の側は誤答の記録がある過去問だけ
+    expect(excludesCorrect(condition(find(REVIEW)[0]))).toBe(true)
+    // 理解度由来は正誤で絞らない（掛かるのは定着した問題の除外だけ）
+    expect(excludesCorrect(condition(find(WEAK)[0]))).toBe(false)
+    expect(built.questions.map((q) => q.id)).toEqual(['w-1', 'k-1'])
+  })
+
+  // @verifies REQ-042
+  it('誤答だけで問題数に達するときは理解度由来を足さない', async () => {
+    const wrong = [1, 2].map((n) => row({ id: `w-${n}`, exam: '2024r06', contentKey: `ck-w${n}` }))
+    const { db } = fakeDb([
+      { match: REVIEW, rows: wrong },
+      { match: WEAK, rows: [row({ id: 'k-1', exam: '2024r06', contentKey: 'ck-k1' })] },
+      { match: TIMES, rows: [] },
+    ])
+    const built = await buildQuestions(db, 'u-1', { ...base, kind: 'review', size: 2 })
+    expect(built.questions.map((q) => q.id)).toEqual(['w-1', 'w-2'])
+  })
+
+  // @verifies REQ-021, REQ-042
+  it('誤答と同じ内容の過去問が理解度由来にも来たときは 1 問にまとめる', async () => {
+    const same = () => row({ id: 'w-1', exam: '2024r06', contentKey: 'ck-1' })
+    const { db } = fakeDb([
+      { match: REVIEW, rows: [same()] },
+      { match: WEAK, rows: [same(), row({ id: 'k-1', exam: '2024r06', contentKey: 'ck-k1' })] },
+      { match: TIMES, rows: [] },
+    ])
+    const built = await buildQuestions(db, 'u-1', { ...base, kind: 'review', size: 20 })
+    expect(built.questions.map((q) => q.id)).toEqual(['w-1', 'k-1'])
   })
 
   // @verifies REQ-213

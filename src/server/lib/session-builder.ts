@@ -161,7 +161,7 @@ export type BuildResult = {
 }
 
 /** セッションの出題内容を組み立てる。 */
-// @implements REQ-019, REQ-020, REQ-194, REQ-212, REQ-213, REQ-221, REQ-240, REQ-242
+// @implements REQ-019, REQ-020, REQ-042, REQ-194, REQ-212, REQ-213, REQ-221, REQ-240, REQ-242
 export async function buildQuestions(
   db: Db,
   userId: string,
@@ -189,17 +189,20 @@ export async function buildQuestions(
       }
     }
     // ランダム構成。分野比率を本番の目安に寄せる。
+    // 定着済みは**範囲（全範囲）から先に**外す。分野ごとに外すと、埋める側の経路や
+    // 分野の一つが全部定着済みのときに定着済みが混ざる。
     const pool = dedupe(await fetchQuestions(db, sql``))
+    const avail = drop(pool)
     const picked: QuestionRow[] = []
     for (const [field, count] of Object.entries(input.fieldRatio)) {
-      const inField = shuffle(drop(pool.filter((q) => q.field === field)))
+      const inField = shuffle(avail.filter((q) => q.field === field))
       picked.push(...inField.slice(0, count))
     }
     // 分野が付いていない問題（論点未紐付け）で不足分を埋める
     if (picked.length < input.size) {
       const chosen = new Set(picked.map((q) => q.id))
       picked.push(
-        ...shuffle(pool.filter((q) => !chosen.has(q.id))).slice(0, input.size - picked.length),
+        ...shuffle(avail.filter((q) => !chosen.has(q.id))).slice(0, input.size - picked.length),
       )
     }
     return {
@@ -215,7 +218,7 @@ export async function buildQuestions(
       sql`SELECT term FROM topics WHERE id = ${input.topicId}`,
     )
     return {
-      questions: shuffle(dedupe(rows)).slice(0, input.size),
+      questions: shuffle(drop(dedupe(rows))).slice(0, input.size),
       scopeLabel: `論点「${term?.term ?? ''}」`,
       sourceExam: null,
     }
@@ -244,11 +247,11 @@ export async function buildQuestions(
     }
   }
 
-  // review: 過去に間違えた問題を優先。直近の誤答から。
+  // review: 間違えた問題を先に、直近に間違えた順で。そのあと理解度の低い論点の問題で詰める。
   // 同一内容は content_key でまとめる。代表は**直近に間違えた回**（最新の回ではない）。
   // 復習で見たいのは「自分がつまずいた現物」なので、そのときの回のまま出す。
   // GROUP BY と MAX() を組むと、SQLite は MAX に一致する行の値を返す。
-  const rows = await db.all<QuestionRow>(sql`
+  const wrong = await db.all<QuestionRow>(sql`
     SELECT q.id AS id, q.text AS text, q.choices AS choices, q.answer AS answer,
            q.has_figure AS hasFigure, q.figure_description AS figureDescription,
            q.figure_image AS figureImage,
@@ -265,8 +268,33 @@ export async function buildQuestions(
      ORDER BY MAX(sq.answered_at) DESC
      LIMIT ${input.size}
   `)
+
+  // 誤答だけでは弱点を覆えない（まだ解いていない論点は誤答に現れない）ので、
+  // 理解度の自己申告が未理解（1）・やや理解（2）の論点に紐づく過去問も足す。
+  // 出題頻度の高い論点から並べる（頻出論点から潰すのが最短経路）。
+  const weakRows = await db.all<QuestionRow>(sql`
+    SELECT q.id AS id, q.text AS text, q.choices AS choices, q.answer AS answer,
+           q.has_figure AS hasFigure, q.figure_description AS figureDescription,
+           q.figure_image AS figureImage,
+           q.citation AS citation, q.modified AS modified,
+           q.exam_label AS examLabel, q.number AS number,
+           q.content_key AS contentKey, q.exam AS exam,
+           si.field AS field
+      FROM progress p
+      JOIN topics t ON t.id = p.topic_id
+      JOIN topic_questions tq ON tq.topic_id = t.id
+      JOIN past_questions q ON q.id = tq.question_id
+      LEFT JOIN syllabus_items si ON si.id = t.syllabus_item_id
+     WHERE p.user_id = ${userId} AND p.status <= 2
+     ORDER BY t.question_count DESC, t.id
+     LIMIT ${input.size * 5}
+  `)
+  // 誤答で既に入っている問題は同一内容ごと省く。誤答が先、理解度の低い論点が後。
+  const already = new Set(wrong.map((r) => r.contentKey ?? r.id))
+  const weak = dedupe(weakRows).filter((r) => !already.has(r.contentKey ?? r.id))
+  const picked = drop([...wrong, ...weak]).slice(0, input.size)
   return {
-    questions: await annotateTimesAsked(db, rows),
+    questions: await annotateTimesAsked(db, picked),
     scopeLabel: '間違えた問題の復習',
     sourceExam: null,
   }

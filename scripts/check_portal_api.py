@@ -30,6 +30,10 @@ scripts/check_sso_prod.sh は本番の死活だけ見る。**まなびば単独�
 - REQ-088 Cookie の境界 — ログインが要る経路は Cookie 無しで 401、/api/health と /api/learnings は 200
 - REQ-086 セキュリティヘッダ — CSP・HSTS・X-Frame-Options・nosniff・Referrer-Policy が応答に載る
 - REQ-094 死活確認 — /api/health は認証なしで {ok: true}
+- REQ-300 本文の検証 — login・sso/exchange・me/password・管理の作成・更新・再設定に、欠け・型違い・範囲外の
+  本文を送ると 400。{error} はどの項目（メール・パスワード・名前）が悪いか分かる日本語で、
+  スキーマの既定の英語の文言（Invalid・Required・Expected・received）を含まない
+- REQ-302 知らない /api — 存在しない /api の経路は、未ログインでもログイン後でも 404 で {error} が日本語
 
 ## 触るもの・触らないもの
 
@@ -65,6 +69,7 @@ DB_NAME = "manabiba-db"
 ADMIN_EMAIL = "portalcheck-admin@example.com"
 MEMBER_EMAIL = "portalcheck-member@example.com"
 TEMP_EMAIL = "portalcheck-temp@example.com"
+SCHEMA_EMAIL = "portalcheck-schema@example.com"
 PASSWORD = "portalcheck-pass-1234"
 PREFIX = "portalcheck-"
 
@@ -72,6 +77,14 @@ PREFIX = "portalcheck-"
 ITERATIONS = 100_000
 
 JAPANESE = re.compile(r"[ぁ-んァ-ヶ一-龥]")
+
+# スキーマ（zod）の既定の英語の文言。利用者に出す {error} に混ぜない（要件 §10 の入力検証）
+SCHEMA_WORDS = re.compile(r"(?i)\b(invalid|required|expected|received)\b")
+
+# 「どの項目が悪いか」を示す項目名の語（要件 §10。メール・パスワード・名前）
+EMAIL_WORDS = ("メール",)
+PASSWORD_WORDS = ("パスワード",)
+NAME_WORDS = ("名前",)
 
 
 # --------------------------------------------------------------------------
@@ -196,6 +209,23 @@ class Report:
         if not JAPANESE.search(body["error"]):
             self.warn(f"{label}: error が日本語でない（{body['error'][:60]}）")
         return body["error"]
+
+    def field_error(self, label: str, body, words: tuple[str, ...] = ()):
+        """検証で断った本文が {error: 日本語の 1 文} で、どの項目がどう悪いか分かり、
+        スキーマの既定の英語の文言を含まないこと（words のどれか 1 つが入っていればよい）。"""
+        if not isinstance(body, dict) or not isinstance(body.get("error"), str) or not body["error"]:
+            self.error(f"{label}: 本文が {{error: 文字列}} でない（{json.dumps(body, ensure_ascii=False)[:120]}）")
+            return
+        msg = body["error"]
+        if not JAPANESE.search(msg):
+            self.error(f"{label}: error が日本語でない（{msg[:80]}）")
+        hit = SCHEMA_WORDS.search(msg)
+        if hit:
+            self.error(f"{label}: error にスキーマの既定の英語の文言「{hit.group(0)}」が出ている（{msg[:80]}）")
+        if words and not any(w in msg for w in words):
+            self.error(
+                f"{label}: error にどの項目が悪いか（{' か '.join(words)}）が書かれていない（{msg[:80]}）"
+            )
 
 
 # --------------------------------------------------------------------------
@@ -820,6 +850,143 @@ def check_me_password_and_logout(r: Report, base: str):
     r.note("自分の設定: 現在のパスワード違い 401・長さ 400・変更後は新パスワード・ログアウトはこの端末だけ")
 
 
+# @verifies REQ-300
+def check_body_schema(admin: Client, r: Report, base: str, secret: str, admin_grant: str, member_id: str | None):
+    """本文の検証。login・sso/exchange・me/password・管理の作成・更新・再設定に、欠け・型違い・範囲外の
+    本文を送ると 400 で、{error} は「どの項目がどう悪いか」分かる日本語（項目名の語はメール・パスワード・名前）。
+    スキーマの既定の英語の文言（Invalid・Required・Expected・received）を出さない。
+    断った呼び出しでアカウントが増えない・パスワードが変わらないことも見る。
+
+    検査は使い捨てのアカウント（portalcheck-schema@example.com）の中で行う。
+    交換は共有秘密を正しく渡した本文だけを見る（共有秘密の確認が本文の検証より先で、
+    秘密が無い・違うときは 403。§15。そちらは REQ-003 の側が見ている）。"""
+    before = d1("SELECT COUNT(*) AS n FROM accounts")[0]["n"]
+
+    # --- POST /api/login（メールアドレスとパスワード）
+    for label, body, words in [
+        ("両方欠け", {}, EMAIL_WORDS + PASSWORD_WORDS),
+        ("パスワード欠け", {"email": ADMIN_EMAIL}, PASSWORD_WORDS),
+        ("メール欠け", {"password": PASSWORD}, EMAIL_WORDS),
+        ("メールが数値", {"email": 12345, "password": PASSWORD}, EMAIL_WORDS),
+        ("パスワードが数値", {"email": ADMIN_EMAIL, "password": 12345}, PASSWORD_WORDS),
+        ("メールの形が違う", {"email": "not-an-email", "password": PASSWORD}, EMAIL_WORDS),
+    ]:
+        st, data, _, _ = Client(base).call("POST", "/api/login", body)
+        r.status(f"POST /api/login（{label}）", st, 400, data)
+        r.field_error(f"POST /api/login（{label}）の本文", data, words)
+
+    # --- POST /api/admin/accounts（作成。欠け・型違い・範囲外）
+    for label, body, words in [
+        ("メール欠け", {"name": "検査用", "password": PASSWORD, "grants": []}, EMAIL_WORDS),
+        ("お名前欠け", {"email": f"{PREFIX}s0@example.com", "password": PASSWORD, "grants": []}, NAME_WORDS),
+        ("パスワード欠け", {"email": f"{PREFIX}s1@example.com", "name": "検査用", "grants": []}, PASSWORD_WORDS),
+        ("メールが数値", {"email": 1, "name": "検査用", "password": PASSWORD, "grants": []}, EMAIL_WORDS),
+        ("お名前が数値", {"email": f"{PREFIX}s2@example.com", "name": 5, "password": PASSWORD, "grants": []}, NAME_WORDS),
+        ("パスワードが数値", {"email": f"{PREFIX}s3@example.com", "name": "検査用", "password": 12345678, "grants": []}, PASSWORD_WORDS),
+        ("お名前が 51 文字", {"email": f"{PREFIX}s4@example.com", "name": "あ" * 51, "password": PASSWORD, "grants": []}, NAME_WORDS),
+        ("パスワードが 7 文字", {"email": f"{PREFIX}s5@example.com", "name": "検査用", "password": "a" * 7, "grants": []}, PASSWORD_WORDS),
+        ("パスワードが 201 文字", {"email": f"{PREFIX}s6@example.com", "name": "検査用", "password": "a" * 201, "grants": []}, PASSWORD_WORDS),
+        ("grants が配列でない", {"email": f"{PREFIX}s7@example.com", "name": "検査用", "password": PASSWORD, "grants": admin_grant}, ()),
+        ("role が知らない値", {"email": f"{PREFIX}s8@example.com", "name": "検査用", "password": PASSWORD, "role": "KING", "grants": []}, ()),
+    ]:
+        st, data, _, _ = admin.call("POST", "/api/admin/accounts", body)
+        r.status(f"POST /api/admin/accounts（{label}）", st, 400, data)
+        r.field_error(f"POST /api/admin/accounts（{label}）の本文", data, words)
+
+    # --- 検査用の使い捨てアカウント（更新・再設定・自分のパスワードを、他の検査と切り離して見る）
+    st, data, _, _ = admin.call(
+        "POST", "/api/admin/accounts",
+        {"email": SCHEMA_EMAIL, "name": "検査用の本文検証", "password": PASSWORD, "grants": [admin_grant]},
+    )
+    schema_id = data.get("id") if r.status("POST /api/admin/accounts（本文検証用を作成）", st, 201, data) and isinstance(data, dict) else None
+
+    # --- PUT /api/admin/accounts/:id（更新）
+    target_id = schema_id or member_id
+    if not target_id:
+        r.error("更新と再設定の本文の検証ができない（検査用アカウントが作れていない）")
+    else:
+        for label, body, words in [
+            ("お名前が空", {"name": ""}, NAME_WORDS),
+            ("お名前が 51 文字", {"name": "あ" * 51}, NAME_WORDS),
+            ("お名前が数値", {"name": 5}, NAME_WORDS),
+            ("role が知らない値", {"role": "KING"}, ()),
+            ("grants が配列でない", {"grants": admin_grant}, ()),
+        ]:
+            st, data, _, _ = admin.call("PUT", f"/api/admin/accounts/{target_id}", body)
+            r.status(f"PUT /api/admin/accounts/:id（{label}）", st, 400, data)
+            r.field_error(f"PUT /api/admin/accounts/:id（{label}）の本文", data, words)
+
+        # --- POST /api/admin/accounts/:id/password（再設定）
+        for label, body in [
+            ("パスワード欠け", {}),
+            ("パスワードが数値", {"password": 12345678}),
+            ("パスワードが 7 文字", {"password": "a" * 7}),
+            ("パスワードが 201 文字", {"password": "a" * 201}),
+        ]:
+            st, data, _, _ = admin.call("POST", f"/api/admin/accounts/{target_id}/password", body)
+            r.status(f"POST /api/admin/accounts/:id/password（{label}）", st, 400, data)
+            r.field_error(f"POST /api/admin/accounts/:id/password（{label}）の本文", data, PASSWORD_WORDS)
+
+    # --- POST /api/me/password（自分のパスワード。使い捨てのアカウントでログインして送る）
+    if schema_id:
+        me = Client(base)
+        st, data, _, _ = me.call("POST", "/api/login", {"email": SCHEMA_EMAIL, "password": PASSWORD})
+        if r.status("POST /api/login（本文検証用）", st, 200, data):
+            for label, body in [
+                ("両方欠け", {}),
+                ("next 欠け", {"current": PASSWORD}),
+                ("current 欠け", {"next": PASSWORD + "-x"}),
+                ("current が数値", {"current": 12345678, "next": PASSWORD + "-x"}),
+                ("next が数値", {"current": PASSWORD, "next": 12345678}),
+                ("next が 7 文字", {"current": PASSWORD, "next": "a" * 7}),
+                ("next が 201 文字", {"current": PASSWORD, "next": "a" * 201}),
+            ]:
+                st, data, _, _ = me.call("POST", "/api/me/password", body)
+                r.status(f"POST /api/me/password（{label}）", st, 400, data)
+                r.field_error(f"POST /api/me/password（{label}）の本文", data, PASSWORD_WORDS)
+            # 断った呼び出しでパスワードが変わっていないこと
+            st, data, _, _ = Client(base).call("POST", "/api/login", {"email": SCHEMA_EMAIL, "password": PASSWORD})
+            r.status("断った本文の後も元のパスワードで入れる", st, 200, data)
+
+    # --- POST /api/sso/exchange（共有秘密は正しく渡し、本文の形だけを崩す）
+    for label, body in [
+        ("code 欠け", {"app": admin_grant, "secret": secret}),
+        ("code が数値", {"code": 12345, "app": admin_grant, "secret": secret}),
+    ]:
+        st, data, _, _ = Client(base).call("POST", "/api/sso/exchange", body)
+        r.status(f"POST /api/sso/exchange（{label}）", st, 400, data)
+        r.field_error(f"POST /api/sso/exchange（{label}）の本文", data)
+
+    after = d1("SELECT COUNT(*) AS n FROM accounts")[0]["n"]
+    want = before + (1 if schema_id else 0)
+    if after != want:
+        r.error(f"断ったはずの作成でアカウントが増えている（{before} → {after} 件。{want} 件のはず）")
+    if schema_id:
+        admin.call("DELETE", f"/api/admin/accounts/{schema_id}")
+    r.note("本文の検証: login 6・作成 11・更新 5・再設定 4・自分のパスワード 7・交換 2 通りが 400 で項目の分かる日本語")
+
+
+# @verifies REQ-302
+def check_unknown_api_path(r: Report, base: str, admin: Client):
+    """知らない /api の経路は、未ログインでもログイン後でも 404 で本文が {error} の日本語。
+    静的ファイルに落ちて 200（index.html）になっていないこと（本文が JSON であることで見る）。
+    権限が要る接頭辞（/api/admin/…）の下は先に 401・403 を返してよいので、ここでは見ない（§10）。"""
+    anon = Client(base)
+    for who, c in (("未ログイン", anon), ("ログイン後", admin)):
+        for method, path, body in [
+            ("GET", "/api/no-such-path", None),
+            ("POST", "/api/no-such-path", {"x": 1}),
+            ("PUT", "/api/no-such-path", {"x": 1}),
+            ("DELETE", "/api/no-such-path", None),
+            ("GET", "/api/no-such-path/deeper", None),
+            ("GET", "/api/health/no-such-path", None),
+        ]:
+            st, data, _, _ = c.call(method, path, body)
+            r.status(f"{method} {path}（{who}）", st, 404, data)
+            r.field_error(f"{method} {path}（{who}）の本文", data)
+    r.note("知らない /api: 6 通り × 未ログイン／ログイン後が 404 の {error}（日本語）")
+
+
 # --------------------------------------------------------------------------
 
 
@@ -864,6 +1031,8 @@ def main() -> int:
         check_admin_list(admin, r)
         check_admin_validation(admin, r, args.base, member_id)
         check_admin_self_guard(admin, r, admin_id)
+        check_unknown_api_path(r, args.base, admin)
+        check_body_schema(admin, r, args.base, args.secret, admin_grant, member_id)
         code = check_sso_start(r, args.base, learn, admin_grant)
         check_sso_exchange(admin, r, args.base, args.secret, code, admin_grant, learn)
         check_me_password_and_logout(r, args.base)

@@ -1,7 +1,17 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { api, apiCached } from '../lib/api'
 import type { Field } from '../lib/api'
+
+/** シラバスの中分類。画面では「単元」と呼ぶ（「中分類」は学習者に通じない）。 */
+type Category = {
+  middleNo: number
+  middle: string
+  field: string
+  topics: number
+  questions: number
+  understood: number
+}
 
 type Current = {
   session: {
@@ -13,11 +23,15 @@ type Current = {
   } | null
 }
 
-// @implements REQ-190, REQ-191, REQ-229, REQ-230, REQ-234, REQ-160
+// @implements REQ-190, REQ-191, REQ-192, REQ-229, REQ-230, REQ-234, REQ-160
 export function Practice() {
   // null は「まだ取得していない」、[] は「取得した結果が空」。[] で初期化すると
   // 読み込み中に分野が1つも無いように見える。
   const [fields, setFields] = useState<Field[] | null>(null)
+  // カテゴリ別は2段。選んだ分野（未選択は null）と、その分野の単元。
+  const [catField, setCatField] = useState<string | null>(null)
+  const [categories, setCategories] = useState<Category[] | null>(null)
+  const [categoriesError, setCategoriesError] = useState('')
   const [current, setCurrent] = useState<Current['session']>(null)
   // 進行中の有無を取れていないことは、取れて「無い」ことと違う。黙って隠すと
   // 進行中を見落としたまま開始を押して 409 で弾かれる。
@@ -25,6 +39,8 @@ export function Practice() {
   const [currentError, setCurrentError] = useState('')
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
+  // 分野を続けて押したとき、遅れて届いた前の分野の単元で上書きしないための目印
+  const askedField = useRef('')
   const navigate = useNavigate()
 
   const reload = useCallback(() => {
@@ -41,10 +57,28 @@ export function Practice() {
       .catch((e) => setFieldsError(e.message))
   }, [])
 
+  const loadCategories = useCallback((field: string) => {
+    askedField.current = field
+    setCategoriesError('')
+    setCategories(null)
+    apiCached<{ categories: Category[] }>(`/categories?field=${encodeURIComponent(field)}`)
+      .then((d) => {
+        if (askedField.current === field) setCategories(d.categories)
+      })
+      .catch((e) => {
+        if (askedField.current === field) setCategoriesError(e.message)
+      })
+  }, [])
+
   useEffect(() => {
     loadFields()
     reload()
   }, [loadFields, reload])
+
+  function selectField(field: string) {
+    setCatField(field)
+    loadCategories(field)
+  }
 
   async function start(body: Record<string, unknown>) {
     setBusy(true)
@@ -143,6 +177,59 @@ export function Practice() {
           </button>
         ))}
       </div>
+
+      {/* カテゴリ別も2段。分野をフラットに20問取ると範囲が広すぎるので、
+          分野を選んでからその分野の単元（シラバスの中分類）を選んで始める。 */}
+      <h2>カテゴリ別演習</h2>
+      <p className="muted" style={{ marginTop: 0 }}>
+        分野を選ぶと、その分野の単元が出ます。単元を選ぶとその範囲だけで20問出題します。
+      </p>
+      <div className="chips">
+        {(fields ?? []).map((f) => (
+          <button
+            key={f.field}
+            type="button"
+            className="chip-f"
+            aria-pressed={catField === f.field}
+            onClick={() => selectField(f.field)}
+          >
+            {f.field}
+          </button>
+        ))}
+      </div>
+      {catField && (
+        <>
+          {categoriesError && (
+            <>
+              <p className="error">{categoriesError}</p>
+              <button className="btn" onClick={() => loadCategories(catField)}>
+                再読み込み
+              </button>
+            </>
+          )}
+          {/* null は未取得。[] と混ぜると読み込み中に「単元がありません」と出る。 */}
+          {categories === null && !categoriesError && <p className="muted">読み込み中…</p>}
+          {categories !== null && categories.length === 0 && (
+            <p className="muted">この分野には単元がありません。</p>
+          )}
+          <div className="grid grid-3">
+            {(categories ?? []).map((c) => (
+              <button
+                key={c.middleNo}
+                className="card"
+                style={{ textAlign: 'left', cursor: 'pointer', font: 'inherit', color: 'inherit' }}
+                disabled={busy || !!current}
+                onClick={() => start({ kind: 'middle', middleNo: c.middleNo, size: 20 })}
+              >
+                <div className="term">{c.middle}</div>
+                <div className="muted" style={{ fontSize: '0.85rem' }}>
+                  {c.questions} 問から20問
+                </div>
+              </button>
+            ))}
+          </div>
+        </>
+      )}
 
       <h2>弱点復習</h2>
       <div className="card">
