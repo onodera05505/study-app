@@ -13,7 +13,7 @@ description: 本人の要求（機能追加・変更・修正）を受けたと�
 2. **仕様書 → ユースケース → 要件 を書く（承認前に製造しない。書き方は `~/.claude/brain/tools/trace/README.md`「書き方」）**
    - 仕様書に決まりが無い振る舞いなら、先に仕様書（`docs/要件定義書_draft.md`）の節に書く（節番号が UC の `source`）
    - ユースケース: 該当の `docs/usecases/UC-xxx.md` の基本の流れ／例外の流れにステップを足す・書き換える（新規は `--next uc`、`status: draft`）。1 ステップ＝1 動作か 1 応答
-   - 要件: ステップごとに `docs/spec.yaml` に `usecase`・`step` 付きで足す（`--next req`、`status: draft`）。**1 要件は 1 か所のコードが実現できる粒度**（サーバとクライアントは別の要件）。description は「条件・振る舞い」、acceptance は「機械で確かめられる受入の条件」
+   - 要件: ステップごとに `docs/spec.yaml` に `usecase`・`step`・`quote`（仕様書の文の原文どおりの引用。S6 が実在を見る）付きで足す（`--next req`、`status: draft`）。**1 要件は 1 か所のコードが実現できる粒度**（サーバとクライアントは別の要件）。description は「条件・振る舞い」、acceptance は「機械で確かめられる受入の条件」
    - 変更: 該当のステップと REQ の文面を書き換える（足さない。経緯は git）。取り下げは `status: withdrawn`
    - バグ修正: spec は触らず `.trace-gate/work.json` に `{"reqs": ["REQ-xxx"], "kind": "bugfix", "note": "…"}` を書く（write_gate がこれを見る）
    - 本人に要件の文面を示して承認を得る。既存の文書（要件定義書・不変条件）と矛盾するなら矛盾を提示して止まる
@@ -21,7 +21,7 @@ description: 本人の要求（機能追加・変更・修正）を受けたと�
    - `implementer`: REQ の ID・文面・関連ファイルを渡す。テストは書かせない
    - `test-author`: REQ の ID・文面と**契約**（公開関数の名前・引き数・応答の形。実装が先に決めた外形）だけを渡す。実装ファイルのパスを渡さない。Bash は持たない
    - 契約がまだ無い新規機能は、implementer に「契約（外形）だけ先に返す」短い 1 巡目をさせ、その契約で test-author を起こす
-4. **機械の門**: `npm test` を回す。`[NG]` と赤を、どちらの欠陥か切り分けて戻す（実装の欠陥 → implementer／テストが要件と違う → test-author／要件の空白・ステップに要件が無い・1 要件が 2 か所に散る（C7）→ 2 へ戻り本人へ）。**実装側にテストを書き換えさせない。test-author に実装を見せない**
+4. **機械の門**: `npm test` を回す。`[NG]` と赤を、どちらの欠陥か切り分けて戻す（実装の欠陥 → implementer／テストが要件と違う → test-author／要件の空白・ステップに要件が無い・1 要件が 2 か所に散る（C7）→ 2 へ戻り本人へ）。**実装側にテストを書き換えさせない。test-author に実装を見せない。親も実装を読んで要件やテストを実装に寄せない（契約は名前と型だけ。振る舞いの空白は本人へ）**
 5. `draft` の REQ を `active` にし、`npm test` が全部通ったら `.trace-gate/work.json` を消してコミット（Conventional Commits）。Stop フックが最後にもう一度回す
 6. 挙動を変えたら `docs/不変条件と門.md`・`brain/PREMISES.md` の反映先（`→ 反映:`）を更新。作業ログは点、仕様書は現在形
 

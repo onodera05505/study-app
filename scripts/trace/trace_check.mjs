@@ -10,7 +10,7 @@
 //   仕様書      spec_document.file の見出し（## 4. … / ### 5.1 …）。規範的な節を spec_document.sections に列挙
 //   ユースケース usecases（ディレクトリ）の UC-xxx.md。frontmatter（id・title・status・actor・source=節）と
 //               本文の「## 前提条件」「## 基本の流れ」（1. 2. …）「## 例外の流れ」（E1. E2. …）「## 事後条件」
-//   要件        spec の requirements。各 REQ は usecase（1 つ）と step（基本の番号か E 番号）を持つ
+//   要件        spec の requirements。各 REQ は usecase（1 つ）と step（基本の番号か E 番号）と quote（根拠となる仕様書の文の引用）を持つ
 //   コード      @implements REQ-xxx（単位の直前）。1 つの REQ を実装する単位は max_units_per_req 以下（既定 1）
 //   テスト      @verifies REQ-xxx（テストケースの直前）
 //
@@ -20,6 +20,7 @@
 //   S3 active な UC のステップ（基本・例外）に要件が 1 つも無い（draft の UC は見ない）
 //   S4 UC の source（仕様書の節）が仕様書に実在しない
 //   S5 spec_document.sections の節に UC が 1 つも無い（仕様書の決まりがユースケースに落ちていない）
+//   S6 要件の quote（仕様書の文の引用。空白と強調記号を除いて照合）が規範的な節の本文に無い／quote が無い（require_quote、既定 true）。仕様書に無い振る舞いは要件にできない
 //   C1 active な要件に @implements が 1 つも無い
 //   C2 active な要件に @verifies が 1 つも無い
 //   C3 コードやテストが spec に無い ID、または withdrawn の ID を参照している
@@ -28,7 +29,7 @@
 //   C6 trace_ignore の行に理由が無い／指す先が実在しない／使われていない
 //   C7 1 つの要件を実装する単位が max_units_per_req を超える（要件が粗い。ステップを分けて細分化する）
 // 失敗の行は [NG] で始め、AI がそのまま直せる具体さで書く。最後に「全N件の要件のうち、実装済みX件・テスト済みY件」。
-export const VERSION = "2.0.0";
+export const VERSION = "2.1.1";
 
 import fs from "node:fs";
 import path from "node:path";
@@ -62,6 +63,8 @@ const specPath = path.resolve(opt.root, cfg.spec ?? "docs/spec.yaml");
 const ucDir = path.resolve(opt.root, cfg.usecases ?? "docs/usecases");
 const ignorePath = path.resolve(opt.root, cfg.ignore ?? "scripts/trace_ignore");
 const maxUnits = Number(cfg.max_units_per_req ?? 1);
+const requireQuote = cfg.require_quote !== false;
+const normQuote = (t) => String(t).replace(/[\s\u3000]/g, "").replace(/[*`_]/g, "");
 const idRe = { uc: /^UC-\d{3}$/, req: /^REQ-\d{3}$/ };
 const stepRe = /^(?:\d+|E\d+)$/;
 const implementsRe = new RegExp(cfg.implements_pattern ?? "@implements\\s+(REQ-\\d{3}(?:\\s*[,/]\\s*REQ-\\d{3})*)", "g");
@@ -79,10 +82,22 @@ function assign(obj, kv, where, problems) {
   const key = m[1]; let val = m[2].trim();
   if (val.startsWith("[")) {
     if (!val.endsWith("]")) { problems.push(`[NG] ${where} 行内リストが閉じていない: ${kv}`); return; }
-    obj[key] = val.slice(1, -1).split(",").map((s) => unquote(s.trim())).filter(Boolean);
+    obj[key] = splitList(val.slice(1, -1)).map((s) => unquote(s.trim())).filter(Boolean);
     return;
   }
   obj[key] = unquote(val);
+}
+/** 行内リストの中身を、引用符の外の , だけで割る（"本文 ≤2,000 字" のような読点を含む文を引けるように）。 */
+function splitList(inner) {
+  const out = []; let cur = "", q = null;
+  for (const c of inner) {
+    if (q) { cur += c; if (c === q) q = null; continue; }
+    if (c === '"' || c === "'") { q = c; cur += c; continue; }
+    if (c === ",") { out.push(cur); cur = ""; continue; }
+    cur += c;
+  }
+  out.push(cur);
+  return out;
 }
 function stripComment(line) {
   let q = null;
@@ -165,18 +180,22 @@ function parseUsecases(problems) {
 // ------------------------------------------------------------------ 仕様書の節（見出し番号）
 function specDocumentSections(problems) {
   const sd = cfg.spec_document;
-  if (!sd || !sd.file) { problems.push(`[NG] traceconfig.json に spec_document.file（仕様書）が無い。UC の source が指す書類を登録する`); return { headings: new Set(), normative: [] }; }
+  if (!sd || !sd.file) { problems.push(`[NG] traceconfig.json に spec_document.file（仕様書）が無い。UC の source が指す書類を登録する`); return { headings: new Set(), normative: [], normativeText: "" }; }
   const file = path.resolve(opt.root, sd.file);
-  if (!fs.existsSync(file)) { problems.push(`[NG] 仕様書が無い: ${sd.file}`); return { headings: new Set(), normative: [] }; }
+  if (!fs.existsSync(file)) { problems.push(`[NG] 仕様書が無い: ${sd.file}`); return { headings: new Set(), normative: [], normativeText: "" }; }
   const headings = new Set();
+  const normative = asList(sd.sections).map(normSection);
+  const isNormative = (n) => normative.some((s) => n === s || n.startsWith(s + "."));
+  let active = false, body = "";
   for (const l of fs.readFileSync(file, "utf8").split(/\r?\n/)) {
     const m = l.match(/^#{1,6}\s+(\d+(?:\.\d+)*)\.?\s/);
-    if (m) headings.add(m[1]);
+    if (m) { headings.add(m[1]); active = isNormative(m[1]); }
+    if (active) body += l + "\n";
   }
-  const normative = asList(sd.sections).map(normSection);
+  const normativeText = normQuote(body);
   if (normative.length === 0) problems.push(`[NG] traceconfig.json の spec_document.sections が空（規範的な節の番号を列挙する。例 ["4", "5.1"]）`);
   for (const s of normative) if (!headings.has(s)) problems.push(`[NG] traceconfig.json の spec_document.sections に仕様書に無い節がある: §${s}（${sd.file} の見出し番号と合わせる）`);
-  return { headings, normative, file: sd.file };
+  return { headings, normative, file: sd.file, normativeText };
 }
 
 // ------------------------------------------------------------------ ファイル走査
@@ -294,6 +313,15 @@ function main() {
     if (!r.acceptance) problems.push(`[NG] ${w} ${r.id}: acceptance が空`);
     r.status = r.status ?? "active";
     if (!STATUSES.has(r.status)) problems.push(`[NG] ${w} ${r.id}: status は draft|active|withdrawn（今: ${r.status}）`);
+    if (requireQuote && r.status !== "withdrawn") {
+      const quotes = asList(r.quote).map((q) => String(q).trim()).filter(Boolean);
+      if (quotes.length === 0) problems.push(`[NG] ${w} ${r.id}: quote が無い（根拠となる仕様書の文をそのまま引用する。仕様書に無い振る舞いなら、先に仕様書の節に書いて承認を得る）`);
+      for (const q of quotes) {
+        if (normQuote(q).length < 8) problems.push(`[NG] ${w} ${r.id}: quote が短すぎる（8 文字以上の文を引く）: ${q}`);
+        else if (doc.normativeText && !doc.normativeText.includes(normQuote(q))) problems.push(`[NG] ${w} ${r.id}: quote が仕様書の規範的な節に見つからない（引用は原文どおりに。仕様書に無い振る舞いなら先に仕様書へ）: 「${q}」`);
+        else r._quoted = true;
+      }
+    }
     if (r.usecases !== undefined) problems.push(`[NG] ${w} ${r.id}: usecases（複数）は廃止。usecase: UC-xxx と step: n（基本の番号か E1）に書く。複数の UC に掛かるなら要件を分ける`);
     if (Array.isArray(r.usecase)) problems.push(`[NG] ${w} ${r.id}: usecase は 1 つ（リストにしない。複数の UC に掛かるなら要件を分ける）`);
     const uc = typeof r.usecase === "string" ? r.usecase : null;
@@ -393,7 +421,9 @@ function main() {
   const drafts = reqs.filter((r) => r.status === "draft").length, withdrawn = reqs.filter((r) => r.status === "withdrawn").length;
   const ucActive = ucs.filter((u) => u.status === "active").length, ucDraft = ucs.filter((u) => u.status === "draft").length;
   const covered = doc.normative.filter((s) => ucs.some((u) => u.source.includes(s) && u.status !== "withdrawn")).length;
-  console.log(`全${active}件の要件のうち、実装済み${implemented}件・テスト済み${tested}件（仕様書の節 ${covered}/${doc.normative.length} に UC、UC active ${ucActive}・draft ${ucDraft}、要件 draft ${drafts}・withdrawn ${withdrawn}）${uniq.length ? `。NG ${uniq.length} 件` : "。問題なし"}`);
+  const live = reqs.filter((r) => r.status !== "withdrawn" && !r._dup);
+  const quoted = live.filter((r) => r._quoted).length;
+  console.log(`全${active}件の要件のうち、実装済み${implemented}件・テスト済み${tested}件（仕様書の節 ${covered}/${doc.normative.length} に UC、仕様書の文を引く要件 ${quoted}/${live.length}、UC active ${ucActive}・draft ${ucDraft}、要件 draft ${drafts}・withdrawn ${withdrawn}）${uniq.length ? `。NG ${uniq.length} 件` : "。問題なし"}`);
   return uniq.length ? 1 : 0;
 }
 
