@@ -226,6 +226,7 @@ report してきた例が複数あった（ファイルの中身は正しかっ�
 
 ## 仕様 ⇔ コード ⇔ テスト の対応（作業完了の条件）
 
+- **要求を受けたら Skill `/develop` の手順で動く**: 要件（`docs/spec.yaml`）を書き直して承認 → `implementer` と `test-author` を**別コンテキストで並行**（test-author は実装を読まず Bash も持たない。中央 `reports/106`）→ `npm test` が通るまで。書き込みの瞬間は `write_gate`（PreToolUse。spec に差分か `.trace-gate/work.json` の REQ 宣言が無いと `src/`・`tests/` に書けない）、終了の瞬間は `stop_gate`（Stop）が止める
 - **実装の前に `docs/spec.yaml` に要件 ID（REQ-xxx）があるか確かめる。** 無ければ追加を提案する（`bash scripts/trace_check --next req` で次の番号。決めたが未実装なら `status: draft`）。仕様に無い機能を勝手に作らない
 - **コードには `@implements REQ-xxx`、テストには `@verifies REQ-xxx`** を、その単位（関数・クラス・ルートハンドラ・テストケース）の直前のコメントに書く。ID だけを書き、要件の文を写さない。ファイル先頭にまとめない。コメントは今の仕様だけ（経緯・日付を書かない）
 - **作業完了の条件は `npm test`（trace_check → 単体テスト → check_source → check_docs）が全部通ること。** Stop フック（ユーザー設定）・pre-commit・CI が同じ検査を回す。落ちたら `[NG]` の行を直す

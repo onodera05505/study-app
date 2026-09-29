@@ -142,7 +142,7 @@ def check_spec_current_form(root: Path, errors: list[str]) -> int:
 
 
 CENTRAL_TRACE = Path(os.path.expanduser("~/.claude/brain/tools/trace"))
-TRACE_COPIES = ["scripts/trace/trace_check.mjs", "scripts/trace/stop_gate.mjs"]
+TRACE_COPIES = ["scripts/trace/trace_check.mjs", "scripts/trace/stop_gate.mjs", "scripts/trace/write_gate.mjs"]
 
 
 def check_trace_copies(root: Path, errors: list[str]) -> int:
