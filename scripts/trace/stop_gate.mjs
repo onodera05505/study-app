@@ -9,7 +9,7 @@
 //               連続で --max-rounds 回止めても失敗が減らない（人に返す）／フック自身の内部エラー（壊れたフックでセッションを止めない）
 // 止める（exit 2）: commands.test が 0 以外か timeout
 // 記録: <root>/.trace-gate/log.jsonl（判定 1 行）と state.json（最終合格の指紋・回数）。.gitignore に .trace-gate/ を足す
-export const VERSION = "1.0.0";
+export const VERSION = "1.2.2";
 
 import fs from "node:fs";
 import path from "node:path";
@@ -51,9 +51,39 @@ function main() {
   const cfgPath = path.join(root, "traceconfig.json");
   if (!fs.existsSync(cfgPath)) return 0; // この仕組みを入れていないプロジェクト。何もしない
   const cfg = JSON.parse(fs.readFileSync(cfgPath, "utf8"));
-  const cmd = cfg.commands?.test;
   const stateDir = path.join(root, ".trace-gate");
+  // 複製が古いままでないか（正本 ~/.claude/brain/tools/trace/ の VERSION と比べる。正本が無い環境＝CI では見ない）
+  try {
+    const central = path.join(process.env.HOME ?? "", ".claude", "brain", "tools", "trace");
+    if (fs.existsSync(central)) {
+      const ver = (f) => (fs.readFileSync(f, "utf8").match(/export const VERSION = "([^"]+)"/) ?? [])[1] ?? "0";
+      const cmpVer = (a, b) => { const x = a.split(".").map(Number), y = b.split(".").map(Number); for (let i = 0; i < 3; i++) { if ((x[i] ?? 0) !== (y[i] ?? 0)) return (x[i] ?? 0) < (y[i] ?? 0) ? -1 : 1; } return 0; };
+      const older = (a, b) => cmpVer(a, b) < 0;
+      const stale = ["trace_check.mjs", "stop_gate.mjs", "write_gate.mjs"].filter((n) => fs.existsSync(path.join(root, "scripts", "trace", n)) && older(ver(path.join(root, "scripts", "trace", n)), ver(path.join(central, n))));
+      if (stale.length) {
+        console.error(`[stop-gate] 複製が正本より古い: ${stale.join(", ")}（cp ~/.claude/brain/tools/trace/{${stale.join(",")}} scripts/trace/ で更新する。検査の条件が古いまま通っている恐れ）`);
+        log(stateDir, { decision: "block", reason: "stale-copy", stale });
+        return 2;
+      }
+    }
+  } catch {}
+  const cmd = cfg.commands?.test;
   if (!cmd) { console.log("[stop-gate] traceconfig.json の commands.test が未宣言。検査は行われていない"); log(stateDir, { decision: "skip", reason: "no-command" }); return 0; }
+  // 緩和の検知: commands.test から trace_check が外れていたら止める（導入中の「一時緩和」がそのまま残るのを防ぐ。本人の許可があるなら relax_until: "YYYY-MM-DD" を traceconfig.json に書く）
+  // npm test / pnpm test / yarn test のときは package.json の scripts.test まで辿って見る
+  let effective = cmd;
+  const viaPkg = cmd.match(/^\s*(?:npm|pnpm|yarn)\s+(?:run\s+)?test\b/);
+  if (viaPkg) { try { effective += " " + (JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8")).scripts?.test ?? ""); } catch {} }
+  if (!/trace_check/.test(effective)) {
+    const until = cfg.relax_until ? new Date(cfg.relax_until) : null;
+    const today = new Date().toISOString().slice(0, 10);
+    if (!until || Number.isNaN(until.getTime()) || today > cfg.relax_until) {
+      console.error(`[stop-gate] traceconfig.json の commands.test に trace_check が含まれていません（門が緩和されたまま）。"node scripts/trace/trace_check.mjs && <単体テスト>" に戻してください。本人が期限つきで緩和を許可したときだけ、traceconfig.json に "relax_until": "YYYY-MM-DD" を書く（期限を過ぎると止まる）`);
+      log(stateDir, { decision: "block", reason: "relaxed-gate", cmd });
+      return 2;
+    }
+    console.log(`[stop-gate] 門の緩和中（本人許可。期限 ${cfg.relax_until}）: ${cmd}`);
+  }
 
   let state = {};
   try { state = JSON.parse(fs.readFileSync(path.join(stateDir, "state.json"), "utf8")); } catch {}
