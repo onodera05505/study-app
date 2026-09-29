@@ -46,27 +46,35 @@ describe('セキュリティヘッダ', () => {
 
 describe('SSO の環境（まなびばが認証の正本）', () => {
   // @verifies REQ-005
-  it('register と login は 404', async () => {
-    for (const path of ['/api/auth/register', '/api/auth/login']) {
-      const res = await app.request(path, json({ email: 'a@example.com', password: 'password1', name: '名' }), sso())
-      expect(res.status).toBe(404)
-      expect(await res.json()).toHaveProperty('error')
-    }
+  it('従来のパスワードログイン（/api/auth/login）は 404', async () => {
+    const res = await app.request('/api/auth/login', json({ email: 'a@example.com', password: 'password1' }), sso())
+    expect(res.status).toBe(404)
+    expect(await res.json()).toHaveProperty('error')
   })
 
-  // @verifies REQ-005
-  it('config は sso・portal・app だけを返し、secretSet を出さない', async () => {
+  // @verifies REQ-065
+  it('登録（/api/auth/register）は 404', async () => {
+    const res = await app.request('/api/auth/register', json({ email: 'a@example.com', password: 'password1', name: '名' }), sso())
+    expect(res.status).toBe(404)
+    expect(await res.json()).toHaveProperty('error')
+  })
+
+  // @verifies REQ-066
+  it('config は sso・portal・app だけを返し、秘密の有無（secretSet）を出さない', async () => {
     const res = await app.request('/api/auth/config', {}, sso())
     expect(res.status).toBe(200)
     const body = (await res.json()) as Record<string, unknown>
     expect(Object.keys(body).sort()).toEqual(['app', 'portal', 'sso'])
+    expect(body).not.toHaveProperty('secretSet')
     expect(body.sso).toBe(true)
     expect(body.portal).toBe('https://portal.example')
+    expect(typeof body.app).toBe('string')
+    expect(body.app).not.toBe('')
   })
 })
 
 describe('失敗の形', () => {
-  // @verifies REQ-034
+  // @verifies REQ-004
   it('/api/auth/sso は壊れた入力を 400 の {error} で返す', async () => {
     for (const init of [json({}), json({ code: 12 }), { method: 'POST', body: 'not json' }]) {
       const res = await app.request('/api/auth/sso', init, sso())
@@ -75,7 +83,7 @@ describe('失敗の形', () => {
     }
   })
 
-  // @verifies REQ-034
+  // @verifies REQ-091
   it('未知の API の経路は 404 の {error}', async () => {
     const res = await app.request('/api/auth/no-such-path', {}, sso())
     expect(res.status).toBe(404)
@@ -84,14 +92,14 @@ describe('失敗の形', () => {
 })
 
 describe('SSO のコード交換（学び側）', () => {
-  // @verifies REQ-004
+  // @verifies REQ-060
   it('共有秘密が無い環境では 503 で止まり、まなびばに問い合わせない', async () => {
     const res = await app.request('/api/auth/sso', json({ code: 'abc' }), env({ SSO_PORTAL_URL: 'https://portal.example' }))
     expect(res.status).toBe(503)
     expect(((await res.json()) as { error: string }).error).toContain('共有秘密')
   })
 
-  // @verifies REQ-004
+  // @verifies REQ-060
   it('まなびばに繋がらないときは 502 の {error}', async () => {
     const orig = globalThis.fetch
     globalThis.fetch = (async () => { throw new TypeError('fetch failed') }) as typeof fetch

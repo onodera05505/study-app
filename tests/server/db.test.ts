@@ -25,7 +25,7 @@ describe('トークンの秘密', () => {
     expect(getSecret(env({ JWT_SECRET: 'from-secret' }))).toBe('from-secret')
   })
 
-  // @verifies REQ-049
+  // @verifies REQ-095
   it('未設定の環境では開発用の既定値に倒れる（本番は secret を設定する運用）', () => {
     expect(getSecret(env())).toBe('dev-only-insecure-secret')
   })

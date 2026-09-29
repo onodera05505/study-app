@@ -43,6 +43,18 @@ API の形は静かに壊れる。SELECT の別名を1つ変えれば画面の�
    一致し、実際に作った模試がその問題数と制限時間で返るか
 9. **セキュリティヘッダ** — 全応答に CSP・HSTS・X-Frame-Options DENY・nosniff・
    Referrer-Policy が載っているか
+10. **出題の範囲と畳み込み** — 論点別の出題がその論点に紐づく過去問だけで、1回の出題に
+    同じ内容の問題が2度出ないか。出題できる過去問が無い範囲は 400 で、セッションを作らないか
+11. **公開回の通し受験** — その回の過去問の件数のまま（同一内容を畳まない）で、
+    問番号の昇順に出るか
+12. **完了していない結果と破棄** — 進行中のセッションの結果が 404 か（未回答の正解と解説が
+    読めてしまう）、破棄で進行中とその回答が残らないか
+13. **回ごとの受験回数** — /exams の受験回数・最高正答数が、他人の受験も進行中のセッションも
+    数えていないか
+14. **制限時間の境目** — 残り秒が開始時刻と制限時間から出るか、制限時間を過ぎたら問題を返さず
+    回答も採点しないか、時間切れで締めた回の結果が時間切れになるか
+15. **論点の詳細に添わるもの** — 「次に学ぶ論点」がいま開いている論点自身でも理解にした論点でも
+    ないか、学ぶ順の前後の単位がロードマップ型だけに添えられ、端では該当側が null か
 
 ## 触るもの・触らないもの
 
@@ -50,6 +62,8 @@ API の形は静かに壊れる。SELECT の別名を1つ変えれば画面の�
   既存データの UPDATE / DELETE はしない。理解度の記録（progress）も書かない
 - 消すのは検査用アカウント自身の「進行中セッション」だけ（残っていると 409 で
   次回の検査が始められないため）。終わったセッションは残す
+- 書き換えるのは検査用アカウント自身が作った模試の開始時刻だけ（制限時間切れは
+  時間の経過を待てないので、その 1 行を epoch に戻して作る）
 - **ローカルの D1 だけ。本番 URL には当てない**
 """
 
@@ -236,6 +250,12 @@ TOPICS = {
     ]
 }
 
+# 論点の詳細に添わるもの。次に学ぶ論点は候補が尽きたら null、
+# 前後の単位はロードマップ型だけで、端では該当側が null（資格版は neighbors そのものが null）。
+NEXT_TOPIC = ("|", None, {"*id": "int", "*term": "str", "*questionCount": "int"})
+NEIGHBOR = ("|", None, {"*id": "int", "*term": "str"})
+NEIGHBORS = ("|", None, {"*prev": NEIGHBOR, "*next": NEIGHBOR})
+
 TOPIC_DETAIL = {
     "*topic": {
         "*id": "int",
@@ -273,6 +293,8 @@ TOPIC_DETAIL = {
         }
     ],
     "*siblings": [{"*id": "int", "*term": "str", "*questionCount": "int"}],
+    "*nextTopic": NEXT_TOPIC,
+    "*neighbors": NEIGHBORS,
 }
 
 GLOSSARY = {"*glossary": [{"*term": "str", "*brief": "str", "*topicId": "int?"}]}
@@ -572,7 +594,7 @@ def account(c: Client, r: Report, email: str, name: str, code: str | None) -> st
     return data["token"]
 
 
-# @verifies REQ-033
+# @verifies REQ-033, REQ-047
 def check_auth_boundary(c: Client, r: Report):
     """未認証・壊れたトークンで保護経路に当てる。200 なら保護が外れ、500 なら検証で落ちている。"""
     broken = [
@@ -670,7 +692,7 @@ def check_failure_shapes(c: Client, r: Report, code: str | None):
             r.error_body(f"{label} の本文", data)
 
 
-# @verifies REQ-010, REQ-011, REQ-012
+# @verifies REQ-010, REQ-120, REQ-011, REQ-012, REQ-137
 def check_get_shapes(c: Client, r: Report) -> dict:
     """各 GET の形。返ってきた本文は件数の検査でも使うので返す。"""
     got = {}
@@ -702,7 +724,7 @@ def check_get_shapes(c: Client, r: Report) -> dict:
     return got
 
 
-# @verifies REQ-010, REQ-011, REQ-041
+# @verifies REQ-010, REQ-120, REQ-011, REQ-137, REQ-041
 def check_counts(c: Client, r: Report, got: dict, exam: str, db_name: str):
     """API の件数がローカル D1 の SELECT と一致するか。200 と「全部入っている」は別。"""
     rows = d1(
@@ -760,7 +782,7 @@ def check_counts(c: Client, r: Report, got: dict, exam: str, db_name: str):
     return rows
 
 
-# @verifies REQ-010
+# @verifies REQ-011, REQ-120, REQ-014
 def check_empty_lists(c: Client, r: Report, other_token: str):
     """空になりうる一覧が [] で返るか。null や キー欠落だと画面が未取得と区別できない。
 
@@ -793,7 +815,7 @@ def check_empty_lists(c: Client, r: Report, other_token: str):
             r.warn("GET /sessions/current: 検査用アカウントに進行中セッションが残っている")
 
 
-# @verifies REQ-019, REQ-022, REQ-025, REQ-026
+# @verifies REQ-025, REQ-026, REQ-193, REQ-196, REQ-199, REQ-202, REQ-203, REQ-205, REQ-207, REQ-218, REQ-232
 def check_session_flow(c: Client, r: Report, got: dict, other_token: str):
     """作成 → 1問回答 → 中断 → 再開 → 全問回答 → finish → 結果。二重回答と他人のセッションも見る。"""
     detail = got.get("topic_detail")
@@ -995,7 +1017,124 @@ def check_ordering(c: Client, r: Report, got: dict, exam: str):
     )
 
 
-# @verifies REQ-019, REQ-023
+# @verifies REQ-133, REQ-150
+def check_topic_detail_extras(c: Client, r: Report, got: dict, exam: str):
+    """論点の詳細に添わる「次に学ぶ論点」と「学ぶ順の前後の単位」。
+
+    次に学ぶ論点は、いま開いている論点自身でも「理解」にした論点でもなく、候補の先頭
+    （資格版は出題頻度が最も高い候補 / ロードマップ型は学ぶ順の先頭）であること。
+    前後の単位はロードマップ型だけに添わり、学ぶ順の隣で、端では該当側が null。
+    資格版は neighbors そのものが null（sort_order の列を参照しない）。"""
+    sys.path.insert(0, str(Path(__file__).parent)); from targets import target as _target
+    roadmap = bool(_target(exam).get("roadmap"))
+    detail = got.get("topic_detail")
+    topics = (got.get("/topics?limit=500") or {}).get("topics") or []
+    if not detail or not topics:
+        r.error("論点の詳細の添え物: /topics か論点の詳細が取れなかったので確かめられない")
+        return
+    by_id = {t["id"]: t for t in topics}
+    me_id = detail["topic"]["id"]
+
+    # --- 次に学ぶ論点 -----------------------------------------------------
+    for key in ("nextTopic", "neighbors"):
+        if key not in detail:
+            r.error(f"GET /topics/:id: キー {key} が無い（クライアントが参照している）")
+    r.shape("GET /topics/:id の nextTopic", detail.get("nextTopic"), NEXT_TOPIC)
+    # 候補: 自分以外・理解（3）でない・出題がある論点。/topics の並びが候補の順
+    cands = [
+        t for t in topics
+        if t["id"] != me_id and t["status"] != 3 and t["questionCount"] > 0
+    ]
+    nxt = detail.get("nextTopic")
+    if nxt is None:
+        if cands:
+            r.error(
+                f"nextTopic が null（まだ理解していない論点が {len(cands)} 件あるのに添えられていない）"
+            )
+    elif isinstance(nxt, dict):
+        if nxt.get("id") == me_id:
+            r.error(f"nextTopic がいま開いている論点自身（{me_id}）")
+        row = by_id.get(nxt.get("id"))
+        if row is None:
+            r.error(f"nextTopic の論点 {nxt.get('id')} が /topics に無い")
+        else:
+            if row["status"] == 3:
+                r.error(f"nextTopic が理解にした論点（{row['id']} {row['term']}）")
+            if nxt.get("term") != row["term"]:
+                r.error(f"nextTopic の名前が /topics と違う（{nxt.get('term')} / {row['term']}）")
+            if nxt.get("questionCount") != row["questionCount"]:
+                r.error(
+                    f"nextTopic の出題回数が /topics と違う"
+                    f"（{nxt.get('questionCount')} / {row['questionCount']}）"
+                )
+            if cands:
+                if roadmap:
+                    if row["id"] != cands[0]["id"]:
+                        r.error(
+                            f"nextTopic が学ぶ順の先頭の候補でない"
+                            f"（{row['id']} / 学ぶ順の先頭は {cands[0]['id']} {cands[0]['term']}）"
+                        )
+                else:
+                    top = max(t["questionCount"] for t in cands)
+                    if row["questionCount"] != top:
+                        r.error(
+                            f"nextTopic の出題回数が {row['questionCount']}"
+                            f"（頻出でまだ理解していない先頭は {top} 回）"
+                        )
+
+    # --- 学ぶ順の前後の単位 -----------------------------------------------
+    if not roadmap:
+        if detail.get("neighbors") is not None:
+            r.error(
+                f"資格版なのに neighbors が返っている（{detail['neighbors']}）"
+                "。資格版は sort_order の列を参照しない"
+            )
+        r.notes.append("論点の詳細の添え物: nextTopic を確認（資格版は neighbors が null）")
+        return
+
+    ordered = [t for t in topics if t["sortOrder"] is not None]
+    if len(ordered) < 2:
+        r.error("前後の単位の検査: 学ぶ順の単位が 2 件未満で確かめられない")
+        return
+    # 先頭・末尾・真ん中の 3 か所で見る（端は該当側が null になるはず）
+    picks = {0: "先頭", len(ordered) - 1: "末尾", len(ordered) // 2: "真ん中"}
+    for i, label in picks.items():
+        unit = ordered[i]
+        st, data, text = c.call("GET", f"/topics/{unit['id']}")
+        if not r.status(
+            f"GET /topics/{unit['id']}（{label}の単位）", st, 200, None if st == 200 else text[:200]
+        ):
+            continue
+        if not isinstance(data, dict):
+            r.error(f"GET /topics/{unit['id']}（{label}の単位）: 本文が JSON のオブジェクトでない")
+            continue
+        r.shape(f"GET /topics/{unit['id']} の neighbors", data.get("neighbors"), NEIGHBORS)
+        nb = data.get("neighbors")
+        if not isinstance(nb, dict):
+            r.error(f"{label}の単位 {unit['id']}: neighbors が無い（ロードマップ型は前後を添える）")
+            continue
+        for side, j in (("prev", i - 1), ("next", i + 1)):
+            want = ordered[j] if 0 <= j < len(ordered) else None
+            side_got = nb.get(side)
+            if want is None:
+                if side_got is not None:
+                    r.error(f"{label}の単位 {unit['id']}: {side} が {side_got}（端なので null のはず）")
+            elif not isinstance(side_got, dict):
+                r.error(
+                    f"{label}の単位 {unit['id']}: {side} が null"
+                    f"（学ぶ順の隣 {want['id']} {want['term']} のはず）"
+                )
+            elif side_got.get("id") != want["id"] or side_got.get("term") != want["term"]:
+                r.error(
+                    f"{label}の単位 {unit['id']}: {side} が {side_got.get('id')} {side_got.get('term')}"
+                    f"（学ぶ順の隣は {want['id']} {want['term']}）"
+                )
+    r.notes.append(
+        f"論点の詳細の添え物: nextTopic と、学ぶ順 {len(ordered)} 単位の前後（先頭・末尾・真ん中）を確認"
+    )
+
+
+# @verifies REQ-023
 def check_mock_settings(c: Client, r: Report, exam: str, db_name: str):
     """模試の問題数と制限時間。app_settings の値が登録簿（src/shared/targets.json）と一致し、
     実際に作った模試がその問題数・制限時間で返るか。作った模試はその場で破棄する。"""
@@ -1037,6 +1176,259 @@ def check_mock_settings(c: Client, r: Report, exam: str, db_name: str):
     r.notes.append(f"模試: {want_size} 問 / 制限 {want_sec} 秒で作成できることを確認（破棄済み）")
 
 
+def squeeze(s: str) -> str:
+    """空白を落とした本文（同じ問題かどうかを字面で突き合わせるため）。"""
+    return re.sub(r"\s+", "", s or "")
+
+
+# @verifies REQ-019, REQ-021, REQ-204
+def check_session_scope(c: Client, r: Report, got: dict):
+    """出題の範囲（論点別はその論点に紐づく過去問だけ）と畳み込み（1回の出題に同じ内容を2度出さない）、
+    出題できる過去問が無い範囲の 400。作ったセッションはその場で破棄する。"""
+    detail = got.get("topic_detail")
+    if not detail:
+        r.error("出題の範囲の検査: 出題できる論点が取れなかったので検査できない")
+        return
+    topic_id = detail["topic"]["id"]
+    allowed = {squeeze(q["text"]) for q in detail["questions"]}
+
+    c.call("DELETE", "/sessions/current")
+    size = min(3, len(detail["questions"]))
+    st, created, text = c.call("POST", "/sessions", {"kind": "drill", "topicId": topic_id, "size": size})
+    if not r.status("POST /sessions（範囲の検査）", st, 201, None if st == 201 else text[:200]):
+        return
+    sid = created["id"]
+    if created["questionCount"] > size:
+        r.error(f"出題が指定した問題数を超えている: {created['questionCount']} 問（{size} 問以下のはず）")
+
+    seen: list[str] = []
+    for i in range(created["questionCount"]):
+        st, cur, _ = c.call("GET", f"/sessions/{sid}/current")
+        if st != 200 or not (cur or {}).get("question"):
+            r.error(f"出題の範囲の検査: {i + 1} 問目が取れない（status {st}）")
+            break
+        q = cur["question"]
+        if squeeze(q["text"]) not in allowed:
+            r.error(
+                f"論点別の出題に範囲外の過去問が入っている（論点 {topic_id} に紐づかない）: {q['text'][:40]}…"
+            )
+        seen.append(squeeze(q["text"]))
+        st, _, _ = c.call("POST", f"/sessions/{sid}/answer", {"idx": q["idx"], "answer": "ア"})
+        if st != 200:
+            r.error(f"出題の範囲の検査: {i + 1} 問目の回答が {st}")
+            break
+    dupes = [t for t in set(seen) if seen.count(t) > 1]
+    if dupes:
+        r.error(f"1回の出題に同じ内容の問題が2度出ている {len(dupes)} 件: {dupes[0][:40]}…")
+    c.call("DELETE", "/sessions/current")
+
+    # 出題できる過去問が1問も無い範囲は 400 で、セッションを作らない
+    st, data, _ = c.call("POST", "/sessions", {"kind": "field", "field": "そんな分野は無い"})
+    if r.status("POST /sessions（出題できる過去問が無い範囲）", st, 400, data):
+        r.error_body("出題できる過去問が無い範囲の本文", data)
+    st, cur, _ = c.call("GET", "/sessions/current")
+    if r.status("GET /sessions/current（作られていないこと）", st, 200) and (cur or {}).get("session"):
+        r.error("出題できない範囲を指定したのにセッションが作られている")
+        c.call("DELETE", "/sessions/current")
+    r.notes.append(
+        f"出題の範囲: 論点 {topic_id} の {len(seen)} 問がその論点の過去問だけ・同じ内容の重複なしを確認"
+    )
+
+
+# @verifies REQ-212, REQ-240
+def check_mock_by_exam(c: Client, r: Report, got: dict, exam: str):
+    """公開回の通し受験。その回の過去問だけを問番号の昇順で、同一内容も畳まずに出す。"""
+    sys.path.insert(0, str(Path(__file__).parent)); from targets import target as _target
+    if _target(exam).get("roadmap"):
+        r.notes.append("通し受験の検査: ロードマップ型には公開回の通し受験が無いので見ない")
+        return
+    exams = (got.get("/exams") or {}).get("exams") or []
+    if not exams:
+        r.error("通し受験の検査: /exams が空で確かめられない")
+        return
+    e = exams[0]
+
+    c.call("DELETE", "/sessions/current")
+    st, created, text = c.call("POST", "/sessions", {"kind": "mock", "exam": e["exam"]})
+    if not r.status(f"POST /sessions（{e['exam']} の通し受験）", st, 201, None if st == 201 else text[:200]):
+        return
+    sid = created["id"]
+    # 畳まないので、その回の過去問の件数がそのまま出る
+    if created.get("questionCount") != e["questions"]:
+        r.error(
+            f"通し受験の問題数が {created.get('questionCount')}（{e['exam']} の過去問 {e['questions']} 問のはず。"
+            "同一内容を畳んでいる）"
+        )
+    numbers: list[int] = []
+    for i in range(2):
+        st, cur, _ = c.call("GET", f"/sessions/{sid}/current")
+        if st != 200 or not (cur or {}).get("question"):
+            r.error(f"通し受験の {i + 1} 問目が取れない（status {st}）")
+            break
+        q = cur["question"]
+        if e["examLabel"] not in q["citation"]:
+            r.error(f"通し受験に別の回の過去問が入っている: {q['citation']}")
+        if (cur.get("session") or {}).get("sourceExam") != e["exam"]:
+            r.error("通し受験のセッションが sourceExam にその回を返さない（画面が原本どおりと判別できない）")
+        m = re.search(r"問(\d+)", q["citation"])
+        if m:
+            numbers.append(int(m.group(1)))
+        c.call("POST", f"/sessions/{sid}/answer", {"idx": q["idx"], "answer": "ア"})
+    if len(numbers) == 2 and numbers[0] >= numbers[1]:
+        r.error(f"通し受験が問番号の昇順でない: 問{numbers[0]} → 問{numbers[1]}")
+    c.call("DELETE", "/sessions/current")
+    r.notes.append(
+        f"通し受験: {e['exam']} を {created.get('questionCount')} 問・問番号の昇順で作成（破棄済み）"
+    )
+
+
+# @verifies REQ-226, REQ-231
+def check_discard(c: Client, r: Report, got: dict, exam: str, db_name: str):
+    """完了していないセッションの結果は 404（未回答の正解と解説が読めてしまう）。
+    破棄すると進行中もその回答も残らず履歴にも出ない。進行中が無くても破棄は成功する。"""
+    detail = got.get("topic_detail")
+    if not detail:
+        r.error("破棄の検査: 出題できる論点が取れなかったので検査できない")
+        return
+    topic_id = detail["topic"]["id"]
+
+    c.call("DELETE", "/sessions/current")
+    st, created, text = c.call("POST", "/sessions", {"kind": "drill", "topicId": topic_id, "size": 2})
+    if not r.status("POST /sessions（破棄の検査）", st, 201, None if st == 201 else text[:200]):
+        return
+    sid = created["id"]
+    st, cur, _ = c.call("GET", f"/sessions/{sid}/current")
+    if st == 200 and (cur or {}).get("question"):
+        c.call("POST", f"/sessions/{sid}/answer", {"idx": cur["question"]["idx"], "answer": "ア"})
+
+    # 完了していない結果は 404（本文に正解も解説も出さない）
+    st, data, text = c.call("GET", f"/sessions/{sid}")
+    if r.status("GET /sessions/:id（完了していない結果）", st, 404, data):
+        r.error_body("完了していない結果の本文", data)
+    if '"answer"' in text or '"explanation"' in text:
+        r.error("完了していないセッションの結果の本文に正解か解説が入っている")
+
+    # 破棄
+    st, _, _ = c.call("DELETE", "/sessions/current")
+    r.status("DELETE /sessions/current", st, 200)
+    st, cur, _ = c.call("GET", "/sessions/current")
+    if r.status("GET /sessions/current（破棄後）", st, 200) and (cur or {}).get("session"):
+        r.error("破棄したのに進行中のセッションが残っている")
+    st, hist, _ = c.call("GET", "/sessions")
+    if st == 200 and any(s["id"] == sid for s in (hist.get("sessions") or [])):
+        r.error("破棄したセッションが履歴 /sessions に出ている")
+    try:
+        rows = d1(exam, db_name, f"SELECT COUNT(*) AS n FROM session_questions WHERE session_id = '{sid}'")
+        if rows and rows[0]["n"]:
+            r.error(f"破棄したセッションの回答が {rows[0]['n']} 件残っている（セッションと一緒に消すこと）")
+    except Exception as ex:  # 列名が変わった等。破棄そのものは上で見ている
+        r.warn(f"破棄したセッションの回答を D1 で数えられなかった: {str(ex)[:80]}")
+
+    # 進行中が無くても成功する
+    st, _, _ = c.call("DELETE", "/sessions/current")
+    r.status("DELETE /sessions/current（進行中なし）", st, 200)
+    r.notes.append("完了していない結果は 404・破棄で回答ごと消える・進行中が無くても破棄は 200 を確認")
+
+
+# @verifies REQ-214, REQ-223, REQ-224
+def check_time_limit(c: Client, r: Report, exam: str, db_name: str):
+    """制限時間の境目。検査用アカウント自身が作った模試の開始時刻を epoch（0）に書き換えて、
+    残り秒・時間切れの回答 409・結果の時間切れを見る。書き換えるのはこのセッションの行だけ。"""
+    sys.path.insert(0, str(Path(__file__).parent)); from targets import target as _target
+    if _target(exam).get("roadmap"):
+        r.notes.append("制限時間の検査: ロードマップ型の確認テストに制限時間が無いので見ない")
+        return
+
+    c.call("DELETE", "/sessions/current")
+    st, created, text = c.call("POST", "/sessions", {"kind": "mock"})
+    if not r.status("POST /sessions（制限時間の検査）", st, 201, None if st == 201 else text[:200]):
+        return
+    sid = created["id"]
+    limit = created.get("timeLimitSec")
+    if not limit:
+        r.error("模試に制限時間が付いていないので制限時間の検査ができない")
+        c.call("DELETE", "/sessions/current")
+        return
+
+    # 制限時間内: 残り秒は 0 より大きく、制限時間以下
+    st, cur, _ = c.call("GET", f"/sessions/{sid}/current")
+    if r.status("GET /sessions/:id/current（制限時間内）", st, 200):
+        left = (cur or {}).get("remainingSec")
+        if not isinstance(left, int) or not 0 < left <= limit:
+            r.error(f"制限時間内の残り秒が {left}（0 より大きく {limit} 以下のはず）")
+
+    try:
+        d1(exam, db_name, f"UPDATE sessions SET started_at = 0 WHERE id = '{sid}'")
+    except Exception as ex:  # 列名が変わった等
+        r.warn(f"制限時間の検査: 開始時刻を書き換えられず時間切れを見られなかった: {str(ex)[:80]}")
+        c.call("DELETE", "/sessions/current")
+        return
+
+    st, cur, _ = c.call("GET", f"/sessions/{sid}/current")
+    if r.status("GET /sessions/:id/current（制限時間切れ）", st, 200):
+        if (cur or {}).get("question") is not None:
+            r.error("制限時間を過ぎても問題を返している（未回答の問題が読めてしまう）")
+        if not (cur or {}).get("finished") or not (cur or {}).get("expired"):
+            r.error(
+                "制限時間を過ぎたのに終了・時間切れが立たない: "
+                + json.dumps(cur, ensure_ascii=False)[:120]
+            )
+        if (cur or {}).get("remainingSec") not in (0, None):
+            r.error(f"制限時間を過ぎた残り秒が {(cur or {}).get('remainingSec')}（0 のはず）")
+
+    st, data, _ = c.call("POST", f"/sessions/{sid}/answer", {"idx": 0, "answer": "ア"})
+    if r.status("時間切れのセッションへの回答", st, 409, data):
+        r.error_body("時間切れの回答の本文", data)
+        if not (data or {}).get("expired"):
+            r.warn("時間切れの 409 に expired が無い（画面が時間切れと判別できない）")
+
+    st, _, _ = c.call("POST", f"/sessions/{sid}/finish")
+    r.status("POST /sessions/:id/finish（時間切れ）", st, 200)
+    st, res, _ = c.call("GET", f"/sessions/{sid}")
+    if r.status("GET /sessions/:id（時間切れの結果）", st, 200):
+        if not (res or {}).get("expired"):
+            r.error("制限時間を過ぎて締めた回の結果が時間切れになっていない")
+    r.notes.append("制限時間: 残り秒・時間切れの回答 409・結果の時間切れを確認")
+
+
+# @verifies REQ-041
+def check_exam_attempts(c: Client, r: Report, got: dict, exam: str, other_token: str):
+    """/exams の受験回数・最高正答数は、自分の完了したセッションだけを数える
+    （他人の受験も、進行中のセッションも数えない）。"""
+    exams = (got.get("/exams") or {}).get("exams") or []
+    if not exams:
+        r.error("受験回数の検査: /exams が空で確かめられない")
+        return
+
+    st, other, _ = c.call("GET", "/exams", token=other_token)
+    if r.status("GET /exams（まだ受験していないアカウント）", st, 200):
+        bad = [
+            x["exam"] for x in (other.get("exams") or []) if x["attempts"] or x["bestScore"] is not None
+        ]
+        if bad:
+            r.error(
+                f"受験していないアカウントに受験回数・最高正答数が出ている {len(bad)} 回: {bad[:3]}"
+                "（他人の受験を数えている）"
+            )
+
+    sys.path.insert(0, str(Path(__file__).parent)); from targets import target as _target
+    if _target(exam).get("roadmap"):
+        return
+    e = exams[0]
+    c.call("DELETE", "/sessions/current")
+    st, created, _ = c.call("POST", "/sessions", {"kind": "mock", "exam": e["exam"]})
+    if st == 201:
+        st, data, _ = c.call("GET", "/exams")
+        if r.status("GET /exams（進行中の模試あり）", st, 200):
+            now = next((x["attempts"] for x in (data.get("exams") or []) if x["exam"] == e["exam"]), None)
+            if now != e["attempts"]:
+                r.error(
+                    f"/exams の受験回数が進行中のセッションを数えている（{e['exam']}: {e['attempts']} → {now}）"
+                )
+        c.call("DELETE", "/sessions/current")
+    r.notes.append("/exams の受験回数: 他人の分と進行中を数えないことを確認")
+
+
 # @verifies REQ-035
 def check_security_headers(c: Client, r: Report):
     """全応答に secureHeaders が載っているか（CSP・HSTS・X-Frame-Options DENY・nosniff・Referrer-Policy）。"""
@@ -1061,10 +1453,14 @@ def check_security_headers(c: Client, r: Report):
     r.notes.append("セキュリティヘッダ: CSP・HSTS・X-Frame-Options DENY・nosniff・Referrer-Policy を確認")
 
 
-# @verifies REQ-030
+# @verifies REQ-030, REQ-274, REQ-275
 def check_feedback(c: Client, r: Report, exam: str, db_name: str):
-    """フィードバック（要件 §5.5-4）。送信が保存されること、開発側の読み口（feedback 表）に届くこと。
+    """フィードバック（要件 §5.5-4）。送信が保存されること、開発側の読み口（feedback 表）に届くこと、
+    拒んだ送信と上限を超えた送信が保存されないこと。
     利用者向けの一覧 API は無いので、保存の確認はローカル D1 を直接読む。検査で入れた行は消す。"""
+    # 前の検査が途中で落ちていると日次の上限を食っているので、検査用の行を先に片付ける
+    d1(exam, db_name, "DELETE FROM feedback WHERE body LIKE 'apicheck %'")
+
     marker = f"apicheck {uuid.uuid4()}"
     st, data, text = c.call("POST", "/feedback", {"body": marker, "page": "/topics/1", "topicId": 1})
     if not r.status("POST /feedback", st, 201, None if st == 201 else text[:200]):
@@ -1083,6 +1479,36 @@ def check_feedback(c: Client, r: Report, exam: str, db_name: str):
         if row.get("topic_id") != 1 or row.get("page") != "/topics/1": r.error("feedback の page / topic_id が送った値と違う")
         r.notes.append("フィードバック: 送信 → feedback 表に保存（status=new）を確認")
     d1(exam, db_name, f"DELETE FROM feedback WHERE id = '{fid}'")
+
+    # 拒んだ送信は保存されない（本文が空・2,000 字超）
+    def count_rows(where: str) -> int:
+        return d1(exam, db_name, f"SELECT COUNT(*) AS n FROM feedback WHERE {where}")[0]["n"]
+
+    before = count_rows("1 = 1")
+    for label, payload in [("本文が空", {"body": "   "}), ("2,001 字", {"body": "あ" * 2001})]:
+        st, data, _ = c.call("POST", "/feedback", payload)
+        if r.status(f"POST /feedback（{label}）", st, 400, data):
+            r.error_body(f"POST /feedback（{label}）の本文", data)
+    after = count_rows("1 = 1")
+    if after != before:
+        r.error(f"POST /feedback: 400 で拒んだのに行が {after - before} 件増えた")
+
+    # 日次の上限（20 件）を超えた送信は 429 で、保存されない
+    limit = 20
+    statuses = []
+    for i in range(limit + 1):
+        st, _, _ = c.call("POST", "/feedback", {"body": f"apicheck limit {i}"})
+        statuses.append(st)
+    if statuses[:limit] != [201] * limit:
+        r.error(f"POST /feedback: 上限までの {limit} 件が通らない（返った status: {statuses[:limit]}）")
+    if statuses[limit] != 429:
+        r.error(f"POST /feedback: {limit + 1} 件目が {statuses[limit]} を返した（429 のはず）")
+    n_saved = count_rows("body LIKE 'apicheck limit %'")
+    if n_saved != limit:
+        r.error(f"日次上限: 保存された行が {n_saved} 件（{limit} 件のはず。429 の分は保存しないこと）")
+    else:
+        r.notes.append(f"フィードバック: 入力の 400 と日次上限 {limit} 件の 429（どちらも保存なし）を確認")
+    d1(exam, db_name, "DELETE FROM feedback WHERE body LIKE 'apicheck %'")
 
 
 def main() -> int:
@@ -1119,7 +1545,13 @@ def main() -> int:
     check_empty_lists(c, r, other)
     check_session_flow(c, r, got, other)
     check_ordering(c, r, got, args.exam)
+    check_topic_detail_extras(c, r, got, args.exam)
     check_mock_settings(c, r, args.exam, db_name)
+    check_session_scope(c, r, got)
+    check_mock_by_exam(c, r, got, args.exam)
+    check_discard(c, r, got, args.exam, db_name)
+    check_time_limit(c, r, args.exam, db_name)
+    check_exam_attempts(c, r, got, args.exam, other)
     check_security_headers(c, r)
     check_feedback(c, r, args.exam, db_name)
 

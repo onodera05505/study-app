@@ -156,7 +156,7 @@ function inline(text: string): ReactNode {
 }
 
 /** 段落を作らずに行の中の記法だけを描く。問題の解説の1行に使う。 */
-// @implements REQ-016, REQ-018
+// @implements REQ-139
 export function Inline({ text }: { text: string }) {
   return <>{inline(text)}</>
 }
@@ -221,7 +221,7 @@ function MdFigure({ src, caption }: { src: string; caption: string }) {
   )
 }
 
-// @implements REQ-016, REQ-017, REQ-018
+// @implements REQ-018, REQ-017
 export function Markdown({ source, className }: { source: string; className?: string }) {
   const blocks = parse(source)
   return (

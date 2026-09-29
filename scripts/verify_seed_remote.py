@@ -19,6 +19,8 @@
 - **代表値** — seed の先頭の論点（id と term）と先頭の過去問（id と年度ラベル）が
   DB でも同じ値か。表の取り違え（ip の DB に ap の seed）はこれで止まる
 - **年度ラベルの素通し** — `exam_label` が `2022r04h` のような内部コードのまま残っている行が 0 か
+- **出典の形** — `citation` が「出典：<年度ラベル> <試験名> 問N」の形をしている行が全件か
+  （空・年度ラベルが違う・問番号が無いものを数える）
 """
 
 from __future__ import annotations
@@ -109,6 +111,13 @@ def main() -> int:
     stmts.append(f"SELECT id, term FROM topics WHERE id = {topic[0]}")
     stmts.append(f"SELECT id, exam, exam_label FROM past_questions WHERE id = '{question[0]}'")
     stmts.append("SELECT COUNT(*) AS n FROM past_questions WHERE exam_label = exam")
+    # 出典が「出典：<年度ラベル> <試験名> 問N」の形になっていない行
+    stmts.append(
+        "SELECT COUNT(*) AS n FROM past_questions"
+        " WHERE citation IS NULL OR citation = ''"
+        "    OR citation NOT GLOB '出典：* 問[0-9]*'"
+        "    OR citation NOT LIKE '出典：' || exam_label || ' %'"
+    )
     print(f"▶ {db}（{where}）を seed {sql} と突き合わせる")
     results = d1_query(db, args.exam, where, "; ".join(stmts))
 
@@ -128,8 +137,8 @@ def main() -> int:
     else:
         print(f"  ✓ 論点 {topic[0]} = {topic[1]!r}")
 
-    # 先頭の過去問の出典（回・年度ラベル）が DB でも同じ値か
-    # @verifies REQ-027
+    # 先頭の過去問の出典（回・年度ラベル）が DB でも同じ値か（表の取り違えはここで止まる）
+    # @verifies REQ-261
     row = results[len(TABLES) + 1]
     got_q = (row[0]["id"], row[0]["exam"], row[0]["exam_label"]) if row else None
     if got_q != question:
@@ -138,12 +147,23 @@ def main() -> int:
         print(f"  ✓ 過去問 {question[0]} の年度ラベル = {question[2]!r}")
 
     # 年度ラベルが内部コード（exam と同じ値）のまま残っている行は 0
-    # @verifies REQ-027
+    # @verifies REQ-261
     n_raw = results[len(TABLES) + 2][0]["n"]
     if n_raw:
         problems.append(f"年度ラベルが内部コードのままの過去問が {n_raw} 件（exam_labels.json の足し忘れ）")
     else:
         print("  ✓ 年度ラベルが内部コードのままの行: 0")
+
+    # 出典が「出典：<年度ラベル> <試験名> 問N」の形をしていない行は 0
+    # @verifies REQ-260
+    n_bad = results[len(TABLES) + 3][0]["n"]
+    if n_bad:
+        problems.append(
+            f"出典が「出典：<年度ラベル> <試験名> 問N」の形でない過去問が {n_bad} 件"
+            "（空・年度ラベルが合わない・問番号が無い）"
+        )
+    else:
+        print("  ✓ 出典が「出典：<年度ラベル> <試験名> 問N」の形: 全件")
 
     if problems:
         print()

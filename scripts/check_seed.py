@@ -156,7 +156,8 @@ def main() -> int:
 
     # --- 出典と年度ラベル -------------------------------------------------
     # 出典は「出典：<年度ラベル> <試験名> 問N」。試験名の取り違えと内部コードの素通しを止める
-    # @verifies REQ-027
+    # @implements REQ-261
+    # @verifies REQ-261
     per_exam: dict[str, int] = defaultdict(int)
     labels: dict[str, set[str]] = defaultdict(set)
     wrong_name: list[str] = []
@@ -193,7 +194,8 @@ def main() -> int:
             problems.append(f"{exam}: 年度ラベルが複数ある {sorted(ls)}")
 
     # --- 回ごとの問題数 ---------------------------------------------------
-    # @verifies REQ-038
+    # @implements REQ-245
+    # @verifies REQ-245
     want_n = QUESTIONS_PER_EXAM.get(d.name)
     if want_n:
         for exam, n in sorted(per_exam.items()):
@@ -285,6 +287,39 @@ def main() -> int:
             )
         )
 
+    # --- 出題頻度は同一内容の重複を数えたまま --------------------------------
+    # 論点の question_count は、その論点に紐づく過去問の件数（同一内容の重複を含む）。
+    # 畳んだ数を入れると出題頻度＝重要度の並びが変わり、頻出論点から潰す最短経路が崩れる。
+    # @verifies REQ-236
+    key_of = {q["id"]: q.get("content_key") for q in rows_full}
+    linked: dict[int, list[str]] = defaultdict(list)
+    for link in insert_rows(sql, "topic_questions"):
+        if str(link.get("topic_id") or "").isdigit():
+            linked[int(link["topic_id"])].append(str(link.get("question_id")))
+    count_mismatch: list[str] = []
+    folded: list[int] = []
+    for t in insert_rows(sql, "topics"):
+        if not str(t.get("id") or "").isdigit():
+            continue
+        tid = int(t["id"])
+        qs = linked.get(tid, [])
+        got_n = int(t["question_count"]) if str(t.get("question_count") or "").isdigit() else None
+        if got_n != len(qs):
+            count_mismatch.append(f"論点 {tid}: question_count {got_n} / 紐づく過去問 {len(qs)} 件")
+            # 重複を畳んだ数になっていないか（同一内容を1問と数えた形）
+            if got_n == len({key_of.get(q) or q for q in qs}):
+                folded.append(tid)
+    if count_mismatch:
+        problems.append(
+            f"出題頻度が紐づく過去問の件数と合わない論点 {len(count_mismatch)} 件: "
+            + " / ".join(count_mismatch[:3])
+        )
+    if folded:
+        problems.append(
+            f"出題頻度が同一内容を畳んだ数になっている論点 {len(folded)} 件: {folded[:3]}"
+            "（頻度は重複を数えたまま持つ）"
+        )
+
     # --- 問題ごとの解説と用語集 ---------------------------------------------
     # 解説は content_key で問題と結ぶ（FK は張っていない）。鍵が1文字でも違えば
     # どの問題にも表示されない。投入は通るので、ここで見ないと気づけない。
@@ -329,7 +364,8 @@ def main() -> int:
           f"（うち論点に結び付いた用語 {sum(1 for r in gloss if r.get('topic_id') is not None)}）")
 
     # D16: seed は利用者データ（users / progress / sessions / feedback）に触らない。触ると再投入で消える
-    # @verifies REQ-030
+    # @implements REQ-272
+    # @verifies REQ-272
     sql_text = sql_path.read_text(encoding="utf-8")
     for tbl in ("feedback", "users", "progress", "sessions", "session_questions", "daily_visits"):
         import re as _re

@@ -158,6 +158,7 @@ api.route('/feedback', feedbackRoutes)
 
 app.route('/api', api)
 
+// @implements REQ-092
 app.onError((err, c) => {
   if (err instanceof HTTPException) return err.getResponse()
   // 内部エラーの詳細は返さない。ログには残す。
@@ -165,6 +166,7 @@ app.onError((err, c) => {
   return c.json({ error: 'サーバでエラーが発生しました' }, 500)
 })
 
+// @implements REQ-091
 app.notFound(async (c) => {
   if (c.req.path.startsWith('/api/')) return c.json({ error: '見つかりません' }, 404)
   // SPA のルーティングは assets 側の single-page-application 設定に委ねる。

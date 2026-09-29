@@ -11,7 +11,7 @@
 //   止める（exit 2）: 上のどちらも無い。stderr に「先に docs/spec.yaml の要件を書き換える（新規は status: draft、次の番号は trace_check --next req）か、.trace-gate/work.json に対象の REQ を宣言する」
 //   通す: spec.yaml・traceconfig.json・trace_ignore・.trace-gate/・docs/ 配下・source/tests の外（門の前提を書く操作は止めない）
 //   通す: フック自身の内部エラー（壊れたフックでセッションを止めない）。判定は .trace-gate/log.jsonl に 1 行
-export const VERSION = "1.0.0";
+export const VERSION = "1.1.0";
 
 import fs from "node:fs";
 import path from "node:path";
@@ -88,8 +88,8 @@ function main() {
     }
   }
   console.error(
-    `[write-gate] ${rel} への書き込みを止めました。要件を書き直してから製造・テスト設計を始めます。\n` +
-    `  1) 要求が挙動を変える／足すなら、先に ${spec} の要件を書き換える（新規は status: draft。次の番号は bash scripts/trace_check --next req）。spec.yaml に差分があれば通ります\n` +
+    `[write-gate] ${rel} への書き込みを止めました。仕様書 → ユースケース → 要件 を書き直してから製造・テスト設計を始めます。\n` +
+    `  1) 要求が挙動を変える／足すなら、先に ユースケース（docs/usecases/UC-xxx.md）の流れを書き直し、${spec} の要件（usecase・step 付き。新規は status: draft。次の番号は bash scripts/trace_check --next req）を書き換える。${spec} に差分があれば通ります\n` +
     `  2) 要件は正しく実装だけを直す（バグ修正・整理）なら、.trace-gate/work.json に {"reqs": ["REQ-xxx"], "kind": "bugfix", "note": "何を直すか"} を書いて対象の要件を宣言する（存在する ID だけ通ります）\n` +
     `  どちらも無い書き込みは「要件に無いコード」なので誤りです（本人の決定 2026-09-29）`,
   );

@@ -37,7 +37,7 @@ const createBody = z.object({
   size: z.number().int().min(1).max(100).optional(),
 })
 
-// @implements REQ-019, REQ-023
+// @implements REQ-193, REQ-203, REQ-204, REQ-023
 sessionRoutes.post('/', async (c) => {
   const parsed = createBody.safeParse(await c.req.json().catch(() => null))
   if (!parsed.success) return c.json({ error: '入力が正しくありません' }, 400)
@@ -134,7 +134,7 @@ sessionRoutes.get('/current', async (c) => {
 })
 
 /** 進行中のセッションを破棄する。 */
-// @implements REQ-025
+// @implements REQ-231
 sessionRoutes.delete('/current', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -161,7 +161,7 @@ function isExpired(s: { timeLimitSec: number | null; startedAt: number }): boole
 }
 
 /** 現在の問題（未回答の最小 idx）。 */
-// @implements REQ-023, REQ-025
+// @implements REQ-196, REQ-214
 sessionRoutes.get('/:id/current', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -228,7 +228,7 @@ const answerBody = z.object({
 })
 
 /** 1問回答する。採点は**出題時スナップショット**に対して行う。 */
-// @implements REQ-022
+// @implements REQ-199, REQ-205, REQ-207, REQ-223
 sessionRoutes.post('/:id/answer', async (c) => {
   const parsed = answerBody.safeParse(await c.req.json().catch(() => null))
   if (!parsed.success) return c.json({ error: '入力が正しくありません' }, 400)
@@ -306,7 +306,7 @@ async function finalize(db: ReturnType<typeof getDb>, sessionId: string) {
   return { byField: rows.filter((r) => r.field), total: total ?? { total: 0, correct: 0 } }
 }
 
-// @implements REQ-025
+// @implements REQ-202
 sessionRoutes.post('/:id/finish', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -328,7 +328,7 @@ sessionRoutes.post('/:id/finish', async (c) => {
 })
 
 /** 結果の詳細。間違えた問題から論点へ戻れるようにする。 */
-// @implements REQ-024
+// @implements REQ-218, REQ-224, REQ-226
 sessionRoutes.get('/:id', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -428,7 +428,7 @@ sessionRoutes.get('/:id', async (c) => {
 })
 
 /** 受験履歴。 */
-// @implements REQ-025
+// @implements REQ-232
 sessionRoutes.get('/', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id

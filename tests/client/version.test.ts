@@ -58,14 +58,14 @@ describe('新しい版の検知', () => {
     expect(await v.checkForUpdate()).toBe(true)
   })
 
-  // @verifies REQ-032
+  // @verifies REQ-283
   it('version.json が取れないときは合図を立てない（帯を誤って出さない）', async () => {
     stubFetch([null])
     const v = await load()
     expect(await v.checkForUpdate()).toBe(false)
   })
 
-  // @verifies REQ-032
+  // @verifies REQ-284
   it('最初の印が取れなかったときは、次に取れた値を最初の印にする', async () => {
     stubFetch([
       null,
@@ -79,7 +79,7 @@ describe('新しい版の検知', () => {
     expect(await v.checkForUpdate()).toBe(false)
   })
 
-  // @verifies REQ-032
+  // @verifies REQ-279
   it('最初の印を取りに行くのは何度呼んでも 1 回', async () => {
     const { urls } = stubFetch([{ build: 'abc1234', at: '2026-09-28T00:00:00Z' }])
     const v = await load()
@@ -87,7 +87,7 @@ describe('新しい版の検知', () => {
     expect(urls).toEqual(['/version.json'])
   })
 
-  // @verifies REQ-032
+  // @verifies REQ-282
   it('版が違っても自動では読み直さない（更新は押されたときだけ）', async () => {
     stubFetch([
       { build: 'abc1234', at: '2026-09-28T00:00:00Z' },
@@ -100,7 +100,7 @@ describe('新しい版の検知', () => {
     expect(reload).not.toHaveBeenCalled()
   })
 
-  // @verifies REQ-032
+  // @verifies REQ-280
   it('見比べる間隔は 5 分', async () => {
     stubFetch([{ build: 'abc1234', at: '2026-09-28T00:00:00Z' }])
     const v = await load()

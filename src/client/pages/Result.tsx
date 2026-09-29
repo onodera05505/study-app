@@ -51,7 +51,7 @@ export function verdict(passed: boolean): { label: string; color: string } {
 
 /** 分野別の正答率に付ける色。分野ごとの基準点がある試験でだけ色を付ける。
  *  基準点の無い試験（応用情報の午前）で色を付けると、落ちると誤解させる。 */
-// @implements REQ-024
+// @implements REQ-227
 export function fieldPctColor(
   pct: number,
   fieldPct: number,
@@ -61,7 +61,7 @@ export function fieldPctColor(
   return pct >= fieldPct ? 'var(--ok)' : 'var(--ng)'
 }
 
-// @implements REQ-024, REQ-027, REQ-028
+// @implements REQ-219, REQ-220, REQ-225, REQ-239, REQ-027, REQ-028
 export function Result() {
   const { id } = useParams()
   const [data, setData] = useState<ResultData | null>(null)

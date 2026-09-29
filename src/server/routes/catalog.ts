@@ -40,7 +40,7 @@ catalogRoutes.get('/fields', async (c) => {
 })
 
 /** 分野配下の中分類。テーマ分けの中間階層。 */
-// @implements REQ-010
+// @implements REQ-120
 catalogRoutes.get('/categories', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -150,7 +150,7 @@ catalogRoutes.get('/topics', async (c) => {
 })
 
 /** 論点の詳細。解説・周辺知識と、その論点が出題された過去問。 */
-// @implements REQ-012, REQ-021
+// @implements REQ-012, REQ-133, REQ-150
 catalogRoutes.get('/topics/:id', async (c) => {
   const id = Number(c.req.param('id'))
   if (!Number.isInteger(id)) return c.json({ error: '不正な ID です' }, 400)
@@ -320,7 +320,7 @@ catalogRoutes.put('/topics/:id/progress', async (c) => {
  *  数百語あるが1語が1行なので全部返す。画面側はアプリを開いている間に1度だけ取り、
  *  以降はメモリから引く（用語ごとに問い合わせると、1画面で何十回も往復する）。
  *  中身が変わるのは seed を入れ直したときだけなので、長めにキャッシュしてよい。 */
-// @implements REQ-016
+// @implements REQ-137
 catalogRoutes.get('/glossary', async (c) => {
   const db = getDb(c.env)
   const rows = await db.all<{ term: string; brief: string; topicId: number | null }>(sql`

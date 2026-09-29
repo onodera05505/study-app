@@ -27,7 +27,7 @@ const emailOk = (s: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s)
 
 const app = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
-// @implements REQ-035
+// @implements REQ-086
 app.use(
   '*',
   secureHeaders({
@@ -76,14 +76,14 @@ async function openSession(c: any, accountId: string) {
 
 const api = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
-// @implements REQ-047
+// @implements REQ-094
 api.get('/health', (c) => c.json({ ok: true }))
 
 /** 学びの一覧（公開。URL は公開情報。合言葉や秘密は含めない） */
 // @implements REQ-045
 api.get('/learnings', (c) => c.json({ learnings: LEARNINGS.map(({ key, brand, kind, desc }) => ({ key, brand, kind, desc })) }))
 
-// @implements REQ-001
+// @implements REQ-001, REQ-056
 api.post('/login', async (c) => {
   const body = (await c.req.json().catch(() => null)) as { email?: string; password?: string } | null
   const email = (body?.email ?? '').trim().toLowerCase()
@@ -98,7 +98,7 @@ api.post('/login', async (c) => {
 })
 
 /** 学び側サーバが使い捨てコードをメールと名前に交換する（共有秘密）。権限は交換時にも見る。 */
-// @implements REQ-003
+// @implements REQ-003, REQ-059
 api.post('/sso/exchange', async (c) => {
   const body = (await c.req.json().catch(() => null)) as { code?: string; app?: string; secret?: string } | null
   if (!c.env.SSO_SECRET || !body?.secret || body.secret !== c.env.SSO_SECRET) return c.json({ error: '不正な要求です' }, 403)
@@ -117,6 +117,7 @@ api.post('/sso/exchange', async (c) => {
 })
 
 // 以降はログインが要る
+// @implements REQ-088
 api.use('*', async (c, next) => {
   const acc = await accountOf(c.env, getCookie(c, SESSION_COOKIE))
   if (!acc) return c.json({ error: 'ログインが必要です' }, 401)
@@ -124,7 +125,7 @@ api.use('*', async (c, next) => {
   await next()
 })
 
-// @implements REQ-009
+// @implements REQ-083
 api.post('/logout', async (c) => {
   const sid = getCookie(c, SESSION_COOKIE)
   if (sid) await c.env.DB.prepare(`DELETE FROM sessions WHERE id = ?`).bind(sid).run()
@@ -132,13 +133,13 @@ api.post('/logout', async (c) => {
   return c.json({ ok: true })
 })
 
-// @implements REQ-046, REQ-009
+// @implements REQ-046
 api.get('/me', async (c) => {
   const a = c.get('account')
   return c.json({ account: a, grants: await grantsOf(c.env, a.id) })
 })
 
-// @implements REQ-009
+// @implements REQ-009, REQ-084, REQ-085
 api.post('/me/password', async (c) => {
   const a = c.get('account')
   const body = (await c.req.json().catch(() => null)) as { current?: string; next?: string } | null
@@ -153,12 +154,13 @@ api.post('/me/password', async (c) => {
 // ---- 管理（ADMIN だけ） ------------------------------------------------------
 
 const admin = new Hono<{ Bindings: Bindings; Variables: Variables }>()
+// @implements REQ-007
 admin.use('*', async (c, next) => {
   if (c.get('account').role !== 'ADMIN') return c.json({ error: '管理者だけが使えます' }, 403)
   await next()
 })
 
-// @implements REQ-007
+// @implements REQ-070
 admin.get('/accounts', async (c) => {
   const rows = await c.env.DB.prepare(
     `SELECT a.id, a.email, a.name, a.role, a.created_at AS createdAt,
@@ -174,7 +176,7 @@ const validGrants = (g: unknown): string[] | null => {
   return keys.every((k) => learningOf(k)) ? [...new Set(keys)] : null
 }
 
-// @implements REQ-007
+// @implements REQ-071, REQ-075, REQ-078
 admin.post('/accounts', async (c) => {
   const body = (await c.req.json().catch(() => null)) as { email?: string; name?: string; password?: string; grants?: unknown; role?: string } | null
   const email = (body?.email ?? '').trim().toLowerCase()
@@ -194,7 +196,7 @@ admin.post('/accounts', async (c) => {
   return c.json({ id, email, name, role, grants }, 201)
 })
 
-// @implements REQ-007, REQ-008
+// @implements REQ-072, REQ-076, REQ-008, REQ-080
 admin.put('/accounts/:id', async (c) => {
   const id = c.req.param('id')
   const body = (await c.req.json().catch(() => null)) as { name?: string; role?: string; grants?: unknown } | null
@@ -220,7 +222,7 @@ admin.put('/accounts/:id', async (c) => {
   return c.json({ ok: true })
 })
 
-// @implements REQ-007
+// @implements REQ-073, REQ-077, REQ-081
 admin.post('/accounts/:id/password', async (c) => {
   const id = c.req.param('id')
   const body = (await c.req.json().catch(() => null)) as { password?: string } | null
@@ -232,7 +234,7 @@ admin.post('/accounts/:id/password', async (c) => {
   return c.json({ ok: true })
 })
 
-// @implements REQ-007, REQ-008
+// @implements REQ-074, REQ-079, REQ-082
 admin.delete('/accounts/:id', async (c) => {
   const id = c.req.param('id')
   if (id === c.get('account').id) return c.json({ error: '自分は削除できません' }, 400)
@@ -246,7 +248,7 @@ app.route('/api', api)
 
 // ---- SSO の入口（ブラウザが来る） ----------------------------------------------
 
-// @implements REQ-002
+// @implements REQ-002, REQ-057
 app.get('/sso/start', async (c) => {
   const key = c.req.query('app') ?? ''
   const learning = learningOf(key)

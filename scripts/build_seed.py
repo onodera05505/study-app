@@ -369,6 +369,7 @@ def main() -> int:
             qid = f"{exam}-q{n}"
             question_ids.add(qid)
             content_keys.setdefault(content_key_of(qq), []).append(qid)
+            # @implements REQ-260
             citation = f"出典：{label} {exam_name} 問{n}"
             # 図として描かれている問題だけ、切り出した画像がある（scripts/crop_figures.py）
             # 画像は試験ごとのディレクトリに置く。IT パスポートと応用情報には
@@ -440,7 +441,7 @@ def main() -> int:
         cols = "id, term, syllabus_item_id, is_new, explanation, detail, question_count" + (", sort_order" if has_order else "")
         # 出題頻度（question_count）と topic_questions は同一内容（content_key）の重複を畳まずに数える。
         # 1 問にまとめるのは学習側の出題だけ。
-        # @implements REQ-029
+        # @implements REQ-236
         vals = [tid, t["term"], t["syllabus_item"], bool(t["is_new"]), (m or {}).get("explanation"), (m or {}).get("detail"), len(valid)]
         if has_order: vals.append(t.get("sort_order"))
         lines.append(

@@ -6,13 +6,13 @@ const SECRET = 'test-secret'
 const user = { id: 'u-1', name: '小野寺', role: 'MEMBER' }
 
 describe('パスワードのハッシュ', () => {
-  // @verifies REQ-036
+  // @verifies REQ-093
   it('ハッシュしたパスワードは同じ文字列で照合できる', async () => {
     const stored = await hashPassword('correct horse 8')
     expect(await verifyPassword('correct horse 8', stored)).toBe(true)
   })
 
-  // @verifies REQ-036
+  // @verifies REQ-093
   it('違うパスワード・壊れた保存値は照合に失敗する', async () => {
     const stored = await hashPassword('correct horse 8')
     expect(await verifyPassword('correct horse 9', stored)).toBe(false)
@@ -38,7 +38,7 @@ describe('パスワードのハッシュ', () => {
 })
 
 describe('トークン', () => {
-  // @verifies REQ-033
+  // @verifies REQ-087
   it('発行したトークンは同じ秘密で読み戻せる', async () => {
     const token = await issueToken(SECRET, user)
     const payload = await readToken(SECRET, token)
@@ -49,7 +49,7 @@ describe('トークン', () => {
     expect(payload!.exp).toBeGreaterThan(Math.floor(Date.now() / 1000))
   })
 
-  // @verifies REQ-033
+  // @verifies REQ-087
   it('改ざん・別の秘密・素の文字列は null', async () => {
     const token = await issueToken(SECRET, user)
     const parts = token.split('.')
@@ -61,7 +61,23 @@ describe('トークン', () => {
     expect(await readToken(SECRET, 'not-a-token')).toBeNull()
   })
 
-  // @verifies REQ-033
+  // @verifies REQ-061
+  it('HS256 で sub・name・role を持ち、期限は発行から 14 日', async () => {
+    const issuedAt = Math.floor(Date.now() / 1000)
+    const token = await issueToken(SECRET, user)
+    const b64url = (s: string) => atob(s.replace(/-/g, '+').replace(/_/g, '/'))
+    expect(JSON.parse(b64url(token.split('.')[0])).alg).toBe('HS256')
+    const payload = await readToken(SECRET, token)
+    expect(payload).not.toBeNull()
+    expect(payload!.sub).toBe(user.id)
+    expect(payload!.name).toBe(user.name)
+    expect(payload!.role).toBe(user.role)
+    const days = (payload!.exp - issuedAt) / 86_400
+    expect(days).toBeGreaterThan(13.99)
+    expect(days).toBeLessThan(14.01)
+  })
+
+  // @verifies REQ-087
   it('期限切れのトークンは null', async () => {
     const expired = await sign({ sub: 'u-1', name: '小野寺', role: 'MEMBER', exp: Math.floor(Date.now() / 1000) - 60 }, SECRET, 'HS256')
     expect(await readToken(SECRET, expired)).toBeNull()

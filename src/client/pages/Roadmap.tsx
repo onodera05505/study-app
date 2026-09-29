@@ -24,7 +24,7 @@ type Unit = {
  *  資格版の「分野 → 単元 → 論点」は出題頻度で歩く形。ロードマップ型は学ぶ順が決まっているので、
  *  1 日目〜N 日目の並びそのままを 1 枚で見せ、いま学ぶ位置（最初のまだ理解していない単位）に印を付ける。
  *  ロードマップ外の「補足」は末尾に別枠で置く。 */
-// @implements REQ-015, REQ-037, REQ-038, REQ-040
+// @implements REQ-144, REQ-145, REQ-146, REQ-147, REQ-148, REQ-149, REQ-157, REQ-159
 export function Roadmap() {
   // null は「まだ取得していない」、[] は「取得した結果が空」
   const [units, setUnits] = useState<Unit[] | null>(null)

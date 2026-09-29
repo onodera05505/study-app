@@ -31,12 +31,15 @@ for k in $(python3 scripts/targets.py keys); do
   [ "$R" = 200 ] || { echo "  ✘ ${k} の画面（/）が ${R}"; NG=1; }
   check_headers "$U" "$k"
   # SSO が有効な学びではパスワードの登録・ログインが無い（D17）。config は sso・portal・app を返す
-  # @verifies REQ-005
   C="$(curl -s -A "$UA" "$U/api/auth/config")"
   printf '%-6s %s -> %s\n' "$k" "$U" "$C"
   echo "$C" | grep -q '"sso":true' || { echo "  ✘ sso が有効でない（SSO_PORTAL_URL が env に無い）"; NG=1; }
   echo "$C" | grep -q '"secretSet":true' || { echo "  ✘ SSO_SECRET が載っていない（bash scripts/set_sso_secret.sh → deploy-pages.sh）"; NG=1; }
+  # @verifies REQ-005
   L="$(curl -s -o /dev/null -w '%{http_code}' -A "$UA" -X POST -H 'Content-Type: application/json' -d '{"email":"x@example.com","password":"xxxxxxxx"}' "$U/api/auth/login")"
   [ "$L" = 404 ] || { echo "  ✘ パスワードのログインが生きている（$L）。D17"; NG=1; }
+  # @verifies REQ-065
+  G="$(curl -s -o /dev/null -w '%{http_code}' -A "$UA" -X POST -H 'Content-Type: application/json' -d '{"email":"x@example.com","password":"xxxxxxxx","name":"x"}' "$U/api/auth/register")"
+  [ "$G" = 404 ] || { echo "  ✘ パスワードの登録が生きている（$G）。D17"; NG=1; }
 done
 [ "$NG" = 0 ] && echo "✓ SSO の門: まなびばと学び $(python3 scripts/targets.py keys | wc -w | tr -d " ") つすべて有効（画面も 200）" || { echo "✘ SSO の門に問題あり"; exit 1; }

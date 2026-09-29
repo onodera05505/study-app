@@ -13,7 +13,7 @@ describe('合否の目安の表示', () => {
     expect(verdict(false)).toEqual({ label: '未達', color: 'var(--ng)' })
   })
 
-  // @verifies REQ-024
+  // @verifies REQ-227
   it('分野の基準点（30%）に達していない分野を色で示す', () => {
     expect(fieldPctColor(30, 30, true)).toBe('var(--ok)')
     expect(fieldPctColor(29, 30, true)).toBe('var(--ng)')
@@ -21,7 +21,7 @@ describe('合否の目安の表示', () => {
     expect(fieldPctColor(0, 30, true)).toBe('var(--ng)')
   })
 
-  // @verifies REQ-024
+  // @verifies REQ-227
   it('分野ごとの基準点が無い試験では色を付けない（落ちると誤解させない）', () => {
     expect(fieldPctColor(29, 30, false)).toBeUndefined()
     expect(fieldPctColor(100, 30, false)).toBeUndefined()

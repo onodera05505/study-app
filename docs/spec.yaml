@@ -1,298 +1,1256 @@
-# 仕様（ユースケースと要件）— 仕様 ⇔ コード ⇔ テスト のトレーサビリティの正本
+# 要件（REQ）— 仕様書 ⇔ ユースケース ⇔ 要件 ⇔ コード ⇔ テスト のトレーサビリティの正本（要件の層）
 #
-# 2026-09-28 初版（本人が同日承認）。出典: docs/要件定義書_draft.md（§4・5・9・10・13.5・13.6・15）、
-# docs/不変条件と門.md（D11・D13・D16・D17・D18）、実装の現物（src/server、portal/src、src/client）。
-# 載せたのは**今すでに実装されている挙動**だけ。未実装の機能（§5.5 の間隔反復・診断・逆算計画など）は
-# 実装するときに要件を足す（実装前に ID を振る）。
-#
-# 規則: ID は UC-xxx / REQ-xxx の 3 桁連番。一度振った ID は再利用しない（次の空き番号は `bash scripts/trace_check --next req`）。
-#       要件は 1 つ以上の UC に紐づく。UC は 1 つ以上の要件を持つ。
+# 層: 仕様書 docs/要件定義書_draft.md（traceconfig.json の spec_document.sections が規範的な節）
+#     → ユースケース docs/usecases/UC-xxx.md（frontmatter の source に仕様書の節。基本の流れ 1. 2. … と 例外の流れ E1. …）
+#     → 要件（このファイル。usecase と step で UC の 1 ステップに属する）→ コード（@implements REQ-xxx）→ テスト（@verifies REQ-xxx）
+# 規則: ID は REQ-xxx の 3 桁連番。一度振った ID は再利用しない（次の空き番号は `bash scripts/trace_check --next req`、UC は `--next uc`）。
+#       要件は 1 つの UC の 1 つのステップに属する。active な UC の全ステップに要件が 1 つ以上ある。
+#       1 つの要件を実装するコードの単位は 1 つ（traceconfig の max_units_per_req）。複数か所に散るなら要件を分ける。1 つの単位が複数の要件を実現するのはよい。
 #       status は draft（決めたが未実装。検査の対象外）／active（既定。実装とテストが要る）／withdrawn（取り下げ。ID は残す）。
-#       コードは `@implements REQ-xxx`、テストは `@verifies REQ-xxx`（`bash scripts/trace_check` が見る。複数は , 区切り）。
-#       未実装の機能を決めたら draft で先に足し、実装で active にする。
-
-usecases:
-  - id: UC-001
-    goal: "利用者がまなびば（入口）でログインし、権限のある学びに入れる（SSO）"
-  - id: UC-002
-    goal: "管理者がまなびばでアカウントを作り、学びごとの権限を付け外しし、パスワードを再設定できる"
-  - id: UC-003
-    goal: "利用者が自分のパスワードを変え、ログアウトできる"
-  - id: UC-004
-    goal: "利用者が 分野 → カテゴリ → 論点 の順に辿り、論点の解説と紐づく過去問を読める"
-  - id: UC-005
-    goal: "利用者が論点の理解度を 3 段階で記録し、おすすめ順（頻度が高く未理解）で学べる"
-  - id: UC-006
-    goal: "本文の用語ポップと図が、実データ全件で正しく描画される"
-  - id: UC-007
-    goal: "利用者が論点別・分野別・カテゴリ別・弱点復習の演習を解き、回答ごとに解説を読める"
-  - id: UC-008
-    goal: "利用者が本番形式の模擬試験を制限時間つきで受け、合否の目安と分野別の結果を見る"
-  - id: UC-009
-    goal: "利用者が演習・模試を中断して再開し、過去の受験履歴と結果を見返せる"
-  - id: UC-010
-    goal: "過去問を表示する全画面に出典が出て、改変した問題には「一部改変」が併記される（IPA の利用条件）"
-  - id: UC-011
-    goal: "同一内容の過去問は DB に全問残しつつ学習側で 1 問にまとめ、出題頻度は重複を数えたまま出る"
-  - id: UC-012
-    goal: "利用者が開いていた画面を添えて自由記述のフィードバックを送れる"
-  - id: UC-013
-    goal: "デプロイ後、開いたままの画面に「新しい版があります」の帯が出て、押したときだけ読み直す"
-  - id: UC-014
-    goal: "API は認証・入力検証・失敗の形・セキュリティヘッダで守られ、他人のデータに触れない"
-  - id: UC-015
-    goal: "ロードマップ型の対象では、論点が学ぶ順（sort_order）に並び、メニューは 2 つに絞られる"
-  - id: UC-016
-    goal: "利用者が前回開いていた論点・画面にすぐ戻れる"
-  - id: UC-017
-    goal: "運用者（本人）が、本番の生存・秘密の設定・データの保存先を機械で確かめられる（監視と検査の土台）"
+#       書くのは「今どう振る舞うか」だけ（経緯は git と作業ログへ）。書き方は ~/.claude/brain/tools/trace/README.md「書き方」。
 
 requirements:
-  # --- UC-001 SSO ---
-  - id: REQ-001
-    usecases: [UC-001]
-    description: "まなびばの /api/login はメールとパスワードで認証し、HttpOnly・SameSite=Lax の Cookie を発行する（Secure は https のときだけ。ローカルの http でも動く）。失敗時の文言はメールの有無を漏らさない"
-    acceptance: "正しい認証情報で Set-Cookie が返る。誤りは 401 で本文 {error} が共通文"
-  - id: REQ-002
-    usecases: [UC-001]
-    description: "まなびばの /sso/start は、ログイン済みで対象の学びの権限がある人にだけ使い捨てコードを発行し、学び側へリダイレクトする。外から渡された next は使わず、未ログイン時の戻り先はサーバが組む。画面（portal/static/app.js）が辿る next は /sso/start で始まる値だけ"
-    acceptance: "権限の無い学びでは denied でコードが発行されない。未ログインはログイン画面へ。next に外部 URL や別の経路を渡しても Location に出ない。画面側の絞り込みは check_portal_api が原文で見る"
-  - id: REQ-003
-    usecases: [UC-001]
-    description: "まなびばの /api/sso/exchange は、使い捨てコードを 1 回・120 秒に限って交換し、交換時にも権限を再確認する。共有秘密が一致しないと 403"
-    acceptance: "同じコードは 2 回使えない。期限切れは拒否。秘密違いは 403（不変条件 D18・O13）"
-  - id: REQ-004
-    usecases: [UC-001]
-    description: "学び側の /api/auth/sso は、コードをまなびばで交換してメールと名前を得、初めての人なら users 行を passwordHash='sso' で作り、この学びのトークン（JWT HS256・14 日）を返す"
-    acceptance: "有効なコードでトークンが返り、users に行がある。まなびば不通は 502、秘密未設定は 503"
-  - id: REQ-005
-    usecases: [UC-001, UC-014]
-    description: "SSO_PORTAL_URL が設定された環境では、学び側の /api/auth/register と /api/auth/login は 404 を返す。/api/auth/config は sso・portal・app だけを返す（secretSet は出さない）"
-    acceptance: "本番相当の環境で register/login が 404、config に secretSet が無い（不変条件 D17）"
+  # ================= UC-001 SSO でログインして学びに入る =================
   - id: REQ-006
-    usecases: [UC-001]
-    description: "学び側の画面は、SSO 環境ではまなびばへ誘導し、戻ってきたコードを /api/auth/sso に渡してトークンを保存する"
-    acceptance: "Login 画面にパスワード欄が出ない。SsoCallback がトークンを保存してホームへ移る"
-
-  # --- UC-002 / UC-003 まなびばの管理と自分の設定 ---
-  - id: REQ-007
-    usecases: [UC-002]
-    description: "管理者だけが /api/admin/accounts の一覧・作成・更新（役割と学びの権限）・パスワード再設定・削除を使える。一般利用者は 403。パスワードを再設定すると、その人の開いているセッションは切れる"
-    acceptance: "ADMIN 以外は 403。作成で grants が入り、更新で付け外しできる"
-  - id: REQ-008
-    usecases: [UC-002]
-    description: "管理者は自分の管理者権限を外せず、自分を削除できない"
-    acceptance: "自分の role を MEMBER にする更新と自分の削除が 400"
-  - id: REQ-009
-    usecases: [UC-003]
-    description: "利用者は /api/me/password で現在のパスワードを確かめたうえで変更でき、/api/logout で Cookie が失効する。パスワードは 8〜200 文字"
-    acceptance: "現在のパスワード違いは 401、範囲外の長さは 400。logout 後は /api/me が 401"
-
-  # --- UC-004 / UC-005 学習 ---
-  - id: REQ-010
-    usecases: [UC-004]
-    description: "/api/fields は分野ごとの論点数と自分の理解度の集計を、/api/categories はカテゴリ（middle）ごとの集計を返す。空のときは [] で返す（null ではない）"
-    acceptance: "件数がローカル D1 の SELECT と一致。空一覧が []（不変条件 D11）"
-  - id: REQ-011
-    usecases: [UC-004, UC-005]
-    description: "/api/topics は論点の一覧に出題回数（times）・自分の理解度（status）を付けて返し、頻度順に並べ替えられる。分野・カテゴリで絞れる"
-    acceptance: "全件の times が topic_questions の件数と一致。status は未記録なら 0"
-  - id: REQ-012
-    usecases: [UC-004, UC-010]
-    description: "/api/topics/:id は論点の解説（explanation・detail）、図、紐づく過去問（出典・一部改変・解説）を返す"
-    acceptance: "全論点で explanation が空でなく、過去問に examLabel と number がある"
-  - id: REQ-013
-    usecases: [UC-005]
-    description: "PUT /api/topics/:id/progress で理解度を 0〜3 の 3 段階（未理解／やや理解／理解）に記録し、UPSERT で上書きする"
-    acceptance: "範囲外は 400。同じ論点に 2 回書くと最新が残る"
-  - id: REQ-014
-    usecases: [UC-005]
-    description: "ホームのおすすめは「出題頻度が高く、まだ理解していない論点」を上から並べる"
-    acceptance: "理解度 3 の論点はおすすめに出ない。並びは times の降順"
-  - id: REQ-015
-    usecases: [UC-004]
-    description: "画面の一覧は取得前を null、結果が空を [] で区別し、読み込み中に「該当なし」を出さない"
-    acceptance: "useState の初期値に空配列を使わない（scripts/check_source.py。不変条件 D11）"
-
-  # --- UC-006 用語ポップと図 ---
-  - id: REQ-016
-    usecases: [UC-006]
-    description: "本文の [[用語]] は用語集を引いて色付きの押せる語になり、押すと 1 行説明と（論点があれば）「この論点を学ぶ →」が出る。太字の中でも効く"
-    acceptance: "実データ全件を jsdom で描いて、[[ ]] が文字のまま残らない（scripts/check_render.sh。不変条件 D10）"
-  - id: REQ-017
-    usecases: [UC-006]
-    description: "教材の図（/figures/materials/<試験>/<id>-<n>.svg）は実在する画像を指し、試験ごとのディレクトリに分かれる"
-    acceptance: "全教材の図パスが public に実在（check_seed・check_render。不変条件 D6）。画面は /figures/materials/ の行だけを画像にし、他の画像記法は文字のまま出す"
-  - id: REQ-018
-    usecases: [UC-006]
-    description: "本文の記法（###・箇条書き・番号付き・太字・表・[[用語]]）だけを解釈し、それ以外は書かれた文字のまま出す"
-    acceptance: "表の区切り行が無い表と `|` の混在を check_render が警告する"
-
-  # --- UC-007 / UC-008 / UC-009 演習・模試・履歴 ---
-  - id: REQ-019
-    usecases: [UC-007]
-    description: "POST /api/sessions は kind（drill／field／middle／review／mock）と範囲（topicId／field／middleNo）から問題を組み、既定の問題数は drill と mock が設定値、それ以外 20"
-    acceptance: "kind ごとに範囲外の問題が入らない。size は 1〜100。既定の問題数（app_settings）は check_api が本番相当の DB で見る"
-  - id: REQ-020
-    usecases: [UC-007]
-    description: "弱点復習（review）は自分が間違えた問題を、直近に間違えた順で集める。分野別・カテゴリ別・ランダム模試では、直近 N 回連続で正解した問題を当面出さない（N は設定値。全部が定着済みなら除外しない）"
-    acceptance: "review に誤答の問題が新しい順で入る。field／middle／mock で連続正解した問題が出ず、全部が定着済みなら通常どおり出る"
-  - id: REQ-021
-    usecases: [UC-007, UC-008, UC-011]
-    description: "セッションの出題では content_key が同じ過去問を 1 問にまとめ、代表は最新の回にする。模試（mock）は原本どおりで畳まない"
-    acceptance: "drill で同じ content_key が 2 度出ない。mock で 1 回分の全問が順に出る"
-  - id: REQ-022
-    usecases: [UC-007, UC-008]
-    description: "POST /api/sessions/:id/answer は位置（index）付きで回答を記録し、二重回答や位置ずれを拒む。正誤と解説（正解の根拠・誤答の note）を返す"
-    acceptance: "同じ位置に 2 回答えると 409 か拒否。返る正誤が answer_key と一致"
-  - id: REQ-023
-    usecases: [UC-008]
-    description: "模試は設定値の問題数と制限時間（app_settings の mock_size・mock_time_limit_sec）で出題され、時間切れで自動的に終了する"
-    acceptance: "IP 100 問／120 分、AP 80 問／150 分（align_app_settings.sh）。残り時間が画面に出る"
-  - id: REQ-024
-    usecases: [UC-008]
-    description: "結果画面は総合 60% 以上かつ各分野 30% 以上を合否の目安として表示し、IRT のため公式スコアと一致しない旨を明記する。分野別の正答率と、間違えた問題から論点への導線を出す"
-    acceptance: "合格ライン到達／未達の文言と色が出て、分野別の表は 30% の境界（30 は到達・29 は未達）で色が分かれる。分野の基準が無い試験では色を付けない。分野別の正答率の合計が全体と整合"
-  - id: REQ-025
-    usecases: [UC-009]
-    description: "GET /api/sessions/current で進行中のセッションを再開でき、DELETE /api/sessions/current で中断を破棄できる。/api/sessions は自分の履歴だけを返す"
-    acceptance: "作成 → 1 問回答 → 中断 → 再開 → 全問回答 → finish → 結果 の一連が通る（check_api の流れ）"
-  - id: REQ-026
-    usecases: [UC-009, UC-014]
-    description: "セッションの全 API は user_id で絞り、他人のセッション ID には 404 を返す"
-    acceptance: "別アカウントを実際に作り、他人の ID で 404（check_api）"
-
-  # --- UC-010 出典 ---
-  - id: REQ-027
-    usecases: [UC-010]
-    description: "過去問には出典（試験・年度ラベル・問番号）が必須で、問題を表示する全画面（学習・演習・模試・結果・履歴）に「出典：<年度ラベル> <試験名> 問N」が出る"
-    acceptance: "全過去問に examLabel と number があり、年度ラベルが内部コードのまま出ない（check_seed・verify_seed_remote。不変条件 D4）"
-  - id: REQ-028
-    usecases: [UC-010]
-    description: "原文を書き換えた過去問には「一部改変」が併記される"
-    acceptance: "modified が真の問題を表示すると「一部改変」が出る"
-
-  # --- UC-011 同一問題 ---
-  - id: REQ-029
-    usecases: [UC-011]
-    description: "同一内容（content_key 同一）の過去問で正解が割れていたら seed の門で止める。出題頻度（times）は重複を数えたまま"
-    acceptance: "check_seed が正解の割れを問題として止める（不変条件 D2）。学習画面の頻度が topic_questions の件数と一致"
-
-  # --- UC-012 フィードバック ---
-  - id: REQ-030
-    usecases: [UC-012]
-    description: "POST /api/feedback は本文（2,000 字以内）と開いていた画面（page・topicId・questionId）を保存し、本人には受付文だけ返す。1 人 1 日 20 件を超えると 429。seed の投入で消えない"
-    acceptance: "送信が feedback 表に入り、21 件目が 429。seed.sql が feedback 表に触れない（不変条件 D16）"
-  - id: REQ-031
-    usecases: [UC-012]
-    description: "上部メニューの「フィードバック」から、開いていた論点・問題の ID が自動で添えられて送れる"
-    acceptance: "論点画面から開くと topicId が入る。送信後に「フィードバックありがとうございます。改善に活かします。」が出る"
-
-  # --- UC-013 新しい版 ---
-  - id: REQ-032
-    usecases: [UC-013]
-    description: "ビルドのたびに version.json（コミットの短い ID と時刻）を出し、画面は画面遷移時と 5 分おきに取りに行き、違えば「新しい版があります。」の帯と「更新」ボタンを出す。自動では読み直さない"
-    acceptance: "version.json が dist に出る。版が違うと帯が出て、押すまで再読み込みしない"
-
-  # --- UC-014 API の保護 ---
-  - id: REQ-033
-    usecases: [UC-014]
-    description: "/api/auth/* と /api/health 以外の API は Bearer トークンを要求し、無い・壊れている・期限切れなら 401 を返す"
-    acceptance: "保護された全経路に未認証・壊れたトークンで 401（check_api の認証の境界）"
-  - id: REQ-034
-    usecases: [UC-014]
-    description: "全 POST/PUT の入力は zod で検証し、失敗は 400。失敗の本文は {error: 日本語} で、メールアドレス・パスワード・お名前・合言葉は項目名つきの文にする"
-    acceptance: "入力エラー 400／未知の経路 404／本文が {error} の日本語（check_api の失敗時の形）"
-  - id: REQ-035
-    usecases: [UC-014]
-    description: "全応答に secureHeaders（CSP・HSTS・X-Frame-Options DENY・nosniff・Referrer-Policy）を付け、未処理例外は固定文の 500 で内部情報を出さない"
-    acceptance: "本番 URL の curl -I で 5 つのヘッダが出る。onError の本文に stack が無い"
-  - id: REQ-036
-    usecases: [UC-014]
-    description: "パスワードの PBKDF2 反復回数は 100,000 以下（Cloudflare Workers の上限）"
-    acceptance: "ITERATIONS が 100,000 以下で定数が存在する（scripts/check_source.py。不変条件 O5）"
-
-  # --- UC-015 ロードマップ型 ---
-  - id: REQ-037
-    usecases: [UC-015]
-    description: "roadmap: true の対象では /api/topics を sort_order 順に返し、資格版では sort_order 列を参照しない"
-    acceptance: "ロードマップ対象で並びが sort_order、資格版の SQL に sort_order が無い（不変条件 D13）"
-  - id: REQ-038
-    usecases: [UC-015]
-    description: "ロードマップ型の画面は「ロードマップ」と「確認テスト」の 2 つのメニューに絞り、資格の語（模試・分野）を出さない。日ごとの確認テストは 1 日の単位数 × 2 問"
-    acceptance: "確認テストの問題数が登録簿の questionsPerRound（check_seed。不変条件 D14）。メニューが 2 つであることは roadmap:true の対象のビルドで画面を見る（audit_screens。VITE_EXAM で分かれるため単体では見ない）"
-  - id: REQ-039
-    usecases: [UC-015, UC-004]
-    description: "対象（試験・題材）ごとの名前・種類・設定は登録簿 src/shared/targets.json の 1 か所から読み、コードは対象名を列挙しない"
-    acceptance: "examOf(key) が登録簿から解決される。new_target.py --check が通る（不変条件 D15）"
-
-  # --- UC-016 前回の位置 ---
-  - id: REQ-040
-    usecases: [UC-016]
-    description: "最後に開いた論点と画面を端末に覚え、ホームから「前回の続き」で戻れる"
-    acceptance: "論点を開いて戻るとホームにその論点への導線が出る"
-
-  # --- 2026-09-28 タグ付けで見つかった欠けと意図 ---
-  - id: REQ-041
-    usecases: [UC-008, UC-009]
-    description: "/api/exams は回ごとに、問題数・自分が完了した受験回数・最高正答数を返す。並びは資格版が新しい回から、ロードマップ型は 1 日目から"
-    acceptance: "回の件数が past_questions の回数と一致し、attempts と bestScore が自分の completed セッションだけを数える。ロードマップ対象で並びが昇順"
-  - id: REQ-042
-    usecases: [UC-007]
-    status: draft
-    description: "弱点復習（review）は、間違えた問題に加えて理解度が低い論点の問題も優先して出し、連続正解した問題は review でも当面出さない（要件定義書 §5.2 の意図。実装は誤答だけを集めている）"
-    acceptance: "理解度 0〜1 の論点の問題が review に混ざる。直近 N 回連続正解の問題が review に出ない"
-  - id: REQ-043
-    usecases: [UC-004, UC-007]
-    description: "図として描かれた過去問は、原本から切り出した画像（public/figures/<試験>/。試験ごとに分ける）を出し、書き起こし（表・擬似言語）を併記する。画像はタップで原寸に切り替え、表だけの問題は書き起こしを本体として出す"
-    acceptance: "図つきの問題で画像が出て public/figures/<試験>/ に実在（check_seed）。閉じていないコードフェンスや列数の揃わない表の書き起こしでも例外を投げない"
-  - id: REQ-044
-    usecases: [UC-007]
-    description: "組合せを問う選択肢（a：…／b：… の並び）は項目の切れ目で改行して縦に並べる。普通の読点では割らない。選択肢のデータは変えない"
-    acceptance: "『／＋：』と『短い項目名＋：』の並びだけを割る。30 字以下は 1 行のまま"
+    usecase: UC-001
+    step: 1
+    description: "学び側のログイン画面は、SSO 環境（/api/auth/config の sso が真）ではパスワード欄を出さず、まなびばへ誘導するボタンだけを出す"
+    acceptance: "sso: true の設定で描いた Login にパスワードの入力欄が無く、まなびばの /sso/start へのリンクがある"
+  - id: REQ-001
+    usecase: UC-001
+    step: 2
+    description: "まなびばの POST /api/login はメールとパスワードで認証し、HttpOnly・SameSite=Lax の Cookie（Secure は https のときだけ）でセッションを発行する"
+    acceptance: "正しい認証情報で Set-Cookie が返り、HttpOnly と SameSite=Lax を含む。http のローカルでは Secure が付かない"
+  - id: REQ-056
+    usecase: UC-001
+    step: E1
+    description: "まなびばの POST /api/login は、メールかパスワードが違うとき 401 を返し、本文 {error} はメールの有無で変わらない共通文にする"
+    acceptance: "存在しないメールと、存在するメールの誤パスワードで、同じ 401 と同じ {error} が返る"
   - id: REQ-045
-    usecases: [UC-001]
-    description: "まなびばの /api/learnings は学びの一覧（key・brand・kind・desc・url）を返し、秘密を含まない。画面は権限のある学びだけを「開く」のリンクにし、権限の無い学びは開けない"
-    acceptance: "一覧の件数と key が登録簿と一致し、応答に秘密（SSO_SECRET など）の値が無い"
+    usecase: UC-001
+    step: 3
+    description: "まなびばの GET /api/learnings は学びの一覧（key・brand・kind・desc・url）を返し、秘密を含まない"
+    acceptance: "一覧の件数と key が登録簿と一致し、応答の文字列に SSO_SECRET などの秘密の値が無い"
   - id: REQ-046
-    usecases: [UC-001, UC-003]
-    description: "まなびばの /api/me はログイン中の本人の account と grants（権限なしは []）を返し、未ログインは 401"
-    acceptance: "ログイン後に account と grants が返り、未ログインと logout 後は 401"
-
-  # --- 2026-09-29 「関係ないコードは誤り」: 下請けと思われた単位の要件を書き起こした ---
-  - id: REQ-047
-    usecases: [UC-017]
-    description: "学び側とまなびばの /api/health は認証なしで {ok: true} を返す。監視と検査スクリプト（check_api・check_portal_api・check_sso_prod）の死活確認に使う"
-    acceptance: "未認証で GET /api/health が 200 の {ok: true}。他の API は同じ条件で 401"
-  - id: REQ-048
-    usecases: [UC-017]
-    description: "学び側のデータは学びごとの Cloudflare D1 に保存し、サーバは drizzle のスキーマ定義（src/server/db/schema.ts）を通して読み書きする。生 SQL の連結はしない"
-    acceptance: "getDb(env) が env.DB を束ねた drizzle を返し、schema の全表（users・topics・past_questions・sessions・feedback など）を query で引ける"
-  - id: REQ-049
-    usecases: [UC-014, UC-017]
-    description: "トークンの署名に使う秘密は環境の JWT_SECRET（Pages の secret）から読む。未設定の環境（ローカル開発）では開発用の既定値を使い、本番では必ず secret を設定する"
-    acceptance: "JWT_SECRET があればその値、無ければ既定値 'dev-only-insecure-secret' を返す。本番の secret 一覧に JWT_SECRET がある（wrangler pages secret list）"
+    usecase: UC-001
+    step: 3
+    description: "まなびばの GET /api/me はログイン中の本人の account と grants（権限なしは []）を返し、未ログインは 401。画面はこれで権限のある学びだけを「開く」にする"
+    acceptance: "ログイン後に account と grants が返り、未ログインは 401"
+  - id: REQ-002
+    usecase: UC-001
+    step: 4
+    description: "まなびばの GET /sso/start?app=<key> は、ログイン済みで対象の学びの権限がある人に使い捨てコード（120 秒）を発行し、学び側の /sso/callback?code=… へリダイレクトする"
+    acceptance: "権限のある学びで 302 の Location が学び側の callback で、code が付く"
+  - id: REQ-057
+    usecase: UC-001
+    step: E2
+    description: "まなびばの GET /sso/start は、権限の無い学びでは denied を返してコードを発行せず、未ログインならまなびばのログイン画面へ送る。戻り先はサーバが /sso/start から組み、外から渡された next は使わない"
+    acceptance: "権限の無い学びで sso_codes に行が増えない。未ログインで Location がログイン画面。next に外部 URL を渡しても Location に出ない"
+  - id: REQ-058
+    usecase: UC-001
+    step: 5
+    description: "学び側の /sso/callback 画面は URL の code を POST /api/auth/sso に渡し、返ったトークンを保存してホームへ移る。code が無い・交換に失敗したときはトークンを保存せず、ログインできなかった旨と理由、まなびばへ戻る導線を出す"
+    acceptance: "code 付きで描くと /api/auth/sso が呼ばれ、成功でトークンが保存されてホームへ移る。失敗と code 無しではトークンが保存されず、失敗の旨・理由・まなびばへ戻る導線が描かれる"
+  - id: REQ-003
+    usecase: UC-001
+    step: 6
+    description: "まなびばの POST /api/sso/exchange は、共有秘密が一致する呼び出しに限り、未使用で 120 秒以内のコードをメールと名前に交換し、交換時にも対象の学びの権限を再確認する。コードは使用済みにする"
+    acceptance: "有効なコードで email と name が返り、sso_codes の行が used になる"
+  - id: REQ-059
+    usecase: UC-001
+    step: E3
+    description: "まなびばの POST /api/sso/exchange は、使用済み・期限切れ・権限が外れたコードを拒否し、共有秘密が違えば 403 を返す"
+    acceptance: "同じコードの 2 回目が拒否される。期限切れが拒否される。秘密違いは 403（不変条件 D18・O13）"
+  - id: REQ-004
+    usecase: UC-001
+    step: 7
+    description: "学び側の POST /api/auth/sso は、code をまなびばの /api/sso/exchange で交換してメールと名前を得、users をメールで見つけるか passwordHash='sso' で作り、学び側のトークンを返す"
+    acceptance: "有効なコードで token が返り、users に passwordHash が 'sso' の行がある。2 回目は同じ行を使う"
+  - id: REQ-060
+    usecase: UC-001
+    step: E3
+    description: "学び側の POST /api/auth/sso は、まなびばに届かないとき 502、SSO_SECRET が未設定のとき 503 を返す"
+    acceptance: "SSO_SECRET 無しで 503。exchange の fetch が失敗すると 502"
+  - id: REQ-061
+    usecase: UC-001
+    step: 7
+    description: "学び側のトークンは JWT（HS256）で、sub（利用者 ID）・name・role を持ち、有効期限は 14 日"
+    acceptance: "issueToken の結果を readToken で戻すと sub・name・role が一致し、exp が発行から 14 日"
   - id: REQ-050
-    usecases: [UC-001]
-    description: "学び側の画面は発行されたトークンを端末の localStorage に保存し、以後の API 呼び出しに Bearer で付ける。ログアウトと 401 で捨て、捨てるときは「前回の続き」も消す（同じ端末を分け合うことがある）"
-    acceptance: "setToken 後の api() 呼び出しに Authorization: Bearer が付く。clearToken で トークンと前回の続きが両方消える"
-  - id: REQ-051
-    usecases: [UC-014]
-    description: "画面の API 呼び出しは、失敗の本文 {error} を画面に出せる形（ApiError: message・status・body）で投げる。通信できないときは status 無しで日本語の固定文。トークン付きで 401 なら期限切れの印を立ててトークンを捨て、トークン無しの 401 では印を立てない"
-    acceptance: "fetch が {error:'X'} の 400 を返すと ApiError('X', 400)。fetch が例外なら status undefined の日本語文。トークン有りの 401 で印が立ちトークンが消える"
-  - id: REQ-052
-    usecases: [UC-001]
-    description: "期限切れで締め出されてログイン画面に戻ったとき、その理由を 1 度だけ伝える（印は sessionStorage。自分でログアウトしたときは出さない）"
-    acceptance: "takeSessionExpired は印があれば true を返して印を消し、2 回目は false。印が無ければ false"
+    usecase: UC-001
+    step: 8
+    description: "画面はトークンを端末の localStorage に保存する"
+    acceptance: "setToken の後に localStorage にトークンがある"
+  - id: REQ-062
+    usecase: UC-001
+    step: 8
+    description: "画面は保存したトークンを読む。無ければ null"
+    acceptance: "保存前は getToken が null、保存後は同じ値"
+  - id: REQ-063
+    usecase: UC-001
+    step: 8
+    description: "画面の API 呼び出しは、トークンがあれば Authorization: Bearer <トークン> を付ける"
+    acceptance: "setToken 後の api() の fetch に Authorization: Bearer が付き、無ければ付かない"
   - id: REQ-053
-    usecases: [UC-001]
-    description: "ヘッダーにログインしている本人の名前を出す。名前はトークン（JWT）の中身から読み、サーバに聞かない"
-    acceptance: "getUserName がトークンの name を返し、トークンが無い・壊れている・name が無いときは null"
+    usecase: UC-001
+    step: 8
+    description: "本人の名前はトークン（JWT）の中身から読み、サーバに聞かない。トークンが無い・壊れている・name が無いときは null"
+    acceptance: "getUserName がトークンの name を返し、無い・壊れている・name 無しは null"
+  - id: REQ-064
+    usecase: UC-001
+    step: 8
+    description: "画面のヘッダーにログインしている本人の名前を出す。名前が読めないときは出さない"
+    acceptance: "name を持つトークンで App のヘッダーに名前が出る。トークン無しでは出ない"
+  - id: REQ-005
+    usecase: UC-001
+    step: E4
+    description: "SSO_PORTAL_URL が設定された環境では、学び側の POST /api/auth/login は 404 を返す"
+    acceptance: "SSO_PORTAL_URL ありで login が 404、無しで従来どおり動く（不変条件 D17）"
+  - id: REQ-065
+    usecase: UC-001
+    step: E4
+    description: "SSO_PORTAL_URL が設定された環境では、学び側の POST /api/auth/register は 404 を返す"
+    acceptance: "SSO_PORTAL_URL ありで register が 404、無しで従来どおり動く（不変条件 D17）"
+  - id: REQ-066
+    usecase: UC-001
+    step: E4
+    description: "学び側の GET /api/auth/config は sso（SSO_PORTAL_URL の有無）・portal（その URL）・app（対象の key）だけを返し、秘密の有無（secretSet）を出さない"
+    acceptance: "config の鍵が sso・portal・app の 3 つで、secretSet が無い"
+  - id: REQ-067
+    usecase: UC-001
+    step: E5
+    description: "画面の API 呼び出しは、トークン付きの呼び出しが 401 を返したとき、期限切れの印（sessionStorage）を立ててトークンを捨てる。トークン無しの 401 では印を立てない"
+    acceptance: "トークン有りで 401 → 印が立ちトークンが消える。トークン無しで 401 → 印が立たない"
+  - id: REQ-052
+    usecase: UC-001
+    step: E5
+    description: "期限切れの印は 1 度だけ取り出せる。取り出すと消え、無ければ false"
+    acceptance: "takeSessionExpired は印があれば true を返して印を消し、2 回目は false。印が無ければ false"
+  - id: REQ-068
+    usecase: UC-001
+    step: E5
+    description: "学び側のログイン画面は、期限切れの印があるときだけ「ログインの有効期限が切れました。もう一度ログインしてください。」の案内を出す。自分でログアウトしたときは出さない"
+    acceptance: "印を立てて描くと「有効期限が切れました」を含む案内が出る。印が無ければ出ない"
+  - id: REQ-069
+    usecase: UC-001
+    step: E5
+    description: "トークンを捨てるとき、「前回の続き」（最後に開いた論点と画面）も一緒に消す（同じ端末を分け合うことがある）"
+    acceptance: "clearToken の後に localStorage のトークンと前回の続きが両方無い"
+  # ================= UC-002 管理者がアカウントと権限を管理する =================
+  - id: REQ-007
+    usecase: UC-002
+    step: 1
+    description: "まなびばの /api/admin/* は役割が ADMIN のアカウントの呼び出しだけを通し、利用者（MEMBER）の呼び出しには 403 と {error} を返す"
+    acceptance: "一覧・作成・更新・パスワード再設定・削除の 5 経路すべてに、MEMBER でログインした人が当てると 403 が返り、役割も権限も変わらない"
+  - id: REQ-070
+    usecase: UC-002
+    step: 2
+    description: "まなびばの GET /api/admin/accounts は全アカウントの id・メール・名前・役割・作成時刻と、その人に付いている学びの権限を作成順に返す。権限が無い人は空の配列にする"
+    acceptance: "一覧の行が accounts の件数と一致し、作成時に付けた学びが grants に出る。権限の無い行の grants が [] で、null や欠落でない"
+  - id: REQ-071
+    usecase: UC-002
+    step: 3
+    description: "まなびばの POST /api/admin/accounts は、メール・名前・初期パスワード・開ける学びからアカウントと権限の行を作り、役割の既定を MEMBER にして 201 を返す"
+    acceptance: "201 の本文に id・メール・名前・役割・権限があり、役割が MEMBER。直後の一覧に同じ権限が出る"
+  - id: REQ-072
+    usecase: UC-002
+    step: 4
+    description: "まなびばの PUT /api/admin/accounts/:id は、送られた名前・役割・開ける学びを反映し、権限は送られた一覧で今の権限を置き換える（差分ではなく総入れ替え）"
+    acceptance: "学びを 2 つ送ると一覧の権限が 2 つになり、1 つで送り直すと 1 つになる。名前の変更が一覧に出る。自分以外の役割は ADMIN と MEMBER のどちらにも変えられる"
+  - id: REQ-073
+    usecase: UC-002
+    step: 5
+    description: "まなびばの POST /api/admin/accounts/:id/password は、その人のパスワードのハッシュを入れ替え、その人が開いているセッションを全部消す"
+    acceptance: "再設定の後、その人が開いていた Cookie で /api/me が 401 になり、新しいパスワードではログインでき、前のパスワードでは 401 になる"
+  - id: REQ-074
+    usecase: UC-002
+    step: 6
+    description: "まなびばの DELETE /api/admin/accounts/:id は、アカウントの行とその権限の行を消す。学び側の利用者と進捗には触れない"
+    acceptance: "削除の後、一覧にその人が居らず、grants にもその人の行が無い"
+  - id: REQ-075
+    usecase: UC-002
+    step: E1
+    description: "まなびばの POST /api/admin/accounts は、メールの形が違う・名前が空か 50 文字を超える・初期パスワードが 8 文字未満か 200 文字を超える・知らない学びが権限に入っているとき、400 と {error} を返してアカウントを作らない"
+    acceptance: "4 つの場合それぞれで 400 と日本語の {error} が返り、accounts の件数が増えない"
+  - id: REQ-076
+    usecase: UC-002
+    step: E1
+    description: "まなびばの PUT /api/admin/accounts/:id は、名前が空か 50 文字を超える・知らない学びが権限に入っているとき、400 と {error} を返して何も変えない"
+    acceptance: "知らない学びを混ぜた更新が 400 で、一覧の権限が変わっていない"
+  - id: REQ-077
+    usecase: UC-002
+    step: E1
+    description: "まなびばの POST /api/admin/accounts/:id/password は、新しいパスワードが 8 文字未満か 200 文字を超えるとき、400 と {error} を返してハッシュを入れ替えない"
+    acceptance: "7 文字の再設定が 400 で、元のパスワードでログインできる"
+  - id: REQ-078
+    usecase: UC-002
+    step: E2
+    description: "まなびばの POST /api/admin/accounts は、同じメールのアカウントがすでにあるとき 409 と {error} を返す"
+    acceptance: "同じメールでの 2 回目の作成が 409 で、accounts の件数が増えない"
+  - id: REQ-008
+    usecase: UC-002
+    step: E3
+    description: "まなびばの PUT /api/admin/accounts/:id は、呼び出した管理者が自分の役割を ADMIN 以外に変えようとしたとき 400 と {error} を返し、役割を変えない"
+    acceptance: "自分の role を MEMBER にする更新が 400 で、accounts の自分の行が ADMIN のまま。他人の降格は 200 で通る"
+  - id: REQ-079
+    usecase: UC-002
+    step: E4
+    description: "まなびばの DELETE /api/admin/accounts/:id は、呼び出した管理者が自分を削除しようとしたとき 400 と {error} を返し、消さない"
+    acceptance: "自分の削除が 400 で、一覧に自分が残っている"
+  - id: REQ-080
+    usecase: UC-002
+    step: E5
+    description: "まなびばの PUT /api/admin/accounts/:id は、その id のアカウントが無いとき 404 と {error} を返す"
+    acceptance: "存在しない id への更新が 404"
+  - id: REQ-081
+    usecase: UC-002
+    step: E5
+    description: "まなびばの POST /api/admin/accounts/:id/password は、その id のアカウントが無いとき 404 と {error} を返す"
+    acceptance: "存在しない id への再設定が 404"
+  - id: REQ-082
+    usecase: UC-002
+    step: E5
+    description: "まなびばの DELETE /api/admin/accounts/:id は、その id のアカウントが無いとき 404 と {error} を返す"
+    acceptance: "存在しない id への削除が 404"
+
+  # ================= UC-003 利用者が自分のパスワードを変え、ログアウトする =================
+  - id: REQ-009
+    usecase: UC-003
+    step: 1
+    description: "まなびばの POST /api/me/password は、現在のパスワードを照合してから、本人のパスワードのハッシュを新しいものに入れ替える"
+    acceptance: "変更の後、新しいパスワードでログインでき、前のパスワードは 401 になる"
+  - id: REQ-083
+    usecase: UC-003
+    step: 2
+    description: "まなびばの POST /api/logout は、この Cookie のセッションの行だけを消し、Cookie を失効させる（他の端末のセッションは残す）"
+    acceptance: "ログアウトの後、sessions にその ID の行が無く、同じ Cookie での /api/me が 401。別の端末のセッションの行は残る"
+  - id: REQ-084
+    usecase: UC-003
+    step: E1
+    description: "まなびばの POST /api/me/password は、現在のパスワードが違うとき 401 と {error} を返し、パスワードを変えない"
+    acceptance: "現在のパスワードを間違えると 401 で、元のパスワードでログインできる"
+  - id: REQ-085
+    usecase: UC-003
+    step: E2
+    description: "まなびばの POST /api/me/password は、新しいパスワードが 8 文字未満か 200 文字を超えるとき、または現在か新しいパスワードの欄が空のとき、400 と {error} を返す"
+    acceptance: "7 文字・201 文字・空の本文がそれぞれ 400 で、パスワードは変わらない"
+
+  # ================= UC-014 API を認証・検証・失敗の形・ヘッダで守る =================
+  - id: REQ-035
+    usecase: UC-014
+    step: 1
+    description: "学び側の全応答にセキュリティヘッダ（CSP・HSTS・X-Frame-Options DENY・X-Content-Type-Options nosniff・Referrer-Policy）を付ける"
+    acceptance: "公開の経路と認証の要る経路の両方で 5 つのヘッダが載る。本番 URL でも同じ（check_sso_prod）"
+  - id: REQ-086
+    usecase: UC-014
+    step: 2
+    description: "まなびばの全応答に、学び側と同じセキュリティヘッダ（CSP・HSTS・X-Frame-Options DENY・X-Content-Type-Options nosniff・Referrer-Policy）を付ける"
+    acceptance: "まなびばの公開の経路と認証の要る経路の両方で 5 つのヘッダが載り、静的ファイルの応答も 200 で返る"
+  - id: REQ-033
+    usecase: UC-014
+    step: 3
+    description: "学び側の /api/auth/* と /api/health 以外の API は Authorization の Bearer トークンを要求し、読めたときだけ本人（利用者 ID・名前・役割）を処理に渡す。無い・壊れている・期限切れは 401 と {error}"
+    acceptance: "保護された全経路に、トークン無し・形になっていないトークン・署名の合わないトークンで 401 が返り、公開の経路は同じ条件で 200"
+  - id: REQ-087
+    usecase: UC-014
+    step: 3
+    description: "学び側はトークンを HS256 の署名と期限で検証し、改ざん・別の秘密・期限切れ・トークンでない文字列のときは本人を返さない"
+    acceptance: "readToken が、正しいトークンでは中身を返し、中身を差し替えたもの・別の秘密で署名したもの・期限切れ・素の文字列では null を返す"
+  - id: REQ-088
+    usecase: UC-014
+    step: 4
+    description: "まなびばの /api/me・/api/me/password・/api/logout・/api/admin/* は、期限内のセッションの Cookie を要求し、読めたときだけ本人を処理に渡す。無い・期限切れは 401 と {error}"
+    acceptance: "Cookie 無しでこれらの経路が 401。ログアウトした後の Cookie でも 401。/api/health と /api/learnings は同じ条件で 200"
+  - id: REQ-089
+    usecase: UC-014
+    step: 5
+    description: "学び側の POST /api/auth/register は、メール・パスワード・お名前・合言葉の本文をスキーマで検証し、通った値だけを使う"
+    acceptance: "メールの形・パスワードの長さ・お名前の長さが条件を満たす本文だけが処理に進み、満たさない本文では利用者が作られない"
+  - id: REQ-090
+    usecase: UC-014
+    step: 5
+    description: "学び側の POST /api/auth/login は、メールとパスワードの本文をスキーマで検証し、通った値だけを使う"
+    acceptance: "メールの形とパスワードの長さが条件を満たす本文だけが照合に進む"
+  - id: REQ-034
+    usecase: UC-014
+    step: E1
+    description: "学び側の入力の検証に失敗したときの応答は 400 で、本文は {error} に日本語の 1 文を入れる。メールアドレス・パスワード・お名前・合言葉は、どの項目が悪いか分かる文にする"
+    acceptance: "空の本文・形の違うメール・短いパスワードがそれぞれ 400 で、本文の {error} が項目の分かる日本語（英語のスキーマの文言をそのまま出さない）"
+  - id: REQ-091
+    usecase: UC-014
+    step: E2
+    description: "学び側の知らない /api の経路は 404 と {error} を返す（画面の経路は静的ファイルに委ねる）"
+    acceptance: "存在しない /api の経路が 404 で、本文が {error} の日本語"
+  - id: REQ-092
+    usecase: UC-014
+    step: E3
+    description: "学び側の想定していない例外は、固定の日本語の文の 500 にして返し、例外の内容や呼び出しの履歴を本文に出さない"
+    acceptance: "例外を起こす呼び出しの応答が 500 で、本文が {error} の固定文だけ（stack を含まない）"
+  - id: REQ-036
+    usecase: UC-014
+    step: 6
+    description: "パスワードは PBKDF2（SHA-256）のハッシュにして保存し、毎回ソルトを変える。反復回数は Cloudflare Workers が受け付ける上限の 100,000 以下にする"
+    acceptance: "保存値の先頭の反復回数が 100,000 以下で、同じパスワードでもハッシュが毎回違う。コードの定数 ITERATIONS が 100,000 以下（不変条件 O5）"
+  - id: REQ-093
+    usecase: UC-014
+    step: 6
+    description: "パスワードの照合は保存値に入っている反復回数とソルトで導き、比較にかかる時間を入力に依存させない。保存値の形が壊れているときは合致しない"
+    acceptance: "同じパスワードで真、違うパスワードで偽、区切りの無い保存値で偽が返る"
+
+  # ================= UC-017 運用者が生存・秘密・保存先を機械で確かめる =================
+  - id: REQ-047
+    usecase: UC-017
+    step: 1
+    description: "学び側の GET /api/health は認証なしで {ok: true} を返す（監視と検査スクリプトの死活確認）"
+    acceptance: "未認証で 200 の {ok: true}。同じ条件で他の API は 401"
+  - id: REQ-094
+    usecase: UC-017
+    step: 2
+    description: "まなびばの GET /api/health は認証なしで {ok: true} を返す（監視と検査スクリプトの死活確認）"
+    acceptance: "未認証で 200 の {ok: true}。同じ条件で /api/me は 401"
+  - id: REQ-049
+    usecase: UC-017
+    step: 3
+    description: "学び側はトークンの署名に使う秘密を環境の JWT_SECRET から読む"
+    acceptance: "JWT_SECRET が設定された環境では、その値が署名の秘密として返る"
+  - id: REQ-095
+    usecase: UC-017
+    step: E1
+    description: "JWT_SECRET が設定されていない環境では、学び側は開発用の既定値を署名の秘密として使う"
+    acceptance: "JWT_SECRET の無い環境で、署名の秘密が開発用の既定値になる"
+  - id: REQ-048
+    usecase: UC-017
+    step: 4
+    description: "学び側のデータは学びごとの Cloudflare D1 に保存し、サーバはスキーマ定義（drizzle）を通して読み書きする。文字列を連結した生 SQL は使わない"
+    acceptance: "env.DB を束ねた接続から、スキーマの全表（users・topics・past_questions・sessions・feedback など）を引ける"
+  - id: REQ-039
+    usecase: UC-017
+    step: 5
+    description: "対象（試験・題材）ごとの名前・種類・設定は登録簿 src/shared/targets.json の 1 か所から読み、コードは対象名を列挙しない"
+    acceptance: "登録簿に載っている全対象が key で解決でき、解決の結果が登録簿の値と一致する（不変条件 D15）"
+  - id: REQ-096
+    usecase: UC-017
+    step: E2
+    description: "知らない対象の key が渡されたとき、または対象が指定されていないときは、既定の対象（ip）の設定を返す"
+    acceptance: "未知の key と未指定のどちらでも ip の設定が返る"
+
+  # ================= UC-018 API の失敗を画面に出せる形で受け取る =================
+  - id: REQ-097
+    usecase: UC-018
+    step: 1
+    description: "画面が受け取る API の失敗は、画面に出す文（message）・HTTP のステータス（status）・応答の本文（body）を持つ 1 つの型にする。通信そのものが成立しなかったときは status を持たない"
+    acceptance: "投げられた値がその型のインスタンスで、message・status・body を読める"
+  - id: REQ-051
+    usecase: UC-018
+    step: 2
+    description: "画面の API 呼び出しは、応答が失敗のとき、本文の {error}（日本語）を message、HTTP のステータスを status、本文そのものを body にして投げる。本文に {error} が無いときは既定の日本語の 1 文にする"
+    acceptance: "{error: 'X'} の 400 が返ると message が 'X'・status が 400・body が本文になる。{error} の無い失敗では message が既定の日本語の文"
+  - id: REQ-098
+    usecase: UC-018
+    step: E1
+    description: "画面の API 呼び出しは、通信そのものが成立しなかったとき、status を持たない日本語の固定文で投げる（ブラウザの英語の文を画面に出さない）"
+    acceptance: "fetch が例外を投げると status が undefined で、message が通信できなかったことを伝える日本語の文"
+  # ===== UC-010 過去問の出典と「一部改変」 =====
+  - id: REQ-260
+    usecase: UC-010
+    step: 1
+    description: "投入する SQL を組むとき、過去問 1 行ごとに出典「出典：<年度ラベル> <試験名> 問N」を組み立てて列に持たせる"
+    acceptance: "seed の過去問の INSERT すべてに citation の値があり、「出典：」で始まり年度ラベル・試験名・問番号を含む"
+  - id: REQ-261
+    usecase: UC-010
+    step: E1
+    description: "出典の試験名が対象の試験名と違う過去問、または年度ラベルが内部コードのままの過去問があるとき、投入前の門は問題として止める"
+    acceptance: "他の試験の試験名を含む出典、または年度ラベルが内部コード（exam と同じ値）の行があると check_seed が異常終了する。投入後の突き合わせで年度ラベルが内部コードのままの行が 0 件（不変条件 D4）"
+  - id: REQ-262
+    usecase: UC-010
+    step: 2
+    description: "論点の学習画面は、紐づく過去問ごとに出典（年度ラベル・試験名・問番号）を出す"
+    acceptance: "過去問 1 件を返す論点を描くと「出典：<年度ラベル> <試験名> 問N」が出て、年度ラベルが内部コードのまま出ない"
+  - id: REQ-263
+    usecase: UC-010
+    step: 2
+    description: "論点の学習画面は、改変の印が立つ過去問の出典に「一部改変」を併記し、立っていない過去問には出さない"
+    acceptance: "改変の印が真の過去問で出典に「（一部改変）」が付き、偽では付かない"
+  - id: REQ-264
+    usecase: UC-010
+    step: 3
+    description: "出題時のスナップショットに、その過去問の出典と改変の印を入れる（後から教材を直しても当時の出典で表示・採点できる）"
+    acceptance: "snapshotOf の結果に citation と modified があり、渡した過去問の値と一致する"
+  - id: REQ-265
+    usecase: UC-010
+    step: 4
+    description: "演習・模試の出題画面は、出題中の過去問の出典（年度ラベル・試験名・問番号）を出す"
+    acceptance: "出題の応答を返して描くと「出典：<年度ラベル> <試験名> 問N」が出る"
+  - id: REQ-266
+    usecase: UC-010
+    step: 4
+    description: "演習・模試の出題画面は、改変の印が立つ過去問の出典に「一部改変」を併記し、立っていない過去問には出さない"
+    acceptance: "改変の印が真の出題で出典に「（一部改変）」が付き、偽では付かない"
+  - id: REQ-027
+    usecase: UC-010
+    step: 5
+    description: "結果画面は、振り返る過去問ごとに出典（年度ラベル・試験名・問番号）を出す"
+    acceptance: "結果を描くと問題ごとに「出典：<年度ラベル> <試験名> 問N」が出て、年度ラベルが内部コードのまま出ない"
+  - id: REQ-028
+    usecase: UC-010
+    step: 5
+    description: "結果画面は、改変の印が立つ過去問の出典に「一部改変」を併記し、立っていない過去問には出さない"
+    acceptance: "改変の印が真の問題で出典に「（一部改変）」が付き、偽では付かない"
+
+  # ===== UC-012 画面を添えたフィードバック =====
+  - id: REQ-267
+    usecase: UC-012
+    step: 1
+    description: "画面を移るたびに、移った先のパスと人が読む画面名を直前に開いていた画面として記録する。フィードバックの画面自身は記録しない"
+    acceptance: "論点の画面へ移ると記録のパスがその画面になり、フィードバックの画面へ移っても記録が変わらない"
+  - id: REQ-268
+    usecase: UC-012
+    step: 1
+    description: "直前に開いていた画面（パス・人が読む名前・論点 ID・問題 ID）を端末に保存する"
+    acceptance: "保存した内容が、そのまま読み出せる"
+  - id: REQ-269
+    usecase: UC-012
+    step: 2
+    description: "画面が中身を読み込んだあと、記録済みの直前の画面に論点 ID・問題 ID と人が読む名前を足す。記録が無いときは新しく作らない"
+    acceptance: "記録がある状態で論点 ID を足すとパスは変わらず ID が入る。記録が無い状態で足しても記録ができない"
+  - id: REQ-270
+    usecase: UC-012
+    step: 3
+    description: "上部メニューに「フィードバック」を置き、選ぶとフィードバックの画面を出す"
+    acceptance: "上部メニューに「フィードバック」への移動があり、その行き先でフィードバックの画面が描かれる"
+  - id: REQ-271
+    usecase: UC-012
+    step: 3
+    description: "フィードバックの画面は、記録された直前の画面を読み出して添え先として示す。記録が無ければ添えるものが無いものとして扱う"
+    acceptance: "記録があるときは読み出した内容が返り、記録が無いときは null が返る"
+  - id: REQ-031
+    usecase: UC-012
+    step: 4
+    description: "フィードバックの画面は、利用者が書いた本文（2,000 字以内）と、直前に開いていた画面（パス・論点 ID・問題 ID）を送信する"
+    acceptance: "論点の画面を記録した状態で送ると、本文と、その画面のパス・論点 ID が送信の本体に入る"
+  - id: REQ-030
+    usecase: UC-012
+    step: 5
+    description: "フィードバックの受け口は、本文と開いていた画面（パス・論点 ID・問題 ID）を送った利用者に紐づけて未処理の状態で保存し、受け付けた印だけを返す（その場で応答文を生成しない）"
+    acceptance: "送信が 201 で id を返し、保存された行の本文・パス・論点 ID が送った値と一致し、状態が未処理である"
+  - id: REQ-272
+    usecase: UC-012
+    step: 5
+    description: "投入する SQL はフィードバックの表と利用者のデータに触れない（再投入で送られた内容が消えない）"
+    acceptance: "seed の SQL に feedback・users・progress・sessions への DELETE／INSERT／UPDATE が無いことを門が確かめる（不変条件 D16）"
+  - id: REQ-273
+    usecase: UC-012
+    step: 6
+    description: "送信が成功したあと、フィードバックの画面は「フィードバックありがとうございます。改善に活かします。」の受付文だけを出す"
+    acceptance: "送信の成功後に受付文が描かれ、入力欄の本文が残らない"
+  - id: REQ-274
+    usecase: UC-012
+    step: E1
+    description: "フィードバックの受け口は、本文が空または 2,000 字を超える送信を 400 と日本語の理由で拒み、保存しない"
+    acceptance: "本文が空、または 2,001 字の送信が 400 で本文 {error} が日本語。表に行が増えない"
+  - id: REQ-275
+    usecase: UC-012
+    step: E2
+    description: "フィードバックの受け口は、同じ利用者の直近 1 日の送信が 20 件に達しているとき 429 を返し、保存しない"
+    acceptance: "20 件のあとの 21 件目が 429 で、表に行が増えない"
+  - id: REQ-276
+    usecase: UC-012
+    step: E3
+    description: "直前に開いていた画面の記録は、端末の記憶が使えないときや値が壊れているときも例外を投げず、記録が無いものとして扱う"
+    acceptance: "壊れた値が入っていても読み出しは null を返し、保存が失敗しても例外が外に出ない"
+  - id: REQ-277
+    usecase: UC-012
+    step: 4
+    status: draft
+    description: "画面に「分かりにくい」の 1 タップを置き、押すと種別を unclear として同じフィードバックの表に行を入れる"
+    acceptance: "「分かりにくい」を押すと本文の入力なしで 201 が返り、保存された行の種別が unclear である"
+
+  # ===== UC-013 新しい版の帯 =====
+  - id: REQ-278
+    usecase: UC-013
+    step: 1
+    description: "ビルドのたびに、コミットの短い ID と時刻を持つ版の印を静的ファイル version.json として配信物に出す"
+    acceptance: "ビルドの出力に version.json があり、build（コミットの短い ID）と at（時刻）を持つ"
+  - id: REQ-279
+    usecase: UC-013
+    step: 2
+    description: "画面は最初の版の印を 1 回だけ取りに行って覚える（何度求められても取得は 1 回）"
+    acceptance: "版の印を 3 回求めても version.json の取得は 1 回で、同じ値が返る"
+  - id: REQ-032
+    usecase: UC-013
+    step: 3
+    description: "画面は版の印を取り直して最初の印と見比べ、違えば新しい版が出ていると判定する。コミットが同じでも時刻が違えば違うと判定する"
+    acceptance: "印が同じなら偽、build が違えば真、build が同じで時刻が違えば真を返す"
+  - id: REQ-280
+    usecase: UC-013
+    step: 3
+    description: "画面を移るときと 5 分おきに、版の印の見比べを行う"
+    acceptance: "見比べの間隔が 5 分で、画面のパスが変わるたびに見比べが呼ばれる"
+  - id: REQ-281
+    usecase: UC-013
+    step: 4
+    description: "新しい版が出ていると判定したとき、画面の上部に「新しい版があります。」の帯と「更新」ボタンを出す。判定していないときは出さない"
+    acceptance: "判定が真のとき帯の文言と「更新」ボタンが描かれ、偽のとき描かれない"
+  - id: REQ-282
+    usecase: UC-013
+    step: 5
+    description: "「更新」を押したときだけ画面を読み直す。押されるまでは自動で読み直さない"
+    acceptance: "新しい版と判定されても押すまで読み直しが起きず、押すと読み直しが 1 回呼ばれる"
+  - id: REQ-283
+    usecase: UC-013
+    step: E1
+    description: "版の印が取れないときは、新しい版が出ていないものとして扱う（帯を誤って出さない）"
+    acceptance: "version.json の取得が失敗する状態では判定が偽になる"
+  - id: REQ-284
+    usecase: UC-013
+    step: E2
+    description: "最初の版の印が取れなかったときは、次に取れた値を最初の印にし、その回は新しい版と判定しない"
+    acceptance: "1 回目の取得が失敗し 2 回目が成功する状態で、その回の判定が偽、同じ値の次の回も偽になる"
+
+  # ===== UC-024 管理（論点・解説・分類・パラメータ） =====
+  - id: REQ-285
+    usecase: UC-024
+    step: 2
+    status: draft
+    description: "管理の画面は、論点の解説と周辺知識を書き換えて保存できる。保存した本文が学習画面に出る"
+    acceptance: "保存した本文が、その論点の学習画面の解説・周辺知識として返る"
+  - id: REQ-286
+    usecase: UC-024
+    step: 4
+    status: draft
+    description: "管理の画面は、過去問と論点の紐付けを外し、別の論点に紐づけ直せる。紐付けを変えた論点の出題頻度は数え直される"
+    acceptance: "紐付けを 1 件外すとその論点の出題頻度が 1 減り、1 件足すと 1 増える"
+  - id: REQ-287
+    usecase: UC-024
+    step: 5
+    status: draft
+    description: "管理の画面は、練習テストの出題数・当面除外する連続正解の回数・合格ラインの目安（総合・分野）を設定して保存できる。以後の出題と合否の目安はその値を使う"
+    acceptance: "出題数を変えると次に始めた練習テストの問題数が変わり、合格ラインを変えると結果の判定の閾値が変わる"
+
+  # ===== UC-025 初出年・直近出題年 =====
+  - id: REQ-288
+    usecase: UC-025
+    step: 1
+    status: draft
+    description: "論点の一覧の応答に、論点ごとの最初に出た回と直近に出た回を、紐づく過去問から導いて入れる。紐づく過去問が無い論点は持たない"
+    acceptance: "過去問が複数の回にまたがる論点で、最古と最新の回の年度ラベルが返る。過去問が無い論点では空になる"
+  - id: REQ-289
+    usecase: UC-025
+    step: 2
+    status: draft
+    description: "論点の一覧は初出の回と直近に出た回を年度ラベルで出し、直近に出た回で並べ替えられる"
+    acceptance: "一覧に年度ラベルが出て内部コードのまま出ない。並べ替えを選ぶと直近の回が新しい論点から並ぶ"
+
+  # ===== UC-026 段階的ヒント =====
+  - id: REQ-290
+    usecase: UC-026
+    step: 1
+    status: draft
+    description: "回答後の解説は、関連用語・論点名・正解の根拠の 3 段に分けて 1 段ずつ開く。最終段の内容は段に分ける前の解説と同じにする"
+    acceptance: "問題を描くと 3 段が順に開け、最終段の本文が問題解説の正解の根拠と一致する"
+
+  # ===== UC-027 合格見込みの 1 行 =====
+  - id: REQ-291
+    usecase: UC-027
+    step: 2
+    status: draft
+    description: "模試の結果画面は、合格ラインの目安（総合・分野）に対して足りない正解数を 1 行で出し、合格圏・圏外・分野割れを区別して示す"
+    acceptance: "総合も分野も満たす結果・総合が足りない結果・分野だけ足りない結果の 3 通りで、それぞれ別の文言が出る"
+
+  # ===== UC-028 自信度 =====
+  - id: REQ-292
+    usecase: UC-028
+    step: 2
+    status: draft
+    description: "回答の受け口は、任意で添えられた自信度を回答と一緒に記録する。自信度が無い回答も受け付ける"
+    acceptance: "自信度つきの回答で記録に自信度が入り、自信度なしの回答も同じ応答で受け付けられる"
+  - id: REQ-293
+    usecase: UC-028
+    step: 3
+    status: draft
+    description: "結果画面は、自信ありで誤答した問題（過信）を他の誤答より先に並べる"
+    acceptance: "自信あり×誤答と自信なし×誤答が混じる結果で、自信あり×誤答が先に出る"
+
+  # ===== UC-029 診断テスト =====
+  - id: REQ-294
+    usecase: UC-029
+    step: 1
+    status: draft
+    description: "診断テストは、分野の比率に沿って出題頻度の高い論点から 20〜30 問を選んで出す"
+    acceptance: "出題の問題数が 20〜30 問で、分野ごとの件数が分野の比率に沿う"
+  - id: REQ-295
+    usecase: UC-029
+    step: 3
+    status: draft
+    description: "診断テストの結果から論点ごとの理解度の初期値を置き、その理解度に診断という由来を残す。自己申告の理解度がある論点は上書きしない"
+    acceptance: "理解度が無い論点には由来が診断の理解度が入り、自己申告の理解度がある論点は値も由来も変わらない"
+
+  # ===== UC-030 間隔反復 =====
+  - id: REQ-296
+    usecase: UC-030
+    step: 1
+    status: draft
+    description: "演習の正誤から論点ごとの次回の復習日を置き直す。正解なら前回より間隔を延ばし、誤答なら縮める"
+    acceptance: "同じ論点で正解したときの次回の復習日が前回より先になり、誤答したときは前回より近くなる"
+
+  # ===== UC-031 逆算の日次計画 =====
+  - id: REQ-297
+    usecase: UC-031
+    step: 3
+    status: draft
+    description: "試験日と 1 日の目標が設定されているとき、出題頻度・習得の状況・復習の予定から今日学ぶ論点を目標の量だけ選んで出し、試験日までの残り日数を出す。設定が無いときは出題頻度の順で出す"
+    acceptance: "試験日を近づけると今日の論点の件数が増え、設定が無いときは出題頻度の順の一覧と一致する"
+
+  # ===== UC-032 計測 =====
+  - id: REQ-298
+    usecase: UC-032
+    step: 1
+    status: draft
+    description: "計測の画面は、論点ごとの正答率の推移、同じ問題を 7 日後・30 日後に解き直したときの正誤、初回の学習から合格見込みに届くまでの日数を本人の分だけ出す"
+    acceptance: "出した数値が、保存されている回答の記録から同じ値として数え直せる"
+  # ===== UC-004 分野 → カテゴリ → 論点 を辿り、解説と紐づく過去問を読む =====
   - id: REQ-054
-    usecases: [UC-004]
-    description: "分野・カテゴリの集計（/fields・/categories）は画面を開いている間だけ覚えて取り直さず、理解度を変えたら捨てる。失敗した取得は覚えない。版の更新で読み直すと消える"
-    acceptance: "同じ path の apiCached を 2 回呼ぶと fetch は 1 回。invalidateCached 後は取り直す。失敗した path は次の呼び出しで取り直す"
+    usecase: UC-004
+    step: 1
+    description: "分野・単元の集計は、同じ問い合わせを画面を開いている間だけ覚えて取り直さない。失敗した取得は覚えない"
+    acceptance: "同じ path を 2 回求めても取得は 1 回。失敗した path は次に求めたときに取り直す"
+  - id: REQ-010
+    usecase: UC-004
+    step: 2
+    description: "GET /api/fields は分野ごとの論点数・過去問数と、本人の理解度の内訳（理解・やや理解・記録なし）を、対象の分野の並びで返す"
+    acceptance: "件数がローカル D1 の SELECT と一致し、並びが登録簿の分野の順。何も無いときは [] で返る（不変条件 D11）"
+  - id: REQ-120
+    usecase: UC-004
+    step: 3
+    description: "GET /api/categories は単元（中分類）ごとの論点数・過去問数と理解した数を中分類の番号順に返し、分野を指定したときはその分野の単元だけを返す"
+    acceptance: "件数がローカル D1 の SELECT と一致。分野を指定するとその分野の単元だけが返り、何も無いときは []"
+  - id: REQ-121
+    usecase: UC-004
+    step: 4
+    description: "学習の画面は、分野で絞り込める単元の一覧を、大項目ごとにまとめ、単元ごとの論点数・過去問数と「理解した数／論点数」つきで出す"
+    acceptance: "分野を選ぶとその分野の単元だけが残る。各単元に論点数・過去問数と 理解した数／論点数 が出る"
+  - id: REQ-011
+    usecase: UC-004
+    step: 5
+    description: "GET /api/topics は論点の一覧に出題回数と本人の理解度を付けて返す。既定は出題頻度の降順で、分野・単元・理解度で絞り込め、名前順にも並べ替えられる"
+    acceptance: "全件の出題回数が topic_questions の件数と一致し、既定の並びが出題回数の降順。理解度で絞り込めて、記録の無い論点は未理解として扱われる"
+  - id: REQ-122
+    usecase: UC-004
+    step: 6
+    description: "単元を選んだときの論点の一覧は、各論点の出題回数と小項目名（単元名と同じときは出さない）を出し、並べ替え（出題が多い順・名前順）と理解度の絞り込みを受ける。理解度を全部外したときは取りに行かず、1 つ以上選ぶよう促す"
+    acceptance: "並べ替えを変えると取得の並びが変わる。理解度を全部外すと一覧が空になり、1 つ以上選ぶ案内とすべて表示に戻す手段が出る"
+  - id: REQ-012
+    usecase: UC-004
+    step: 7
+    description: "GET /api/topics/:id は論点の短い説明と詳しい解説、紐づく過去問（出典・改変の有無・問題ごとの解説）、同じ小項目の他の論点を返す"
+    acceptance: "全論点で短い説明が空でなく、過去問に年度ラベルと問番号がある。他の論点にその論点自身が入らない"
+  - id: REQ-123
+    usecase: UC-004
+    step: 8
+    description: "論点の画面は短い説明を本文の記法で描き、詳しい解説は押したときだけ開く"
+    acceptance: "最初は詳しい解説が描かれず、押すと描かれる。押すたびに開閉する"
+  - id: REQ-124
+    usecase: UC-004
+    step: 9
+    description: "論点の画面は紐づく過去問を本文・選択肢つきで出し、答えは押したときだけ、問題ごとの解説は答えを出したあとだけ開く。最初は先頭の数問だけ出し、残りは押して開く"
+    acceptance: "答えを見る前は正解の印と解説の手段が出ない。過去問が表示数を超える論点では残りの件数つきの手段が出る"
+  - id: REQ-043
+    usecase: UC-004
+    step: 10
+    description: "過去問の図の書き起こしは、表・擬似言語・説明文を書かれた順のかたまりとして読み、表と解釈できないかたまりは文字のまま出す。閉じていないコードの囲みや列数の揃わない表でも例外を投げない"
+    acceptance: "表・擬似言語・文が混ざる書き起こしが書かれた順のかたまりになる。閉じていない囲みや列数の違う表でも例外を投げず、読めない所が文として残る"
+  - id: REQ-125
+    usecase: UC-004
+    step: 10
+    description: "図として描かれた過去問は、原本から切り出した画像を出して書き起こしを併記し、画像はタップで原寸に切り替える。画像が無い（表だけの）問題は書き起こしを本体として出す"
+    acceptance: "画像がある問題では画像と、畳まれた書き起こしを開く手段が出る。画像が無い問題では書き起こしがそのまま出る。図の無い問題では何も出さない"
+  - id: REQ-126
+    usecase: UC-004
+    step: 11
+    description: "同一内容でまとめられた過去問には、同じ問題が何回出題されたかと他の出典を出す。まとめられていない問題には出さない"
+    acceptance: "回数が 2 以上のときだけ回数と他の出典が出る。1 回の問題では何も描かない"
   - id: REQ-055
-    usecases: [UC-004, UC-009]
-    description: "一覧以外の画面の左上に、戻り先を明示した戻るリンクを置く（ブラウザの履歴ではなく行き先とラベルを示す。タップ領域 44px）"
-    acceptance: "BackLink が to のリンクと label の文字を描き、アイコンは読み上げ対象にしない"
+    usecase: UC-004
+    step: 12
+    description: "一覧以外の画面の左上に、行き先とラベルを明示した戻るリンクを置く（ブラウザの履歴に頼らない）。タップ領域は 44px を確保する"
+    acceptance: "指定した行き先のリンクとラベルの文字が描かれ、アイコンは読み上げ対象にしない"
+  - id: REQ-127
+    usecase: UC-004
+    step: E1
+    description: "分野・単元の集計が取れなかったとき、学習の画面は失敗の内容と取り直す手段を出し、読み込み中の表示のままにしない"
+    acceptance: "取得が失敗すると失敗の文と取り直す手段が出て、読み込み中の文が消える。取り直すと再度取得する"
+  - id: REQ-015
+    usecase: UC-004
+    step: E2
+    description: "論点の一覧の画面は、一覧を取得前は null、結果が空は [] で持ち、読み込み中に「該当なし」を出さない"
+    acceptance: "一覧の状態を空の配列で初期化していない（scripts/check_source.py。不変条件 D11）"
+
+  # ===== UC-005 理解度を 3 段階で記録し、おすすめ順で学ぶ =====
+  - id: REQ-013
+    usecase: UC-005
+    step: 1
+    description: "PUT /api/topics/:id/progress は理解度を未理解・やや理解・理解の 3 段階のいずれかとして記録し、同じ論点の以前の記録を上書きする。3 段階の外の値は記録しない"
+    acceptance: "同じ論点に 2 回記録すると最新だけが残る。3 段階の外の値は 400 で記録されない"
+  - id: REQ-128
+    usecase: UC-005
+    step: 2
+    description: "理解度を選んだとき、画面は記録の結果を待たずに選んだ段階を選択済みにする"
+    acceptance: "押した直後に、その段階が選択済みとして描かれる"
+  - id: REQ-129
+    usecase: UC-005
+    step: 3
+    description: "理解度を記録したあと、画面は覚えていた分野・単元の集計を捨て、次に一覧を開いたときに取り直させる"
+    acceptance: "捨てたあとは、同じ path でも取り直す"
+  - id: REQ-130
+    usecase: UC-005
+    step: 4
+    description: "理解度は段階の文字と色の両方で示す（色だけに頼らない）。記録が無い論点は未理解として示す"
+    acceptance: "3 段階それぞれで段階の文字が描かれ、段階ごとに異なる印が付く。記録が無いときは未理解になる"
+  - id: REQ-131
+    usecase: UC-005
+    step: 4
+    description: "一覧の行そのものにも、その論点の理解度が分かる印を付ける。記録が無い論点は未理解として扱う"
+    acceptance: "行の印が段階ごとに変わり、記録が無いときは未理解の印になる"
+  - id: REQ-014
+    usecase: UC-005
+    step: 5
+    description: "GET /api/me はおすすめとして「出題頻度が高く、まだ理解していない論点」を上から並べて返し、理解にした論点と過去問が無い論点は含めない"
+    acceptance: "並びが出題回数の降順で、理解度が理解の論点が含まれない（ロードマップ型は学ぶ順）"
+  - id: REQ-132
+    usecase: UC-005
+    step: 6
+    description: "ホームはおすすめの論点を「次に学ぶ」として出題回数と分野つきで数件並べ、候補が無いときはその節ごと出さない"
+    acceptance: "候補があるとき見出しと論点の行が出る。候補が無いときは見出しが出ない"
+  - id: REQ-133
+    usecase: UC-005
+    step: 7
+    description: "GET /api/topics/:id は、いま開いている論点を除いた「出題頻度が高く、まだ理解していない論点」の先頭を添える。候補が尽きたら無しとして返す"
+    acceptance: "添えられる論点がその論点自身でなく、理解にした論点でない。候補が無いときは null"
+  - id: REQ-134
+    usecase: UC-005
+    step: 7
+    description: "論点の画面の末尾に、添えられた次に学ぶ論点への導線を出す。候補が無いときは、ひととおり学べたことと一覧への導線を出す"
+    acceptance: "候補があるとき次に学ぶの見出しと論点名の導線が出る。無いときは学び終えた案内と一覧への導線が出る"
+  - id: REQ-135
+    usecase: UC-005
+    step: E1
+    description: "理解度の記録に失敗したとき、画面は表示を押す前の段階に戻し、読んでいた教材を消さずに失敗と再操作の案内をその場に出す"
+    acceptance: "記録が失敗すると押す前の段階に戻り、失敗の文が出て、教材の本文が残る"
+
+  # ===== UC-006 本文の用語ポップと図の描画 =====
+  - id: REQ-136
+    usecase: UC-006
+    step: 1
+    description: "用語集は画面を開いている間まとめて 1 度だけ取りに行き、何度求められても取得は 1 回にする"
+    acceptance: "続けて何度求めても取得は 1 回で、以後は覚えたものを返す"
+  - id: REQ-137
+    usecase: UC-006
+    step: 2
+    description: "GET /api/glossary は用語集の全語（用語・1 行の説明・紐づく論点の ID）を用語の順で 1 回の応答として返し、ログインしている本人にだけ返す"
+    acceptance: "件数が D1 の glossary と一致し、各行が用語・1 行説明・論点 ID（無ければ null）を持つ"
+  - id: REQ-138
+    usecase: UC-006
+    step: 3
+    description: "用語集は取得前を未取得として区別し、未取得のうちは本文の用語に色を付けない"
+    acceptance: "取得前は未取得が返り、取得後に用語を引ける"
+  - id: REQ-018
+    usecase: UC-006
+    step: 4
+    description: "本文は決めた記法（見出し・箇条書き・番号付き・太字・表・用語・図の画像行）だけを解釈し、それ以外は書かれた文字のまま出す。閉じていない記法も文字として残す"
+    acceptance: "許した記法以外（リンク・引用・コードの囲み）が文字のまま出る。区切り行の無い表や文中のパイプを表に取り違えない（scripts/check_render.sh が実データ全件で見る）"
+  - id: REQ-139
+    usecase: UC-006
+    step: 5
+    description: "段落を作らない 1 行の本文でも、行の中の記法（太字・用語）を解釈する。太字の中の用語も押せる語にする"
+    acceptance: "太字の中の `[[用語]]` が押せる要素になり、記法の括弧が残らない"
+  - id: REQ-016
+    usecase: UC-006
+    step: 6
+    description: "本文の `[[用語]]` は用語集にある語を押せる語にし、押すと 1 行の説明と、紐づく論点があれば「この論点を学ぶ →」をその場に出す。押しても画面は移らない"
+    acceptance: "押すと 1 行説明が出て、画面は移らない。論点の無い語では論点への導線が出ない。実データ全件の描画で `[[ ]]` が文字のまま残らない（scripts/check_render.sh。不変条件 D10）"
+  - id: REQ-140
+    usecase: UC-006
+    step: 7
+    description: "本文に出す用語の表示名は、正式表記が長いときだけ末尾の括弧書きを落とす。ポップの見出しは正式表記のまま出す"
+    acceptance: "短い用語はそのまま、長い括弧付きの用語は括弧の前までになる。ポップの見出しは元の表記"
+  - id: REQ-017
+    usecase: UC-006
+    step: 8
+    description: "本文の図は教材の図の置き場所（試験ごとのディレクトリ）を指す画像行だけを画像にし、他の場所を指す画像記法は文字のまま出す。図はタップで原寸に切り替える"
+    acceptance: "置き場所の画像行だけが画像になり、他は段落として出る。全教材の図が置き場所に実在する（check_seed。不変条件 D6）"
+  - id: REQ-141
+    usecase: UC-006
+    step: E1
+    description: "用語集が取れなかったとき、画面は空の用語集として扱い、用語に色を付けないまま本文を出す"
+    acceptance: "取得が失敗しても本文が描かれ、用語は素の文字になる"
+  - id: REQ-142
+    usecase: UC-006
+    step: E2
+    description: "用語集に無い語は色を付けず、書かれた文字のまま出す"
+    acceptance: "用語集に無い語では押せる要素が作られず、文字がそのまま出る"
+
+  # ===== UC-015 ロードマップ型の並びとメニュー =====
+  - id: REQ-038
+    usecase: UC-015
+    step: 1
+    description: "ロードマップ型の上部メニューは「ロードマップ」「フィードバック」の 2 つだけにし、資格の語（練習テスト・模試・履歴）を出さない。資格版のメニューは変えない"
+    acceptance: "ロードマップ型のビルドでメニューが 2 つ、資格版は据え置き（VITE_EXAM で分かれるので対象ごとのビルドの画面で見る。audit_screens）"
+  - id: REQ-143
+    usecase: UC-015
+    step: 2
+    description: "ロードマップ型では、ホーム・練習テスト・確認テスト・履歴の場所を開いてもロードマップへ送る"
+    acceptance: "ロードマップ型で / ・/practice ・/exams ・/history がロードマップに置き換わる。資格版では各画面が出る"
+  - id: REQ-037
+    usecase: UC-015
+    step: 3
+    description: "ロードマップ型の対象では論点の一覧を学ぶ順（sort_order）で返し、資格版では sort_order の列を参照しない"
+    acceptance: "ロードマップ対象で並びが学ぶ順。資格版の SQL に sort_order が無く、返る sortOrder が null（不変条件 D13）"
+  - id: REQ-144
+    usecase: UC-015
+    step: 4
+    description: "ロードマップは単位を 1 日ごとにまとめて（学ぶ順を 1 日の単位数で割る）日の順に並べ、最初のまだ理解していない単位に「ここから」を出し、その日の単位が全部理解なら完了の印を出す"
+    acceptance: "1 日の行数が登録簿の 1 日の単位数まで。最初の未理解の単位にだけ「ここから」が付き、全部理解の日に完了の印が付く"
+  - id: REQ-145
+    usecase: UC-015
+    step: 5
+    description: "ロードマップの先頭に、理解した単位数と全単位数、連続日数を 1 行で出す"
+    acceptance: "理解した数が理解の単位の件数と一致し、連続日数が出る。連続日数が取れないときはその部分だけ出さない"
+  - id: REQ-146
+    usecase: UC-015
+    step: 6
+    description: "ロードマップの各日の見出しに、その日の確認テストの問題数と、受けた回数・最高正解数を出す。受けていない日は結果を出さない"
+    acceptance: "その日の確認の問題数が登録簿の 1 回の問題数と一致（check_seed。不変条件 D14）。受けた回数が 0 の日には結果が出ない"
+  - id: REQ-147
+    usecase: UC-015
+    step: 7
+    description: "その日の確認を始めるとき、画面は確かめを取ってからその日の範囲のテストの作成をサーバに求め、出題画面へ移す。進行中のテストがあってサーバが 409 を返したときは、終えるかやめるよう伝えて移らない"
+    acceptance: "確かめを断ると作成を求めない。作成が 409 のときはその旨が出て移らない"
+  - id: REQ-148
+    usecase: UC-015
+    step: 8
+    description: "ロードマップに入れなかった補足の単位は、日ごとの並びに混ぜず末尾の別枠に並べる"
+    acceptance: "補足の分野の単位が日ごとの並びに出ず、末尾の別枠に出る。補足が無ければ枠ごと出ない"
+  - id: REQ-149
+    usecase: UC-015
+    step: E1
+    description: "単位の一覧が取れないとき、ロードマップは失敗と取り直す手段だけを出す。確認テストと連続日数が取れないときは、一覧を出したままその部分を出さない"
+    acceptance: "一覧の取得が失敗すると失敗の文と取り直す手段が出る。確認テストの取得だけが失敗したときは一覧が出る"
+
+  # ===== UC-019 ロードマップ型で前後の単位へ移る =====
+  - id: REQ-150
+    usecase: UC-019
+    step: 1
+    description: "ロードマップ型では GET /api/topics/:id が学ぶ順の前後の単位（ID と名前）を添える。資格版では添えない"
+    acceptance: "ロードマップ対象で前後が学ぶ順の隣の単位。最初・最後では該当する側が null。資格版では前後そのものが null"
+  - id: REQ-151
+    usecase: UC-019
+    step: 2
+    description: "ロードマップ型の論点の画面は、本文の末尾に前後の単位への導線を単位名つきで出す"
+    acceptance: "前後の単位があるとき、単位名を含む導線が末尾に出て、押すとその単位へ移る"
+  - id: REQ-152
+    usecase: UC-019
+    step: 3
+    description: "ロードマップ型の論点の画面は「他の論点」と「次に学ぶ」を出さず、戻り先をロードマップにする"
+    acceptance: "ロードマップ型では他の論点・次に学ぶが出ず、戻るリンクの行き先がロードマップ。資格版では従来どおり出る"
+  - id: REQ-153
+    usecase: UC-019
+    step: E1
+    description: "前後どちらかの単位が無いとき（最初・最後の単位）、画面はその向きの案内を押せない形で残す"
+    acceptance: "端の単位で、無い向きの案内が押せない状態で描かれる"
+
+  # ===== UC-016 前回の続きに戻る =====
+  - id: REQ-154
+    usecase: UC-016
+    step: 1
+    description: "論点の画面を開いたとき、画面はその論点を前回の続きとして覚える"
+    acceptance: "論点を開いたあと、覚えている前回の続きがその論点になる"
+  - id: REQ-040
+    usecase: UC-016
+    step: 2
+    description: "最後に開いた論点（ID・名前・単元・単元番号）を端末に保存する。保存できない端末でも操作を止めない"
+    acceptance: "保存したあとに読み出すと同じ論点が返り、あとから開いた論点で置き換わる。保存できない環境でも例外を投げない"
+  - id: REQ-155
+    usecase: UC-016
+    step: 3
+    description: "覚えた論点を読み出す。覚えていないときは無いものとして返す"
+    acceptance: "保存前は無し、保存後は保存した論点が返る"
+  - id: REQ-156
+    usecase: UC-016
+    step: 4
+    description: "資格版のホームは、覚えた論点があれば前回の続きとして論点名と単元を出し、無ければ学習の一覧への導線を出す"
+    acceptance: "覚えた論点があるとき前回の続きの導線が出る。無いときは学習へ進む導線だけが出る"
+  - id: REQ-157
+    usecase: UC-016
+    step: 5
+    description: "ロードマップの先頭の導線は、覚えた単位があれば前回の続きとしてその単位名を出し、無ければいま学ぶ位置か最初の単位へ送る"
+    acceptance: "覚えた単位があるとその単位への導線、無いと最初のまだ理解していない単位への導線になる"
+  - id: REQ-158
+    usecase: UC-016
+    step: E1
+    description: "覚えていた値が読めないとき、画面は前回の続きを出さないだけにして、操作を止めない"
+    acceptance: "壊れた値が入っていても無しが返り、例外を投げない"
+  # ===== UC-007 論点別・分野別・カテゴリ別・弱点復習の演習 =====
+  - id: REQ-190
+    usecase: UC-007
+    step: 1
+    description: "練習テストの画面は、演習の範囲（分野ごとの問題数）の一覧と進行中のテストの有無を出す。どちらも取得前と結果が空を区別し、取得に失敗したときは失敗した側だけを伝えて読み直せるようにする"
+    acceptance: "分野の一覧の取得が失敗すると分野側の文言と再読み込みが出て、進行中の取得が失敗すると「確認できていません」と再読み込みが出る。取得前は一覧が空として描かれない"
+  - id: REQ-191
+    usecase: UC-007
+    step: 2
+    description: "練習テストの画面は、分野別演習と弱点復習を範囲と問題数つきで開始する。進行中のテストがあるあいだは開始のボタンを押せない"
+    acceptance: "分野を押すと kind が分野別・範囲がその分野で POST /api/sessions が呼ばれ、弱点復習は kind が弱点復習で呼ばれる。進行中があると両方のボタンが disabled"
+  - id: REQ-192
+    usecase: UC-007
+    step: 2
+    status: draft
+    description: "利用者はカテゴリ（シラバスの中分類）を選んで、その範囲だけの演習を画面から開始できる"
+    acceptance: "カテゴリの画面からカテゴリ別演習が始まり、出題がそのカテゴリの論点に紐づく過去問だけになる"
+  - id: REQ-193
+    usecase: UC-007
+    step: 3
+    description: "POST /api/sessions は演習の種別と範囲（論点・分野・カテゴリ）を受け取り、問題数の指定が無ければ設定値から決め、セッションと出題（順序つき）を保存して ID・範囲の名前・問題数・制限時間を返す"
+    acceptance: "作成の応答が 201 で、返した問題数と保存された出題の件数が一致する。問題数の指定が 1 未満か 100 超は 400"
+  - id: REQ-019
+    usecase: UC-007
+    step: 3
+    description: "出題の組み立ては、演習の種別ごとに範囲（論点 ID・分野・カテゴリ）で過去問を絞り、範囲外の過去問を入れない。指定された問題数を超えて出さない"
+    acceptance: "論点別は指定した論点に紐づく過去問だけ、分野別は指定した分野だけ、カテゴリ別は指定した中分類だけになる。出題の件数が問題数以下"
+  - id: REQ-020
+    usecase: UC-007
+    step: 3
+    description: "直近 N 回（設定値）連続で正解した問題は、範囲を絞った演習の出題から当面外す。範囲の問題がすべて外れるときは外さない"
+    acceptance: "N 回連続で正解した問題が出題に入らない。範囲の全問が連続正解のときは従来どおり出題される"
+  - id: REQ-194
+    usecase: UC-007
+    step: 3
+    description: "弱点復習は、自分が間違えた過去問を、直近に間違えた順に集める"
+    acceptance: "誤答として記録された過去問だけが、最後に間違えた時刻の新しい順に並ぶ。正解した問題は入らない"
+  - id: REQ-042
+    usecase: UC-007
+    step: 3
+    status: draft
+    description: "弱点復習は、間違えた問題に加えて理解度が低い論点の過去問も優先して出す"
+    acceptance: "理解度が未理解・やや理解の論点に紐づく過去問が弱点復習の出題に混ざる"
+  - id: REQ-195
+    usecase: UC-007
+    step: 3
+    description: "出題は、そのときの問題文・選択肢・正解・出典を出題時の内容として保存し、以後の採点と振り返りはその内容で行う（後から過去問を直しても当時の内容で見える）"
+    acceptance: "保存された出題時の内容に問題文・選択肢・正解・出典が含まれ、過去問の本文を変えても既存のセッションの表示と採点が変わらない"
+  - id: REQ-196
+    usecase: UC-007
+    step: 4
+    description: "GET /api/sessions/:id/current は、未回答の最小の位置（index）をそのセッションの現在の問題として、出題時の内容から返す。正解と解説は返さない"
+    acceptance: "1 問目に答えると現在の問題の index が 1 になる。応答の本文に正解も解説も含まれない"
+  - id: REQ-197
+    usecase: UC-007
+    step: 5
+    description: "出題の画面は、現在の問題の問題文と選択肢、範囲の名前、進捗（回答済みの数と全体の数）を出す"
+    acceptance: "問題文と選択肢の記号（ア・イ・ウ・エ）が描かれ、進捗が回答済み／全体の形で出る"
+  - id: REQ-044
+    usecase: UC-007
+    step: 5
+    description: "組合せを問う選択肢は、項目の切れ目で改行して縦に並べる。普通の読点では割らず、選択肢のデータは変えない"
+    acceptance: "区切りと項目名つきの並びだけが行に割れ、読点を含む普通の文と 30 字以下の選択肢は 1 行のまま。返る行をつなぐと元の文字列と同じになる"
+  - id: REQ-198
+    usecase: UC-007
+    step: 6
+    description: "出題の画面は、押された選択肢を表示中の位置（index）とともに送る。送信中と判定を出したあとは選択肢を押せなくする"
+    acceptance: "回答の送信に表示中の index と選んだ記号が入る。送信中と判定後は選択肢が disabled で 2 回目の送信が起きない"
+  - id: REQ-199
+    usecase: UC-007
+    step: 7
+    description: "POST /api/sessions/:id/answer は、送られた選択肢を出題時の正解と比べて正誤と回答時刻を記録し、正誤・正解の記号・残りの問数を返す"
+    acceptance: "出題時の正解と同じ記号で正誤が真、違えば偽。応答の正解の記号が出題時の正解と一致し、残りの問数が未回答の件数と一致する"
+  - id: REQ-022
+    usecase: UC-007
+    step: 7
+    description: "回答の応答には、その問題の解説（正解の根拠と選択肢ごとの 1 行）を載せる。解説が無い、または形が壊れているときは解説なしとして返し、回答そのものは通す"
+    acceptance: "根拠と選択肢の両方があるときだけ解説が返る。どちらかが欠けている・JSON が壊れている・配列でないときは解説が空で 200"
+  - id: REQ-200
+    usecase: UC-007
+    step: 8
+    description: "解説の表示は、正解の根拠を本文の記法で描き、選択肢ごとに 1 行（誤答は何の用語の説明かと 1 行の説明）を出す。正解の行は目立たせ、誤答の用語名は押すと説明が出る語にする"
+    acceptance: "正解の根拠と選択肢の全行が描かれ、正解の記号の行に印が付く。誤答の用語名が押せる語になる"
+  - id: REQ-201
+    usecase: UC-007
+    step: 8
+    description: "出題の画面は、回答のあとに正誤と正解の記号を出し、選んだ選択肢と正解の選択肢を色で示す。「次の問題へ」で現在の問題を取り直す"
+    acceptance: "正解なら正解の文言、誤答なら正解の記号つきの文言が出る。正解の選択肢と誤って選んだ選択肢に別の印が付く。「次の問題へ」で次の問題が描かれる"
+  - id: REQ-202
+    usecase: UC-007
+    step: 9
+    description: "POST /api/sessions/:id/finish は、そのセッションの正答数を集計して完了にし、正答数と問題数を返す。既に完了しているセッションは数えなおさない"
+    acceptance: "締めたあとセッションが完了で正答数が記録される。2 回呼んでも正答数と完了時刻が変わらない"
+  - id: REQ-203
+    usecase: UC-007
+    step: E1
+    description: "POST /api/sessions は、進行中のセッションが既にあるとき 409 と進行中のセッションの内容を返し、新しいセッションを作らない"
+    acceptance: "進行中があるときの作成が 409 で、本文に進行中のセッションが入る。セッションの件数が増えない"
+  - id: REQ-204
+    usecase: UC-007
+    step: E2
+    description: "POST /api/sessions は、指定された範囲に出題できる過去問が 1 問も無いとき 400 と日本語の理由を返し、セッションを作らない"
+    acceptance: "過去問の無い範囲で 400 が返り、本文が日本語の理由。セッションの件数が増えない"
+  - id: REQ-205
+    usecase: UC-007
+    step: E3
+    description: "POST /api/sessions/:id/answer は、送られた位置がサーバの現在の位置と違うとき採点せず、位置が食い違っていることとサーバの位置を返す（中断・再開でずれた回答を別の問題に記録しない）"
+    acceptance: "現在の位置と違う index の回答が 409 で、本文にサーバの位置が入る。その問題の回答と正誤が記録されない"
+  - id: REQ-206
+    usecase: UC-007
+    step: E3
+    description: "出題の画面は、位置が食い違っていると返されたとき、表示がずれていたことを伝えて現在の問題を取り直す"
+    acceptance: "位置の食い違いの応答でずれを伝える文言が出て、現在の問題の取得が呼ばれる"
+  - id: REQ-207
+    usecase: UC-007
+    step: E4
+    description: "POST /api/sessions/:id/answer は、セッションが終了している、または未回答の問題が無いとき採点せず 409 と日本語の理由を返す"
+    acceptance: "完了したセッションへの回答が 409。全問回答したあとの追加の回答も 409 で、記録が増えない"
+  - id: REQ-208
+    usecase: UC-007
+    step: E5
+    description: "解説の表示は、解説が無い問題では何も描かない（正誤の表示だけが残る）"
+    acceptance: "解説が空のときに解説の見出しも本文も描かれない"
+  - id: REQ-209
+    usecase: UC-007
+    step: E6
+    description: "出題の画面は、締めに失敗したとき失敗の理由と採点できていないことを出し、同じ締め方でもう一度押せるようにする"
+    acceptance: "締めが失敗すると理由と「まだ採点できていません」が出て、押し直すと同じ履歴の残し方で締めが呼ばれる"
+
+  # ===== UC-008 本番形式の模擬試験 =====
+  - id: REQ-041
+    usecase: UC-008
+    step: 1
+    description: "GET /api/exams は回ごとに、問題数・自分が完了した受験回数・最高正答数を返す。並びは新しい回から"
+    acceptance: "回の件数が過去問の回の数と一致し、受験回数と最高正答数が自分の完了したセッションだけを数える。並びが回の新しい順"
+  - id: REQ-210
+    usecase: UC-008
+    step: 2
+    description: "模擬試験の画面は、公開回の一覧（回の名前・問題数・受験回数・最高正答数）とランダム構成の入口を出す。取得前と結果が空を区別し、取得に失敗したときは理由と読み直しを出す"
+    acceptance: "受験ずみの回に受験回数と最高正答数が出て、未受験の回には出ない。取得前は読み込み中、空のときだけ取り込み済みが無い旨が出る"
+  - id: REQ-211
+    usecase: UC-008
+    step: 3
+    description: "模擬試験の画面は、受験を始める前に制限時間が始まることを確認し、確認が取れたときだけセッションを作る。進行中のテストがあって作れないときは、練習テストの画面で再開か破棄をするよう案内する"
+    acceptance: "確認を取り消すと POST /api/sessions が呼ばれない。409 が返ったときだけ進行中の案内の文言が出る"
+  - id: REQ-023
+    usecase: UC-008
+    step: 4
+    description: "模擬試験のセッションは、試験ごとの設定値の問題数と制限時間で作る"
+    acceptance: "作成の応答の問題数と制限時間が設定の値と一致する（IT パスポートは 100 問 120 分、応用情報 午前は 80 問 150 分）"
+  - id: REQ-212
+    usecase: UC-008
+    step: 4
+    description: "公開回を指定した模擬試験は、その回の過去問だけを問番号の昇順で出題する（本番の追体験）"
+    acceptance: "出題がその回の過去問だけになり、問番号の昇順に並ぶ"
+  - id: REQ-213
+    usecase: UC-008
+    step: 4
+    description: "回を指定しない模擬試験は、全範囲から分野ごとの出題数（試験ごとの分野比率）に寄せて設定値の問題数を選ぶ"
+    acceptance: "分野ごとの出題数が分野比率の値以下で、合計が設定値の問題数。並びは毎回同じにならない"
+  - id: REQ-214
+    usecase: UC-008
+    step: 5
+    description: "GET /api/sessions/:id/current は、制限時間のあるセッションでは残り秒を返し、制限時間を過ぎていれば問題を返さず終了として返す"
+    acceptance: "残り秒が開始時刻と制限時間から求めた値（0 未満にはならない）。制限時間を過ぎていると問題が空で終了と時間切れが真"
+  - id: REQ-215
+    usecase: UC-008
+    step: 5
+    description: "出題の画面は、残り時間があるとき時計を上部に出して 1 秒ごとに減らし、残りが少なくなったら見た目を変える"
+    acceptance: "残り秒を時分秒の形で出し、1 秒後に 1 減る。残り 5 分未満で強調の印が付く"
+  - id: REQ-216
+    usecase: UC-008
+    step: 5
+    description: "模擬試験の出題では、1 問ごとの正誤も解説も出さずに次の問題へ送る（振り返りは結果の画面でまとめて行う）"
+    acceptance: "模擬試験で回答したあと正誤の文言と解説が描かれず、次の問題が描かれる"
+  - id: REQ-217
+    usecase: UC-008
+    step: 6
+    description: "出題の画面は、残り時間が 0 になったとき自動で締めて結果の画面へ移る"
+    acceptance: "残り秒が 0 になると締めが呼ばれ、結果の画面へ移る"
+  - id: REQ-218
+    usecase: UC-008
+    step: 7
+    description: "GET /api/sessions/:id は、総合の正答率と分野別の正答率を集計し、総合が基準以上（分野の基準点がある試験では各分野も基準以上）かどうかを合否の目安として返す。あわせて基準の値と、公式スコアと一致しない旨を返す"
+    acceptance: "分野別の正答数の合計が総合の正答数と一致する。分野の基準点がある試験では、1 分野でも基準未満なら合否の目安が偽。基準の値と断り書きが本文に入る"
+  - id: REQ-024
+    usecase: UC-008
+    step: 8
+    description: "合否の目安は、合格ラインに届いているときと届いていないときで文言と色を出し分ける"
+    acceptance: "合否の目安が真のとき合格ラインの文言と到達の色、偽のとき未達の文言と未達の色になる"
+  - id: REQ-219
+    usecase: UC-008
+    step: 8
+    description: "結果の画面は、模擬試験のときだけ合否の目安と基準（総合の割合、分野の基準点がある試験は各分野の割合）を出し、分野別の正答率の表と、公式スコアと一致しない旨を出す"
+    acceptance: "模擬試験の結果に合否の目安・基準の値・断り書きが出て、演習の結果には出ない。分野別の表に分野ごとの正答数と正答率が並ぶ"
+  - id: REQ-220
+    usecase: UC-008
+    step: 9
+    description: "結果の画面は、はじめに間違えた問題だけを一覧し、すべてに切り替えられる。各問題に自分の解答と正解、その問題の論点への導線、畳んで開ける解説を出す"
+    acceptance: "はじめは正解した問題が一覧に出ず、すべてに切り替えると全問出る。誤答の行に自分の解答と正解が出て、論点があればその論点へのリンクが出る。解説は押して開く"
+  - id: REQ-221
+    usecase: UC-008
+    step: E1
+    description: "回を指定しない模擬試験で、分野比率に沿って選んだだけでは問題数に足りないとき、分野の付いていない過去問で残りを埋める"
+    acceptance: "分野の付いた過去問が比率に足りないときも、出題の件数が設定値の問題数になる"
+  - id: REQ-222
+    usecase: UC-008
+    step: E2
+    description: "出題の画面は「ここまでで採点する」を押されたとき、未回答の残り問数を示して確認し、確認が取れたら未回答のまま締める"
+    acceptance: "確認に未回答の残り問数が入る。取り消すと締めが呼ばれず、了承すると締めが呼ばれる"
+  - id: REQ-223
+    usecase: UC-008
+    step: E3
+    description: "POST /api/sessions/:id/answer は、制限時間を過ぎたセッションへの回答を採点せず、時間切れであることを返す"
+    acceptance: "制限時間を過ぎたセッションへの回答が 409 で時間切れの印が付き、回答が記録されない"
+  - id: REQ-224
+    usecase: UC-008
+    step: E4
+    description: "GET /api/sessions/:id は、制限時間のあるセッションで締めた時刻が制限時間を過ぎていたとき、時間切れとして返す（早く終えた回を時間切れにしない）"
+    acceptance: "締めた時刻が開始時刻と制限時間の和以上のときだけ時間切れが真。制限時間内に締めた回は、いま制限時間を過ぎていても偽"
+  - id: REQ-225
+    usecase: UC-008
+    step: E4
+    description: "結果の画面は、時間切れで締められた回に、そこまでの回答で採点していることを出す"
+    acceptance: "時間切れが真のときだけ制限時間切れの案内が出る"
+  - id: REQ-226
+    usecase: UC-008
+    step: E5
+    description: "GET /api/sessions/:id は、完了していないセッションの結果を返さず 404 を返す"
+    acceptance: "進行中のセッションの結果が 404 で、本文に正解も解説も含まれない"
+  - id: REQ-227
+    usecase: UC-008
+    step: E6
+    description: "分野別の正答率の色は、分野ごとの基準点がある試験でだけ付け、基準以上と基準未満で分ける。基準点の無い試験では色を付けない"
+    acceptance: "基準点がある試験では基準と同じ割合が到達の色、1 だけ下が未達の色。基準点の無い試験では色を返さない"
+
+  # ===== UC-009 中断・再開と受験履歴 =====
+  - id: REQ-228
+    usecase: UC-009
+    step: 1
+    description: "出題の画面は「中断してホームへ」でホームに戻る。そこまでの回答は残し、セッションは進行中のままにする"
+    acceptance: "押すとホームへ移り、セッションが進行中で回答済みの件数が変わらない"
+  - id: REQ-025
+    usecase: UC-009
+    step: 2
+    description: "GET /api/sessions/current は、自分の進行中のセッションと回答済みの問数を返す。進行中が無いときはセッションを空として返す"
+    acceptance: "進行中があるときセッションと回答済みの問数が返り、無いときはセッションが空で 200"
+  - id: REQ-229
+    usecase: UC-009
+    step: 3
+    description: "練習テストの画面は、進行中のテストの範囲と回答済みの問数・全体の問数を知らせ、「再開する」でそのセッションの出題の画面へ移す"
+    acceptance: "進行中があると範囲の名前と回答済み／全体が出て、「再開する」でそのセッションの出題の画面へ移る"
+  - id: REQ-230
+    usecase: UC-009
+    step: 4
+    description: "練習テストの画面は「破棄する」を押されたとき、回答済みの問数ごと消えることを示して確認し、確認が取れたときだけ破棄を頼む"
+    acceptance: "確認に回答済みの問数が入る。取り消すと破棄が呼ばれず、了承すると DELETE /api/sessions/current が呼ばれる"
+  - id: REQ-231
+    usecase: UC-009
+    step: 5
+    description: "DELETE /api/sessions/current は、自分の進行中のセッションを消す（そのセッションの回答も一緒に消える）。進行中が無くても成功として返す"
+    acceptance: "破棄のあと進行中のセッションと、そのセッションの回答が残らない。進行中が無いときも 200"
+  - id: REQ-232
+    usecase: UC-009
+    step: 6
+    description: "GET /api/sessions は、自分の完了したセッションだけを、締めた時刻の新しい順に、種別・範囲の名前・問題数・正答数・時刻つきで返す"
+    acceptance: "他人のセッションと進行中のセッションが入らない。並びが締めた時刻の新しい順で、件数の上限がある"
+  - id: REQ-233
+    usecase: UC-009
+    step: 7
+    description: "履歴の画面は、完了したテストを種別の表示名・範囲の名前・正答率（正答数と問題数つき）・日時で一覧し、押すとその結果の画面へ移る"
+    acceptance: "行に種別の表示名と範囲、正答率が割合の単位つきで出て、押すとその結果の画面へ移る"
+  - id: REQ-234
+    usecase: UC-009
+    step: E1
+    description: "練習テストの画面は、破棄に失敗したとき理由を出し、進行中の知らせを消さない（消せていないことが分かる）"
+    acceptance: "破棄が失敗すると理由が出て、進行中の知らせと再開・破棄が残る"
+  - id: REQ-026
+    usecase: UC-009
+    step: E2
+    description: "セッションを指す API は、すべて本人の利用者 ID で絞り、他人のセッション ID には 404 を返す"
+    acceptance: "別のアカウントのセッション ID で、現在の問題・回答・締め・結果のどれも 404"
+  - id: REQ-235
+    usecase: UC-009
+    step: E3
+    description: "履歴の画面は、完了したテストが 1 件も無いとき履歴が無いことを伝える。取得前は読み込み中とし、取得に失敗したときは理由と読み直しを出す"
+    acceptance: "取得前は読み込み中、結果が空のときだけ履歴が無い旨が出る。失敗のときは理由と再読み込みが出る"
+
+  # ===== UC-011 同一内容の過去問 =====
+  - id: REQ-029
+    usecase: UC-011
+    step: 1
+    description: "投入の門は、同一内容（content_key が同じ）の過去問の組を集め、組の中で正解が割れていたら投入を止める"
+    acceptance: "同一内容なのに正解が違う組があると、門が問題として報告して投入を止める"
+  - id: REQ-236
+    usecase: UC-011
+    step: 2
+    description: "投入は同一内容の過去問を 1 問も畳まずに入れ、論点の出題頻度も同一内容の重複を数えたまま保存する"
+    acceptance: "投入後の過去問の件数が元のデータの件数と一致し、論点の出題頻度が紐づく過去問の件数（重複を含む）と一致する"
+  - id: REQ-243
+    usecase: UC-011
+    step: 3
+    description: "回の新旧は、回の ID の年と実施時期（春・10 月・秋、時期の無い回は年内で最後）で比べる。文字列の大小では比べない"
+    acceptance: "同じ年では春・10 月・秋の順に大きく、時期の無い回が年内で最も大きい。並べ替えに使うと古い順に揃う"
+  - id: REQ-021
+    usecase: UC-011
+    step: 3
+    description: "学習側の出題は、同一内容（content_key が同じ）の過去問を 1 問にまとめ、代表を最新の回にする。代表には同一内容の件数と、代表以外の出典（新しい回から）を付ける"
+    acceptance: "同じ content_key の組が 1 問になり、代表の出典が最新の回。件数が組の大きさと一致し、代表以外の出典が新しい順に並ぶ。結合で増えた同じ過去問を 2 回と数えない"
+  - id: REQ-237
+    usecase: UC-011
+    step: 4
+    description: "同一内容の印は、同じ内容が 2 回以上出題されているときだけ、その回数と代表以外の出典を問題の前に出す。1 回だけの問題には何も出さない"
+    acceptance: "件数が 2 以上のとき回数と他の出典が描かれ、1 以下のときは何も描かれない"
+  - id: REQ-238
+    usecase: UC-011
+    step: 4
+    description: "出題の画面は、公開回の通し受験でないときだけ同一内容の印を出す（通し受験は原本どおり全問出しているため）"
+    acceptance: "回を指定した模擬試験では印が描かれず、演習とランダム構成の模擬試験では描かれる"
+  - id: REQ-239
+    usecase: UC-011
+    step: 4
+    description: "結果の画面は、公開回の通し受験でないときだけ同一内容の印を各問題に出す"
+    acceptance: "回を指定した模擬試験の結果では印が描かれず、演習とランダム構成の模擬試験の結果では描かれる"
+  - id: REQ-240
+    usecase: UC-011
+    step: 5
+    description: "公開回の通し受験では同一内容の過去問をまとめず、原本に 2 度あるものは 2 度出す"
+    acceptance: "回を指定した模擬試験の出題の件数が、その回の過去問の件数と一致する"
+  - id: REQ-241
+    usecase: UC-011
+    step: E1
+    description: "content_key を持たない過去問は、まとめる対象にせず 1 問ずつ別の問題として残す"
+    acceptance: "content_key が空の過去問が畳まれず、それぞれの件数が 1 になる"
+  - id: REQ-242
+    usecase: UC-011
+    step: E2
+    description: "弱点復習の出題に付ける同一内容の件数と代表以外の出典は、間違えた問題の中ではなく過去問全体から数え直す"
+    acceptance: "2 回出題されている問題を 1 回だけ間違えているとき、弱点復習での件数が 2 になる"
+  # ===== 横断の決まり（未取得と空の区別）を画面ごとに分けた要件と、割り当てが漏れていた単位 =====
+  - id: REQ-159
+    usecase: UC-015
+    step: E2
+    description: "ロードマップの画面は、単位の一覧を取得前は null、結果が空は [] で持ち、読み込み中に「該当なし」を出さない"
+    acceptance: "useState の初期値に空配列を使わない（scripts/check_source.py）。取得前に空の文言が描かれない"
+  - id: REQ-160
+    usecase: UC-007
+    step: E7
+    description: "練習テストの画面は、論点・分野の一覧を取得前は null、結果が空は [] で持ち、読み込み中に「該当なし」を出さない"
+    acceptance: "useState の初期値に空配列を使わない（scripts/check_source.py）。取得前に空の文言が描かれない"
+  - id: REQ-161
+    usecase: UC-008
+    step: E7
+    description: "回の一覧の画面は、一覧を取得前は null、結果が空は [] で持ち、読み込み中に「該当なし」を出さない"
+    acceptance: "useState の初期値に空配列を使わない（scripts/check_source.py）。取得前に空の文言が描かれない"
+  - id: REQ-244
+    usecase: UC-009
+    step: 8
+    description: "ホームは進行中のテストがあれば範囲の名前と回答済み／全体の問数を案内し、そのセッションの出題画面へ戻る導線を出す。無ければ出さない"
+    acceptance: "進行中のセッションを返す状態で描くと案内と、そのセッションの出題画面への導線が出る。無ければ出ない"
+  - id: REQ-245
+    usecase: UC-017
+    step: 6
+    description: "seed の門は回ごとの問題数を確かめ、資格版は回ごとの定数（IP 100・AP 80）、ロードマップ型は 1 日の単位数 × 登録簿の questionsPerRound と一致しないとき投入を止める"
+    acceptance: "問題数の合わない回があると check_seed が問題として止める（不変条件 D12・D14）"

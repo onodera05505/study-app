@@ -20,7 +20,7 @@ describe('examOf（対象の登録簿）', () => {
     expect(ip.roadmap).toBe(raw.roadmap)
   })
 
-  // @verifies REQ-039
+  // @verifies REQ-096
   it('未知の key と未指定は既定（ip）に倒れる', () => {
     expect(examOf('no-such-target').key).toBe('ip')
     expect(examOf(undefined).key).toBe('ip')

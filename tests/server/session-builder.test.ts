@@ -2,7 +2,7 @@ import type { SQL } from 'drizzle-orm'
 import { SQLiteSyncDialect } from 'drizzle-orm/sqlite-core'
 import { describe, expect, it } from 'vitest'
 import type { Db } from '../../src/server/lib/db'
-import { buildQuestions, compareExam, dedupe, type QuestionRow } from '../../src/server/lib/session-builder'
+import { buildQuestions, compareExam, dedupe, snapshotOf, type QuestionRow } from '../../src/server/lib/session-builder'
 
 /** 偽の行。DB は触らず、buildQuestions が受け取る db の all/get を差し替える。 */
 function row(over: Partial<QuestionRow> & { id: string; exam: string }): QuestionRow {
@@ -48,15 +48,31 @@ const TIMES = /SELECT id, content_key AS contentKey/
 
 const base = { size: 20, masteredStreak: 3, fieldRatio: { テクノロジ系: 45 } }
 
+/** 分野の指定（SQL のパラメータに入った分野名）で絞って返す偽の db。
+ *  ランダム構成の模試は分野ごとに引くので、分野で絞られた結果を返す必要がある。 */
+function fakeDbByField(rows: QuestionRow[]) {
+  const dialect = new SQLiteSyncDialect()
+  const names = [...new Set(rows.map((x) => x.field).filter((f): f is string => !!f))]
+  const answer = (q: SQL) => {
+    const { sql: text, params } = dialect.sqlToQuery(q)
+    if (!FETCH.test(text)) return []
+    const f = params.find((p) => typeof p === 'string' && names.includes(p))
+    return f ? rows.filter((x) => x.field === f) : rows
+  }
+  return {
+    db: { all: async (q: SQL) => answer(q), get: async (q: SQL) => answer(q)[0] } as unknown as Db,
+  }
+}
+
 describe('compareExam（回の新旧）', () => {
-  // @verifies REQ-021
+  // @verifies REQ-243
   it('古い回が小さく、新しい回が大きい', () => {
     expect(compareExam('2016h28h', '2024r06')).toBeLessThan(0)
     expect(compareExam('2024r06', '2016h28h')).toBeGreaterThan(0)
     expect(compareExam('2020r02o', '2020r02o')).toBe(0)
   })
 
-  // @verifies REQ-021
+  // @verifies REQ-243
   it('同じ年は 春(h) → 10月(o) → 秋(a) の順で、時期の無い回は年内で最後', () => {
     expect(compareExam('2016h28h', '2016h28a')).toBeLessThan(0)
     expect(compareExam('2020r02h', '2020r02o')).toBeLessThan(0)
@@ -64,7 +80,7 @@ describe('compareExam（回の新旧）', () => {
     expect(compareExam('2024r06a', '2024r06')).toBeLessThan(0)
   })
 
-  // @verifies REQ-021
+  // @verifies REQ-243
   it('並べ替えに使うと古い順に揃う', () => {
     const sorted = ['2024r06', '2016h28a', '2020r02o', '2016h28h'].sort(compareExam)
     expect(sorted).toEqual(['2016h28h', '2016h28a', '2020r02o', '2024r06'])
@@ -97,13 +113,14 @@ describe('dedupe（同一内容を1問にまとめる）', () => {
     expect(got[0].timesAsked).toBe(1)
   })
 
-  // @verifies REQ-021
+  // @verifies REQ-241
   it('content_key が無い問題は id ごとに別の問題として残る', () => {
     const got = dedupe([
       { id: 'q-1', exam: '2024r06', contentKey: null, citation: 'c1' },
       { id: 'q-2', exam: '2024r06', contentKey: null, citation: 'c2' },
     ])
     expect(got.map((q) => q.id)).toEqual(['q-1', 'q-2'])
+    expect(got.map((q) => q.timesAsked)).toEqual([1, 1])
   })
 })
 
@@ -168,7 +185,7 @@ describe('buildQuestions（出題の組み立て）', () => {
     expect(built.questions).toHaveLength(2)
   })
 
-  // @verifies REQ-021
+  // @verifies REQ-212, REQ-240
   it('回を指定した模試は畳まず、原本どおり問番号の順に出す', async () => {
     const rows = [
       row({ id: 'q-3', exam: '2024r06', number: 3, contentKey: 'ck-same' }),
@@ -177,6 +194,8 @@ describe('buildQuestions（出題の組み立て）', () => {
     ]
     const { db, find } = fakeDb([{ match: FETCH, rows }])
     const built = await buildQuestions(db, 'u-1', { ...base, kind: 'mock', exam: '2024r06', size: 100 })
+    // 同じ content_key が 2 問あっても畳まないので、その回の過去問の件数（3 問）がそのまま出る
+    expect(built.questions).toHaveLength(rows.length)
     expect(built.questions.map((q) => q.number)).toEqual([1, 2, 3])
     expect(built.sourceExam).toBe('2024r06')
     expect(find(FETCH)[0].params).toContain('2024r06')
@@ -210,7 +229,7 @@ describe('buildQuestions（出題の組み立て）', () => {
     expect(built.questions.map((q) => q.id)).toEqual(['q-1'])
   })
 
-  // @verifies REQ-020
+  // @verifies REQ-194
   it('弱点復習は誤答（result = 2）だけを直近に間違えた順で集める', async () => {
     const rows = [row({ id: 'q-1', exam: '2024r06', contentKey: 'ck-1' })]
     const { db, find } = fakeDb([
@@ -226,7 +245,42 @@ describe('buildQuestions（出題の組み立て）', () => {
     expect(built.questions.map((q2) => q2.id)).toEqual(['q-1'])
   })
 
-  // @verifies REQ-021
+  // @verifies REQ-213
+  it('回を指定しない模試は分野ごとの出題数を分野比率に寄せ、合計を設定値の問題数にする', async () => {
+    const rows = [
+      ...[1, 2, 3].map((n) => row({ id: `t-${n}`, exam: '2024r06', contentKey: `ck-t${n}`, field: 'テクノロジ系' })),
+      ...[1, 2].map((n) => row({ id: `m-${n}`, exam: '2024r06', contentKey: `ck-m${n}`, field: 'マネジメント系' })),
+      ...[1, 2].map((n) => row({ id: `s-${n}`, exam: '2024r06', contentKey: `ck-s${n}`, field: 'ストラテジ系' })),
+    ]
+    const { db } = fakeDbByField(rows)
+    const built = await buildQuestions(db, 'u-1', {
+      ...base,
+      kind: 'mock',
+      size: 4,
+      fieldRatio: { テクノロジ系: 2, マネジメント系: 1, ストラテジ系: 1 },
+    })
+    const per = (prefix: string) => built.questions.filter((q) => q.id.startsWith(prefix)).length
+    expect(built.questions).toHaveLength(4)
+    expect(per('t-')).toBeLessThanOrEqual(2)
+    expect(per('m-')).toBeLessThanOrEqual(1)
+    expect(per('s-')).toBeLessThanOrEqual(1)
+    expect(built.sourceExam).toBeNull()
+  })
+
+  // @verifies REQ-221
+  it('分野比率に沿って選ぶだけでは足りないときは分野の付いていない過去問で埋める', async () => {
+    const rows = [
+      row({ id: 't-1', exam: '2024r06', contentKey: 'ck-t1', field: 'テクノロジ系' }),
+      row({ id: 'n-1', exam: '2024r06', contentKey: 'ck-n1', field: null }),
+      row({ id: 'n-2', exam: '2024r06', contentKey: 'ck-n2', field: null }),
+    ]
+    const { db } = fakeDbByField(rows)
+    const built = await buildQuestions(db, 'u-1', { ...base, kind: 'mock', size: 3, fieldRatio: { テクノロジ系: 3 } })
+    expect(built.questions).toHaveLength(3)
+    expect(built.questions.filter((q) => q.id.startsWith('n-')).length).toBe(2)
+  })
+
+  // @verifies REQ-242
   it('弱点復習の出題回数は過去問全体から数え直す', async () => {
     const rows = [row({ id: 'q-new', exam: '2020r02o', contentKey: 'ck-1' })]
     const { db } = fakeDb([
@@ -242,5 +296,26 @@ describe('buildQuestions（出題の組み立て）', () => {
     const built = await buildQuestions(db, 'u-1', { ...base, kind: 'review' })
     expect(built.questions[0].timesAsked).toBe(2)
     expect(built.questions[0].otherCitations).toEqual(['出典：平成28年春 問1'])
+  })
+})
+
+describe('snapshotOf（出題時の内容）', () => {
+  // @verifies REQ-195
+  it('問題文・選択肢・正解・出典を出題時の内容として持つ', () => {
+    const q = row({
+      id: 'q-1',
+      exam: '2024r06',
+      text: '出題時の問題文',
+      choices: JSON.stringify({ ア: '選択肢アの本文', イ: '選択肢イの本文', ウ: '選択肢ウの本文', エ: '選択肢エの本文' }),
+      answer: 'ウ',
+      citation: '出典：令和6年度 ITパスポート試験 問7',
+    })
+    const snap = snapshotOf({ ...q, timesAsked: 1, otherCitations: [] } as unknown as Parameters<typeof snapshotOf>[0])
+    const flat = typeof snap === 'string' ? snap : JSON.stringify(snap)
+    expect(flat).toContain('出題時の問題文')
+    expect(flat).toContain('選択肢ウの本文')
+    expect(flat).toContain('出典：令和6年度 ITパスポート試験 問7')
+    // 正解は「値」として入る（選択肢の記号は鍵なので、値としての一致を見る）
+    expect(flat).toMatch(/:\s*\\?"ウ\\?"/)
   })
 })

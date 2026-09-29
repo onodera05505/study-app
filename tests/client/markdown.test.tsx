@@ -65,7 +65,7 @@ describe('用語ポップ', () => {
     expect(text()).not.toContain(']]')
   })
 
-  // @verifies REQ-016
+  // @verifies REQ-139
   it('太字の中の [[用語]] でも押せる要素になる', async () => {
     await draw(h(Markdown, { source: '- **[[LTV]]** — 生涯価値のこと' }))
     const btn = container.querySelector('li b button.term-btn')
@@ -74,7 +74,7 @@ describe('用語ポップ', () => {
     expect(text()).not.toContain('**')
   })
 
-  // @verifies REQ-016
+  // @verifies REQ-142
   it('用語集に無い語は色を付けず、文字のまま出す', async () => {
     await draw(h(Markdown, { source: '[[まだ無い用語]] の説明。' }))
     expect(container.querySelector('button.term-btn')).toBeNull()
@@ -108,7 +108,7 @@ describe('用語ポップ', () => {
     expect(card?.querySelector('a.term-link')).toBeNull()
   })
 
-  // @verifies REQ-016
+  // @verifies REQ-140
   it('本文に出す表示名は、長い正式表記のときだけ末尾の（…）を落とす', () => {
     expect(shortTerm('LTV')).toBe('LTV')
     expect(shortTerm('リスク対応（リスク回避，リスク共有，リスク保有）')).toBe('リスク対応')

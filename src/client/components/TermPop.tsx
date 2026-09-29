@@ -9,7 +9,7 @@ type Pos = { top: number; left: number }
  *  `リスク対応（リスク回避，リスク共有（…），リスク保有）` のように長い正式表記になる。
  *  文中でそのまま出すと読めないので、長いときだけ末尾の（…）を落とす。
  *  ポップの見出しには正式表記をそのまま出す（そちらは 1 行で読める）。 */
-// @implements REQ-016
+// @implements REQ-140
 export function shortTerm(term: string): string {
   if (term.length <= 14) return term
   const m = term.match(/^(.+?)\s*[（(].*[）)]$/)
@@ -29,7 +29,7 @@ export function shortTerm(term: string): string {
  *  ポップは body に出す（ポータル）。本文の中に置くと、教材の表
  *  （`.table-wrap` が横スクロールのため overflow を持つ）の中の用語で
  *  カードが切り落とされる。位置はボタンの座標から毎回計算する。 */
-// @implements REQ-016
+// @implements REQ-016, REQ-142
 export function TermPop({ term }: { term: string }) {
   const glossary = useGlossary()
   const [open, setOpen] = useState(false)

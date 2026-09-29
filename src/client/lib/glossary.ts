@@ -39,7 +39,7 @@ function snapshot() {
 }
 
 /** まだ取っていなければ取りにいく。何度呼んでも1回しか飛ばない。 */
-// @implements REQ-016
+// @implements REQ-136, REQ-141
 export function ensureGlossary() {
   if (cache || inflight) return
   inflight = true
@@ -58,7 +58,7 @@ export function ensureGlossary() {
 }
 
 /** 用語集。未取得なら null。 */
-// @implements REQ-016
+// @implements REQ-138
 export function useGlossary(): Map<string, GlossaryEntry> | null {
   const g = useSyncExternalStore(subscribe, snapshot)
   useEffect(ensureGlossary, [])

@@ -36,6 +36,8 @@
  *   6. 用語ボタンを押すとポップが出る・説明が入る・**ページが移らない**。
  *      論点に結び付いた語だけ「この論点を学ぶ」が出る
  *   7. 用語集が未取得（null）の間も `[[` が文字として出ない
+ *   8. 配信物に版の印 `dist/version.json` があり、`build`（コミットの短い ID）と
+ *      `at`（時刻）を持つ（ビルドの出力がある環境だけで見る）
  *
  * error は終了コード1（デプロイを止める）、warning は0。
  */
@@ -262,7 +264,7 @@ async function main(): Promise<number> {
     warnings.push({ where, what, excerpt: ex })
 
   // === 7. 用語集が未取得（null）でも `[[` が文字として出ない ==============
-  // @verifies REQ-016
+  // @verifies REQ-136, REQ-138
   // explanation に [[用語]] が 1 つも無い対象（mkt。用語は detail 側だけ）で fetch 未検出の誤報が出たので、
   // explanation → detail の順で用語を含む本文を探す（2026-09-15）
   const sampleText = (m: Material) =>
@@ -287,7 +289,7 @@ async function main(): Promise<number> {
 
   // === 1〜4. 教材 =======================================================
   // 記法の解釈（1・4）・用語ポップ（2）・教材の図が試験ごとの場所に実在すること（3）
-  // @verifies REQ-016, REQ-017, REQ-018
+  // @verifies REQ-016, REQ-017, REQ-018, REQ-139
   let termTotal = 0
   let buttonTotal = 0
   let figureTotal = 0
@@ -352,7 +354,7 @@ async function main(): Promise<number> {
   }
 
   // === 5. 問題解説 ======================================================
-  // @verifies REQ-016, REQ-018
+  // @verifies REQ-016, REQ-018, REQ-139
   const LABELS = ['ア', 'イ', 'ウ', 'エ']
   for (const ck of [...explanations.keys()].sort()) {
     const e = explanations.get(ck)!
@@ -464,6 +466,11 @@ async function main(): Promise<number> {
   })
   console.error = realError
 
+  // === 8. 版の印（version.json）=========================================
+  const stamp = checkVersionStamp()
+  errors.push(...stamp.errors)
+  warnings.push(...stamp.warnings)
+
   // --- 出力 -------------------------------------------------------------
   const secs = ((Date.now() - started) / 1000).toFixed(1)
   console.log(`描画検査 ${path.relative(ROOT, dataDir)}（${secs} 秒）`)
@@ -489,6 +496,48 @@ async function main(): Promise<number> {
   }
   console.log('\n描画検査: 問題なし')
   return 0
+}
+
+/** 配信物に版の印（version.json）が入っているか。ビルドの出力がある環境で見る。
+ *  build はコミットの短い ID、at は時刻として読める文字列であること。 */
+// @verifies REQ-278
+function checkVersionStamp(): { errors: Issue[]; warnings: Issue[] } {
+  const errors: Issue[] = []
+  const warnings: Issue[] = []
+  const where = 'version.json'
+  const dist = path.join(ROOT, 'dist')
+  const file = path.join(dist, 'version.json')
+  if (!fs.existsSync(dist)) {
+    warnings.push({
+      where,
+      what: 'ビルドの出力（dist/）が無いので版の印を見られない（ビルドの後に回すこと）',
+      excerpt: dist,
+    })
+    return { errors, warnings }
+  }
+  if (!fs.existsSync(file)) {
+    errors.push({
+      where,
+      what: 'ビルドの出力に version.json が無い（配信のたびに版の印を出すこと）',
+      excerpt: dist,
+    })
+    return { errors, warnings }
+  }
+  let data: any
+  try {
+    data = JSON.parse(fs.readFileSync(file, 'utf-8'))
+  } catch (e) {
+    errors.push({ where, what: 'version.json が JSON として読めない', excerpt: String(e).slice(0, 120) })
+    return { errors, warnings }
+  }
+  const excerpt = JSON.stringify(data).slice(0, 120)
+  if (typeof data?.build !== 'string' || !data.build.trim()) {
+    errors.push({ where, what: 'build（コミットの短い ID）が無い', excerpt })
+  }
+  if (typeof data?.at !== 'string' || Number.isNaN(Date.parse(data.at))) {
+    errors.push({ where, what: 'at（時刻）が無い、または時刻として読めない', excerpt })
+  }
+  return { errors, warnings }
 }
 
 main().then(

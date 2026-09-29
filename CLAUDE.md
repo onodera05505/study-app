@@ -73,7 +73,9 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 | **全コンテンツのセルフフィードバック**（8 対象を読む→型→直す→突き合わせの 4 段で読み直し、ロードマップ型 6 対象を再投入。指示書 `scripts/prompts/self_*.md`、要約は `apply_summary_override.py`。資格版は判断待ち） | [`docs/作業ログ_2026-09-25_セルフフィードバック.md`](docs/作業ログ_2026-09-25_セルフフィードバック.md) |
 | **脆弱性診断**（認証・認可・SQL・XSS・ヘッダ・秘密・依存を本番の経路で確認。入られる穴は無し、直した 3 点と運用で足す指摘） | [`docs/作業ログ_2026-09-25_脆弱性診断.md`](docs/作業ログ_2026-09-25_脆弱性診断.md) |
 | **仕様 ⇔ コード ⇔ テストのトレーサビリティ**（`docs/spec.yaml`・`@implements`／`@verifies`・`scripts/trace_check`・Stop フック。harness から取った物と取らなかった物、第 1 段の範囲） | [`docs/作業ログ_2026-09-28_トレーサビリティ.md`](docs/作業ログ_2026-09-28_トレーサビリティ.md) |
-| **仕様（UC と要件）の正本**（線。`bash scripts/trace_check` が読む。実装前に ID を振る） | [`docs/spec.yaml`](docs/spec.yaml) |
+| **仕様書 → ユースケース → 要件 の 3 層化**（UC を書類に、要件を 1 か所のコードの粒度に。trace_check 2.0.0 の S4・S5・C7） | [`docs/作業ログ_2026-09-29_三層のトレーサビリティ.md`](docs/作業ログ_2026-09-29_三層のトレーサビリティ.md) |
+| **要件（REQ）の正本**（線。`bash scripts/trace_check` が読む。UC の 1 ステップに属し 1 要件 1 か所のコード。実装前に ID を振る） | [`docs/spec.yaml`](docs/spec.yaml) |
+| **ユースケースの書類**（線。1 件 1 枚。frontmatter の source が仕様書の節、基本の流れ／例外の流れのステップに要件が紐づく） | [`docs/usecases/`](docs/usecases/) |
 | 一斉検査のレビュー全量（学習系・受験系。改善候補の根拠） | [`docs/レビュー詳細_2026-09-02_学習系.md`](docs/レビュー詳細_2026-09-02_学習系.md) / [`docs/レビュー詳細_2026-09-02_受験系.md`](docs/レビュー詳細_2026-09-02_受験系.md) |
 
 ## 現在地（2026-08-23 に書き、2026-09-14 に数値を現物と照合済み）
@@ -226,8 +228,8 @@ report してきた例が複数あった（ファイルの中身は正しかっ�
 
 ## 仕様 ⇔ コード ⇔ テスト の対応（作業完了の条件）
 
-- **要求を受けたら Skill `/develop` の手順で動く**: 要件（`docs/spec.yaml`）を書き直して承認 → `implementer` と `test-author` を**別コンテキストで並行**（test-author は実装を読まず Bash も持たない。中央 `reports/106`）→ `npm test` が通るまで。書き込みの瞬間は `write_gate`（PreToolUse。spec に差分か `.trace-gate/work.json` の REQ 宣言が無いと `src/`・`tests/` に書けない）、終了の瞬間は `stop_gate`（Stop）が止める
-- **実装の前に `docs/spec.yaml` に要件 ID（REQ-xxx）があるか確かめる。** 無ければ追加を提案する（`bash scripts/trace_check --next req` で次の番号。決めたが未実装なら `status: draft`）。仕様に無い機能を勝手に作らない
+- **要求を受けたら Skill `/develop` の手順で動く**: 仕様書（`docs/要件定義書_draft.md` の節）→ ユースケースの書類（`docs/usecases/UC-xxx.md`。流れをステップに）→ 要件（`docs/spec.yaml`。1 ステップに 1 つ以上、**1 要件 1 か所のコード**）の順に書き直して承認 → `implementer` と `test-author` を**別コンテキストで並行**（test-author は実装を読まず Bash も持たない。中央 `reports/106`）→ `npm test` が通るまで。書き込みの瞬間は `write_gate`（PreToolUse。spec に差分か `.trace-gate/work.json` の REQ 宣言が無いと `src/`・`tests/` に書けない）、終了の瞬間は `stop_gate`（Stop）が止める
+- **実装の前に `docs/spec.yaml` に要件 ID（REQ-xxx）があり、その `usecase`・`step` が UC の書類のステップを指しているか確かめる。** 無ければ UC のステップと要件の追加を提案する（`bash scripts/trace_check --next req`／`--next uc` で次の番号。決めたが未実装なら `status: draft`）。仕様に無い機能を勝手に作らない。仕様書から直接コードに結ばない（UC → REQ を経る）
 - **コードには `@implements REQ-xxx`、テストには `@verifies REQ-xxx`** を、その単位（関数・クラス・ルートハンドラ・テストケース）の直前のコメントに書く。ID だけを書き、要件の文を写さない。ファイル先頭にまとめない。コメントは今の仕様だけ（経緯・日付を書かない）
 - **作業完了の条件は `npm test`（trace_check → 単体テスト → check_source → check_docs）が全部通ること。** Stop フック（ユーザー設定）・pre-commit・CI が同じ検査を回す。落ちたら `[NG]` の行を直す
 - **どの要件にも当たらないコードは、除外ではなく要件を書いてから実装する**（仕様が絶対の正解。2026-09-29 本人）。`scripts/trace_ignore` は空のまま。検査の緩和・テストの skip・中身の無いタグやテストは**本人の許可なく行わない**

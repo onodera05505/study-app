@@ -82,7 +82,7 @@ function useCountUp(target: number, ms = 700): number {
 }
 
 /** ホーム。連続記録・次の一手・前回の続きへの導線。 */
-// @implements REQ-014, REQ-025, REQ-040
+// @implements REQ-132, REQ-156, REQ-244
 export function Home() {
   const [me, setMe] = useState<Me | null>(null)
   const [error, setError] = useState('')

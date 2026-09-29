@@ -13,16 +13,23 @@ scripts/check_sso_prod.sh は本番の死活だけ見る。**まなびば単独�
 
 ## 見るもの（仕様は docs/spec.yaml。@verifies で紐づけてある）
 
-- REQ-001 ログイン — 正しい認証情報で Cookie（HttpOnly・SameSite=Lax）、誤りは 401 で共通の文。
+- REQ-001・REQ-056 ログイン — 正しい認証情報で Cookie（HttpOnly・SameSite=Lax）、誤りは 401 で共通の文。
   **メールが在るか無いかで文言が変わらない**（変わると総当たりでメールの存在が分かる）
-- REQ-002 /sso/start — 未ログインはログイン画面へ、権限の無い学びは denied へ、知らない学びは 400。
+- REQ-002・REQ-057 /sso/start — 未ログインはログイン画面へ、権限の無い学びは denied へ、知らない学びは 400。
   外から渡した next は使わない（行き先はサーバが組む）
-- REQ-003 /api/sso/exchange — 共有秘密が合わないと 403、コードは 1 回だけ、期限切れと権限なしは拒否
-- REQ-007 管理 — 一般利用者は 403。管理者は一覧・作成（grants が入る）・更新（付け外し）・パスワード再設定・削除
-- REQ-008 自分への保護 — 自分の管理者権限を外す更新と自分の削除が 400
-- REQ-009 自分の設定 — /api/me/password は現在のパスワード違いが 401・長さ範囲外が 400、
-  成功後は新しいパスワードで入れる。/api/logout の後は /api/me が 401
-- REQ-035 セキュリティヘッダ — CSP・HSTS・X-Frame-Options・nosniff・Referrer-Policy が応答に載る
+- REQ-003・REQ-059 /api/sso/exchange — 共有秘密が合わないと 403、コードは 1 回だけ、期限切れと権限なしは拒否
+- REQ-045 /api/learnings — 学びの一覧が登録簿と一致し、秘密を含まない
+- REQ-046 /api/me — ログイン中は account と grants、未ログインは 401
+- REQ-007・REQ-071〜074・REQ-080〜082 管理 — 一般利用者は 403。管理者は一覧・作成（grants が入る）・
+  更新（付け外し）・パスワード再設定・削除。居ない ID は 404
+- REQ-070 一覧 — 件数が accounts と一致し、権限の無い行の grants が []
+- REQ-075〜078 入力検証 — メールの形・名前の長さ・パスワードの長さ・知らない学びが 400（メール重複は 409）で、何も変わらない
+- REQ-008・REQ-079 自分への保護 — 自分の管理者権限を外す更新と自分の削除が 400
+- REQ-009・REQ-083〜085 自分の設定 — /api/me/password は現在のパスワード違いが 401・長さ範囲外が 400、
+  成功後は新しいパスワードで入れる。/api/logout はこの端末のセッションだけを消し、以後 /api/me が 401
+- REQ-088 Cookie の境界 — ログインが要る経路は Cookie 無しで 401、/api/health と /api/learnings は 200
+- REQ-086 セキュリティヘッダ — CSP・HSTS・X-Frame-Options・nosniff・Referrer-Policy が応答に載る
+- REQ-094 死活確認 — /api/health は認証なしで {ok: true}
 
 ## 触るもの・触らないもの
 
@@ -224,7 +231,7 @@ def seed_admin(grant: str) -> str:
 # --------------------------------------------------------------------------
 
 
-# @verifies REQ-035
+# @verifies REQ-086
 def check_security_headers(c: Client, r: Report):
     """全応答に secureHeaders が載るか（CSP・HSTS・X-Frame-Options DENY・nosniff・Referrer-Policy）。
     まなびばは app.use('*', secureHeaders(...)) で全経路に付けている。ローカルの http でも 5 つとも載る
@@ -247,10 +254,15 @@ def check_security_headers(c: Client, r: Report):
                 r.error(f"セキュリティヘッダ {path}: {name} が無い")
             elif needle not in got:
                 r.error(f"セキュリティヘッダ {path}: {name} に「{needle}」が無い（{got[:80]}）")
-    r.note(f"セキュリティヘッダ: {len(want)} 種 × 2 経路")
+    # 静的ファイル（assets）の応答も 200 のままであること。
+    # secureHeaders が assets の変更できないヘッダーに触ると、API は 200 でも画面が全部 500 になる
+    for path in ("/", "/app.js", "/style.css"):
+        st, _, _, _ = c.call("GET", path)
+        r.status(f"GET {path}（静的ファイル）", st, 200)
+    r.note(f"セキュリティヘッダ: {len(want)} 種 × 2 経路（静的ファイルは 200 のまま）")
 
 
-# @verifies REQ-001
+# @verifies REQ-001, REQ-056
 def check_login(c: Client, r: Report):
     """/api/login。正しい認証情報で HttpOnly・SameSite=Lax の Cookie が出る（Secure は https のときだけ
     付ける実装なので、ローカルの http では無くて正しい）。失敗の文言はメールの有無を漏らさない。"""
@@ -303,10 +315,11 @@ def check_login(c: Client, r: Report):
     return True
 
 
-# @verifies REQ-007
+# @verifies REQ-007, REQ-071, REQ-072, REQ-073, REQ-074, REQ-080, REQ-081, REQ-082
 def check_admin_accounts(admin: Client, r: Report, base: str, learn: list[dict]) -> str | None:
     """管理（ADMIN だけ）。一覧・作成（grants が入る）・更新（付け外し）・パスワード再設定・削除。
-    一般利用者は 403。作った検査用アカウント（member）の id を返す（以降の検査で使う）。"""
+    一般利用者は 403。居ない ID は 404。入力検証は check_admin_validation が見る。
+    作った検査用アカウント（member）の id を返す（以降の検査で使う）。"""
     keys = [l["key"] for l in learn]
     first, second = keys[0], (keys[1] if len(keys) > 1 else keys[0])
 
@@ -323,6 +336,11 @@ def check_admin_accounts(admin: Client, r: Report, base: str, learn: list[dict])
         return None
     if data.get("role") != "MEMBER":
         r.error(f"POST /api/admin/accounts: role の既定が MEMBER でない（{data.get('role')!r}）")
+    # 201 の本文は画面がそのまま行に足せる形（id・メール・名前・役割・権限）
+    if data.get("email") != MEMBER_EMAIL or data.get("name") != "検査用利用者":
+        r.error(f"POST /api/admin/accounts: 本文のメール・名前が送った値でない（{json.dumps(data, ensure_ascii=False)[:120]}）")
+    if data.get("grants") != [first]:
+        r.error(f"POST /api/admin/accounts: 本文の grants が送った学びでない（{data.get('grants')!r}。[{first!r}] のはず）")
 
     # 一覧に grants が入っているか（作成の本文だけでなく DB を経た一覧で見る）
     st, data, _, _ = admin.call("GET", "/api/admin/accounts")
@@ -339,17 +357,6 @@ def check_admin_accounts(admin: Client, r: Report, base: str, learn: list[dict])
         r.error(f"作成した grants が一覧に反映されていない: {row.get('grants')!r}（[{first!r}] のはず）")
     if any(not isinstance(a.get("grants"), list) for a in rows):
         r.error("GET /api/admin/accounts: grants が配列でない行がある（権限なしは [] のはず。不変条件 D11）")
-
-    # 作成の入力検証
-    for label, body, want in [
-        ("メール重複", {"email": MEMBER_EMAIL, "name": "x", "password": PASSWORD, "grants": []}, 409),
-        ("メールの形", {"email": "nope", "name": "x", "password": PASSWORD, "grants": []}, 400),
-        ("短いパスワード", {"email": f"{PREFIX}x@example.com", "name": "x", "password": "short", "grants": []}, 400),
-        ("知らない学び", {"email": f"{PREFIX}y@example.com", "name": "y", "password": PASSWORD, "grants": ["no-such-learning"]}, 400),
-    ]:
-        st, data, _, _ = admin.call("POST", "/api/admin/accounts", body)
-        r.status(f"POST /api/admin/accounts（{label}）", st, want, data)
-        r.error_body(f"POST /api/admin/accounts（{label}）の本文", data)
 
     # 一般利用者は 403（実際に別の人としてログインして確かめる）
     member = Client(base)
@@ -390,8 +397,6 @@ def check_admin_accounts(admin: Client, r: Report, base: str, learn: list[dict])
     if not row or row.get("grants") != [first]:
         r.error(f"権限を外した結果が一覧に出ない: {row and row.get('grants')!r}（[{first!r}] のはず）")
 
-    st, data, _, _ = admin.call("PUT", f"/api/admin/accounts/{member_id}", {"grants": ["no-such-learning"]})
-    r.status("PUT /api/admin/accounts/:id（知らない学び）", st, 400, data)
     st, data, _, _ = admin.call("PUT", f"/api/admin/accounts/{uuid.uuid4()}", {"name": "x"})
     r.status("PUT /api/admin/accounts/:id（居ないアカウント）", st, 404, data)
 
@@ -407,8 +412,6 @@ def check_admin_accounts(admin: Client, r: Report, base: str, learn: list[dict])
     st, _, _, _ = temp.call("POST", "/api/login", {"email": TEMP_EMAIL, "password": PASSWORD})
     r.status("POST /api/login（使い捨て）", st, 200)
 
-    st, data, _, _ = admin.call("POST", f"/api/admin/accounts/{temp_id}/password", {"password": "short"})
-    r.status("POST /api/admin/accounts/:id/password（短い）", st, 400, data)
     new_pw = PASSWORD + "-reset"
     st, data, _, _ = admin.call("POST", f"/api/admin/accounts/{temp_id}/password", {"password": new_pw})
     r.status("POST /api/admin/accounts/:id/password（再設定）", st, 200, data)
@@ -437,7 +440,126 @@ def check_admin_accounts(admin: Client, r: Report, base: str, learn: list[dict])
     return member_id
 
 
-# @verifies REQ-008
+# @verifies REQ-070
+def check_admin_list(admin: Client, r: Report):
+    """一覧は全アカウントを返す（件数がローカル D1 の accounts と一致）。行は id・メール・名前・役割を持ち、
+    権限の無い人の grants は [] で返る（null や欠落だと画面が「未取得」と区別できない。不変条件 D11）。"""
+    email = f"{PREFIX}nogrant@example.com"
+    st, data, _, _ = admin.call(
+        "POST", "/api/admin/accounts",
+        {"email": email, "name": "権限なしの人", "password": PASSWORD, "grants": []},
+    )
+    if not r.status("POST /api/admin/accounts（権限なしを作成）", st, 201, data):
+        return
+    st, data, _, _ = admin.call("GET", "/api/admin/accounts")
+    if not r.status("GET /api/admin/accounts（一覧）", st, 200, data):
+        return
+    rows = data.get("accounts") if isinstance(data, dict) else None
+    if not isinstance(rows, list):
+        r.error("GET /api/admin/accounts: accounts が配列でない")
+        return
+    total = d1("SELECT COUNT(*) AS n FROM accounts")
+    if total and len(rows) != total[0]["n"]:
+        r.error(f"一覧の件数が accounts と合わない（API {len(rows)} 件 / D1 {total[0]['n']} 件）")
+    row = next((a for a in rows if a.get("email") == email), None)
+    if not row:
+        r.error("GET /api/admin/accounts: 権限なしで作ったアカウントが一覧に無い")
+    else:
+        if row.get("grants") != []:
+            r.error(f"権限の無い行の grants が [] でない（{row.get('grants')!r}。不変条件 D11）")
+        for key in ("id", "email", "name", "role"):
+            if not row.get(key):
+                r.error(f"一覧の行に {key} が無い（{json.dumps(row, ensure_ascii=False)[:120]}）")
+        if row.get("id"):
+            admin.call("DELETE", f"/api/admin/accounts/{row['id']}")
+    r.note(f"一覧: {len(rows)} 件が accounts と一致・権限なしは []")
+
+
+# @verifies REQ-075, REQ-076, REQ-077, REQ-078
+def check_admin_validation(admin: Client, r: Report, base: str, member_id: str | None):
+    """作成・更新・再設定の入力検証。メールの形・名前の長さ（空か 50 文字超）・パスワードの長さ
+    （8 文字未満か 200 文字超）・知らない学びは 400、同じメールは 409。どれも値を変えない。"""
+    before = d1("SELECT COUNT(*) AS n FROM accounts")[0]["n"]
+    for label, body, want in [
+        ("メール重複", {"email": MEMBER_EMAIL, "name": "x", "password": PASSWORD, "grants": []}, 409),
+        ("メールの形", {"email": "nope", "name": "x", "password": PASSWORD, "grants": []}, 400),
+        ("名前が空", {"email": f"{PREFIX}n0@example.com", "name": "", "password": PASSWORD, "grants": []}, 400),
+        ("名前が 51 文字", {"email": f"{PREFIX}n1@example.com", "name": "あ" * 51, "password": PASSWORD, "grants": []}, 400),
+        ("パスワードが 7 文字", {"email": f"{PREFIX}p0@example.com", "name": "x", "password": "a" * 7, "grants": []}, 400),
+        ("パスワードが 201 文字", {"email": f"{PREFIX}p1@example.com", "name": "x", "password": "a" * 201, "grants": []}, 400),
+        ("知らない学び", {"email": f"{PREFIX}g0@example.com", "name": "y", "password": PASSWORD, "grants": ["no-such-learning"]}, 400),
+    ]:
+        st, data, _, _ = admin.call("POST", "/api/admin/accounts", body)
+        r.status(f"POST /api/admin/accounts（{label}）", st, want, data)
+        r.error_body(f"POST /api/admin/accounts（{label}）の本文", data)
+    after = d1("SELECT COUNT(*) AS n FROM accounts")[0]["n"]
+    if after != before:
+        r.error(f"断ったはずの作成でアカウントが増えている（{before} → {after} 件）")
+
+    if not member_id:
+        r.error("更新と再設定の入力検証ができない（検査用アカウントが作れていない）")
+        return
+
+    def member_row():
+        _, data, _, _ = admin.call("GET", "/api/admin/accounts")
+        return next((a for a in (data or {}).get("accounts", []) if a.get("email") == MEMBER_EMAIL), None) or {}
+
+    kept = member_row()
+    for label, body in [
+        ("知らない学び", {"grants": ["no-such-learning"]}),
+        ("名前が空", {"name": ""}),
+        ("名前が 51 文字", {"name": "あ" * 51}),
+    ]:
+        st, data, _, _ = admin.call("PUT", f"/api/admin/accounts/{member_id}", body)
+        r.status(f"PUT /api/admin/accounts/:id（{label}）", st, 400, data)
+        r.error_body(f"PUT /api/admin/accounts/:id（{label}）の本文", data)
+    now = member_row()
+    if (now.get("grants"), now.get("name")) != (kept.get("grants"), kept.get("name")):
+        r.error(
+            "400 が返ったのに権限か名前が変わっている: "
+            f"{(kept.get('grants'), kept.get('name'))!r} → {(now.get('grants'), now.get('name'))!r}"
+        )
+
+    for label, pw in [("7 文字", "a" * 7), ("201 文字", "a" * 201)]:
+        st, data, _, _ = admin.call("POST", f"/api/admin/accounts/{member_id}/password", {"password": pw})
+        r.status(f"POST /api/admin/accounts/:id/password（{label}）", st, 400, data)
+        r.error_body(f"POST /api/admin/accounts/:id/password（{label}）の本文", data)
+    probe = Client(base)
+    st, data, _, _ = probe.call("POST", "/api/login", {"email": MEMBER_EMAIL, "password": PASSWORD})
+    r.status("断った再設定の後も元のパスワードで入れる", st, 200, data)
+    r.note("入力検証: 作成 7 通り（重複は 409）・更新 3 通り・再設定 2 通りで断り、値は変わらない")
+
+
+# @verifies REQ-088
+def check_portal_auth_boundary(r: Report, base: str):
+    """ログインが要る経路（/api/me・/api/me/password・/api/logout・/api/admin/*）は、
+    セッションの Cookie が無いと 401 の {error}。死活確認と学びの一覧は同じ条件で 200。"""
+    anon = Client(base)
+    other = str(uuid.uuid4())
+    for method, path, body in [
+        ("GET", "/api/me", None),
+        ("POST", "/api/me/password", {"current": PASSWORD, "next": PASSWORD + "-x"}),
+        ("POST", "/api/logout", None),
+        ("GET", "/api/admin/accounts", None),
+        ("POST", "/api/admin/accounts", {"email": f"{PREFIX}anon@example.com", "name": "x", "password": PASSWORD, "grants": []}),
+        ("PUT", f"/api/admin/accounts/{other}", {"name": "x"}),
+        ("POST", f"/api/admin/accounts/{other}/password", {"password": PASSWORD}),
+        ("DELETE", f"/api/admin/accounts/{other}", None),
+    ]:
+        st, data, _, _ = anon.call(method, path, body)
+        r.status(f"{method} {path}（Cookie なし）", st, 401, data)
+        r.error_body(f"{method} {path}（Cookie なし）の本文", data)
+    for path in ("/api/health", "/api/learnings"):
+        st, data, _, _ = anon.call("GET", path)
+        r.status(f"GET {path}（Cookie なし）", st, 200, data)
+    # 断った呼び出しで行が増えていないこと（401 の前に処理が走っていない）
+    left = d1(f"SELECT COUNT(*) AS n FROM accounts WHERE email = {q(PREFIX + 'anon@example.com')}")
+    if left and left[0]["n"]:
+        r.error("Cookie なしの作成が 401 のはずなのにアカウントができている")
+    r.note("Cookie の境界: ログインが要る 8 経路が 401、/api/health と /api/learnings は 200")
+
+
+# @verifies REQ-008, REQ-072, REQ-079
 def check_admin_self_guard(admin: Client, r: Report, admin_id: str):
     """管理者は自分の管理者権限を外せず、自分を削除できない（最後の管理者が消えると誰も直せない）。"""
     st, data, _, _ = admin.call("PUT", f"/api/admin/accounts/{admin_id}", {"role": "MEMBER"})
@@ -461,7 +583,7 @@ def check_admin_self_guard(admin: Client, r: Report, admin_id: str):
     r.note("自分への保護: 自分の降格と自分の削除が 400（他人は通る）")
 
 
-# @verifies REQ-002
+# @verifies REQ-002, REQ-057
 def check_sso_start(r: Report, base: str, learn: list[dict], admin_grant: str) -> str | None:
     """/sso/start。未ログインはログイン画面へ、権限が無ければ denied へ、知らない学びは 400。
     行き先はサーバが組む（外から渡した next は使わない）。発行した使い捨てコードを返す。"""
@@ -524,7 +646,7 @@ def check_sso_start(r: Report, base: str, learn: list[dict], admin_grant: str) -
     return code
 
 
-# @verifies REQ-003
+# @verifies REQ-003, REQ-059
 def check_sso_exchange(admin: Client, r: Report, base: str, secret: str, code: str | None, admin_grant: str, learn: list[dict]):
     """/api/sso/exchange。共有秘密が合わないと 403、コードは 1 回だけ・120 秒だけ、権限は交換時にも見る。
     期限切れは待たずに、ローカル D1 の expires_at を過去に書き換えて確かめる。"""
@@ -591,7 +713,7 @@ def check_sso_exchange(admin: Client, r: Report, base: str, secret: str, code: s
     r.note("交換: 秘密違い 403 / 1 回だけ / 期限切れ（D1 を書き換えて確認）/ 権限を外すと 403")
 
 
-# @verifies REQ-047
+# @verifies REQ-094
 def check_health(c: Client, r: Report):
     """/api/health は認証なしで {ok: true}。同じ条件で /api/me は 401（死活確認だけが素通しであること）。"""
     st, data, _, _ = c.call("GET", "/api/health")
@@ -627,14 +749,25 @@ def check_learnings(c: Client, r: Report, learn: list[dict], secret: str):
     r.notes.append(f"学びの一覧 {len(rows)} 件（秘密なし）")
 
 
-# @verifies REQ-009, REQ-046
+# @verifies REQ-009, REQ-046, REQ-083, REQ-084, REQ-085
 def check_me_password_and_logout(r: Report, base: str):
     """/api/me/password と /api/logout。現在のパスワード違いは 401、8〜200 文字の外は 400。
-    成功したら新しいパスワードで入れる。ログアウトの後は /api/me が 401。"""
+    成功したら新しいパスワードで入れて前のパスワードでは入れない。
+    ログアウトはこの端末のセッションの行だけを消す（別の端末のセッションは残る）。"""
     c = Client(base)
     st, data, _, _ = c.call("POST", "/api/login", {"email": MEMBER_EMAIL, "password": PASSWORD})
     if not r.status("POST /api/login（パスワード変更の検査用）", st, 200, data):
         return
+
+    # /api/me は本人の account と grants（権限なしは []）を返す。画面はこれで「開く」にする学びを決める
+    st, data, _, _ = c.call("GET", "/api/me")
+    if r.status("GET /api/me（ログイン中）", st, 200, data):
+        me = data if isinstance(data, dict) else {}
+        account = me.get("account") if isinstance(me.get("account"), dict) else {}
+        if account.get("email") != MEMBER_EMAIL:
+            r.error(f"GET /api/me: 本文に自分の account が無い（{json.dumps(data, ensure_ascii=False)[:120]}）")
+        if not isinstance(me.get("grants"), list):
+            r.error("GET /api/me: grants が配列でない（権限なしは []。不変条件 D11）")
 
     st, data, _, _ = c.call("POST", "/api/me/password", {})
     r.status("POST /api/me/password（空）", st, 400, data)
@@ -647,12 +780,15 @@ def check_me_password_and_logout(r: Report, base: str):
     r.status("POST /api/me/password（現在のパスワード違い）", st, 401, data)
     r.error_body("POST /api/me/password（現在のパスワード違い）の本文", data)
 
+    # ここまでの 400・401 でパスワードが変わっていれば、この変更（current が元のパスワード）が通らない
     new_pw = PASSWORD + "-changed"
+    other: Client | None = None
     st, data, _, _ = c.call("POST", "/api/me/password", {"current": PASSWORD, "next": new_pw})
     if r.status("POST /api/me/password（変更）", st, 200, data):
         fresh = Client(base)
         st, data, _, _ = fresh.call("POST", "/api/login", {"email": MEMBER_EMAIL, "password": new_pw})
-        r.status("変更後のパスワードでログイン", st, 200, data)
+        if r.status("変更後のパスワードでログイン", st, 200, data):
+            other = fresh  # 同じ人の 2 つ目のセッション（別の端末のつもり）
         st, data, _, _ = fresh.call("POST", "/api/login", {"email": MEMBER_EMAIL, "password": PASSWORD})
         r.status("変更前のパスワードは通らない", st, 401, data)
 
@@ -664,6 +800,7 @@ def check_me_password_and_logout(r: Report, base: str):
 
     # ログアウト → Cookie が失効 → /api/me が 401
     sid = c.session_id()
+    other_sid = other.session_id() if other else None
     st, data, _, _ = c.call("POST", "/api/logout")
     r.status("POST /api/logout", st, 200, data)
     st, data, _, _ = c.call("GET", "/api/me")
@@ -673,7 +810,14 @@ def check_me_password_and_logout(r: Report, base: str):
         r.error("ログアウト前のセッション ID が Cookie から取れなかった")
     elif d1(f"SELECT 1 AS ok FROM sessions WHERE id = {q(sid)}"):
         r.error("ログアウトしたのに sessions の行が残っている（Cookie を消しただけ）")
-    r.note("自分の設定: 現在のパスワード違い 401・長さ 400・変更後は新パスワード・ログアウトで 401")
+    if other and other_sid:
+        if not d1(f"SELECT 1 AS ok FROM sessions WHERE id = {q(other_sid)}"):
+            r.error("片方のログアウトで別の端末のセッションの行まで消えている")
+        st, data, _, _ = other.call("GET", "/api/me")
+        r.status("GET /api/me（別の端末。ログアウトしていない側）", st, 200, data)
+    else:
+        r.warn("別の端末のセッションが用意できず、ログアウトの範囲（この端末だけ）は未検査")
+    r.note("自分の設定: 現在のパスワード違い 401・長さ 400・変更後は新パスワード・ログアウトはこの端末だけ")
 
 
 # --------------------------------------------------------------------------
@@ -709,13 +853,16 @@ def main() -> int:
         admin = Client(args.base)
         check_security_headers(Client(args.base), r)
         check_health(Client(args.base), r)
+        check_portal_auth_boundary(r, args.base)
         check_learnings(Client(args.base), r, learn, args.secret)
         if not check_login(admin, r):
             print("検査用の管理者でログインできなかった", file=sys.stderr)
             for e in r.errors:
                 print(f"  - {e}", file=sys.stderr)
             return 1
-        check_admin_accounts(admin, r, args.base, learn)
+        member_id = check_admin_accounts(admin, r, args.base, learn)
+        check_admin_list(admin, r)
+        check_admin_validation(admin, r, args.base, member_id)
         check_admin_self_guard(admin, r, admin_id)
         code = check_sso_start(r, args.base, learn, admin_grant)
         check_sso_exchange(admin, r, args.base, args.secret, code, admin_grant, learn)

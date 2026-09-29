@@ -23,7 +23,7 @@ const body = z.object({
 /** 1 人が 1 日に送れる件数。連打や誤操作で表が埋まるのを防ぐだけの上限。 */
 const DAILY_LIMIT = 20
 
-// @implements REQ-030
+// @implements REQ-030, REQ-274, REQ-275
 feedbackRoutes.post('/', async (c) => {
   const parsed = body.safeParse(await c.req.json().catch(() => null))
   if (!parsed.success) {
