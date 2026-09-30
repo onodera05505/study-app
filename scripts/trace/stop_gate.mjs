@@ -10,7 +10,7 @@
 // 止める（exit 2）: commands.test が 0 以外か timeout
 // commands.system（遅い層。E2E など）は Stop では回さない。pre-push／CI が回す（.githooks の型を参照）。無いなら遅い層は無い
 // 記録: <root>/.trace-gate/log.jsonl（判定 1 行）と state.json（最終合格の指紋・回数）。.gitignore に .trace-gate/ を足す
-export const VERSION = "1.4.0";
+export const VERSION = "1.5.0";
 
 import fs from "node:fs";
 import path from "node:path";
@@ -43,6 +43,12 @@ function fingerprint(root) {
   return h.digest("hex");
 }
 
+/** 原本 harness の PJ か。印（apm.yml か .harness/）があり、かつ traceconfig がこの門のスキーマ（spec_document）を持たないとき true。 */
+export function isHarnessProject(root, cfg) {
+  const marked = fs.existsSync(path.join(root, "apm.yml")) || fs.existsSync(path.join(root, ".harness"));
+  return marked && !cfg.spec_document;
+}
+
 function main() {
   const raw = readStdin();
   let input = {};
@@ -52,6 +58,10 @@ function main() {
   const cfgPath = path.join(root, "traceconfig.json");
   if (!fs.existsSync(cfgPath)) return 0; // この仕組みを入れていないプロジェクト。何もしない
   const cfg = JSON.parse(fs.readFileSync(cfgPath, "utf8"));
+  // 原本 harness（tsay-dev/harness）を入れた PJ は同名の traceconfig.json を別のスキーマで持ち、門も自前（gate-hook／stop-gate）。
+  // 二重に走って旧スキーマを誤読しないよう、harness の印（apm.yml か .harness/）があり、かつこの門のスキーマ（spec_document）が無いときだけ何もしない。
+  // 印だけでは skip しない（brain の型を入れた PJ に apm.yml を置いても門は外れない）
+  if (isHarnessProject(root, cfg)) { console.log("[stop-gate] 原本 harness の PJ（apm.yml／.harness/ があり traceconfig に spec_document が無い）。この門は何もしない"); return 0; }
   const stateDir = path.join(root, ".trace-gate");
   // 複製が古いままでないか（正本 ~/.claude/brain/tools/trace/ の VERSION と比べる。正本が無い環境＝CI では見ない）
   try {

@@ -11,7 +11,7 @@
 //   止める（exit 2）: 上のどちらも無い。stderr に「先に docs/spec.yaml の要件を書き換える（新規は status: draft、次の番号は trace_check --next req）か、.trace-gate/work.json に対象の REQ を宣言する」
 //   通す: spec.yaml・traceconfig.json・trace_ignore・.trace-gate/・docs/ 配下・source/tests の外（門の前提を書く操作は止めない）
 //   通す: フック自身の内部エラー（壊れたフックでセッションを止めない）。判定は .trace-gate/log.jsonl に 1 行
-export const VERSION = "1.2.0";
+export const VERSION = "1.3.0";
 
 import fs from "node:fs";
 import path from "node:path";
@@ -54,6 +54,8 @@ function main() {
   const cfgPath = path.join(root, "traceconfig.json");
   if (!fs.existsSync(cfgPath)) return 0;
   const cfg = JSON.parse(fs.readFileSync(cfgPath, "utf8"));
+  // 原本 harness の PJ（apm.yml か .harness/ があり、traceconfig にこの門のスキーマ spec_document が無い）は自前の gate-hook を持つので何もしない。印だけでは skip しない
+  if ((fs.existsSync(path.join(root, "apm.yml")) || fs.existsSync(path.join(root, ".harness"))) && !cfg.spec_document) return 0;
   const target = input.tool_input?.file_path ?? input.tool_input?.notebook_path;
   if (!target) return 0;
   const rel = path.relative(root, path.resolve(root, target)).split(path.sep).join("/");
