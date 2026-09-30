@@ -75,7 +75,14 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 | **仕様 ⇔ コード ⇔ テストのトレーサビリティ**（`docs/spec.yaml`・`@implements`／`@verifies`・`scripts/trace_check`・Stop フック。harness から取った物と取らなかった物、第 1 段の範囲） | [`docs/作業ログ_2026-09-28_トレーサビリティ.md`](docs/作業ログ_2026-09-28_トレーサビリティ.md) |
 | **仕様書 → ユースケース → 要件 の 3 層化**（UC を書類に、要件を 1 か所のコードの粒度に。trace_check 2.0.0 の S4・S5・C7） | [`docs/作業ログ_2026-09-29_三層のトレーサビリティ.md`](docs/作業ログ_2026-09-29_三層のトレーサビリティ.md) |
 | **要件の仕分け表**（点。監査で仕様書に無いと判った要件 116 件と矛盾 3 件を、残す（追記先の節）／消す／合わせる の案で 1 件ずつ。2026-09-29 に全件「現状を仕様書に書いて残す」で決着） | [`docs/検討事項_2026-09-29_要件の仕分け.md`](docs/検討事項_2026-09-29_要件の仕分け.md) |
-| **用語集**（線。画面に出る語と識別子の正本。spec-author が書き、implementer と test-author はこの語しか使わない） | [`docs/01-glossary.md`](docs/01-glossary.md) |
+| **ビジョン**（原本 harness の docs。解決する課題・対象・KPI・やらないこと。draft） | [`docs/00-vision.md`](docs/00-vision.md) |
+| **アクター**（閉じた集合 ACT-01〜06。人 3・システム 3。draft） | [`docs/02-actors.md`](docs/02-actors.md) |
+| **GOAL の置き場**（`docs/goals/GOAL-nn-<slug>/GOAL.md`。UC・REQ・contract はその下。Phase 3〜5 で作る） | [`docs/goals/`](docs/goals/) |
+| **未着手の GOAL**（backlog。GOAL-07 学びの中のコンテンツ管理） | [`docs/goals-backlog.md`](docs/goals-backlog.md) |
+| **非機能要件**（閾値と計測方法がある物だけ。NFR-001 セキュリティヘッダ） | [`docs/nfr/`](docs/nfr/) |
+| **共有の語彙（契約）**（`_shared/components.yaml`。Phase 5 で埋める） | [`docs/_shared/`](docs/_shared/) |
+| **用語集**（線。業務語の正本。原本 harness のテンプレで spec-author が書く。識別子は契約へ） | [`docs/01-glossary.md`](docs/01-glossary.md) |
+| attic: 識別子列つきの空の用語集（写した型の草案。2026-09-30 の移行で退役） | [`docs/attic/01-glossary_2026-09-29_識別子列つき.md`](docs/attic/01-glossary_2026-09-29_識別子列つき.md) |
 | **保留台帳**（線。reviewer の指摘のうち機械判定に落とせない物。縮む方向にしか動かない） | [`docs/verification/DEFERRED.md`](docs/verification/DEFERRED.md) |
 | **原本 harness への移行**（2026-09-30 本人決定。APM で develop-core、docs-migrate の 7 Phase。Phase 0 の記録と実体・状態値の全文） | [`docs/作業ログ_2026-09-30_原本harnessへの移行.md`](docs/作業ログ_2026-09-30_原本harnessへの移行.md) |
 | **原本 harness への移行の棚卸し**（docs-migrate Phase 0。文書ごとの分類と処遇、実体と状態値、矛盾。本人の答えは `OPEN-QUESTIONS.md`） | [`docs/INVENTORY.md`](docs/INVENTORY.md) |
