@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-# trace_check — 仕様（docs/spec.yaml）⇔ コード（@implements）⇔ テスト（@verifies）の検査。正本は ~/.claude/brain/tools/trace/（複製の版は scripts/trace/trace_check.mjs の VERSION）
-exec node "$(dirname "$0")/trace/trace_check.mjs" "$@"

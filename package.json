@@ -15,7 +15,7 @@
     "typecheck": "tsc --noEmit",
     "check:render": "bash scripts/check_render.sh",
     "audit:screens": "bash scripts/audit_screens.sh",
-    "test": "bash scripts/trace_check && vitest run && python3 scripts/check_source.py && python3 scripts/check_docs.py",
+    "test": "node .harness/tools/spec-lint/spec-lint.mjs validate --ignore-legacy-layout && node .harness/tools/trace-check/trace-check.mjs && vitest run && python3 scripts/check_source.py && python3 scripts/check_docs.py",
     "test:unit": "vitest run"
   },
   "dependencies": {

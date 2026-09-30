@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-# push 前の門（遅い層）。traceconfig.json の commands.system（E2E など）を回す。無ければ何もしない。黙って飛ばさない。
+# push 前の門（遅い層）。実 API を叩く検査（wrangler dev）を回す。traceconfig の commands.system は未宣言（ブラウザの system suite が無い。OQ-05）なのでここに直書き。
 set -e
 cd "$(git rev-parse --show-toplevel)"
-CMD=$(node -e 'const c=JSON.parse(require("fs").readFileSync("traceconfig.json","utf8")).commands; console.log(c.system ?? "")')
-[ -z "$CMD" ] && { echo "pre-push: commands.system が無い（遅い層は無し）"; exit 0; }
-bash -lc "$CMD"
+bash scripts/check_api.sh ip
+bash scripts/check_portal_api.sh

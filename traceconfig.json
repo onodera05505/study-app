@@ -1,124 +1,61 @@
 {
-  "_comment": "trace_check（scripts/trace/trace_check.mjs、正本は ~/.claude/brain/tools/trace/）の設定。spec_document は仕様書と規範的な節、usecases は UC の書類、spec は要件。source は公開単位と @implements、tests は test_pattern と @verifies を見る。1 要件を実装する単位は max_units_per_req まで。除外は scripts/trace_ignore に理由つきで（本人の許可なく足さない）。commands.test は Stop フックが回す。",
-  "spec_document": {
-    "file": "docs/要件定義書_draft.md",
-    "sections": [
-      "3.1",
-      "4",
-      "5.1",
-      "5.2",
-      "5.3",
-      "5.4",
-      "5.5",
-      "5.6",
-      "9",
-      "10",
-      "13.5",
-      "13.6",
-      "15",
-      "16.1",
-      "16.2",
-      "16.3",
-      "16.4",
-      "17",
-      "5.7",
-      "5.8",
-      "16.5"
+  "_comment": "原本 harness（tsay-dev/harness v4.1.0）の traceconfig。tools/trace-check・spec-lint・gate-hook が読む。docs-migrate Phase 1 で置いた（2026-09-30）。source はアプリ（src・portal/src）と運用スクリプト、tests は vitest（jsdom。ブラウザの system suite は未宣言＝C15 は skip。OQ-05）。layering・contract は無し（層構造とエラーコードの単一の出所が無い）。schema は drizzle の schema とまなびばの DDL。commands.test は vitest だけ（stop-gate が spec-lint と trace-check を自分で回す）。",
+  "id_patterns": {
+    "goal": "\\bGOAL-\\d{2}\\b",
+    "uc": "\\bUC-\\d{3}\\b",
+    "req": "\\bREQ-\\d{3}\\b",
+    "br": "\\bBR-\\d{3}\\b",
+    "nfr": "\\bNFR-\\d{3}\\b",
+    "adr": "\\bADR-\\d{4}\\b"
+  },
+  "covers_pattern": "@covers\\s+(REQ-\\d{3})(?:#([\\w-]+))?",
+  "scenario_pattern": "@scenario\\s+(UC-\\d{3})",
+  "implements_pattern": "@implements\\s+((?:REQ|BR|UC)-\\d{3}(?:\\s*[,/]\\s*(?:REQ|BR|UC)-\\d{3})*)",
+  "docs": {
+    "goals_dir": "docs/goals",
+    "goals_backlog": "docs/goals-backlog.md",
+    "rules_dir": "docs/rules",
+    "nfr_dir": "docs/nfr",
+    "adr_dir": "docs/adr",
+    "verification_global": "docs/verification/GLOBAL.md",
+    "verification_deferred": "docs/verification/DEFERRED.md",
+    "shared": "docs/_shared/components.yaml",
+    "actors": "docs/02-actors.md"
+  },
+  "commands": {
+    "typecheck": "npx tsc --noEmit",
+    "test": "npx vitest run"
+  },
+  "source": {
+    "dirs": [
+      "src",
+      "portal/src",
+      "scripts"
+    ],
+    "extensions": [
+      ".ts",
+      ".tsx",
+      ".py",
+      ".sh"
     ]
   },
-  "usecases": "docs/usecases",
-  "spec": "docs/spec.yaml",
-  "ignore": "scripts/trace_ignore",
-  "max_units_per_req": 1,
-  "require_quote": true,
-  "require_scenario": true,
-  "source": [
-    {
-      "dirs": [
-        "src/server",
-        "src/shared",
-        "src/client",
-        "portal/src"
-      ],
-      "extensions": [
-        ".ts",
-        ".tsx"
-      ],
-      "exclude": [
-        "**/*.test.ts",
-        "**/*.test.tsx",
-        "**/*.d.ts",
-        "portal/.worker-build/**",
-        "portal/dist/**"
-      ],
-      "tag_lookback": 6,
-      "public_patterns": [
-        {
-          "pattern": "^export\\s+(?:default\\s+)?(?:async\\s+)?function\\s+(\\w+)",
-          "kind": "function"
-        },
-        {
-          "pattern": "^export\\s+(?:default\\s+)?class\\s+(\\w+)",
-          "kind": "class"
-        },
-        {
-          "pattern": "^export\\s+const\\s+(\\w+)\\s*(?::[^=]+)?=\\s*(?:async\\s*)?(?:\\([^)]*\\)|\\w+)\\s*(?::[^=]+)?=>",
-          "kind": "function"
-        },
-        {
-          "pattern": "^\\s*\\w+\\.(?:get|post|put|delete|patch)\\(\\s*['\"]([^'\"]*)['\"]",
-          "kind": "route"
-        }
-      ]
-    },
-    {
-      "_comment": "seed の門と版の印（version.json）は不変条件・仕様の実装でもある。公開単位の検査はしない（Python・sh は第 2 段）",
-      "files": [
-        "scripts/check_seed.py",
-        "scripts/build_seed.py",
-        "scripts/deploy-pages.sh",
-        "scripts/check_sso_prod.sh"
-      ],
-      "extensions": [
-        ".py",
-        ".sh"
-      ],
-      "public_patterns": []
-    }
-  ],
-  "tests": [
-    {
-      "dirs": [
-        "tests"
-      ],
-      "extensions": [
-        ".ts",
-        ".tsx"
-      ],
-      "test_pattern": "^\\s*(?:it|test)\\(\\s*['\"`](.+?)['\"`]",
-      "tag_lookback": 6
-    },
-    {
-      "files": [
-        "scripts/check_api.py",
-        "scripts/check_source.py",
-        "scripts/check_seed.py",
-        "scripts/verify_seed_remote.py",
-        "scripts/check_sso_prod.sh",
-        "scripts/check_render.tsx",
-        "scripts/check_portal_api.py"
-      ],
-      "extensions": [
-        ".py",
-        ".sh",
-        ".tsx"
-      ],
-      "test_pattern": "^def (check_\\w+|verify_\\w+)\\(",
-      "tag_lookback": 6
-    }
-  ],
-  "commands": {
-    "test": "npm test",
-    "system": "bash scripts/check_api.sh ip && bash scripts/check_portal_api.sh"
-  }
+  "tests": {
+    "dirs": [
+      "tests"
+    ],
+    "extensions": [
+      ".ts",
+      ".tsx"
+    ],
+    "test_pattern": "^\\s*(?:it|test)\\(\\s*[\"'`](.+?)[\"'`]",
+    "covers_placement": "before",
+    "exempt_pattern": "//\\s*仕様外:"
+  },
+  "schema": {
+    "files": [
+      "src/server/db/schema.ts",
+      "portal/migrations/0001_init.sql"
+    ]
+  },
+  "baseline_file": ".trace-baseline.json"
 }

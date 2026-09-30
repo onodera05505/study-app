@@ -1,4 +1,4 @@
-# test — 仕様⇔コード⇔テストの門（trace_check）→ 単体テスト → 静的な門 を、フックを回避しても止まる層として回す。
+# test — 原本 harness の門（spec-lint → trace-check）→ 単体テスト → 静的な門 を、フックを回避しても止まる層として回す。
 # pre-commit は --no-verify で通れるので、同じ npm test を CI でも走らせる（回避不能な層）。
 name: test
 on:
@@ -17,5 +17,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - run: git clone --depth 1 --branch v4.1.0 https://github.com/tsay-dev/harness .harness
       - run: npm ci
       - run: npm test

@@ -79,7 +79,7 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 | **保留台帳**（線。reviewer の指摘のうち機械判定に落とせない物。縮む方向にしか動かない） | [`docs/verification/DEFERRED.md`](docs/verification/DEFERRED.md) |
 | **原本 harness への移行**（2026-09-30 本人決定。APM で develop-core、docs-migrate の 7 Phase。Phase 0 の記録と実体・状態値の全文） | [`docs/作業ログ_2026-09-30_原本harnessへの移行.md`](docs/作業ログ_2026-09-30_原本harnessへの移行.md) |
 | **原本 harness への移行の棚卸し**（docs-migrate Phase 0。文書ごとの分類と処遇、実体と状態値、矛盾。本人の答えは `OPEN-QUESTIONS.md`） | [`docs/INVENTORY.md`](docs/INVENTORY.md) |
-| **要件（REQ）の正本**（線。`bash scripts/trace_check` が読む。UC の 1 ステップに属し 1 要件 1 か所のコード。実装前に ID を振る） | [`docs/spec.yaml`](docs/spec.yaml) |
+| **要件（REQ）の正本**（旧。原本 harness へ移行中（`docs/INVENTORY.md`）。Phase 4 で `docs/goals/**/REQ-nnn.md` へ変換して attic） | [`docs/spec.yaml`](docs/spec.yaml) |
 | **ユースケースの書類**（線。1 件 1 枚。frontmatter の source が仕様書の節、基本の流れ／例外の流れのステップに要件が紐づく） | [`docs/usecases/`](docs/usecases/) |
 | 一斉検査のレビュー全量（学習系・受験系。改善候補の根拠） | [`docs/レビュー詳細_2026-09-02_学習系.md`](docs/レビュー詳細_2026-09-02_学習系.md) / [`docs/レビュー詳細_2026-09-02_受験系.md`](docs/レビュー詳細_2026-09-02_受験系.md) |
 
@@ -234,12 +234,12 @@ report してきた例が複数あった（ファイルの中身は正しかっ�
 ## 仕様 ⇔ コード ⇔ テスト の対応（作業完了の条件）
 
 - **要求を受けたら Skill `/develop` の手順で動く**: `spec-author`（実装もテストも読まない）が 仕様書（`docs/要件定義書_draft.md` の節）→ ユースケースの書類（`docs/usecases/UC-xxx.md`。流れをステップに）→ 要件（`docs/spec.yaml`。1 ステップに 1 つ以上、**1 要件 1 か所のコード**）→ 用語集 の順に草案を書き、本人が承認 → `implementer` と `test-author` を**別コンテキストで並行**（test-author は実装を読まず Bash も持たない。中央 `reports/106`）→ `npm test` が通るまで。書き込みの瞬間は `write_gate`（PreToolUse。spec に差分か `.trace-gate/work.json` の REQ 宣言が無いと `src/`・`tests/` に書けない）、終了の瞬間は `stop_gate`（Stop）が止める
-- **実装の前に `docs/spec.yaml` に要件 ID（REQ-xxx）があり、その `usecase`・`step` が UC の書類のステップを指しているか確かめる。** 無ければ UC のステップと要件の追加を提案する（`bash scripts/trace_check --next req`／`--next uc` で次の番号。決めたが未実装なら `status: draft`）。仕様に無い機能を勝手に作らない。仕様書から直接コードに結ばない（UC → REQ を経る）
+- **実装の前に `docs/spec.yaml` に要件 ID（REQ-xxx）があり、その `usecase`・`step` が UC の書類のステップを指しているか確かめる。** 無ければ UC のステップと要件の追加を提案する（移行後は `node .harness/tools/trace-check/trace-check.mjs --next req` で次の番号。決めたが未実装なら `status: draft`）。仕様に無い機能を勝手に作らない。仕様書から直接コードに結ばない（UC → REQ を経る）
 - **コードには `@implements REQ-xxx`、テストには `@verifies REQ-xxx`** を、その単位（関数・クラス・ルートハンドラ・テストケース）の直前のコメントに書く。ID だけを書き、要件の文を写さない。ファイル先頭にまとめない。コメントは今の仕様だけ（経緯・日付を書かない）
-- **作業完了の条件は `npm test`（trace_check → 単体テスト → check_source → check_docs）が全部通ること。** Stop フック（ユーザー設定）・pre-commit・CI が同じ検査を回す。落ちたら `[NG]` の行を直す
+- **作業完了の条件は `npm test`（spec-lint → trace-check → 単体テスト → check_source → check_docs）が全部通ること。** Stop フック（ユーザー設定）・pre-commit・CI が同じ検査を回す。落ちたら `[NG]` の行を直す
 - **親（この会話）は仕様も実装もテストも書かない。** 赤は三分岐で裁く: ①仕様が決めている → 実装の欠陥（implementer） ②テストが仕様に無い手順・DOM を固定 → test-author が再導出 ③仕様が表現できていない → spec-author。コミット前に `reviewer`（別コンテキスト・読み取り専用）の `阻止` ゼロ。UC 1 本にシナリオテスト 1 本（`@scenario UC-xxx`。`require_scenario: true`）
 - **要件は仕様書の文を `quote` に引く**（`trace_check` の S6 が実在を見る）。引ける文が無ければ仕様書に先に書いて本人の承認。赤の切り分けで実装を読んで要件やテストを実装に寄せない（追認）。テスト設計に渡す契約は名前と型だけ
-- **どの要件にも当たらないコードは、除外ではなく要件を書いてから実装する**（仕様が絶対の正解。2026-09-29 本人）。`scripts/trace_ignore` は空のまま。検査の緩和・テストの skip・中身の無いタグやテストは**本人の許可なく行わない**
+- **どの要件にも当たらないコードは、除外ではなく要件を書いてから実装する**（仕様が絶対の正解。2026-09-29 本人）。除外は使わない。検査の緩和・テストの skip・中身の無いタグやテストは**本人の許可なく行わない**
 
 ## 権限プロンプトを減らす運用
 
