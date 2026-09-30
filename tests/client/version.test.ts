@@ -80,7 +80,7 @@ describe('新しい版の検知', () => {
   })
 
   // @verifies REQ-279
-  it('最初の印を取りに行くのは何度呼んでも 1 回', async () => {
+  it('最初の印は 1 回だけ取りに行って覚える（何度求めても取得は 1 回）', async () => {
     const { urls } = stubFetch([{ build: 'abc1234', at: '2026-09-28T00:00:00Z' }])
     const v = await load()
     await Promise.all([v.rememberBuild(), v.rememberBuild(), v.rememberBuild()])

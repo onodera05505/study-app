@@ -8,8 +8,9 @@
 // 通す（exit 0）: traceconfig.json が無い／Stop 以外のイベント／木が前回の合格から変わっていない／
 //               連続で --max-rounds 回止めても失敗が減らない（人に返す）／フック自身の内部エラー（壊れたフックでセッションを止めない）
 // 止める（exit 2）: commands.test が 0 以外か timeout
+// commands.system（遅い層。E2E など）は Stop では回さない。pre-push／CI が回す（.githooks の型を参照）。無いなら遅い層は無い
 // 記録: <root>/.trace-gate/log.jsonl（判定 1 行）と state.json（最終合格の指紋・回数）。.gitignore に .trace-gate/ を足す
-export const VERSION = "1.2.2";
+export const VERSION = "1.4.0";
 
 import fs from "node:fs";
 import path from "node:path";
@@ -67,6 +68,12 @@ function main() {
       }
     }
   } catch {}
+  // 書き込みの宣言（.trace-gate/work.json）が残ったまま終わらない: 宣言は作業単位ごとに親が置き、終わったら消す（残ると以後の書き込みが素通りする）
+  if (fs.existsSync(path.join(stateDir, "work.json"))) {
+    console.error(`[stop-gate] .trace-gate/work.json（書き込みの宣言）が残っています。作業単位が終わったら消してください（残すと以後の src/tests への書き込みが宣言なしで通る）。宣言は親だけが書く`);
+    log(stateDir, { decision: "block", reason: "work-declaration-left" });
+    return 2;
+  }
   const cmd = cfg.commands?.test;
   if (!cmd) { console.log("[stop-gate] traceconfig.json の commands.test が未宣言。検査は行われていない"); log(stateDir, { decision: "skip", reason: "no-command" }); return 0; }
   // 緩和の検知: commands.test から trace_check が外れていたら止める（導入中の「一時緩和」がそのまま残るのを防ぐ。本人の許可があるなら relax_until: "YYYY-MM-DD" を traceconfig.json に書く）

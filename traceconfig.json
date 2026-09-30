@@ -31,6 +31,7 @@
   "ignore": "scripts/trace_ignore",
   "max_units_per_req": 1,
   "require_quote": true,
+  "require_scenario": true,
   "source": [
     {
       "dirs": [
@@ -117,6 +118,7 @@
     }
   ],
   "commands": {
-    "test": "npm test"
+    "test": "npm test",
+    "system": "bash scripts/check_api.sh ip && bash scripts/check_portal_api.sh"
   }
 }

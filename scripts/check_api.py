@@ -55,6 +55,9 @@ API の形は静かに壊れる。SELECT の別名を1つ変えれば画面の�
     回答も採点しないか、時間切れで締めた回の結果が時間切れになるか
 15. **論点の詳細に添わるもの** — 「次に学ぶ論点」がいま開いている論点自身でも理解にした論点でも
     ないか、学ぶ順の前後の単位がロードマップ型だけに添えられ、端では該当側が null か
+16. **UC の基本の流れの写し**（`check_scenario_uc0xx`。`docs/usecases/UC-xxx.md` の番号付きステップを
+    順に 1 本で通し、最後に事後条件を見る）— 正常系だけ。失敗系・境界は 1〜15 が見る。
+    画面の描画は `scripts/check_render.tsx` の担当なので、画面が使う応答までを確かめる
 
 ## 触るもの・触らないもの
 
@@ -1511,6 +1514,686 @@ def check_feedback(c: Client, r: Report, exam: str, db_name: str):
     d1(exam, db_name, "DELETE FROM feedback WHERE body LIKE 'apicheck %'")
 
 
+# --------------------------------------------------------------------------
+# UC の基本の流れの写し（scenario）
+#
+# 1 UC につき 1 本。docs/usecases/UC-xxx.md の「基本の流れ」の番号付きステップを順に
+# 1 操作か 1 応答ずつ写し、最後に「事後条件」を見る。正常系だけを通す（例外の流れ・境目は
+# 上の check_* が見る）。画面の操作と描画は API では踏めないので、画面が使う応答まで。
+# --------------------------------------------------------------------------
+
+
+def first_choice(question: dict) -> str:
+    """選択肢の記号を 1 つ選ぶ（正解は分からないので記号の順で先頭を選ぶ）。"""
+    return sorted(question["choices"])[0]
+
+
+# @scenario UC-007
+def check_scenario_uc007(c: Client, r: Report, got: dict):
+    """練習テストの画面を開く → 範囲を選んで開始 → 出題 → 回答して解説 → 次の問題 → 締め → 結果。"""
+    L = "UC-007"
+    detail = got.get("topic_detail")
+    if not detail:
+        r.error(f"{L}: 出題できる論点が取れなかったので基本の流れを通せない")
+        return
+    topic_id = detail["topic"]["id"]
+
+    # 1. 練習テストの画面を開く（演習の範囲＝分野と、分野を選んだあとの単元、進行中の有無）
+    st, fields, _ = c.call("GET", "/fields")
+    if not r.status(f"{L} 1 分野の一覧", st, 200):
+        return
+    rows = (fields or {}).get("fields")
+    if not isinstance(rows, list) or not rows:
+        r.error(f"{L} 1: 分野の一覧が空で範囲を選べない")
+        return
+    field = rows[0]["field"]
+    st, cats, _ = c.call("GET", f"/categories?field={field}")
+    if r.status(f"{L} 1 分野『{field}』の単元の一覧", st, 200):
+        if not isinstance((cats or {}).get("categories"), list):
+            r.error(f"{L} 1: 単元（カテゴリ）の一覧が配列で返らない")
+    c.call("DELETE", "/sessions/current")  # 前の検査が残した進行中を片付ける
+    st, cur, _ = c.call("GET", "/sessions/current")
+    if r.status(f"{L} 1 進行中のテストの有無", st, 200) and "session" not in (cur or {}):
+        r.error(f"{L} 1: 進行中の有無（session）が返らない")
+
+    # 2. 範囲（論点別）を選んで開始する
+    size = min(3, len(detail["questions"]))
+    if size < 2:
+        r.error(f"{L}: 出題できる過去問が 1 問しかない論点なので、次の問題まで通せない")
+        return
+    st, created, text = c.call(
+        "POST", "/sessions", {"kind": "drill", "topicId": topic_id, "size": size}
+    )
+    if not r.status(f"{L} 2 論点別の演習を開始", st, 201, None if st == 201 else text[:200]):
+        return
+
+    # 3. セッションを作って ID・範囲の名前・問題数を返す
+    sid, total = (created or {}).get("id"), (created or {}).get("questionCount")
+    if not sid or not isinstance(total, int) or not 0 < total <= size:
+        r.error(f"{L} 3: ID と問題数が返らない（{json.dumps(created, ensure_ascii=False)[:120]}）")
+        return
+    if not (created or {}).get("scopeLabel"):
+        r.error(f"{L} 3: 範囲の名前（scopeLabel）が返らない")
+
+    # 4. 未回答の最小 index の問題を、出題時の内容（正解と解説を除く）で返す
+    st, cur, text = c.call("GET", f"/sessions/{sid}/current")
+    if not r.status(f"{L} 4 現在の問題", st, 200, None if st == 200 else text[:200]):
+        return
+    q = (cur or {}).get("question") or {}
+    if q.get("idx") != 0:
+        r.error(f"{L} 4: 現在の問題の index が {q.get('idx')}（未回答の最小は 0）")
+    if '"answer"' in text or '"explanation"' in text:
+        r.error(f"{L} 4: 出題中の応答に正解か解説が入っている（回答したあとに渡すこと）")
+
+    # 5. 画面が出す材料（問題文・選択肢・進捗）が応答にある
+    if not q.get("text") or not isinstance(q.get("choices"), dict) or not q.get("choices"):
+        r.error(f"{L} 5: 問題文か選択肢が無い")
+        return
+    if cur.get("answered") != 0 or (cur.get("session") or {}).get("questionCount") != total:
+        r.error(
+            f"{L} 5: 進捗が合わない（回答済み {cur.get('answered')} / "
+            f"全体 {(cur.get('session') or {}).get('questionCount')}。0 / {total} のはず）"
+        )
+
+    # 6. 選択肢を 1 つ選び、表示中の位置を添えて回答を送る
+    picked = first_choice(q)
+    st, ans, text = c.call("POST", f"/sessions/{sid}/answer", {"idx": q["idx"], "answer": picked})
+    if not r.status(f"{L} 6 回答を送る", st, 200, None if st == 200 else text[:200]):
+        return
+
+    # 7. 出題時の正解と比べた正誤と、問題ごとの解説を返す
+    ans = ans if isinstance(ans, dict) else {}
+    if not isinstance(ans.get("correct"), bool) or not ans.get("correctAnswer"):
+        r.error(f"{L} 7: 正誤か正解の記号が返らない")
+    elif ans["correct"] != (picked == ans["correctAnswer"]):
+        r.error(
+            f"{L} 7: 正誤が正解との突き合わせと合わない"
+            f"（選んだ {picked} / 正解 {ans['correctAnswer']} / correct {ans['correct']}）"
+        )
+    if "explanation" not in (ans or {}):
+        r.error(f"{L} 7: 問題ごとの解説（explanation）が応答に無い")
+    if ans.get("remaining") != total - 1:
+        r.error(f"{L} 7: 残りの問数が {ans.get('remaining')}（{total - 1} のはず）")
+
+    # 8.「次の問題へ」で 4 に戻る（次の未回答の最小 index）
+    st, cur, _ = c.call("GET", f"/sessions/{sid}/current")
+    if r.status(f"{L} 8 次の問題", st, 200):
+        if ((cur or {}).get("question") or {}).get("idx") != 1:
+            r.error(f"{L} 8: 次の問題の index が {((cur or {}).get('question') or {}).get('idx')}（1 のはず）")
+
+    # 9. 未回答が無くなると締めが呼ばれ、正答数を集計してセッションを完了にする
+    for _ in range(total + 1):
+        st, cur, _ = c.call("GET", f"/sessions/{sid}/current")
+        if st != 200:
+            r.error(f"{L} 9: 現在の問題が取れない（status {st}）")
+            return
+        q = (cur or {}).get("question")
+        if not q:
+            break
+        st, ans, text = c.call(
+            "POST", f"/sessions/{sid}/answer", {"idx": q["idx"], "answer": first_choice(q)}
+        )
+        if not r.status(f"{L} 9 残りの回答", st, 200, None if st == 200 else text[:200]):
+            return
+    st, fin, text = c.call("POST", f"/sessions/{sid}/finish")
+    if not r.status(f"{L} 9 締める", st, 200, None if st == 200 else text[:200]):
+        return
+    fin = fin if isinstance(fin, dict) else {}
+    if fin.get("total") != total:
+        r.error(f"{L} 9: 締めの total が {fin.get('total')}（{total} のはず）")
+
+    # 事後条件: セッションが完了になり、正答数と 1 問ごとの正誤・選んだ選択肢が残る
+    st, res, text = c.call("GET", f"/sessions/{sid}")
+    if not r.status(f"{L} 事後条件 結果", st, 200, None if st == 200 else text[:200]):
+        return
+    if not isinstance(res, dict):
+        r.error(f"{L} 事後条件: 結果の本文が JSON のオブジェクトでない")
+        return
+    if (res.get("overall") or {}).get("total") != total:
+        r.error(f"{L} 事後条件: 結果の総数が {(res.get('overall') or {}).get('total')}（{total} のはず）")
+    if (res.get("overall") or {}).get("correct") != fin.get("correct"):
+        r.error(
+            f"{L} 事後条件: 結果の正答数 {(res.get('overall') or {}).get('correct')} と"
+            f"締めの正答数 {fin.get('correct')} が違う"
+        )
+    items = res.get("items") or []
+    if len(items) != total:
+        r.error(f"{L} 事後条件: 1 問ごとの記録が {len(items)} 件（{total} 件のはず）")
+    lost = [x.get("idx") for x in items if x.get("userAnswer") is None or x.get("result") is None]
+    if lost:
+        r.error(f"{L} 事後条件: 選んだ選択肢か正誤が残っていない問題がある（idx {lost[:3]}）")
+    r.notes.append(f"{L} の基本の流れ: 範囲の一覧 → 開始 → 出題 → 回答と解説 → 次の問題 → 締め → 結果（{total} 問）")
+
+
+# @scenario UC-008
+def check_scenario_uc008(c: Client, r: Report, got: dict, exam: str, db_name: str):
+    """模擬試験の画面を開く → 公開回を選んで開始 → 出題 → 残り 0 で締め → 合否の目安と分野別の結果。"""
+    L = "UC-008"
+    sys.path.insert(0, str(Path(__file__).parent)); from targets import target as _target
+    if _target(exam).get("roadmap"):
+        r.notes.append(f"{L}: ロードマップ型には公開回の模擬試験が無いので基本の流れは見ない（未検査）")
+        return
+
+    # 1. 利用者が模擬試験の画面を開く。サーバは回ごとの問題数・自分の受験回数・最高正答数を返す
+    st, data, _ = c.call("GET", "/exams")
+    if not r.status(f"{L} 1 回ごとの一覧", st, 200):
+        return
+    exams = (data or {}).get("exams") or []
+    if not exams:
+        r.error(f"{L} 1: 回の一覧が空で受験できない")
+        return
+    before = exams[0]
+    for key in ("questions", "attempts"):
+        if not isinstance(before.get(key), int):
+            r.error(f"{L} 1: 回の行に {key} が無い")
+    if "bestScore" not in before:
+        r.error(f"{L} 1: 回の行に最高正答数（bestScore）が無い")
+
+    # 2. 画面は公開回の一覧とランダム構成の入口を出す（画面）
+    # 3. 利用者が受験を開始する。画面は制限時間が始まることを確認する（画面）
+    # 4. サーバは、その試験の設定値の問題数と制限時間でセッションを作る
+    c.call("DELETE", "/sessions/current")
+    st, created, text = c.call("POST", "/sessions", {"kind": "mock", "exam": before["exam"]})
+    if not r.status(f"{L} 4 {before['exam']} の受験を開始", st, 201, None if st == 201 else text[:200]):
+        return
+    sid = (created or {}).get("id")
+    limit = (created or {}).get("timeLimitSec")
+    if not sid or not isinstance(limit, int) or limit <= 0:
+        r.error(f"{L} 4: 制限時間つきのセッションになっていない（{json.dumps(created, ensure_ascii=False)[:120]}）")
+        c.call("DELETE", "/sessions/current")
+        return
+    if created.get("questionCount") != before["questions"]:
+        r.error(
+            f"{L} 4: 出題が {created.get('questionCount')} 問"
+            f"（{before['exam']} の過去問 {before['questions']} 問のはず）"
+        )
+
+    # 5. 利用者が公開回を選んだとき、サーバはその回の過去問だけを問番号の昇順で出題する
+    # 6. ランダム構成（分野比率に寄せた設定値の問題数・並びを毎回同じにしない）は REQ の検査が見る
+    # 7. 画面は残り時間を数えながら出題し、1 問ごとの正誤と解説は出さずに次の問題へ送る
+    numbers: list[int] = []
+    for i in range(2):
+        st, cur, _ = c.call("GET", f"/sessions/{sid}/current")
+        if st != 200 or not (cur or {}).get("question"):
+            r.error(f"{L} 7: {i + 1} 問目が取れない（status {st}）")
+            c.call("DELETE", "/sessions/current")
+            return
+        left = cur.get("remainingSec")
+        if not isinstance(left, int) or not 0 < left <= limit:
+            r.error(f"{L} 7: 残り秒が {left}（0 より大きく {limit} 以下のはず）")
+        q = cur["question"]
+        if before["examLabel"] not in q["citation"]:
+            r.error(f"{L} 5: 別の回の過去問が出ている（{q['citation']}）")
+        m = re.search(r"問(\d+)", q["citation"])
+        if m:
+            numbers.append(int(m.group(1)))
+        st, _, _ = c.call("POST", f"/sessions/{sid}/answer", {"idx": q["idx"], "answer": first_choice(q)})
+        if st != 200:
+            r.error(f"{L} 7: {i + 1} 問目の回答が {st}")
+            c.call("DELETE", "/sessions/current")
+            return
+    if len(numbers) == 2 and numbers[0] >= numbers[1]:
+        r.error(f"{L} 5: 公開回が問番号の昇順でない（問{numbers[0]} → 問{numbers[1]}）")
+
+    # 8. 残り時間が 0 になると、画面は自動で締める（時間の経過は待てないので開始時刻を epoch に戻す）
+    try:
+        d1(exam, db_name, f"UPDATE sessions SET started_at = 0 WHERE id = '{sid}'")
+    except Exception as ex:
+        r.warn(f"{L} 8: 開始時刻を書き換えられず、残り 0 の締めを見られなかった: {str(ex)[:80]}")
+        c.call("DELETE", "/sessions/current")
+        return
+    st, cur, _ = c.call("GET", f"/sessions/{sid}/current")
+    if r.status(f"{L} 8 残り時間が 0", st, 200):
+        if (cur or {}).get("remainingSec") not in (0, None):
+            r.error(f"{L} 8: 残り秒が {(cur or {}).get('remainingSec')}（0 のはず）")
+        if not (cur or {}).get("finished"):
+            r.error(f"{L} 8: 残り 0 なのに終了として返らない")
+    st, _, text = c.call("POST", f"/sessions/{sid}/finish")
+    if not r.status(f"{L} 8 締める", st, 200, None if st == 200 else text[:200]):
+        return
+
+    # 9. サーバは総合と分野別の正答率を集計し、合否の目安と、公式スコアと一致しない旨を返す
+    st, res, text = c.call("GET", f"/sessions/{sid}", None)
+    if not r.status(f"{L} 9 結果", st, 200, None if st == 200 else text[:200]):
+        return
+    if not isinstance(res, dict):
+        r.error(f"{L} 9: 結果の本文が JSON のオブジェクトでない")
+        return
+    r.shape(f"{L} 9 結果", res, RESULT)
+    overall = res.get("overall") or {}
+    fields = res.get("fields") or []
+    by_field = sum((f.get("correct") or 0) for f in fields)
+    if by_field != overall.get("correct"):
+        r.error(
+            f"{L} 9: 分野別の正答数の合計 {by_field} が総合の正答数 {overall.get('correct')} と合わない"
+        )
+    if not isinstance(res.get("passed"), bool):
+        r.error(f"{L} 9: 合否の目安（passed）が真偽値で返らない")
+    if not (res.get("criteria") or {}).get("overallPct"):
+        r.error(f"{L} 9: 合格の目安の基準（criteria）が返らない")
+    if not res.get("approximation"):
+        r.error(f"{L} 9: 公式スコアと一致しない旨（approximation）が返らない")
+
+    # 10. 画面は合否の目安・分野別の正答率・断り書きを出す（9 の応答で描く。描画は check_render.tsx）
+    # 11. 画面は間違えた問題を一覧し、問題ごとの解説とその論点への導線を出す（その材料）
+    items = res.get("items") or []
+    if len(items) != created["questionCount"]:
+        r.error(f"{L} 11: 1 問ごとの記録が {len(items)} 件（{created['questionCount']} 件のはず）")
+    for key in ("result", "userAnswer", "answer", "explanation", "topicId"):
+        if items and key not in items[0]:
+            r.error(f"{L} 11: 1 問ごとの記録に {key} が無い（誤答の一覧と論点への導線が出せない）")
+
+    # 事後条件: 履歴と結果から見返せる。回ごとの受験回数と最高正答数が一覧に反映される
+    st, hist, _ = c.call("GET", "/sessions")
+    if r.status(f"{L} 事後条件 履歴", st, 200):
+        if not any(s["id"] == sid for s in ((hist or {}).get("sessions") or [])):
+            r.error(f"{L} 事後条件: 受験したセッションが履歴に出てこない")
+    st, data, _ = c.call("GET", "/exams")
+    if r.status(f"{L} 事後条件 回ごとの一覧", st, 200):
+        after = next((x for x in (data or {}).get("exams") or [] if x["exam"] == before["exam"]), None)
+        if not after:
+            r.error(f"{L} 事後条件: {before['exam']} が回の一覧から消えた")
+        else:
+            if after.get("attempts") != (before.get("attempts") or 0) + 1:
+                r.error(
+                    f"{L} 事後条件: 受験回数が {before.get('attempts')} → {after.get('attempts')}"
+                    f"（1 増えるはず）"
+                )
+            if after.get("bestScore") is None:
+                r.error(f"{L} 事後条件: 受験したのに最高正答数が空のまま")
+    r.notes.append(
+        f"{L} の基本の流れ: 回の一覧 → {before['exam']} を {created['questionCount']} 問で開始 → "
+        "出題（残り時間つき） → 残り 0 で締め → 合否の目安と分野別の結果 → 履歴と受験回数"
+    )
+
+
+# @scenario UC-009
+def check_scenario_uc009(c: Client, r: Report, got: dict, exam: str, db_name: str):
+    """中断 → ホームの案内と進行中の知らせ → 再開 → 破棄 → 履歴の一覧と結果。"""
+    L = "UC-009"
+    detail = got.get("topic_detail")
+    if not detail:
+        r.error(f"{L}: 出題できる論点が取れなかったので基本の流れを通せない")
+        return
+    topic_id = detail["topic"]["id"]
+
+    # 前提: 進行中のテストを 1 つ作り、1 問だけ答えて回答の途中にする
+    c.call("DELETE", "/sessions/current")
+    size = min(3, len(detail["questions"]))
+    if size < 2:
+        r.error(f"{L}: 出題できる過去問が 1 問しかない論点なので、再開の続きを見られない")
+        return
+    st, created, text = c.call(
+        "POST", "/sessions", {"kind": "drill", "topicId": topic_id, "size": size}
+    )
+    if not r.status(f"{L} の前提 演習を開始", st, 201, None if st == 201 else text[:200]):
+        return
+    sid = created["id"]
+    st, cur, _ = c.call("GET", f"/sessions/{sid}/current")
+    if st != 200 or not (cur or {}).get("question"):
+        r.error(f"{L} の前提: 1 問目が取れない（status {st}）")
+        return
+    st, _, _ = c.call(
+        "POST", f"/sessions/{sid}/answer",
+        {"idx": cur["question"]["idx"], "answer": first_choice(cur["question"])},
+    )
+    if not r.status(f"{L} の前提 1 問だけ答える", st, 200):
+        return
+
+    # 1. 利用者が回答の途中で「中断してホームへ」を押す。画面はそこまでの回答を残したまま出題を離れる
+    #    （画面の操作。API は呼ばず、そこまでの回答は残る）
+    # 2. 利用者がホームを開く。画面は進行中のテストがあればその案内を出し、再開の画面へ進める
+    # 3. 利用者が練習テストの画面を開く。サーバは進行中のセッションと回答済みの問数を返す
+    #    （2 の案内も 3 と同じ進行中の有無から出るので、ここで両方の材料を見る）
+    st, data, _ = c.call("GET", "/sessions/current")
+    if not r.status(f"{L} 2・3 進行中のセッション", st, 200):
+        return
+    session = (data or {}).get("session") or {}
+    if session.get("id") != sid:
+        r.error(f"{L} 3: 進行中のセッションが中断したものでない（{session.get('id')}）")
+    if session.get("answered") != 1:
+        r.error(f"{L} 1・3: 回答済みの問数が {session.get('answered')}（中断しても残るので 1 のはず）")
+
+    # 4. 画面は進行中のテストと回答済みの問数を知らせ、「再開する」で出題の画面へ戻す
+    #    （続きは未回答の最小 index から出る）
+    st, cur, _ = c.call("GET", f"/sessions/{sid}/current")
+    if r.status(f"{L} 4 再開", st, 200):
+        if ((cur or {}).get("question") or {}).get("idx") != 1:
+            r.error(
+                f"{L} 4: 再開後の index が {((cur or {}).get('question') or {}).get('idx')}"
+                "（未回答の最小の 1 のはず）"
+            )
+
+    # 5. 利用者が「破棄する」を押す。画面は回答済みの問数を示して確認する（画面）
+    # 6. サーバは進行中のセッションを消す（そのセッションの回答も一緒に消える）
+    st, _, _ = c.call("DELETE", "/sessions/current")
+    r.status(f"{L} 6 破棄", st, 200)
+    st, cur, _ = c.call("GET", "/sessions/current")
+    if r.status(f"{L} 6 破棄後の進行中", st, 200) and (cur or {}).get("session"):
+        r.error(f"{L} 6: 破棄したのに進行中のセッションが残っている")
+    try:
+        rows = d1(exam, db_name, f"SELECT COUNT(*) AS n FROM session_questions WHERE session_id = '{sid}'")
+        if rows and rows[0]["n"]:
+            r.error(f"{L} 6: 破棄したセッションの回答が {rows[0]['n']} 件残っている")
+    except Exception as ex:
+        r.warn(f"{L} 6: 破棄したセッションの回答を D1 で数えられなかった: {str(ex)[:80]}")
+
+    # 7. 利用者が履歴の画面を開く。サーバは自分の完了したセッションだけを新しい順に返す
+    st, hist, _ = c.call("GET", "/sessions")
+    if not r.status(f"{L} 7 履歴", st, 200):
+        return
+    rows = (hist or {}).get("sessions")
+    if not isinstance(rows, list):
+        r.error(f"{L} 7: 履歴が配列で返らない")
+        return
+    if any(s["id"] == sid for s in rows):
+        r.error(f"{L} 7: 破棄したセッションが履歴に出ている")
+    unfinished = [s["id"] for s in rows if s.get("finishedAt") is None]
+    if unfinished:
+        r.error(f"{L} 7: 完了していないセッションが履歴に出ている {unfinished[:3]}")
+    times = [s["finishedAt"] for s in rows if s.get("finishedAt") is not None]
+    back = [i for i in range(1, len(times)) if times[i] > times[i - 1]]
+    if back:
+        r.error(f"{L} 7: 履歴が新しい順でない（{back[:3]} 件目で新しくなる）")
+
+    # 8. 画面は種別・範囲・正答率・日時を一覧し、結果の画面へ進める
+    if not rows:
+        r.error(f"{L} 8: 完了したセッションが 1 件も無く、一覧と結果への導線を確かめられない")
+    else:
+        row = rows[0]
+        for key in ("kind", "scopeLabel", "questionCount", "correctCount", "finishedAt"):
+            if key not in row:
+                r.error(f"{L} 8: 履歴の行に {key} が無い（種別・範囲・正答率・日時が出せない）")
+        st, _, text = c.call("GET", f"/sessions/{row['id']}")
+        r.status(f"{L} 8 履歴から結果へ", st, 200, None if st == 200 else text[:200])
+
+    # 事後条件: 破棄したセッションは進行中として残らず、履歴にも出ない（6・7）。
+    #           再開は未回答の最小 index から（4）
+    st, cur, _ = c.call("GET", "/sessions/current")
+    if r.status(f"{L} 事後条件 破棄後の進行中の有無", st, 200):
+        if "session" not in (cur or {}):
+            r.error(f"{L} 事後条件: 進行中の有無（session）が返らない")
+        elif cur["session"] is not None:
+            r.error(f"{L} 事後条件: 破棄したのに進行中のテストがある（案内が出てしまう）")
+    r.notes.append(
+        f"{L} の基本の流れ: 中断 → ホームの案内と進行中の知らせ → 再開 → 破棄 → 履歴と結果"
+    )
+
+
+# @scenario UC-011
+def check_scenario_uc011(c: Client, r: Report, got: dict, exam: str, db_name: str):
+    """同一内容の過去問を全問残したまま、学習側の出題では 1 問にまとめ、公開回の通し受験では畳まない。"""
+    L = "UC-011"
+    sys.path.insert(0, str(Path(__file__).parent)); from targets import target as _target
+    roadmap = bool(_target(exam).get("roadmap"))
+
+    # 1. 投入の前の門（同一内容で正解が割れていないか）は scripts/check_seed.py の担当
+    # 2. 投入は同一内容を 1 問も畳まずに入れる
+    rows = d1(
+        exam, db_name,
+        "SELECT COUNT(*) AS all_q,"
+        " COUNT(DISTINCT CASE WHEN content_key IS NULL OR content_key = '' THEN NULL ELSE content_key END) AS uniq_keys,"
+        " SUM(CASE WHEN content_key IS NULL OR content_key = '' THEN 1 ELSE 0 END) AS no_key"
+        " FROM past_questions",
+    )[0]
+    folded_total = (rows["uniq_keys"] or 0) + (rows["no_key"] or 0)
+    dup = d1(
+        exam, db_name,
+        "SELECT content_key AS k, COUNT(*) AS n FROM past_questions"
+        " WHERE content_key IS NOT NULL AND content_key <> ''"
+        " GROUP BY content_key HAVING COUNT(*) > 1 ORDER BY COUNT(*) DESC LIMIT 1",
+    )
+    if not dup:
+        r.warn(f"{L}: この対象には同一内容の過去問の組が無いので、まとめる側（3・4）は成立しない（未検査）")
+    elif rows["all_q"] <= folded_total:
+        r.error(
+            f"{L} 2: 過去問が {rows['all_q']} 件で、畳んだ件数 {folded_total} を上回らない"
+            "（同一内容の組があるのに全問残っていない）"
+        )
+
+    # 3. 範囲を絞った演習では同一内容を 1 問にまとめる（代表に同一内容の件数が付く）
+    topics = (got.get("/topics?limit=500") or {}).get("topics") or []
+    detail = got.get("topic_detail")
+    pick = detail if detail and any(q["timesAsked"] > 1 for q in (detail.get("questions") or [])) else None
+    if pick is None:
+        for t in [x for x in topics if x["questionCount"] > 1][:12]:
+            st, data, _ = c.call("GET", f"/topics/{t['id']}")
+            if st == 200 and isinstance(data, dict) and any(
+                q["timesAsked"] > 1 for q in (data.get("questions") or [])
+            ):
+                pick = data
+                break
+    if dup and pick is None:
+        r.warn(f"{L}: 見た論点の中に同一内容の代表が無く、まとめる側（3・4）は未検査")
+    if pick:
+        topic_id = pick["topic"]["id"]
+        questions = pick["questions"]
+        folded = [q for q in questions if q["timesAsked"] > 1]
+        c.call("DELETE", "/sessions/current")
+        st, created, text = c.call(
+            "POST", "/sessions", {"kind": "drill", "topicId": topic_id, "size": min(len(questions), 100)}
+        )
+        if not r.status(f"{L} 3 論点 {topic_id} の演習を開始", st, 201, None if st == 201 else text[:200]):
+            return
+        if not isinstance(created, dict) or not created.get("id"):
+            r.error(f"{L} 3: 作成の本文に id が無い")
+            return
+        sid = created["id"]
+        seen: list[str] = []
+        marks: dict[str, tuple[int, list]] = {}
+        for i in range(created["questionCount"]):
+            st, cur, _ = c.call("GET", f"/sessions/{sid}/current")
+            if st != 200 or not (cur or {}).get("question"):
+                r.error(f"{L} 3: {i + 1} 問目が取れない（status {st}）")
+                break
+            q = cur["question"]
+            key = squeeze(q["text"])
+            seen.append(key)
+            marks[key] = (q["timesAsked"], q["otherCitations"])
+            st, _, _ = c.call("POST", f"/sessions/{sid}/answer", {"idx": q["idx"], "answer": first_choice(q)})
+            if st != 200:
+                r.error(f"{L} 3: {i + 1} 問目の回答が {st}")
+                break
+        dupes = [t for t in set(seen) if seen.count(t) > 1]
+        if dupes:
+            r.error(f"{L} 3: 1 回の出題に同じ内容の問題が 2 度出ている {len(dupes)} 件: {dupes[0][:40]}…")
+
+        # 4. 同じ内容が何回出題されたかと、代表以外の出典が問題に付く
+        hit = next((squeeze(q["text"]) for q in folded if squeeze(q["text"]) in marks), None)
+        if hit is None:
+            r.warn(f"{L} 4: 同一内容の代表が今回の出題に入らず未検査")
+        else:
+            times, others = marks[hit]
+            if times < 2:
+                r.error(f"{L} 4: 代表の出題回数が {times}（同一内容の組なので 2 以上のはず）")
+            elif len(others) != times - 1:
+                r.error(
+                    f"{L} 4: 代表以外の出典が {len(others)} 件"
+                    f"（同じ内容が {times} 回なら {times - 1} 件のはず）"
+                )
+        c.call("DELETE", "/sessions/current")
+
+    # 5. 公開回の通し受験は同一内容をまとめず、原本どおりに出す
+    exams = (got.get("/exams") or {}).get("exams") or []
+    if roadmap or not exams:
+        r.warn(f"{L} 5: 公開回の通し受験が無い対象なので未検査")
+    else:
+        e = exams[0]
+        c.call("DELETE", "/sessions/current")
+        st, created, text = c.call("POST", "/sessions", {"kind": "mock", "exam": e["exam"]})
+        if r.status(f"{L} 5 {e['exam']} の通し受験", st, 201, None if st == 201 else text[:200]):
+            if (created or {}).get("questionCount") != e["questions"]:
+                r.error(
+                    f"{L} 5: 通し受験が {(created or {}).get('questionCount')} 問"
+                    f"（原本どおりなら {e['questions']} 問）"
+                )
+        c.call("DELETE", "/sessions/current")
+
+    r.notes.append(
+        f"{L} の基本の流れ: 過去問 {rows['all_q']} 件（畳むと {folded_total} 件）を残したまま、"
+        "演習は 1 問にまとめ・通し受験は原本どおり"
+    )
+
+
+# @scenario UC-012
+def check_scenario_uc012(c: Client, r: Report, exam: str, db_name: str):
+    """本文と直前に開いていた画面を送ると、未処理で保存され、受け付けた印だけが返る。"""
+    L = "UC-012"
+    # 1〜3. 直前に開いていた画面を端末に覚えるのと上部メニューは画面側（check_render.tsx）
+    d1(exam, db_name, "DELETE FROM feedback WHERE body LIKE 'apicheck scenario %'")
+    marker = f"apicheck scenario {uuid.uuid4()}"
+
+    # 4. 本文（2,000 字以内）と、直前に開いていた画面（パス・論点 ID）を送信する
+    st, data, text = c.call("POST", "/feedback", {"body": marker, "page": "/topics/1", "topicId": 1})
+    if not r.status(f"{L} 4 フィードバックを送る", st, 201, None if st == 201 else text[:200]):
+        return
+
+    # 5. 本文と画面の情報を利用者に紐づけて保存し、受け付けた印を返す（その場で応答しない）
+    fid = (data or {}).get("id")
+    if not isinstance(fid, str) or not fid:
+        r.error(f"{L} 5: 受け付けた印（id）が返らない")
+        return
+    said = [v for v in (data or {}).values() if isinstance(v, str) and JAPANESE.search(v)]
+    if said:
+        r.error(f"{L} 5: 応答に日本語の文が入っている（その場で応答しない。受付文は画面が出す）: {said[0][:40]}")
+    rows = d1(exam, db_name, f"SELECT body, status, page, topic_id FROM feedback WHERE id = '{fid}'")
+    if not rows:
+        r.error(f"{L} 5: 201 が返ったのに feedback 表に行が無い")
+    else:
+        row = rows[0]
+        if row.get("body") != marker:
+            r.error(f"{L} 5: 保存された本文が送った本文と違う（{str(row.get('body'))[:40]}）")
+        if row.get("page") != "/topics/1" or row.get("topic_id") != 1:
+            r.error(f"{L} 5: 保存された画面（パス・論点 ID）が送った値と違う")
+        # 事後条件: 未処理の状態で溜まり、開発側が取り出して改善に回せる
+        if row.get("status") != "new":
+            r.error(f"{L} 事後条件: 状態が未処理（new）でない（{row.get('status')!r}）")
+    # 6. 受付文だけを出すのは画面（check_render.tsx）
+    d1(exam, db_name, f"DELETE FROM feedback WHERE id = '{fid}'")
+    r.notes.append(f"{L} の基本の流れ: 本文と直前の画面を送信 → 未処理で保存 → 受け付けた印だけが返る")
+
+
+# @scenario UC-014
+def check_scenario_uc014(c: Client, r: Report, got: dict, exam: str, db_name: str):
+    """セキュリティヘッダ → Bearer トークンで本人を確定 → 本文の検証 → パスワードはハッシュで保存し照合。"""
+    L = "UC-014"
+    want = {
+        "content-security-policy": None,
+        "strict-transport-security": None,
+        "x-frame-options": "DENY",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": None,
+    }
+
+    def headers_on(label: str):
+        for name, value in want.items():
+            got_value = c.last_headers.get(name)
+            if got_value is None:
+                r.error(f"{L}: {label} にヘッダ {name} が無い")
+            elif value is not None and got_value != value:
+                r.error(f"{L}: {label} のヘッダ {name} が {got_value!r}（{value!r} のはず）")
+
+    # 1. 学び側の全応答にセキュリティヘッダが載る
+    st, _, _ = c.call("GET", "/health", token=None)
+    if r.status(f"{L} 1 公開の経路", st, 200):
+        headers_on("公開の経路の応答")
+
+    # 2. まなびばの応答は scripts/check_portal_api.py の担当（別のサーバ）
+    # 3. 保護された API を Bearer トークン付きで呼ぶ → 本人を確定してから処理に進む
+    st, me, _ = c.call("GET", "/me")
+    if r.status(f"{L} 3 トークン付きの呼び出し", st, 200):
+        if not ((me or {}).get("user") or {}).get("id"):
+            r.error(f"{L} 3: 本人（user）が応答に無い（本人を確定していない）")
+        headers_on("認証の要る経路の応答")
+
+    # 4. まなびばの Cookie の経路は scripts/check_portal_api.py の担当
+    # 5. POST の本文をスキーマで検証し、通った値だけを使う
+    detail = got.get("topic_detail")
+    if not detail:
+        r.error(f"{L} 5: 出題できる論点が取れなかったので本文の検証を通せない")
+    else:
+        c.call("DELETE", "/sessions/current")
+        st, created, text = c.call(
+            "POST", "/sessions", {"kind": "drill", "topicId": detail["topic"]["id"], "size": 2}
+        )
+        if r.status(f"{L} 5 正しい本文の POST", st, 201, None if st == 201 else text[:200]):
+            if not 0 < ((created or {}).get("questionCount") or 0) <= 2:
+                r.error(f"{L} 5: 送った問題数が使われていない（{(created or {}).get('questionCount')}）")
+        c.call("DELETE", "/sessions/current")
+
+    # 6. パスワードを含む本文は、平文で持たずハッシュにして保存し、照合もハッシュで行う
+    st, data, _ = c.call("POST", "/auth/login", {"email": EMAIL, "password": PASSWORD}, token=None)
+    if st == 404:
+        r.warn(f"{L} 6: この環境は SSO でパスワードの経路が無いので、保存と照合は未検査")
+    else:
+        if r.status(f"{L} 6 パスワードの照合", st, 200, data):
+            if not (data or {}).get("token"):
+                r.error(f"{L} 6: 照合が通ったのにトークンが返らない")
+        try:
+            rows = d1(exam, db_name, f"SELECT password_hash AS h FROM users WHERE email = '{EMAIL}'")
+        except Exception as ex:
+            r.warn(f"{L} 6: 保存されたパスワードの形を D1 で確かめられなかった: {str(ex)[:80]}")
+        else:
+            stored = (rows[0]["h"] if rows else None) or ""
+            if stored == PASSWORD:
+                r.error(f"{L} 6: パスワードが平文で保存されている")
+            m = re.match(r"^(\d+):[0-9a-f]+:[0-9a-f]+$", stored)
+            if not m:
+                r.error(f"{L} 6: 保存された値が <反復回数>:<ソルト>:<ハッシュ> の形でない（{stored[:40]}）")
+            elif int(m.group(1)) > 100_000:
+                r.error(f"{L} 6: 反復回数が {m.group(1)}（Cloudflare Workers の上限 100,000 以下のはず）")
+
+    # 事後条件: 本人として呼ばれたときだけ処理され、失敗はステータスと日本語の {error} で返る
+    st, data, _ = c.call("GET", "/me", token=None)
+    if r.status(f"{L} 事後条件 本人でない呼び出し", st, 401, data):
+        r.error_body(f"{L} 事後条件 401 の本文", data)
+        headers_on("401 の応答")
+    r.notes.append(f"{L} の基本の流れ: ヘッダ 5 種 → トークンで本人を確定 → 本文の検証 → パスワードはハッシュ")
+
+
+# @scenario UC-017
+def check_scenario_uc017(c: Client, r: Report, exam: str, db_name: str):
+    """死活確認 → 学びごとの D1 → 対象の設定は登録簿の 1 か所から。"""
+    L = "UC-017"
+    sys.path.insert(0, str(Path(__file__).parent)); from targets import target as _target
+
+    # 1. 学び側の死活確認を認証なしで叩く
+    st, data, _ = c.call("GET", "/health", token=None)
+    if r.status(f"{L} 1 学び側の死活確認", st, 200) and data != {"ok": True}:
+        r.error(f"{L} 1: 本文が {{ok: true}} でない（{json.dumps(data, ensure_ascii=False)[:60]}）")
+
+    # 2. まなびばの死活確認は scripts/check_portal_api.py の担当
+    # 3. 本番のトークンの秘密は scripts/check_sso_prod.sh の担当（ローカルは開発用の既定値）
+    # 4. データの保存先（学びごとの D1）をスキーマの表として読み書きする
+    for table in ("users", "topics", "past_questions", "sessions", "feedback"):
+        try:
+            d1(exam, db_name, f"SELECT COUNT(*) AS n FROM {table}")
+        except Exception as ex:
+            r.error(f"{L} 4: 学びごとの D1 の {table} を引けない: {str(ex)[:80]}")
+
+    # 5. 対象の名前と設定は登録簿の 1 か所から解決する
+    t = _target(exam)
+    want_size, want_sec = t.get("mockSize"), (t.get("mockMinutes") or 0) * 60
+    if not want_size or not want_sec:
+        r.error(f"{L} 5: 登録簿から対象『{exam}』の問題数・制限時間が解決できない")
+    else:
+        rows = d1(exam, db_name, "SELECT mock_size, mock_time_limit_sec FROM app_settings WHERE id = 'default'")
+        if not rows:
+            r.error(f"{L} 5: app_settings に id='default' の行が無い（設定が既定値に落ちる）")
+        elif (rows[0]["mock_size"], rows[0]["mock_time_limit_sec"]) != (want_size, want_sec):
+            r.error(
+                f"{L} 5: 保存された設定 {rows[0]['mock_size']} 問 / {rows[0]['mock_time_limit_sec']} 秒が"
+                f"登録簿の {want_size} 問 / {want_sec} 秒と違う"
+            )
+
+    # 6. seed の門（回ごとの問題数）は scripts/check_seed.py の担当
+    # 7. 本番の秘密の一覧は scripts/check_sso_prod.sh の担当（本番には当てない）
+    # 事後条件: 死活確認は認証なしで通り、他の API は同じ条件で 401
+    st, data, _ = c.call("GET", "/me", token=None)
+    r.status(f"{L} 事後条件 死活確認以外は認証なしで 401", st, 401, data)
+    r.notes.append(f"{L} の基本の流れ: 死活確認 → 学びごとの D1 の 5 表 → 対象の設定は登録簿と一致")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     sys.path.insert(0, str(Path(__file__).parent)); from targets import keys as _keys, deploy as _deploy
@@ -1554,6 +2237,15 @@ def main() -> int:
     check_exam_attempts(c, r, got, args.exam, other)
     check_security_headers(c, r)
     check_feedback(c, r, args.exam, db_name)
+    # UC の基本の流れの写し。ここまでの検査が作った進行中のセッションと feedback の行を
+    # 片付けたあと（＝素の状態）に回すので、最後に置く。
+    check_scenario_uc007(c, r, got)
+    check_scenario_uc008(c, r, got, args.exam, db_name)
+    check_scenario_uc009(c, r, got, args.exam, db_name)
+    check_scenario_uc011(c, r, got, args.exam, db_name)
+    check_scenario_uc012(c, r, args.exam, db_name)
+    check_scenario_uc014(c, r, got, args.exam, db_name)
+    check_scenario_uc017(c, r, args.exam, db_name)
 
     # --- 結果 -------------------------------------------------------------
     print(f"{args.base}  試験『{args.exam}』  D1『{db_name}』")

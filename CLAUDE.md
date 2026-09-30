@@ -75,6 +75,8 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 | **仕様 ⇔ コード ⇔ テストのトレーサビリティ**（`docs/spec.yaml`・`@implements`／`@verifies`・`scripts/trace_check`・Stop フック。harness から取った物と取らなかった物、第 1 段の範囲） | [`docs/作業ログ_2026-09-28_トレーサビリティ.md`](docs/作業ログ_2026-09-28_トレーサビリティ.md) |
 | **仕様書 → ユースケース → 要件 の 3 層化**（UC を書類に、要件を 1 か所のコードの粒度に。trace_check 2.0.0 の S4・S5・C7） | [`docs/作業ログ_2026-09-29_三層のトレーサビリティ.md`](docs/作業ログ_2026-09-29_三層のトレーサビリティ.md) |
 | **要件の仕分け表**（点。監査で仕様書に無いと判った要件 116 件と矛盾 3 件を、残す（追記先の節）／消す／合わせる の案で 1 件ずつ。2026-09-29 に全件「現状を仕様書に書いて残す」で決着） | [`docs/検討事項_2026-09-29_要件の仕分け.md`](docs/検討事項_2026-09-29_要件の仕分け.md) |
+| **用語集**（線。画面に出る語と識別子の正本。spec-author が書き、implementer と test-author はこの語しか使わない） | [`docs/01-glossary.md`](docs/01-glossary.md) |
+| **保留台帳**（線。reviewer の指摘のうち機械判定に落とせない物。縮む方向にしか動かない） | [`docs/verification/DEFERRED.md`](docs/verification/DEFERRED.md) |
 | **要件（REQ）の正本**（線。`bash scripts/trace_check` が読む。UC の 1 ステップに属し 1 要件 1 か所のコード。実装前に ID を振る） | [`docs/spec.yaml`](docs/spec.yaml) |
 | **ユースケースの書類**（線。1 件 1 枚。frontmatter の source が仕様書の節、基本の流れ／例外の流れのステップに要件が紐づく） | [`docs/usecases/`](docs/usecases/) |
 | 一斉検査のレビュー全量（学習系・受験系。改善候補の根拠） | [`docs/レビュー詳細_2026-09-02_学習系.md`](docs/レビュー詳細_2026-09-02_学習系.md) / [`docs/レビュー詳細_2026-09-02_受験系.md`](docs/レビュー詳細_2026-09-02_受験系.md) |
@@ -229,10 +231,11 @@ report してきた例が複数あった（ファイルの中身は正しかっ�
 
 ## 仕様 ⇔ コード ⇔ テスト の対応（作業完了の条件）
 
-- **要求を受けたら Skill `/develop` の手順で動く**: 仕様書（`docs/要件定義書_draft.md` の節）→ ユースケースの書類（`docs/usecases/UC-xxx.md`。流れをステップに）→ 要件（`docs/spec.yaml`。1 ステップに 1 つ以上、**1 要件 1 か所のコード**）の順に書き直して承認 → `implementer` と `test-author` を**別コンテキストで並行**（test-author は実装を読まず Bash も持たない。中央 `reports/106`）→ `npm test` が通るまで。書き込みの瞬間は `write_gate`（PreToolUse。spec に差分か `.trace-gate/work.json` の REQ 宣言が無いと `src/`・`tests/` に書けない）、終了の瞬間は `stop_gate`（Stop）が止める
+- **要求を受けたら Skill `/develop` の手順で動く**: `spec-author`（実装もテストも読まない）が 仕様書（`docs/要件定義書_draft.md` の節）→ ユースケースの書類（`docs/usecases/UC-xxx.md`。流れをステップに）→ 要件（`docs/spec.yaml`。1 ステップに 1 つ以上、**1 要件 1 か所のコード**）→ 用語集 の順に草案を書き、本人が承認 → `implementer` と `test-author` を**別コンテキストで並行**（test-author は実装を読まず Bash も持たない。中央 `reports/106`）→ `npm test` が通るまで。書き込みの瞬間は `write_gate`（PreToolUse。spec に差分か `.trace-gate/work.json` の REQ 宣言が無いと `src/`・`tests/` に書けない）、終了の瞬間は `stop_gate`（Stop）が止める
 - **実装の前に `docs/spec.yaml` に要件 ID（REQ-xxx）があり、その `usecase`・`step` が UC の書類のステップを指しているか確かめる。** 無ければ UC のステップと要件の追加を提案する（`bash scripts/trace_check --next req`／`--next uc` で次の番号。決めたが未実装なら `status: draft`）。仕様に無い機能を勝手に作らない。仕様書から直接コードに結ばない（UC → REQ を経る）
 - **コードには `@implements REQ-xxx`、テストには `@verifies REQ-xxx`** を、その単位（関数・クラス・ルートハンドラ・テストケース）の直前のコメントに書く。ID だけを書き、要件の文を写さない。ファイル先頭にまとめない。コメントは今の仕様だけ（経緯・日付を書かない）
 - **作業完了の条件は `npm test`（trace_check → 単体テスト → check_source → check_docs）が全部通ること。** Stop フック（ユーザー設定）・pre-commit・CI が同じ検査を回す。落ちたら `[NG]` の行を直す
+- **親（この会話）は仕様も実装もテストも書かない。** 赤は三分岐で裁く: ①仕様が決めている → 実装の欠陥（implementer） ②テストが仕様に無い手順・DOM を固定 → test-author が再導出 ③仕様が表現できていない → spec-author。コミット前に `reviewer`（別コンテキスト・読み取り専用）の `阻止` ゼロ。UC 1 本にシナリオテスト 1 本（`@scenario UC-xxx`。`require_scenario: true`）
 - **要件は仕様書の文を `quote` に引く**（`trace_check` の S6 が実在を見る）。引ける文が無ければ仕様書に先に書いて本人の承認。赤の切り分けで実装を読んで要件やテストを実装に寄せない（追認）。テスト設計に渡す契約は名前と型だけ
 - **どの要件にも当たらないコードは、除外ではなく要件を書いてから実装する**（仕様が絶対の正解。2026-09-29 本人）。`scripts/trace_ignore` は空のまま。検査の緩和・テストの skip・中身の無いタグやテストは**本人の許可なく行わない**
 

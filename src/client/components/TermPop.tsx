@@ -5,13 +5,12 @@ import { useGlossary } from '../lib/glossary'
 
 type Pos = { top: number; left: number }
 
-/** 本文に出す表示名。用語集の見出し語は論点名に合わせるため
- *  `リスク対応（リスク回避，リスク共有（…），リスク保有）` のように長い正式表記になる。
- *  文中でそのまま出すと読めないので、長いときだけ末尾の（…）を落とす。
- *  ポップの見出しには正式表記をそのまま出す（そちらは 1 行で読める）。 */
+/** 本文に出す表示名。用語集の見出し語は `ARP（アドレス解決プロトコル）` のように
+ *  読み・英字表記の括弧書きを末尾に持つ正式表記になる。文中ではその括弧書きを落として
+ *  短くする。末尾に括弧書きが無い語はそのまま。
+ *  ポップの見出しには正式表記をそのまま出す。 */
 // @implements REQ-140
 export function shortTerm(term: string): string {
-  if (term.length <= 14) return term
   const m = term.match(/^(.+?)\s*[（(].*[）)]$/)
   return m ? m[1] : term
 }

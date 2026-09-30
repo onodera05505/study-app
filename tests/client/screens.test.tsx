@@ -279,4 +279,30 @@ describe('ヘッダーの本人の名前', () => {
     await draw(h(App))
     expect(text()).not.toContain('寺田テスト')
   })
+
+  // @verifies REQ-064
+  it('トークンを保存した時点から名前が出る（画面の読み直しを待たない）', async () => {
+    // トークンを保存する操作は UC-001 の step 5〜8（戻ってきたコードを渡し、返ったトークンを保存する）。
+    // 保存のあとページを読み直していない、この描画のまま名前を見る。
+    const TOKEN = jwtWith({ sub: 'u-1', name: '寺田テスト', role: 'MEMBER' })
+    stubApi((url) =>
+      url.includes('/api/auth/sso')
+        ? { token: TOKEN }
+        : url.includes('/api/me')
+          ? ME
+          : url.includes('/auth/config')
+            ? SSO_CONFIG
+            : [],
+    )
+    const entry = '/sso/callback?code=abc123'
+    window.history.replaceState({}, '', entry)
+    await draw(h(App), entry)
+    expect(getToken(), 'トークンが保存されていない').toBe(TOKEN)
+    const header = container.querySelector('header')
+    expect(header, 'ヘッダー（header 要素）が無い').not.toBeNull()
+    expect(
+      header!.textContent ?? '',
+      'トークンを保存しても、読み直すまでヘッダーに名前が出ない',
+    ).toContain('寺田テスト')
+  })
 })

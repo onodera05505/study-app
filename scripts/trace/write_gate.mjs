@@ -7,11 +7,11 @@
 // 判定（書き込み先が traceconfig.json の source / tests の中のときだけ）:
 //   通す: docs/spec.yaml に未コミットの変更がある（要件の書き直しが先に行われている）
 //   通す: .trace-gate/work.json が {"reqs": ["REQ-xxx", …], "kind": "bugfix|feature|refactor", "note": "…"} を持ち、全 ID が spec.yaml に実在し withdrawn でない
-//         （仕様は正しく実装が違うバグ修正など、要件を変えずに触る作業。何の要件のための書き込みかを先に宣言させる）
+//         （仕様は正しく実装が違うバグ修正など、要件を変えずに触る作業。何の要件のための書き込みかを先に宣言させる。**宣言を書くのは親だけ**。担当が自分で置いた宣言は門の迂回。Stop フックは宣言が残っていると止める）
 //   止める（exit 2）: 上のどちらも無い。stderr に「先に docs/spec.yaml の要件を書き換える（新規は status: draft、次の番号は trace_check --next req）か、.trace-gate/work.json に対象の REQ を宣言する」
 //   通す: spec.yaml・traceconfig.json・trace_ignore・.trace-gate/・docs/ 配下・source/tests の外（門の前提を書く操作は止めない）
 //   通す: フック自身の内部エラー（壊れたフックでセッションを止めない）。判定は .trace-gate/log.jsonl に 1 行
-export const VERSION = "1.1.0";
+export const VERSION = "1.2.0";
 
 import fs from "node:fs";
 import path from "node:path";
@@ -61,6 +61,8 @@ function main() {
   const stateDir = path.join(root, ".trace-gate");
   const spec = cfg.spec ?? "docs/spec.yaml";
   // 門の前提を書く操作は止めない
+  // 宣言そのものを Write/Edit で置くのは止める（親が Bash で置く。Bash を持たない担当が自分で宣言して門を迂回した事例）
+  if (rel === ".trace-gate/work.json") { console.error("[write-gate] .trace-gate/work.json は担当が置くものではありません（門の迂回）。宣言は親が作業単位ごとに置き、終わったら消す。要件を変える作業なら先に spec を書き換える"); log(stateDir, { decision: "block", reason: "declaration-by-tool", file: rel }); return 2; }
   if (rel === spec || rel === "traceconfig.json" || rel === (cfg.ignore ?? "scripts/trace_ignore") || rel.startsWith(".trace-gate/") || rel.startsWith("docs/")) return 0;
   const gated = [...asList(cfg.source), ...asList(cfg.tests)].some((g) => inGroup(rel, g));
   if (!gated) return 0;

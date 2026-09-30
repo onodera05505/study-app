@@ -48,7 +48,8 @@ export function App() {
       .catch(() => setPortal(null))
   }, [])
 
-  // 新しい版の検知（要件 §5.6）。最初に版を覚え、画面を移るときと 5 分おきに見比べる
+  // 新しい版の検知（要件 §5.6）。開いたときに版の印を 1 回だけ覚え、その時点では見比べない。
+  // 見比べるのは画面を移ったときと 5 分おき。
   useEffect(() => {
     rememberBuild()
     const id = setInterval(() => {
@@ -56,7 +57,11 @@ export function App() {
     }, CHECK_INTERVAL_MS)
     return () => clearInterval(id)
   }, [])
+  // 覚えているのは「最後に見たパス」。開いた直後は同じなので見比べず、移るたびに見比べる
+  const seenPath = useRef(location.pathname)
   useEffect(() => {
+    if (location.pathname === seenPath.current) return
+    seenPath.current = location.pathname
     checkForUpdate().then((v) => v && setUpdateReady(true))
   }, [location.pathname])
 

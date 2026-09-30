@@ -34,6 +34,9 @@ scripts/check_sso_prod.sh は本番の死活だけ見る。**まなびば単独�
   本文を送ると 400。{error} はどの項目（メール・パスワード・名前）が悪いか分かる日本語で、
   スキーマの既定の英語の文言（Invalid・Required・Expected・received）を含まない
 - REQ-302 知らない /api — 存在しない /api の経路は、未ログインでもログイン後でも 404 で {error} が日本語
+- **UC の基本の流れの写し**（`check_scenario_uc0xx`。`docs/usecases/UC-xxx.md` の番号付きステップを順に
+  1 本で通し、最後に事後条件を見る）— 正常系だけ。例外の流れと境目は上の検査が見る。
+  画面の操作と描画は HTTP では踏めないので、画面が使う応答まで
 
 ## 触るもの・触らないもの
 
@@ -70,6 +73,7 @@ ADMIN_EMAIL = "portalcheck-admin@example.com"
 MEMBER_EMAIL = "portalcheck-member@example.com"
 TEMP_EMAIL = "portalcheck-temp@example.com"
 SCHEMA_EMAIL = "portalcheck-schema@example.com"
+SCENARIO_EMAIL = "portalcheck-scenario@example.com"
 PASSWORD = "portalcheck-pass-1234"
 PREFIX = "portalcheck-"
 
@@ -988,6 +992,155 @@ def check_unknown_api_path(r: Report, base: str, admin: Client):
 
 
 # --------------------------------------------------------------------------
+# UC の基本の流れの写し（scenario）
+#
+# 1 UC につき 1 本。docs/usecases/UC-xxx.md の「基本の流れ」の番号付きステップを順に
+# 1 操作か 1 応答ずつ写し、最後に「事後条件」を見る。正常系だけを通す。
+# --------------------------------------------------------------------------
+
+
+# @scenario UC-002
+def check_scenario_uc002(admin: Client, r: Report, base: str, learn: list[dict], admin_id: str):
+    """管理の API を呼ぶ → 一覧 → 作成 → 更新（権限の置き換え）→ パスワード再設定 → 削除。"""
+    L = "UC-002"
+    keys = [l["key"] for l in learn]
+    first, second = keys[0], (keys[1] if len(keys) > 1 else keys[0])
+
+    def row_of(account_id: str) -> dict:
+        _, data, _, _ = admin.call("GET", "/api/admin/accounts")
+        rows = (data or {}).get("accounts") if isinstance(data, dict) else []
+        return next((a for a in (rows or []) if a.get("id") == account_id), {})
+
+    # 1. 管理の画面を開き、管理の API を呼ぶ（役割が ADMIN の呼び出しは通る）
+    st, data, _, _ = admin.call("GET", "/api/admin/accounts")
+    if not r.status(f"{L} 1 管理者が管理の API を呼ぶ", st, 200, data):
+        return
+
+    # 2. アカウントの一覧（名前・メール・役割と、その人に付いている学びの権限）
+    rows = (data or {}).get("accounts") if isinstance(data, dict) else None
+    if not isinstance(rows, list) or not rows:
+        r.error(f"{L} 2: 一覧が accounts の配列で返らない")
+        return
+    me_row = next((a for a in rows if a.get("id") == admin_id), None)
+    if not me_row:
+        r.error(f"{L} 2: 一覧に管理者自身の行が無い（全アカウントを返すこと）")
+    else:
+        for key in ("email", "name", "role"):
+            if not me_row.get(key):
+                r.error(f"{L} 2: 一覧の行に {key} が無い")
+        if not isinstance(me_row.get("grants"), list):
+            r.error(f"{L} 2: 行の学びの権限（grants）が配列でない（権限なしは []）")
+
+    # 3. メール・名前・初期パスワード・開ける学びを入れて作成する（役割の既定は利用者）
+    st, data, _, _ = admin.call(
+        "POST", "/api/admin/accounts",
+        {"email": SCENARIO_EMAIL, "name": "シナリオの利用者", "password": PASSWORD, "grants": [first]},
+    )
+    if not r.status(f"{L} 3 アカウントを作成", st, 201, data):
+        return
+    target_id = data.get("id") if isinstance(data, dict) else None
+    if not target_id:
+        r.error(f"{L} 3: 作成の本文に id が無い")
+        return
+    if data.get("role") != "MEMBER":
+        r.error(f"{L} 3: 役割の既定が利用者（MEMBER）でない（{data.get('role')!r}）")
+    if not d1(f"SELECT 1 AS ok FROM grants WHERE account_id = {q(target_id)} AND learning = {q(first)}"):
+        r.error(f"{L} 3: 権限の行（{first}）が作られていない")
+
+    # 4. 名前・役割・開ける学びを送って更新する（権限は送られた一覧に置き換わる）
+    want = [second]
+    st, data, _, _ = admin.call(
+        "PUT", f"/api/admin/accounts/{target_id}",
+        {"name": "シナリオの利用者2", "role": "MEMBER", "grants": want},
+    )
+    r.status(f"{L} 4 名前・役割・開ける学びを更新", st, 200, data)
+    row = row_of(target_id)
+    if sorted(row.get("grants") or []) != sorted(want):
+        r.error(f"{L} 4: 権限が送った一覧に置き換わっていない（{row.get('grants')!r} / {want}）")
+    if row.get("name") != "シナリオの利用者2":
+        r.error(f"{L} 4: 名前の更新が反映されていない（{row.get('name')!r}）")
+    if row.get("role") != "MEMBER":
+        r.error(f"{L} 4: 役割が送った値でない（{row.get('role')!r}）")
+    if second == first:
+        r.warn(f"{L} 4: 学びが 1 つしか無いので、前の権限が外れることは未検査")
+
+    # 5. ある人のパスワードを再設定する（ハッシュを入れ替え、その人のセッションを全部切る）
+    target = Client(base)
+    st, _, _, _ = target.call("POST", "/api/login", {"email": SCENARIO_EMAIL, "password": PASSWORD})
+    if not r.status(f"{L} 5 の前提 その人がログインしている", st, 200):
+        return
+    new_pw = PASSWORD + "-scenario"
+    st, data, _, _ = admin.call("POST", f"/api/admin/accounts/{target_id}/password", {"password": new_pw})
+    r.status(f"{L} 5 パスワードを再設定", st, 200, data)
+    st, data, _, _ = target.call("GET", "/api/me")
+    r.status(f"{L} 5 開いていたセッションが切れる", st, 401, data)
+    st, data, _, _ = Client(base).call("POST", "/api/login", {"email": SCENARIO_EMAIL, "password": new_pw})
+    r.status(f"{L} 5 再設定したパスワードで入れる", st, 200, data)
+
+    # 6. アカウントを削除する（アカウントとその権限を消す）
+    st, data, _, _ = admin.call("DELETE", f"/api/admin/accounts/{target_id}")
+    r.status(f"{L} 6 アカウントを削除", st, 200, data)
+
+    # 事後条件: accounts と grants が操作どおりになっている
+    if row_of(target_id):
+        r.error(f"{L} 事後条件: 削除したアカウントが一覧に残っている")
+    if d1(f"SELECT 1 AS ok FROM accounts WHERE email = {q(SCENARIO_EMAIL)}"):
+        r.error(f"{L} 事後条件: 削除したアカウントの行が accounts に残っている")
+    if d1(f"SELECT 1 AS ok FROM grants WHERE account_id = {q(target_id)}"):
+        r.error(f"{L} 事後条件: 削除したアカウントの権限が grants に残っている")
+    # 事後条件: 管理者自身の管理者権限とアカウントは残っている
+    rows = d1(f"SELECT role FROM accounts WHERE id = {q(admin_id)}")
+    if not rows or rows[0].get("role") != "ADMIN":
+        r.error(f"{L} 事後条件: 管理者自身のアカウントか管理者権限が残っていない（{rows and rows[0]}）")
+    st, data, _, _ = admin.call("GET", "/api/me")
+    r.status(f"{L} 事後条件 管理者はログインしたまま", st, 200, data)
+    r.note(f"{L} の基本の流れ: 管理の API → 一覧 → 作成 → 更新（権限の置き換え）→ 再設定 → 削除")
+
+
+# @scenario UC-003
+def check_scenario_uc003(admin: Client, r: Report, base: str, learn: list[dict]):
+    """自分のパスワードを変える → ログアウトする。"""
+    L = "UC-003"
+    email = f"{PREFIX}scenario-me@example.com"
+
+    # 前提条件: 本人のアカウントがあり、その人でログイン中（Cookie のセッションがある）
+    st, data, _, _ = admin.call(
+        "POST", "/api/admin/accounts",
+        {"email": email, "name": "シナリオの本人", "password": PASSWORD, "grants": [learn[0]["key"]]},
+    )
+    if not r.status(f"{L} の前提 本人のアカウントを用意", st, 201, data):
+        return
+    me = Client(base)
+    st, data, _, _ = me.call("POST", "/api/login", {"email": email, "password": PASSWORD})
+    if not r.status(f"{L} の前提 本人でログイン", st, 200, data):
+        return
+    session_id = me.session_id()
+
+    # 1. 現在のパスワードと新しいパスワードを送る（照合して新しいハッシュに入れ替える）
+    new_pw = PASSWORD + "-mine"
+    st, data, _, _ = me.call("POST", "/api/me/password", {"current": PASSWORD, "next": new_pw})
+    r.status(f"{L} 1 自分のパスワードを変える", st, 200, data)
+
+    # 2. ログアウトする（この端末のセッションを消し、Cookie を失効させる）
+    st, data, _, _ = me.call("POST", "/api/logout", None)
+    r.status(f"{L} 2 ログアウト", st, 200, data)
+
+    # 事後条件: 新しいパスワードでログインでき、前のパスワードでは入れない
+    st, data, _, _ = Client(base).call("POST", "/api/login", {"email": email, "password": new_pw})
+    r.status(f"{L} 事後条件 新しいパスワードで入れる", st, 200, data)
+    st, data, _, _ = Client(base).call("POST", "/api/login", {"email": email, "password": PASSWORD})
+    r.status(f"{L} 事後条件 前のパスワードでは入れない", st, 401, data)
+    # 事後条件: ログアウトした端末の Cookie は使えない
+    st, data, _, _ = me.call("GET", "/api/me")
+    r.status(f"{L} 事後条件 ログアウトした Cookie は使えない", st, 401, data)
+    if not session_id:
+        r.error(f"{L} 事後条件: ログアウト前のセッション ID が Cookie から取れなかった")
+    elif d1(f"SELECT 1 AS ok FROM sessions WHERE id = {q(session_id)}"):
+        r.error(f"{L} 事後条件: ログアウトしたのに sessions の行が残っている")
+    r.note(f"{L} の基本の流れ: パスワードの変更 → ログアウト（新旧のパスワードと Cookie の失効まで）")
+
+
+# --------------------------------------------------------------------------
 
 
 def main() -> int:
@@ -1036,6 +1189,9 @@ def main() -> int:
         code = check_sso_start(r, args.base, learn, admin_grant)
         check_sso_exchange(admin, r, args.base, args.secret, code, admin_grant, learn)
         check_me_password_and_logout(r, args.base)
+        # UC の基本の流れの写し。自分の検査用アカウントを作って消すところまでで完結するので最後に置く。
+        check_scenario_uc002(admin, r, args.base, learn, admin_id)
+        check_scenario_uc003(admin, r, args.base, learn)
     finally:
         wipe()
         left = d1(f"SELECT COUNT(*) AS n FROM accounts WHERE email LIKE {q(PREFIX + '%')}")

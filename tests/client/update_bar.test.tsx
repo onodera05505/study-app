@@ -5,20 +5,25 @@
  *  - 上部メニューの「フィードバック」からフィードバックの画面へ行ける
  *  - 画面を移るたびに版の印を見比べ、違えば帯と「更新」を出す。押したときだけ読み直す
  *
+ *  版の印は「最初の印を 1 回だけ取って覚える」ので、前の件が覚えた印を持ち越すと
+ *  「開いた時点では見比べない」を見られない。1 件ごとに resetModules して App と lib を
+ *  読み直す（tests/client/version.test.ts と同じ立ち上げ方）。
+ *
  *  fetch は偽物。version.json は呼ばれた順に印を返し、API は path ごとの本文を返す。 */
 
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { act, createElement as h } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { MemoryRouter } from 'react-router-dom'
-import { App } from '../../src/client/App'
-import { getLastPage } from '../../src/client/lib/lastPage'
-import { setToken } from '../../src/client/lib/api'
 
-let container: HTMLElement
-let root: Root
+let container: HTMLElement | null = null
+let root: Root | null = null
 
-const text = () => container.textContent ?? ''
+/** 1 件ごとに読み直す（module が覚えている最初の印とトークンを持ち越さない）。 */
+let appMod!: typeof import('../../src/client/App')
+let lastPageMod!: typeof import('../../src/client/lib/lastPage')
+
+const text = () => container?.textContent ?? ''
 
 type Stamp = { build: string; at: string }
 /** 最初に取れる印と、配信後の印。 */
@@ -68,26 +73,54 @@ function jwtWith(payload: Record<string, unknown>): string {
   return `${b64('{"alg":"HS256"}')}.${b64(JSON.stringify(payload))}.sig`
 }
 
-/** 画面を開き直す（MemoryRouter は初期の場所しか見ないので、必ず捨ててから描く）。 */
+/** 1 件ごとの立ち上げ。偽の fetch を置き、module を作り直して App と lib を読み直し、
+ *  ログイン済みのトークンを入れる。返り値で version.json の取得回数を数える。 */
+async function start(stamps: Stamp[]) {
+  const stub = stubFetch(stamps)
+  vi.resetModules()
+  appMod = await import('../../src/client/App')
+  lastPageMod = await import('../../src/client/lib/lastPage')
+  const { setToken } = await import('../../src/client/lib/api')
+  setToken(jwtWith({ sub: 'u-1', name: '寺田テスト', role: 'MEMBER' }))
+  return stub
+}
+
+/** 描いたものを片付ける。 */
+async function teardown() {
+  if (root) {
+    const r = root
+    root = null
+    await act(async () => {
+      r.unmount()
+    })
+  }
+  container?.remove()
+  container = null
+}
+
+/** 画面を開く（MemoryRouter は初期の場所しか見ないので、根ごと作り直して描く）。 */
 async function open(entry: string) {
+  await teardown()
+  container = document.createElement('div')
+  document.body.appendChild(container)
+  root = createRoot(container)
   await act(async () => {
-    root.render(null)
-  })
-  await act(async () => {
-    root.render(h(MemoryRouter, { initialEntries: [entry] }, h(App)))
+    root!.render(h(MemoryRouter, { initialEntries: [entry] }, h(appMod.App)))
   })
 }
 
 /** 文字でリンクを探す。 */
 function link(re: RegExp): HTMLAnchorElement | null {
-  return ([...container.querySelectorAll('a')].find((a) => re.test(a.textContent ?? '')) ??
-    null) as HTMLAnchorElement | null
+  return ([...(container?.querySelectorAll('a') ?? [])].find((a) =>
+    re.test(a.textContent ?? ''),
+  ) ?? null) as HTMLAnchorElement | null
 }
 
 /** 文字でボタンを探す。 */
 function button(re: RegExp): HTMLButtonElement | null {
-  return ([...container.querySelectorAll('button')].find((b) => re.test(b.textContent ?? '')) ??
-    null) as HTMLButtonElement | null
+  return ([...(container?.querySelectorAll('button') ?? [])].find((b) =>
+    re.test(b.textContent ?? ''),
+  ) ?? null) as HTMLButtonElement | null
 }
 
 async function click(el: Element) {
@@ -128,21 +161,15 @@ function countReloads(): { n: number } {
 
 beforeAll(() => {
   ;(globalThis as any).IS_REACT_ACT_ENVIRONMENT = true
-  container = document.createElement('div')
-  document.body.appendChild(container)
-  root = createRoot(container)
 })
 
 beforeEach(() => {
   localStorage.clear()
   sessionStorage.clear()
-  setToken(jwtWith({ sub: 'u-1', name: '寺田テスト', role: 'MEMBER' }))
 })
 
 afterEach(async () => {
-  await act(async () => {
-    root.render(null)
-  })
+  await teardown()
   vi.unstubAllGlobals()
   vi.restoreAllMocks()
 })
@@ -150,20 +177,20 @@ afterEach(async () => {
 describe('直前に開いていた画面の記録（UC-012#1）', () => {
   // @verifies REQ-267
   it('移った先の画面を記録し、フィードバックの画面自身は記録しない', async () => {
-    stubFetch([A])
+    await start([A])
     await open('/topics')
-    expect(getLastPage()?.path).toBe('/topics')
+    expect(lastPageMod.getLastPage()?.path).toBe('/topics')
 
     await open('/feedback')
     // フィードバックの画面は記録しないので、記録は前の画面のまま
-    expect(getLastPage()?.path).toBe('/topics')
+    expect(lastPageMod.getLastPage()?.path).toBe('/topics')
   })
 })
 
 describe('上部メニューのフィードバック（UC-012#3）', () => {
   // @verifies REQ-270
   it('上部メニューの「フィードバック」からフィードバックの画面へ行ける', async () => {
-    stubFetch([A])
+    await start([A])
     await open('/')
     const nav = link(/フィードバック/)
     expect(nav, '上部メニューに「フィードバック」が無い').not.toBeNull()
@@ -171,28 +198,29 @@ describe('上部メニューのフィードバック（UC-012#3）', () => {
 
     await click(nav!)
     // 行き先はフィードバックの画面（本文を書く欄がある）
-    expect(container.querySelector('textarea'), 'フィードバックの画面が描かれていない').not.toBeNull()
+    expect(container!.querySelector('textarea'), 'フィードバックの画面が描かれていない').not.toBeNull()
     expect(text()).toContain('フィードバック')
   })
 })
 
 describe('新しい版の帯（UC-013#3〜#5）', () => {
   // @verifies REQ-280
-  it('画面を移るたびに版の印を見比べる', async () => {
-    const { versionCalls } = stubFetch([A])
+  it('開いた時点では見比べず、画面を移るたびに見比べる', async () => {
+    // 2 つ目の印は違う版。開いた時点で見比べていれば取得が 2 回になり、帯も出てしまう
+    const { versionCalls } = await start([A, B])
     await open('/')
-    const before = versionCalls()
-    expect(before, '画面を開いたときに版の印を見に行っていない').toBeGreaterThan(0)
+    expect(versionCalls(), '開いた時点で版の印を見比べている（最初の印の 1 回だけのはず）').toBe(1)
+    expect(text(), '開いた時点で帯が出ている').not.toContain('新しい版があります')
 
     const nav = link(/フィードバック/)
     expect(nav).not.toBeNull()
     await click(nav!)
-    expect(versionCalls(), '画面を移っても版の印を見比べていない').toBeGreaterThan(before)
+    expect(versionCalls(), '画面を移っても版の印を見比べていない').toBeGreaterThan(1)
   })
 
   // @verifies REQ-281
   it('版が変わっていなければ帯を出さない', async () => {
-    stubFetch([A])
+    await start([A])
     await open('/')
     const nav = link(/フィードバック/)
     if (nav) await click(nav)
@@ -202,7 +230,7 @@ describe('新しい版の帯（UC-013#3〜#5）', () => {
 
   // @verifies REQ-281
   it('版が変わっていれば「新しい版があります。」の帯と「更新」を出す', async () => {
-    stubFetch([A, B])
+    await start([A, B])
     await open('/')
     const nav = link(/フィードバック/)
     expect(nav).not.toBeNull()
@@ -213,7 +241,7 @@ describe('新しい版の帯（UC-013#3〜#5）', () => {
 
   // @verifies REQ-282
   it('「更新」を押したときだけ読み直す', async () => {
-    stubFetch([A, B])
+    await start([A, B])
     const reloads = countReloads()
     await open('/')
     const nav = link(/フィードバック/)

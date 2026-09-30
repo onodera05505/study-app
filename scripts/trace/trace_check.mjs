@@ -5,6 +5,10 @@
 //   node trace_check.mjs [--root DIR] [--config traceconfig.json]   # 検査。1 件でも NG なら exit 1
 //   node trace_check.mjs --index                                    # REQ ごとの UC/ステップ・実装・テストの所在（1 行 1 ID）
 //   node trace_check.mjs --next uc|req [--reserve N]                # 次の空き ID。振った ID は再利用しない
+//   node trace_check.mjs --update-baseline [--allow-growth]          # 既存の違反を台帳 .trace-baseline.json に記録（ラチェット。台帳は減る方向にしか動かない）
+//   node trace_check.mjs --strict                                   # 台帳を無視して全違反で落とす
+// 台帳（baseline）: 既存プロジェクトに後から門を入れるとき「今より悪くしない」から始める。鍵は [NG] の文から <file>:<line> の :line を落とした物、値は件数。
+//   既定は台帳の件数までを許し、超えた分だけ落とす。--update-baseline は件数を減らす更新だけ受け付け、増やすには --allow-growth（門を初めて既存物に当てた 1 回だけ）。
 //
 // 層（traceconfig.json）:
 //   仕様書      spec_document.file の見出し（## 4. … / ### 5.1 …）。規範的な節を spec_document.sections に列挙
@@ -12,7 +16,7 @@
 //               本文の「## 前提条件」「## 基本の流れ」（1. 2. …）「## 例外の流れ」（E1. E2. …）「## 事後条件」
 //   要件        spec の requirements。各 REQ は usecase（1 つ）と step（基本の番号か E 番号）と quote（根拠となる仕様書の文の引用）を持つ
 //   コード      @implements REQ-xxx（単位の直前）。1 つの REQ を実装する単位は max_units_per_req 以下（既定 1）
-//   テスト      @verifies REQ-xxx（テストケースの直前）
+//   テスト      @verifies REQ-xxx（テストケースの直前）。UC 1 本につきシナリオテスト 1 本以上 @scenario UC-xxx（require_scenario、既定 false。基本の流れの実行可能な写し）
 //
 // 見るもの:
 //   S1 形: ID が UC-xxx / REQ-xxx の 3 桁、重複なし、status は draft|active|withdrawn、必須の欄が空でない。UC の id はファイル名と一致
@@ -28,15 +32,17 @@
 //   C5 テストに @verifies が無い（tests.test_pattern。除外は trace_ignore に理由つき）
 //   C6 trace_ignore の行に理由が無い／指す先が実在しない／使われていない
 //   C7 1 つの要件を実装する単位が max_units_per_req を超える（要件が粗い。ステップを分けて細分化する）
+//   C8 @scenario が存在しない・withdrawn の UC を参照している
+//   S7 active な UC に @scenario のテストが 1 本も無い（require_scenario のとき）
 // 失敗の行は [NG] で始め、AI がそのまま直せる具体さで書く。最後に「全N件の要件のうち、実装済みX件・テスト済みY件」。
-export const VERSION = "2.1.1";
+export const VERSION = "2.3.0";
 
 import fs from "node:fs";
 import path from "node:path";
 
 // ------------------------------------------------------------------ 引数
 const argv = process.argv.slice(2);
-const opt = { root: process.cwd(), config: "traceconfig.json", index: false, next: null, reserve: 1, quiet: false };
+const opt = { root: process.cwd(), config: "traceconfig.json", index: false, next: null, reserve: 1, quiet: false, updateBaseline: false, allowGrowth: false, strict: false };
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i];
   if (a === "--root") opt.root = path.resolve(argv[++i]);
@@ -45,11 +51,14 @@ for (let i = 0; i < argv.length; i++) {
   else if (a === "--next") opt.next = argv[++i];
   else if (a === "--reserve") opt.reserve = Number(argv[++i]);
   else if (a === "--quiet") opt.quiet = true;
+  else if (a === "--update-baseline") opt.updateBaseline = true;
+  else if (a === "--allow-growth") opt.allowGrowth = true;
+  else if (a === "--strict") opt.strict = true;
   else if (a === "--help" || a === "-h") { usage(); process.exit(0); }
   else { console.error(`不明な引数: ${a}`); usage(); process.exit(2); }
 }
 function usage() {
-  console.error("usage: node trace_check.mjs [--root DIR] [--config traceconfig.json] [--index] [--next uc|req [--reserve N]]");
+  console.error("usage: node trace_check.mjs [--root DIR] [--config traceconfig.json] [--index] [--next uc|req [--reserve N]] [--update-baseline [--allow-growth]] [--strict]");
 }
 
 // ------------------------------------------------------------------ 設定
@@ -64,6 +73,8 @@ const ucDir = path.resolve(opt.root, cfg.usecases ?? "docs/usecases");
 const ignorePath = path.resolve(opt.root, cfg.ignore ?? "scripts/trace_ignore");
 const maxUnits = Number(cfg.max_units_per_req ?? 1);
 const requireQuote = cfg.require_quote !== false;
+const requireScenario = cfg.require_scenario === true;
+const scenarioRe = new RegExp(cfg.scenario_pattern ?? "@scenario\\s+(UC-\\d{3}(?:\\s*[,/]\\s*UC-\\d{3})*)", "g");
 const normQuote = (t) => String(t).replace(/[\s\u3000]/g, "").replace(/[*`_]/g, "");
 const idRe = { uc: /^UC-\d{3}$/, req: /^REQ-\d{3}$/ };
 const stepRe = /^(?:\d+|E\d+)$/;
@@ -369,6 +380,8 @@ function main() {
       });
     }
   }
+  const scen = new Map(); // UC → [{file,line}]
+  const scenRefs = [];
   for (const g of asList(cfg.tests)) {
     const testRe = g.test_pattern ? new RegExp(g.test_pattern) : null;
     const lookback = g.tag_lookback ?? 6;
@@ -377,11 +390,13 @@ function main() {
       lines.forEach((l, i) => {
         verifiesRe.lastIndex = 0; let m;
         while ((m = verifiesRe.exec(l))) for (const id of splitIds(m[1])) { addRef(veri, id, { file: rel(f), line: i + 1 }); refs.push({ id, file: rel(f), line: i + 1, tag: "@verifies" }); }
+        scenarioRe.lastIndex = 0; let sm;
+        while ((sm = scenarioRe.exec(l))) for (const id of splitIds(sm[1])) { addRef(scen, id, { file: rel(f), line: i + 1 }); scenRefs.push({ id, file: rel(f), line: i + 1 }); }
         if (testRe) {
           const tm = l.match(testRe);
           if (tm) {
             const name = tm[1] ?? l.trim();
-            if (tagsAbove(lines, i, verifiesRe, lookback).length === 0 && !ignored(ignore, rel(f), name))
+            if (tagsAbove(lines, i, verifiesRe, lookback).length === 0 && tagsAbove(lines, i, scenarioRe, lookback).length === 0 && !ignored(ignore, rel(f), name))
               problems.push(`[NG] ${rel(f)}:${i + 1} テスト「${name}」に @verifies タグがありません（確かめる REQ-xxx を直前のコメントに書く）`);
           }
         }
@@ -389,6 +404,16 @@ function main() {
     }
   }
 
+  // C8 シナリオの参照先
+  for (const x of scenRefs) {
+    const u = ucIds.get(x.id);
+    if (!u) problems.push(`[NG] ${x.file}:${x.line} が存在しない UC ${x.id} を参照しています（@scenario）`);
+    else if (u.status === "withdrawn") problems.push(`[NG] ${x.file}:${x.line} が withdrawn の ${x.id} を参照しています（@scenario）`);
+  }
+  // S7 UC ごとのシナリオ
+  if (requireScenario) for (const u of ucIds.values()) {
+    if (u.status === "active" && !scen.has(u.id)) problems.push(`[NG] ${u._file} ${u.id}: シナリオテスト（@scenario ${u.id}。基本の流れを 1 本で実行する）がありません`);
+  }
   // C3
   for (const x of refs) {
     const r = reqIds.get(x.id);
@@ -416,14 +441,42 @@ function main() {
     }
     return 0;
   }
-  const uniq = [...new Set(problems)];
+  let uniq = [...new Set(problems)];
+  // ---- 台帳（baseline ラチェット）
+  const baselinePath = path.resolve(opt.root, cfg.baseline ?? ".trace-baseline.json");
+  const keyOf = (msg) => msg.replace(/(\S+?):\d+(?=[\s:）)]|$)/g, "$1");
+  const counts = new Map(); for (const p of uniq) counts.set(keyOf(p), (counts.get(keyOf(p)) ?? 0) + 1);
+  let allowed = 0, baselineNote = "";
+  if (opt.updateBaseline) {
+    const prev = fs.existsSync(baselinePath) ? JSON.parse(fs.readFileSync(baselinePath, "utf8")).violations ?? {} : {};
+    const grown = [...counts].filter(([k, n]) => n > (prev[k] ?? 0));
+    if (grown.length && !opt.allowGrowth && fs.existsSync(baselinePath)) {
+      console.error(`[NG] 台帳を増やす更新は受け付けません（${grown.length} 種が増加。門を初めて既存物に当てた 1 回だけ --allow-growth で記録し、報告に件数を書く）`);
+      for (const [k, n] of grown.slice(0, 5)) console.error(`  ${k}  ${prev[k] ?? 0} → ${n}`);
+      return 1;
+    }
+    const violations = Object.fromEntries([...counts].sort());
+    fs.writeFileSync(baselinePath, JSON.stringify({ _comment: "trace_check の台帳。既存の違反の件数。減る方向にしか動かさない（減ったら --update-baseline で書き直す）。新しい違反はこの台帳に無いので落ちる", updated: new Date().toISOString().slice(0, 10), violations }, null, 2) + "\n");
+    console.log(`台帳を書いた: ${rel(baselinePath)}（${uniq.length} 件・${counts.size} 種）`);
+    return 0;
+  }
+  if (!opt.strict && fs.existsSync(baselinePath)) {
+    const base = JSON.parse(fs.readFileSync(baselinePath, "utf8")).violations ?? {};
+    const budget = new Map(Object.entries(base));
+    const kept = [];
+    for (const p of uniq) { const k = keyOf(p); const b = budget.get(k) ?? 0; if (b > 0) { budget.set(k, b - 1); allowed++; } else kept.push(p); }
+    uniq = kept;
+    const shrinkable = [...budget].filter(([, b]) => b > 0).reduce((a, [, b]) => a + b, 0);
+    baselineNote = `。台帳で許した既存の違反 ${allowed} 件` + (shrinkable ? `（台帳に余り ${shrinkable} 件。減ったので --update-baseline で締める）` : "");
+  }
   for (const p of uniq) console.log(p);
   const drafts = reqs.filter((r) => r.status === "draft").length, withdrawn = reqs.filter((r) => r.status === "withdrawn").length;
   const ucActive = ucs.filter((u) => u.status === "active").length, ucDraft = ucs.filter((u) => u.status === "draft").length;
   const covered = doc.normative.filter((s) => ucs.some((u) => u.source.includes(s) && u.status !== "withdrawn")).length;
+  const scenCovered = [...ucIds.values()].filter((u) => u.status === "active" && scen.has(u.id)).length;
   const live = reqs.filter((r) => r.status !== "withdrawn" && !r._dup);
   const quoted = live.filter((r) => r._quoted).length;
-  console.log(`全${active}件の要件のうち、実装済み${implemented}件・テスト済み${tested}件（仕様書の節 ${covered}/${doc.normative.length} に UC、仕様書の文を引く要件 ${quoted}/${live.length}、UC active ${ucActive}・draft ${ucDraft}、要件 draft ${drafts}・withdrawn ${withdrawn}）${uniq.length ? `。NG ${uniq.length} 件` : "。問題なし"}`);
+  console.log(`全${active}件の要件のうち、実装済み${implemented}件・テスト済み${tested}件（仕様書の節 ${covered}/${doc.normative.length} に UC、仕様書の文を引く要件 ${quoted}/${live.length}、UC active ${ucActive}・draft ${ucDraft}${requireScenario ? `・シナリオ ${scenCovered}/${ucActive}` : ""}、要件 draft ${drafts}・withdrawn ${withdrawn}）${uniq.length ? `。NG ${uniq.length} 件` : "。問題なし"}${baselineNote}`);
   return uniq.length ? 1 : 0;
 }
 

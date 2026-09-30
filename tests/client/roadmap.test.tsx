@@ -248,6 +248,33 @@ describe('各日の確認テスト', () => {
     await v.close()
   })
 
+  /** 押したあとに画面へ増えた文（確かめが画面の中に出る作りでも読めるように、前後の差を採る）。 */
+  const addedText = (before: string, after: string) => {
+    let s = 0
+    while (s < before.length && before[s] === after[s]) s++
+    let e = 0
+    while (e < before.length - s && before[before.length - 1 - e] === after[after.length - 1 - e]) e++
+    return after.slice(s, after.length - e)
+  }
+
+  // @verifies REQ-147
+  it('確かめにその日の範囲と問数が出る', async () => {
+    stubApi()
+    // 確かめの機構（confirm か画面の中か）は仕様が決めていないので、どちらでも読める形で見る
+    const asked: string[] = []
+    vi.stubGlobal('confirm', (message?: unknown) => {
+      asked.push(String(message ?? ''))
+      return false
+    })
+    const v = await drawRoadmap()
+    const before = v.text()
+    await v.click('この日の確認')
+    const shown = `${asked.join(' ')} ${addedText(before, v.text())}`
+    expect(shown, 'その日の範囲（1 日目）が確かめに出ていない').toContain('1 日目')
+    expect(shown, 'その日の問数が確かめに出ていない').toMatch(/6\s*問/)
+    await v.close()
+  })
+
   // @verifies REQ-147
   it('確かめを断ると作成を求めない', async () => {
     stubApi()

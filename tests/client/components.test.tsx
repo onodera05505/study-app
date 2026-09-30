@@ -14,7 +14,7 @@ import { TermPop, shortTerm } from '../../src/client/components/TermPop'
 import { DupBadge } from '../../src/client/components/DupBadge'
 import { ensureGlossary } from '../../src/client/lib/glossary'
 
-/** 正式表記が長い語（本文では短く、ポップの見出しは正式表記）と、短い語。 */
+/** 末尾に括弧書きのある語（本文では括弧の前まで、ポップの見出しは正式表記）と、無い語。 */
 const LONG_TERM = 'リスク対応（リスク回避，リスク共有，リスク保有）'
 const GLOSSARY = [
   { term: 'LTV', brief: '1 人の顧客が生涯で払う金額。', topicId: 231 },
@@ -89,7 +89,7 @@ describe('理解度の見せ方', () => {
 
 describe('用語ポップ', () => {
   // @verifies REQ-016, REQ-140
-  it('本文の表示名は短くし、押すと出るポップの見出しは正式表記のまま', async () => {
+  it('本文の表示名は末尾の括弧書きを落とし、押すと出るポップの見出しは正式表記のまま', async () => {
     await draw(<TermPop term={LONG_TERM} />)
     const btn = container.querySelector<HTMLButtonElement>('button.term-btn')
     expect(btn, '用語が押せる要素になっていない').not.toBeNull()
@@ -105,7 +105,7 @@ describe('用語ポップ', () => {
   })
 
   // @verifies REQ-140
-  it('短い正式表記はそのまま出す（括弧書きを落とすのは長いときだけ）', () => {
+  it('末尾に括弧書きが無ければそのまま、あれば括弧の前までにする', () => {
     expect(shortTerm('LTV')).toBe('LTV')
     expect(shortTerm(LONG_TERM)).toBe('リスク対応')
   })
@@ -119,15 +119,31 @@ describe('用語ポップ', () => {
 })
 
 describe('同一内容の過去問の印', () => {
-  /** props の形は API の過去問の項目（timesAsked・otherCitations）と同じ。 */
-  const OTHER = '出典：令和5年度 ITパスポート試験 問4'
+  /** props の形は API の過去問の項目（timesAsked・otherCitations）と同じ。
+   *  代表以外の回を、回の新しい順（令和5年度 → 平成28年度 春期）で渡す。 */
+  const OTHERS = [
+    '出典：令和5年度 ITパスポート試験 問4',
+    '出典：平成28年度 春期 ITパスポート試験 問1',
+  ]
 
   // @verifies REQ-126
-  it('2 回以上出題された問題には回数と他の出典を出す', async () => {
-    await draw(<DupBadge timesAsked={2} otherCitations={[OTHER]} />)
-    expect(text()).toContain('同一の問題が 2 回出題されています')
-    // 他の出典は頭の「出典：」を外して並べる
-    expect(text()).toContain('他の出典: 令和5年度 ITパスポート試験 問4')
+  it('2 回以上出題された問題には回数と、「他の出典：」に続けて代表以外の回を新しい順に出す', async () => {
+    await draw(<DupBadge timesAsked={3} otherCitations={OTHERS} />)
+    // 数の前後の空白は仕様が決めていないので、そこだけ緩めて見る
+    expect(text()).toMatch(/同一の問題が\s*3\s*回出題されています/)
+    const head = text().indexOf('他の出典：')
+    expect(head, '「他の出典：」の見出しが出ていない').toBeGreaterThan(-1)
+    // 代表以外の回は「回の名前 問N」の形（§9 の出典と同じ形。頭の「出典：」は代表の見出し）
+    const first = text().indexOf('令和5年度 ITパスポート試験 問4')
+    const second = text().indexOf('平成28年度 春期 ITパスポート試験 問1')
+    expect(first, '新しい回の出典が見出しのあとに出ていない').toBeGreaterThan(head)
+    expect(second, '古い回の出典が見出しのあとに出ていない').toBeGreaterThan(head)
+    expect(first, '他の出典が回の新しい順に並んでいない').toBeLessThan(second)
+    // 代表の見出し（「出典：」）とは分けるので、見出しのあとに「出典：」は出てこない
+    expect(
+      text().slice(head + '他の出典：'.length),
+      '他の出典に代表の見出し「出典：」が混ざっている',
+    ).not.toContain('出典：')
   })
 
   // @verifies REQ-126
