@@ -5,7 +5,7 @@ import { getLastPage } from '../lib/lastPage'
 
 /** フィードバック（要件 §5.5-4）。自由記述を送る。送った本人には受付の文だけ返す。
  *  その場で AI は応答しない（溜めて開発側が改善フェーズで読む）。 */
-// @implements REQ-031, REQ-273
+// @implements-old REQ-031, REQ-273
 export function Feedback() {
   const last = getLastPage()
   // 途中の入力は遷移しても消さない（利用者の指摘 2026-09-16。警告ではなく下書きの保持で応える。送信で消す）

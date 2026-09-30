@@ -48,7 +48,7 @@ type Detail = {
   neighbors: { prev: { id: number; term: string } | null; next: { id: number; term: string } | null } | null
 }
 
-// @implements REQ-123, REQ-124, REQ-128, REQ-134, REQ-135, REQ-151, REQ-152, REQ-153, REQ-154, REQ-262, REQ-263
+// @implements-old REQ-123, REQ-124, REQ-128, REQ-134, REQ-135, REQ-151, REQ-152, REQ-153, REQ-154, REQ-262, REQ-263
 export function TopicDetail() {
   const { id } = useParams()
   const navigate = useNavigate()

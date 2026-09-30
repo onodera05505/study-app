@@ -10,7 +10,7 @@ import { compareExam, dedupe } from '../lib/session-builder'
 export const catalogRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
 /** 分野ごとの論点数と理解度の内訳。トップ画面の骨格になる。 */
-// @implements REQ-010
+// @implements-old REQ-010
 catalogRoutes.get('/fields', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -40,7 +40,7 @@ catalogRoutes.get('/fields', async (c) => {
 })
 
 /** 分野配下の中分類。テーマ分けの中間階層。 */
-// @implements REQ-120
+// @implements-old REQ-120
 catalogRoutes.get('/categories', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -83,7 +83,7 @@ const topicQuery = z.object({
 })
 
 /** 論点一覧。既定は出題頻度の降順＝最短合格の優先順位そのもの。 */
-// @implements REQ-011, REQ-037
+// @implements-old REQ-011, REQ-037
 catalogRoutes.get('/topics', async (c) => {
   const parsed = topicQuery.safeParse(c.req.query())
   if (!parsed.success) return c.json({ error: '検索条件が正しくありません' }, 400)
@@ -150,7 +150,7 @@ catalogRoutes.get('/topics', async (c) => {
 })
 
 /** 論点の詳細。解説・周辺知識と、その論点が出題された過去問。 */
-// @implements REQ-012, REQ-133, REQ-150
+// @implements-old REQ-012, REQ-133, REQ-150
 catalogRoutes.get('/topics/:id', async (c) => {
   const id = Number(c.req.param('id'))
   if (!Number.isInteger(id)) return c.json({ error: '不正な ID です' }, 400)
@@ -293,7 +293,7 @@ catalogRoutes.get('/topics/:id', async (c) => {
 const progressBody = z.object({ status: z.number().int().min(1).max(3) })
 
 /** 理解度の記録（未理解 / やや理解 / 理解）。 */
-// @implements REQ-013
+// @implements-old REQ-013
 catalogRoutes.put('/topics/:id/progress', async (c) => {
   const id = Number(c.req.param('id'))
   const parsed = progressBody.safeParse(await c.req.json().catch(() => null))
@@ -320,7 +320,7 @@ catalogRoutes.put('/topics/:id/progress', async (c) => {
  *  数百語あるが1語が1行なので全部返す。画面側はアプリを開いている間に1度だけ取り、
  *  以降はメモリから引く（用語ごとに問い合わせると、1画面で何十回も往復する）。
  *  中身が変わるのは seed を入れ直したときだけなので、長めにキャッシュしてよい。 */
-// @implements REQ-137
+// @implements-old REQ-137
 catalogRoutes.get('/glossary', async (c) => {
   const db = getDb(c.env)
   const rows = await db.all<{ term: string; brief: string; topicId: number | null }>(sql`
@@ -332,7 +332,7 @@ catalogRoutes.get('/glossary', async (c) => {
 })
 
 /** 過去問の一覧（回ごと）。過去問実践の入口で使う。 */
-// @implements REQ-041
+// @implements-old REQ-041
 catalogRoutes.get('/exams', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id

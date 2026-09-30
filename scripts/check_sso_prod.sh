@@ -20,7 +20,7 @@ check_headers() {
 }
 # 本番の Pages プロジェクトの秘密の一覧を機械で確かめる（O13）。共有秘密 SSO_SECRET は まなびばと各学び、
 # トークンの署名の秘密 JWT_SECRET は各学び。名前が一覧にあることだけを見て、値は読まない・出さない。
-# @implements REQ-303
+# @implements-old REQ-303
 # @verifies REQ-303
 check_secrets() {
   local key name project want s out have expect

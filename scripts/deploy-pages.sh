@@ -51,7 +51,7 @@ echo "▶ フロントをビルド"
 # 試験名とタイトルは .env / .env.ap から読ませる（--mode で切り替わる）
 npx vite build --mode "$EXAM"
 # 新しい版の印（要件 §5.6）。画面が 5 分おきに見比べ、違えば「更新」の帯を出す
-# @implements REQ-278
+# @implements-old REQ-278
 printf '{"build": "%s", "at": "%s"}\n' "$(git rev-parse --short HEAD 2>/dev/null || echo unknown)" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > dist/version.json
 
 echo "▶ Worker を1ファイルにまとめる（Pages の advanced mode 用）"

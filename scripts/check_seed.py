@@ -156,7 +156,7 @@ def main() -> int:
 
     # --- 出典と年度ラベル -------------------------------------------------
     # 出典は「出典：<年度ラベル> <試験名> 問N」。試験名の取り違えと内部コードの素通しを止める
-    # @implements REQ-261
+    # @implements-old REQ-261
     # @verifies REQ-261
     per_exam: dict[str, int] = defaultdict(int)
     labels: dict[str, set[str]] = defaultdict(set)
@@ -194,7 +194,7 @@ def main() -> int:
             problems.append(f"{exam}: 年度ラベルが複数ある {sorted(ls)}")
 
     # --- 回ごとの問題数 ---------------------------------------------------
-    # @implements REQ-245
+    # @implements-old REQ-245
     # @verifies REQ-245
     want_n = QUESTIONS_PER_EXAM.get(d.name)
     if want_n:
@@ -267,7 +267,7 @@ def main() -> int:
     # IPA は同じ問題を別の回で使い回す。DB には全問そのまま持つが、学習側では
     # content_key で1問にまとめて出す。まとめる以上、グループの中で正解が
     # 割れていてはいけない（どちらかの読み取りが間違っている）。
-    # @implements REQ-029
+    # @implements-old REQ-029
     # @verifies REQ-029
     dup_groups: dict[str, list[dict]] = defaultdict(list)
     rows_full = question_values(sql)
@@ -364,7 +364,7 @@ def main() -> int:
           f"（うち論点に結び付いた用語 {sum(1 for r in gloss if r.get('topic_id') is not None)}）")
 
     # D16: seed は利用者データ（users / progress / sessions / feedback）に触らない。触ると再投入で消える
-    # @implements REQ-272
+    # @implements-old REQ-272
     # @verifies REQ-272
     sql_text = sql_path.read_text(encoding="utf-8")
     for tbl in ("feedback", "users", "progress", "sessions", "session_questions", "daily_visits"):

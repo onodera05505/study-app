@@ -5,7 +5,7 @@ import { portal } from '../../shared/exam'
 
 type AuthConfig = { sso: boolean; portal: string | null; app: string }
 
-// @implements REQ-006, REQ-068
+// @implements-old REQ-006, REQ-068
 export function Login({ onDone }: { onDone: () => void }) {
   const [mode, setMode] = useState<'login' | 'register'>('login')
   // 401 で締め出されて戻って来たのかどうか。読んだ時点で印は消えるので、

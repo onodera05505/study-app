@@ -19,7 +19,7 @@ export type Variables = {
   user: { id: string; name: string; role: string }
 }
 
-// @implements REQ-048
+// @implements-old REQ-048
 export function getDb(env: Bindings) {
   return drizzle(env.DB, { schema })
 }
@@ -28,7 +28,7 @@ export type Db = ReturnType<typeof getDb>
 
 /** JWT_SECRET は secret として設定する運用。未設定のまま本番に出さないよう、
  *  開発用の既定値を使ったことが分かるようにしておく。 */
-// @implements REQ-049, REQ-095
+// @implements-old REQ-049, REQ-095
 export function getSecret(env: Bindings): string {
   return env.JWT_SECRET ?? 'dev-only-insecure-secret'
 }

@@ -13,7 +13,7 @@ export type LastPage = {
 
 const KEY = 'study-app:last-page'
 
-// @implements REQ-268
+// @implements-old REQ-268
 export function setLastPage(p: LastPage) {
   try {
     sessionStorage.setItem(KEY, JSON.stringify(p))
@@ -22,7 +22,7 @@ export function setLastPage(p: LastPage) {
   }
 }
 
-// @implements REQ-271, REQ-276
+// @implements-old REQ-271, REQ-276
 export function getLastPage(): LastPage | null {
   try {
     const raw = sessionStorage.getItem(KEY)
@@ -33,7 +33,7 @@ export function getLastPage(): LastPage | null {
 }
 
 /** 画面が自分の中身（論点名・問題 ID）を知ったときに、名前と ID だけを上書きする。 */
-// @implements REQ-269
+// @implements-old REQ-269
 export function annotateLastPage(patch: Partial<LastPage>) {
   const cur = getLastPage()
   if (!cur) return

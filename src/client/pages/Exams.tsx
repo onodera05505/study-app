@@ -11,7 +11,7 @@ type Exam = {
   bestScore: number | null
 }
 
-// @implements REQ-210, REQ-211, REQ-161
+// @implements-old REQ-210, REQ-211, REQ-161
 export function Exams() {
   // null は「まだ取得していない」、[] は「取得した結果が空」
   const [exams, setExams] = useState<Exam[] | null>(null)

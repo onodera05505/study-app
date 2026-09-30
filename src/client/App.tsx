@@ -18,7 +18,7 @@ import { setLastPage } from './lib/lastPage'
 import { CHECK_INTERVAL_MS, checkForUpdate, rememberBuild } from './lib/version'
 import { exam } from './exam'
 
-// @implements REQ-038, REQ-143, REQ-064, REQ-267, REQ-270, REQ-280, REQ-281, REQ-282
+// @implements-old REQ-038, REQ-143, REQ-064, REQ-267, REQ-270, REQ-280, REQ-281, REQ-282
 export function App() {
   const [authed, setAuthed] = useState(!!getToken())
   const [menuOpen, setMenuOpen] = useState(false)

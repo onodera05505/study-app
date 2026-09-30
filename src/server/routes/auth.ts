@@ -24,7 +24,7 @@ const FIELD_LABEL: Record<string, string> = {
   name: 'お名前を入力してください（50 文字まで）',
   signupCode: '合言葉が長すぎます',
 }
-// @implements REQ-034
+// @implements-old REQ-034
 function validationMessage(err: z.ZodError): string {
   const field = String(err.issues[0]?.path?.[0] ?? '')
   return FIELD_LABEL[field] ?? '入力が正しくありません'
@@ -37,11 +37,11 @@ export const authRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>
 const ssoOn = (env: Bindings) => !!env.SSO_PORTAL_URL
 
 /** 画面がログインの形を決めるための設定（公開）。 */
-// @implements REQ-066
+// @implements-old REQ-066
 authRoutes.get('/config', (c) => c.json({ sso: ssoOn(c.env), portal: c.env.SSO_PORTAL_URL ?? null, app: c.env.EXAM }))
 
 /** まなびばから戻ってきた使い捨てコードを、まなびばのサーバでメールと名前に交換し、この学びのトークンを出す。 */
-// @implements REQ-004, REQ-060
+// @implements-old REQ-004, REQ-060
 authRoutes.post('/sso', async (c) => {
   if (!ssoOn(c.env)) return c.json({ error: 'この環境では SSO が設定されていません' }, 404)
   if (!c.env.SSO_SECRET) return c.json({ error: 'SSO の共有秘密が設定されていません。管理者に連絡してください' }, 503)
@@ -72,7 +72,7 @@ authRoutes.post('/sso', async (c) => {
   return c.json({ token, user: { id: user.id, name: user.name, role: user.role } })
 })
 
-// @implements REQ-065, REQ-089
+// @implements-old REQ-065, REQ-089
 authRoutes.post('/register', async (c) => {
   if (ssoOn(c.env)) return c.json({ error: 'アカウントはまなびばで作ります' }, 404)
   const parsed = registration.safeParse(await c.req.json().catch(() => null))
@@ -102,7 +102,7 @@ authRoutes.post('/register', async (c) => {
   return c.json({ token, user: { id: user.id, name: user.name, role: user.role } }, 201)
 })
 
-// @implements REQ-005, REQ-090
+// @implements-old REQ-005, REQ-090
 authRoutes.post('/login', async (c) => {
   if (ssoOn(c.env)) return c.json({ error: 'まなびばからログインしてください' }, 404)
   const parsed = credentials.safeParse(await c.req.json().catch(() => null))

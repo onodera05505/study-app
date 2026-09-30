@@ -4,7 +4,7 @@ import { api, setToken } from '../lib/api'
 import { portal } from '../../shared/exam'
 
 /** まなびばから戻ってきた使い捨てコードを、この学びのトークンに換える（要件 §15）。 */
-// @implements REQ-058
+// @implements-old REQ-058
 export function SsoCallback({ onDone }: { onDone: () => void }) {
   const [params] = useSearchParams()
   const [error, setError] = useState('')

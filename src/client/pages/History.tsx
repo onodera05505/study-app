@@ -12,7 +12,7 @@ type Row = {
   finishedAt: number | null
 }
 
-// @implements REQ-233, REQ-235
+// @implements-old REQ-233, REQ-235
 export function History() {
   // null は「まだ取得していない」、[] は「取得した結果が空」
   const [rows, setRows] = useState<Row[] | null>(null)

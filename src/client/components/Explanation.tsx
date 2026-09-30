@@ -15,7 +15,7 @@ export type ExplanationData = { correctReason: string; choices: ExplanationChoic
  *
  *  解説がまだ無い問題は null が来る。そのときは何も描かない（途中状態でも画面は
  *  今までどおり）。 */
-// @implements REQ-200, REQ-208
+// @implements-old REQ-200, REQ-208
 export function Explanation({
   data,
   answer,
