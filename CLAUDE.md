@@ -77,6 +77,8 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 | **要件の仕分け表**（点。監査で仕様書に無いと判った要件 116 件と矛盾 3 件を、残す（追記先の節）／消す／合わせる の案で 1 件ずつ。2026-09-29 に全件「現状を仕様書に書いて残す」で決着） | [`docs/検討事項_2026-09-29_要件の仕分け.md`](docs/検討事項_2026-09-29_要件の仕分け.md) |
 | **用語集**（線。画面に出る語と識別子の正本。spec-author が書き、implementer と test-author はこの語しか使わない） | [`docs/01-glossary.md`](docs/01-glossary.md) |
 | **保留台帳**（線。reviewer の指摘のうち機械判定に落とせない物。縮む方向にしか動かない） | [`docs/verification/DEFERRED.md`](docs/verification/DEFERRED.md) |
+| **原本 harness への移行**（2026-09-30 本人決定。APM で develop-core、docs-migrate の 7 Phase。Phase 0 の記録と実体・状態値の全文） | [`docs/作業ログ_2026-09-30_原本harnessへの移行.md`](docs/作業ログ_2026-09-30_原本harnessへの移行.md) |
+| **原本 harness への移行の棚卸し**（docs-migrate Phase 0。文書ごとの分類と処遇、実体と状態値、矛盾。本人の答えは `OPEN-QUESTIONS.md`） | [`docs/INVENTORY.md`](docs/INVENTORY.md) |
 | **要件（REQ）の正本**（線。`bash scripts/trace_check` が読む。UC の 1 ステップに属し 1 要件 1 か所のコード。実装前に ID を振る） | [`docs/spec.yaml`](docs/spec.yaml) |
 | **ユースケースの書類**（線。1 件 1 枚。frontmatter の source が仕様書の節、基本の流れ／例外の流れのステップに要件が紐づく） | [`docs/usecases/`](docs/usecases/) |
 | 一斉検査のレビュー全量（学習系・受験系。改善候補の根拠） | [`docs/レビュー詳細_2026-09-02_学習系.md`](docs/レビュー詳細_2026-09-02_学習系.md) / [`docs/レビュー詳細_2026-09-02_受験系.md`](docs/レビュー詳細_2026-09-02_受験系.md) |
