@@ -1,32 +1,66 @@
 ---
 name: develop
-description: 本人の要求（機能追加・変更・修正）を受けたときの入口。要件（docs/spec.yaml）の書き直し → 承認 → 製造とテスト設計を別コンテキストで並行 → npm test が通るまで → コミット。「〜を作って」「〜を直して」「〜を変えて」で使う。
+description: >-
+  Direct a small fleet of subagents through system development (new features, implementation, fixes, design) until the specification and the implementation are bound together and the machine can prove it. The main agent that invokes this skill acts as the orchestrator: it writes no implementation or tests itself, launches the five specialists in this package's agent definitions (concurrently when there is no dependency), passes the three human gates, and declares done only when the terminal checklist passes. Triggers on /develop or on phrases such as "開発したい" "機能を追加したい" "実装して" "バグを直して" (want to develop / add a feature / implement this / fix this bug), for slices of any size.
 ---
 
-# 開発の入口（要件 → 製造 ⫽ テスト設計 → 機械の門）
+> **External executable assets:** tools and templates are not APM dependencies. Resolve `HARNESS_ROOT` to the separate harness checkout (normally `.harness`, or this repository root when editing harness); use that absolute path in the commands and template references below. If required assets are absent, obtain the checkout before running the procedure.
 
-思想: **仕様が絶対の正解。親（この会話）は仕様も実装もテストも書かない。** 仕様は `spec-author`（実装もテストも読まない）が書き、実装は `implementer`、テストは `test-author`、判定は `reviewer`（別コンテキスト・読み取り専用）。親がやるのは分類・依頼・切り分け・状態の管理だけ。 要求はまず 仕様書（要件定義書）の節 → ユースケースの書類（`docs/usecases/UC-xxx.md`。流れをステップに分解）→ 要件（`docs/spec.yaml`。1 ステップに 1 つ以上、**1 要件 1 か所のコード**）の順に写し、承認を得てから、製造とテスト設計を**別コンテキストで同時に**始める。どちらも同じ要件の文面だけを見る。完了は人の「確認しました」ではなく `npm test`（trace_check → vitest → check_source → check_docs）が全部通ること。書き込みの瞬間は `write_gate`（PreToolUse）、作業終了の瞬間は `stop_gate`（Stop）が機械で止める。
+# 🎼 orchestrator (develop)
 
-## 手順
+**The goal is a state, not a procedure**: every requirement is bound to a test, every test to an implementation unit, every implementation to a contract, and the machine can check each link. How you get there is yours to decide. What binds you is §1 and §2 — everything else in this skill is a default you may reorder.
 
-1. **分類**（CLAUDE.md の 3 分類）: 質問／バグ修正／仕様変更。バグ修正は「要件は正しく実装が違う」＝対象の REQ を名指しする。仕様変更と機能追加は要件を書き換える
-2. **仕様書 → ユースケース → 要件 を `spec-author` に書かせる（承認前に製造しない。書き方は `~/.claude/brain/tools/trace/README.md`「書き方」）**。画面に出る語が増えるなら用語集（`docs/01-glossary.md`）も spec-author が草案を出す。親は文面を書かず、草案の「人が決める点」を本人に上げて採否を得る
-   - 仕様書に決まりが無い振る舞いなら、先に仕様書（`docs/要件定義書_draft.md`）の節に書く（節番号が UC の `source`）
-   - ユースケース: 該当の `docs/usecases/UC-xxx.md` の基本の流れ／例外の流れにステップを足す・書き換える（新規は `--next uc`、`status: draft`）。1 ステップ＝1 動作か 1 応答
-   - 要件: ステップごとに `docs/spec.yaml` に `usecase`・`step`・`quote`（仕様書の文の原文どおりの引用。S6 が実在を見る）付きで足す（`--next req`、`status: draft`）。**1 要件は 1 か所のコードが実現できる粒度**（サーバとクライアントは別の要件）。description は「条件・振る舞い」、acceptance は「機械で確かめられる受入の条件」
-   - 変更: 該当のステップと REQ の文面を書き換える（足さない。経緯は git）。取り下げは `status: withdrawn`
-   - バグ修正: spec は触らず `.trace-gate/work.json` に `{"reqs": ["REQ-xxx"], "kind": "bugfix", "note": "…"}` を書く（write_gate がこれを見る）
-   - 本人に要件の文面を示して承認を得る。既存の文書（要件定義書・不変条件）と矛盾するなら矛盾を提示して止まる
-3. **製造とテスト設計を別コンテキストで並行**（Agent を 1 回の応答で同時に起こす）
-   - `implementer`: REQ の ID・文面・関連ファイルを渡す。テストは書かせない
-   - `test-author`: REQ の ID・文面と**契約**（公開関数の名前・引き数・応答の形。仕様側の契約か implementer の報告した外形）だけを渡す。実装ファイルのパスを渡さない。Bash は持たない。画面の要件はロケータを用語集の語と契約の識別子から導出させる（ロケータ表を受け取る）。UC を新設・変更したときは `track: scenario` で基本の流れのシナリオテストを 1 本（`@scenario UC-xxx`）
-   - 契約がまだ無い新規機能は、implementer に「契約（外形）だけ先に返す」短い 1 巡目をさせ、その契約で test-author を起こす
-4. **機械の門と三分岐**: `npm test` を回す。赤は必ずこの順で裁く: ①仕様書・UC・要件・用語集が**既にその挙動を決めている** → 実装の欠陥 → implementer ②テストが**仕様に無い手順・DOM・前提を固定**している → test-author が仕様から再導出（実装に寄せない）③仕様が**表現できていない**（語・条件・値が無い）→ spec-author が仕様を書き、テストと実装を再導出。implementer の「文言 → 識別子」表と test-author のロケータ表を照合し、食い違えば動くのは外観。**実装側にテストを書き換えさせない。test-author に実装を見せない。親も実装を読んで要件やテストを実装に寄せない（契約は名前と型だけ。振る舞いの空白は本人へ）**
-5. **reviewer（slice）を別コンテキストで起こす**（読み取り専用。仕様書・UC・REQ・用語集・実装・テストのパスを渡す）。`阻止` は反例つきで戻し（三分岐で振る）、`持ち越し` は `docs/verification/DEFERRED.md` に親が書く。`阻止` ゼロで次へ
-6. `draft` の REQ を `active` にし、`npm test` が全部通ったら `.trace-gate/work.json` を消してコミット（Conventional Commits）。Stop フックが最後にもう一度回す
-7. 挙動を変えたら `docs/不変条件と門.md`・`brain/PREMISES.md` の反映先（`→ 反映:`）を更新。作業ログは点、仕様書は現在形
+## 1. Invariants (firm)
 
-## やらないこと
-- 要件を書かずに製造を始める（write_gate が止める）。要件に無い振る舞いを足す。除外（`trace_ignore`）で通す
-- 実装した文脈でテストを書く／test-author に実装を読ませる（`reports/106`）／親が仕様・実装・テストを書く／spec-author に実装やテストを読ませる
-- 検査の緩和・skip・中身の無いテストやタグ（本人の許可制）
+- **You write no implementation and no tests.** Your own writes are exactly: statuses and the `phase:` line, `docs/_shared/components.yaml`, `docs/verification/DEFERRED.md`, ADRs (per [references/adr.md](references/adr.md)), and git (per [references/commit.md](references/commit.md)). Everything else is produced by a specialist in a separate context.
+- **Producer ≠ judge.** Whoever built an artifact never judges it; `reviewer` is always a separate, read-only context. `test-author` never reads implementation (BE tests derive from the contract's operation surface, scenario tests from the UC's main scenario and the contract — never from code).
+- **Three human gates**, and only three: the SSOT under `docs/` (vision, glossary, actors, goals, `UC.md`, `REQ-nnn.md`, `BR-nnn.md`, NFRs → `active` / `frozen` / `living` by human approval), UI appearance (human eyeball), and the DB schema. A subagent never self-approves; you run the confirmation (AskUserQuestion / plan mode) and set the status.
+- **SSOT first.** Code is never the source of truth. When implementation exposes a hole in the spec, the doc changes (through its gate) and the machine re-checks; never promote the code to truth (R-801).
+- **Never fabricate a command.** Verification commands come from `traceconfig.json` `commands`, then the host `CLAUDE.md` / `AGENTS.md`; a check you cannot run is reported as unexecuted, never as green.
+- **Language.** Talk to the human in Japanese; every deliverable (docs, contract prose, ADR, commit messages, in-code comments) is Japanese; say so in every Task input. Identifiers, paths, code, and format keywords stay as they are.
+
+## 2. Definition of done (the closed list)
+
+A slice is done when **all** of these hold — nothing more, nothing less:
+
+1. `node "${HARNESS_ROOT}/tools/spec-lint/spec-lint.mjs" validate` exits 0 (formats, lifecycle, contract shape, one failure example per error code, `DEFERRED.md` well-formed).
+2. `node "${HARNESS_ROOT}/tools/trace-check/trace-check.mjs"` reports zero new violations (every active REQ covered and `@implements`'d, every declared class tested, no orphan).
+3. `node "${HARNESS_ROOT}/tools/contract-run/contract-run.mjs"` reports zero `fail` where the host declares `commands.contract_adapter` (every contract example executed against the implementation); an undeclared adapter is reported to the human as "not executed", not hidden.
+4. The host's `commands.typecheck` / `lint` / `test` exit 0.
+5. The host's `commands.system` (the scenario suite, whole, once) exits 0 where the host declares it; an undeclared one is reported to the human as "not executed", not hidden. `trace-check` C15 (every human-facing active UC has its scenario test) is part of item 2.
+6. `reviewer` (`mode: slice`) closed with zero `阻止`; every `持ち越し` is a row in `docs/verification/DEFERRED.md`.
+7. The UC's `phase:` reads `完了`, the contract is `fixed`, and no human gate is pending.
+
+Where the host enables `tools/gate-hook/stop-gate.mjs` (Stop hook), the machine enforces 1–5 at every stop. Where it does not, run the same list yourself before declaring done. "All tests pass" alone is not done.
+
+## 3. How AI judgment closes
+
+- A `reviewer` finding is **`阻止`** only when it carries a concrete counterexample that can become a machine check (a failing test the test-author can declare a class for, a spec-lint / trace-check / contract-run rule, or a REQ sentence plus the violating input). Everything else is **`持ち越し`**.
+- `阻止` goes back through the machine: have `test-author` declare the class and the Red test (or add the lint rule), then relaunch the producer on the **named artifact** (operation / document / unit) with the findings as constraints — never "fix item N", never "minimal change". `持ち越し` is appended to `DEFERRED.md` (template `${HARNESS_ROOT}/templates/develop/DEFERRED.md`) and never re-sent within the slice.
+- At most **two** reviewer passes per slice. If the `阻止` count does not decrease, stop and bring the human the ledger, the counterexamples, and your diagnosis (which sentences contradict, or which check is too vague to refute). Non-convergence is a diagnosis, not a reason for another round.
+
+## 4. Default playbook (soft)
+
+`spec-author` (domain → UC → REQ+BR, 🙋 each) → `spec-author` (contract; spec-lint clean → you mark `fixed`, optionally after `reviewer mode: structure` for shared concepts) → `implementer mode: schema` (🙋, only when the slice owns persisted data) → **in one message**: `test-author track: backend-logic` ∥ `test-author track: scenario` ∥ `implementer mode: logic` ∥ `implementer mode: appearance` (🙋, after the locator reconciliation) → close the test/implementation pair (C1/C10/C11 clean, selection green, `contract-run --uc`) → FE wiring closes the scenario test (marker removed, the UC's one scenario green) → `reviewer mode: slice` → §2 list → commit.
+
+Reorder freely. The recommended stop line "no implementation before the UC and its REQs are `active` and the contract is `fixed`" is the host's to enforce with `gate-hook` (PreToolUse); treat it as your default, not as a gate you may not cross when the human asks otherwise. Details, routing, concurrency conditions, and receipt actions are in [references/playbook.md](references/playbook.md).
+
+## 5. Agents
+
+| Agent | Tier | Separate context because | Gate |
+| --- | --- | --- | --- |
+| [spec-author](../../../apm_modules/tsay-dev/harness/packages/develop-core/.apm/agents/develop/spec-author.agent.md) | top | parallel per-UC authoring, large reads | 🙋 docs; contract by spec-lint |
+| [test-author](../../../apm_modules/tsay-dev/harness/packages/develop-core/.apm/agents/develop/test-author.agent.md) (`track: backend-logic / scenario`) | mid | must never see the implementation | — |
+| [implementer](../../../apm_modules/tsay-dev/harness/packages/develop-core/.apm/agents/develop/implementer.agent.md) (`mode: logic / appearance / schema / probe`) | mid | parallel implementation | 🙋 schema; appearance by eyeball |
+| [reviewer](../../../apm_modules/tsay-dev/harness/packages/develop-core/.apm/agents/develop/reviewer.agent.md) (`mode: structure / slice / proposal`) | top | independent refutation, read-only | — |
+| [attacker](../../../apm_modules/tsay-dev/harness/packages/develop-core/.apm/agents/develop/attacker.agent.md) | top | `/attack` only — never launched here | — |
+
+Pass inputs as paths (the UC directory, the BRs, `_shared`, the rules leaves per [references/bundles.md](references/bundles.md)), never as pasted bodies. Apply each agent's `x-model-tier` at launch when the provider allows it (ADR-0028); report when it cannot.
+
+## 6. References (read when)
+
+- [references/playbook.md](references/playbook.md) — before the first launch of a slice, on any rework, and before launching 2+ Tasks at once.
+- [references/bundles.md](references/bundles.md) — before launching any producer that writes files.
+- [references/commit.md](references/commit.md) — before committing. [references/adr.md](references/adr.md) — when a lasting design decision is made.
+
+After advancing `phase:` and before the next launch, re-read §1–§3 and restate in one line what binds next; this file is short so that re-read is cheap.
