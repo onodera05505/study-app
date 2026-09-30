@@ -191,6 +191,7 @@ export const sessionQuestions = sqliteTable(
     /** 0 始まりの出題順。未回答の最小 index が「現在の問題」。 */
     idx: integer('idx').notNull(),
     /** { text, choices, answer, citation, hasFigure, figureDescription } の JSON。 */
+    // @implements BR-020
     snapshot: text('snapshot').notNull(),
     userAnswer: text('user_answer'),
     /** 0: 未回答 / 1: 正解 / 2: 不正解 */

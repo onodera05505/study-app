@@ -9,6 +9,7 @@ CREATE TABLE `accounts` (
 	`updated_at` integer DEFAULT (unixepoch()) NOT NULL
 );
 --> statement-breakpoint
+-- @implements BR-008
 CREATE UNIQUE INDEX `uq_account_email` ON `accounts` (`email`);
 --> statement-breakpoint
 CREATE TABLE `grants` (
