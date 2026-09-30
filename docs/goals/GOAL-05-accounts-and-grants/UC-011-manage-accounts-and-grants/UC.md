@@ -3,7 +3,7 @@ id: UC-011
 title: アカウントを作り、学びの権限とパスワードを付け替え、削除する
 actor: ACT-02
 goal: GOAL-05
-status: draft
+status: active
 phase: 定義
 ---
 

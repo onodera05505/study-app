@@ -3,7 +3,7 @@ id: UC-004
 title: 範囲を選んで演習を解き、問題解説を読む
 actor: ACT-01
 goal: GOAL-01
-status: draft
+status: active
 phase: 定義
 ---
 

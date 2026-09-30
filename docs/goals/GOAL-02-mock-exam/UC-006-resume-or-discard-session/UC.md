@@ -3,7 +3,7 @@ id: UC-006
 title: 中断したテストを再開するか破棄する
 actor: ACT-01
 goal: GOAL-02
-status: draft
+status: active
 phase: 定義
 ---
 

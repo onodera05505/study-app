@@ -3,7 +3,7 @@ id: UC-005
 title: 前回の続きから論点へ戻る
 actor: ACT-01
 goal: GOAL-01
-status: draft
+status: active
 phase: 定義
 ---
 

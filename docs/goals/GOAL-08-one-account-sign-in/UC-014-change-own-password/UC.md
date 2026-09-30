@@ -3,7 +3,7 @@ id: UC-014
 title: 自分のパスワードを変える
 actor: ACT-01
 goal: GOAL-08
-status: draft
+status: active
 phase: 定義
 ---
 

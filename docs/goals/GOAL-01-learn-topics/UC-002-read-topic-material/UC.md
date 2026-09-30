@@ -3,7 +3,7 @@ id: UC-002
 title: 分野から単元をたどり、論点の教材と紐づく過去問を読む
 actor: ACT-01
 goal: GOAL-01
-status: draft
+status: active
 phase: 定義
 ---
 

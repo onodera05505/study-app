@@ -3,7 +3,7 @@ id: UC-016
 title: 配信した新しい版を、開いたままの画面に知らせる
 actor: ACT-03
 goal: GOAL-06
-status: draft
+status: active
 phase: 定義
 ---
 

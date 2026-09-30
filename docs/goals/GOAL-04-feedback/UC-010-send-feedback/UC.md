@@ -3,7 +3,7 @@ id: UC-010
 title: 開いていた画面を添えてフィードバックを送る
 actor: ACT-01
 goal: GOAL-04
-status: draft
+status: active
 phase: 定義
 ---
 

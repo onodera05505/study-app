@@ -3,7 +3,7 @@ id: UC-007
 title: 受験履歴から過去のテストの結果を見返す
 actor: ACT-01
 goal: GOAL-02
-status: draft
+status: active
 phase: 定義
 ---
 

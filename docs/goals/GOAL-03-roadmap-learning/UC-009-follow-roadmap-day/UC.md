@@ -3,7 +3,7 @@ id: UC-009
 title: 学ぶ順に並んだ論点を日ごとに辿り、この日の確認を始める
 actor: ACT-01
 goal: GOAL-03
-status: draft
+status: active
 phase: 定義
 ---
 

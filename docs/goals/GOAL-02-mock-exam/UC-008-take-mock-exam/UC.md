@@ -3,7 +3,7 @@ id: UC-008
 title: 模試を制限時間つきで受け、合否の目安と分野別の結果を見る
 actor: ACT-01
 goal: GOAL-02
-status: draft
+status: active
 phase: 定義
 ---
 

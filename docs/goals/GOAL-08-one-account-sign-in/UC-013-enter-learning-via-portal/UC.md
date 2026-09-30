@@ -3,7 +3,7 @@ id: UC-013
 title: まなびばから権限のある学びに入る
 actor: ACT-01
 goal: GOAL-08
-status: draft
+status: active
 phase: 定義
 ---
 
