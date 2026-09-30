@@ -1,6 +1,6 @@
 ---
 id: ACTORS
-status: draft
+status: living
 ---
 
 # アクター

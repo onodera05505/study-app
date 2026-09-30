@@ -1,6 +1,6 @@
 ---
 id: GLOSSARY
-status: draft
+status: living
 ---
 
 # 用語集（ユビキタス言語）
