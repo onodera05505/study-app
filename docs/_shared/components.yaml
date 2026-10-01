@@ -1,34 +1,56 @@
-# docs/_shared/components.yaml — the contracts' shared vocabulary ($ref targets)
-# What may go here: only what 2+ UCs use (auth schemes, error codes, shared DTOs)
-# A schema used by only one UC is written in that contract (inline, or under the contract's own top-level
-# schemas: when 2+ operations of that UC share it) — never here
-# Only the orchestrator writes here. Concurrent producers never append; they report the vocabulary they want added
-# Accepted YAML is the same strict subset as contract.yaml (no anchors/aliases, no block scalars)
+# docs/_shared/components.yaml — 契約の共有語彙（$ref の行き先）
+# 2 つ以上の UC が使う物だけ（認証スキーム・エラーコード・共有の形）。1 UC だけの形はその契約に書く。
+# 書くのは orchestrator だけ。担当は足したい語彙を報告で返す。YAML は契約と同じ厳格な部分集合（anchor/alias・block scalar 禁止）。
+# 読み方の決まりは docs/adr/ADR-0001（境界の読み方）。
 
-# Auth schemes referenced by a contract's `auth:`. An operation naming an undefined scheme is an error
-# NOTHING is enabled by default — the harness never decides a host's auth method (CLAUDE.md §0).
-# Enable the ones this project actually uses; several may coexist
-authSchemes: {}
-  # session:                 # web: a cookie session
-  #   kind: cookie
-  #   name: session
-  # bearer:                  # native / SPA: a token in the Authorization header
-  #   kind: token
-  #   scheme: Bearer
-  #   storage: keychain      # where the token lives (keychain / secure-store / memory). Native must state this
-  # apiKey:
-  #   kind: header
-  #   name: X-Api-Key
+authSchemes:
+  bearer:
+    kind: token
+    scheme: Bearer
+    storage: localStorage
+    note: 学び側の API。トークンは学び側が発行し端末が保存する（UC-013）
+  session:
+    kind: cookie
+    name: mb_session
+    note: まなびばの API。ログインで発行、ログアウトと管理者の再設定で失効（UC-011・013・014）
+  sharedSecret:
+    kind: body
+    field: secret
+    note: 学び側サーバがまなびばの交換を呼ぶときだけ。値は配備の秘密（BR-009）
 
-# The closed vocabulary for a contract's `errors[].code`. An undefined code is an error.
-# The value is a one-line note on what the code means (the triggering condition goes in the contract's `when:`).
-# trace-check C7 checks that the implementation's error codes are a subset of these keys (when traceconfig.json configures `contract`)
 errorCodes:
-  INVALID_INPUT: 入力が要件を満たさない
-  FORBIDDEN: 権限がない
-  NOT_FOUND: 対象が存在しない
-  PERMISSION_DENIED: OS の権限が拒否されている   # used by operations that declare requires:
+  INVALID_INPUT: 入力が決められた形を満たさない（400）
+  UNAUTHENTICATED: 本人と分からない要求（401。BR-001）
+  FORBIDDEN: 権限が無い、または共有秘密が合わない（403）
+  NOT_FOUND: 対象が無い、または本人の物でない（404。BR-018）
+  CONFLICT: 今の状態では受け付けない（409。進行中が既にある・終わったテスト・位置の食い違い・メールの重複）
+  RATE_LIMITED: 直近の受付が上限に達している（429）
+  UPSTREAM_UNAVAILABLE: 相手方（まなびば）に届かない（502）
+  NOT_CONFIGURED: この配備にはその機能の設定が無い（SSO の場所や共有秘密。404/503）
+  PERMISSION_DENIED: OS の権限が拒否されている（requires を宣言する操作だけ。この学びでは未使用）
 
-# Shared DTOs used by 2+ UCs
-# $ref target (from docs/goals/<GOAL>/<UC>/contract.yaml): ../../../_shared/components.yaml#/schemas/<Name>
-schemas: {}
+schemas:
+  ErrorBody:
+    type: object
+    required: [error]
+    properties:
+      error: { type: string, minLength: 1 }
+  Ok:
+    type: object
+    required: [ok]
+    properties:
+      ok: { type: boolean, const: true }
+  QuestionSnapshot:
+    type: object
+    required: [idx, text, choices, citation, modified, hasFigure]
+    properties:
+      idx: { type: integer, minimum: 0 }
+      text: { type: string }
+      choices: { type: array, items: { type: string } }
+      citation: { type: string }
+      modified: { type: boolean }
+      hasFigure: { type: boolean }
+      figureDescription: { type: [string, "null"] }
+      figureImage: { type: [string, "null"] }
+      timesAsked: { type: integer, minimum: 1 }
+      otherCitations: { type: array, items: { type: string } }

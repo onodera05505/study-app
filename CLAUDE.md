@@ -80,6 +80,7 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 | **GOAL の置き場**（`docs/goals/GOAL-nn-<slug>/GOAL.md`。UC・REQ・contract はその下。Phase 3〜5 で作る） | [`docs/goals/`](docs/goals/) |
 | **未着手の GOAL**（backlog。GOAL-07 学びの中のコンテンツ管理） | [`docs/goals-backlog.md`](docs/goals-backlog.md) |
 | **非機能要件**（閾値と計測方法がある物だけ。NFR-001 セキュリティヘッダ） | [`docs/nfr/`](docs/nfr/) |
+| **ADR**（原本 harness の決定の記録。ADR-0001 境界の読み方、0002 実行環境と配信、0003 認可の置き場、0004 永続化、0005 層構造、0006/0007 保証点。既存の ADR は書き換えず supersedes で重ねる） | [`docs/adr/`](docs/adr/) |
 | **共有の語彙（契約）**（`_shared/components.yaml`。Phase 5 で埋める） | [`docs/_shared/`](docs/_shared/) |
 | **用語集**（線。業務語の正本。原本 harness のテンプレで spec-author が書く。識別子は契約へ） | [`docs/01-glossary.md`](docs/01-glossary.md) |
 | attic: 識別子列つきの空の用語集（写した型の草案。2026-09-30 の移行で退役） | [`docs/attic/01-glossary_2026-09-29_識別子列つき.md`](docs/attic/01-glossary_2026-09-29_識別子列つき.md) |
