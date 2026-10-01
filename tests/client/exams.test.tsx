@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-/** 模擬試験の画面（公開回の一覧・ランダム構成の入口・受験前の確認）。 */
+/** UC-008 模試（通し受験）の入口の画面（公開回の一覧・ランダム構成の入口・受験前の確認）。 */
 
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { act, createElement as h } from 'react'
@@ -118,7 +118,7 @@ afterEach(async () => {
 })
 
 describe('模擬試験の画面', () => {
-  // @verifies REQ-210
+  // @covers REQ-102#exam-row-figures
   it('回の名前・問題数・受験回数・最高正答数を出し、未受験の回には受験回数を出さない', async () => {
     stubApi(replies())
     await draw()
@@ -131,7 +131,7 @@ describe('模擬試験の画面', () => {
     expect(rowOf('令和5年度 秋期', '令和6年度'), '未受験の回に受験回数が出ている').not.toMatch(/\d+\s*回/)
   })
 
-  // @verifies REQ-210
+  // @covers REQ-103#not-loaded-vs-empty
   it('取得前は読み込み中と分かり、結果が空のときだけ一覧が空として描かれる', async () => {
     stubApi(replies({ 'GET /api/exams': { body: EXAMS, wait: new Promise(() => {}) } }))
     await draw()
@@ -144,7 +144,7 @@ describe('模擬試験の画面', () => {
     expect(text()).not.toContain('令和6年度')
   })
 
-  // @verifies REQ-211
+  // @covers REQ-104#start-confirmation
   it('制限時間が始まることを確認し、取り消したらセッションを作らない', async () => {
     const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false)
     const calls = stubApi(replies())
@@ -160,7 +160,7 @@ describe('模擬試験の画面', () => {
     expect(calls.some((c) => c.method === 'POST' && c.url === '/api/sessions'), '確認が取れてもセッションを作らない').toBe(true)
   })
 
-  // @verifies REQ-211
+  // @covers REQ-110#conflict-guides-to-resume
   it('進行中のテストがあって作れないときだけ、練習テストで再開か破棄をするよう案内する', async () => {
     vi.spyOn(window, 'confirm').mockReturnValue(true)
     stubApi(

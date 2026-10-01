@@ -44,22 +44,22 @@ describe('セキュリティヘッダ', () => {
   })
 })
 
-describe('SSO の環境（まなびばが認証の正本）', () => {
-  // @verifies REQ-005
+describe('SSO の環境（まなびばが認証の正本。UC-013）', () => {
+  // @covers REQ-204#password-login-rejected
   it('従来のパスワードログイン（/api/auth/login）は 404', async () => {
     const res = await app.request('/api/auth/login', json({ email: 'a@example.com', password: 'password1' }), sso())
     expect(res.status).toBe(404)
     expect(await res.json()).toHaveProperty('error')
   })
 
-  // @verifies REQ-065
+  // @covers REQ-204#register-rejected
   it('登録（/api/auth/register）は 404', async () => {
     const res = await app.request('/api/auth/register', json({ email: 'a@example.com', password: 'password1', name: '名' }), sso())
     expect(res.status).toBe(404)
     expect(await res.json()).toHaveProperty('error')
   })
 
-  // @verifies REQ-066
+  // @covers REQ-205#config-shape
   it('config は sso・portal・app だけを返し、秘密の有無（secretSet）を出さない', async () => {
     const res = await app.request('/api/auth/config', {}, sso())
     expect(res.status).toBe(200)
@@ -74,7 +74,7 @@ describe('SSO の環境（まなびばが認証の正本）', () => {
 })
 
 describe('失敗の形', () => {
-  // @verifies REQ-004
+  // @covers REQ-193#malformed-code
   it('/api/auth/sso は壊れた入力を 400 の {error} で返す', async () => {
     for (const init of [json({}), json({ code: 12 }), { method: 'POST', body: 'not json' }]) {
       const res = await app.request('/api/auth/sso', init, sso())
@@ -91,15 +91,15 @@ describe('失敗の形', () => {
   })
 })
 
-describe('SSO のコード交換（学び側）', () => {
-  // @verifies REQ-060
+describe('SSO のコード交換（学び側。UC-013）', () => {
+  // @covers REQ-206#secret-missing-refused
   it('共有秘密が無い環境では 503 で止まり、まなびばに問い合わせない', async () => {
     const res = await app.request('/api/auth/sso', json({ code: 'abc' }), env({ SSO_PORTAL_URL: 'https://portal.example' }))
     expect(res.status).toBe(503)
     expect(((await res.json()) as { error: string }).error).toContain('共有秘密')
   })
 
-  // @verifies REQ-060
+  // @covers REQ-208#portal-unreachable
   it('まなびばに繋がらないときは 502 の {error}', async () => {
     const orig = globalThis.fetch
     globalThis.fetch = (async () => { throw new TypeError('fetch failed') }) as typeof fetch
@@ -112,7 +112,7 @@ describe('SSO のコード交換（学び側）', () => {
     }
   })
 
-  // @verifies REQ-004
+  // @covers REQ-193#exchange-refused
   it('まなびばがコードを拒んだら 401 で、その理由をそのまま返す', async () => {
     const orig = globalThis.fetch
     globalThis.fetch = (async () => new Response(JSON.stringify({ error: 'コードが無効です' }), { status: 401 })) as typeof fetch

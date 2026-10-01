@@ -182,7 +182,7 @@ afterEach(async () => {
 })
 
 describe('出題の画面', () => {
-  // @verifies REQ-197
+  // @covers REQ-059#scope-and-progress
   it('問題文・選択肢の記号・範囲の名前・進捗（回答済み／全体）を出す', async () => {
     stubApi(replies())
     await draw()
@@ -195,7 +195,7 @@ describe('出題の画面', () => {
     expect(text()).toMatch(/1\s*[／/]\s*3/)
   })
 
-  // @verifies REQ-198
+  // @covers REQ-061#send-current-idx-and-choice
   it('表示中の位置と選んだ記号を送り、送信中と判定後は選択肢を押せなくする', async () => {
     let release!: () => void
     const held = new Promise<void>((r) => {
@@ -220,7 +220,7 @@ describe('出題の画面', () => {
     expect(calls.filter((c) => c.url === '/api/sessions/s-1/answer')).toHaveLength(1)
   })
 
-  // @verifies REQ-201
+  // @covers REQ-063#verdict-and-marks
   it('回答のあとに正誤と正解の記号を出し、正解と誤答の選択肢を別の印で示す。「次の問題へ」で次が出る', async () => {
     stubApi(
       replies({
@@ -243,7 +243,7 @@ describe('出題の画面', () => {
     expect(text()).toContain('問題文その2')
   })
 
-  // @verifies REQ-206
+  // @covers REQ-068#stale-idx-refetch
   it('位置が食い違っていると返されたら、ずれを伝えて現在の問題を取り直す', async () => {
     const calls = stubApi(
       replies({
@@ -263,7 +263,7 @@ describe('出題の画面', () => {
     expect(calls.filter((c) => c.url === '/api/sessions/s-1/current').length, '現在の問題を取り直していない').toBeGreaterThan(before)
   })
 
-  // @verifies REQ-209
+  // @covers REQ-074#finish-failed-retryable
   it('締めに失敗したら理由と「まだ採点できていません」を出し、押し直せる', async () => {
     const calls = stubApi(
       replies({
@@ -285,7 +285,7 @@ describe('出題の画面', () => {
     expect(again[again.length - 1].body).toEqual(again[0].body)
   })
 
-  // @verifies REQ-222
+  // @covers REQ-069#finish-with-unanswered
   it('「ここまでで採点する」は未回答の残り問数を示して確認し、了承したときだけ締める', async () => {
     const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false)
     const calls = stubApi(replies())
@@ -299,7 +299,7 @@ describe('出題の画面', () => {
     expect(calls.some((c) => c.url === '/api/sessions/s-1/finish')).toBe(true)
   })
 
-  // @verifies REQ-228
+  // @covers REQ-070#suspend-keeps-answers
   it('「中断してホームへ」でホームに戻り、そこまでの回答を残す（破棄しない）', async () => {
     const calls = stubApi(replies())
     await draw()
@@ -377,7 +377,7 @@ describe('同一内容の印', () => {
   /** 印に出る他の出典（先頭の「出典：」は外して並べる）。 */
   const OTHER = '平成28年度 春期 ITパスポート試験 問1'
 
-  // @verifies REQ-237
+  // @covers REQ-053#mark-shown-when-multiple
   it('同じ内容が 2 回以上出題されているときだけ回数と他の出典を出す', async () => {
     stubApi(replies({ 'GET /api/sessions/s-1/current': { body: CUR(asked2) } }))
     await draw()

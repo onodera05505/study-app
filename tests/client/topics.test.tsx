@@ -149,8 +149,8 @@ afterEach(async () => {
   vi.unstubAllGlobals()
 })
 
-describe('単元の一覧', () => {
-  // @verifies REQ-121
+describe('単元の一覧（UC-002）', () => {
+  // @covers REQ-015#grouped-by-major
   it('大項目ごとに、単元の論点数・過去問数と 理解した数／論点数 を出す', async () => {
     stubApi()
     await draw(<Topics />)
@@ -166,7 +166,7 @@ describe('単元の一覧', () => {
     expect(text()).toContain('1/4')
   })
 
-  // @verifies REQ-121
+  // @covers REQ-019#filter-by-field
   it('分野を選ぶとその分野の単元だけが残る', async () => {
     stubApi()
     await draw(<Topics />)
@@ -177,8 +177,8 @@ describe('単元の一覧', () => {
   })
 })
 
-describe('論点の一覧', () => {
-  // @verifies REQ-122
+describe('論点の一覧（UC-002）', () => {
+  // @covers REQ-020#topics-of-middle
   it('選んだ単元の論点を、出題回数と小項目名つきで出す', async () => {
     stubApi()
     await draw(<Topics />)
@@ -194,7 +194,7 @@ describe('論点の一覧', () => {
     expect(text()).not.toContain('クロスサイトスクリプティング')
   })
 
-  // @verifies REQ-122
+  // @covers REQ-021#resort
   it('並べ替えを変えると、その並びで取りに行く', async () => {
     stubApi()
     await draw(<Topics />)
@@ -206,7 +206,7 @@ describe('論点の一覧', () => {
     expect(requests[requests.length - 1]).toContain('sort=')
   })
 
-  // @verifies REQ-122
+  // @covers REQ-022#no-status-selected
   it('理解度を全部外すと取りに行かず、すべて表示に戻す手段を出す', async () => {
     stubApi()
     await draw(<Topics />)
@@ -235,8 +235,8 @@ describe('論点の一覧', () => {
   })
 })
 
-describe('集計が取れないとき', () => {
-  // @verifies REQ-127
+describe('集計が取れないとき（UC-002）', () => {
+  // @covers REQ-016#aggregate-failed
   it('失敗の内容と取り直す手段を出し、読み込み中の表示のままにしない', async () => {
     stubApi(new Set(['/fields', '/categories']))
     await draw(<Topics />)

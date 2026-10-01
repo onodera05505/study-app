@@ -28,14 +28,14 @@ function snap(q: QuestionRow): Record<string, unknown> {
 
 const CITATION = '出典：令和6年度 ITパスポート試験 問8'
 
-describe('出題時のスナップショット（UC-010#3）', () => {
-  // @verifies REQ-264
+describe('出題時のスナップショット（UC-004）', () => {
+  // @covers REQ-058#snapshot-citation
   it('渡した過去問の出典がそのまま入る（後から教材を直しても当時の出典で出せる）', () => {
     const got = snap(row({ id: 'q-1', exam: '2024r06', number: 8, citation: CITATION }))
     expect(got.citation).toBe(CITATION)
   })
 
-  // @verifies REQ-264
+  // @covers REQ-058#snapshot-modified
   it('改変の印も入り、印の無い問題では立たない', () => {
     const on = snap(row({ id: 'q-1', exam: '2024r06', citation: CITATION, modified: 1 }))
     const off = snap(row({ id: 'q-2', exam: '2024r06', citation: CITATION, modified: 0 }))

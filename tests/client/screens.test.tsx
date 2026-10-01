@@ -148,8 +148,8 @@ describe('結果画面の出典', () => {
   })
 })
 
-describe('ログイン画面', () => {
-  // @verifies REQ-006
+describe('ログイン画面（UC-013）', () => {
+  // @covers REQ-190#portal-link-only
   it('SSO の環境ではパスワード欄を出さず、まなびばへ送る', async () => {
     stubApi(() => SSO_CONFIG)
     await draw(h(Login, { onDone: () => {} }))
@@ -165,7 +165,7 @@ describe('ログイン画面', () => {
     expect(container.querySelector('input[type="password"]')).not.toBeNull()
   })
 
-  // @verifies REQ-068
+  // @covers REQ-197#notice-on-login-screen
   it('期限切れの印があるときは「有効期限が切れました」の案内を出す', async () => {
     await markSessionExpired()
     stubApi(() => SSO_CONFIG)
@@ -173,7 +173,7 @@ describe('ログイン画面', () => {
     expect(text()).toContain('有効期限が切れました')
   })
 
-  // @verifies REQ-068
+  // @covers REQ-198#no-expiry-notice
   it('印が無いとき（自分でログアウトしたとき）は期限切れの案内を出さない', async () => {
     stubApi(() => SSO_CONFIG)
     await draw(h(Login, { onDone: () => {} }))
@@ -181,7 +181,7 @@ describe('ログイン画面', () => {
   })
 })
 
-describe('まなびばから戻ってくる画面（/sso/callback）', () => {
+describe('まなびばから戻ってくる画面（/sso/callback。UC-013）', () => {
   /** 交換が済んだ合図（onDone）を受けてホームへ移る所は親の担当なので、App と同じ配線で包んで描く。 */
   async function drawCallback(entry: string) {
     const done = vi.fn()
@@ -211,7 +211,7 @@ describe('まなびばから戻ってくる画面（/sso/callback）', () => {
     expect(back!.textContent ?? '', '導線に戻り先の名前が無い').toContain(portal.name)
   }
 
-  // @verifies REQ-058
+  // @covers REQ-191#exchange-and-home
   it('code を /api/auth/sso に渡し、返ったトークンを保存してホームへ移る', async () => {
     const calls = stubApiCalls((url) =>
       url.includes('/api/auth/sso') ? { body: { token: 'tok-from-portal' } } : { body: SSO_CONFIG },
@@ -226,7 +226,7 @@ describe('まなびばから戻ってくる画面（/sso/callback）', () => {
     expect(text()).toContain('ホーム画面')
   })
 
-  // @verifies REQ-058
+  // @covers REQ-193#exchange-refused
   it('交換に失敗したらトークンを保存せず、旨と理由とまなびばへ戻る導線を出す', async () => {
     stubApiCalls((url) =>
       url.includes('/api/auth/sso')
@@ -239,7 +239,7 @@ describe('まなびばから戻ってくる画面（/sso/callback）', () => {
     expectFailureScreen('コードが無効です')
   })
 
-  // @verifies REQ-058
+  // @covers REQ-193#no-code
   it('code が無いときは交換せず、旨と理由とまなびばへ戻る導線を出す', async () => {
     const calls = stubApiCalls(() => ({ body: SSO_CONFIG }))
     const done = await drawCallback('/sso/callback')
@@ -250,7 +250,7 @@ describe('まなびばから戻ってくる画面（/sso/callback）', () => {
   })
 })
 
-describe('ヘッダーの本人の名前', () => {
+describe('ヘッダーの本人の名前（UC-013）', () => {
   /** ホームが読む /api/me の応答。名前はトークンから出す決まりなので、ここには別の名前を入れておく。 */
   const ME = {
     user: { id: 'u-1', name: 'サーバの名前', role: 'MEMBER' },
@@ -263,7 +263,7 @@ describe('ヘッダーの本人の名前', () => {
   const stubHome = () =>
     stubApi((url) => (url.includes('/api/me') ? ME : url.includes('/auth/config') ? SSO_CONFIG : []))
 
-  // @verifies REQ-064
+  // @covers REQ-199#name-shown
   it('name を持つトークンがあるとヘッダーに名前が出る', async () => {
     stubHome()
     setToken(jwtWith({ sub: 'u-1', name: '寺田テスト', role: 'MEMBER' }))
@@ -273,16 +273,16 @@ describe('ヘッダーの本人の名前', () => {
     expect(header!.textContent ?? '').toContain('寺田テスト')
   })
 
-  // @verifies REQ-064
+  // @covers REQ-199#name-unknown
   it('トークンが無いときは名前を出さない', async () => {
     stubHome()
     await draw(h(App))
     expect(text()).not.toContain('寺田テスト')
   })
 
-  // @verifies REQ-064
+  // @covers REQ-199#name-without-reload
   it('トークンを保存した時点から名前が出る（画面の読み直しを待たない）', async () => {
-    // トークンを保存する操作は UC-001 の step 5〜8（戻ってきたコードを渡し、返ったトークンを保存する）。
+    // トークンを保存する操作は主シナリオの 8〜9（戻ってきたコードを換え、返ったトークンを端末に保存する）。
     // 保存のあとページを読み直していない、この描画のまま名前を見る。
     const TOKEN = jwtWith({ sub: 'u-1', name: '寺田テスト', role: 'MEMBER' })
     stubApi((url) =>

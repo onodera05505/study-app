@@ -69,7 +69,7 @@ afterEach(async () => {
 })
 
 describe('解説の表示', () => {
-  // @verifies REQ-200
+  // @covers REQ-062#explanation-rendered
   it('正解の根拠と選択肢ごとの 1 行を出し、正解の行に印を付ける', async () => {
     await draw(EXPL)
     expect(text()).toContain('固定費を限界利益率で割ると求まります。')
@@ -88,7 +88,7 @@ describe('解説の表示', () => {
     expect(marked, '誤答の用語名が押せる語になっていない').toBe(true)
   })
 
-  // @verifies REQ-208
+  // @covers REQ-065#explanation-absent-renders-nothing
   it('解説が無い問題では何も描かない', async () => {
     await draw(EXPL)
     expect(container.querySelector('.expl'), '解説があるのに描かれていない').not.toBeNull()

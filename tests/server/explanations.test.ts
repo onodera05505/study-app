@@ -7,7 +7,7 @@ const choices = [
 ]
 
 describe('explanationOf（問題ごとの解説）', () => {
-  // @verifies REQ-022
+  // @covers REQ-062#explanation-built
   it('列から正解の根拠と誤答の note を組む', () => {
     const got = explanationOf({
       explCorrectReason: '正解はア。均衡点の定義そのもの。',
@@ -19,13 +19,13 @@ describe('explanationOf（問題ごとの解説）', () => {
     expect(got!.choices[1]).toEqual({ label: 'イ', term: '損益分岐点', note: '売上と費用が等しくなる点の説明。' })
   })
 
-  // @verifies REQ-022
+  // @covers REQ-065#explanation-missing-columns
   it('根拠か選択肢が欠けていれば null', () => {
     expect(explanationOf({ explCorrectReason: null, explChoicesJson: JSON.stringify(choices) })).toBeNull()
     expect(explanationOf({ explCorrectReason: '正解はア。', explChoicesJson: null })).toBeNull()
   })
 
-  // @verifies REQ-022
+  // @covers REQ-065#explanation-malformed
   it('選択肢の JSON が壊れていても配列でなくても null', () => {
     expect(explanationOf({ explCorrectReason: '正解はア。', explChoicesJson: '{壊れた' })).toBeNull()
     expect(explanationOf({ explCorrectReason: '正解はア。', explChoicesJson: '{"label":"ア"}' })).toBeNull()

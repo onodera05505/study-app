@@ -106,14 +106,14 @@ function fakeDbByField(rows: QuestionRow[]) {
 }
 
 describe('compareExam（回の新旧）', () => {
-  // @verifies REQ-243
+  // @covers REQ-053#exam-recency-order
   it('古い回が小さく、新しい回が大きい', () => {
     expect(compareExam('2016h28h', '2024r06')).toBeLessThan(0)
     expect(compareExam('2024r06', '2016h28h')).toBeGreaterThan(0)
     expect(compareExam('2020r02o', '2020r02o')).toBe(0)
   })
 
-  // @verifies REQ-243
+  // @covers REQ-053#exam-recency-order
   it('同じ年は 春(h) → 10月(o) → 秋(a) の順で、時期の無い回は年内で最後', () => {
     expect(compareExam('2016h28h', '2016h28a')).toBeLessThan(0)
     expect(compareExam('2020r02h', '2020r02o')).toBeLessThan(0)
@@ -121,7 +121,7 @@ describe('compareExam（回の新旧）', () => {
     expect(compareExam('2024r06a', '2024r06')).toBeLessThan(0)
   })
 
-  // @verifies REQ-243
+  // @covers REQ-053#exam-recency-order
   it('並べ替えに使うと古い順に揃う', () => {
     const sorted = ['2024r06', '2016h28a', '2020r02o', '2016h28h'].sort(compareExam)
     expect(sorted).toEqual(['2016h28h', '2016h28a', '2020r02o', '2024r06'])
@@ -129,7 +129,7 @@ describe('compareExam（回の新旧）', () => {
 })
 
 describe('dedupe（同一内容を1問にまとめる）', () => {
-  // @verifies REQ-021
+  // @covers REQ-053#fold-same-content
   it('同じ content_key を1問に畳み、代表は最新の回になる', () => {
     const rows = [
       { id: 'q-old', exam: '2016h28h', contentKey: 'ck-1', citation: '出典：平成28年春 問1' },
@@ -146,7 +146,7 @@ describe('dedupe（同一内容を1問にまとめる）', () => {
     expect(got[1].otherCitations).toEqual([])
   })
 
-  // @verifies REQ-021
+  // @covers REQ-053#duplicate-row-not-counted
   it('JOIN で増えた同じ id の行を「2回出題」と数えない', () => {
     const r = { id: 'q-1', exam: '2024r06', contentKey: 'ck-1', citation: '出典：令和6年 問1' }
     const got = dedupe([r, { ...r }])
@@ -154,7 +154,7 @@ describe('dedupe（同一内容を1問にまとめる）', () => {
     expect(got[0].timesAsked).toBe(1)
   })
 
-  // @verifies REQ-241
+  // @covers REQ-053#no-content-key
   it('content_key が無い問題は id ごとに別の問題として残る', () => {
     const got = dedupe([
       { id: 'q-1', exam: '2024r06', contentKey: null, citation: 'c1' },
@@ -166,7 +166,7 @@ describe('dedupe（同一内容を1問にまとめる）', () => {
 })
 
 describe('buildQuestions（出題の組み立て）', () => {
-  // @verifies REQ-019
+  // @covers REQ-051#scope-drill
   it('drill は担当の論点だけを SQL で絞る', async () => {
     const { db, find } = fakeDb([
       { match: FETCH, rows: [row({ id: 'q-1', exam: '2024r06' })] },
@@ -181,7 +181,7 @@ describe('buildQuestions（出題の組み立て）', () => {
     expect(built.sourceExam).toBeNull()
   })
 
-  // @verifies REQ-019
+  // @covers REQ-051#scope-field-middle
   it('field は分野、middle は中分類で絞る', async () => {
     const f = fakeDb([{ match: FETCH, rows: [row({ id: 'q-1', exam: '2024r06', field: 'テクノロジ系' })] }])
     await buildQuestions(f.db, 'u-1', { ...base, kind: 'field', field: 'テクノロジ系' })
@@ -198,7 +198,7 @@ describe('buildQuestions（出題の組み立て）', () => {
     expect(built.scopeLabel).toBe('中分類「基礎理論」')
   })
 
-  // @verifies REQ-019, REQ-021
+  // @covers REQ-053#fold-in-drill
   it('drill は同じ content_key を2度出さない', async () => {
     const rows = [
       row({ id: 'q-old', exam: '2016h28h', contentKey: 'ck-1' }),
@@ -215,7 +215,7 @@ describe('buildQuestions（出題の組み立て）', () => {
     expect(built.questions.find((q) => q.id === 'q-new')!.timesAsked).toBe(2)
   })
 
-  // @verifies REQ-019
+  // @covers REQ-051#size-cap
   it('size を超える数は出さない', async () => {
     const rows = [1, 2, 3, 4, 5].map((n) => row({ id: `q-${n}`, exam: '2024r06', contentKey: `ck-${n}` }))
     const { db } = fakeDb([
@@ -242,7 +242,7 @@ describe('buildQuestions（出題の組み立て）', () => {
     expect(find(FETCH)[0].params).toContain('2024r06')
   })
 
-  // @verifies REQ-020
+  // @covers REQ-052#mastered-excluded
   it('drill・field・middle・弱点復習・回を指定しない模試で、直近 N 回連続で正解した問題は出さない', async () => {
     const rows = [1, 2, 3].map((n) => row({ id: `q-${n}`, exam: '2024r06', contentKey: `ck-${n}`, field: 'テクノロジ系' }))
     /** 定着済み（ck-2）を返す偽 db で組み立て、出題に残った id を返す。 */
@@ -279,7 +279,7 @@ describe('buildQuestions（出題の組み立て）', () => {
     expect(built.questions.map((q) => q.id)).toEqual(['q-1', 'q-2'])
   })
 
-  // @verifies REQ-020
+  // @covers REQ-052#mastered-all-fallback
   it('範囲の問題が除外で全部無くなるときは除外しない（弱点復習は誤答と理解度由来を合わせて見る）', async () => {
     const rows = [row({ id: 'q-1', exam: '2024r06', contentKey: 'ck-1', field: 'テクノロジ系' })]
     const f = fakeDb([
@@ -306,7 +306,7 @@ describe('buildQuestions（出題の組み立て）', () => {
     expect(some.questions.map((q) => q.id)).toEqual(['k-1'])
   })
 
-  // @verifies REQ-194
+  // @covers REQ-054#wrong-recent-first
   it('弱点復習は誤答（result = 2）だけを直近に間違えた順で集める', async () => {
     const rows = [row({ id: 'q-1', exam: '2024r06', contentKey: 'ck-1' })]
     const { db, find } = fakeDb([
@@ -322,7 +322,7 @@ describe('buildQuestions（出題の組み立て）', () => {
     expect(built.questions.map((q2) => q2.id)).toEqual(['q-1'])
   })
 
-  // @verifies REQ-042, REQ-194
+  // @covers REQ-054#wrong-then-weak-fill
   it('弱点復習は誤答を新しい順に先に詰め、余りを理解度が低い論点の過去問で埋める', async () => {
     const wrong = [1, 2].map((n) => row({ id: `w-${n}`, exam: '2024r06', contentKey: `ck-w${n}` }))
     const weak = [1, 2].map((n) => row({ id: `k-${n}`, exam: '2024r06', contentKey: `ck-k${n}` }))
@@ -339,7 +339,7 @@ describe('buildQuestions（出題の組み立て）', () => {
     expect(find(WEAK)[0].params).toContain('u-1')
   })
 
-  // @verifies REQ-042
+  // @covers REQ-054#weak-by-frequency
   it('理解度が低い論点の過去問は出題頻度の高い論点から取る', async () => {
     const { db, find } = fakeDb([
       { match: REVIEW, rows: [row({ id: 'w-1', exam: '2024r06', contentKey: 'ck-w1' })] },
@@ -352,7 +352,7 @@ describe('buildQuestions（出題の組み立て）', () => {
     expect(ordersByFrequencyDesc(find(WEAK)[0].sql)).toBe(true)
   })
 
-  // @verifies REQ-042
+  // @covers REQ-054#weak-status-boundary
   it('理解度 3 の論点と、理解度の記録が無い論点の過去問は、誤答でなければ入らない', async () => {
     const { db, find } = fakeDb([
       { match: REVIEW, rows: [row({ id: 'w-1', exam: '2024r06', contentKey: 'ck-w1' })] },
@@ -373,7 +373,7 @@ describe('buildQuestions（出題の組み立て）', () => {
     expect(excludesUnderstood(condition(find(REVIEW)[0]))).toBe(false)
   })
 
-  // @verifies REQ-042, REQ-194
+  // @covers REQ-054#wrong-only-incorrect
   it('正解した問題を外すのは誤答の側だけで、理解度が低い論点の過去問には正解したことのある問題も入る', async () => {
     const { db, find } = fakeDb([
       { match: REVIEW, rows: [row({ id: 'w-1', exam: '2024r06', contentKey: 'ck-w1' })] },
@@ -390,7 +390,7 @@ describe('buildQuestions（出題の組み立て）', () => {
     expect(built.questions.map((q) => q.id)).toEqual(['w-1', 'k-1'])
   })
 
-  // @verifies REQ-042
+  // @covers REQ-054#wrong-fills-size
   it('誤答だけで問題数に達するときは理解度由来を足さない', async () => {
     const wrong = [1, 2].map((n) => row({ id: `w-${n}`, exam: '2024r06', contentKey: `ck-w${n}` }))
     const { db } = fakeDb([
@@ -402,7 +402,7 @@ describe('buildQuestions（出題の組み立て）', () => {
     expect(built.questions.map((q) => q.id)).toEqual(['w-1', 'w-2'])
   })
 
-  // @verifies REQ-021, REQ-042
+  // @covers REQ-053#fold-across-review-sources
   it('誤答と同じ内容の過去問が理解度由来にも来たときは 1 問にまとめる', async () => {
     const same = () => row({ id: 'w-1', exam: '2024r06', contentKey: 'ck-1' })
     const { db } = fakeDb([
@@ -449,7 +449,7 @@ describe('buildQuestions（出題の組み立て）', () => {
     expect(built.questions.filter((q) => q.id.startsWith('n-')).length).toBe(2)
   })
 
-  // @verifies REQ-242
+  // @covers REQ-053#times-asked-recount
   it('弱点復習の出題回数は過去問全体から数え直す', async () => {
     const rows = [row({ id: 'q-new', exam: '2020r02o', contentKey: 'ck-1' })]
     const { db } = fakeDb([
@@ -469,7 +469,7 @@ describe('buildQuestions（出題の組み立て）', () => {
 })
 
 describe('snapshotOf（出題時の内容）', () => {
-  // @verifies REQ-195
+  // @covers REQ-058#snapshot-content
   it('問題文・選択肢・正解・出典を出題時の内容として持つ', () => {
     const q = row({
       id: 'q-1',

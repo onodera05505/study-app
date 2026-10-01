@@ -172,8 +172,8 @@ afterEach(async () => {
   vi.unstubAllEnvs()
 })
 
-describe('論点の解説', () => {
-  // @verifies REQ-123
+describe('論点の解説（UC-002）', () => {
+  // @covers REQ-030#detail-toggle
   it('短い説明は最初から描き、詳しい解説は押したときだけ開く', async () => {
     stubApi()
     await draw(<TopicDetail />)
@@ -186,13 +186,13 @@ describe('論点の解説', () => {
   })
 })
 
-describe('紐づく過去問', () => {
+describe('紐づく過去問（UC-002）', () => {
   const explControls = () =>
     [...container.querySelectorAll<HTMLElement>('button, summary')].filter(
       (b) => /解説/.test(b.textContent ?? '') && !/詳し/.test(b.textContent ?? ''),
     )
 
-  // @verifies REQ-124
+  // @covers REQ-031#answer-then-explanation
   it('本文と選択肢は出すが、答えを押すまで解説の手段を出さない', async () => {
     stubApi()
     await draw(<TopicDetail />)
@@ -208,7 +208,7 @@ describe('紐づく過去問', () => {
     expect(text()).toContain('問 1 の正解の理由です。')
   })
 
-  // @verifies REQ-124
+  // @covers REQ-032#first-page-then-rest
   it('最初は先頭の数問だけ出し、残りの件数つきの手段で残りを開く', async () => {
     stubApi()
     await draw(<TopicDetail />)
@@ -225,7 +225,7 @@ describe('紐づく過去問', () => {
     expect(QUESTIONS.every((q) => text().includes(q.text))).toBe(true)
   })
 
-  // @verifies REQ-125
+  // @covers REQ-024#figure-image-and-transcript
   it('図は画像を出して書き起こしを開けるようにし、画像が無い問題は書き起こしを本体にする', async () => {
     stubApi()
     await draw(<TopicDetail />)

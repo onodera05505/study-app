@@ -165,7 +165,7 @@ afterEach(async () => {
 })
 
 describe('練習テストの画面', () => {
-  // @verifies REQ-190
+  // @covers REQ-049#fields-failed
   it('分野の一覧が取れないときは、分野側の理由と読み直しだけを出す', async () => {
     stubApi(replies({ 'GET /api/fields': { status: 500, body: { error: '分野の一覧を取得できませんでした' } } }))
     await draw()
@@ -175,7 +175,7 @@ describe('練習テストの画面', () => {
     expect(text()).not.toContain('確認できていません')
   })
 
-  // @verifies REQ-190
+  // @covers REQ-049#current-failed
   it('進行中の確認が取れないときは「確認できていません」を出し、分野の一覧は出す', async () => {
     stubApi(replies({ 'GET /api/sessions/current': { status: 500, body: { error: '進行中を確認できませんでした' } } }))
     await draw()
@@ -184,7 +184,7 @@ describe('練習テストの画面', () => {
     expect(btn(/再読み込み|読み直/), '読み直しの導線が無い').toBeTruthy()
   })
 
-  // @verifies REQ-190
+  // @covers REQ-048#fields-listed
   it('範囲の一覧はカテゴリ別の節を持ち、その節で分野を選べる', async () => {
     stubApi(replies())
     await draw()
@@ -193,7 +193,7 @@ describe('練習テストの画面', () => {
     expect(sectionBtn(/カテゴリ別/, /マネジメント系/), 'カテゴリ別の節に出ない分野がある').toBeTruthy()
   })
 
-  // @verifies REQ-192
+  // @covers REQ-048#categories-after-field
   it('カテゴリ別で分野を選ぶと、その分野の単元の一覧が出る（選んだだけでは始まらない）', async () => {
     const calls = stubApi(replies({ 'GET /api/categories': { body: CATEGORIES } }))
     await draw()
@@ -220,7 +220,7 @@ describe('練習テストの画面', () => {
     expect(decodeURIComponent(asked2[asked2.length - 1].url)).toContain('field=マネジメント系')
   })
 
-  // @verifies REQ-192
+  // @covers REQ-050#start-middle
   it('単元を押すと kind=middle・その単元の middleNo で作成が頼まれる', async () => {
     const calls = stubApi(replies({ 'GET /api/categories': { body: CATEGORIES } }))
     await draw()
@@ -233,7 +233,7 @@ describe('練習テストの画面', () => {
     expect(typeof created!.body?.size).toBe('number')
   })
 
-  // @verifies REQ-191, REQ-192
+  // @covers REQ-056#block-middle
   it('進行中のテストがあるあいだは単元のボタンも押せない', async () => {
     stubApi(
       replies({
@@ -251,7 +251,7 @@ describe('練習テストの画面', () => {
     expect(unit!.disabled).toBe(true)
   })
 
-  // @verifies REQ-191
+  // @covers REQ-050#start-field-and-review
   it('分野を押すと分野別演習、弱点復習を押すと弱点復習が範囲と問題数つきで始まる', async () => {
     const calls = stubApi(replies())
     await draw()
@@ -271,7 +271,7 @@ describe('練習テストの画面', () => {
     expect(typeof review!.body?.size).toBe('number')
   })
 
-  // @verifies REQ-191
+  // @covers REQ-056#block-field-and-review
   it('進行中のテストがあるあいだは開始のボタンを押せない', async () => {
     stubApi(replies({ 'GET /api/sessions/current': { body: IN_PROGRESS } }))
     await draw()

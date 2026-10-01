@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-/** 結果の画面（合否の目安と基準・分野別の表・間違えた問題の振り返り・時間切れの案内・同一内容の印）。
+/** UC-008 模試（通し受験）の結果の画面（合否の目安と基準・分野別の表・間違えた問題の振り返り・時間切れの案内・同一内容の印）。
  *  出典と「一部改変」は tests/client/screens.test.tsx が見る。 */
 
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
@@ -122,7 +122,7 @@ afterEach(async () => {
 })
 
 describe('結果の画面', () => {
-  // @verifies REQ-219
+  // @covers REQ-120#mock-result-sections
   it('模擬試験では合否の目安・基準・分野別の表・断り書きを出し、演習では出さない', async () => {
     stubApi(RESULT())
     await draw()
@@ -140,7 +140,7 @@ describe('結果の画面', () => {
     expect(text(), '演習の結果に断り書きが出ている').not.toContain('本番は IRT のため公式スコアとは一致しません。')
   })
 
-  // @verifies REQ-220
+  // @covers REQ-125#wrong-first-and-review-links
   it('はじめは間違えた問題だけを出し、自分の解答と正解・論点への導線・畳んだ解説を持つ', async () => {
     stubApi(RESULT())
     await draw()
@@ -157,7 +157,7 @@ describe('結果の画面', () => {
     expect(text(), 'すべてに切り替えても正解した問題が出ない').toContain('問題文その2')
   })
 
-  // @verifies REQ-225
+  // @covers REQ-124#expired-notice
   it('時間切れで締められた回にだけ、そこまでの回答で採点した旨を出す', async () => {
     stubApi(RESULT({ expired: true }))
     await draw()
@@ -168,7 +168,6 @@ describe('結果の画面', () => {
     expect(text(), '時間切れでないのに案内が出ている').not.toMatch(/制限時間/)
   })
 
-  // @verifies REQ-239
   it('公開回の通し受験では同一内容の印を出さず、演習では出す', async () => {
     const asked2 = { timesAsked: 2, otherCitations: ['出典：平成28年度 春期 ITパスポート試験 問1'] }
     // 印に出る他の出典は、先頭の「出典：」を外した形で並ぶ

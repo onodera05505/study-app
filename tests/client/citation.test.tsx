@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 /** 過去問を出す 3 つの画面（論点の学習・出題・結果）に出典が出て、改変した問題に
- *  「一部改変」が併記されることを見る（UC-010）。
+ *  「一部改変」が併記されることを見る（BR-027）。
  *
  *  サーバの応答をそのまま出す所なので、fetch を偽物にして本物の React で描く。
  *  出典は API が組み立てた文字列（citation）として来て、改変の印は modified。 */
@@ -167,13 +167,13 @@ const result = (modified: boolean) => ({
 const only = (body: unknown) => (url: string) =>
   url.includes('/glossary') ? { glossary: [] } : body
 
-describe('論点の学習画面の出典（UC-010#2）', () => {
+describe('論点の学習画面の出典（UC-002）', () => {
   const drawTopic = (modified: 0 | 1) => {
     stubApi(only(topicDetail(modified)))
     return draw(h(Routes, null, h(Route, { path: '/topics/:id', element: h(TopicDetail) })), '/topics/12')
   }
 
-  // @verifies REQ-262
+  // @covers REQ-023#citation-per-question
   it('紐づく過去問ごとに「出典：<年度ラベル> <試験名> 問N」が出る', async () => {
     await drawTopic(0)
     expect(text()).toContain(CITATION)
@@ -181,7 +181,7 @@ describe('論点の学習画面の出典（UC-010#2）', () => {
     expect(text()).not.toContain(EXAM_CODE)
   })
 
-  // @verifies REQ-263
+  // @covers REQ-023#modified-question
   it('改変の印が立つ過去問には「一部改変」を併記し、立っていない過去問には出さない', async () => {
     await drawTopic(1)
     expect(text()).toContain(CITATION)

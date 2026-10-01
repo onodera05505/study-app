@@ -28,8 +28,8 @@ afterEach(() => {
   vi.unstubAllGlobals()
 })
 
-describe('トークンの保存', () => {
-  // @verifies REQ-050
+describe('トークンの保存（UC-013）', () => {
+  // @covers REQ-191#token-survives-reload
   it('setToken で端末（localStorage）にトークンが残る', async () => {
     const m = await load()
     m.setToken('tok-1')
@@ -39,7 +39,7 @@ describe('トークンの保存', () => {
     expect(reloaded.getToken()).toBe('tok-1')
   })
 
-  // @verifies REQ-062
+  // @covers REQ-191#token-round-trip
   it('getToken は保存前は null、保存後は同じ値', async () => {
     const m = await load()
     expect(m.getToken()).toBeNull()
@@ -47,7 +47,7 @@ describe('トークンの保存', () => {
     expect(m.getToken()).toBe('tok-2')
   })
 
-  // @verifies REQ-063
+  // @covers REQ-196#request-carries-token
   it('api() はトークンがあれば Authorization: Bearer を付け、無ければ付けない', async () => {
     const m = await load()
     const calls: Array<[string, RequestInit | undefined]> = []
@@ -62,7 +62,7 @@ describe('トークンの保存', () => {
     expect((calls[1][1]?.headers as Record<string, string>).Authorization).toBe('Bearer tok-1')
   })
 
-  // @verifies REQ-069
+  // @covers REQ-198#token-and-device-memory-cleared
   it('clearToken はトークンと「前回の続き」を両方消す', async () => {
     const m = await load()
     m.setToken('tok-1')
@@ -117,7 +117,7 @@ describe('API 呼び出しの失敗の形', () => {
     expect(e.message).not.toContain('Failed to fetch')
   })
 
-  // @verifies REQ-067
+  // @covers REQ-197#expired-token-401
   it('トークン付きで 401 なら期限切れの印を立ててトークンを捨てる', async () => {
     const m = await load()
     vi.stubGlobal('fetch', vi.fn(async () => okJson({ error: '認証が必要です' }, 401)))
@@ -127,7 +127,7 @@ describe('API 呼び出しの失敗の形', () => {
     expect(m.takeSessionExpired()).toBe(true)
   })
 
-  // @verifies REQ-067
+  // @covers REQ-194#no-expiry-notice
   it('トークン無しの 401 では期限切れの印を立てない（元から未ログイン）', async () => {
     const m = await load()
     vi.stubGlobal('fetch', vi.fn(async () => okJson({ error: '認証が必要です' }, 401)))
@@ -136,8 +136,8 @@ describe('API 呼び出しの失敗の形', () => {
   })
 })
 
-describe('期限切れの印', () => {
-  // @verifies REQ-052
+describe('期限切れの印（UC-013）', () => {
+  // @covers REQ-197#notice-once
   it('印は 1 度だけ取り出せる。印が無ければ false', async () => {
     const m = await load()
     expect(m.takeSessionExpired()).toBe(false)
@@ -149,8 +149,8 @@ describe('期限切れの印', () => {
   })
 })
 
-describe('ヘッダーの本人の名前', () => {
-  // @verifies REQ-053
+describe('ヘッダーの本人の名前（UC-013）', () => {
+  // @covers REQ-199#name-from-token
   it('トークンの中身の name を返し、サーバに聞かない', async () => {
     const m = await load()
     const fetchMock = vi.fn()
@@ -160,7 +160,7 @@ describe('ヘッダーの本人の名前', () => {
     expect(fetchMock).not.toHaveBeenCalled()
   })
 
-  // @verifies REQ-053
+  // @covers REQ-199#name-unknown
   it('トークンが無い・壊れている・name が無いときは null', async () => {
     const m = await load()
     expect(m.getUserName()).toBeNull()
