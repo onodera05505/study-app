@@ -19,7 +19,7 @@ authSchemes:
     note: 学び側サーバがまなびばの交換を呼ぶときだけ。値は配備の秘密（BR-009）
 
 errorCodes:
-  INVALID_INPUT: 入力が決められた形を満たさない（400）
+  INVALID_INPUT: 入力が決められた形を満たさない、または要求に応えられる対象が無い（400）
   UNAUTHENTICATED: 本人と分からない要求（401。BR-001）
   FORBIDDEN: 権限が無い、または共有秘密が合わない（403）
   NOT_FOUND: 対象が無い、または本人の物でない（404。BR-018）
@@ -27,6 +27,8 @@ errorCodes:
   RATE_LIMITED: 直近の受付が上限に達している（429）
   UPSTREAM_UNAVAILABLE: 相手方（まなびば）に届かない（502）
   NOT_CONFIGURED: この配備にはその機能の設定が無い（SSO の場所や共有秘密。404/503）
+  INTERNAL: サーバで処理できなかった（500。全経路共通の最終段）
+  STORAGE_UNAVAILABLE: 端末の記憶に書けない・読めない（local-store）
   PERMISSION_DENIED: OS の権限が拒否されている（requires を宣言する操作だけ。この学びでは未使用）
 
 schemas:
@@ -46,7 +48,11 @@ schemas:
     properties:
       idx: { type: integer, minimum: 0 }
       text: { type: string }
-      choices: { type: array, items: { type: string } }
+      choices:
+        type: object
+        description: ア・イ・ウ・エ を鍵にした選択肢の文
+        propertyNames: { enum: ["ア", "イ", "ウ", "エ"] }
+        additionalProperties: { type: string }
       citation: { type: string }
       modified: { type: boolean }
       hasFigure: { type: boolean }
@@ -54,3 +60,17 @@ schemas:
       figureImage: { type: [string, "null"] }
       timesAsked: { type: integer, minimum: 1 }
       otherCitations: { type: array, items: { type: string } }
+  Explanation:
+    type: object
+    required: [correctReason, choices]
+    properties:
+      correctReason: { type: string }
+      choices:
+        type: array
+        items:
+          type: object
+          required: [label, term, note]
+          properties:
+            label: { type: string, enum: ["ア", "イ", "ウ", "エ"] }
+            term: { type: [string, "null"] }
+            note: { type: string }

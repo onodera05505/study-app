@@ -1,0 +1,431 @@
+x-uc: UC-004
+x-status: draft
+x-spec: ./UC.md
+x-updated: 2026-10-01
+
+operations:
+  listFields:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: bearer
+    summary: 演習の範囲に選べる分野と、その学習の進み具合を一覧で返す
+    wire:
+      method: GET
+      path: /api/fields
+      success: 200
+    response:
+      type: object
+      required: [fields]
+      properties:
+        fields:
+          type: array
+          items:
+            type: object
+            required: [field, topics, questions, understood, partly, untouched]
+            properties:
+              field: { type: string }
+              topics: { type: integer, minimum: 0 }
+              questions: { type: integer, minimum: 0 }
+              understood: { type: integer, minimum: 0 }
+              partly: { type: integer, minimum: 0 }
+              untouched: { type: integer, minimum: 0 }
+    errors:
+      - code: UNAUTHENTICATED
+        when: Authorization の Bearer トークンが無い、または読めない
+        wire: { status: 401 }
+    examples:
+      ok:
+        response:
+          fields:
+            - { field: "ストラテジ系", topics: 148, questions: 310, understood: 20, partly: 5, untouched: 123 }
+            - { field: "マネジメント系", topics: 92, questions: 180, understood: 8, partly: 3, untouched: 81 }
+            - { field: "テクノロジ系", topics: 292, questions: 610, understood: 31, partly: 12, untouched: 249 }
+      unauthenticated:
+        error: UNAUTHENTICATED
+
+  listCategories:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: bearer
+    summary: 分野を選んだあとに選べる単元（中分類）を一覧で返す
+    wire:
+      method: GET
+      path: /api/categories
+      success: 200
+    request:
+      type: object
+      properties:
+        field:
+          type: string
+          minLength: 1
+    response:
+      type: object
+      required: [categories]
+      properties:
+        categories:
+          type: array
+          items:
+            type: object
+            required: [middleNo, middle, major, field, topics, questions, understood]
+            properties:
+              middleNo: { type: integer, minimum: 1 }
+              middle: { type: string }
+              major: { type: string }
+              field: { type: string }
+              topics: { type: integer, minimum: 0 }
+              questions: { type: integer, minimum: 0 }
+              understood: { type: integer, minimum: 0 }
+    errors:
+      - code: UNAUTHENTICATED
+        when: Authorization の Bearer トークンが無い、または読めない
+        wire: { status: 401 }
+    examples:
+      ok:
+        request: { field: "テクノロジ系" }
+        response:
+          categories:
+            - { middleNo: 22, middle: "ネットワーク", major: "技術要素", field: "テクノロジ系", topics: 31, questions: 74, understood: 4 }
+            - { middleNo: 23, middle: "セキュリティ", major: "技術要素", field: "テクノロジ系", topics: 44, questions: 121, understood: 6 }
+      okAllFields:
+        request: {}
+        response:
+          categories:
+            - { middleNo: 1, middle: "企業活動", major: "企業と法務", field: "ストラテジ系", topics: 26, questions: 58, understood: 3 }
+      unauthenticated:
+        error: UNAUTHENTICATED
+
+  startSession:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: bearer
+    summary: 選んだ種別と範囲で進行中のテストを 1 つ作り、範囲の名前と問題数を返す
+    wire:
+      method: POST
+      path: /api/sessions
+      success: 201
+    request:
+      type: object
+      required: [kind]
+      properties:
+        kind:
+          type: string
+          enum: [drill, field, middle, review]
+        topicId:
+          type: integer
+          minimum: 1
+        field:
+          type: string
+          minLength: 1
+        middleNo:
+          type: integer
+          minimum: 1
+        size:
+          type: integer
+          minimum: 1
+          maximum: 100
+    response:
+      type: object
+      required: [id, kind, scopeLabel, questionCount, timeLimitSec]
+      properties:
+        id: { type: string, format: uuid }
+        kind: { type: string, enum: [drill, field, middle, review] }
+        scopeLabel: { type: string, minLength: 1 }
+        questionCount: { type: integer, minimum: 1 }
+        timeLimitSec: { type: [integer, "null"] }
+    errors:
+      - code: UNAUTHENTICATED
+        when: Authorization の Bearer トークンが無い、または読めない
+        wire: { status: 401 }
+      - code: INVALID_INPUT
+        when: 本文が kind・topicId・field・middleNo・size の形を満たさない
+        wire: { status: 400 }
+      - code: CONFLICT
+        when: 進行中のテストが既にある
+        wire: { status: 409 }
+      - code: INVALID_INPUT
+        when: 選んだ範囲に出題できる問題が 1 問も無い
+        wire: { status: 400 }
+    examples:
+      okDrill:
+        request: { kind: drill, topicId: 2 }
+        response:
+          id: "8f14e45f-ea2b-4f1c-9a3e-6b1d2c7f4a90"
+          kind: drill
+          scopeLabel: "論点「オープンソースソフトウェア」"
+          questionCount: 10
+          timeLimitSec: null
+      okField:
+        request: { kind: field, field: "テクノロジ系", size: 20 }
+        response:
+          id: "1c0b9f2d-7e55-4b3a-8c21-0d9f6a4e7b13"
+          kind: field
+          scopeLabel: "分野「テクノロジ系」"
+          questionCount: 20
+          timeLimitSec: null
+      okReview:
+        request: { kind: review }
+        response:
+          id: "b5d6c1a0-3f48-4e97-9d52-7a1c8e0b6f34"
+          kind: review
+          scopeLabel: "間違えた問題の復習"
+          questionCount: 20
+          timeLimitSec: null
+      invalidKind:
+        request: { kind: daily }
+        error: INVALID_INPUT
+      invalidSize:
+        request: { kind: field, field: "テクノロジ系", size: 101 }
+        error: INVALID_INPUT
+      inProgress:
+        request: { kind: middle, middleNo: 23 }
+        error: CONFLICT
+      emptyScope:
+        request: { kind: drill, topicId: 9999 }
+        error: INVALID_INPUT
+      inProgressBeforeEmptyScope:
+        request: { kind: drill, topicId: 9999 }
+        error: CONFLICT
+      unauthenticatedBeforeInvalidKind:
+        request: { kind: daily }
+        error: UNAUTHENTICATED
+
+  getCurrentQuestion:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: bearer
+    summary: 進行中のテストの現在の問題（未回答の最小位置）を、範囲と進み具合とともに返す
+    wire:
+      method: GET
+      path: /api/sessions/{id}/current
+      success: 200
+    request:
+      type: object
+      required: [id]
+      properties:
+        id: { type: string, format: uuid }
+    response:
+      type: object
+      required: [session, question, answered, remainingSec, finished]
+      properties:
+        session:
+          type: object
+          required: [id, kind, scopeLabel, questionCount]
+          properties:
+            id: { type: string, format: uuid }
+            kind: { type: string, enum: [drill, field, middle, review] }
+            scopeLabel: { type: string, minLength: 1 }
+            questionCount: { type: integer, minimum: 1 }
+            sourceExam: { type: [string, "null"] }
+        question:
+          oneOf:
+            - $ref: "../../../_shared/components.yaml#/schemas/QuestionSnapshot"
+            - type: "null"
+        answered: { type: integer, minimum: 0 }
+        remainingSec: { type: [integer, "null"] }
+        finished: { type: boolean }
+        expired: { type: boolean }
+    errors:
+      - code: UNAUTHENTICATED
+        when: Authorization の Bearer トークンが無い、または読めない
+        wire: { status: 401 }
+      - code: NOT_FOUND
+        when: その ID のテストが無い、または本人のものでない
+        wire: { status: 404 }
+    examples:
+      okInProgress:
+        request: { id: "8f14e45f-ea2b-4f1c-9a3e-6b1d2c7f4a90" }
+        response:
+          session:
+            id: "8f14e45f-ea2b-4f1c-9a3e-6b1d2c7f4a90"
+            kind: drill
+            scopeLabel: "論点「オープンソースソフトウェア」"
+            questionCount: 10
+            sourceExam: null
+          question:
+            idx: 3
+            text: "インターネットの検索エンジンの検索結果において，自社のホームページの表示順位を，より上位にしようとするための技法や手法の総称はどれか。"
+            choices: { "ア": "DNS", "イ": "RSS", "ウ": "SEO", "エ": "SNS" }
+            citation: "出典：平成30年度 秋期 ITパスポート試験 問3"
+            modified: false
+            hasFigure: false
+            figureDescription: null
+            figureImage: null
+            timesAsked: 2
+            otherCitations: ["出典：令和3年度 ITパスポート試験 問18"]
+          answered: 3
+          remainingSec: null
+          finished: false
+      okNoUnanswered:
+        request: { id: "8f14e45f-ea2b-4f1c-9a3e-6b1d2c7f4a90" }
+        response:
+          session:
+            id: "8f14e45f-ea2b-4f1c-9a3e-6b1d2c7f4a90"
+            kind: drill
+            scopeLabel: "論点「オープンソースソフトウェア」"
+            questionCount: 10
+          question: null
+          finished: true
+          expired: false
+          answered: 10
+          remainingSec: null
+      notFound:
+        request: { id: "00000000-0000-4000-8000-000000000000" }
+        error: NOT_FOUND
+      unauthenticated:
+        request: { id: "8f14e45f-ea2b-4f1c-9a3e-6b1d2c7f4a90" }
+        error: UNAUTHENTICATED
+
+  answerQuestion:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: bearer
+    summary: 現在の問題に選んだ選択肢を送り、正誤・正解の選択肢・問題解説・残りの未回答数を受け取る
+    wire:
+      method: POST
+      path: /api/sessions/{id}/answer
+      success: 200
+    request:
+      type: object
+      required: [id, idx, answer]
+      properties:
+        id: { type: string, format: uuid }
+        idx: { type: integer, minimum: 0 }
+        answer: { type: string, enum: ["ア", "イ", "ウ", "エ"] }
+    response:
+      type: object
+      required: [correct, correctAnswer, explanation, remaining, finished]
+      properties:
+        correct: { type: boolean }
+        correctAnswer: { type: string, enum: ["ア", "イ", "ウ", "エ"] }
+        explanation:
+          oneOf:
+            - type: object
+              required: [correctReason, choices]
+              properties:
+                correctReason: { type: string, minLength: 1 }
+                choices:
+                  type: array
+                  items:
+                    type: object
+                    required: [label, term, note]
+                    properties:
+                      label: { type: string, enum: ["ア", "イ", "ウ", "エ"] }
+                      term: { type: [string, "null"] }
+                      note: { type: string, minLength: 1 }
+            - type: "null"
+        remaining: { type: integer, minimum: 0 }
+        finished: { type: boolean }
+    errors:
+      - code: UNAUTHENTICATED
+        when: Authorization の Bearer トークンが無い、または読めない
+        wire: { status: 401 }
+      - code: INVALID_INPUT
+        when: 本文が idx・answer の形を満たさない
+        wire: { status: 400 }
+      - code: NOT_FOUND
+        when: その ID のテストが無い、または本人のものでない
+        wire: { status: 404 }
+      - code: CONFLICT
+        when: テストが進行中でない
+        wire: { status: 409 }
+      - code: CONFLICT
+        when: 制限時間を過ぎている（演習の種別には制限時間が無い）
+        wire: { status: 409 }
+      - code: CONFLICT
+        when: 未回答の問題が 1 問も無い
+        wire: { status: 409 }
+      - code: CONFLICT
+        when: 送られた位置が現在の問題の位置と違う
+        wire: { status: 409 }
+    examples:
+      okCorrect:
+        request: { id: "8f14e45f-ea2b-4f1c-9a3e-6b1d2c7f4a90", idx: 3, answer: "ウ" }
+        response:
+          correct: true
+          correctAnswer: "ウ"
+          explanation:
+            correctReason: "正解。SEO は検索結果の表示順位を上げるための技法の総称です。"
+            choices:
+              - { label: "ア", term: "DNS", note: "ドメイン名と IP アドレスを対応づける仕組みの説明です。" }
+              - { label: "イ", term: "RSS", note: "更新情報を配信する形式の説明です。" }
+              - { label: "ウ", term: null, note: "正解。検索順位を上げる技法の総称です。" }
+              - { label: "エ", term: "SNS", note: "人のつながりを扱うサービスの説明です。" }
+          remaining: 6
+          finished: false
+      okNoExplanation:
+        request: { id: "8f14e45f-ea2b-4f1c-9a3e-6b1d2c7f4a90", idx: 4, answer: "ア" }
+        response:
+          correct: false
+          correctAnswer: "イ"
+          explanation: null
+          remaining: 5
+          finished: false
+      invalidAnswer:
+        request: { id: "8f14e45f-ea2b-4f1c-9a3e-6b1d2c7f4a90", idx: 3, answer: "A" }
+        error: INVALID_INPUT
+      notFound:
+        request: { id: "00000000-0000-4000-8000-000000000000", idx: 0, answer: "ア" }
+        error: NOT_FOUND
+      alreadyCompleted:
+        request: { id: "b5d6c1a0-3f48-4e97-9d52-7a1c8e0b6f34", idx: 0, answer: "ア" }
+        error: CONFLICT
+      staleIdx:
+        request: { id: "8f14e45f-ea2b-4f1c-9a3e-6b1d2c7f4a90", idx: 1, answer: "ア" }
+        error: CONFLICT
+      invalidBeforeNotFound:
+        request: { id: "00000000-0000-4000-8000-000000000000", idx: -1, answer: "A" }
+        error: INVALID_INPUT
+      notFoundBeforeConflict:
+        request: { id: "00000000-0000-4000-8000-000000000000", idx: 99, answer: "ア" }
+        error: NOT_FOUND
+      unauthenticated:
+        request: { id: "8f14e45f-ea2b-4f1c-9a3e-6b1d2c7f4a90", idx: 3, answer: "ウ" }
+        error: UNAUTHENTICATED
+
+  finishSession:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: bearer
+    summary: テストを締めて正答数を確定し、正答数と問題数を返す
+    wire:
+      method: POST
+      path: /api/sessions/{id}/finish
+      success: 200
+    request:
+      type: object
+      required: [id]
+      properties:
+        id: { type: string, format: uuid }
+    response:
+      type: object
+      required: [ok, correct, total]
+      properties:
+        ok: { type: boolean, const: true }
+        correct: { type: integer, minimum: 0 }
+        total: { type: integer, minimum: 0 }
+    errors:
+      - code: UNAUTHENTICATED
+        when: Authorization の Bearer トークンが無い、または読めない
+        wire: { status: 401 }
+      - code: NOT_FOUND
+        when: その ID のテストが無い、または本人のものでない
+        wire: { status: 404 }
+    examples:
+      ok:
+        request: { id: "8f14e45f-ea2b-4f1c-9a3e-6b1d2c7f4a90" }
+        response: { ok: true, correct: 7, total: 10 }
+      okAgain:
+        request: { id: "8f14e45f-ea2b-4f1c-9a3e-6b1d2c7f4a90" }
+        response: { ok: true, correct: 7, total: 10 }
+      notFound:
+        request: { id: "00000000-0000-4000-8000-000000000000" }
+        error: NOT_FOUND
+      unauthenticated:
+        request: { id: "8f14e45f-ea2b-4f1c-9a3e-6b1d2c7f4a90" }
+        error: UNAUTHENTICATED
