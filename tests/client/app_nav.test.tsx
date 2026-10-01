@@ -107,7 +107,7 @@ afterEach(() => {
 })
 
 describe('上部メニュー', () => {
-  // @verifies REQ-038
+  // @covers REQ-128#roadmap-type-destinations
   it('ロードマップ型はロードマップとフィードバックの 2 つだけで、資格の語を出さない', async () => {
     // ロードマップ型ではロードマップが /topics に載っている
     const v = await drawApp('itc', '/topics')
@@ -121,7 +121,7 @@ describe('上部メニュー', () => {
     await v.close()
   })
 
-  // @verifies REQ-038
+  // @covers REQ-128#cert-type-not-restricted
   it('資格版のメニューは資格の画面を持ったままにする', async () => {
     const v = await drawApp('ip', '/')
     const hrefs = new Set(v.menuHrefs())
@@ -133,7 +133,7 @@ describe('上部メニュー', () => {
 })
 
 describe('無くした画面の経路', () => {
-  // @verifies REQ-143
+  // @covers REQ-128#cert-only-location
   it('ロードマップ型ではホーム・練習テスト・確認テスト・履歴がロードマップ（/topics）へ送られる', async () => {
     for (const entry of ['/', '/practice', '/exams', '/history']) {
       const v = await drawApp('itc', entry)
@@ -142,7 +142,7 @@ describe('無くした画面の経路', () => {
     }
   })
 
-  // @verifies REQ-143
+  // @covers REQ-128#cert-type-not-restricted
   it('資格版では各画面がそのまま出る（ロードマップに置き換わらない）', async () => {
     const home = await drawApp('ip', '/')
     expect(home.text()).toContain(NEXT_TOPIC_TERM)

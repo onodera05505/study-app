@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-/** App の外枠（UC-012#1・#3 と UC-013#3〜#5）。
+/** App の外枠（UC-010 と UC-016）。
  *
  *  - 画面を移るたびに「直前に開いていた画面」を記録する（フィードバックの画面自身は記録しない）
  *  - 上部メニューの「フィードバック」からフィードバックの画面へ行ける
@@ -174,8 +174,8 @@ afterEach(async () => {
   vi.restoreAllMocks()
 })
 
-describe('直前に開いていた画面の記録（UC-012#1）', () => {
-  // @verifies REQ-267
+describe('直前に開いていた画面の記録（UC-010）', () => {
+  // @covers REQ-147#keep-remembered
   it('移った先の画面を記録し、フィードバックの画面自身は記録しない', async () => {
     await start([A])
     await open('/topics')
@@ -187,8 +187,8 @@ describe('直前に開いていた画面の記録（UC-012#1）', () => {
   })
 })
 
-describe('上部メニューのフィードバック（UC-012#3）', () => {
-  // @verifies REQ-270
+describe('上部メニューのフィードバック（UC-010）', () => {
+  // @covers REQ-150#from-any-screen
   it('上部メニューの「フィードバック」からフィードバックの画面へ行ける', async () => {
     await start([A])
     await open('/')
@@ -203,8 +203,8 @@ describe('上部メニューのフィードバック（UC-012#3）', () => {
   })
 })
 
-describe('新しい版の帯（UC-013#3〜#5）', () => {
-  // @verifies REQ-280
+describe('新しい版の帯（UC-016）', () => {
+  // @covers REQ-228#no-compare-on-open
   it('開いた時点では見比べず、画面を移るたびに見比べる', async () => {
     // 2 つ目の印は違う版。開いた時点で見比べていれば取得が 2 回になり、帯も出てしまう
     const { versionCalls } = await start([A, B])
@@ -218,7 +218,7 @@ describe('新しい版の帯（UC-013#3〜#5）', () => {
     expect(versionCalls(), '画面を移っても版の印を見比べていない').toBeGreaterThan(1)
   })
 
-  // @verifies REQ-281
+  // @covers REQ-231#same-stamp
   it('版が変わっていなければ帯を出さない', async () => {
     await start([A])
     await open('/')
@@ -228,7 +228,7 @@ describe('新しい版の帯（UC-013#3〜#5）', () => {
     expect(button(/^更新$/)).toBeNull()
   })
 
-  // @verifies REQ-281
+  // @covers REQ-231#changed-stamp
   it('版が変わっていれば「新しい版があります。」の帯と「更新」を出す', async () => {
     await start([A, B])
     await open('/')
@@ -239,7 +239,7 @@ describe('新しい版の帯（UC-013#3〜#5）', () => {
     expect(button(/^更新$/), '「更新」のボタンが無い').not.toBeNull()
   })
 
-  // @verifies REQ-282
+  // @covers REQ-236#reload-on-choice
   it('「更新」を押したときだけ読み直す', async () => {
     await start([A, B])
     const reloads = countReloads()

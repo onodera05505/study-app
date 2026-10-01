@@ -30,15 +30,15 @@ afterEach(() => {
   vi.unstubAllGlobals()
 })
 
-describe('新しい版の検知', () => {
-  // @verifies REQ-032
+describe('新しい版の検知（UC-016）', () => {
+  // @covers REQ-231#same-stamp
   it('版が同じなら更新の合図は立たない', async () => {
     stubFetch([{ build: 'abc1234', at: '2026-09-28T00:00:00Z' }])
     const v = await load()
     expect(await v.checkForUpdate()).toBe(false)
   })
 
-  // @verifies REQ-032
+  // @covers REQ-231#changed-stamp
   it('版が違えば更新の合図が立つ', async () => {
     stubFetch([
       { build: 'abc1234', at: '2026-09-28T00:00:00Z' },
@@ -48,7 +48,7 @@ describe('新しい版の検知', () => {
     expect(await v.checkForUpdate()).toBe(true)
   })
 
-  // @verifies REQ-032
+  // @covers REQ-231#same-build-different-time
   it('同じコミットを出し直しても時刻が変われば合図が立つ', async () => {
     stubFetch([
       { build: 'abc1234', at: '2026-09-28T00:00:00Z' },
@@ -58,14 +58,14 @@ describe('新しい版の検知', () => {
     expect(await v.checkForUpdate()).toBe(true)
   })
 
-  // @verifies REQ-283
+  // @covers REQ-232#refetch-fails-without-remembered
   it('version.json が取れないときは合図を立てない（帯を誤って出さない）', async () => {
     stubFetch([null])
     const v = await load()
     expect(await v.checkForUpdate()).toBe(false)
   })
 
-  // @verifies REQ-284
+  // @covers REQ-233#adopt-and-silence
   it('最初の印が取れなかったときは、次に取れた値を最初の印にする', async () => {
     stubFetch([
       null,
@@ -79,7 +79,7 @@ describe('新しい版の検知', () => {
     expect(await v.checkForUpdate()).toBe(false)
   })
 
-  // @verifies REQ-279
+  // @covers REQ-227#fetch-once
   it('最初の印は 1 回だけ取りに行って覚える（何度求めても取得は 1 回）', async () => {
     const { urls } = stubFetch([{ build: 'abc1234', at: '2026-09-28T00:00:00Z' }])
     const v = await load()
@@ -87,7 +87,7 @@ describe('新しい版の検知', () => {
     expect(urls).toEqual(['/version.json'])
   })
 
-  // @verifies REQ-282
+  // @covers REQ-235#detect-without-reload
   it('版が違っても自動では読み直さない（更新は押されたときだけ）', async () => {
     stubFetch([
       { build: 'abc1234', at: '2026-09-28T00:00:00Z' },
@@ -100,7 +100,8 @@ describe('新しい版の検知', () => {
     expect(reload).not.toHaveBeenCalled()
   })
 
-  // @verifies REQ-280
+  // 仕様外: 間隔の値は機械可読なのでコードが正本（R-102）で、利用者から観測できない。
+  //         間隔ごとに取り直して見比べること自体は REQ-230#interval-recheck の観測。
   it('見比べる間隔は 5 分', async () => {
     stubFetch([{ build: 'abc1234', at: '2026-09-28T00:00:00Z' }])
     const v = await load()

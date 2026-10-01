@@ -187,7 +187,7 @@ afterEach(() => {
 })
 
 describe('1 日ごとの並び', () => {
-  // @verifies REQ-144
+  // @covers REQ-130#first-unlearned-only
   it('日の順に並べ、最初のまだ理解していない単位にだけ「ここから」の印を付ける', async () => {
     stubApi()
     const v = await drawRoadmap()
@@ -202,7 +202,7 @@ describe('1 日ごとの並び', () => {
     await v.close()
   })
 
-  // @verifies REQ-148
+  // @covers REQ-134#extra-present-in-tail
   it('補足の単位は日ごとの並びに混ぜず、末尾の別枠に出す', async () => {
     stubApi({ units: [...UNITS, EXTRA] })
     const v = await drawRoadmap()
@@ -212,7 +212,7 @@ describe('1 日ごとの並び', () => {
     await v.close()
   })
 
-  // @verifies REQ-148
+  // @covers REQ-134#extra-absent-no-section
   it('補足の単位が無ければ、その枠ごと出さない', async () => {
     stubApi()
     const v = await drawRoadmap()
@@ -222,7 +222,7 @@ describe('1 日ごとの並び', () => {
 })
 
 describe('先頭の 1 行', () => {
-  // @verifies REQ-145
+  // @covers REQ-131#understood-count-and-total
   it('理解した単位数と全単位数、連続日数を出す', async () => {
     stubApi()
     const v = await drawRoadmap()
@@ -235,7 +235,7 @@ describe('先頭の 1 行', () => {
 })
 
 describe('各日の確認テスト', () => {
-  // @verifies REQ-146
+  // @covers REQ-133#attempted-day
   it('その日の確認の問題数と、受けた回数・最高正解数を出す（受けていない日は出さない）', async () => {
     stubApi()
     const v = await drawRoadmap()
@@ -257,7 +257,7 @@ describe('各日の確認テスト', () => {
     return after.slice(s, after.length - e)
   }
 
-  // @verifies REQ-147
+  // @covers REQ-142#confirm-shows-scope-and-count
   it('確かめにその日の範囲と問数が出る', async () => {
     stubApi()
     // 確かめの機構（confirm か画面の中か）は仕様が決めていないので、どちらでも読める形で見る
@@ -275,7 +275,7 @@ describe('各日の確認テスト', () => {
     await v.close()
   })
 
-  // @verifies REQ-147
+  // @covers REQ-142#declined-no-test
   it('確かめを断ると作成を求めない', async () => {
     stubApi()
     vi.stubGlobal('confirm', () => false)
@@ -285,7 +285,7 @@ describe('各日の確認テスト', () => {
     await v.close()
   })
 
-  // @verifies REQ-147
+  // @covers REQ-143#in-progress-blocks
   it('作成が 409 のときは進行中の旨を出して移らない', async () => {
     stubApi({ postStatus: 409 })
     vi.stubGlobal('confirm', () => true)
@@ -299,7 +299,7 @@ describe('各日の確認テスト', () => {
 })
 
 describe('先頭の導線', () => {
-  // @verifies REQ-157
+  // @covers REQ-144#last-topic-destination
   it('覚えた単位があれば「前回の続きから」にする', async () => {
     stubApi()
     setLastTopic({ id: 103, term: '単位 3 の名前', middle: 'コンサルの仕事', middleNo: 1 })
@@ -310,7 +310,7 @@ describe('先頭の導線', () => {
     await v.close()
   })
 
-  // @verifies REQ-157
+  // @covers REQ-144#fallback-here
   it('覚えた単位が無ければ、いま学ぶ位置（status が 3 でない最初の単位）へ送る', async () => {
     stubApi()
     const v = await drawRoadmap()
@@ -323,7 +323,6 @@ describe('先頭の導線', () => {
 })
 
 describe('取れなかったとき', () => {
-  // @verifies REQ-149
   it('単位の一覧が取れないときは、失敗と取り直す手段を出す', async () => {
     stubApi({ fail: ['/topics'] })
     const v = await drawRoadmap()
@@ -334,7 +333,7 @@ describe('取れなかったとき', () => {
     await v.close()
   })
 
-  // @verifies REQ-149
+  // @covers REQ-136#both-missing-list-kept
   it('確認テストと連続日数だけが取れないときは、一覧を出したままにする', async () => {
     stubApi({ fail: ['/exams', '/me'] })
     const v = await drawRoadmap()
