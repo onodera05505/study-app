@@ -1,0 +1,107 @@
+# UC-015 本番が生きていることと秘密がそろっていることを機械で確かめる — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-213〜223）
+# 読み方の決まりは docs/adr/ADR-0001（決め 6: 外から叩く死活確認と入口の画面、および秘密の名前の一覧）
+# 共有語彙（authSchemes・errorCodes・共有の形）は ../../../_shared/components.yaml
+# 検査が叩く経路のうち、認証の形（/api/auth/config）とパスワードのログインが閉じていること（/api/auth/login）は
+#   UC-013 の getAuthConfig・signInWithPassword が形の正本。ここには再掲しない（R-101）
+# REQ-223（認証の要る応答を認証なしで叩くと断られる）の形は、各 UC の auth: bearer / session の operation の
+#   UNAUTHENTICATED が持つ。ここには再掲しない（R-101）
+# 配備ごとの URL・Pages プロジェクト名・必要な秘密の名前・配備先のアカウントは値なので書かない（R-102）。
+#   値の正本は scripts/pages_projects.json と scripts/check_sso_prod.sh
+x-uc: UC-015
+x-status: draft
+x-spec: ./UC.md
+x-updated: 2026-10-01
+
+operations:
+  checkDeploymentHealth:
+    transport: http
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 配備の死活確認を認証なしで外から叩き、生きている印を受け取る
+    wire: { method: GET, path: /api/health, success: 200 }
+    request:
+      type: object
+      required: [deployment]
+      properties:
+        deployment:
+          type: string
+          minLength: 1
+          description: 叩く配備の key（まなびばと各学び）。key と URL の値の正本は scripts/pages_projects.json
+    response: { $ref: "../../../_shared/components.yaml#/schemas/Ok" }
+    errors:
+      - code: UPSTREAM_UNAVAILABLE
+        when: 配備に届かない、または死活確認の本文が生きている印でない（検査は両者を区別しない）
+    examples:
+      ok: { request: { deployment: _portal }, response: { ok: true } }
+      okLearning: { request: { deployment: ip }, response: { ok: true } }
+      noAnswer: { request: { deployment: ip }, error: UPSTREAM_UNAVAILABLE }
+
+  openDeploymentEntry:
+    transport: http
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 配備の入口の画面を成す経路を認証なしで外から開き、開けることを確かめる
+    wire: { method: GET, path: '/{path}', success: 200 }
+    request:
+      type: object
+      required: [deployment, path]
+      properties:
+        deployment:
+          type: string
+          minLength: 1
+          description: 開く配備の key。key と URL の値の正本は scripts/pages_projects.json
+        path:
+          type: string
+          pattern: '^/'
+          description: 入口の画面を成す公開の経路（/ を含む）。配備ごとに見る経路の一覧の正本は scripts/check_sso_prod.sh
+    response:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: integer
+          const: 200
+          description: 観測するのは状態コードだけ。本文は静的ファイルで形を持たない
+    errors:
+      - code: UPSTREAM_UNAVAILABLE
+        when: その経路が 200 を返さない（届かないときも状態コードが得られないまま同じ扱い）
+    examples:
+      ok: { request: { deployment: _portal, path: / }, response: { status: 200 } }
+      okLearning: { request: { deployment: ip, path: / }, response: { status: 200 } }
+      notOpenable: { request: { deployment: _portal, path: /app.js }, error: UPSTREAM_UNAVAILABLE }
+
+  listDeploymentSecretNames:
+    transport: sdk
+    direction: outbound
+    owned: false
+    source: Cloudflare wrangler CLI の pages secret list（配備の Pages プロジェクトを指して秘密の名前を取る。プロジェクト名の値の正本は scripts/pages_projects.json）
+    auth: none
+    summary: 配備に設定されている秘密の名前の一覧を取る（名前だけ。値は読まない）
+    request:
+      type: object
+      required: [deployment]
+      properties:
+        deployment:
+          type: string
+          minLength: 1
+          description: 一覧を取る配備の key。key と Pages プロジェクト名の値の正本は scripts/pages_projects.json
+    response:
+      type: object
+      required: [names]
+      properties:
+        names:
+          type: array
+          items: { type: string, minLength: 1 }
+          description: その配備に設定されている秘密の名前。値は含まれない。必要な名前が欠けている配備ではその名前がこの一覧に無い
+    errors:
+      - code: FORBIDDEN
+        when: ログイン中の配備先のアカウントが、その配備を持つアカウントと違う
+      - code: UPSTREAM_UNAVAILABLE
+        when: 一覧の取得が失敗する（配備先に届かない・プロジェクトが見つからない・ログインしていない）
+    examples:
+      ok: { request: { deployment: ip } }
+      noSecretsConfigured: { request: { deployment: itc }, response: { names: [] } }
+      wrongAccount: { request: { deployment: ip }, error: FORBIDDEN }
+      listUnavailable: { request: { deployment: ip }, error: UPSTREAM_UNAVAILABLE }

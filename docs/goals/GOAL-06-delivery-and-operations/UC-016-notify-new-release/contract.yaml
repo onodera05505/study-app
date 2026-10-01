@@ -1,0 +1,41 @@
+# UC-016 配信した新しい版を、開いたままの画面に知らせる — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-224〜236）
+# 読み方の決まりは docs/adr/ADR-0001（決め 4: 配信物の版の印を画面が取りに行くのは http・outbound・owned・auth none。
+# 配信の手続きが印を書き出す側は operation にしない＝ REQ-224・225・226 はここに形を持たない。決め 3: メモリ上の記憶は境界でない）
+# 共有語彙（errorCodes・共有の形）は ../../../_shared/components.yaml
+# この UC がプロセスの外に出るのは版の印を取りに行く 1 回だけ。最初の印の保持・見比べの間隔・知らせの出し入れ・読み直しは
+# 同じプロセスの中なので operation にしない（REQ-227〜236 の見比べ以降はここに形を持たない）
+x-uc: UC-016
+x-status: draft
+x-spec: ./UC.md
+x-updated: 2026-10-01
+
+operations:
+  fetchVersionStamp:
+    transport: http
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 自分の配備の配信物から版の印を取りに行く。取れない・形が合わないときは印が無いものとして返す
+    wire:
+      method: GET
+      path: /version.json
+      success: 200
+    response:
+      type: object
+      required: [versionStamp]
+      properties:
+        versionStamp:
+          type: [object, "null"]
+          description: 配信物に置かれた版の印。取れない・形が合わないときは null（失敗を畳むので呼び出し元に失敗が見えない）
+          required: [build]
+          properties:
+            build: { type: string, minLength: 1, description: 版を見分ける値。string でないときは印が無いものとして扱う }
+            at: { type: string, minLength: 1, description: 配信の時点。無くても印は成り立つ }
+    errors: []
+    examples:
+      ok:
+        response: { versionStamp: { build: c1ffde6, at: "2026-10-01T04:12:30Z" } }
+      noStamp:
+        response: { versionStamp: null }
+      unreachable:
+        response: { versionStamp: null }

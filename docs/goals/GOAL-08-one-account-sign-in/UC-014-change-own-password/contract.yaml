@@ -1,0 +1,55 @@
+# UC-014 自分のパスワードを変える — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-209〜212）
+# 読み方の決まりは docs/adr/ADR-0001（transport・direction・auth・operation 名の当て方）
+# 共有語彙（authSchemes・errorCodes・共有の形）は ../../../_shared/components.yaml
+x-uc: UC-014
+x-status: draft
+x-spec: ./UC.md
+x-updated: 2026-10-01
+
+operations:
+  changeOwnPassword:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: session
+    summary: 現在のパスワードと新しいパスワードを受け取り、合っていれば本人のパスワードを入れ替える
+    wire: { method: POST, path: /api/me/password, success: 200 }
+    request:
+      type: object
+      required: [current, next]
+      properties:
+        current: { type: string, minLength: 1 }
+        next: { type: string, minLength: 8, maxLength: 200 }
+    response: { $ref: "../../../_shared/components.yaml#/schemas/Ok" }
+    errors:
+      - code: UNAUTHENTICATED
+        when: セッションが無い、または期限が過ぎている
+        wire: { status: 401 }
+      - code: INVALID_INPUT
+        when: 本文が JSON でない、現在のパスワードが空、または新しいパスワードが 8 文字未満か 200 文字超
+        wire: { status: 400 }
+      - code: UNAUTHENTICATED
+        when: 送られた現在のパスワードが本人のものと合わない
+        wire: { status: 401 }
+    examples:
+      ok:
+        request: { current: harunokaze8, next: natsunoame9 }
+        response: { ok: true }
+      noSession:
+        request: { current: harunokaze8, next: natsunoame9 }
+        error: UNAUTHENTICATED
+      emptyCurrent:
+        request: { current: "", next: natsunoame9 }
+        error: INVALID_INPUT
+      shortNext:
+        request: { current: harunokaze8, next: mijikai }
+        error: INVALID_INPUT
+      wrongCurrent:
+        request: { current: chigaupass9, next: natsunoame9 }
+        error: UNAUTHENTICATED
+      noSessionBeforeInvalid:
+        request: { current: "", next: "" }
+        error: UNAUTHENTICATED
+      invalidBeforeWrongCurrent:
+        request: { current: chigaupass9, next: mijikai }
+        error: INVALID_INPUT
