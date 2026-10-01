@@ -33,6 +33,7 @@ export function Exams() {
     load()
   }, [load])
 
+  // @implements REQ-104, REQ-109, REQ-110
   async function start(body: Record<string, unknown>) {
     // 開始するとタイマーが走り出し、終わるまで練習系のテストが作れなくなる。
     // 1クリックで始まるのは重いので、一度受け止める。
@@ -68,6 +69,7 @@ export function Exams() {
       {error && <p className="error">{error}</p>}
 
       <h2>{exam.roadmap ? '1 日分（3 単位・6 問）を解く' : '公開回をそのまま解く'}</h2>
+      {/* @implements REQ-102, REQ-103 */}
       <ul className="list">
         {(exams ?? []).map((e) => (
           <li key={e.exam} className="row">
@@ -91,6 +93,7 @@ export function Exams() {
             </button>
           </li>
         ))}
+        {/* @implements REQ-103, BR-014, BR-015 */}
         {loadError && (
           <li>
             <p className="error">{loadError}</p>
@@ -106,6 +109,7 @@ export function Exams() {
       </ul>
 
       <h2>全範囲からランダム</h2>
+      {/* @implements REQ-103 */}
       <div className="card">
         <p style={{ marginTop: 0 }}>
           {exam.roadmap ? '全 42 単位から 1 問ずつ、分野の単位数（' : '取り込み済みの全回から、本番の分野比率（'}

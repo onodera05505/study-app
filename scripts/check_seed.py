@@ -128,6 +128,7 @@ def question_values(sql: str) -> list[dict]:
     return insert_rows(sql, "past_questions")
 
 
+# @implements BR-032
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", default="data/ip", type=Path)
@@ -158,6 +159,7 @@ def main() -> int:
     # 出典は「出典：<年度ラベル> <試験名> 問N」。試験名の取り違えと内部コードの素通しを止める
     # @implements-old REQ-261
     # @verifies REQ-261
+    # @implements BR-027
     per_exam: dict[str, int] = defaultdict(int)
     labels: dict[str, set[str]] = defaultdict(set)
     wrong_name: list[str] = []
@@ -221,6 +223,7 @@ def main() -> int:
             warnings.append(f"{table}: UPSERT で更新されない列 {missing}")
 
     # --- 図の画像 ---------------------------------------------------------
+    # @implements BR-026
     missing_fig = [
         p for p in {m for m in re.findall(r"'(/figures/[^']+)'", sql)}
         if not (args.figures / Path(p).name).exists()
@@ -245,6 +248,7 @@ def main() -> int:
     # figure_image と同じで、無くてもエラーにはならず画面が空欄になるだけ。
     # 置き場所は試験ごとに分ける（同じ論点 ID が試験をまたいでぶつかるため）。
     # @verifies REQ-017
+    # @implements BR-026
     material_images = sorted(set(MATERIAL_IMAGE.findall(sql)))
     want_prefix = f"/figures/materials/{d.name}/"
     stray_mat = [p for p in material_images if not p.startswith(want_prefix)]

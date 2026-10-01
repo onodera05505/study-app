@@ -57,6 +57,7 @@ type Dedupable = { id: string; exam: string; contentKey: string | null; citation
  *
  *  グループの並びは元の並びのまま（最初に現れた位置に代表を置く）。呼び出し側が
  *  付けた順序（新しい回が先、など）を壊さないため。 */
+// @implements REQ-053, BR-028
 // @implements-old REQ-021, REQ-241
 export function dedupe<T extends Dedupable>(
   rows: T[],
@@ -161,6 +162,7 @@ export type BuildResult = {
 }
 
 /** セッションの出題内容を組み立てる。 */
+// @implements REQ-051, REQ-052, REQ-054, BR-019
 // @implements-old REQ-019, REQ-020, REQ-042, REQ-194, REQ-212, REQ-213, REQ-221, REQ-240, REQ-242
 export async function buildQuestions(
   db: Db,
@@ -174,6 +176,7 @@ export async function buildQuestions(
     return kept.length > 0 ? kept : rows
   }
 
+  // @implements REQ-106, REQ-107, REQ-108
   if (input.kind === 'mock') {
     if (input.exam) {
       // 公開回をそのまま1セットとして解く。本番の追体験。順序も原文どおり。
@@ -304,6 +307,7 @@ export async function buildQuestions(
  *
  *  復習は「間違えた問題」しか集めないので、その中で数えると回数が過少になる
  *  （2回出題されていても、間違えたのが1回なら1と出てしまう）。過去問全体から数え直す。 */
+// @implements REQ-053
 async function annotateTimesAsked(db: Db, rows: QuestionRow[]): Promise<QuestionRow[]> {
   const keys = rows.map((r) => r.contentKey).filter((k): k is string => !!k)
   if (keys.length === 0) return rows.map((r) => ({ ...r, timesAsked: 1, otherCitations: [] }))
@@ -330,6 +334,7 @@ async function annotateTimesAsked(db: Db, rows: QuestionRow[]): Promise<Question
 }
 
 /** 出題時スナップショット。教材を後から直しても当時の内容で採点・表示するため。 */
+// @implements REQ-058
 // @implements-old REQ-195, REQ-264
 export function snapshotOf(q: QuestionRow) {
   return {

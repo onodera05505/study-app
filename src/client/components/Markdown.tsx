@@ -70,6 +70,7 @@ function isDelimiter(row: string[]): boolean {
   return row.length >= 2 && row.every((c) => DELIM_CELL.test(c))
 }
 
+// @implements REQ-003, BR-025
 function parse(src: string): Block[] {
   const blocks: Block[] = []
   const lines = src.split('\n')
@@ -84,6 +85,7 @@ function parse(src: string): Block[] {
     }
 
     // 図の画像行。置き場所が違うものは画像にせず、そのまま段落として出す。
+    // @implements REQ-004
     const image = IMAGE.exec(line)
     if (image && image[2].startsWith(FIGURE_PREFIX)) {
       blocks.push({ kind: 'image', src: image[2], caption: image[1] })
@@ -129,6 +131,7 @@ function parse(src: string): Block[] {
  *  閉じていない `**` や `[[` はそのまま文字として残す（本文が消えないほうが大事）。 */
 const INLINE = /\*\*(.+?)\*\*|\[\[([^\[\]\n]+)\]\]/g
 
+// @implements REQ-007
 function inline(text: string): ReactNode {
   const out: ReactNode[] = []
   let last = 0
@@ -200,6 +203,7 @@ function Table({ head, rows }: { head: string[] | null; rows: string[][] }) {
  *
  *  スマホでは幅に合わせて縮むと文字が読めなくなる図がある。過去問側にだけ
  *  拡大があって教材側に無いのは、同じ絵なのに扱いが違って見える。 */
+// @implements REQ-006
 function MdFigure({ src, caption }: { src: string; caption: string }) {
   const [zoomed, setZoomed] = useState(false)
   return (

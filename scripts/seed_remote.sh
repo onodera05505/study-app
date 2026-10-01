@@ -26,6 +26,7 @@ if [ "${2:-}" = "--local" ]; then WHERE="--local"; fi
 SEED="data/${EXAM}/seed.sql"
 [ -f "$SEED" ] || { echo "seed が無い: ${SEED}（先に python3 scripts/build_seed.py --data data/${EXAM}）"; exit 1; }
 
+# @implements BR-032
 echo "▶ 1/4 seed の中身を検査"
 python3 scripts/check_seed.py --data "data/${EXAM}"
 

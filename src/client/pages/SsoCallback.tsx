@@ -5,6 +5,7 @@ import { portal } from '../../shared/exam'
 
 /** まなびばから戻ってきた使い捨てコードを、この学びのトークンに換える（要件 §15）。 */
 // @implements-old REQ-058
+// @implements REQ-191, REQ-193
 export function SsoCallback({ onDone }: { onDone: () => void }) {
   const [params] = useSearchParams()
   const [error, setError] = useState('')

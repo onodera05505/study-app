@@ -57,6 +57,7 @@ export function Practice() {
       .catch((e) => setFieldsError(e.message))
   }, [])
 
+  // @implements REQ-048
   const loadCategories = useCallback((field: string) => {
     askedField.current = field
     setCategoriesError('')
@@ -80,6 +81,7 @@ export function Practice() {
     loadCategories(field)
   }
 
+  // @implements REQ-050
   async function start(body: Record<string, unknown>) {
     setBusy(true)
     setError('')
@@ -94,6 +96,7 @@ export function Practice() {
     }
   }
 
+  // @implements REQ-089, REQ-090, REQ-091, REQ-092, BR-014
   async function discard() {
     // 破棄は取り消せず、回答済みの分もまとめて消える。1クリックで消えるのは重い。
     if (!current) return
@@ -119,10 +122,12 @@ export function Practice() {
         同じ内容の問題は1問にまとめて出題します。
       </p>
 
+      {/* @implements REQ-084, REQ-087, BR-017 */}
       {current && (
         <div className="notice">
           進行中のテストがあります（{current.scopeLabel} / {current.answered}·{current.questionCount}問）。
           <div className="btn-row" style={{ marginTop: '0.6rem' }}>
+            {/* @implements REQ-088 */}
             <button className="btn btn-primary" onClick={() => navigate(`/sessions/${current.id}`)}>
               再開する
             </button>
@@ -132,6 +137,7 @@ export function Practice() {
           </div>
         </div>
       )}
+      {/* @implements REQ-049, REQ-094, BR-014, BR-015 */}
       {currentError && (
         <div className="notice">
           {/* 文言は続けずに2行に分ける。API の返す文自体が「…できませんでした」なので、
@@ -152,6 +158,7 @@ export function Practice() {
       {error && <p className="error">{error}</p>}
 
       <h2>分野別演習</h2>
+      {/* @implements REQ-049, BR-014 */}
       {fieldsError && (
         <>
           <p className="error">{fieldsError}</p>
@@ -160,7 +167,9 @@ export function Practice() {
           </button>
         </>
       )}
+      {/* @implements BR-015 */}
       {fields === null && !fieldsError && <p className="muted">読み込み中…</p>}
+      {/* @implements REQ-048, REQ-056 */}
       <div className="grid grid-3">
         {(fields ?? []).map((f) => (
           <button
@@ -212,6 +221,7 @@ export function Practice() {
           {categories !== null && categories.length === 0 && (
             <p className="muted">この分野には単元がありません。</p>
           )}
+          {/* @implements REQ-048, REQ-056 */}
           <div className="grid grid-3">
             {(categories ?? []).map((c) => (
               <button
@@ -236,6 +246,7 @@ export function Practice() {
         <p style={{ marginTop: 0 }}>
           これまでに間違えた問題を、直近のものから20問出題します。
         </p>
+        {/* @implements REQ-056 */}
         <button
           className="btn btn-primary"
           disabled={busy || !!current}

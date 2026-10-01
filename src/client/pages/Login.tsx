@@ -6,6 +6,7 @@ import { portal } from '../../shared/exam'
 type AuthConfig = { sso: boolean; portal: string | null; app: string }
 
 // @implements-old REQ-006, REQ-068
+// @implements REQ-190
 export function Login({ onDone }: { onDone: () => void }) {
   const [mode, setMode] = useState<'login' | 'register'>('login')
   // 401 で締め出されて戻って来たのかどうか。読んだ時点で印は消えるので、
@@ -47,6 +48,7 @@ export function Login({ onDone }: { onDone: () => void }) {
       <p className="lead">
         {exam.roadmapSpec?.loginLead ?? '過去問を起点に、頻出の論点から順に潰していく学習アプリです。'}
       </p>
+      {/* @implements REQ-197 */}
       {expired && (
         <div className="notice">
           ログインの有効期限が切れました。もう一度ログインしてください。

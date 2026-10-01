@@ -10,6 +10,7 @@ type Pos = { top: number; left: number }
  *  短くする。末尾に括弧書きが無い語はそのまま。
  *  ポップの見出しには正式表記をそのまま出す。 */
 // @implements-old REQ-140
+// @implements REQ-008
 export function shortTerm(term: string): string {
   const m = term.match(/^(.+?)\s*[（(].*[）)]$/)
   return m ? m[1] : term
@@ -29,6 +30,7 @@ export function shortTerm(term: string): string {
  *  （`.table-wrap` が横スクロールのため overflow を持つ）の中の用語で
  *  カードが切り落とされる。位置はボタンの座標から毎回計算する。 */
 // @implements-old REQ-016, REQ-142
+// @implements REQ-008, REQ-010, REQ-011
 export function TermPop({ term }: { term: string }) {
   const glossary = useGlossary()
   const [open, setOpen] = useState(false)
@@ -65,6 +67,7 @@ export function TermPop({ term }: { term: string }) {
   })
 
   // 外側を触るか Esc で閉じる。スクロール・画面回転では位置を追う。
+  // @implements REQ-013
   useEffect(() => {
     if (!open) return
     const onDown = (e: Event) => {
@@ -91,6 +94,7 @@ export function TermPop({ term }: { term: string }) {
   }, [open, place])
 
   // 未取得（null）のうちは色を付けない。取れてから色が付く。
+  // @implements REQ-005, REQ-009, BR-015
   const entry = glossary?.get(term)
   if (!entry) return <>{term}</>
 

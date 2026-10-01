@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parent.parent
 _T = ROOT / "src" / "shared" / "targets.json"
 _P = ROOT / "scripts" / "pages_projects.json"
 
+# @implements BR-005
 def targets() -> dict:
     return {k: v for k, v in json.loads(_T.read_text(encoding="utf-8")).items() if not k.startswith("_")}
 

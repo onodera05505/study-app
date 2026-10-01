@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
  *
  *  タップ領域は 44px を確保する。片手操作で最初に触る場所になるため。 */
 // @implements-old REQ-055
+// @implements BR-016
 export function BackLink({ to, label }: { to: string; label: string }) {
   return (
     <Link to={to} className="back">

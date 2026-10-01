@@ -50,6 +50,7 @@ export function App() {
 
   // 新しい版の検知（要件 §5.6）。開いたときに版の印を 1 回だけ覚え、その時点では見比べない。
   // 見比べるのは画面を移ったときと 5 分おき。
+  // @implements REQ-227, REQ-228, REQ-230
   useEffect(() => {
     rememberBuild()
     const id = setInterval(() => {
@@ -58,6 +59,7 @@ export function App() {
     return () => clearInterval(id)
   }, [])
   // 覚えているのは「最後に見たパス」。開いた直後は同じなので見比べず、移るたびに見比べる
+  // @implements REQ-229
   const seenPath = useRef(location.pathname)
   useEffect(() => {
     if (location.pathname === seenPath.current) return
@@ -66,6 +68,7 @@ export function App() {
   }, [location.pathname])
 
   // 「直前に開いていた画面」を覚える（フィードバックに自動で添える）。/feedback 自身は記録しない
+  // @implements REQ-146, REQ-147
   useEffect(() => {
     if (location.pathname.startsWith('/feedback')) return
     setLastPage({ path: location.pathname, label: pageLabel(location.pathname) })
@@ -103,6 +106,7 @@ export function App() {
     }
   }, [])
 
+  // @implements REQ-190, REQ-195
   if (!authed) {
     // まなびばから戻ってきた（要件 §15）。コードをトークンに換えてからホームへ
     if (location.pathname === '/sso/callback') {
@@ -121,6 +125,7 @@ export function App() {
 
   return (
     <>
+      {/* @implements REQ-234, REQ-235, REQ-236 */}
       {updateReady && (
         <div className="update-bar" role="status">
           <span>新しい版があります。</span>
@@ -157,6 +162,7 @@ export function App() {
                 <p className="account-name">
                   {getUserName() ?? 'ログイン中'} としてログイン中
                 </p>
+                {/* @implements REQ-198 */}
                 <button
                   type="button"
                   role="menuitem"
@@ -176,6 +182,7 @@ export function App() {
           {/* ロードマップ型は「ロードマップ」「フィードバック」の 2 つだけ（要件 §13.6、2026-09-18 決定）。
               1 単位 2 問しかなく、同じ問題が単位の下にあるので、練習テストとドリルは重複だった。
               確認テストは日ごとにロードマップの中へ、履歴は各日の結果表示へ移した。資格版は据え置き。 */}
+          {/* @implements REQ-128, REQ-150 */}
           <nav className={navScroll ? 'nav nav-scroll' : 'nav'} ref={navRef}>
             {exam.roadmap ? (
               <>
@@ -196,6 +203,7 @@ export function App() {
         </div>
       </header>
       <main>
+        {/* @implements REQ-128, REQ-195 */}
         <Routes>
           {/* ロードマップ型にホームは無い（要件 §13.6）。進捗と続きはロードマップの先頭に出す */}
           <Route path="/" element={exam.roadmap ? <Navigate to="/topics" replace /> : <Home />} />
@@ -215,6 +223,7 @@ export function App() {
 }
 
 /** パスから人が読む画面名を出す。論点名・問題 ID は各画面が分かった時点で annotateLastPage で足す。 */
+// @implements REQ-146
 function pageLabel(path: string): string {
   if (path === '/') return 'ホーム'
   if (path.startsWith('/topics/')) return '学習の単位'

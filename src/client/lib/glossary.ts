@@ -40,6 +40,7 @@ function snapshot() {
 
 /** まだ取っていなければ取りにいく。何度呼んでも1回しか飛ばない。 */
 // @implements-old REQ-136, REQ-141
+// @implements REQ-001, REQ-012, BR-015
 export function ensureGlossary() {
   if (cache || inflight) return
   inflight = true

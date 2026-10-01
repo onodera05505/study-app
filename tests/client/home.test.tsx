@@ -128,7 +128,7 @@ describe('前回の続き', () => {
 })
 
 describe('進行中のテストの案内', () => {
-  // @verifies REQ-244
+  // @covers REQ-086#home-notice-with-progress
   it('進行中のテストがあれば、範囲の名前と回答済み／全体を案内し、そのセッションへ戻す', async () => {
     stubApi({ current: IN_PROGRESS })
     await draw(<Home />)
@@ -138,7 +138,7 @@ describe('進行中のテストの案内', () => {
     expect(hrefs()).toContain('/sessions/s-1')
   })
 
-  // @verifies REQ-244
+  // @covers REQ-083#home-no-notice
   it('進行中のテストが無ければ案内を出さない', async () => {
     stubApi({ current: { session: null } })
     await draw(<Home />)

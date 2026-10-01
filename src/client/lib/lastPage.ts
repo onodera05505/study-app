@@ -14,6 +14,7 @@ export type LastPage = {
 const KEY = 'study-app:last-page'
 
 // @implements-old REQ-268
+// @implements REQ-146, BR-011, BR-012
 export function setLastPage(p: LastPage) {
   try {
     sessionStorage.setItem(KEY, JSON.stringify(p))
@@ -34,6 +35,7 @@ export function getLastPage(): LastPage | null {
 
 /** 画面が自分の中身（論点名・問題 ID）を知ったときに、名前と ID だけを上書きする。 */
 // @implements-old REQ-269
+// @implements REQ-148, REQ-149, BR-011
 export function annotateLastPage(patch: Partial<LastPage>) {
   const cur = getLastPage()
   if (!cur) return

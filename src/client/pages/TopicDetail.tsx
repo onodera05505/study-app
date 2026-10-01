@@ -49,6 +49,7 @@ type Detail = {
 }
 
 // @implements-old REQ-123, REQ-124, REQ-128, REQ-134, REQ-135, REQ-151, REQ-152, REQ-153, REQ-154, REQ-262, REQ-263
+// @implements REQ-023
 export function TopicDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
@@ -92,6 +93,7 @@ export function TopicDetail() {
       .catch((e) => setError(e.message))
   }, [id])
 
+  // @implements REQ-038, REQ-039, REQ-040, BR-014
   async function mark(next: number) {
     const prev = status
     setStatus(next)
@@ -124,15 +126,18 @@ export function TopicDetail() {
     }
   }
 
+  // @implements REQ-033
   if (error) return <p className="error">{error}</p>
   if (!data) return <p className="muted">読み込み中…</p>
   const t = data.topic
+  // @implements REQ-032
   const FIRST_QUESTIONS = 5
   const shownQuestions = allQuestions ? data.questions : data.questions.slice(0, FIRST_QUESTIONS)
   const hiddenQuestions = data.questions.length - shownQuestions.length
 
   return (
     <>
+      {/* @implements REQ-029, REQ-141, BR-016 */}
       <BackLink to={exam.roadmap ? '/topics' : `/topics?middleNo=${t.middleNo}`} label={exam.roadmap ? 'ロードマップに戻る' : `${t.middle} に戻る`} />
       {/* パンくずは押せるようにする。1論点を読んだあと、同じ単元の隣へ進めるため。 */}
       <p className="crumb">
@@ -148,9 +153,11 @@ export function TopicDetail() {
         )}
       </p>
 
+      {/* @implements REQ-026 */}
       {t.explanation ? (
         <div className="card">
           <Markdown source={t.explanation} />
+          {/* @implements REQ-030 */}
           {t.detail && (
             <>
               <button
@@ -183,6 +190,7 @@ export function TopicDetail() {
         </>
       )}
 
+      {/* @implements REQ-137 */}
       <h2>{exam.roadmap ? 'この単位の確認問題' : 'この論点が出題された過去問'}</h2>
       <ul className="list">
         {shownQuestions.map((q) => {
@@ -211,6 +219,7 @@ export function TopicDetail() {
                   </div>
                 ))}
               </div>
+              {/* @implements REQ-031 */}
               <div className="btn-row">
                 <button
                   className="btn"
@@ -233,6 +242,7 @@ export function TopicDetail() {
                 <Explanation data={q.explanation} answer={q.answer} />
               )}
               {/* 自作の確認問題（ロードマップ型）は出典を出さない。データは持っている（本人の決定 2026-09-15） */}
+              {/* @implements BR-027 */}
               {!exam.roadmap && (
                 <p className="citation">
                   {q.citation}
@@ -242,6 +252,7 @@ export function TopicDetail() {
             </li>
           )
         })}
+        {/* @implements REQ-026 */}
         {data.questions.length === 0 && <li className="muted">{exam.roadmap ? '確認問題がありません。' : '紐づく過去問がありません。'}</li>}
       </ul>
       {hiddenQuestions > 0 && (
@@ -252,6 +263,7 @@ export function TopicDetail() {
         </div>
       )}
 
+      {/* @implements REQ-023, REQ-138 */}
       {!exam.roadmap && data.siblings.length > 0 && (
         <>
           <h2>{t.itemName} の他の論点</h2>
@@ -278,6 +290,7 @@ export function TopicDetail() {
       {/* 次の一手。順序はホームの nextTopics と同じ（頻出×未理解）。ここで別の並びを
           作らない——"次" の意味をアプリ全体で1つに保つため。この論点を「理解」にすると
           候補から外れて次が繰り上がる。尽きたらグレーアウトの完了表示。 */}
+      {/* @implements REQ-045, REQ-046, REQ-138 */}
       {!exam.roadmap && (
       <div className="next-move">
         {data.nextTopic ? (
@@ -300,6 +313,7 @@ export function TopicDetail() {
       )}
 
       {/* ロードマップ型: 順番で前後へ。「他の論点」「次に学ぶ」は出さない（審議で採用 2026-09-16） */}
+      {/* @implements REQ-139, REQ-140 */}
       {exam.roadmap && (
         <div className="btn-row rm-nav" style={{ margin: '1.2rem 0 0.4rem' }}>
           {data.neighbors?.prev ? (

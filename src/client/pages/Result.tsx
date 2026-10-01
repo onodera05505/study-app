@@ -43,6 +43,7 @@ type ResultData = {
 /** 合否の目安の見せ方。判定そのものは /api/sessions/:id が返す passed
  *  （基準は criteria: 総合の割合と分野の割合）。画面は文言と色だけを決める。 */
 // @implements-old REQ-024
+// @implements REQ-120
 export function verdict(passed: boolean): { label: string; color: string } {
   return passed
     ? { label: '合格ライン', color: 'var(--ok)' }
@@ -52,6 +53,7 @@ export function verdict(passed: boolean): { label: string; color: string } {
 /** 分野別の正答率に付ける色。分野ごとの基準点がある試験でだけ色を付ける。
  *  基準点の無い試験（応用情報の午前）で色を付けると、落ちると誤解させる。 */
 // @implements-old REQ-227
+// @implements REQ-122
 export function fieldPctColor(
   pct: number,
   fieldPct: number,
@@ -62,6 +64,7 @@ export function fieldPctColor(
 }
 
 // @implements-old REQ-219, REQ-220, REQ-225, REQ-239, REQ-027, REQ-028
+// @implements REQ-120, REQ-125
 export function Result() {
   const { id } = useParams()
   const [data, setData] = useState<ResultData | null>(null)
@@ -110,6 +113,7 @@ export function Result() {
         )}
       </div>
 
+      {/* @implements REQ-124 */}
       {data.expired && (
         <div className="notice">制限時間切れのため、そこまでの回答で採点しています。</div>
       )}
@@ -218,6 +222,7 @@ export function Result() {
               </div>
             )}
             {openExpl[i.idx] && <Explanation data={i.explanation} answer={i.answer} />}
+            {/* @implements BR-027 */}
             {!exam.roadmap && (
               <p className="citation">
                 {i.citation}

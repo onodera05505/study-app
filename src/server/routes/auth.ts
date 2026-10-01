@@ -37,10 +37,12 @@ export const authRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>
 const ssoOn = (env: Bindings) => !!env.SSO_PORTAL_URL
 
 /** 画面がログインの形を決めるための設定（公開）。 */
+// @implements REQ-205
 // @implements-old REQ-066
 authRoutes.get('/config', (c) => c.json({ sso: ssoOn(c.env), portal: c.env.SSO_PORTAL_URL ?? null, app: c.env.EXAM }))
 
 /** まなびばから戻ってきた使い捨てコードを、まなびばのサーバでメールと名前に交換し、この学びのトークンを出す。 */
+// @implements REQ-191, REQ-192, REQ-193, REQ-206, REQ-207, REQ-208
 // @implements-old REQ-004, REQ-060
 authRoutes.post('/sso', async (c) => {
   if (!ssoOn(c.env)) return c.json({ error: 'この環境では SSO が設定されていません' }, 404)
@@ -72,6 +74,7 @@ authRoutes.post('/sso', async (c) => {
   return c.json({ token, user: { id: user.id, name: user.name, role: user.role } })
 })
 
+// @implements REQ-204
 // @implements-old REQ-065, REQ-089
 authRoutes.post('/register', async (c) => {
   if (ssoOn(c.env)) return c.json({ error: 'アカウントはまなびばで作ります' }, 404)
@@ -102,6 +105,7 @@ authRoutes.post('/register', async (c) => {
   return c.json({ token, user: { id: user.id, name: user.name, role: user.role } }, 201)
 })
 
+// @implements REQ-204
 // @implements-old REQ-005, REQ-090
 authRoutes.post('/login', async (c) => {
   if (ssoOn(c.env)) return c.json({ error: 'まなびばからログインしてください' }, 404)

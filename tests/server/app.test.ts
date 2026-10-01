@@ -9,7 +9,7 @@ const sso = () => env({ SSO_PORTAL_URL: 'https://portal.example', SSO_SECRET: 's
 const json = (body: unknown) => ({ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
 
 describe('認証の境界', () => {
-  // @verifies REQ-033
+  // @covers REQ-223#learning-protected-refused
   it('トークンが無いと保護された経路は 401', async () => {
     const res = await app.request('/api/fields', {}, env())
     expect(res.status).toBe(401)
@@ -24,7 +24,7 @@ describe('認証の境界', () => {
     }
   })
 
-  // @verifies REQ-033, REQ-047
+  // @covers REQ-213#learning-alive
   it('/api/health は認証なしで通る', async () => {
     const res = await app.request('/api/health', {}, env())
     expect(res.status).toBe(200)

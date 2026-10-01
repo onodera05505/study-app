@@ -21,6 +21,7 @@ export function Feedback() {
     writeDraft(text)
   }, [text])
 
+  // @implements REQ-155, REQ-156, REQ-157, BR-014
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (busy) return
@@ -47,6 +48,7 @@ export function Feedback() {
     }
   }
 
+  // @implements REQ-158
   if (done) {
     return (
       <>
@@ -111,6 +113,7 @@ export function Feedback() {
           />
           <small className="muted">{text.length} / 2,000</small>
         </label>
+        {/* @implements REQ-151, REQ-152, BR-012 */}
         {last && (
           <label className="feedback-attach">
             <input type="checkbox" checked={attach} onChange={(e) => setAttach(e.target.checked)} />{' '}
@@ -119,6 +122,7 @@ export function Feedback() {
         )}
         {error && <p className="error">{error}</p>}
         <div className="btn-row">
+          {/* @implements REQ-154 */}
           <button type="submit" className="btn btn-primary" disabled={busy || text.trim() === '' || kind === ''}>
             {busy ? '送信中…' : '送信する'}
           </button>
@@ -135,6 +139,7 @@ const KINDS = [
 ]
 
 const DRAFT_KEY = 'study-app:feedback-draft'
+// @implements REQ-153, BR-011
 function readDraft(): string {
   try {
     return sessionStorage.getItem(DRAFT_KEY) ?? ''
@@ -142,6 +147,7 @@ function readDraft(): string {
     return ''
   }
 }
+// @implements REQ-153, BR-011
 function writeDraft(v: string) {
   try {
     if (v) sessionStorage.setItem(DRAFT_KEY, v)

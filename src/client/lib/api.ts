@@ -5,12 +5,14 @@ export function getToken(): string | null {
   return localStorage.getItem(TOKEN_KEY)
 }
 // @implements-old REQ-050
+// @implements REQ-191
 export function setToken(token: string) {
   localStorage.setItem(TOKEN_KEY, token)
 }
 /** ログインしている人の名前。トークン（JWT）の中身から読む。サーバに聞かない。
  *  「ログインしている私が誰か分からない」（利用者のフィードバック 2026-09-16）に応えてヘッダーに出す。 */
 // @implements-old REQ-053
+// @implements REQ-199
 export function getUserName(): string | null {
   const token = getToken()
   if (!token) return null
@@ -25,6 +27,7 @@ export function getUserName(): string | null {
 }
 
 // @implements-old REQ-069
+// @implements REQ-198, BR-010
 export function clearToken() {
   localStorage.removeItem(TOKEN_KEY)
   // 「前回の続き」は端末に残る。消さないと、次にログインした別のアカウントに
@@ -50,6 +53,7 @@ function markSessionExpired() {
 
 /** 印が立っていれば true を返し、同時に消す（出すのは一度だけ）。 */
 // @implements-old REQ-052
+// @implements REQ-197, BR-011
 export function takeSessionExpired(): boolean {
   try {
     const hit = sessionStorage.getItem(EXPIRED_KEY) === '1'
@@ -73,6 +77,7 @@ export class ApiError extends Error {
 }
 
 // @implements-old REQ-063, REQ-067, REQ-051, REQ-098
+// @implements REQ-196
 export async function api<T = any>(
   path: string,
   init: { method?: string; body?: unknown } = {},
@@ -104,6 +109,7 @@ export async function api<T = any>(
     if (res.status === 401) {
       // トークンを持って行って弾かれた＝期限切れ。持っていなければ元から
       // 未ログインなので、期限切れとは言わない。
+      // @implements REQ-194, REQ-197
       if (token) markSessionExpired()
       clearToken()
     }
@@ -132,6 +138,7 @@ export function invalidateCached() {
 }
 
 // @implements-old REQ-054
+// @implements REQ-017, REQ-018
 export function apiCached<T = any>(path: string): Promise<T> {
   const hit = memo.get(path)
   if (hit) return hit as Promise<T>
@@ -153,6 +160,7 @@ const LAST_TOPIC_KEY = 'study-app.lastTopic'
 export type LastTopic = { id: number; term: string; middle: string; middleNo: number }
 
 // @implements-old REQ-155, REQ-158
+// @implements REQ-082, BR-011, BR-012
 export function getLastTopic(): LastTopic | null {
   try {
     const raw = localStorage.getItem(LAST_TOPIC_KEY)
@@ -163,6 +171,7 @@ export function getLastTopic(): LastTopic | null {
 }
 
 // @implements-old REQ-040
+// @implements REQ-077, REQ-078, BR-011, BR-013
 export function setLastTopic(t: LastTopic) {
   try {
     localStorage.setItem(LAST_TOPIC_KEY, JSON.stringify(t))

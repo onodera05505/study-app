@@ -43,6 +43,7 @@ const zPassword = (message: string) => z.string({ error: message }).min(8, messa
 const zName = (message: string) => z.string({ error: message }).trim().min(1, message).max(50, message)
 const zRole = z.enum(['ADMIN', 'MEMBER'], { error: ROLE_MSG })
 /** 権限は登録簿にある学びの key だけ。同じ key を 2 回書かれても 1 つに畳む。 */
+// @implements REQ-169, BR-004
 const zGrants = z
   .array(z.string(), { error: GRANTS_MSG })
   .refine((keys) => keys.every((k) => !!learningOf(k)), GRANTS_MSG)
@@ -52,14 +53,17 @@ const loginBody = z.object({
   email: zEmail(LOGIN_MSG),
   password: z.string({ error: LOGIN_MSG }).min(1, LOGIN_MSG),
 })
+// @implements BR-004
 const exchangeBody = z.object({
   code: z.string({ error: 'コードが正しくありません' }).min(1, 'コードが正しくありません'),
   app: z.string({ error: '学びの指定が正しくありません' }).min(1, '学びの指定が正しくありません').refine((k) => !!learningOf(k), '知らない学びです'),
 })
+// @implements REQ-211
 const mePasswordBody = z.object({
   current: z.string({ error: ME_PASSWORD_MSG }).min(1, ME_PASSWORD_MSG),
   next: z.string({ error: ME_PASSWORD_MSG }).min(8, NEW_PASSWORD_MSG).max(200, NEW_PASSWORD_MSG),
 })
+// @implements REQ-177
 const accountCreateBody = z.object({
   email: zEmail('メールアドレスの形式が正しくありません'),
   name: zName(NAME_MSG),
@@ -67,11 +71,13 @@ const accountCreateBody = z.object({
   grants: zGrants.default([]),
   role: zRole.optional(),
 })
+// @implements REQ-178
 const accountUpdateBody = z.object({
   name: zName(NAME_MSG).optional(),
   role: zRole.optional(),
   grants: zGrants.optional(),
 })
+// @implements REQ-179
 const passwordResetBody = z.object({ password: zPassword(NEW_PASSWORD_MSG) })
 
 /** 項目の名前。スキーマの文言が日本語でないときの差し替えに使う。 */
@@ -160,13 +166,16 @@ async function openSession(c: any, accountId: string) {
 const api = new Hono<AppEnv>()
 
 // @implements-old REQ-094
+// @implements REQ-213
 api.get('/health', (c) => c.json({ ok: true }))
 
 /** 学びの一覧（公開。URL は公開情報。合言葉や秘密は含めない） */
 // @implements-old REQ-045
+// @implements REQ-183
 api.get('/learnings', (c) => c.json({ learnings: LEARNINGS.map(({ key, brand, kind, desc }) => ({ key, brand, kind, desc })) }))
 
 // @implements-old REQ-001, REQ-056
+// @implements REQ-181, REQ-182
 api.post('/login', async (c) => {
   const p = await parseBody(c, loginBody)
   if (!p.ok) return p.res
@@ -182,6 +191,7 @@ api.post('/login', async (c) => {
 
 /** 学び側サーバが使い捨てコードをメールと名前に交換する（共有秘密）。権限は交換時にも見る。 */
 // @implements-old REQ-003, REQ-059
+// @implements REQ-200, REQ-201, REQ-202, REQ-203, BR-003, BR-004
 api.post('/sso/exchange', async (c) => {
   // 共有秘密は本文の検証より先に見る（合わなければ 403 で止まり、本文が欠けていても DB も見ない）
   const secret = ((await c.req.json().catch(() => null)) as { secret?: unknown } | null)?.secret
@@ -204,6 +214,7 @@ api.post('/sso/exchange', async (c) => {
 
 /** ログインが要る経路。`*` に付けると知らない経路まで 401 になって 404（REQ-302）を隠すので、経路を挙げて囲う。 */
 // @implements-old REQ-088
+// @implements REQ-223, BR-001
 const requireLogin = async (c: Context<AppEnv>, next: Next) => {
   const acc = await accountOf(c.env, getCookie(c, SESSION_COOKIE))
   if (!acc) return c.json({ error: 'ログインが必要です' }, 401)
@@ -213,6 +224,7 @@ const requireLogin = async (c: Context<AppEnv>, next: Next) => {
 for (const path of ['/logout', '/me', '/me/*', '/admin/*']) api.use(path, requireLogin)
 
 // @implements-old REQ-083
+// @implements REQ-189
 api.post('/logout', async (c) => {
   const sid = getCookie(c, SESSION_COOKIE)
   if (sid) await c.env.DB.prepare(`DELETE FROM sessions WHERE id = ?`).bind(sid).run()
@@ -221,12 +233,14 @@ api.post('/logout', async (c) => {
 })
 
 // @implements-old REQ-046
+// @implements REQ-184
 api.get('/me', async (c) => {
   const a = c.get('account')
   return c.json({ account: a, grants: await grantsOf(c.env, a.id) })
 })
 
 // @implements-old REQ-009, REQ-084, REQ-085
+// @implements REQ-209, REQ-210, REQ-212, BR-007
 api.post('/me/password', async (c) => {
   const a = c.get('account')
   const p = await parseBody(c, mePasswordBody)
@@ -242,12 +256,14 @@ api.post('/me/password', async (c) => {
 
 const admin = new Hono<AppEnv>()
 // @implements-old REQ-007
+// @implements REQ-176
 admin.use('*', async (c, next) => {
   if (c.get('account').role !== 'ADMIN') return c.json({ error: '管理者だけが使えます' }, 403)
   await next()
 })
 
 // @implements-old REQ-070
+// @implements REQ-162
 admin.get('/accounts', async (c) => {
   const rows = await c.env.DB.prepare(
     `SELECT a.id, a.email, a.name, a.role, a.created_at AS createdAt,
@@ -258,6 +274,7 @@ admin.get('/accounts', async (c) => {
 })
 
 // @implements-old REQ-071, REQ-075, REQ-078
+// @implements REQ-163, REQ-164
 admin.post('/accounts', async (c) => {
   const p = await parseBody(c, accountCreateBody)
   if (!p.ok) return p.res
@@ -273,6 +290,7 @@ admin.post('/accounts', async (c) => {
 })
 
 // @implements-old REQ-072, REQ-076, REQ-008, REQ-080
+// @implements REQ-165, REQ-166, REQ-167, REQ-173
 admin.put('/accounts/:id', async (c) => {
   const id = c.req.param('id')
   const p = await parseBody(c, accountUpdateBody)
@@ -297,6 +315,7 @@ admin.put('/accounts/:id', async (c) => {
 })
 
 // @implements-old REQ-073, REQ-077, REQ-081
+// @implements REQ-168, REQ-174, BR-007
 admin.post('/accounts/:id/password', async (c) => {
   const id = c.req.param('id')
   const p = await parseBody(c, passwordResetBody)
@@ -309,6 +328,7 @@ admin.post('/accounts/:id/password', async (c) => {
 })
 
 // @implements-old REQ-074, REQ-079, REQ-082
+// @implements REQ-170, REQ-172, REQ-175
 admin.delete('/accounts/:id', async (c) => {
   const id = c.req.param('id')
   if (id === c.get('account').id) return c.json({ error: '自分は削除できません' }, 400)
@@ -323,6 +343,7 @@ app.route('/api', api)
 // ---- SSO の入口（ブラウザが来る） ----------------------------------------------
 
 // @implements-old REQ-002, REQ-057
+// @implements REQ-185, REQ-186, REQ-187, REQ-188, BR-003, BR-004
 app.get('/sso/start', async (c) => {
   const key = c.req.query('app') ?? ''
   const learning = learningOf(key)
@@ -337,6 +358,7 @@ app.get('/sso/start', async (c) => {
 })
 
 // @implements-old REQ-301
+// @implements BR-002
 app.onError((err, c) => {
   if (err instanceof HTTPException) return err.getResponse()
   // 想定していない例外。中身（message・stack）は本文に出さず、ログにだけ残す
@@ -349,6 +371,7 @@ app.onError((err, c) => {
 // ヘッダーを足そうとして TypeError（Can't modify immutable headers）→ 画面が全部 500。
 // ローカルの wrangler dev では再現せず、本番だけで落ちた（2026-09-17。API は Hono が作る応答なので無事だった）
 // @implements-old REQ-302
+// @implements REQ-214
 app.notFound(async (c) => {
   if (c.req.path === '/api' || c.req.path.startsWith('/api/')) return c.json({ error: '見つかりません' }, 404)
   const res = await c.env.ASSETS.fetch(c.req.raw)

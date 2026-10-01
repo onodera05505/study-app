@@ -89,6 +89,7 @@ export function Home() {
   const [last, setLast] = useState<LastTopic | null>(null)
   // 進行中のテスト。ここでは補助情報なので、取れなくても黙って出さない
   // （進行中の有無を正面から扱うのは /practice の役目）。
+  // @implements REQ-093
   const [current, setCurrent] = useState<CurrentSession['session']>(null)
 
   const load = useCallback(() => {
@@ -112,6 +113,7 @@ export function Home() {
   // 見出しとして出したい文字が無いので、読み上げ専用で置く。
   const heading = <h1 className="sr-only">ホーム</h1>
 
+  // @implements REQ-047, BR-014
   if (error)
     return (
       <>
@@ -171,6 +173,7 @@ export function Home() {
 
       {/* 中断したテストへ戻る道は /practice にしかなかった。開いた最初の画面で
           気づけるよう、いちばん上に出す。 */}
+      {/* @implements REQ-083, REQ-086 */}
       {current && (
         <div className="notice">
           進行中のテストがあります（{current.scopeLabel}・回答 {current.answered}/
@@ -199,6 +202,7 @@ export function Home() {
 
       {/* このアプリの設計の中核は「出題頻度＝重要度」。頻出なのに理解できて
           いない論点こそが最短合格の次の一手なので、ホームの正面に出す。 */}
+      {/* @implements REQ-044, REQ-046, BR-015 */}
       {next.length > 0 && (
         <section className="next-up">
           <h2>次に学ぶ</h2>
@@ -224,6 +228,7 @@ export function Home() {
         </section>
       )}
 
+      {/* @implements REQ-079, REQ-080, REQ-081, REQ-082 */}
       {last ? (
         <Link to={`/topics/${last.id}`} className="resume">
           <span className="resume-label">前回の続き</span>

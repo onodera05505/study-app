@@ -48,6 +48,7 @@ export const EXAMS: Record<string, ExamConfig> = Object.fromEntries(
     }),
 )
 
+// @implements BR-005
 // @implements-old REQ-039, REQ-096
 export function examOf(key: string | undefined): ExamConfig {
   return EXAMS[key ?? 'ip'] ?? EXAMS.ip

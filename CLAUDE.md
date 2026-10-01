@@ -85,6 +85,7 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 | **用語集**（線。業務語の正本。原本 harness のテンプレで spec-author が書く。識別子は契約へ） | [`docs/01-glossary.md`](docs/01-glossary.md) |
 | attic: 識別子列つきの空の用語集（写した型の草案。2026-09-30 の移行で退役） | [`docs/attic/01-glossary_2026-09-29_識別子列つき.md`](docs/attic/01-glossary_2026-09-29_識別子列つき.md) |
 | **保留台帳**（線。reviewer の指摘のうち機械判定に落とせない物。縮む方向にしか動かない） | [`docs/verification/DEFERRED.md`](docs/verification/DEFERRED.md) |
+| **検証方針（全体）**（線。プロジェクト全体で単体テストが観測できない範囲とその理由。REQ ごとの方針は各 REQ の `## 検証方針`） | [`docs/verification/GLOBAL.md`](docs/verification/GLOBAL.md) |
 | **原本 harness への移行**（2026-09-30 本人決定。APM で develop-core、docs-migrate の 7 Phase。Phase 0 の記録と実体・状態値の全文） | [`docs/作業ログ_2026-09-30_原本harnessへの移行.md`](docs/作業ログ_2026-09-30_原本harnessへの移行.md) |
 | **原本 harness への移行の棚卸し**（docs-migrate Phase 0。文書ごとの分類と処遇、実体と状態値、矛盾。本人の答えは `OPEN-QUESTIONS.md`） | [`docs/INVENTORY.md`](docs/INVENTORY.md) |
 | **要件（REQ）の正本**（旧。原本 harness へ移行中（`docs/INVENTORY.md`）。Phase 4 で `docs/goals/**/REQ-nnn.md` へ変換して attic） | [`docs/spec.yaml`](docs/spec.yaml) |

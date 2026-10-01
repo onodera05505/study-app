@@ -172,7 +172,7 @@ describe('ヘッダーの本人の名前（UC-013）', () => {
 })
 
 describe('分野・カテゴリの集計の記憶', () => {
-  // @verifies REQ-054, REQ-129
+  // @covers REQ-018#aggregate-remembered
   it('同じ path は 1 回だけ取りに行き、invalidateCached の後は取り直す', async () => {
     const m = await load()
     const fetchMock = vi.fn(async () => okJson([{ field: 'x' }]))
@@ -185,7 +185,7 @@ describe('分野・カテゴリの集計の記憶', () => {
     expect(fetchMock).toHaveBeenCalledTimes(2)
   })
 
-  // @verifies REQ-054
+  // @covers REQ-017#failure-not-cached
   it('失敗した取得は覚えず、次の呼び出しで取り直す', async () => {
     const m = await load()
     let n = 0

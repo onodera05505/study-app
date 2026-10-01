@@ -38,6 +38,7 @@ export function Roadmap() {
   const perDay = exam.roadmapSpec?.perDay ?? 3
   const extraField = exam.roadmapSpec?.extraField ?? '補足（ロードマップ外）'
 
+  // @implements REQ-127, REQ-136, BR-014
   const load = useCallback(() => {
     setError('')
     setUnits(null)
@@ -55,6 +56,7 @@ export function Roadmap() {
   }, [load])
 
   /** その日の確認テストを始める。範囲はその日の単位だけ（通しで受ける形は §13.6 で無くした） */
+  // @implements REQ-142, REQ-143, BR-017
   async function startDay(e: DayExam) {
     if (busy) return
     if (!window.confirm(`${e.examLabel}の確認（${e.questions} 問）を始めます。よろしいですか？`)) return
@@ -87,11 +89,13 @@ export function Roadmap() {
   const all = (units ?? []).slice().sort((a, b) => (a.sortOrder ?? 1e9) - (b.sortOrder ?? 1e9) || a.term.localeCompare(b.term, 'ja'))
   const main = all.filter((u) => u.field !== extraField)
   const extras = all.filter((u) => u.field === extraField)
+  // @implements REQ-129, REQ-134, REQ-135
   const days = new Map<number, Unit[]>()
   for (const u of main) {
     const d = u.sortOrder ? Math.ceil(u.sortOrder / perDay) : 0
     days.set(d, [...(days.get(d) ?? []), u])
   }
+  // @implements REQ-130, BR-029
   const current = main.find((u) => (u.status ?? 1) < 3) // いま学ぶ位置
   const understood = main.filter((u) => u.status === 3).length
 
@@ -99,12 +103,14 @@ export function Roadmap() {
     <>
       <h1>ロードマップ</h1>
       {/* ホームを無くしたので、続きの導線と連続日数はここが受け皿（要件 §13.6） */}
+      {/* @implements REQ-144, REQ-145, BR-013 */}
       <Link
         to={last ? `/topics/${last.id}` : current ? `/topics/${current.id}` : '/topics'}
         className="btn btn-primary btn-block go-study"
       >
         {last ? `前回の続きから（${last.term}）` : current ? `ここから（${current.term}）` : '最初の単位から始める'}
       </Link>
+      {/* @implements REQ-131, REQ-132 */}
       <p className="lead">
         1 日 {perDay} 単位、全 {days.size} 日。順番どおりに読み、読んだら理解度を付けます。
         {visits && <> 連続 <b>{visits.streak}</b> 日。</>}
@@ -121,6 +127,7 @@ export function Roadmap() {
         )}
       </p>
 
+      {/* @implements REQ-126, BR-015 */}
       {units === null && <p className="muted">読み込み中…</p>}
       {units !== null && main.length === 0 && <p className="muted">単位がありません。</p>}
 
@@ -139,6 +146,7 @@ export function Roadmap() {
               {done && <small>完了</small>}
             </h2>
             {/* その日の確認テスト（要件 §13.6）。範囲はこの日の単位だけ */}
+            {/* @implements REQ-133 */}
             {(() => {
               const ex = (exams ?? []).find((e) => e.examLabel === `${d} 日目`)
               if (!ex) return null
@@ -178,6 +186,7 @@ export function Roadmap() {
         )
       })}
 
+      {/* @implements REQ-134 */}
       {extras.length > 0 && (
         <section className="rm-day">
           <h2 className="rm-day-head">{extraField}</h2>

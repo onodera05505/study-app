@@ -9,6 +9,7 @@ import { examOf } from '../../shared/exam'
 
 export const sessionRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
+// @implements BR-005
 async function settings(db: ReturnType<typeof getDb>, env: Bindings) {
   const row = await db.query.appSettings.findFirst()
   // 既定値は試験ごとに違う（IT パスポート 100問120分 / 応用情報 午前 80問150分）。
@@ -37,6 +38,7 @@ const createBody = z.object({
   size: z.number().int().min(1).max(100).optional(),
 })
 
+// @implements REQ-050, REQ-055, REQ-057, REQ-105, REQ-109, BR-017
 // @implements-old REQ-193, REQ-203, REQ-204, REQ-023
 sessionRoutes.post('/', async (c) => {
   const parsed = createBody.safeParse(await c.req.json().catch(() => null))
@@ -119,6 +121,7 @@ sessionRoutes.post('/', async (c) => {
 })
 
 /** 進行中のセッション。中断からの復帰に使う。 */
+// @implements BR-015
 // @implements-old REQ-025
 sessionRoutes.get('/current', async (c) => {
   const db = getDb(c.env)
@@ -134,6 +137,7 @@ sessionRoutes.get('/current', async (c) => {
 })
 
 /** 進行中のセッションを破棄する。 */
+// @implements REQ-085, REQ-090
 // @implements-old REQ-231
 sessionRoutes.delete('/current', async (c) => {
   const db = getDb(c.env)
@@ -147,6 +151,7 @@ sessionRoutes.delete('/current', async (c) => {
 })
 
 // 他人のセッション ID は 404 になる（user_id で絞る）。
+// @implements REQ-076, BR-018
 // @implements-old REQ-026
 async function loadSession(db: ReturnType<typeof getDb>, userId: string, id: string) {
   return db.query.sessions.findFirst({
@@ -161,6 +166,7 @@ function isExpired(s: { timeLimitSec: number | null; startedAt: number }): boole
 }
 
 /** 現在の問題（未回答の最小 idx）。 */
+// @implements REQ-058, REQ-060, REQ-071, REQ-111, REQ-116, REQ-117, BR-021
 // @implements-old REQ-196, REQ-214
 sessionRoutes.get('/:id/current', async (c) => {
   const db = getDb(c.env)
@@ -228,6 +234,7 @@ const answerBody = z.object({
 })
 
 /** 1問回答する。採点は**出題時スナップショット**に対して行う。 */
+// @implements REQ-061, REQ-064, REQ-066, REQ-067, REQ-072, REQ-119, BR-020, BR-022, BR-023
 // @implements-old REQ-199, REQ-205, REQ-207, REQ-223
 sessionRoutes.post('/:id/answer', async (c) => {
   const parsed = answerBody.safeParse(await c.req.json().catch(() => null))
@@ -306,6 +313,7 @@ async function finalize(db: ReturnType<typeof getDb>, sessionId: string) {
   return { byField: rows.filter((r) => r.field), total: total ?? { total: 0, correct: 0 } }
 }
 
+// @implements REQ-069, REQ-073, REQ-075, BR-024
 // @implements-old REQ-202
 sessionRoutes.post('/:id/finish', async (c) => {
   const db = getDb(c.env)
@@ -328,6 +336,7 @@ sessionRoutes.post('/:id/finish', async (c) => {
 })
 
 /** 結果の詳細。間違えた問題から論点へ戻れるようにする。 */
+// @implements REQ-115, REQ-120, REQ-121, REQ-123
 // @implements-old REQ-218, REQ-224, REQ-226
 sessionRoutes.get('/:id', async (c) => {
   const db = getDb(c.env)
@@ -428,6 +437,7 @@ sessionRoutes.get('/:id', async (c) => {
 })
 
 /** 受験履歴。 */
+// @implements REQ-095, REQ-096, REQ-097
 // @implements-old REQ-232
 sessionRoutes.get('/', async (c) => {
   const db = getDb(c.env)

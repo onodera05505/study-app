@@ -66,6 +66,7 @@ export function Topics() {
     loadStructure()
   }, [loadStructure])
 
+  // @implements REQ-021, REQ-022
   const loadTopics = useCallback(() => {
     if (!middleNo) return
     setTopicsError('')
@@ -88,6 +89,7 @@ export function Topics() {
     loadTopics()
   }, [loadTopics])
 
+  // @implements REQ-019
   function setFilter(key: string, value: string) {
     const next = new URLSearchParams(params)
     if (value) next.set(key, value)
@@ -106,6 +108,7 @@ export function Topics() {
   if (category) {
     return (
       <>
+        {/* @implements REQ-029, BR-016 */}
         <BackLink to="/topics" label="単元の一覧に戻る" />
         <p className="crumb">
           {category.field} / {category.major}
@@ -145,6 +148,7 @@ export function Topics() {
           ))}
         </div>
 
+        {/* @implements REQ-020 */}
         <ul className="list">
           {(topics ?? []).map((t) => {
             const status = t.status ?? 1
@@ -168,6 +172,7 @@ export function Topics() {
             </li>
             )
           })}
+          {/* @implements REQ-027, BR-014 */}
           {topicsError && (
             <li>
               <p className="error">{topicsError}</p>
@@ -176,6 +181,7 @@ export function Topics() {
               </button>
             </li>
           )}
+          {/* @implements REQ-028, BR-015 */}
           {topics === null && !topicsError && <li className="muted">読み込み中…</li>}
           {topics !== null && topics.length === 0 && !topicsError && (
             <li className="muted">
@@ -221,6 +227,7 @@ export function Topics() {
         >
           すべて
         </button>
+        {/* @implements REQ-014 */}
         {FIELD_ORDER.filter((f) => (fields ?? []).some((x) => x.field === f)).map((f) => {
           const d = (fields ?? []).find((x) => x.field === f)!
           return (
@@ -240,6 +247,7 @@ export function Topics() {
         })}
       </div>
 
+      {/* @implements REQ-016, BR-014, BR-015 */}
       {structError && (
         <>
           <p className="error">{structError}</p>
@@ -250,6 +258,7 @@ export function Topics() {
       )}
       {!structError && categories === null && <p className="muted">読み込み中…</p>}
 
+      {/* @implements REQ-015 */}
       {majors.map((m) => (
         <section key={`${m.field}-${m.major}`}>
           <div className="major-head">

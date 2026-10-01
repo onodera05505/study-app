@@ -279,7 +279,7 @@ describe('練習テストの画面', () => {
     expect((btn(/復習/) as HTMLButtonElement | undefined)?.disabled).toBe(true)
   })
 
-  // @verifies REQ-229
+  // @covers REQ-087#practice-notice-with-choices
   it('進行中のテストの範囲と回答済み／全体を知らせ、「再開する」でその出題の画面へ移る', async () => {
     stubApi(replies({ 'GET /api/sessions/current': { body: IN_PROGRESS } }))
     await draw()
@@ -289,7 +289,7 @@ describe('練習テストの画面', () => {
     expect(path()).toMatch(/^\/sessions?\/s-9/)
   })
 
-  // @verifies REQ-230
+  // @covers REQ-089#confirm-shows-answered-count
   it('「破棄する」は回答済みの問数を示して確認し、了承したときだけ破棄を頼む', async () => {
     const confirm = vi.spyOn(window, 'confirm').mockReturnValue(false)
     const calls = stubApi(replies({ 'GET /api/sessions/current': { body: IN_PROGRESS } }))
@@ -304,7 +304,7 @@ describe('練習テストの画面', () => {
     expect(calls.some((c) => c.method === 'DELETE' && c.url === '/api/sessions/current')).toBe(true)
   })
 
-  // @verifies REQ-234
+  // @covers REQ-092#discard-failed-keeps-notice
   it('破棄に失敗したときは理由を出し、進行中の知らせと再開・破棄を残す', async () => {
     vi.spyOn(window, 'confirm').mockReturnValue(true)
     stubApi(

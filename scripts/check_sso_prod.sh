@@ -6,6 +6,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36"
+# @implements REQ-219
 NG=0
 # 全応答に載るべきセキュリティヘッダ（CSP・HSTS・X-Frame-Options DENY・nosniff・Referrer-Policy）。
 # 抜けても画面は動くので、本番の応答を見て確かめる。
@@ -22,6 +23,7 @@ check_headers() {
 # トークンの署名の秘密 JWT_SECRET は各学び。名前が一覧にあることだけを見て、値は読まない・出さない。
 # @implements-old REQ-303
 # @verifies REQ-303
+# @implements REQ-215, REQ-221, REQ-222, BR-009
 check_secrets() {
   local key name project want s out have expect
   expect="$(python3 scripts/targets.py account)"
@@ -54,13 +56,16 @@ check_secrets() {
   done
 }
 PORTAL="$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['_portal']['url'])")"
+# @implements REQ-213, REQ-217
 printf '%-6s %s -> ' まなびば "$PORTAL"; H="$(curl -s -A "$UA" "$PORTAL/api/health")"; echo "$H"; [ "$H" = '{"ok":true}' ] || NG=1
 check_headers "$PORTAL" まなびば
 # health（API）だけでは静的ファイル側の 500 を見逃す（2026-09-17: secureHeaders が ASSETS の変更不可ヘッダーに触れて画面が全部 500、API は 200 のまま）
+# @implements REQ-214, REQ-218
 for path in / /app.js /style.css; do
   S="$(curl -s -o /dev/null -w '%{http_code}' -A "$UA" "$PORTAL$path")"
   [ "$S" = 200 ] || { echo "  ✘ まなびばの ${path} が ${S}（画面が開けない）"; NG=1; }
 done
+# @implements REQ-214, REQ-218
 for k in $(python3 scripts/targets.py keys); do
   U="$(python3 scripts/targets.py url "$k")"
   R="$(curl -s -o /dev/null -w '%{http_code}' -A "$UA" "$U/")"
@@ -79,4 +84,5 @@ for k in $(python3 scripts/targets.py keys); do
 done
 echo "▶ 本番の秘密の一覧（名前だけを見る。値は読まない）"
 check_secrets
+# @implements REQ-216, REQ-220
 [ "$NG" = 0 ] && echo "✓ SSO の門: まなびばと学び $(python3 scripts/targets.py keys | wc -w | tr -d " ") つすべて有効（画面も 200・秘密も設定済み）" || { echo "✘ SSO の門に問題あり"; exit 1; }

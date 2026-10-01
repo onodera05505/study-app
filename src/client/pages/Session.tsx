@@ -66,6 +66,7 @@ export function Session() {
   // 再試行のとき、失敗した呼び出しと同じ履歴の残し方をする
   const finishReplace = useRef(true)
 
+  // @implements REQ-069, REQ-074, BR-014
   const finish = useCallback(
     async (replace: boolean) => {
       finishReplace.current = replace
@@ -80,6 +81,7 @@ export function Session() {
     [id, navigate],
   )
 
+  // @implements REQ-071
   const load = useCallback(async () => {
     try {
       const d = await api<Current>(`/sessions/${id}/current`)
@@ -101,6 +103,7 @@ export function Session() {
   }, [load])
 
   // 制限時間のカウントダウン。0 になったら締めて結果へ。
+  // @implements REQ-112, REQ-118
   useEffect(() => {
     if (remaining === null) return
     if (remaining <= 0) {
@@ -114,6 +117,7 @@ export function Session() {
   // 過去問実践（通し受験）かどうか。判定と解説を出すかの分かれ目になる。
   const isMock = data?.session.kind === 'mock'
 
+  // @implements REQ-061, REQ-068, REQ-113
   async function answer(choice: string) {
     if (!data?.question || judged || sending) return
     setPicked(choice)
@@ -197,6 +201,7 @@ export function Session() {
     )
 
   const q = data.question
+  // @implements REQ-064
   const done = data.answered + (judged ? 1 : 0)
   const total = data.session.questionCount
 
@@ -204,6 +209,7 @@ export function Session() {
     <>
       {heading}
       {/* 進捗と残り時間は上部に固定する。スクロールしても現在地と持ち時間が見える。 */}
+      {/* @implements REQ-059, REQ-112 */}
       <div className="exam-top">
         <span className="idx">
           {done} / {total}
@@ -229,6 +235,7 @@ export function Session() {
         <p className="question" style={{ marginTop: 0 }}>{q.text}</p>
         <Figure hasFigure={q.hasFigure} description={q.figureDescription} image={q.figureImage} />
 
+        {/* @implements REQ-063 */}
         <div className="choices">
           {Object.entries(q.choices).map(([k, v]) => {
             let cls = ''
@@ -256,6 +263,7 @@ export function Session() {
           })}
         </div>
 
+        {/* @implements REQ-062, REQ-063 */}
         {judged && (
           <>
             <p className={`verdict ${judged.correct ? 'ok' : 'ng'}`}>
@@ -283,6 +291,7 @@ export function Session() {
             </button>
           </>
         )}
+        {/* @implements BR-027 */}
         {!exam.roadmap && (
           <p className="citation">
             {q.citation}
@@ -291,6 +300,7 @@ export function Session() {
         )}
       </div>
 
+      {/* @implements REQ-070, REQ-114 */}
       <div className="btn-row" style={{ marginTop: '1rem' }}>
         <button className="btn" onClick={() => navigate('/')}>
           中断してホームへ

@@ -10,6 +10,7 @@ import { compareExam, dedupe } from '../lib/session-builder'
 export const catalogRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
 /** 分野ごとの論点数と理解度の内訳。トップ画面の骨格になる。 */
+// @implements REQ-014
 // @implements-old REQ-010
 catalogRoutes.get('/fields', async (c) => {
   const db = getDb(c.env)
@@ -40,6 +41,7 @@ catalogRoutes.get('/fields', async (c) => {
 })
 
 /** 分野配下の中分類。テーマ分けの中間階層。 */
+// @implements REQ-015, REQ-019
 // @implements-old REQ-120
 catalogRoutes.get('/categories', async (c) => {
   const db = getDb(c.env)
@@ -83,6 +85,7 @@ const topicQuery = z.object({
 })
 
 /** 論点一覧。既定は出題頻度の降順＝最短合格の優先順位そのもの。 */
+// @implements REQ-020, REQ-021, REQ-042, BR-029, BR-031
 // @implements-old REQ-011, REQ-037
 catalogRoutes.get('/topics', async (c) => {
   const parsed = topicQuery.safeParse(c.req.query())
@@ -150,6 +153,7 @@ catalogRoutes.get('/topics', async (c) => {
 })
 
 /** 論点の詳細。解説・周辺知識と、その論点が出題された過去問。 */
+// @implements REQ-023, REQ-045, BR-030
 // @implements-old REQ-012, REQ-133, REQ-150
 catalogRoutes.get('/topics/:id', async (c) => {
   const id = Number(c.req.param('id'))
@@ -293,6 +297,7 @@ catalogRoutes.get('/topics/:id', async (c) => {
 const progressBody = z.object({ status: z.number().int().min(1).max(3) })
 
 /** 理解度の記録（未理解 / やや理解 / 理解）。 */
+// @implements REQ-034, REQ-035, REQ-036, REQ-037
 // @implements-old REQ-013
 catalogRoutes.put('/topics/:id/progress', async (c) => {
   const id = Number(c.req.param('id'))
@@ -320,6 +325,7 @@ catalogRoutes.put('/topics/:id/progress', async (c) => {
  *  数百語あるが1語が1行なので全部返す。画面側はアプリを開いている間に1度だけ取り、
  *  以降はメモリから引く（用語ごとに問い合わせると、1画面で何十回も往復する）。
  *  中身が変わるのは seed を入れ直したときだけなので、長めにキャッシュしてよい。 */
+// @implements REQ-002
 // @implements-old REQ-137
 catalogRoutes.get('/glossary', async (c) => {
   const db = getDb(c.env)
@@ -332,6 +338,7 @@ catalogRoutes.get('/glossary', async (c) => {
 })
 
 /** 過去問の一覧（回ごと）。過去問実践の入口で使う。 */
+// @implements REQ-102
 // @implements-old REQ-041
 catalogRoutes.get('/exams', async (c) => {
   const db = getDb(c.env)

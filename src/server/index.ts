@@ -36,12 +36,14 @@ app.use(
 
 const api = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
+// @implements REQ-213
 // @implements-old REQ-047
 api.get('/health', (c) => c.json({ ok: true }))
 
 api.route('/auth', authRoutes)
 
 /** 認証。/api/auth/* 以外は Bearer トークンを要求する。
+ *  @implements REQ-196, REQ-223, BR-001, BR-002
  *  @implements-old REQ-033 */
 api.use('*', async (c, next) => {
   if (c.req.path.startsWith('/api/auth/') || c.req.path === '/api/health') return next()
@@ -63,6 +65,7 @@ api.use('*', async (c, next) => {
   await next()
 })
 
+// @implements REQ-043, REQ-044, BR-030
 // @implements-old REQ-014
 api.get('/me', async (c) => {
   const db = getDb(c.env)
@@ -158,6 +161,7 @@ api.route('/feedback', feedbackRoutes)
 
 app.route('/api', api)
 
+// @implements BR-002
 // @implements-old REQ-092
 app.onError((err, c) => {
   if (err instanceof HTTPException) return err.getResponse()

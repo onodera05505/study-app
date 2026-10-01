@@ -52,6 +52,7 @@ echo "▶ フロントをビルド"
 npx vite build --mode "$EXAM"
 # 新しい版の印（要件 §5.6）。画面が 5 分おきに見比べ、違えば「更新」の帯を出す
 # @implements-old REQ-278
+# @implements REQ-224, REQ-225, REQ-226
 printf '{"build": "%s", "at": "%s"}\n' "$(git rev-parse --short HEAD 2>/dev/null || echo unknown)" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > dist/version.json
 
 echo "▶ Worker を1ファイルにまとめる（Pages の advanced mode 用）"
@@ -65,6 +66,7 @@ mv wrangler.jsonc "$STASH"
 trap 'mv "$STASH" wrangler.jsonc' EXIT
 
 # Workers 用設定の env.<試験> から D1 と vars を写して、Pages 用の設定を組む
+# @implements BR-033
 python3 - "$STASH" "$EXAM" "$PROJECT" > wrangler.jsonc <<'PY'
 import json, re, sys
 

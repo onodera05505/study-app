@@ -13,12 +13,14 @@ type Row = {
 }
 
 // @implements-old REQ-233, REQ-235
+// @implements REQ-095
 export function History() {
   // null は「まだ取得していない」、[] は「取得した結果が空」
   const [rows, setRows] = useState<Row[] | null>(null)
   // 取得に失敗したまま null にしておくと「読み込み中…」が消えない
   const [error, setError] = useState('')
 
+  // @implements REQ-101, BR-014
   const load = useCallback(() => {
     setError('')
     setRows(null)
@@ -40,6 +42,7 @@ export function History() {
           const pct = r.correctCount !== null ? Math.round((r.correctCount / r.questionCount) * 100) : 0
           return (
             <li key={r.id}>
+              {/* @implements REQ-098 */}
               <Link to={`/sessions/${r.id}/result`} className="row" style={{ color: 'inherit' }}>
                 {/* 単位が無いと、ホーム（正答数）や /exams（「点」）の数字と
                     見分けが付かない。ここは正答率なので % を付ける。 */}
@@ -64,6 +67,7 @@ export function History() {
             </li>
           )
         })}
+        {/* @implements REQ-100, BR-014 */}
         {error && (
           <li>
             <p className="error">{error}</p>
@@ -73,6 +77,7 @@ export function History() {
           </li>
         )}
         {rows === null && !error && <li className="muted">読み込み中…</li>}
+        {/* @implements REQ-099, BR-015 */}
         {rows !== null && rows.length === 0 && (
           <li className="muted">まだ受験履歴がありません。</li>
         )}
