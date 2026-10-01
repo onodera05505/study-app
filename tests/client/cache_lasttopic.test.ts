@@ -78,8 +78,8 @@ describe('分野・単元の集計の記憶', () => {
   })
 })
 
-describe('前回の続き（最後に開いた論点）', () => {
-  // @verifies REQ-155
+describe('前回の続き（UC-005）', () => {
+  // @covers REQ-077#saved-value-readable
   it('覚えていなければ無し、覚えたあとは同じ論点が返る', async () => {
     const m = await load()
     expect(m.getLastTopic()).toBeNull()
@@ -87,7 +87,7 @@ describe('前回の続き（最後に開いた論点）', () => {
     expect(m.getLastTopic()).toEqual(TOPIC)
   })
 
-  // @verifies REQ-040
+  // @covers REQ-077#replaces-previous
   it('ID・名前・単元・単元番号を端末に残し、あとから開いた論点で置き換わる', async () => {
     const m = await load()
     m.setLastTopic(TOPIC)
@@ -105,7 +105,7 @@ describe('前回の続き（最後に開いた論点）', () => {
     })
   })
 
-  // @verifies REQ-040
+  // @covers REQ-078#storage-blocked-keeps-going
   it('端末に保存できないときも例外を投げない（操作を止めない）', async () => {
     const m = await load()
     vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
@@ -114,7 +114,7 @@ describe('前回の続き（最後に開いた論点）', () => {
     expect(() => m.setLastTopic(TOPIC)).not.toThrow()
   })
 
-  // @verifies REQ-158
+  // @covers REQ-082#unreadable-value
   it('覚えていた値が読めないときは無しを返す（例外を投げない）', async () => {
     const m = await load()
     m.setLastTopic(TOPIC)

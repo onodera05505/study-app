@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-/** フィードバックの画面（UC-012#4・#6）。本文と、直前に開いていた画面を送ることと、
+/** フィードバックの画面（UC-010 の主シナリオ #4・#6）。本文と、添え先を送ることと、
  *  送ったあとに受付文だけが出ることを見る。
  *
  *  送信先（サーバ）は偽物にして、呼ばれた URL と送信の本体を読む。 */
@@ -102,8 +102,8 @@ afterEach(async () => {
   vi.unstubAllGlobals()
 })
 
-describe('フィードバックの送信', () => {
-  // @verifies REQ-031
+describe('フィードバックの送信（UC-010）', () => {
+  // @covers REQ-152#attach-included
   it('本文と、直前に開いていた画面（パス・論点 ID）を送る', async () => {
     setLastPage({ path: '/topics/12', label: '学習の単位' })
     annotateLastPage({ topicId: 12, label: '学習の単位「LTV」' })
@@ -124,7 +124,7 @@ describe('フィードバックの送信', () => {
     expect(sent.topicId).toBe(12)
   })
 
-  // @verifies REQ-031
+  // @covers REQ-151#send-without-attachment
   it('直前に開いていた画面が無くても本文だけで送れる', async () => {
     const calls = stubApiCalls(() => ({ status: 201, body: { id: 'f-2' } }))
 
@@ -138,7 +138,7 @@ describe('フィードバックの送信', () => {
     expect(String(call!.init?.body)).toContain(TYPED)
   })
 
-  // @verifies REQ-273
+  // @covers REQ-155#accepted-shows-thanks
   it('送信に成功すると受付文が出て、書いた本文は残らない', async () => {
     setLastPage({ path: '/topics/12', label: '学習の単位「LTV」' })
     stubApiCalls(() => ({ status: 201, body: { id: 'f-3' } }))

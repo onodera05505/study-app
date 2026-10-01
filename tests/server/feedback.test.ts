@@ -32,15 +32,15 @@ async function post(payload: unknown, auth = true) {
 /** 日本語が 1 文字も無い理由は、たいてい内部の例外がそのまま出ている。 */
 const JAPANESE = /[ぁ-んァ-ヶ一-龥]/
 
-describe('フィードバックの受け口の入力検証', () => {
-  // @verifies REQ-033
+describe('フィードバックの受け口の入力検証（UC-010）', () => {
+  // BR-001 の守り。本人と分からない送信には返さず何も変えない（UC-010 にこれを持つ要件は無い）
   it('ログインしていない送信は 401', async () => {
     const res = await post({ body: '読みにくいです' }, false)
     expect(res.status).toBe(401)
     expect(await res.json()).toHaveProperty('error')
   })
 
-  // @verifies REQ-274
+  // @covers REQ-160#body-empty
   it('本文が無い・空・空白だけの送信は 400 と日本語の理由', async () => {
     for (const payload of [{}, { body: '' }, { body: '   ' }]) {
       const res = await post(payload)
@@ -51,7 +51,7 @@ describe('フィードバックの受け口の入力検証', () => {
     }
   })
 
-  // @verifies REQ-274
+  // @covers REQ-160#body-too-long
   it('本文が 2,000 字を超える送信は 400（2,000 字は入力検証を通る）', async () => {
     const over = await post({ body: 'あ'.repeat(2001) })
     expect(over.status).toBe(400)

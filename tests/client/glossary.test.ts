@@ -53,8 +53,8 @@ afterEach(() => {
   vi.unstubAllGlobals()
 })
 
-describe('用語集の取得', () => {
-  // @verifies REQ-136
+describe('用語集の取得（UC-001）', () => {
+  // @covers REQ-001#fetch-once-while-open
   it('何度求められても取りに行くのは 1 回だけ', async () => {
     const calls: string[] = []
     vi.stubGlobal('fetch', async (url: string) => {
@@ -76,7 +76,7 @@ describe('用語集の取得', () => {
     await m.React.act(async () => m.root.unmount())
   })
 
-  // @verifies REQ-138
+  // @covers REQ-005#pending-distinguished-from-empty
   it('取得が済むまでは未取得として区別し、済んでから引ける', async () => {
     let open!: () => void
     const gate = new Promise<void>((r) => {
@@ -99,7 +99,7 @@ describe('用語集の取得', () => {
     await m.React.act(async () => m.root.unmount())
   })
 
-  // @verifies REQ-141
+  // @covers REQ-012#fetch-failed-empty-glossary
   it('用語集が取れなかったときは、空の用語集として扱い本文を素の文字で描く', async () => {
     vi.stubGlobal('fetch', async () => {
       throw new TypeError('Failed to fetch')

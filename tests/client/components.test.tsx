@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-/** 画面の部品: 理解度のバッジと行の印（StatusBadge.tsx）・用語ポップ（TermPop.tsx）・
+/** 画面の部品: 理解度のバッジと行の印（StatusBadge.tsx）・用語の説明（TermPop.tsx）・
  *  同一内容の印（DupBadge.tsx）。
  *
  *  用語集は API から来るので fetch を偽物にして、先に取っておく
@@ -87,8 +87,8 @@ describe('理解度の見せ方', () => {
   })
 })
 
-describe('用語ポップ', () => {
-  // @verifies REQ-016, REQ-140
+describe('用語の説明（UC-001）', () => {
+  // @covers REQ-008#pop-heading-official-form
   it('本文の表示名は末尾の括弧書きを落とし、押すと出るポップの見出しは正式表記のまま', async () => {
     await draw(<TermPop term={LONG_TERM} />)
     const btn = container.querySelector<HTMLButtonElement>('button.term-btn')
@@ -104,13 +104,13 @@ describe('用語ポップ', () => {
     expect(card!.querySelector('a.term-link')?.getAttribute('href')).toBe('/topics/77')
   })
 
-  // @verifies REQ-140
+  // @covers REQ-008#display-name-without-paren
   it('末尾に括弧書きが無ければそのまま、あれば括弧の前までにする', () => {
     expect(shortTerm('LTV')).toBe('LTV')
     expect(shortTerm(LONG_TERM)).toBe('リスク対応')
   })
 
-  // @verifies REQ-142
+  // @covers REQ-009#term-not-in-glossary
   it('用語集に無い語は押せる要素にせず、書かれた文字のまま出す', async () => {
     await draw(<TermPop term="まだ用語集に無い語" />)
     expect(container.querySelector('button.term-btn')).toBeNull()

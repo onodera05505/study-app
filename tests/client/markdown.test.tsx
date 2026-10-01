@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-/** 本文の記法（src/client/components/Markdown.tsx）と用語ポップ（TermPop.tsx）。
+/** 本文の記法（src/client/components/Markdown.tsx）と用語の説明（TermPop.tsx）。
  *
  *  用語集は API から来るので fetch を偽物に差し替える。描くのは本物の React
  *  （react-dom/client）で、押したときの振る舞いまで見る。 */
@@ -55,8 +55,8 @@ beforeAll(async () => {
 // 開いたポップは body に出るが、次に描き直した時点で React が片付ける
 // （自分で消すと React の片付けとぶつかる）。
 
-describe('用語ポップ', () => {
-  // @verifies REQ-016
+describe('用語の説明（UC-001）', () => {
+  // @covers REQ-003#term-notation
   it('[[用語]] が押せる要素になり、記法の括弧は残らない', async () => {
     await draw(h(Markdown, { source: '売上は [[LTV]] で見る。' }))
     const btn = container.querySelector('button.term-btn')
@@ -65,7 +65,7 @@ describe('用語ポップ', () => {
     expect(text()).not.toContain(']]')
   })
 
-  // @verifies REQ-139
+  // @covers REQ-007#term-in-bold
   it('太字の中の [[用語]] でも押せる要素になる', async () => {
     await draw(h(Markdown, { source: '- **[[LTV]]** — 生涯価値のこと' }))
     const btn = container.querySelector('li b button.term-btn')
@@ -74,7 +74,7 @@ describe('用語ポップ', () => {
     expect(text()).not.toContain('**')
   })
 
-  // @verifies REQ-142
+  // @covers REQ-009#term-not-in-glossary
   it('用語集に無い語は色を付けず、文字のまま出す', async () => {
     await draw(h(Markdown, { source: '[[まだ無い用語]] の説明。' }))
     expect(container.querySelector('button.term-btn')).toBeNull()
@@ -82,7 +82,7 @@ describe('用語ポップ', () => {
     expect(text()).not.toContain('[[')
   })
 
-  // @verifies REQ-016
+  // @covers REQ-010#brief-with-topic-link
   it('押すと 1 行説明と「この論点を学ぶ」が出て、画面は移らない', async () => {
     await draw(h(Markdown, { source: '売上は [[LTV]] で見る。' }))
     const btn = container.querySelector<HTMLButtonElement>('button.term-btn')!
@@ -97,7 +97,7 @@ describe('用語ポップ', () => {
     expect(path()).toBe('/topics/1')
   })
 
-  // @verifies REQ-016
+  // @covers REQ-010#brief-without-topic-link
   it('論点に結び付かない用語では「この論点を学ぶ」を出さない', async () => {
     await draw(h(Markdown, { source: '[[CSRF]] の対策。' }))
     await act(async () => {
@@ -108,7 +108,7 @@ describe('用語ポップ', () => {
     expect(card?.querySelector('a.term-link')).toBeNull()
   })
 
-  // @verifies REQ-140
+  // @covers REQ-008#display-name-drops-paren
   it('本文に出す表示名は、末尾に括弧書き（読み・英字表記）があれば落とす', () => {
     // 末尾に括弧書きが無い語はそのまま
     expect(shortTerm('LTV')).toBe('LTV')
@@ -118,8 +118,8 @@ describe('用語ポップ', () => {
   })
 })
 
-describe('本文の記法', () => {
-  // @verifies REQ-018
+describe('本文の記法（UC-001）', () => {
+  // @covers REQ-003#allowed-notations
   it('見出し・箇条書き・番号付き・太字を解釈する', async () => {
     await draw(
       h(Markdown, {
@@ -132,14 +132,14 @@ describe('本文の記法', () => {
     expect(container.querySelector('p b')?.textContent).toBe('強い')
   })
 
-  // @verifies REQ-018
+  // @covers REQ-003#table-notation
   it('区切り行のある表を見出しつきの表にする', async () => {
     await draw(h(Markdown, { source: '| 用語 | 違い |\n| --- | --- |\n| A | 速い |\n| B | 安い |' }))
     expect(container.querySelectorAll('table thead th')).toHaveLength(2)
     expect(container.querySelectorAll('table tbody tr')).toHaveLength(2)
   })
 
-  // @verifies REQ-018
+  // @covers REQ-003#foreign-notation
   it('許した記法以外は書かれた文字のまま出す', async () => {
     await draw(
       h(Markdown, {
@@ -156,7 +156,7 @@ describe('本文の記法', () => {
     expect(text()).toContain('**閉じていない強調')
   })
 
-  // @verifies REQ-017
+  // @covers REQ-004#material-figure-path
   it('図の画像は /figures/materials/ の行だけを画像にする', async () => {
     await draw(h(Markdown, { source: '![LTV の図](/figures/materials/mkt/231-1.svg)' }))
     const img = container.querySelector('img')
@@ -165,7 +165,7 @@ describe('本文の記法', () => {
     expect(container.querySelector('figcaption')?.textContent).toBe('LTV の図')
   })
 
-  // @verifies REQ-017
+  // @covers REQ-004#other-path
   it('置き場所の違う画像は画像にせず、段落として出す', async () => {
     await draw(h(Markdown, { source: '![外部](https://example.com/zu.png)' }))
     expect(container.querySelector('img')).toBeNull()

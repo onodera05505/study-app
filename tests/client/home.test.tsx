@@ -86,8 +86,8 @@ afterEach(async () => {
   vi.unstubAllGlobals()
 })
 
-describe('次に学ぶ（おすすめ）', () => {
-  // @verifies REQ-132
+describe('次に学ぶ（UC-003）', () => {
+  // @covers REQ-044#home-shows-candidate-with-count-and-field
   it('候補を出題回数と分野つきで出す', async () => {
     stubApi()
     await draw(<Home />)
@@ -98,7 +98,7 @@ describe('次に学ぶ（おすすめ）', () => {
     expect(hrefs()).toContain('/topics/231')
   })
 
-  // @verifies REQ-132
+  // @covers REQ-046#home-hides-next-section
   it('候補が無いときはその節ごと出さない', async () => {
     stubApi({ me: { nextTopics: [] } })
     await draw(<Home />)
