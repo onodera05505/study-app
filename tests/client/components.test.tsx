@@ -55,7 +55,7 @@ afterEach(async () => {
 })
 
 describe('理解度の見せ方', () => {
-  // @verifies REQ-130
+  // @covers REQ-041#badge-text-and-mark-per-stage
   it('3 段階それぞれで段階の文字と段階ごとに違う印が出る（記録が無ければ未理解）', async () => {
     const marks: string[] = []
     for (const [status, want] of [[1, '未理解'], [2, 'やや理解'], [3, '理解']] as const) {
@@ -77,7 +77,7 @@ describe('理解度の見せ方', () => {
     expect(container.querySelector('span.status-badge')?.classList.contains('st-1')).toBe(true)
   })
 
-  // @verifies REQ-131
+  // @covers REQ-041#row-mark-per-stage
   it('一覧の行の印は段階ごとに変わり、記録が無いときは未理解と同じになる', () => {
     const rows = [statusRowClass(1), statusRowClass(2), statusRowClass(3)]
     expect(rows.every((c) => typeof c === 'string' && c.trim() !== '')).toBe(true)
@@ -126,7 +126,7 @@ describe('同一内容の過去問の印', () => {
     '出典：平成28年度 春期 ITパスポート試験 問1',
   ]
 
-  // @verifies REQ-126
+  // @covers REQ-053#mark-shown-when-multiple
   it('2 回以上出題された問題には回数と、「他の出典：」に続けて代表以外の回を新しい順に出す', async () => {
     await draw(<DupBadge timesAsked={3} otherCitations={OTHERS} />)
     // 数の前後の空白は仕様が決めていないので、そこだけ緩めて見る
@@ -146,7 +146,7 @@ describe('同一内容の過去問の印', () => {
     ).not.toContain('出典：')
   })
 
-  // @verifies REQ-126
+  // @covers REQ-053#mark-shown-when-multiple
   it('まとめられていない（1 回だけの）問題には何も出さない', async () => {
     await draw(<DupBadge timesAsked={1} otherCitations={[]} />)
     expect(text()).toBe('')

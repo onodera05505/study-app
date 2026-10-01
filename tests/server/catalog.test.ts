@@ -35,7 +35,7 @@ async function headers() {
 }
 
 describe('理解度の記録（PUT /api/topics/:id/progress）', () => {
-  // @verifies REQ-013
+  // @covers REQ-036#outside-three-stages-rejected
   it('3 段階（1・2・3）の外の値は 400 で記録しない', async () => {
     const h = await headers()
     for (const body of [{ status: 0 }, { status: 4 }, { status: -1 }, { status: 'りかい' }, {}]) {
@@ -63,7 +63,7 @@ describe('論点の一覧（GET /api/topics）', () => {
 })
 
 describe('用語集（GET /api/glossary）', () => {
-  // @verifies REQ-137
+  // @covers REQ-002#unauthenticated
   it('ログインしていない人には返さない', async () => {
     const res = await app.request('/api/glossary', {}, env())
     expect(res.status).toBe(401)

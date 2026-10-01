@@ -79,7 +79,7 @@ describe('解説の表示', () => {
     expect(correct, '正解の行に印が付いていない').not.toBe(wrong)
   })
 
-  // @verifies REQ-200
+  // @covers REQ-007#term-in-single-line
   it('誤答の用語名は押すと説明が出る語になる', async () => {
     await draw(EXPL)
     const marked = els('button,a,[role="button"],[tabindex],[class*="term"]').some((e) =>

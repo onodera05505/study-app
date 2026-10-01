@@ -193,7 +193,7 @@ describe('論点の学習画面の出典（UC-002）', () => {
   })
 })
 
-describe('出題画面の出典（UC-010#4）', () => {
+describe('出題画面の出典', () => {
   const drawSession = (modified: boolean) => {
     stubApi(only(sessionQuestion(modified)))
     return draw(h(Routes, null, h(Route, { path: '/sessions/:id', element: h(Session) })), '/sessions/s1')
@@ -217,7 +217,7 @@ describe('出題画面の出典（UC-010#4）', () => {
   })
 })
 
-describe('結果画面の出典（UC-010#5）', () => {
+describe('結果画面の出典', () => {
   const drawResult = (modified: boolean) => {
     stubApi(only(result(modified)))
     return draw(

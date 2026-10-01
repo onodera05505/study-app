@@ -249,7 +249,7 @@ describe('紐づく過去問（UC-002）', () => {
 })
 
 describe('理解度の記録', () => {
-  // @verifies REQ-128
+  // @covers REQ-038#selected-before-response
   it('記録の結果を待たずに、押した段階を選択済みにする', async () => {
     // 応答が返らない PUT（待たずに描き替えることを見る）
     stubApi({ put: () => new Promise(() => {}) })
@@ -260,7 +260,7 @@ describe('理解度の記録', () => {
     expect(calls.some((c) => c.method === 'PUT')).toBe(true)
   })
 
-  // @verifies REQ-135
+  // @covers REQ-039#revert-on-failure
   it('記録に失敗したら押す前の段階に戻し、教材を消さずに失敗を伝える', async () => {
     stubApi({
       put: async () => ({
@@ -279,7 +279,7 @@ describe('理解度の記録', () => {
 })
 
 describe('次に学ぶ論点', () => {
-  // @verifies REQ-134
+  // @covers REQ-045#next-topic-link-on-detail
   it('添えられた候補があれば末尾に導線を出す', async () => {
     stubApi()
     await draw(<TopicDetail />)
@@ -288,7 +288,7 @@ describe('次に学ぶ論点', () => {
     expect(hrefs()).toContain('/topics/555')
   })
 
-  // @verifies REQ-134
+  // @covers REQ-046#detail-shows-list-link
   it('候補が無ければ次に学ぶを出さず、一覧への導線を出す', async () => {
     stubApi({ body: { nextTopic: null } })
     await draw(<TopicDetail />)
@@ -298,7 +298,7 @@ describe('次に学ぶ論点', () => {
 })
 
 describe('前回の続き', () => {
-  // @verifies REQ-154
+  // @covers REQ-077#opened-topic-remembered
   it('論点の画面を開くと、その論点を前回の続きとして覚える', async () => {
     stubApi()
     expect(getLastTopic()).toBeNull()
@@ -345,7 +345,7 @@ describe('ロードマップ型の論点の画面', () => {
     }
   }
 
-  // @verifies REQ-151
+  // @covers REQ-139#neighbors-named-and-linked
   it('前後の単位への導線を単位名つきで末尾に出す', async () => {
     stubApi({
       body: {
@@ -361,7 +361,7 @@ describe('ロードマップ型の論点の画面', () => {
     await v.close()
   })
 
-  // @verifies REQ-152
+  // @covers REQ-138#no-sibling-no-next
   it('他の論点と次に学ぶを出さず、戻り先をロードマップにする', async () => {
     stubApi({
       body: {
@@ -378,7 +378,7 @@ describe('ロードマップ型の論点の画面', () => {
     await v.close()
   })
 
-  // @verifies REQ-153
+  // @covers REQ-140#one-side-missing-disabled
   it('端の単位では、無い向きの案内を押せない形で残す', async () => {
     stubApi({
       body: { neighbors: { prev: null, next: { id: 232, term: '次の単位の名前' } } },

@@ -310,7 +310,7 @@ describe('出題の画面', () => {
 })
 
 describe('出題の画面の時計（制限時間つき）', () => {
-  // @verifies REQ-215
+  // @covers REQ-112#countdown-ticks
   it('残り時間を時分秒で出し、1 秒ごとに減らす', async () => {
     vi.useFakeTimers()
     stubApi(replies({ 'GET /api/sessions/s-1/current': { body: CUR({ remainingSec: 125, session: SESSION({ kind: 'mock' }) }) } }))
@@ -335,7 +335,7 @@ describe('出題の画面の時計（制限時間つき）', () => {
     expect(timer()!.className, '残り 5 分未満でも強調されない').toMatch(/\blow\b/)
   })
 
-  // @verifies REQ-217
+  // @covers REQ-118#auto-finish-at-zero
   it('残り時間が 0 になったら自動で締めて結果の画面へ移る', async () => {
     vi.useFakeTimers()
     const calls = stubApi(replies({ 'GET /api/sessions/s-1/current': { body: CUR({ remainingSec: 1, session: SESSION({ kind: 'mock' }) }) } }))
@@ -350,7 +350,7 @@ describe('出題の画面の時計（制限時間つき）', () => {
 })
 
 describe('模擬試験の出題', () => {
-  // @verifies REQ-216
+  // @covers REQ-113#no-feedback-next
   it('1 問ごとの正誤も解説も出さずに次の問題へ送る', async () => {
     stubApi(
       replies({

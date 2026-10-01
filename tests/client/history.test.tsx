@@ -99,8 +99,8 @@ afterEach(async () => {
   vi.restoreAllMocks()
 })
 
-describe('履歴の画面', () => {
-  // @verifies REQ-233
+describe('履歴の画面（UC-007）', () => {
+  // @covers REQ-095#listed-with-kind-scope-rate-datetime
   it('種別の表示名・範囲・正答率・日時を一覧し、押すと結果の画面へ移る', async () => {
     stubApi({ body: HISTORY })
     await draw()
@@ -115,7 +115,7 @@ describe('履歴の画面', () => {
     expect(path()).toContain('s-1')
   })
 
-  // @verifies REQ-235
+  // @covers REQ-099#empty-tells-none
   it('取得前は読み込み中とし、完了したテストが無いときだけ履歴が無いことを伝える', async () => {
     stubApi({ body: HISTORY, wait: new Promise(() => {}) })
     await draw()
@@ -128,7 +128,7 @@ describe('履歴の画面', () => {
     expect(text(), '空のときに何も伝えていない').not.toBe('')
   })
 
-  // @verifies REQ-235
+  // @covers REQ-100#fetch-failed-shows-reason-and-reload
   it('取得に失敗したときは理由と読み直しを出す', async () => {
     stubApi({ status: 500, body: { error: '履歴を取得できませんでした' } })
     await draw()

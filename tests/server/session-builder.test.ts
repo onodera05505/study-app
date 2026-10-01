@@ -226,7 +226,7 @@ describe('buildQuestions（出題の組み立て）', () => {
     expect(built.questions).toHaveLength(2)
   })
 
-  // @verifies REQ-212, REQ-240
+  // @covers REQ-106#exam-as-printed
   it('回を指定した模試は畳まず、原本どおり問番号の順に出す', async () => {
     const rows = [
       row({ id: 'q-3', exam: '2024r06', number: 3, contentKey: 'ck-same' }),
@@ -268,7 +268,7 @@ describe('buildQuestions（出題の組み立て）', () => {
     expect(await idsOf(review, { ...base, kind: 'review' })).toEqual(['q-1', 'q-3'])
   })
 
-  // @verifies REQ-020
+  // @covers REQ-106#no-mastered-exclusion
   it('回を指定した模試（公開回の通し受験）では連続正解した問題も原本どおり出す', async () => {
     const rows = [1, 2].map((n) => row({ id: `q-${n}`, exam: '2024r06', number: n, contentKey: `ck-${n}` }))
     const { db } = fakeDb([
@@ -414,7 +414,7 @@ describe('buildQuestions（出題の組み立て）', () => {
     expect(built.questions.map((q) => q.id)).toEqual(['w-1', 'k-1'])
   })
 
-  // @verifies REQ-213
+  // @covers REQ-107#field-ratio
   it('回を指定しない模試は分野ごとの出題数を分野比率に寄せ、合計を設定値の問題数にする', async () => {
     const rows = [
       ...[1, 2, 3].map((n) => row({ id: `t-${n}`, exam: '2024r06', contentKey: `ck-t${n}`, field: 'テクノロジ系' })),
@@ -436,7 +436,7 @@ describe('buildQuestions（出題の組み立て）', () => {
     expect(built.sourceExam).toBeNull()
   })
 
-  // @verifies REQ-221
+  // @covers REQ-108#fill-with-unclassified
   it('分野比率に沿って選ぶだけでは足りないときは分野の付いていない過去問で埋める', async () => {
     const rows = [
       row({ id: 't-1', exam: '2024r06', contentKey: 'ck-t1', field: 'テクノロジ系' }),

@@ -37,7 +37,7 @@ afterEach(() => {
 })
 
 describe('分野・単元の集計の記憶', () => {
-  // @verifies REQ-054
+  // @covers REQ-018#aggregate-remembered
   it('同じ path は画面を開いている間 1 回しか取りに行かない', async () => {
     const m = await load()
     const fetchMock = vi.fn(async () => okJson({ fields: [{ field: 'ストラテジ系' }] }))
@@ -51,7 +51,7 @@ describe('分野・単元の集計の記憶', () => {
     expect(fetchMock).toHaveBeenCalledTimes(2)
   })
 
-  // @verifies REQ-054
+  // @covers REQ-017#failure-not-cached
   it('失敗した取得は覚えず、次に求めたときに取り直す', async () => {
     const m = await load()
     let n = 0
@@ -63,7 +63,7 @@ describe('分野・単元の集計の記憶', () => {
     expect(n).toBe(2)
   })
 
-  // @verifies REQ-129
+  // @covers REQ-040#aggregate-refetched-after-record
   it('集計を捨てたあと（invalidateCached）は同じ path でも取り直す', async () => {
     const m = await load()
     const fetchMock = vi.fn(async () => okJson({ fields: [] }))

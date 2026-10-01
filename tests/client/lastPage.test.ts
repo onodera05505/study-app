@@ -64,27 +64,27 @@ describe('添え先（UC-010）', () => {
 })
 
 describe('前回の続き（最後に開いた論点）', () => {
-  // @verifies REQ-040, REQ-155
+  // @covers REQ-077#saved-value-readable
   it('開いた論点を覚えて、次に開いたときに復元する', () => {
     expect(getLastTopic()).toBeNull()
     setLastTopic({ id: 231, term: 'LTV', middle: '事業の指標', middleNo: 4 })
     expect(getLastTopic()).toEqual({ id: 231, term: 'LTV', middle: '事業の指標', middleNo: 4 })
   })
 
-  // @verifies REQ-040
+  // @covers REQ-077#replaces-previous
   it('あとから開いた論点で置き換わる', () => {
     setLastTopic({ id: 231, term: 'LTV', middle: '事業の指標', middleNo: 4 })
     setLastTopic({ id: 88, term: 'CSRF', middle: '情報セキュリティ', middleNo: 11 })
     expect(getLastTopic()?.id).toBe(88)
   })
 
-  // @verifies REQ-158
+  // @covers REQ-082#unreadable-value
   it('壊れた値が入っていても null を返す（前回の続きを出さないだけ）', () => {
     localStorage.setItem('study-app.lastTopic', 'not json')
     expect(getLastTopic()).toBeNull()
   })
 
-  // @verifies REQ-069
+  // @covers REQ-198#token-and-device-memory-cleared
   it('ログアウトすると前回の続きも消える（同じ端末の別の人に出さない）', () => {
     setToken('dummy.token.value')
     setLastTopic({ id: 231, term: 'LTV', middle: '事業の指標', middleNo: 4 })

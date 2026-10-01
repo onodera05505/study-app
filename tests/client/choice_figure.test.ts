@@ -43,7 +43,7 @@ describe('過去問の図の書き起こし', () => {
     expect(table.rows).toEqual([['ガム', '100']])
   })
 
-  // @verifies REQ-043
+  // @covers REQ-025#unparsable-table
   it('閉じていないコードフェンスや列数の揃わない表でも例外を投げず、読めない所は文として残す', () => {
     expect(() => parseFigureDescription('```\nx ← 1\ny ← 2')).not.toThrow()
     const uneven = parseFigureDescription('| a | b |\n| --- | --- |\n| 1 |\n| 2 | 3 | 4 |')

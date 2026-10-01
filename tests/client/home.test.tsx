@@ -107,7 +107,7 @@ describe('次に学ぶ（UC-003）', () => {
 })
 
 describe('前回の続き', () => {
-  // @verifies REQ-156
+  // @covers REQ-080#remembered-shows-term-and-middle
   it('覚えた論点があれば、論点名と単元つきの導線を出す', async () => {
     stubApi()
     setLastTopic({ id: 777, term: '前回開いた論点', middle: '事業の指標', middleNo: 4 })
@@ -118,7 +118,7 @@ describe('前回の続き', () => {
     expect(hrefs()).toContain('/topics/777')
   })
 
-  // @verifies REQ-156
+  // @covers REQ-079#not-remembered-topics-link
   it('覚えていないときは前回の続きを出さず、学習の一覧への導線を出す', async () => {
     stubApi()
     await draw(<Home />)
