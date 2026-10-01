@@ -77,7 +77,7 @@ operations:
     direction: outbound
     owned: false
     source: Cloudflare wrangler CLI の pages secret list（配備の Pages プロジェクトを指して秘密の名前を取る。プロジェクト名の値の正本は scripts/pages_projects.json）
-    auth: none
+    auth: cloudflareAccount
     summary: 配備に設定されている秘密の名前の一覧を取る（名前だけ。値は読まない）
     request:
       type: object

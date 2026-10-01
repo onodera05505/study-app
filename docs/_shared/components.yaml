@@ -17,6 +17,9 @@ authSchemes:
     kind: body
     field: secret
     note: 学び側サーバがまなびばの交換を呼ぶときだけ。値は配備の秘密（BR-009）
+  cloudflareAccount:
+    kind: cli
+    note: 配備先（Cloudflare）にログイン中のアカウント。本番の検査が秘密の名前の一覧を読むときだけ（UC-015。値は読まない）
 
 errorCodes:
   INVALID_INPUT: 入力が決められた形を満たさない、または要求に応えられる対象が無い（400）
@@ -25,7 +28,7 @@ errorCodes:
   NOT_FOUND: 対象が無い、または本人の物でない（404。BR-018）
   CONFLICT: 今の状態では受け付けない（409。進行中が既にある・終わったテスト・位置の食い違い・メールの重複）
   RATE_LIMITED: 直近の受付が上限に達している（429）
-  UPSTREAM_UNAVAILABLE: 相手方（まなびば）に届かない（502）
+  UPSTREAM_UNAVAILABLE: 相手方（まなびば・外から叩いた配備・配備先の CLI）に届かない（HTTP では 502）
   NOT_CONFIGURED: この配備にはその機能の設定が無い（SSO の場所や共有秘密。404/503）
   INTERNAL: サーバで処理できなかった（500。全経路共通の最終段）
   STORAGE_UNAVAILABLE: 端末の記憶に書けない・読めない（local-store）
