@@ -106,4 +106,12 @@
 | OQ-100 | 5 | 失敗の応答の本文に載る追加の鍵（`inProgress`・`expired`・`staleQuestion`・`expected`）を契約の `errors` に書く場所が無い（code/when/wire の閉集合） | 推し: `when` に 1 行で添えるに留め、形は移行後に `errors[].wire` の拡張を作り手へ提案 | 推し |
 | OQ-101 | 5 | `/sso/callback?code=` を境界（deeplink）として書くか（今は静的配信の入口で operation にしていない） | 推し: 書かない（ADR-0001 どおり。コードの値は signInWithCode の request が持つ） | 推し |
 | OQ-102 | 5 | `saveToken` の失敗（端末の記憶に書けない）は `STORAGE_UNAVAILABLE` を足したので、UC-013 の契約の `errors: []` を 1 件にする（Phase 7 の整理で） | 推し | 推し |
+| OQ-103 | 5 | 同じ経路を複数の契約に書くか参照に留めるか: 第 1 波（UC-002/004）は `listFields`/`listCategories` を重複させ、第 2 波（UC-003/009）は再掲せず参照に留めた。向きを揃える | 推し: 参照に留める（R-101）。Phase 7 で UC-004 の `listFields`/`listCategories` を削り UC-002 を正に。ADR-0001 に 1 行追記 | 推し |
+| OQ-104 | 5 | `INTERNAL`（500 の最終段）を各 operation の `errors` 末尾に書くか、全経路共通としてどこにも書かないか | 推し: 書かない（ADR-0001 決め 8 に「全経路共通の最終段は契約に書かない」を追記）。REQ-049/074/092/094/100 の「失敗」の形はテストが見る | 推し |
+| OQ-105 | 5 | `SessionRow`（sessions の行）を `_shared` に上げる形（行の全列・kind 5 値・answered は含めない。UC-006/007/008 が使う）と `SessionKind`・`LearningUser` の共有化 | 推し: Phase 7 の整理で `_shared` に上げる（今は各契約のローカル） | 推し |
+| OQ-106 | 5 | UC-007 の受験履歴は演習の行も返す（GOAL-02 の下だが全テスト）。UC-007 の射程と帰属 | 推し: そのまま（「締めたテスト」は全種別。GOAL-02 は模試と履歴の束） | 推し |
+| OQ-107 | 5 | `GET /api/sessions/:id`（結果）の正の持ち主（今は UC-008 の `getMockResult`。演習の結果も同じ経路） | 推し: Phase 7 で UC-007（見返す）に移すか UC-004 に寄せるか決める。OQ-97 と一緒に | 推し |
+| OQ-108 | 5 | UC-009 の契約は `x-no-boundary`（境界は他 UC の物だけ）で spec-lint が「例外系の走査に導出があるが errors が無い」と warn。受け入れるか最小 operation 2 本で errors を持たせるか | 推し: 受け入れる（第 2 の正を立てない） | 推し |
+| OQ-109 | 5 | ロードマップ型の日とテストの突き合わせが `examLabel === "N 日目"` の文字列比較で、仕様にも契約にも約束が無い（ラベルを変えると各日のボタンが消える） | 推し: 移行後に BR か契約の形（`day` の数値）にする。今は DEFERRED | 推し |
+| OQ-110 | 5 | 受験履歴の `correctCount`・`finishedAt` が null を取り得る（UC-007 の事前条件は確定済みと言う） | 推し: 契約はコードどおり null 許容。UC の事前条件はそのまま（締めた物だけ一覧する前提） | 推し |
 

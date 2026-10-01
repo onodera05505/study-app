@@ -1,0 +1,267 @@
+# UC-011 アカウントと学びの権限の管理 — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-162〜179）
+# 読み方の決まりは docs/adr/ADR-0001（transport・direction・auth・operation 名の当て方）
+# 共有語彙（authSchemes・errorCodes・共有の形）は ../../../_shared/components.yaml
+x-uc: UC-011
+x-status: draft
+x-spec: ./UC.md
+x-updated: 2026-10-01
+
+operations:
+  # ---- まなびばの管理の経路（役割が管理者のセッションだけが通る） ----
+
+  listAccounts:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: session
+    summary: 全アカウントの名前・メール・役割・作成時刻と、それぞれに付いている学びの権限を作成順に返す
+    wire: { method: GET, path: /api/admin/accounts, success: 200 }
+    response:
+      type: object
+      required: [accounts]
+      properties:
+        accounts:
+          type: array
+          description: 作成時刻の昇順
+          items:
+            type: object
+            required: [id, email, name, role, createdAt, grants]
+            properties:
+              id: { type: string }
+              email: { type: string }
+              name: { type: string, minLength: 1, maxLength: 50 }
+              role: { type: string, enum: [ADMIN, MEMBER] }
+              createdAt: { type: integer, description: 作成時刻の秒（unixepoch） }
+              grants:
+                type: array
+                items: { type: string, minLength: 1, description: 権限のある学びの key。key の昇順 }
+    errors:
+      - code: UNAUTHENTICATED
+        when: セッションが無い、または期限が過ぎている
+        wire: { status: 401 }
+      - code: FORBIDDEN
+        when: セッションの本人の役割が管理者でない
+        wire: { status: 403 }
+    examples:
+      ok:
+        response:
+          accounts:
+            - { id: 8a0f1d62-3c47-4b10-9f85-d2e6a1c70b33, email: yudai@example.com, name: 山田 太郎, role: ADMIN, createdAt: 1758000000, grants: [ap, ip] }
+            - { id: 1c7e4b05-9a26-4d83-b7f1-6e0c3a9d2544, email: hanako@example.com, name: 鈴木 花子, role: MEMBER, createdAt: 1758600000, grants: [ip] }
+      noSession: { error: UNAUTHENTICATED }
+      notAdmin: { error: FORBIDDEN }
+
+  createAccount:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: session
+    summary: メール・名前・初期パスワード・開ける学びを受け取り、アカウントと権限を作って作られた行を返す
+    wire: { method: POST, path: /api/admin/accounts, success: 201 }
+    request:
+      type: object
+      required: [email, name, password]
+      properties:
+        email: { type: string, pattern: '^[^\s@]+@[^\s@]+\.[^\s@]+$', description: 前後の空白を落とし小文字に畳んでから照合・保存する }
+        name: { type: string, minLength: 1, maxLength: 50, description: 前後の空白を落としてから数える }
+        password: { type: string, minLength: 8, maxLength: 200 }
+        grants:
+          type: array
+          description: 省略時は空。重複した key は 1 つに畳む
+          items: { type: string, minLength: 1, description: 学びの登録簿にある key }
+        role: { type: string, enum: [ADMIN, MEMBER], description: 省略時は MEMBER }
+    response:
+      type: object
+      required: [id, email, name, role, grants]
+      properties:
+        id: { type: string }
+        email: { type: string }
+        name: { type: string, minLength: 1, maxLength: 50 }
+        role: { type: string, enum: [ADMIN, MEMBER] }
+        grants: { type: array, items: { type: string, minLength: 1, description: 畳んだあとの key } }
+    errors:
+      - code: UNAUTHENTICATED
+        when: セッションが無い、または期限が過ぎている
+        wire: { status: 401 }
+      - code: FORBIDDEN
+        when: セッションの本人の役割が管理者でない
+        wire: { status: 403 }
+      - code: INVALID_INPUT
+        when: 本文が JSON でない、メール・名前・初期パスワード・役割が形を満たさない、または grants に登録簿に無い key がある
+        wire: { status: 400 }
+      - code: CONFLICT
+        when: そのメールのアカウントが既にある
+        wire: { status: 409 }
+    examples:
+      ok:
+        request: { email: hanako@example.com, name: 鈴木 花子, password: harunokaze8, grants: [ip] }
+        response: { id: 1c7e4b05-9a26-4d83-b7f1-6e0c3a9d2544, email: hanako@example.com, name: 鈴木 花子, role: MEMBER, grants: [ip] }
+      noSession:
+        request: { email: hanako@example.com, name: 鈴木 花子, password: harunokaze8 }
+        error: UNAUTHENTICATED
+      notAdmin:
+        request: { email: hanako@example.com, name: 鈴木 花子, password: harunokaze8 }
+        error: FORBIDDEN
+      badEmail:
+        request: { email: hanako-example.com, name: 鈴木 花子, password: harunokaze8 }
+        error: INVALID_INPUT
+      unknownLearning:
+        request: { email: hanako@example.com, name: 鈴木 花子, password: harunokaze8, grants: [zzz] }
+        error: INVALID_INPUT
+      duplicateEmail:
+        request: { email: yudai@example.com, name: 鈴木 花子, password: harunokaze8 }
+        error: CONFLICT
+      invalidBeforeConflict:
+        request: { email: yudai@example.com, name: 鈴木 花子, password: mijikai }
+        error: INVALID_INPUT
+      forbiddenBeforeInvalid:
+        request: { email: hanako-example.com, name: "", password: mijikai }
+        error: FORBIDDEN
+
+  updateAccount:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: session
+    summary: 送られた名前・役割・開ける学びだけを反映する（権限は送られた一覧に置き換える）
+    wire: { method: PUT, path: "/api/admin/accounts/{id}", success: 200 }
+    request:
+      type: object
+      required: [id]
+      properties:
+        id: { type: string, minLength: 1, description: 経路の :id。相手のアカウントの id }
+        name: { type: string, minLength: 1, maxLength: 50, description: 送らなければ変えない }
+        role: { type: string, enum: [ADMIN, MEMBER], description: 送らなければ変えない }
+        grants:
+          type: array
+          description: 送らなければ変えない。送るとこの一覧に置き換える（重複した key は 1 つに畳む）
+          items: { type: string, minLength: 1, description: 学びの登録簿にある key }
+    response: { $ref: "../../../_shared/components.yaml#/schemas/Ok" }
+    errors:
+      - code: UNAUTHENTICATED
+        when: セッションが無い、または期限が過ぎている
+        wire: { status: 401 }
+      - code: FORBIDDEN
+        when: セッションの本人の役割が管理者でない
+        wire: { status: 403 }
+      - code: INVALID_INPUT
+        when: 本文が JSON でない、名前か役割が形を満たさない、または grants に登録簿に無い key がある
+        wire: { status: 400 }
+      - code: NOT_FOUND
+        when: その id のアカウントが無い
+        wire: { status: 404 }
+      - code: INVALID_INPUT
+        when: 呼び出した本人の id に対して役割を MEMBER にしようとしている
+        wire: { status: 400 }
+    examples:
+      ok:
+        request: { id: 1c7e4b05-9a26-4d83-b7f1-6e0c3a9d2544, name: 鈴木 花, role: ADMIN, grants: [ap, ip] }
+        response: { ok: true }
+      noSession:
+        request: { id: 1c7e4b05-9a26-4d83-b7f1-6e0c3a9d2544, name: 鈴木 花 }
+        error: UNAUTHENTICATED
+      notAdmin:
+        request: { id: 1c7e4b05-9a26-4d83-b7f1-6e0c3a9d2544, name: 鈴木 花 }
+        error: FORBIDDEN
+      emptyName:
+        request: { id: 1c7e4b05-9a26-4d83-b7f1-6e0c3a9d2544, name: "" }
+        error: INVALID_INPUT
+      notFound:
+        request: { id: 00000000-0000-4000-8000-000000000000, name: 鈴木 花 }
+        error: NOT_FOUND
+      selfDemotion:
+        request: { id: 8a0f1d62-3c47-4b10-9f85-d2e6a1c70b33, role: MEMBER, name: 山田 太 }
+        error: INVALID_INPUT
+      invalidBeforeNotFound:
+        request: { id: 00000000-0000-4000-8000-000000000000, name: "" }
+        error: INVALID_INPUT
+
+  resetAccountPassword:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: session
+    summary: 相手のパスワードを送られた値に入れ替え、その相手の開いているセッションをすべて終わらせる
+    wire: { method: POST, path: "/api/admin/accounts/{id}/password", success: 200 }
+    request:
+      type: object
+      required: [id, password]
+      properties:
+        id: { type: string, minLength: 1, description: 経路の :id。相手のアカウントの id }
+        password: { type: string, minLength: 8, maxLength: 200 }
+    response: { $ref: "../../../_shared/components.yaml#/schemas/Ok" }
+    errors:
+      - code: UNAUTHENTICATED
+        when: セッションが無い、または期限が過ぎている
+        wire: { status: 401 }
+      - code: FORBIDDEN
+        when: セッションの本人の役割が管理者でない
+        wire: { status: 403 }
+      - code: INVALID_INPUT
+        when: 本文が JSON でない、またはパスワードが 8 文字未満か 200 文字超
+        wire: { status: 400 }
+      - code: NOT_FOUND
+        when: その id のアカウントが無い
+        wire: { status: 404 }
+    examples:
+      ok:
+        request: { id: 1c7e4b05-9a26-4d83-b7f1-6e0c3a9d2544, password: natsunoame9 }
+        response: { ok: true }
+      noSession:
+        request: { id: 1c7e4b05-9a26-4d83-b7f1-6e0c3a9d2544, password: natsunoame9 }
+        error: UNAUTHENTICATED
+      notAdmin:
+        request: { id: 1c7e4b05-9a26-4d83-b7f1-6e0c3a9d2544, password: natsunoame9 }
+        error: FORBIDDEN
+      shortPassword:
+        request: { id: 1c7e4b05-9a26-4d83-b7f1-6e0c3a9d2544, password: mijikai }
+        error: INVALID_INPUT
+      notFound:
+        request: { id: 00000000-0000-4000-8000-000000000000, password: natsunoame9 }
+        error: NOT_FOUND
+      invalidBeforeNotFound:
+        request: { id: 00000000-0000-4000-8000-000000000000, password: mijikai }
+        error: INVALID_INPUT
+
+  deleteAccount:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: session
+    summary: 相手のアカウントとその学びの権限とセッションを消し、一覧から外す
+    wire: { method: DELETE, path: "/api/admin/accounts/{id}", success: 200 }
+    request:
+      type: object
+      required: [id]
+      properties:
+        id: { type: string, minLength: 1, description: 経路の :id。相手のアカウントの id }
+    response: { $ref: "../../../_shared/components.yaml#/schemas/Ok" }
+    errors:
+      - code: UNAUTHENTICATED
+        when: セッションが無い、または期限が過ぎている
+        wire: { status: 401 }
+      - code: FORBIDDEN
+        when: セッションの本人の役割が管理者でない
+        wire: { status: 403 }
+      - code: INVALID_INPUT
+        when: id が呼び出した本人の id と同じ
+        wire: { status: 400 }
+      - code: NOT_FOUND
+        when: その id のアカウントが無い
+        wire: { status: 404 }
+    examples:
+      ok:
+        request: { id: 1c7e4b05-9a26-4d83-b7f1-6e0c3a9d2544 }
+        response: { ok: true }
+      noSession:
+        request: { id: 1c7e4b05-9a26-4d83-b7f1-6e0c3a9d2544 }
+        error: UNAUTHENTICATED
+      notAdmin:
+        request: { id: 1c7e4b05-9a26-4d83-b7f1-6e0c3a9d2544 }
+        error: FORBIDDEN
+      selfDelete:
+        request: { id: 8a0f1d62-3c47-4b10-9f85-d2e6a1c70b33 }
+        error: INVALID_INPUT
+      notFound:
+        request: { id: 00000000-0000-4000-8000-000000000000 }
+        error: NOT_FOUND

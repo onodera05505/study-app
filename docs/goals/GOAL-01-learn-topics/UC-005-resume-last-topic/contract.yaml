@@ -1,0 +1,74 @@
+# UC-005 前回の続きから論点へ戻る — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-077〜082）
+# 読み方の決まりは docs/adr/ADR-0001（決め 3: 端末の記憶は local-store・outbound・owned・auth none。鍵名は operation 名が表し、値の形を request に書く）
+# 共有語彙（errorCodes・共有の形）は ../../../_shared/components.yaml
+# HTTP の経路はここに再掲しない（ADR-0001 決め 1）: 論点の画面を開く／導線の行き先は UC-002 の契約の getTopicDetail、
+# ホームの中身は UC-003 の契約の getHomeSummary。この UC が自分で持つ境界は端末の記憶の 3 つだけ
+x-uc: UC-005
+x-status: draft
+x-spec: ./UC.md
+x-updated: 2026-10-01
+
+operations:
+  # ---- 端末の記憶（この端末に残る。鍵の名前は operation 名が表し、値の形だけを書く） ----
+
+  saveLastTopic:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 開いた論点を前回の続きとして端末の記憶に保存する。常に 1 件で、以前の値の上に書く
+    request:
+      type: object
+      required: [lastTopic]
+      properties:
+        lastTopic: { $ref: "#/schemas/LastTopic" }
+    errors:
+      - code: STORAGE_UNAVAILABLE
+        when: 端末の記憶に書けない（捕まえて無視し、呼び出し元の操作を止めない）
+    examples:
+      ok: { request: { lastTopic: { id: 412, term: 公開鍵暗号方式, middle: 情報セキュリティ, middleNo: 11 } } }
+      storageBlocked: { request: { lastTopic: { id: 412, term: 公開鍵暗号方式, middle: 情報セキュリティ, middleNo: 11 } }, error: STORAGE_UNAVAILABLE }
+
+  readLastTopic:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 端末の記憶にある前回の続きを読む。覚えていない・値が読めない・記憶が使えないときはいずれも null
+    response:
+      type: object
+      required: [lastTopic]
+      properties:
+        lastTopic: { $ref: "#/schemas/LastTopic" }
+    errors: []
+    examples:
+      ok: { response: { lastTopic: { id: 412, term: 公開鍵暗号方式, middle: 情報セキュリティ, middleNo: 11 } } }
+      none: { response: { lastTopic: null } }
+      unreadable: { response: { lastTopic: null } }
+
+  clearLastTopic:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: この端末の記憶から前回の続きを捨てる。トークンを捨てる操作（UC-013 の契約の clearToken）が同時に呼ぶ
+    response:
+      type: object
+      required: [lastTopic]
+      properties:
+        lastTopic: { type: "null", description: 捨てたあとに読むと null }
+    errors: []
+    examples:
+      ok: { response: { lastTopic: null } }
+
+# この UC の 2 つ以上の operation が使う形（2 UC 以上で使う形は ../../../_shared/components.yaml）
+schemas:
+  LastTopic:
+    type: [object, "null"]
+    description: 端末に書く前回の続きの値。保存は常に値 1 件、読み取りでは覚えていない・読めないときに null
+    required: [id, term, middle, middleNo]
+    properties:
+      id: { type: integer, minimum: 1, description: 論点の id。UC-002 の getTopicDetail の topic.id と同じ }
+      term: { type: string, minLength: 1, description: 論点の名前 }
+      middle: { type: string, minLength: 1, description: 単元の名前 }
+      middleNo: { type: integer, minimum: 1, description: 単元の番号 }
