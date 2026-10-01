@@ -1,0 +1,81 @@
+# UC-006 中断したテストの再開・破棄の境界。読み方の決まりは docs/adr/ADR-0001、共有語彙は ../../../_shared/components.yaml。
+# 振る舞いと規則は ./UC.md と REQ-083〜094・REQ-240 が持つ。ここは形だけ。
+# 再開そのものの出題の形（REQ-088）は UC-004 の契約が持つ操作を通る。この契約には書かない。
+x-uc: UC-006
+x-status: draft
+x-spec: ./UC.md
+x-updated: 2026-10-01
+
+operations:
+  getCurrentSession:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: bearer
+    summary: その利用者の進行中のテストを、回答済みの件数つきで 1 件返す（無ければ null）
+    wire: { method: GET, path: /api/sessions/current, success: 200 }
+    response:
+      type: object
+      required: [session]
+      properties:
+        session:
+          $ref: "#/schemas/SessionRow"
+          description: 進行中のテストが無いときは null
+    errors:
+      - { code: UNAUTHENTICATED, when: Bearer トークンが無いか読めない, wire: { status: 401 } }
+    examples:
+      okNone:
+        response: { session: null }
+      okInProgress:
+        response:
+          session:
+            id: 7b1e3d50-9c42-4a8f-bd21-6e0f5a39c714
+            userId: u_01HQ8Z3K5M
+            kind: drill
+            status: in_progress
+            sourceExam: null
+            scopeLabel: "論点: RAID"
+            timeLimitSec: null
+            questionCount: 10
+            correctCount: null
+            startedAt: 1759276800
+            finishedAt: null
+            answered: 4
+      unauthenticated: { error: UNAUTHENTICATED }
+
+  discardCurrentSession:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: bearer
+    summary: その利用者の進行中のテストとその回答を消す（進行中が無くても成功を返す）
+    wire: { method: DELETE, path: /api/sessions/current, success: 200 }
+    response:
+      $ref: ../../../_shared/components.yaml#/schemas/Ok
+    errors:
+      - { code: UNAUTHENTICATED, when: Bearer トークンが無いか読めない, wire: { status: 401 } }
+    examples:
+      okDiscarded:
+        response: { ok: true }
+      okNothingToDiscard:
+        response: { ok: true }
+      unauthenticated: { error: UNAUTHENTICATED }
+
+schemas:
+  SessionRow:
+    type: object
+    description: sessions の行の全列に、この操作が回答済みの件数 answered を添えた形
+    required: [id, userId, kind, status, sourceExam, scopeLabel, timeLimitSec, questionCount, correctCount, startedAt, finishedAt, answered]
+    properties:
+      id: { type: string, minLength: 1 }
+      userId: { type: string, minLength: 1 }
+      kind: { type: string, enum: [drill, field, middle, review, mock] }
+      status: { type: string, enum: [in_progress, completed, abandoned] }
+      sourceExam: { type: [string, "null"], description: 公開回の ID。ランダム構成と演習は null }
+      scopeLabel: { type: [string, "null"] }
+      timeLimitSec: { type: [integer, "null"], minimum: 1 }
+      questionCount: { type: integer, minimum: 1 }
+      correctCount: { type: [integer, "null"], minimum: 0 }
+      startedAt: { type: integer }
+      finishedAt: { type: [integer, "null"] }
+      answered: { type: integer, minimum: 0, description: sessions の列ではなく、この応答が添える値 }
