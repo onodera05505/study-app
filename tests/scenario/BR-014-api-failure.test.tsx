@@ -71,7 +71,7 @@ afterEach(async () => {
 })
 
 describe('UC-018 API の失敗を画面に出せる形で受け取る', () => {
-  // @scenario UC-018
+  // 横断の決まり（BR-014 失敗の見せ方・API の失敗の形）のシナリオ。UC のシナリオではないので @scenario は付けない
   it('失敗を message・status・body の 1 つの型で受け取り、その日本語を画面に出す', async () => {
     // 1. 利用者が画面を操作し、画面が API を呼ぶ。画面は失敗を message・status・body を持つ 1 つの型で受け取る
     const thrown = await api('/fields').then(

@@ -999,7 +999,7 @@ def check_unknown_api_path(r: Report, base: str, admin: Client):
 # --------------------------------------------------------------------------
 
 
-# @scenario UC-002
+# @scenario UC-011
 def check_scenario_uc002(admin: Client, r: Report, base: str, learn: list[dict], admin_id: str):
     """管理の API を呼ぶ → 一覧 → 作成 → 更新（権限の置き換え）→ パスワード再設定 → 削除。"""
     L = "UC-002"
@@ -1097,7 +1097,7 @@ def check_scenario_uc002(admin: Client, r: Report, base: str, learn: list[dict],
     r.note(f"{L} の基本の流れ: 管理の API → 一覧 → 作成 → 更新（権限の置き換え）→ 再設定 → 削除")
 
 
-# @scenario UC-003
+# @scenario UC-014
 def check_scenario_uc003(admin: Client, r: Report, base: str, learn: list[dict]):
     """自分のパスワードを変える → ログアウトする。"""
     L = "UC-003"

@@ -1,5 +1,5 @@
 {
-  "_comment": "原本 harness（tsay-dev/harness v4.1.0）の traceconfig。tools/trace-check・spec-lint・gate-hook が読む。docs-migrate Phase 1 で置いた（2026-09-30）。source はアプリ（src・portal/src）と運用スクリプト、tests は vitest（jsdom。ブラウザの system suite は未宣言＝C15 は skip。OQ-05）。layering・contract は無し（層構造とエラーコードの単一の出所が無い）。schema は drizzle の schema とまなびばの DDL。commands.test は vitest だけ（stop-gate が spec-lint と trace-check を自分で回す）。",
+  "_comment": "原本 harness（tsay-dev/harness v4.1.0）の traceconfig。tools/trace-check・spec-lint・gate-hook が読む。docs-migrate Phase 1 で置いた（2026-09-30）。source はアプリ（src・portal/src）と運用スクリプト、tests は vitest の単体（client/server/portal）。tests.system は UC ごとのシナリオ＝jsdom の tests/scenario と、wrangler dev を要する Python の検査（scripts）。commands.system は未宣言（毎停止で回すには遅い。pre-push が回す）。layering・contract は無し（層構造とエラーコードの単一の出所が無い）。schema は drizzle の schema とまなびばの DDL。commands.test は vitest だけ（stop-gate が spec-lint と trace-check を自分で回す）。",
   "id_patterns": {
     "goal": "\\bGOAL-\\d{2}\\b",
     "uc": "\\bUC-\\d{3}\\b",
@@ -41,7 +41,9 @@
   },
   "tests": {
     "dirs": [
-      "tests"
+      "tests/client",
+      "tests/server",
+      "tests/portal"
     ],
     "extensions": [
       ".ts",
@@ -49,7 +51,17 @@
     ],
     "test_pattern": "^\\s*(?:it|test)\\(\\s*[\"'`](.+?)[\"'`]",
     "covers_placement": "before",
-    "exempt_pattern": "//\\s*仕様外:"
+    "exempt_pattern": "//\\s*仕様外:",
+    "system": {
+      "dirs": [
+        "tests/scenario",
+        "scripts"
+      ],
+      "extensions": [
+        ".tsx",
+        ".py"
+      ]
+    }
   },
   "schema": {
     "files": [

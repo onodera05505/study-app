@@ -1528,7 +1528,7 @@ def first_choice(question: dict) -> str:
     return sorted(question["choices"])[0]
 
 
-# @scenario UC-007
+# @scenario UC-004
 def check_scenario_uc007(c: Client, r: Report, got: dict):
     """練習テストの画面を開く → 範囲を選んで開始 → 出題 → 回答して解説 → 次の問題 → 締め → 結果。"""
     L = "UC-007"
@@ -1807,7 +1807,8 @@ def check_scenario_uc008(c: Client, r: Report, got: dict, exam: str, db_name: st
     )
 
 
-# @scenario UC-009
+# @scenario UC-006
+# @scenario UC-007
 def check_scenario_uc009(c: Client, r: Report, got: dict, exam: str, db_name: str):
     """中断 → ホームの案内と進行中の知らせ → 再開 → 破棄 → 履歴の一覧と結果。"""
     L = "UC-009"
@@ -1920,7 +1921,7 @@ def check_scenario_uc009(c: Client, r: Report, got: dict, exam: str, db_name: st
     )
 
 
-# @scenario UC-011
+# 横断の決まり（BR-028 同一内容）の検査。UC のシナリオではないので @scenario は付けない
 def check_scenario_uc011(c: Client, r: Report, got: dict, exam: str, db_name: str):
     """同一内容の過去問を全問残したまま、学習側の出題では 1 問にまとめ、公開回の通し受験では畳まない。"""
     L = "UC-011"
@@ -2035,7 +2036,7 @@ def check_scenario_uc011(c: Client, r: Report, got: dict, exam: str, db_name: st
     )
 
 
-# @scenario UC-012
+# @scenario UC-010
 def check_scenario_uc012(c: Client, r: Report, exam: str, db_name: str):
     """本文と直前に開いていた画面を送ると、未処理で保存され、受け付けた印だけが返る。"""
     L = "UC-012"
@@ -2073,7 +2074,7 @@ def check_scenario_uc012(c: Client, r: Report, exam: str, db_name: str):
     r.notes.append(f"{L} の基本の流れ: 本文と直前の画面を送信 → 未処理で保存 → 受け付けた印だけが返る")
 
 
-# @scenario UC-014
+# 横断の決まり（BR-001・BR-002 認証と失敗の応答）の検査。UC のシナリオではないので @scenario は付けない
 def check_scenario_uc014(c: Client, r: Report, got: dict, exam: str, db_name: str):
     """セキュリティヘッダ → Bearer トークンで本人を確定 → 本文の検証 → パスワードはハッシュで保存し照合。"""
     L = "UC-014"
@@ -2151,7 +2152,7 @@ def check_scenario_uc014(c: Client, r: Report, got: dict, exam: str, db_name: st
     r.notes.append(f"{L} の基本の流れ: ヘッダ 5 種 → トークンで本人を確定 → 本文の検証 → パスワードはハッシュ")
 
 
-# @scenario UC-017
+# @scenario UC-015
 def check_scenario_uc017(c: Client, r: Report, exam: str, db_name: str):
     """死活確認 → 学びごとの D1 → 対象の設定は登録簿の 1 か所から。"""
     L = "UC-017"

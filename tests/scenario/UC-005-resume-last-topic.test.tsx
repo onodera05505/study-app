@@ -154,7 +154,7 @@ afterEach(async () => {
 })
 
 describe('UC-016 前回の続きに戻る', () => {
-  // @scenario UC-016
+  // @scenario UC-005
   it('論点の画面を開くと端末が覚え、資格版のホームとロードマップの先頭が前回の続きの導線になる', async () => {
     // 1. 利用者が論点の画面を開く。画面はその論点を「前回の続き」として覚える
     await openShikaku(`/topics/${TOPIC.id}`)

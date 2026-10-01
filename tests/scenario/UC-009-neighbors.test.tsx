@@ -160,7 +160,7 @@ afterEach(async () => {
 })
 
 describe('UC-019 ロードマップ型で前後の単位へ移る', () => {
-  // @scenario UC-019
+  // UC-009（ロードマップの 1 日）の前後の単位の移動。UC-009 の @scenario は UC-009-roadmap-day.test.tsx が持つ
   it('ロードマップから単位を開き、末尾の「次の単位 →」で学ぶ順の隣へ進む', async () => {
     // 1. 利用者がロードマップから単位を開く。システムは学ぶ順の前後の単位を添えて返す
     const v = await open('/topics')
