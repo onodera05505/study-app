@@ -1,10 +1,11 @@
 // @vitest-environment jsdom
-/** UC-019「ロードマップ型で、論点の詳細から学ぶ順の前後の単位へ移る」の基本の流れを
- *  1 本で実行する写し（正常系のみ。端の単位は REQ-153 のテストが見る）。
+/** UC-009「学ぶ順に並んだ論点を日ごとに辿り、この日の確認を始める」のうち、
+ *  論点の詳細から学ぶ順の前後へ移る step 9〜11 を 1 本で実行する写し
+ *  （正常系のみ。端の単位は要件のテストが見る）。
  *
  *  対象は読み込み時に決まる（VITE_EXAM）ので、ロードマップ型にしてから読み込み直して描く。
  *  ロードマップ型ではロードマップが /topics に載る。
- *  画面の文字は要件（REQ-150〜REQ-152）の文面から採る。 */
+ *  画面の文字は要件の文面から採る。 */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -162,13 +163,13 @@ afterEach(async () => {
 describe('UC-009 ロードマップ型で前後の単位へ移る', () => {
   // UC-009（ロードマップの 1 日）の前後の単位の移動。UC-009 の @scenario は UC-009-roadmap-day.test.tsx が持つ
   it('ロードマップから単位を開き、末尾の「次の単位 →」で学ぶ順の隣へ進む', async () => {
-    // 1. 利用者がロードマップから単位を開く。システムは学ぶ順の前後の単位を添えて返す
+    // step 8・9: 利用者がロードマップから単位を開く。システムは学ぶ順の前後の単位を添えて返す
     const v = await open('/topics')
     await v.press(UNIT[1].term)
     expect(countOf(`/api/topics/${UNIT[1].id}`), '開いた単位を取りに行っていない').toBe(1)
     expect(v.text(), '単位の画面が出ていない').toContain(`${UNIT[1].term} の短い説明です。`)
 
-    // 2. 画面は本文の末尾に「← 前の単位」「次の単位 →」を単位名つきで出し、押すとその単位の詳細へ移す
+    // step 9・10: 画面は本文の末尾に「← 前の単位」「次の単位 →」を単位名つきで出し、押すとその単位の詳細へ移す
     const body = v.text()
     expect(body, '前の単位の案内が無い').toContain('前の単位')
     expect(body, '次の単位の案内が無い').toContain('次の単位')
@@ -181,7 +182,7 @@ describe('UC-009 ロードマップ型で前後の単位へ移る', () => {
     await v.press(/次の単位/)
     expect(v.text(), '次の単位へ移っていない').toContain(`${UNIT[2].term} の短い説明です。`)
 
-    // 3. 画面は「他の論点」と「次に学ぶ」の箱を出さず、戻り先をロードマップにする
+    // step 11（BR-016）: 画面は「他の論点」と「次に学ぶ」の箱を出さず、戻り先をロードマップにする
     expect(v.text(), 'ロードマップ型で「他の論点」が出ている').not.toContain(SIBLING)
     expect(v.text(), 'ロードマップ型で「次に学ぶ」が出ている').not.toContain('次に学ぶ')
     const back = v.anchors().find((a) => /ロードマップに戻る/.test(a.textContent ?? ''))

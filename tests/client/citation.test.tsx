@@ -193,20 +193,20 @@ describe('論点の学習画面の出典（UC-002）', () => {
   })
 })
 
-describe('出題画面の出典', () => {
+describe('出題画面の出典（UC-004）', () => {
   const drawSession = (modified: boolean) => {
     stubApi(only(sessionQuestion(modified)))
     return draw(h(Routes, null, h(Route, { path: '/sessions/:id', element: h(Session) })), '/sessions/s1')
   }
 
-  // @verifies REQ-265
+  // @covers REQ-245#citation-in-question
   it('出題中の問題に「出典：<年度ラベル> <試験名> 問N」が出る', async () => {
     await drawSession(false)
     expect(text()).toContain(CITATION)
     expect(text()).not.toContain(EXAM_CODE)
   })
 
-  // @verifies REQ-266
+  // @covers REQ-245#modified-in-question
   it('改変の印が立つ出題には「一部改変」を併記し、立っていない出題には出さない', async () => {
     await drawSession(true)
     expect(text()).toContain('（一部改変）')
@@ -217,7 +217,7 @@ describe('出題画面の出典', () => {
   })
 })
 
-describe('結果画面の出典', () => {
+describe('結果画面の出典（UC-008）', () => {
   const drawResult = (modified: boolean) => {
     stubApi(only(result(modified)))
     return draw(
@@ -226,14 +226,14 @@ describe('結果画面の出典', () => {
     )
   }
 
-  // @verifies REQ-027
+  // @covers REQ-252#citation-per-item
   it('振り返る問題ごとに「出典：<年度ラベル> <試験名> 問N」が出る', async () => {
     await drawResult(false)
     expect(text()).toContain(CITATION)
     expect(text()).not.toContain(EXAM_CODE)
   })
 
-  // @verifies REQ-028
+  // @covers REQ-252#modified-item
   it('改変の印が立つ問題には「一部改変」を併記し、立っていない問題には出さない', async () => {
     await drawResult(true)
     expect(text()).toContain('（一部改変）')

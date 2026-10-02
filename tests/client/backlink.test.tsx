@@ -6,7 +6,6 @@ import { MemoryRouter } from 'react-router-dom'
 import { BackLink } from '../../src/client/components/BackLink'
 
 describe('戻るリンク', () => {
-  // @verifies REQ-055
   it('行き先とラベルを明示したリンクを描き、アイコンは読み上げ対象にしない', async () => {
     const host = document.createElement('div')
     document.body.appendChild(host)

@@ -157,8 +157,6 @@ def main() -> int:
 
     # --- 出典と年度ラベル -------------------------------------------------
     # 出典は「出典：<年度ラベル> <試験名> 問N」。試験名の取り違えと内部コードの素通しを止める
-    # @implements-old REQ-261
-    # @verifies REQ-261
     # @implements BR-027
     per_exam: dict[str, int] = defaultdict(int)
     labels: dict[str, set[str]] = defaultdict(set)
@@ -196,8 +194,6 @@ def main() -> int:
             problems.append(f"{exam}: 年度ラベルが複数ある {sorted(ls)}")
 
     # --- 回ごとの問題数 ---------------------------------------------------
-    # @implements-old REQ-245
-    # @verifies REQ-245
     want_n = QUESTIONS_PER_EXAM.get(d.name)
     if want_n:
         for exam, n in sorted(per_exam.items()):
@@ -247,7 +243,6 @@ def main() -> int:
     # --- 教材に差し込んだ図 -------------------------------------------------
     # figure_image と同じで、無くてもエラーにはならず画面が空欄になるだけ。
     # 置き場所は試験ごとに分ける（同じ論点 ID が試験をまたいでぶつかるため）。
-    # @verifies REQ-017
     # @implements BR-026
     material_images = sorted(set(MATERIAL_IMAGE.findall(sql)))
     want_prefix = f"/figures/materials/{d.name}/"
@@ -271,8 +266,6 @@ def main() -> int:
     # IPA は同じ問題を別の回で使い回す。DB には全問そのまま持つが、学習側では
     # content_key で1問にまとめて出す。まとめる以上、グループの中で正解が
     # 割れていてはいけない（どちらかの読み取りが間違っている）。
-    # @implements-old REQ-029
-    # @verifies REQ-029
     dup_groups: dict[str, list[dict]] = defaultdict(list)
     rows_full = question_values(sql)
     for row in rows_full:
@@ -294,7 +287,6 @@ def main() -> int:
     # --- 出題頻度は同一内容の重複を数えたまま --------------------------------
     # 論点の question_count は、その論点に紐づく過去問の件数（同一内容の重複を含む）。
     # 畳んだ数を入れると出題頻度＝重要度の並びが変わり、頻出論点から潰す最短経路が崩れる。
-    # @verifies REQ-236
     key_of = {q["id"]: q.get("content_key") for q in rows_full}
     linked: dict[int, list[str]] = defaultdict(list)
     for link in insert_rows(sql, "topic_questions"):
@@ -368,8 +360,6 @@ def main() -> int:
           f"（うち論点に結び付いた用語 {sum(1 for r in gloss if r.get('topic_id') is not None)}）")
 
     # D16: seed は利用者データ（users / progress / sessions / feedback）に触らない。触ると再投入で消える
-    # @implements-old REQ-272
-    # @verifies REQ-272
     sql_text = sql_path.read_text(encoding="utf-8")
     for tbl in ("feedback", "users", "progress", "sessions", "session_questions", "daily_visits"):
         import re as _re

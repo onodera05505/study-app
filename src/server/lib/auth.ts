@@ -36,7 +36,6 @@ async function derive(
   return toHex(bits)
 }
 
-// @implements-old REQ-036
 export async function hashPassword(password: string): Promise<string> {
   const salt = new Uint8Array(new ArrayBuffer(16))
   crypto.getRandomValues(salt)
@@ -44,7 +43,6 @@ export async function hashPassword(password: string): Promise<string> {
   return `${ITERATIONS}:${toHex(salt.buffer)}:${hash}`
 }
 
-// @implements-old REQ-093
 export async function verifyPassword(password: string, stored: string): Promise<boolean> {
   const [iterStr, saltHex, expected] = stored.split(':')
   if (!iterStr || !saltHex || !expected) return false
@@ -65,7 +63,6 @@ export type TokenPayload = {
 
 const TOKEN_TTL_SEC = 60 * 60 * 24 * 14
 
-// @implements-old REQ-061
 export async function issueToken(
   secret: string,
   user: { id: string; name: string; role: string },
@@ -79,7 +76,6 @@ export async function issueToken(
   return sign(payload, secret, 'HS256')
 }
 
-// @implements-old REQ-087
 export async function readToken(secret: string, token: string): Promise<TokenPayload | null> {
   try {
     return (await verify(token, secret, 'HS256')) as TokenPayload

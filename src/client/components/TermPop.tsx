@@ -9,7 +9,6 @@ type Pos = { top: number; left: number }
  *  読み・英字表記の括弧書きを末尾に持つ正式表記になる。文中ではその括弧書きを落として
  *  短くする。末尾に括弧書きが無い語はそのまま。
  *  ポップの見出しには正式表記をそのまま出す。 */
-// @implements-old REQ-140
 // @implements REQ-008
 export function shortTerm(term: string): string {
   const m = term.match(/^(.+?)\s*[（(].*[）)]$/)
@@ -29,7 +28,6 @@ export function shortTerm(term: string): string {
  *  ポップは body に出す（ポータル）。本文の中に置くと、教材の表
  *  （`.table-wrap` が横スクロールのため overflow を持つ）の中の用語で
  *  カードが切り落とされる。位置はボタンの座標から毎回計算する。 */
-// @implements-old REQ-016, REQ-142
 // @implements REQ-008, REQ-010, REQ-011
 export function TermPop({ term }: { term: string }) {
   const glossary = useGlossary()

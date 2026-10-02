@@ -1,10 +1,10 @@
 // @vitest-environment jsdom
-/** UC-005「理解度を 3 段階で記録し、おすすめ順（頻度が高く未理解）で学ぶ」の基本の流れを
- *  1 本で実行する写し（正常系のみ。失敗系・境界は REQ のテストが見る）。
+/** UC-003「論点の理解度を記録して次に学ぶ論点を辿る」の主シナリオを
+ *  1 本で実行する写し（正常系のみ。失敗系・境界は要件のテストが見る）。
  *
- *  前提条件（UC-001・UC-004）は、トークンを置いて学習の画面から論点の画面まで辿ることで作る。
- *  画面の文字は要件（REQ-013・REQ-128〜REQ-134）の文面から採る。
- *  理解度の 3 段階の文字は「未理解／やや理解／理解」（REQ-013・REQ-130）。 */
+ *  事前条件（ログインして論点の画面を開いている）は、トークンを置いて単元の一覧から
+ *  論点の画面まで辿ることで作る。
+ *  画面の文字は要件の文面から採り、理解度の 3 段階の文字は「未理解／やや理解／理解」。 */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { act, createElement as h } from 'react'
@@ -120,7 +120,7 @@ async function press(name: string | RegExp) {
   })
 }
 
-/** 理解度の 3 段階（REQ-013・REQ-130 の文字）。 */
+/** 理解度の 3 段階（画面に出る段階の文字）。 */
 const STAGES = ['未理解', 'やや理解', '理解']
 const stageButtons = () =>
   [...host.querySelectorAll<HTMLButtonElement>('button')].filter((b) =>
@@ -177,46 +177,46 @@ afterEach(async () => {
 describe('UC-003 理解度を記録して、おすすめ順に学ぶ', () => {
   // @scenario UC-003
   it('論点の画面で理解度を記録し、集計を数え直させ、ホームと論点の画面のおすすめを辿る', async () => {
-    // 前提条件: ログインしていて、学習の画面から論点の画面を開いている（UC-001・UC-004）
+    // 事前条件: ログインしていて、単元の一覧から論点の画面を開いている（辿る導線は UC-002 の範囲）
     await open('/topics')
     await press('企業活動')
     await press('損益分岐点')
     expect(text(), '論点の画面が出ていない').toContain('損益分岐点 の短い説明です。')
 
-    // 1. 利用者が理解度（未理解／やや理解／理解）を選ぶ。システムは 3 段階のいずれかとして記録する
+    // step 1・3: 利用者が理解度（未理解／やや理解／理解）を選ぶ。システムは 3 段階のいずれかとして記録する
     await pressStage('やや理解')
     const puts = calls.filter((c) => c.method === 'PUT' && c.url.includes('/progress'))
     expect(puts, '理解度が記録されていない（PUT /api/topics/:id/progress が無い）').toHaveLength(1)
     expect(puts[0].url).toContain('/api/topics/11/progress')
     expect(puts[0].body ?? '', '記録に理解度が入っていない').not.toBe('')
 
-    // 2. 画面は記録の結果を待たずに、選んだ理解度を押した状態にする
+    // step 2: 画面は記録の結果を待たずに、選んだ理解度を押した状態にする
     expect(selectedStage(), '押した段階が選ばれていない').toBe('やや理解')
 
-    // 3. 画面は覚えていた分野・単元の集計を捨て、次に一覧を開いたときに数え直させる
+    // step 4: 画面は覚えていた分野・単元の集計を捨て、次に一覧を開いたときに数え直させる
     const before = countOf('/api/fields')
     await press(/戻る/)
     expect(countOf('/api/fields'), '理解度を変えたのに集計を数え直していない').toBeGreaterThan(before)
 
-    // 4. 画面は記録した理解度を、論点の画面で文字と印の両方で示す
-    //    （戻り先が単元の一覧のときは単元をもう一度選ぶ。UC はどちらの一覧に戻るかを決めていない）
+    // step 4: 画面は記録した理解度を、論点の画面で文字と印の両方で示す
+    //（戻り先が単元の一覧のときは単元をもう一度選ぶ。UC はどちらの一覧に戻るかを決めていない）
     if (!controls('損益分岐点').length) await press('企業活動')
     await press('損益分岐点')
     expect(stageButtons().map((b) => (b.textContent ?? '').trim()), '3 段階の文字が出ていない').toEqual(STAGES)
     expect(selectedStage(), '記録した段階が示されていない').toBe('やや理解')
 
-    // 5. 利用者がホームを開く。システムは「出題頻度が高く、まだ理解していない論点」を返す
+    // step 5・6: 利用者がホームを開く。システムは「出題頻度が高く、まだ理解していない論点」を返す
     await press('ホーム')
     expect(countOf('/api/me'), 'ホームがおすすめを取りに行っていない').toBeGreaterThan(0)
 
-    // 6. 画面はホームに「次に学ぶ」としてその候補を出す（論点名・出題回数・分野）
+    // step 6: 画面はホームに「次に学ぶ」としてその候補を出す（論点名・出題回数・分野）
     expect(text()).toContain('次に学ぶ')
     expect(text()).toContain(NEXT_TOPIC.term)
     expect(text(), 'おすすめに出題回数が出ていない').toContain(String(NEXT_TOPIC.questionCount))
     expect(text(), 'おすすめに分野が出ていない').toContain(NEXT_TOPIC.field)
     expect(hrefs()).toContain(`/topics/${NEXT_TOPIC.id}`)
 
-    // 7. 画面は論点の画面の末尾にも次に学ぶ論点を出す
+    // step 7・8: 利用者が示された論点を開く。画面はその論点の末尾にも次に学ぶ論点を出す
     await press(NEXT_TOPIC.term)
     expect(text(), 'おすすめの論点の画面へ移れていない').toContain('頻出の未理解の論点 の短い説明です。')
     expect(text()).toContain('次に学ぶ')

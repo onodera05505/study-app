@@ -68,7 +68,7 @@ const errorOf = async (res: Response) => {
 }
 
 describe('認証の境界（保護された経路と公開の経路）', () => {
-  // @verifies REQ-033
+  // @covers REQ-255#credential-absent
   it('保護された経路は、トークン無し・壊れたトークン・別の秘密・期限切れのどれでも 401 の {error}', async () => {
     const wrongSecret = await issueToken('other-secret', { id: 'u-1', name: '名', role: 'MEMBER' })
     const expired = await sign({ sub: 'u-1', name: '名', role: 'MEMBER', exp: Math.floor(Date.now() / 1000) - 60 }, SECRET, 'HS256')
@@ -87,7 +87,7 @@ describe('認証の境界（保護された経路と公開の経路）', () => {
     }
   })
 
-  // @verifies REQ-033
+  // @covers REQ-255#public-route-not-refused
   it('公開の経路（/api/health・/api/auth/config）はトークン無しで 200', async () => {
     for (const path of ['/api/health', '/api/auth/config']) {
       const res = await app.request(path, {}, env())
@@ -97,7 +97,7 @@ describe('認証の境界（保護された経路と公開の経路）', () => {
 })
 
 describe('セキュリティヘッダ（公開・認証の要る経路の両方）', () => {
-  // @verifies REQ-035
+  // @covers REQ-259#headers-on-refusal
   it('公開の応答にも 401 の応答にも 5 つのヘッダが載る', async () => {
     for (const [method, path, token] of [['GET', '/api/health', undefined], ['GET', '/api/fields', undefined]] as const) {
       const res = await call(method, path, token)
@@ -112,7 +112,6 @@ describe('セキュリティヘッダ（公開・認証の要る経路の両方�
 
 describe('本文のスキーマ検証', () => {
   // 400 で断ったもの＝処理に進んでいない（進めば DB が無い環境なので 400 にはならない）
-  // @verifies REQ-089
   it('register は条件を満たさない本文を処理に進めず 400、満たす本文は進む', async () => {
     for (const body of [
       {},
@@ -128,7 +127,6 @@ describe('本文のスキーマ検証', () => {
     expect(ok.status).not.toBe(400)
   })
 
-  // @verifies REQ-090
   it('login は条件を満たさない本文を照合に進めず 400、満たす本文は進む', async () => {
     for (const body of [{}, { email: 'not-an-email', password: 'password1' }, { email: 'a@example.com', password: 'short' }]) {
       const res = await app.request('/api/auth/login', json(body), env())
@@ -139,7 +137,7 @@ describe('本文のスキーマ検証', () => {
     expect(ok.status).not.toBe(400)
   })
 
-  // @verifies REQ-034
+  // @covers REQ-257#reason-names-the-field
   it('検証に失敗した 400 の {error} は、どの項目が悪いか分かる日本語（英語のスキーマの文言を出さない）', async () => {
     const cases: Array<[unknown, RegExp | null]> = [
       [{ email: 'not-an-email', password: 'password1', name: '名' }, /メール/],
@@ -158,7 +156,7 @@ describe('本文のスキーマ検証', () => {
 })
 
 describe('知らない経路と想定していない例外', () => {
-  // @verifies REQ-091
+  // @covers REQ-256#unknown-path-authenticated
   it('知らない /api の経路は 404 の {error}（本人として呼んでも同じ）', async () => {
     const token = await issueToken(SECRET, { id: 'u-1', name: '名', role: 'MEMBER' })
     // 本人として通る側は来訪の記録で D1 に書くので、偽の D1 を渡して 404 まで届かせる
@@ -171,7 +169,7 @@ describe('知らない経路と想定していない例外', () => {
     await errorOf(anon)
   })
 
-  // @verifies REQ-092
+  // @covers REQ-258#learning-internal-fixed
   it('想定していない例外は固定文の 500 で、例外の内容や呼び出しの履歴を本文に出さない', async () => {
     const token = await issueToken(SECRET, { id: 'u-1', name: '名', role: 'MEMBER' })
     // 本人としては通るが、DB を束ねていない環境なので処理の途中で例外になる（例外を起こす名前付きの口は無い）

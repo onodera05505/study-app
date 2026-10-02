@@ -33,7 +33,7 @@ async function post(payload: unknown, auth = true) {
 const JAPANESE = /[ぁ-んァ-ヶ一-龥]/
 
 describe('フィードバックの受け口の入力検証（UC-010）', () => {
-  // BR-001 の守り。本人と分からない送信には返さず何も変えない（UC-010 にこれを持つ要件は無い）
+  // @covers REQ-255#mutating-route-refused
   it('ログインしていない送信は 401', async () => {
     const res = await post({ body: '読みにくいです' }, false)
     expect(res.status).toBe(401)

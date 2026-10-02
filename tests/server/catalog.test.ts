@@ -51,7 +51,7 @@ describe('理解度の記録（PUT /api/topics/:id/progress）', () => {
 })
 
 describe('論点の一覧（GET /api/topics）', () => {
-  // @verifies REQ-011
+  // @covers REQ-265#sort-outside-allowed
   it('並べ替えと件数の上限は決めた値だけを受ける', async () => {
     const h = await headers()
     for (const query of ['?sort=nonsense', '?limit=9999']) {

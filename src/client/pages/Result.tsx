@@ -42,7 +42,6 @@ type ResultData = {
 
 /** 合否の目安の見せ方。判定そのものは /api/sessions/:id が返す passed
  *  （基準は criteria: 総合の割合と分野の割合）。画面は文言と色だけを決める。 */
-// @implements-old REQ-024
 // @implements REQ-120
 export function verdict(passed: boolean): { label: string; color: string } {
   return passed
@@ -52,7 +51,6 @@ export function verdict(passed: boolean): { label: string; color: string } {
 
 /** 分野別の正答率に付ける色。分野ごとの基準点がある試験でだけ色を付ける。
  *  基準点の無い試験（応用情報の午前）で色を付けると、落ちると誤解させる。 */
-// @implements-old REQ-227
 // @implements REQ-122
 export function fieldPctColor(
   pct: number,
@@ -63,7 +61,6 @@ export function fieldPctColor(
   return pct >= fieldPct ? 'var(--ok)' : 'var(--ng)'
 }
 
-// @implements-old REQ-219, REQ-220, REQ-225, REQ-239, REQ-027, REQ-028
 // @implements REQ-120, REQ-125
 export function Result() {
   const { id } = useParams()

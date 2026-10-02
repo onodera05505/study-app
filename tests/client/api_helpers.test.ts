@@ -76,7 +76,6 @@ describe('トークンの保存（UC-013）', () => {
 })
 
 describe('API 呼び出しの失敗の形', () => {
-  // @verifies REQ-097
   it('投げられる失敗は 1 つの型で、message・status・body を読める', async () => {
     const m = await load()
     vi.stubGlobal('fetch', vi.fn(async () => okJson({ error: '入力が正しくありません', detail: 'x' }, 400)))
@@ -89,7 +88,7 @@ describe('API 呼び出しの失敗の形', () => {
     expect(e.body).toEqual({ error: '入力が正しくありません', detail: 'x' })
   })
 
-  // @verifies REQ-051
+  // @covers REQ-261#reason-from-body
   it('失敗の本文 {error} を message にする（{error} が無ければ既定の日本語の文）', async () => {
     const m = await load()
     vi.stubGlobal('fetch', vi.fn(async () => okJson({ error: '入力が正しくありません' }, 400)))
@@ -105,7 +104,7 @@ describe('API 呼び出しの失敗の形', () => {
     expect(e2.message).toMatch(/[ぁ-んァ-ヶ一-龥]/)
   })
 
-  // @verifies REQ-098
+  // @covers REQ-262#no-response-fixed-sentence
   it('通信できないときは status 無しの日本語の固定文', async () => {
     const m = await load()
     vi.stubGlobal('fetch', vi.fn(async () => { throw new TypeError('Failed to fetch') }))

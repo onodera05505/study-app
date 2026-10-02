@@ -168,6 +168,7 @@ describe('結果の画面', () => {
     expect(text(), '時間切れでないのに案内が出ている').not.toMatch(/制限時間/)
   })
 
+  // @covers REQ-249#sourced-exam-result-no-marks
   it('公開回の通し受験では同一内容の印を出さず、演習では出す', async () => {
     const asked2 = { timesAsked: 2, otherCitations: ['出典：平成28年度 春期 ITパスポート試験 問1'] }
     // 印に出る他の出典は、先頭の「出典：」を外した形で並ぶ

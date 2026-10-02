@@ -1,9 +1,9 @@
 // @vitest-environment jsdom
-/** UC-018「利用者が API の失敗を、画面に出せる形で受け取る」の基本の流れを 1 本で実行する写し
- *  （正常系のみ。通信そのものが成立しないときは REQ-098 のテストが見る）。
+/** 横断の決まり BR-014（失敗の見せ方）のうち、画面が API の失敗を出せる形で受け取るところを
+ *  1 本で実行する写し（正常系のみ。通信そのものが成立しないときは既定のテストが見る）。
  *
  *  画面が呼ぶのと同じ道（api()）で失敗を受け取り、その本文 {error} が画面に出ることまで見る。
- *  画面の文字はサーバが返した {error} の日本語そのもの（REQ-051）。 */
+ *  画面の文字はサーバが返した {error} の日本語そのもの。 */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { act, createElement as h } from 'react'
@@ -73,7 +73,7 @@ afterEach(async () => {
 describe('BR-014 API の失敗を画面に出せる形で受け取る', () => {
   // 横断の決まり（BR-014 失敗の見せ方・API の失敗の形）のシナリオ。UC のシナリオではないので @scenario は付けない
   it('失敗を message・status・body の 1 つの型で受け取り、その日本語を画面に出す', async () => {
-    // 1. 利用者が画面を操作し、画面が API を呼ぶ。画面は失敗を message・status・body を持つ 1 つの型で受け取る
+    // 利用者が画面を操作し、画面が API を呼ぶ。画面は失敗を message・status・body を持つ 1 つの型で受け取る
     const thrown = await api('/fields').then(
       () => null,
       (e: unknown) => e,
@@ -85,7 +85,7 @@ describe('BR-014 API の失敗を画面に出せる形で受け取る', () => {
     expect(err.status, 'HTTP のステータスが読めない').toBe(STATUS)
     expect(err.body, '応答の本文が読めない').toEqual({ error: REASON })
 
-    // 2. API が失敗を返す。画面は本文の {error}（日本語）を message にして、そのまま画面に出せるようにする
+    // API が失敗を返す。画面は本文の {error}（日本語）を message にして、そのまま画面に出せるようにする
     expect(err.message, '本文の {error} が message になっていない').toBe(REASON)
     invalidateCached()
     await open('/topics')

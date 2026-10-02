@@ -16,7 +16,7 @@ describe('認証の境界', () => {
     expect(await res.json()).toEqual({ error: 'ログインが必要です' })
   })
 
-  // @verifies REQ-033
+  // @covers REQ-255#credential-malformed
   it('壊れたトークン・別の秘密で署名したトークンは 401', async () => {
     for (const token of ['not-a-token', 'Bearer', await issueToken('other-secret', { id: 'u-1', name: '名', role: 'MEMBER' })]) {
       const res = await app.request('/api/sessions', { headers: { Authorization: `Bearer ${token}` } }, env())
@@ -33,7 +33,7 @@ describe('認証の境界', () => {
 })
 
 describe('セキュリティヘッダ', () => {
-  // @verifies REQ-035
+  // @covers REQ-259#headers-on-public
   it('応答に CSP・HSTS・X-Frame-Options・nosniff・Referrer-Policy が付く', async () => {
     const res = await app.request('/api/health', {}, env())
     expect(res.headers.get('Content-Security-Policy')).toContain("default-src 'self'")
@@ -83,7 +83,7 @@ describe('失敗の形', () => {
     }
   })
 
-  // @verifies REQ-091
+  // @covers REQ-256#unknown-path-anonymous
   it('未知の API の経路は 404 の {error}', async () => {
     const res = await app.request('/api/auth/no-such-path', {}, sso())
     expect(res.status).toBe(404)

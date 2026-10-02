@@ -322,7 +322,7 @@ describe('出題の画面の時計（制限時間つき）', () => {
     expect(text(), '1 秒後に 1 減っていない').toMatch(/2\s*[:分]\s*0?4/)
   })
 
-  // @verifies REQ-215
+  // @covers REQ-248#below-threshold-distinct
   it('残り 5 分未満になったら時計の見た目を変える', async () => {
     const timer = () => container.querySelector('span.timer')
     stubApi(replies({ 'GET /api/sessions/s-1/current': { body: CUR({ remainingSec: 301, session: SESSION({ kind: 'mock' }) }) } }))
@@ -389,7 +389,7 @@ describe('同一内容の印', () => {
     expect(text(), '1 回だけの問題に印が出ている').not.toMatch(/\d+\s*回/)
   })
 
-  // @verifies REQ-238
+  // @covers REQ-249#sourced-exam-question-no-marks
   it('公開回の通し受験では印を出さず、演習とランダム構成では出す', async () => {
     stubApi(
       replies({

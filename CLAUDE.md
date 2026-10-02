@@ -242,13 +242,17 @@ report してきた例が複数あった（ファイルの中身は正しかっ�
 
 ## 仕様 ⇔ コード ⇔ テスト の対応（作業完了の条件）
 
-- **要求を受けたら Skill `/develop` の手順で動く**: `spec-author`（実装もテストも読まない）が 仕様書（`docs/要件定義書_draft.md` の節）→ ユースケースの書類（`docs/usecases/UC-xxx.md`。流れをステップに）→ 要件（`docs/spec.yaml`。1 ステップに 1 つ以上、**1 要件 1 か所のコード**）→ 用語集 の順に草案を書き、本人が承認 → `implementer` と `test-author` を**別コンテキストで並行**（test-author は実装を読まず Bash も持たない。中央 `reports/106`）→ `npm test` が通るまで。書き込みの瞬間は `write_gate`（PreToolUse。spec に差分か `.trace-gate/work.json` の REQ 宣言が無いと `src/`・`tests/` に書けない）、終了の瞬間は `stop_gate`（Stop）が止める
-- **実装の前に `docs/spec.yaml` に要件 ID（REQ-xxx）があり、その `usecase`・`step` が UC の書類のステップを指しているか確かめる。** 無ければ UC のステップと要件の追加を提案する（移行後は `node .harness/tools/trace-check/trace-check.mjs --next req` で次の番号。決めたが未実装なら `status: draft`）。仕様に無い機能を勝手に作らない。仕様書から直接コードに結ばない（UC → REQ を経る）
-- **コードには `@implements REQ-xxx`、テストには `@verifies REQ-xxx`** を、その単位（関数・クラス・ルートハンドラ・テストケース）の直前のコメントに書く。ID だけを書き、要件の文を写さない。ファイル先頭にまとめない。コメントは今の仕様だけ（経緯・日付を書かない）
-- **作業完了の条件は `npm test`（spec-lint → trace-check → 単体テスト → check_source → check_docs）が全部通ること。** Stop フック（ユーザー設定）・pre-commit・CI が同じ検査を回す。落ちたら `[NG]` の行を直す
-- **親（この会話）は仕様も実装もテストも書かない。** 赤は三分岐で裁く: ①仕様が決めている → 実装の欠陥（implementer） ②テストが仕様に無い手順・DOM を固定 → test-author が再導出 ③仕様が表現できていない → spec-author。コミット前に `reviewer`（別コンテキスト・読み取り専用）の `阻止` ゼロ。UC 1 本にシナリオテスト 1 本（`@scenario UC-xxx`。`require_scenario: true`）
-- **要件は仕様書の文を `quote` に引く**（`trace_check` の S6 が実在を見る）。引ける文が無ければ仕様書に先に書いて本人の承認。赤の切り分けで実装を読んで要件やテストを実装に寄せない（追認）。テスト設計に渡す契約は名前と型だけ
-- **どの要件にも当たらないコードは、除外ではなく要件を書いてから実装する**（仕様が絶対の正解。2026-09-29 本人）。除外は使わない。検査の緩和・テストの skip・中身の無いタグやテストは**本人の許可なく行わない**
+原本 harness（`tsay-dev/harness` v4.1.0。APM で `develop-core` を `.claude/` に展開、道具は `.harness/`）の作法で回す。
+仕様の正本は `docs/goals/<GOAL>/<UC>/`（`UC.md`・`REQ-nnn.md`・`contract.yaml`）、横断の決まりは `docs/rules/BR-nnn.md`、
+用語は `docs/01-glossary.md`、決定は `docs/adr/`。規約は `.claude/rules/docs.md`（R-101〜R-1207）と `.claude/rules/comments.md`。
+
+- **要求を受けたら Skill `/develop` の手順で動く**: `spec-author`（実装もテストも読まない）が GOAL → UC（状態×イベント表）→ REQ（EARS 1 文、**1 要件 1 か所のコード**）→ 契約 → 用語集 の順に草案を書き、本人が承認して UC・REQ を `active`、契約を `fixed` → `implementer` と `test-author` を**別コンテキストで並行**（test-author は実装を読まない。中央 `reports/106`）→ `npm test` が通るまで。書き込みの瞬間は `gate-hook`（PreToolUse。UC の `phase:` が 実装／検証 で、REQ が全部 `active`・契約が `fixed` でないと `src/`・`portal/`・`scripts/` に書けない）、終了の瞬間は `stop-gate`（Stop）が止める
+- **実装の前に REQ があるか確かめる。** 無ければ UC の表のセルと REQ の追加を提案する（次の番号は `node .harness/tools/trace-check/trace-check.mjs --next req`。UC・BR・ADR も同じ）。仕様に無い機能を勝手に作らない。GOAL や BR から直接コードに結ばない（UC → REQ を経る）。test-author は REQ の `## 検証方針` に分割クラスを宣言してからテストを書く（テストの下限と上限）
+- **コードには `@implements REQ-nnn`／`BR-nnn`、テストには `@covers REQ-nnn#class`**（`it(` の直前の行。1 テスト 1 クラス）、UC 1 本にシナリオテスト 1 本（`@scenario UC-nnn`。`tests/scenario/` か `scripts/check_*api.py`）。ID だけを書き、要件の文を写さない。ファイル先頭にまとめない。コメントは今の仕様だけ（経緯・日付を書かない）
+- **作業完了の条件は `npm test`（spec-lint → trace-check → vitest → check_source → check_docs）が全部通ること。** Stop フック・pre-commit・CI が同じ検査を回す。**合流の条件はテスト緑＋trace-check の新規違反 0**（R-803）。`.trace-baseline.json` は既知の未返済（返済計画 `docs/検証の返済計画.md`）で、**縮む方向にしか動かさない**（R-804。`--update-baseline` は解消済みを消すときだけ。育てるのは本人の許可制）
+- **上流が先**（R-801）: 赤や欠けは SSOT を直してから再導出する。親（この会話）は仕様も実装もテストも書かない。赤は三分岐で裁く: ①仕様が決めている → 実装の欠陥（implementer） ②テストが仕様に無い手順・DOM を固定 → test-author が再導出 ③仕様が表現できていない → spec-author。コミット前に `reviewer`（別コンテキスト・読み取り専用）の `阻止` ゼロ。機械判定に落とせない指摘は `docs/verification/DEFERRED.md`
+- **赤の切り分けで実装を読んで要件やテストを実装に寄せない**（追認）。テスト設計に渡す契約は `contract.yaml` の operation の名前と型だけ
+- **どの要件にも当たらないコードは、除外ではなく要件を書いてから実装する**（仕様が絶対の正解。2026-09-29 本人）。`// 仕様外:` の印（利用者から観測できない実装の都合）・検査の緩和・テストの skip・中身の無いタグやテストは**本人の許可なく行わない**
 
 ## 権限プロンプトを減らす運用
 

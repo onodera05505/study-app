@@ -1,11 +1,11 @@
 // @vitest-environment jsdom
-/** UC-016「利用者が前回開いていた論点・画面にすぐ戻れる」の基本の流れを 1 本で実行する写し
- *  （正常系のみ。覚えた値が壊れているときは REQ-158 のテストが見る）。
+/** UC-005「前回の続きから論点へ戻る」の主シナリオを 1 本で実行する写し
+ *  （正常系のみ。覚えた値が壊れているときは要件のテストが見る）。
  *
- *  step 4 の「ホーム（ロードマップ型はロードマップの先頭）」は資格版とロードマップ型で
- *  別の画面になるので、同じ流れ（単位を開いて覚えさせる → 先頭の導線を見る）を
+ *  step 3・4 の「ホーム」は資格版とロードマップ型（ロードマップの先頭。BR-013）で
+ *  別の画面になるので、同じ流れ（論点を開いて覚えさせる → 先頭の導線を見る）を
  *  対象を替えてもう一度辿る。
- *  画面の文字は要件（REQ-040・REQ-156・REQ-157）の文面から採る。 */
+ *  画面の文字は要件の文面から採る。 */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { act, createElement as h } from 'react'
@@ -14,7 +14,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { App } from '../../src/client/App'
 import { setToken } from '../../src/client/lib/api'
 
-/** 最後に開く論点（単位）。ID・名前・単元名・単元の番号を覚える決まり（REQ-040）。 */
+/** 最後に開く論点（単位）。ID・名前・単元名・単元の番号を端末に覚える（BR-012）。 */
 const TOPIC = { id: 231, term: '前回開いた論点', middle: '事業の指標', middleNo: 4 }
 
 const DETAIL = {
@@ -156,28 +156,27 @@ afterEach(async () => {
 describe('UC-005 前回の続きに戻る', () => {
   // @scenario UC-005
   it('論点の画面を開くと端末が覚え、資格版のホームとロードマップの先頭が前回の続きの導線になる', async () => {
-    // 1. 利用者が論点の画面を開く。画面はその論点を「前回の続き」として覚える
+    // step 1: 利用者が論点の画面を開く。画面はその論点を「前回の続き」として覚える
     await openShikaku(`/topics/${TOPIC.id}`)
     expect(text(), '論点の画面が出ていない').toContain(`${TOPIC.term} の短い説明です。`)
 
-    // 2. 画面は最後に開いた論点（ID・名前・単元）を端末に保存する
+    // step 2: 画面は最後に開いた論点（ID・名前・単元）を端末に 1 件だけ保存する
     const stored = storedValues(localStorage)
     expect(stored, '論点の名前を端末に覚えていない').toContain(TOPIC.term)
     expect(stored, '論点の ID を端末に覚えていない').toContain(String(TOPIC.id))
     expect(stored, '単元名を端末に覚えていない').toContain(TOPIC.middle)
     expect(stored, '単元の番号を端末に覚えていない').toContain(String(TOPIC.middleNo))
 
-    // 3. 画面は覚えた論点を読み出す（開き直しても端末の値から組み立てる）
-    // 4. 利用者がホーム（ロードマップ型はロードマップの先頭）を開く。画面は覚えた論点があれば
-    //    「前回の続き」の導線を出す（まず資格版のホームで見る）
+    // step 3・4: 利用者が学びを開き直してホームを開く。画面は端末の値から覚えた論点を組み立て、
+    // 論点名と単元を添えた「前回の続き」の導線を出す（まず資格版のホームで見る）
     await openShikaku('/')
     expect(text(), 'ホームに「前回の続き」が出ていない').toContain('前回の続き')
     expect(text()).toContain(TOPIC.term)
     expect(text(), '前回の続きに単元が出ていない').toContain(TOPIC.middle)
     expect(hrefs()).toContain(`/topics/${TOPIC.id}`)
 
-    // 4. 同じ step を、ロードマップ型のロードマップの先頭でもう一度辿る
-    //    （1・2 と同じように、まず単位を開いて覚えさせる）
+    // 同じ step 3・4 を、ロードマップ型のロードマップの先頭でもう一度辿る
+    //（step 1・2 と同じように、まず単位を開いて覚えさせる）
     await closeShikaku()
     await openRoadmap(`/topics/${TOPIC.id}`)
     const map = await openRoadmap('/topics')

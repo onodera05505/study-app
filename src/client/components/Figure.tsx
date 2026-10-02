@@ -57,7 +57,6 @@ function trimBlank(lines: string[]): string[] {
  *  書き手が機械（画像の読み取り）なので、閉じていないコードフェンスや列数の
  *  揃っていない表が来うる。どんな入力でも例外を投げず、表と解釈できない
  *  かたまりは素のテキストとして出す。 */
-// @implements-old REQ-043
 // @implements REQ-025
 export function parseFigureDescription(src: string): FigBlock[] {
   const blocks: FigBlock[] = []
@@ -180,7 +179,6 @@ function Description({ source }: { source: string }) {
   )
 }
 
-// @implements-old REQ-125
 // @implements REQ-024
 export function Figure({
   hasFigure,

@@ -12,7 +12,6 @@ type Row = {
   finishedAt: number | null
 }
 
-// @implements-old REQ-233, REQ-235
 // @implements REQ-095
 export function History() {
   // null は「まだ取得していない」、[] は「取得した結果が空」

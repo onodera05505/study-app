@@ -10,7 +10,6 @@ UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, l
 NG=0
 # 全応答に載るべきセキュリティヘッダ（CSP・HSTS・X-Frame-Options DENY・nosniff・Referrer-Policy）。
 # 抜けても画面は動くので、本番の応答を見て確かめる。
-# @verifies REQ-035
 check_headers() {
   local url="$1" name="$2" h want
   h="$(curl -s -D - -o /dev/null -A "$UA" "$url/api/health" | tr -d '\r' | tr 'A-Z' 'a-z')"
@@ -21,8 +20,6 @@ check_headers() {
 }
 # 本番の Pages プロジェクトの秘密の一覧を機械で確かめる（O13）。共有秘密 SSO_SECRET は まなびばと各学び、
 # トークンの署名の秘密 JWT_SECRET は各学び。名前が一覧にあることだけを見て、値は読まない・出さない。
-# @implements-old REQ-303
-# @verifies REQ-303
 # @implements REQ-215, REQ-221, REQ-222, BR-009
 check_secrets() {
   local key name project want s out have expect
@@ -75,10 +72,8 @@ for k in $(python3 scripts/targets.py keys); do
   C="$(curl -s -A "$UA" "$U/api/auth/config")"
   printf '%-6s %s -> %s\n' "$k" "$U" "$C"
   echo "$C" | grep -q '"sso":true' || { echo "  ✘ sso が有効でない（SSO_PORTAL_URL が env に無い）"; NG=1; }
-  # @verifies REQ-005
   L="$(curl -s -o /dev/null -w '%{http_code}' -A "$UA" -X POST -H 'Content-Type: application/json' -d '{"email":"x@example.com","password":"xxxxxxxx"}' "$U/api/auth/login")"
   [ "$L" = 404 ] || { echo "  ✘ パスワードのログインが生きている（$L）。D17"; NG=1; }
-  # @verifies REQ-065
   G="$(curl -s -o /dev/null -w '%{http_code}' -A "$UA" -X POST -H 'Content-Type: application/json' -d '{"email":"x@example.com","password":"xxxxxxxx","name":"x"}' "$U/api/auth/register")"
   [ "$G" = 404 ] || { echo "  ✘ パスワードの登録が生きている（$G）。D17"; NG=1; }
 done

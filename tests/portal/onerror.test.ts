@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import app from '../../portal/src/index'
 
 /**
- * まなびばの想定していない例外の扱い（要件 §10 のエラー処理）。
+ * まなびばの想定していない例外の扱い（UC-017 の REQ-258・REQ-260）。
  *
  * D1 を壊した env（prepare などが必ず投げる偽の D1）で DB を引く経路を呼び、
  * 応答が 500・本文が固定の日本語の {error} だけであることを見る。
@@ -40,7 +40,7 @@ const errorText = async (res: Response) => {
 }
 
 describe('想定していない例外（まなびば）', () => {
-  // @verifies REQ-301
+  // @covers REQ-258#portal-internal-fixed
   it('DB が壊れている呼び出しは 500 で、本文は固定の日本語の {error} だけ（例外の message も stack も出さない）', async () => {
     const res = await app.request('/api/login', login('portal-onerror@example.com'), env())
     expect(res.status, '想定していない例外が 500 になっていない').toBe(500)
@@ -53,14 +53,14 @@ describe('想定していない例外（まなびば）', () => {
     expect(text, '固定の 1 文でない（改行がある）').not.toContain('\n')
   })
 
-  // @verifies REQ-301
+  // @covers REQ-258#same-text-regardless-of-input
   it('呼び出しの入力が違っても 5xx の文言は同じ（固定の文で、入力や内部の状態を映さない）', async () => {
     const first = await errorText(await app.request('/api/login', login('portal-onerror-a@example.com'), env()))
     const second = await errorText(await app.request('/api/login', login('portal-onerror-b@example.com'), env()))
     expect(second, '呼び出しごとに 5xx の文言が変わる（固定の文でない）').toBe(first)
   })
 
-  // @verifies REQ-301
+  // @covers REQ-260#health-without-store-portal
   it('DB を引かない /api/health は同じ env でも 200（500 になるのは例外が起きた呼び出しだけ）', async () => {
     const res = await app.request('/api/health', {}, env())
     expect(res.status).toBe(200)

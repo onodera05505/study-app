@@ -597,7 +597,6 @@ def account(c: Client, r: Report, email: str, name: str, code: str | None) -> st
     return data["token"]
 
 
-# @verifies REQ-033, REQ-047
 def check_auth_boundary(c: Client, r: Report):
     """未認証・壊れたトークンで保護経路に当てる。200 なら保護が外れ、500 なら検証で落ちている。"""
     broken = [
@@ -628,7 +627,6 @@ def check_auth_boundary(c: Client, r: Report):
     r.status("POST /auth/sso（未設定の環境では 404）", st, 404, data)
 
 
-# @verifies REQ-013, REQ-034
 def check_failure_shapes(c: Client, r: Report, code: str | None):
     """失敗したときのステータスと本文。クライアントは data?.error をそのまま画面に出す。"""
     cases = [
@@ -695,7 +693,6 @@ def check_failure_shapes(c: Client, r: Report, code: str | None):
             r.error_body(f"{label} の本文", data)
 
 
-# @verifies REQ-010, REQ-120, REQ-011, REQ-012, REQ-137
 def check_get_shapes(c: Client, r: Report) -> dict:
     """各 GET の形。返ってきた本文は件数の検査でも使うので返す。"""
     got = {}
@@ -727,7 +724,6 @@ def check_get_shapes(c: Client, r: Report) -> dict:
     return got
 
 
-# @verifies REQ-010, REQ-120, REQ-011, REQ-137, REQ-041
 def check_counts(c: Client, r: Report, got: dict, exam: str, db_name: str):
     """API の件数がローカル D1 の SELECT と一致するか。200 と「全部入っている」は別。"""
     rows = d1(
@@ -785,7 +781,6 @@ def check_counts(c: Client, r: Report, got: dict, exam: str, db_name: str):
     return rows
 
 
-# @verifies REQ-011, REQ-120, REQ-014
 def check_empty_lists(c: Client, r: Report, other_token: str):
     """空になりうる一覧が [] で返るか。null や キー欠落だと画面が未取得と区別できない。
 
@@ -818,7 +813,6 @@ def check_empty_lists(c: Client, r: Report, other_token: str):
             r.warn("GET /sessions/current: 検査用アカウントに進行中セッションが残っている")
 
 
-# @verifies REQ-025, REQ-026, REQ-193, REQ-196, REQ-199, REQ-202, REQ-203, REQ-205, REQ-207, REQ-218, REQ-232
 def check_session_flow(c: Client, r: Report, got: dict, other_token: str):
     """作成 → 1問回答 → 中断 → 再開 → 全問回答 → finish → 結果。二重回答と他人のセッションも見る。"""
     detail = got.get("topic_detail")
@@ -953,7 +947,6 @@ def check_session_flow(c: Client, r: Report, got: dict, other_token: str):
     r.notes.append(f"セッションの流れ: {total} 問を作成 → 回答 → 中断 → 再開 → finish → 結果 まで通過")
 
 
-# @verifies REQ-011, REQ-014, REQ-037
 def check_ordering(c: Client, r: Report, got: dict, exam: str):
     """並びと絞り込み。/topics の既定の並び（資格版は出題頻度の降順 / ロードマップ型は学ぶ順）、
     sortOrder の出し方（資格版は sort_order を参照しないので null）、分野での絞り込み、
@@ -1020,7 +1013,6 @@ def check_ordering(c: Client, r: Report, got: dict, exam: str):
     )
 
 
-# @verifies REQ-133, REQ-150
 def check_topic_detail_extras(c: Client, r: Report, got: dict, exam: str):
     """論点の詳細に添わる「次に学ぶ論点」と「学ぶ順の前後の単位」。
 
@@ -1137,7 +1129,6 @@ def check_topic_detail_extras(c: Client, r: Report, got: dict, exam: str):
     )
 
 
-# @verifies REQ-023
 def check_mock_settings(c: Client, r: Report, exam: str, db_name: str):
     """模試の問題数と制限時間。app_settings の値が登録簿（src/shared/targets.json）と一致し、
     実際に作った模試がその問題数・制限時間で返るか。作った模試はその場で破棄する。"""
@@ -1184,7 +1175,6 @@ def squeeze(s: str) -> str:
     return re.sub(r"\s+", "", s or "")
 
 
-# @verifies REQ-019, REQ-021, REQ-204
 def check_session_scope(c: Client, r: Report, got: dict):
     """出題の範囲（論点別はその論点に紐づく過去問だけ）と畳み込み（1回の出題に同じ内容を2度出さない）、
     出題できる過去問が無い範囲の 400。作ったセッションはその場で破棄する。"""
@@ -1238,7 +1228,6 @@ def check_session_scope(c: Client, r: Report, got: dict):
     )
 
 
-# @verifies REQ-212, REQ-240
 def check_mock_by_exam(c: Client, r: Report, got: dict, exam: str):
     """公開回の通し受験。その回の過去問だけを問番号の昇順で、同一内容も畳まずに出す。"""
     sys.path.insert(0, str(Path(__file__).parent)); from targets import target as _target
@@ -1285,7 +1274,6 @@ def check_mock_by_exam(c: Client, r: Report, got: dict, exam: str):
     )
 
 
-# @verifies REQ-226, REQ-231
 def check_discard(c: Client, r: Report, got: dict, exam: str, db_name: str):
     """完了していないセッションの結果は 404（未回答の正解と解説が読めてしまう）。
     破棄すると進行中もその回答も残らず履歴にも出ない。進行中が無くても破棄は成功する。"""
@@ -1333,7 +1321,6 @@ def check_discard(c: Client, r: Report, got: dict, exam: str, db_name: str):
     r.notes.append("完了していない結果は 404・破棄で回答ごと消える・進行中が無くても破棄は 200 を確認")
 
 
-# @verifies REQ-214, REQ-223, REQ-224
 def check_time_limit(c: Client, r: Report, exam: str, db_name: str):
     """制限時間の境目。検査用アカウント自身が作った模試の開始時刻を epoch（0）に書き換えて、
     残り秒・時間切れの回答 409・結果の時間切れを見る。書き換えるのはこのセッションの行だけ。"""
@@ -1394,7 +1381,6 @@ def check_time_limit(c: Client, r: Report, exam: str, db_name: str):
     r.notes.append("制限時間: 残り秒・時間切れの回答 409・結果の時間切れを確認")
 
 
-# @verifies REQ-041
 def check_exam_attempts(c: Client, r: Report, got: dict, exam: str, other_token: str):
     """/exams の受験回数・最高正答数は、自分の完了したセッションだけを数える
     （他人の受験も、進行中のセッションも数えない）。"""
@@ -1432,7 +1418,6 @@ def check_exam_attempts(c: Client, r: Report, got: dict, exam: str, other_token:
     r.notes.append("/exams の受験回数: 他人の分と進行中を数えないことを確認")
 
 
-# @verifies REQ-035
 def check_security_headers(c: Client, r: Report):
     """全応答に secureHeaders が載っているか（CSP・HSTS・X-Frame-Options DENY・nosniff・Referrer-Policy）。"""
     want = {
@@ -1456,7 +1441,6 @@ def check_security_headers(c: Client, r: Report):
     r.notes.append("セキュリティヘッダ: CSP・HSTS・X-Frame-Options DENY・nosniff・Referrer-Policy を確認")
 
 
-# @verifies REQ-030, REQ-274, REQ-275
 def check_feedback(c: Client, r: Report, exam: str, db_name: str):
     """フィードバック（要件 §5.5-4）。送信が保存されること、開発側の読み口（feedback 表）に届くこと、
     拒んだ送信と上限を超えた送信が保存されないこと。
@@ -2074,7 +2058,12 @@ def check_scenario_uc012(c: Client, r: Report, exam: str, db_name: str):
     r.notes.append(f"{L} の基本の流れ: 本文と直前の画面を送信 → 未処理で保存 → 受け付けた印だけが返る")
 
 
-# 横断の決まり（BR-001・BR-002 認証と失敗の応答）の検査。UC のシナリオではないので @scenario は付けない
+# @scenario UC-017
+# UC-017「学びとまなびばの要求の受け口を一様に守る」の主シナリオのうち、学び側の受け口を見る
+# （まなびばの側は scripts/check_portal_api.py が同じ流儀で見る）。下の番号はこの検査の順で、
+# UC-017 の step 4（どの応答にもヘッダ）→ step 1・3（本人の確定）→ step 2（本文の検証）→
+# step 6（断りの形）に当たる。パスワードの保存の形と反復回数は不変条件 O5 の検査で、
+# UC-017 の主シナリオの外（要件は作り方を決めていない）。
 def check_scenario_uc014(c: Client, r: Report, got: dict, exam: str, db_name: str):
     """セキュリティヘッダ → Bearer トークンで本人を確定 → 本文の検証 → パスワードはハッシュで保存し照合。"""
     L = "UC-014"

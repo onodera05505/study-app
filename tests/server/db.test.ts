@@ -5,7 +5,6 @@ import type { Bindings } from '../../src/server/lib/db'
 const env = (over: Partial<Bindings> = {}) => ({ ...over }) as Bindings
 
 describe('データの保存先（D1 と drizzle のスキーマ）', () => {
-  // @verifies REQ-048
   it('getDb は env.DB を束ねた drizzle を返し、schema の全表を query で引ける', () => {
     const calls: string[] = []
     const fakeD1 = { prepare: (sql: string) => { calls.push(sql); throw new Error('not executed in unit test') } } as unknown as D1Database
@@ -20,12 +19,10 @@ describe('データの保存先（D1 と drizzle のスキーマ）', () => {
 })
 
 describe('トークンの秘密', () => {
-  // @verifies REQ-049
   it('JWT_SECRET があればその値を返す', () => {
     expect(getSecret(env({ JWT_SECRET: 'from-secret' }))).toBe('from-secret')
   })
 
-  // @verifies REQ-095
   it('未設定の環境では開発用の既定値に倒れる（本番は secret を設定する運用）', () => {
     expect(getSecret(env())).toBe('dev-only-insecure-secret')
   })

@@ -43,7 +43,7 @@ async function post(path: string, body: unknown) {
 const JAPANESE = /[ぁ-んァ-ヶ一-龥]/
 
 describe('POST /api/sessions の入力の検証', () => {
-  // @verifies REQ-193
+  // @covers REQ-243#size-out-of-range
   it('問題数が 1 未満・100 超なら 400 の {error}', async () => {
     for (const size of [0, -1, 101, 1000]) {
       const res = await post('/api/sessions', { kind: 'field', field: 'テクノロジ系', size })
@@ -54,7 +54,7 @@ describe('POST /api/sessions の入力の検証', () => {
     }
   })
 
-  // @verifies REQ-193
+  // @covers REQ-243#size-at-bounds
   it('範囲内の問題数（1・100）は問題数の検証で弾かない', async () => {
     const rejected = await (await post('/api/sessions', { kind: 'field', field: 'テクノロジ系', size: 0 })).json()
     for (const size of [1, 100]) {
@@ -64,7 +64,7 @@ describe('POST /api/sessions の入力の検証', () => {
     }
   })
 
-  // @verifies REQ-193
+  // @covers REQ-243#kind-or-type-malformed
   it('種別が無い・知らない種別・問題数が数でないときは 400', async () => {
     for (const body of [{}, { kind: 'nope' }, { kind: 'field', field: 'テクノロジ系', size: '20' }]) {
       const res = await post('/api/sessions', body)
@@ -73,7 +73,7 @@ describe('POST /api/sessions の入力の検証', () => {
     }
   })
 
-  // @verifies REQ-193
+  // @covers REQ-243#scope-missing-for-kind
   it('種別に対応する範囲（論点・分野・カテゴリ）が無いときは 400', async () => {
     for (const body of [{ kind: 'drill' }, { kind: 'field' }, { kind: 'middle' }]) {
       const res = await post('/api/sessions', body)

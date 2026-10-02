@@ -265,7 +265,6 @@ def seed_admin(grant: str) -> str:
 # --------------------------------------------------------------------------
 
 
-# @verifies REQ-086
 def check_security_headers(c: Client, r: Report):
     """全応答に secureHeaders が載るか（CSP・HSTS・X-Frame-Options DENY・nosniff・Referrer-Policy）。
     まなびばは app.use('*', secureHeaders(...)) で全経路に付けている。ローカルの http でも 5 つとも載る
@@ -296,7 +295,6 @@ def check_security_headers(c: Client, r: Report):
     r.note(f"セキュリティヘッダ: {len(want)} 種 × 2 経路（静的ファイルは 200 のまま）")
 
 
-# @verifies REQ-001, REQ-056
 def check_login(c: Client, r: Report):
     """/api/login。正しい認証情報で HttpOnly・SameSite=Lax の Cookie が出る（Secure は https のときだけ
     付ける実装なので、ローカルの http では無くて正しい）。失敗の文言はメールの有無を漏らさない。"""
@@ -349,7 +347,6 @@ def check_login(c: Client, r: Report):
     return True
 
 
-# @verifies REQ-007, REQ-071, REQ-072, REQ-073, REQ-074, REQ-080, REQ-081, REQ-082
 def check_admin_accounts(admin: Client, r: Report, base: str, learn: list[dict]) -> str | None:
     """管理（ADMIN だけ）。一覧・作成（grants が入る）・更新（付け外し）・パスワード再設定・削除。
     一般利用者は 403。居ない ID は 404。入力検証は check_admin_validation が見る。
@@ -474,7 +471,6 @@ def check_admin_accounts(admin: Client, r: Report, base: str, learn: list[dict])
     return member_id
 
 
-# @verifies REQ-070
 def check_admin_list(admin: Client, r: Report):
     """一覧は全アカウントを返す（件数がローカル D1 の accounts と一致）。行は id・メール・名前・役割を持ち、
     権限の無い人の grants は [] で返る（null や欠落だと画面が「未取得」と区別できない。不変条件 D11）。"""
@@ -509,7 +505,6 @@ def check_admin_list(admin: Client, r: Report):
     r.note(f"一覧: {len(rows)} 件が accounts と一致・権限なしは []")
 
 
-# @verifies REQ-075, REQ-076, REQ-077, REQ-078
 def check_admin_validation(admin: Client, r: Report, base: str, member_id: str | None):
     """作成・更新・再設定の入力検証。メールの形・名前の長さ（空か 50 文字超）・パスワードの長さ
     （8 文字未満か 200 文字超）・知らない学びは 400、同じメールは 409。どれも値を変えない。"""
@@ -564,7 +559,6 @@ def check_admin_validation(admin: Client, r: Report, base: str, member_id: str |
     r.note("入力検証: 作成 7 通り（重複は 409）・更新 3 通り・再設定 2 通りで断り、値は変わらない")
 
 
-# @verifies REQ-088
 def check_portal_auth_boundary(r: Report, base: str):
     """ログインが要る経路（/api/me・/api/me/password・/api/logout・/api/admin/*）は、
     セッションの Cookie が無いと 401 の {error}。死活確認と学びの一覧は同じ条件で 200。"""
@@ -593,7 +587,6 @@ def check_portal_auth_boundary(r: Report, base: str):
     r.note("Cookie の境界: ログインが要る 8 経路が 401、/api/health と /api/learnings は 200")
 
 
-# @verifies REQ-008, REQ-072, REQ-079
 def check_admin_self_guard(admin: Client, r: Report, admin_id: str):
     """管理者は自分の管理者権限を外せず、自分を削除できない（最後の管理者が消えると誰も直せない）。"""
     st, data, _, _ = admin.call("PUT", f"/api/admin/accounts/{admin_id}", {"role": "MEMBER"})
@@ -617,7 +610,6 @@ def check_admin_self_guard(admin: Client, r: Report, admin_id: str):
     r.note("自分への保護: 自分の降格と自分の削除が 400（他人は通る）")
 
 
-# @verifies REQ-002, REQ-057
 def check_sso_start(r: Report, base: str, learn: list[dict], admin_grant: str) -> str | None:
     """/sso/start。未ログインはログイン画面へ、権限が無ければ denied へ、知らない学びは 400。
     行き先はサーバが組む（外から渡した next は使わない）。発行した使い捨てコードを返す。"""
@@ -680,7 +672,6 @@ def check_sso_start(r: Report, base: str, learn: list[dict], admin_grant: str) -
     return code
 
 
-# @verifies REQ-003, REQ-059
 def check_sso_exchange(admin: Client, r: Report, base: str, secret: str, code: str | None, admin_grant: str, learn: list[dict]):
     """/api/sso/exchange。共有秘密が合わないと 403、コードは 1 回だけ・120 秒だけ、権限は交換時にも見る。
     期限切れは待たずに、ローカル D1 の expires_at を過去に書き換えて確かめる。"""
@@ -747,7 +738,6 @@ def check_sso_exchange(admin: Client, r: Report, base: str, secret: str, code: s
     r.note("交換: 秘密違い 403 / 1 回だけ / 期限切れ（D1 を書き換えて確認）/ 権限を外すと 403")
 
 
-# @verifies REQ-094
 def check_health(c: Client, r: Report):
     """/api/health は認証なしで {ok: true}。同じ条件で /api/me は 401（死活確認だけが素通しであること）。"""
     st, data, _, _ = c.call("GET", "/api/health")
@@ -758,7 +748,6 @@ def check_health(c: Client, r: Report):
     r.status("GET /api/me（未認証）", st2, 401)
     r.notes.append("死活確認: /api/health は未認証で 200、/api/me は 401")
 
-# @verifies REQ-045
 def check_learnings(c: Client, r: Report, learn: list[dict], secret: str):
     """/api/learnings は学びの一覧（key・brand・kind・desc・url）だけを返し、秘密を含まない。
     件数と key は登録簿（portal/src/learnings.json）と一致する。認証なしで読める（トップ画面の材料）。"""
@@ -783,7 +772,6 @@ def check_learnings(c: Client, r: Report, learn: list[dict], secret: str):
     r.notes.append(f"学びの一覧 {len(rows)} 件（秘密なし）")
 
 
-# @verifies REQ-009, REQ-046, REQ-083, REQ-084, REQ-085
 def check_me_password_and_logout(r: Report, base: str):
     """/api/me/password と /api/logout。現在のパスワード違いは 401、8〜200 文字の外は 400。
     成功したら新しいパスワードで入れて前のパスワードでは入れない。
@@ -854,7 +842,6 @@ def check_me_password_and_logout(r: Report, base: str):
     r.note("自分の設定: 現在のパスワード違い 401・長さ 400・変更後は新パスワード・ログアウトはこの端末だけ")
 
 
-# @verifies REQ-300
 def check_body_schema(admin: Client, r: Report, base: str, secret: str, admin_grant: str, member_id: str | None):
     """本文の検証。login・sso/exchange・me/password・管理の作成・更新・再設定に、欠け・型違い・範囲外の
     本文を送ると 400 で、{error} は「どの項目がどう悪いか」分かる日本語（項目名の語はメール・パスワード・名前）。
@@ -970,7 +957,6 @@ def check_body_schema(admin: Client, r: Report, base: str, secret: str, admin_gr
     r.note("本文の検証: login 6・作成 11・更新 5・再設定 4・自分のパスワード 7・交換 2 通りが 400 で項目の分かる日本語")
 
 
-# @verifies REQ-302
 def check_unknown_api_path(r: Report, base: str, admin: Client):
     """知らない /api の経路は、未ログインでもログイン後でも 404 で本文が {error} の日本語。
     静的ファイルに落ちて 200（index.html）になっていないこと（本文が JSON であることで見る）。

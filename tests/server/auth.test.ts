@@ -6,13 +6,11 @@ const SECRET = 'test-secret'
 const user = { id: 'u-1', name: '小野寺', role: 'MEMBER' }
 
 describe('パスワードのハッシュ', () => {
-  // @verifies REQ-093
   it('ハッシュしたパスワードは同じ文字列で照合できる', async () => {
     const stored = await hashPassword('correct horse 8')
     expect(await verifyPassword('correct horse 8', stored)).toBe(true)
   })
 
-  // @verifies REQ-093
   it('違うパスワード・壊れた保存値は照合に失敗する', async () => {
     const stored = await hashPassword('correct horse 8')
     expect(await verifyPassword('correct horse 9', stored)).toBe(false)

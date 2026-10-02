@@ -104,7 +104,6 @@ function validationMessage(err: z.ZodError): string {
 }
 
 /** POST / PUT の本文はここを通して読む。通った値だけを使い、通らなければ 400 と {error} の日本語を返す。 */
-// @implements-old REQ-300
 async function parseBody<S extends z.ZodType>(
   c: Context<AppEnv>,
   schema: S,
@@ -116,7 +115,6 @@ async function parseBody<S extends z.ZodType>(
 
 const app = new Hono<AppEnv>()
 
-// @implements-old REQ-086
 app.use(
   '*',
   secureHeaders({
@@ -165,16 +163,13 @@ async function openSession(c: any, accountId: string) {
 
 const api = new Hono<AppEnv>()
 
-// @implements-old REQ-094
 // @implements REQ-213
 api.get('/health', (c) => c.json({ ok: true }))
 
 /** 学びの一覧（公開。URL は公開情報。合言葉や秘密は含めない） */
-// @implements-old REQ-045
 // @implements REQ-183
 api.get('/learnings', (c) => c.json({ learnings: LEARNINGS.map(({ key, brand, kind, desc }) => ({ key, brand, kind, desc })) }))
 
-// @implements-old REQ-001, REQ-056
 // @implements REQ-181, REQ-182
 api.post('/login', async (c) => {
   const p = await parseBody(c, loginBody)
@@ -190,7 +185,6 @@ api.post('/login', async (c) => {
 })
 
 /** 学び側サーバが使い捨てコードをメールと名前に交換する（共有秘密）。権限は交換時にも見る。 */
-// @implements-old REQ-003, REQ-059
 // @implements REQ-200, REQ-201, REQ-202, REQ-203, BR-003, BR-004
 api.post('/sso/exchange', async (c) => {
   // 共有秘密は本文の検証より先に見る（合わなければ 403 で止まり、本文が欠けていても DB も見ない）
@@ -213,7 +207,6 @@ api.post('/sso/exchange', async (c) => {
 })
 
 /** ログインが要る経路。`*` に付けると知らない経路まで 401 になって 404（REQ-302）を隠すので、経路を挙げて囲う。 */
-// @implements-old REQ-088
 // @implements REQ-223, BR-001
 const requireLogin = async (c: Context<AppEnv>, next: Next) => {
   const acc = await accountOf(c.env, getCookie(c, SESSION_COOKIE))
@@ -223,7 +216,6 @@ const requireLogin = async (c: Context<AppEnv>, next: Next) => {
 }
 for (const path of ['/logout', '/me', '/me/*', '/admin/*']) api.use(path, requireLogin)
 
-// @implements-old REQ-083
 // @implements REQ-189
 api.post('/logout', async (c) => {
   const sid = getCookie(c, SESSION_COOKIE)
@@ -232,14 +224,12 @@ api.post('/logout', async (c) => {
   return c.json({ ok: true })
 })
 
-// @implements-old REQ-046
 // @implements REQ-184
 api.get('/me', async (c) => {
   const a = c.get('account')
   return c.json({ account: a, grants: await grantsOf(c.env, a.id) })
 })
 
-// @implements-old REQ-009, REQ-084, REQ-085
 // @implements REQ-209, REQ-210, REQ-212, BR-007
 api.post('/me/password', async (c) => {
   const a = c.get('account')
@@ -255,14 +245,12 @@ api.post('/me/password', async (c) => {
 // ---- 管理（ADMIN だけ） ------------------------------------------------------
 
 const admin = new Hono<AppEnv>()
-// @implements-old REQ-007
 // @implements REQ-176
 admin.use('*', async (c, next) => {
   if (c.get('account').role !== 'ADMIN') return c.json({ error: '管理者だけが使えます' }, 403)
   await next()
 })
 
-// @implements-old REQ-070
 // @implements REQ-162
 admin.get('/accounts', async (c) => {
   const rows = await c.env.DB.prepare(
@@ -273,7 +261,6 @@ admin.get('/accounts', async (c) => {
   return c.json({ accounts: (rows.results ?? []).map((r) => ({ ...r, grants: r.grants ? r.grants.split(',').sort() : [] })) })
 })
 
-// @implements-old REQ-071, REQ-075, REQ-078
 // @implements REQ-163, REQ-164
 admin.post('/accounts', async (c) => {
   const p = await parseBody(c, accountCreateBody)
@@ -289,7 +276,6 @@ admin.post('/accounts', async (c) => {
   return c.json({ id, email, name, role, grants }, 201)
 })
 
-// @implements-old REQ-072, REQ-076, REQ-008, REQ-080
 // @implements REQ-165, REQ-166, REQ-167, REQ-173
 admin.put('/accounts/:id', async (c) => {
   const id = c.req.param('id')
@@ -314,7 +300,6 @@ admin.put('/accounts/:id', async (c) => {
   return c.json({ ok: true })
 })
 
-// @implements-old REQ-073, REQ-077, REQ-081
 // @implements REQ-168, REQ-174, BR-007
 admin.post('/accounts/:id/password', async (c) => {
   const id = c.req.param('id')
@@ -327,7 +312,6 @@ admin.post('/accounts/:id/password', async (c) => {
   return c.json({ ok: true })
 })
 
-// @implements-old REQ-074, REQ-079, REQ-082
 // @implements REQ-170, REQ-172, REQ-175
 admin.delete('/accounts/:id', async (c) => {
   const id = c.req.param('id')
@@ -342,7 +326,6 @@ app.route('/api', api)
 
 // ---- SSO の入口（ブラウザが来る） ----------------------------------------------
 
-// @implements-old REQ-002, REQ-057
 // @implements REQ-185, REQ-186, REQ-187, REQ-188, BR-003, BR-004
 app.get('/sso/start', async (c) => {
   const key = c.req.query('app') ?? ''
@@ -357,7 +340,6 @@ app.get('/sso/start', async (c) => {
   return c.redirect(`${learning.url}/sso/callback?code=${encodeURIComponent(code)}`)
 })
 
-// @implements-old REQ-301
 // @implements BR-002
 app.onError((err, c) => {
   if (err instanceof HTTPException) return err.getResponse()
@@ -370,7 +352,6 @@ app.onError((err, c) => {
 // ASSETS の応答はヘッダーが変更不可なので、写してから返す。そのまま返すと secureHeaders が
 // ヘッダーを足そうとして TypeError（Can't modify immutable headers）→ 画面が全部 500。
 // ローカルの wrangler dev では再現せず、本番だけで落ちた（2026-09-17。API は Hono が作る応答なので無事だった）
-// @implements-old REQ-302
 // @implements REQ-214
 app.notFound(async (c) => {
   if (c.req.path === '/api' || c.req.path.startsWith('/api/')) return c.json({ error: '見つかりません' }, 404)

@@ -1,17 +1,14 @@
 const TOKEN_KEY = 'study-app.token'
 
-// @implements-old REQ-062
 export function getToken(): string | null {
   return localStorage.getItem(TOKEN_KEY)
 }
-// @implements-old REQ-050
 // @implements REQ-191
 export function setToken(token: string) {
   localStorage.setItem(TOKEN_KEY, token)
 }
 /** ログインしている人の名前。トークン（JWT）の中身から読む。サーバに聞かない。
  *  「ログインしている私が誰か分からない」（利用者のフィードバック 2026-09-16）に応えてヘッダーに出す。 */
-// @implements-old REQ-053
 // @implements REQ-199
 export function getUserName(): string | null {
   const token = getToken()
@@ -26,7 +23,6 @@ export function getUserName(): string | null {
   }
 }
 
-// @implements-old REQ-069
 // @implements REQ-198, BR-010
 export function clearToken() {
   localStorage.removeItem(TOKEN_KEY)
@@ -52,7 +48,6 @@ function markSessionExpired() {
 }
 
 /** 印が立っていれば true を返し、同時に消す（出すのは一度だけ）。 */
-// @implements-old REQ-052
 // @implements REQ-197, BR-011
 export function takeSessionExpired(): boolean {
   try {
@@ -64,7 +59,6 @@ export function takeSessionExpired(): boolean {
   }
 }
 
-// @implements-old REQ-097
 export class ApiError extends Error {
   constructor(
     message: string,
@@ -76,7 +70,6 @@ export class ApiError extends Error {
   }
 }
 
-// @implements-old REQ-063, REQ-067, REQ-051, REQ-098
 // @implements REQ-196
 export async function api<T = any>(
   path: string,
@@ -132,12 +125,10 @@ const memo = new Map<string, Promise<unknown>>()
  *  /fields と /categories は分野・単元の構造だけでなく「理解した数」も返す（進捗の集計を含む）。
  *  理解度を付けて一覧へ戻っても古い数が出続け、再読み込みで直る、という不具合の原因だった
  *  （利用者のフィードバック 2026-09-16）。 */
-// @implements-old REQ-129
 export function invalidateCached() {
   memo.clear()
 }
 
-// @implements-old REQ-054
 // @implements REQ-017, REQ-018
 export function apiCached<T = any>(path: string): Promise<T> {
   const hit = memo.get(path)
@@ -159,7 +150,6 @@ const LAST_TOPIC_KEY = 'study-app.lastTopic'
 
 export type LastTopic = { id: number; term: string; middle: string; middleNo: number }
 
-// @implements-old REQ-155, REQ-158
 // @implements REQ-082, BR-011, BR-012
 export function getLastTopic(): LastTopic | null {
   try {
@@ -170,7 +160,6 @@ export function getLastTopic(): LastTopic | null {
   }
 }
 
-// @implements-old REQ-040
 // @implements REQ-077, REQ-078, BR-011, BR-013
 export function setLastTopic(t: LastTopic) {
   try {

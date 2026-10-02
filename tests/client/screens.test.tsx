@@ -112,8 +112,8 @@ const RESULT = {
   ],
 }
 
-describe('結果画面の出典', () => {
-  // @verifies REQ-027
+describe('結果画面の出典（UC-008）', () => {
+  // @covers REQ-252#citation-per-item
   it('問題ごとに「出典：<年度ラベル> <試験名> 問N」が出る', async () => {
     stubApi(() => RESULT)
     await draw(
@@ -125,7 +125,7 @@ describe('結果画面の出典', () => {
     expect(text()).not.toContain('2024r06')
   })
 
-  // @verifies REQ-028
+  // @covers REQ-252#modified-item
   it('原文を書き換えた問題には「一部改変」が併記される', async () => {
     stubApi(() => RESULT)
     await draw(
@@ -136,7 +136,7 @@ describe('結果画面の出典', () => {
     expect(note?.textContent).toBe('（一部改変）')
   })
 
-  // @verifies REQ-028
+  // @covers REQ-252#modified-item
   it('書き換えていない問題には「一部改変」を出さない', async () => {
     stubApi(() => ({ ...RESULT, items: [{ ...RESULT.items[0], modified: false }] }))
     await draw(
@@ -158,7 +158,6 @@ describe('ログイン画面（UC-013）', () => {
     expect(link?.getAttribute('href')).toBe('https://manabiba.example/sso/start?app=ip')
   })
 
-  // @verifies REQ-006
   it('SSO でない環境（ローカルの検査用）ではパスワードのフォームを出す', async () => {
     stubApi(() => ({ sso: false, portal: null, app: 'ip' }))
     await draw(h(Login, { onDone: () => {} }))

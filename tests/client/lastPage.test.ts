@@ -41,13 +41,13 @@ describe('添え先（UC-010）', () => {
     expect(getLastPage()).toBeNull()
   })
 
-  // BR-011 の守り。覚えた値が読めないときは添え先を覚えていない扱いに畳む（UC-010 にこれを持つ要件は無い）
+  // @covers REQ-242#unreadable-value
   it('壊れた値が入っていても null を返す（画面を止めない）', () => {
     sessionStorage.setItem('study-app:last-page', '{壊れた')
     expect(getLastPage()).toBeNull()
   })
 
-  // BR-011 の守り。端末が覚えられないときは添え先を覚えないだけにする（UC-010 にこれを持つ要件は無い）
+  // @covers REQ-242#cannot-remember
   it('端末の記憶が使えないときも保存で例外を投げない（添えるものが無いだけ）', () => {
     const real = Storage.prototype.setItem
     Storage.prototype.setItem = () => {

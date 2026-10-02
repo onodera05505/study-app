@@ -323,6 +323,7 @@ describe('先頭の導線', () => {
 })
 
 describe('取れなかったとき', () => {
+  // @covers REQ-241#list-unavailable-shows-retry
   it('単位の一覧が取れないときは、失敗と取り直す手段を出す', async () => {
     stubApi({ fail: ['/topics'] })
     const v = await drawRoadmap()

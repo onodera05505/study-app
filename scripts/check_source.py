@@ -31,7 +31,6 @@ EMPTY_LIST_RE = re.compile(r"useState(?:<[^\n]*?>)?\(\s*\[\s*\]\s*\)")
 ALLOW_MARK = "空で開始可"
 
 
-# @verifies REQ-036
 def check_iterations(auth: Path, errors: list[str]) -> None:
     if not auth.exists():
         errors.append(f"O5: {auth} が無い（改名したらこの検査も直す）")
@@ -45,7 +44,6 @@ def check_iterations(auth: Path, errors: list[str]) -> None:
         errors.append(f"O5: PBKDF2 の反復回数 {n:,} が Workers の上限 {PBKDF2_MAX:,} を超えている（本番だけログインが 500 になる）")
 
 
-# @verifies REQ-015, REQ-159, REQ-160, REQ-161
 def check_empty_lists(client: Path, errors: list[str]) -> int:
     n = 0
     for f in sorted(client.rglob("*.tsx")):

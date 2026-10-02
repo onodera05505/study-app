@@ -13,7 +13,6 @@ import { feedbackRoutes } from './routes/feedback'
 
 const app = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
-// @implements-old REQ-035
 app.use(
   '*',
   secureHeaders({
@@ -37,14 +36,13 @@ app.use(
 const api = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
 // @implements REQ-213
-// @implements-old REQ-047
 api.get('/health', (c) => c.json({ ok: true }))
 
 api.route('/auth', authRoutes)
 
 /** 認証。/api/auth/* 以外は Bearer トークンを要求する。
  *  @implements REQ-196, REQ-223, BR-001, BR-002
- *  @implements-old REQ-033 */
+ */
 api.use('*', async (c, next) => {
   if (c.req.path.startsWith('/api/auth/') || c.req.path === '/api/health') return next()
   const header = c.req.header('Authorization') ?? ''
@@ -66,7 +64,6 @@ api.use('*', async (c, next) => {
 })
 
 // @implements REQ-043, REQ-044, BR-030
-// @implements-old REQ-014
 api.get('/me', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -162,7 +159,6 @@ api.route('/feedback', feedbackRoutes)
 app.route('/api', api)
 
 // @implements BR-002
-// @implements-old REQ-092
 app.onError((err, c) => {
   if (err instanceof HTTPException) return err.getResponse()
   // 内部エラーの詳細は返さない。ログには残す。
@@ -170,7 +166,6 @@ app.onError((err, c) => {
   return c.json({ error: 'サーバでエラーが発生しました' }, 500)
 })
 
-// @implements-old REQ-091
 app.notFound(async (c) => {
   if (c.req.path.startsWith('/api/')) return c.json({ error: '見つかりません' }, 404)
   // SPA のルーティングは assets 側の single-page-application 設定に委ねる。

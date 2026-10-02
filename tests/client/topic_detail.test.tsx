@@ -288,7 +288,7 @@ describe('次に学ぶ論点', () => {
     expect(hrefs()).toContain('/topics/555')
   })
 
-  // @covers REQ-046#detail-shows-list-link
+  // @covers REQ-269#detail-shows-list-link
   it('候補が無ければ次に学ぶを出さず、一覧への導線を出す', async () => {
     stubApi({ body: { nextTopic: null } })
     await draw(<TopicDetail />)

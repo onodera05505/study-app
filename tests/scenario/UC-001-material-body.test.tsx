@@ -1,10 +1,10 @@
 // @vitest-environment jsdom
-/** UC-006「本文の用語ポップと図の描画」の基本の流れを 1 本で実行する写し
- *  （正常系のみ。用語集が取れない・用語集に無い語は REQ のテストが見る）。
+/** UC-001「教材の本文を読み、用語の説明をその場で確かめる」の主シナリオを 1 本で実行する写し
+ *  （正常系のみ。用語集が取れない・用語集に無い語は要件のテストが見る）。
  *
  *  本文を出す画面として論点の画面を使い、用語集の応答は待たせられる偽の fetch で返す。
- *  画面の文字は要件（REQ-136〜REQ-140・REQ-016〜REQ-018）の文面から採る。
- *  教材の図の置き場所は /figures/materials/<試験>/（REQ-017。既定の対象は ip）。 */
+ *  画面の文字は要件の文面から採る。
+ *  教材の図の置き場所は /figures/materials/<試験>/（既定の対象は ip）。 */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { act, createElement as h } from 'react'
@@ -151,22 +151,22 @@ afterEach(async () => {
 describe('UC-001 本文の用語ポップと図の描画', () => {
   // @scenario UC-001
   it('用語集を 1 度だけ引き、記法どおりに本文を描き、用語を押して 1 行説明を出す', async () => {
-    // 1. 利用者がログインする。画面は用語集をまとめて取りに行き、何度求められても 1 回しか取りに行かない
+    // step 1・2: 利用者が教材を開く。画面は用語集をまとめて取りに行き、何度求められても 1 回しか取りに行かない
     await open('/topics/231')
     expect(glossaryCalls, '用語集を 1 回だけ取りに行っていない').toBe(1)
 
-    // 3. 画面は用語集が取れるまでを未取得として扱い、本文の用語に色を付けない
+    // 用語集を引けていない間は未取得として扱い、本文の用語に色を付けない
     expect(text(), '本文が出ていない').toContain('売上は')
     expect(controls('LTV'), '用語集が引けていないのに押せる語になっている').toHaveLength(0)
 
-    // 2. システムは用語集の全語（用語・1 行説明・紐づく論点）を返す
+    // step 2: システムは用語集の全語（用語・1 行説明・紐づく論点）を返す
     await act(async () => {
       openGate()
       await new Promise((r) => setTimeout(r, 0))
     })
     expect(glossaryCalls, '用語集を取り直している').toBe(1)
 
-    // 4. 画面は本文を決めた記法（見出し・箇条書き・番号付き・太字・表）だけ解釈し、それ以外は文字のまま出す
+    // step 3: 画面は本文を決めた記法（見出し・箇条書き・番号付き・太字・表）だけ解釈し、それ以外は文字のまま出す
     expect(headings(), '見出しの記法が解釈されていない').toContain('見出しの行')
     const items = [...host.querySelectorAll('li')].map((el) => (el.textContent ?? '').trim())
     expect(
@@ -180,12 +180,12 @@ describe('UC-001 本文の用語ポップと図の描画', () => {
     expect(text(), '許していない記法が文字のまま出ていない').toContain('[リンク](https://example.com)')
     expect(text()).toContain('`コード`')
 
-    // 5. 画面は行の中の記法を描き、太字の中の [[用語]] も押せる語にする
+    // step 3: 画面は行の中の記法を描き、太字の中の [[用語]] も押せる語にする
     expect(controls('LTV').length, '太字の中と本文の中の用語が押せる語になっていない').toBeGreaterThan(1)
     expect(text(), '記法の括弧が残っている').not.toContain('[[')
     expect(text(), '太字の記法が文字のまま残っている').not.toContain('**')
 
-    // 6. 利用者が色の付いた用語を押す。画面は 1 行の説明と「この論点を学ぶ →」をその場に出し、画面は移らない
+    // step 4・5: 利用者が色の付いた用語を押す。画面は 1 行の説明と「この論点を学ぶ →」をその場に出し、画面は移らない
     await press('LTV')
     expect(pageText(), '1 行の説明が出ていない').toContain('1 人の顧客が生涯で払う金額。')
     const toTopic = [...document.body.querySelectorAll('a')].find((a) =>
@@ -195,13 +195,13 @@ describe('UC-001 本文の用語ポップと図の描画', () => {
     expect(toTopic!.getAttribute('href')).toBe('/topics/999')
     expect(text(), '用語を押したら画面が移ってしまった').toContain('売上は')
 
-    // 7. 画面は本文に出す用語の表示名を、末尾に括弧書き（読み・英字表記）があればそれを落として出す
-    //    （ポップの見出しは正式表記のまま）
+    // 本文に出す用語の表示名は、末尾に括弧書き（読み・英字表記）があればそれを落として出す
+    //（ポップの見出しは正式表記のまま）
     expect(controls('リスク対応').length, '末尾の括弧書きが落ちていない').toBeGreaterThan(0)
     await press('リスク対応')
     expect(pageText(), 'ポップの見出しが正式表記になっていない').toContain(PAREN_TERM)
 
-    // 8. 画面は図の画像行を、教材の図の置き場所のものだけ画像にし、他の画像記法は文字のまま出す
+    // step 3: 画面は図の画像行を、教材の図の置き場所のものだけ画像にし、他の画像記法は文字のまま出す
     expect(images(), '教材の図の置き場所の画像行が画像になっていない').toContain(FIGURE_SRC)
     expect(images(), '置き場所の違う画像行が画像になっている').not.toContain('https://example.com/zu.png')
     expect(text(), '置き場所の違う画像記法が文字のまま出ていない').toContain(OUTSIDE_FIGURE)

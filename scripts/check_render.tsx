@@ -264,7 +264,6 @@ async function main(): Promise<number> {
     warnings.push({ where, what, excerpt: ex })
 
   // === 7. 用語集が未取得（null）でも `[[` が文字として出ない ==============
-  // @verifies REQ-136, REQ-138
   // explanation に [[用語]] が 1 つも無い対象（mkt。用語は detail 側だけ）で fetch 未検出の誤報が出たので、
   // explanation → detail の順で用語を含む本文を探す（2026-09-15）
   const sampleText = (m: Material) =>
@@ -289,7 +288,6 @@ async function main(): Promise<number> {
 
   // === 1〜4. 教材 =======================================================
   // 記法の解釈（1・4）・用語ポップ（2）・教材の図が試験ごとの場所に実在すること（3）
-  // @verifies REQ-016, REQ-017, REQ-018, REQ-139
   let termTotal = 0
   let buttonTotal = 0
   let figureTotal = 0
@@ -354,7 +352,6 @@ async function main(): Promise<number> {
   }
 
   // === 5. 問題解説 ======================================================
-  // @verifies REQ-016, REQ-018, REQ-139
   const LABELS = ['ア', 'イ', 'ウ', 'エ']
   for (const ck of [...explanations.keys()].sort()) {
     const e = explanations.get(ck)!
@@ -415,7 +412,6 @@ async function main(): Promise<number> {
   }
 
   // === 6. 押したときの挙動 ==============================================
-  // @verifies REQ-016
   const withTopic = glossary.find((x) => x.topicId !== null)
   const withoutTopic = glossary.find((x) => x.topicId === null)
   for (const [kind, entry] of [
@@ -500,7 +496,6 @@ async function main(): Promise<number> {
 
 /** 配信物に版の印（version.json）が入っているか。ビルドの出力がある環境で見る。
  *  build はコミットの短い ID、at は時刻として読める文字列であること。 */
-// @verifies REQ-278
 function checkVersionStamp(): { errors: Issue[]; warnings: Issue[] } {
   const errors: Issue[] = []
   const warnings: Issue[] = []

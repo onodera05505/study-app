@@ -5,7 +5,6 @@ import { portal } from '../../shared/exam'
 
 type AuthConfig = { sso: boolean; portal: string | null; app: string }
 
-// @implements-old REQ-006, REQ-068
 // @implements REQ-190
 export function Login({ onDone }: { onDone: () => void }) {
   const [mode, setMode] = useState<'login' | 'register'>('login')

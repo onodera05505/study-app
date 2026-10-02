@@ -24,7 +24,6 @@ const body = z.object({
 const DAILY_LIMIT = 20
 
 // @implements REQ-159, REQ-160, REQ-161
-// @implements-old REQ-030, REQ-274, REQ-275
 feedbackRoutes.post('/', async (c) => {
   const parsed = body.safeParse(await c.req.json().catch(() => null))
   if (!parsed.success) {

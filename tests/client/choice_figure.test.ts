@@ -3,7 +3,7 @@ import { formatChoice } from '../../src/client/lib/choice'
 import { parseFigureDescription } from '../../src/client/components/Figure'
 
 describe('組合せ選択肢の表示整形', () => {
-  // @verifies REQ-044
+  // @covers REQ-246#split-by-separator
   it('「／」と「：」を持つ組合せは項目ごとに行を割る', () => {
     expect(formatChoice('品名：ガム，価格：100 ／ 品名：せんべい，価格：250 ／ 品名：チョコ，価格：150')).toEqual([
       '品名：ガム，価格：100',
@@ -12,7 +12,7 @@ describe('組合せ選択肢の表示整形', () => {
     ])
   })
 
-  // @verifies REQ-044
+  // @covers REQ-246#split-by-item-head
   it('「短い項目名＋：」が読点の後に続く並びは項目の切れ目で割る', () => {
     expect(formatChoice('a：（2 の i 乗）－ 1，b：（2 の i 乗）＋ 1，c：2 の（i ＋ 1）乗')).toEqual([
       'a：（2 の i 乗）－ 1',
@@ -21,7 +21,7 @@ describe('組合せ選択肢の表示整形', () => {
     ])
   })
 
-  // @verifies REQ-044
+  // @covers REQ-246#kept-as-one-line
   it('普通の読点を含む文や 30 字以下の選択肢は 1 行のまま出し、データを変えない', () => {
     const plain = '信頼性を高めるため，このディスクを二重化した。分数 1／2 の比は変えない。'
     expect(formatChoice(plain)).toEqual([plain])
@@ -32,7 +32,7 @@ describe('組合せ選択肢の表示整形', () => {
 })
 
 describe('過去問の図の書き起こし', () => {
-  // @verifies REQ-043
+  // @covers REQ-266#blocks-in-written-order
   it('表と擬似言語と文を、書かれた順に別のかたまりとして読む', () => {
     const src = ['図の説明です。', '', '| 品名 | 価格 |', '| --- | --- |', '| ガム | 100 |', '', '```', 'x ← 1', '```'].join('\n')
     const blocks = parseFigureDescription(src)
