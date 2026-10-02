@@ -2,7 +2,7 @@
 id: GOAL-06
 actor: ACT-03
 origin: KPI-07
-status: draft
+status: active
 ---
 
 # GOAL-06

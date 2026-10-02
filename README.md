@@ -5,7 +5,7 @@ IT パスポート試験に**最短で合格する**ための学習アプリ。�
 過去問（IPA 公開分）を起点に、その背後にある**論点**を学習単位として構成する。
 単なる過去問暗記にせず、周辺知識を添えて理解を深められるようにするのが方針。
 
-- 要件定義: [`docs/要件定義書_draft.md`](docs/要件定義書_draft.md)
+- 仕様の正本: [`docs/goals/`](docs/goals/)（GOAL → UC → REQ → 契約）・[`docs/rules/`](docs/rules/)（BR）・[`docs/adr/`](docs/adr/)。旧の要件定義書は [`docs/attic/要件定義書_draft.md`](docs/attic/要件定義書_draft.md)
 - 開発の経緯: [`docs/作業ログ_2026-08-23.md`](docs/作業ログ_2026-08-23.md)
 
 ## 設計の中核

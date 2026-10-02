@@ -11,7 +11,7 @@
 scripts/check_sso_flow.py は 2 つの wrangler dev を手で起こす受入用のリハーサルで、
 scripts/check_sso_prod.sh は本番の死活だけ見る。**まなびば単独の経路を機械で毎回見るもの**がこれ。
 
-## 見るもの（仕様は docs/spec.yaml。@verifies で紐づけてある）
+## 見るもの（仕様は docs/goals/**/REQ-nnn.md。@scenario で UC に紐づけてある）
 
 - REQ-001・REQ-056 ログイン — 正しい認証情報で Cookie（HttpOnly・SameSite=Lax）、誤りは 401 で共通の文。
   **メールが在るか無いかで文言が変わらない**（変わると総当たりでメールの存在が分かる）
@@ -34,7 +34,7 @@ scripts/check_sso_prod.sh は本番の死活だけ見る。**まなびば単独�
   本文を送ると 400。{error} はどの項目（メール・パスワード・名前）が悪いか分かる日本語で、
   スキーマの既定の英語の文言（Invalid・Required・Expected・received）を含まない
 - REQ-302 知らない /api — 存在しない /api の経路は、未ログインでもログイン後でも 404 で {error} が日本語
-- **UC の基本の流れの写し**（`check_scenario_uc0xx`。`docs/usecases/UC-xxx.md` の番号付きステップを順に
+- **UC の基本の流れの写し**（`check_scenario_uc0xx`。`docs/goals/<GOAL>/<UC>/UC.md` の主シナリオの番号付きステップを順に
   1 本で通し、最後に事後条件を見る）— 正常系だけ。例外の流れと境目は上の検査が見る。
   画面の操作と描画は HTTP では踏めないので、画面が使う応答まで
 
@@ -994,7 +994,7 @@ def check_unknown_api_path(r: Report, base: str, admin: Client):
 # --------------------------------------------------------------------------
 # UC の基本の流れの写し（scenario）
 #
-# 1 UC につき 1 本。docs/usecases/UC-xxx.md の「基本の流れ」の番号付きステップを順に
+# 1 UC につき 1 本。docs/goals/<GOAL>/<UC>/UC.md の主シナリオの番号付きステップを順に
 # 1 操作か 1 応答ずつ写し、最後に「事後条件」を見る。正常系だけを通す。
 # --------------------------------------------------------------------------
 

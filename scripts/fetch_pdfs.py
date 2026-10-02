@@ -8,7 +8,7 @@
 
 出典: https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/questions.html
 過去問の利用に許諾・使用料は不要だが、表示時の出典明記が必須。詳細は
-docs/要件定義書_draft.md §9 を参照。
+docs/rules/BR-027.md を参照。
 """
 
 import argparse
