@@ -3,7 +3,7 @@ id: UC-017
 title: 学びとまなびばの要求の受け口を一様に守る
 actor: ACT-03
 goal: GOAL-06
-status: draft
+status: active
 phase: 定義
 ---
 
