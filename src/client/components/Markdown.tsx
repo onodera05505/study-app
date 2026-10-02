@@ -202,7 +202,7 @@ function Table({ head, rows }: { head: string[] | null; rows: string[][] }) {
  *
  *  スマホでは幅に合わせて縮むと文字が読めなくなる図がある。過去問側にだけ
  *  拡大があって教材側に無いのは、同じ絵なのに扱いが違って見える。 */
-// @implements REQ-006
+// @implements REQ-006, BR-035
 function MdFigure({ src, caption }: { src: string; caption: string }) {
   const [zoomed, setZoomed] = useState(false)
   return (

@@ -57,7 +57,7 @@ function trimBlank(lines: string[]): string[] {
  *  書き手が機械（画像の読み取り）なので、閉じていないコードフェンスや列数の
  *  揃っていない表が来うる。どんな入力でも例外を投げず、表と解釈できない
  *  かたまりは素のテキストとして出す。 */
-// @implements REQ-025
+// @implements REQ-025, REQ-266
 export function parseFigureDescription(src: string): FigBlock[] {
   const blocks: FigBlock[] = []
   const lines = src.split('\n')
@@ -200,6 +200,7 @@ export function Figure({
     <>
       {image && (
         <figure className={`figure-image ${zoomed ? 'zoomed' : ''}`}>
+          {/* @implements REQ-267, BR-035 */}
           <button
             type="button"
             className="figure-zoom"

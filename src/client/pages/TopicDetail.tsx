@@ -289,7 +289,7 @@ export function TopicDetail() {
       {/* 次の一手。順序はホームの nextTopics と同じ（頻出×未理解）。ここで別の並びを
           作らない——"次" の意味をアプリ全体で1つに保つため。この論点を「理解」にすると
           候補から外れて次が繰り上がる。尽きたらグレーアウトの完了表示。 */}
-      {/* @implements REQ-045, REQ-046, REQ-138 */}
+      {/* @implements REQ-045, REQ-138, REQ-269 */}
       {!exam.roadmap && (
       <div className="next-move">
         {data.nextTopic ? (

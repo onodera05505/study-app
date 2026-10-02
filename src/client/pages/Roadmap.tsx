@@ -74,6 +74,7 @@ export function Roadmap() {
     }
   }
 
+  // @implements REQ-241
   if (error)
     return (
       <>

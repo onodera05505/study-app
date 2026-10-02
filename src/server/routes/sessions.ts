@@ -38,7 +38,7 @@ const createBody = z.object({
   size: z.number().int().min(1).max(100).optional(),
 })
 
-// @implements REQ-050, REQ-055, REQ-057, REQ-105, REQ-109, BR-017
+// @implements REQ-050, REQ-055, REQ-057, REQ-105, REQ-109, REQ-243, REQ-247, BR-017
 sessionRoutes.post('/', async (c) => {
   const parsed = createBody.safeParse(await c.req.json().catch(() => null))
   if (!parsed.success) return c.json({ error: '入力が正しくありません' }, 400)
@@ -229,7 +229,7 @@ const answerBody = z.object({
 })
 
 /** 1問回答する。採点は**出題時スナップショット**に対して行う。 */
-// @implements REQ-061, REQ-064, REQ-066, REQ-067, REQ-072, REQ-119, BR-020, BR-022, BR-023
+// @implements REQ-061, REQ-064, REQ-066, REQ-067, REQ-072, REQ-119, REQ-253, BR-020, BR-022, BR-023
 sessionRoutes.post('/:id/answer', async (c) => {
   const parsed = answerBody.safeParse(await c.req.json().catch(() => null))
   if (!parsed.success) return c.json({ error: '入力が正しくありません' }, 400)
@@ -307,7 +307,7 @@ async function finalize(db: ReturnType<typeof getDb>, sessionId: string) {
   return { byField: rows.filter((r) => r.field), total: total ?? { total: 0, correct: 0 } }
 }
 
-// @implements REQ-069, REQ-073, REQ-075, BR-024
+// @implements REQ-069, REQ-073, REQ-075, REQ-254, BR-024
 sessionRoutes.post('/:id/finish', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -329,7 +329,7 @@ sessionRoutes.post('/:id/finish', async (c) => {
 })
 
 /** 結果の詳細。間違えた問題から論点へ戻れるようにする。 */
-// @implements REQ-115, REQ-120, REQ-121, REQ-123
+// @implements REQ-115, REQ-120, REQ-121, REQ-123, REQ-252
 sessionRoutes.get('/:id', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id

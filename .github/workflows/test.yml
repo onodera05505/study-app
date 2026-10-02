@@ -17,6 +17,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: git clone --depth 1 --branch v4.1.0 https://github.com/tsay-dev/harness .harness
+      - run: git clone --depth 1 --branch "$(grep -o 'develop-core#v[0-9.]*' apm.yml | cut -d'#' -f2)" https://github.com/tsay-dev/harness .harness
       - run: npm ci
       - run: npm test

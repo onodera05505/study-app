@@ -90,6 +90,7 @@ export async function api<T = any>(
     // 電波が無い・オフラインだと fetch は TypeError を投げる。そのままだと
     // ブラウザの英語メッセージ（Failed to fetch）が画面に出る。
     // サーバまで届いていないので status は無い（undefined のまま）。
+    // @implements REQ-262
     throw new ApiError(
       '通信できませんでした。電波の状態を確認して、もう一度お試しください。',
       undefined,
@@ -106,6 +107,7 @@ export async function api<T = any>(
       if (token) markSessionExpired()
       clearToken()
     }
+    // @implements REQ-261
     throw new ApiError(data?.error ?? '通信に失敗しました', res.status, data)
   }
   return data as T

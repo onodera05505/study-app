@@ -92,7 +92,7 @@ export function TermPop({ term }: { term: string }) {
   }, [open, place])
 
   // 未取得（null）のうちは色を付けない。取れてから色が付く。
-  // @implements REQ-005, REQ-009, BR-015
+  // @implements REQ-005, REQ-009, REQ-264, BR-015
   const entry = glossary?.get(term)
   if (!entry) return <>{term}</>
 

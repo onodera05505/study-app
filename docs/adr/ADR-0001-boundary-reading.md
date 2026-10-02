@@ -22,7 +22,8 @@ date: 2026-10-01
 7. **UC-005（前回の続き）・UC-001 のメモリの記憶**など、境界が端末の記憶だけの UC はその local-store operation を書く。境界が本当に無い UC は無い見込みだが、あれば `operations: {}` と `x-no-boundary`（R-1206）。
 8. **エラーコードの語彙**は `docs/_shared/components.yaml` の `errorCodes` に閉じる（HTTP の status は `wire.status` で持つ）。失敗条件の評価順は各 operation の `errors` の並びだけが持つ（R-1207）。コード側に単一の出所が無いので `traceconfig.json` の `contract` ブロックは置かず C7 は skip（Phase 7 の返済候補）。
 9. **認証スキーム**は `bearer`（学び側）・`session`（まなびば）・`sharedSecret`（交換）の 3 つ（`docs/_shared/components.yaml`）。
-10. 2 つ以上の UC が使う形（`ErrorBody`・`Ok`・`QuestionSnapshot`）だけを `_shared` に置き、1 UC の形はその契約に書く。足したい物は担当が報告し、orchestrator が足す。
+10. 2 つ以上の UC が使う形（`ErrorBody`・`Ok`・`QuestionSnapshot`）だけを `_shared` に置き、1 UC の形はその契約に書く。足したい物は担当が報告し、orchestrator が足す。**同じ経路は 1 つの契約にだけ書き、他の UC は `UC-nnn: <operation 名>` で参照する**（同じ形が 2 か所に立つと片方だけ直る。R-101）。
+11. 横断の決まり（BR-001・BR-002・BR-014・NFR-001）の射影は、1 回の着座の価値を持たない UC（UC-017）に束ねて REQ の置き場にする。R-503 の例外で、`@covers` の先が REQ にしか無いために置く。主アクターは配備を扱う運用者（ACT-03）。
 
 守る箇所: spec-lint（`transport`・`auth`・`errors[].code` の語彙、operation の鍵の閉じた集合）。operation 名 → 入口の規約は Phase 7 まで文書だけ（R-901 の説得的統制）。
 

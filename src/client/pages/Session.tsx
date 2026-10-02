@@ -65,7 +65,7 @@ export function Session() {
   // 再試行のとき、失敗した呼び出しと同じ履歴の残し方をする
   const finishReplace = useRef(true)
 
-  // @implements REQ-069, REQ-074, BR-014
+  // @implements REQ-069, REQ-074, REQ-251, BR-014
   const finish = useCallback(
     async (replace: boolean) => {
       finishReplace.current = replace
@@ -216,6 +216,7 @@ export function Session() {
         <span className="prog">
           <i style={{ width: `${(done / total) * 100}%` }} />
         </span>
+        {/* @implements REQ-248 */}
         {remaining !== null && (
           <span className={`timer ${remaining < 300 ? 'low' : ''}`}>{formatTime(remaining)}</span>
         )}
@@ -228,6 +229,7 @@ export function Session() {
         {/* 出さないのは**公開回の通し受験だけ**（原本どおり全問出しているため）。
             それ以外（練習テスト・ランダム構成の模試）は同一内容を1問にまとめて
             出しているのでバッジが要る。判別は sourceExam の有無で行う。 */}
+        {/* @implements REQ-249 */}
         {!data.session.sourceExam && (
           <DupBadge timesAsked={q.timesAsked} otherCitations={q.otherCitations} />
         )}
@@ -290,7 +292,7 @@ export function Session() {
             </button>
           </>
         )}
-        {/* @implements BR-027 */}
+        {/* @implements REQ-245, BR-027 */}
         {!exam.roadmap && (
           <p className="citation">
             {q.citation}

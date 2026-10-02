@@ -13,6 +13,7 @@ import { feedbackRoutes } from './routes/feedback'
 
 const app = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
+// @implements REQ-259
 app.use(
   '*',
   secureHeaders({
@@ -35,13 +36,13 @@ app.use(
 
 const api = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
-// @implements REQ-213
+// @implements REQ-213, REQ-260
 api.get('/health', (c) => c.json({ ok: true }))
 
 api.route('/auth', authRoutes)
 
 /** 認証。/api/auth/* 以外は Bearer トークンを要求する。
- *  @implements REQ-196, REQ-223, BR-001, BR-002
+ *  @implements REQ-196, REQ-223, REQ-255, BR-001, BR-002
  */
 api.use('*', async (c, next) => {
   if (c.req.path.startsWith('/api/auth/') || c.req.path === '/api/health') return next()
@@ -54,6 +55,7 @@ api.use('*', async (c, next) => {
   // その日に「動きがあった」ことを記録する。ホームを開いたときだけでなく、
   // どの画面を触っても記録する。23:00 に始めて 0:01 まで続けた場合、
   // 0時をまたいだあとの操作が1つでもあれば、その日も1日として数える。
+  // @implements REQ-270
   const db = getDb(c.env)
   await db.run(sql`
     INSERT INTO daily_visits (user_id, day) VALUES (${payload.sub}, ${jstDay(new Date())})
@@ -63,7 +65,7 @@ api.use('*', async (c, next) => {
   await next()
 })
 
-// @implements REQ-043, REQ-044, BR-030
+// @implements REQ-043, REQ-044, REQ-271, REQ-272, BR-030
 api.get('/me', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -158,7 +160,7 @@ api.route('/feedback', feedbackRoutes)
 
 app.route('/api', api)
 
-// @implements BR-002
+// @implements REQ-258, BR-002
 app.onError((err, c) => {
   if (err instanceof HTTPException) return err.getResponse()
   // 内部エラーの詳細は返さない。ログには残す。
@@ -166,6 +168,7 @@ app.onError((err, c) => {
   return c.json({ error: 'サーバでエラーが発生しました' }, 500)
 })
 
+// @implements REQ-256
 app.notFound(async (c) => {
   if (c.req.path.startsWith('/api/')) return c.json({ error: '見つかりません' }, 404)
   // SPA のルーティングは assets 側の single-page-application 設定に委ねる。

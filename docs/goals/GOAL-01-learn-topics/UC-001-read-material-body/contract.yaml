@@ -9,7 +9,7 @@
 x-uc: UC-001
 x-status: draft
 x-spec: ./UC.md
-x-updated: 2026-10-01
+x-updated: 2026-10-02
 
 operations:
   getGlossary:
@@ -17,13 +17,11 @@ operations:
     direction: inbound
     owned: true
     auth: bearer
-    summary: 用語集の全語（用語・1 行の説明・紐づく論点）を用語の順に返す
+    summary: 用語集の全語（用語・1 行の説明・紐づく論点）を用語の順に返す（キャッシュ可）
     wire:
       method: GET
       path: /api/glossary
       success: 200
-      headers:
-        Cache-Control: private, max-age=3600
     response:
       type: object
       required: [glossary]

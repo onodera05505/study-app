@@ -4,7 +4,7 @@
 x-uc: UC-010
 x-status: draft
 x-spec: ./UC.md
-x-updated: 2026-10-01
+x-updated: 2026-10-02
 
 operations:
   # ---- 学び側（この配備。フィードバックの受け口） ----
@@ -85,7 +85,7 @@ operations:
 
   # ---- 端末の記憶（この端末・このタブに残る。鍵の名前は operation 名が表し、値の形だけを書く） ----
 
-  saveLastPage:
+  setLastPage:
     transport: local-store
     direction: outbound
     owned: true

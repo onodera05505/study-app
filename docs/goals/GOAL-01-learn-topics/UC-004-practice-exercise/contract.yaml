@@ -1,101 +1,10 @@
 x-uc: UC-004
 x-status: draft
 x-spec: ./UC.md
-x-updated: 2026-10-01
+x-updated: 2026-10-02
 
 operations:
-  listFields:
-    transport: http
-    direction: inbound
-    owned: true
-    auth: bearer
-    summary: 演習の範囲に選べる分野と、その学習の進み具合を一覧で返す
-    wire:
-      method: GET
-      path: /api/fields
-      success: 200
-    response:
-      type: object
-      required: [fields]
-      properties:
-        fields:
-          type: array
-          items:
-            type: object
-            required: [field, topics, questions, understood, partly, untouched]
-            properties:
-              field: { type: string }
-              topics: { type: integer, minimum: 0 }
-              questions: { type: integer, minimum: 0 }
-              understood: { type: integer, minimum: 0 }
-              partly: { type: integer, minimum: 0 }
-              untouched: { type: integer, minimum: 0 }
-    errors:
-      - code: UNAUTHENTICATED
-        when: Authorization の Bearer トークンが無い、または読めない
-        wire: { status: 401 }
-    examples:
-      ok:
-        response:
-          fields:
-            - { field: "ストラテジ系", topics: 148, questions: 310, understood: 20, partly: 5, untouched: 123 }
-            - { field: "マネジメント系", topics: 92, questions: 180, understood: 8, partly: 3, untouched: 81 }
-            - { field: "テクノロジ系", topics: 292, questions: 610, understood: 31, partly: 12, untouched: 249 }
-      unauthenticated:
-        error: UNAUTHENTICATED
-
-  listCategories:
-    transport: http
-    direction: inbound
-    owned: true
-    auth: bearer
-    summary: 分野を選んだあとに選べる単元（中分類）を一覧で返す
-    wire:
-      method: GET
-      path: /api/categories
-      success: 200
-    request:
-      type: object
-      properties:
-        field:
-          type: string
-          minLength: 1
-    response:
-      type: object
-      required: [categories]
-      properties:
-        categories:
-          type: array
-          items:
-            type: object
-            required: [middleNo, middle, major, field, topics, questions, understood]
-            properties:
-              middleNo: { type: integer, minimum: 1 }
-              middle: { type: string }
-              major: { type: string }
-              field: { type: string }
-              topics: { type: integer, minimum: 0 }
-              questions: { type: integer, minimum: 0 }
-              understood: { type: integer, minimum: 0 }
-    errors:
-      - code: UNAUTHENTICATED
-        when: Authorization の Bearer トークンが無い、または読めない
-        wire: { status: 401 }
-    examples:
-      ok:
-        request: { field: "テクノロジ系" }
-        response:
-          categories:
-            - { middleNo: 22, middle: "ネットワーク", major: "技術要素", field: "テクノロジ系", topics: 31, questions: 74, understood: 4 }
-            - { middleNo: 23, middle: "セキュリティ", major: "技術要素", field: "テクノロジ系", topics: 44, questions: 121, understood: 6 }
-      okAllFields:
-        request: {}
-        response:
-          categories:
-            - { middleNo: 1, middle: "企業活動", major: "企業と法務", field: "ストラテジ系", topics: 26, questions: 58, understood: 3 }
-      unauthenticated:
-        error: UNAUTHENTICATED
-
+  # 分野の一覧（GET /api/fields）と単元の一覧（GET /api/categories）は同じ経路なので UC-002 の契約が正本（UC-002: listFields / listCategories。ADR-0001 の決め 10）
   startSession:
     transport: http
     direction: inbound

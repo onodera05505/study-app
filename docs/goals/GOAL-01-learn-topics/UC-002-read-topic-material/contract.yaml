@@ -1,9 +1,10 @@
 # UC-002 の境界契約。境界の形だけを持つ（振る舞いと規則は ./UC.md と REQ-014〜033）
 # 読み方の決まりは ../../../adr/ADR-0001-boundary-reading.md（transport / direction / auth の当て方）
+# 論点の教材からドリルを始める経路（REQ-273）は同じ POST /api/sessions なので UC-004 の契約が正本（UC-004: startSession。ADR-0001 の決め 10）
 x-uc: UC-002
 x-status: draft
 x-spec: ./UC.md
-x-updated: 2026-10-01
+x-updated: 2026-10-02
 
 operations:
   listFields:

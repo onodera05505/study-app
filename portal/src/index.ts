@@ -53,7 +53,7 @@ const loginBody = z.object({
   email: zEmail(LOGIN_MSG),
   password: z.string({ error: LOGIN_MSG }).min(1, LOGIN_MSG),
 })
-// @implements BR-004
+// @implements REQ-263, BR-004
 const exchangeBody = z.object({
   code: z.string({ error: 'コードが正しくありません' }).min(1, 'コードが正しくありません'),
   app: z.string({ error: '学びの指定が正しくありません' }).min(1, '学びの指定が正しくありません').refine((k) => !!learningOf(k), '知らない学びです'),
@@ -104,6 +104,7 @@ function validationMessage(err: z.ZodError): string {
 }
 
 /** POST / PUT の本文はここを通して読む。通った値だけを使い、通らなければ 400 と {error} の日本語を返す。 */
+// @implements REQ-257
 async function parseBody<S extends z.ZodType>(
   c: Context<AppEnv>,
   schema: S,
@@ -115,6 +116,7 @@ async function parseBody<S extends z.ZodType>(
 
 const app = new Hono<AppEnv>()
 
+// @implements REQ-259
 app.use(
   '*',
   secureHeaders({
@@ -163,7 +165,7 @@ async function openSession(c: any, accountId: string) {
 
 const api = new Hono<AppEnv>()
 
-// @implements REQ-213
+// @implements REQ-213, REQ-260
 api.get('/health', (c) => c.json({ ok: true }))
 
 /** 学びの一覧（公開。URL は公開情報。合言葉や秘密は含めない） */
@@ -207,7 +209,7 @@ api.post('/sso/exchange', async (c) => {
 })
 
 /** ログインが要る経路。`*` に付けると知らない経路まで 401 になって 404（REQ-302）を隠すので、経路を挙げて囲う。 */
-// @implements REQ-223, BR-001
+// @implements REQ-223, REQ-255, BR-001
 const requireLogin = async (c: Context<AppEnv>, next: Next) => {
   const acc = await accountOf(c.env, getCookie(c, SESSION_COOKIE))
   if (!acc) return c.json({ error: 'ログインが必要です' }, 401)
@@ -340,7 +342,7 @@ app.get('/sso/start', async (c) => {
   return c.redirect(`${learning.url}/sso/callback?code=${encodeURIComponent(code)}`)
 })
 
-// @implements BR-002
+// @implements REQ-258, BR-002
 app.onError((err, c) => {
   if (err instanceof HTTPException) return err.getResponse()
   // 想定していない例外。中身（message・stack）は本文に出さず、ログにだけ残す
@@ -352,7 +354,7 @@ app.onError((err, c) => {
 // ASSETS の応答はヘッダーが変更不可なので、写してから返す。そのまま返すと secureHeaders が
 // ヘッダーを足そうとして TypeError（Can't modify immutable headers）→ 画面が全部 500。
 // ローカルの wrangler dev では再現せず、本番だけで落ちた（2026-09-17。API は Hono が作る応答なので無事だった）
-// @implements REQ-214
+// @implements REQ-214, REQ-256
 app.notFound(async (c) => {
   if (c.req.path === '/api' || c.req.path.startsWith('/api/')) return c.json({ error: '見つかりません' }, 404)
   const res = await c.env.ASSETS.fetch(c.req.raw)

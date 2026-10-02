@@ -169,6 +169,7 @@ export function Result() {
             {/* 出さないのは**公開回の通し受験だけ**（原本どおり全問出しているため）。
                 ランダム構成の模試は同一内容を1問にまとめているので、練習テストと
                 同じくバッジを出す。判別は sourceExam の有無で行う（Session.tsx と同じ）。 */}
+            {/* @implements REQ-249 */}
             {!data.session.sourceExam && (
               <DupBadge timesAsked={i.timesAsked} otherCitations={i.otherCitations} />
             )}
@@ -219,7 +220,7 @@ export function Result() {
               </div>
             )}
             {openExpl[i.idx] && <Explanation data={i.explanation} answer={i.answer} />}
-            {/* @implements BR-027 */}
+            {/* @implements REQ-252, BR-027 */}
             {!exam.roadmap && (
               <p className="citation">
                 {i.citation}

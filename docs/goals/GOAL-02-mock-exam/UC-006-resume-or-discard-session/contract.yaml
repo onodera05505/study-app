@@ -4,7 +4,7 @@
 x-uc: UC-006
 x-status: draft
 x-spec: ./UC.md
-x-updated: 2026-10-01
+x-updated: 2026-10-02
 
 operations:
   getCurrentSession:
@@ -69,7 +69,7 @@ schemas:
     properties:
       id: { type: string, minLength: 1 }
       userId: { type: string, minLength: 1 }
-      kind: { type: string, enum: [drill, field, middle, review, mock] }
+      kind: { $ref: "../../../_shared/components.yaml#/schemas/SessionKind" }
       status: { type: string, enum: [in_progress, completed, abandoned] }
       sourceExam: { type: [string, "null"], description: 公開回の ID。ランダム構成と演習は null }
       scopeLabel: { type: [string, "null"] }

@@ -207,6 +207,7 @@ export function Practice() {
       </div>
       {catField && (
         <>
+          {/* @implements REQ-244 */}
           {categoriesError && (
             <>
               <p className="error">{categoriesError}</p>

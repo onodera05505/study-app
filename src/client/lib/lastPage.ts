@@ -13,7 +13,7 @@ export type LastPage = {
 
 const KEY = 'study-app:last-page'
 
-// @implements REQ-146, BR-011, BR-012
+// @implements REQ-146, REQ-242, BR-011, BR-012
 export function setLastPage(p: LastPage) {
   try {
     sessionStorage.setItem(KEY, JSON.stringify(p))
@@ -22,6 +22,7 @@ export function setLastPage(p: LastPage) {
   }
 }
 
+// @implements REQ-242
 export function getLastPage(): LastPage | null {
   try {
     const raw = sessionStorage.getItem(KEY)

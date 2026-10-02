@@ -63,6 +63,19 @@ schemas:
       figureImage: { type: [string, "null"] }
       timesAsked: { type: integer, minimum: 1 }
       otherCitations: { type: array, items: { type: string } }
+  SessionKind:
+    type: string
+    enum: [drill, field, middle, review, mock]
+    description: テストの種別（模試を含む 5 値）
+  AccountCore:
+    type: object
+    description: アカウントの核（本人に見せる 4 列）
+    required: [id, email, name, role]
+    properties:
+      id: { type: string }
+      email: { type: string }
+      name: { type: string, minLength: 1, maxLength: 50 }
+      role: { type: string, enum: [ADMIN, MEMBER] }
   Explanation:
     type: object
     required: [correctReason, choices]

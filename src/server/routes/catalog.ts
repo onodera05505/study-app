@@ -83,7 +83,7 @@ const topicQuery = z.object({
 })
 
 /** 論点一覧。既定は出題頻度の降順＝最短合格の優先順位そのもの。 */
-// @implements REQ-020, REQ-021, REQ-042, BR-029, BR-031
+// @implements REQ-020, REQ-021, REQ-042, REQ-265, BR-029, BR-031
 catalogRoutes.get('/topics', async (c) => {
   const parsed = topicQuery.safeParse(c.req.query())
   if (!parsed.success) return c.json({ error: '検索条件が正しくありません' }, 400)
@@ -293,7 +293,7 @@ catalogRoutes.get('/topics/:id', async (c) => {
 const progressBody = z.object({ status: z.number().int().min(1).max(3) })
 
 /** 理解度の記録（未理解 / やや理解 / 理解）。 */
-// @implements REQ-034, REQ-035, REQ-036, REQ-037
+// @implements REQ-034, REQ-035, REQ-036, REQ-037, REQ-268
 catalogRoutes.put('/topics/:id/progress', async (c) => {
   const id = Number(c.req.param('id'))
   const parsed = progressBody.safeParse(await c.req.json().catch(() => null))

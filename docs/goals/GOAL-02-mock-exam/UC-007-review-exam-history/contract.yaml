@@ -5,7 +5,7 @@
 x-uc: UC-007
 x-status: draft
 x-spec: ./UC.md
-x-updated: 2026-10-01
+x-updated: 2026-10-02
 
 operations:
   listExamHistory:
@@ -28,7 +28,7 @@ operations:
             required: [id, kind, scopeLabel, questionCount, correctCount, startedAt, finishedAt, sourceExam]
             properties:
               id: { type: string, minLength: 1 }
-              kind: { type: string, enum: [drill, field, middle, review, mock] }
+              kind: { $ref: "../../../_shared/components.yaml#/schemas/SessionKind" }
               scopeLabel: { type: [string, "null"] }
               questionCount: { type: integer, minimum: 1 }
               correctCount: { type: [integer, "null"], minimum: 0 }

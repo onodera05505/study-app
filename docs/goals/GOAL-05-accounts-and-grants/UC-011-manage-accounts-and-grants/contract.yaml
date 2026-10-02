@@ -4,7 +4,7 @@
 x-uc: UC-011
 x-status: draft
 x-spec: ./UC.md
-x-updated: 2026-10-01
+x-updated: 2026-10-02
 
 operations:
   # ---- まなびばの管理の経路（役割が管理者のセッションだけが通る） ----
@@ -24,17 +24,15 @@ operations:
           type: array
           description: 作成時刻の昇順
           items:
-            type: object
-            required: [id, email, name, role, createdAt, grants]
-            properties:
-              id: { type: string }
-              email: { type: string }
-              name: { type: string, minLength: 1, maxLength: 50 }
-              role: { type: string, enum: [ADMIN, MEMBER] }
-              createdAt: { type: integer, description: 作成時刻の秒（unixepoch） }
-              grants:
-                type: array
-                items: { type: string, minLength: 1, description: 権限のある学びの key。key の昇順 }
+            allOf:
+              - $ref: "../../../_shared/components.yaml#/schemas/AccountCore"
+              - type: object
+                required: [createdAt, grants]
+                properties:
+                  createdAt: { type: integer, description: 作成時刻の秒（unixepoch） }
+                  grants:
+                    type: array
+                    items: { type: string, minLength: 1, description: 権限のある学びの key。key の昇順 }
     errors:
       - code: UNAUTHENTICATED
         when: セッションが無い、または期限が過ぎている
@@ -71,14 +69,12 @@ operations:
           items: { type: string, minLength: 1, description: 学びの登録簿にある key }
         role: { type: string, enum: [ADMIN, MEMBER], description: 省略時は MEMBER }
     response:
-      type: object
-      required: [id, email, name, role, grants]
-      properties:
-        id: { type: string }
-        email: { type: string }
-        name: { type: string, minLength: 1, maxLength: 50 }
-        role: { type: string, enum: [ADMIN, MEMBER] }
-        grants: { type: array, items: { type: string, minLength: 1, description: 畳んだあとの key } }
+      allOf:
+        - $ref: "../../../_shared/components.yaml#/schemas/AccountCore"
+        - type: object
+          required: [grants]
+          properties:
+            grants: { type: array, items: { type: string, minLength: 1, description: 畳んだあとの key } }
     errors:
       - code: UNAUTHENTICATED
         when: セッションが無い、または期限が過ぎている

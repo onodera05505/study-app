@@ -34,6 +34,7 @@
   }
   const esc = (s) => String(s).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch])
 
+  // @implements REQ-184
   function renderGrid() {
     const grid = $('#grid')
     grid.innerHTML = learnings
@@ -119,6 +120,7 @@
     renderAdmin(d.accounts)
   }
 
+  // @implements REQ-184, REQ-185
   async function afterLogin(data) {
     me = data.account
     grants = data.grants
@@ -145,6 +147,7 @@
     }
   }
 
+  // @implements REQ-183, REQ-187
   async function boot() {
     try {
       learnings = (await api('/learnings')).learnings
