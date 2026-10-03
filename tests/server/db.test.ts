@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { getDb, getSecret, schema } from '../../src/server/lib/db'
+import { getDb, schema } from '../../src/server/lib/db'
 import type { Bindings } from '../../src/server/lib/db'
 
 const env = (over: Partial<Bindings> = {}) => ({ ...over }) as Bindings
@@ -15,15 +15,5 @@ describe('データの保存先（D1 と drizzle のスキーマ）', () => {
     }
     // 生成時には SQL を発行しない（接続の口を作るだけ）
     expect(calls).toEqual([])
-  })
-})
-
-describe('トークンの秘密', () => {
-  it('JWT_SECRET があればその値を返す', () => {
-    expect(getSecret(env({ JWT_SECRET: 'from-secret' }))).toBe('from-secret')
-  })
-
-  it('未設定の環境では開発用の既定値に倒れる（本番は secret を設定する運用）', () => {
-    expect(getSecret(env())).toBe('dev-only-insecure-secret')
   })
 })

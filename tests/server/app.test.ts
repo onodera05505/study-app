@@ -84,19 +84,34 @@ describe('失敗の形', () => {
   })
 
   // @covers REQ-256#unknown-path-anonymous
-  it('未知の API の経路は 404 の {error}', async () => {
-    const res = await app.request('/api/auth/no-such-path', {}, sso())
+  it('受け持たない /api の経路は、本人と分からない要求にも 404 の {error}（認証の前置きの 401 に変わらない）', async () => {
+    const res = await app.request('/api/no-such-path', {}, sso())
     expect(res.status).toBe(404)
-    expect(await res.json()).toEqual({ error: '見つかりません' })
+    const body = (await res.json()) as Record<string, unknown>
+    expect(Object.keys(body)).toEqual(['error'])
+    expect(String(body.error)).toMatch(/[ぁ-んァ-ヶ一-龥]/)
   })
 })
 
 describe('SSO のコード交換（学び側。UC-013）', () => {
   // @covers REQ-206#secret-missing-refused
-  it('共有秘密が無い環境では 503 で止まり、まなびばに問い合わせない', async () => {
-    const res = await app.request('/api/auth/sso', json({ code: 'abc' }), env({ SSO_PORTAL_URL: 'https://portal.example' }))
-    expect(res.status).toBe(503)
-    expect(((await res.json()) as { error: string }).error).toContain('共有秘密')
+  it('共有秘密が無い環境では 503 の {error} で止まり、まなびばに問い合わせずトークンも渡さない', async () => {
+    const orig = globalThis.fetch
+    let calls = 0
+    globalThis.fetch = (async () => { calls += 1; throw new TypeError('fetch failed') }) as typeof fetch
+    try {
+      const res = await app.request('/api/auth/sso', json({ code: 'abc' }), env({ SSO_PORTAL_URL: 'https://portal.example' }))
+      expect(res.status).toBe(503)
+      const body = (await res.json()) as Record<string, unknown>
+      // 足りない設定を名指ししない（BR-002）。本文が等しいことは signing_secret.test.ts が見る
+      expect(Object.keys(body)).toEqual(['error'])
+      const error = String(body.error)
+      expect(error).toMatch(/[ぁ-んァ-ヶ一-龥]/)
+      expect(error.trim().split('\n')).toHaveLength(1)
+      expect(calls, 'まなびばへの呼び出し').toBe(0)
+    } finally {
+      globalThis.fetch = orig
+    }
   })
 
   // @covers REQ-208#portal-unreachable

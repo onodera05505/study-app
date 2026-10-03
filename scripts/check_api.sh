@@ -52,8 +52,11 @@ else
   echo "▶ wrangler dev を起動（--env ${EXAM} / port ${PORT}）"
   # wrangler.jsonc の env は本番どおり SSO_PORTAL_URL を持つ（学び側のパスワード登録・ログインは 404）。
   # この検査はパスワードの経路で検査用アカウントを作るので、SSO を空で上書きして切る。
-  # SSO が有効な経路は scripts/check_sso_flow.py（ローカル）と check_sso_prod.sh（本番）が見る（2026-09-17 msg で発覚）
+  # SSO が有効な経路は scripts/check_sso_flow.py（ローカル）と check_sso_prod.sh（本番）が見る。
+  # JWT_SECRET はローカルのこの検査専用の固定値を渡す（本番の値ではない）。渡さない配備では
+  # トークンを発行も検証もしないので、ログインから先の検査が 503 で止まる。
   npx wrangler dev --env "$EXAM" --port "$PORT" --ip 127.0.0.1 --var "SSO_PORTAL_URL:" \
+    --var "JWT_SECRET:check-api-local-only-not-a-secret" \
     --show-interactive-dev-session=false >"$LOG" 2>&1 &
   PID=$!
 

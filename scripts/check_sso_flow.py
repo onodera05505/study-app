@@ -2,7 +2,7 @@
 """SSO の一巡（受入・リハーサル用）。まなびば(8790) と学び(8788) をローカルに起こし、ログイン → /sso/start → コード → 学び側 /api/auth/sso → /api/me と逆経路を見る（要件 §15）。
 
     cd portal && npx wrangler dev --port 8790 --var SSO_SECRET:testsecret
-    npx wrangler dev --env mkt --port 8788 --var SSO_PORTAL_URL:http://127.0.0.1:8790 --var SSO_SECRET:testsecret
+    npx wrangler dev --env mkt --port 8788 --var SSO_PORTAL_URL:http://127.0.0.1:8790 --var SSO_SECRET:testsecret --var JWT_SECRET:sso-flow-local-only-not-a-secret
     python3 scripts/portal_migrate_accounts.py --admin apicheck@example.com --local
     python3 scripts/check_sso_flow.py
 """

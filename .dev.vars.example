@@ -1,0 +1,19 @@
+# ローカルの wrangler dev（npm run dev:api / npx wrangler dev）に渡す値の雛形。
+# これをコピーして .dev.vars を作る（.dev.vars は追跡しない）。
+#
+#   cp .dev.vars.example .dev.vars
+#
+# 本番の値は書かない。ここに書くのはローカルだけの使い捨ての値。
+# --env <対象> を付けて起動するとき、.dev.vars.<対象>（例 .dev.vars.ip）が在ればそれ**だけ**が読まれ、.dev.vars は読まれない。
+# .dev.vars.<対象> を持つなら、そちらにも JWT_SECRET を書く。
+
+# トークンの署名の秘密。無いと学び側はトークンを発行も検証もせず、
+# ログインも認証を要する経路もすべて 503 で断る。
+JWT_SECRET=local-dev-only-not-a-secret
+
+# 新規登録に要る合言葉。設定しなければ誰でも登録できる。
+# SIGNUP_CODE=local-aikotoba
+
+# まなびば（SSO）をローカルで繋ぐときだけ。設定するとパスワードのログイン・登録は 404 になる。
+# SSO_PORTAL_URL=http://127.0.0.1:8790
+# SSO_SECRET=local-dev-only-not-a-secret

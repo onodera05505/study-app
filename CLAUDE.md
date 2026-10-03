@@ -88,6 +88,7 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 | **検証の返済計画**（線。`.trace-baseline.json` の中身を項目・UC 別に並べ、返す順と `/develop` の順。縮む方向にしか動かさない） | [`docs/検証の返済計画.md`](docs/検証の返済計画.md) |
 | **検証方針（全体）**（線。プロジェクト全体で単体テストが観測できない範囲とその理由。REQ ごとの方針は各 REQ の `## 検証方針`） | [`docs/verification/GLOBAL.md`](docs/verification/GLOBAL.md) |
 | **原本 harness への移行**（2026-09-30 本人決定。APM で develop-core、docs-migrate の 7 Phase。Phase 0 の記録と実体・状態値の全文） | [`docs/作業ログ_2026-09-30_原本harnessへの移行.md`](docs/作業ログ_2026-09-30_原本harnessへの移行.md) |
+| **移行後の最初の `/develop`**（署名の秘密が無い配備は発行も検証も断る。本人決定 → spec-author → 門 → 並行 → reviewer 2 巡の運び） | [`docs/作業ログ_2026-10-03_develop第1件_署名の秘密.md`](docs/作業ログ_2026-10-03_develop第1件_署名の秘密.md) |
 | **原本 harness への移行の棚卸し**（docs-migrate Phase 0。文書ごとの分類と処遇、実体と状態値、矛盾。本人の答えは `OPEN-QUESTIONS.md`） | [`docs/INVENTORY.md`](docs/INVENTORY.md) |
 | attic: 旧の要件の正本 `spec.yaml`（REQ は `docs/goals/**/REQ-nnn.md` に移った。旧パスは退役の印だけ） | [`docs/attic/spec.yaml`](docs/attic/spec.yaml) / [`docs/spec.yaml`](docs/spec.yaml) |
 | attic: 旧のユースケースの書類 UC-001〜019（UC は `docs/goals/<GOAL>/<UC>/UC.md` に移った。旧パスは退役の印だけ） | [`docs/attic/usecases/`](docs/attic/usecases/) / [`docs/usecases/`](docs/usecases/) |

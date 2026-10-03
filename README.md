@@ -66,10 +66,16 @@ npx wrangler d1 migrations apply study-app-db --local
 python3 scripts/build_seed.py
 npx wrangler d1 execute study-app-db --local --file=data/seed.sql
 
+# ローカルに渡す値（トークンの署名の秘密など）
+cp .dev.vars.example .dev.vars
+
 # 起動（API + 静的配信が 8787 で一体）
 npm run build
 npx wrangler dev
 ```
+
+`.dev.vars` に `JWT_SECRET` を置く（`.dev.vars.example` が雛形）。
+無いと学び側はトークンを発行も検証もせず、ログインも認証を要する経路も 503 で断る。
 
 管理ユーザは `build_seed.py --admin-password <パスワード>` を**渡したときだけ**作られる
 （`admin@example.com` / ADMIN）。渡さなければ `users` には一切触らない。

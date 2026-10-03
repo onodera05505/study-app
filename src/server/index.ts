@@ -1,9 +1,11 @@
 import { examOf } from '../shared/exam'
 import { Hono } from 'hono'
+import type { Context } from 'hono'
+import { matchedRoutes } from 'hono/route'
 import { HTTPException } from 'hono/http-exception'
 import { secureHeaders } from 'hono/secure-headers'
 import { sql } from 'drizzle-orm'
-import { readToken } from './lib/auth'
+import { NOT_CONFIGURED, readToken } from './lib/auth'
 import type { Bindings, Variables } from './lib/db'
 import { getDb, getSecret } from './lib/db'
 import { authRoutes } from './routes/auth'
@@ -41,14 +43,34 @@ api.get('/health', (c) => c.json({ ok: true }))
 
 api.route('/auth', authRoutes)
 
+/** この要求に、経路として登録された具体のハンドラが当たっているか。
+ *  Hono は前置き（use で足したもの）も当たった経路として数えるので、
+ *  引数を 2 つ以上とる関数＝前置きとして外す（Hono 自身の isMiddleware と同じ判じ方）。
+ *  子の Hono が独自の onError を持つときハンドラは包まれるので、包みを剥いでから数える。
+ */
+function hasRouteHandler(c: Context<{ Bindings: Bindings; Variables: Variables }>): boolean {
+  return matchedRoutes(c).some((route) => {
+    let handler = route.handler as ((...args: unknown[]) => unknown) & {
+      __COMPOSED_HANDLER?: (...args: unknown[]) => unknown
+    }
+    while (handler.__COMPOSED_HANDLER) handler = handler.__COMPOSED_HANDLER as typeof handler
+    return handler.length <= 1
+  })
+}
+
 /** 認証。/api/auth/* 以外は Bearer トークンを要求する。
- *  @implements REQ-196, REQ-223, REQ-255, BR-001, BR-002
+ *  署名の秘密が無い配備では、添えられたトークンを読まずに断る（通る／通らないを判じられない）。
+ *  受け持たない経路は、秘密の有無もトークンの有無も見ずに notFound へ委ねる。
+ *  @implements REQ-196, REQ-223, REQ-255, REQ-256, REQ-275, BR-001, BR-002
  */
 api.use('*', async (c, next) => {
+  if (!hasRouteHandler(c)) return next()
   if (c.req.path.startsWith('/api/auth/') || c.req.path === '/api/health') return next()
+  const secret = getSecret(c.env)
+  if (!secret) return c.json(NOT_CONFIGURED.body, NOT_CONFIGURED.status)
   const header = c.req.header('Authorization') ?? ''
   const token = header.startsWith('Bearer ') ? header.slice(7) : ''
-  const payload = token ? await readToken(getSecret(c.env), token) : null
+  const payload = token ? await readToken(secret, token) : null
   if (!payload) return c.json({ error: 'ログインが必要です' }, 401)
   c.set('user', { id: payload.sub, name: payload.name, role: payload.role })
 

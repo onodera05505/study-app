@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { schema } from '../lib/db'
 import type { Bindings, Variables } from '../lib/db'
 import { getDb, getSecret } from '../lib/db'
-import { hashPassword, issueToken, verifyPassword } from '../lib/auth'
+import { NOT_CONFIGURED, hashPassword, issueToken, verifyPassword } from '../lib/auth'
 
 const credentials = z.object({
   email: z.string().email().max(200),
@@ -16,8 +16,8 @@ const registration = credentials.extend({
   signupCode: z.string().max(100).optional(),
 })
 
-/** 検証エラーを項目名つきの文にする。「入力が正しくありません」だけだと、合言葉を疑って詰まる
- *  （実際はメールアドレスに `.` が無かった。2026-09-15）。 */
+/** 検証エラーを項目名つきの文にする。「入力が正しくありません」だけだと、どの欄が悪いか分からず
+ *  （メールの形の誤りを合言葉の誤りと取り違える）手が止まる。 */
 const FIELD_LABEL: Record<string, string> = {
   email: 'メールアドレスの形式が正しくありません（例: name@example.com）',
   password: 'パスワードは 8 文字以上にしてください',
@@ -31,8 +31,8 @@ function validationMessage(err: z.ZodError): string {
 
 export const authRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
-/** SSO（まなびば。要件 §15）が設定された環境か。設定されていればパスワードのログイン・登録は受けない。 */
-// 秘密が欠けても「開く」側（パスワード登録の復活）に倒さない。URL があれば SSO 環境と見なし、秘密が無ければ /auth/sso が 503 で止まる（受入の所見 2026-09-17、D17）
+/** SSO（まなびば）が設定された環境か。設定されていればパスワードのログイン・登録は受けない。
+ *  判定はまなびばの場所の有無だけで、共有秘密が欠けても「開く」側（パスワード登録の復活）には倒さない。 */
 const ssoOn = (env: Bindings) => !!env.SSO_PORTAL_URL
 
 /** 画面がログインの形を決めるための設定（公開）。 */
@@ -40,10 +40,12 @@ const ssoOn = (env: Bindings) => !!env.SSO_PORTAL_URL
 authRoutes.get('/config', (c) => c.json({ sso: ssoOn(c.env), portal: c.env.SSO_PORTAL_URL ?? null, app: c.env.EXAM }))
 
 /** まなびばから戻ってきた使い捨てコードを、まなびばのサーバでメールと名前に交換し、この学びのトークンを出す。 */
-// @implements REQ-191, REQ-192, REQ-193, REQ-206, REQ-207, REQ-208
+// @implements REQ-191, REQ-192, REQ-193, REQ-206, REQ-207, REQ-208, REQ-274, BR-002
 authRoutes.post('/sso', async (c) => {
+  const secret = getSecret(c.env)
+  if (!secret) return c.json(NOT_CONFIGURED.body, NOT_CONFIGURED.status)
   if (!ssoOn(c.env)) return c.json({ error: 'この環境では SSO が設定されていません' }, 404)
-  if (!c.env.SSO_SECRET) return c.json({ error: 'SSO の共有秘密が設定されていません。管理者に連絡してください' }, 503)
+  if (!c.env.SSO_SECRET) return c.json(NOT_CONFIGURED.body, NOT_CONFIGURED.status)
   const body = (await c.req.json().catch(() => null)) as { code?: string } | null
   if (!body?.code || typeof body.code !== 'string' || body.code.length > 100) return c.json({ error: '入力が正しくありません' }, 400)
   let res: Response
@@ -67,12 +69,14 @@ authRoutes.post('/sso', async (c) => {
     user = { id: crypto.randomUUID(), email, name: (data.name ?? email).slice(0, 50), passwordHash: 'sso', role: 'MEMBER', createdAt: Math.floor(Date.now() / 1000) }
     await db.insert(schema.users).values(user)
   }
-  const token = await issueToken(getSecret(c.env), user)
+  const token = await issueToken(secret, user)
   return c.json({ token, user: { id: user.id, name: user.name, role: user.role } })
 })
 
-// @implements REQ-204
+// @implements REQ-204, REQ-274
 authRoutes.post('/register', async (c) => {
+  const secret = getSecret(c.env)
+  if (!secret) return c.json(NOT_CONFIGURED.body, NOT_CONFIGURED.status)
   if (ssoOn(c.env)) return c.json({ error: 'アカウントはまなびばで作ります' }, 404)
   const parsed = registration.safeParse(await c.req.json().catch(() => null))
   if (!parsed.success) return c.json({ error: validationMessage(parsed.error) }, 400)
@@ -97,12 +101,14 @@ authRoutes.post('/register', async (c) => {
     role: 'MEMBER',
   }
   await db.insert(schema.users).values(user)
-  const token = await issueToken(getSecret(c.env), user)
+  const token = await issueToken(secret, user)
   return c.json({ token, user: { id: user.id, name: user.name, role: user.role } }, 201)
 })
 
-// @implements REQ-204
+// @implements REQ-204, REQ-274
 authRoutes.post('/login', async (c) => {
+  const secret = getSecret(c.env)
+  if (!secret) return c.json(NOT_CONFIGURED.body, NOT_CONFIGURED.status)
   if (ssoOn(c.env)) return c.json({ error: 'まなびばからログインしてください' }, 404)
   const parsed = credentials.safeParse(await c.req.json().catch(() => null))
   if (!parsed.success) return c.json({ error: validationMessage(parsed.error) }, 400)
@@ -115,6 +121,6 @@ authRoutes.post('/login', async (c) => {
   const ok = user && (await verifyPassword(parsed.data.password, user.passwordHash))
   if (!user || !ok) return c.json({ error: 'メールアドレスまたはパスワードが違います' }, 401)
 
-  const token = await issueToken(getSecret(c.env), user)
+  const token = await issueToken(secret, user)
   return c.json({ token, user: { id: user.id, name: user.name, role: user.role } })
 })

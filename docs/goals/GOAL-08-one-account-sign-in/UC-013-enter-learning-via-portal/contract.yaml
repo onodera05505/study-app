@@ -1,8 +1,8 @@
-# UC-013 まなびばから権限のある学びに入る — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-181〜208）
+# UC-013 まなびばから権限のある学びに入る — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-181〜208・263・274）
 # 読み方の決まりは docs/adr/ADR-0001（transport・direction・auth・operation 名の当て方）
 # 共有語彙（authSchemes・errorCodes・共有の形）は ../../../_shared/components.yaml
 x-uc: UC-013
-x-status: draft
+x-status: fixed
 x-spec: ./UC.md
 x-updated: 2026-10-02
 
@@ -193,6 +193,9 @@ operations:
     response: { $ref: "#/schemas/TokenAndUser" }
     errors:
       - code: NOT_CONFIGURED
+        when: トークンの署名の秘密が配備に無い
+        wire: { status: 503 }
+      - code: NOT_CONFIGURED
         when: この配備にまなびばの場所が無い
         wire: { status: 404 }
       - code: NOT_CONFIGURED
@@ -212,6 +215,7 @@ operations:
         wire: { status: 401 }
     examples:
       ok: { request: { code: 3f1c9a52-7b0e-4a1d-9c3e-2f5b8d6a1e40 }, response: { token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0ZDJiOGExMCIsIm5hbWUiOiJ0YXJvIiwicm9sZSI6Ik1FTUJFUiIsImV4cCI6MTc5OTk5OTk5OX0.c2lnbmF0dXJlLXNhbXBsZQ, user: { id: 4d2b8a10-9c61-4f03-8a7d-15b2e6c94f88, name: 山田 太郎, role: MEMBER } } }
+      noSigningSecret: { request: { code: 7d4a2e09-8b16-4c53-ae72-0f93b5c81d24 }, error: NOT_CONFIGURED }
       notConfigured: { request: { code: 3f1c9a52-7b0e-4a1d-9c3e-2f5b8d6a1e40 }, error: NOT_CONFIGURED }
       emptyCode: { request: { code: "" }, error: INVALID_INPUT }
       portalUnreachable: { request: { code: 3f1c9a52-7b0e-4a1d-9c3e-2f5b8d6a1e40 }, error: UPSTREAM_UNAVAILABLE }
@@ -233,6 +237,9 @@ operations:
         password: { type: string, minLength: 8, maxLength: 200 }
     response: { $ref: "#/schemas/TokenAndUser" }
     errors:
+      - code: NOT_CONFIGURED
+        when: トークンの署名の秘密が配備に無い
+        wire: { status: 503 }
       - code: NOT_FOUND
         when: まなびばの場所が与えられている配備ではこの経路を受け付けない
         wire: { status: 404 }
@@ -244,6 +251,7 @@ operations:
         wire: { status: 401 }
     examples:
       ok: { request: { email: yudai@example.com, password: harunokaze8 }, response: { token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0ZDJiOGExMCIsIm5hbWUiOiJ0YXJvIiwicm9sZSI6Ik1FTUJFUiIsImV4cCI6MTc5OTk5OTk5OX0.c2lnbmF0dXJlLXNhbXBsZQ, user: { id: 4d2b8a10-9c61-4f03-8a7d-15b2e6c94f88, name: 山田 太郎, role: MEMBER } } }
+      noSigningSecret: { request: { email: yudai@example.com, password: harunokaze8 }, error: NOT_CONFIGURED }
       ssoDeployment: { request: { email: yudai@example.com, password: harunokaze8 }, error: NOT_FOUND }
       shortPassword: { request: { email: yudai@example.com, password: mijikai }, error: INVALID_INPUT }
       wrongPassword: { request: { email: yudai@example.com, password: chigaupass9 }, error: UNAUTHENTICATED }
@@ -265,6 +273,9 @@ operations:
         signupCode: { type: string, maxLength: 100, description: 配備に合言葉があるときだけ要る }
     response: { $ref: "#/schemas/TokenAndUser" }
     errors:
+      - code: NOT_CONFIGURED
+        when: トークンの署名の秘密が配備に無い
+        wire: { status: 503 }
       - code: NOT_FOUND
         when: まなびばの場所が与えられている配備ではこの経路を受け付けない
         wire: { status: 404 }
@@ -279,6 +290,7 @@ operations:
         wire: { status: 409 }
     examples:
       ok: { request: { email: yudai@example.com, password: harunokaze8, name: 山田 太郎, signupCode: aikotoba }, response: { token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0ZDJiOGExMCIsIm5hbWUiOiJ0YXJvIiwicm9sZSI6Ik1FTUJFUiIsImV4cCI6MTc5OTk5OTk5OX0.c2lnbmF0dXJlLXNhbXBsZQ, user: { id: 4d2b8a10-9c61-4f03-8a7d-15b2e6c94f88, name: 山田 太郎, role: MEMBER } } }
+      noSigningSecret: { request: { email: yudai@example.com, password: harunokaze8, name: 山田 太郎 }, error: NOT_CONFIGURED }
       ssoDeployment: { request: { email: yudai@example.com, password: harunokaze8, name: 山田 太郎 }, error: NOT_FOUND }
       emptyName: { request: { email: yudai@example.com, password: harunokaze8, name: "" }, error: INVALID_INPUT }
       wrongSignupCode: { request: { email: yudai@example.com, password: harunokaze8, name: 山田 太郎, signupCode: chigau }, error: FORBIDDEN }

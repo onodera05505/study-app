@@ -72,7 +72,10 @@ else
   npx vite build --mode "$EXAM" >/dev/null || { echo "ビルドに失敗"; exit 1; }
 
   echo "▶ wrangler dev を起動（port ${PORT} / env ${EXAM}）"
-  npx wrangler dev --env "$EXAM" --port "$PORT" --ip 127.0.0.1 >"$DEV_LOG" 2>&1 &
+  # JWT_SECRET はこの採取専用の固定値（本番の値ではない）。渡さない配備ではトークンを発行も
+  # 検証もしないので、検査用アカウントの作成（audit_fixtures.mjs）が 503 で止まる。
+  npx wrangler dev --env "$EXAM" --port "$PORT" --ip 127.0.0.1 \
+    --var "JWT_SECRET:audit-screens-local-only-not-a-secret" >"$DEV_LOG" 2>&1 &
   DEV_PID=$!
   STARTED_BY_US=1
 

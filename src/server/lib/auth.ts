@@ -3,8 +3,8 @@ import { sign, verify } from 'hono/jwt'
 /** パスワードハッシュは Web Crypto の PBKDF2 で行う。
  *  bcryptjs は Workers 上で純 JS 実装になり CPU 時間を食うため使わない。 */
 // Cloudflare Workers は PBKDF2 の反復回数を 100,000 までしか受け付けない
-// （それ以上は NotSupportedError になる）。ローカルの miniflare は通ってしまうので、
-// 本番に出すまで気づけなかった。上限いっぱいの 100,000 を使う。
+// （それ以上は NotSupportedError になる。ローカルの miniflare は上限を課さないので、
+// 超えても本番でだけ落ちる）。上限いっぱいの 100,000 を使う。
 const ITERATIONS = 100_000
 const KEY_LENGTH = 32
 
@@ -53,6 +53,13 @@ export async function verifyPassword(password: string, stored: string): Promise<
   for (let i = 0; i < actual.length; i++) diff |= actual.charCodeAt(i) ^ expected.charCodeAt(i)
   return diff === 0
 }
+
+/** 配備にトークンの署名の秘密が無いときの断り。トークンを発行する経路と、認証を要する経路が
+ *  同じ形で断る。本文はどの設定が足りないかを明かさない。 */
+export const NOT_CONFIGURED = {
+  status: 503,
+  body: { error: 'この配備はまだ設定が終わっていません。管理者に連絡してください' },
+} as const
 
 export type TokenPayload = {
   sub: string
