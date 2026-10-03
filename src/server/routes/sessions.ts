@@ -29,14 +29,31 @@ async function settings(db: ReturnType<typeof getDb>, env: Bindings) {
   )
 }
 
-const createBody = z.object({
-  kind: z.enum(['drill', 'field', 'middle', 'review', 'mock']),
-  topicId: z.number().int().optional(),
-  field: z.string().optional(),
-  middleNo: z.number().int().optional(),
-  exam: z.string().optional(),
-  size: z.number().int().min(1).max(100).optional(),
-})
+/** 種別と、それが必要とする範囲の対応。復習と模試は範囲を取らない
+ *  （模試の回は任意。省略するとランダム構成になる）。 */
+const SCOPE_FIELD = {
+  drill: 'topicId',
+  field: 'field',
+  middle: 'middleNo',
+} as const
+
+const createBody = z
+  .object({
+    kind: z.enum(['drill', 'field', 'middle', 'review', 'mock']),
+    // 範囲の値は契約の形（論点番号・単元番号は 1 以上、分野は空でない）で弾く。
+    // ここを素通りさせると、形の誤りが「出題できる問題がありません」に化けて理由が伝わらない。
+    topicId: z.number().int().min(1).optional(),
+    field: z.string().min(1).optional(),
+    middleNo: z.number().int().min(1).optional(),
+    exam: z.string().optional(),
+    size: z.number().int().min(1).max(100).optional(),
+  })
+  // 種別に対応する範囲の有無も入力の形。無いまま組み立てに渡すと種別ごとの分岐から
+  // 外れ、頼んでいない範囲（弱点復習）のテストが黙って出来てしまう。
+  .refine((body) => {
+    const key = SCOPE_FIELD[body.kind as keyof typeof SCOPE_FIELD]
+    return key === undefined || body[key] !== undefined
+  }, '種別に対応する範囲がありません')
 
 // @implements REQ-050, REQ-055, REQ-057, REQ-105, REQ-109, REQ-243, REQ-247, BR-017
 sessionRoutes.post('/', async (c) => {
@@ -48,7 +65,7 @@ sessionRoutes.post('/', async (c) => {
   const userId = c.get('user').id
 
   // 進行中のセッションは1つまで。放置されたものが新規開始を塞がないよう、
-  // 既存があれば内容を返して選ばせる（前身アプリ は 409 で止まるだけだった）。
+  // 既存があれば内容を添えて返し、再開か破棄を選ばせる。
   const running = await db.query.sessions.findFirst({
     where: and(eq(schema.sessions.userId, userId), eq(schema.sessions.status, 'in_progress')),
   })
@@ -162,7 +179,7 @@ function isExpired(s: { timeLimitSec: number | null; startedAt: number }): boole
 }
 
 /** 現在の問題（未回答の最小 idx）。 */
-// @implements REQ-058, REQ-060, REQ-071, REQ-111, REQ-116, REQ-117, BR-021
+// @implements REQ-058, REQ-060, REQ-071, REQ-111, REQ-116, REQ-117, REQ-237, REQ-238, REQ-240, BR-021, BR-034
 sessionRoutes.get('/:id/current', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -182,7 +199,10 @@ sessionRoutes.get('/:id/current', async (c) => {
     ? Math.max(0, Math.round(s.startedAt + s.timeLimitSec - Date.now() / 1000))
     : null
 
-  if (!q || isExpired(s)) {
+  // 締めた・破棄したテストは、未回答の行が残っていても出題しない（BR-034）。
+  // 古い案内や残った URL をたどった利用者には、終わっていることだけを返す。
+  // 破棄したテストは行そのものが無いので上の 404 で終わる。
+  if (s.status !== 'in_progress' || !q || isExpired(s)) {
     return c.json({
       session: s,
       question: null,

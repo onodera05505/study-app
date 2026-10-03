@@ -160,9 +160,9 @@ describe('署名の秘密が無い配備では添えられたトークンを読�
   })
 })
 
-describe('設定が無いことによる断りは足りない設定で変わらない（UC-013）', () => {
+describe('設定が無いことによる断りは足りない秘密で変わらない（UC-013）', () => {
   // @covers REQ-206#same-text-as-other-not-configured
-  it('同じ断り（503）を返す 2 つの配備は、足りない設定が違っても本文が等しい', async () => {
+  it('同じ断り（503）を返す 2 つの配備は、足りない秘密が違っても本文が等しい', async () => {
     await withFetchCounter(async (calls) => {
       const code = json({ code: CODE })
       const noSigning = await expectNotConfigured(
@@ -173,7 +173,7 @@ describe('設定が無いことによる断りは足りない設定で変わら�
         await app.request('/api/auth/sso', code, withSecret({ SSO_PORTAL_URL: PORTAL.SSO_PORTAL_URL })),
         'まなびばの場所はあるが共有秘密が無い配備',
       )
-      expect(noShared, '足りない設定で本文が変わらない（BR-002）').toBe(noSigning)
+      expect(noShared, '足りない秘密で本文が変わらない（BR-002）').toBe(noSigning)
       expect(calls.count, 'まなびばへの呼び出し').toBe(0)
     })
   })
