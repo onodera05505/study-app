@@ -4,7 +4,7 @@
 x-uc: UC-008
 x-status: draft
 x-spec: ./UC.md
-x-updated: 2026-10-01
+x-updated: 2026-10-03
 
 operations:
   listExams:
@@ -352,7 +352,7 @@ schemas:
       scopeLabel: { type: [string, "null"] }
       questionCount: { type: integer, minimum: 1 }
       sourceExam: { type: [string, "null"], description: 公開回の ID。ランダム構成は null }
-      status: { type: string, enum: [in_progress, completed, abandoned] }
+      status: { type: string, enum: [in_progress, completed] }
       timeLimitSec: { type: [integer, "null"] }
       correctCount: { type: [integer, "null"] }
       startedAt: { type: integer }

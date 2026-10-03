@@ -4,7 +4,7 @@
 x-uc: UC-006
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-10-02
+x-updated: 2026-10-03
 
 operations:
   getCurrentSession:
@@ -70,7 +70,7 @@ schemas:
       id: { type: string, minLength: 1 }
       userId: { type: string, minLength: 1 }
       kind: { $ref: "../../../_shared/components.yaml#/schemas/SessionKind" }
-      status: { type: string, enum: [in_progress, completed, abandoned] }
+      status: { type: string, enum: [in_progress, completed] }
       sourceExam: { type: [string, "null"], description: 公開回の ID。ランダム構成と演習は null }
       scopeLabel: { type: [string, "null"] }
       timeLimitSec: { type: [integer, "null"], minimum: 1 }

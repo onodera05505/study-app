@@ -161,7 +161,7 @@ export const sessions = sqliteTable(
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
     kind: text('kind').notNull(),
-    status: text('status').notNull(), // in_progress | completed | abandoned
+    status: text('status').notNull(), // in_progress | completed
     /** mock のとき、どの回を再現しているか。ランダム構成なら null。 */
     sourceExam: text('source_exam'),
     /** 出題範囲の説明。「論点: RAID」「分野: テクノロジ系」など画面表示用。 */
