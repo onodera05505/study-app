@@ -44,7 +44,7 @@ operations:
     direction: inbound
     owned: true
     auth: bearer
-    summary: 公開回かランダム構成の模試を作り、範囲の名前・問題数・制限時間を返す
+    summary: 公開回かランダム構成の模試を作り、範囲の名前・問題数・制限時間を返す（失敗の本文は ErrorBody だけ。断られた画面は UC-006 の getCurrentSession で進行中のテストを取り直す）
     wire: { method: POST, path: /api/sessions, success: 201 }
     request:
       type: object
@@ -72,7 +72,7 @@ operations:
     errors:
       - { code: UNAUTHENTICATED, when: Bearer トークンが無いか読めない, wire: { status: 401 } }
       - { code: INVALID_INPUT, when: 本文が kind・exam・size の形を満たさない, wire: { status: 400 } }
-      - { code: CONFLICT, when: 進行中のテストが既にある（本文に inProgress を添える）, wire: { status: 409 } }
+      - { code: CONFLICT, when: 進行中のテストが既にある, wire: { status: 409 } }
       - { code: INVALID_INPUT, when: 選んだ範囲に出題できる問題が 1 問も無い, wire: { status: 400 } }
     examples:
       okExam:
@@ -171,7 +171,7 @@ operations:
     direction: inbound
     owned: true
     auth: bearer
-    summary: 現在の問題への回答を 1 件記録し、残りの問数と終了したかを返す
+    summary: 現在の問題への回答を 1 件記録し、残りの問数と終了したかを返す（失敗の本文は ErrorBody だけ。断られた画面は getMockCurrentQuestion で位置・finished・expired を取り直す）
     wire: { method: POST, path: "/api/sessions/{id}/answer", success: 200 }
     request:
       type: object
@@ -196,9 +196,9 @@ operations:
       - { code: INVALID_INPUT, when: idx か answer が形を満たさない, wire: { status: 400 } }
       - { code: NOT_FOUND, when: その ID のテストが無い、または本人の物でない, wire: { status: 404 } }
       - { code: CONFLICT, when: そのテストは既に締められている, wire: { status: 409 } }
-      - { code: CONFLICT, when: 制限時間を過ぎている（本文に expired を添える）, wire: { status: 409 } }
+      - { code: CONFLICT, when: 残り時間が 0 に達している, wire: { status: 409 } }
       - { code: CONFLICT, when: 未回答の問題が 1 問も無い, wire: { status: 409 } }
-      - { code: CONFLICT, when: 送られた idx がサーバの現在位置と違う（本文に staleQuestion と expected を添える）, wire: { status: 409 } }
+      - { code: CONFLICT, when: 送られた idx がサーバの現在位置と違う, wire: { status: 409 } }
     examples:
       ok:
         request: { id: 3f2a7c1e-5b84-4d6a-9e10-2c7b8a4f0d55, idx: 0, answer: イ }
@@ -349,7 +349,7 @@ schemas:
     properties:
       id: { type: string, minLength: 1 }
       kind: { type: string, const: mock }
-      scopeLabel: { type: [string, "null"] }
+      scopeLabel: { type: string, minLength: 1 }
       questionCount: { type: integer, minimum: 1 }
       sourceExam: { type: [string, "null"], description: 公開回の ID。ランダム構成は null }
       status: { type: string, enum: [in_progress, completed] }

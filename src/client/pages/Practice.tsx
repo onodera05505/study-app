@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { api, apiCached } from '../lib/api'
 import type { Field } from '../lib/api'
+import { discardCurrentSession } from '../lib/discardCurrent'
 
 /** シラバスの中分類。画面では「単元」と呼ぶ（「中分類」は学習者に通じない）。 */
 type Category = {
@@ -95,22 +96,17 @@ export function Practice() {
     }
   }
 
-  // @implements REQ-089, REQ-090, REQ-091, REQ-092, BR-014
+  /** 確かめと破棄の要求そのものは discardCurrentSession が持つ。ここは案内の消し方だけ。 */
+  // @implements REQ-092
   async function discard() {
-    // 破棄は取り消せず、回答済みの分もまとめて消える。1クリックで消えるのは重い。
     if (!current) return
-    if (!window.confirm(`回答済み ${current.answered} 問ごと破棄します。よろしいですか？`)) return
     setBusy(true)
     setError('')
-    try {
-      await api('/sessions/current', { method: 'DELETE' })
-      setCurrent(null)
-    } catch (e: any) {
-      // 消せていないのに画面から消すと、進行中が残っていることに気づけない
-      setError(e.message)
-    } finally {
-      setBusy(false)
-    }
+    const r = await discardCurrentSession(current.answered)
+    if (r === 'discarded') setCurrent(null)
+    // 消せていないのに画面から消すと、進行中が残っていることに気づけない
+    else if (typeof r === 'object') setError(r.error)
+    setBusy(false)
   }
 
   return (
@@ -256,7 +252,7 @@ export function Practice() {
         </button>
       </div>
 
-      {/* 同じ機能に3つの名前が付いていたので「論点ドリル」に寄せた（履歴の種別も同じ名前）。 */}
+      {/* 個別の論点で練習する機能の名前は「論点ドリル」に一本化する（受験履歴の種別も同じ名前）。 */}
       <h2>論点ドリル</h2>
       <div className="card">
         <p style={{ margin: 0 }}>

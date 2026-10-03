@@ -254,7 +254,7 @@ input, select {
   min-height: 44px;
 }
 /* チェックボックスとラジオは上の指定（幅 100%・高さ 44px）から外す。
-   掛かったままだと箱が全幅に伸びて巨大に見える（本人の指摘 2026-09-18、とくにスマホ） */
+   掛かったままだと箱が全幅に伸びて巨大に見える（とくにスマホ）。 */
 input[type='checkbox'], input[type='radio'] {
   width: auto;
   min-height: 0;
@@ -985,7 +985,7 @@ button.choice:hover:not(:disabled) { border-color: var(--accent); }
     -webkit-overflow-scrolling: touch;
   }
   .nav::-webkit-scrollbar { display: none; }
-  /* 収まらないときだけ右端をぼかす。切れているのか押せるのかが見た目で分かる（本人の指摘 2026-09-18） */
+  /* 収まらないときだけ右端をぼかす。切れているのか押せるのかが見た目で分かる。 */
   .nav.nav-scroll {
     -webkit-mask-image: linear-gradient(to right, #000 88%, rgba(0, 0, 0, 0.15));
     mask-image: linear-gradient(to right, #000 88%, rgba(0, 0, 0, 0.15));
@@ -1169,7 +1169,7 @@ button.choice:hover:not(:disabled) { border-color: var(--accent); }
 .feedback-attach { display: flex; gap: 0.5rem; align-items: center; color: inherit; min-height: 44px; }
 .feedback-attach input { margin: 0; }
 
-/* フィードバックの種類（良かった／改善の提案／その他）。押せる領域は 44px を保つ（本人 2026-09-18） */
+/* フィードバックの種類（良かった／改善の提案／その他）。押せる領域は 44px を保つ。 */
 .fb-kinds-label { display: block; margin-bottom: 0.2rem; font-size: 0.9rem; color: var(--muted); }
 .fb-kinds { display: flex; gap: 0.4rem; flex-wrap: wrap; margin: 0 0 0.9rem; }
 .fb-kind {
@@ -1189,10 +1189,9 @@ button.choice:hover:not(:disabled) { border-color: var(--accent); }
 .rm-status { flex: none; align-self: center; font-size: 0.75rem; white-space: nowrap; }
 .rm-here { border-color: var(--accent); background: var(--accent-soft); }
 .rm-here-label { flex: none; align-self: center; font-size: 0.72rem; font-weight: 700; color: var(--accent); white-space: nowrap; }
-.rm-home-progress { font-size: 0.95rem; color: var(--muted); margin: 0.6rem 0 1rem; }
 .account-name { margin: 0 0 0.4rem; padding: 0.3rem 0.6rem; font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
 
-/* ---- 理解度のバッジと行の色（2026-09-16） ---- */
+/* ---- 理解度のバッジと行の色 ---- */
 .status-badge {
   flex: none;
   align-self: center;

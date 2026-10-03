@@ -82,29 +82,48 @@ const IN_PROGRESS = {
   answered: 4,
 }
 
-/** UC-008 の契約 startMockExam の CONFLICT（409）の本文。sessions の行を inProgress に添える形で、
- *  回答済みの数は入らない（進み具合は UC-006 の getCurrentSession が持つ）。
- *  error の文は仕様が決めていないので、契約のエラーコードだけを置く。案内の文はここから採らせない。 */
-const CONFLICT_BODY = (() => {
-  const { answered: _answered, ...row } = IN_PROGRESS
-  return { error: 'CONFLICT', inProgress: row }
-})()
+/** UC-008 の契約 startMockExam の CONFLICT（409）の本文。失敗の本文は共有語彙の ErrorBody だけで
+ *  （additionalProperties: false）、進行中のテストの行は載らない。範囲と進み具合は UC-006 の
+ *  getCurrentSession で取り直す。error の文は仕様が決めていないので契約のエラーコードを置く。 */
+const CONFLICT_BODY = { error: 'CONFLICT' }
 
-/** 応答を決める偽の fetch。fail に入れた path は 500。
+/** 日の見出し（EXAMS の examLabel と同じ順）。案内がどの日のそばに出たかを読むのに使う。 */
+const DAY_LABELS = EXAMS.exams.map((e) => e.examLabel)
+
+/** 取れなかったときにサーバが返す ErrorBody の文（経路ごと）。画面はこれを理由として示せる。 */
+const FAIL_TEXT: Record<string, string> = {
+  '/topics': '単位の一覧を取得できませんでした',
+  '/sessions/current': '進行中のテストを確認できませんでした',
+}
+
+/** 応答を決める偽の fetch。fail に入れた path は 500（本文は FAIL_TEXT の理由）。
  *  inProgress を立てると「進行中のテストが 1 つある」サーバになり、作成は 409、
- *  進行中の問い合わせはその行を返す。破棄（DELETE）が通ったあとは進行中が無い状態へ移る。 */
-function stubApi(opts: { units?: Unit[]; fail?: string[]; inProgress?: boolean } = {}) {
+ *  進行中の問い合わせはその行を返す。破棄（DELETE）が通ったあとは進行中が無い状態へ移る。
+ *  startFails は進行中の有無以外の理由で作成を断る側（REQ-276）。'network' は通信そのものが届かない。
+ *  返り値の recover() で fail を解き、取り直しが成功する状態へ移せる。 */
+function stubApi(
+  opts: {
+    units?: Unit[]
+    fail?: string[]
+    inProgress?: boolean
+    gone?: boolean
+    startFails?: 'network' | { status: number; error: string }
+  } = {},
+) {
   calls = []
   let discarded = false
+  let raced = opts.gone === true
+  let failing = [...(opts.fail ?? [])]
   vi.stubGlobal('fetch', async (raw: string, init?: RequestInit) => {
     const url = new URL(String(raw), 'http://localhost')
     const method = init?.method ?? 'GET'
     calls.push({ url: url.pathname + url.search, method })
-    if ((opts.fail ?? []).some((f) => url.pathname.endsWith(f)))
+    const failed = failing.find((f) => url.pathname.endsWith(f))
+    if (failed !== undefined)
       return {
         ok: false,
         status: 500,
-        text: async () => JSON.stringify({ error: '単位の一覧を取得できませんでした' }),
+        text: async () => JSON.stringify({ error: FAIL_TEXT[failed] ?? '取得できませんでした' }),
       }
     const inProgress = opts.inProgress === true && !discarded
     if (method === 'DELETE' && url.pathname.endsWith('/sessions/current')) {
@@ -114,6 +133,18 @@ function stubApi(opts: { units?: Unit[]; fail?: string[]; inProgress?: boolean }
     if (method === 'POST' && url.pathname.endsWith('/sessions')) {
       if (inProgress)
         return { ok: false, status: 409, text: async () => JSON.stringify(CONFLICT_BODY) }
+      if (raced) {
+        // 競合: この 1 回だけ進行中があるとして断る。取り直すともう無い（進行中の問い合わせは null）
+        raced = false
+        return { ok: false, status: 409, text: async () => JSON.stringify(CONFLICT_BODY) }
+      }
+      if (opts.startFails === 'network') throw new TypeError('Failed to fetch')
+      if (opts.startFails)
+        return {
+          ok: false,
+          status: opts.startFails.status,
+          text: async () => JSON.stringify({ error: (opts.startFails as { error: string }).error }),
+        }
       return {
         ok: true,
         status: 201,
@@ -129,6 +160,12 @@ function stubApi(opts: { units?: Unit[]; fail?: string[]; inProgress?: boolean }
     else if (url.pathname.endsWith('/glossary')) body = { glossary: [] }
     return { ok: true, status: 200, text: async () => JSON.stringify(body) }
   })
+  return {
+    /** 取れなかった経路を取れる状態に戻す（取り直しが成功する側へ移す）。 */
+    recover: () => {
+      failing = []
+    },
+  }
 }
 
 /** 確かめの応答。1 件のテストの中で answer を替えられ、問われた文は asked に残る
@@ -178,6 +215,11 @@ async function drawRoadmap() {
     )
   })
   const links = () => [...host.querySelectorAll('a')]
+  /** 「この日の確認」のボタン。日ごとに 1 つで、文書の順＝日の順に並ぶ。 */
+  const dayButtons = () =>
+    [...host.querySelectorAll<HTMLElement>('button, summary, [role="button"]')].filter((b) =>
+      /この日の確認/.test(b.textContent ?? ''),
+    )
   return {
     host,
     text: () => host.textContent ?? '',
@@ -196,6 +238,41 @@ async function drawRoadmap() {
       for (let i = 0; i < 2 && el.parentElement; i++) el = el.parentElement
       return el.textContent ?? ''
     },
+    dayButtons,
+    buttons: () => [...host.querySelectorAll<HTMLElement>('button, [role="button"]')],
+    /** 押せなくされている日（disabled か aria-disabled）。 */
+    disabledDays: () =>
+      dayButtons().filter(
+        (b) => (b as HTMLButtonElement).disabled === true || b.getAttribute('aria-disabled') === 'true',
+      ),
+    /** n 日目（1 起点）の「この日の確認」を押す。 */
+    clickDay: async (n: number) => {
+      const b = dayButtons()[n - 1]
+      if (!b) throw new Error(`${n} 日目の「この日の確認」が画面に無い`)
+      await React.act(async () => {
+        b.click()
+      })
+    },
+    clickEl: async (el: HTMLElement) => {
+      await React.act(async () => {
+        el.click()
+      })
+    },
+    /** 文書の順の上で、与えた文がどの日の見出しの後ろに出ているか。
+     *  日ごとに並ぶ画面では「その日の見出しの後ろ」＝「その日のそば」。 */
+    dayOf: (needle: string | RegExp) => {
+      const body = host.textContent ?? ''
+      const at = typeof needle === 'string' ? body.indexOf(needle) : body.search(needle)
+      if (at < 0) throw new Error(`「${needle}」が画面に無い`)
+      let found = ''
+      for (const label of DAY_LABELS) {
+        const i = body.indexOf(label)
+        if (i >= 0 && i < at) found = label
+      }
+      return found
+    },
+    /** その文が画面に出ている回数（案内が 1 か所だけかを見る）。 */
+    countText: (needle: string) => (host.textContent ?? '').split(needle).length - 1,
     click: async (label: string | RegExp) => {
       const match = (s: string) => (typeof label === 'string' ? s.includes(label) : label.test(s))
       const cand = [...host.querySelectorAll<HTMLElement>('button, summary, [role="button"]')].filter(
@@ -332,18 +409,39 @@ describe('各日の確認テスト（UC-009）', () => {
     await v.close()
   })
 
+  /** 押すと進行中の取得だけをやり直す（新しいテストの作成は求めない）操作を探す。
+   *  取れなかったときに添える「取り直す手段」の探し方で、既に無いときはこれが無いことを見る。 */
+  const findRetry = async (v: Awaited<ReturnType<typeof drawRoadmap>>) => {
+    for (const b of v.buttons()) {
+      if (/この日の確認/.test(b.textContent ?? '')) continue
+      const got = countOf('/sessions/current')
+      const posted = countOf('/sessions', 'POST')
+      await v.clickEl(b)
+      if (countOf('/sessions/current') > got && countOf('/sessions', 'POST') === posted) return b
+    }
+    return undefined
+  }
+
   // @covers REQ-143#in-progress-blocks
-  it('作成が 409 のときは、その場で進行中の案内を出し、日ごとの並びを残したまま移らない', async () => {
+  it('作成が 409 のときは、どの日を押しても新しいテストを作らず移らず、日ごとの並びを残す', async () => {
     stubApi({ inProgress: true })
     stubConfirm(true)
     const v = await drawRoadmap()
-    await v.click('この日の確認')
+    expect(v.dayButtons(), '日ごとの「この日の確認」が 3 日ぶん出ていない').toHaveLength(3)
+    await v.clickDay(1)
     expect(countOf('/sessions', 'POST'), '作成をサーバに求めていない').toBe(1)
     // 文言は仕様が決めていないので、進行中のテストを指す語が出ることだけを見る
     expect(v.text(), '進行中のテストの案内が出ていない').toMatch(/進行中のテスト/)
+    // 案内が出ている間も、押せなくする日は 1 つも無い（押した日も、ほかの日も）
+    expect(v.disabledDays(), '進行中の間に押せなくなっている日がある').toHaveLength(0)
+    await v.clickDay(2)
+    await v.clickDay(3)
+    expect(countOf('/sessions', 'POST'), 'ほかの日を押しても作成を求めていない（押せない）').toBe(3)
+    // どれを押しても新しいテストにはならず、出題の画面へも移らない
+    expect(v.path(), '出題の画面へ移っている').toBe('/topics')
     expect(v.text(), '出題の画面へ移っている').not.toContain('出題の画面')
     // その場＝ロードマップのまま。並びの取得が失敗したときと同じ描画に落ちていない
-    for (const day of ['1 日目', '2 日目', '3 日目'])
+    for (const day of DAY_LABELS)
       expect(v.text(), `日ごとの見出し「${day}」が消えている`).toContain(day)
     expect(v.text(), '並びの先頭の単位が消えている').toContain('単位 1 の名前')
     expect(v.text(), '並びの末尾の単位が消えている').toContain('単位 7 の名前')
@@ -352,19 +450,42 @@ describe('各日の確認テスト（UC-009）', () => {
   })
 
   // @covers REQ-143#in-progress-shows-scope-and-progress
-  it('進行中のテストの範囲と、回答済み／全体の問数を、押した日のその場に出す', async () => {
+  it('進行中のテストの範囲と回答済み／全体の問数を、契約の進行中の取得から採って出す', async () => {
     stubApi({ inProgress: true })
     stubConfirm(true)
     const v = await drawRoadmap()
     const before = v.text()
-    await v.click('この日の確認')
-    // 押したことで増えた文＝その場に出た案内。どこへ出すかの形は仕様が決めていないので位置では見ない
+    const fetched = countOf('/sessions/current')
+    await v.clickDay(1)
+    // 409 の本文は ErrorBody だけなので、範囲と進み具合は UC-006 の getCurrentSession で取り直すしかない
+    expect(
+      countOf('/sessions/current'),
+      '断られたあとに進行中のテストを契約の操作で取り直していない',
+    ).toBeGreaterThan(fetched)
     const shown = addedText(before, v.text())
     expect(shown, '進行中のテストの範囲が案内に出ていない').toContain(IN_PROGRESS.scopeLabel)
     // 2 つの数が並んで出ることだけを見る（どちらを先に書くか・区切りの文字は仕様が決めていない）
     const { answered, questionCount } = IN_PROGRESS
     expect(shown, '回答済みと全体の問数が案内に出ていない').toMatch(
       new RegExp(`(${answered}\\D{0,12}${questionCount}|${questionCount}\\D{0,12}${answered})`),
+    )
+    await v.close()
+  })
+
+  // @covers REQ-143#in-progress-shows-scope-and-progress
+  it('案内は押した日のそばに 1 か所だけ出し、別の日を押すとその日のそばへ移る', async () => {
+    stubApi({ inProgress: true })
+    stubConfirm(true)
+    const v = await drawRoadmap()
+    await v.clickDay(1)
+    expect(v.countText(IN_PROGRESS.scopeLabel), '案内が 1 か所だけ出ていない').toBe(1)
+    expect(v.dayOf(IN_PROGRESS.scopeLabel), '1 日目を押したのに 1 日目のそばに出ていない').toBe(
+      DAY_LABELS[0],
+    )
+    await v.clickDay(3)
+    expect(v.countText(IN_PROGRESS.scopeLabel), '前に押した日の案内も残って 2 か所に出ている').toBe(1)
+    expect(v.dayOf(IN_PROGRESS.scopeLabel), '3 日目を押したのに 3 日目のそばに出ていない').toBe(
+      DAY_LABELS[2],
     )
     await v.close()
   })
@@ -420,31 +541,118 @@ describe('各日の確認テスト（UC-009）', () => {
   })
 
   // @covers REQ-143#in-progress-not-fetched
-  it('進み具合が取れなくても、範囲と全体の問数を示し、再開・破棄は選べる', async () => {
-    // 作成は 409（進行中あり）だが、進み具合の問い合わせだけが取れない
-    stubApi({ inProgress: true, fail: ['/sessions/current'] })
+  it('進行中のテストの範囲と進み具合が取れないときは理由と取り直す手段を出し、取り直せてから再開・破棄を選べる', async () => {
+    // 作成は 409（進行中あり）だが、進行中のテストの問い合わせだけが取れない
+    const api = stubApi({ inProgress: true, fail: ['/sessions/current'] })
     stubConfirm(true)
     const v = await drawRoadmap()
     const before = v.text()
-    await v.click('この日の確認')
-    const row = CONFLICT_BODY.inProgress
+    await v.clickDay(1)
     const shown = addedText(before, v.text())
-    // 409 の本文にあるものは示せる（進み具合の問い合わせに頼らない）
-    expect(shown, '進行中のテストの範囲が案内に出ていない').toContain(row.scopeLabel)
-    expect(shown, '進行中のテストの全体の問数が案内に出ていない').toMatch(
-      new RegExp(`${row.questionCount}\\s*問|問\\D{0,6}${row.questionCount}`),
+    // 理由を示す（文言は仕様が決めていないので、サーバが返した ErrorBody の文か取れなかったことを指す語）
+    expect(shown, '取れなかった理由が出ていない').toMatch(
+      new RegExp(`${FAIL_TEXT['/sessions/current']}|取得できません|確認できません|取れません|失敗`),
     )
-    // 取れていない進み具合を、取れたかのように回答済み／全体の形で出さない
-    expect(shown, '取れていない回答済みの数を示している').not.toMatch(
-      new RegExp(`${IN_PROGRESS.answered}\\D{0,8}${row.questionCount}`),
+    // 取れていないものを、取れたかのように出さない
+    expect(v.text(), '取れていない進行中のテストの範囲を示している').not.toContain(IN_PROGRESS.scopeLabel)
+    expect(
+      v.buttons().filter((b) => /再開|破棄/.test(b.textContent ?? '')),
+      '取り直せていないのに再開・破棄が選べる',
+    ).toHaveLength(0)
+    for (const day of DAY_LABELS)
+      expect(v.text(), `日ごとの見出し「${day}」が消えている`).toContain(day)
+
+    const retry = await findRetry(v)
+    expect(retry, '取れなかったのに取り直す手段が添えられていない').toBeDefined()
+
+    // 取り直せたら、範囲と進み具合が出て再開・破棄が選べる
+    const label = (retry?.textContent ?? '').trim()
+    expect(label, '取り直す手段に押せる文が無い（空の操作では押し直せない）').not.toBe('')
+    api.recover()
+    await v.click(label)
+    expect(v.text(), '取り直せたのに進行中のテストの範囲が出ない').toContain(IN_PROGRESS.scopeLabel)
+    expect(
+      v.buttons().filter((b) => /再開/.test(b.textContent ?? '')),
+      '取り直せたのに再開が選べない',
+    ).not.toHaveLength(0)
+    expect(
+      v.buttons().filter((b) => /破棄/.test(b.textContent ?? '')),
+      '取り直せたのに破棄が選べない',
+    ).not.toHaveLength(0)
+    await v.close()
+  })
+
+  // @covers REQ-143#in-progress-already-gone
+  it('取りに行った進行中のテストが既に無いときは、無い旨を押した日のそばに出し、始められる状態に戻る', async () => {
+    // 競合: 作成は 409 で断られたが、取り直すともう進行中のテストは無い（別の経路で締められた・破棄された）
+    stubApi({ gone: true })
+    stubConfirm(true)
+    const v = await drawRoadmap()
+    const before = v.text()
+    const fetched = countOf('/sessions/current')
+    await v.clickDay(2)
+    expect(countOf('/sessions', 'POST'), '作成をサーバに求めていない').toBe(1)
+    expect(countOf('/sessions/current'), '断られたあとに進行中のテストを取り直していない').toBeGreaterThan(
+      fetched,
     )
-    // 条件は「進行中のテストがある」だけなので、取れなくても選べる
-    expect(v.text(), '再開が選べない').toMatch(/再開/)
-    expect(v.text(), '破棄が選べない').toMatch(/破棄/)
-    await v.click('再開')
-    expect(v.path(), '進行中のテストの出題の画面へ移っていない').toMatch(
-      new RegExp(`^/sessions/${row.id}$`),
-    )
+    // 文言は仕様が決めていないので、進行中のテストを指す語が出ることだけを見る
+    const shown = addedText(before, v.text())
+    expect(shown, '進行中のテストが無いことが示されていない').toMatch(/進行中/)
+    expect(v.dayOf(/進行中/), '2 日目を押したのに 2 日目のそばに出ていない').toBe(DAY_LABELS[1])
+    // 既に無いものの範囲・進み具合・再開・破棄は出さない
+    expect(v.text(), '既に無い進行中のテストの範囲を示している').not.toContain(IN_PROGRESS.scopeLabel)
+    expect(
+      v.buttons().filter((b) => /再開|破棄/.test(b.textContent ?? '')),
+      '既に無いのに再開・破棄が選べる',
+    ).toHaveLength(0)
+    for (const day of DAY_LABELS)
+      expect(v.text(), `日ごとの見出し「${day}」が消えている`).toContain(day)
+    // 「既に無い」と「取れなかった」を分ける: 取り直す手段は添えない（取り直しても無いものは出てこない）
+    expect(
+      await findRetry(v),
+      '既に無いのに取り直す手段が添えられている（取れなかった側の案内に倒れている）',
+    ).toBeUndefined()
+    // この日の確認を始められる状態に戻っている（同じ日をもう一度押すと作成へ進む）
+    await v.clickDay(2)
+    expect(countOf('/sessions', 'POST'), 'この日の確認を始められる状態に戻っていない').toBe(2)
+    await v.close()
+  })
+
+  // @covers REQ-276#start-failed-shows-reason-keeps-list
+  it('進行中の有無以外の理由で作れなかったときは、押した日のそばに理由を出し、日ごとの並びを消さない', async () => {
+    // UC-008 の契約 startMockExam の INVALID_INPUT（選んだ範囲に出題できる問題が 1 問も無い）
+    const reason = 'この日の確認問題がまだ登録されていません'
+    stubApi({ startFails: { status: 400, error: reason } })
+    stubConfirm(true)
+    const v = await drawRoadmap()
+    await v.clickDay(2)
+    expect(countOf('/sessions', 'POST'), '作成をサーバに求めていない').toBe(1)
+    expect(v.text(), 'サーバが返した理由が出ていない').toContain(reason)
+    expect(v.dayOf(reason), '押した日（2 日目）のそばに理由が出ていない').toBe(DAY_LABELS[1])
+    for (const day of DAY_LABELS)
+      expect(v.text(), `日ごとの見出し「${day}」が消えている`).toContain(day)
+    expect(v.text(), '並びの先頭の単位が消えている').toContain('単位 1 の名前')
+    expect(v.text(), '並びの末尾の単位が消えている').toContain('単位 7 の名前')
+    expect(v.text(), '出題の画面へ移っている').not.toContain('出題の画面')
+    // 進行中のテストがある側（REQ-143）の案内に混ぜない
+    expect(v.text(), '進行中でもないのに再開・破棄の案内を出している').not.toMatch(/再開|破棄/)
+    await v.close()
+  })
+
+  // @covers REQ-276#start-failed-shows-reason-keeps-list
+  it('通信そのものが届かないときも、理由を出して日ごとの並びを消さない', async () => {
+    stubApi({ startFails: 'network' })
+    stubConfirm(true)
+    const v = await drawRoadmap()
+    const before = v.text()
+    await v.clickDay(3)
+    expect(countOf('/sessions', 'POST'), '作成をサーバに求めていない').toBe(1)
+    const shown = addedText(before, v.text())
+    expect(shown, '始められなかったことを示していない').toMatch(/できません|できなかった|失敗|エラー|通信/)
+    for (const day of DAY_LABELS)
+      expect(v.text(), `日ごとの見出し「${day}」が消えている`).toContain(day)
+    expect(v.text(), '並びの先頭の単位が消えている').toContain('単位 1 の名前')
+    expect(v.text(), '出題の画面へ移っている').not.toContain('出題の画面')
     await v.close()
   })
 })

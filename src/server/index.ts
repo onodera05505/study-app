@@ -61,7 +61,7 @@ function hasRouteHandler(c: Context<{ Bindings: Bindings; Variables: Variables }
 /** 認証。/api/auth/* 以外は Bearer トークンを要求する。
  *  署名の秘密が無い配備では、添えられたトークンを読まずに断る（通る／通らないを判じられない）。
  *  受け持たない経路は、秘密の有無もトークンの有無も見ずに notFound へ委ねる。
- *  @implements REQ-196, REQ-223, REQ-255, REQ-256, REQ-275, BR-001, BR-002
+ *  @implements REQ-196, REQ-223, REQ-255, REQ-275, BR-001, BR-002
  */
 api.use('*', async (c, next) => {
   if (!hasRouteHandler(c)) return next()

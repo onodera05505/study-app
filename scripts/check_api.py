@@ -6,9 +6,8 @@
 
 ## なぜ要るか
 
-`docs/検査観点カタログ.md` の層で言うと L3。ここだけ恒久の門が無く、個別の curl で
-その場を確認するだけだった。データ側（L1/L2）と描画側（L4）は全件検査があるのに、
-**その間をつなぐ API の形は誰も見ていない**。
+`docs/検査観点カタログ.md` の層で言うと L3。データ側（L1/L2）と描画側（L4）には
+全件検査があり、**その間をつなぐ API の形を見るのはここだけ**。
 
 API の形は静かに壊れる。SELECT の別名を1つ変えれば画面の値が undefined になるが、
 サーバは 200 を返すのでログにも出ない。認証も同じで、ミドルウェアの除外条件を
@@ -553,9 +552,15 @@ class Report:
         return False
 
     def error_body(self, label: str, body):
-        """失敗の本文が {error: 日本語の文字列} か。クライアントはこれを画面に出す。"""
+        """失敗の本文が {error: 日本語の文字列} か。クライアントはこれを画面に出す。
+
+        契約の ErrorBody は additionalProperties: false なので、鍵は error だけ。
+        画面に出せない鍵を失敗の本文に混ぜると、クライアントが拾う約束が増える。"""
         if not self.shape(label, body, ERROR_BODY):
             return
+        extra = sorted(k for k in body if k != "error")
+        if extra:
+            self.error(f"{label}: 失敗の本文の鍵は error だけのはず（余分: {', '.join(extra)}）")
         if not JAPANESE.search(body["error"]):
             self.warn(f"{label}: error が日本語でない（{body['error'][:60]}）")
 
@@ -757,7 +762,7 @@ def check_counts(c: Client, r: Report, got: dict, exam: str, db_name: str):
 
     exams = (got.get("/exams") or {}).get("exams") or []
     same("/exams の回数", len(exams), rows["exams"])
-    # 並び: ロードマップ型は 1 日目が先（学ぶ順）、資格版は新しい回が先。本人の指摘（2026-09-16、mkt で 14 日目が先頭に出た）
+    # 並び: ロードマップ型は 1 日目が先（学ぶ順）、資格版は新しい回が先。
     if exams:
         sys.path.insert(0, str(Path(__file__).parent)); from targets import target as _target
         first = exams[0]["exam"]; want_first = min(e["exam"] for e in exams) if _target(exam).get("roadmap") else max(e["exam"] for e in exams)
@@ -834,12 +839,10 @@ def check_session_flow(c: Client, r: Report, got: dict, other_token: str):
     sid = created["id"]
     total = created["questionCount"]
 
-    # 進行中がもう1つ作れないこと（409 ＋ inProgress を返す仕様）
+    # 進行中がもう1つ作れないこと（409 で断り、本文は {error} だけ）
     st, data, _ = c.call("POST", "/sessions", {"kind": "drill", "topicId": topic_id, "size": size})
     if r.status("POST /sessions（進行中が既にある）", st, 409, data):
         r.error_body("進行中が既にある場合の本文", data)
-        if "inProgress" not in (data or {}):
-            r.warn("POST /sessions の 409 に inProgress が無い（画面が続きを出せない）")
 
     # 1問目
     st, cur, text = c.call("GET", f"/sessions/{sid}/current")
@@ -862,8 +865,6 @@ def check_session_flow(c: Client, r: Report, got: dict, other_token: str):
     st, data, _ = c.call("POST", f"/sessions/{sid}/answer", {"idx": 0, "answer": "イ"})
     if r.status("二重回答（同じ idx を再送）", st, 409, data):
         r.error_body("二重回答の本文", data)
-        if not (data or {}).get("staleQuestion"):
-            r.warn("二重回答の 409 に staleQuestion が無い（画面が取り直しに入れない）")
 
     # 不正な選択肢
     st, data, _ = c.call("POST", f"/sessions/{sid}/answer", {"idx": 1, "answer": "オ"})
@@ -1369,8 +1370,6 @@ def check_time_limit(c: Client, r: Report, exam: str, db_name: str):
     st, data, _ = c.call("POST", f"/sessions/{sid}/answer", {"idx": 0, "answer": "ア"})
     if r.status("時間切れのセッションへの回答", st, 409, data):
         r.error_body("時間切れの回答の本文", data)
-        if not (data or {}).get("expired"):
-            r.warn("時間切れの 409 に expired が無い（画面が時間切れと判別できない）")
 
     st, _, _ = c.call("POST", f"/sessions/{sid}/finish")
     r.status("POST /sessions/:id/finish（時間切れ）", st, 200)
@@ -1513,9 +1512,9 @@ def first_choice(question: dict) -> str:
 
 
 # @scenario UC-004
-def check_scenario_uc007(c: Client, r: Report, got: dict):
+def check_scenario_uc004(c: Client, r: Report, got: dict):
     """練習テストの画面を開く → 範囲を選んで開始 → 出題 → 回答して解説 → 次の問題 → 締め → 結果。"""
-    L = "UC-007"
+    L = "UC-004"
     detail = got.get("topic_detail")
     if not detail:
         r.error(f"{L}: 出題できる論点が取れなかったので基本の流れを通せない")
@@ -1793,9 +1792,9 @@ def check_scenario_uc008(c: Client, r: Report, got: dict, exam: str, db_name: st
 
 # @scenario UC-006
 # @scenario UC-007
-def check_scenario_uc009(c: Client, r: Report, got: dict, exam: str, db_name: str):
+def check_scenario_uc006_007(c: Client, r: Report, got: dict, exam: str, db_name: str):
     """中断 → ホームの案内と進行中の知らせ → 再開 → 破棄 → 履歴の一覧と結果。"""
-    L = "UC-009"
+    L = "UC-006/007"
     detail = got.get("topic_detail")
     if not detail:
         r.error(f"{L}: 出題できる論点が取れなかったので基本の流れを通せない")
@@ -1906,9 +1905,9 @@ def check_scenario_uc009(c: Client, r: Report, got: dict, exam: str, db_name: st
 
 
 # 横断の決まり（BR-028 同一内容）の検査。UC のシナリオではないので @scenario は付けない
-def check_scenario_uc011(c: Client, r: Report, got: dict, exam: str, db_name: str):
+def check_same_content_questions(c: Client, r: Report, got: dict, exam: str, db_name: str):
     """同一内容の過去問を全問残したまま、学習側の出題では 1 問にまとめ、公開回の通し受験では畳まない。"""
-    L = "UC-011"
+    L = "横断の決まり BR-028"
     sys.path.insert(0, str(Path(__file__).parent)); from targets import target as _target
     roadmap = bool(_target(exam).get("roadmap"))
 
@@ -2015,15 +2014,15 @@ def check_scenario_uc011(c: Client, r: Report, got: dict, exam: str, db_name: st
         c.call("DELETE", "/sessions/current")
 
     r.notes.append(
-        f"{L} の基本の流れ: 過去問 {rows['all_q']} 件（畳むと {folded_total} 件）を残したまま、"
+        f"{L}: 過去問 {rows['all_q']} 件（畳むと {folded_total} 件）を残したまま、"
         "演習は 1 問にまとめ・通し受験は原本どおり"
     )
 
 
 # @scenario UC-010
-def check_scenario_uc012(c: Client, r: Report, exam: str, db_name: str):
+def check_scenario_uc010(c: Client, r: Report, exam: str, db_name: str):
     """本文と直前に開いていた画面を送ると、未処理で保存され、受け付けた印だけが返る。"""
-    L = "UC-012"
+    L = "UC-010"
     # 1〜3. 直前に開いていた画面を端末に覚えるのと上部メニューは画面側（check_render.tsx）
     d1(exam, db_name, "DELETE FROM feedback WHERE body LIKE 'apicheck scenario %'")
     marker = f"apicheck scenario {uuid.uuid4()}"
@@ -2058,15 +2057,42 @@ def check_scenario_uc012(c: Client, r: Report, exam: str, db_name: str):
     r.notes.append(f"{L} の基本の流れ: 本文と直前の画面を送信 → 未処理で保存 → 受け付けた印だけが返る")
 
 
+# パスワードの保存の形と反復回数は不変条件 O5 の検査。UC-017 の主シナリオの外なので
+# @scenario は付けない（要件は作り方を決めていない）。
+def check_password_storage(c: Client, r: Report, exam: str, db_name: str):
+    """パスワードを含む本文は、平文で持たずハッシュにして保存し、照合もハッシュで行う。"""
+    L = "不変条件 O5"
+    st, data, _ = c.call("POST", "/auth/login", {"email": EMAIL, "password": PASSWORD}, token=None)
+    if st == 404:
+        r.warn(f"{L}: この環境は SSO でパスワードの経路が無いので、保存と照合は未検査")
+    else:
+        if r.status(f"{L} パスワードの照合", st, 200, data):
+            if not (data or {}).get("token"):
+                r.error(f"{L}: 照合が通ったのにトークンが返らない")
+        try:
+            rows = d1(exam, db_name, f"SELECT password_hash AS h FROM users WHERE email = '{EMAIL}'")
+        except Exception as ex:
+            r.warn(f"{L}: 保存されたパスワードの形を D1 で確かめられなかった: {str(ex)[:80]}")
+        else:
+            stored = (rows[0]["h"] if rows else None) or ""
+            if stored == PASSWORD:
+                r.error(f"{L}: パスワードが平文で保存されている")
+            m = re.match(r"^(\d+):[0-9a-f]+:[0-9a-f]+$", stored)
+            if not m:
+                r.error(f"{L}: 保存された値が <反復回数>:<ソルト>:<ハッシュ> の形でない（{stored[:40]}）")
+            elif int(m.group(1)) > 100_000:
+                r.error(f"{L}: 反復回数が {m.group(1)}（Cloudflare Workers の上限 100,000 以下のはず）")
+    r.notes.append(f"{L}: パスワードは <反復回数>:<ソルト>:<ハッシュ> で保存し、照合もハッシュ")
+
+
 # @scenario UC-017
 # UC-017「学びとまなびばの要求の受け口を一様に守る」の主シナリオのうち、学び側の受け口を見る
 # （まなびばの側は scripts/check_portal_api.py が同じ流儀で見る）。下の番号はこの検査の順で、
 # UC-017 の step 4（どの応答にもヘッダ）→ step 1・3（本人の確定）→ step 2（本文の検証）→
-# step 6（断りの形）に当たる。パスワードの保存の形と反復回数は不変条件 O5 の検査で、
-# UC-017 の主シナリオの外（要件は作り方を決めていない）。
-def check_scenario_uc014(c: Client, r: Report, got: dict, exam: str, db_name: str):
-    """セキュリティヘッダ → Bearer トークンで本人を確定 → 本文の検証 → パスワードはハッシュで保存し照合。"""
-    L = "UC-014"
+# step 6（断りの形）に当たる。
+def check_scenario_uc017(c: Client, r: Report, got: dict):
+    """セキュリティヘッダ → Bearer トークンで本人を確定 → 本文の検証 → 本人でない呼び出しは断る。"""
+    L = "UC-017"
     want = {
         "content-security-policy": None,
         "strict-transport-security": None,
@@ -2111,40 +2137,18 @@ def check_scenario_uc014(c: Client, r: Report, got: dict, exam: str, db_name: st
                 r.error(f"{L} 5: 送った問題数が使われていない（{(created or {}).get('questionCount')}）")
         c.call("DELETE", "/sessions/current")
 
-    # 6. パスワードを含む本文は、平文で持たずハッシュにして保存し、照合もハッシュで行う
-    st, data, _ = c.call("POST", "/auth/login", {"email": EMAIL, "password": PASSWORD}, token=None)
-    if st == 404:
-        r.warn(f"{L} 6: この環境は SSO でパスワードの経路が無いので、保存と照合は未検査")
-    else:
-        if r.status(f"{L} 6 パスワードの照合", st, 200, data):
-            if not (data or {}).get("token"):
-                r.error(f"{L} 6: 照合が通ったのにトークンが返らない")
-        try:
-            rows = d1(exam, db_name, f"SELECT password_hash AS h FROM users WHERE email = '{EMAIL}'")
-        except Exception as ex:
-            r.warn(f"{L} 6: 保存されたパスワードの形を D1 で確かめられなかった: {str(ex)[:80]}")
-        else:
-            stored = (rows[0]["h"] if rows else None) or ""
-            if stored == PASSWORD:
-                r.error(f"{L} 6: パスワードが平文で保存されている")
-            m = re.match(r"^(\d+):[0-9a-f]+:[0-9a-f]+$", stored)
-            if not m:
-                r.error(f"{L} 6: 保存された値が <反復回数>:<ソルト>:<ハッシュ> の形でない（{stored[:40]}）")
-            elif int(m.group(1)) > 100_000:
-                r.error(f"{L} 6: 反復回数が {m.group(1)}（Cloudflare Workers の上限 100,000 以下のはず）")
-
     # 事後条件: 本人として呼ばれたときだけ処理され、失敗はステータスと日本語の {error} で返る
     st, data, _ = c.call("GET", "/me", token=None)
     if r.status(f"{L} 事後条件 本人でない呼び出し", st, 401, data):
         r.error_body(f"{L} 事後条件 401 の本文", data)
         headers_on("401 の応答")
-    r.notes.append(f"{L} の基本の流れ: ヘッダ 5 種 → トークンで本人を確定 → 本文の検証 → パスワードはハッシュ")
+    r.notes.append(f"{L} の基本の流れ: ヘッダ 5 種 → トークンで本人を確定 → 本文の検証 → 本人でない呼び出しは断る")
 
 
 # @scenario UC-015
-def check_scenario_uc017(c: Client, r: Report, exam: str, db_name: str):
+def check_scenario_uc015(c: Client, r: Report, exam: str, db_name: str):
     """死活確認 → 学びごとの D1 → 対象の設定は登録簿の 1 か所から。"""
-    L = "UC-017"
+    L = "UC-015"
     sys.path.insert(0, str(Path(__file__).parent)); from targets import target as _target
 
     # 1. 学び側の死活確認を認証なしで叩く
@@ -2229,13 +2233,14 @@ def main() -> int:
     check_feedback(c, r, args.exam, db_name)
     # UC の基本の流れの写し。ここまでの検査が作った進行中のセッションと feedback の行を
     # 片付けたあと（＝素の状態）に回すので、最後に置く。
-    check_scenario_uc007(c, r, got)
+    check_scenario_uc004(c, r, got)
     check_scenario_uc008(c, r, got, args.exam, db_name)
-    check_scenario_uc009(c, r, got, args.exam, db_name)
-    check_scenario_uc011(c, r, got, args.exam, db_name)
-    check_scenario_uc012(c, r, args.exam, db_name)
-    check_scenario_uc014(c, r, got, args.exam, db_name)
-    check_scenario_uc017(c, r, args.exam, db_name)
+    check_scenario_uc006_007(c, r, got, args.exam, db_name)
+    check_same_content_questions(c, r, got, args.exam, db_name)
+    check_scenario_uc010(c, r, args.exam, db_name)
+    check_scenario_uc017(c, r, got)
+    check_password_storage(c, r, args.exam, db_name)
+    check_scenario_uc015(c, r, args.exam, db_name)
 
     # --- 結果 -------------------------------------------------------------
     print(f"{args.base}  試験『{args.exam}』  D1『{db_name}』")

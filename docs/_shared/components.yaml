@@ -38,6 +38,7 @@ schemas:
   ErrorBody:
     type: object
     required: [error]
+    additionalProperties: false
     properties:
       error: { type: string, minLength: 1 }
   Ok:

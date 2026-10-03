@@ -134,44 +134,11 @@ export function Home() {
   const v = me.visits
   const next = me.nextTopics ?? []
 
-  // ロードマップ型のホームは 2 ボタン＋進捗 1 行（利用者の指摘「ごちゃごちゃ」。審議で採用 2026-09-16。資格版は据え置き）。
-  // 順番が決まっているので「次に学ぶ」候補の列挙は要らない。進行中のテストの案内だけは残す。
-  if (exam.roadmap) {
-    const total = me.topics.total
-    const done = me.topics.understood
-    const perDay = exam.roadmapSpec?.perDay ?? 3
-    return (
-      <>
-        {heading}
-        {current && (
-          <div className="notice">
-            進行中のテストがあります（{current.scopeLabel}・回答 {current.answered}/{current.questionCount}）。
-            <div className="btn-row" style={{ marginTop: '0.6rem' }}>
-              <Link className="btn btn-primary" to={`/sessions/${current.id}`}>
-                再開する
-              </Link>
-            </div>
-          </div>
-        )}
-        <p className="rm-home-progress">
-          理解 <b>{done}</b> / {total} 単位（{Math.ceil(done / perDay)} 日分）· 連続 <b>{v.streak}</b> 日
-        </p>
-        <Link to={last ? `/topics/${last.id}` : '/topics'} className="btn btn-primary btn-block go-study">
-          {last ? `前回の続きから（${last.term}）` : '最初の単位から始める'}
-        </Link>
-        <Link to="/topics" className="btn btn-block go-study">
-          ロードマップ（学習項目の一覧）
-        </Link>
-      </>
-    )
-  }
-
   return (
     <>
       {heading}
 
-      {/* 中断したテストへ戻る道は /practice にしかなかった。開いた最初の画面で
-          気づけるよう、いちばん上に出す。 */}
+      {/* 中断したテストへ戻る道を、開いた最初の画面のいちばん上で示す。 */}
       {/* @implements REQ-083, REQ-086 */}
       {current && (
         <div className="notice">

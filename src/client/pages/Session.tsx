@@ -80,8 +80,9 @@ export function Session() {
     [id, navigate],
   )
 
+  /** 現在の問題を取り直す。取れたものを返すので、呼び出し側は位置や締め済みを見て次を決められる。 */
   // @implements REQ-071
-  const load = useCallback(async () => {
+  const load = useCallback(async (): Promise<Current | null> => {
     try {
       const d = await api<Current>(`/sessions/${id}/current`)
       setData(d)
@@ -91,9 +92,12 @@ export function Session() {
       setPicked(null)
       setJudged(null)
       setSending(false)
+      // 終わっているテストは出題を返さない（時間切れもこちらに入る）。そのまま締めの流れへ送る
       if (d.finished) await finish(true)
+      return d
     } catch (e: any) {
       setError(e.message)
+      return null
     }
   }, [id, finish])
 
@@ -119,6 +123,7 @@ export function Session() {
   // @implements REQ-061, REQ-068, REQ-113
   async function answer(choice: string) {
     if (!data?.question || judged || sending) return
+    const idx = data.question.idx
     setPicked(choice)
     setSending(true)
     try {
@@ -129,7 +134,7 @@ export function Session() {
         finished: boolean
       }>(`/sessions/${id}/answer`, {
         method: 'POST',
-        body: { idx: data.question.idx, answer: choice },
+        body: { idx, answer: choice },
       })
       // 過去問実践（模試）は**本番と同じ**通し受験なので、1問ごとの正誤も解説も
       // 出さずに次へ送る。即時フィードバックがあると実力の見積もりが甘くなるし、
@@ -145,10 +150,14 @@ export function Session() {
         explanation: res.explanation ?? null,
       })
     } catch (e: any) {
-      // 表示中の問題が古い場合はサーバの位置に合わせ直す
-      if (e.body?.staleQuestion) {
-        setError('問題の表示がずれていたため読み込み直しました。')
-        load()
+      // 回答が受け付けられない理由（締め済み・時間切れ・未回答なし・位置の食い違い）は
+      // どれも 409 で、本文は理由の文だけ。どれであるかは現在の問題を取り直して決める。
+      if (e.status === 409) {
+        const d = await load()
+        // 終わっていれば load が締めの流れへ送り、取り直せなければ load が理由を出す。
+        // 終わっていなければ取り直した問題で示し、位置が送った位置と違うときだけずれを伝える
+        if (d && !d.finished && d.question && d.question.idx !== idx)
+          setError('問題の表示がずれていたため読み込み直しました。')
       } else {
         setError(e.message)
         setPicked(null)

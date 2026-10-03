@@ -243,13 +243,43 @@ describe('出題の画面', () => {
     expect(text()).toContain('問題文その2')
   })
 
+  /** 断りの本文は契約の ErrorBody だけで、断られた理由（進行中でない・時間切れ・未回答なし・位置の食い違い）を
+   *  区別しない（BR-022）。だから分岐は取り直した getCurrentQuestion の応答だけで決まる。 */
+  const REJECTED = { status: 409, body: { error: '回答を受け付けられませんでした' } }
+  const refetches = (calls: Call[]) => calls.filter((c) => c.url === '/api/sessions/s-1/current').length
+  const finishes = (calls: Call[]) => calls.filter((c) => c.url === '/api/sessions/s-1/finish').length
+
+  // @covers REQ-068#rejected-refetch-finished
+  it('断られて取り直した結果が「終わっている」なら、採点したことにせず締めの流れへ進む', async () => {
+    const calls = stubApi(
+      replies({
+        'POST /api/sessions/s-1/answer': REJECTED,
+        'GET /api/sessions/s-1/current': {
+          queue: [
+            CUR(),
+            // 未回答が無くなっている（契約 getCurrentQuestion の例 okNoUnanswered の形）
+            { session: SESSION(), question: null, answered: 3, remainingSec: null, finished: true, expired: false },
+          ],
+        },
+      }),
+    )
+    await draw()
+    const before = refetches(calls)
+    await click(choiceBtn('ア'), '選択肢ア')
+    expect(refetches(calls), '断られたのに現在の問題を取り直していない').toBeGreaterThan(before)
+    expect(text(), '位置はずれていないのにずれを伝えている').not.toMatch(/ずれ/)
+    expect(text(), '断られた回答を採点したことにしている').not.toContain('アが正解の根拠です。')
+    expect(finishes(calls), '取り直した結果が終わっているのに締めへ進まない').toBeGreaterThan(0)
+  })
+
   // @covers REQ-068#stale-idx-refetch
-  it('位置が食い違っていると返されたら、ずれを伝えて現在の問題を取り直す', async () => {
+  it('断られて取り直した位置が送った位置と違うなら、ずれを伝えて取り直した結果で進む', async () => {
     const calls = stubApi(
       replies({
         'POST /api/sessions/s-1/answer': {
           status: 409,
-          body: { error: '表示がずれていました。読み込み直します', staleQuestion: true, idx: 2 },
+          // 断りの本文は契約の ErrorBody だけ（位置は載らない。位置の正本は現在の問題の取得。BR-022）
+          body: { error: '表示がずれていました。読み込み直します' },
         },
         'GET /api/sessions/s-1/current': {
           queue: [CUR(), CUR({ question: Q({ idx: 2, text: '問題文その2' }), answered: 2 })],
@@ -257,10 +287,13 @@ describe('出題の画面', () => {
       }),
     )
     await draw()
-    const before = calls.filter((c) => c.url === '/api/sessions/s-1/current').length
+    const before = refetches(calls)
     await click(choiceBtn('ア'), '選択肢ア')
     expect(text()).toMatch(/ずれ/)
-    expect(calls.filter((c) => c.url === '/api/sessions/s-1/current').length, '現在の問題を取り直していない').toBeGreaterThan(before)
+    expect(refetches(calls), '現在の問題を取り直していない').toBeGreaterThan(before)
+    // 取り直した結果で画面が進む（位置は取り直した現在の問題が持つ）
+    expect(text(), '取り直した現在の問題を示していない').toContain('問題文その2')
+    expect(text(), '取り直した進捗（2／3）になっていない').toMatch(/2\s*[／/]\s*3/)
   })
 
   // @covers REQ-074#finish-failed-retryable

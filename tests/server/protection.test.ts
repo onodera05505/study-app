@@ -11,46 +11,43 @@ const SECRET = 'test-secret'
 const JAPANESE = /[ぁ-んァ-ヶ一-龥]/
 const json = (body: unknown) => ({ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
 
-/** 本人として通った要求は来訪の記録で D1 に書くので、そこまで進む経路には何も返さない偽の D1 を渡す。 */
-type FakeStmt = {
-  bind: (...a: unknown[]) => FakeStmt
-  run: () => Promise<unknown>
-  all: () => Promise<unknown>
-  first: () => Promise<null>
-  raw: () => Promise<unknown[]>
-}
-const fakeD1 = () => {
-  const empty = { success: true, results: [], meta: {} }
-  const stmt: FakeStmt = {
-    bind: () => stmt,
-    run: async () => empty,
-    all: async () => empty,
-    first: async () => null,
-    raw: async () => [],
-  }
-  return { prepare: () => stmt, batch: async () => [], exec: async () => ({ count: 0, duration: 0 }) } as unknown as D1Database
-}
-
-/** 認証が要る経路（/api のうち /api/auth/* と /api/health 以外）。 */
-const PROTECTED: Array<[string, string]> = [
-  ['GET', '/api/me'],
-  ['GET', '/api/fields'],
-  ['GET', '/api/categories'],
-  ['GET', '/api/topics'],
-  ['GET', '/api/topics/1'],
-  ['PUT', '/api/topics/1/progress'],
-  ['GET', '/api/glossary'],
-  ['GET', '/api/exams'],
-  ['GET', '/api/sessions'],
-  ['POST', '/api/sessions'],
-  ['GET', '/api/sessions/current'],
-  ['DELETE', '/api/sessions/current'],
-  ['POST', '/api/feedback'],
+/** /api の具体の経路の一覧を、サーバが登録した経路の表から導く（一覧の正本はサーバの経路の定義。
+ *  BR-001・R-102）。手書きの一覧は経路を足したときに取り残され、守りの漏れを検査が見逃す。
+ *  前置き（ヘッダ・認証）は `*` を含む経路で登録されるので、それを除いたものが具体の経路。 */
+const API_ROUTES: Array<[string, string]> = [
+  ...new Map(
+    app.routes
+      .filter((route) => route.path.startsWith('/api/') && !route.path.includes('*'))
+      .map((route) => [`${route.method} ${route.path}`, [route.method, route.path] as [string, string]]),
+  ).values(),
 ]
+
+/** 認証を要さない経路は、死活確認と /api/auth/* （ログインの形の問い合わせと発行）だけ。残りは認証が要る。 */
+const isPublic = (path: string) => path === '/api/health' || path.startsWith('/api/auth/')
+const AUTH_REQUIRED = API_ROUTES.filter(([, path]) => !isPublic(path))
+const PUBLIC_ROUTES = API_ROUTES.filter(([, path]) => isPublic(path))
+const label = ([method, path]: [string, string]) => `${method} ${path}`
+
+/** 導いた一覧が空・片側だけ、になっていないことの確認。これを欠くと経路が 1 本も無くても緑になる。 */
+const expectRoutesDerived = () => {
+  expect(AUTH_REQUIRED.length, '経路の表から導いた認証の要る経路が 17 本を下回る').toBeGreaterThanOrEqual(17)
+  expect(PUBLIC_ROUTES.map(label).sort(), '認証を要さない経路').toEqual([
+    'GET /api/auth/config',
+    'GET /api/health',
+    'POST /api/auth/login',
+    'POST /api/auth/register',
+    'POST /api/auth/sso',
+  ])
+  // 手書きの一覧に入っていなかった :id 付きの経路も導けている
+  expect(AUTH_REQUIRED.map(label)).toContain('GET /api/sessions/:id/current')
+  expect(AUTH_REQUIRED.map(label)).toContain('POST /api/sessions/:id/answer')
+  expect(AUTH_REQUIRED.map(label)).toContain('POST /api/sessions/:id/finish')
+  expect(AUTH_REQUIRED.map(label)).toContain('GET /api/sessions/:id')
+}
 
 const call = (method: string, path: string, token?: string) =>
   app.request(
-    path,
+    path.replace(/:\w+/g, '1'),
     {
       method,
       headers: { 'Content-Type': 'application/json', ...(token === undefined ? {} : { Authorization: `Bearer ${token}` }) },
@@ -59,9 +56,10 @@ const call = (method: string, path: string, token?: string) =>
     env(),
   )
 
+/** 失敗の本文は契約の ErrorBody（`{ error }` だけ）。文言そのものは照合しない。 */
 const errorOf = async (res: Response) => {
-  const body = (await res.json()) as { error?: unknown }
-  expect(typeof body.error).toBe('string')
+  const body = (await res.json()) as Record<string, unknown>
+  expect(Object.keys(body)).toEqual(['error'])
   const error = String(body.error)
   expect(error).toMatch(JAPANESE)
   return error
@@ -69,7 +67,8 @@ const errorOf = async (res: Response) => {
 
 describe('認証の境界（保護された経路と公開の経路）', () => {
   // @covers REQ-255#credential-absent
-  it('保護された経路は、トークン無し・壊れたトークン・別の秘密・期限切れのどれでも 401 の {error}', async () => {
+  it('認証の要る経路は、経路の表から導いた全件が、トークン無し・壊れたトークン・別の秘密・期限切れのどれでも 401 の {error}', async () => {
+    expectRoutesDerived()
     const wrongSecret = await issueToken('other-secret', { id: 'u-1', name: '名', role: 'MEMBER' })
     const expired = await sign({ sub: 'u-1', name: '名', role: 'MEMBER', exp: Math.floor(Date.now() / 1000) - 60 }, SECRET, 'HS256')
     const tokens: Array<[string, string | undefined]> = [
@@ -78,17 +77,22 @@ describe('認証の境界（保護された経路と公開の経路）', () => {
       ['署名が別の秘密', wrongSecret],
       ['期限切れ', expired],
     ]
-    for (const [method, path] of PROTECTED) {
-      for (const [label, token] of tokens) {
-        const res = await call(method, path, token)
-        expect(res.status, `${method} ${path}（${label}）`).toBe(401)
+    for (const route of AUTH_REQUIRED) {
+      for (const [kind, token] of tokens) {
+        const res = await call(route[0], route[1], token)
+        expect(res.status, `${label(route)}（${kind}）`).toBe(401)
         await errorOf(res)
       }
     }
   })
 
   // @covers REQ-255#public-route-not-refused
-  it('公開の経路（/api/health・/api/auth/config）はトークン無しで 200', async () => {
+  it('認証を要さない経路は、トークン無しでも認証では断られない（死活確認とログインの形は 200）', async () => {
+    expectRoutesDerived()
+    for (const route of PUBLIC_ROUTES) {
+      const res = await call(route[0], route[1])
+      expect(res.status, `${label(route)}（認証で断られている）`).not.toBe(401)
+    }
     for (const path of ['/api/health', '/api/auth/config']) {
       const res = await app.request(path, {}, env())
       expect(res.status, path).toBe(200)
@@ -159,8 +163,7 @@ describe('知らない経路と想定していない例外', () => {
   // @covers REQ-256#unknown-path-authenticated
   it('知らない /api の経路は 404 の {error}（本人として呼んでも同じ）', async () => {
     const token = await issueToken(SECRET, { id: 'u-1', name: '名', role: 'MEMBER' })
-    // 本人として通る側は来訪の記録で D1 に書くので、偽の D1 を渡して 404 まで届かせる
-    const mine = await app.request('/api/no-such-path', { headers: { Authorization: `Bearer ${token}` } }, env({ DB: fakeD1() }))
+    const mine = await app.request('/api/no-such-path', { headers: { Authorization: `Bearer ${token}` } }, env())
     expect(mine.status, '/api/no-such-path（本人）').toBe(404)
     await errorOf(mine)
     // 認証の要らない /api/auth/* 配下は未ログインでも 404

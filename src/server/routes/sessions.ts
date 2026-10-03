@@ -45,7 +45,7 @@ const createBody = z
     topicId: z.number().int().min(1).optional(),
     field: z.string().min(1).optional(),
     middleNo: z.number().int().min(1).optional(),
-    exam: z.string().optional(),
+    exam: z.string().min(1).optional(),
     size: z.number().int().min(1).max(100).optional(),
   })
   // 種別に対応する範囲の有無も入力の形。無いまま組み立てに渡すと種別ごとの分岐から
@@ -64,13 +64,13 @@ sessionRoutes.post('/', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
 
-  // 進行中のセッションは1つまで。放置されたものが新規開始を塞がないよう、
-  // 既存があれば内容を添えて返し、再開か破棄を選ばせる。
+  // 進行中のテストは1つまで。放置されたものが新規開始を塞がないよう、
+  // 断られた画面は進行中のテストを取り直して再開か破棄を選ばせる。
   const running = await db.query.sessions.findFirst({
     where: and(eq(schema.sessions.userId, userId), eq(schema.sessions.status, 'in_progress')),
   })
   if (running) {
-    return c.json({ error: '進行中のセッションがあります', inProgress: running }, 409)
+    return c.json({ error: '進行中のテストがあります' }, 409)
   }
 
   const cfg = await settings(db, c.env)
@@ -136,7 +136,7 @@ sessionRoutes.post('/', async (c) => {
   )
 })
 
-/** 進行中のセッション。中断からの復帰に使う。 */
+/** 進行中のテスト。中断からの復帰に使う。 */
 // @implements BR-015
 sessionRoutes.get('/current', async (c) => {
   const db = getDb(c.env)
@@ -151,7 +151,7 @@ sessionRoutes.get('/current', async (c) => {
   return c.json({ session: { ...s, answered: answered?.n ?? 0 } })
 })
 
-/** 進行中のセッションを破棄する。 */
+/** 進行中のテストを破棄する。 */
 // @implements REQ-085, REQ-090
 sessionRoutes.delete('/current', async (c) => {
   const db = getDb(c.env)
@@ -164,7 +164,7 @@ sessionRoutes.delete('/current', async (c) => {
   return c.json({ ok: true })
 })
 
-// 他人のセッション ID は 404 になる（user_id で絞る）。
+// 他人のテストの ID は 404 になる（user_id で絞る）。
 // @implements REQ-076, BR-018
 async function loadSession(db: ReturnType<typeof getDb>, userId: string, id: string) {
   return db.query.sessions.findFirst({
@@ -172,10 +172,20 @@ async function loadSession(db: ReturnType<typeof getDb>, userId: string, id: str
   })
 }
 
-/** 制限時間を超えていないか。超えていれば自動的に締める。 */
-function isExpired(s: { timeLimitSec: number | null; startedAt: number }): boolean {
+/** 制限時間を過ぎているか。進行中のテストは「いま」で、締めたテストは締めた時刻で判じる
+ *  （締めたテストも「いま」で見ると、制限時間内に締めたテストが期限の時刻を越えた途端に
+ *  時間切れになってしまう）。残り時間が 0 に達した時点で時間切れ（ちょうどを含む）。 */
+// @implements REQ-123
+function isExpired(s: {
+  status: string
+  timeLimitSec: number | null
+  startedAt: number
+  finishedAt: number | null
+}): boolean {
   if (!s.timeLimitSec) return false
-  return Date.now() / 1000 > s.startedAt + s.timeLimitSec
+  const deadline = s.startedAt + s.timeLimitSec
+  if (s.status === 'in_progress') return Date.now() / 1000 >= deadline
+  return s.finishedAt !== null && s.finishedAt >= deadline
 }
 
 /** 現在の問題（未回答の最小 idx）。 */
@@ -184,7 +194,7 @@ sessionRoutes.get('/:id/current', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
   const s = await loadSession(db, userId, c.req.param('id'))
-  if (!s) return c.json({ error: 'セッションが見つかりません' }, 404)
+  if (!s) return c.json({ error: 'テストが見つかりません' }, 404)
 
   const q = await db.get<{ idx: number; snapshot: string }>(sql`
     SELECT idx, snapshot FROM session_questions
@@ -257,9 +267,9 @@ sessionRoutes.post('/:id/answer', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
   const s = await loadSession(db, userId, c.req.param('id'))
-  if (!s) return c.json({ error: 'セッションが見つかりません' }, 404)
-  if (s.status !== 'in_progress') return c.json({ error: 'このセッションは終了しています' }, 409)
-  if (isExpired(s)) return c.json({ error: '制限時間を過ぎています', expired: true }, 409)
+  if (!s) return c.json({ error: 'テストが見つかりません' }, 404)
+  if (s.status !== 'in_progress') return c.json({ error: 'このテストは終了しています' }, 409)
+  if (isExpired(s)) return c.json({ error: '制限時間を過ぎています' }, 409)
 
   const current = await db.get<{
     id: string
@@ -279,7 +289,7 @@ sessionRoutes.post('/:id/answer', async (c) => {
   // 中断・再開でクライアントとサーバの位置がずれたまま採点すると、
   // 別の問題に答えが記録されてしまう。ずれていたら採点しない。
   if (current.idx !== parsed.data.idx) {
-    return c.json({ error: '表示中の問題が最新ではありません', staleQuestion: true, expected: current.idx }, 409)
+    return c.json({ error: '表示中の問題が最新ではありません' }, 409)
   }
 
   const snap = JSON.parse(current.snapshot)
@@ -332,7 +342,7 @@ sessionRoutes.post('/:id/finish', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
   const s = await loadSession(db, userId, c.req.param('id'))
-  if (!s) return c.json({ error: 'セッションが見つかりません' }, 404)
+  if (!s) return c.json({ error: 'テストが見つかりません' }, 404)
 
   const agg = await finalize(db, s.id)
   if (s.status === 'in_progress') {
@@ -349,16 +359,16 @@ sessionRoutes.post('/:id/finish', async (c) => {
 })
 
 /** 結果の詳細。間違えた問題から論点へ戻れるようにする。 */
-// @implements REQ-115, REQ-120, REQ-121, REQ-123, REQ-252
+// @implements REQ-115, REQ-120, REQ-121, REQ-252
 sessionRoutes.get('/:id', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
   const s = await loadSession(db, userId, c.req.param('id'))
-  if (!s) return c.json({ error: 'セッションが見つかりません' }, 404)
+  if (!s) return c.json({ error: 'テストが見つかりません' }, 404)
   // 終わっていない回の結果は返さない。URL を直に開けば、まだ答えていない問題の
   // 正解と解説がそのまま読めてしまう（過去問実践の途中でも開ける）。
   if (s.status !== 'completed') {
-    return c.json({ error: 'このセッションはまだ終了していません' }, 404)
+    return c.json({ error: 'このテストはまだ終了していません' }, 404)
   }
 
   const cfg = await settings(db, c.env)
@@ -403,14 +413,7 @@ sessionRoutes.get('/:id', async (c) => {
     overallPct >= cfg.passOverallPct &&
     (!e.fieldThreshold || fields.every((f) => f.pct >= cfg.passFieldPct))
 
-  // 制限時間のある回で、締めた時刻が期限を過ぎていれば時間切れ。
-  // isExpired は「いま」を見るので完了済みの回には使えない（早く終えた回も、
-  // 期限の時刻を過ぎれば true になってしまう）。締めた時刻で判定する。
-  const expired = !!(
-    s.timeLimitSec &&
-    s.finishedAt &&
-    s.finishedAt >= s.startedAt + s.timeLimitSec
-  )
+  const expired = isExpired(s)
 
   return c.json({
     session: s,

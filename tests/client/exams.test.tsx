@@ -167,7 +167,8 @@ describe('模擬試験の画面', () => {
       replies({
         'POST /api/sessions': {
           status: 409,
-          body: { error: '進行中のテストがあります', inProgress: { id: 's-9', kind: 'field', scopeLabel: '分野「テクノロジ系」', questionCount: 20, answered: 7 } },
+          // 断りの本文は契約の ErrorBody だけ（進行中のテストの行は載らない）
+          body: { error: '進行中のテストがあります' },
         },
       }),
     )

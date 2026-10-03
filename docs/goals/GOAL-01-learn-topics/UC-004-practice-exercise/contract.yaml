@@ -1,7 +1,7 @@
 x-uc: UC-004
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-10-02
+x-updated: 2026-10-03
 
 operations:
   # 分野の一覧（GET /api/fields）と単元の一覧（GET /api/categories）は同じ経路なので UC-002 の契約が正本（UC-002: listFields / listCategories。ADR-0001 の決め 10）
@@ -10,12 +10,13 @@ operations:
     direction: inbound
     owned: true
     auth: bearer
-    summary: 選んだ種別と範囲で進行中のテストを 1 つ作り、範囲の名前と問題数を返す
+    summary: 選んだ種別と範囲で進行中のテストを 1 つ作り、範囲の名前と問題数を返す（失敗の本文は ErrorBody だけ。断られた画面は UC-006 の getCurrentSession で進行中のテストを取り直す）
     wire:
       method: POST
       path: /api/sessions
       success: 201
     request:
+      # 同じ経路の模試（kind: mock）は UC-008 の startMockExam が持つ
       type: object
       required: [kind]
       properties:
@@ -35,6 +36,11 @@ operations:
           type: integer
           minimum: 1
           maximum: 100
+      oneOf:
+        - { properties: { kind: { const: drill } }, required: [kind, topicId] }
+        - { properties: { kind: { const: field } }, required: [kind, field] }
+        - { properties: { kind: { const: middle } }, required: [kind, middleNo] }
+        - { properties: { kind: { const: review } }, required: [kind] }
     response:
       type: object
       required: [id, kind, scopeLabel, questionCount, timeLimitSec]
@@ -84,6 +90,9 @@ operations:
           timeLimitSec: null
       invalidKind:
         request: { kind: daily }
+        error: INVALID_INPUT
+      missingScopeForKind:
+        request: { kind: drill }
         error: INVALID_INPUT
       invalidSize:
         request: { kind: field, field: "テクノロジ系", size: 101 }
@@ -193,7 +202,7 @@ operations:
     direction: inbound
     owned: true
     auth: bearer
-    summary: 現在の問題に選んだ選択肢を送り、正誤・正解の選択肢・問題解説・残りの未回答数を受け取る
+    summary: 現在の問題に選んだ選択肢を送り、正誤・正解の選択肢・問題解説・残りの未回答数を受け取る（失敗の本文は ErrorBody だけ。断られた画面は getCurrentQuestion で位置・finished・expired を取り直す）
     wire:
       method: POST
       path: /api/sessions/{id}/answer

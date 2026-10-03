@@ -1,4 +1,5 @@
-/** 終わったテスト（締めた・破棄した）に出題や再開を求めたときの境界（BR-034）。
+/** 終わったテスト（締めた・破棄した・残り時間が 0 に達した）に出題や再開を求めたときの境界
+ *  （BR-034・残り時間は UC-008 の REQ-117・REQ-119・REQ-123）。
  *
  *  叩くのは契約の操作の入口だけ（UC-004 getCurrentQuestion・UC-008 getMockCurrentQuestion ＝
  *  GET /api/sessions/:id/current、UC-006 getCurrentSession ＝ GET /api/sessions/current）。
@@ -7,7 +8,7 @@
  *  session-builder.test.ts の作法）。本物のデータが要る件数・並びは scripts/check_api.py が
  *  本番相当で見る。ここで見るのは「終わったテストの問題文が渡らないこと」だけ。 */
 
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import app from '../../src/server/index'
 import type { Bindings } from '../../src/server/lib/db'
 import { issueToken } from '../../src/server/lib/auth'
@@ -59,8 +60,9 @@ function conditions(sql: string, params: unknown[]): { column: string; equal: bo
   return found
 }
 
-/** 列名で持った行を返す偽の D1（prepare → bind → raw/all/first）。 */
-function fakeD1(tables: Table[]) {
+/** 列名で持った行を返す偽の D1（prepare → bind → raw/all/first）。
+ *  走らせた SQL を `executed` に記録する。断られた要求が何も書いていないことを見るのに使う。 */
+function fakeD1(tables: Table[], executed: string[] = []) {
   const rowsFor = (sql: string, params: unknown[]) => {
     const rows = tables.find((t) => t.match.test(sql))?.rows ?? []
     const where = conditions(sql, params)
@@ -79,7 +81,10 @@ function fakeD1(tables: Table[]) {
         params = bound
         return stmt
       },
-      run: async () => ({ success: true, results: [], meta: {} }),
+      run: async () => {
+        executed.push(sql)
+        return { success: true, results: [], meta: {} }
+      },
       all: async () => ({ success: true, results: rowsFor(sql, params), meta: {} }),
       first: async () => rowsFor(sql, params)[0] ?? null,
       raw: async () => {
@@ -92,7 +97,12 @@ function fakeD1(tables: Table[]) {
   return { prepare, batch: async () => [], exec: async () => ({ count: 0, duration: 0 }) }
 }
 
-const env = (tables: Table[]) => ({ EXAM: 'ip', JWT_SECRET: SECRET, DB: fakeD1(tables) } as unknown as Bindings)
+const env = (tables: Table[], executed: string[] = []) =>
+  ({ EXAM: 'ip', JWT_SECRET: SECRET, DB: fakeD1(tables, executed) } as unknown as Bindings)
+
+/** 回答の記録（session_questions）とテストの行（sessions）への書き込みだけを取り出す。 */
+const answerWrites = (executed: string[]) =>
+  executed.filter((sql) => /^\s*(insert|update|delete)\b/i.test(sql) && /"(session_questions|sessions)"/i.test(sql))
 
 /** sessions の行（列名は schema のまま）。終わった行は status と finished_at を持つ。 */
 const session = (over: Row): Row => ({
@@ -133,9 +143,52 @@ const sessions = (rows: Row[]): Table => ({ match: /from "sessions"/, rows })
 const SID = '8f14e45f-ea2b-4f1c-9a3e-6b1d2c7f4a90'
 const MOCK_SID = '3f2a7c1e-5b84-4d6a-9e10-2c7b8a4f0d55'
 
-async function get(path: string, tables: Table[]) {
+/** 制限時間つきの模試の時刻の基点（契約 UC-008 の例 okExpired の startedAt と timeLimitSec）。 */
+const START = 1759276800
+const LIMIT = 7200
+
+/** 制限時間つきで始まった模試の行（進行中か完了かは over で与える）。 */
+const mockSession = (over: Row): Row =>
+  session({
+    id: MOCK_SID,
+    kind: 'mock',
+    source_exam: '2024r06',
+    scope_label: '令和6年度 を通しで受験',
+    time_limit_sec: LIMIT,
+    question_count: 100,
+    started_at: START,
+    ...over,
+  })
+
+/** 開始から elapsed 秒の「いま」で叩く。時刻はサーバの時計なので、境界（残りちょうど 0・
+ *  締めた時刻がちょうど制限時間）と「いまが期限の後でも締めた時刻で決まる」を揺れなく測るために
+ *  時計を止める。 */
+async function atElapsed<T>(elapsed: number, body: () => Promise<T>): Promise<T> {
+  vi.useFakeTimers({ toFake: ['Date'] })
+  try {
+    vi.setSystemTime((START + elapsed) * 1000)
+    return await body()
+  } finally {
+    vi.useRealTimers()
+  }
+}
+
+async function get(path: string, tables: Table[], executed: string[] = []) {
   const token = await issueToken(SECRET, { id: 'u-1', name: '検査', role: 'MEMBER' })
-  return app.request(path, { headers: { Authorization: `Bearer ${token}` } }, env(tables))
+  return app.request(path, { headers: { Authorization: `Bearer ${token}` } }, env(tables, executed))
+}
+
+async function post(path: string, body: unknown, tables: Table[], executed: string[] = []) {
+  const token = await issueToken(SECRET, { id: 'u-1', name: '検査', role: 'MEMBER' })
+  return app.request(
+    path,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify(body),
+    },
+    env(tables, executed),
+  )
 }
 
 /** 出題を渡していない応答か（問題は null で、スナップショットの本文・選択肢が本文に現れない）。 */
@@ -143,7 +196,7 @@ async function noQuestion(res: Response) {
   const text = await res.text()
   expect(text).not.toContain(SNAPSHOT.text)
   expect(text).not.toContain(SNAPSHOT.choices.ウ)
-  const body = JSON.parse(text) as { question?: unknown; finished?: unknown }
+  const body = JSON.parse(text) as Record<string, unknown>
   expect(body.question ?? null).toBeNull()
   return body
 }
@@ -240,3 +293,139 @@ describe('終わったテストの再開（GET /api/sessions/current と戻り�
     await errorOf(resumed)
   })
 })
+
+/** 制限時間つきで進行中の模試（締めても破棄してもいない）。 */
+const RUNNING_MOCK = [
+  sessions([mockSession({ status: 'in_progress', correct_count: null, finished_at: null })]),
+  ANSWERED_COUNT,
+  UNANSWERED,
+]
+
+describe('残り時間が 0 に達した進行中の模試の現在の問題（GET /api/sessions/:id/current。UC-008）', () => {
+  const currentAt = (elapsed: number) =>
+    atElapsed(elapsed, () => get(`/api/sessions/${MOCK_SID}/current`, RUNNING_MOCK))
+
+  // @covers REQ-117#expired-finished
+  it('残り時間が 0 に達した進行中の模試は、未回答が残っていても問題を渡さず時間切れの終了として返る（境界は残り 0 ちょうど）', async () => {
+    // 0 に達する前（残り 1 秒）では同じ偽の D1 が問題を渡す
+    // ＝下の question: null は時間切れだけが出している（出題が届いていないのではない）
+    const beforeZero = await currentAt(LIMIT - 1)
+    expect(beforeZero.status).toBe(200)
+    const open = (await beforeZero.json()) as Record<string, unknown>
+    expect(open.question, '残り 1 秒で出題が渡っていない（この検査は空振りになる）').not.toBeNull()
+    expect(open.finished).toBe(false)
+    expect(open.remainingSec).toBe(1)
+
+    for (const elapsed of [LIMIT, LIMIT + 800]) {
+      const res = await currentAt(elapsed)
+      expect(res.status, `経過 ${elapsed} 秒`).toBe(200)
+      const body = await noQuestion(res)
+      expect(body.finished, `経過 ${elapsed} 秒`).toBe(true)
+      expect(body.expired, `経過 ${elapsed} 秒`).toBe(true)
+      expect(body.remainingSec, `経過 ${elapsed} 秒`).toBe(0)
+    }
+  })
+})
+
+describe('完了した模試を時間切れとして扱うかは締めた時刻で決まる（UC-008）', () => {
+  /** 締めた時刻だけを変えた完了の模試。 */
+  const completedAfter = (afterStart: number) => [
+    sessions([mockSession({ status: 'completed', correct_count: 1, finished_at: START + afterStart })]),
+    ANSWERED_COUNT,
+    UNANSWERED,
+  ]
+
+  /** 残り時間が 0 に達する時刻をとうに過ぎた「いま」で開き直す。時間切れの扱いが「いま」で
+   *  決まるならここで true に倒れる＝締めた時刻で決まっていることをこの 1 点が見分ける。 */
+  const reopenedLongAfter = <T>(body: () => Promise<T>) => atElapsed(LIMIT + 100_000, body)
+
+  const expiredOf = async (res: Response, label: string) => {
+    expect(res.status, label).toBe(200)
+    const body = (await res.json()) as Record<string, unknown>
+    return body.expired
+  }
+
+  // @covers REQ-123#in-time-not-expired
+  it('残り時間が 0 に達する前に締めた模試は、0 に達する時刻を過ぎてから開き直しても時間切れにならない（現在の問題の取得）', async () => {
+    // 達する前の側の端は残り 1 秒で締めた回（ちょうど 0 で締めた回は時間切れの側。
+    // REQ-117・REQ-119 と同じ切り方）
+    for (const afterStart of [100, LIMIT - 1]) {
+      const res = await reopenedLongAfter(() => get(`/api/sessions/${MOCK_SID}/current`, completedAfter(afterStart)))
+      expect(await expiredOf(res, `締めたのは開始から ${afterStart} 秒後`), `締めたのは開始から ${afterStart} 秒後`).toBe(
+        false,
+      )
+    }
+  })
+
+  // @covers REQ-123#in-time-not-expired
+  it('残り時間が 0 に達する前に締めた模試は、0 に達する時刻を過ぎてから開き直しても時間切れにならない（結果）', async () => {
+    for (const afterStart of [100, LIMIT - 1]) {
+      const res = await reopenedLongAfter(() => get(`/api/sessions/${MOCK_SID}`, completedAfter(afterStart)))
+      expect(await expiredOf(res, `締めたのは開始から ${afterStart} 秒後`), `締めたのは開始から ${afterStart} 秒後`).toBe(
+        false,
+      )
+    }
+  })
+
+  // @covers REQ-123#expired-by-finished-at
+  it('締めた時刻までに残り時間が 0 に達していた模試は、締めた直後に開いても時間切れになる（現在の問題の取得）', async () => {
+    // 境界はちょうど 0 で締めた回（REQ-118 の自動の締めが落ちる点）で、こちらが時間切れの側
+    for (const afterStart of [LIMIT, LIMIT + 900]) {
+      const res = await atElapsed(afterStart + 1, () =>
+        get(`/api/sessions/${MOCK_SID}/current`, completedAfter(afterStart)),
+      )
+      expect(await expiredOf(res, `締めたのは開始から ${afterStart} 秒後`), `締めたのは開始から ${afterStart} 秒後`).toBe(
+        true,
+      )
+    }
+  })
+
+  // @covers REQ-123#expired-by-finished-at
+  it('締めた時刻までに残り時間が 0 に達していた模試は、締めた直後に開いても時間切れになる（結果）', async () => {
+    for (const afterStart of [LIMIT, LIMIT + 900]) {
+      const res = await atElapsed(afterStart + 1, () => get(`/api/sessions/${MOCK_SID}`, completedAfter(afterStart)))
+      expect(await expiredOf(res, `締めたのは開始から ${afterStart} 秒後`), `締めたのは開始から ${afterStart} 秒後`).toBe(
+        true,
+      )
+    }
+  })
+})
+
+describe('残り時間が 0 に達した模試への回答（POST /api/sessions/:id/answer。UC-008）', () => {
+  /** 回答の経路が要る列（行の id・問題の id・正解）まで持たせた未回答の行。 */
+  const UNANSWERED_ROW: Table = {
+    match: UNANSWERED.match,
+    rows: [{ ...UNANSWERED.rows[0], id: 'sq-1', question_id: 'q-1', answer: 'ア' }],
+  }
+  const RUNNING = [
+    sessions([mockSession({ status: 'in_progress', correct_count: null, finished_at: null })]),
+    ANSWERED_COUNT,
+    UNANSWERED_ROW,
+  ]
+  /** 現在の問題（未回答の行）への回答。選択肢は契約の enum の値。 */
+  const ANSWER = { idx: SNAPSHOT.idx, answer: 'ア' }
+  const answer = (elapsed: number, executed: string[]) =>
+    atElapsed(elapsed, () => post(`/api/sessions/${MOCK_SID}/answer`, ANSWER, RUNNING, executed))
+
+  // @covers REQ-119#expired-answer-rejected
+  it('残り時間が 0 に達した進行中の模試への回答は、正誤も記録も残さず断られる（境界は残り 0 ちょうど）', async () => {
+    // 0 に達する前（残り 1 秒）では同じ偽の D1 が回答を記録する
+    // ＝下の「書き込みが無い」は時間切れだけが出している（回答の経路が届いていないのではない）
+    const kept: string[] = []
+    const beforeZero = await answer(LIMIT - 1, kept)
+    expect(beforeZero.status, '残り 1 秒の回答が通らない（この検査は空振りになる）').toBe(200)
+    expect(answerWrites(kept), '残り 1 秒の回答が記録されていない（この検査は空振りになる）').not.toEqual([])
+
+    for (const elapsed of [LIMIT, LIMIT + 900]) {
+      const executed: string[] = []
+      const res = await answer(elapsed, executed)
+      expect(res.status, `経過 ${elapsed} 秒`).toBe(409)
+      // 本文は契約の ErrorBody だけ（正誤も正解も解説も入らない）
+      const body = (await res.json()) as Record<string, unknown>
+      expect(Object.keys(body), `経過 ${elapsed} 秒`).toEqual(['error'])
+      expect(String(body.error), `経過 ${elapsed} 秒`).toMatch(JAPANESE)
+      expect(answerWrites(executed), `経過 ${elapsed} 秒で回答か締めが書かれている`).toEqual([])
+    }
+  })
+})
+

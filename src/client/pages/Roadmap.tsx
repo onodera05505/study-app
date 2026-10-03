@@ -2,16 +2,26 @@ import { useCallback, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { api, getLastTopic } from '../lib/api'
 import type { LastTopic } from '../lib/api'
+import { discardCurrentSession } from '../lib/discardCurrent'
 import { exam } from '../exam'
 import { StatusBadge, statusRowClass } from '../components/StatusBadge'
 
 /** その日の確認テスト。1 日＝1 回（過去問の「回」を日に割り当ててある） */
 type DayExam = { exam: string; examLabel: string; questions: number; attempts: number; bestScore: number | null }
 
-/** 進行中のテスト。範囲と全体の問数は、テストを作る経路が 409 に添える行から取る。
- *  その行は回答済みの数を持たないので、進み具合だけは GET /api/sessions/current で補う。
- *  補いが取れなかったときは answered が null（範囲と全体の問数だけで案内する）。 */
-type InProgress = { id: string; scopeLabel: string | null; questionCount: number; answered: number | null }
+/** 進行中のテスト。範囲と回答の進み具合は GET /api/sessions/current から取る
+ *  （テストを作る経路の 409 の本文は理由の文だけで、進行中のテストの中身は入らない）。 */
+type InProgress = { id: string; scopeLabel: string; questionCount: number; answered: number }
+
+/** 進行中のテストがあって、この日の確認を始められなかったことの案内。exam は押した日。
+ *
+ *  - `fetched` 範囲と進み具合が取れた（再開と破棄を選べる）
+ *  - `fetchFailed` 取れなかった（理由と取り直す手段だけを出す。再開と破棄は宛先が無いので出さない）
+ *  - `gone` 取りに行ったら進行中のテストが無かった（確かめているあいだに締められたか破棄された） */
+type InProgressNotice =
+  | { exam: string; kind: 'fetched'; session: InProgress }
+  | { exam: string; kind: 'fetchFailed'; message: string }
+  | { exam: string; kind: 'gone' }
 
 type Unit = {
   id: number
@@ -41,9 +51,8 @@ export function Roadmap() {
   // この日の確認を始める操作の失敗。並びの取得の失敗とは別に持つ。これを error に混ぜると
   // 日ごとの並びが画面から消え、どの日で失敗したのかも分からなくなる
   const [startError, setStartError] = useState<{ exam: string; message: string } | null>(null)
-  // ロードマップ型では練習テストの画面へ行けないので、進行中のテストはこの画面その場で扱う。
-  // exam は押した日。案内をその日のボタンの近くに出すために持つ
-  const [inProgress, setInProgress] = useState<{ exam: string; session: InProgress } | null>(null)
+  // ロードマップ型では練習テストの画面へ行けないので、進行中のテストはこの画面その場で扱う
+  const [inProgress, setInProgress] = useState<InProgressNotice | null>(null)
   // 破棄の操作の失敗。案内は残したまま理由だけ添える
   const [discardError, setDiscardError] = useState('')
   const [busy, setBusy] = useState(false)
@@ -71,63 +80,44 @@ export function Roadmap() {
     setLast(getLastTopic())
   }, [load])
 
-  /** 進行中のテストがあって作れなかった（409）ことを、その場の案内に変える。
+  /** 進行中のテストの範囲と回答の進み具合を取り、押した日の近くの案内にする。
    *
-   *  案内の土台は 409 の本文に添えられた進行中のテストの行（範囲と全体の問数が入る）。
-   *  回答の進み具合はその行に入らないので GET /api/sessions/current で補うが、
-   *  補いが取れなくても範囲と全体の問数で案内を出し、再開と破棄はどちらも出す。
-   *  進み具合が取れないことを理由に行き止まりにしてはいけない。
-   *
-   *  取りに行くまでのあいだに締められた・破棄されたときだけ（進行中が無いと返ったとき）
-   *  案内ではなく理由を示す。 */
-  // @implements REQ-143, BR-017
-  async function showInProgress(examId: string, body: any) {
-    const row = body?.inProgress
-    let session: InProgress | null =
-      row && typeof row.id === 'string' && typeof row.questionCount === 'number'
-        ? {
-            id: row.id,
-            scopeLabel: typeof row.scopeLabel === 'string' ? row.scopeLabel : null,
-            questionCount: row.questionCount,
-            answered: null,
-          }
-        : null
+   *  取れなかったときは理由と取り直す手段（再読み込み）を出す。再開と破棄は宛先の
+   *  テストの ID が要るので、取り直せてからでないと選べない。 */
+  // @implements REQ-143, BR-014, BR-017
+  const fetchInProgress = useCallback(async (examId: string) => {
+    setBusy(true)
+    setDiscardError('')
+    setInProgress(null)
     try {
-      const d = await api<{
-        session: { id: string; scopeLabel: string | null; questionCount: number; answered: number } | null
-      }>('/sessions/current')
-      if (d.session) {
-        session = {
-          id: d.session.id,
-          scopeLabel: d.session.scopeLabel,
-          questionCount: d.session.questionCount,
-          answered: d.session.answered,
-        }
-      } else {
-        // 進行中はもう無い。再開も破棄も宛先が無いので、案内ではなく理由を示す
-        setStartError({
-          exam: examId,
-          message: '進行中のテストは、確かめているあいだに締められたか破棄されました。もう一度始めてください。',
-        })
-        return
-      }
-    } catch {
-      // 進み具合が取れなかっただけ。案内そのものは 409 の本文で出せる
+      const d = await api<{ session: InProgress | null }>('/sessions/current')
+      setInProgress(
+        d.session
+          ? {
+              exam: examId,
+              kind: 'fetched',
+              session: {
+                id: d.session.id,
+                scopeLabel: d.session.scopeLabel,
+                questionCount: d.session.questionCount,
+                answered: d.session.answered,
+              },
+            }
+          : { exam: examId, kind: 'gone' },
+      )
+    } catch (e: any) {
+      setInProgress({ exam: examId, kind: 'fetchFailed', message: e.message })
+    } finally {
+      setBusy(false)
     }
-    if (session) setInProgress({ exam: examId, session })
-    // 409 なのに本文に進行中のテストの行が無い（契約の外）。再開の宛先が無いので理由だけ示す
-    else
-      setStartError({
-        exam: examId,
-        message: '進行中のテストがあるため、この日の確認は始められません。進行中のテストの内容が取れませんでした。',
-      })
-  }
+  }, [])
 
   /** この日の確認を始める。範囲はその日の単位だけ。
    *
    *  失敗は押した日の近くに出し、日ごとの並びは残す。409 は進行中のテストが 1 人 1 つという
-   *  規則（サーバが守る）に当たったときで、新しいテストは作られず、出題の画面へも移さない。 */
-  // @implements REQ-142, REQ-143, BR-017
+   *  規則（サーバが守る）に当たったときで、新しいテストは作られず、出題の画面へも移さない。
+   *  409 の本文は理由の文だけなので、案内の中身は進行中のテストを取り直して作る。 */
+  // @implements REQ-142, REQ-143, REQ-276, BR-017
   async function startDay(e: DayExam) {
     if (busy) return
     setStartError(null)
@@ -139,32 +129,25 @@ export function Roadmap() {
       const s = await api<{ id: string }>('/sessions', { method: 'POST', body: { kind: 'mock', exam: e.exam } })
       navigate(`/sessions/${s.id}`)
     } catch (err: any) {
-      if (err.status === 409) await showInProgress(e.exam, err.body)
+      if (err.status === 409) await fetchInProgress(e.exam)
       else setStartError({ exam: e.exam, message: err.message })
     } finally {
       setBusy(false)
     }
   }
 
-  /** 進行中のテストを破棄する。了承を取ってから消し、消せたらこの日の確認を始められる状態に戻す。 */
-  // @implements REQ-143, BR-014
+  /** 進行中のテストを破棄する。確かめと破棄の要求そのものは discardCurrentSession が持つ。
+   *  消せたら案内を消し、この日の確認を始められる状態に戻す。 */
+  // @implements REQ-143
   async function discardInProgress() {
-    if (!inProgress) return
-    // 破棄は取り消せず、回答済みの分もまとめて消える。1 クリックで消えるのは重い
-    const n = inProgress.session.answered
-    if (!window.confirm(n === null ? '回答済みの分ごと破棄します。よろしいですか？' : `回答済み ${n} 問ごと破棄します。よろしいですか？`))
-      return
+    if (inProgress?.kind !== 'fetched') return
     setBusy(true)
     setDiscardError('')
-    try {
-      await api('/sessions/current', { method: 'DELETE' })
-      setInProgress(null)
-    } catch (e: any) {
-      // 消せていないのに案内を消すと、進行中が残っていることに気づけない
-      setDiscardError(e.message)
-    } finally {
-      setBusy(false)
-    }
+    const r = await discardCurrentSession(inProgress.session.answered)
+    if (r === 'discarded') setInProgress(null)
+    // 消せていないのに案内を消すと、進行中が残っていることに気づけない
+    else if (typeof r === 'object') setDiscardError(r.error)
+    setBusy(false)
   }
 
   // 単位の並びが取れないときだけ、一覧の代わりに失敗と読み直す手段を出す
@@ -247,13 +230,8 @@ export function Roadmap() {
               return (
                 <>
                   <p className="rm-day-exam">
-                    {/* 進行中のテストがあるあいだはどの日の確認も始められない（BR-017） */}
-                    <button
-                      type="button"
-                      className="btn small"
-                      disabled={busy || inProgress !== null}
-                      onClick={() => startDay(ex)}
-                    >
+                    {/* 進行中のテストがあるあいだも押せる。断られたらその日の近くに案内を出す（REQ-143） */}
+                    <button type="button" className="btn small" disabled={busy} onClick={() => startDay(ex)}>
                       この日の確認（{ex.questions} 問）
                     </button>
                     {ex.attempts > 0 && (
@@ -262,40 +240,69 @@ export function Roadmap() {
                       </span>
                     )}
                   </p>
-                  {/* 押した日の近くに理由を出し、日ごとの並びは消さない */}
-                  {/* @implements BR-014 */}
+                  {/* 進行中のテストがあること以外の理由で始められなかったとき、押した日の近くに
+                      理由を出し、日ごとの並びは消さない */}
+                  {/* @implements REQ-276, BR-014 */}
                   {startError?.exam === ex.exam && (
                     <p className="error" role="alert">
                       {startError.message}
                     </p>
                   )}
                   {/* 進行中のテストの範囲と進み具合、再開と破棄を押した日のその場に置く */}
-                  {/* @implements REQ-143, BR-017 */}
-                  {inProgress?.exam === ex.exam && (
+                  {/* @implements REQ-143, BR-014, BR-017 */}
+                  {inProgress && inProgress.exam === ex.exam && (
                     <div className="notice" role="alert">
-                      <p style={{ margin: 0 }}>
-                        進行中のテストがあります（
-                        {inProgress.session.scopeLabel && `${inProgress.session.scopeLabel} / `}
-                        {inProgress.session.answered !== null && `回答済み ${inProgress.session.answered} / `}
-                        全体 {inProgress.session.questionCount} 問）。
-                        {/* 進み具合が取れなくても案内は出す。取れていないことは隠さない */}
-                        {inProgress.session.answered === null && '回答の進み具合は取れませんでした。'}
-                      </p>
-                      <div className="btn-row" style={{ marginTop: '0.6rem' }}>
-                        <button
-                          type="button"
-                          className="btn btn-primary"
-                          onClick={() => navigate(`/sessions/${inProgress.session.id}`)}
-                        >
-                          再開する
-                        </button>
-                        <button type="button" className="btn" disabled={busy} onClick={discardInProgress}>
-                          破棄する
-                        </button>
-                      </div>
-                      {discardError && (
-                        <p className="error" style={{ margin: '0.6rem 0 0' }}>
-                          {discardError}
+                      {inProgress.kind === 'fetched' && (
+                        <>
+                          <p style={{ margin: 0 }}>
+                            進行中のテストがあります（{inProgress.session.scopeLabel} / 回答済み{' '}
+                            {inProgress.session.answered} / 全体 {inProgress.session.questionCount} 問）。
+                            この日の確認は、再開か破棄のあとに始められます。
+                          </p>
+                          <div className="btn-row" style={{ marginTop: '0.6rem' }}>
+                            <button
+                              type="button"
+                              className="btn btn-primary"
+                              onClick={() => navigate(`/sessions/${inProgress.session.id}`)}
+                            >
+                              再開する
+                            </button>
+                            <button type="button" className="btn" disabled={busy} onClick={discardInProgress}>
+                              破棄する
+                            </button>
+                          </div>
+                          {discardError && (
+                            <p className="error" style={{ margin: '0.6rem 0 0' }}>
+                              {discardError}
+                            </p>
+                          )}
+                        </>
+                      )}
+                      {/* 範囲と進み具合が取れないあいだは、再開と破棄の宛先が無い。
+                          取れなかったことを隠さず、取り直す手段を添える */}
+                      {inProgress.kind === 'fetchFailed' && (
+                        <>
+                          <p className="error" style={{ margin: 0 }}>
+                            {inProgress.message}
+                          </p>
+                          <p className="muted" style={{ margin: '0.2rem 0 0', fontSize: '0.85rem' }}>
+                            進行中のテストがあるため、この日の確認は始められません。進行中のテストの範囲と回答の進み具合が取れていません。
+                          </p>
+                          <div className="btn-row" style={{ marginTop: '0.6rem' }}>
+                            <button
+                              type="button"
+                              className="btn"
+                              disabled={busy}
+                              onClick={() => fetchInProgress(ex.exam)}
+                            >
+                              再読み込み
+                            </button>
+                          </div>
+                        </>
+                      )}
+                      {inProgress.kind === 'gone' && (
+                        <p style={{ margin: 0 }}>
+                          進行中のテストは、確かめているあいだに締められたか破棄されました。もう一度この日の確認を始めてください。
                         </p>
                       )}
                     </div>
