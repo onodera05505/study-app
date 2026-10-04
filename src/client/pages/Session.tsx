@@ -55,6 +55,9 @@ export function Session() {
     explanation: ExplanationData | null
   } | null>(null)
   const [error, setError] = useState('')
+  // 現在の問題を取れなかった理由。最初の取得も、断られた回答のあとの取り直しもここに入る。
+  // 取れていない問題は出せないので、問題が出るはずだった場所にこの理由を出す
+  const [loadError, setLoadError] = useState('')
   // 送信中は選択肢を押せなくする。模試は判定を出さない（＝ judged が入らない）ので、
   // judged だけを見ていると答えが二重に送られる。
   const [sending, setSending] = useState(false)
@@ -92,11 +95,12 @@ export function Session() {
       setPicked(null)
       setJudged(null)
       setSending(false)
+      setLoadError('')
       // 終わっているテストは出題を返さない（時間切れもこちらに入る）。そのまま締めの流れへ送る
       if (d.finished) await finish(true)
       return d
     } catch (e: any) {
-      setError(e.message)
+      setLoadError(e.message)
       return null
     }
   }, [id, finish])
@@ -154,7 +158,7 @@ export function Session() {
       // どれも 409 で、本文は理由の文だけ。どれであるかは現在の問題を取り直して決める。
       if (e.status === 409) {
         const d = await load()
-        // 終わっていれば load が締めの流れへ送り、取り直せなければ load が理由を出す。
+        // 終わっていれば load が締めの流れへ送り、取れなければ load が理由と取り直す手段を出す。
         // 終わっていなければ取り直した問題で示し、位置が送った位置と違うときだけずれを伝える
         if (d && !d.finished && d.question && d.question.idx !== idx)
           setError('問題の表示がずれていたため読み込み直しました。')
@@ -171,12 +175,23 @@ export function Session() {
   // 集中させたいので見出しを見せない。読み上げにだけ出す。
   const heading = <h1 className="sr-only">出題中</h1>
 
-  if (error && !data)
+  // 取れていない問題は出せないので、問題が出るはずだった場所に理由と取り直す手段を置く。
+  // 再読み込みは問題の取得だけをやり直す（回答は送り直さない）
+  // @implements REQ-278, BR-014
+  if (loadError)
     return (
-      <>
+      <div className="card">
         {heading}
-        <p className="error">{error}</p>
-      </>
+        <p className="error" role="alert" style={{ marginTop: 0 }}>
+          {loadError}
+        </p>
+        <p className="muted" style={{ margin: '0.2rem 0 0.6rem', fontSize: '0.85rem' }}>
+          現在の問題を取れていません。
+        </p>
+        <button type="button" className="btn" onClick={() => load()}>
+          再読み込み
+        </button>
+      </div>
     )
   if (!data)
     return (

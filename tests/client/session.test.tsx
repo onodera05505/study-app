@@ -296,6 +296,152 @@ describe('出題の画面', () => {
     expect(text(), '取り直した進捗（2／3）になっていない').toMatch(/2\s*[／/]\s*3/)
   })
 
+  /** 取り直しが断られたときにサーバが返す本文（契約 getCurrentQuestion の NOT_FOUND。本文は ErrorBody だけ）。 */
+  const REFETCH_FAILED = { status: 404, body: { error: 'テストが見つかりませんでした' } }
+  /** その文のとおりの操作を探す（押したあとに名札が変わっても読めるよう、押す直前に引き直す）。 */
+  const byLabel = (label: string) =>
+    els('button,a,[role="button"]').find((b) => (b.textContent ?? '').trim() === label)
+
+  /** 断られた回答のあとの「現在の問題の取り直し」だけが失敗する偽のサーバ。
+   *  最初の描画の取得は成功し、2 回目以降（断られたあとの取り直し）が落ちる。
+   *  recover() を呼ぶと、そのあとの取り直しは次の問題（位置 2）で成功する。 */
+  function stubRefetchFailure(fail: Reply | 'network') {
+    let gets = 0
+    let recovered = false
+    const base = replies({ 'POST /api/sessions/s-1/answer': REJECTED })
+    const calls = stubApi((key) => {
+      if (key !== 'GET /api/sessions/s-1/current') return base(key)
+      gets += 1
+      if (gets === 1) return { body: CUR() }
+      if (recovered) return { body: CUR({ question: Q({ idx: 2, text: '問題文その2' }), answered: 2 }) }
+      // 通信そのものが届かない側は、応答を返さずに投げる（偽の fetch が落ちる）
+      if (fail === 'network') throw new TypeError('Failed to fetch')
+      return fail
+    })
+    return {
+      calls,
+      recover: () => {
+        recovered = true
+      },
+    }
+  }
+
+  /** 「取り直す手段」を探してその文を返す。押して現在の問題の取得が実際に増え、回答の送り直しが
+   *  起きないものだけを手段と見なす（在るだけ・押しても何も起きないものは手段にしない）。
+   *  中断（REQ-070）と締め（REQ-069）は別の操作なので候補から外す。 */
+  async function findRetry(calls: Call[]): Promise<string | undefined> {
+    const answers = () => calls.filter((c) => c.url === '/api/sessions/s-1/answer').length
+    const choices = choiceBtns()
+    const labels = els('button,a,[role="button"]')
+      .filter((b) => !choices.includes(b as HTMLButtonElement))
+      .map((b) => (b.textContent ?? '').trim())
+      .filter((t) => t !== '' && !/中断|採点/.test(t))
+    for (const label of labels) {
+      const el = byLabel(label)
+      if (!el) continue
+      const got = refetches(calls)
+      const posted = answers()
+      await click(el, label)
+      // 画面を離れる操作は取り直す手段ではない（離れたらそれ以上は探せない）
+      if (path() !== '') return undefined
+      if (refetches(calls) > got && answers() === posted) return label
+    }
+    return undefined
+  }
+
+  // @covers REQ-278#refetch-failed-shows-reason-with-retry
+  it('画面を開いた直後の最初の取得が落ちたときも、問題の場所に理由を出して取り直す手段を添える', async () => {
+    const FAIL = { status: 500, body: { error: '現在の問題を取得できませんでした' } }
+    const calls = stubApi(replies({ 'GET /api/sessions/s-1/current': FAIL }))
+    await draw()
+    expect(refetches(calls), '現在の問題を取りに行っていない').toBeGreaterThan(0)
+    expect(text(), '取れなかった理由が出ていない').toMatch(
+      /現在の問題を取得できませんでした|取得できません|取り直せていません|失敗/,
+    )
+    expect(finishes(calls), '取れていないのに締めへ進んでいる').toBe(0)
+    // 取り直す手段（押すと現在の問題の取得だけが走る、文のある操作）
+    expect(await findRetry(calls), '取り直す手段が添えられていない').toBeDefined()
+
+    // 空振り対策: 取れた側では同じ理由が出ない（出続ける文を理由と読んでいない）
+    stubApi(replies())
+    await draw()
+    expect(text()).toContain('問題文その1')
+    expect(text(), '取れたのに取れなかった理由が出ている').not.toMatch(
+      /現在の問題を取得できませんでした|取得できません|取り直せていません/,
+    )
+  })
+
+  // @covers REQ-278#refetch-failed-shows-reason-with-retry
+  it('断られたあとに取り直せなかったら、問題が出るはずだった場所に理由を出し、取り直す手段を添える', async () => {
+    const { calls } = stubRefetchFailure(REFETCH_FAILED)
+    await draw()
+    const before = refetches(calls)
+    await click(choiceBtn('ア'), '選択肢ア')
+    expect(refetches(calls), '断られたのに現在の問題を取り直していない').toBeGreaterThan(before)
+    // 理由（文言は仕様が決めていないので、サーバが返した ErrorBody の文か取れなかったことを指す語）
+    expect(text(), '取り直せなかった理由が出ていない').toMatch(
+      /テストが見つかりませんでした|取得できません|取り直せません|取り直せませんでした/,
+    )
+    // 理由は「現在の問題が出るはずだった場所」に出る（取り直せていない問題を出したままにしない）
+    expect(text(), '取り直せていない位置の問題をそのまま出している').not.toContain('問題文その1')
+    // 取り直せていないのに、取り直せた側（REQ-068）の示し方へ倒れない
+    expect(text(), '取り直せていないのに位置のずれを伝えている').not.toMatch(/ずれ/)
+    expect(finishes(calls), '取り直せていないのに締めへ進んでいる').toBe(0)
+    expect(text(), '断られた回答を採点したことにしている').not.toContain('アが正解の根拠です。')
+    // 取り直す手段（押すと現在の問題の取得だけが走る、文のある操作）
+    expect(await findRetry(calls), '取り直す手段が添えられていない').toBeDefined()
+
+    // 空振り対策: 取り直せた側では同じ理由が出ない（出続ける文を理由と読んでいない）
+    stubApi(
+      replies({
+        'POST /api/sessions/s-1/answer': REJECTED,
+        'GET /api/sessions/s-1/current': {
+          queue: [CUR(), CUR({ question: Q({ idx: 2, text: '問題文その2' }), answered: 2 })],
+        },
+      }),
+    )
+    await draw()
+    await click(choiceBtn('ア'), '選択肢ア')
+    expect(text(), '取り直せたのに取り直せなかった理由が出ている').not.toMatch(
+      /テストが見つかりませんでした|取得できません|取り直せません|取り直せませんでした/,
+    )
+  })
+
+  // @covers REQ-278#refetch-failed-shows-reason-with-retry
+  it('取り直しの通信そのものが届かないときも、理由を出して取り直す手段を添える', async () => {
+    const FAILED = /できません|できなかった|失敗|エラー|通信|取り直/
+    const { calls } = stubRefetchFailure('network')
+    await draw()
+    const before = refetches(calls)
+    // 空振り対策: 描いた直後は失敗の案内が出ていない（出しっぱなしの文を拾っていない）
+    expect(text(), '描いた直後から失敗の案内が出ている').not.toMatch(FAILED)
+    await click(choiceBtn('ア'), '選択肢ア')
+    expect(refetches(calls), '断られたのに現在の問題を取り直していない').toBeGreaterThan(before)
+    expect(text(), '取り直せなかったことを示していない').toMatch(FAILED)
+    expect(finishes(calls), '取り直せていないのに締めへ進んでいる').toBe(0)
+    expect(await findRetry(calls), '取り直す手段が添えられていない').toBeDefined()
+  })
+
+  // @covers REQ-278#retry-refetches-current-only
+  it('添えた手段を押すと、回答を送り直さずに現在の問題だけを取り直し、取り直せたらその問題を出す', async () => {
+    const { calls, recover } = stubRefetchFailure(REFETCH_FAILED)
+    const answers = () => calls.filter((c) => c.url === '/api/sessions/s-1/answer').length
+    await draw()
+    await click(choiceBtn('ア'), '選択肢ア')
+    const retry = await findRetry(calls)
+    expect(retry, '取り直す手段が添えられていない').toBeDefined()
+    expect(byLabel(retry!), '一度押したら取り直す手段が消えている（押し直せない）').toBeDefined()
+    // 取り直せる状態に戻して押し直す
+    recover()
+    const got = refetches(calls)
+    const posted = answers()
+    await click(byLabel(retry!), `取り直す手段「${retry}」`)
+    expect(refetches(calls), '押しても現在の問題を取り直さない').toBeGreaterThan(got)
+    expect(answers(), '取り直しで断られた回答を送り直している').toBe(posted)
+    expect(text(), '取り直せたのに現在の問題が出ない').toContain('問題文その2')
+    expect(text(), '取り直せた進捗（2／3）になっていない').toMatch(/2\s*[／/]\s*3/)
+  })
+
   // @covers REQ-074#finish-failed-retryable
   it('締めに失敗したら理由と「まだ採点できていません」を出し、押し直せる', async () => {
     const calls = stubApi(
