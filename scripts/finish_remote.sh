@@ -3,11 +3,14 @@
 #
 #   bash scripts/finish_remote.sh ip     # seed 生成 → デプロイ → 投入 → 進捗の復元（backups/restore_ip.sql があれば）→ 突き合わせ
 #
+# 対象の ID は登録簿（scripts/targets.py keys）にあるもの。
+#
 # 進捗と受験履歴は旧本番のバックアップ（scripts/extract_user_data.py で抜いたもの）から戻す。無ければ復元は飛ばす。
 set -euo pipefail
 cd "$(dirname "$0")/.."
-EXAM="${1:?第1引数: ip か ap か itc}"
-read -r PROJECT DB < <(python3 -c "import json;c=json.load(open('scripts/pages_projects.json'))['$EXAM'];print(c['project'],c['db'])")
+EXAM="${1:-}"
+[ "$(python3 scripts/targets.py has "$EXAM")" = yes ] || { echo "第1引数は対象の ID（$(python3 scripts/targets.py keys)）"; exit 1; }
+DB=$(python3 scripts/targets.py db "$EXAM")
 
 echo "▶ 1/5 seed 生成と検査"
 python3 scripts/build_seed.py --data "data/${EXAM}" >/dev/null
@@ -32,4 +35,4 @@ fi
 echo "▶ 5/5 模試設定を試験に合わせる"
 bash scripts/align_app_settings.sh "$EXAM"
 echo
-echo "完了: $(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['$EXAM'].get('url','https://${PROJECT}.pages.dev'))")"
+echo "完了: $(python3 scripts/targets.py url "$EXAM")"

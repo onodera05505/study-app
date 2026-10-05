@@ -540,5 +540,34 @@
       "secondarySignal": "talk_count",
       "confusionSection": "関連用語"
     }
+  },
+  "fe": {
+    "kind": "exam",
+    "brand": "基本情報 科目A 最短合格",
+    "title": "基本情報 科目A 最短合格",
+    "examName": "基本情報技術者試験 科目A",
+    "mockSize": 60,
+    "mockMinutes": 90,
+    "fieldThreshold": false,
+    "passRule": "科目A は 60 問すべて配点が同じで，60%（36 問）以上の正解で突破です。分野ごとの足切りはありません。分野別の内訳は，どこから手を付けるかの目安として出しています。",
+    "fieldRatio": {
+      "ストラテジ系": 15,
+      "マネジメント系": 7,
+      "テクノロジ系": 38
+    },
+    "fields": [
+      "ストラテジ系",
+      "マネジメント系",
+      "テクノロジ系"
+    ],
+    "questionsPerRound": 80,
+    "exemptRounds": [],
+    "roadmap": false,
+    "words": {
+      "question": "過去問",
+      "questions": "過去問",
+      "mock": "過去問実践",
+      "nextUp": "頻出なのにまだ理解できていない論点"
+    }
   }
 }

@@ -1,5 +1,5 @@
 """対象（試験・題材）の登録簿を読む 1 か所。UI 設定は src/shared/targets.json、デプロイ先と合言葉は scripts/pages_projects.json。
-スクリプトは対象名を列挙せず、ここから引く（対象を足すときに触る場所を 1 つにするため。2026-09-15）。"""
+スクリプトは対象名を列挙せず、ここから引く（対象を足すときに触る場所を 1 つにするため）。"""
 from __future__ import annotations
 import json
 from pathlib import Path
@@ -34,9 +34,11 @@ def exam_settings() -> dict[str, tuple[int, int]]:
 
 if __name__ == "__main__":
     import sys
-    # シェルから: python3 scripts/targets.py db ip → study-app-db / keys → ip ap itc / project ip → itpass-study
+    # シェルから: python3 scripts/targets.py db ip → study-app-db / keys → ap fe ip … / project ip → itpass-study
     what, key = (sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else None)
     if what == "keys": print(" ".join(keys()))
+    elif what == "title": print(target(key)["title"])
+    elif what == "kind": print(target(key).get("kind", "roadmap"))
     elif what == "db": print(deploy(key)["db"])
     elif what == "project": print(deploy(key)["project"])
     elif what == "url": print(deploy(key).get("url", f"https://{deploy(key)['project']}.pages.dev"))

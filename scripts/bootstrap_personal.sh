@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
-# 個人アカウントに 3 つの試験の Pages プロジェクト・D1 のマイグレーション・secret を用意する（対話端末で人が回す）。
+# 対象の Pages プロジェクト・D1 のマイグレーション・secret を個人アカウントに用意する（対話端末で人が回す）。
 #
 #   npx wrangler login            # 個人アカウント（scripts/pages_projects.json の account_id）を選ぶ
-#   bash scripts/bootstrap_personal.sh [ip|ap|itc ...]   # 引数なしなら 3 つ全部
+#   bash scripts/bootstrap_personal.sh fe [ap …]   # 対象の ID は scripts/targets.py keys
+#
+# JWT_SECRET は毎回新しい乱数を入れ直すので、**出し直す対象だけを明示して渡す**
+# （既に動いている対象に回すと、その学びのログイン済みの端末が一斉に切れる）。
 #
 # 対話が要る操作だけをここに集めた（Pages 作成・migrations apply の確認・secret の入力）。
 # 終わったら、デプロイと投入は `bash scripts/finish_remote.sh <試験>`（Claude 側でも回せる）。
@@ -14,7 +17,11 @@ WANT=$(python3 -c "import json;print(json.load(open('$CFG'))['account_id'])")
 HAVE=$(npx wrangler whoami 2>/dev/null | grep -oE '[0-9a-f]{32}' | head -1 || true)
 [ "$HAVE" = "$WANT" ] || { echo "ログイン中のアカウント（${HAVE:-不明}）が想定（${WANT}）と違う。npx wrangler login で個人アカウントを選び直す"; exit 1; }
 
-EXAMS=("$@"); [ $# -eq 0 ] && EXAMS=(ip ap itc)
+EXAMS=("$@")
+[ $# -gt 0 ] || { echo "対象の ID を 1 つ以上渡す（$(python3 scripts/targets.py keys)）"; exit 1; }
+for EXAM in "${EXAMS[@]}"; do
+  [ "$(python3 scripts/targets.py has "$EXAM")" = yes ] || { echo "登録簿に無い対象: ${EXAM}（$(python3 scripts/targets.py keys)。先に scripts/new_target.py）"; exit 1; }
+done
 for EXAM in "${EXAMS[@]}"; do
   read -r PROJECT DB CODE < <(python3 -c "import json;c=json.load(open('$CFG'))['$EXAM'];print(c['project'],c['db'],c['signup_code'])")
   echo "▶ ${EXAM}: Pages ${PROJECT}"
@@ -37,4 +44,4 @@ PY
   printf '%s' "$CODE" | npx wrangler pages secret put SIGNUP_CODE --project-name "$PROJECT"
 done
 echo
-echo "完了。次: bash scripts/finish_remote.sh ip / ap / itc（デプロイ → 投入 → 進捗の復元 → 突き合わせ）。pages_projects.json が変わっていたらコミット"
+echo "完了。次: bash scripts/finish_remote.sh ${EXAMS[*]}（デプロイ → 投入 → 進捗の復元 → 突き合わせ）。pages_projects.json が変わっていたらコミット"

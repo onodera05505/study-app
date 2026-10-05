@@ -4,8 +4,11 @@
 問題冊子はスキャン画像のみでテキストを持たないため、読み取りはページ画像を
 ビジョンモデルに渡す形で行う。その前段としてページを画像化する。
 
-    python3 scripts/render_pages.py 2024r06
+    python3 scripts/render_pages.py 2024r06                      # IT パスポート（data/ip）
+    python3 scripts/render_pages.py --data data/fe 2019r01a       # 基本情報 科目A
     python3 scripts/render_pages.py 2024r06 --dpi 200 --out data/pages
+
+読む PDF は `<data>/pdfs`、書き出す先は `<data>/pages/<回>/pNNN.png`。
 
 埋め込み画像の実寸は 1432x2026px（≒175dpi 相当）なので、dpi を上げても
 情報量は増えない。既定の 200dpi は元画像をわずかに上回る程度で、文字の
@@ -25,15 +28,20 @@ except ImportError:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("exam", help="回の識別子。例: 2024r06, 2019h31h, 2025r07a")
-    ap.add_argument("--pdf-dir", default="data/ip/pdfs", type=Path)
-    ap.add_argument("--out", default="data/ip/pages", type=Path)
+    ap.add_argument("--data", default="data/ip", type=Path, help="対象のデータ置き場。応用情報は data/ap、基本情報は data/fe")
+    ap.add_argument("--pdf-dir", default=None, type=Path, help="既定は <data>/pdfs")
+    ap.add_argument("--out", default=None, type=Path, help="既定は <data>/pages")
     ap.add_argument("--dpi", type=int, default=200)
     args = ap.parse_args()
+    args.pdf_dir = args.pdf_dir or args.data / "pdfs"
+    args.out = args.out or args.data / "pages"
 
-    # 問題冊子のファイル名は試験ごとに違う。
-    #   IT パスポート … 2024r06_ip_qs.pdf
-    #   応用情報 午前 … 2025r07a_ap_am_qs.pdf
-    candidates = [f"{args.exam}_ip_qs.pdf", f"{args.exam}_ap_am_qs.pdf"]
+    # 問題冊子のファイル名は試験ごとに違う。試験コードは PDF 置き場の親（データ置き場）の名前。
+    #   IT パスポート  … 2024r06_ip_qs.pdf
+    #   応用情報 午前  … 2025r07a_ap_am_qs.pdf
+    #   基本情報 科目A … 2019r01a_fe_am_qs.pdf
+    code = args.pdf_dir.parent.name
+    candidates = [f"{args.exam}_{code}_qs.pdf", f"{args.exam}_{code}_am_qs.pdf"]
     pdf_path = next((args.pdf_dir / n for n in candidates if (args.pdf_dir / n).exists()), None)
     if pdf_path is None:
         sys.exit(

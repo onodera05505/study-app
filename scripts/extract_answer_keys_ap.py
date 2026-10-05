@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
-"""応用情報（午前）の解答例 PDF から、正解記号と分野を抽出する。
+"""応用情報（午前）と基本情報（科目A）の解答例 PDF から、正解記号と分野を抽出する。
 
-    python3 scripts/extract_answer_keys_ap.py
+    python3 scripts/extract_answer_keys_ap.py                 # 応用情報（data/ap）
+    python3 scripts/extract_answer_keys_ap.py --data data/fe   # 基本情報 科目A
 
-出力:
+出力（`--data` の下）:
     data/ap/answer_keys.json     {"2025r07a": {"1": "エ", ...}}
     data/ap/question_fields.json {"2025r07a": {"1": "テクノロジ系", ...}}
 
+読む PDF は `<data>/pdfs/*_<試験>_am_ans.pdf`。`<試験>` は `--data` の末尾の名前（ap / fe）
+を使う。データ置き場の名前＝対象のキー＝解答例のファイル名の試験コード、で揃えてある。
+
 **IT パスポートとの決定的な違いは、分野が公式に付いていること。**
-IP の公開問題には分野タグが無いので自前で分類していたが、応用情報の解答例には
+IP の公開問題には分野タグが無いので自前で分類していたが、応用情報と基本情報の解答例には
 「問番号 / 正解 / 分野」の3列があり、分野は Ｔ（テクノロジ系）Ｍ（マネジメント系）
 Ｓ（ストラテジ系）の全角カタカナで入っている。合否は分野ごとの基準にも左右されるので、
 ここが公式に取れる意味は大きい。
@@ -16,9 +20,9 @@ IP の公開問題には分野タグが無いので自前で分類していた�
 解答例 PDF にはテキストレイヤーがあるので機械抽出できる。問題冊子のほうは
 画像なので、そちらは別途ページ画像にして読み取る（IP と同じ流れ）。
 
-**ただし全回ではない。** 令和4年度春期の解答例だけはスキャン画像で、
+**ただし全回ではない。** 応用情報の令和4年度春期の解答例だけはスキャン画像で、
 テキストレイヤーが無い（抽出すると 0 問になる）。この回はページ画像を人が読んで
-`data/ap/answer_keys_manual.json` に書いてある。ここでマージするので、
+`<data>/answer_keys_manual.json` に書いてある。ここでマージするので、
 再実行しても消えない。同じ回が他にもあれば、同じファイルに足せばよい。
 """
 
@@ -52,12 +56,18 @@ ROW = re.compile(r"問\s*(\d{1,3})\s*([アイウエ])\s*([ＴＭＳTMS])?")
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--pdf-dir", default="data/ap/pdfs", type=Path)
-    ap.add_argument("--out", default="data/ap/answer_keys.json", type=Path)
-    ap.add_argument("--fields-out", default="data/ap/question_fields.json", type=Path)
-    ap.add_argument("--manual", default="data/ap/answer_keys_manual.json", type=Path,
-                    help="テキストレイヤーが無い回の、人が読んだ正解表")
+    ap.add_argument("--data", default="data/ap", type=Path, help="対象のデータ置き場。基本情報は data/fe")
+    ap.add_argument("--pdf-dir", default=None, type=Path, help="既定は <data>/pdfs")
+    ap.add_argument("--out", default=None, type=Path, help="既定は <data>/answer_keys.json")
+    ap.add_argument("--fields-out", default=None, type=Path, help="既定は <data>/question_fields.json")
+    ap.add_argument("--manual", default=None, type=Path,
+                    help="テキストレイヤーが無い回の、人が読んだ正解表。既定は <data>/answer_keys_manual.json")
     args = ap.parse_args()
+    exam_code = args.data.name
+    args.pdf_dir = args.pdf_dir or args.data / "pdfs"
+    args.out = args.out or args.data / "answer_keys.json"
+    args.fields_out = args.fields_out or args.data / "question_fields.json"
+    args.manual = args.manual or args.data / "answer_keys_manual.json"
 
     # 自動抽出が空になる回の受け皿。{"2022r04h": {"1": ["ア", "T"], …}}
     manual: dict[str, dict[str, list[str]]] = {}
@@ -71,7 +81,7 @@ def main() -> int:
     fields: dict[str, dict[str, str]] = {}
     problems: list[str] = []
 
-    for pdf in sorted(args.pdf_dir.glob("*_ap_am_ans.pdf")):
+    for pdf in sorted(args.pdf_dir.glob(f"*_{exam_code}_am_ans.pdf")):
         exam = pdf.name.split("_", 1)[0]
         text = "\n".join(page.extract_text() or "" for page in pypdf.PdfReader(pdf).pages)
 

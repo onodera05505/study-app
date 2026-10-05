@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 from targets import targets, deploy  # noqa: E402
 
-ORDER = ["itc", "mkt", "ip", "ap"]  # ロードマップ型を先に、資格版を後に
+ORDER = ["itc", "mkt", "ip", "ap"]  # 先頭の並びは固定。載っていない対象は ロードマップ型 → 資格版 の順で続ける
 
 
 def learning(key: str, t: dict) -> dict:
@@ -29,9 +29,10 @@ def learning(key: str, t: dict) -> dict:
 
 def main() -> int:
     ts = targets()
-    keys = [k for k in ORDER if k in ts] + [k for k in ts if k not in ORDER]
+    rest = [k for k in ts if k not in ORDER]
+    keys = [k for k in ORDER if k in ts] + [k for k in rest if ts[k].get("roadmap")] + [k for k in rest if not ts[k].get("roadmap")]
     # まだ本番に出していない対象（登録簿に url が無い）は一覧に出さない。出すと「開く」が壊れたリンクになる
-    # （msg を登録した時点で入口の生成が KeyError で落ちた。2026-09-17）
+    # （url が無い対象を載せると、入口の生成が KeyError で落ちる）
     pending = [k for k in keys if "url" not in deploy(k)]
     keys = [k for k in keys if k not in pending]
     ls = [learning(k, ts[k]) for k in keys]

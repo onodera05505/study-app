@@ -5,11 +5,11 @@
 #   bash scripts/align_app_settings.sh ap          # 応用情報 午前: 80 問・150 分
 #   bash scripts/align_app_settings.sh ap --local  # ローカル D1
 #
-# 背景: 列の既定値（100 問 / 7200 秒）が試験の設定を上書きしていた（brain/reports/23、2026-09-15）。
+# 列の既定値（100 問 / 7200 秒）は試験の設定を上書きするので、古い DB はここで揃える（brain/reports/23）。
 # 本番を書き換えるので許可リストに入れない。先に `npx wrangler whoami` が通ること。
 set -euo pipefail
 cd "$(dirname "$0")/.."
-EXAM="${1:?第1引数: ip か ap か itc}"
+EXAM="${1:-}"
 [ "$(python3 scripts/targets.py has "$EXAM")" = yes ] || { echo "第1引数は対象の ID（$(python3 scripts/targets.py keys)）"; exit 1; }
 DB=$(python3 scripts/targets.py db "$EXAM")
 WHERE="--remote"; [ "${2:-}" = "--local" ] && WHERE="--local"

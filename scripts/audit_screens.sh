@@ -2,7 +2,7 @@
 # L5: 画面の検査 — 本物のブラウザで全画面 × 全状態のスクリーンショットと計測を機械採取する。
 #
 #   bash scripts/audit_screens.sh          # IT パスポート（既定）
-#   bash scripts/audit_screens.sh ap       # 応用情報 午前
+#   bash scripts/audit_screens.sh ap       # 応用情報 午前（対象の ID は scripts/targets.py keys）
 #   bash scripts/audit_screens.sh ip --out /path/to/dir
 #
 # 何を撮るかは docs/検査観点カタログ.md の「L5: 画面の検査 — 状態の行列」が仕様。
@@ -23,15 +23,13 @@ set -uo pipefail
 cd "$(dirname "$0")/.."
 
 EXAM="ip"
-if [[ "${1:-}" == "ip" || "${1:-}" == "ap" ]]; then EXAM="$1"; shift; fi
+if [[ -n "${1:-}" && "$(python3 scripts/targets.py has "${1:-}")" == "yes" ]]; then EXAM="$1"; shift; fi
 
 PORT=8787
 BASE="http://127.0.0.1:${PORT}"
-case "$EXAM" in
-  ip) EXPECT_TITLE="IT パスポート" ;;
-  ap) EXPECT_TITLE="応用情報" ;;
-  *)  echo "第1引数は ip か ap"; exit 1 ;;
-esac
+# 8787 で別の対象が動いているのを見分ける印。画面の名（登録簿の title＝VITE_TITLE＝<title>）で突き合わせる
+EXPECT_TITLE="$(python3 scripts/targets.py title "$EXAM")"
+[ -n "$EXPECT_TITLE" ] || { echo "第1引数は対象の ID（$(python3 scripts/targets.py keys)）"; exit 1; }
 
 echo "▶ 対象: ${EXAM}（${BASE}）"
 
