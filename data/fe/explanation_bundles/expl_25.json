@@ -1,0 +1,245 @@
+{
+  "bundle": "expl_25",
+  "topics": [
+    {
+      "topic_id": 191,
+      "term": "SD カード",
+      "field": "テクノロジ系",
+      "middle": "コンピュータ構成要素",
+      "syllabus_item_name": "メモリ",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30h-q12",
+          "content_key": "6761301f73dce0b1",
+          "exam_label": "平成30年度 春期",
+          "number": 12,
+          "stem": "SD メモリカードの上位規格の一つである SDXC の特徴として，適切なものはどれか。",
+          "choices": {
+            "ア": "GPS，カメラ，無線 LAN アダプタなどの周辺機能をハードウェアとしてカードに搭載している。",
+            "イ": "SD メモリカードの 4 分の 1 以下の小型サイズで，最大 32G バイトの容量をもつ。",
+            "ウ": "著作権保護技術として AACS を採用し，従来の SD メモリカードよりもセキュリティが強化された。",
+            "エ": "ファイルシステムに exFAT を採用し，最大 2T バイトの容量に対応できる。"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 192,
+      "term": "フラッシュメモリ",
+      "field": "テクノロジ系",
+      "middle": "コンピュータ構成要素",
+      "syllabus_item_name": "メモリ",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30h-q22",
+          "content_key": "78aab623333a0c45",
+          "exam_label": "平成30年度 春期",
+          "number": 22,
+          "stem": "フラッシュメモリに関する記述として，適切なものはどれか。",
+          "choices": {
+            "ア": "高速に書換えができ，CPUのキャッシュメモリに用いられる。",
+            "イ": "紫外線で全データを一括消去できる。",
+            "ウ": "周期的にデータの再書込みが必要である。",
+            "エ": "ブロック単位で電気的にデータの消去ができる。"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 193,
+      "term": "3 層クライアントサーバシステム",
+      "field": "テクノロジ系",
+      "middle": "システム構成要素",
+      "syllabus_item_name": "システムの構成",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30a-q13",
+          "content_key": "daddcab640476a89",
+          "exam_label": "平成30年度 秋期",
+          "number": 13,
+          "stem": "Web システムにおいて，Web サーバとアプリケーション（AP）サーバを異なる物理サーバに配置する場合のメリットとして，適切なものはどれか。",
+          "choices": {
+            "ア": "Web サーバにクライアントの実行環境が実装されているので，リクエストのたびにクライアントと AP サーバの間で画面データをやり取りする必要がなく，データ通信量が少なくて済む。",
+            "イ": "Web ブラウザの文字コード体系と AP サーバの文字コード体系の違いを Web サーバが吸収するので，文字化けが発生しない。",
+            "ウ": "データへのアクセスを伴う業務ロジックは，Web サーバのプログラムに配置されているので，業務ロジックの変更に伴って，AP サーバのプログラムを変更する必要がない。",
+            "エ": "負荷が軽い静的コンテンツへのリクエストは Web サーバで処理し，負荷が重い動的コンテンツへのリクエストは AP サーバで処理するように，クライアントからのリクエストの種類に応じて処理を分担できる。"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 194,
+      "term": "RAID5",
+      "field": "テクノロジ系",
+      "middle": "システム構成要素",
+      "syllabus_item_name": "システムの構成",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2017h29a-q12",
+          "content_key": "33a2ea4ced56f929",
+          "exam_label": "平成29年度 秋期",
+          "number": 12,
+          "stem": "RAID5 の記録方式に関する記述のうち，適切なものはどれか。",
+          "choices": {
+            "ア": "複数の磁気ディスクに分散してバイト単位でデータを書き込み，さらに，1 台の磁気ディスクにパリティを書き込む。",
+            "イ": "複数の磁気ディスクに分散してビット単位でデータを書き込み，さらに，複数の磁気ディスクにエラー訂正符号（ECC）を書き込む。",
+            "ウ": "複数の磁気ディスクに分散してブロック単位でデータを書き込み，さらに，複数の磁気ディスクに分散してパリティを書き込む。",
+            "エ": "ミラーディスクを構成するために，磁気ディスク 2 台に同じ内容を書き込む。"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 195,
+      "term": "クラウドコンピューティング",
+      "field": "テクノロジ系",
+      "middle": "システム構成要素",
+      "syllabus_item_name": "システムの構成",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2017h29a-q14",
+          "content_key": "820cd2ff35e1e8a1",
+          "exam_label": "平成29年度 秋期",
+          "number": 14,
+          "stem": "社内業務システムをクラウドサービスへ移行することによって得られるメリットはどれか。",
+          "choices": {
+            "ア": "PaaS を利用すると，プラットフォームの管理や OS のアップデートは，サービスを提供するプロバイダが行うので，導入や運用の負担を軽減することができる。",
+            "イ": "オンプレミスで運用していた社内固有の機能を有する社内業務システムを SaaS で提供されるシステムへ移行する場合，社内固有の機能の移行も容易である。",
+            "ウ": "社内業務システムの開発や評価で一時的に使う場合，SaaS を利用することによって自由度の高い開発環境が整えられる。",
+            "エ": "非常に高い可用性が求められる社内業務システムを IaaS に移行する場合，いずれのプロバイダも高可用性を保証しているので移行が容易である。"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 196,
+      "term": "フォールトトレラントシステム",
+      "field": "テクノロジ系",
+      "middle": "システム構成要素",
+      "syllabus_item_name": "システムの構成",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30h-q13",
+          "content_key": "83dd586b70ee3b9c",
+          "exam_label": "平成30年度 春期",
+          "number": 13,
+          "stem": "フォールトトレラントシステムを実現する上で不可欠なものはどれか。",
+          "choices": {
+            "ア": "システム構成に冗長性をもたせ，部品が故障してもその影響を最小限に抑えることによって，システム全体には影響を与えずに処理が続けられるようにする。",
+            "イ": "システムに障害が発生したときの原因究明や復旧のために，システム稼働中のデータベースの変更情報などの履歴を自動的に記録する。",
+            "ウ": "障害が発生した場合，速やかに予備の環境に障害前の状態を復旧できるように，定期的にデータをバックアップする。",
+            "エ": "操作ミスが発生しにくい容易な操作にするか，操作ミスが発生しても致命的な誤りにならないように設計する。"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 197,
+      "term": "ホットスタンバイシステム",
+      "field": "テクノロジ系",
+      "middle": "システム構成要素",
+      "syllabus_item_name": "システムの構成",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30h-q14",
+          "content_key": "731f244445c806d7",
+          "exam_label": "平成30年度 春期",
+          "number": 14,
+          "stem": "コンピュータを 2 台用意しておき，現用系が故障したときは，現用系と同一のオンライン処理プログラムをあらかじめ起動して待機している待機系のコンピュータに速やかに切り替えて，処理を続行するシステムはどれか。",
+          "choices": {
+            "ア": "コールドスタンバイシステム",
+            "イ": "ホットスタンバイシステム",
+            "ウ": "マルチプロセッサシステム",
+            "エ": "マルチユーザシステム"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 198,
+      "term": "スケールアウト",
+      "field": "テクノロジ系",
+      "middle": "システム構成要素",
+      "syllabus_item_name": "システムの評価指標",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30h-q15",
+          "content_key": "94809e32283cf697",
+          "exam_label": "平成30年度 春期",
+          "number": 15,
+          "stem": "システムのスケールアウトに関する記述として，適切なものはどれか。",
+          "choices": {
+            "ア": "既存のシステムにサーバを追加導入することによって，システム全体の処理能力を向上させる。",
+            "イ": "既存のシステムのサーバの一部又は全部を，クラウドサービスなどに再配置することによって，システム運用コストを下げる。",
+            "ウ": "既存のシステムのサーバを，より高性能なものと入れ替えることによって，個々のサーバの処理能力を向上させる。",
+            "エ": "一つのサーバをあたかも複数のサーバであるかのように見せることによって，システム運用コストを下げる。"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    }
+  ]
+}

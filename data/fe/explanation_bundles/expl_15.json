@@ -1,0 +1,245 @@
+{
+  "bundle": "expl_15",
+  "topics": [
+    {
+      "topic_id": 82,
+      "term": "DMZ（非武装地帯）",
+      "field": "テクノロジ系",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ対策",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q42",
+          "content_key": "6571f80d72edd09f",
+          "exam_label": "令和元年度 秋期",
+          "number": 42,
+          "stem": "1 台のファイアウォールによって，外部セグメント，DMZ，内部セグメントの三つのセグメントに分割されたネットワークがあり，このネットワークにおいて，Web サーバと，重要なデータをもつデータベースサーバから成るシステムを使って，利用者向けの Web サービスをインターネットに公開する。インターネットからの不正アクセスから重要なデータを保護するためのサーバの設置方法のうち，最も適切なものはどれか。ここで，Web サーバでは，データベースサーバのフロントエンド処理を行い，ファイアウォールでは，外部セグメントと DMZ との間，及び DMZ と内部セグメントとの間の通信は特定のプロトコルだけを許可し，外部セグメントと内部セグメントとの間の直接の通信は許可しないものとする。",
+          "choices": {
+            "ア": "Web サーバとデータベースサーバを DMZ に設置する。",
+            "イ": "Web サーバとデータベースサーバを内部セグメントに設置する。",
+            "ウ": "Web サーバを DMZ に，データベースサーバを内部セグメントに設置する。",
+            "エ": "Web サーバを外部セグメントに，データベースサーバを DMZ に設置する。"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 83,
+      "term": "SIEM（Security Information and Event Management ）",
+      "field": "テクノロジ系",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ対策",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q43",
+          "content_key": "69b839f6c1539b68",
+          "exam_label": "令和元年度 秋期",
+          "number": 43,
+          "stem": "SIEM（Security Information and Event Management）の機能はどれか。",
+          "choices": {
+            "ア": "隔離された仮想環境でファイルを実行して，C&C サーバへの通信などの振る舞いを監視する。",
+            "イ": "様々な機器から集められたログを総合的に分析し，管理者による分析と対応を支援する。",
+            "ウ": "ネットワーク上の様々な通信機器を集中的に制御し，ネットワーク構成やセキュリティ設定などを変更する。",
+            "エ": "パケットのヘッダ情報の検査だけではなく，通信先のアプリケーションプログラムを識別して通信を制御する。"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 84,
+      "term": "マルウェアの動的解析",
+      "field": "テクノロジ系",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ対策",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q36",
+          "content_key": "7d8997192a3ecea1",
+          "exam_label": "令和元年度 秋期",
+          "number": 36,
+          "stem": "マルウェアの動的解析に該当するものはどれか。",
+          "choices": {
+            "ア": "検体のハッシュ値を計算し，オンラインデータベースに登録された既知のマルウェアのハッシュ値のリストと照合してマルウェアを特定する。",
+            "イ": "検体をサンドボックス上で実行し，その動作や外部との通信を観測する。",
+            "ウ": "検体をネットワーク上の通信データから抽出し，さらに，逆コンパイルして取得したコードから検体の機能を調べる。",
+            "エ": "ハードディスク内のファイルの拡張子とファイルヘッダの内容を基に，拡張子が偽装された不正なプログラムファイルを検出する。"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 85,
+      "term": "IPSec",
+      "field": "テクノロジ系",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "セキュリティ実装技術",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q43",
+          "content_key": "1e082e25bf6af947",
+          "exam_label": "平成31年度 春期",
+          "number": 43,
+          "stem": "OSI 基本参照モデルのネットワーク層で動作し，“認証ヘッダ（AH）”と“暗号ペイロード（ESP）”の二つのプロトコルを含むものはどれか。",
+          "choices": {
+            "ア": "IPsec",
+            "イ": "S/MIME",
+            "ウ": "SSH",
+            "エ": "XML 暗号"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 86,
+      "term": "SMTP-AUTH",
+      "field": "テクノロジ系",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "セキュリティ実装技術",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q44",
+          "content_key": "6fd7ea334c2ec51d",
+          "exam_label": "令和元年度 秋期",
+          "number": 44,
+          "stem": "電子メールをドメイン A の送信者がドメイン B の宛先に送信するとき，送信者をドメイン A のメールサーバで認証するためのものはどれか。",
+          "choices": {
+            "ア": "APOP",
+            "イ": "POP3S",
+            "ウ": "S/MIME",
+            "エ": "SMTP-AUTH"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 87,
+      "term": "WPA3",
+      "field": "テクノロジ系",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "セキュリティ実装技術",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q37",
+          "content_key": "87dbcf83b4920591",
+          "exam_label": "令和元年度 秋期",
+          "number": 37,
+          "stem": "WPA3はどれか。",
+          "choices": {
+            "ア": "HTTP通信の暗号化規格",
+            "イ": "TCP/IP通信の暗号化規格",
+            "ウ": "Webサーバで使用するディジタル証明書の規格",
+            "エ": "無線LANのセキュリティ規格"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 88,
+      "term": "ハニーポット",
+      "field": "テクノロジ系",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "セキュリティ実装技術",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q44",
+          "content_key": "7965e67614730c07",
+          "exam_label": "平成31年度 春期",
+          "number": 44,
+          "stem": "侵入者やマルウェアの挙動を調査するために，意図的に脆弱性をもたせたシステム又はネットワークはどれか。",
+          "choices": {
+            "ア": "DMZ",
+            "イ": "SIEM",
+            "ウ": "ハニーポット",
+            "エ": "ボットネット"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 89,
+      "term": "ファジング",
+      "field": "テクノロジ系",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "セキュリティ実装技術",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q45",
+          "content_key": "dc4ec12df00ac149",
+          "exam_label": "平成31年度 春期",
+          "number": 45,
+          "stem": "ファジングで得られるセキュリティ上の効果はどれか。",
+          "choices": {
+            "ア": "ソフトウェアの脆弱性を自動的に修正できる。",
+            "イ": "ソフトウェアの脆弱性を検出できる。",
+            "ウ": "複数のログデータを相関分析し，不正アクセスを検知できる。",
+            "エ": "利用者 ID を統合的に管理し，統一したパスワードポリシを適用できる。"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    }
+  ]
+}

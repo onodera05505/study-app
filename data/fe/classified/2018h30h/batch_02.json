@@ -1,0 +1,384 @@
+{
+ "exam": "2018h30h",
+ "range": "28-54",
+ "classifications": [
+  {
+   "number": 28,
+   "syllabus_item": 30,
+   "topic_term": "カーソル",
+   "topic_is_new": false,
+   "related_terms": [
+    "埋込みSQL",
+    "会話型SQL",
+    "実表",
+    "問合せ（クエリ）"
+   ],
+   "confidence": "high",
+   "notes": "OPEN / FETCH / CLOSE と WHERE CURRENT OF で参照される X はカーソル。項目30の用語例「カーソル」をそのままコピーした。"
+  },
+  {
+   "number": 29,
+   "syllabus_item": 31,
+   "topic_term": "ジャーナルファイル （ログファイル）",
+   "topic_is_new": false,
+   "related_terms": [
+    "チェックポイント",
+    "フォワードリカバリ （ロールフォワード）",
+    "バックワードリカバリ（ロールバック）",
+    "障害回復"
+   ],
+   "confidence": "high",
+   "notes": "更新前・更新後の値を記録するファイル＝ログファイル。項目31の用語例「ジャーナルファイル （ログファイル）」（ジャーナルファイルの後に空白が入る表記）をそのままコピーした。応用情報マスタは空白なしの「ジャーナルファイル（ログファイル）」だが、FE はシラバスの表記に合わせた。既存論点「ロールフォワード」（項目67・マネジメント系）は障害回復の運用手順を問う別物なので合流させない。"
+  },
+  {
+   "number": 30,
+   "syllabus_item": 31,
+   "topic_term": "ロック粒度",
+   "topic_is_new": false,
+   "related_terms": [
+    "専有ロック",
+    "共有ロック",
+    "デッドロック",
+    "同時実行制御（排他制御）"
+   ],
+   "confidence": "high",
+   "notes": "行単位と表単位のロックで競合のしやすさとメモリ使用量がどう変わるかを問う。項目31の用語例「ロック粒度」をそのままコピーした。"
+  },
+  {
+   "number": 31,
+   "syllabus_item": 33,
+   "topic_term": "転送速度",
+   "topic_is_new": false,
+   "related_terms": [
+    "bps（bit per second：ビット／秒）",
+    "回線容量",
+    "伝送効率",
+    "スループット"
+   ],
+   "confidence": "high",
+   "notes": "伝送効率を考慮した転送時間の計算。応用情報 2018h30h 問31（伝送効率50％での伝送時間計算）が項目33・論点「転送速度（伝送速度）」なのでそれに合わせ、表記は FE シラバスの用語例「転送速度」を採った。既存論点「回線利用率」（2019r01a 問30）は利用率そのものを求める問なので別論点のままにした。"
+  },
+  {
+   "number": 32,
+   "syllabus_item": 35,
+   "topic_term": "サブネットマスク",
+   "topic_is_new": false,
+   "related_terms": [
+    "ブロードキャスト",
+    "サブネットアドレス",
+    "IP アドレス",
+    "CIDR（Classless Inter Domain Routing）"
+   ],
+   "confidence": "high",
+   "notes": "マスク 255.255.255.240 のサブネットでは末尾 .31 がブロードキャストアドレスで割り当て不可。既存論点「サブネットマスク」（2019h31h 問32、同じくサブネット内で使えるアドレスの計算）に合流させた。"
+  },
+  {
+   "number": 33,
+   "syllabus_item": 36,
+   "topic_term": "arp",
+   "topic_is_new": false,
+   "related_terms": [
+    "ping",
+    "netstat",
+    "ifconfig",
+    "物理アドレス"
+   ],
+   "confidence": "high",
+   "notes": "応用情報 2024r06a 問36 が同一問題（本文一致率0.96）で、その分類（項目36・論点「arp」）に合わせた。この論点は ARP キャッシュを表示するコマンドであり、プロトコルの ARP とは別概念。小文字のコマンド名で区別するので、プロトコル側の論点と統合してはいけない。"
+  },
+  {
+   "number": 34,
+   "syllabus_item": 37,
+   "topic_term": "SMTP",
+   "topic_is_new": false,
+   "related_terms": [
+    "Bcc",
+    "MIME",
+    "POP3",
+    "ヘッダー"
+   ],
+   "confidence": "medium",
+   "notes": "Bcc は SMTP で配送される過程でヘッダから削除される。中心は SMTP による電子メール転送の仕組みなので項目37の用語例「SMTP」を採った。「電子メールのヘッダフィールド」を新設して寄せる流儀もあり得るため medium。"
+  },
+  {
+   "number": 35,
+   "syllabus_item": 37,
+   "topic_term": "CGI",
+   "topic_is_new": false,
+   "related_terms": [
+    "HTTP",
+    "Web サーバ",
+    "サーバサイドプログラミング",
+    "URL"
+   ],
+   "confidence": "high",
+   "notes": "Web サーバと外部プログラムを連携させる仕組み＝CGI。項目37の用語例をそのままコピーした。"
+  },
+  {
+   "number": 36,
+   "syllabus_item": 38,
+   "topic_term": "ドライブバイダウンロード",
+   "topic_is_new": false,
+   "related_terms": [
+    "ランサムウェア",
+    "ルートキット",
+    "SQL インジェクション",
+    "水飲み場型攻撃"
+   ],
+   "confidence": "high",
+   "notes": "応用情報 2017h29a 問40 が同型（本文一致率0.83）で、その分類（項目38・論点「ドライブバイダウンロード」）に合わせた。誤答はア＝ランサムウェア、イ＝ルートキット、ウ＝SQL インジェクション。"
+  },
+  {
+   "number": 37,
+   "syllabus_item": 38,
+   "topic_term": "ポートスキャン",
+   "topic_is_new": false,
+   "related_terms": [
+    "フットプリンティング",
+    "サイバーキルチェーン",
+    "脆弱性",
+    "不正アクセス"
+   ],
+   "confidence": "high",
+   "notes": "事前調査の段階で攻撃できるサービスを探す目的。FE の用語例は「プロンプトインジェクション・攻撃の準備（フットプリンティング，ポートスキャンほか）」という連結・列挙エントリで、括弧内は別概念の列挙なので、設問の主題である1語「ポートスキャン」を論点にした（応用情報マスタの同名論点・項目38と同じ扱い）。IPA が挙げている語なので topic_is_new は false とした。"
+  },
+  {
+   "number": 38,
+   "syllabus_item": 38,
+   "topic_term": "公開鍵暗号方式",
+   "topic_is_new": false,
+   "related_terms": [
+    "共通鍵暗号方式",
+    "RSA 暗号",
+    "ハイブリッド暗号",
+    "デジタル署名（署名鍵， 検証鍵）"
+   ],
+   "confidence": "high",
+   "notes": "受信者の公開鍵で暗号化した電子メールは受信者の秘密鍵でしか復号できない。用語例「暗号方式（暗号化（暗号鍵） ，復号（復号鍵） ，共通鍵暗号方式（共通鍵） ，公開鍵暗号方式（公開鍵，秘密鍵） ）」の括弧内は別概念の列挙なので主題の1語を採り、応用情報 2024r06h 問38 の論点「公開鍵暗号方式」（項目38）と同表記にそろえた。"
+  },
+  {
+   "number": 39,
+   "syllabus_item": 38,
+   "topic_term": "真正性（Authenticity）",
+   "topic_is_new": false,
+   "related_terms": [
+    "信頼性 （Reliability）",
+    "責任追跡性 （Accountability）",
+    "否認防止 （Non-Repudiation）",
+    "JIS Q 27000"
+   ],
+   "confidence": "high",
+   "notes": "JIS Q 27000 の「エンティティは，それが主張するとおりのものであるという特性」＝真正性。項目38の用語例をそのままコピーし、応用情報 2025r07a 問41 の論点「真正性（Authenticity）」（項目38）と同表記にそろえた。"
+  },
+  {
+   "number": 40,
+   "syllabus_item": 42,
+   "topic_term": "SPF",
+   "topic_is_new": false,
+   "related_terms": [
+    "DKIM",
+    "DMARC",
+    "SMTP-AUTH",
+    "送信元ドメイン認証"
+   ],
+   "confidence": "medium",
+   "notes": "応用情報 2024r06h 問43 と本文が完全一致する同一問題で、その分類（項目42・論点「SPF」）に合わせた。用語例は「スパム対策（…SPF，DKIM，DMARC，SMTP-AUTH…ほか）」という総称で括弧内は別概念の列挙なので主題の1語を採った（総称側を採る流儀と揺れる可能性があるため medium）。既存 FE 論点「SMTP-AUTH」（項目42）は送信時の認証で別概念。"
+  },
+  {
+   "number": 41,
+   "syllabus_item": 42,
+   "topic_term": "SQL インジェクション対策（プレースホルダほか）",
+   "topic_is_new": false,
+   "related_terms": [
+    "SQL インジェクション",
+    "プレースホルダ",
+    "エスケープ処理",
+    "クロスサイトスクリプティング対策"
+   ],
+   "confidence": "high",
+   "notes": "特別な意味をもつ文字として解釈させない＝プレースホルダやエスケープによる対策。攻撃そのものを問う項目38ではなく、対策を問うので項目42。用語例「SQL インジェクション対策（プレースホルダほか）」をそのままコピーした（括弧内はその語自身の例示なので丸ごと採った）。"
+  },
+  {
+   "number": 42,
+   "syllabus_item": 38,
+   "topic_term": "セキュリティバイデザイン（セキュアバイデザイン）",
+   "topic_is_new": false,
+   "related_terms": [
+    "プライバシーバイデザイン",
+    "多層防御",
+    "リスクアセスメント",
+    "脆弱性診断"
+   ],
+   "confidence": "high",
+   "notes": "企画・設計段階からセキュリティを確保する方策。項目38の用語例をそのままコピーした。既存論点「プライバシーバイデザイン」（項目75・ストラテジ系）は別概念で分野も違うので合流させない。"
+  },
+  {
+   "number": 43,
+   "syllabus_item": 41,
+   "topic_term": "アクセス権の設定",
+   "topic_is_new": false,
+   "related_terms": [
+    "アクセス制御",
+    "参照権限",
+    "最小権限",
+    "データベースアクセス制御"
+   ],
+   "confidence": "medium",
+   "notes": "検索・表示だけの機能には参照権限のみを与える（必要最小限の権限）。項目30の用語例「アクセス権」や項目42「データベースアクセス制御」も候補だが、設問が情報セキュリティ管理上の権限付与を問うので項目41の用語例「アクセス権の設定」を採った。候補が複数あるため medium。"
+  },
+  {
+   "number": 44,
+   "syllabus_item": 42,
+   "topic_term": "パケットフィルタリング",
+   "topic_is_new": false,
+   "related_terms": [
+    "ポート番号",
+    "SMTP",
+    "ファイアウォール",
+    "ステートフルインスペクション"
+   ],
+   "confidence": "high",
+   "notes": "静的フィルタリングでは往復2方向の規則が必要で、PC 側は1024以上、SMTP サーバ側は25。応用情報マスタの同名論点（項目42、2件）と同表記にそろえた。"
+  },
+  {
+   "number": 45,
+   "syllabus_item": 38,
+   "topic_term": "本人拒否率（FRR）",
+   "topic_is_new": false,
+   "related_terms": [
+    "他人受入率（FAR）",
+    "身体的特徴（静脈パターン認証，虹彩認証，顔認証，網膜認証ほか）",
+    "行動的特徴（声紋認証，署名認証ほか）",
+    "多要素認証（記憶，所有，生体）"
+   ],
+   "confidence": "medium",
+   "notes": "本人拒否率と他人受入率の双方を勘案して装置を調整する点が正解。用語例が「本人拒否率（FRR）」と「他人受入率（FAR）」の2語に分かれているため、設問の軸である本人拒否率側に寄せ、他人受入率は related に置いた。他人受入率側に寄せる流儀もあり得るため medium。"
+  },
+  {
+   "number": 46,
+   "syllabus_item": 44,
+   "topic_term": "継承 （インヘリタンス）",
+   "topic_is_new": false,
+   "related_terms": [
+    "カプセル化",
+    "多相性",
+    "サブクラス",
+    "クラス"
+   ],
+   "confidence": "high",
+   "notes": "あるクラスの属性や機能をサブクラスで利用できること＝継承。FE シラバス項目44の用語例の表記（「継承」の後に空白が入る「継承 （インヘリタンス）」）をそのままコピーした。応用情報マスタは空白なしの「継承（インヘリタンス）」だが、FE はシラバスの表記に合わせた。"
+  },
+  {
+   "number": 47,
+   "syllabus_item": 44,
+   "topic_term": "ソフトウェア方式設計",
+   "topic_is_new": true,
+   "related_terms": [
+    "ソフトウェア構成品目",
+    "アーキテクチャ",
+    "ソフトウェアユニット分割",
+    "インタフェース設計"
+   ],
+   "confidence": "high",
+   "notes": "最上位レベルの構造へ要件を変換し、ソフトウェアコンポーネントを識別する作業。応用情報 2018h30h 問46・2016h28a 問48 が同型で、その分類（項目44・論点「ソフトウェア方式設計」）に合わせた。項目44の用語例にこの語は無いので topic_is_new=true。"
+  },
+  {
+   "number": 48,
+   "syllabus_item": 44,
+   "topic_term": "ブラックボックステスト",
+   "topic_is_new": false,
+   "related_terms": [
+    "同値分析法",
+    "限界値分析法",
+    "ホワイトボックステスト",
+    "テストケース"
+   ],
+   "confidence": "high",
+   "notes": "機能仕様から同値クラスや限界値を識別してテストデータを作る。既存論点「ブラックボックステスト」（2019h31h 問47）に合流させた。項目45の「同値分析法」「限界値分析法」も候補だが、設問がブラックボックステストの性質を問うので既存の論点・項目に合わせ、頻度を分散させない。"
+  },
+  {
+   "number": 49,
+   "syllabus_item": 45,
+   "topic_term": "複数条件網羅（multiple condition coverage）",
+   "topic_is_new": false,
+   "related_terms": [
+    "判定条件網羅（decision coverage）",
+    "条件網羅",
+    "命令網羅",
+    "ホワイトボックステスト"
+   ],
+   "confidence": "high",
+   "notes": "判定条件網羅のデータに何を加えれば複数条件網羅になるかを問うので、主題は複数条件網羅。項目45の用語例をそのままコピーした。既存論点「判定条件網羅（decision coverage）」（2019r01a 問49）は網羅基準どうしの関係を問う別の論点なので合流させない（応用情報マスタも網羅基準ごとに論点を分けている）。"
+  },
+  {
+   "number": 50,
+   "syllabus_item": 49,
+   "topic_term": "XP（エクストリームプログラミング）",
+   "topic_is_new": false,
+   "related_terms": [
+    "ペアプログラミング",
+    "テスト駆動開発（TDD）",
+    "ソースコードの共同所有",
+    "リファクタリング"
+   ],
+   "confidence": "high",
+   "notes": "既存回の同型問（2019r01a 問50「XP においてプラクティスとして提唱されているものはどれか」＝正解ペアプログラミング）に付いている論点「XP（エクストリームプログラミング）」（項目49）に合流させた。応用情報は同型問（2018h30h 問49）を「ペアプログラミング」としているが、FE マスタ内の既存問に合わせて頻度を分散させないことを優先した。"
+  },
+  {
+   "number": 51,
+   "syllabus_item": 58,
+   "topic_term": "アローダイアグラム",
+   "topic_is_new": false,
+   "related_terms": [
+    "クラッシング",
+    "CPM（Critical Path Method： クリティカルパス法）",
+    "クリティカルパス",
+    "ファストトラッキング"
+   ],
+   "confidence": "high",
+   "notes": "図から最少所要日数とクリティカルパスを読み、2日短縮できる作業の組みを選ぶ。既存論点「アローダイアグラム」（2019h31h 問53・2019r01a 問52）に合流させた。作業を1日ずつ短縮する点はクラッシングだが、中心はアローダイアグラムの読み取りと計算。"
+  },
+  {
+   "number": 52,
+   "syllabus_item": 58,
+   "topic_term": "作業配分モデル",
+   "topic_is_new": true,
+   "related_terms": [
+    "進捗報告",
+    "工数見積り",
+    "EVM（Earned Value Management）",
+    "WBS"
+   ],
+   "confidence": "medium",
+   "notes": "工程ごとの工数配分比を使って全体の進捗度を求める。応用情報 2016h28a 問53・2023r05h 問53（作業配分モデルから所要日数を求める同型の計算）の論点「作業配分モデル」（項目58・新設）に名前と項目をそろえた。項目58の用語例に「進捗報告」はあるが報告の話で合わないため新設。「進捗率の算出」のような別名を立てる流儀もあり得るため medium。"
+  },
+  {
+   "number": 53,
+   "syllabus_item": 59,
+   "topic_term": "工数見積り",
+   "topic_is_new": true,
+   "related_terms": [
+    "パラメトリック見積り",
+    "COCOMO（Constructive Cost Model）",
+    "LOC（Lines of Code） 法",
+    "ファンクションポイント法"
+   ],
+   "confidence": "high",
+   "notes": "工数と期間の近似式に値を代入して期間を求める。既存論点「工数見積り」（2019h31h 問54、項目59、topic_is_new=true）に合流させ、is_new も既存に合わせた。応用情報も同型の式による工数・期間の計算（2018h30h 問54 ほか計5件）をこの論点に寄せている。"
+  },
+  {
+   "number": 54,
+   "syllabus_item": 59,
+   "topic_term": "ファンクションポイント法",
+   "topic_is_new": false,
+   "related_terms": [
+    "重み付け係数",
+    "LOC（Lines of Code） 法",
+    "COCOMO（Constructive Cost Model）",
+    "パラメトリック見積り"
+   ],
+   "confidence": "high",
+   "notes": "機能の個数×重み付け係数の合計に補正係数を掛ける。既存論点「ファンクションポイント法」（2019r01a 問53）に合流させた。"
+  }
+ ]
+}

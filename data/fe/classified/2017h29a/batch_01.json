@@ -1,0 +1,249 @@
+{
+ "exam": "2017h29a",
+ "range": "1-27",
+ "classifications": [
+  {
+   "number": 1,
+   "syllabus_item": 1,
+   "topic_term": "論理シフト",
+   "topic_is_new": false,
+   "related_terms": ["算術シフト", "2 進数", "桁あふれ", "オーバーフロー（あふれ）"],
+   "confidence": "high",
+   "notes": "正の整数を左シフトと加算で10倍にする操作を選ぶ問題。項目1の用語例「論理シフト」をそのままコピー（応用情報もビット操作の問 2023r05a 問1 を項目1「論理シフト」で起こしている）。"
+  },
+  {
+   "number": 2,
+   "syllabus_item": 4,
+   "topic_term": "CRC",
+   "topic_is_new": false,
+   "related_terms": ["生成多項式", "パリティチェック", "ハミング符号", "通信路符号化（誤り検出訂正）"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 3,
+   "syllabus_item": 5,
+   "topic_term": "フィードバック制御",
+   "topic_is_new": false,
+   "related_terms": ["オープンループ", "シーケンス制御", "クローズドループ制御", "制御安定性"],
+   "confidence": "medium",
+   "notes": "フィードバック制御の定義を問う問題。用語例としては項目23（ハードウェア）に「フィードバック制御」があるのでその表記をコピーしたが、出題位置が基礎理論の並び（問1〜8）にあり、制御の理論そのものを問うため項目は5「計測・制御に関する理論」を選んだ。項目23（ハードウェア）も候補。"
+  },
+  {
+   "number": 4,
+   "syllabus_item": 5,
+   "topic_term": "光学センサー",
+   "topic_is_new": false,
+   "related_terms": ["フィードバック制御", "モーター", "反射型光センサ", "制御安定性"],
+   "confidence": "medium",
+   "notes": "反射型光センサの出力値の大小から、黒線をたどるための左右モータの回転速度制御を選ぶ問題。フィードバック制御の応用だが、解答の鍵は「黒に掛かる比率が大きいと出力値が小さい」というセンサの出力特性の読み取りなので、項目5の用語例「光学センサー」を論点にした。問3のフィードバック制御に寄せる判断もあり得る。"
+  },
+  {
+   "number": 5,
+   "syllabus_item": 6,
+   "topic_term": "LIFO",
+   "topic_is_new": false,
+   "related_terms": ["スタック", "プッシュ", "ポップ", "FIFO"],
+   "confidence": "high",
+   "notes": "一つのスタックで出力可能なデータ列を選ぶ問題。既存回 2019r01a 問8（スタックの個数を求める問題）と同じ論点「LIFO」（項目6）に合わせた。"
+  },
+  {
+   "number": 6,
+   "syllabus_item": 7,
+   "topic_term": "再帰",
+   "topic_is_new": false,
+   "related_terms": ["再帰呼出し", "スタック", "終了条件", "分割統治法"],
+   "confidence": "high",
+   "notes": "再帰呼出しの説明を問う問題。既存回 2019h31h 問6・2019r01a 問11 と同じ論点「再帰」（項目7）に合わせた。"
+  },
+  {
+   "number": 7,
+   "syllabus_item": 8,
+   "topic_term": "オーバーライド",
+   "topic_is_new": false,
+   "related_terms": ["オーバーロード", "多相性", "継承", "カプセル化"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 8,
+   "syllabus_item": 9,
+   "topic_term": "Perl",
+   "topic_is_new": false,
+   "related_terms": ["スクリプト言語", "インタプリタ", "CGI", "コンパイラ"],
+   "confidence": "high",
+   "notes": "Perl の実行（事前のコンパイル不要）を問う問題。言語そのものの性質を問うので項目9の用語例「Perl」を採った（応用情報も言語別の問を項目9「Python」などで起こしている）。項目21「インタプリタ」も候補だが、設問の主題は Perl。"
+  },
+  {
+   "number": 9,
+   "syllabus_item": 11,
+   "topic_term": "MIPS",
+   "topic_is_new": true,
+   "related_terms": ["CPI（Cycles Per Instruction）", "クロック周波数", "命令ミックス", "FLOPS"],
+   "confidence": "medium",
+   "notes": "平均命令実行時間から MIPS 値を求める問題。項目11の用語例に MIPS が無いため新設。既存回 2019r01a 問12（クロック周波数とクロック数から命令実行数を求める）は論点「CPI（Cycles Per Instruction）」で起こされているが、本問はクロックを経由せず命令実行時間から MIPS を求めるので、SRAM／DRAM を分けている既存の流儀に合わせて別論点にした。CPI に合流させる判断もあり得る。"
+  },
+  {
+   "number": 10,
+   "syllabus_item": 11,
+   "topic_term": "外部割込み",
+   "topic_is_new": true,
+   "related_terms": ["内部割込み", "SVC（SuperVisor Call）割込み", "入出力割込み", "ページフォールト"],
+   "confidence": "high",
+   "notes": "外部割込みに分類されるものを選ぶ問題。既存回 2019h31h 問9（外部割込みの原因）と同一型なので、同じ論点「外部割込み」（項目11、既存マスタで topic_is_new=true）に合わせた。"
+  },
+  {
+   "number": 11,
+   "syllabus_item": 14,
+   "topic_term": "USB",
+   "topic_is_new": false,
+   "related_terms": ["USB Type-C", "シリアルバス", "HDMI", "Thunderbolt"],
+   "confidence": "high",
+   "notes": "USB Type-C のコネクタ断面図を選ぶ問題。応用情報 2021r03a 問10 と同一問題で、そちらも項目14「USB」なので合わせた。"
+  },
+  {
+   "number": 12,
+   "syllabus_item": 16,
+   "topic_term": "RAID5",
+   "topic_is_new": false,
+   "related_terms": ["パリティ", "ストライピング", "RAID1", "ミラーリング"],
+   "confidence": "high",
+   "notes": "既存マスタの「RAID1」（2019r01a 問15）とは別の記録方式を主題とする問いなので、項目16の用語例「RAID5」を別論点として起こした。"
+  },
+  {
+   "number": 13,
+   "syllabus_item": 16,
+   "topic_term": "デュアルシステム",
+   "topic_is_new": false,
+   "related_terms": ["デュプレックスシステム", "ホットスタンバイ", "主系（現用系）", "従系（待機系）"],
+   "confidence": "high",
+   "notes": "既存回 2019h31h 問13 と同一型。同じ論点「デュアルシステム」（項目16）に合わせた。"
+  },
+  {
+   "number": 14,
+   "syllabus_item": 16,
+   "topic_term": "クラウドコンピューティング",
+   "topic_is_new": false,
+   "related_terms": ["SaaS", "PaaS", "IaaS", "オンプレミス"],
+   "confidence": "medium",
+   "notes": "SaaS・PaaS・IaaS を横断して移行のメリットを比較させる問題なので、総称である項目16の用語例「クラウドコンピューティング」を論点にした。応用情報は類似の問を項目73（ストラテジ系）の「クラウドサービス（SaaS，PaaS，IaaS など）」で起こしているが、本バンドルの公式分野はテクノロジ系で確定しているため、分野をまたぐその論点には寄せない。"
+  },
+  {
+   "number": 15,
+   "syllabus_item": 17,
+   "topic_term": "稼働率",
+   "topic_is_new": true,
+   "related_terms": ["MTBF", "MTTR", "直列システムの稼働率", "並列システムの稼働率"],
+   "confidence": "high",
+   "notes": "MTBF と MTTR から直列2台の稼働率を求める問題。既存回 2019h31h 問14・2019r01a 問16 と同じ論点「稼働率」（項目17、既存マスタで topic_is_new=true）に合わせた。"
+  },
+  {
+   "number": 16,
+   "syllabus_item": 18,
+   "topic_term": "メモリリーク",
+   "topic_is_new": true,
+   "related_terms": ["ガベージコレクション", "フラグメンテーション", "スラッシング", "オーバーレイ方式（セグメント方式）"],
+   "confidence": "high",
+   "notes": "メモリリークの説明を選ぶ問題。項目18の用語例に「ガベージコレクション」「コンパクション」「スラッシング」はあるがメモリリーク自体が無く、他項目にも無いため新設。"
+  },
+  {
+   "number": 17,
+   "syllabus_item": 18,
+   "topic_term": "ポーリング制御",
+   "topic_is_new": true,
+   "related_terms": ["割込み", "プログラム制御方式", "DMA（Direct Memory Access：直接記憶アクセス）方式", "排他制御"],
+   "confidence": "medium",
+   "notes": "CPU が状態レジスタやビジー信号を読み出して入出力装置の状態を監視する方式を選ぶ問題。誤答が割込み・タスク間通信・排他制御という OS の機能で、出題位置もソフトウェアの並び（問16〜20）なので項目18を選んだ。項目14（プログラム制御方式・DMA 方式）も候補。項目34の「ポーリング／セレクティング方式」は回線制御の別概念なので、同じ『ポーリング』でも合流させない。"
+  },
+  {
+   "number": 18,
+   "syllabus_item": 18,
+   "topic_term": "プリエンプティブ方式",
+   "topic_is_new": false,
+   "related_terms": ["リアルタイム OS", "実行可能状態", "待ち状態", "優先順"],
+   "confidence": "high",
+   "notes": "既存回 2019r01a 問18 と同一問題（本文・選択肢が一致）。同じ論点「プリエンプティブ方式」（項目18）に合わせた。"
+  },
+  {
+   "number": 19,
+   "syllabus_item": 18,
+   "topic_term": "コンパクション",
+   "topic_is_new": false,
+   "related_terms": ["動的再配置", "セグメント方式", "フラグメンテーション", "メモリアクセス時間"],
+   "confidence": "high",
+   "notes": "セグメントの解放後に動的再配置で空き領域を1つにまとめる所要時間を求める問題。処理そのものがコンパクションなので、項目18の用語例をそのまま採った。"
+  },
+  {
+   "number": 20,
+   "syllabus_item": 18,
+   "topic_term": "ページフォールト",
+   "topic_is_new": false,
+   "related_terms": ["ページング方式", "ページリプレースメント", "スラッシング", "LRU"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 21,
+   "syllabus_item": 12,
+   "topic_term": "DRAM",
+   "topic_is_new": false,
+   "related_terms": ["SRAM", "リフレッシュ", "フラッシュメモリ", "EEPROM"],
+   "confidence": "high",
+   "notes": "コンデンサの電荷で記憶するメモリを選ぶ問題。既存回 2019r01a 問20 と同じ論点「DRAM」（項目12）に合わせた（フリップフロップ側を問う 2019h31h 問21 は別論点「SRAM」で起こされている）。"
+  },
+  {
+   "number": 22,
+   "syllabus_item": 23,
+   "topic_term": "アクチュエーター",
+   "topic_is_new": true,
+   "related_terms": ["センサー", "モーター", "A/D 変換", "D/A 変換"],
+   "confidence": "medium",
+   "notes": "アクチュエータの機能（電気信号を力学的な運動に変える）を選ぶ問題。応用情報 2019h31h 問21 と同一問題で、そちらは項目23「アクチュエーター」なので項目と表記を合わせた（出題位置もハードウェアの並び 問21〜23）。基本情報のシラバスには用語例「アクチュエーター」が無いため topic_is_new=true。項目5（モーター・油圧シリンダ・空気圧シリンダを挙げている）も候補。"
+  },
+  {
+   "number": 23,
+   "syllabus_item": 23,
+   "topic_term": "論理式",
+   "topic_is_new": false,
+   "related_terms": ["真理値表", "論理積", "論理和", "排他的論理和"],
+   "confidence": "high",
+   "notes": "ディジタル回路と等価な論理式を選ぶ問題。既存マスタの「真理値表」（2019r01a 問22、回路の入出力の対応を問う）とは問われ方が違うので、項目23の用語例「論理式」を別論点として起こした（応用情報も 2017h29h 問23 を項目23「論理式」で起こしている）。"
+  },
+  {
+   "number": 24,
+   "syllabus_item": 25,
+   "topic_term": "チェックキャラクター",
+   "topic_is_new": false,
+   "related_terms": ["チェックデジット", "重み付け", "基数", "ニューメリックチェック"],
+   "confidence": "medium",
+   "notes": "重み付け和の剰余からチェックデジットを求める問題。設問の語は「チェックデジット」だが同概念の用語例が項目25に「チェックキャラクター」としてあるため、表記を揺らさないようそちらをコピーした。"
+  },
+  {
+   "number": 25,
+   "syllabus_item": 27,
+   "topic_term": "レンダリング",
+   "topic_is_new": true,
+   "related_terms": ["隠線消去", "隠面消去", "シェーディング", "テクスチャマッピング"],
+   "confidence": "high",
+   "notes": "3次元 CG の隠線消去・隠面消去の説明を選ぶ問題。基本情報のシラバスには「レンダリング」が無いため新設だが、応用情報は同種の問を項目27「レンダリング」で起こしているので項目と表記を合わせた。"
+  },
+  {
+   "number": 26,
+   "syllabus_item": 30,
+   "topic_term": "ストアドプロシージャ",
+   "topic_is_new": true,
+   "related_terms": ["DBMS", "埋込みSQL", "クライアントサーバ処理", "トリガー"],
+   "confidence": "high",
+   "notes": "利用頻度の高い命令群を DBMS に格納して通信量を減らす仕組みを選ぶ問題。シラバスに用語例が無いため新設だが、応用情報も同趣旨の問（2017h29a 問26 ほか）を項目30「ストアドプロシージャ」で起こしているので項目と表記を合わせた。"
+  },
+  {
+   "number": 27,
+   "syllabus_item": 30,
+   "topic_term": "参照制約",
+   "topic_is_new": false,
+   "related_terms": ["外部キー", "主キー", "一意性制約", "検査制約"],
+   "confidence": "high",
+   "notes": null
+  }
+ ]
+}

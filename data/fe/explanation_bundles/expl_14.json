@@ -1,0 +1,245 @@
+{
+  "bundle": "expl_14",
+  "topics": [
+    {
+      "topic_id": 73,
+      "term": "SEO ポイズニング",
+      "field": "テクノロジ系",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q41",
+          "content_key": "c0fcac7b07946123",
+          "exam_label": "令和元年度 秋期",
+          "number": 41,
+          "stem": "検索サイトの検索結果の上位に悪意のあるサイトが表示されるように細工する攻撃の名称はどれか。",
+          "choices": {
+            "ア": "DNS キャッシュポイズニング",
+            "イ": "SEO ポイズニング",
+            "ウ": "クロスサイトスクリプティング",
+            "エ": "ソーシャルエンジニアリング"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 75,
+      "term": "ハッシュ関数 （SHA-256（SHA-2）ほか）",
+      "field": "テクノロジ系",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q40",
+          "content_key": "d82b291e65c2cebe",
+          "exam_label": "令和元年度 秋期",
+          "number": 40,
+          "stem": "ファイルの提供者は，ファイルの作成者が作成したファイル A を受け取り，ファイル A と，ファイル A に SHA-256 を適用して算出した値 B とを利用者に送信する。そのとき，利用者が情報セキュリティ上実現できることはどれか。ここで，利用者が受信した値 B はファイルの提供者から事前に電話で直接伝えられた値と同じであり，改ざんされていないことが確認できているものとする。",
+          "choices": {
+            "ア": "値 B に SHA-256 を適用して値 B からディジタル署名を算出し，そのディジタル署名を検証することによって，ファイル A の作成者を確認できる。",
+            "イ": "値 B に SHA-256 を適用して値 B からディジタル署名を算出し，そのディジタル署名を検証することによって，ファイル A の提供者がファイル A の作成者であるかどうかを確認できる。",
+            "ウ": "ファイル A に SHA-256 を適用して値を算出し，その値と値 B を比較することによって，ファイル A の内容が改ざんされていないかどうかを検証できる。",
+            "エ": "ファイル A の内容が改ざんされていても，ファイル A に SHA-256 を適用して値を算出し，その値と値 B の差分を確認することによって，ファイル A の内容のうち改ざんされている部分を修復できる。"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 76,
+      "term": "バックドア",
+      "field": "テクノロジ系",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q39",
+          "content_key": "bcc86afb8b76041a",
+          "exam_label": "令和元年度 秋期",
+          "number": 39,
+          "stem": "情報セキュリティにおいてバックドアに該当するものはどれか。",
+          "choices": {
+            "ア": "アクセスする際にパスワード認証などの正規の手続が必要なWebサイトに，当該手続を経ないでアクセス可能なURL",
+            "イ": "インターネットに公開されているサーバのTCPポートの中からアクティブになっているポートを探して，稼働中のサービスを特定するためのツール",
+            "ウ": "ネットワーク上の通信パケットを取得して通信内容を見るために設けられたスイッチのLANポート",
+            "エ": "プログラムが確保するメモリ領域に，領域の大きさを超える長さの文字列を入力してあふれさせ，ダウンさせる攻撃"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 77,
+      "term": "パスワードリスト攻撃（クレデンシャルスタッフィング）",
+      "field": "テクノロジ系",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q37",
+          "content_key": "20a48a8b7c3ae52e",
+          "exam_label": "平成31年度 春期",
+          "number": 37,
+          "stem": "パスワードリスト攻撃の手口に該当するものはどれか。",
+          "choices": {
+            "ア": "辞書にある単語をパスワードに設定している利用者がいる状況に着目して，攻撃対象とする利用者 ID を一つ定め，辞書にある単語やその組合せをパスワードとして，ログインを試行する。",
+            "イ": "パスワードの文字数の上限が小さい Web サイトに対して，攻撃対象とする利用者 ID を一つ定め，文字を組み合わせたパスワードを総当たりして，ログインを試行する。",
+            "ウ": "複数サイトで同一の利用者 ID とパスワードを使っている利用者がいる状況に着目して，不正に取得した他サイトの利用者 ID とパスワードの一覧表を用いて，ログインを試行する。",
+            "エ": "よく用いられるパスワードを一つ定め，文字を組み合わせた利用者 ID を総当たりして，ログインを試行する。"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 78,
+      "term": "不正のトライアングル（機会，動機，正当化）",
+      "field": "テクノロジ系",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q42",
+          "content_key": "9a092bad794e9e72",
+          "exam_label": "平成31年度 春期",
+          "number": 42,
+          "stem": "不正が発生する際には“不正のトライアングル”の 3 要素全てが存在すると考えられている。“不正のトライアングル”の構成要素の説明として，適切なものはどれか。",
+          "choices": {
+            "ア": "“機会”とは，情報システムなどの技術や物理的な環境，組織のルールなど，内部者による不正行為の実行を可能又は容易にする環境の存在である。",
+            "イ": "“情報と伝達”とは，必要な情報が識別，把握及び処理され，組織内外及び関係者相互に正しく伝えられるようにすることである。",
+            "ウ": "“正当化”とは，ノルマによるプレッシャなどのことである。",
+            "エ": "“動機”とは，良心のかしゃくを乗り越える都合の良い解釈や他人への責任転嫁など，内部者が不正行為を自ら納得させるための自分勝手な理由付けである。"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 79,
+      "term": "楕円曲線暗号",
+      "field": "テクノロジ系",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q39",
+          "content_key": "e84ab1eecf36afaf",
+          "exam_label": "平成31年度 春期",
+          "number": 39,
+          "stem": "楕円曲線暗号の特徴はどれか。",
+          "choices": {
+            "ア": "RSA 暗号と比べて，短い鍵長で同レベルの安全性が実現できる。",
+            "イ": "共通鍵暗号方式であり，暗号化や復号の処理を高速に行うことができる。",
+            "ウ": "総当たりによる解読が不可能なことが，数学的に証明されている。",
+            "エ": "データを秘匿する目的で用いる場合，復号鍵を秘密にしておく必要がない。"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 80,
+      "term": "リスクファイナンシング",
+      "field": "テクノロジ系",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ管理",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q40",
+          "content_key": "478504276e549c80",
+          "exam_label": "平成31年度 春期",
+          "number": 40,
+          "stem": "リスク対応のうち，リスクファイナンシングに該当するものはどれか。",
+          "choices": {
+            "ア": "システムが被害を受けるリスクを想定して，保険を掛ける。",
+            "イ": "システムの被害につながるリスクの顕在化を抑える対策に資金を投入する。",
+            "ウ": "リスクが大きいと評価されたシステムを廃止し，新たなセキュアなシステムの構築に資金を投入する。",
+            "エ": "リスクが顕在化した場合のシステムの被害を小さくする設備に資金を投入する。"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 81,
+      "term": "リスクレベル",
+      "field": "テクノロジ系",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ管理",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q41",
+          "content_key": "2ceccde8dee5f1b1",
+          "exam_label": "平成31年度 春期",
+          "number": 41,
+          "stem": "JIS Q 27000:2014（情報セキュリティマネジメントシステム－用語）における“リスクレベル”の定義はどれか。",
+          "choices": {
+            "ア": "脅威によって付け込まれる可能性のある，資産又は管理策の弱点",
+            "イ": "結果とその起こりやすさの組合せとして表現される，リスクの大きさ",
+            "ウ": "対応すべきリスクに付与する優先順位",
+            "エ": "リスクの重大性を評価するために目安とする条件"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    }
+  ]
+}

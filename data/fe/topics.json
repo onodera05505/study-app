@@ -1,11 +1,227 @@
 {
- "topic_count": 148,
- "question_count": 160,
+ "topic_count": 315,
+ "question_count": 400,
  "exams": [
+  "2017h29a",
+  "2018h30a",
+  "2018h30h",
   "2019h31h",
   "2019r01a"
  ],
  "topics": [
+  {
+   "id": 9,
+   "term": "アローダイアグラム",
+   "match_key": "アローダイアグラム",
+   "syllabus_item": 58,
+   "syllabus_item_name": "プロジェクトの時間",
+   "field": "マネジメント系",
+   "major": "プロジェクトマネジメント",
+   "middle": "プロジェクトマネジメント",
+   "is_new": false,
+   "related_terms": [
+    "クリティカルパス",
+    "CPM（Critical Path Method： クリティカルパス法）",
+    "最早結合点時刻",
+    "ダミー作業",
+    "PERT",
+    "クラッシング"
+   ],
+   "question_count": 5,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 53,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30a",
+     "number": 52,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30h",
+     "number": 51,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019h31h",
+     "number": 53,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019r01a",
+     "number": 52,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 4,
+   "term": "稼働率",
+   "match_key": "稼働率",
+   "syllabus_item": 17,
+   "syllabus_item_name": "システムの評価指標",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "システム構成要素",
+   "is_new": true,
+   "related_terms": [
+    "MTBF",
+    "直列システムの稼働率",
+    "並列システムの稼働率",
+    "直列システム",
+    "並列システム",
+    "信頼性ブロック図"
+   ],
+   "question_count": 4,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 15,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30a",
+     "number": 15,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019h31h",
+     "number": 14,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019r01a",
+     "number": 16,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 101,
+   "term": "工数見積り",
+   "match_key": "工数見積り",
+   "syllabus_item": 59,
+   "syllabus_item_name": "プロジェクトのコスト",
+   "field": "マネジメント系",
+   "major": "プロジェクトマネジメント",
+   "middle": "プロジェクトマネジメント",
+   "is_new": true,
+   "related_terms": [
+    "ボトムアップ見積り",
+    "パラメトリック見積り",
+    "ファンクションポイント法",
+    "人月",
+    "人日",
+    "管理工数"
+   ],
+   "question_count": 4,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 52,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30a",
+     "number": 54,
+     "confidence": "medium"
+    },
+    {
+     "exam": "2018h30h",
+     "number": 53,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019h31h",
+     "number": 54,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 12,
+   "term": "ビッグデータ",
+   "match_key": "ビッグデータ",
+   "syllabus_item": 90,
+   "syllabus_item_name": "業務分析・データ利活用",
+   "field": "ストラテジ系",
+   "major": "企業と法務",
+   "middle": "企業活動",
+   "is_new": false,
+   "related_terms": [
+    "データマイニング",
+    "ソーシャルメディアデータ",
+    "非構造化データ",
+    "テキストマイニング",
+    "BI（Business Intelligence）",
+    "パーソナルデータ"
+   ],
+   "question_count": 4,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 63,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30h",
+     "number": 63,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019h31h",
+     "number": 64,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019r01a",
+     "number": 63,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 23,
+   "term": "LIFO",
+   "match_key": "lifo",
+   "syllabus_item": 6,
+   "syllabus_item_name": "データ構造",
+   "field": "テクノロジ系",
+   "major": "基礎理論",
+   "middle": "アルゴリズムとプログラミング",
+   "is_new": false,
+   "related_terms": [
+    "スタック",
+    "プッシュ",
+    "ポップ",
+    "FIFO"
+   ],
+   "question_count": 3,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 5,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30h",
+     "number": 5,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019r01a",
+     "number": 8,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
   {
    "id": 1,
    "term": "ハッシュ表探索法",
@@ -19,13 +235,18 @@
    "related_terms": [
     "ハッシュ関数",
     "シノニム",
+    "衝突",
     "2 分探索法",
     "線形探索法",
-    "剰余",
-    "衝突"
+    "剰余"
    ],
-   "question_count": 2,
+   "question_count": 3,
    "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 7,
+     "confidence": "high"
+    },
     {
      "exam": "2019h31h",
      "number": 18,
@@ -50,15 +271,20 @@
    "middle": "アルゴリズムとプログラミング",
    "is_new": false,
    "related_terms": [
-    "スタック",
-    "LIFO",
-    "プッシュ",
-    "ポップ",
     "再帰呼出し",
-    "終了条件"
+    "スタック",
+    "終了条件",
+    "分割統治法",
+    "LIFO",
+    "プッシュ"
    ],
-   "question_count": 2,
+   "question_count": 3,
    "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 6,
+     "confidence": "high"
+    },
     {
      "exam": "2019h31h",
      "number": 6,
@@ -67,6 +293,634 @@
     {
      "exam": "2019r01a",
      "number": 11,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 30,
+   "term": "DRAM",
+   "match_key": "dram",
+   "syllabus_item": 12,
+   "syllabus_item_name": "メモリ",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "コンピュータ構成要素",
+   "is_new": false,
+   "related_terms": [
+    "SRAM",
+    "リフレッシュ",
+    "フラッシュメモリ",
+    "ROM",
+    "EEPROM"
+   ],
+   "question_count": 3,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 21,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30a",
+     "number": 21,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019r01a",
+     "number": 20,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 41,
+   "term": "プリエンプティブ方式",
+   "match_key": "プリエンプティブ方式",
+   "syllabus_item": 18,
+   "syllabus_item_name": "オペレーティングシステム",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "ソフトウェア",
+   "is_new": false,
+   "related_terms": [
+    "実行可能状態",
+    "優先順",
+    "リアルタイム OS",
+    "待ち状態",
+    "ディスパッチ",
+    "ノンプリエンプティブ方式"
+   ],
+   "question_count": 3,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 18,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30h",
+     "number": 16,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019r01a",
+     "number": 18,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 58,
+   "term": "多重度",
+   "match_key": "多重度",
+   "syllabus_item": 29,
+   "syllabus_item_name": "データベース設計",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "データベース",
+   "is_new": true,
+   "related_terms": [
+    "クラス図",
+    "リレーションシップ",
+    "概念データモデル",
+    "エンティティ",
+    "汎化"
+   ],
+   "question_count": 3,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 28,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30a",
+     "number": 26,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019r01a",
+     "number": 25,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 5,
+   "term": "関係代数",
+   "match_key": "関係代数",
+   "syllabus_item": 30,
+   "syllabus_item_name": "データ操作",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "データベース",
+   "is_new": false,
+   "related_terms": [
+    "射影",
+    "選択",
+    "結合",
+    "関係モデル",
+    "射影（projection）",
+    "選択（selection）"
+   ],
+   "question_count": 3,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 28,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019h31h",
+     "number": 28,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019r01a",
+     "number": 27,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 68,
+   "term": "サブネットマスク",
+   "match_key": "サブネットマスク",
+   "syllabus_item": 35,
+   "syllabus_item_name": "通信プロトコル",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "ネットワーク",
+   "is_new": false,
+   "related_terms": [
+    "IP アドレス",
+    "サブネットアドレス",
+    "CIDR（Classless Inter Domain Routing）",
+    "ブロードキャスト"
+   ],
+   "question_count": 3,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 35,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30h",
+     "number": 32,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019h31h",
+     "number": 32,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 74,
+   "term": "デジタル署名（署名鍵， 検証鍵）",
+   "match_key": "デジタル署名署名鍵検証鍵",
+   "syllabus_item": 38,
+   "syllabus_item_name": "情報セキュリティ",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": false,
+   "related_terms": [
+    "公開鍵暗号方式",
+    "メッセージダイジェスト",
+    "改ざん",
+    "否認防止 （Non-Repudiation）",
+    "完全性（Integrity）",
+    "RSA 暗号"
+   ],
+   "question_count": 3,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 40,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30a",
+     "number": 36,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019r01a",
+     "number": 38,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 91,
+   "term": "ブラックボックステスト",
+   "match_key": "ブラックボックステスト",
+   "syllabus_item": 44,
+   "syllabus_item_name": "設計",
+   "field": "テクノロジ系",
+   "major": "開発技術",
+   "middle": "システム開発技術",
+   "is_new": false,
+   "related_terms": [
+    "ホワイトボックステスト",
+    "限界値分析法",
+    "同値分析法",
+    "命令網羅",
+    "テストケース"
+   ],
+   "question_count": 3,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 49,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30h",
+     "number": 48,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019h31h",
+     "number": 47,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 92,
+   "term": "モジュール結合度",
+   "match_key": "モジュール結合度",
+   "syllabus_item": 44,
+   "syllabus_item_name": "設計",
+   "field": "テクノロジ系",
+   "major": "開発技術",
+   "middle": "システム開発技術",
+   "is_new": true,
+   "related_terms": [
+    "モジュール分割",
+    "独立性",
+    "データ結合",
+    "共通結合"
+   ],
+   "question_count": 3,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 48,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30a",
+     "number": 48,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019r01a",
+     "number": 46,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 98,
+   "term": "XP（エクストリームプログラミング）",
+   "match_key": "xpエクストリームプログラミング",
+   "syllabus_item": 49,
+   "syllabus_item_name": "開発プロセス・手法",
+   "field": "テクノロジ系",
+   "major": "開発技術",
+   "middle": "ソフトウェア開発管理技術",
+   "is_new": false,
+   "related_terms": [
+    "テスト駆動開発（TDD）",
+    "ペアプログラミング",
+    "リファクタリング",
+    "継続的インテグレーション （CI）",
+    "ソースコードの共同所有"
+   ],
+   "question_count": 3,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 50,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30h",
+     "number": 50,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019r01a",
+     "number": 50,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 100,
+   "term": "ファンクションポイント法",
+   "match_key": "ファンクションポイント法",
+   "syllabus_item": 59,
+   "syllabus_item_name": "プロジェクトのコスト",
+   "field": "マネジメント系",
+   "major": "プロジェクトマネジメント",
+   "middle": "プロジェクトマネジメント",
+   "is_new": false,
+   "related_terms": [
+    "LOC（Lines of Code） 法",
+    "COCOMO（Constructive Cost Model）",
+    "類推見積り",
+    "ボトムアップ見積り",
+    "重み付け係数",
+    "パラメトリック見積り"
+   ],
+   "question_count": 3,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 51,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30h",
+     "number": 54,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019r01a",
+     "number": 53,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 10,
+   "term": "監査の独立性と客観性の保持",
+   "match_key": "監査の独立性と客観性の保持",
+   "syllabus_item": 69,
+   "syllabus_item_name": "システム監査",
+   "field": "マネジメント系",
+   "major": "サービスマネジメント",
+   "middle": "システム監査",
+   "is_new": false,
+   "related_terms": [
+    "内部監査",
+    "監査人の倫理",
+    "システム監査人の権限と責任等",
+    "外観上の独立性",
+    "精神上の独立性",
+    "監査部"
+   ],
+   "question_count": 3,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 59,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019h31h",
+     "number": 59,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019r01a",
+     "number": 59,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 149,
+   "term": "SOA（Service Oriented Architecture：サービス指向アーキテクチャ）",
+   "match_key": "soaserviceorientedarchitectureサービス指向アーキテクチャ",
+   "syllabus_item": 73,
+   "syllabus_item_name": "ソリューションビジネス",
+   "field": "ストラテジ系",
+   "major": "システム戦略",
+   "middle": "システム戦略",
+   "is_new": false,
+   "related_terms": [
+    "BPR（Business Process Reengineering ）",
+    "サービス",
+    "ERP（Enterprise Resource Planning：企業資源計画）",
+    "SLA",
+    "ソリューション",
+    "クラウドサービス（SaaS，PaaS，IaaS など）"
+   ],
+   "question_count": 3,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 62,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30a",
+     "number": 63,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30h",
+     "number": 62,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 150,
+   "term": "IoT（Internet of Things）",
+   "match_key": "iotinternetofthings",
+   "syllabus_item": 84,
+   "syllabus_item_name": "ビジネスシステム",
+   "field": "ストラテジ系",
+   "major": "経営戦略",
+   "middle": "ビジネスインダストリ",
+   "is_new": false,
+   "related_terms": [
+    "センサー",
+    "M2M（Machine to Machine ）",
+    "エッジコンピューティング",
+    "データの収集",
+    "データの活用",
+    "ユビキタスコンピューティング"
+   ],
+   "question_count": 3,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 71,
+     "confidence": "medium"
+    },
+    {
+     "exam": "2018h30a",
+     "number": 71,
+     "confidence": "medium"
+    },
+    {
+     "exam": "2018h30h",
+     "number": 71,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 137,
+   "term": "CIO（Chief Information Officer：最高情報責任者）",
+   "match_key": "ciochiefinformationofficer最高情報責任者",
+   "syllabus_item": 89,
+   "syllabus_item_name": "経営・組織論",
+   "field": "ストラテジ系",
+   "major": "企業と法務",
+   "middle": "企業活動",
+   "is_new": false,
+   "related_terms": [
+    "CEO（Chief Executive Officer：最高経営責任者）",
+    "CDO（Chief Digital Officer ：最高デジタル責任者）",
+    "情報システム戦略",
+    "IT 投資マネジメント",
+    "システム監査",
+    "CFO（Chief Financial Officer：最高財務責任者）"
+   ],
+   "question_count": 3,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 75,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30a",
+     "number": 74,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019r01a",
+     "number": 75,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 151,
+   "term": "先入先出法",
+   "match_key": "先入先出法",
+   "syllabus_item": 91,
+   "syllabus_item_name": "会計・財務",
+   "field": "ストラテジ系",
+   "major": "企業と法務",
+   "middle": "企業活動",
+   "is_new": false,
+   "related_terms": [
+    "棚卸資産評価",
+    "総平均法",
+    "移動平均法",
+    "期末在庫",
+    "費用",
+    "在庫評価額"
+   ],
+   "question_count": 3,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 78,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30a",
+     "number": 77,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30h",
+     "number": 78,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 14,
+   "term": "基数",
+   "match_key": "基数",
+   "syllabus_item": 1,
+   "syllabus_item_name": "離散数学",
+   "field": "テクノロジ系",
+   "major": "基礎理論",
+   "middle": "基礎理論",
+   "is_new": true,
+   "related_terms": [
+    "固定小数点数",
+    "基数変換",
+    "16 進数",
+    "2 進数",
+    "2進数",
+    "小数の基数変換"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 1,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019h31h",
+     "number": 1,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 16,
+   "term": "論理積",
+   "match_key": "論理積",
+   "syllabus_item": 1,
+   "syllabus_item_name": "離散数学",
+   "field": "テクノロジ系",
+   "major": "基礎理論",
+   "middle": "基礎理論",
+   "is_new": false,
+   "related_terms": [
+    "排他的論理和",
+    "論理和",
+    "否定論理積",
+    "ビット演算",
+    "ビットマスク",
+    "パリティチェック"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 2,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019h31h",
+     "number": 2,
      "confidence": "high"
     }
    ],
@@ -106,66 +960,327 @@
    "aliases": []
   },
   {
-   "id": 4,
-   "term": "稼働率",
-   "match_key": "稼働率",
-   "syllabus_item": 17,
-   "syllabus_item_name": "システムの評価指標",
+   "id": 152,
+   "term": "シーケンス図",
+   "match_key": "シーケンス図",
+   "syllabus_item": 10,
+   "syllabus_item_name": "その他の言語",
    "field": "テクノロジ系",
-   "major": "コンピュータシステム",
-   "middle": "システム構成要素",
-   "is_new": true,
+   "major": "基礎理論",
+   "middle": "アルゴリズムとプログラミング",
+   "is_new": false,
    "related_terms": [
-    "信頼性ブロック図",
-    "直列システムの稼働率",
-    "並列システムの稼働率",
-    "フォールトトレラントシステム",
-    "並列システム",
-    "直列システム"
+    "ステートマシン図",
+    "コミュニケーション図",
+    "アクティビティ図",
+    "コンポーネント図",
+    "タイミング図",
+    "オブジェクト図"
    ],
    "question_count": 2,
    "questions": [
     {
-     "exam": "2019h31h",
-     "number": 14,
+     "exam": "2017h29a",
+     "number": 46,
      "confidence": "high"
     },
     {
-     "exam": "2019r01a",
-     "number": 16,
+     "exam": "2018h30a",
+     "number": 46,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 29,
+   "term": "外部割込み",
+   "match_key": "外部割込み",
+   "syllabus_item": 11,
+   "syllabus_item_name": "プロセッサ",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "コンピュータ構成要素",
+   "is_new": true,
+   "related_terms": [
+    "内部割込み",
+    "SVC（SuperVisor Call）割込み",
+    "入出力割込み",
+    "ページフォールト"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 10,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019h31h",
+     "number": 9,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 32,
+   "term": "キャッシュメモリ",
+   "match_key": "キャッシュメモリ",
+   "syllabus_item": 12,
+   "syllabus_item_name": "メモリ",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "コンピュータ構成要素",
+   "is_new": true,
+   "related_terms": [
+    "ヒット率",
+    "主記憶",
+    "ライトスルー",
+    "ライトバック",
+    "実効アクセス時間",
+    "ディスクキャッシュ"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 11,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019h31h",
+     "number": 10,
      "confidence": "high"
     }
    ],
    "aliases": []
   },
   {
-   "id": 5,
-   "term": "関係代数",
-   "match_key": "関係代数",
-   "syllabus_item": 30,
-   "syllabus_item_name": "データ操作",
+   "id": 153,
+   "term": "USB",
+   "match_key": "usb",
+   "syllabus_item": 14,
+   "syllabus_item_name": "入出力デバイス",
    "field": "テクノロジ系",
-   "major": "技術要素",
-   "middle": "データベース",
+   "major": "コンピュータシステム",
+   "middle": "コンピュータ構成要素",
    "is_new": false,
    "related_terms": [
-    "射影",
-    "選択",
-    "結合",
-    "関係モデル",
-    "射影（projection）",
-    "選択（selection）"
+    "シリアルバス",
+    "Thunderbolt",
+    "USB Type-C",
+    "HDMI",
+    "シリアルATA",
+    "アイソクロナス転送"
    ],
    "question_count": 2,
    "questions": [
     {
+     "exam": "2017h29a",
+     "number": 11,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30a",
+     "number": 12,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 36,
+   "term": "デュアルシステム",
+   "match_key": "デュアルシステム",
+   "syllabus_item": 16,
+   "syllabus_item_name": "システムの構成",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "システム構成要素",
+   "is_new": false,
+   "related_terms": [
+    "デュプレックスシステム",
+    "主系（現用系）",
+    "従系（待機系）",
+    "ホットスタンバイ",
+    "ロードシェアリングシステム"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 13,
+     "confidence": "high"
+    },
+    {
      "exam": "2019h31h",
-     "number": 28,
+     "number": 13,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 155,
+   "term": "コンパイラ",
+   "match_key": "コンパイラ",
+   "syllabus_item": 21,
+   "syllabus_item_name": "開発ツール",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "ソフトウェア",
+   "is_new": false,
+   "related_terms": [
+    "目的プログラム",
+    "構文解析",
+    "意味解析",
+    "原始プログラム（ソースプログラム）",
+    "最適化",
+    "実行時間"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 19,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30h",
+     "number": 18,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 47,
+   "term": "NAND 回路",
+   "match_key": "nand回路",
+   "syllabus_item": 23,
+   "syllabus_item_name": "ハードウェア",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "ハードウェア",
+   "is_new": false,
+   "related_terms": [
+    "論理式",
+    "真理値表",
+    "論理積",
+    "否定",
+    "AND 回路",
+    "XOR 回路"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 22,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019h31h",
+     "number": 22,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 156,
+   "term": "アクチュエーター",
+   "match_key": "アクチュエーター",
+   "syllabus_item": 23,
+   "syllabus_item_name": "ハードウェア",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "ハードウェア",
+   "is_new": true,
+   "related_terms": [
+    "センサー",
+    "モーター",
+    "A/D 変換",
+    "D/A 変換",
+    "フィードバック制御",
+    "油圧シリンダ"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 22,
+     "confidence": "medium"
+    },
+    {
+     "exam": "2018h30h",
+     "number": 21,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 50,
+   "term": "真理値表",
+   "match_key": "真理値表",
+   "syllabus_item": 23,
+   "syllabus_item_name": "ハードウェア",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "ハードウェア",
+   "is_new": false,
+   "related_terms": [
+    "論理積",
+    "論理和",
+    "論理式",
+    "組合せ回路",
+    "排他的論理和",
+    "否定"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 23,
      "confidence": "high"
     },
     {
      "exam": "2019r01a",
-     "number": 27,
+     "number": 22,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 53,
+   "term": "H.264",
+   "match_key": "h264",
+   "syllabus_item": 26,
+   "syllabus_item_name": "マルチメディア技術",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "情報メディア",
+   "is_new": false,
+   "related_terms": [
+    "MPEG",
+    "HEVC",
+    "非可逆圧縮",
+    "ストリーミング",
+    "MP3",
+    "JPEG"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 25,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019r01a",
+     "number": 24,
      "confidence": "high"
     }
    ],
@@ -205,6 +1320,99 @@
    "aliases": []
   },
   {
+   "id": 157,
+   "term": "ロック粒度",
+   "match_key": "ロック粒度",
+   "syllabus_item": 31,
+   "syllabus_item_name": "トランザクション処理",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "データベース",
+   "is_new": false,
+   "related_terms": [
+    "専有ロック",
+    "共有ロック",
+    "デッドロック",
+    "同時実行制御（排他制御）"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 29,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30h",
+     "number": 30,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 158,
+   "term": "転送速度",
+   "match_key": "転送速度",
+   "syllabus_item": 33,
+   "syllabus_item_name": "ネットワーク方式",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "ネットワーク",
+   "is_new": false,
+   "related_terms": [
+    "bps（bit per second：ビット／秒）",
+    "回線容量",
+    "伝送効率",
+    "スループット"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 31,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30h",
+     "number": 31,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 67,
+   "term": "UDP",
+   "match_key": "udp",
+   "syllabus_item": 35,
+   "syllabus_item_name": "通信プロトコル",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "ネットワーク",
+   "is_new": true,
+   "related_terms": [
+    "TCP",
+    "ポート番号",
+    "トランスポート層",
+    "VoIP（Voice over Internet Protocol）"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 34,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019h31h",
+     "number": 33,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 7,
    "term": "ポート番号",
    "match_key": "ポート番号",
@@ -231,6 +1439,202 @@
     {
      "exam": "2019r01a",
      "number": 34,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 159,
+   "term": "C&C サーバ",
+   "match_key": "c&cサーバ",
+   "syllabus_item": 38,
+   "syllabus_item_name": "情報セキュリティ",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": true,
+   "related_terms": [
+    "ボット（ボットネット， 遠隔操作型ウイルス（RAT：Remote Access Trojan），C&C サーバ）",
+    "踏み台",
+    "ボットネット",
+    "遠隔操作型ウイルス（RAT：Remote Access Trojan）",
+    "DDoS 攻撃",
+    "バックドア"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 36,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30a",
+     "number": 41,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 71,
+   "term": "DNS キャッシュポイズニング",
+   "match_key": "dnsキャッシュポイズニング",
+   "syllabus_item": 38,
+   "syllabus_item_name": "情報セキュリティ",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": false,
+   "related_terms": [
+    "DNS",
+    "名前解決",
+    "ファーミング",
+    "DNSSEC",
+    "FQDN"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 37,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019r01a",
+     "number": 35,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 238,
+   "term": "SQL インジェクション",
+   "match_key": "sqlインジェクション",
+   "syllabus_item": 38,
+   "syllabus_item_name": "情報セキュリティ",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": false,
+   "related_terms": [
+    "クロスサイトスクリプティング",
+    "クロスサイトリクエストフォージェリ",
+    "SQL インジェクション対策（プレースホルダほか）",
+    "改ざん",
+    "SQL インジェクション",
+    "プレースホルダ"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 39,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30h",
+     "number": 41,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 160,
+   "term": "真正性（Authenticity）",
+   "match_key": "真正性authenticity",
+   "syllabus_item": 38,
+   "syllabus_item_name": "情報セキュリティ",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": false,
+   "related_terms": [
+    "信頼性 （Reliability）",
+    "可用性（Availability）",
+    "機密性（Confidentiality）",
+    "完全性（Integrity）",
+    "責任追跡性 （Accountability）",
+    "否認防止 （Non-Repudiation）"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 39,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30h",
+     "number": 39,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 161,
+   "term": "CSIRT",
+   "match_key": "csirt",
+   "syllabus_item": 39,
+   "syllabus_item_name": "情報セキュリティ管理",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": true,
+   "related_terms": [
+    "情報セキュリティインシデント",
+    "JPCERTコーディネーションセンター",
+    "情報セキュリティ関連組織（ CSIRT，SOC（Security Operation Center） ）",
+    "IETF（Internet Engineering Task Force：インターネット技術タスクフォース）",
+    "ISMS ユーザーズガイド",
+    "組織における内部不正防止ガイドライン"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 42,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30a",
+     "number": 40,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 162,
+   "term": "クラス",
+   "match_key": "クラス",
+   "syllabus_item": 44,
+   "syllabus_item_name": "設計",
+   "field": "テクノロジ系",
+   "major": "開発技術",
+   "middle": "システム開発技術",
+   "is_new": false,
+   "related_terms": [
+    "インスタンス",
+    "属性",
+    "メソッド",
+    "継承 （インヘリタンス）",
+    "カプセル化"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 47,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30a",
+     "number": 47,
      "confidence": "high"
     }
    ],
@@ -270,42 +1674,42 @@
    "aliases": []
   },
   {
-   "id": 9,
-   "term": "アローダイアグラム",
-   "match_key": "アローダイアグラム",
-   "syllabus_item": 58,
-   "syllabus_item_name": "プロジェクトの時間",
+   "id": 163,
+   "term": "バックアップ",
+   "match_key": "バックアップ",
+   "syllabus_item": 67,
+   "syllabus_item_name": "サービスの運用",
    "field": "マネジメント系",
-   "major": "プロジェクトマネジメント",
-   "middle": "プロジェクトマネジメント",
+   "major": "サービスマネジメント",
+   "middle": "サービスマネジメント",
    "is_new": false,
    "related_terms": [
-    "ダミー作業",
-    "クリティカルパス",
-    "最早結合点時刻",
-    "PDM（Precedence Diagramming Method：プレシデンスダイアグラム法）",
-    "CPM（Critical Path Method： クリティカルパス法）",
-    "PERT"
+    "差分バックアップ",
+    "世代管理",
+    "ジョブスケジューリング",
+    "復旧",
+    "フルバックアップ",
+    "データ管理"
    ],
    "question_count": 2,
    "questions": [
     {
-     "exam": "2019h31h",
-     "number": 53,
+     "exam": "2017h29a",
+     "number": 56,
      "confidence": "high"
     },
     {
-     "exam": "2019r01a",
-     "number": 52,
+     "exam": "2018h30h",
+     "number": 57,
      "confidence": "high"
     }
    ],
    "aliases": []
   },
   {
-   "id": 10,
-   "term": "監査の独立性と客観性の保持",
-   "match_key": "監査の独立性と客観性の保持",
+   "id": 109,
+   "term": "システム監査人の権限と責任等",
+   "match_key": "システム監査人の権限と責任等",
    "syllabus_item": 69,
    "syllabus_item_name": "システム監査",
    "field": "マネジメント系",
@@ -313,23 +1717,89 @@
    "middle": "システム監査",
    "is_new": false,
    "related_terms": [
-    "内部監査",
-    "監査人の倫理",
-    "システム監査人の権限と責任等",
-    "内部監査規程",
-    "外部監査"
+    "改善提案",
+    "指摘事項",
+    "助言を目的としたシステム監査",
+    "監査報告書の作成と報告",
+    "監査の独立性と客観性の保持",
+    "監査証拠の入手と評価"
    ],
    "question_count": 2,
    "questions": [
     {
-     "exam": "2019h31h",
-     "number": 59,
+     "exam": "2018h30h",
+     "number": 58,
      "confidence": "high"
     },
     {
      "exam": "2019r01a",
+     "number": 60,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 164,
+   "term": "情報セキュリティ監査",
+   "match_key": "情報セキュリティ監査",
+   "syllabus_item": 69,
+   "syllabus_item_name": "システム監査",
+   "field": "マネジメント系",
+   "major": "サービスマネジメント",
+   "middle": "システム監査",
+   "is_new": false,
+   "related_terms": [
+    "指摘事項",
+    "内部監査",
+    "監査報告書の作成と報告",
+    "リスクの評価に基づく監査計画の策定（リスクアプローチ）",
+    "監査証拠の入手と評価",
+    "情報セキュリティ管理基準"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 58,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30a",
+     "number": 59,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 111,
+   "term": "監査証拠の入手と評価",
+   "match_key": "監査証拠の入手と評価",
+   "syllabus_item": 69,
+   "syllabus_item_name": "システム監査",
+   "field": "マネジメント系",
+   "major": "サービスマネジメント",
+   "middle": "システム監査",
+   "is_new": false,
+   "related_terms": [
+    "代表的なシステム監査技法",
+    "監査手続の適用",
+    "監査調書の作成と保管",
+    "監査の独立性と客観性の保持",
+    "監査人の倫理"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2017h29a",
      "number": 59,
      "confidence": "high"
+    },
+    {
+     "exam": "2019h31h",
+     "number": 58,
+     "confidence": "medium"
     }
    ],
    "aliases": []
@@ -370,9 +1840,107 @@
    ]
   },
   {
-   "id": 12,
-   "term": "ビッグデータ",
-   "match_key": "ビッグデータ",
+   "id": 123,
+   "term": "ニッチ戦略",
+   "match_key": "ニッチ戦略",
+   "syllabus_item": 78,
+   "syllabus_item_name": "経営戦略手法",
+   "field": "ストラテジ系",
+   "major": "経営戦略",
+   "middle": "経営戦略マネジメント",
+   "is_new": true,
+   "related_terms": [
+    "市場の特定化",
+    "チャレンジャ戦略",
+    "フォロワ戦略",
+    "集中戦略",
+    "基本戦略（コストリーダーシップ戦略，差別化戦略，集中戦略）",
+    "同質化戦略"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 66,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019h31h",
+     "number": 68,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 130,
+   "term": "機械学習",
+   "match_key": "機械学習",
+   "syllabus_item": 84,
+   "syllabus_item_name": "ビジネスシステム",
+   "field": "ストラテジ系",
+   "major": "経営戦略",
+   "middle": "ビジネスインダストリ",
+   "is_new": true,
+   "related_terms": [
+    "パターン認識",
+    "AI の活用",
+    "コールセンタ",
+    "ナレッジベース",
+    "AI による自動化",
+    "ロボティクス"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 61,
+     "confidence": "medium"
+    },
+    {
+     "exam": "2019r01a",
+     "number": 73,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 135,
+   "term": "HEMS（Home Energy Management System）",
+   "match_key": "hemshomeenergymanagementsystem",
+   "syllabus_item": 87,
+   "syllabus_item_name": "民生機器",
+   "field": "ストラテジ系",
+   "major": "経営戦略",
+   "middle": "ビジネスインダストリ",
+   "is_new": false,
+   "related_terms": [
+    "情報家電",
+    "ホームネットワーク",
+    "スマートグリッド",
+    "EMS（Energy Management System： エネルギーマネジメントシステム）",
+    "IoT（Internet of Things）"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 73,
+     "confidence": "high"
+    },
+    {
+     "exam": "2019h31h",
+     "number": 71,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 140,
+   "term": "BI（Business Intelligence）",
+   "match_key": "bibusinessintelligence",
    "syllabus_item": 90,
    "syllabus_item_name": "業務分析・データ利活用",
    "field": "ストラテジ系",
@@ -380,23 +1948,114 @@
    "middle": "企業活動",
    "is_new": false,
    "related_terms": [
-    "パーソナルデータ",
-    "人の行動ログデータ",
     "データマイニング",
-    "BI（Business Intelligence）",
-    "非構造化データ",
-    "ソーシャルメディアデータ"
+    "データウェアハウス",
+    "BPR（Business Process Reengineering ）",
+    "意思決定",
+    "ビッグデータ",
+    "データレイク"
    ],
    "question_count": 2,
    "questions": [
     {
-     "exam": "2019h31h",
-     "number": 64,
+     "exam": "2017h29a",
+     "number": 65,
      "confidence": "high"
     },
     {
-     "exam": "2019r01a",
+     "exam": "2019h31h",
      "number": 63,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 166,
+   "term": "貸借対照表",
+   "match_key": "貸借対照表",
+   "syllabus_item": 91,
+   "syllabus_item_name": "会計・財務",
+   "field": "ストラテジ系",
+   "major": "企業と法務",
+   "middle": "企業活動",
+   "is_new": false,
+   "related_terms": [
+    "純資産",
+    "損益計算書",
+    "財務諸表",
+    "キャッシュフロー計算書",
+    "株主資本",
+    "流動負債"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 77,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30h",
+     "number": 77,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 167,
+   "term": "労働者派遣契約",
+   "match_key": "労働者派遣契約",
+   "syllabus_item": 94,
+   "syllabus_item_name": "労働関連・取引関連法規",
+   "field": "ストラテジ系",
+   "major": "企業と法務",
+   "middle": "法務",
+   "is_new": false,
+   "related_terms": [
+    "指揮命令",
+    "雇用契約",
+    "請負契約",
+    "偽装請負",
+    "二重派遣の禁止"
+   ],
+   "question_count": 2,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 79,
+     "confidence": "high"
+    },
+    {
+     "exam": "2018h30h",
+     "number": 80,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 168,
+   "term": "2 の補数",
+   "match_key": "2の補数",
+   "syllabus_item": 1,
+   "syllabus_item_name": "離散数学",
+   "field": "テクノロジ系",
+   "major": "基礎理論",
+   "middle": "基礎理論",
+   "is_new": true,
+   "related_terms": [
+    "固定小数点数",
+    "負数の表現",
+    "算術シフト",
+    "オーバーフロー（あふれ）"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 1,
      "confidence": "high"
     }
    ],
@@ -429,32 +2088,6 @@
    "aliases": []
   },
   {
-   "id": 14,
-   "term": "基数",
-   "match_key": "基数",
-   "syllabus_item": 1,
-   "syllabus_item_name": "離散数学",
-   "field": "テクノロジ系",
-   "major": "基礎理論",
-   "middle": "基礎理論",
-   "is_new": true,
-   "related_terms": [
-    "2進数",
-    "小数の基数変換",
-    "固定小数点数",
-    "10進数"
-   ],
-   "question_count": 1,
-   "questions": [
-    {
-     "exam": "2019h31h",
-     "number": 1,
-     "confidence": "high"
-    }
-   ],
-   "aliases": []
-  },
-  {
    "id": 15,
    "term": "排他的論理和",
    "match_key": "排他的論理和",
@@ -481,9 +2114,9 @@
    "aliases": []
   },
   {
-   "id": 16,
-   "term": "論理積",
-   "match_key": "論理積",
+   "id": 169,
+   "term": "論理シフト",
+   "match_key": "論理シフト",
    "syllabus_item": 1,
    "syllabus_item_name": "離散数学",
    "field": "テクノロジ系",
@@ -491,16 +2124,16 @@
    "middle": "基礎理論",
    "is_new": false,
    "related_terms": [
-    "ビットマスク",
-    "排他的論理和",
-    "論理和",
-    "パリティチェック"
+    "算術シフト",
+    "2 進数",
+    "桁あふれ",
+    "オーバーフロー（あふれ）"
    ],
    "question_count": 1,
    "questions": [
     {
-     "exam": "2019h31h",
-     "number": 2,
+     "exam": "2017h29a",
+     "number": 1,
      "confidence": "high"
     }
    ],
@@ -527,6 +2160,32 @@
     {
      "exam": "2019r01a",
      "number": 6,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 170,
+   "term": "場合の数",
+   "match_key": "場合の数",
+   "syllabus_item": 2,
+   "syllabus_item_name": "応用数学",
+   "field": "テクノロジ系",
+   "major": "基礎理論",
+   "middle": "基礎理論",
+   "is_new": true,
+   "related_terms": [
+    "階乗",
+    "組合せ",
+    "順列",
+    "最短経路"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 2,
      "confidence": "medium"
     }
    ],
@@ -611,6 +2270,84 @@
    "aliases": []
   },
   {
+   "id": 171,
+   "term": "オートマトン",
+   "match_key": "オートマトン",
+   "syllabus_item": 3,
+   "syllabus_item_name": "情報に関する理論",
+   "field": "テクノロジ系",
+   "major": "基礎理論",
+   "middle": "基礎理論",
+   "is_new": false,
+   "related_terms": [
+    "状態遷移図",
+    "形式言語",
+    "状態遷移表",
+    "有限オートマトン"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 4,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 315,
+   "term": "ディープラーニング（AI 技術）",
+   "match_key": "ディープラーニングai技術",
+   "syllabus_item": 3,
+   "syllabus_item_name": "情報に関する理論",
+   "field": "テクノロジ系",
+   "major": "基礎理論",
+   "middle": "基礎理論",
+   "is_new": true,
+   "related_terms": [
+    "ニューラルネットワーク",
+    "多層パーセプトロン",
+    "エキスパートシステム",
+    "強化学習"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 3,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 172,
+   "term": "ハフマン符号",
+   "match_key": "ハフマン符号",
+   "syllabus_item": 3,
+   "syllabus_item_name": "情報に関する理論",
+   "field": "テクノロジ系",
+   "major": "基礎理論",
+   "middle": "基礎理論",
+   "is_new": false,
+   "related_terms": [
+    "情報源符号化（データ圧縮）",
+    "出現頻度",
+    "可逆圧縮",
+    "符号表"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 4,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 21,
    "term": "教師あり学習 （回帰， 分類など）",
    "match_key": "教師あり学習回帰分類など",
@@ -632,6 +2369,136 @@
      "exam": "2019h31h",
      "number": 4,
      "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 173,
+   "term": "機械学習（AI 技術）",
+   "match_key": "機械学習ai技術",
+   "syllabus_item": 3,
+   "syllabus_item_name": "情報に関する理論",
+   "field": "テクノロジ系",
+   "major": "基礎理論",
+   "middle": "基礎理論",
+   "is_new": true,
+   "related_terms": [
+    "教師あり学習 （回帰， 分類など）",
+    "エキスパートシステム",
+    "知識ベース",
+    "推論エンジン"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 3,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 174,
+   "term": "CRC",
+   "match_key": "crc",
+   "syllabus_item": 4,
+   "syllabus_item_name": "通信に関する理論",
+   "field": "テクノロジ系",
+   "major": "基礎理論",
+   "middle": "基礎理論",
+   "is_new": false,
+   "related_terms": [
+    "生成多項式",
+    "パリティチェック",
+    "ハミング符号",
+    "通信路符号化（誤り検出訂正）"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 2,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 175,
+   "term": "ECC",
+   "match_key": "ecc",
+   "syllabus_item": 4,
+   "syllabus_item_name": "通信に関する理論",
+   "field": "テクノロジ系",
+   "major": "基礎理論",
+   "middle": "基礎理論",
+   "is_new": false,
+   "related_terms": [
+    "ハミング符号",
+    "パリティチェック",
+    "誤り検出訂正",
+    "冗長ビット"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 11,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 176,
+   "term": "フィードバック制御",
+   "match_key": "フィードバック制御",
+   "syllabus_item": 5,
+   "syllabus_item_name": "計測・制御に関する理論",
+   "field": "テクノロジ系",
+   "major": "基礎理論",
+   "middle": "基礎理論",
+   "is_new": false,
+   "related_terms": [
+    "オープンループ",
+    "シーケンス制御",
+    "クローズドループ制御",
+    "制御安定性"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 3,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 177,
+   "term": "光学センサー",
+   "match_key": "光学センサー",
+   "syllabus_item": 5,
+   "syllabus_item_name": "計測・制御に関する理論",
+   "field": "テクノロジ系",
+   "major": "基礎理論",
+   "middle": "基礎理論",
+   "is_new": false,
+   "related_terms": [
+    "フィードバック制御",
+    "モーター",
+    "反射型光センサ",
+    "制御安定性"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 4,
+     "confidence": "medium"
     }
    ],
    "aliases": []
@@ -663,9 +2530,9 @@
    "aliases": []
   },
   {
-   "id": 23,
-   "term": "LIFO",
-   "match_key": "lifo",
+   "id": 178,
+   "term": "FIFO",
+   "match_key": "fifo",
    "syllabus_item": 6,
    "syllabus_item_name": "データ構造",
    "field": "テクノロジ系",
@@ -673,16 +2540,16 @@
    "middle": "アルゴリズムとプログラミング",
    "is_new": false,
    "related_terms": [
-    "スタック",
+    "待ち行列（キュー）",
+    "LIFO",
     "プッシュ",
-    "ポップ",
-    "FIFO"
+    "ポップ"
    ],
    "question_count": 1,
    "questions": [
     {
-     "exam": "2019r01a",
-     "number": 8,
+     "exam": "2018h30a",
+     "number": 5,
      "confidence": "high"
     }
    ],
@@ -715,6 +2582,58 @@
    "aliases": []
   },
   {
+   "id": 179,
+   "term": "線形リスト",
+   "match_key": "線形リスト",
+   "syllabus_item": 6,
+   "syllabus_item_name": "データ構造",
+   "field": "テクノロジ系",
+   "major": "基礎理論",
+   "middle": "アルゴリズムとプログラミング",
+   "is_new": false,
+   "related_terms": [
+    "単方向リスト",
+    "ポインタ",
+    "静的配列",
+    "要素の挿入"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 6,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 180,
+   "term": "クイックソート",
+   "match_key": "クイックソート",
+   "syllabus_item": 7,
+   "syllabus_item_name": "アルゴリズム",
+   "field": "テクノロジ系",
+   "major": "基礎理論",
+   "middle": "アルゴリズムとプログラミング",
+   "is_new": false,
+   "related_terms": [
+    "挿入ソート",
+    "選択ソート",
+    "バブルソート",
+    "分割統治法"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 6,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 25,
    "term": "Ajax",
    "match_key": "ajax",
@@ -741,6 +2660,58 @@
    "aliases": []
   },
   {
+   "id": 181,
+   "term": "オーバーライド",
+   "match_key": "オーバーライド",
+   "syllabus_item": 8,
+   "syllabus_item_name": "プログラミング",
+   "field": "テクノロジ系",
+   "major": "基礎理論",
+   "middle": "アルゴリズムとプログラミング",
+   "is_new": false,
+   "related_terms": [
+    "オーバーロード",
+    "多相性",
+    "継承",
+    "カプセル化"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 7,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 182,
+   "term": "コーディング規約",
+   "match_key": "コーディング規約",
+   "syllabus_item": 8,
+   "syllabus_item_name": "プログラミング",
+   "field": "テクノロジ系",
+   "major": "基礎理論",
+   "middle": "アルゴリズムとプログラミング",
+   "is_new": true,
+   "related_terms": [
+    "命名規則",
+    "局所変数",
+    "使用禁止命令",
+    "プログラムの機能適合性・性能効率性・使用性・保守性の向上"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 7,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 26,
    "term": "BNF",
    "match_key": "bnf",
@@ -762,6 +2733,84 @@
      "exam": "2019r01a",
      "number": 7,
      "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 183,
+   "term": "Java",
+   "match_key": "java",
+   "syllabus_item": 9,
+   "syllabus_item_name": "プログラム言語",
+   "field": "テクノロジ系",
+   "major": "基礎理論",
+   "middle": "アルゴリズムとプログラミング",
+   "is_new": false,
+   "related_terms": [
+    "オブジェクト指向言語",
+    "ガベージコレクション",
+    "多重継承",
+    "C++"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 8,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 184,
+   "term": "Perl",
+   "match_key": "perl",
+   "syllabus_item": 9,
+   "syllabus_item_name": "プログラム言語",
+   "field": "テクノロジ系",
+   "major": "基礎理論",
+   "middle": "アルゴリズムとプログラミング",
+   "is_new": false,
+   "related_terms": [
+    "スクリプト言語",
+    "インタプリタ",
+    "CGI",
+    "コンパイラ"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 8,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 185,
+   "term": "DTD（Document Type Definition： 文書型定義）",
+   "match_key": "dtddocumenttypedefinition文書型定義",
+   "syllabus_item": 10,
+   "syllabus_item_name": "その他の言語",
+   "field": "テクノロジ系",
+   "major": "基礎理論",
+   "middle": "アルゴリズムとプログラミング",
+   "is_new": false,
+   "related_terms": [
+    "XML",
+    "開始タグ",
+    "終了タグ",
+    "XML Schema"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 8,
+     "confidence": "high"
     }
    ],
    "aliases": []
@@ -819,9 +2868,9 @@
    "aliases": []
   },
   {
-   "id": 29,
-   "term": "外部割込み",
-   "match_key": "外部割込み",
+   "id": 186,
+   "term": "MIPS",
+   "match_key": "mips",
    "syllabus_item": 11,
    "syllabus_item_name": "プロセッサ",
    "field": "テクノロジ系",
@@ -829,15 +2878,15 @@
    "middle": "コンピュータ構成要素",
    "is_new": true,
    "related_terms": [
-    "内部割込み",
-    "SVC（SuperVisor Call）割込み",
-    "入出力割込み",
-    "ページフォールト"
+    "CPI（Cycles Per Instruction）",
+    "クロック周波数",
+    "命令ミックス",
+    "FLOPS"
    ],
    "question_count": 1,
    "questions": [
     {
-     "exam": "2019h31h",
+     "exam": "2017h29a",
      "number": 9,
      "confidence": "medium"
     }
@@ -845,27 +2894,131 @@
    "aliases": []
   },
   {
-   "id": 30,
-   "term": "DRAM",
-   "match_key": "dram",
-   "syllabus_item": 12,
-   "syllabus_item_name": "メモリ",
+   "id": 187,
+   "term": "内部割込み",
+   "match_key": "内部割込み",
+   "syllabus_item": 11,
+   "syllabus_item_name": "プロセッサ",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "コンピュータ構成要素",
+   "is_new": true,
+   "related_terms": [
+    "外部割込み",
+    "ゼロによる除算",
+    "SVC（SuperVisor Call）割込み",
+    "入出力割込み"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 10,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 188,
+   "term": "命令アドレスレジスタ （命令カウンター， プログラムカウンター，逐次制御カウンター）",
+   "match_key": "命令アドレスレジスタ命令カウンタープログラムカウンター逐次制御カウンター",
+   "syllabus_item": 11,
+   "syllabus_item_name": "プロセッサ",
    "field": "テクノロジ系",
    "major": "コンピュータシステム",
    "middle": "コンピュータ構成要素",
    "is_new": false,
    "related_terms": [
-    "SRAM",
-    "リフレッシュ",
-    "フラッシュメモリ",
-    "ROM"
+    "割込み",
+    "命令レジスタ",
+    "インデックスレジスタ（指標レジスタ）",
+    "汎用レジスタ"
    ],
    "question_count": 1,
    "questions": [
     {
-     "exam": "2019r01a",
-     "number": 20,
+     "exam": "2018h30a",
+     "number": 10,
      "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 189,
+   "term": "命令ミックス",
+   "match_key": "命令ミックス",
+   "syllabus_item": 11,
+   "syllabus_item_name": "プロセッサ",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "コンピュータ構成要素",
+   "is_new": false,
+   "related_terms": [
+    "CPI（Cycles Per Instruction）",
+    "サイクルタイム",
+    "FLOPS",
+    "クロック周波数"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 9,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 190,
+   "term": "命令レジスタ",
+   "match_key": "命令レジスタ",
+   "syllabus_item": 11,
+   "syllabus_item_name": "プロセッサ",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "コンピュータ構成要素",
+   "is_new": false,
+   "related_terms": [
+    "命令デコーダ",
+    "命令フェッチ",
+    "アキュムレーター",
+    "プログラムカウンター"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 9,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 191,
+   "term": "SD カード",
+   "match_key": "sdカード",
+   "syllabus_item": 12,
+   "syllabus_item_name": "メモリ",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "コンピュータ構成要素",
+   "is_new": true,
+   "related_terms": [
+    "SDXC",
+    "exFAT",
+    "フラッシュメモリ",
+    "SDHC"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 12,
+     "confidence": "medium"
     }
    ],
    "aliases": []
@@ -897,26 +3050,26 @@
    "aliases": []
   },
   {
-   "id": 32,
-   "term": "キャッシュメモリ",
-   "match_key": "キャッシュメモリ",
+   "id": 192,
+   "term": "フラッシュメモリ",
+   "match_key": "フラッシュメモリ",
    "syllabus_item": 12,
    "syllabus_item_name": "メモリ",
    "field": "テクノロジ系",
    "major": "コンピュータシステム",
    "middle": "コンピュータ構成要素",
-   "is_new": true,
+   "is_new": false,
    "related_terms": [
-    "実効アクセス時間",
-    "ヒット率",
-    "主記憶",
-    "ディスクキャッシュ"
+    "EEPROM",
+    "DRAM",
+    "SSD（ソリッドステートドライブ）",
+    "ウェアレベリング"
    ],
    "question_count": 1,
    "questions": [
     {
-     "exam": "2019h31h",
-     "number": 10,
+     "exam": "2018h30h",
+     "number": 22,
      "confidence": "high"
     }
    ],
@@ -975,6 +3128,32 @@
    "aliases": []
   },
   {
+   "id": 193,
+   "term": "3 層クライアントサーバシステム",
+   "match_key": "3層クライアントサーバシステム",
+   "syllabus_item": 16,
+   "syllabus_item_name": "システムの構成",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "システム構成要素",
+   "is_new": true,
+   "related_terms": [
+    "プレゼンテーション層",
+    "ファンクション層",
+    "データベースアクセス層",
+    "Web サーバ"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 13,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 35,
    "term": "RAID1",
    "match_key": "raid1",
@@ -1001,9 +3180,9 @@
    "aliases": []
   },
   {
-   "id": 36,
-   "term": "デュアルシステム",
-   "match_key": "デュアルシステム",
+   "id": 194,
+   "term": "RAID5",
+   "match_key": "raid5",
    "syllabus_item": 16,
    "syllabus_item_name": "システムの構成",
    "field": "テクノロジ系",
@@ -1011,16 +3190,146 @@
    "middle": "システム構成要素",
    "is_new": false,
    "related_terms": [
+    "パリティ",
+    "ストライピング",
+    "RAID1",
+    "ミラーリング"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 12,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 195,
+   "term": "クラウドコンピューティング",
+   "match_key": "クラウドコンピューティング",
+   "syllabus_item": 16,
+   "syllabus_item_name": "システムの構成",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "システム構成要素",
+   "is_new": false,
+   "related_terms": [
+    "SaaS",
+    "PaaS",
+    "IaaS",
+    "オンプレミス"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 14,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 196,
+   "term": "フォールトトレラントシステム",
+   "match_key": "フォールトトレラントシステム",
+   "syllabus_item": 16,
+   "syllabus_item_name": "システムの構成",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "システム構成要素",
+   "is_new": false,
+   "related_terms": [
+    "冗長性",
+    "フォールトアボイダンス",
+    "フェールソフト",
+    "フールプルーフ"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 13,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 197,
+   "term": "ホットスタンバイシステム",
+   "match_key": "ホットスタンバイシステム",
+   "syllabus_item": 16,
+   "syllabus_item_name": "システムの構成",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "システム構成要素",
+   "is_new": true,
+   "related_terms": [
     "デュプレックスシステム",
-    "ロードシェアリングシステム",
+    "コールドスタンバイシステム",
     "主系（現用系）",
     "従系（待機系）"
    ],
    "question_count": 1,
    "questions": [
     {
-     "exam": "2019h31h",
-     "number": 13,
+     "exam": "2018h30h",
+     "number": 14,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 316,
+   "term": "キャパシティプランニング",
+   "match_key": "キャパシティプランニング",
+   "syllabus_item": 17,
+   "syllabus_item_name": "システムの評価指標",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "システム構成要素",
+   "is_new": true,
+   "related_terms": [
+    "サイジング",
+    "モニタリング",
+    "スケールアウト",
+    "プロビジョニング"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 14,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 198,
+   "term": "スケールアウト",
+   "match_key": "スケールアウト",
+   "syllabus_item": 17,
+   "syllabus_item_name": "システムの評価指標",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "システム構成要素",
+   "is_new": false,
+   "related_terms": [
+    "スケールアップ",
+    "負荷分散",
+    "サイジング",
+    "サーバ"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 15,
      "confidence": "high"
     }
    ],
@@ -1048,6 +3357,58 @@
      "exam": "2019h31h",
      "number": 15,
      "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 199,
+   "term": "コンパクション",
+   "match_key": "コンパクション",
+   "syllabus_item": 18,
+   "syllabus_item_name": "オペレーティングシステム",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "ソフトウェア",
+   "is_new": false,
+   "related_terms": [
+    "動的再配置",
+    "セグメント方式",
+    "フラグメンテーション",
+    "メモリアクセス時間"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 19,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 200,
+   "term": "スプーリング",
+   "match_key": "スプーリング",
+   "syllabus_item": 18,
+   "syllabus_item_name": "オペレーティングシステム",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "ソフトウェア",
+   "is_new": true,
+   "related_terms": [
+    "補助記憶",
+    "多重（マルチ）プログラミング",
+    "バッファリング",
+    "ジョブスケジューラー"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 17,
+     "confidence": "high"
     }
    ],
    "aliases": []
@@ -1131,9 +3492,9 @@
    "aliases": []
   },
   {
-   "id": 41,
-   "term": "プリエンプティブ方式",
-   "match_key": "プリエンプティブ方式",
+   "id": 201,
+   "term": "ページフォールト",
+   "match_key": "ページフォールト",
    "syllabus_item": 18,
    "syllabus_item_name": "オペレーティングシステム",
    "field": "テクノロジ系",
@@ -1141,15 +3502,93 @@
    "middle": "ソフトウェア",
    "is_new": false,
    "related_terms": [
-    "リアルタイム OS",
-    "実行可能状態",
-    "待ち状態",
-    "優先順"
+    "ページング方式",
+    "ページリプレースメント",
+    "スラッシング",
+    "LRU"
    ],
    "question_count": 1,
    "questions": [
     {
-     "exam": "2019r01a",
+     "exam": "2017h29a",
+     "number": 20,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 202,
+   "term": "ポーリング制御",
+   "match_key": "ポーリング制御",
+   "syllabus_item": 18,
+   "syllabus_item_name": "オペレーティングシステム",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "ソフトウェア",
+   "is_new": true,
+   "related_terms": [
+    "割込み",
+    "プログラム制御方式",
+    "DMA（Direct Memory Access：直接記憶アクセス）方式",
+    "排他制御"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 17,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 203,
+   "term": "メモリリーク",
+   "match_key": "メモリリーク",
+   "syllabus_item": 18,
+   "syllabus_item_name": "オペレーティングシステム",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "ソフトウェア",
+   "is_new": true,
+   "related_terms": [
+    "ガベージコレクション",
+    "フラグメンテーション",
+    "スラッシング",
+    "オーバーレイ方式（セグメント方式）"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 16,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 204,
+   "term": "ラウンドロビン",
+   "match_key": "ラウンドロビン",
+   "syllabus_item": 18,
+   "syllabus_item_name": "オペレーティングシステム",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "ソフトウェア",
+   "is_new": false,
+   "related_terms": [
+    "タイムスライス方式",
+    "タイムクウォンタム",
+    "優先順",
+    "プリエンプティブ方式"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
      "number": 18,
      "confidence": "high"
     }
@@ -1209,6 +3648,32 @@
    "aliases": []
   },
   {
+   "id": 205,
+   "term": "多重（マルチ）プログラミング",
+   "match_key": "多重マルチプログラミング",
+   "syllabus_item": 18,
+   "syllabus_item_name": "オペレーティングシステム",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "ソフトウェア",
+   "is_new": false,
+   "related_terms": [
+    "優先順",
+    "プリエンプティブ方式",
+    "実行可能状態",
+    "入出力割込み"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 16,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 44,
    "term": "増分バックアップ",
    "match_key": "増分バックアップ",
@@ -1230,6 +3695,32 @@
      "exam": "2019r01a",
      "number": 19,
      "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 206,
+   "term": "絶対パス名",
+   "match_key": "絶対パス名",
+   "syllabus_item": 20,
+   "syllabus_item_name": "ファイルシステム",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "ソフトウェア",
+   "is_new": true,
+   "related_terms": [
+    "相対パス名",
+    "ルートディレクトリ",
+    "カレントディレクトリ",
+    "ディレクトリ"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 17,
+     "confidence": "medium"
     }
    ],
    "aliases": []
@@ -1261,6 +3752,58 @@
    "aliases": []
   },
   {
+   "id": 207,
+   "term": "リンカ",
+   "match_key": "リンカ",
+   "syllabus_item": 21,
+   "syllabus_item_name": "開発ツール",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "ソフトウェア",
+   "is_new": false,
+   "related_terms": [
+    "ローダ",
+    "目的プログラム",
+    "ロードモジュール",
+    "オブジェクトライブラリ"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 20,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 208,
+   "term": "Eclipse",
+   "match_key": "eclipse",
+   "syllabus_item": 22,
+   "syllabus_item_name": "オープンソースソフトウェア",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "ソフトウェア",
+   "is_new": true,
+   "related_terms": [
+    "統合開発環境（IDE）",
+    "Apache Tomcat",
+    "GCC",
+    "Linux"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 19,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 46,
    "term": "オープンソースソフトウェアの定義",
    "match_key": "オープンソースソフトウェアの定義",
@@ -1281,32 +3824,6 @@
     {
      "exam": "2019h31h",
      "number": 20,
-     "confidence": "high"
-    }
-   ],
-   "aliases": []
-  },
-  {
-   "id": 47,
-   "term": "NAND 回路",
-   "match_key": "nand回路",
-   "syllabus_item": 23,
-   "syllabus_item_name": "ハードウェア",
-   "field": "テクノロジ系",
-   "major": "コンピュータシステム",
-   "middle": "ハードウェア",
-   "is_new": false,
-   "related_terms": [
-    "真理値表",
-    "論理式",
-    "AND 回路",
-    "XOR 回路"
-   ],
-   "question_count": 1,
-   "questions": [
-    {
-     "exam": "2019h31h",
-     "number": 22,
      "confidence": "high"
     }
    ],
@@ -1339,6 +3856,32 @@
    "aliases": []
   },
   {
+   "id": 209,
+   "term": "二次電池",
+   "match_key": "二次電池",
+   "syllabus_item": 23,
+   "syllabus_item_name": "ハードウェア",
+   "field": "テクノロジ系",
+   "major": "コンピュータシステム",
+   "middle": "ハードウェア",
+   "is_new": true,
+   "related_terms": [
+    "リチウムイオン電池",
+    "燃料電池",
+    "一次電池",
+    "充電"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 23,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 49,
    "term": "直流給電",
    "match_key": "直流給電",
@@ -1365,9 +3908,9 @@
    "aliases": []
   },
   {
-   "id": 50,
-   "term": "真理値表",
-   "match_key": "真理値表",
+   "id": 210,
+   "term": "論理式",
+   "match_key": "論理式",
    "syllabus_item": 23,
    "syllabus_item_name": "ハードウェア",
    "field": "テクノロジ系",
@@ -1375,17 +3918,17 @@
    "middle": "ハードウェア",
    "is_new": false,
    "related_terms": [
-    "排他的論理和",
+    "真理値表",
     "論理積",
     "論理和",
-    "否定"
+    "排他的論理和"
    ],
    "question_count": 1,
    "questions": [
     {
-     "exam": "2019r01a",
-     "number": 22,
-     "confidence": "medium"
+     "exam": "2017h29a",
+     "number": 23,
+     "confidence": "high"
     }
    ],
    "aliases": []
@@ -1417,6 +3960,58 @@
    "aliases": []
   },
   {
+   "id": 211,
+   "term": "自然言語インタフェース",
+   "match_key": "自然言語インタフェース",
+   "syllabus_item": 24,
+   "syllabus_item_name": "ユーザーインタフェース技術",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "ユーザーインタフェース",
+   "is_new": false,
+   "related_terms": [
+    "VUI（Voice User Interface）",
+    "ノンバーバルインタフェース",
+    "音声認識",
+    "NUI（Natural User Interface）"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 24,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 212,
+   "term": "チェックキャラクター",
+   "match_key": "チェックキャラクター",
+   "syllabus_item": 25,
+   "syllabus_item_name": "UX/UI デザイン",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "ユーザーインタフェース",
+   "is_new": false,
+   "related_terms": [
+    "チェックデジット",
+    "重み付け",
+    "基数",
+    "ニューメリックチェック"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 24,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 52,
    "term": "表意コード",
    "match_key": "表意コード",
@@ -1443,9 +4038,35 @@
    "aliases": []
   },
   {
-   "id": 53,
-   "term": "H.264",
-   "match_key": "h264",
+   "id": 213,
+   "term": "論理チェック",
+   "match_key": "論理チェック",
+   "syllabus_item": 25,
+   "syllabus_item_name": "UX/UI デザイン",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "ユーザーインタフェース",
+   "is_new": true,
+   "related_terms": [
+    "シーケンスチェック",
+    "重複チェック",
+    "フォーマットチェック",
+    "照合チェック"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 24,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 214,
+   "term": "ストリーミング",
+   "match_key": "ストリーミング",
    "syllabus_item": 26,
    "syllabus_item_name": "マルチメディア技術",
    "field": "テクノロジ系",
@@ -1453,17 +4074,17 @@
    "middle": "情報メディア",
    "is_new": false,
    "related_terms": [
-    "MPEG",
-    "HEVC",
-    "MP3",
-    "JPEG"
+    "符号化速度",
+    "転送速度",
+    "バッファリング",
+    "音声のデータ量"
    ],
    "question_count": 1,
    "questions": [
     {
-     "exam": "2019r01a",
-     "number": 24,
-     "confidence": "high"
+     "exam": "2017h29a",
+     "number": 31,
+     "confidence": "medium"
     }
    ],
    "aliases": []
@@ -1489,6 +4110,32 @@
     {
      "exam": "2019h31h",
      "number": 25,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 215,
+   "term": "AR（Augmented Reality ：拡張現実）",
+   "match_key": "araugmentedreality拡張現実",
+   "syllabus_item": 27,
+   "syllabus_item_name": "マルチメディア応用",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "情報メディア",
+   "is_new": false,
+   "related_terms": [
+    "VR（Virtual Reality：仮想現実）",
+    "MR（Mixed Reality：複合現実）",
+    "ヘッドマウントディスプレイ",
+    "メタバース"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 26,
      "confidence": "high"
     }
    ],
@@ -1521,6 +4168,84 @@
    "aliases": []
   },
   {
+   "id": 216,
+   "term": "アンチエイリアシング",
+   "match_key": "アンチエイリアシング",
+   "syllabus_item": 27,
+   "syllabus_item_name": "マルチメディア応用",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "情報メディア",
+   "is_new": true,
+   "related_terms": [
+    "シェーディング",
+    "テクスチャマッピング",
+    "バンプマッピング",
+    "CG"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 25,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 217,
+   "term": "レンダリング",
+   "match_key": "レンダリング",
+   "syllabus_item": 27,
+   "syllabus_item_name": "マルチメディア応用",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "情報メディア",
+   "is_new": true,
+   "related_terms": [
+    "隠線消去",
+    "隠面消去",
+    "シェーディング",
+    "テクスチャマッピング"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 25,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 218,
+   "term": "ACID特性",
+   "match_key": "acid特性",
+   "syllabus_item": 28,
+   "syllabus_item_name": "データベース方式",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "データベース",
+   "is_new": true,
+   "related_terms": [
+    "原子性",
+    "一貫性",
+    "独立性",
+    "耐久性"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 29,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 56,
    "term": "キーバリュー型データベース",
    "match_key": "キーバリュー型データベース",
@@ -1542,6 +4267,32 @@
      "exam": "2019h31h",
      "number": 30,
      "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 219,
+   "term": "データ機密保護機能",
+   "match_key": "データ機密保護機能",
+   "syllabus_item": 28,
+   "syllabus_item_name": "データベース方式",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "データベース",
+   "is_new": false,
+   "related_terms": [
+    "アクセス権",
+    "データベース制御機能",
+    "同時実行制御（排他制御）",
+    "参照制約"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 27,
+     "confidence": "medium"
     }
    ],
    "aliases": []
@@ -1573,9 +4324,9 @@
    "aliases": []
   },
   {
-   "id": 58,
-   "term": "多重度",
-   "match_key": "多重度",
+   "id": 220,
+   "term": "データ項目の命名規約",
+   "match_key": "データ項目の命名規約",
    "syllabus_item": 29,
    "syllabus_item_name": "データベース設計",
    "field": "テクノロジ系",
@@ -1583,16 +4334,94 @@
    "middle": "データベース",
    "is_new": true,
    "related_terms": [
-    "概念データモデル",
-    "クラス図",
-    "エンティティ",
-    "リレーションシップ"
+    "データディクショナリ",
+    "定義域（ドメイン）",
+    "メタデータ",
+    "異音同義語"
    ],
    "question_count": 1,
    "questions": [
     {
-     "exam": "2019r01a",
-     "number": 25,
+     "exam": "2018h30a",
+     "number": 27,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 221,
+   "term": "カーソル",
+   "match_key": "カーソル",
+   "syllabus_item": 30,
+   "syllabus_item_name": "データ操作",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "データベース",
+   "is_new": false,
+   "related_terms": [
+    "埋込みSQL",
+    "会話型SQL",
+    "実表",
+    "問合せ（クエリ）"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 28,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 222,
+   "term": "ストアドプロシージャ",
+   "match_key": "ストアドプロシージャ",
+   "syllabus_item": 30,
+   "syllabus_item_name": "データ操作",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "データベース",
+   "is_new": true,
+   "related_terms": [
+    "DBMS",
+    "埋込みSQL",
+    "クライアントサーバ処理",
+    "トリガー"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 26,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 223,
+   "term": "参照制約",
+   "match_key": "参照制約",
+   "syllabus_item": 30,
+   "syllabus_item_name": "データ操作",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "データベース",
+   "is_new": false,
+   "related_terms": [
+    "外部キー",
+    "主キー",
+    "一意性制約",
+    "検査制約"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 27,
      "confidence": "high"
     }
    ],
@@ -1618,6 +4447,32 @@
    "questions": [
     {
      "exam": "2019h31h",
+     "number": 29,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 224,
+   "term": "ジャーナルファイル （ログファイル）",
+   "match_key": "ジャーナルファイルログファイル",
+   "syllabus_item": 31,
+   "syllabus_item_name": "トランザクション処理",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "データベース",
+   "is_new": false,
+   "related_terms": [
+    "チェックポイント",
+    "フォワードリカバリ （ロールフォワード）",
+    "バックワードリカバリ（ロールバック）",
+    "障害回復"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
      "number": 29,
      "confidence": "high"
     }
@@ -1677,6 +4532,110 @@
    "aliases": []
   },
   {
+   "id": 225,
+   "term": "バックワードリカバリ（ロールバック）",
+   "match_key": "バックワードリカバリロールバック",
+   "syllabus_item": 31,
+   "syllabus_item_name": "トランザクション処理",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "データベース",
+   "is_new": false,
+   "related_terms": [
+    "ジャーナルファイル （ログファイル）",
+    "フォワードリカバリ （ロールフォワード）",
+    "チェックポイント",
+    "障害回復"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 30,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 226,
+   "term": "フォワードリカバリ （ロールフォワード）",
+   "match_key": "フォワードリカバリロールフォワード",
+   "syllabus_item": 31,
+   "syllabus_item_name": "トランザクション処理",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "データベース",
+   "is_new": false,
+   "related_terms": [
+    "ジャーナルファイル （ログファイル）",
+    "バックワードリカバリ（ロールバック）",
+    "チェックポイント",
+    "障害回復"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 30,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 227,
+   "term": "Apache Hadoop",
+   "match_key": "apachehadoop",
+   "syllabus_item": 32,
+   "syllabus_item_name": "データベース応用",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "データベース",
+   "is_new": true,
+   "related_terms": [
+    "Apache Spark",
+    "分散ファイルシステム",
+    "ビッグデータ",
+    "MapReduce"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 20,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 228,
+   "term": "DNS",
+   "match_key": "dns",
+   "syllabus_item": 33,
+   "syllabus_item_name": "ネットワーク方式",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "ネットワーク",
+   "is_new": false,
+   "related_terms": [
+    "ドメイン",
+    "TLD",
+    "DHCP",
+    "NAT（Network Address Translation：ネットワークアドレス変換）"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 33,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 62,
    "term": "IP マスカレード（NAPT）",
    "match_key": "ipマスカレードnapt",
@@ -1698,6 +4657,32 @@
      "exam": "2019r01a",
      "number": 33,
      "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 229,
+   "term": "NAT（Network Address Translation：ネットワークアドレス変換）",
+   "match_key": "natnetworkaddresstranslationネットワークアドレス変換",
+   "syllabus_item": 33,
+   "syllabus_item_name": "ネットワーク方式",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "ネットワーク",
+   "is_new": false,
+   "related_terms": [
+    "プライベート IP アドレス",
+    "グローバル IP アドレス",
+    "IP マスカレード（NAPT）",
+    "IPv4"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 33,
+     "confidence": "high"
     }
    ],
    "aliases": []
@@ -1781,6 +4766,58 @@
    "aliases": []
   },
   {
+   "id": 230,
+   "term": "スイッチングハブ",
+   "match_key": "スイッチングハブ",
+   "syllabus_item": 34,
+   "syllabus_item_name": "データ通信と制御",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "ネットワーク",
+   "is_new": false,
+   "related_terms": [
+    "レイヤー2（L2）スイッチ",
+    "物理アドレス",
+    "ブリッジ",
+    "ハブ"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 32,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 231,
+   "term": "リピータ",
+   "match_key": "リピータ",
+   "syllabus_item": 34,
+   "syllabus_item_name": "データ通信と制御",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "ネットワーク",
+   "is_new": false,
+   "related_terms": [
+    "ゲートウェイ",
+    "ブリッジ",
+    "ルータ",
+    "OSI 基本参照モデル"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 32,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 66,
    "term": "レイヤー3（L3）スイッチ",
    "match_key": "レイヤー3l3スイッチ",
@@ -1800,58 +4837,6 @@
    "questions": [
     {
      "exam": "2019r01a",
-     "number": 32,
-     "confidence": "high"
-    }
-   ],
-   "aliases": []
-  },
-  {
-   "id": 67,
-   "term": "UDP",
-   "match_key": "udp",
-   "syllabus_item": 35,
-   "syllabus_item_name": "通信プロトコル",
-   "field": "テクノロジ系",
-   "major": "技術要素",
-   "middle": "ネットワーク",
-   "is_new": true,
-   "related_terms": [
-    "TCP",
-    "ポート番号",
-    "トランスポート層",
-    "VoIP（Voice over Internet Protocol）"
-   ],
-   "question_count": 1,
-   "questions": [
-    {
-     "exam": "2019h31h",
-     "number": 33,
-     "confidence": "high"
-    }
-   ],
-   "aliases": []
-  },
-  {
-   "id": 68,
-   "term": "サブネットマスク",
-   "match_key": "サブネットマスク",
-   "syllabus_item": 35,
-   "syllabus_item_name": "通信プロトコル",
-   "field": "テクノロジ系",
-   "major": "技術要素",
-   "middle": "ネットワーク",
-   "is_new": false,
-   "related_terms": [
-    "CIDR（Classless Inter Domain Routing）",
-    "IP アドレス",
-    "サブネットアドレス",
-    "ブロードキャスト"
-   ],
-   "question_count": 1,
-   "questions": [
-    {
-     "exam": "2019h31h",
      "number": 32,
      "confidence": "high"
     }
@@ -1885,6 +4870,136 @@
    "aliases": []
   },
   {
+   "id": 232,
+   "term": "arp",
+   "match_key": "arp",
+   "syllabus_item": 36,
+   "syllabus_item_name": "ネットワーク管理",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "ネットワーク",
+   "is_new": false,
+   "related_terms": [
+    "ping",
+    "netstat",
+    "ifconfig",
+    "物理アドレス"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 33,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 233,
+   "term": "CGI",
+   "match_key": "cgi",
+   "syllabus_item": 37,
+   "syllabus_item_name": "ネットワーク応用",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "ネットワーク",
+   "is_new": false,
+   "related_terms": [
+    "HTTP",
+    "Web サーバ",
+    "サーバサイドプログラミング",
+    "URL"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 35,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 234,
+   "term": "LTE",
+   "match_key": "lte",
+   "syllabus_item": 37,
+   "syllabus_item_name": "ネットワーク応用",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "ネットワーク",
+   "is_new": false,
+   "related_terms": [
+    "MIMO",
+    "パケット交換サービス",
+    "5G（第 5 世代移動通信システム）",
+    "VoIP（Voice over Internet Protocol）"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 35,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 235,
+   "term": "MIME",
+   "match_key": "mime",
+   "syllabus_item": 37,
+   "syllabus_item_name": "ネットワーク応用",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "ネットワーク",
+   "is_new": false,
+   "related_terms": [
+    "SMTP",
+    "HTML メール（MHTML）",
+    "ヘッダー",
+    "Base64"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 34,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 236,
+   "term": "SMTP",
+   "match_key": "smtp",
+   "syllabus_item": 37,
+   "syllabus_item_name": "ネットワーク応用",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "ネットワーク",
+   "is_new": false,
+   "related_terms": [
+    "Bcc",
+    "MIME",
+    "POP3",
+    "ヘッダー"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 34,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 70,
    "term": "CAPTCHA",
    "match_key": "captcha",
@@ -1911,32 +5026,6 @@
    "aliases": []
   },
   {
-   "id": 71,
-   "term": "DNS キャッシュポイズニング",
-   "match_key": "dnsキャッシュポイズニング",
-   "syllabus_item": 38,
-   "syllabus_item_name": "情報セキュリティ",
-   "field": "テクノロジ系",
-   "major": "技術要素",
-   "middle": "セキュリティ",
-   "is_new": false,
-   "related_terms": [
-    "DNS",
-    "名前解決",
-    "FQDN",
-    "ファーミング"
-   ],
-   "question_count": 1,
-   "questions": [
-    {
-     "exam": "2019r01a",
-     "number": 35,
-     "confidence": "high"
-    }
-   ],
-   "aliases": []
-  },
-  {
    "id": 72,
    "term": "MAC（Message Authentication Code：メッセージ認証符号）",
    "match_key": "macmessageauthenticationcodeメッセージ認証符号",
@@ -1956,6 +5045,32 @@
    "questions": [
     {
      "exam": "2019h31h",
+     "number": 38,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 237,
+   "term": "RSA 暗号",
+   "match_key": "rsa暗号",
+   "syllabus_item": 38,
+   "syllabus_item_name": "情報セキュリティ",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": false,
+   "related_terms": [
+    "公開鍵暗号方式",
+    "素因数分解",
+    "楕円曲線暗号",
+    "AES"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
      "number": 38,
      "confidence": "high"
     }
@@ -1989,9 +5104,9 @@
    "aliases": []
   },
   {
-   "id": 74,
-   "term": "デジタル署名（署名鍵， 検証鍵）",
-   "match_key": "デジタル署名署名鍵検証鍵",
+   "id": 239,
+   "term": "セキュリティバイデザイン（セキュアバイデザイン）",
+   "match_key": "セキュリティバイデザインセキュアバイデザイン",
    "syllabus_item": 38,
    "syllabus_item_name": "情報セキュリティ",
    "field": "テクノロジ系",
@@ -1999,16 +5114,42 @@
    "middle": "セキュリティ",
    "is_new": false,
    "related_terms": [
-    "RSA 暗号",
-    "公開鍵暗号方式",
-    "メッセージダイジェスト",
-    "ハッシュ関数"
+    "プライバシーバイデザイン",
+    "多層防御",
+    "リスクアセスメント",
+    "脆弱性診断"
    ],
    "question_count": 1,
    "questions": [
     {
-     "exam": "2019r01a",
-     "number": 38,
+     "exam": "2018h30h",
+     "number": 42,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 240,
+   "term": "ドライブバイダウンロード",
+   "match_key": "ドライブバイダウンロード",
+   "syllabus_item": 38,
+   "syllabus_item_name": "情報セキュリティ",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": false,
+   "related_terms": [
+    "ランサムウェア",
+    "ルートキット",
+    "SQL インジェクション",
+    "水飲み場型攻撃"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 36,
      "confidence": "high"
     }
    ],
@@ -2093,6 +5234,58 @@
    "aliases": []
   },
   {
+   "id": 241,
+   "term": "ポートスキャン",
+   "match_key": "ポートスキャン",
+   "syllabus_item": 38,
+   "syllabus_item_name": "情報セキュリティ",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": false,
+   "related_terms": [
+    "フットプリンティング",
+    "サイバーキルチェーン",
+    "脆弱性",
+    "不正アクセス"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 37,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 242,
+   "term": "ワーム",
+   "match_key": "ワーム",
+   "syllabus_item": 38,
+   "syllabus_item_name": "情報セキュリティ",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": false,
+   "related_terms": [
+    "トロイの木馬",
+    "コンピュータウイルス",
+    "ランサムウェア",
+    "自己伝染"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 41,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 78,
    "term": "不正のトライアングル（機会，動機，正当化）",
    "match_key": "不正のトライアングル機会動機正当化",
@@ -2119,6 +5312,84 @@
    "aliases": []
   },
   {
+   "id": 243,
+   "term": "公開鍵暗号方式",
+   "match_key": "公開鍵暗号方式",
+   "syllabus_item": 38,
+   "syllabus_item_name": "情報セキュリティ",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": false,
+   "related_terms": [
+    "共通鍵暗号方式",
+    "RSA 暗号",
+    "ハイブリッド暗号",
+    "デジタル署名（署名鍵， 検証鍵）"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 38,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 244,
+   "term": "共通鍵暗号方式",
+   "match_key": "共通鍵暗号方式",
+   "syllabus_item": 38,
+   "syllabus_item_name": "情報セキュリティ",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": true,
+   "related_terms": [
+    "公開鍵暗号方式",
+    "鍵管理",
+    "ハイブリッド暗号",
+    "ブロック暗号（AES（Advanced Encryption Standard） ほか）"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 38,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 245,
+   "term": "本人拒否率（FRR）",
+   "match_key": "本人拒否率frr",
+   "syllabus_item": 38,
+   "syllabus_item_name": "情報セキュリティ",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": false,
+   "related_terms": [
+    "他人受入率（FAR）",
+    "身体的特徴（静脈パターン認証，虹彩認証，顔認証，網膜認証ほか）",
+    "行動的特徴（声紋認証，署名認証ほか）",
+    "多要素認証（記憶，所有，生体）"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 45,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 79,
    "term": "楕円曲線暗号",
    "match_key": "楕円曲線暗号",
@@ -2139,6 +5410,84 @@
     {
      "exam": "2019h31h",
      "number": 39,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 246,
+   "term": "第三者中継（オープンリレー）",
+   "match_key": "第三者中継オープンリレー",
+   "syllabus_item": 38,
+   "syllabus_item_name": "情報セキュリティ",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": false,
+   "related_terms": [
+    "SMTP",
+    "迷惑メール（スパム）",
+    "ログの取得",
+    "SMTP-AUTH"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 45,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 247,
+   "term": "総当たり （ブルートフォース）攻撃",
+   "match_key": "総当たりブルートフォース攻撃",
+   "syllabus_item": 38,
+   "syllabus_item_name": "情報セキュリティ",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": false,
+   "related_terms": [
+    "ブロック暗号（AES（Advanced Encryption Standard） ほか）",
+    "鍵管理",
+    "・辞書攻撃",
+    "共通鍵暗号方式"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 37,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 248,
+   "term": "リスクアセスメントのプロセス（リスク特定，リスク分析，リスク評価）",
+   "match_key": "リスクアセスメントのプロセスリスク特定リスク分析リスク評価",
+   "syllabus_item": 39,
+   "syllabus_item_name": "情報セキュリティ管理",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": false,
+   "related_terms": [
+    "リスク対応計画",
+    "リスクレベル",
+    "リスク保有",
+    "リスクマネジメント（JIS Q 31000）"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 43,
      "confidence": "high"
     }
    ],
@@ -2197,6 +5546,32 @@
    "aliases": []
   },
   {
+   "id": 249,
+   "term": "ペネトレーションテスト",
+   "match_key": "ペネトレーションテスト",
+   "syllabus_item": 40,
+   "syllabus_item_name": "セキュリティ技術評価",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": false,
+   "related_terms": [
+    "脆弱性",
+    "ウォークスルー",
+    "回帰テスト （リグレッションテスト）",
+    "ファジング"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 45,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 82,
    "term": "DMZ（非武装地帯）",
    "match_key": "dmz非武装地帯",
@@ -2216,6 +5591,32 @@
    "questions": [
     {
      "exam": "2019r01a",
+     "number": 42,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 250,
+   "term": "IDS（Intrusion Detection System：侵入検知システム）",
+   "match_key": "idsintrusiondetectionsystem侵入検知システム",
+   "syllabus_item": 41,
+   "syllabus_item_name": "情報セキュリティ対策",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": false,
+   "related_terms": [
+    "IPS（Intrusion Prevention System：侵入防止システム）",
+    "侵入検知",
+    "ネットワーク監視",
+    "ファジング"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
      "number": 42,
      "confidence": "high"
     }
@@ -2244,6 +5645,58 @@
      "exam": "2019r01a",
      "number": 43,
      "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 251,
+   "term": "アクセス権の設定",
+   "match_key": "アクセス権の設定",
+   "syllabus_item": 41,
+   "syllabus_item_name": "情報セキュリティ対策",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": false,
+   "related_terms": [
+    "アクセス制御",
+    "参照権限",
+    "最小権限",
+    "データベースアクセス制御"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 43,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 252,
+   "term": "セキュアブート",
+   "match_key": "セキュアブート",
+   "syllabus_item": 41,
+   "syllabus_item_name": "情報セキュリティ対策",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": true,
+   "related_terms": [
+    "デジタル署名（署名鍵， 検証鍵）",
+    "マルウェア・不正プログラム対策（マルウェア対策ソフトの導入，マルウェア定義ファイルの更新ほか）",
+    "ルートキット",
+    "BIOS"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 43,
+     "confidence": "medium"
     }
    ],
    "aliases": []
@@ -2327,6 +5780,32 @@
    "aliases": []
   },
   {
+   "id": 253,
+   "term": "SPF",
+   "match_key": "spf",
+   "syllabus_item": 42,
+   "syllabus_item_name": "セキュリティ実装技術",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": false,
+   "related_terms": [
+    "DKIM",
+    "DMARC",
+    "SMTP-AUTH",
+    "送信元ドメイン認証"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 40,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 87,
    "term": "WPA3",
    "match_key": "wpa3",
@@ -2353,6 +5832,32 @@
    "aliases": []
   },
   {
+   "id": 255,
+   "term": "データベースのセキュリティ対策",
+   "match_key": "データベースのセキュリティ対策",
+   "syllabus_item": 42,
+   "syllabus_item_name": "セキュリティ実装技術",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": true,
+   "related_terms": [
+    "データベース暗号化",
+    "データベースアクセス制御",
+    "盗聴",
+    "SSL/TLS"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 44,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 88,
    "term": "ハニーポット",
    "match_key": "ハニーポット",
@@ -2372,6 +5877,32 @@
    "questions": [
     {
      "exam": "2019h31h",
+     "number": 44,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 256,
+   "term": "パケットフィルタリング",
+   "match_key": "パケットフィルタリング",
+   "syllabus_item": 42,
+   "syllabus_item_name": "セキュリティ実装技術",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": false,
+   "related_terms": [
+    "ポート番号",
+    "SMTP",
+    "ファイアウォール",
+    "ステートフルインスペクション"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
      "number": 44,
      "confidence": "high"
     }
@@ -2405,6 +5936,32 @@
    "aliases": []
   },
   {
+   "id": 257,
+   "term": "無線LANセキュリティ",
+   "match_key": "無線lanセキュリティ",
+   "syllabus_item": 42,
+   "syllabus_item_name": "セキュリティ実装技術",
+   "field": "テクノロジ系",
+   "major": "技術要素",
+   "middle": "セキュリティ",
+   "is_new": true,
+   "related_terms": [
+    "MAC アドレス（Media Access Control address）フィルタリング",
+    "SSID",
+    "WPA3",
+    "無線LAN アクセスポイント"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 44,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 90,
    "term": "DFD",
    "match_key": "dfd",
@@ -2431,35 +5988,9 @@
    "aliases": []
   },
   {
-   "id": 91,
-   "term": "ブラックボックステスト",
-   "match_key": "ブラックボックステスト",
-   "syllabus_item": 44,
-   "syllabus_item_name": "設計",
-   "field": "テクノロジ系",
-   "major": "開発技術",
-   "middle": "システム開発技術",
-   "is_new": false,
-   "related_terms": [
-    "ホワイトボックステスト",
-    "命令網羅",
-    "限界値分析法",
-    "同値分析法"
-   ],
-   "question_count": 1,
-   "questions": [
-    {
-     "exam": "2019h31h",
-     "number": 47,
-     "confidence": "high"
-    }
-   ],
-   "aliases": []
-  },
-  {
-   "id": 92,
-   "term": "モジュール結合度",
-   "match_key": "モジュール結合度",
+   "id": 258,
+   "term": "ソフトウェア方式設計",
+   "match_key": "ソフトウェア方式設計",
    "syllabus_item": 44,
    "syllabus_item_name": "設計",
    "field": "テクノロジ系",
@@ -2467,15 +5998,67 @@
    "middle": "システム開発技術",
    "is_new": true,
    "related_terms": [
-    "モジュール分割",
-    "独立性",
-    "データ結合",
-    "共通結合"
+    "ソフトウェア構成品目",
+    "アーキテクチャ",
+    "ソフトウェアユニット分割",
+    "インタフェース設計"
    ],
    "question_count": 1,
    "questions": [
     {
-     "exam": "2019r01a",
+     "exam": "2018h30h",
+     "number": 47,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 259,
+   "term": "委譲",
+   "match_key": "委譲",
+   "syllabus_item": 44,
+   "syllabus_item_name": "設計",
+   "field": "テクノロジ系",
+   "major": "開発技術",
+   "middle": "システム開発技術",
+   "is_new": true,
+   "related_terms": [
+    "クラス",
+    "継承 （インヘリタンス）",
+    "集約",
+    "カプセル化"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 49,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 260,
+   "term": "継承 （インヘリタンス）",
+   "match_key": "継承インヘリタンス",
+   "syllabus_item": 44,
+   "syllabus_item_name": "設計",
+   "field": "テクノロジ系",
+   "major": "開発技術",
+   "middle": "システム開発技術",
+   "is_new": false,
+   "related_terms": [
+    "カプセル化",
+    "多相性",
+    "サブクラス",
+    "クラス"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
      "number": 46,
      "confidence": "high"
     }
@@ -2535,6 +6118,32 @@
    "aliases": []
   },
   {
+   "id": 261,
+   "term": "複数条件網羅（multiple condition coverage）",
+   "match_key": "複数条件網羅multipleconditioncoverage",
+   "syllabus_item": 45,
+   "syllabus_item_name": "実装・構築",
+   "field": "テクノロジ系",
+   "major": "開発技術",
+   "middle": "システム開発技術",
+   "is_new": false,
+   "related_terms": [
+    "判定条件網羅（decision coverage）",
+    "条件網羅",
+    "命令網羅",
+    "ホワイトボックステスト"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 49,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 95,
    "term": "静的解析",
    "match_key": "静的解析",
@@ -2587,6 +6196,32 @@
    "aliases": []
   },
   {
+   "id": 262,
+   "term": "リバースエンジニアリング",
+   "match_key": "リバースエンジニアリング",
+   "syllabus_item": 48,
+   "syllabus_item_name": "保守・廃棄",
+   "field": "テクノロジ系",
+   "major": "開発技術",
+   "middle": "システム開発技術",
+   "is_new": false,
+   "related_terms": [
+    "リファクタリング",
+    "フォワードエンジニアリング",
+    "完全化保守",
+    "保守のための文書作成"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 50,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 97,
    "term": "保守費用の見積り",
    "match_key": "保守費用の見積り",
@@ -2613,26 +6248,26 @@
    "aliases": []
   },
   {
-   "id": 98,
-   "term": "XP（エクストリームプログラミング）",
-   "match_key": "xpエクストリームプログラミング",
-   "syllabus_item": 49,
-   "syllabus_item_name": "開発プロセス・手法",
-   "field": "テクノロジ系",
-   "major": "開発技術",
-   "middle": "ソフトウェア開発管理技術",
+   "id": 263,
+   "term": "WBS",
+   "match_key": "wbs",
+   "syllabus_item": 56,
+   "syllabus_item_name": "プロジェクトのスコープ",
+   "field": "マネジメント系",
+   "major": "プロジェクトマネジメント",
+   "middle": "プロジェクトマネジメント",
    "is_new": false,
    "related_terms": [
-    "ペアプログラミング",
-    "リファクタリング",
-    "テスト駆動開発（TDD）",
-    "継続的インテグレーション （CI）"
+    "ワークパッケージ",
+    "WBS 辞書",
+    "スコープ（作業及び成果物）",
+    "ガントチャート"
    ],
    "question_count": 1,
    "questions": [
     {
-     "exam": "2019r01a",
-     "number": 50,
+     "exam": "2018h30a",
+     "number": 51,
      "confidence": "high"
     }
    ],
@@ -2665,53 +6300,79 @@
    "aliases": []
   },
   {
-   "id": 100,
-   "term": "ファンクションポイント法",
-   "match_key": "ファンクションポイント法",
-   "syllabus_item": 59,
-   "syllabus_item_name": "プロジェクトのコスト",
-   "field": "マネジメント系",
-   "major": "プロジェクトマネジメント",
-   "middle": "プロジェクトマネジメント",
-   "is_new": false,
-   "related_terms": [
-    "LOC（Lines of Code） 法",
-    "COCOMO（Constructive Cost Model）",
-    "類推見積り",
-    "ボトムアップ見積り"
-   ],
-   "question_count": 1,
-   "questions": [
-    {
-     "exam": "2019r01a",
-     "number": 53,
-     "confidence": "high"
-    }
-   ],
-   "aliases": []
-  },
-  {
-   "id": 101,
-   "term": "工数見積り",
-   "match_key": "工数見積り",
-   "syllabus_item": 59,
-   "syllabus_item_name": "プロジェクトのコスト",
+   "id": 264,
+   "term": "作業配分モデル",
+   "match_key": "作業配分モデル",
+   "syllabus_item": 58,
+   "syllabus_item_name": "プロジェクトの時間",
    "field": "マネジメント系",
    "major": "プロジェクトマネジメント",
    "middle": "プロジェクトマネジメント",
    "is_new": true,
    "related_terms": [
-    "人月",
-    "ボトムアップ見積り",
-    "予算",
-    "要員計画"
+    "進捗報告",
+    "工数見積り",
+    "EVM（Earned Value Management）",
+    "WBS"
    ],
    "question_count": 1,
    "questions": [
     {
-     "exam": "2019h31h",
-     "number": 54,
+     "exam": "2018h30h",
+     "number": 52,
      "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 265,
+   "term": "進捗率の算出",
+   "match_key": "進捗率の算出",
+   "syllabus_item": 58,
+   "syllabus_item_name": "プロジェクトの時間",
+   "field": "マネジメント系",
+   "major": "プロジェクトマネジメント",
+   "middle": "プロジェクトマネジメント",
+   "is_new": true,
+   "related_terms": [
+    "進捗報告",
+    "小日程計画表（週間作業計画）",
+    "ガントチャート",
+    "人日"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 53,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 266,
+   "term": "パレート図",
+   "match_key": "パレート図",
+   "syllabus_item": 61,
+   "syllabus_item_name": "プロジェクトの品質",
+   "field": "マネジメント系",
+   "major": "プロジェクトマネジメント",
+   "middle": "プロジェクトマネジメント",
+   "is_new": true,
+   "related_terms": [
+    "管理図",
+    "散布図",
+    "特性要因図",
+    "QC 七つ道具"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 54,
+     "confidence": "high"
     }
    ],
    "aliases": []
@@ -2789,6 +6450,110 @@
     {
      "exam": "2019r01a",
      "number": 57,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 267,
+   "term": "サービスレベル管理",
+   "match_key": "サービスレベル管理",
+   "syllabus_item": 65,
+   "syllabus_item_name": "サービスマネジメントシステムの計画及び運用",
+   "field": "マネジメント系",
+   "major": "サービスマネジメント",
+   "middle": "サービスマネジメント",
+   "is_new": false,
+   "related_terms": [
+    "SLA",
+    "サービスカタログ",
+    "サービスレベル目標",
+    "サービス可用性"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 55,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 268,
+   "term": "サービス可用性管理",
+   "match_key": "サービス可用性管理",
+   "syllabus_item": 65,
+   "syllabus_item_name": "サービスマネジメントシステムの計画及び運用",
+   "field": "マネジメント系",
+   "major": "サービスマネジメント",
+   "middle": "サービスマネジメント",
+   "is_new": false,
+   "related_terms": [
+    "サービス可用性",
+    "SLA",
+    "サービス時間",
+    "サービスレベル目標"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 57,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 269,
+   "term": "問題管理",
+   "match_key": "問題管理",
+   "syllabus_item": 65,
+   "syllabus_item_name": "サービスマネジメントシステムの計画及び運用",
+   "field": "マネジメント系",
+   "major": "サービスマネジメント",
+   "middle": "サービスマネジメント",
+   "is_new": false,
+   "related_terms": [
+    "インシデント管理",
+    "根本原因",
+    "予防処置",
+    "既知の誤り"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 55,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 154,
+   "term": "容量 ・ 能力管理",
+   "match_key": "容量能力管理",
+   "syllabus_item": 65,
+   "syllabus_item_name": "サービスマネジメントシステムの計画及び運用",
+   "field": "マネジメント系",
+   "major": "サービスマネジメント",
+   "middle": "サービスマネジメント",
+   "is_new": false,
+   "related_terms": [
+    "容量 ・ 能力計画",
+    "需要予測",
+    "傾向情報",
+    "しきい （閾）値"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 55,
      "confidence": "high"
     }
    ],
@@ -2873,6 +6638,58 @@
    "aliases": []
   },
   {
+   "id": 270,
+   "term": "コールドスタート",
+   "match_key": "コールドスタート",
+   "syllabus_item": 67,
+   "syllabus_item_name": "サービスの運用",
+   "field": "マネジメント系",
+   "major": "サービスマネジメント",
+   "middle": "サービスマネジメント",
+   "is_new": true,
+   "related_terms": [
+    "ウォームスタート",
+    "ロールバック （切り戻し）",
+    "ロールフォワード",
+    "ジョブの復旧と再実行"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 56,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 271,
+   "term": "サービスデスク",
+   "match_key": "サービスデスク",
+   "syllabus_item": 67,
+   "syllabus_item_name": "サービスの運用",
+   "field": "マネジメント系",
+   "major": "サービスマネジメント",
+   "middle": "サービスマネジメント",
+   "is_new": false,
+   "related_terms": [
+    "ローカルサービスデスク",
+    "中央サービスデスク",
+    "バーチャルサービスデスク",
+    "SPOC（Single Point Of Contact）"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 56,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 108,
    "term": "ロールフォワード",
    "match_key": "ロールフォワード",
@@ -2899,27 +6716,53 @@
    "aliases": []
   },
   {
-   "id": 109,
-   "term": "システム監査人の権限と責任等",
-   "match_key": "システム監査人の権限と責任等",
+   "id": 272,
+   "term": "サージ防護デバイス",
+   "match_key": "サージ防護デバイス",
+   "syllabus_item": 68,
+   "syllabus_item_name": "ファシリティマネジメント",
+   "field": "マネジメント系",
+   "major": "サービスマネジメント",
+   "middle": "サービスマネジメント",
+   "is_new": true,
+   "related_terms": [
+    "アレスタ",
+    "落雷",
+    "UPS",
+    "自家発電設備"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 57,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 273,
+   "term": "可用性（システム監査の判断尺度）",
+   "match_key": "可用性システム監査の判断尺度",
    "syllabus_item": 69,
    "syllabus_item_name": "システム監査",
    "field": "マネジメント系",
    "major": "サービスマネジメント",
    "middle": "システム監査",
-   "is_new": false,
+   "is_new": true,
    "related_terms": [
-    "監査の独立性と客観性の保持",
-    "監査証拠の入手と評価",
-    "監査手続の適用",
-    "アクセス制御"
+    "情報セキュリティ監査",
+    "システム監査上の判断尺度",
+    "機密性",
+    "完全性"
    ],
    "question_count": 1,
    "questions": [
     {
-     "exam": "2019r01a",
+     "exam": "2018h30h",
      "number": 60,
-     "confidence": "medium"
+     "confidence": "high"
     }
    ],
    "aliases": []
@@ -2951,9 +6794,9 @@
    "aliases": []
   },
   {
-   "id": 111,
-   "term": "監査証拠の入手と評価",
-   "match_key": "監査証拠の入手と評価",
+   "id": 274,
+   "term": "指摘事項",
+   "match_key": "指摘事項",
    "syllabus_item": 69,
    "syllabus_item_name": "システム監査",
    "field": "マネジメント系",
@@ -2961,17 +6804,43 @@
    "middle": "システム監査",
    "is_new": false,
    "related_terms": [
-    "代表的なシステム監査技法",
-    "監査手続の適用",
-    "監査調書の作成と保管",
-    "監査人の倫理"
+    "職務分掌",
+    "承認",
+    "システム運用管理",
+    "運用オペレーション"
    ],
    "question_count": 1,
    "questions": [
     {
-     "exam": "2019h31h",
+     "exam": "2017h29a",
      "number": 58,
      "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 275,
+   "term": "監査調書の作成と保管",
+   "match_key": "監査調書の作成と保管",
+   "syllabus_item": 69,
+   "syllabus_item_name": "システム監査",
+   "field": "マネジメント系",
+   "major": "サービスマネジメント",
+   "middle": "システム監査",
+   "is_new": false,
+   "related_terms": [
+    "監査証拠の入手と評価",
+    "監査報告書の作成と報告",
+    "監査手続の適用",
+    "監査の結論の形成"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 60,
+     "confidence": "high"
     }
    ],
    "aliases": []
@@ -3003,6 +6872,58 @@
    "aliases": []
   },
   {
+   "id": 276,
+   "term": "内部統制報告制度",
+   "match_key": "内部統制報告制度",
+   "syllabus_item": 70,
+   "syllabus_item_name": "内部統制",
+   "field": "マネジメント系",
+   "major": "サービスマネジメント",
+   "middle": "システム監査",
+   "is_new": false,
+   "related_terms": [
+    "内部統制の限界",
+    "金融商品取引法",
+    "コーポレートガバナンス",
+    "監査役"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 60,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 277,
+   "term": "IT 投資マネジメント",
+   "match_key": "it投資マネジメント",
+   "syllabus_item": 71,
+   "syllabus_item_name": "情報システム戦略",
+   "field": "ストラテジ系",
+   "major": "システム戦略",
+   "middle": "システム戦略",
+   "is_new": false,
+   "related_terms": [
+    "情報システム戦略評価",
+    "差異分析",
+    "モニタリング指標",
+    "開発投資対効果"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 61,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 113,
    "term": "エンタープライズアーキテクチャ",
    "match_key": "エンタープライズアーキテクチャ",
@@ -3023,6 +6944,32 @@
     {
      "exam": "2019h31h",
      "number": 61,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 278,
+   "term": "BPO （ Business Process Outsourcing）",
+   "match_key": "bpobusinessprocessoutsourcing",
+   "syllabus_item": 72,
+   "syllabus_item_name": "業務プロセス",
+   "field": "ストラテジ系",
+   "major": "システム戦略",
+   "middle": "システム戦略",
+   "is_new": false,
+   "related_terms": [
+    "オフショア",
+    "アウトソーシングサービス",
+    "ホスティングサービス",
+    "ASP"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 62,
      "confidence": "high"
     }
    ],
@@ -3159,6 +7106,84 @@
    "aliases": []
   },
   {
+   "id": 279,
+   "term": "全体システム化計画",
+   "match_key": "全体システム化計画",
+   "syllabus_item": 75,
+   "syllabus_item_name": "システム化計画",
+   "field": "ストラテジ系",
+   "major": "システム戦略",
+   "middle": "システム企画",
+   "is_new": false,
+   "related_terms": [
+    "プロジェクト推進体制",
+    "開発投資対効果",
+    "全体開発スケジュール",
+    "個別システム化計画"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 64,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 280,
+   "term": "UML",
+   "match_key": "uml",
+   "syllabus_item": 76,
+   "syllabus_item_name": "要件定義",
+   "field": "ストラテジ系",
+   "major": "システム戦略",
+   "middle": "システム企画",
+   "is_new": false,
+   "related_terms": [
+    "アクティビティ図",
+    "クラス図",
+    "オブジェクト図",
+    "コンポーネント図"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 64,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 281,
+   "term": "ステークホルダ",
+   "match_key": "ステークホルダ",
+   "syllabus_item": 76,
+   "syllabus_item_name": "要件定義",
+   "field": "ストラテジ系",
+   "major": "システム戦略",
+   "middle": "システム企画",
+   "is_new": false,
+   "related_terms": [
+    "ユーザーニーズ調査",
+    "課題定義",
+    "要求仕様書",
+    "SLCP-JCF（共通フレーム）"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 65,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 119,
    "term": "非機能要件定義",
    "match_key": "非機能要件定義",
@@ -3206,6 +7231,84 @@
      "exam": "2019h31h",
      "number": 66,
      "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 282,
+   "term": "RFP",
+   "match_key": "rfp",
+   "syllabus_item": 77,
+   "syllabus_item_name": "調達計画・実施",
+   "field": "ストラテジ系",
+   "major": "システム戦略",
+   "middle": "システム企画",
+   "is_new": true,
+   "related_terms": [
+    "RFI",
+    "情報システム・モデル取引・契約書",
+    "企画競争入札",
+    "内外作基準"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 66,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 283,
+   "term": "内外作基準",
+   "match_key": "内外作基準",
+   "syllabus_item": 77,
+   "syllabus_item_name": "調達計画・実施",
+   "field": "ストラテジ系",
+   "major": "システム戦略",
+   "middle": "システム企画",
+   "is_new": false,
+   "related_terms": [
+    "開発投資対効果",
+    "委託費",
+    "ソフトウェア開発委託モデル契約",
+    "人月"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 66,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 284,
+   "term": "SWOT（Strength，Weakness，Opportunity，Threat：強み，弱み，機会，脅威）分析",
+   "match_key": "swotstrengthweaknessopportunitythreat強み弱み機会脅威分析",
+   "syllabus_item": 78,
+   "syllabus_item_name": "経営戦略手法",
+   "field": "ストラテジ系",
+   "major": "経営戦略",
+   "middle": "経営戦略マネジメント",
+   "is_new": false,
+   "related_terms": [
+    "競争優位",
+    "バリューチェーン分析",
+    "3C（Customer，Competitor，Company） 分析",
+    "経営環境"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 67,
+     "confidence": "high"
     }
    ],
    "aliases": []
@@ -3263,9 +7366,35 @@
    "aliases": []
   },
   {
-   "id": 123,
-   "term": "ニッチ戦略",
-   "match_key": "ニッチ戦略",
+   "id": 285,
+   "term": "シナジー効果",
+   "match_key": "シナジー効果",
+   "syllabus_item": 78,
+   "syllabus_item_name": "経営戦略手法",
+   "field": "ストラテジ系",
+   "major": "経営戦略",
+   "middle": "経営戦略マネジメント",
+   "is_new": false,
+   "related_terms": [
+    "規模の経済",
+    "範囲の経済",
+    "スケールメリット",
+    "多角化"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 67,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 286,
+   "term": "リーダ戦略",
+   "match_key": "リーダ戦略",
    "syllabus_item": 78,
    "syllabus_item_name": "経営戦略手法",
    "field": "ストラテジ系",
@@ -3273,16 +7402,42 @@
    "middle": "経営戦略マネジメント",
    "is_new": true,
    "related_terms": [
-    "基本戦略（コストリーダーシップ戦略，差別化戦略，集中戦略）",
-    "同質化戦略",
-    "競争優位",
-    "ブルーオーシャン戦略"
+    "チャレンジャ戦略",
+    "フォロワ戦略",
+    "ニッチ戦略",
+    "基本戦略（コストリーダーシップ戦略，差別化戦略，集中戦略）"
    ],
    "question_count": 1,
    "questions": [
     {
-     "exam": "2019h31h",
+     "exam": "2017h29a",
      "number": 68,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 287,
+   "term": "コストプラス法",
+   "match_key": "コストプラス法",
+   "syllabus_item": 79,
+   "syllabus_item_name": "マーケティング",
+   "field": "ストラテジ系",
+   "major": "経営戦略",
+   "middle": "経営戦略マネジメント",
+   "is_new": true,
+   "related_terms": [
+    "バリュープライシング",
+    "ターゲットリターン価格設定",
+    "スキミングプライシング",
+    "ペネトレーションプライシング"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 69,
      "confidence": "high"
     }
    ],
@@ -3367,6 +7522,58 @@
    "aliases": []
   },
   {
+   "id": 288,
+   "term": "成熟期",
+   "match_key": "成熟期",
+   "syllabus_item": 79,
+   "syllabus_item_name": "マーケティング",
+   "field": "ストラテジ系",
+   "major": "経営戦略",
+   "middle": "経営戦略マネジメント",
+   "is_new": false,
+   "related_terms": [
+    "導入期",
+    "成長期",
+    "衰退期",
+    "ライフサイクルエクステンション"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 68,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 289,
+   "term": "成長期",
+   "match_key": "成長期",
+   "syllabus_item": 79,
+   "syllabus_item_name": "マーケティング",
+   "field": "ストラテジ系",
+   "major": "経営戦略",
+   "middle": "経営戦略マネジメント",
+   "is_new": false,
+   "related_terms": [
+    "導入期",
+    "成熟期",
+    "衰退期",
+    "製品ライン"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 67,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 127,
    "term": "BSC（Balanced Scorecard：バランススコアカード）",
    "match_key": "bscbalancedscorecardバランススコアカード",
@@ -3387,6 +7594,84 @@
     {
      "exam": "2019r01a",
      "number": 67,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 290,
+   "term": "KM（Knowledge Management：ナレッジマネジメント）",
+   "match_key": "kmknowledgemanagementナレッジマネジメント",
+   "syllabus_item": 81,
+   "syllabus_item_name": "経営管理システム",
+   "field": "ストラテジ系",
+   "major": "経営戦略",
+   "middle": "経営戦略マネジメント",
+   "is_new": false,
+   "related_terms": [
+    "SECI モデル",
+    "コアコンピタンス",
+    "ベンチマーキング",
+    "企業内情報ポータル（EIP）"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 70,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 291,
+   "term": "SCM",
+   "match_key": "scm",
+   "syllabus_item": 81,
+   "syllabus_item_name": "経営管理システム",
+   "field": "ストラテジ系",
+   "major": "経営戦略",
+   "middle": "経営戦略マネジメント",
+   "is_new": false,
+   "related_terms": [
+    "CRM",
+    "KM（Knowledge Management：ナレッジマネジメント）",
+    "ERP",
+    "在庫管理"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 69,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 292,
+   "term": "コア技術",
+   "match_key": "コア技術",
+   "syllabus_item": 82,
+   "syllabus_item_name": "技術開発戦略の立案",
+   "field": "ストラテジ系",
+   "major": "経営戦略",
+   "middle": "技術戦略マネジメント",
+   "is_new": false,
+   "related_terms": [
+    "MOT（Management of Technology ：技術経営）",
+    "標準化戦略",
+    "アライアンス",
+    "技術提携"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 70,
      "confidence": "high"
     }
    ],
@@ -3445,9 +7730,61 @@
    "aliases": []
   },
   {
-   "id": 130,
-   "term": "機械学習",
-   "match_key": "機械学習",
+   "id": 293,
+   "term": "技術の Sカーブ",
+   "match_key": "技術のsカーブ",
+   "syllabus_item": 82,
+   "syllabus_item_name": "技術開発戦略の立案",
+   "field": "ストラテジ系",
+   "major": "経営戦略",
+   "middle": "技術戦略マネジメント",
+   "is_new": true,
+   "related_terms": [
+    "イノベーション",
+    "MOT（Management of Technology ：技術経営）",
+    "キャズム",
+    "経験曲線"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 70,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 294,
+   "term": "POS システム",
+   "match_key": "posシステム",
+   "syllabus_item": 84,
+   "syllabus_item_name": "ビジネスシステム",
+   "field": "ストラテジ系",
+   "major": "経営戦略",
+   "middle": "ビジネスインダストリ",
+   "is_new": false,
+   "related_terms": [
+    "顧客管理",
+    "店頭販売管理",
+    "パーソナルデータ",
+    "販売管理"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 72,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 165,
+   "term": "ディープラーニング",
+   "match_key": "ディープラーニング",
    "syllabus_item": 84,
    "syllabus_item_name": "ビジネスシステム",
    "field": "ストラテジ系",
@@ -3455,17 +7792,43 @@
    "middle": "ビジネスインダストリ",
    "is_new": true,
    "related_terms": [
+    "機械学習",
+    "AI による認識",
     "AI による自動化",
-    "ロボティクス",
-    "スマートファクトリー",
-    "経験曲線"
+    "ニューラルネットワーク"
    ],
    "question_count": 1,
    "questions": [
     {
-     "exam": "2019r01a",
-     "number": 73,
+     "exam": "2017h29a",
+     "number": 74,
      "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 295,
+   "term": "MRP",
+   "match_key": "mrp",
+   "syllabus_item": 85,
+   "syllabus_item_name": "エンジニアリングシステム",
+   "field": "ストラテジ系",
+   "major": "経営戦略",
+   "middle": "ビジネスインダストリ",
+   "is_new": false,
+   "related_terms": [
+    "基準生産計画",
+    "かんばん方式",
+    "コンカレントエンジニアリング",
+    "受注生産"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 72,
+     "confidence": "high"
     }
    ],
    "aliases": []
@@ -3491,6 +7854,32 @@
     {
      "exam": "2019r01a",
      "number": 70,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 296,
+   "term": "セル生産方式",
+   "match_key": "セル生産方式",
+   "syllabus_item": 85,
+   "syllabus_item_name": "エンジニアリングシステム",
+   "field": "ストラテジ系",
+   "major": "経営戦略",
+   "middle": "ビジネスインダストリ",
+   "is_new": true,
+   "related_terms": [
+    "かんばん方式",
+    "リーン生産方式",
+    "ライン生産方式",
+    "FMS（Flexible Manufacturing System）"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 73,
      "confidence": "high"
     }
    ],
@@ -3523,6 +7912,58 @@
    "aliases": []
   },
   {
+   "id": 297,
+   "term": "IC カード・RFID 応用システム",
+   "match_key": "icカードrfid応用システム",
+   "syllabus_item": 86,
+   "syllabus_item_name": "e-ビジネス",
+   "field": "ストラテジ系",
+   "major": "経営戦略",
+   "middle": "ビジネスインダストリ",
+   "is_new": false,
+   "related_terms": [
+    "スマートカード",
+    "電子マネー",
+    "キャッシュレス決済（スマートフォンのキャリア決済，非接触IC 決済，QR コード決済ほか）",
+    "QR コード"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 72,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 298,
+   "term": "OtoO（Online toOffline）",
+   "match_key": "otooonlinetooffline",
+   "syllabus_item": 86,
+   "syllabus_item_name": "e-ビジネス",
+   "field": "ストラテジ系",
+   "major": "経営戦略",
+   "middle": "ビジネスインダストリ",
+   "is_new": false,
+   "related_terms": [
+    "OMO（Online Merges with Offline）",
+    "オムニチャネル",
+    "インターネットビジネス",
+    "e マーケットプレイス"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 73,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 133,
    "term": "シェアリングエコノミー",
    "match_key": "シェアリングエコノミー",
@@ -3543,6 +7984,32 @@
     {
      "exam": "2019h31h",
      "number": 73,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 299,
+   "term": "ロングテール",
+   "match_key": "ロングテール",
+   "syllabus_item": 86,
+   "syllabus_item_name": "e-ビジネス",
+   "field": "ストラテジ系",
+   "major": "経営戦略",
+   "middle": "ビジネスインダストリ",
+   "is_new": false,
+   "related_terms": [
+    "オンラインショッピング",
+    "アフィリエイト",
+    "ドロップシッピング",
+    "e マーケットプレイス"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 74,
      "confidence": "high"
     }
    ],
@@ -3575,32 +8042,6 @@
    "aliases": []
   },
   {
-   "id": 135,
-   "term": "HEMS（Home Energy Management System）",
-   "match_key": "hemshomeenergymanagementsystem",
-   "syllabus_item": 87,
-   "syllabus_item_name": "民生機器",
-   "field": "ストラテジ系",
-   "major": "経営戦略",
-   "middle": "ビジネスインダストリ",
-   "is_new": false,
-   "related_terms": [
-    "IoT（Internet of Things）",
-    "情報家電",
-    "ホームネットワーク",
-    "スマートグリッド"
-   ],
-   "question_count": 1,
-   "questions": [
-    {
-     "exam": "2019h31h",
-     "number": 71,
-     "confidence": "high"
-    }
-   ],
-   "aliases": []
-  },
-  {
    "id": 136,
    "term": "BCP（Business Continuity Plan：事業継続計画）",
    "match_key": "bcpbusinesscontinuityplan事業継続計画",
@@ -3627,27 +8068,27 @@
    "aliases": []
   },
   {
-   "id": 137,
-   "term": "CIO（Chief Information Officer：最高情報責任者）",
-   "match_key": "ciochiefinformationofficer最高情報責任者",
+   "id": 300,
+   "term": "OJT",
+   "match_key": "ojt",
    "syllabus_item": 89,
    "syllabus_item_name": "経営・組織論",
    "field": "ストラテジ系",
    "major": "企業と法務",
    "middle": "企業活動",
-   "is_new": false,
+   "is_new": true,
    "related_terms": [
-    "CEO（Chief Executive Officer：最高経営責任者）",
-    "CDO（Chief Digital Officer ：最高デジタル責任者）",
-    "CISO（Chief Information Security Officer ：最高情報セキュリティ責任者）",
-    "情報システム戦略委員会"
+    "e-ラーニング",
+    "ジョブローテーション",
+    "コーチング",
+    "人材育成計画"
    ],
    "question_count": 1,
    "questions": [
     {
-     "exam": "2019r01a",
-     "number": 75,
-     "confidence": "medium"
+     "exam": "2017h29a",
+     "number": 76,
+     "confidence": "high"
     }
    ],
    "aliases": []
@@ -3705,9 +8146,35 @@
    "aliases": []
   },
   {
-   "id": 140,
-   "term": "BI（Business Intelligence）",
-   "match_key": "bibusinessintelligence",
+   "id": 301,
+   "term": "ABC分析",
+   "match_key": "abc分析",
+   "syllabus_item": 90,
+   "syllabus_item_name": "業務分析・データ利活用",
+   "field": "ストラテジ系",
+   "major": "企業と法務",
+   "middle": "企業活動",
+   "is_new": true,
+   "related_terms": [
+    "パレート分析",
+    "パレート図",
+    "累積比率",
+    "重点管理"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 75,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 302,
+   "term": "クロス集計表",
+   "match_key": "クロス集計表",
    "syllabus_item": 90,
    "syllabus_item_name": "業務分析・データ利活用",
    "field": "ストラテジ系",
@@ -3715,16 +8182,120 @@
    "middle": "企業活動",
    "is_new": false,
    "related_terms": [
-    "データマイニング",
-    "ビッグデータ",
-    "データレイク",
-    "テキストマイニング"
+    "調査データ",
+    "分割表",
+    "量的データ",
+    "顧客管理"
    ],
    "question_count": 1,
    "questions": [
     {
-     "exam": "2019h31h",
-     "number": 63,
+     "exam": "2018h30a",
+     "number": 69,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 303,
+   "term": "デシジョンツリー",
+   "match_key": "デシジョンツリー",
+   "syllabus_item": 90,
+   "syllabus_item_name": "業務分析・データ利活用",
+   "field": "ストラテジ系",
+   "major": "企業と法務",
+   "middle": "企業活動",
+   "is_new": false,
+   "related_terms": [
+    "モデル化（確定モデル，確率モデル）",
+    "マクシミン原理",
+    "機会損失",
+    "デルファイ法"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 75,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 304,
+   "term": "モデル化（確定モデル，確率モデル）",
+   "match_key": "モデル化確定モデル確率モデル",
+   "syllabus_item": 90,
+   "syllabus_item_name": "業務分析・データ利活用",
+   "field": "ストラテジ系",
+   "major": "企業と法務",
+   "middle": "企業活動",
+   "is_new": false,
+   "related_terms": [
+    "最小二乗法",
+    "相関係数",
+    "時系列分析",
+    "バリュープライシング"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 68,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 305,
+   "term": "作業分析",
+   "match_key": "作業分析",
+   "syllabus_item": 90,
+   "syllabus_item_name": "業務分析・データ利活用",
+   "field": "ストラテジ系",
+   "major": "企業と法務",
+   "middle": "企業活動",
+   "is_new": false,
+   "related_terms": [
+    "稼働分析",
+    "営業支援システム",
+    "業務プロセス",
+    "SFA"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 61,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 306,
+   "term": "検査特性曲線",
+   "match_key": "検査特性曲線",
+   "syllabus_item": 90,
+   "syllabus_item_name": "業務分析・データ利活用",
+   "field": "ストラテジ系",
+   "major": "企業と法務",
+   "middle": "企業活動",
+   "is_new": true,
+   "related_terms": [
+    "OC 曲線",
+    "抜取り検査",
+    "不良率",
+    "故障率曲線（バスタブ曲線）"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 76,
      "confidence": "high"
     }
    ],
@@ -3751,6 +8322,32 @@
     {
      "exam": "2019h31h",
      "number": 77,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 307,
+   "term": "連関図法",
+   "match_key": "連関図法",
+   "syllabus_item": 90,
+   "syllabus_item_name": "業務分析・データ利活用",
+   "field": "ストラテジ系",
+   "major": "企業と法務",
+   "middle": "企業活動",
+   "is_new": true,
+   "related_terms": [
+    "特性要因図",
+    "ブレーンストーミング",
+    "ロジックツリー",
+    "パレート分析"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 76,
      "confidence": "high"
     }
    ],
@@ -3835,6 +8432,32 @@
    "aliases": []
   },
   {
+   "id": 308,
+   "term": "著作権",
+   "match_key": "著作権",
+   "syllabus_item": 92,
+   "syllabus_item_name": "知的財産権",
+   "field": "ストラテジ系",
+   "major": "企業と法務",
+   "middle": "法務",
+   "is_new": false,
+   "related_terms": [
+    "職務著作",
+    "請負契約",
+    "著作財産権（複製権，公衆送信権， 頒布権， 譲渡権， 貸与権）",
+    "プログラムの著作物"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 79,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 145,
    "term": "著作者人格権（公表権，氏名表示権，同一性保持権）",
    "match_key": "著作者人格権公表権氏名表示権同一性保持権",
@@ -3856,6 +8479,58 @@
      "exam": "2019h31h",
      "number": 79,
      "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 309,
+   "term": "不正指令電磁的記録に関する罪（ウイルス作成罪）",
+   "match_key": "不正指令電磁的記録に関する罪ウイルス作成罪",
+   "syllabus_item": 93,
+   "syllabus_item_name": "セキュリティ関連法規",
+   "field": "ストラテジ系",
+   "major": "企業と法務",
+   "middle": "法務",
+   "is_new": false,
+   "related_terms": [
+    "刑法",
+    "不正アクセス行為",
+    "電子計算機損壊等業務妨害罪",
+    "不正競争防止法"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 78,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 310,
+   "term": "個人情報保護法",
+   "match_key": "個人情報保護法",
+   "syllabus_item": 93,
+   "syllabus_item_name": "セキュリティ関連法規",
+   "field": "ストラテジ系",
+   "major": "企業と法務",
+   "middle": "法務",
+   "is_new": true,
+   "related_terms": [
+    "匿名加工情報",
+    "要配慮個人情報",
+    "個人情報保護に関するガイドライン",
+    "個人情報取扱事業者"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 79,
+     "confidence": "medium"
     }
    ],
    "aliases": []
@@ -3887,6 +8562,58 @@
    "aliases": []
   },
   {
+   "id": 311,
+   "term": "偽装請負",
+   "match_key": "偽装請負",
+   "syllabus_item": 94,
+   "syllabus_item_name": "労働関連・取引関連法規",
+   "field": "ストラテジ系",
+   "major": "企業と法務",
+   "middle": "法務",
+   "is_new": false,
+   "related_terms": [
+    "請負契約",
+    "労働者派遣契約",
+    "指揮命令",
+    "二重派遣の禁止"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30a",
+     "number": 80,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 312,
+   "term": "特定商取引法",
+   "match_key": "特定商取引法",
+   "syllabus_item": 94,
+   "syllabus_item_name": "労働関連・取引関連法規",
+   "field": "ストラテジ系",
+   "major": "企業と法務",
+   "middle": "法務",
+   "is_new": false,
+   "related_terms": [
+    "クーリングオフ",
+    "電子消費者契約法",
+    "消費者保護",
+    "通信販売"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 80,
+     "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
    "id": 147,
    "term": "製造物責任法",
    "match_key": "製造物責任法",
@@ -3908,6 +8635,58 @@
      "exam": "2019r01a",
      "number": 80,
      "confidence": "high"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 313,
+   "term": "グリーン調達",
+   "match_key": "グリーン調達",
+   "syllabus_item": 95,
+   "syllabus_item_name": "その他の法律・ガイドライン・技術者倫理",
+   "field": "ストラテジ系",
+   "major": "企業と法務",
+   "middle": "法務",
+   "is_new": true,
+   "related_terms": [
+    "グリーン IT",
+    "カーボンフットプリント",
+    "環境表示",
+    "リサイクル法"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2017h29a",
+     "number": 64,
+     "confidence": "medium"
+    }
+   ],
+   "aliases": []
+  },
+  {
+   "id": 314,
+   "term": "グリーン購入",
+   "match_key": "グリーン購入",
+   "syllabus_item": 95,
+   "syllabus_item_name": "その他の法律・ガイドライン・技術者倫理",
+   "field": "ストラテジ系",
+   "major": "企業と法務",
+   "middle": "法務",
+   "is_new": true,
+   "related_terms": [
+    "グリーン購入法",
+    "エコマーク",
+    "環境アセスメント",
+    "CSR（Corporate Social Responsibility：企業の社会的責任）"
+   ],
+   "question_count": 1,
+   "questions": [
+    {
+     "exam": "2018h30h",
+     "number": 65,
+     "confidence": "medium"
     }
    ],
    "aliases": []

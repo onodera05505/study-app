@@ -1,0 +1,245 @@
+{
+  "bundle": "expl_13",
+  "topics": [
+    {
+      "topic_id": 62,
+      "term": "IP マスカレード（NAPT）",
+      "field": "テクノロジ系",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "ネットワーク方式",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q33",
+          "content_key": "4d94dd0c59afd841",
+          "exam_label": "令和元年度 秋期",
+          "number": 33,
+          "stem": "LANに接続されている複数のPCをインターネットに接続するシステムがあり，装置AのWAN側インタフェースには1個のグローバルIPアドレスが割り当てられている。この1個のグローバルIPアドレスを使って複数のPCがインターネットを利用するのに必要な装置Aの機能はどれか。",
+          "choices": {
+            "ア": "DHCP",
+            "イ": "NAPT（IPマスカレード）",
+            "ウ": "PPPoE",
+            "エ": "パケットフィルタリング"
+          },
+          "answer": "イ",
+          "has_figure": true,
+          "figure_description": "システムの構成図。左側に大きな長方形の枠があり，その上辺の右寄りに「利用者宅内」と書かれている。\n\n枠の中には，左上に長方形「PC」，左下に長方形「PC」があり，その2つの間に縦の3点（…）が置かれて複数台あることを示している。2台の「PC」からそれぞれ線が右へ伸びて長方形「ハブ」に集まる。「ハブ」は線で長方形「装置A」に結ばれ，「装置A」は線で長方形「ONU」に結ばれている。\n\n「ONU」から出た線は枠の右辺を越えて外へ伸び，その線の上に「光ファイバ ケーブル」と書かれている。線の右端は楕円「インターネット」につながり，楕円の右側からさらに線が右端へ伸びている。",
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 63,
+      "term": "回線利用率",
+      "field": "テクノロジ系",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "ネットワーク方式",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q30",
+          "content_key": "0a75289b2073ce61",
+          "exam_label": "令和元年度 秋期",
+          "number": 30,
+          "stem": "10Mビット／秒の回線で接続された端末間で，平均1Mバイトのファイルを，10秒ごとに転送するときの回線利用率は何％か。ここで，ファイル転送時には，転送量の20％が制御情報として付加されるものとし，1Mビット＝10^6ビットとする。",
+          "choices": {
+            "ア": "1.2",
+            "イ": "6.4",
+            "ウ": "8.0",
+            "エ": "9.6"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 64,
+      "term": "CSMA/CD",
+      "field": "テクノロジ系",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "データ通信と制御",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q31",
+          "content_key": "a7f25ee50b7a6115",
+          "exam_label": "令和元年度 秋期",
+          "number": 31,
+          "stem": "CSMA/CD方式のLANに接続されたノードの送信動作として，適切なものはどれか。",
+          "choices": {
+            "ア": "各ノードに論理的な順位付けを行い，送信権を順次受け渡し，これを受け取ったノードだけが送信を行う。",
+            "イ": "各ノードは伝送媒体が使用中かどうかを調べ，使用中でなければ送信を行う。衝突を検出したらランダムな時間の経過後に再度送信を行う。",
+            "ウ": "各ノードを環状に接続して，送信権を制御するための特殊なフレームを巡回させ，これを受け取ったノードだけが送信を行う。",
+            "エ": "タイムスロットを割り当てられたノードだけが送信を行う。"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 65,
+      "term": "ゲートウェイ",
+      "field": "テクノロジ系",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "データ通信と制御",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q31",
+          "content_key": "bdfccec7d427b117",
+          "exam_label": "平成31年度 春期",
+          "number": 31,
+          "stem": "OSI 基本参照モデルのトランスポート層以上が異なる LAN システム相互間でプロトコル変換を行う機器はどれか。",
+          "choices": {
+            "ア": "ゲートウェイ",
+            "イ": "ブリッジ",
+            "ウ": "リピータ",
+            "エ": "ルータ"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 66,
+      "term": "レイヤー3（L3）スイッチ",
+      "field": "テクノロジ系",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "データ通信と制御",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q32",
+          "content_key": "fb55f543ce328cb9",
+          "exam_label": "令和元年度 秋期",
+          "number": 32,
+          "stem": "メディアコンバータ，リピータハブ，レイヤ2スイッチ，レイヤ3スイッチのうち，レイヤ3スイッチだけがもつ機能はどれか。",
+          "choices": {
+            "ア": "データリンク層において，宛先アドレスに従って適切なLANポートにパケットを中継する機能",
+            "イ": "ネットワーク層において，宛先アドレスに従って適切なLANポートにパケットを中継する機能",
+            "ウ": "物理層において，異なる伝送媒体を接続し，信号を相互に変換する機能",
+            "エ": "物理層において，入力信号を全てのLANポートに対して中継する機能"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 69,
+      "term": "SDN（Software-Defined Networking）",
+      "field": "テクノロジ系",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "ネットワーク管理",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q35",
+          "content_key": "3e1e61afb49dfd5b",
+          "exam_label": "平成31年度 春期",
+          "number": 35,
+          "stem": "OpenFlow を使った SDN（Software-Defined Networking）の説明として，適切なものはどれか。",
+          "choices": {
+            "ア": "RFID を用いる IoT（Internet of Things）技術の一つであり，物流ネットワークを最適化するためのソフトウェアアーキテクチャ",
+            "イ": "様々なコンテンツをインターネット経由で効率よく配信するために開発された，ネットワーク上のサーバの最適配置手法",
+            "ウ": "データ転送と経路制御の機能を論理的に分離し，データ転送に特化したネットワーク機器とソフトウェアによる経路制御の組合せで実現するネットワーク技術",
+            "エ": "データフロー図やアクティビティ図などを活用し，業務プロセスの問題点を発見して改善を行うための，業務分析と可視化ソフトウェアの技術"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 70,
+      "term": "CAPTCHA",
+      "field": "テクノロジ系",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q36",
+          "content_key": "75426d3c850f0d78",
+          "exam_label": "平成31年度 春期",
+          "number": 36,
+          "stem": "CAPTCHA の目的はどれか。",
+          "choices": {
+            "ア": "Web サイトなどにおいて，コンピュータではなく人間がアクセスしていることを確認する。",
+            "イ": "公開鍵暗号と共通鍵暗号を組み合わせて，メッセージを効率よく暗号化する。",
+            "ウ": "通信回線を流れるパケットをキャプチャして，パケットの内容の表示や解析，集計を行う。",
+            "エ": "電子政府推奨暗号の安全性を評価し，暗号技術の適切な実装法，運用法を調査，検討する。"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 72,
+      "term": "MAC（Message Authentication Code：メッセージ認証符号）",
+      "field": "テクノロジ系",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q38",
+          "content_key": "b4e83ac631ac3f0f",
+          "exam_label": "平成31年度 春期",
+          "number": 38,
+          "stem": "メッセージ認証符号の利用目的に該当するものはどれか。",
+          "choices": {
+            "ア": "メッセージが改ざんされていないことを確認する。",
+            "イ": "メッセージの暗号化方式を確認する。",
+            "ウ": "メッセージの概要を確認する。",
+            "エ": "メッセージの秘匿性を確保する。"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    }
+  ]
+}

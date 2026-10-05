@@ -1,0 +1,245 @@
+{
+  "bundle": "expl_27",
+  "topics": [
+    {
+      "topic_id": 207,
+      "term": "リンカ",
+      "field": "テクノロジ系",
+      "middle": "ソフトウェア",
+      "syllabus_item_name": "開発ツール",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30a-q20",
+          "content_key": "3e047071664016be",
+          "exam_label": "平成30年度 秋期",
+          "number": 20,
+          "stem": "リンカの機能として，適切なものはどれか。",
+          "choices": {
+            "ア": "作成したプログラムをライブラリに登録する。",
+            "イ": "実行に先立ってロードモジュールを主記憶にロードする。",
+            "ウ": "相互参照の解決などを行い，複数の目的モジュールなどから一つのロードモジュールを生成する。",
+            "エ": "プログラムの実行を監視し，ステップごとに実行結果を記録する。"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 208,
+      "term": "Eclipse",
+      "field": "テクノロジ系",
+      "middle": "ソフトウェア",
+      "syllabus_item_name": "オープンソースソフトウェア",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30h-q19",
+          "content_key": "3b8324b6a3fc22cd",
+          "exam_label": "平成30年度 春期",
+          "number": 19,
+          "stem": "ソフトウェアの統合開発環境として提供されている OSS はどれか。",
+          "choices": {
+            "ア": "Apache Tomcat",
+            "イ": "Eclipse",
+            "ウ": "GCC",
+            "エ": "Linux"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 209,
+      "term": "二次電池",
+      "field": "テクノロジ系",
+      "middle": "ハードウェア",
+      "syllabus_item_name": "ハードウェア",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30a-q23",
+          "content_key": "ab8693baa65287e1",
+          "exam_label": "平成30年度 秋期",
+          "number": 23,
+          "stem": "二次電池（充電式電池）はどれか。",
+          "choices": {
+            "ア": "アルカリマンガン乾電池",
+            "イ": "酸化銀電池",
+            "ウ": "燃料電池",
+            "エ": "リチウムイオン電池"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 210,
+      "term": "論理式",
+      "field": "テクノロジ系",
+      "middle": "ハードウェア",
+      "syllabus_item_name": "ハードウェア",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2017h29a-q23",
+          "content_key": "5fcb14c4e58d1f59",
+          "exam_label": "平成29年度 秋期",
+          "number": 23,
+          "stem": "図に示すディジタル回路と等価な論理式はどれか。ここで，論理式中の“・”は論理積を，“＋”は論理和を，¬X は X の否定を表す。",
+          "choices": {
+            "ア": "X ＝ A・B ＋ ¬(A・B)",
+            "イ": "X ＝ A・B ＋ ¬A・¬B",
+            "ウ": "X ＝ A・¬B ＋ ¬A・B",
+            "エ": "X ＝ (¬A ＋ B)・(A ＋ ¬B)"
+          },
+          "answer": "ウ",
+          "has_figure": true,
+          "figure_description": "ディジタル回路の図。左に入力 A，B の線があり，右端に出力 X の線がある。\n\n- 入力 A の線は右へ伸び，途中の黒丸（分岐点）で2つに分かれる。一方は上へ上がって右へ長く伸び，右上の AND 記号（左辺が直線で右辺が半円状の記号）の上の入力へ入る。もう一方はそのまま右へ進んで，先端に小さな丸を付けた三角形の記号（NOT）を通り，その出力が中央の OR 記号（左辺がくぼんだ砲弾状の記号）の上の入力へ入る。\n- 入力 B の線は A の下を右へ伸び，途中の黒丸（分岐点）で2つに分かれる。一方はそのまま右へ進んで，先端に小さな丸を付けた三角形の記号（NOT）を通り，その出力が中央の OR 記号の下の入力へ入る。もう一方は下へ降りて右へ長く伸び，右下の AND 記号の下の入力へ入る。\n- 中央の OR 記号の出力は右へ伸び，黒丸（分岐点）で2つに分かれる。一方は上へ上がって右上の AND 記号の下の入力へ入り，もう一方は下へ降りて右下の AND 記号の上の入力へ入る。\n- 右上の AND 記号の出力と右下の AND 記号の出力は，右端の OR 記号の上下2つの入力へそれぞれ入り，その出力の線の先に X と書かれている。",
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 211,
+      "term": "自然言語インタフェース",
+      "field": "テクノロジ系",
+      "middle": "ユーザーインタフェース",
+      "syllabus_item_name": "ユーザーインタフェース技術",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30a-q24",
+          "content_key": "f1abdbf1ea73d9cb",
+          "exam_label": "平成30年度 秋期",
+          "number": 24,
+          "stem": "列車の予約システムにおいて，人間とコンピュータが音声だけで次のようなやり取りを行う。この場合に用いられるインタフェースの種類はどれか。\n〔凡例〕\nP：人間\nC：コンピュータ\nP　“5月28日の名古屋駅から東京駅までをお願いします。”\nC　“ご乗車人数をどうぞ。”\nP　“大人2名でお願いします。”\nC　“ご希望の発車時刻をどうぞ。”\nP　“午前9時頃を希望します。”\nC　“午前9時3分発，午前10時43分着の列車ではいかがでしょうか。”\nP　“それでお願いします。”\nC　“確認します。大人2名で，5月28日の名古屋駅午前9時3分発，東京駅午前10時43分着の列車でよろしいでしょうか。”\nP　“はい。”",
+          "choices": {
+            "ア": "感性インタフェース",
+            "イ": "自然言語インタフェース",
+            "ウ": "ノンバーバルインタフェース",
+            "エ": "マルチモーダルインタフェース"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 212,
+      "term": "チェックキャラクター",
+      "field": "テクノロジ系",
+      "middle": "ユーザーインタフェース",
+      "syllabus_item_name": "UX/UI デザイン",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2017h29a-q24",
+          "content_key": "61c180847a288295",
+          "exam_label": "平成29年度 秋期",
+          "number": 24,
+          "stem": "次の方式によって求められるチェックデジットを付加した結果はどれか。ここで，データを7394，重み付け定数を1234，基数を11とする。\n〔方式〕\n(1) データと重み付け定数の，対応する桁ごとの積を求め，それらの和を求める。\n(2) 和を基数で割って，余りを求める。\n(3) 基数から余りを減じ，その結果の1の位をチェックデジットとしてデータの末尾に付加する。",
+          "choices": {
+            "ア": "73940",
+            "イ": "73941",
+            "ウ": "73944",
+            "エ": "73947"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 213,
+      "term": "論理チェック",
+      "field": "テクノロジ系",
+      "middle": "ユーザーインタフェース",
+      "syllabus_item_name": "UX/UI デザイン",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30h-q24",
+          "content_key": "58d485b217ed7bb9",
+          "exam_label": "平成30年度 春期",
+          "number": 24,
+          "stem": "次のような注文データが入力されたとき，注文日が入力日以前の営業日かどうかを検査するチェックはどれか。",
+          "choices": {
+            "ア": "シーケンスチェック",
+            "イ": "重複チェック",
+            "ウ": "フォーマットチェック",
+            "エ": "論理チェック"
+          },
+          "answer": "エ",
+          "has_figure": true,
+          "figure_description": "「注文データ」と題した，横1行のレコード形式を表す図。左から右へ5つのセルが並び，各セルは2段で上段に項目名，下段に括弧書きのデータ型が書かれている。\n\n| 伝票番号（文字） | 注文日（文字） | 商品コード（文字） | 数量（数値） | 顧客コード（文字） |\n| --- | --- | --- | --- | --- |",
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 214,
+      "term": "ストリーミング",
+      "field": "テクノロジ系",
+      "middle": "情報メディア",
+      "syllabus_item_name": "マルチメディア技術",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2017h29a-q31",
+          "content_key": "91b44e7cdb9352da",
+          "exam_label": "平成29年度 秋期",
+          "number": 31,
+          "stem": "符号化速度が192kビット／秒の音声データ2.4Mバイトを，通信速度が128kビット／秒のネットワークを用いてダウンロードしながら途切れることなく再生するためには，再生開始前のデータのバッファリング時間として最低何秒間が必要か。",
+          "choices": {
+            "ア": "50",
+            "イ": "100",
+            "ウ": "150",
+            "エ": "250"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    }
+  ]
+}

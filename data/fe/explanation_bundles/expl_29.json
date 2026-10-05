@@ -1,0 +1,245 @@
+{
+  "bundle": "expl_29",
+  "topics": [
+    {
+      "topic_id": 223,
+      "term": "参照制約",
+      "field": "テクノロジ系",
+      "middle": "データベース",
+      "syllabus_item_name": "データ操作",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2017h29a-q27",
+          "content_key": "bb9792ab30cd6013",
+          "exam_label": "平成29年度 秋期",
+          "number": 27,
+          "stem": "SQL文においてFOREIGN KEYとREFERENCESを用いて指定する制約はどれか。",
+          "choices": {
+            "ア": "キー制約",
+            "イ": "検査制約",
+            "ウ": "参照制約",
+            "エ": "表明"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 224,
+      "term": "ジャーナルファイル （ログファイル）",
+      "field": "テクノロジ系",
+      "middle": "データベース",
+      "syllabus_item_name": "トランザクション処理",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30h-q29",
+          "content_key": "08b68be863edf144",
+          "exam_label": "平成30年度 春期",
+          "number": 29,
+          "stem": "データベースの更新前や更新後の値を書き出して，データベースの更新記録として保存するファイルはどれか。",
+          "choices": {
+            "ア": "ダンプファイル",
+            "イ": "チェックポイントファイル",
+            "ウ": "バックアップファイル",
+            "エ": "ログファイル"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 225,
+      "term": "バックワードリカバリ（ロールバック）",
+      "field": "テクノロジ系",
+      "middle": "データベース",
+      "syllabus_item_name": "トランザクション処理",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2017h29a-q30",
+          "content_key": "fd8ad96549b8c238",
+          "exam_label": "平成29年度 秋期",
+          "number": 30,
+          "stem": "トランザクション処理プログラムが，データベース更新の途中で異常終了した場合，ロールバック処理によってデータベースを復元する。このとき使用する情報はどれか。",
+          "choices": {
+            "ア": "最新のスナップショット情報",
+            "イ": "最新のバックアップファイル情報",
+            "ウ": "ログファイルの更新後情報",
+            "エ": "ログファイルの更新前情報"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 226,
+      "term": "フォワードリカバリ （ロールフォワード）",
+      "field": "テクノロジ系",
+      "middle": "データベース",
+      "syllabus_item_name": "トランザクション処理",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30a-q30",
+          "content_key": "6e861086c6a7faca",
+          "exam_label": "平成30年度 秋期",
+          "number": 30,
+          "stem": "データベースが格納されている記憶媒体に故障が発生した場合，バックアップファイルとログを用いてデータベースを回復する操作はどれか。",
+          "choices": {
+            "ア": "アーカイブ",
+            "イ": "コミット",
+            "ウ": "チェックポイントダンプ",
+            "エ": "ロールフォワード"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 227,
+      "term": "Apache Hadoop",
+      "field": "テクノロジ系",
+      "middle": "データベース",
+      "syllabus_item_name": "データベース応用",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30h-q20",
+          "content_key": "92286ee313af5829",
+          "exam_label": "平成30年度 春期",
+          "number": 20,
+          "stem": "多数のサーバで構成された大規模な分散ファイルシステム機能を提供し，MapReduce による大規模データの分散処理を実現する OSS はどれか。",
+          "choices": {
+            "ア": "Apache Hadoop",
+            "イ": "Apache Kafka",
+            "ウ": "Apache Spark",
+            "エ": "Apache Storm"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 228,
+      "term": "DNS",
+      "field": "テクノロジ系",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "ネットワーク方式",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30a-q33",
+          "content_key": "4a92af2769983c9c",
+          "exam_label": "平成30年度 秋期",
+          "number": 33,
+          "stem": "TCP/IPネットワークでDNSが果たす役割はどれか。",
+          "choices": {
+            "ア": "PCやプリンタなどからのIPアドレス付与の要求に対して，サーバに登録してあるIPアドレスの中から使用されていないIPアドレスを割り当てる。",
+            "イ": "サーバにあるプログラムを，サーバのIPアドレスを意識することなく，プログラム名の指定だけで呼び出すようにする。",
+            "ウ": "社内のプライベートIPアドレスをグローバルIPアドレスに変換し，インターネットへのアクセスを可能にする。",
+            "エ": "ドメイン名やホスト名などとIPアドレスとを対応付ける。"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 229,
+      "term": "NAT（Network Address Translation：ネットワークアドレス変換）",
+      "field": "テクノロジ系",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "ネットワーク方式",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2017h29a-q33",
+          "content_key": "f637498d5fddb68c",
+          "exam_label": "平成29年度 秋期",
+          "number": 33,
+          "stem": "IPv4において，インターネット接続用ルータのNAT機能の説明として，適切なものはどれか。",
+          "choices": {
+            "ア": "インターネットへのアクセスをキャッシュしておくことによって，その後に同じIPアドレスのWebサイトへアクセスする場合，表示を高速化できる機能である。",
+            "イ": "通信中のIPパケットを検査して，インターネットからの攻撃や侵入を検知する機能である。",
+            "ウ": "特定の端末宛てのIPパケットだけを通過させる機能である。",
+            "エ": "プライベートIPアドレスとグローバルIPアドレスを相互に変換する機能である。"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 230,
+      "term": "スイッチングハブ",
+      "field": "テクノロジ系",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "データ通信と制御",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2017h29a-q32",
+          "content_key": "633fe1aed56c11a7",
+          "exam_label": "平成29年度 秋期",
+          "number": 32,
+          "stem": "ネットワーク機器の一つであるスイッチングハブ（レイヤ2スイッチ）の特徴として，適切なものはどれか。",
+          "choices": {
+            "ア": "LANポートに接続された端末に対して，IPアドレスの動的な割当てを行う。",
+            "イ": "受信したパケットを，宛先MACアドレスが存在するLANポートだけに転送する。",
+            "ウ": "受信したパケットを，全てのLANポートに転送（ブロードキャスト）する。",
+            "エ": "受信したパケットを，ネットワーク層で分割（フラグメンテーション）する。"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    }
+  ]
+}
