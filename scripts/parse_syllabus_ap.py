@@ -5,7 +5,10 @@
     python3 scripts/parse_syllabus_ap.py --data data/fe   # 基本情報 科目A
 
 入力: `<data>/syllabus_*.pdf`（例 data/ap/syllabus_ap_ver7_2.pdf、data/fe/syllabus_fe_ver9_2.pdf）
-出力: `<data>/syllabus.json`
+出力: `<data>/syllabus.json` と `<data>/syllabus_index.json`
+
+索引（`syllabus_index.json`）は分類のバンドル（`build_classify_bundles.py`）が読む形で、
+小分類 1 件が 1 項目。分類の担当に渡すのに要らない階層の番号（`small_no`・`major_no`）を落とす。
 
 IT パスポートの `parse_syllabus.py` と出力の形は揃えてあるが、**階層の深さが違う**
 ので別スクリプトにしている。
@@ -73,6 +76,9 @@ CAMEL_OK = {
     "SuperVisor",  # SVC の展開。シラバスの原文が SuperVisor Call
 }
 RE_CAMEL = re.compile(r"[A-Za-z]+")
+
+# 索引に載せる項目の鍵と並び（分類のバンドルが読む形）
+INDEX_KEYS = ("number", "name", "field", "major", "middle", "middle_no", "terms")
 
 # 抽出の崩れを直す表。左が PDF から出てくる形、右が正しい形。
 #
@@ -180,10 +186,12 @@ def main() -> int:
     ap.add_argument("--data", default="data/ap", type=Path, help="対象のデータ置き場。基本情報は data/fe")
     ap.add_argument("--pdf", default=None, type=Path, help="既定は <data>/syllabus_*.pdf")
     ap.add_argument("--out", default=None, type=Path, help="既定は <data>/syllabus.json")
+    ap.add_argument("--index-out", default=None, type=Path, help="既定は <data>/syllabus_index.json")
     ap.add_argument("--version", default=None, help="出力に載せる版。既定は PDF の名前から組む")
     args = ap.parse_args()
     args.pdf = args.pdf or find_pdf(args.data)
     args.out = args.out or args.data / "syllabus.json"
+    args.index_out = args.index_out or args.data / "syllabus_index.json"
 
     reader = pypdf.PdfReader(args.pdf)
     # 目次を読み飛ばす。本文は最初の「大分類 N：… 中分類 N：…」ヘッダから始まる
@@ -273,8 +281,12 @@ def main() -> int:
     }
     args.out.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    index = {"items": [{k: it[k] for k in INDEX_KEYS} for it in items]}
+    args.index_out.write_text(json.dumps(index, ensure_ascii=False, indent=1), encoding="utf-8")
+
     middles = {(i["major_no"], i["middle_no"], i["middle"]) for i in items}
     print(f"→ {args.out}")
+    print(f"→ {args.index_out}（小分類 {len(index['items'])} 件。分類のバンドルが読む）")
     print(f"  分野     : {len({i['field'] for i in items})}")
     print(f"  大分類   : {len({i['major_no'] for i in items})}")
     print(f"  中分類   : {len(middles)}")

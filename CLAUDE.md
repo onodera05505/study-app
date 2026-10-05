@@ -91,6 +91,7 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 | **検証方針（全体）**（線。プロジェクト全体で単体テストが観測できない範囲とその理由。REQ ごとの方針は各 REQ の `## 検証方針`） | [`docs/verification/GLOBAL.md`](docs/verification/GLOBAL.md) |
 | **原本 harness への移行**（2026-09-30 本人決定。APM で develop-core、docs-migrate の 7 Phase。Phase 0 の記録と実体・状態値の全文） | [`docs/作業ログ_2026-09-30_原本harnessへの移行.md`](docs/作業ログ_2026-09-30_原本harnessへの移行.md) |
 | **移行後の最初の `/develop`**（署名の秘密が無い配備は発行も検証も断る。本人決定 → spec-author → 門 → 並行 → reviewer 2 巡の運び） | [`docs/作業ログ_2026-10-03_develop第1件_署名の秘密.md`](docs/作業ログ_2026-10-03_develop第1件_署名の秘密.md) |
+| **基本情報 科目A（`fe`）を 1 日でデータ完成まで運んだ記録**（最新 5 回 400 問・論点 315・解説 397・図 45。初回の論点マスタの作り方・v2 を飛ばす・波の完了判定は中身の一致で。本番は本人の bootstrap 待ち） | [`docs/作業ログ_2026-10-05_基本情報.md`](docs/作業ログ_2026-10-05_基本情報.md) |
 | **原本 harness への移行の棚卸し**（docs-migrate Phase 0。文書ごとの分類と処遇、実体と状態値、矛盾。本人の答えは `OPEN-QUESTIONS.md`） | [`docs/INVENTORY.md`](docs/INVENTORY.md) |
 | attic: 旧の要件の正本 `spec.yaml`（REQ は `docs/goals/**/REQ-nnn.md` に移った。旧パスは退役の印だけ） | [`docs/attic/spec.yaml`](docs/attic/spec.yaml) / [`docs/spec.yaml`](docs/spec.yaml) |
 | attic: 旧のユースケースの書類 UC-001〜019（UC は `docs/goals/<GOAL>/<UC>/UC.md` に移った。旧パスは退役の印だけ） | [`docs/attic/usecases/`](docs/attic/usecases/) / [`docs/usecases/`](docs/usecases/) |
@@ -110,6 +111,7 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
   （手順は `docs/ロードマップ対象を追加する.md`、経緯は `docs/作業ログ_2026-09-15_ロードマップ試作.md`）
 - 4 つ目: **マーケティング 実務の判断**: https://mkt-roadmap.pages.dev ／ 5 つ目: **マッサージ 肩と腰の手当て**（身体に触れる最初の対象。42 単位・問題 84）: **https://msg-roadmap.pages.dev**（`docs/作業ログ_2026-09-17_マッサージ.md`）
 - **未取込は18回**。新しい順に `2017h29h` → `2009h21a`
+- 6 つ目: **基本情報 科目A 最短合格**（`fe`。旧午前の最新 5 回・400 問・論点 315、全件に解説と教材。**データは完成、本番は未配備**＝本人の `bootstrap_personal.sh fe` 待ち。`docs/基本情報を追加する.md`）
 
 `data/pdfs/` に全29回の PDF、`data/pages/` に全ページの画像、
 `data/answer_keys.json` に全2,900問の正解表が揃っている。前工程は済んでいるので、
