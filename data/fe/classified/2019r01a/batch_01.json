@@ -1,0 +1,249 @@
+{
+ "exam": "2019r01a",
+ "range": "1-27",
+ "classifications": [
+  {
+   "number": 1,
+   "syllabus_item": 7,
+   "topic_term": "流れ図",
+   "topic_is_new": true,
+   "related_terms": ["定義済み処理", "ループ端", "基数変換", "配列"],
+   "confidence": "high",
+   "notes": "流れ図の空欄に入る処理を追跡させる問題。項目7の用語例は流れ図の記号（端子・処理・定義済み処理・ループ端）を個別に挙げるだけで総称が無いため新設。応用情報も同じ位置（項目7「流れ図」）で起こしている。"
+  },
+  {
+   "number": 2,
+   "syllabus_item": 1,
+   "topic_term": "排他的論理和",
+   "topic_is_new": false,
+   "related_terms": ["論理和", "否定", "ビット演算", "マスク処理"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 3,
+   "syllabus_item": 2,
+   "topic_term": "無向グラフ",
+   "topic_is_new": false,
+   "related_terms": ["隣接行列", "ノード", "エッジ", "有向グラフ"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 4,
+   "syllabus_item": 2,
+   "topic_term": "関数の極限",
+   "topic_is_new": true,
+   "related_terms": ["多項式の次数", "微分", "対数", "無限大"],
+   "confidence": "medium",
+   "notes": "t→∞ での関数の商の極限を求める問題。項目2の用語例に「微分」「積分」はあるが極限そのものが無く、ほかの項目にも該当語が無いため新設。項目の選択（応用数学）は確実。"
+  },
+  {
+   "number": 5,
+   "syllabus_item": 2,
+   "topic_term": "正規分布",
+   "topic_is_new": false,
+   "related_terms": ["標準偏差", "平均値", "分散", "尖度"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 6,
+   "syllabus_item": 2,
+   "topic_term": "同時確率",
+   "topic_is_new": false,
+   "related_terms": ["乗法定理", "加法定理", "一様分布", "独立事象"],
+   "confidence": "medium",
+   "notes": "独立な2つの一様乱数が一致する確率を数える問題。項目2の用語例の「同時確率」「乗法定理」「加法定理」のどれでも説明できるが、A と B が同じ値を取る組を数える構造なので「同時確率」を主題に採った。"
+  },
+  {
+   "number": 7,
+   "syllabus_item": 9,
+   "topic_term": "BNF",
+   "topic_is_new": true,
+   "related_terms": ["構文規則", "再帰的定義", "メタ言語", "形式言語"],
+   "confidence": "medium",
+   "notes": "BNF は基本情報のシラバスのどの項目の用語例にも無いため新設。項目3（情報に関する理論）の「形式言語」も候補だが、言語の構文定義を読む知識なので応用情報と同じ項目9（プログラム言語）に置いた。"
+  },
+  {
+   "number": 8,
+   "syllabus_item": 6,
+   "topic_term": "LIFO",
+   "topic_is_new": false,
+   "related_terms": ["スタック", "プッシュ", "ポップ", "FIFO"],
+   "confidence": "high",
+   "notes": "スタックの出力順を考えさせる問題。用語例に「スタック」の語が無く、該当するのは「LIFO」なのでこれを論点名にした（応用情報も同じ扱い）。"
+  },
+  {
+   "number": 9,
+   "syllabus_item": 6,
+   "topic_term": "多次元配列",
+   "topic_is_new": false,
+   "related_terms": ["2 次元配列", "添字", "流れ図", "行列の転置"],
+   "confidence": "medium",
+   "notes": "流れ図の形で出題されているので項目7（アルゴリズム）の「流れ図」とも取れるが、解くのに必要なのは 2 次元配列の添字の対応付けなので項目6の「多次元配列」を採用。"
+  },
+  {
+   "number": 10,
+   "syllabus_item": 7,
+   "topic_term": "ハッシュ表探索法",
+   "topic_is_new": false,
+   "related_terms": ["ハッシュ関数", "剰余", "シノニム", "衝突"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 11,
+   "syllabus_item": 7,
+   "topic_term": "再帰",
+   "topic_is_new": false,
+   "related_terms": ["再帰呼出し", "終了条件", "等差数列", "階乗"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 12,
+   "syllabus_item": 11,
+   "topic_term": "CPI（Cycles Per Instruction）",
+   "topic_is_new": true,
+   "related_terms": ["クロック周波数", "MIPS", "サイクルタイム", "命令ミックス"],
+   "confidence": "high",
+   "notes": "クロック周波数と 1 命令あたりのクロック数から毎秒の命令数を求める問題。用語例に CPI が無いため新設。応用情報の論点名「CPI（Cycles Per Instruction）」に表記を揃えた。"
+  },
+  {
+   "number": 13,
+   "syllabus_item": 18,
+   "topic_term": "割込み",
+   "topic_is_new": false,
+   "related_terms": ["多重割込み", "割込み優先度", "プリエンプション", "多重（マルチ）プログラミング"],
+   "confidence": "medium",
+   "notes": "多重割込みの優先度を追ってメイン処理の CPU 時間を求める問題。項目11（プロセッサ）の用語例にも「SVC 割込み」「入出力割込み」があるが、割込みの受付と優先度の制御は OS の仕事なので項目18の「割込み」を採用。"
+  },
+  {
+   "number": 14,
+   "syllabus_item": 14,
+   "topic_term": "デイジーチェーン接続",
+   "topic_is_new": false,
+   "related_terms": ["Thunderbolt", "カスケード接続", "スター接続", "ハブ"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 15,
+   "syllabus_item": 16,
+   "topic_term": "RAID1",
+   "topic_is_new": false,
+   "related_terms": ["ミラーリング", "ストライピング", "パリティ", "RAID5"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 16,
+   "syllabus_item": 17,
+   "topic_term": "稼働率",
+   "topic_is_new": true,
+   "related_terms": ["並列システム", "直列システム", "MTBF", "信頼性ブロック図"],
+   "confidence": "high",
+   "notes": "2 台の処理装置の並列（いずれか一方）と直列（両方）の稼働率の差を求める問題。項目17の用語例に稼働率が無いため新設。応用情報の論点名「稼働率」に表記を揃えた。"
+  },
+  {
+   "number": 17,
+   "syllabus_item": 18,
+   "topic_term": "バッファリング",
+   "topic_is_new": true,
+   "related_terms": ["オーバフロー", "送信タスク", "受信タスク", "スプーリング"],
+   "confidence": "medium",
+   "notes": "タスク間の転送速度差であふれないバッファサイズを求める問題。用語例に該当語が無いため新設。項目17（システムの評価指標）とも取れるが、タスク間のデータ受渡しの仕組みを問うので項目18を採用。セキュリティの「バッファオーバーフロー」（項目38・42）とは別概念なので合流させない。"
+  },
+  {
+   "number": 18,
+   "syllabus_item": 18,
+   "topic_term": "プリエンプティブ方式",
+   "topic_is_new": false,
+   "related_terms": ["リアルタイム OS", "実行可能状態", "待ち状態", "優先順"],
+   "confidence": "high",
+   "notes": "2017h29a 問18 と全文一致の再出題（選択肢まで同一）。同回の分類と同じ論点・項目になるべき問。"
+  },
+  {
+   "number": 19,
+   "syllabus_item": 20,
+   "topic_term": "増分バックアップ",
+   "topic_is_new": false,
+   "related_terms": ["差分バックアップ", "フルバックアップ", "多重バックアップ", "アーカイブ属性"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 20,
+   "syllabus_item": 12,
+   "topic_term": "DRAM",
+   "topic_is_new": false,
+   "related_terms": ["SRAM", "リフレッシュ", "フラッシュメモリ", "ROM"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 21,
+   "syllabus_item": 23,
+   "topic_term": "シフトレジスタ",
+   "topic_is_new": true,
+   "related_terms": ["タイミングチャート", "フリップフロップ", "正論理", "クロックの立上りエッジ"],
+   "confidence": "high",
+   "notes": "波形から 8 ビットシフトレジスタの確定値を読む問題。項目23の用語例にシフトレジスタが無いため新設。応用情報の論点名「シフトレジスタ」に表記を揃えた。"
+  },
+  {
+   "number": 22,
+   "syllabus_item": 23,
+   "topic_term": "真理値表",
+   "topic_is_new": false,
+   "related_terms": ["排他的論理和", "論理積", "論理和", "否定"],
+   "confidence": "medium",
+   "notes": "AND・OR・NOT を組んだ回路の入出力関係を問う問題で、結果は排他的論理和になる。問われているのは回路から真理値表を導く操作なので項目23の「真理値表」を採用し、XOR は related に置いた。"
+  },
+  {
+   "number": 23,
+   "syllabus_item": 25,
+   "topic_term": "表意コード",
+   "topic_is_new": false,
+   "related_terms": ["区分コード（分類コード）", "桁別コード", "順番コード", "合成コード"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 24,
+   "syllabus_item": 26,
+   "topic_term": "H.264",
+   "topic_is_new": false,
+   "related_terms": ["MPEG", "HEVC", "MP3", "JPEG"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 25,
+   "syllabus_item": 29,
+   "topic_term": "多重度",
+   "topic_is_new": true,
+   "related_terms": ["概念データモデル", "クラス図", "エンティティ", "リレーションシップ"],
+   "confidence": "high",
+   "notes": "UML の概念データモデルの多重度（1..* と 0..*）の読み方を問う問題。用語例に多重度が無いため新設。応用情報の論点名「多重度」に表記を揃えた。項目10（その他の言語）の「クラス図」も候補だが、問うているのはデータモデルの解釈なので項目29。"
+  },
+  {
+   "number": 26,
+   "syllabus_item": 30,
+   "topic_term": "集約関数",
+   "topic_is_new": false,
+   "related_terms": ["GROUP BY", "HAVING", "AVG", "WHERE"],
+   "confidence": "medium",
+   "notes": "GROUP BY と HAVING の使い分けを問う SQL の問題。用語例に GROUP BY も HAVING も無く、グループごとの平均を扱うので「集約関数」に寄せた（新設を増やさない判断）。"
+  },
+  {
+   "number": 27,
+   "syllabus_item": 30,
+   "topic_term": "関係代数",
+   "topic_is_new": false,
+   "related_terms": ["射影（projection）", "選択（selection）", "結合（join）", "和（union）"],
+   "confidence": "high",
+   "notes": null
+  }
+ ]
+}

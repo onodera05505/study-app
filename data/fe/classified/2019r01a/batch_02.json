@@ -1,0 +1,384 @@
+{
+ "exam": "2019r01a",
+ "range": "28-54",
+ "classifications": [
+  {
+   "number": 28,
+   "syllabus_item": 31,
+   "topic_term": "トランザクションの状態遷移",
+   "topic_is_new": true,
+   "related_terms": [
+    "2 相コミットメント",
+    "バックワードリカバリ（ロールバック）",
+    "障害回復",
+    "同時実行制御（排他制御）"
+   ],
+   "confidence": "high",
+   "notes": "アクティブ／アボート／コミットの各状態の遷移を問う。用語例に状態遷移を表す語がないため新設。コミットとアボートの処理を扱う項目31で確実。"
+  },
+  {
+   "number": 29,
+   "syllabus_item": 31,
+   "topic_term": "デッドロック",
+   "topic_is_new": false,
+   "related_terms": [
+    "専有ロック",
+    "共有ロック",
+    "ロック粒度",
+    "2 相ロッキングプロトコル"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 30,
+   "syllabus_item": 33,
+   "topic_term": "回線利用率",
+   "topic_is_new": true,
+   "related_terms": [
+    "転送速度",
+    "bps（bit per second：ビット／秒）",
+    "回線容量",
+    "スループット"
+   ],
+   "confidence": "high",
+   "notes": "回線容量に対する実効転送量の割合を求める計算。用語例に「転送速度」「回線容量」はあるが利用率そのものの語がないため新設。"
+  },
+  {
+   "number": 31,
+   "syllabus_item": 34,
+   "topic_term": "CSMA/CD",
+   "topic_is_new": false,
+   "related_terms": [
+    "CSMA/CA",
+    "トークンパッシング",
+    "衝突",
+    "コンテンション方式"
+   ],
+   "confidence": "high",
+   "notes": "応用情報 2024r06h 問30 に同一問題があり、その分類（項目34・CSMA/CD）に合わせた。"
+  },
+  {
+   "number": 32,
+   "syllabus_item": 34,
+   "topic_term": "レイヤー3（L3）スイッチ",
+   "topic_is_new": false,
+   "related_terms": [
+    "レイヤー2（L2）スイッチ",
+    "リピータ",
+    "ルータ",
+    "ネットワーク層"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 33,
+   "syllabus_item": 33,
+   "topic_term": "IP マスカレード（NAPT）",
+   "topic_is_new": false,
+   "related_terms": [
+    "NAT（Network Address Translation：ネットワークアドレス変換）",
+    "グローバル IP アドレス",
+    "プライベート IP アドレス",
+    "ポート番号"
+   ],
+   "confidence": "medium",
+   "notes": "表記は項目42の用語例「IP マスカレード（NAPT）」をそのままコピーした。項目は42（セキュリティ実装技術）とも迷ったが、設問はセキュリティ効果ではなく1個のグローバルIPアドレスで複数PCを接続する仕組みを問うているため、NAT とアドレス種別を扱う項目33を選んだ（応用情報 2023r05a 問32 も同じ枠組みで項目33）。"
+  },
+  {
+   "number": 34,
+   "syllabus_item": 35,
+   "topic_term": "ポート番号",
+   "topic_is_new": false,
+   "related_terms": [
+    "プロキシサーバ",
+    "HTTP",
+    "TCP",
+    "ウェルノウンポート"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 35,
+   "syllabus_item": 38,
+   "topic_term": "DNS キャッシュポイズニング",
+   "topic_is_new": false,
+   "related_terms": [
+    "DNS",
+    "名前解決",
+    "FQDN",
+    "ファーミング"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 36,
+   "syllabus_item": 41,
+   "topic_term": "マルウェアの動的解析",
+   "topic_is_new": true,
+   "related_terms": [
+    "サンドボックス",
+    "ビヘイビア法（振る舞い検知）",
+    "静的解析",
+    "逆コンパイル"
+   ],
+   "confidence": "high",
+   "notes": "検体を実行して挙動を観測する解析手法。用語例の「マルウェア検出手法」は括弧内に検出法が列挙されているだけで動的解析の語がないため新設。解析・検出の手法なので項目41。"
+  },
+  {
+   "number": 37,
+   "syllabus_item": 42,
+   "topic_term": "WPA3",
+   "topic_is_new": false,
+   "related_terms": [
+    "WPA2",
+    "SSID",
+    "無線LAN アクセスポイント",
+    "IEEE 802.11a/b/g/n/ac/ax"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 38,
+   "syllabus_item": 38,
+   "topic_term": "デジタル署名（署名鍵， 検証鍵）",
+   "topic_is_new": false,
+   "related_terms": [
+    "RSA 暗号",
+    "公開鍵暗号方式",
+    "メッセージダイジェスト",
+    "ハッシュ関数"
+   ],
+   "confidence": "high",
+   "notes": "応用情報 2023r05h 問38 にほぼ同一の問題があり、同じ論点（項目38・デジタル署名）に合わせた。表記は基本情報シラバスの用語例をそのままコピー（読点の後の空白を含む）。"
+  },
+  {
+   "number": 39,
+   "syllabus_item": 38,
+   "topic_term": "バックドア",
+   "topic_is_new": false,
+   "related_terms": [
+    "不正アクセス",
+    "ポートスキャン",
+    "ルートキット",
+    "バッファオーバーフロー"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 40,
+   "syllabus_item": 38,
+   "topic_term": "ハッシュ関数 （SHA-256（SHA-2）ほか）",
+   "topic_is_new": false,
+   "related_terms": [
+    "メッセージダイジェスト",
+    "完全性（Integrity）",
+    "改ざん",
+    "デジタル署名（署名鍵， 検証鍵）"
+   ],
+   "confidence": "high",
+   "notes": "SHA-256 で算出した値を照合して改ざんを検知する問題。表記は用語例のエントリをそのままコピーした。"
+  },
+  {
+   "number": 41,
+   "syllabus_item": 38,
+   "topic_term": "SEO ポイズニング",
+   "topic_is_new": true,
+   "related_terms": [
+    "DNS キャッシュポイズニング",
+    "ドライブバイダウンロード",
+    "サイバー攻撃",
+    "フィッシング（スミッシングほか）"
+   ],
+   "confidence": "high",
+   "notes": "用語例では「SEO ポイズニング・ゼロデイ攻撃」と2つの別概念が1エントリに連結されており単独の表記が無いため、設問の主題である SEO ポイズニングを新設した。"
+  },
+  {
+   "number": 42,
+   "syllabus_item": 41,
+   "topic_term": "DMZ（非武装地帯）",
+   "topic_is_new": false,
+   "related_terms": [
+    "ファイアウォール",
+    "パケットフィルタリング",
+    "多層防御",
+    "アクセス制御"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 43,
+   "syllabus_item": 41,
+   "topic_term": "SIEM（Security Information and Event Management ）",
+   "topic_is_new": false,
+   "related_terms": [
+    "ログの取得",
+    "IDS（Intrusion Detection System：侵入検知システム）",
+    "UTM（Unified Threat Management：統合脅威管理）",
+    "WAF（Web Application Firewall）"
+   ],
+   "confidence": "high",
+   "notes": "応用情報 2017h29a 問38 に同一問題があり、その分類（項目41・SIEM）に合わせた。表記は基本情報シラバスの用語例をそのままコピー（閉じ括弧前の空白を含む）。"
+  },
+  {
+   "number": 44,
+   "syllabus_item": 42,
+   "topic_term": "SMTP-AUTH",
+   "topic_is_new": true,
+   "related_terms": [
+    "APOP",
+    "POP3S",
+    "S/MIME（Secure MIME）",
+    "送信元ドメイン認証"
+   ],
+   "confidence": "high",
+   "notes": "用語例では「スパム対策（… SMTP-AUTH …ほか）」の括弧内に別概念として列挙されているだけで単独の表記が無いため、設問の主題である SMTP-AUTH を新設した。"
+  },
+  {
+   "number": 45,
+   "syllabus_item": 43,
+   "topic_term": "DFD",
+   "topic_is_new": false,
+   "related_terms": [
+    "プロセス",
+    "データストア",
+    "データフロー",
+    "構造化分析法"
+   ],
+   "confidence": "high",
+   "notes": "項目49にも DFD があるが、設問は構造化分析での記法（○＝プロセス）を問うており、要件定義でのモデリング表記なので項目43を選んだ。"
+  },
+  {
+   "number": 46,
+   "syllabus_item": 44,
+   "topic_term": "モジュール結合度",
+   "topic_is_new": true,
+   "related_terms": [
+    "モジュール分割",
+    "独立性",
+    "データ結合",
+    "共通結合"
+   ],
+   "confidence": "high",
+   "notes": "用語例に「モジュール分割」「独立性」はあるが結合度そのものの語が無いため新設。モジュール分割を扱う項目44。"
+  },
+  {
+   "number": 47,
+   "syllabus_item": 45,
+   "topic_term": "エラー埋込法",
+   "topic_is_new": false,
+   "related_terms": [
+    "潜在エラー数",
+    "バグ管理図",
+    "テストケース",
+    "実験計画法"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 48,
+   "syllabus_item": 46,
+   "topic_term": "スタブ",
+   "topic_is_new": false,
+   "related_terms": [
+    "ドライバ",
+    "トップダウンテスト",
+    "ボトムアップテスト",
+    "ユニットテスト"
+   ],
+   "confidence": "high",
+   "notes": "応用情報 2017h29a 問47 に同一問題があり、その分類（項目46・スタブ）に合わせた。"
+  },
+  {
+   "number": 49,
+   "syllabus_item": 45,
+   "topic_term": "判定条件網羅（decision coverage）",
+   "topic_is_new": false,
+   "related_terms": [
+    "命令網羅",
+    "条件網羅",
+    "複数条件網羅（multiple condition coverage）",
+    "テストケース"
+   ],
+   "confidence": "medium",
+   "notes": "命令網羅と判定条件網羅の包含関係を問う問題で、用語例にはどちらも単独で載っている。解答を決めるのは「判定条件網羅を満たせば命令網羅も満たす」という強い側の基準なので判定条件網羅を論点にし、命令網羅を周辺用語に置いた。"
+  },
+  {
+   "number": 50,
+   "syllabus_item": 49,
+   "topic_term": "XP（エクストリームプログラミング）",
+   "topic_is_new": false,
+   "related_terms": [
+    "ペアプログラミング",
+    "リファクタリング",
+    "テスト駆動開発（TDD）",
+    "継続的インテグレーション （CI）"
+   ],
+   "confidence": "high",
+   "notes": "応用情報 2025r07h 問48（XP のプラクティスを選ぶ同型問題）に合わせ、主題である XP を論点にしてペアプログラミングを周辺用語に置いた。"
+  },
+  {
+   "number": 51,
+   "syllabus_item": 58,
+   "topic_term": "PDM（Precedence Diagramming Method：プレシデンスダイアグラム法）",
+   "topic_is_new": false,
+   "related_terms": [
+    "活動順序",
+    "アローダイアグラム",
+    "スケジュールネットワーク分析",
+    "FS 関係（Finish-to-Start）"
+  ],
+   "confidence": "medium",
+   "notes": "FS／SS／FF／SF という依存関係の種類は用語例に無く、これらは PDM が定める先行関係の型なので PDM を論点にした（応用情報 2020r02o 問53・2022r04a 問52 の依存関係の問題も項目58・PDM）。プロジェクトマネジメント系の論点であり、同綴りの PDM（Product Data Management：ストラテジ系）とは別概念なので混同しないこと。"
+  },
+  {
+   "number": 52,
+   "syllabus_item": 58,
+   "topic_term": "アローダイアグラム",
+   "topic_is_new": false,
+   "related_terms": [
+    "CPM（Critical Path Method： クリティカルパス法）",
+    "ダミー作業",
+    "PERT",
+    "スケジュールネットワーク分析"
+   ],
+   "confidence": "high",
+   "notes": "応用情報ではアローダイアグラムからクリティカルパスや日数を読む問題を一貫して項目58・アローダイアグラムに割り当てており、それに合わせた。"
+  },
+  {
+   "number": 53,
+   "syllabus_item": 59,
+   "topic_term": "ファンクションポイント法",
+   "topic_is_new": false,
+   "related_terms": [
+    "LOC（Lines of Code） 法",
+    "COCOMO（Constructive Cost Model）",
+    "類推見積り",
+    "ボトムアップ見積り"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 54,
+   "syllabus_item": 63,
+   "topic_term": "コミュニケーションチャネル",
+   "topic_is_new": false,
+   "related_terms": [
+    "双方向コミュニケーション",
+    "プロジェクトチーム",
+    "進捗報告",
+    "組合せ"
+   ],
+   "confidence": "high",
+   "notes": "n(n-1)/2 でチャネル数を求める計算。応用情報 2021r03h 問55（16人の総当たり顔合わせ）と同型で、同じ項目63・コミュニケーションチャネル。"
+  }
+ ]
+}

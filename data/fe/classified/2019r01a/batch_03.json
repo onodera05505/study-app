@@ -1,0 +1,370 @@
+{
+ "exam": "2019r01a",
+ "range": "55-80",
+ "classifications": [
+  {
+   "number": 55,
+   "syllabus_item": 65,
+   "topic_term": "PDCA",
+   "topic_is_new": false,
+   "related_terms": [
+    "マネジメントシステム",
+    "継続的改善",
+    "是正処置",
+    "サービスマネジメントシステム"
+   ],
+   "confidence": "high",
+   "notes": "サービスマネジメントシステムに PDCA を当てたときの Act を問う。ap も同じ問題型を項目65の『PDCA』に付けている（2021r03h ほか）。"
+  },
+  {
+   "number": 56,
+   "syllabus_item": 65,
+   "topic_term": "移行計画",
+   "topic_is_new": false,
+   "related_terms": [
+    "移行判断",
+    "移行リハーサル",
+    "ロールバック （切り戻し）",
+    "業務及びシステムの移行"
+   ],
+   "confidence": "high",
+   "notes": "公式の分野はマネジメント系。『移行計画』は項目48（保守・廃棄＝テクノロジ系）にもあるが分野が合わないので項目65を採る。"
+  },
+  {
+   "number": 57,
+   "syllabus_item": 65,
+   "topic_term": "RTO（目標復旧時間）",
+   "topic_is_new": false,
+   "related_terms": [
+    "RPO（目標復旧時点）",
+    "事業継続計画（BCP）",
+    "MTBF",
+    "MTTR"
+   ],
+   "confidence": "high",
+   "notes": "ap も RTO の問題を項目65の『RTO（目標復旧時間）』に付けている（2023r05h）。表記をそのまま揃えた。"
+  },
+  {
+   "number": 58,
+   "syllabus_item": 69,
+   "topic_term": "開発・運用・保守プロセスの信頼性・効率性",
+   "topic_is_new": true,
+   "related_terms": [
+    "システム監査上の判断尺度",
+    "監査手続の適用",
+    "受入れテスト",
+    "テストケース"
+   ],
+   "confidence": "medium",
+   "notes": "システムテスト（開発プロセス）の監査のチェックポイント。ap は同型の問（受入テストの監査・アジャイル開発の監査）をこの論点名に寄せているので名前を揃えた。基本情報シラバス Ver.9.2 の項目69の用語例にはこの語が無いため topic_is_new=true。"
+  },
+  {
+   "number": 59,
+   "syllabus_item": 69,
+   "topic_term": "監査の独立性と客観性の保持",
+   "topic_is_new": false,
+   "related_terms": [
+    "システム監査人の権限と責任等",
+    "内部監査",
+    "外部監査",
+    "監査人の倫理"
+   ],
+   "confidence": "high",
+   "notes": "被監査部門（情報システム部・経理部）に所属しない者とする、が正解。ap 2025r07a 問58 と同じ論点名に合わせた。"
+  },
+  {
+   "number": 60,
+   "syllabus_item": 69,
+   "topic_term": "システム監査人の権限と責任等",
+   "topic_is_new": false,
+   "related_terms": [
+    "監査の独立性と客観性の保持",
+    "監査証拠の入手と評価",
+    "監査手続の適用",
+    "アクセス制御"
+   ],
+   "confidence": "medium",
+   "notes": "監査人がしてよい行為（規程の閲覧）と、被監査部門の業務になってしまう行為（台帳作成・方針制定・手続実施）の区別を問う。『監査の独立性と客観性の保持』（問59）とも読めるが、問われているのは監査人の行為の範囲なのでこちらにした。ap は『システム監査人の役割と権限』の問をこの論点名に付けている。"
+  },
+  {
+   "number": 61,
+   "syllabus_item": 75,
+   "topic_term": "IT ポートフォリオ",
+   "topic_is_new": false,
+   "related_terms": [
+    "開発投資対効果",
+    "IT 投資マネジメント",
+    "ベンチマーキング",
+    "経営資源の最適配分"
+   ],
+   "confidence": "high",
+   "notes": "ap も『IT ポートフォリオ』を項目75に付けている。"
+  },
+  {
+   "number": 62,
+   "syllabus_item": 72,
+   "topic_term": "RPA（Robotic Process Automation）",
+   "topic_is_new": false,
+   "related_terms": [
+    "プロセスの可視化／標準化／自動化",
+    "BPR（Business Process Reengineering ）",
+    "ワークフローシステム",
+    "BPO （ Business Process Outsourcing）"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 63,
+   "syllabus_item": 90,
+   "topic_term": "ビッグデータ",
+   "topic_is_new": false,
+   "related_terms": [
+    "非構造化データ",
+    "ソーシャルメディアデータ",
+    "パーソナルデータ",
+    "テキストマイニング"
+   ],
+   "confidence": "high",
+   "notes": "『ビッグデータ』は項目32（データベース応用＝テクノロジ系）にもあるが、公式の分野がストラテジ系なので項目90を採る。"
+  },
+  {
+   "number": 64,
+   "syllabus_item": 75,
+   "topic_term": "プライバシーバイデザイン",
+   "topic_is_new": true,
+   "related_terms": [
+    "情報システム導入リスク分析",
+    "プライバシーマーク",
+    "情報セキュリティ方針",
+    "要配慮個人情報"
+   ],
+   "confidence": "medium",
+   "notes": "『プライバシーバイデザイン』は用語例では項目38（情報セキュリティ＝テクノロジ系）にしか無く、公式の分野（ストラテジ系）と矛盾するので使えない。上流工程で稼働後のリスクへの予防的機能を検討する話なので、項目75の『情報システム導入リスク分析』の側に置いた。項目76（要件定義）も候補。"
+  },
+  {
+   "number": 65,
+   "syllabus_item": 76,
+   "topic_term": "非機能要件定義",
+   "topic_is_new": true,
+   "related_terms": [
+    "要求仕様書",
+    "課題定義",
+    "現状分析",
+    "非機能要件"
+   ],
+   "confidence": "medium",
+   "notes": "ap は同型の問を項目76の『非機能要件定義』に付けているので名前を揃えた。基本情報シラバス Ver.9.2 の項目76の用語例には無い（『非機能要件』は項目43・44・65＝ほかの分野・項目にある）ため topic_is_new=true。"
+  },
+  {
+   "number": 66,
+   "syllabus_item": 79,
+   "topic_term": "リレーションシップマーケティング",
+   "topic_is_new": false,
+   "related_terms": [
+    "ワントゥワンマーケティング",
+    "ダイレクトマーケティング",
+    "クロスメディアマーケティング",
+    "顧客ロイヤルティ"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 67,
+   "syllabus_item": 80,
+   "topic_term": "BSC（Balanced Scorecard：バランススコアカード）",
+   "topic_is_new": false,
+   "related_terms": [
+    "KPI（Key Performance Indicator：重要業績評価指標）",
+    "KGI（KeyGoal Indicator：重要目標達成指標）",
+    "モニタリング",
+    "競合分 析"
+   ],
+   "confidence": "high",
+   "notes": "用語例の表記をそのままコピーした（ap 側は短縮形『バランススコアカード』を使っている回があるが、基本情報は用語例の表記で統一する）。"
+  },
+  {
+   "number": 68,
+   "syllabus_item": 82,
+   "topic_term": "プロダクトイノベーション",
+   "topic_is_new": true,
+   "related_terms": [
+    "MOT（Management of Technology ：技術経営）",
+    "プロセスイノベーション",
+    "イノベーション",
+    "R&D（Research and Development）"
+   ],
+   "confidence": "medium",
+   "notes": "選択肢は MOT・技術経営・プロセスイノベーションの説明で、主題はプロダクトイノベーション。用語例に無いため新設。"
+  },
+  {
+   "number": 69,
+   "syllabus_item": 74,
+   "topic_term": "デジタルディバイド",
+   "topic_is_new": false,
+   "related_terms": [
+    "IT リテラシー",
+    "メディアリテラシー",
+    "ユニバーサルデザイン",
+    "アクセシビリティ"
+   ],
+   "confidence": "medium",
+   "notes": "問題文（原文は『ディジタルディバイド』）は情報リテラシの有無による格差を問うので、IT リテラシーと並ぶ項目74に置いた。同じ用語は項目84（ビジネスシステム）の用語例にもあり、そちらを採る判断もあり得る。論点名は用語例の表記『デジタルディバイド』に統一。"
+  },
+  {
+   "number": 70,
+   "syllabus_item": 85,
+   "topic_term": "かんばん方式",
+   "topic_is_new": true,
+   "related_terms": [
+    "JIT（Just In Time：ジャストインタイム）",
+    "リーン生産方式",
+    "セル生産方式",
+    "MRP"
+   ],
+   "confidence": "high",
+   "notes": "ap 2022r04h 問72 と同一問題。同じ項目85・同じ論点名『かんばん方式』に合わせた。用語例は『生産方式（かんばん方式，リーン生産方式，セル生産方式）』と括弧内に別概念が並ぶ形なので、仕様どおり主題の1語だけを採り topic_is_new=true とした。"
+  },
+  {
+   "number": 71,
+   "syllabus_item": 86,
+   "topic_term": "暗号資産（仮想通貨）",
+   "topic_is_new": false,
+   "related_terms": [
+    "マイニング",
+    "ブロックチェーンの活用（トレーサビリティ確保，スマートコントラクトほか）",
+    "フィンテック（FinTech）",
+    "NFT（Non-Fungible Token）"
+   ],
+   "confidence": "medium",
+   "notes": "主題の語は『マイニング』だが用語例に無く、ap も仮想通貨の問を項目86の『暗号資産（仮想通貨）』に寄せているので、頻度を分散させないためこの論点にまとめた。マイニングは周辺用語に置いた。"
+  },
+  {
+   "number": 72,
+   "syllabus_item": 78,
+   "topic_term": "クラウドファンディング",
+   "topic_is_new": false,
+   "related_terms": [
+    "クラウドソーシング",
+    "アフィリエイト",
+    "アカウントアグリゲーション",
+    "ベンチャービジネス"
+   ],
+   "confidence": "medium",
+   "notes": "誤りの選択肢（アフィリエイト・クラウドソーシング・アカウントアグリゲーション）は項目86（e-ビジネス）の用語だが、主題の『クラウドファンディング』が用語例にあるのは項目78なので、表記をそのまま使える項目78を採った。"
+  },
+  {
+   "number": 73,
+   "syllabus_item": 84,
+   "topic_term": "機械学習",
+   "topic_is_new": true,
+   "related_terms": [
+    "AI による自動化",
+    "ロボティクス",
+    "スマートファクトリー",
+    "経験曲線"
+   ],
+   "confidence": "medium",
+   "notes": "『機械学習』は基本情報シラバス Ver.9.2 の用語例のどこにも無いため新設。公式の分野はストラテジ系なので、AI 関連の用語例がまとまっている項目84に置いた（生産現場が舞台なので項目88（産業機器）も候補）。"
+  },
+  {
+   "number": 74,
+   "syllabus_item": 89,
+   "topic_term": "BCP（Business Continuity Plan：事業継続計画）",
+   "topic_is_new": false,
+   "related_terms": [
+    "BCM（Business Continuity Management：事業継続マネジメント）",
+    "事業影響度分析（BIA）",
+    "JIS Q 22301（ISO 22301）",
+    "リスクへの対応"
+   ],
+   "confidence": "high",
+   "notes": "用語例には全角空白の有無が違う2通りの表記があるが、ap と同じ『BCP（Business Continuity Plan：事業継続計画）』に揃えた。項目65にも『事業継続計画（BCP）』があるが、公式の分野がストラテジ系なので項目89。"
+  },
+  {
+   "number": 75,
+   "syllabus_item": 89,
+   "topic_term": "CIO（Chief Information Officer：最高情報責任者）",
+   "topic_is_new": false,
+   "related_terms": [
+    "CEO（Chief Executive Officer：最高経営責任者）",
+    "CDO（Chief Digital Officer ：最高デジタル責任者）",
+    "CISO（Chief Information Security Officer ：最高情報セキュリティ責任者）",
+    "情報システム戦略委員会"
+   ],
+   "confidence": "medium",
+   "notes": "項目71（情報システム戦略）の用語例にも『CIO』が単独であるが、経営層の役職の定義が集まっている項目89の表記に寄せた（ap も CIO の問を項目89に付けている）。"
+  },
+  {
+   "number": 76,
+   "syllabus_item": 90,
+   "topic_term": "配分問題",
+   "topic_is_new": false,
+   "related_terms": [
+    "シンプレックス法",
+    "線形計画法",
+    "輸送問題",
+    "最適化"
+   ],
+   "confidence": "high",
+   "notes": "原料の調達可能量の制約下で利益を最大化する線形計画問題。ap は同型の問（製品 X，Y の利益最大化）を項目90の『配分問題』に付けているので合わせた。"
+  },
+  {
+   "number": 77,
+   "syllabus_item": 91,
+   "topic_term": "ROI（Return on Investment：投資利益率）",
+   "topic_is_new": true,
+   "related_terms": [
+    "NPV（正味現在価値）",
+    "IRR（内部収益率）",
+    "回収期間法",
+    "経済性計算"
+   ],
+   "confidence": "medium",
+   "notes": "基本情報シラバス Ver.9.2 の用語例に ROI が無いため新設。論点名は ap の表記をそのままコピーした。ap は項目71（情報システム戦略の IT 投資）に付けているが、この問は IT 投資に限らない一般の投資評価指標なので、『経済性計算』がある項目91に置いた。"
+  },
+  {
+   "number": 78,
+   "syllabus_item": 91,
+   "topic_term": "損益分岐点",
+   "topic_is_new": false,
+   "related_terms": [
+    "変動費率",
+    "固定費",
+    "目標利益",
+    "損益計算書"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 79,
+   "syllabus_item": 94,
+   "topic_term": "シュリンクラップ契約",
+   "topic_is_new": false,
+   "related_terms": [
+    "ソフトウェア使用許諾契約",
+    "ライセンス契約",
+    "ボリュームライセンス契約",
+    "サイトライセンス契約"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 80,
+   "syllabus_item": 94,
+   "topic_term": "製造物責任法",
+   "topic_is_new": true,
+   "related_terms": [
+    "製造物",
+    "瑕疵",
+    "組込み機器",
+    "ソフトウェアパッケージ"
+   ],
+   "confidence": "high",
+   "notes": "ap 2017h29a 問80・2016h28h 問80 と同一問題。同じ項目94・同じ論点名『製造物責任法』に合わせた（用語例に無いため topic_is_new=true も ap と同じ）。"
+  }
+ ]
+}

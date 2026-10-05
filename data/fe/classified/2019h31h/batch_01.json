@@ -1,0 +1,249 @@
+{
+ "exam": "2019h31h",
+ "range": "1-27",
+ "classifications": [
+  {
+   "number": 1,
+   "syllabus_item": 1,
+   "topic_term": "基数",
+   "topic_is_new": true,
+   "related_terms": ["2進数", "小数の基数変換", "固定小数点数", "10進数"],
+   "confidence": "high",
+   "notes": "7÷32 を 2 進小数で表す基数変換の問題。項目1の用語例に基数・基数変換に当たる語が無いため新設。論点名は応用情報側の同種の論点名（基数）に粒度と表記を揃えた。"
+  },
+  {
+   "number": 2,
+   "syllabus_item": 1,
+   "topic_term": "論理積",
+   "topic_is_new": false,
+   "related_terms": ["ビットマスク", "排他的論理和", "論理和", "パリティチェック"],
+   "confidence": "high",
+   "notes": "16進数 7F との AND でパリティビットを落とすビットマスクの問題。項目8（プログラミング）の用語例「ビット演算」も候補だが、問うているのは論理積の働きそのものなので基礎理論側の項目1を採用。"
+  },
+  {
+   "number": 3,
+   "syllabus_item": 1,
+   "topic_term": "命題論理",
+   "topic_is_new": false,
+   "related_terms": ["論理和", "否定", "真", "偽"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 4,
+   "syllabus_item": 3,
+   "topic_term": "教師あり学習 （回帰， 分類など）",
+   "topic_is_new": false,
+   "related_terms": ["教師なし学習 （クラスタリング， 次元削減など）", "強化学習", "学習 （訓練）データ", "ニューラルネットワーク"],
+   "confidence": "high",
+   "notes": "用語例の表記（全角スペース混じり）をそのままコピーしている。"
+  },
+  {
+   "number": 5,
+   "syllabus_item": 6,
+   "topic_term": "2 分探索木",
+   "topic_is_new": false,
+   "related_terms": ["2 分木", "探索木", "根", "葉"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 6,
+   "syllabus_item": 7,
+   "topic_term": "再帰",
+   "topic_is_new": false,
+   "related_terms": ["スタック", "LIFO", "プッシュ", "ポップ"],
+   "confidence": "medium",
+   "notes": "再帰呼出しの展開を追えるかを問う問題。項目6（データ構造）の「LIFO」も候補だが、スタック操作そのものより再帰の動作の追跡が中心なので項目7を採用した。"
+  },
+  {
+   "number": 7,
+   "syllabus_item": 7,
+   "topic_term": "流れ図",
+   "topic_is_new": true,
+   "related_terms": ["ユークリッドの互除法", "判断", "ループ端", "最大公約数"],
+   "confidence": "medium",
+   "notes": "流れ図をトレースして比較回数を数える問題。項目7の用語例は流れ図の部品（端子・処理・判断・ループ端）に分かれていて総称が無いため「流れ図」を新設した。ユークリッドの互除法そのものより流れ図の追跡が中心と判断。"
+  },
+  {
+   "number": 8,
+   "syllabus_item": 18,
+   "topic_term": "リエントラント",
+   "topic_is_new": true,
+   "related_terms": ["リカーシブ", "リユーザブル", "リロケータブル", "プロセス"],
+   "confidence": "medium",
+   "notes": "リエントラント・リユーザブルなどのプログラム属性は基本情報のシラバス（Ver.9.2）の用語例に一切載っていないため新設。置き場は項目8（プログラミング）とも取れるが、複数プロセスからの同時呼出しという文脈なので OS（項目18）を採用した。"
+  },
+  {
+   "number": 9,
+   "syllabus_item": 11,
+   "topic_term": "外部割込み",
+   "topic_is_new": true,
+   "related_terms": ["内部割込み", "SVC（SuperVisor Call）割込み", "入出力割込み", "ページフォールト"],
+   "confidence": "medium",
+   "notes": "内部割込みと外部割込みの区別を問う問題。用語例に「外部割込み」の語は無いため新設。項目18（オペレーティングシステム）にも「割込み」があるが、割込みの種類（SVC割込み・入出力割込み）を用語例に持つ項目11（プロセッサ）を採用した。"
+  },
+  {
+   "number": 10,
+   "syllabus_item": 12,
+   "topic_term": "キャッシュメモリ",
+   "topic_is_new": true,
+   "related_terms": ["実効アクセス時間", "ヒット率", "主記憶", "ディスクキャッシュ"],
+   "confidence": "high",
+   "notes": "ヒット率から実効アクセス時間を求める計算。項目12の用語例に「キャッシュメモリ」が無い（「ディスクキャッシュ」だけ）ため新設。論点名は応用情報側の同種の論点名に揃えた。"
+  },
+  {
+   "number": 11,
+   "syllabus_item": 27,
+   "topic_term": "dpi（dot per inch）",
+   "topic_is_new": false,
+   "related_terms": ["ppi（pixels per inch）", "ポイント", "ラスターデータ（ビットマップデータ）", "解像度"],
+   "confidence": "medium",
+   "notes": "ディスプレイの解像度（dpi）と文字のポイント数からドット数を求める問題。項目15（入出力装置）の表示装置側も候補だが、解像度の単位そのものを用語例に持つ項目27を採用した。"
+  },
+  {
+   "number": 12,
+   "syllabus_item": 15,
+   "topic_term": "3D プリンター",
+   "topic_is_new": false,
+   "related_terms": ["熱溶解積層方式", "インパクトプリンター", "プロジェクター", "画像入力装置（スキャナー，OCR，OMR，デジタルカメラほか）"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 13,
+   "syllabus_item": 16,
+   "topic_term": "デュアルシステム",
+   "topic_is_new": false,
+   "related_terms": ["デュプレックスシステム", "ロードシェアリングシステム", "主系（現用系）", "従系（待機系）"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 14,
+   "syllabus_item": 17,
+   "topic_term": "稼働率",
+   "topic_is_new": true,
+   "related_terms": ["直列システムの稼働率", "並列システムの稼働率", "信頼性ブロック図", "フォールトトレラントシステム"],
+   "confidence": "high",
+   "notes": "装置の稼働率からシステム全体の稼働率の式を組み立てる問題。項目17の用語例に「稼働率」が無いため新設。論点名は応用情報側の最頻出論点（稼働率）に表記を揃えた。"
+  },
+  {
+   "number": 15,
+   "syllabus_item": 17,
+   "topic_term": "モニタリング",
+   "topic_is_new": false,
+   "related_terms": ["フラグメンテーション", "負荷", "レスポンスタイム（応答時間）", "容量・能力管理"],
+   "confidence": "medium",
+   "notes": "性能悪化の想定原因と調査項目の対応付け。データベースの文脈だが問うているのは性能低下の切分け（監視・調査）なので項目17を採用した。項目31（トランザクション処理）のインデックス・負荷も候補で迷った。"
+  },
+  {
+   "number": 16,
+   "syllabus_item": 18,
+   "topic_term": "ディスパッチ",
+   "topic_is_new": false,
+   "related_terms": ["実行可能状態", "実行状態", "ジョブスケジューラー", "プリエンプティブ方式"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 17,
+   "syllabus_item": 18,
+   "topic_term": "デバイスドライバ",
+   "topic_is_new": true,
+   "related_terms": ["システムソフトウェア", "ミドルウェア", "周辺機器", "カーネルモード （スーパーバイザーモード）"],
+   "confidence": "medium",
+   "notes": "デバイスドライバは基本情報のシラバスの用語例に無いため新設。置き場は項目19（ミドルウェア）とも取れるが、周辺機器を制御するシステムソフトウェアなので項目18（オペレーティングシステム）を採用した。"
+  },
+  {
+   "number": 18,
+   "syllabus_item": 7,
+   "topic_term": "ハッシュ表探索法",
+   "topic_is_new": false,
+   "related_terms": ["ハッシュ関数", "シノニム", "2 分探索法", "線形探索法"],
+   "confidence": "high",
+   "notes": "項目20（ファイルシステム）の「検索手法」も候補だが、ハッシュ法そのものの説明を問うているので項目7を採用した。"
+  },
+  {
+   "number": 19,
+   "syllabus_item": 21,
+   "topic_term": "インタプリタ",
+   "topic_is_new": false,
+   "related_terms": ["コンパイラ", "原始プログラム（ソースプログラム）", "目的プログラム", "ローダ"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 20,
+   "syllabus_item": 22,
+   "topic_term": "オープンソースソフトウェアの定義",
+   "topic_is_new": true,
+   "related_terms": ["OSI（Open Source Initiative）", "コピーレフト（Copyleft）", "GPL（General Public License）", "再配布の自由"],
+   "confidence": "high",
+   "notes": "OSI によるオープンソースの定義（The Open Source Definition）に沿った取扱いを問う問題。項目22の用語例は個別のライセンス名とコピーレフトだけで定義そのものの語が無いため新設。"
+  },
+  {
+   "number": 21,
+   "syllabus_item": 12,
+   "topic_term": "SRAM",
+   "topic_is_new": false,
+   "related_terms": ["DRAM", "フリップフロップ", "キャッシュメモリ", "ROM"],
+   "confidence": "high",
+   "notes": "メモリセルの構造（フリップフロップ）から種類を選ぶ問題。項目23（ハードウェア）に「フリップフロップ」もあるが、問うているのは半導体メモリの種類の違いなので項目12を採用した。"
+  },
+  {
+   "number": 22,
+   "syllabus_item": 23,
+   "topic_term": "NAND 回路",
+   "topic_is_new": false,
+   "related_terms": ["真理値表", "論理式", "AND 回路", "XOR 回路"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 23,
+   "syllabus_item": 23,
+   "topic_term": "直流給電",
+   "topic_is_new": true,
+   "related_terms": ["電力損失", "データセンタ", "交流", "無停電電源装置（UPS）"],
+   "confidence": "high",
+   "notes": "データセンタの直流給電の利点。用語例に無いため新設。論点名は応用情報側の同一論点名（直流給電）に表記を揃えた。"
+  },
+  {
+   "number": 24,
+   "syllabus_item": 24,
+   "topic_term": "ラジオボタン（ラジオボックス）",
+   "topic_is_new": false,
+   "related_terms": ["チェックボックス", "リストボックス", "プルダウンメニュー", "テキストボックス"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 25,
+   "syllabus_item": 26,
+   "topic_term": "音声のデータ量",
+   "topic_is_new": true,
+   "related_terms": ["標本化周波数", "量子化ビット数", "PCM（Pulse Code Modulation：パルス符号変調）", "サンプリング"],
+   "confidence": "high",
+   "notes": "標本化回数と量子化ビット数から記録できる時間を求める計算。用語例に計算を指す語が無いため新設。論点名は応用情報側の同種の論点名（音声のデータ量）に揃えた。"
+  },
+  {
+   "number": 26,
+   "syllabus_item": 28,
+   "topic_term": "属性（列，フィールド）",
+   "topic_is_new": false,
+   "related_terms": ["関係（リレーション）", "タプル（行，組）", "定義域（ドメイン）", "関係モデル"],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 27,
+   "syllabus_item": 30,
+   "topic_term": "集約関数",
+   "topic_is_new": false,
+   "related_terms": ["GROUP BY 句", "ORDER BY 句", "AVG", "会話型SQL"],
+   "confidence": "medium",
+   "notes": "問うているのは GROUP BY 句と ORDER BY 句の書き方だが、用語例に句の名前が無いため、平均を求める集約関数と合わせて用語例の「集約関数」に寄せた。"
+  }
+ ]
+}
