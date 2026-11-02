@@ -1,0 +1,224 @@
+{
+ "exam": "eng-c19",
+ "source": "roadmap 確認問題（自作）",
+ "normalized": true,
+ "question_count": 12,
+ "questions": [
+  {
+   "number": 1,
+   "page": null,
+   "text": "「https://shop.example.com/items/list.html」のうち、ドメイン名に当たる部分はどれか。",
+   "choices": {
+    "ア": "https",
+    "イ": "shop",
+    "ウ": "example.com",
+    "エ": "/items/list.html"
+   },
+   "has_figure": false,
+   "figure_description": null,
+   "confidence": "high",
+   "notes": null,
+   "source_qid": "t91-1",
+   "tests_goal": 4,
+   "topic_id": 91
+  },
+  {
+   "number": 2,
+   "page": null,
+   "text": "ドメイン名が example.com の A 社から来たように見えるメールに、次のリンクが並んでいた。A 社のサーバを指していると読めるものはどれか。",
+   "choices": {
+    "ア": "https://example.com.login-check.net/top",
+    "イ": "https://login.example.com/top",
+    "ウ": "https://example-com.net/login",
+    "エ": "https://login-example.com/example.com/top"
+   },
+   "has_figure": false,
+   "figure_description": null,
+   "confidence": "high",
+   "notes": null,
+   "source_qid": "t91-2",
+   "tests_goal": 4,
+   "topic_id": 91
+  },
+  {
+   "number": 3,
+   "page": null,
+   "text": "DNS の働きを説明したものはどれか。",
+   "choices": {
+    "ア": "名前の区分ごとに置かれた係を順にたどり、ドメイン名に対応する番号を答える",
+    "イ": "1 か所の大きな表に世界中の名前と番号を集め、そこへ尋ねて番号を答える",
+    "ウ": "番号を受け取り、それに合うドメイン名をその場で新しく作って相手に返す",
+    "エ": "ドメイン名を受け取り、そのサーバの中のどの場所のページかを決めて返す"
+   },
+   "has_figure": false,
+   "figure_description": null,
+   "confidence": "high",
+   "notes": null,
+   "source_qid": "t92-1",
+   "tests_goal": 4,
+   "topic_id": 92
+  },
+  {
+   "number": 4,
+   "page": null,
+   "text": "B さんの PC で、取引先のサイトの名前を番号に変えてみると、番号はきちんと返ってきた。それでもページは開かない。B さんが次に疑う場所として正しいものはどれか。",
+   "choices": {
+    "ア": "名前の答えは得られているので、その番号の相手とつながる段から先を疑う",
+    "イ": "ページが開かない以上、名前から番号を引く段で誤りが起きていると疑う",
+    "ウ": "名前の綴りが誤っているとみて、URL の後ろのパスの部分を書き直して疑う",
+    "エ": "DNS サーバに番号を尋ね直し、別の番号が返ってくるまで引き直して疑う"
+   },
+   "has_figure": false,
+   "figure_description": null,
+   "confidence": "high",
+   "notes": null,
+   "source_qid": "t92-2",
+   "tests_goal": 4,
+   "topic_id": 92
+  },
+  {
+   "number": 5,
+   "page": null,
+   "text": "HTTP がステートレスであることを説明したものはどれか。",
+   "choices": {
+    "ア": "小包が途中で消えても届くまで送り直し、順番どおりに並べてから相手に渡す",
+    "イ": "サーバはつながった相手ごとに話の流れを覚え、続きの頼みにそれを使って返す",
+    "ウ": "サーバは 1 往復ごとに話を閉じ、同じ相手から前に何を頼まれたかを持ち越さない",
+    "エ": "やり取りの中身を暗号にして、途中で他の誰かに読まれない形にしてから送る"
+   },
+   "has_figure": false,
+   "figure_description": null,
+   "confidence": "high",
+   "notes": null,
+   "source_qid": "t93-1",
+   "tests_goal": 4,
+   "topic_id": 93
+  },
+  {
+   "number": 6,
+   "page": null,
+   "text": "C さんはログイン後の画面を作っている。サーバの機械を 3 台に増やし、頼みはどの機械が受けてもよい形にした。ログインした状態を保つ考え方として正しいものはどれか。",
+   "choices": {
+    "ア": "HTTP は前のやり取りを覚えないので、毎回の頼みに本人を示す目印を付けて送る",
+    "イ": "HTTP は最初にログインした機械が流れを覚えるので、何も付けずに続きを頼める",
+    "ウ": "HTTP は TCP の上で動くので、TCP が届けた順番からログインした人を見分ける",
+    "エ": "HTTP は 3 台のうち 1 台にだけ話の流れを残すので、その 1 台に頼みを集める"
+   },
+   "has_figure": false,
+   "figure_description": null,
+   "confidence": "high",
+   "notes": null,
+   "source_qid": "t93-2",
+   "tests_goal": 4,
+   "topic_id": 93
+  },
+  {
+   "number": 7,
+   "page": null,
+   "text": "レスポンスに付く 3 桁の番号の読み方として正しいものはどれか。",
+   "choices": {
+    "ア": "4 で始まる番号は、サーバのプログラムが処理の途中で失敗したことを表す",
+    "イ": "3 で始まる番号は、頼んだ物がサーバのどこにも見つからなかったことを表す",
+    "ウ": "2 で始まる番号は、頼んだ物が別の場所へ移ったのでそちらを見る案内を表す",
+    "エ": "4 で始まる番号は、頼んだ側の書き方や頼んだ場所に誤りがあることを表す"
+   },
+   "has_figure": false,
+   "figure_description": null,
+   "confidence": "high",
+   "notes": null,
+   "source_qid": "t94-1",
+   "tests_goal": 4,
+   "topic_id": 94
+  },
+  {
+   "number": 8,
+   "page": null,
+   "text": "D さんが注文の画面で注文の中身を送る頼み（POST）を出したあと、通信が途切れて結果が分からなかった。同じ頼みをそのまま送り直すときに起こりうることとして正しいものはどれか。",
+   "choices": {
+    "ア": "POST は取り出すだけの頼みなので、何度送り直してもサーバの中身は変わらない",
+    "イ": "POST はデータを増やす頼みなので、1 回目が届いていれば注文が 2 件になりうる",
+    "ウ": "POST は 1 回目と同じ中身ならサーバが 2 回目を捨てるので、注文は 1 件で済む",
+    "エ": "POST は届かなかったときに 404 が返るので、404 が無ければ注文はできていない"
+   },
+   "has_figure": false,
+   "figure_description": null,
+   "confidence": "high",
+   "notes": null,
+   "source_qid": "t94-2",
+   "tests_goal": 4,
+   "topic_id": 94
+  },
+  {
+   "number": 9,
+   "page": null,
+   "text": "次の書き換えのうち、CSS を直して行うものはどれか。",
+   "choices": {
+    "ア": "見出しの文言を「お知らせ」から「新着情報」という言葉に入れ替える",
+    "イ": "見出しの文字の色を黒から青に変え、左寄せから中央寄せに並べ替える",
+    "ウ": "ボタンを押すと、見出しの下に一覧の行が 1 つずつ足されるようにする",
+    "エ": "画像を 1 枚、新しい段落として本文の途中に部品ごと差し込んでおく"
+   },
+   "has_figure": false,
+   "figure_description": null,
+   "confidence": "high",
+   "notes": null,
+   "source_qid": "t95-1",
+   "tests_goal": 4,
+   "topic_id": 95
+  },
+  {
+   "number": 10,
+   "page": null,
+   "text": "E さんの作った画面は、文字や色は意図どおりに出ているが、「もっと見る」を押しても続きの行が増えない。最初に調べる先として正しいものはどれか。",
+   "choices": {
+    "ア": "骨組みを書いた HTML の、見出しや段落を並べたタグの組み方",
+    "イ": "見た目を書いた CSS の、部品ごとに当てる色や並べ方の決まり",
+    "ウ": "動きを書いた JavaScript の、操作に応じて部品を書き換える処理",
+    "エ": "3 種類の文を運ぶ HTTP の、最初に送ったリクエストのヘッダ"
+   },
+   "has_figure": false,
+   "figure_description": null,
+   "confidence": "high",
+   "notes": null,
+   "source_qid": "t95-2",
+   "tests_goal": 4,
+   "topic_id": 95
+  },
+  {
+   "number": 11,
+   "page": null,
+   "text": "URL を開いてから画面が出るまでの流れで、名前を引く段から次のつなぐ段へ渡されるものはどれか。",
+   "choices": {
+    "ア": "サーバが返した結果の番号と HTML",
+    "イ": "ブラウザが送る HTTP のリクエスト",
+    "ウ": "足りない CSS や JavaScript の場所",
+    "エ": "DNS から受け取った相手の番号"
+   },
+   "has_figure": false,
+   "figure_description": null,
+   "confidence": "high",
+   "notes": null,
+   "source_qid": "t96-1",
+   "tests_goal": 4,
+   "topic_id": 96
+  },
+  {
+   "number": 12,
+   "page": null,
+   "text": "利用者から「ページが出ない」と連絡があった。調べると、名前は番号に引けており、相手とも接続でき、サーバからは成功の番号と HTML が返っていた。次に調べる段として正しいものはどれか。",
+   "choices": {
+    "ア": "名前を引く段に戻り、DNS が返した IP アドレスが今の相手のものかを調べる",
+    "イ": "つなぐ段に戻り、TCP の 3 回のやり取りで準備が確かめ合えたかを調べる",
+    "ウ": "頼む段に戻り、ルータがリクエストの小包を相手まで中継できたかを調べる",
+    "エ": "描く段に進み、ブラウザが HTML と足りない文を読んで描けたかを調べる"
+   },
+   "has_figure": false,
+   "figure_description": null,
+   "confidence": "high",
+   "notes": null,
+   "source_qid": "t96-2",
+   "tests_goal": 4,
+   "topic_id": 96
+  }
+ ]
+}

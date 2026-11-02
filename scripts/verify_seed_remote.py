@@ -116,7 +116,9 @@ def main() -> int:
         "SELECT COUNT(*) AS n FROM past_questions"
         " WHERE citation IS NULL OR citation = ''"
         "    OR citation NOT GLOB '出典：* 問[0-9]*'"
-        "    OR citation NOT LIKE '出典：' || exam_label || ' %'"
+        # 「出典：<回のラベル> 」で始まるかは前方の切り出しで比べる。LIKE の型にすると、長い回のラベル
+        # （章の見出しなど）で D1 の型の長さの上限（50 バイト）を超えて SQLITE_ERROR になる
+        "    OR substr(citation, 1, length('出典：' || exam_label || ' ')) <> '出典：' || exam_label || ' '"
     )
     print(f"▶ {db}（{where}）を seed {sql} と突き合わせる")
     results = d1_query(db, args.exam, where, "; ".join(stmts))
