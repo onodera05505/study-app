@@ -120,6 +120,13 @@
       ],
       "vars": { "APP_NAME": "study-app-fe", "EXAM": "fe", "SSO_PORTAL_URL": "https://manabiba-5oz.pages.dev" },
       "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application" }
+    },
+    "eng": {
+      "d1_databases": [
+        { "binding": "DB", "database_name": "study-app-eng-db", "database_id": "PLACEHOLDER-eng-run-scripts/bootstrap_personal.sh", "migrations_dir": "migrations" }
+      ],
+      "vars": { "APP_NAME": "study-app-eng", "EXAM": "eng", "SSO_PORTAL_URL": "https://manabiba-5oz.pages.dev" },
+      "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application" }
     }
   }
 }
