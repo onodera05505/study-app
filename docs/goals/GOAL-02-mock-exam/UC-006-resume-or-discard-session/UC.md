@@ -4,7 +4,7 @@ title: 中断したテストを再開するか破棄する
 actor: ACT-01
 goal: GOAL-02
 status: active
-phase: 完了
+phase: 実装
 ---
 
 # UC-006 中断したテストを再開するか破棄する

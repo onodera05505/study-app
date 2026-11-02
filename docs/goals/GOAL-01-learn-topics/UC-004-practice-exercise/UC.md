@@ -4,7 +4,7 @@ title: 範囲を選んで演習を解き、問題解説を読む
 actor: ACT-01
 goal: GOAL-01
 status: active
-phase: 完了
+phase: 実装
 ---
 
 # UC-004 範囲を選んで演習を解き、問題解説を読む

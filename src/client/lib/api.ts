@@ -8,7 +8,7 @@ export function setToken(token: string) {
   localStorage.setItem(TOKEN_KEY, token)
 }
 /** ログインしている人の名前。トークン（JWT）の中身から読む。サーバに聞かない。
- *  「ログインしている私が誰か分からない」（利用者のフィードバック 2026-09-16）に応えてヘッダーに出す。 */
+ *  誰でログインしているかが分かるよう、ヘッダーに出す。 */
 // @implements REQ-199
 export function getUserName(): string | null {
   const token = getToken()
@@ -70,6 +70,22 @@ export class ApiError extends Error {
   }
 }
 
+/** 応答の本文を JSON として読む。空なら null。
+ *
+ *  失敗の応答（ok でない）の本文は、中継機の HTML やプレーンテキストのことがあり、
+ *  JSON として読めなくても「理由が無い失敗」として扱う（null を返す）。
+ *  成功の応答で本文が読めないのは契約違反なので、そのまま投げる。 */
+// @implements REQ-261
+function parseBody(text: string, ok: boolean): any {
+  if (!text) return null
+  try {
+    return JSON.parse(text)
+  } catch (e) {
+    if (ok) throw e
+    return null
+  }
+}
+
 // @implements REQ-196
 export async function api<T = any>(
   path: string,
@@ -98,7 +114,7 @@ export async function api<T = any>(
     )
   }
   const text = await res.text()
-  const data = text ? JSON.parse(text) : null
+  const data = parseBody(text, res.ok)
   if (!res.ok) {
     if (res.status === 401) {
       // トークンを持って行って弾かれた＝期限切れ。持っていなければ元から
@@ -115,18 +131,16 @@ export async function api<T = any>(
 
 /** 画面を移るたびに取り直さなくてよいものを、ページを開いている間だけ覚えておく。
  *
- *  シラバスの分野・単元は、回を追加しても構造が変わらない。にもかかわらず
- *  `/topics` へ入るたびに `/fields` と `/categories` を取り直していて、
- *  そのぶん画面が出るのが遅れていた（1リクエストあたり 0.2〜0.4 秒かかる）。
+ *  シラバスの分野・単元は、回を追加しても構造が変わらない。`/topics` へ入るたびに
+ *  `/fields` と `/categories` を取り直すと、そのぶん画面が出るのが遅れる（1リクエストあたり 0.2〜0.4 秒）。
  *
  *  **リロードすれば消える**ので、データを入れ替えたあとは再読み込みで最新になる。
  *  内容が変わりうるもの（論点一覧・進捗・受験履歴）には使わないこと。 */
 const memo = new Map<string, Promise<unknown>>()
 
 /** 覚えたものを捨てる。進捗を変えた直後に呼ぶ。
- *  /fields と /categories は分野・単元の構造だけでなく「理解した数」も返す（進捗の集計を含む）。
- *  理解度を付けて一覧へ戻っても古い数が出続け、再読み込みで直る、という不具合の原因だった
- *  （利用者のフィードバック 2026-09-16）。 */
+ *  /fields と /categories は分野・単元の構造だけでなく「理解した数」も返す（進捗の集計を含む）ので、
+ *  捨てずにいると理解度を付けて一覧へ戻ったときに古い数が出る。 */
 export function invalidateCached() {
   memo.clear()
 }

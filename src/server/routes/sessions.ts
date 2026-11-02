@@ -346,17 +346,21 @@ sessionRoutes.post('/:id/finish', async (c) => {
   const s = await loadSession(db, userId, c.req.param('id'))
   if (!s) return c.json({ error: 'テストが見つかりません' }, 404)
 
-  const agg = await finalize(db, s.id)
-  if (s.status === 'in_progress') {
-    await db
-      .update(schema.sessions)
-      .set({
-        status: 'completed',
-        correctCount: agg.total.correct,
-        finishedAt: sql`(unixepoch())`,
-      })
-      .where(eq(schema.sessions.id, s.id))
+  // 締めたテストは、最初の締めで確定した正答数をそのまま返す（BR-024）。
+  // 記録から数え直すと、確定後に記録が変わった場合に確定した結果と食い違う。
+  if (s.status !== 'in_progress') {
+    return c.json({ ok: true, correct: s.correctCount ?? 0, total: s.questionCount })
   }
+
+  const agg = await finalize(db, s.id)
+  await db
+    .update(schema.sessions)
+    .set({
+      status: 'completed',
+      correctCount: agg.total.correct,
+      finishedAt: sql`(unixepoch())`,
+    })
+    .where(eq(schema.sessions.id, s.id))
   return c.json({ ok: true, correct: agg.total.correct, total: agg.total.total })
 })
 

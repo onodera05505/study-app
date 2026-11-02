@@ -4,7 +4,7 @@ title: まなびばから権限のある学びに入る
 actor: ACT-01
 goal: GOAL-08
 status: active
-phase: 完了
+phase: 実装
 ---
 
 # UC-013 まなびばから権限のある学びに入る

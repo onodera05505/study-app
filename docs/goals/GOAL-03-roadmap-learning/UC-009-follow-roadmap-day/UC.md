@@ -4,7 +4,7 @@ title: 学ぶ順に並んだ論点を回ごとに辿り、回ごとの確認を�
 actor: ACT-01
 goal: GOAL-03
 status: active
-phase: 完了
+phase: 実装
 ---
 
 # UC-009 学ぶ順に並んだ論点を回ごとに辿り、回ごとの確認を始める
