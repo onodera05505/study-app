@@ -5,7 +5,7 @@
 
 見るもの:
 - 章で束ねる学び（roadmap.json の group_by: chapter）: 各単位に章の番号・章の名前・登録簿にある段の印
-- 教材: 全単位に教材があり、担当バンドルと topic_id/term が一致する（自己申告を信じない）。sources が 1 件以上。
+- 教材: 全単位に教材があり、担当バンドルと topic_id/term が一致する（自己申告を信じない）。sources は一次資料に当たる記述だけ（無い単位は出典無しでよい）。
   explanation / detail の長さが仕様の範囲（下限は落とす、上限は警告）。見分けワードの行がある。記法が 5 つ以外でない（`**`/`###`/`- `/`1. `/表）。
   `[[用語]]` はロードマップ内の論点名だけ。会社の評価・年収・「最新」「近年」を含まない
 - 問題: 1 論点 2 問、四択、answer が選択肢にある、qid 一意、正解位置が 1 つに偏りすぎない（1 位置が 45% 超で警告）、tests_goal が 1〜（到達基準の数。roadmap.json の単位の goals の最大）。\n  正解の選択肢が教材と 14 字以上連続一致するものを数えて警告（サイクル 1 で独立解答 2 体が「再認で当たる」と指摘）
@@ -24,6 +24,14 @@ def verbatim(choice: str, text: str) -> bool:
     c, t = norm(choice), norm(text)
     if len(c) < VERBATIM: return False  # 用語そのものを選ばせる短い選択肢は対象外（語が教材に出るのは当然）
     return any(c[i:i + VERBATIM] in t for i in range(0, max(1, len(c) - VERBATIM + 1)))
+# 出典の where で読者に見せない書き方: 番号つきの項目名（第 7 週・第 3 章・14.01・GE-DIG3・丸数字・ローマ数字）と英語の文。
+# 技術の略語・技術語（CPU・SQL・Web・Git・Cookie・TLS 1.3・SHA-256 など）は読者が本文でも出会う語なので認める
+WHERE_CODE = re.compile(
+    r"[①-⑳Ⅰ-Ⅹ]"
+    r"|第\s*[0-9０-９]+\s*[章節条週]"
+    r"|(?<![0-9A-Za-z/.v])(?<![A-Za-z] )[0-9]+[.．][0-9]+(?![0-9])"  # 技術語の後の版番号（TLS 1.3・HTTP/1.1）は除く
+    r"|(?<![A-Za-z0-9])(?=[A-Za-z0-9-]*[0-9])[A-Z][A-Z0-9]*-[A-Z][A-Z0-9]*(?![A-Za-z0-9])"  # 記号つきの項目番号
+    r"|[A-Za-z][a-z]+(?:[ ,]+[A-Za-z][a-z]+){2,}")  # 英語の文（3 語以上）
 ALLOWED_INLINE = re.compile(r"^(#{3} |- |\d+\. |\||!\[)")
 
 def _kw(key: str) -> str:
@@ -75,7 +83,6 @@ def main() -> int:
             mats[tid] = x
             if tid not in units: warns.append(f"{tag}: ロードマップ外の教材（{mp.name}。害は無いが除外済みの単位）"); continue
             if units[tid]["term"] != x["term"]: errors.append(f"{tag}: 論点名がロードマップと不一致（{units[tid]['term']}）")
-            if not x.get("sources"): errors.append(f"{tag}: 出典が無い")
             ex, de = x.get("explanation", ""), x.get("detail", "")
             if len(ex) < 120: errors.append(f"{tag}: explanation が短すぎる {len(ex)} 字")
             if len(ex) > 420: warns.append(f"{tag}: explanation が長い {len(ex)} 字（目安 200〜300）")
@@ -87,13 +94,14 @@ def main() -> int:
             for term in re.findall(r"\[\[([^\]]+)\]\]", ex + de):
                 if term not in terms: errors.append(f"{tag}: [[{term}]] はロードマップに無い論点")
             for hit in NG.findall(ex + de): warns.append(f"{tag}: 避ける語「{hit}」")
-            # 出典の where は読者に見える。章節番号・略号・英字（2026-09-24 セルフフィードバック）
+            # 出典の where は読者に見える。番号つきの項目名と英語の文を警告する（出典が無い単位は見るものが無い）
             import ast as _ast
             srcs = x.get("sources"); srcs = srcs if isinstance(srcs, list) else (_ast.literal_eval(srcs) if isinstance(srcs, str) and srcs.startswith("[") else [])
             for sdef in srcs:
                 w = (sdef.get("where") or "") if isinstance(sdef, dict) else ""
-                if re.search(r"[A-Za-z]{3,}|[①-⑳Ⅰ-Ⅹ]|第[0-9０-９]+[章節条]|\b[0-9]+[.．][0-9]+\b|[a-z][0-9]{2}\b", w):
-                    warns.append(f"{tag}: 出典 where に記号・英字・章節番号「{w[:30]}」"); break
+                hit = WHERE_CODE.search(w)
+                if hit:
+                    warns.append(f"{tag}: 出典 where に番号つきの項目名か英語の文「{hit.group(0)}」（{w[:30]}）"); break
             m_sh = re.search(r"### しくみ\n(.*?)(?=\n### |\Z)", de, flags=re.S)
             if m_sh:
                 n_sent = len([t for t in re.split(r"[。！？]", re.sub(r"^[-\d].*$", "", m_sh.group(1), flags=re.M)) if t.strip()])

@@ -1,0 +1,90 @@
+{
+  "topic_id": 22,
+  "term": "論理回路と XOR（ゲートを組んで足し算する）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "1 桁分の足し算は、半加算器 2 つと OR でできます。この 1 桁分を横に並べ、左へ出る桁上がりを上の桁へ渡すと 8 ビットの足し算になります。",
+      "nodes": [
+        {
+          "id": "ab",
+          "label": "この桁の\nA と B",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "c",
+          "label": "下の桁からの\n桁上がり C",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "ha1",
+          "label": "半加算器 1\nXOR と AND",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "ha2",
+          "label": "半加算器 2\nXOR と AND",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "s",
+          "label": "この桁の\n答え",
+          "row": 1,
+          "col": 3
+        },
+        {
+          "id": "up",
+          "label": "上の桁へ\n渡す桁上がり",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "or",
+          "label": "OR\n桁上がりを\nまとめる",
+          "row": 2,
+          "col": 1,
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "ab",
+          "to": "ha1"
+        },
+        {
+          "from": "c",
+          "to": "ha2"
+        },
+        {
+          "from": "ha1",
+          "to": "ha2",
+          "label": "仮の答え"
+        },
+        {
+          "from": "ha2",
+          "to": "s"
+        },
+        {
+          "from": "ha1",
+          "to": "or",
+          "label": "桁上がり"
+        },
+        {
+          "from": "ha2",
+          "to": "or",
+          "label": "桁上がり"
+        },
+        {
+          "from": "or",
+          "to": "up"
+        }
+      ]
+    }
+  ]
+}

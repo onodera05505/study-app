@@ -1,0 +1,47 @@
+{
+  "topic_id": 166,
+  "term": "業務の流れを図にする（業務フローと DFD）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "DFD は、四角から出たデータが矢印で運ばれ、丸で加工され、平行線に溜まる順にたどります。この図では丸を角の丸い箱、平行線を円柱で表しています。",
+      "nodes": [
+        {
+          "id": "user",
+          "label": "□ 四角：外の相手\n利用者",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "rec",
+          "label": "○ 丸：加工する所\n受付",
+          "row": 0,
+          "col": 1,
+          "shape": "round",
+          "emphasis": true
+        },
+        {
+          "id": "db",
+          "label": "＝ 平行線：溜める所\n注文の台帳",
+          "row": 1,
+          "col": 1,
+          "shape": "cylinder"
+        }
+      ],
+      "edges": [
+        {
+          "from": "user",
+          "to": "rec",
+          "label": "注文の情報"
+        },
+        {
+          "from": "rec",
+          "to": "db",
+          "label": "受け付けた注文"
+        }
+      ]
+    }
+  ]
+}

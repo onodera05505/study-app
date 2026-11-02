@@ -1,0 +1,2205 @@
+{
+  "cycle": 5,
+  "score": "400/400",
+  "rate": 1.0,
+  "by_goal": {
+    "1": "42/42",
+    "2": "35/35",
+    "3": "67/67",
+    "4": "53/53",
+    "5": "40/40",
+    "6": "59/59",
+    "7": "104/104"
+  },
+  "by_field": {
+    "コンピュータの仕組み": "44/44",
+    "OS とソフトウェア": "50/50",
+    "プログラミングとアルゴリズム": "64/64",
+    "ネットワークと Web": "62/62",
+    "データベース": "42/42",
+    "セキュリティ": "58/58",
+    "開発の進め方と仕事": "80/80"
+  },
+  "shift_suspect": [],
+  "avg_understood": 2.74,
+  "stuck_units": [],
+  "overconfident_units": [],
+  "unknown_terms": [
+    "API キー（API が何か、この範囲では説明が無い）",
+    "CVE は番号だと分かったが、深刻さの点数の付け方は出てこない",
+    "README",
+    "SameSite",
+    "cd",
+    "chmod",
+    "pwd",
+    "アラート",
+    "ガントチャート",
+    "クラス",
+    "クリティカルパス",
+    "コピーレフト（名前だけ覚えた）",
+    "コンパイラ",
+    "コールバック",
+    "ステージング",
+    "スラッシング",
+    "スワップ",
+    "ディレクトリ（パスの単位を読み返して確認した）",
+    "デバイスドライバ",
+    "デバッガ",
+    "デバッガ（ここで初めて出たが括弧で説明はあった）",
+    "デプロイ",
+    "データベース",
+    "トレードオフ",
+    "ノンリピータブルリード",
+    "ハイパーバイザ",
+    "ハルシネーション",
+    "パイプライン",
+    "パリティ",
+    "ビルド",
+    "プログラムカウンタ",
+    "プロンプト",
+    "ヘッダ",
+    "ポート番号",
+    "マルウェア",
+    "リンカ",
+    "不正指令電磁的記録（正式名は長くて覚えられない）",
+    "人日",
+    "依存関係",
+    "判定",
+    "制御の反転",
+    "半加算器",
+    "回帰テスト",
+    "基数",
+    "基板",
+    "報連相",
+    "実行計画",
+    "技術的負債",
+    "暫定対応・恒久対応",
+    "職務著作",
+    "開発者ツール",
+    "関数",
+    "関数（クラスの中の）"
+  ],
+  "wrong": [],
+  "overall": {},
+  "per_unit": {
+    "1": {
+      "term": "コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）",
+      "field": "コンピュータの仕組み",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "2": {
+      "term": "CPU（命令を読んで計算する中心の部品）",
+      "field": "コンピュータの仕組み",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "3": {
+      "term": "メモリ（作業中のデータを置く一時的な記憶）",
+      "field": "コンピュータの仕組み",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "4": {
+      "term": "ストレージ（電源を切っても残る記憶：SSD・HDD）",
+      "field": "コンピュータの仕組み",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "5": {
+      "term": "記憶の階層（速くて小さい物から遅くて大きい物へ）",
+      "field": "コンピュータの仕組み",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "6": {
+      "term": "キャッシュメモリ（よく使う物を CPU の手元に置く）",
+      "field": "コンピュータの仕組み",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "7": {
+      "term": "部品をつなぐ通り道と差し込み口（バス・USB）",
+      "field": "コンピュータの仕組み",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "基板の上の金属の線がバス、という実物の説明が想像しにくい。USB が「通り道の一種」というのも、口や線と通り道の関係がピンと来なかった",
+      "unknown_terms": [
+        "基板"
+      ],
+      "minutes": 6
+    },
+    "8": {
+      "term": "プログラムは命令の並び（機械語とプログラム内蔵方式）",
+      "field": "コンピュータの仕組み",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "ノイマン型という名前が出てくるが、名前だけ覚えておけばよいのか少し迷った",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "9": {
+      "term": "命令の実行サイクルとレジスタ（取り出す・読み解く・実行する）",
+      "field": "コンピュータの仕組み",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "3 段の流れは分かったが、実行の段で結果をレジスタに置くのかメモリに書き戻すのかの区別と、プログラムカウンタが何をしているかがぼんやり",
+      "unknown_terms": [
+        "プログラムカウンタ"
+      ],
+      "minutes": 6
+    },
+    "10": {
+      "term": "クロックと CPU の速さの測り方",
+      "field": "コンピュータの仕組み",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "11": {
+      "term": "マルチコアと GPU（並べて同時に計算する）",
+      "field": "コンピュータの仕組み",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "12": {
+      "term": "割り込み（途中で急ぎの用事を差し込む仕組み）",
+      "field": "コンピュータの仕組み",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "外からの知らせは分かった。0 で割る命令が割り込みになる話と、例外処理との層の違いは、例外処理をまだ習っていないので分からなかった",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "13": {
+      "term": "ビットとバイト（情報の最小単位と容量の数え方）",
+      "field": "コンピュータの仕組み",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "14": {
+      "term": "2 進数と 16 進数（数の表し方を変える）",
+      "field": "コンピュータの仕組み",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "重みを足して 10 進に直すのは追えたが、16 進の 2 桁（例えば 3C）を自分で 10 進に直せるかは自信がない",
+      "unknown_terms": [
+        "基数"
+      ],
+      "minutes": 7
+    },
+    "15": {
+      "term": "小数の表し方と計算の誤差（浮動小数点数）",
+      "field": "コンピュータの仕組み",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "0.1 がずれる理由は分かったが、「数字の並びと小数点を何桁ずらすかを分けて持つ」が具体的に何をしているのか想像できなかった",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "16": {
+      "term": "文字コード（文字に番号を割り当てる：ASCII・Unicode・UTF-8）",
+      "field": "コンピュータの仕組み",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "17": {
+      "term": "負の数の表し方（2 の補数）",
+      "field": "コンピュータの仕組み",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "反転して 1 を足す手順は真似できるが、なぜそれで負になるのかを人に説明する自信はない。時計の輪のたとえの段落は長くて 2 回読んだ",
+      "unknown_terms": [],
+      "minutes": 9
+    },
+    "18": {
+      "term": "画像と音をデジタルにする（標本化・量子化・データ量）",
+      "field": "コンピュータの仕組み",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "標本化と量子化の区別は分かった。データ量の計算はビットとバイトの変換が入って途中で迷った",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "19": {
+      "term": "圧縮（データを小さくする：可逆と非可逆）",
+      "field": "コンピュータの仕組み",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "20": {
+      "term": "論理演算（AND・OR・NOT）と真理値表",
+      "field": "コンピュータの仕組み",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "21": {
+      "term": "条件の否定の言い換え（ド・モルガンの法則）",
+      "field": "コンピュータの仕組み",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "22": {
+      "term": "論理回路と XOR（ゲートを組んで足し算する）",
+      "field": "コンピュータの仕組み",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "半加算器（下の桁は XOR、桁上がりは AND）は分かった。2 桁目から上の、半加算器を 2 回使って OR でまとめる段落は文字だけで追い切れなかった",
+      "unknown_terms": [
+        "半加算器"
+      ],
+      "minutes": 9
+    },
+    "23": {
+      "term": "ソフトウェアの種類（OS・ミドルウェア・アプリ）",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "ミドルウェアの例が「データを預かる仕組みを動かすソフトウェア」「ページを届けるソフトウェア」で、実物を見たことがないので OS との境目が抽象的に感じた",
+      "unknown_terms": [
+        "データベース"
+      ],
+      "minutes": 7
+    },
+    "24": {
+      "term": "OS の役割（CPU・メモリ・機器をアプリに分け与える）",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "25": {
+      "term": "カーネルとシステムコール（アプリが OS に頼む窓口）",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "窓口と行員のたとえは分かった。CPU の中の切り替えの印が命令ごとに確かめる話は細かく、なぜアプリが印を変えられないのかは納得しきれていない",
+      "unknown_terms": [
+        "デバイスドライバ"
+      ],
+      "minutes": 7
+    },
+    "26": {
+      "term": "ファイルとディレクトリ（木の形の置き場）",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "27": {
+      "term": "パス（絶対パス・相対パス）と今いる場所",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "文字で操作する画面を使ったことがないので、pwd や cd の例は読むだけでは実感が無い。「..」が 1 つ上なのは分かった",
+      "unknown_terms": [
+        "pwd",
+        "cd"
+      ],
+      "minutes": 7
+    },
+    "28": {
+      "term": "ファイルの権限（読む・書く・実行するを誰に許すか）",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "rwx の 9 文字の読み方は分かった。ディレクトリの x（名簿を通って中へ進む）が、読む r とどう違うのかがややこしかった",
+      "unknown_terms": [
+        "chmod"
+      ],
+      "minutes": 8
+    },
+    "29": {
+      "term": "拡張子とファイル形式（中身の種類の目印）",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "30": {
+      "term": "プロセス（実行中のプログラム）",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "31": {
+      "term": "スレッド（プロセスの中の処理の流れ）とプロセスとの違い",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "32": {
+      "term": "同期処理と非同期処理（待つか、先に進むか）",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "レジと呼び出し札のたとえは分かった。コールバックという語と、「流れが 1 つのままでも非同期にできる」がどういう状態なのかは分からなかった",
+      "unknown_terms": [
+        "コールバック"
+      ],
+      "minutes": 7
+    },
+    "33": {
+      "term": "排他制御とデッドロック（同じ物の取り合いを防ぐ）",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "34": {
+      "term": "スケジューリングとコンテキストスイッチ（順番に CPU を回す）",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "35": {
+      "term": "アドレス（メモリの番地）と割り当て",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "36": {
+      "term": "スタック領域とヒープ領域（メモリの 2 つの使い方）",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "関数をまだ習っていないので「呼び出す」が実感できず、付箋のたとえ頼み。スタック領域と、名前の似たスタック（データの形）の違いも後で混ざりそう",
+      "unknown_terms": [
+        "関数"
+      ],
+      "minutes": 8
+    },
+    "37": {
+      "term": "ガベージコレクションとメモリリーク（使い終わったメモリの片付け）",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "38": {
+      "term": "仮想記憶（メモリが足りないときの仕組み）",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "クロークのたとえは分かったが、ページ・スワップ・ページフォールト・スラッシングと新しい語が 4 つ一度に出て、見せかけの番地の話はぼんやり",
+      "unknown_terms": [
+        "スワップ",
+        "スラッシング"
+      ],
+      "minutes": 8
+    },
+    "39": {
+      "term": "コンパイラとインタプリタ（人の書いた文を機械向けに直す）",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "40": {
+      "term": "ビルドとライブラリ（部品をつないで動く形にする）",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "空欄を後で埋めるというリンカの話は、番地の例を読んでもまだ抽象的。依存とバージョンを書き残す話は分かった",
+      "unknown_terms": [
+        "リンカ"
+      ],
+      "minutes": 7
+    },
+    "41": {
+      "term": "ライブラリとフレームワークの違い（呼ぶか、呼ばれるか）",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "道具箱と骨組みのたとえは分かったが、「制御の反転」という語と、自分のコードに待つ部分が無いという感覚は実物を書いたことがないので掴みきれない",
+      "unknown_terms": [
+        "制御の反転"
+      ],
+      "minutes": 7
+    },
+    "42": {
+      "term": "オープンソースソフトウェア（中身が公開され、誰でも使えるソフト）",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "43": {
+      "term": "クライアントとサーバ（頼む側と応える側）",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "44": {
+      "term": "性能の指標（応答時間とスループット）",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "45": {
+      "term": "稼働率と冗長化（止まらないように予備を持つ）",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "一列は掛け算、並べると「両方止まる確率」を引く、の 2 つの計算の使い分けは例を見ながらなら出来るが、何も見ずには迷いそう",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "46": {
+      "term": "RAID（複数のディスクを束ねて守る・速くする）",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "RAID0・1・5 の違いと容量の計算は分かった。パリティで壊れた 1 台を戻す桁ごとの計算は 2 回読んで何とか追えた程度",
+      "unknown_terms": [
+        "パリティ"
+      ],
+      "minutes": 8
+    },
+    "47": {
+      "term": "壊れても安全側に倒す設計（フェールセーフ・フールプルーフ）",
+      "field": "OS とソフトウェア",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "48": {
+      "term": "変数と代入（値に名前を付けてしまう箱）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "49": {
+      "term": "データ型と式（数・文字列・真か偽かを区別して計算する）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "50": {
+      "term": "条件分岐（もし〜なら、で処理を分ける）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "51": {
+      "term": "繰り返し（同じ処理を条件が満たされるまで回す）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "52": {
+      "term": "プログラムを読んで追う（トレースと流れ図）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "流れ図の『角を落とした長方形の上下 1 組』がどんな形か、図が無いので想像できなかった",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "53": {
+      "term": "関数（処理に名前を付けて呼び出す：引数と戻り値）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "スコープは名前だけ出てきて、ぶつかって壊すとは具体的にどういう場面か少しぼんやり",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "54": {
+      "term": "値渡しと参照渡し（コピーを渡すか、置き場所を渡すか）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "『言語によっては』小さい値は写し・大きいまとまりは置き場所、という決まりが自分の使う言語ではどうなのか分からない。参照渡しで元が変わるのは分かった",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "55": {
+      "term": "再帰（自分自身を呼ぶ関数）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "スタック領域の付箋が積まれて外れていく流れは、一度では追えず2回読んだ。止める条件が要ることは分かった",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "56": {
+      "term": "例外処理（エラーを受け止めて、どう続けるか決める）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "57": {
+      "term": "部品の分け方の良し悪し（モジュールの結合度と凝集度）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "結合度は低い方が良く凝集度は高い方が良い、という向きが逆なので、時間が経つと取り違えそう",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "58": {
+      "term": "配列とリスト（順番に並べて番号で取り出す）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "59": {
+      "term": "スタックとキュー（後から入れた物を先に出す・先に入れた物を先に出す）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "60": {
+      "term": "辞書とハッシュ表（名前で値を引く）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "ハッシュ関数で番号を出す所は分かったが、衝突の2つの逃がし方（つないで並べる・隣を探す）が頭の中でうまく絵にならなかった。文字を数に置き換える所も具体的でない",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "61": {
+      "term": "木構造と二分探索木（枝分かれでたどる）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "釣り合いを保つためにつなぎ替える話（左右の深さが2段以上違ったら）は、1・2・3 の例しか分からず、大きい木でどうするかは分からない",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "62": {
+      "term": "連結リスト（次の場所を指して数珠つなぎにする）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "63": {
+      "term": "グラフと探索の順番（幅優先・深さ優先）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "深さ優先で『C・B の順に積む』理由（B を先に出したいから逆に積む）に気づくのに時間がかかった。幅優先は分かった",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "64": {
+      "term": "アルゴリズム（問題を解く手順を正確に決める）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "65": {
+      "term": "線形探索と二分探索（端から探すか、半分ずつ絞るか）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "66": {
+      "term": "整列（ソート）の考え方（選択・挿入・クイック・マージ）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "クイックとマージの違い（比べるのが分ける前か合わせるときか）は読めばそうかと思うが、自分で説明はできない。マージの『1段で件数ぶん』の意味もあいまい",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "67": {
+      "term": "計算量（データが増えたとき手間がどう増えるか：オーダー記法）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "O(n) と O(n²) は分かった。log n は半分にする回数だと分かったが、n log n がなぜ掛け算になるかはなんとなく",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "68": {
+      "term": "オブジェクト指向（データと処理をひとまとめにする：クラスとインスタンス）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "69": {
+      "term": "カプセル化・継承・ポリモーフィズム（オブジェクト指向の 3 つの柱）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "継承・オーバーライド・ポリモーフィズムの言い分けが細かく、オーバーライドとポリモーフィズムの違いを人に言える自信は無い。カプセル化は分かった",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "70": {
+      "term": "関数型の考え方（値を書き換えず、関数を組み合わせる）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "関数そのものを引数に渡す（括弧を付けない）所が初めての考え方で、なんとなくしか分からない。副作用の意味は分かった",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "71": {
+      "term": "設計の定石（デザインパターンと MVC）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "シングルトンは『1つだけ』は分かったが、作る窓口の仕組みは少しあいまい",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "72": {
+      "term": "静的型付けと動的型付け（型を確かめるのが実行前か実行中か）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "73": {
+      "term": "平均・中央値・ばらつき（データの真ん中と散らばり）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "平均と中央値は説明できる。分散（差を2乗して平均）と標準偏差（その平方根）は計算の手順は追えたが、意味として使える気はしない",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "74": {
+      "term": "AI と機械学習（データから決まりを見つける）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "75": {
+      "term": "生成 AI と大規模言語モデル（次に来る言葉を予測して文を作る）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "トークンが何か（言葉1つなのか文字1つなのか）がはっきりしなかった",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "76": {
+      "term": "学習の種類（正解つきで学ぶ・正解なしで分ける・試して学ぶ）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "77": {
+      "term": "ディープラーニング（何層もの計算で特徴を自分で見つける）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "重みを少しずつ直す所までは分かった。誤差逆伝播法の『手前の層へ伝え戻す』はほぼ分からない",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "78": {
+      "term": "学習の落とし穴（過学習と学習データの偏り）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "79": {
+      "term": "確率の入口（起こりやすさを 0 から 1 の数で表す）",
+      "field": "プログラミングとアルゴリズム",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "80": {
+      "term": "ネットワークとインターネット（LAN と WAN）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "81": {
+      "term": "パケット（データを小包に分けて送る）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "82": {
+      "term": "プロトコルと階層（OSI 参照モデルと TCP/IP の 4 層）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "層に分けて隣とだけ話す理由は分かったが、OSI の7つの層の名前と、TCP/IP の4層との対応は覚えられていない。荷札を足す・外す順も一瞬迷った",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "83": {
+      "term": "ルータとスイッチ（ネットワークをつなぐ機器の役割）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "MAC アドレスと IP アドレスの違い（名札と、つないだ場所で変わる住所）は読めば分かるが、なぜ2種類要るのかは腑に落ちていない",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "84": {
+      "term": "IP アドレス（ネットワーク上の住所）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "IPv6 の16進数とコロンの書き方は形だけ覚えた",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "85": {
+      "term": "ポート番号（機器の中のどのアプリ宛てかを示す番号）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "86": {
+      "term": "TCP と UDP の違い（確実に届けるか、速さを取るか）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "87": {
+      "term": "TCP の接続のはじめ方（3 ウェイハンドシェイク）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "3回が最少になる理由（応える側が自分の向きを確かめるのに3回目が要る）は、1回では飲み込めず読み返した",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "88": {
+      "term": "ルーティング（小包の道順を決めて中継する）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "89": {
+      "term": "グローバルとプライベートの IP アドレスと NAT（家の中の番号を外向きに付け替える）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "IP アドレスだけでなくポート番号まで付け替えて表を作る IP マスカレードは、例を追えば分かるが自分で再現できる気はしない",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "90": {
+      "term": "サブネットマスクと CIDR（住所のどこまでが地域名か）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "2進数に直して上2ビットを比べる所で詰まり、単位14（2進数）を読み返した。/26 で 62 台の計算は追えたが、自分で別の数でやるのは自信が無い",
+      "unknown_terms": [],
+      "minutes": 9
+    },
+    "91": {
+      "term": "URL とドメイン名（Web の住所の読み方）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "92": {
+      "term": "DNS（名前から IP アドレスを引く仕組み）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "93": {
+      "term": "HTTP（ブラウザとサーバの会話の決まり：リクエストとレスポンス）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "94": {
+      "term": "HTTP のメソッドとステータスコード（何を頼んで、どうなったか）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "95": {
+      "term": "ブラウザが画面を描く仕組み（HTML・CSS・JavaScript）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "96": {
+      "term": "URL を開いてから画面が出るまでの全体の流れ",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "97": {
+      "term": "Web サーバとアプリケーションサーバ（返すだけか、作って返すか）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "98": {
+      "term": "Cookie とセッション（1 回ごとに忘れる会話で相手を覚える）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "99": {
+      "term": "API と REST（プログラムどうしの窓口と、その作り方の流儀）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "REST と REST でない作り方の違いは例で分かったが、なぜ REST の方が良いのかはまだ実感が無い",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "100": {
+      "term": "JSON（プログラムどうしでデータを渡す書式）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "101": {
+      "term": "アクセシビリティ（目や手が不自由な人も使える画面にする）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "102": {
+      "term": "同じ出どころの決まりと CORS（ほかのサイトからの呼び出しを制限する）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "出どころが『http などの決まり・ドメイン名・ポート番号の3つの組』というのは分かったが、止めないと起きる例の4番目『SameSite が None なら札を付けて送る』の意味がよく分からなかった。SameSite が None でないときはどうなるのか書いていないので、結局ブラウザが止めているのが『送ること』なのか『読むこと』なのかで一度混乱した。",
+      "unknown_terms": [
+        "SameSite",
+        "ヘッダ"
+      ],
+      "minutes": 9
+    },
+    "103": {
+      "term": "キャッシュと CDN（近くに写しを置いて速く返す）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "104": {
+      "term": "ロードバランサとリバースプロキシ（受付で振り分ける）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "105": {
+      "term": "スケールアップとスケールアウト（1 台を強くするか、台数を増やすか）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "106": {
+      "term": "クラウド（サーバを持たずに借りて使う）とオンプレミス",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "107": {
+      "term": "IaaS・PaaS・SaaS と責任の分担（どこまで任せるか）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "ミドルウェアの例が『Web のページを届ける』だけで、具体的に何のソフトなのかはぼんやりしている",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "108": {
+      "term": "コンテナ（アプリを動く環境ごと箱に詰める：Docker）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "『OS の中心部分を箱どうしで共有する』のイメージはなんとなく。イメージとコンテナの違い（型と、そこから起こした物）は分かったが、なぜ Windows のアプリが Linux の上の箱で動かないかは日本語と英語の窓口の例えで何とか納得した程度。",
+      "unknown_terms": [],
+      "minutes": 8
+    },
+    "109": {
+      "term": "仮想化（1 台の機械を何台にも見せる）",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "ハイパーバイザが具体的に何なのか（ソフトなのか機械なのか）ははっきりしない",
+      "unknown_terms": [
+        "ハイパーバイザ"
+      ],
+      "minutes": 6
+    },
+    "110": {
+      "term": "インフラをコードで書く（IaC）とサーバレス",
+      "field": "ネットワークと Web",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "サーバレスの『準備を片付けると次の1回が遅くなる』は分かったが、なぜ片付けるのかは想像で補った",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "111": {
+      "term": "データベースと DBMS（データをまとめて預かり、取り出しに応える仕組み）",
+      "field": "データベース",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "112": {
+      "term": "関係データベース（表・行・列でデータを持つ）",
+      "field": "データベース",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "113": {
+      "term": "主キーと外部キー（行を見分ける・表をつなぐ）",
+      "field": "データベース",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "114": {
+      "term": "正規化（重複をなくすように表を分ける）",
+      "field": "データベース",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "第1正規形と第3正規形の名前は出てきたが、第2正規形は出てこず、間に何があるのかは分からない。第3正規形の『行を見分ける番号だけで決まる』は例が無いので、面接で聞かれたら言葉をなぞるだけになりそう",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "115": {
+      "term": "E-R 図（データのつながりを図にする）",
+      "field": "データベース",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "116": {
+      "term": "表の定義と制約（CREATE TABLE・型・入れてよい値の決まり）",
+      "field": "データベース",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "VARCHAR(50) の 50 が文字数なのか何なのかは書いていない",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "117": {
+      "term": "1 対多と多対多（つながりの数と中間の表）",
+      "field": "データベース",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "118": {
+      "term": "SQL（データベースに頼むための言葉）",
+      "field": "データベース",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "119": {
+      "term": "SELECT と WHERE（条件に合う行を取り出す）",
+      "field": "データベース",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "120": {
+      "term": "INSERT・UPDATE・DELETE（行を追加・更新・削除する）",
+      "field": "データベース",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "121": {
+      "term": "表の結合（JOIN：分けた表をつないで取り出す）",
+      "field": "データベース",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "LEFT と RIGHT のどちらが残るかは『FROM の直後が左』で覚えたが、少し時間を置くと逆に覚えていそうで不安",
+      "unknown_terms": [],
+      "minutes": 8
+    },
+    "122": {
+      "term": "並べ替えと集計（ORDER BY・GROUP BY・件数や合計）",
+      "field": "データベース",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "WHERE と HAVING の違いは 100円・300円の例で分かった。ただ『データベースは行を集めやすい順に返す』の理由は何となく",
+      "unknown_terms": [],
+      "minutes": 8
+    },
+    "123": {
+      "term": "副問合せとビュー（問い合わせの中に問い合わせ・保存した見え方）",
+      "field": "データベース",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "124": {
+      "term": "トランザクションと ACID（全部やるか、全部やらないか）",
+      "field": "データベース",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "原子性と耐久性ははっきり分かった。一貫性と独立性は『終わった後を見る／最中を見る』で分けてあるので区別はできたが、自分の言葉の例はまだ振込の例しか出せない",
+      "unknown_terms": [],
+      "minutes": 8
+    },
+    "125": {
+      "term": "バックアップと復元（消えても戻せるようにする）",
+      "field": "データベース",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "差分と増分の違いは最初に読んだとき逆に覚えかけた。日曜〜木曜の例で直った",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "126": {
+      "term": "ロックと分離レベル（同時の読み書きをどこまで隔てるか）",
+      "field": "データベース",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "ダーティリードとノンリピータブルリードは分かったが、4 段階の分離レベルの名前が無く『確定前も読める・確定した値だけ読む…』という説明だけなので、3 つ目と 4 つ目の違い（件数が変わる話）はほぼ文をなぞって問題を解いた。鍵を『範囲ごとにかける』の具体的な姿が浮かばない",
+      "unknown_terms": [
+        "ノンリピータブルリード"
+      ],
+      "minutes": 12
+    },
+    "127": {
+      "term": "障害からの回復（ログで進め直す・巻き戻す）",
+      "field": "データベース",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "ロールフォワード（変えた後の値で古い順）とロールバック（変える前の値で新しい順）の向きは覚えたが、なぜ順番がそうなるのかは自分で説明できない。チェックポイントの『メモリの中身を書き出し終えた時点』も分かったつもり程度",
+      "unknown_terms": [],
+      "minutes": 10
+    },
+    "128": {
+      "term": "インデックス（索引で速く探す）",
+      "field": "データベース",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "100万行が20回ほどで済む理由は『半分ずつ』の話を前に読んだのでなんとなく。実行計画の見方は分からない",
+      "unknown_terms": [
+        "実行計画"
+      ],
+      "minutes": 7
+    },
+    "129": {
+      "term": "関係データベースと NoSQL の違い（表で持つか、別の形で持つか）",
+      "field": "データベース",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "スキーマレスやドキュメント型は分かった。『書き込みが写しへ届くまで間があり古い値が返る』のところは分かったが、なぜ NoSQL だとそうなりやすく、関係データベースではそうならないのかは書いていないので分からない",
+      "unknown_terms": [],
+      "minutes": 8
+    },
+    "130": {
+      "term": "プログラムからデータベースを使う（ORM と N+1 問題）",
+      "field": "データベース",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "131": {
+      "term": "レプリケーションとシャーディング（写しを持つ・分けて持つ）",
+      "field": "データベース",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "132": {
+      "term": "情報セキュリティの 3 要素（機密性・完全性・可用性）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "133": {
+      "term": "脅威・脆弱性・リスク（何が・どの弱みを突いて・どれだけ困るか）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "134": {
+      "term": "マルウェア（ウイルス・ランサムウェアなど悪意のあるソフト）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "135": {
+      "term": "人をだます攻撃（ソーシャルエンジニアリングと標的型メール）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "136": {
+      "term": "リスクへの向き合い方（見積もって、避ける・減らす・移す・受け入れる）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "137": {
+      "term": "認証と認可の違い（本人かを確かめる・何をしてよいか決める）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "138": {
+      "term": "パスワードを狙う攻撃と守り（総当たり・使い回しを狙う攻撃）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "139": {
+      "term": "多要素認証（知っている・持っている・本人の体の 3 種を組み合わせる）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "140": {
+      "term": "アクセス制御と最小権限（必要な人に必要な分だけ許す）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "141": {
+      "term": "トークンによる認可（OAuth と JWT：ほかのサービスに権限を貸す）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "OAuth が手順、JWT が札の書き方、という分け方は覚えた。ただ JWT の印の作り方（秘密の値と中身を混ぜて計算）は『後の単位で扱う』とあり、読んだ時点ではふわっとしていた。サーバが一覧を探さずに信じられる理由は何となく",
+      "unknown_terms": [],
+      "minutes": 10
+    },
+    "142": {
+      "term": "暗号化（鍵がないと読めない形に変える）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "143": {
+      "term": "共通鍵暗号と公開鍵暗号（同じ鍵か、対になった 2 つの鍵か）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "144": {
+      "term": "ハッシュ関数（元に戻せない要約を作る）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "145": {
+      "term": "パスワードの保存の仕方（そのまま持たず、ソルトを足してハッシュで持つ）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "146": {
+      "term": "HTTPS と TLS（通信を暗号にして、相手が本物か確かめる）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "証明書→共通鍵を持つ→中身を送る、の順は分かった。でも『今の TLS は鍵を送らずに作る』の絵の具の例は、なぜ途中の人が同じ色を作れないのかが今ひとつ納得できず、なんとなくで止まった。基本の形（公開鍵で共通鍵を閉めて送る）と今の形のどちらを面接で言えばよいのかも迷う",
+      "unknown_terms": [],
+      "minutes": 10
+    },
+    "147": {
+      "term": "デジタル署名（送り主と改ざんの有無を確かめる）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "時計の例（3 進めると 9 進める）と 7×13＝91 の例で『逆にたどるのが大変』は分かったが、手順 4 の『公開鍵で署名をハッシュ値に戻す』が暗号化の『開ける』と同じことなのかがまだ混ざる。結論（本人が付けた・変わっていない）は言える",
+      "unknown_terms": [],
+      "minutes": 10
+    },
+    "148": {
+      "term": "証明書と認証局（その公開鍵が本物だと第三者が保証する）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "149": {
+      "term": "外から来た値を信じない（入力の確かめと出力のエスケープ）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "150": {
+      "term": "SQL インジェクション（入力で SQL を書き換える攻撃）とプリペアドステートメント",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "『どの行でも成り立つ条件』が具体的に書かれていないので、実際の入力がどんな文字なのかは想像がつかない（あえて書いていないのだと思う）。仕組みとプリペアドステートメントで防げる理由は分かった",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "151": {
+      "term": "クロスサイトスクリプティング（XSS：ページに悪い命令を埋め込む攻撃）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "152": {
+      "term": "脆弱性と更新（弱点の情報を追い、すぐ直す）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "CVE は番号だと分かったが、深刻さの点数の付け方は出てこない"
+      ],
+      "minutes": 5
+    },
+    "153": {
+      "term": "CSRF（本人のふりをさせて勝手に操作させる攻撃）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "ブラウザが「別のサイトから届いた中身を読むのを止める」というのが、どういう仕組みで止めているのか分からない。なぜ送るのは止めないのに読むのは止めるのかが腑に落ちきらない。「他のサイト発のリクエストに Cookie を付けさせない設定」も名前が無く、どこで設定するのか想像できない",
+      "unknown_terms": [],
+      "minutes": 7
+    },
+    "154": {
+      "term": "ファイアウォール（通してよい通信だけを通す門）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "ポート番号が何かは前の単位の語で、ここでは説明が無いので「443 番」が何の番号なのかぼんやりしたまま読んだ。パケットは括弧で説明があったので分かった",
+      "unknown_terms": [
+        "ポート番号",
+        "マルウェア"
+      ],
+      "minutes": 6
+    },
+    "155": {
+      "term": "DMZ と WAF（公開するサーバの置き場と、Web 向けの門番）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "156": {
+      "term": "VPN（公共の回線の中に暗号の専用通路を作る）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "157": {
+      "term": "著作権（プログラムも書いた人の物）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "職務著作"
+      ],
+      "minutes": 5
+    },
+    "158": {
+      "term": "OSS のライセンス（使う条件を守る：GPL と緩い条件の物）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "GPL の「全体」がどこまでかが難しい。「結び付いて 1 つのプログラムとして動く」と「別々に動くプログラムを並べるだけ」の違いが、実際のコードでどう見分けるのか分からない",
+      "unknown_terms": [
+        "コピーレフト（名前だけ覚えた）"
+      ],
+      "minutes": 7
+    },
+    "159": {
+      "term": "個人情報の扱い（集める・使う・渡すときの決まり）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "160": {
+      "term": "不正アクセス禁止法とウイルス作成の罪（やってはいけない操作）",
+      "field": "セキュリティ",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "不正指令電磁的記録（正式名は長くて覚えられない）"
+      ],
+      "minutes": 5
+    },
+    "161": {
+      "term": "システム開発の工程（要件定義から設計・実装・テスト・リリースへ）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "162": {
+      "term": "要件定義（何を作るかを決める：機能要件と非機能要件）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "163": {
+      "term": "設計（画面や機能を決める設計と、作り方を決める設計）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "164": {
+      "term": "ウォーターフォールとアジャイル（工程を順に進めるか、小さく繰り返すか）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "165": {
+      "term": "スクラム（短い区切りで作って振り返る進め方）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "166": {
+      "term": "業務の流れを図にする（業務フローと DFD）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "DFD の記号は覚えたが、実際の図を見ていないので丸と四角を取り違えそう",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "167": {
+      "term": "設計を図で共有する（UML のクラス図とシーケンス図）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "クラスの説明は「物の設計図」と書いてあるが、オブジェクト指向の単位を読んでいないので、クラス図が何の役に立つかの実感がない。シーケンス図のほうは分かった",
+      "unknown_terms": [
+        "クラス",
+        "関数（クラスの中の）"
+      ],
+      "minutes": 6
+    },
+    "168": {
+      "term": "テストの段階（部品ごと・つないで・全体で・利用者が受け入れる）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "169": {
+      "term": "テストケースの作り方（同値分割と境界値）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "170": {
+      "term": "テストの自動化とテスト駆動開発（直したら全部すぐ確かめ直す）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "回帰テスト"
+      ],
+      "minutes": 5
+    },
+    "171": {
+      "term": "ブラックボックステストとホワイトボックステスト（外から見るか、中を見るか）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "172": {
+      "term": "テストの網羅の度合い（命令・分かれ道・条件をどこまで通したか）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "条件の網羅と分かれ道の網羅の違いは例を読んで一度分かったが、すぐに自分で別の例を作れと言われたら迷う。条件網羅を満たしても 3 行目を通らないのが不思議で、2 回読み直した",
+      "unknown_terms": [
+        "判定"
+      ],
+      "minutes": 8
+    },
+    "173": {
+      "term": "ターミナルとコマンド（文字で PC を操作する）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "ディレクトリ（パスの単位を読み返して確認した）"
+      ],
+      "minutes": 5
+    },
+    "174": {
+      "term": "エディタと IDE（コードを書く道具と、書く・動かす・調べるをまとめた道具）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "IDE が「コードを機械向けに直して動かす働き」を持つと書いてあるが、機械向けに直すというのが何なのか（コンパイラ）をこの範囲では知らない",
+      "unknown_terms": [
+        "デバッガ（ここで初めて出たが括弧で説明はあった）",
+        "コンパイラ"
+      ],
+      "minutes": 5
+    },
+    "175": {
+      "term": "パッケージ管理（必要な部品を入れて版をそろえる道具）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "依存関係"
+      ],
+      "minutes": 6
+    },
+    "176": {
+      "term": "環境変数と設定ファイル（コードに書かずに外から渡す設定）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "API キー（API が何か、この範囲では説明が無い）"
+      ],
+      "minutes": 5
+    },
+    "177": {
+      "term": "正規表現（文字の並びの型で探す・置き換える）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "178": {
+      "term": "バージョン管理（変更の履歴を残し、いつでも戻れるようにする）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "179": {
+      "term": "Git の基本（リポジトリとコミット：変更を区切って記録する）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "git add と git commit の 2 段に分ける理由は分かったが、実際に打ったことがないので操作の感覚はない",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "180": {
+      "term": "ブランチとマージ（枝分かれして作り、あとで合流させる）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "181": {
+      "term": "リモートと共有（push・pull とプルリクエスト）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "182": {
+      "term": "コンフリクト（同じ所を別々に変えたときのぶつかり）の解き方",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "183": {
+      "term": "開発・検証・本番の環境（試す場所と、お客様が使う場所を分ける）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "ステージング"
+      ],
+      "minutes": 4
+    },
+    "184": {
+      "term": "CI/CD（変更のたびに自動で確かめて届ける）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "ビルドの説明（CPU が実行できる形に直してライブラリとつなぐ）を読んでも、自分では具体的に何が起きているのか想像できない。CI と CD の区別は分かった",
+      "unknown_terms": [
+        "ビルド",
+        "デプロイ",
+        "パイプライン"
+      ],
+      "minutes": 6
+    },
+    "185": {
+      "term": "リリースと切り戻し（届ける・まずければすぐ戻す）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "データベースの形を変えると戻せない理由は、なんとなくしか分からない",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "186": {
+      "term": "監視とログ（動いている様子を見張り、記録を残す）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "アラート"
+      ],
+      "minutes": 5
+    },
+    "187": {
+      "term": "障害対応の進め方（切り分け・復旧・原因の調査・再発防止）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "暫定対応・恒久対応"
+      ],
+      "minutes": 5
+    },
+    "188": {
+      "term": "サービスの約束（SLA：どれだけ止めないかを決めて守る）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "189": {
+      "term": "プロジェクトと WBS（目的と期限のある仕事を作業に分解する）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "190": {
+      "term": "見積り（どれだけの手間と日数がかかるかを見込む）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "人日"
+      ],
+      "minutes": 5
+    },
+    "191": {
+      "term": "スケジュールと進み具合の管理（遅れが全体に響く作業を見つける）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "クリティカルパス",
+        "ガントチャート"
+      ],
+      "minutes": 7
+    },
+    "192": {
+      "term": "コードレビュー（読み合って誤りを見つけ、知識を分け合う）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "193": {
+      "term": "読みやすいコードとリファクタリング（名前・分け方・技術的負債）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "技術的負債"
+      ],
+      "minutes": 5
+    },
+    "194": {
+      "term": "ドキュメントを書く（あとから来た人が迷わない記録）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "README"
+      ],
+      "minutes": 4
+    },
+    "195": {
+      "term": "質問と報告の仕方（何をして、何が起き、何を試したかを伝える）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "報連相"
+      ],
+      "minutes": 4
+    },
+    "196": {
+      "term": "エラーを自分で調べる手順（メッセージを読む・再現する・絞り込む）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "デバッガ",
+        "開発者ツール"
+      ],
+      "minutes": 5
+    },
+    "197": {
+      "term": "技術を選ぶ理由を説明する（比べる観点を並べて決める）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "トレードオフ"
+      ],
+      "minutes": 5
+    },
+    "198": {
+      "term": "生成 AI でコードを書く・調べる（頼み方と任せ方）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "プロンプト"
+      ],
+      "minutes": 5
+    },
+    "199": {
+      "term": "AI の出力を確かめる（もっともらしい誤りを見抜く：テストとレビュー）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "ハルシネーション"
+      ],
+      "minutes": 4
+    },
+    "200": {
+      "term": "AI に渡してはいけない情報（秘密・個人情報・権利の確認）",
+      "field": "開発の進め方と仕事",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    }
+  },
+  "explain": {
+    "grades": {
+      "コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）": 2,
+      "CPU（命令を読んで計算する中心の部品）": 2,
+      "プロセス（実行中のプログラム）": 2,
+      "スレッド（プロセスの中の処理の流れ）とプロセスとの違い": 2,
+      "オブジェクト指向（データと処理をひとまとめにする：クラスとインスタンス）": 2,
+      "アルゴリズム（問題を解く手順を正確に決める）": 2,
+      "URL を開いてから画面が出るまでの全体の流れ": 2,
+      "HTTP（ブラウザとサーバの会話の決まり：リクエストとレスポンス）": 2,
+      "正規化（重複をなくすように表を分ける）": 2,
+      "トランザクションと ACID（全部やるか、全部やらないか）": 2,
+      "HTTPS と TLS（通信を暗号にして、相手が本物か確かめる）": 2,
+      "SQL インジェクション（入力で SQL を書き換える攻撃）とプリペアドステートメント": 2,
+      "テストの段階（部品ごと・つないで・全体で・利用者が受け入れる）": 2,
+      "バージョン管理（変更の履歴を残し、いつでも戻れるようにする）": 2
+    },
+    "rate": 1.0,
+    "can_explain": 14,
+    "n": 14
+  },
+  "delta_rate": 0.062,
+  "delta_understood": 0.01
+}

@@ -1,0 +1,67 @@
+{
+  "topic_id": 155,
+  "term": "DMZ と WAF（公開するサーバの置き場と、Web 向けの門番）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "外と社内の間に DMZ を挟み、境ごとに門（ファイアウォール）を置きます。外からの通信は DMZ の Web サーバまでで、社内へは 2 つ目の門を越える必要があります。",
+      "nodes": [
+        {
+          "id": "out",
+          "label": "外\nインターネット",
+          "row": 0,
+          "col": 0,
+          "shape": "cloud"
+        },
+        {
+          "id": "g1",
+          "label": "1 つ目の門",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "dmz",
+          "label": "DMZ\nWeb サーバ",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "g2",
+          "label": "2 つ目の門",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "in",
+          "label": "社内\nデータベース",
+          "row": 0,
+          "col": 4,
+          "shape": "cylinder"
+        }
+      ],
+      "edges": [
+        {
+          "from": "out",
+          "to": "g1"
+        },
+        {
+          "from": "g1",
+          "to": "dmz",
+          "label": "Web 宛てだけ"
+        },
+        {
+          "from": "dmz",
+          "to": "g2"
+        },
+        {
+          "from": "g2",
+          "to": "in",
+          "label": "決まった問い合わせ"
+        }
+      ]
+    }
+  ]
+}

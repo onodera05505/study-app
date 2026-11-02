@@ -29,7 +29,6 @@ def main() -> int:
             for item in raw.get(key, []) or []:
                 for s in (item.get("sources") or item.get("examples") or []):
                     if isinstance(s, dict) and s.get("name"): names.add(s["name"])
-    names.add("一般常識")
     import re as _re
     # 集計を出典名にした書き方を認める: 「記事の集計（interview_frequency）」「シラバスの集計（syllabus_weight）」など。
     # 括弧の中は副の信号のキー（登録簿 roadmapSpec.secondarySignal）と同じ綴り
@@ -43,8 +42,10 @@ def main() -> int:
     if bb != mm: errs.append(f"担当バンドルと出力の論点が不一致\n  bundle={bb}\n  output={mm}")
     for x in m.get("materials", []):
         tag = f"{x['topic_id']} {x['term']}"; ex, de = x.get("explanation", ""), x.get("detail", "")
-        if not x.get("sources"): errs.append(f"{tag}: 出典が無い")
+        # 一次資料に無い記述は出典無しでよい（sources が空でも止めない）。書いた出典は集めた資料の名前と一致する
         for s in x.get("sources", []):
+            # 「一般常識」は出典ではない。出典が無い記述は sources に何も書かない
+            if (s.get("name") or "").strip() == "一般常識": errs.append(f"{tag}: 「一般常識」は出典ではない（出典が無い記述は sources に書かない）"); continue
             if s.get("name") not in names and not FREQ.search(s.get("name") or ""): errs.append(f"{tag}: 出典名が sources/*.json に無い: {s.get('name')}")
         if len(ex) < 120: errs.append(f"{tag}: explanation が短い {len(ex)}")
         if len(ex) > 420: warns.append(f"{tag}: explanation が長い {len(ex)}（目安 200〜300）")

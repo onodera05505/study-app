@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="74" viewBox="0 0 1104 128" role="img">
+<title>外と社内の間に DMZ を挟み、境ごとに門（ファイアウォール）を置きます。外からの通信は DMZ の Web サーバまでで、社内へは 2 つ目の門を越える必要があります。</title>
+<rect x="0.5" y="0.5" width="1103" height="127" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<polyline points="128,30 259,30" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="259,30 251,33.6 251,26.4" fill="#1f2937"/>
+<polyline points="355,30 492.6,30" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="492.6,30 484.6,33.6 484.6,26.4" fill="#1f2937"/>
+<polyline points="589.4,30 727,30" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="727,30 719,33.6 719,26.4" fill="#1f2937"/>
+<polyline points="823,30 955,30" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="955,30 947,33.6 947,26.4" fill="#1f2937"/>
+<path d="M 20.48 60 C -7.68 60 -5.12 24 23.04 25.2 C 23.04 -3.6 71.68 -7.2 76.8 18 C 102.4 6 135.68 18 121.6 37.2 C 135.68 56.4 120.32 60 104.96 60 Z" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="64" y="24.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">外</text>
+<text x="64" y="44.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">インターネット</text>
+<rect x="259" y="7" width="96" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="307" y="34.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">1 つ目の門</text>
+<rect x="492.6" y="2" width="96.8" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="541" y="24.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">DMZ</text>
+<text x="541" y="44.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">Web サーバ</text>
+<rect x="727" y="7" width="96" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="775" y="34.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">2 つ目の門</text>
+<path d="M 955 11 A 54 9 0 0 0 1063 11 L 1063 49 A 54 9 0 0 1 955 49 Z" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<path d="M 955 11 A 54 9 0 0 1 1063 11" fill="none" stroke="#1f2937" stroke-width="1"/>
+<text x="1009" y="26.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">社内</text>
+<text x="1009" y="46.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">データベース</text>
+<rect x="382.6" y="13" width="82.4" height="16" rx="3" fill="#ffffff"/>
+<text x="423.8" y="26.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">Web 宛てだけ</text>
+<rect x="831" y="13" width="116" height="16" rx="3" fill="#ffffff"/>
+<text x="889" y="26.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">決まった問い合わせ</text>
+</g>
+<text x="552" y="108" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">外と社内の間に DMZ を挟み、境ごとに門（ファイアウォール）を置きます。外からの通信は DMZ の Web サーバまでで、社内へは 2 つ目の門を越える必要があります。</text>
+</svg>
