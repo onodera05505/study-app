@@ -38,7 +38,7 @@
 - `detail` は `### しくみ` → `### 面接で聞かれたら` → （あれば）`### 混同しやすい用語` の順
 
 ## 出典（必須）
-- `sources` に **1 件以上**。`name` は一次資料の名前（`data/itc/sources/*.json` の `name` と同じ表記）、`where` は章・項目名
+- `sources` に **1 件以上**。`name` は一次資料の名前（`data/eng/sources/*.json` の `name` と同じ表記）、`where` は章・項目名
 - 過去問の出題回数を根拠にするときは `{"name": "過去問の出題回数", "where": "ip・fe・ap の論点名"}` と書く（問題文は転記しない）
 - 面接での聞かれ方を根拠にするときは `{"name": "選考解説記事の集計", "where": "テーマ名"}` と書く（記事の転記はしない）
 - 一次資料に無いことを書かない。一般常識で補う場合は `sources` に `{"name": "一般常識", "where": "—"}` と正直に書く（後で人が見る）
@@ -52,8 +52,8 @@
 - 硬い語は動作で言う（「統制」→「決めて、やらせて、確かめる」）。1 文 60 字以内を目安に切る
 
 ## 入力・出力
-- 入力: `data/itc/material_bundles/bundle_NN.json`（`topics[]`: `topic_id` / `term` / `field` / `middle` / `summary` / `goals` / `prereq` / `sources`）
-- 出力: `data/itc/materials/bundle_NN.json`（同じ番号）。形は
+- 入力: `data/eng/material_bundles/bundle_NN.json`（`topics[]`: `topic_id` / `term` / `field` / `middle` / `summary` / `goals` / `prereq` / `sources`）
+- 出力: `data/eng/materials/bundle_NN.json`（同じ番号）。形は
   `{"bundle": "bundle_NN", "materials": [{"topic_id": 1, "term": "…", "explanation": "…", "detail": "…", "sources": [{"name": "…", "where": "…"}]}]}`
 - 論点名（`term`）はバンドルのまま。順序もバンドルのまま
 - 4 論点ずつ Write → Edit で追記（1 回で 8 論点を書き出さない。接続が切れる）

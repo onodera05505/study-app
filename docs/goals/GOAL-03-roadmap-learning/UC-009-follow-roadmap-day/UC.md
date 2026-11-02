@@ -3,8 +3,8 @@ id: UC-009
 title: 学ぶ順に並んだ論点を回ごとに辿り、回ごとの確認を始める
 actor: ACT-01
 goal: GOAL-03
-status: draft
-phase: 定義
+status: active
+phase: 完了
 ---
 
 # UC-009 学ぶ順に並んだ論点を回ごとに辿り、回ごとの確認を始める

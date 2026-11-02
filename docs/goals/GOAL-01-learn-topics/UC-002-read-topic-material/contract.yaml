@@ -130,7 +130,7 @@ operations:
               isNew: { type: integer, enum: [0, 1] }
               sortOrder: { type: [integer, "null"], description: "ロードマップ型の学ぶ順。資格対策では null" }
               round: { type: [string, "null"], minLength: 1, description: "ロードマップ型で論点が属する回。UC-008 の listExams の exam と同じ値で、補足の論点は補足の回（登録簿の extraRoundId）。学ぶ順を持たない非補足の論点と資格対策では null" }
-              roundLabel: { type: [string, "null"], minLength: 1, description: "論点が属する回のラベル（章で束ねる学びでは章の名前を持つ）。round が null のときは null" }
+              roundLabel: { type: [string, "null"], minLength: 1, description: "論点が属する回のラベル。章で束ねる学びでは章の名前だけ（章の番号を含まない。番号と組み合わせた見出しは登録簿の回の見出しの語が作る）。日で束ねる学びでは今の回のラベル。round が null のときは null" }
               tier: { type: [integer, "null"], minimum: 1, description: "印の段。段と語の対応は登録簿。印を持たない学びでは null" }
     errors:
       - code: UNAUTHENTICATED

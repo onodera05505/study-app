@@ -87,6 +87,7 @@ def main() -> int:
                   "fieldRatio": ratio, "fields": fields + [extra], "questionsPerRound": a.per_day * 2, "exemptRounds": [f"{key}-ex"], "roadmap": True,
                   "words": {"question": "確認問題", "questions": "確認問題", "mock": "確認テスト", "nextUp": "ロードマップの順で、まだ理解できていない単位"},
                   "roadmapSpec": {"targetName": a.target_name, "extraField": extra, "extraMiddle": "ロードマップ外", "extraRoundId": f"{key}-ex", "extraRoundLabel": extra, "roundLabel": "{day} 日目",
+                                  "roundHeading": "{day} 日目", "roundCheck": "この日の確認", "roundCount": "全 {n} 日", "perRoundCount": "1 日 {perDay} 単位",
                                   "loginLead": f"ロードマップの順に 1 日 {a.per_day} 単位を読み、確認問題で確かめる学習アプリです。",
                                   "reader": ["（質疑応答 reader の答えを箇条書きで）"], "usageLabel": "（利用場面でどう出るか。例: 就活でどう出るか）", "usageHint": "（例: 面接で聞かれる形）",
                                   "usageShort": "（例: 就活での出方）", "usageSection": "（detail の 2 段目の見出し。例: 面接で話すなら）", "usageSectionHint": "（その段に何を書くか）",

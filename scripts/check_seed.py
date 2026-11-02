@@ -24,7 +24,10 @@ SQL が通ったとしか言っていない。ここでその差を埋める。
   `exam_labels.json` に無い回はフォールバックでこうなる。出典とセッション名に出る
 - **UPSERT の更新列漏れ** — INSERT する列が ON CONFLICT の UPDATE 句にあるか。
   漏れると「データを直したのに本番が変わらない」。実際 `exam_label` で起きた
-- **回ごとの問題数** — IT パスポート100問 / 応用情報80問。欠けていれば分類も狂う
+- **回ごとの問題数** — IT パスポート100問 / 応用情報80問。欠けていれば分類も狂う。
+  ロードマップ型は `check_roadmap_registry.py` が見る（日なら登録簿の 1 回の問題数、章なら単位数 × 2）
+- **ロードマップ型の回の語・回・印** — 登録簿に回の見出し・回の数・回ごとの確認の語と印の語があり、
+  各論点が回（日なら学ぶ順 ÷ 1 日の論点数と一致）・回のラベル（章なら章の名前）・登録簿にある段の印を持つ
 - **図の画像** — `figure_image` が指すファイルが実在するか。無いと画面で画像が出ないが、
   エラーにはならないので気づけない
 - **教材に差し込んだ図** — `topics` の explanation / detail に入る画像行
@@ -57,7 +60,7 @@ EXAM_CODE = re.compile(r"^\d{4}[hr]\d{2}[hao]?$")
 # 1回あたりの問題数。ここから外れたら読み取りか分類の取りこぼし。
 sys.path.insert(0, str(Path(__file__).parent))
 from targets import targets as _targets  # 対象ごとの値は登録簿（src/shared/targets.json）から
-QUESTIONS_PER_EXAM = {k: v["questionsPerRound"] for k, v in _targets().items()}
+QUESTIONS_PER_EXAM = {k: v["questionsPerRound"] for k, v in _targets().items() if v.get("questionsPerRound")}
 # 回ごとの問題数の例外（回 ID → 何問でもよい）。ロードマップ型の「補足」は単位数が固定でない
 QUESTIONS_EXEMPT = {r for v in _targets().values() for r in v.get("exemptRounds", [])}
 
@@ -194,8 +197,15 @@ def main() -> int:
             problems.append(f"{exam}: 年度ラベルが複数ある {sorted(ls)}")
 
     # --- 回ごとの問題数 ---------------------------------------------------
+    # ロードマップ型は回の語・回・印と合わせて check_roadmap_registry が見る
+    from check_roadmap_registry import is_roadmap, registry_problems, seed_problems
     want_n = QUESTIONS_PER_EXAM.get(d.name)
-    if want_n:
+    if is_roadmap(d.name):
+        problems.extend(registry_problems(d.name, d))
+        problems.extend(seed_problems(d.name, insert_rows(sql, "topics"), per_exam, labels, d,
+                                      links=insert_rows(sql, "topic_questions"),
+                                      exam_of={r["id"]: r["exam"] for r in question_values(sql)}))
+    elif want_n:
         for exam, n in sorted(per_exam.items()):
             if exam in QUESTIONS_EXEMPT: continue
             if n != want_n:

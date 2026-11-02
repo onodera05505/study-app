@@ -29,10 +29,17 @@ def main() -> int:
     unit_ids = {u["topic_id"] for u in rm["units"]}
     for qp in sorted((d / "roadmap_questions").glob("bundle_*.json")):
         qs += [q for q in json.loads(qp.read_text(encoding="utf-8"))["questions"] if q["topic_id"] in unit_ids]  # ロードマップ外（除外済み）の問題は渡さない
-    lines = [f"# 学習ロードマップ: {rm['target']}", "", f"1 日 {rm['per_day']} 単位、全 {rm['days']} 日、{rm['unit_count']} 単位。1 単位は 5 分が目安。順番どおりに読む。", ""]
+    sys.path.insert(0, str(Path(__file__).resolve().parent)); from targets import target
+    by_chapter = rm.get("group_by") == "chapter"  # 章で束ねる学びは見出しを章の番号と名前にする
+    head = f"全 {rm['rounds']} 章、{rm['unit_count']} 単位" if by_chapter else f"1 日 {rm['per_day']} 単位、全 {rm['days']} 日、{rm['unit_count']} 単位"
+    lines = [f"# 学習ロードマップ: {rm['target']}", "", f"{head}。1 単位は 5 分が目安。順番どおりに読む。", ""]
     day = 0
     for u in rm["units"]:
-        if u["day"] != day: day = u["day"]; lines += ["", f"## {day} 日目"]
+        if by_chapter:
+            if u["round"] != day:
+                day = u["round"]; rl = (target(d.name).get("roadmapSpec") or {}).get("roundLabel", "{day}")
+                lines += ["", "## " + (rl.format(day=day, label=u["chapter"]) if "{label}" in rl else f"{rl.format(day=day)} {u['chapter']}")]
+        elif u["day"] != day: day = u["day"]; lines += ["", f"## {day} 日目"]
         safe = re.sub(r"[/\\ ]", "_", u["term"])
         fn = f"{u['order']:02d}_{safe}.md"
         lines.append(f"- {u['order']}. [{u['term']}](units/{fn}) — {u['summary']}")

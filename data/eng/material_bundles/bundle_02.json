@@ -1,0 +1,296 @@
+{
+  "bundle": "bundle_02",
+  "topics": [
+    {
+      "topic_id": 9,
+      "term": "命令の実行サイクルとレジスタ（取り出す・読み解く・実行する）",
+      "field": "コンピュータの仕組み",
+      "middle": "命令が実行される流れ",
+      "summary": "CPU は命令を取り出し、意味を読み解き、実行する手順を繰り返す。途中の値は CPU の中の小さな記憶（レジスタ）に置く",
+      "goals": [
+        1
+      ],
+      "prereq": [
+        "プログラムは命令の並び（機械語とプログラム内蔵方式）"
+      ],
+      "sources": [
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第7回 中央処理装置（The Central Processing Unit …"
+        },
+        {
+          "name": "Nand2Tetris コンピュータシステムの理論と実装（From Nand to Tetris）プロジェクト一覧",
+          "where": "プロジェクト5 コンピュータアーキテクチャ（Computer Architec…"
+        },
+        {
+          "name": "一般情報教育の知識体系 GEBOK2017.1（J17-GE）",
+          "where": "GE-CEO4 コンピュータの動作原理（必修）"
+        },
+        {
+          "name": "情報科学基礎論（Introduction to Information Science）授業計画と内容（2026 前期）",
+          "where": "計算機工学 > 計算機アーキテクチャ"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "CPU の命令実行とレジスタ"
+        }
+      ],
+      "source_count": 4,
+      "exam_weight": 0.89
+    },
+    {
+      "topic_id": 10,
+      "term": "クロックと CPU の速さの測り方",
+      "field": "コンピュータの仕組み",
+      "middle": "命令が実行される流れ",
+      "summary": "CPU は一定の拍子（クロック）に合わせて動く。1 秒あたりの拍の数と 1 命令に要る拍の数で速さが決まる",
+      "goals": [
+        1
+      ],
+      "prereq": [
+        "命令の実行サイクルとレジスタ（取り出す・読み解く・実行する）"
+      ],
+      "sources": [
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "コンピュータ構成要素 > プロセッサ"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "SF システム基礎 > 性能評価"
+        },
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "コンピュータ構成要素 > プロセッサ"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "CPU の性能指標（クロック・CPI・MIPS）・FLOPS"
+        }
+      ],
+      "source_count": 3,
+      "exam_weight": 1.53
+    },
+    {
+      "topic_id": 11,
+      "term": "マルチコアと GPU（並べて同時に計算する）",
+      "field": "コンピュータの仕組み",
+      "middle": "命令が実行される流れ",
+      "summary": "1 つの CPU に計算の芯を複数載せたり、単純な計算を大量に並べて行う GPU を使ったりして速くする",
+      "goals": [
+        1
+      ],
+      "prereq": [
+        "命令の実行サイクルとレジスタ（取り出す・読み解く・実行する）",
+        "クロックと CPU の速さの測り方"
+      ],
+      "sources": [
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "プロセッサ（マルチコア）"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "SF システム基礎 > 並列処理"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第9回 CPU の高度な設計（Advanced CPU Designs）"
+        },
+        {
+          "name": "CS50x 2026 コンピュータサイエンス入門（CS50's Introduction to Computer Science）週ごとの講義一覧",
+          "where": "番外 人工知能（Artificial Intelligence）"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "GPU"
+        }
+      ],
+      "source_count": 4,
+      "exam_weight": 0.41
+    },
+    {
+      "topic_id": 12,
+      "term": "割り込み（途中で急ぎの用事を差し込む仕組み）",
+      "field": "コンピュータの仕組み",
+      "middle": "命令が実行される流れ",
+      "summary": "キー入力や異常などが起きたとき、CPU が今の処理を止めて急ぎの処理に切り替え、終わったら戻る仕組み",
+      "goals": [
+        1,
+        2
+      ],
+      "prereq": [
+        "命令の実行サイクルとレジスタ（取り出す・読み解く・実行する）"
+      ],
+      "sources": [
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "コンピュータ構成要素 > プロセッサ"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "SF システム基礎 > 状態と状態機械"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "割込み（外部・内部）"
+        }
+      ],
+      "source_count": 2,
+      "exam_weight": 1.0
+    },
+    {
+      "topic_id": 13,
+      "term": "ビットとバイト（情報の最小単位と容量の数え方）",
+      "field": "コンピュータの仕組み",
+      "middle": "0 と 1 で数と文字を表す",
+      "summary": "0 か 1 の 1 桁がビット、8 ビットで 1 バイト。KB・MB・GB と 1,000 倍ほどずつ大きくなる容量の単位の土台",
+      "goals": [
+        1
+      ],
+      "prereq": [
+        "コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）"
+      ],
+      "sources": [
+        {
+          "name": "一般情報教育の知識体系 GEBOK2017.1（J17-GE）",
+          "where": "GE-DIG1 符号化の原理（必修）"
+        },
+        {
+          "name": "情報科学基礎論（Introduction to Information Science）授業計画と内容（2026 前期）",
+          "where": "計算機工学 > ビット列によるデータ表現"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第4回 2 進数で数と文字を表す（Representing Numbers a…"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "AR > 機械レベルでのデータの表現"
+        },
+        {
+          "name": "高等学校学習指導要領（平成30年告示）解説 情報編 — 情報Ⅰの内容",
+          "where": "(3) 知識・技能 > コンピュータや外部装置の仕組み、情報の内部表現と計算の…"
+        }
+      ],
+      "source_count": 5,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 14,
+      "term": "2 進数と 16 進数（数の表し方を変える）",
+      "field": "コンピュータの仕組み",
+      "middle": "0 と 1 で数と文字を表す",
+      "summary": "コンピュータは数を 2 進数で持つ。人が読みやすいよう 4 桁ずつまとめた 16 進数もよく使う。基数の変換の考え方",
+      "goals": [
+        1
+      ],
+      "prereq": [
+        "ビットとバイト（情報の最小単位と容量の数え方）"
+      ],
+      "sources": [
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "基礎理論 > 離散数学"
+        },
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "基礎理論 > 離散数学"
+        },
+        {
+          "name": "6.100L コンピュータサイエンスとプログラミング入門（Introduction to CS and Programming Using Python, Fall 2022）講義一覧",
+          "where": "第4回 文字列の繰り返し処理・総当たり・2 進数（Loops over Str…"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第4回 2 進数で数と文字を表す（Representing Numbers a…"
+        },
+        {
+          "name": "Nand2Tetris コンピュータシステムの理論と実装（From Nand to Tetris）プロジェクト一覧",
+          "where": "プロジェクト2 ブール算術（Boolean Arithmetic）"
+        },
+        {
+          "name": "一般情報教育の知識体系 GEBOK2017.1（J17-GE）",
+          "where": "GE-DIG2 数値と文字の符号化（必修）"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "2 進数と基数変換（2 の補数）"
+        }
+      ],
+      "source_count": 6,
+      "exam_weight": 1.12
+    },
+    {
+      "topic_id": 15,
+      "term": "小数の表し方と計算の誤差（浮動小数点数）",
+      "field": "コンピュータの仕組み",
+      "middle": "0 と 1 で数と文字を表す",
+      "summary": "小数は桁を区切った近似で持つため、0.1 を足し続けるとずれが出る。お金の計算で事故になる理由",
+      "goals": [
+        1,
+        3
+      ],
+      "prereq": [
+        "2 進数と 16 進数（数の表し方を変える）"
+      ],
+      "sources": [
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "基礎理論 > 離散数学"
+        },
+        {
+          "name": "6.100L コンピュータサイエンスとプログラミング入門（Introduction to CS and Programming Using Python, Fall 2022）講義一覧",
+          "where": "第5回 浮動小数点数と近似（Floats and Approximation …"
+        },
+        {
+          "name": "高等学校情報科「情報Ⅰ」教員研修用教材（本編）",
+          "where": "第3章の項目 > 計算誤差"
+        },
+        {
+          "name": "高等学校学習指導要領（平成30年告示）解説 情報編 — 情報Ⅰの内容",
+          "where": "(3) 知識・技能 > コンピュータや外部装置の仕組み、情報の内部表現と計算の…"
+        }
+      ],
+      "source_count": 4,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 16,
+      "term": "文字コード（文字に番号を割り当てる：ASCII・Unicode・UTF-8）",
+      "field": "コンピュータの仕組み",
+      "middle": "0 と 1 で数と文字を表す",
+      "summary": "文字は番号で持ち、番号と文字の対応表が文字コード。送り手と受け手の表が違うと文字化けが起きる",
+      "goals": [
+        1
+      ],
+      "prereq": [
+        "ビットとバイト（情報の最小単位と容量の数え方）"
+      ],
+      "sources": [
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "基礎理論 > 情報に関する理論"
+        },
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "基礎理論 > 情報に関する理論"
+        },
+        {
+          "name": "一般情報教育の知識体系 GEBOK2017.1（J17-GE）",
+          "where": "GE-DIG2 数値と文字の符号化（必修）"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "MR メディア表現 > 文字コード（選択）"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第4回 2 進数で数と文字を表す（Representing Numbers a…"
+        }
+      ],
+      "source_count": 5,
+      "exam_weight": 0.0
+    }
+  ]
+}

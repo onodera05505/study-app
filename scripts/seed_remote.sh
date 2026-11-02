@@ -6,6 +6,7 @@
 #   bash scripts/seed_remote.sh ip --local    # ローカル D1 でのリハーサル（バックアップは省く）
 #
 # 順番:
+#   0. d1_migrations.sh check 未適用の migrations があれば止める（当てるのは d1_migrations.sh apply か finish_remote.sh）
 #   1. check_seed.py          seed の中身（出典・ラベル・件数・図・UPSERT の列漏れ・正解の矛盾）
 #   2. backup_d1.sh           本番の丸ごとバックアップ（進捗と受験履歴は本番にしか無い）
 #   3. wrangler d1 execute    --remote を機械的に付ける（付け忘れでローカルだけ変わる事故を潰す）
@@ -25,6 +26,9 @@ WHERE="--remote"
 if [ "${2:-}" = "--local" ]; then WHERE="--local"; fi
 SEED="data/${EXAM}/seed.sql"
 [ -f "$SEED" ] || { echo "seed が無い: ${SEED}（先に python3 scripts/build_seed.py --data data/${EXAM}）"; exit 1; }
+
+echo "▶ 0/4 D1 に migrations が全部当たっているか（未適用だと seed の新しい列の INSERT が落ちる）"
+bash scripts/d1_migrations.sh "$EXAM" check "$WHERE"
 
 # @implements BR-032
 echo "▶ 1/4 seed の中身を検査"

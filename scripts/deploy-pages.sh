@@ -32,11 +32,21 @@ WANT=$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json
 HAVE=$(npx wrangler whoami 2>/dev/null | grep -oE '[0-9a-f]{32}' | head -1 || true)
 [ "$HAVE" = "$WANT" ] || { echo "ログイン中のアカウント（${HAVE:-不明}）が想定（${WANT}）と違う。npx wrangler login で個人アカウントを選び直す"; exit 1; }
 
+echo "▶ D1 に migrations が全部当たっているか（未適用のまま出すと、新しい列を読む SQL が 500 になる）"
+bash scripts/d1_migrations.sh "$EXAM" check
+
+echo "▶ ロードマップ型なら、D1 の論点が回を持っているか（migrations だけ当てて seed が古いまま出さない。資格型は素通り）"
+bash scripts/check_d1_rounds.sh "$EXAM"
+
 # macOS 標準の bash 3.2 は $VAR 直後の全角文字を変数名に巻き込むので ${VAR} で区切る
 echo "▶ 対象: ${EXAM}（Pages: $PROJECT / D1: ${DB}）"
 
 echo "▶ ソースの静的な門（PBKDF2 の反復回数の上限・一覧の空配列初期化。不変条件 O5 / D11）"
 python3 scripts/check_source.py
+
+echo "▶ ロードマップ型の回の語・印の語が登録簿に揃っているか（BR-037。資格型は素通り）"
+# @implements BR-037
+python3 scripts/check_roadmap_registry.py "$EXAM"
 
 echo "▶ 描画検査（実データ全件を jsdom で描いて見る。落ちたらデプロイしない）"
 # データ側の検査が通っても画面だけ壊れることがある（2026-09-01 の用語ポップ）。

@@ -11,8 +11,13 @@
  *  1 日の単位数（3）と 1 回の問題数（6）は登録簿の値。 */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import targets from '../../src/shared/targets.json'
 
 type Unit = Record<string, unknown>
+
+/** 登録簿の補足の回（ID とラベル）。 */
+const ITC_SPEC = (targets as unknown as { itc: { roadmapSpec: { extraRoundId: string; extraRoundLabel: string } } }).itc
+  .roadmapSpec
 
 /** 単位の名前には数字を入れない（画面に出る数値の断言とぶつからないように）。 */
 const NAMES = ['単位 甲', '単位 乙', '単位 丙', '単位 丁', '単位 戊', '単位 己', '単位 庚']
@@ -27,6 +32,9 @@ const unit = (i: number, status: number | null): Unit => ({
   itemName: 'コンサルの仕事',
   isNew: 0,
   sortOrder: i + 1,
+  round: `itc-d0${Math.floor(i / 3) + 1}`,
+  roundLabel: `${Math.floor(i / 3) + 1} 日目`,
+  tier: null,
 })
 
 /** 7 単位。甲〜丁が理解（3）なので 1 日目（3 単位）は全部理解、いま学ぶ位置は戊。 */
@@ -43,6 +51,9 @@ const EXTRA: Unit = {
   itemName: 'ロードマップ外',
   isNew: 0,
   sortOrder: null,
+  round: ITC_SPEC.extraRoundId,
+  roundLabel: ITC_SPEC.extraRoundLabel,
+  tier: null,
 }
 
 /** 単位の画面に出る教材の本文と確認問題の本文（単位ごとに別の文にして、移ったことを見る）。 */
@@ -65,13 +76,14 @@ const detail = (i: number) => ({
     middleNo: 1,
     itemName: 'コンサルの仕事',
     syllabusItemId: 1,
+    tier: null,
   },
   questions: [
     {
-      id: `itc-d2-q${i}`,
+      id: `itc-d02-q${i}`,
       number: i + 1,
       examLabel: '2 日目',
-      exam: 'itc-d2',
+      exam: 'itc-d02',
       text: QUIZ(NAMES[i]),
       choices: { ア: 'アの本文', イ: 'イの本文', ウ: 'ウの本文', エ: 'エの本文' },
       answer: 'ア',
@@ -105,9 +117,9 @@ const detail = (i: number) => ({
 /** 各日の確認テスト（1 回 6 問）。1 日目は 2 回受けていて最高 5 問正解。 */
 const EXAMS = {
   exams: [
-    { exam: 'itc-d1', examLabel: '1 日目', questions: 6, attempts: 2, bestScore: 5 },
-    { exam: 'itc-d2', examLabel: '2 日目', questions: 6, attempts: 0, bestScore: null },
-    { exam: 'itc-d3', examLabel: '3 日目', questions: 6, attempts: 0, bestScore: null },
+    { exam: 'itc-d01', examLabel: '1 日目', questions: 6, attempts: 2, bestScore: 5 },
+    { exam: 'itc-d02', examLabel: '2 日目', questions: 6, attempts: 0, bestScore: null },
+    { exam: 'itc-d03', examLabel: '3 日目', questions: 6, attempts: 0, bestScore: null },
   ],
 }
 
@@ -142,7 +154,7 @@ function stubApi() {
     else if (p.endsWith('/auth/config')) body = { sso: true, portal: 'https://manabiba.example', app: 'itc' }
     else if (p.endsWith('/sessions/s-new/current'))
       body = {
-        session: { id: 's-new', kind: 'mock', scopeLabel: '1 日目', questionCount: 6, sourceExam: 'itc-d1' },
+        session: { id: 's-new', kind: 'mock', scopeLabel: '1 日目', questionCount: 6, sourceExam: 'itc-d01' },
         question: {
           idx: 1,
           text: EXAM_QUESTION,

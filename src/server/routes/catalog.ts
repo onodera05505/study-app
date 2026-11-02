@@ -83,7 +83,7 @@ const topicQuery = z.object({
 })
 
 /** 論点一覧。既定は出題頻度の降順＝最短合格の優先順位そのもの。 */
-// @implements REQ-020, REQ-021, REQ-042, REQ-265, BR-029, BR-031
+// @implements REQ-020, REQ-021, REQ-042, REQ-265, BR-029, BR-031, REQ-279, REQ-282
 catalogRoutes.get('/topics', async (c) => {
   const parsed = topicQuery.safeParse(c.req.query())
   if (!parsed.success) return c.json({ error: '検索条件が正しくありません' }, 400)
@@ -106,7 +106,7 @@ catalogRoutes.get('/topics', async (c) => {
   ]
   // recommended = 「頻出なのに、まだ理解できていない」順。これが最短経路の実体。
   // ロードマップ型は出題頻度が一定（確認問題 2 問）なので、学ぶ順（sort_order）で並べる。
-  // 資格版の SQL は変えない（列を参照しないので、資格版の D1 に列が無くても動く）。
+  // 資格版の SQL はロードマップ型の列（sort_order・round・round_label・tier）を参照しない。
   const byRoadmap = examOf(c.env.EXAM).roadmap
   const ordering =
     sort === 'name'
@@ -129,6 +129,9 @@ catalogRoutes.get('/topics', async (c) => {
     itemName: string
     isNew: number
     sortOrder: number | null
+    round: string | null
+    roundLabel: string | null
+    tier: number | null
   }>(sql`
     SELECT t.id            AS id,
            t.term          AS term,
@@ -138,7 +141,10 @@ catalogRoutes.get('/topics', async (c) => {
            s.middle        AS middle,
            s.name          AS itemName,
            t.is_new        AS isNew,
-           ${byRoadmap ? sql`t.sort_order` : sql`NULL`} AS sortOrder
+           ${byRoadmap ? sql`t.sort_order` : sql`NULL`} AS sortOrder,
+           ${byRoadmap ? sql`t.round` : sql`NULL`} AS round,
+           ${byRoadmap ? sql`t.round_label` : sql`NULL`} AS roundLabel,
+           ${byRoadmap ? sql`t.tier` : sql`NULL`} AS tier
       FROM topics t
       JOIN syllabus_items s ON s.id = t.syllabus_item_id
       LEFT JOIN progress p ON p.topic_id = t.id AND p.user_id = ${userId}
@@ -150,13 +156,14 @@ catalogRoutes.get('/topics', async (c) => {
 })
 
 /** 論点の詳細。解説・周辺知識と、その論点が出題された過去問。 */
-// @implements REQ-023, REQ-045, BR-030
+// @implements REQ-023, REQ-045, BR-030, REQ-284
 catalogRoutes.get('/topics/:id', async (c) => {
   const id = Number(c.req.param('id'))
   if (!Number.isInteger(id)) return c.json({ error: '不正な ID です' }, 400)
 
   const db = getDb(c.env)
   const userId = c.get('user').id
+  const roadmap = examOf(c.env.EXAM).roadmap
 
   // D1 は1クエリごとに往復が要る。直列に await すると往復の回数だけ待たされるので、
   // 3本を同時に投げる。siblings は論点の項目 ID が要るが、サブクエリで引けば
@@ -175,9 +182,11 @@ catalogRoutes.get('/topics/:id', async (c) => {
     middleNo: number
     itemName: string
     syllabusItemId: number
+    tier: number | null
   }>(sql`
     SELECT t.id AS id, t.term AS term, t.explanation AS explanation, t.detail AS detail,
            t.question_count AS questionCount, t.is_new AS isNew, p.status AS status,
+           ${roadmap ? sql`t.tier` : sql`NULL`} AS tier,
            s.field AS field, s.major AS major, s.middle AS middle, s.name AS itemName,
            s.middle_no AS middleNo,
            s.id AS syllabusItemId
@@ -241,7 +250,6 @@ catalogRoutes.get('/topics/:id', async (c) => {
 
   // ロードマップ型: 学ぶ順の前後（sort_order）。資格版は sort_order を参照しない（D13）ので null。
   // ロードマップ型は前後の単位だけを出す。「他の論点」「次に学ぶ（次の未理解）」は学ぶ道を散らす
-  const roadmap = examOf(c.env.EXAM).roadmap
   const neighborsP: Promise<{ prev: { id: number; term: string } | null; next: { id: number; term: string } | null } | null> = roadmap
     ? Promise.all([
         db.get<{ id: number; term: string }>(sql`
@@ -355,7 +363,7 @@ catalogRoutes.get('/exams', async (c) => {
       FROM past_questions q
      GROUP BY q.exam, q.exam_label
      ${examOf(c.env.EXAM).roadmap
-       ? sql`ORDER BY q.exam ASC` /* ロードマップ型は 1 日目から順に並べる。資格版は新しい回が先 */
+       ? sql`ORDER BY q.exam ASC` /* ロードマップ型は最初の回から順に並べる。資格版は新しい回が先 */
        : sql`ORDER BY q.exam DESC`}
   `)
   return c.json({ exams: rows })

@@ -133,7 +133,11 @@
       ],
       "keywordLabel": "見分けワード",
       "perDay": 3,
-      "confusionSection": "関連用語"
+      "confusionSection": "関連用語",
+      "roundHeading": "{day} 日目",
+      "roundCheck": "この日の確認",
+      "roundCount": "全 {n} 日",
+      "perRoundCount": "1 日 {perDay} 単位"
     }
   },
   "mkt": {
@@ -204,7 +208,11 @@
       ],
       "keywordLabel": "キーワード",
       "perDay": 3,
-      "confusionSection": "関連用語"
+      "confusionSection": "関連用語",
+      "roundHeading": "{day} 日目",
+      "roundCheck": "この日の確認",
+      "roundCount": "全 {n} 日",
+      "perRoundCount": "1 日 {perDay} 単位"
     }
   },
   "msg": {
@@ -296,7 +304,11 @@
         "(?:必ず|絶対に)(?:効|楽に|ほぐれ)": "効果を断定している"
       },
       "secondarySignal": "care_count",
-      "confusionSection": "関連用語"
+      "confusionSection": "関連用語",
+      "roundHeading": "{day} 日目",
+      "roundCheck": "この日の確認",
+      "roundCount": "全 {n} 日",
+      "perRoundCount": "1 日 {perDay} 単位"
     }
   },
   "ecl": {
@@ -377,7 +389,11 @@
       "keywordLabel": "キーワード",
       "perDay": 3,
       "secondarySignal": "life_count",
-      "confusionSection": "関連用語"
+      "confusionSection": "関連用語",
+      "roundHeading": "{day} 日目",
+      "roundCheck": "この日の確認",
+      "roundCount": "全 {n} 日",
+      "perRoundCount": "1 日 {perDay} 単位"
     }
   },
   "eca": {
@@ -457,7 +473,11 @@
       "keywordLabel": "キーワード",
       "perDay": 2,
       "secondarySignal": "syllabus_weight",
-      "confusionSection": "関連用語"
+      "confusionSection": "関連用語",
+      "roundHeading": "{day} 日目",
+      "roundCheck": "この日の確認",
+      "roundCount": "全 {n} 日",
+      "perRoundCount": "1 日 {perDay} 単位"
     }
   },
   "cnv": {
@@ -538,7 +558,11 @@
       "keywordLabel": "キーワード",
       "perDay": 3,
       "secondarySignal": "talk_count",
-      "confusionSection": "関連用語"
+      "confusionSection": "関連用語",
+      "roundHeading": "{day} 日目",
+      "roundCheck": "この日の確認",
+      "roundCount": "全 {n} 日",
+      "perRoundCount": "1 日 {perDay} 単位"
     }
   },
   "fe": {
@@ -598,7 +622,6 @@
       "開発の進め方と仕事",
       "補足（ロードマップ外）"
     ],
-    "questionsPerRound": 6,
     "exemptRounds": [
       "eng-ex"
     ],
@@ -645,7 +668,6 @@
         "激務"
       ],
       "keywordLabel": "見分けワード",
-      "perDay": 5,
       "secondarySignal": "exam_weight",
       "confusionSection": "混同しやすい用語",
       "tiers": [
@@ -664,7 +686,10 @@
           "label": "★ 必要になったら",
           "rule": "基本情報の水準・特定の職種や場面で要る"
         }
-      ]
+      ],
+      "roundHeading": "第 {day} 章 {label}",
+      "roundCheck": "この章の確認",
+      "roundCount": "全 {n} 章"
     }
   }
 }

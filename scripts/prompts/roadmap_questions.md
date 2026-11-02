@@ -31,7 +31,7 @@
 - `check_roadmap.py` が 4 つ全部あって空でないことを見る
 
 ## 出力
-`data/itc/roadmap_questions/bundle_NN.json`:
+`data/{{key}}/roadmap_questions/bundle_NN.json`:
 `{"bundle": "bundle_NN", "questions": [{"qid": "t<topic_id>-1", "topic_id": 1, "term": "…", "stem": "…", "choices": {"ア": "…", "イ": "…", "ウ": "…", "エ": "…"}, "answer": "ア", "reason": "…", "tests_goal": 1}]}`
 - `tests_goal` は到達基準 1〜6 のどれを確かめるか
 - 正解の位置（ア〜エ）は偏らせない

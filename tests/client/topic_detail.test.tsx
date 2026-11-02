@@ -10,6 +10,7 @@ import { createRoot, type Root } from 'react-dom/client'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { TopicDetail } from '../../src/client/pages/TopicDetail'
 import { getLastTopic, invalidateCached } from '../../src/client/lib/api'
+import targets from '../../src/shared/targets.json'
 
 const FIGURE_SRC = '/figures/ip/2024r06-q1.png'
 
@@ -70,6 +71,7 @@ const detail = (over: Over = {}) => ({
     middleNo: 4,
     itemName: '会計と財務',
     syllabusItemId: 3,
+    tier: null,
   },
   questions: QUESTIONS,
   siblings: [{ id: 232, term: '同じ小項目の他の論点', questionCount: 3 }],
@@ -307,10 +309,10 @@ describe('前回の続き', () => {
   })
 })
 
-describe('ロードマップ型の論点の画面', () => {
+describe('ロードマップ型の論点の画面（UC-009）', () => {
   /** VITE_EXAM を差し替えてから読み込み直す（対象は読み込み時に決まる）。 */
-  async function drawRoadmap(over: Over = {}) {
-    vi.stubEnv('VITE_EXAM', 'itc')
+  async function drawRoadmap(over: Over = {}, target: 'itc' | 'eng' = 'itc') {
+    vi.stubEnv('VITE_EXAM', target)
     vi.resetModules()
     const React = await import('react')
     const { createRoot: create } = await import('react-dom/client')
@@ -389,6 +391,41 @@ describe('ロードマップ型の論点の画面', () => {
     // 前へ移る手段は無い（押せる要素になっていない）
     expect(v.links().some((a) => /前の単位/.test(a.textContent ?? ''))).toBe(false)
     expect(v.links().map((a) => a.getAttribute('href'))).toContain('/topics/232')
+    await v.close()
+  })
+
+  /** 登録簿の印の段（eng）。段ごとの語は登録簿だけが持つ。 */
+  const TIERS = (
+    targets as unknown as { eng: { roadmapSpec: { tiers: { level: number; label: string }[] } } }
+  ).eng.roadmapSpec.tiers
+
+  // @covers REQ-284#tier-label-on-topic
+  it('印を持つ学びでは、論点の画面にその論点の印を登録簿の語で出す', async () => {
+    const base = detail().topic
+    stubApi({
+      body: {
+        topic: { ...base, tier: 2 },
+        neighbors: { prev: { id: 230, term: '前の単位の名前' }, next: null },
+      },
+    })
+    const v = await drawRoadmap({}, 'eng')
+    expect(v.text(), '描けていない（この検査は空振りになる）').toContain('短い説明の本文です。')
+    const label = TIERS.find((t) => t.level === 2)!.label
+    expect(v.text(), `印「${label}」が出ていない`).toContain(label)
+    for (const t of TIERS.filter((x) => x.level !== 2))
+      expect(v.text(), `その論点のものでない印「${t.label}」が出ている`).not.toContain(t.label)
+    await v.close()
+  })
+
+  // @covers REQ-285#no-tier-on-topic
+  it('印を持たない学びの論点の画面には、印を出さない', async () => {
+    stubApi({
+      body: { neighbors: { prev: { id: 230, term: '前の単位の名前' }, next: { id: 232, term: '次の単位の名前' } } },
+    })
+    const v = await drawRoadmap()
+    expect(v.text(), '描けていない（この検査は空振りになる）').toContain('短い説明の本文です。')
+    for (const t of TIERS) expect(v.text(), `印の語「${t.label}」が出ている`).not.toContain(t.label)
+    expect(v.text(), '印が出ている').not.toContain('★')
     await v.close()
   })
 })

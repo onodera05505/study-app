@@ -7,10 +7,17 @@
 入力: roadmap.json / materials/*.json / questions/bundle_*.json / topics_candidates.json
 出力（すべて data/itc/ 直下。手で編集しない）:
   syllabus.json         自前の階層。分野（4）→ 中分類 を syllabus_items に写す（major は分野名と同じ）
-  topics.json           単位＝論点。id は候補 id で固定（topic_ids.json にも書く）。sort_order がロードマップの順
-  exam_labels.json      「回」＝日。<対象>-d01 … → roadmapSpec.roundLabel（例「1 日目」）
+  topics.json           単位＝論点。id は候補 id で固定（topic_ids.json にも書く）。sort_order がロードマップの順。
+                        round（回の ID）・round_label（回のラベル）・tier（印。登録簿 roadmapSpec.tiers を持つ学びだけ値、他は null）
+  exam_labels.json      回の ID → 回の見出し
   answer_keys.json      確認問題の正解
-  questions/<対象>-dNN.json  1 日 per_day 単位 × 2 問を「回」として持つ（past_questions に入る。出典は自作の確認問題）
+  questions/<回の ID>.json   回に属する単位 × 2 問を「回」として持つ（past_questions に入る。出典は自作の確認問題）
+
+回の ID と見出しは roadmap.json の束ね方で決まる:
+  日（既定）: <対象>-dNN。見出しと round_label は roadmapSpec.roundLabel を {day} で埋めた語（例「1 日目」）
+  章（group_by: chapter）: <対象>-cNN。round_label は章の名前、見出し（exam_label）は roadmapSpec.roundLabel を
+      {day}（章の番号）と {label}（章の名前）で埋めた語。roundLabel に {label} が無ければ末尾に空白と章の名前を足す
+  補足の論点: 回は roadmapSpec.extraRoundId、見出しと round_label は extraRoundLabel
   question_explanations/roadmap.json  問題の reason を correct_reason に、choice_notes を選択肢ごとの note に
   materials_v3/roadmap.json           教材に「### 出典」を足した版（build_seed は後の世代を優先して読む）
 
@@ -28,6 +35,17 @@ def main() -> int:
     EXTRA_FIELD, EXTRA_MIDDLE = spec.get("extraField", "補足（ロードマップ外）"), spec.get("extraMiddle", "ロードマップ外")
     EXTRA_ROUND, EXTRA_LABEL, ROUND_LABEL = spec.get("extraRoundId", f"{key}-ex"), spec.get("extraRoundLabel", "補足（ロードマップ外）"), spec.get("roundLabel", "{day} 日目")
     rm = json.loads((d / "roadmap.json").read_text(encoding="utf-8")); units = rm["units"]
+    by_chapter = rm.get("group_by") == "chapter"
+    has_tiers = bool(spec.get("tiers"))
+    def round_of(u: dict) -> tuple[str, str, str]:
+        """(回の ID, round_label, 回の見出し)。"""
+        if u.get("_extra"): return EXTRA_ROUND, EXTRA_LABEL, EXTRA_LABEL
+        if by_chapter:
+            n, name = u["round"], u["chapter"]
+            head = ROUND_LABEL.format(day=n, label=name) if "{label}" in ROUND_LABEL else f"{ROUND_LABEL.format(day=n)} {name}"
+            return f"{key}-c{n:02d}", name, head
+        label = ROUND_LABEL.format(day=u["day"])
+        return f"{key}-d{u['day']:02d}", label, label
     cands = {c["id"]: c for c in json.loads((d / "topics_candidates.json").read_text(encoding="utf-8"))["candidates"]}
     mats: dict[int, dict] = {}
     for f in sorted(glob.glob(str(d / "materials" / "*.json"))):
@@ -38,14 +56,17 @@ def main() -> int:
     unit_ids = {u["topic_id"] for u in units}
     missing = [u["term"] for u in units if u["topic_id"] not in mats]; assert not missing, f"教材が無い: {missing}"
     bad = [u["term"] for u in units if len(qs.get(u["topic_id"], [])) != 2]; assert not bad, f"問題が 2 問でない: {bad}"
-    # 補足: ロードマップから外したが教材を残す単位（本人の決定 2026-09-15「別枠で残す」）。5 つ目の分野「補足（ロードマップ外）」に
-    # sort_order 43〜 で並べ、確認問題は「回」itc-ex（ラベル「補足」）に入れる。問題が無い単位も載せる（question_count 0）
+    # 補足: ロードマップから外したが教材を残す単位。補足の分野に学ぶ順の末尾で並べ、確認問題は補足の回に入れる。
+    # 問題が無い単位も載せる（question_count 0）。印を持つ学びでは補足の単位も候補の印を持つ
     extra_ids = sorted(set(mats) - unit_ids)
-    day_ex = rm["days"] + 1
     for i, tid in enumerate(extra_ids, 1):
         m = mats[tid]
-        units.append({"order": len(units) + 1, "day": day_ex, "topic_id": tid, "term": m["term"], "field": EXTRA_FIELD, "middle": EXTRA_MIDDLE,
-                      "summary": "", "goals": [], "prereq": [], "sources": [], "_extra": True})
+        units.append({"order": len(units) + 1, "topic_id": tid, "term": m["term"], "field": EXTRA_FIELD, "middle": EXTRA_MIDDLE,
+                      "summary": "", "goals": [], "prereq": [], "sources": [], "tier": cands.get(tid, {}).get("tier"), "_extra": True})
+    if has_tiers:
+        levels = {t.get("level") for t in spec["tiers"]}
+        lack = [u["term"] for u in units if u.get("tier") not in levels]
+        assert not lack, f"印が登録簿 roadmapSpec.tiers の段に無い単位: {lack[:5]}"
 
     # --- 階層: 分野 → 中分類 ---
     fields = list(target(key)["fields"])  # 登録簿の並び（補足の分野を含む）
@@ -61,11 +82,11 @@ def main() -> int:
     (d / "syllabus.json").write_text(json.dumps({"version": f"roadmap-{key}-2026-09-15", "source": "自前の階層（要件定義書 §13）", "item_count": len(items),
                                                  "term_count": len(units), "items": items}, ensure_ascii=False, indent=1), encoding="utf-8")
 
-    # --- 回＝日。問題番号は日の中で 1..6 ---
-    per_day = rm["per_day"]; labels: dict[str, str] = {}; keys: dict[str, dict] = {}; qfiles: dict[str, list] = {}
+    # --- 回。問題番号は回の中で 1.. ---
+    labels: dict[str, str] = {}; keys: dict[str, dict] = {}; qfiles: dict[str, list] = {}
     qid_of: dict[str, str] = {}  # 元の qid → 新しい question_id
     for u in units:
-        exam = EXTRA_ROUND if u.get("_extra") else f"{key}-d{u['day']:02d}"; labels[exam] = EXTRA_LABEL if u.get("_extra") else ROUND_LABEL.format(day=u["day"])
+        exam, _, labels_head = round_of(u); labels[exam] = labels_head
         for q in sorted(qs.get(u["topic_id"], []), key=lambda q: q["qid"]):
             lst = qfiles.setdefault(exam, []); n = len(lst) + 1
             lst.append({"number": n, "page": None, "text": q["stem"], "choices": q["choices"], "has_figure": False, "figure_description": None,
@@ -86,7 +107,8 @@ def main() -> int:
                        "syllabus_item_name": u["middle"], "field": u["field"], "major": u["field"], "middle": u["middle"], "is_new": False,
                        "related_terms": [], "question_count": len(qs.get(u["topic_id"], [])), "sort_order": u["order"],
                        "questions": [{"exam": qid_of[q["qid"]].rsplit("-q", 1)[0], "number": int(qid_of[q["qid"]].rsplit("-q", 1)[1])} for q in qs.get(u["topic_id"], [])],
-                       "aliases": c.get("aliases", [])})
+                       "aliases": c.get("aliases", []), "round": round_of(u)[0], "round_label": round_of(u)[1],
+                       "tier": u.get("tier") if has_tiers else None})
     (d / "topics.json").write_text(json.dumps({"topic_count": len(topics), "question_count": sum(len(v) for v in qfiles.values()), "exams": sorted(qfiles),
                                                "topics": topics}, ensure_ascii=False, indent=1), encoding="utf-8")
     (d / "topic_ids.json").write_text(json.dumps({t["match_key"]: t["id"] for t in topics}, ensure_ascii=False, indent=1), encoding="utf-8")
@@ -116,7 +138,7 @@ def main() -> int:
     if any((d / "material_figures").glob("*.json")):
         import subprocess
         subprocess.run([sys.executable, str(Path(__file__).with_name("attach_material_figures.py")), "--data", str(d)], check=True)
-    print(f"項目 {len(items)} / 論点 {len(topics)}（補足 {len(extra_ids)}）/ 回 {len(qfiles)}（日は各 {per_day * 2} 問）/ 問題 {sum(len(v) for v in qfiles.values())} / 解説 {len(expl)} / 教材 v3 {len(v3)}")
+    print(f"項目 {len(items)} / 論点 {len(topics)}（補足 {len(extra_ids)}）/ 回 {len(qfiles)}（{'章' if by_chapter else '日'}で束ねる）/ 問題 {sum(len(v) for v in qfiles.values())} / 解説 {len(expl)} / 教材 v3 {len(v3)}")
     return 0
 
 if __name__ == "__main__":

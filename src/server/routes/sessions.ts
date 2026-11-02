@@ -55,7 +55,7 @@ const createBody = z
     return key === undefined || body[key] !== undefined
   }, '種別に対応する範囲がありません')
 
-// @implements REQ-050, REQ-055, REQ-057, REQ-105, REQ-109, REQ-243, REQ-247, BR-017
+// @implements REQ-050, REQ-055, REQ-057, REQ-105, REQ-109, REQ-243, REQ-247, BR-017, REQ-281
 sessionRoutes.post('/', async (c) => {
   const parsed = createBody.safeParse(await c.req.json().catch(() => null))
   if (!parsed.success) return c.json({ error: '入力が正しくありません' }, 400)
@@ -77,6 +77,7 @@ sessionRoutes.post('/', async (c) => {
   const size =
     body.size ?? (body.kind === 'mock' ? cfg.mockSize : body.kind === 'drill' ? cfg.drillSize : 20)
 
+  const target = examOf(c.env.EXAM)
   const built = await buildQuestions(db, userId, {
     kind: body.kind,
     topicId: body.topicId,
@@ -85,7 +86,8 @@ sessionRoutes.post('/', async (c) => {
     exam: body.exam,
     size,
     masteredStreak: cfg.masteredStreak,
-    fieldRatio: examOf(c.env.EXAM).fieldRatio,
+    fieldRatio: target.fieldRatio,
+    roadmap: target.roadmap ? { key: target.key, spec: target.roadmapSpec } : undefined,
   })
   if (built.questions.length === 0) {
     return c.json({ error: '出題できる問題がありません' }, 400)

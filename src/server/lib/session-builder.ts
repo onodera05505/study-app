@@ -1,5 +1,7 @@
 import { sql } from 'drizzle-orm'
+import { roundScopeNameOf, type RoadmapSpec } from '../../shared/exam'
 import type { Db } from './db'
+import { allTopicRounds, orderedRounds } from './rounds'
 
 export type QuestionRow = {
   id: string
@@ -151,12 +153,43 @@ export type BuildInput = {
   masteredStreak: number
   /** ランダム構成の模試で寄せる分野別出題数。試験ごとに違う（src/shared/exam.ts） */
   fieldRatio: Record<string, number>
+  /** ロードマップ型の学びのときだけ渡す。exam はその学びの回の ID として読む */
+  roadmap?: { key: string; spec: RoadmapSpec | undefined }
 }
 
 export type BuildResult = {
   questions: QuestionRow[]
   scopeLabel: string
   sourceExam: string | null
+}
+
+/** ロードマップ型の回ごとの確認。範囲はその回に属する単位の確認問題だけで、日でも章でも同じ決め方。
+ *  範囲の名前は回の語で作る。 */
+// @implements REQ-281, REQ-286
+async function buildRoundCheck(
+  db: Db,
+  round: string,
+  roadmap: { key: string; spec: RoadmapSpec | undefined },
+): Promise<BuildResult> {
+  const topics = await allTopicRounds(db)
+  const ids = topics.filter((t) => t.round === round).map((t) => t.id)
+  // 単位の数が多い回でもバインド変数の上限に当たらないよう、ID の列は JSON 1 つで渡す
+  const rows = ids.length
+    ? await fetchQuestions(db, sql`WHERE tq.topic_id IN (SELECT value FROM json_each(${JSON.stringify(ids)}))`)
+    : []
+  const byId = new Map<string, QuestionRow>()
+  for (const r of rows) byId.set(r.id, r)
+  const ordered = [...byId.values()].sort((a, b) => (a.exam < b.exam ? -1 : a.exam > b.exam ? 1 : 0) || a.number - b.number)
+  const at = orderedRounds(topics, roadmap.spec).get(round)
+  return {
+    questions: ordered,
+    scopeLabel: roundScopeNameOf(roadmap.spec, {
+      extra: round === roadmap.spec?.extraRoundId,
+      day: at?.day ?? 0,
+      label: at?.label ?? null,
+    }),
+    sourceExam: round,
+  }
 }
 
 /** セッションの出題内容を組み立てる。 */
@@ -175,6 +208,7 @@ export async function buildQuestions(
 
   // @implements REQ-106, REQ-107, REQ-108
   if (input.kind === 'mock') {
+    if (input.exam && input.roadmap) return buildRoundCheck(db, input.exam, input.roadmap)
     if (input.exam) {
       // 公開回をそのまま1セットとして解く。本番の追体験。順序も原文どおり。
       // **ここでは同一内容をまとめない。** 原本に2度出ているものは2度出す。

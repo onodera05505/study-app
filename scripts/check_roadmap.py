@@ -4,6 +4,7 @@
     python3 scripts/check_roadmap.py --data data/itc [--solutions data/itc/eval/solve_*.json]
 
 見るもの:
+- 章で束ねる学び（roadmap.json の group_by: chapter）: 各単位に章の番号・章の名前・登録簿にある段の印
 - 教材: 全単位に教材があり、担当バンドルと topic_id/term が一致する（自己申告を信じない）。sources が 1 件以上。
   explanation / detail の長さが仕様の範囲（下限は落とす、上限は警告）。見分けワードの行がある。記法が 5 つ以外でない（`**`/`###`/`- `/`1. `/表）。
   `[[用語]]` はロードマップ内の論点名だけ。会社の評価・年収・「最新」「近年」を含まない
@@ -52,6 +53,16 @@ def main() -> int:
                 # 名寄せで単位名が変わると前提だけ古い名前で残り、並びの計算では黙って無視される
                 # （セルフフィードバックの読む段で eca 1・msg 6 件が見つかった 2026-09-24）
                 warns.append(f"順序 {u['order']} {u['term']}: 前提『{pt}』という単位がロードマップに無い（名寄せ後の古い名前か）")
+    # 章で束ねる学び: 各単位に章の番号・章の名前・登録簿にある段の印。★（印 1）は章の末尾（前提で前に出たものは警告）
+    # @implements BR-037
+    if rm.get("group_by") == "chapter":
+        levels = {t.get("level") for t in ((target(d.name).get("roadmapSpec") or {}).get("tiers") or [])}
+        for u in rm["units"]:
+            if not isinstance(u.get("round"), int) or not str(u.get("chapter") or "").strip(): errors.append(f"順序 {u['order']} {u['term']}: 章の番号か章の名前が無い")
+            if u.get("tier") not in levels: errors.append(f"順序 {u['order']} {u['term']}: 印 {u.get('tier')} が登録簿 roadmapSpec.tiers の段に無い")
+        for n in sorted({u.get("round") for u in rm["units"] if isinstance(u.get("round"), int)}):
+            ts = [u.get("tier") for u in rm["units"] if u.get("round") == n]
+            if 1 in ts and any(x != 1 for x in ts[ts.index(1):]): warns.append(f"第 {n} 章: ★ の単位が章の末尾に揃っていない（前提で前に出たか）")
     # 教材
     mats: dict[int, dict] = {}
     for mp in sorted((d / "materials").glob("*.json")):

@@ -36,8 +36,15 @@ export const topics = sqliteTable(
     detail: text('detail'),
     /** topic_questions の件数キャッシュ。並べ替えのたびに数えないための非正規化。 */
     questionCount: integer('question_count').notNull().default(0),
-    /** ロードマップ型（itc）の学ぶ順。資格版は NULL（出題頻度で並べる）。migrations/0005 */
+    /** ロードマップ型の学ぶ順。資格版は NULL（出題頻度で並べる）。 */
     sortOrder: integer('sort_order'),
+    /** ロードマップ型で論点が属する回の ID（past_questions.exam と同じ値。補足の論点は補足の回）。
+     *  学ぶ順を持たない非補足の論点と資格版は NULL。 */
+    round: text('round'),
+    /** 論点が属する回のラベル。章で束ねる学びでは章の名前。round が NULL なら NULL。 */
+    roundLabel: text('round_label'),
+    /** 印の段（登録簿の roadmapSpec.tiers の level）。印を持たない学びは NULL。 */
+    tier: integer('tier'),
     createdAt: integer('created_at').notNull().default(now),
     updatedAt: integer('updated_at').notNull().default(now),
   },

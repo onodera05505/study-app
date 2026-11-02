@@ -1,4 +1,5 @@
 import { exam } from '../exam'
+import { tierLabelOf } from '../../shared/exam'
 import { useEffect, useState } from 'react'
 import { annotateLastPage } from '../lib/lastPage'
 import { Link, useNavigate, useParams } from 'react-router-dom'
@@ -23,6 +24,8 @@ type Detail = {
     middle: string
     middleNo: number
     itemName: string
+    /** 印の段。印を持たない学びでは null */
+    tier: number | null
   }
   questions: {
     id: string
@@ -144,6 +147,12 @@ export function TopicDetail() {
         <Link to={`/topics?middleNo=${t.middleNo}`}>{t.middle}</Link>
       </p>
       <h1>{t.term}</h1>
+      {/* @implements REQ-284, REQ-285 */}
+      {exam.roadmap && tierLabelOf(exam.roadmapSpec, t.tier) && (
+        <p className="rm-tier-topic">
+          <span className="rm-tier">{tierLabelOf(exam.roadmapSpec, t.tier)}</span>
+        </p>
+      )}
       <p className="lead">
         {exam.roadmap ? (
           <>ロードマップの単位です。読み終えたら下の確認問題 <b>{t.questionCount} 問</b>で確かめます。</>

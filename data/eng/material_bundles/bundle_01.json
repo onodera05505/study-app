@@ -1,0 +1,305 @@
+{
+  "bundle": "bundle_01",
+  "topics": [
+    {
+      "topic_id": 1,
+      "term": "コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）",
+      "field": "コンピュータの仕組み",
+      "middle": "コンピュータを形づくる部品",
+      "summary": "どんなコンピュータも、受け取る・覚える・計算する・指図する・返すの 5 つの働きの組み合わせで動く",
+      "goals": [
+        1
+      ],
+      "prereq": [],
+      "sources": [
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "コンピュータ構成要素 > プロセッサ"
+        },
+        {
+          "name": "高等学校情報科「情報Ⅰ」教員研修用教材（本編）",
+          "where": "第3章の項目 > コンピュータの構成（制御・演算・記憶・入力・出力）/ 演算の…"
+        },
+        {
+          "name": "一般情報教育の知識体系 GEBOK2017.1（J17-GE）",
+          "where": "GE-CEO1 コンピュータの構成（必修）"
+        },
+        {
+          "name": "コンピュータサイエンスと情報技術入門（Introduction to Computer Science and Information Technology）授業計画（2023 春）",
+          "where": "第2回 コンピュータの部品（Parts of Computers）"
+        },
+        {
+          "name": "ITスキル標準モデルカリキュラム −レベル１を目指して−（ITSS V3 以降対応）",
+          "where": "IT入門コマ > コンピュータの種類と構成する装置"
+        },
+        {
+          "name": "高等学校学習指導要領（平成30年告示）解説 情報編 — 情報Ⅰの内容",
+          "where": "(3) 知識・技能 > コンピュータや外部装置の仕組み、情報の内部表現と計算の…"
+        }
+      ],
+      "source_count": 6,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 2,
+      "term": "CPU（命令を読んで計算する中心の部品）",
+      "field": "コンピュータの仕組み",
+      "middle": "コンピュータを形づくる部品",
+      "summary": "プログラムの命令を 1 つずつ読み、計算と指図を受け持つ部品。演算と制御の働きを担う",
+      "goals": [
+        1
+      ],
+      "prereq": [
+        "コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）"
+      ],
+      "sources": [
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "プロセッサ（CPU）"
+        },
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "コンピュータ構成要素 > プロセッサ"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第7回 中央処理装置（The Central Processing Unit …"
+        },
+        {
+          "name": "Nand2Tetris コンピュータシステムの理論と実装（From Nand to Tetris）プロジェクト一覧",
+          "where": "プロジェクト5 コンピュータアーキテクチャ（Computer Architec…"
+        },
+        {
+          "name": "情報科学基礎論（Introduction to Information Science）授業計画と内容（2026 前期）",
+          "where": "計算機工学 > 計算機アーキテクチャ"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "知識エリア一覧 > AR アーキテクチャと構成"
+        }
+      ],
+      "source_count": 6,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 3,
+      "term": "メモリ（作業中のデータを置く一時的な記憶）",
+      "field": "コンピュータの仕組み",
+      "middle": "コンピュータを形づくる部品",
+      "summary": "CPU が今使うプログラムとデータを置く作業机。速いが電源を切ると中身が消える",
+      "goals": [
+        1
+      ],
+      "prereq": [
+        "CPU（命令を読んで計算する中心の部品）"
+      ],
+      "sources": [
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "メモリ（揮発性メモリ）"
+        },
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "メモリ（RAM）"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第6回 レジスタと RAM（Registers and RAM）"
+        },
+        {
+          "name": "Nand2Tetris コンピュータシステムの理論と実装（From Nand to Tetris）プロジェクト一覧",
+          "where": "プロジェクト3 メモリ（Memory）"
+        },
+        {
+          "name": "CS50x 2026 コンピュータサイエンス入門（CS50's Introduction to Computer Science）週ごとの講義一覧",
+          "where": "第4週 メモリ（Memory）"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "AR > メモリシステムの構成とアーキテクチャ"
+        }
+      ],
+      "source_count": 6,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 4,
+      "term": "ストレージ（電源を切っても残る記憶：SSD・HDD）",
+      "field": "コンピュータの仕組み",
+      "middle": "コンピュータを形づくる部品",
+      "summary": "ファイルやアプリを長く保存する場所。メモリより遅いが大きく、電源を切っても消えない",
+      "goals": [
+        1
+      ],
+      "prereq": [
+        "メモリ（作業中のデータを置く一時的な記憶）"
+      ],
+      "sources": [
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "メモリ（不揮発性メモリ）"
+        },
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "メモリ（フラッシュメモリ）"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第19回 メモリとストレージ（Memory & Storage）"
+        },
+        {
+          "name": "コンピュータサイエンスと情報技術入門（Introduction to Computer Science and Information Technology）授業計画（2023 春）",
+          "where": "第2回 コンピュータの部品（Parts of Computers）"
+        }
+      ],
+      "source_count": 4,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 5,
+      "term": "記憶の階層（速くて小さい物から遅くて大きい物へ）",
+      "field": "コンピュータの仕組み",
+      "middle": "コンピュータを形づくる部品",
+      "summary": "レジスタ・キャッシュ・メモリ・ストレージを速さと容量で並べ、使い分けて全体を速くする考え方",
+      "goals": [
+        1
+      ],
+      "prereq": [
+        "ストレージ（電源を切っても残る記憶：SSD・HDD）"
+      ],
+      "sources": [
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "AR > メモリシステムの構成とアーキテクチャ"
+        },
+        {
+          "name": "iコンピテンシ ディクショナリ 2022 スキルディクショナリ",
+          "where": "IT基礎 > メモリ"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第19回 メモリとストレージ（Memory & Storage）"
+        }
+      ],
+      "source_count": 3,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 6,
+      "term": "キャッシュメモリ（よく使う物を CPU の手元に置く）",
+      "field": "コンピュータの仕組み",
+      "middle": "コンピュータを形づくる部品",
+      "summary": "メモリより速い小さな記憶にさっき使った物を置き、同じ物をすぐ取り出せるようにする。近くを続けて使う性質（局所性）が効く理由",
+      "goals": [
+        1
+      ],
+      "prereq": [
+        "記憶の階層（速くて小さい物から遅くて大きい物へ）"
+      ],
+      "sources": [
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "コンピュータ構成要素 > メモリ"
+        },
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "コンピュータ構成要素 > メモリ"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "SF > 近接と性能向上"
+        },
+        {
+          "name": "情報科学基礎論（Introduction to Information Science）授業計画と内容（2026 前期）",
+          "where": "計算機工学 > 計算機アーキテクチャ"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "キャッシュメモリ・メモリインタリーブ"
+        },
+        {
+          "name": "選考解説記事の集計",
+          "where": "キャッシュの局所性と置き換え（LRU）"
+        }
+      ],
+      "source_count": 4,
+      "exam_weight": 2.16
+    },
+    {
+      "topic_id": 7,
+      "term": "部品をつなぐ通り道と差し込み口（バス・USB）",
+      "field": "コンピュータの仕組み",
+      "middle": "コンピュータを形づくる部品",
+      "summary": "CPU・メモリ・周辺の機器はバスという通り道でつながり、外の機器は USB などの口で加わる",
+      "goals": [
+        1
+      ],
+      "prereq": [
+        "メモリ（作業中のデータを置く一時的な記憶）"
+      ],
+      "sources": [
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "コンピュータ構成要素 > バス"
+        },
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "コンピュータ構成要素 > 入出力デバイス"
+        },
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "コンピュータ構成要素 > 入出力デバイス"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "AR > インタフェースと通信"
+        },
+        {
+          "name": "高等学校情報科「情報Ⅰ」教員研修用教材（本編）",
+          "where": "第3章 コンピュータとプログラミング > 学習12 外部装置との接続"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "USB・半導体メモリ（DRAM・SRAM）"
+        }
+      ],
+      "source_count": 4,
+      "exam_weight": 2.35
+    },
+    {
+      "topic_id": 8,
+      "term": "プログラムは命令の並び（機械語とプログラム内蔵方式）",
+      "field": "コンピュータの仕組み",
+      "middle": "命令が実行される流れ",
+      "summary": "プログラムはメモリに置かれた命令の列で、CPU はそれを順に取り出して実行する。命令もデータも同じメモリに置く",
+      "goals": [
+        1,
+        3
+      ],
+      "prereq": [
+        "CPU（命令を読んで計算する中心の部品）",
+        "メモリ（作業中のデータを置く一時的な記憶）"
+      ],
+      "sources": [
+        {
+          "name": "Nand2Tetris コンピュータシステムの理論と実装（From Nand to Tetris）プロジェクト一覧",
+          "where": "プロジェクト4 機械語（Machine Language）"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第8回 命令とプログラム（Instructions & Programs）"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "AR > アセンブリ言語レベルでのコンピュータ構成"
+        },
+        {
+          "name": "一般情報教育の知識体系 GEBOK2017.1（J17-GE）",
+          "where": "GE-CEO4 コンピュータの動作原理（必修）"
+        }
+      ],
+      "source_count": 4,
+      "exam_weight": 0.0
+    }
+  ]
+}

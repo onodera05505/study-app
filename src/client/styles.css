@@ -1189,6 +1189,12 @@ button.choice:hover:not(:disabled) { border-color: var(--accent); }
 .rm-status { flex: none; align-self: center; font-size: 0.75rem; white-space: nowrap; }
 .rm-here { border-color: var(--accent); background: var(--accent-soft); }
 .rm-here-label { flex: none; align-self: center; font-size: 0.72rem; font-weight: 700; color: var(--accent); white-space: nowrap; }
+/* 印の語（単位の行と論点の画面）と、印の絞り込み */
+.rm-tier { flex: none; align-self: center; font-size: 0.72rem; color: var(--muted); white-space: nowrap; }
+.rm-tier-topic { margin: -0.4rem 0 0.4rem; }
+.rm-tier-filter { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; border: 1px solid var(--border); border-radius: 8px; padding: 0.5rem 0.8rem; margin: 0 0 1rem; }
+.rm-tier-filter legend { font-size: 0.82rem; color: var(--muted); padding: 0 0.3rem; }
+.rm-tier-filter label { font-size: 0.88rem; white-space: nowrap; }
 .account-name { margin: 0 0 0.4rem; padding: 0.3rem 0.6rem; font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
 
 /* ---- 理解度のバッジと行の色 ---- */

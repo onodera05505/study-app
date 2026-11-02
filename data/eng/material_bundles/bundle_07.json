@@ -1,0 +1,273 @@
+{
+  "bundle": "bundle_07",
+  "topics": [
+    {
+      "topic_id": 49,
+      "term": "データ型と式（数・文字列・真か偽かを区別して計算する）",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "値を入れて、条件で分けて、繰り返す",
+      "summary": "値には数・文字列・真偽値などの種類（型）があり、型ごとにできる計算が違う。演算子で値を組み合わせたのが式",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "変数と代入（値に名前を付けてしまう箱）"
+      ],
+      "sources": [
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "アルゴリズムとプログラミング"
+        },
+        {
+          "name": "6.100L コンピュータサイエンスとプログラミング入門（Introduction to CS and Programming Using Python, Fall 2022）講義一覧",
+          "where": "第2回 文字列・入出力・条件分岐（Strings, Input/Output,…"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "PL > 型システムの基本"
+        },
+        {
+          "name": "カリキュラム標準 J17-SE（ソフトウェアエンジニアリング領域）",
+          "where": "情報科学基礎科目 > プログラミング基礎"
+        }
+      ],
+      "source_count": 4,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 50,
+      "term": "条件分岐（もし〜なら、で処理を分ける）",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "値を入れて、条件で分けて、繰り返す",
+      "summary": "条件が真か偽かで実行する処理を選ぶ書き方。条件は比較と論理演算で作る",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "データ型と式（数・文字列・真か偽かを区別して計算する）",
+        "論理演算（AND・OR・NOT）と真理値表"
+      ],
+      "sources": [
+        {
+          "name": "高等学校情報科「情報Ⅰ」教員研修用教材（本編）",
+          "where": "第3章の項目 > アルゴリズム・フローチャート・順次・分岐・反復・変数"
+        },
+        {
+          "name": "6.100L コンピュータサイエンスとプログラミング入門（Introduction to CS and Programming Using Python, Fall 2022）講義一覧",
+          "where": "第2回 文字列・入出力・条件分岐（Strings, Input/Output,…"
+        },
+        {
+          "name": "CS50x 2026 コンピュータサイエンス入門（CS50's Introduction to Computer Science）週ごとの講義一覧",
+          "where": "第0週 Scratch（ブロックで組むプログラミング）（Scratch）"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "SDF > プログラミングの基本概念（Tier1 10h）"
+        }
+      ],
+      "source_count": 4,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 51,
+      "term": "繰り返し（同じ処理を条件が満たされるまで回す）",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "値を入れて、条件で分けて、繰り返す",
+      "summary": "決まった回数や条件が続く間、同じ処理を繰り返す書き方。終わる条件を書き忘れると止まらない",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "条件分岐（もし〜なら、で処理を分ける）"
+      ],
+      "sources": [
+        {
+          "name": "高等学校情報科「情報Ⅰ」教員研修用教材（本編）",
+          "where": "第3章の項目 > アルゴリズム・フローチャート・順次・分岐・反復・変数"
+        },
+        {
+          "name": "6.100L コンピュータサイエンスとプログラミング入門（Introduction to CS and Programming Using Python, Fall 2022）講義一覧",
+          "where": "第3回 繰り返し（Iteration）"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "SDF > プログラミングの基本概念（Tier1 10h）"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "繰返し処理"
+        }
+      ],
+      "source_count": 3,
+      "exam_weight": 0.55
+    },
+    {
+      "topic_id": 52,
+      "term": "プログラムを読んで追う（トレースと流れ図）",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "値を入れて、条件で分けて、繰り返す",
+      "summary": "変数の値が 1 行ごとにどう変わるかを表にして追う読み方。手順を図にした流れ図もこの読み方で使う",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "繰り返し（同じ処理を条件が満たされるまで回す）"
+      ],
+      "sources": [
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "アルゴリズムとプログラミング"
+        },
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "アルゴリズムとプログラミング"
+        },
+        {
+          "name": "高等学校情報科「情報Ⅰ」教員研修用教材（本編）",
+          "where": "第3章の項目 > アルゴリズム・フローチャート・順次・分岐・反復・変数"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "プログラムのトレース・流れ図"
+        }
+      ],
+      "source_count": 3,
+      "exam_weight": 1.05
+    },
+    {
+      "topic_id": 53,
+      "term": "関数（処理に名前を付けて呼び出す：引数と戻り値）",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "処理を部品に分ける",
+      "summary": "ひとまとまりの処理に名前を付け、値を渡して（引数）結果を受け取る（戻り値）。変数が見える範囲（スコープ）も関数で区切られる",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "繰り返し（同じ処理を条件が満たされるまで回す）"
+      ],
+      "sources": [
+        {
+          "name": "6.100L コンピュータサイエンスとプログラミング入門（Introduction to CS and Programming Using Python, Fall 2022）講義一覧",
+          "where": "第7回 分解・抽象化と関数（Decomposition, Abstractio…"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第12回 プログラミングの基本 > 文と関数（Programming Basi…"
+        },
+        {
+          "name": "高等学校情報科「情報Ⅰ」教員研修用教材（本編）",
+          "where": "第3章の項目 > 配列・乱数・関数・WebAPI"
+        },
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "アルゴリズムとプログラミング"
+        },
+        {
+          "name": "カリキュラム標準 J17-SE（ソフトウェアエンジニアリング領域）",
+          "where": "情報科学基礎科目 > プログラミング基礎"
+        }
+      ],
+      "source_count": 5,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 54,
+      "term": "値渡しと参照渡し（コピーを渡すか、置き場所を渡すか）",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "処理を部品に分ける",
+      "summary": "関数に値の写しを渡すか、元の置き場所を渡すかで、関数の中で書き換えたときに元が変わるかが違う",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "関数（処理に名前を付けて呼び出す：引数と戻り値）",
+        "アドレス（メモリの番地）と割り当て"
+      ],
+      "sources": [
+        {
+          "name": "6.100L コンピュータサイエンスとプログラミング入門（Introduction to CS and Programming Using Python, Fall 2022）講義一覧",
+          "where": "第11回 別名と複製（Aliasing and Cloning）"
+        },
+        {
+          "name": "6.100L コンピュータサイエンスとプログラミング入門（Introduction to CS and Programming Using Python, Fall 2022）講義一覧",
+          "where": "第10回 リストと変更可能性（Lists and Mutability）"
+        },
+        {
+          "name": "CS50x 2026 コンピュータサイエンス入門（CS50's Introduction to Computer Science）週ごとの講義一覧",
+          "where": "第4週 メモリ（Memory）"
+        },
+        {
+          "name": "選考解説記事の集計",
+          "where": "値渡しと参照渡し"
+        }
+      ],
+      "source_count": 2,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 55,
+      "term": "再帰（自分自身を呼ぶ関数）",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "処理を部品に分ける",
+      "summary": "大きな問題を同じ形の小さな問題に分け、関数が自分を呼んで解く書き方。止める条件が要る",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "関数（処理に名前を付けて呼び出す：引数と戻り値）",
+        "スタック領域とヒープ領域（メモリの 2 つの使い方）"
+      ],
+      "sources": [
+        {
+          "name": "6.100L コンピュータサイエンスとプログラミング入門（Introduction to CS and Programming Using Python, Fall 2022）講義一覧",
+          "where": "第15回 再帰（Recursion）"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "AL > アルゴリズム設計の手法（Algorithmic Strategies）"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "再帰"
+        },
+        {
+          "name": "選考解説記事の集計",
+          "where": "再帰"
+        }
+      ],
+      "source_count": 2,
+      "exam_weight": 0.96
+    },
+    {
+      "topic_id": 56,
+      "term": "例外処理（エラーを受け止めて、どう続けるか決める）",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "処理を部品に分ける",
+      "summary": "実行中に起きた想定外（ファイルが無い等）を例外として受け止め、止める・やり直す・知らせるを選ぶ書き方",
+      "goals": [
+        3,
+        7
+      ],
+      "prereq": [
+        "関数（処理に名前を付けて呼び出す：引数と戻り値）"
+      ],
+      "sources": [
+        {
+          "name": "6.100L コンピュータサイエンスとプログラミング入門（Introduction to CS and Programming Using Python, Fall 2022）講義一覧",
+          "where": "第13回 例外とアサーション（Exceptions and Assertion…"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "IAS 情報セキュリティ > 防御プログラミング（Tier1）"
+        },
+        {
+          "name": "選考解説記事の集計",
+          "where": "例外処理とエラーの解決"
+        }
+      ],
+      "source_count": 2,
+      "exam_weight": 0.0
+    }
+  ]
+}

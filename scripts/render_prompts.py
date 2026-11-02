@@ -18,6 +18,7 @@ def main() -> int:
     sys.path.insert(0, str(ROOT / "scripts")); from targets import target
     spec = dict(target(key).get("roadmapSpec") or {})
     spec.setdefault("targetName", target(key)["brand"])
+    spec.setdefault("key", key)  # 入力・出力の置き場 data/{{key}}/ を対象ごとに描く
     rj = a.data / "roadmap.json"; rm = json.loads(rj.read_text(encoding="utf-8")) if rj.exists() else {}
     spec.setdefault("days", rm.get("days", 14)); spec.setdefault("perDay", rm.get("per_day", 3))  # 期間は roadmap 設定から（学習者役の文言が「2 週間・面接」決め打ちだった 2026-09-15）
     for k in ("reader", "taboo"):
