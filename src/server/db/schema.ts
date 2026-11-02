@@ -266,8 +266,8 @@ export const glossary = sqliteTable(
   (t) => [index('idx_glossary_topic').on(t.topicId)],
 )
 
-/** 利用者からのフィードバック（要件 §5.5-4、2026-09-16）。
- *  自由記述（kind='text'）と、後から足す 1 タップの「分かりにくい」（kind='unclear'）を同じ表に置く。
+/** 利用者からのフィードバック。
+ *  自由記述と 1 タップで選ぶ種類（kind）を同じ表に置く。
  *  その場で AI は応答しない。開発側が scripts/feedback.py で取り出して改善フェーズを回し、status を進める。
  *  seed の投入はこの表に触らないので消えない。 */
 export const feedback = sqliteTable(
@@ -277,7 +277,7 @@ export const feedback = sqliteTable(
     userId: text('user_id')
       .notNull()
       .references(() => users.id),
-    kind: text('kind').notNull().default('text'), // text | unclear
+    kind: text('kind').notNull().default('text'), // 取りうる値は routes/feedback.ts の kind の列挙
     /** 送ったときに開いていた画面のパス（/topics/57 など）。 */
     page: text('page'),
     topicId: integer('topic_id'),

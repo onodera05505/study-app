@@ -240,7 +240,7 @@ catalogRoutes.get('/topics/:id', async (c) => {
   `)
 
   // ロードマップ型: 学ぶ順の前後（sort_order）。資格版は sort_order を参照しない（D13）ので null。
-  // 「他の論点」「次に学ぶ（次の未理解）」は道を散らすと指摘され、ロードマップ型では前後の単位だけを出す（2026-09-16 審議で採用）
+  // ロードマップ型は前後の単位だけを出す。「他の論点」「次に学ぶ（次の未理解）」は学ぶ道を散らす
   const roadmap = examOf(c.env.EXAM).roadmap
   const neighborsP: Promise<{ prev: { id: number; term: string } | null; next: { id: number; term: string } | null } | null> = roadmap
     ? Promise.all([
@@ -302,7 +302,7 @@ catalogRoutes.put('/topics/:id/progress', async (c) => {
   }
   const db = getDb(c.env)
   const userId = c.get('user').id
-  // 存在しない論点は 404（外部キーで 500 になっていた。受入の所見 2026-09-16）
+  // 存在しない論点は 404（外部キー違反で 500 にしない）
   const exists = await db.get<{ id: number }>(sql`SELECT id FROM topics WHERE id = ${id}`)
   if (!exists) return c.json({ error: '論点が見つかりません' }, 404)
   await db
@@ -355,7 +355,7 @@ catalogRoutes.get('/exams', async (c) => {
       FROM past_questions q
      GROUP BY q.exam, q.exam_label
      ${examOf(c.env.EXAM).roadmap
-       ? sql`ORDER BY q.exam ASC` /* ロードマップ型は 1 日目から（本人の指摘 2026-09-16。資格版の「新しい回が先」が掛かっていた） */
+       ? sql`ORDER BY q.exam ASC` /* ロードマップ型は 1 日目から順に並べる。資格版は新しい回が先 */
        : sql`ORDER BY q.exam DESC`}
   `)
   return c.json({ exams: rows })

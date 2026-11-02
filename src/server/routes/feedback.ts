@@ -4,7 +4,7 @@ import { z } from 'zod'
 import type { Bindings, Variables } from '../lib/db'
 import { getDb } from '../lib/db'
 
-/** 利用者からのフィードバック（要件 §5.5-4、2026-09-16）。
+/** 利用者からのフィードバック。
  *
  *  受け取って DB に置くだけ。その場で AI は応答しない（API 費用と品質の制御は開発側で行う）。
  *  取り出しと処理済みの印は scripts/feedback.py（開発側）。利用者向けの一覧 API は作らない。 */
@@ -12,8 +12,8 @@ export const feedbackRoutes = new Hono<{ Bindings: Bindings; Variables: Variable
 
 const body = z.object({
   body: z.string().trim().min(1, '本文を入れてください').max(2000, '2,000 字以内にしてください'),
-  // good=良かった / improve=改善の提案 / other=その他（画面で選ばせる。本人 2026-09-18）。
-  // text・unclear は前の版で入った行の値。読み出し側が落ちないよう受け付けたままにする
+  // good=良かった / improve=改善の提案 / other=その他（画面で選ばせる）。
+  // text・unclear は既存の行が持つ値。読み出し側が落ちないよう受け付けたままにする
   kind: z.enum(['text', 'unclear', 'good', 'improve', 'other']).default('text'),
   page: z.string().max(200).optional(),
   topicId: z.number().int().positive().optional(),
@@ -28,7 +28,7 @@ feedbackRoutes.post('/', async (c) => {
   const parsed = body.safeParse(await c.req.json().catch(() => null))
   if (!parsed.success) {
     // 本文の欠け・長さは利用者が直せるので具体に。それ以外（型違い・不正な kind）は他の経路と同じ固定文
-    // （zod の既定メッセージは英語で、そのまま画面に出る。受入の所見 2026-09-16）
+    // （zod の既定メッセージは英語で、そのまま画面に出る）
     const issue = parsed.error.issues[0]
     const onBody = issue?.path?.[0] === 'body' && issue.code !== 'invalid_type'
     return c.json({ error: onBody ? issue.message : '入力が正しくありません' }, 400)

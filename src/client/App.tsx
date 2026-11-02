@@ -28,7 +28,7 @@ export function App() {
   const location = useLocation()
 
   // ナビがスマホ幅で収まらないとき、右端をぼかして「続きがある」と分かるようにする
-  // （資格版は 6 項目あり、iPhone 幅で最後の「フィードバック」が切れて見えるだけだった。本人 2026-09-18）
+  // （資格版は項目が 6 つあり、スマホ幅では最後の項目が端で切れて見える）
   const navRef = useRef<HTMLElement | null>(null)
   const [navScroll, setNavScroll] = useState(false)
   useEffect(() => {
@@ -47,7 +47,7 @@ export function App() {
       .catch(() => setPortal(null))
   }, [])
 
-  // 新しい版の検知（要件 §5.6）。開いたときに版の印を 1 回だけ覚え、その時点では見比べない。
+  // 新しい版の検知。開いたときに版の印を 1 回だけ覚え、その時点では見比べない。
   // 見比べるのは画面を移ったときと 5 分おき。
   // @implements REQ-227, REQ-228, REQ-230
   useEffect(() => {
@@ -107,7 +107,7 @@ export function App() {
 
   // @implements REQ-190, REQ-195
   if (!authed) {
-    // まなびばから戻ってきた（要件 §15）。コードをトークンに換えてからホームへ
+    // まなびばから戻ってきた経路。コードをトークンに換えてからホームへ
     if (location.pathname === '/sso/callback') {
       return (
         <main>
@@ -137,7 +137,7 @@ export function App() {
         <div className="header-inner">
           <span className="brand">{exam.brand}</span>
 
-          {/* まなびば（入口）へ戻る。SSO が有効なときだけ出す。本人の依頼 2026-09-18 */}
+          {/* まなびば（入口）へ戻る。SSO が有効なときだけ出す */}
           {portal && (
             <a className="portal-link" href={portal}>
               ← まなびば
@@ -178,9 +178,9 @@ export function App() {
             )}
           </div>
 
-          {/* ロードマップ型は「ロードマップ」「フィードバック」の 2 つだけ（要件 §13.6、2026-09-18 決定）。
-              1 単位 2 問しかなく、同じ問題が単位の下にあるので、練習テストとドリルは重複だった。
-              確認テストは日ごとにロードマップの中へ、履歴は各日の結果表示へ移した。資格版は据え置き。 */}
+          {/* ロードマップ型は「ロードマップ」「フィードバック」の 2 つだけ。
+              1 単位 2 問しかなく、同じ問題が単位の下にあるので、練習テストとドリルは重複になる。
+              確認テストは日ごとにロードマップの中、履歴は各日の結果表示に出す。資格版は 6 項目を出す。 */}
           {/* @implements REQ-128, REQ-150 */}
           <nav className={navScroll ? 'nav nav-scroll' : 'nav'} ref={navRef}>
             {exam.roadmap ? (
@@ -204,7 +204,7 @@ export function App() {
       <main>
         {/* @implements REQ-128, REQ-195 */}
         <Routes>
-          {/* ロードマップ型にホームは無い（要件 §13.6）。進捗と続きはロードマップの先頭に出す */}
+          {/* ロードマップ型にホームは無い。進捗と続きはロードマップの先頭に出す */}
           <Route path="/" element={exam.roadmap ? <Navigate to="/topics" replace /> : <Home />} />
           <Route path="/topics" element={exam.roadmap ? <Roadmap /> : <Topics />} />
           <Route path="/topics/:id" element={<TopicDetail />} />
