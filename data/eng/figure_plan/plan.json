@@ -1,0 +1,296 @@
+{
+ "figures": [
+  {
+   "topic_id": 5,
+   "term": "記憶の階層（速くて小さい物から遅くて大きい物へ）",
+   "field": "コンピュータの仕組み",
+   "middle": "コンピュータを形づくる部品",
+   "order": 5,
+   "goals": [
+    1
+   ],
+   "kind": "手順・流れ",
+   "template": "sequence",
+   "benefit": 3,
+   "priority": 77,
+   "idea": "",
+   "picked_by": "本人・親の選択（kickoff figure-priority: 手順・対比・計算の単位）"
+  },
+  {
+   "topic_id": 9,
+   "term": "命令の実行サイクルとレジスタ（取り出す・読み解く・実行する）",
+   "field": "コンピュータの仕組み",
+   "middle": "命令が実行される流れ",
+   "order": 9,
+   "goals": [
+    1
+   ],
+   "kind": "手順・流れ",
+   "template": "sequence",
+   "benefit": 3,
+   "priority": 76,
+   "idea": "",
+   "picked_by": "本人・親の選択（kickoff figure-priority: 手順・対比・計算の単位）"
+  },
+  {
+   "topic_id": 30,
+   "term": "プロセス（実行中のプログラム）",
+   "field": "OS とソフトウェア",
+   "middle": "動いているプログラムの単位",
+   "order": 30,
+   "goals": [
+    2
+   ],
+   "kind": "手順・流れ",
+   "template": "sequence",
+   "benefit": 3,
+   "priority": 72,
+   "idea": "",
+   "picked_by": "本人・親の選択（kickoff figure-priority: 手順・対比・計算の単位）"
+  },
+  {
+   "topic_id": 43,
+   "term": "クライアントとサーバ（頼む側と応える側）",
+   "field": "OS とソフトウェア",
+   "middle": "止まらない・遅くならない仕組み",
+   "order": 43,
+   "goals": [
+    2,
+    4
+   ],
+   "kind": "対比・2 軸",
+   "template": "matrix",
+   "benefit": 3,
+   "priority": 86,
+   "idea": "",
+   "picked_by": "本人・親の選択（kickoff figure-priority: 手順・対比・計算の単位）"
+  },
+  {
+   "topic_id": 59,
+   "term": "スタックとキュー（後から入れた物を先に出す・先に入れた物を先に出す）",
+   "field": "プログラミングとアルゴリズム",
+   "middle": "データのまとまりを持つ形",
+   "order": 59,
+   "goals": [
+    3
+   ],
+   "kind": "手順・流れ",
+   "template": "sequence",
+   "benefit": 3,
+   "priority": 66,
+   "idea": "",
+   "picked_by": "本人・親の選択（kickoff figure-priority: 手順・対比・計算の単位）"
+  },
+  {
+   "topic_id": 65,
+   "term": "線形探索と二分探索（端から探すか、半分ずつ絞るか）",
+   "field": "プログラミングとアルゴリズム",
+   "middle": "探す・並べる・速さを比べる",
+   "order": 65,
+   "goals": [
+    3
+   ],
+   "kind": "手順・流れ",
+   "template": "sequence",
+   "benefit": 3,
+   "priority": 65,
+   "idea": "",
+   "picked_by": "本人・親の選択（kickoff figure-priority: 手順・対比・計算の単位）"
+  },
+  {
+   "topic_id": 82,
+   "term": "プロトコルと階層（OSI 参照モデルと TCP/IP の 4 層）",
+   "field": "ネットワークと Web",
+   "middle": "ネットワークの基本の形",
+   "order": 82,
+   "goals": [
+    4
+   ],
+   "kind": "手順・流れ",
+   "template": "sequence",
+   "benefit": 3,
+   "priority": 62,
+   "idea": "",
+   "picked_by": "本人・親の選択（kickoff figure-priority: 手順・対比・計算の単位）"
+  },
+  {
+   "topic_id": 87,
+   "term": "TCP の接続のはじめ方（3 ウェイハンドシェイク）",
+   "field": "ネットワークと Web",
+   "middle": "住所を決めて相手に届ける",
+   "order": 87,
+   "goals": [
+    4
+   ],
+   "kind": "手順・流れ",
+   "template": "sequence",
+   "benefit": 3,
+   "priority": 61,
+   "idea": "",
+   "picked_by": "本人・親の選択（kickoff figure-priority: 手順・対比・計算の単位）"
+  },
+  {
+   "topic_id": 92,
+   "term": "DNS（名前から IP アドレスを引く仕組み）",
+   "field": "ネットワークと Web",
+   "middle": "URL を開いてから画面が出るまで",
+   "order": 92,
+   "goals": [
+    4
+   ],
+   "kind": "手順・流れ",
+   "template": "sequence",
+   "benefit": 3,
+   "priority": 60,
+   "idea": "",
+   "picked_by": "本人・親の選択（kickoff figure-priority: 手順・対比・計算の単位）"
+  },
+  {
+   "topic_id": 93,
+   "term": "HTTP（ブラウザとサーバの会話の決まり：リクエストとレスポンス）",
+   "field": "ネットワークと Web",
+   "middle": "URL を開いてから画面が出るまで",
+   "order": 93,
+   "goals": [
+    4
+   ],
+   "kind": "対比・2 軸",
+   "template": "matrix",
+   "benefit": 3,
+   "priority": 60,
+   "idea": "",
+   "picked_by": "本人・親の選択（kickoff figure-priority: 手順・対比・計算の単位）"
+  },
+  {
+   "topic_id": 96,
+   "term": "URL を開いてから画面が出るまでの全体の流れ",
+   "field": "ネットワークと Web",
+   "middle": "URL を開いてから画面が出るまで",
+   "order": 96,
+   "goals": [
+    4
+   ],
+   "kind": "手順・流れ",
+   "template": "sequence",
+   "benefit": 3,
+   "priority": 59,
+   "idea": "",
+   "picked_by": "本人・親の選択（kickoff figure-priority: 手順・対比・計算の単位）"
+  },
+  {
+   "topic_id": 114,
+   "term": "正規化（重複をなくすように表を分ける）",
+   "field": "データベース",
+   "middle": "データを表に分けて持つ",
+   "order": 114,
+   "goals": [
+    5
+   ],
+   "kind": "対比・2 軸",
+   "template": "matrix",
+   "benefit": 3,
+   "priority": 56,
+   "idea": "",
+   "picked_by": "本人・親の選択（kickoff figure-priority: 手順・対比・計算の単位）"
+  },
+  {
+   "topic_id": 121,
+   "term": "表の結合（JOIN：分けた表をつないで取り出す）",
+   "field": "データベース",
+   "middle": "SQL で取り出す・更新する",
+   "order": 121,
+   "goals": [
+    5
+   ],
+   "kind": "対比・2 軸",
+   "template": "matrix",
+   "benefit": 3,
+   "priority": 54,
+   "idea": "",
+   "picked_by": "本人・親の選択（kickoff figure-priority: 手順・対比・計算の単位）"
+  },
+  {
+   "topic_id": 124,
+   "term": "トランザクションと ACID（全部やるか、全部やらないか）",
+   "field": "データベース",
+   "middle": "同時に使っても壊れないように",
+   "order": 124,
+   "goals": [
+    5
+   ],
+   "kind": "対比・2 軸",
+   "template": "matrix",
+   "benefit": 3,
+   "priority": 54,
+   "idea": "",
+   "picked_by": "本人・親の選択（kickoff figure-priority: 手順・対比・計算の単位）"
+  },
+  {
+   "topic_id": 143,
+   "term": "共通鍵暗号と公開鍵暗号（同じ鍵か、対になった 2 つの鍵か）",
+   "field": "セキュリティ",
+   "middle": "暗号で隠す・確かめる",
+   "order": 143,
+   "goals": [
+    6
+   ],
+   "kind": "対比・2 軸",
+   "template": "matrix",
+   "benefit": 3,
+   "priority": 50,
+   "idea": "",
+   "picked_by": "本人・親の選択（kickoff figure-priority: 手順・対比・計算の単位）"
+  },
+  {
+   "topic_id": 146,
+   "term": "HTTPS と TLS（通信を暗号にして、相手が本物か確かめる）",
+   "field": "セキュリティ",
+   "middle": "暗号で隠す・確かめる",
+   "order": 146,
+   "goals": [
+    4,
+    6
+   ],
+   "kind": "対比・2 軸",
+   "template": "matrix",
+   "benefit": 3,
+   "priority": 61,
+   "idea": "",
+   "picked_by": "本人・親の選択（kickoff figure-priority: 手順・対比・計算の単位）"
+  },
+  {
+   "topic_id": 180,
+   "term": "ブランチとマージ（枝分かれして作り、あとで合流させる）",
+   "field": "開発の進め方と仕事",
+   "middle": "Git で変更を記録して共有する",
+   "order": 180,
+   "goals": [
+    7
+   ],
+   "kind": "人が選択",
+   "template": "blocks",
+   "benefit": 3,
+   "priority": 0,
+   "idea": "",
+   "picked_by": "本人・親の選択（kickoff figure-priority: 手順・対比・計算の単位）"
+  },
+  {
+   "topic_id": 184,
+   "term": "CI/CD（変更のたびに自動で確かめて届ける）",
+   "field": "開発の進め方と仕事",
+   "middle": "本番に届けて動かし続ける",
+   "order": 184,
+   "goals": [
+    7
+   ],
+   "kind": "手順・流れ",
+   "template": "sequence",
+   "benefit": 3,
+   "priority": 42,
+   "idea": "",
+   "picked_by": "本人・親の選択（kickoff figure-priority: 手順・対比・計算の単位）"
+  }
+ ],
+ "tables": [],
+ "_note": "ロードマップ型の優先: plan_roadmap_figures.py。kickoff.json の figure-priority"
+}
