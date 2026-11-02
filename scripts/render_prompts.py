@@ -21,6 +21,8 @@ def main() -> int:
     spec.setdefault("key", key)  # 入力・出力の置き場 data/{{key}}/ を対象ごとに描く
     rj = a.data / "roadmap.json"; rm = json.loads(rj.read_text(encoding="utf-8")) if rj.exists() else {}
     spec.setdefault("days", rm.get("days", 14)); spec.setdefault("perDay", rm.get("per_day", 3))  # 期間は roadmap 設定から（学習者役の文言が「2 週間・面接」決め打ちだった 2026-09-15）
+    # 到達基準の数（確認問題の tests_goal の上限）はロードマップの単位の goals の最大の番号
+    spec.setdefault("goalCount", max((g for u in rm.get("units", []) for g in u.get("goals", [])), default=6))
     for k in ("reader", "taboo"):
         if isinstance(spec.get(k), list): spec[k] = "\n".join(f"- {x}" for x in spec[k])
     out = a.data / "prompts"; out.mkdir(parents=True, exist_ok=True)

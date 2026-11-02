@@ -3,7 +3,7 @@
 
     python3 scripts/build_roadmap.py --data data/itc [--max 40] [--per-day 3] [--out <出力先>]
 
-入力 `roadmap_config.json`（値: max / per_day / min_per_goal / must_include / exclude / prereq_add / prereq_replace / group_by。無ければ引数の既定）と `topics_candidates.json`: {"candidates": [{"id", "term", "field", "middle", "summary", "source_count", "sources", "interview_count", "prereq": [term...], "goals": [1..6]}]}
+入力 `roadmap_config.json`（値: max / per_day / min_per_goal / must_include / exclude / prereq_add / prereq_replace / group_by。無ければ引数の既定）と `topics_candidates.json`: {"candidates": [{"id", "term", "field", "middle", "summary", "source_count", "sources", "interview_count", "prereq": [term...], "goals": [1..到達基準の数]}]}
 出力 `roadmap.json`（順序つき単位）と `material_bundles/bundle_NN.json`（8 論点ずつ）。`--out` を渡すとその下に書く（既定は --data）。
 
 回の束ね方（`group_by`）:

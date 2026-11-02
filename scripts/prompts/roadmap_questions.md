@@ -33,7 +33,7 @@
 ## 出力
 `data/{{key}}/roadmap_questions/bundle_NN.json`:
 `{"bundle": "bundle_NN", "questions": [{"qid": "t<topic_id>-1", "topic_id": 1, "term": "…", "stem": "…", "choices": {"ア": "…", "イ": "…", "ウ": "…", "エ": "…"}, "answer": "ア", "reason": "…", "tests_goal": 1}]}`
-- `tests_goal` は到達基準 1〜6 のどれを確かめるか
+- `tests_goal` は到達基準 1〜{{goalCount}} のどれを確かめるか
 - 正解の位置（ア〜エ）は偏らせない
 - **正解を「形」から当てられないようにする**（5 対象すべてに同じ癖があった）:
   - **同じ論点の 2 問で正解の記号が重なってよい**。記号をずらして均等にすると、1 問目を答えた時点で 2 問目の枝が 1 つ減る

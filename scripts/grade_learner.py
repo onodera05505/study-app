@@ -23,9 +23,11 @@ def main() -> int:
             if q in qs: qs[q] = dict(qs[q], answer=v)
         if changed: print(f"注: パック作成後に正解が変わった問題 {len(changed)} 件はパック時点の正解で採点: {', '.join(changed)}")
     per_unit = {tid: {"term": u["term"], "field": u["field"], "correct": 0, "total": 0} for tid, u in units.items()}
-    by_goal = {g: [0, 0] for g in range(1, 7)}; by_field = {}
-    wrong = []
+    wrong = []; by_field = {}
     qs = {k: q for k, q in qs.items() if q["topic_id"] in units}  # ロードマップ外（除外済み）の問題は採点しない
+    # 到達基準の数は対象ごとに違うので、単位の goals と問題の tests_goal の最大の番号から読む
+    n_goals = max([g for u in units.values() for g in u.get("goals", [])] + [q["tests_goal"] for q in qs.values()] + [6])
+    by_goal = {g: [0, 0] for g in range(1, n_goals + 1)}
     for qid, q in qs.items():
         ok = ans.get(qid) == q["answer"]; pu = per_unit[q["topic_id"]]; pu["total"] += 1; pu["correct"] += ok
         g = by_goal[q["tests_goal"]]; g[1] += 1; g[0] += ok
