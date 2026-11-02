@@ -1,0 +1,84 @@
+{
+  "topic_id": 124,
+  "term": "トランザクションと ACID（全部やるか、全部やらないか）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "振込の 2 つの更新を 1 つのトランザクションにした流れです。確定の前に止まれば振込の前に戻る原子性、確定した後は止まっても結果が消えない耐久性が働きます。",
+      "nodes": [
+        {
+          "id": "start",
+          "label": "振込を始める\nA さんから B さんへ",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "dec",
+          "label": "A の残高を\n1,000円 減らす",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "inc",
+          "label": "B の残高を\n1,000円 増やす",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "commit",
+          "label": "確定する",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "stop",
+          "label": "確定の前に\n機械が止まる",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "back",
+          "label": "取り消して\n振込の前に戻す\n原子性（A）",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "keep",
+          "label": "止まっても\n結果は消えない\n耐久性（D）",
+          "row": 1,
+          "col": 3
+        }
+      ],
+      "edges": [
+        {
+          "from": "start",
+          "to": "dec"
+        },
+        {
+          "from": "dec",
+          "to": "inc"
+        },
+        {
+          "from": "inc",
+          "to": "commit"
+        },
+        {
+          "from": "dec",
+          "to": "stop",
+          "style": "dashed"
+        },
+        {
+          "from": "stop",
+          "to": "back"
+        },
+        {
+          "from": "commit",
+          "to": "keep"
+        }
+      ]
+    }
+  ]
+}

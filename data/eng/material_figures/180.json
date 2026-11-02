@@ -1,0 +1,81 @@
+{
+  "topic_id": 180,
+  "term": "ブランチとマージ（枝分かれして作り、あとで合流させる）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "本流から枝を分けて A さんと B さんが別々にコミットを重ね、できたら本流にマージします。作りかけの間も本流はいつでも動く状態のままです。",
+      "nodes": [
+        {
+          "id": "main",
+          "label": "本流（main）\nいつでも動く状態",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "a1",
+          "label": "A さんの枝\n検索の機能",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "a2",
+          "label": "コミットを重ねる",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "b1",
+          "label": "B さんの枝\nログインのバグ直し",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "b2",
+          "label": "コミットを重ねる",
+          "row": 2,
+          "col": 2
+        },
+        {
+          "id": "merged",
+          "label": "本流にマージ\n両方の変更を\n合わせた状態",
+          "row": 1,
+          "col": 3,
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "a1",
+          "label": "git branch"
+        },
+        {
+          "from": "a1",
+          "to": "a2"
+        },
+        {
+          "from": "a2",
+          "to": "merged",
+          "label": "git merge"
+        },
+        {
+          "from": "main",
+          "to": "b1",
+          "label": "git branch"
+        },
+        {
+          "from": "b1",
+          "to": "b2"
+        },
+        {
+          "from": "b2",
+          "to": "merged",
+          "label": "git merge"
+        }
+      ]
+    }
+  ]
+}

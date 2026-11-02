@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="241" viewBox="0 0 694.9 262" role="img">
+<title>振込の 2 つの更新を 1 つのトランザクションにした流れです。確定の前に止まれば振込の前に戻る原子性、確定した後は止まっても結果が消えない耐久性が働きます。</title>
+<rect x="0.5" y="0.5" width="693.9" height="261" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<polyline points="160.5,28 200.5,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="200.5,28 192.5,31.6 192.5,24.4" fill="#1f2937"/>
+<polyline points="326.7,28 366.7,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="366.7,28 358.7,31.6 358.7,24.4" fill="#1f2937"/>
+<polyline points="492.9,28 545.9,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="545.9,28 537.9,31.6 537.9,24.4" fill="#1f2937"/>
+<polyline points="263.6,56 263.6,112" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polygon points="263.6,112 260,104 267.2,104" fill="#1f2937"/>
+<polyline points="317.6,140 368.8,140" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="368.8,140 360.8,143.6 360.8,136.4" fill="#1f2937"/>
+<polyline points="593.9,51 593.9,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="593.9,102 590.3,94 597.5,94" fill="#1f2937"/>
+<rect x="0" y="0" width="160.5" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="80.25" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">振込を始める</text>
+<text x="80.25" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">A さんから B さんへ</text>
+<rect x="200.5" y="0" width="126.2" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="263.6" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">A の残高を</text>
+<text x="263.6" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">1,000円 減らす</text>
+<rect x="366.7" y="0" width="126.2" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="429.8" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">B の残高を</text>
+<text x="429.8" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">1,000円 増やす</text>
+<rect x="545.9" y="5" width="96" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="593.9" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">確定する</text>
+<rect x="209.6" y="112" width="108" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="263.6" y="134.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">確定の前に</text>
+<text x="263.6" y="154.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">機械が止まる</text>
+<rect x="368.8" y="102" width="122" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="429.8" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">取り消して</text>
+<text x="429.8" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">振込の前に戻す</text>
+<text x="429.8" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">原子性（A）</text>
+<rect x="532.9" y="102" width="122" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="593.9" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">止まっても</text>
+<text x="593.9" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">結果は消えない</text>
+<text x="593.9" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">耐久性（D）</text>
+</g>
+<text x="347.45" y="226" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">振込の 2 つの更新を 1 つのトランザクションにした流れです。確定の前に止まれば振込の前に戻る原子性、確定した後</text>
+<text x="347.45" y="242" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">は止まっても結果が消えない耐久性が働きます。</text>
+</svg>

@@ -1,0 +1,56 @@
+{
+  "topic_id": 5,
+  "term": "記憶の階層（速くて小さい物から遅くて大きい物へ）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "CPU に近い段ほど速くて小さく、遠い段ほど遅くて大きくなります。CPU は近い段から探し、無ければ 1 つ遠い段から取ってきます。",
+      "nodes": [
+        {
+          "id": "reg",
+          "label": "レジスタ\nCPU の中\n最も速い・小さい",
+          "row": 0,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "cache",
+          "label": "キャッシュ\nよく使う物の写し",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "mem",
+          "label": "メモリ\n作業中の記憶",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "sto",
+          "label": "ストレージ\n遅い・大きい",
+          "row": 0,
+          "col": 3
+        }
+      ],
+      "edges": [
+        {
+          "from": "reg",
+          "to": "cache",
+          "label": "無ければ"
+        },
+        {
+          "from": "cache",
+          "to": "mem",
+          "label": "無ければ"
+        },
+        {
+          "from": "mem",
+          "to": "sto",
+          "label": "無ければ"
+        }
+      ]
+    }
+  ]
+}

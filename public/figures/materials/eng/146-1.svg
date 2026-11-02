@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="362" viewBox="0 0 640 362" role="img">
+<title>HTTP と HTTPS を、防ぎたい 3 つの困りごとで比べた表です。HTTPS が守るのは通信の途中だけで、相手のサイトに悪意があるかまでは分かりません。</title>
+<rect x="0.5" y="0.5" width="639" height="361" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(77 20)">
+<text x="295" y="18" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">通信の形</text>
+<text x="65" y="30" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">防ぎたいこと</text>
+<text x="199.5" y="45.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">HTTP</text>
+<text x="390.5" y="45.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">HTTPS（HTTP を TLS で包む）</text>
+<text x="65" y="97.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">盗み見</text>
+<text x="65" y="171.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">書き換え</text>
+<text x="65" y="245.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">偽のサーバ</text>
+<rect x="104" y="56" width="191" height="74" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="199.5" y="81.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">中身がそのまま流れ</text>
+<text x="199.5" y="97.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">同じ経路の人に</text>
+<text x="199.5" y="113.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">読まれうる</text>
+<rect x="295" y="56" width="191" height="74" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="390.5" y="89.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">共通鍵暗号で</text>
+<text x="390.5" y="105.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">暗号にして送る</text>
+<rect x="104" y="130" width="191" height="74" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="199.5" y="163.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">中身を守る</text>
+<text x="199.5" y="179.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">働きを持たない</text>
+<rect x="295" y="130" width="191" height="74" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="390.5" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">変えられたら</text>
+<text x="390.5" y="171.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">受け手が気づける</text>
+<text x="390.5" y="187.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">印を付ける</text>
+<rect x="104" y="204" width="191" height="74" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="199.5" y="229.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">相手が本物かを</text>
+<text x="199.5" y="245.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">確かめる働きを</text>
+<text x="199.5" y="261.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">持たない</text>
+<rect x="295" y="204" width="191" height="74" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="390.5" y="229.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">証明書（第三者が</text>
+<text x="390.5" y="245.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">本物と保証した印）で</text>
+<text x="390.5" y="261.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">相手を確かめる</text>
+</g>
+<text x="320" y="326" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">HTTP と HTTPS を、防ぎたい 3 つの困りごとで比べた表です。HTTPS が守るのは通信の途中だけで、相手の</text>
+<text x="320" y="342" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">サイトに悪意があるかまでは分かりません。</text>
+</svg>

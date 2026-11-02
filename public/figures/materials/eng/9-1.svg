@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="374" viewBox="0 0 640 374" role="img">
+<title>CPU は命令を取り出し、読み解き、実行する 3 段を繰り返します。次の命令の場所はプログラムカウンタが覚えています。</title>
+<rect x="0.5" y="0.5" width="639" height="373" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(28.2 20)">
+<line x1="48" y1="34" x2="48" y2="290" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="291.8" y1="34" x2="291.8" y2="290" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="535.6" y1="34" x2="535.6" y2="290" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">メモリ</text>
+<rect x="243.8" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="291.8" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">CPU</text>
+<rect x="487.6" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="535.6" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">レジスタ</text>
+<polyline points="51,68 288.8,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="288.8,68 280.8,71.6 280.8,64.4" fill="#1f2937"/>
+<text x="169.9" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 次の命令を取り出す（フェッチ）</text>
+<rect x="57.9" y="73" width="224" height="16" rx="3" fill="#ffffff"/>
+<text x="169.9" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">場所はプログラムカウンタが覚えている</text>
+<polyline points="291.8,116 317.8,116 317.8,130 293.8,130" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="293.8,130 301.8,126.4 301.8,133.6" fill="#1f2937"/>
+<text x="325.8" y="124" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2. 何をする命令かを読み解く（デコード）</text>
+<polyline points="291.8,150 317.8,150 317.8,164 293.8,164" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="293.8,164 301.8,160.4 301.8,167.6" fill="#1f2937"/>
+<text x="325.8" y="158" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">3. 計算する（実行）</text>
+<polyline points="294.8,192 532.6,192" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="532.6,192 524.6,195.6 524.6,188.4" fill="#1f2937"/>
+<text x="413.7" y="185" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 結果を書き戻す（レジスタかメモリ）</text>
+<rect x="313.7" y="197" width="200" height="16" rx="3" fill="#ffffff"/>
+<text x="413.7" y="210.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">途中の値はまず速いレジスタに置く</text>
+<polyline points="291.8,240 317.8,240 317.8,254 293.8,254" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="293.8,254 301.8,250.4 301.8,257.6" fill="#1f2937"/>
+<text x="325.8" y="248" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. プログラムカウンタを次へ進める</text>
+<rect x="233.2" y="259" width="117.2" height="16" rx="3" fill="#ffffff"/>
+<text x="291.8" y="272.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">1 に戻って繰り返す</text>
+</g>
+<text x="320" y="338" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">CPU は命令を取り出し、読み解き、実行する 3 段を繰り返します。次の命令の場所はプログラムカウンタが覚</text>
+<text x="320" y="354" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">えています。</text>
+</svg>

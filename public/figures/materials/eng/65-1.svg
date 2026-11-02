@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="336" viewBox="0 0 640 336" role="img">
+<title>小さい順の 8 件から 31 を探す例です。真ん中と比べるたびに候補が半分になり、2 回で見つかります。</title>
+<rect x="0.5" y="0.5" width="639" height="335" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(77.12 20)">
+<line x1="48" y1="34" x2="48" y2="268" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="405.2" y1="34" x2="405.2" y2="268" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">探す手順</text>
+<rect x="324.65" y="0" width="161.1" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="405.2" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">並んだ 8 件のデータ</text>
+<polyline points="51,68 402.2,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="402.2,68 394.2,71.6 394.2,64.4" fill="#1f2937"/>
+<text x="226.6" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 3・7・12・18・25・31・40・52 の真ん中の 18 と比べる</text>
+<rect x="134.7" y="73" width="183.8" height="16" rx="3" fill="#ffffff"/>
+<text x="226.6" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">真ん中が 2 つなら前の方を取る</text>
+<polyline points="402.2,124 51,124" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,124 59,120.4 59,127.6" fill="#1f2937"/>
+<text x="226.6" y="117" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 31 の方が大きい</text>
+<rect x="146.7" y="129" width="159.8" height="16" rx="3" fill="#ffffff"/>
+<text x="226.6" y="142.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">前半の 4 つを丸ごと捨てる</text>
+<polyline points="51,180 402.2,180" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="402.2,180 394.2,183.6 394.2,176.4" fill="#1f2937"/>
+<text x="226.6" y="173" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 残り 25・31・40・52 の真ん中の 31 と比べる</text>
+<polyline points="402.2,220 51,220" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,220 59,216.4 59,223.6" fill="#1f2937"/>
+<text x="226.6" y="213" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 一致して見つかる</text>
+<rect x="112.8" y="225" width="227.6" height="16" rx="3" fill="#ffffff"/>
+<text x="226.6" y="238.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">比べたのは 2 回（線形探索なら 6 回）</text>
+</g>
+<text x="320" y="316" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">小さい順の 8 件から 31 を探す例です。真ん中と比べるたびに候補が半分になり、2 回で見つかります。</text>
+</svg>
