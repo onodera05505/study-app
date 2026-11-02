@@ -8,7 +8,7 @@
 - 教材: 全単位に教材があり、担当バンドルと topic_id/term が一致する（自己申告を信じない）。sources が 1 件以上。
   explanation / detail の長さが仕様の範囲（下限は落とす、上限は警告）。見分けワードの行がある。記法が 5 つ以外でない（`**`/`###`/`- `/`1. `/表）。
   `[[用語]]` はロードマップ内の論点名だけ。会社の評価・年収・「最新」「近年」を含まない
-- 問題: 1 論点 2 問、四択、answer が選択肢にある、qid 一意、正解位置が 1 つに偏りすぎない（1 位置が 45% 超で警告）、tests_goal が 1〜6。\n  正解の選択肢が教材と 14 字以上連続一致するものを数えて警告（サイクル 1 で独立解答 2 体が「再認で当たる」と指摘）
+- 問題: 1 論点 2 問、四択、answer が選択肢にある、qid 一意、正解位置が 1 つに偏りすぎない（1 位置が 45% 超で警告）、tests_goal が 1〜（到達基準の数。roadmap.json の単位の goals の最大）。\n  正解の選択肢が教材と 14 字以上連続一致するものを数えて警告（サイクル 1 で独立解答 2 体が「再認で当たる」と指摘）
 - 独立解答（--solutions）: 教材だけで解いた担当の答えと answer を比べ、不一致を列挙する。不一致率 20% 超でエラー
 """
 from __future__ import annotations
@@ -43,6 +43,8 @@ def main() -> int:
     BANNED = [(re.compile(rx), why) for rx, why in ((target(d.name).get("roadmapSpec") or {}).get("bannedPatterns") or {}).items()]
     rm = json.loads((d / "roadmap.json").read_text(encoding="utf-8"))
     units = {u["topic_id"]: u for u in rm["units"]}; terms = {u["term"] for u in rm["units"]}
+    # 到達基準の数は対象ごとに違うので、ロードマップの単位が持つ到達基準の最大の番号から読む
+    n_goals = max((g for u in rm["units"] for g in u.get("goals", [])), default=6)
     # 前提はロードマップ上で前に置かれているか（クラスタ寄せで前提を飛び越えた mkt 1 周目の再発防止 2026-09-15）
     order_of = {u["term"]: u["order"] for u in rm["units"]}
     for u in rm["units"]:
@@ -140,7 +142,7 @@ def main() -> int:
             qs[q["qid"]] = q; per_topic[q["topic_id"]] = per_topic.get(q["topic_id"], 0) + 1
             if set(q["choices"].keys()) != {"ア", "イ", "ウ", "エ"}: errors.append(f"{q['qid']}: 選択肢がア〜エでない")
             if q["answer"] not in q["choices"]: errors.append(f"{q['qid']}: 正解が選択肢に無い")
-            if q.get("tests_goal") not in range(1, 7): errors.append(f"{q['qid']}: tests_goal が 1〜6 でない")
+            if q.get("tests_goal") not in range(1, n_goals + 1): errors.append(f"{q['qid']}: tests_goal が 1〜{n_goals} でない")
             if q["topic_id"] not in units: warns.append(f"{q['qid']}: ロードマップ外の問題（除外済みの単位）"); continue
             pos[q["answer"]] = pos.get(q["answer"], 0) + 1
             cn = q.get("choice_notes") or {}
