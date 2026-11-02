@@ -88,12 +88,14 @@ def main() -> int:
         print(f"警告: 副の信号 {sig} を持つ候補が無い（登録簿 roadmapSpec.secondarySignal を確かめる）")
     for c in cands: c["score"] = c.get("source_count", 0) + 0.5 * c.get(sig, 0)
     linked = [c for c in cands if c.get("goals")]
+    # 到達基準の数は対象ごとに違うので、候補が持つ到達基準の最大の番号から読む
+    n_goals = max((g for c in linked for g in c["goals"]), default=6)
     dropped = [c["term"] for c in cands if not c.get("goals")]
     linked.sort(key=lambda c: (-c["score"], c["term"]))
     chosen = [c for c in linked if c["term"] in must] + [c for c in linked if c["term"] not in must][: max(0, a.max - len(must))]
     all_by_term = {c["term"]: c for c in linked}
     def ensure_goals():
-        for g in range(1, 7):
+        for g in range(1, n_goals + 1):
             for c in linked:
                 if len([x for x in chosen if g in x["goals"]]) >= a.min_per_goal: break
                 if c not in chosen and g in c["goals"]: chosen.append(c)
@@ -210,7 +212,7 @@ def main() -> int:
             # 副の信号のキーは対象ごとに違う（interview_count / care_count / life_count / syllabus_weight）ので sig で写す
             {k: u[k] for k in ("topic_id", "term", "field", "middle", "summary", "goals", "prereq", "sources", "source_count", sig)} for u in chunk]},
             ensure_ascii=False, indent=2), encoding="utf-8")
-    goals = {g: sum(1 for u in units if g in u["goals"]) for g in range(1, 7)}
+    goals = {g: sum(1 for u in units if g in u["goals"]) for g in range(1, n_goals + 1)}
     fields = {}
     for u in units: fields[u["field"]] = fields.get(u["field"], 0) + 1
     span = f"{roadmap['days']} 日" if group_by == "day" else f"{roadmap['rounds']} 章"
