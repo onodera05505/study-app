@@ -116,14 +116,14 @@
     },
     "fe": {
       "d1_databases": [
-        { "binding": "DB", "database_name": "study-app-fe-db", "database_id": "601412a1-2848-4a0d-9296-85912597e2c7", "migrations_dir": "migrations" }
+        { "binding": "DB", "database_name": "study-app-fe-db", "database_id": "PLACEHOLDER-fe-run-scripts/bootstrap_personal.sh", "migrations_dir": "migrations" }
       ],
       "vars": { "APP_NAME": "study-app-fe", "EXAM": "fe", "SSO_PORTAL_URL": "https://manabiba-5oz.pages.dev" },
       "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application" }
     },
     "eng": {
       "d1_databases": [
-        { "binding": "DB", "database_name": "study-app-eng-db", "database_id": "PLACEHOLDER-eng-run-scripts/bootstrap_personal.sh", "migrations_dir": "migrations" }
+        { "binding": "DB", "database_name": "study-app-eng-db", "database_id": "3ad08e11-5c66-4680-9240-428b5d5b837e", "migrations_dir": "migrations" }
       ],
       "vars": { "APP_NAME": "study-app-eng", "EXAM": "eng", "SSO_PORTAL_URL": "https://manabiba-5oz.pages.dev" },
       "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application" }
