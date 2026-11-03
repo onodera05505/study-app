@@ -124,7 +124,7 @@ export function Session() {
   // 過去問実践（通し受験）かどうか。判定と解説を出すかの分かれ目になる。
   const isMock = data?.session.kind === 'mock'
 
-  // @implements REQ-061, REQ-068, REQ-113
+  // @implements REQ-061, REQ-068, REQ-113, REQ-277
   async function answer(choice: string) {
     if (!data?.question || judged || sending) return
     const idx = data.question.idx

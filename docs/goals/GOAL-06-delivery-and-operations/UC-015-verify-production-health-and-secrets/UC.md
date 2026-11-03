@@ -4,7 +4,7 @@ title: 配信した本番が生きていることと秘密がそろっている�
 actor: ACT-03
 goal: GOAL-06
 status: active
-phase: 定義
+phase: 完了
 ---
 
 # UC-015 配信した本番が生きていることと秘密がそろっていることを機械で確かめる

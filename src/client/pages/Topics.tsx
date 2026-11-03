@@ -226,7 +226,6 @@ export function Topics() {
         >
           すべて
         </button>
-        {/* @implements REQ-014 */}
         {FIELD_ORDER.filter((f) => (fields ?? []).some((x) => x.field === f)).map((f) => {
           const d = (fields ?? []).find((x) => x.field === f)!
           return (
@@ -245,6 +244,47 @@ export function Topics() {
           )
         })}
       </div>
+
+      {/* @implements REQ-014 */}
+      {fields && fields.length > 0 && (
+        <div className="field-sums">
+          {FIELD_ORDER.filter((f) => fields.some((x) => x.field === f)).map((f) => {
+            const d = fields.find((x) => x.field === f)!
+            const pct = (n: number) => `${(n / (d.topics || 1)) * 100}%`
+            return (
+              <div key={f} className="field-sum">
+                <div className="fieldrow">
+                  <span className="fn">{f.replace('系', '')}</span>
+                  <span className="fb">
+                    <span className="track">
+                      <i className="t3" style={{ width: pct(d.understood) }} />
+                      <i className="t2" style={{ width: pct(d.partly) }} />
+                      <i className="t1" style={{ width: pct(d.untouched) }} />
+                    </span>
+                  </span>
+                  <span className="fv">
+                    論点 <b>{d.topics}</b> · {exam.words.questions} {d.questions}
+                  </span>
+                </div>
+                <div className="legend">
+                  <span>
+                    <i style={{ background: 'var(--s3)' }} />
+                    {STATUS_LABEL[3]} <b>{d.understood}</b>
+                  </span>
+                  <span>
+                    <i style={{ background: 'var(--s2)' }} />
+                    {STATUS_LABEL[2]} <b>{d.partly}</b>
+                  </span>
+                  <span>
+                    <i style={{ background: 'var(--s1)' }} />
+                    {STATUS_LABEL[1]} <b>{d.untouched}</b>
+                  </span>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
 
       {/* @implements REQ-016, BR-014, BR-015 */}
       {structError && (

@@ -55,7 +55,7 @@ const createBody = z
     return key === undefined || body[key] !== undefined
   }, '種別に対応する範囲がありません')
 
-// @implements REQ-050, REQ-055, REQ-057, REQ-105, REQ-109, REQ-243, REQ-247, BR-017, REQ-281
+// @implements REQ-050, REQ-055, REQ-057, REQ-105, REQ-109, REQ-243, REQ-247, BR-017, REQ-281, REQ-273
 sessionRoutes.post('/', async (c) => {
   const parsed = createBody.safeParse(await c.req.json().catch(() => null))
   if (!parsed.success) return c.json({ error: '入力が正しくありません' }, 400)
@@ -261,7 +261,7 @@ const answerBody = z.object({
 })
 
 /** 1問回答する。採点は**出題時スナップショット**に対して行う。 */
-// @implements REQ-061, REQ-064, REQ-066, REQ-067, REQ-072, REQ-119, REQ-253, BR-020, BR-022, BR-023
+// @implements REQ-061, REQ-064, REQ-066, REQ-067, REQ-072, REQ-119, REQ-250, REQ-253, BR-020, BR-022, BR-023
 sessionRoutes.post('/:id/answer', async (c) => {
   const parsed = answerBody.safeParse(await c.req.json().catch(() => null))
   if (!parsed.success) return c.json({ error: '入力が正しくありません' }, 400)
@@ -309,7 +309,7 @@ sessionRoutes.post('/:id/answer', async (c) => {
     sql`SELECT COUNT(*) AS n FROM session_questions WHERE session_id = ${s.id} AND result = 0`,
   )
   // 解説は**答え合わせの応答に載せる**。出題（/current）に載せると、答える前に
-  // 正解が読めてしまう。まだ解説が無い問題は null で、画面は今までどおり。
+  // 正解が読めてしまう。まだ解説が無い問題は null で、画面は解説の欄を出さない。
   return c.json({
     correct,
     correctAnswer: snap.answer,

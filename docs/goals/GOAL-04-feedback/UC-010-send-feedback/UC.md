@@ -4,7 +4,7 @@ title: 開いていた画面を添えてフィードバックを送る
 actor: ACT-01
 goal: GOAL-04
 status: active
-phase: 定義
+phase: 完了
 ---
 
 # UC-010 開いていた画面を添えてフィードバックを送る

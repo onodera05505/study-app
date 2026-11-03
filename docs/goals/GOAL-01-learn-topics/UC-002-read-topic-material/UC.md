@@ -4,7 +4,7 @@ title: 分野から単元をたどり、論点の教材と紐づく過去問を�
 actor: ACT-01
 goal: GOAL-01
 status: active
-phase: 定義
+phase: 完了
 ---
 
 # UC-002 分野から単元をたどり、論点の教材と紐づく過去問を読む

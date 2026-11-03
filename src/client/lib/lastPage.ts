@@ -22,11 +22,25 @@ export function setLastPage(p: LastPage) {
   }
 }
 
+/** 契約 LastPage の形（path は空でない文字列、label は文字列、topicId・questionId は在れば型どおり）か。 */
+function isLastPage(v: unknown): v is LastPage {
+  if (typeof v !== 'object' || v === null || Array.isArray(v)) return false
+  const o = v as Record<string, unknown>
+  if (typeof o.path !== 'string' || o.path.length === 0) return false
+  if (typeof o.label !== 'string') return false
+  if (o.topicId !== undefined && !(Number.isInteger(o.topicId) && (o.topicId as number) >= 1)) return false
+  if (o.questionId !== undefined && !(typeof o.questionId === 'string' && o.questionId.length <= 64)) return false
+  return true
+}
+
+/** 覚えていない・読めない・形が壊れている記憶はどれも null。 */
 // @implements REQ-242
 export function getLastPage(): LastPage | null {
   try {
     const raw = sessionStorage.getItem(KEY)
-    return raw ? (JSON.parse(raw) as LastPage) : null
+    if (!raw) return null
+    const v: unknown = JSON.parse(raw)
+    return isLastPage(v) ? v : null
   } catch {
     return null
   }

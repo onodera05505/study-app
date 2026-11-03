@@ -2,7 +2,7 @@
 # 振る舞いと規則は ./UC.md と REQ-102〜125・238 が持つ。ここは形だけ。
 # 演習（UC-004）と同じ経路を通る操作も、模試の文脈の名で書く（移行中は同じ経路を 2 契約が持つ）。
 x-uc: UC-008
-x-status: draft
+x-status: fixed
 x-spec: ./UC.md
 x-updated: 2026-10-03
 
@@ -91,6 +91,9 @@ operations:
           scopeLabel: 全範囲からランダム100問
           questionCount: 100
           timeLimitSec: 7200
+      unauthenticated:
+        request: { kind: mock, exam: 2024r06 }
+        error: UNAUTHENTICATED
       invalidSize:
         request: { kind: mock, size: 0 }
         error: INVALID_INPUT
@@ -203,6 +206,9 @@ operations:
       ok:
         request: { id: 3f2a7c1e-5b84-4d6a-9e10-2c7b8a4f0d55, idx: 0, answer: イ }
         response: { correct: true, correctAnswer: イ, explanation: null, remaining: 99, finished: false }
+      unauthenticated:
+        request: { id: 3f2a7c1e-5b84-4d6a-9e10-2c7b8a4f0d55, idx: 0, answer: イ }
+        error: UNAUTHENTICATED
       invalidAnswer:
         request: { id: 3f2a7c1e-5b84-4d6a-9e10-2c7b8a4f0d55, idx: 0, answer: オ }
         error: INVALID_INPUT

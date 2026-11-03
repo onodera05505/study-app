@@ -11,6 +11,9 @@ type Exam = {
   bestScore: number | null
 }
 
+/** 進行中のテストの範囲と回答の進み具合（GET /api/sessions/current の session の一部） */
+type InProgress = { scopeLabel: string; questionCount: number; answered: number }
+
 export function Exams() {
   // null は「まだ取得していない」、[] は「取得した結果が空」
   const [exams, setExams] = useState<Exam[] | null>(null)
@@ -32,6 +35,22 @@ export function Exams() {
     load()
   }, [load])
 
+  /** 進行中のテストがあって作れなかったときの案内。断りの本文は ErrorBody だけなので、
+   *  範囲と回答の進み具合は GET /api/sessions/current で取り直して添える。
+   *  取り直せなかったときや、取り直したら進行中のテストが無かったときは、入口への案内だけを出す。 */
+  async function inProgressGuide(): Promise<string> {
+    const guide = '練習テスト画面から再開または破棄してください。'
+    try {
+      const d = await api<{ session: InProgress | null }>('/sessions/current')
+      if (d.session) {
+        return `進行中のテストがあります（${d.session.scopeLabel}・${d.session.answered}／${d.session.questionCount} 問 回答済み）。${guide}`
+      }
+    } catch {
+      // 範囲と進み具合が取れなくても、再開か破棄の入口への案内は出す
+    }
+    return `進行中のテストがあります。${guide}`
+  }
+
   // @implements REQ-104, REQ-109, REQ-110
   async function start(body: Record<string, unknown>) {
     // 開始するとタイマーが走り出し、終わるまで練習系のテストが作れなくなる。
@@ -43,11 +62,7 @@ export function Exams() {
       const s = await api<{ id: string }>('/sessions', { method: 'POST', body })
       navigate(`/sessions/${s.id}`)
     } catch (e: any) {
-      setError(
-        e.status === 409
-          ? '進行中のテストがあります。練習テスト画面から再開または破棄してください。'
-          : e.message,
-      )
+      setError(e.status === 409 ? await inProgressGuide() : e.message)
     } finally {
       setBusy(false)
     }

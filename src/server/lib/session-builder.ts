@@ -28,19 +28,26 @@ export type QuestionRow = {
 
 /** 本番の分野別出題数は試験ごとに違う。src/shared/exam.ts の fieldRatio を使う。 */
 
-/** 回の新旧。exam ID（2016h28h / 2020r02o / 2025r07a）を古い→新しいの順で比べる。
- *
- *  先頭4桁が西暦、末尾1文字が実施時期（h=春 < o=10月 < a=秋）。IT パスポートは
- *  通年 CBT なので末尾が無い回がある（2024r06）ので、その場合は年内で最後に置く。
+/** 回の実施時期の順位。exam ID の末尾の季節の記号 → 同じ年度の中での古い→新しいの順位。
+ *  h=春期 < tokubetsu=特別（夏） < o=10 月 < a=秋期。末尾に季節の記号が無い回
+ *  （IT パスポートの通年 CBT。例 2024r06）は SEASON_RANK_YEAR_ROUND で年度内の最後に置く。 */
+// @implements BR-038
+export const SEASON_RANK: Readonly<Record<string, number>> = { h: 0, tokubetsu: 1, o: 2, a: 3 }
+const SEASON_RANK_YEAR_ROUND = 4
+const SEASON_SUFFIX = new RegExp(`(${Object.keys(SEASON_RANK).join('|')})$`)
+
+/** 回の新旧。exam ID（2016h28h / 2011h23tokubetsu / 2020r02o / 2025r07a / 2024r06）を
+ *  古い→新しいの順で比べる。先頭4桁が西暦、末尾が季節の記号（SEASON_RANK）。
  *
  *  **文字列の大小では比べられない。** 2016h28a（秋）と 2016h28h（春）は
  *  辞書順だと a < h で秋のほうが古いことになってしまう。 */
-const SEASON_RANK: Record<string, number> = { h: 0, o: 1, a: 2 }
-
+// @implements BR-038
 export function compareExam(a: string, b: string): number {
   const year = (x: string) => Number(x.slice(0, 4)) || 0
-  // 末尾が h/o/a ならその時期。無ければ通年（年内で最後）。
-  const season = (x: string) => SEASON_RANK[x.slice(-1)] ?? 3
+  const season = (x: string) => {
+    const m = SEASON_SUFFIX.exec(x)
+    return m ? SEASON_RANK[m[1]] : SEASON_RANK_YEAR_ROUND
+  }
   return year(a) - year(b) || season(a) - season(b)
 }
 

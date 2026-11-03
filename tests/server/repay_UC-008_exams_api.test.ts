@@ -11,6 +11,9 @@ import type { Bindings } from '../../src/server/lib/db'
 import { issueToken } from '../../src/server/lib/auth'
 import targets from '../../src/shared/targets.json'
 import examLabels from '../../data/ip/exam_labels.json'
+import apExamLabels from '../../data/ap/exam_labels.json'
+import feExamLabels from '../../data/fe/exam_labels.json'
+import itcExamLabels from '../../data/itc/exam_labels.json'
 
 type Row = Record<string, unknown>
 type Table = { match: RegExp; rows: Row[] }
@@ -121,14 +124,28 @@ const REGISTRY = targets as unknown as Record<string, Registered>
 /** この検査が使う学び（資格型）。値はすべて登録簿から引く。 */
 const LEARNING = 'ip'
 const REG = REGISTRY[LEARNING]
-/** 学びに定めた回の並び（回の登録 `data/ip/exam_labels.json` の順。鍵の順がそのまま並び順）。 */
+/** 回の名前の登録（`data/ip/exam_labels.json`）。名前を引くのに使い、並びの正解には使わない。 */
 const EXAM_LABELS = examLabels as Record<string, string>
+/** 学びごとの回の名前の登録（回の並びの検査で、学びを切り替えて使う）。 */
+const LABELS_BY_LEARNING: Record<string, Record<string, string>> = {
+  ip: EXAM_LABELS,
+  ap: apExamLabels as Record<string, string>,
+  fe: feExamLabels as Record<string, string>,
+  itc: itcExamLabels as Record<string, string>,
+}
 
 const SECRET = 'test-secret'
-const env = (tables: Table[], executed: string[] = []) =>
-  ({ EXAM: LEARNING, JWT_SECRET: SECRET, DB: fakeD1(tables, executed) } as unknown as Bindings)
+const env = (tables: Table[], executed: string[] = [], learning = LEARNING) =>
+  ({ EXAM: learning, JWT_SECRET: SECRET, DB: fakeD1(tables, executed) } as unknown as Bindings)
 
-async function request(method: string, path: string, body: unknown, tables: Table[], executed: string[] = []) {
+async function request(
+  method: string,
+  path: string,
+  body: unknown,
+  tables: Table[],
+  executed: string[] = [],
+  learning = LEARNING,
+) {
   const token = await issueToken(SECRET, { id: 'u-1', name: '検査', role: 'MEMBER' })
   return app.request(
     path,
@@ -137,7 +154,7 @@ async function request(method: string, path: string, body: unknown, tables: Tabl
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
       body: body === undefined ? undefined : JSON.stringify(body),
     },
-    env(tables, executed),
+    env(tables, executed, learning),
   )
 }
 
@@ -196,15 +213,55 @@ const anyInsert = (executed: string[]) => executed.filter((sql) => /^\s*insert\b
 
 describe('模試の入口の回の一覧（GET /api/exams。UC-008）', () => {
   // @covers REQ-102#exam-order
-  it('一覧は学びに定めた回の並び（回の登録の順）で並び、持ち込んだ順にも依らない', async () => {
-    // 同じ年の春(h)と秋(a)、10 月(o)、令和と平成の境目を含む回を、登録の順をわざと崩して持たせる
-    const exams = ['2016h28h', EXAM_ID, '2016h28a', '2020r02o', '2019h31h']
-    for (const exam of exams) expect(EXAM_LABELS[exam], `${exam} が回の登録に無い（この検査の前提が崩れる）`).toBeDefined()
-    const rows = examRows(exams.flatMap((exam, i) => [question(i * 10 + 1, { exam }), question(i * 10 + 2, { exam })]))
-    const res = await request('GET', '/api/exams', undefined, [{ match: EXAM_LIST, rows }, EXAM_REGISTRY])
+  it.each([
+    {
+      label: 'ip: 同じ年度に春期と秋期を持つ回（年 1 回の回もまぜる）',
+      learning: 'ip',
+      given: ['2016h28h', '2018h30h', '2024r06', '2016h28a', '2018h30a'],
+      expected: ['2024r06', '2018h30a', '2018h30h', '2016h28a', '2016h28h'],
+    },
+    {
+      label: 'ap: 同じ年度の春期と秋期（鍵の順は春期が先でも秋期が先）と 10 月の回',
+      learning: 'ap',
+      given: ['2024r06h', '2018h30h', '2025r07h', '2020r02o', '2025r07a', '2018h30a', '2024r06a'],
+      expected: ['2025r07a', '2025r07h', '2024r06a', '2024r06h', '2020r02o', '2018h30a', '2018h30h'],
+    },
+    {
+      label: 'ip: 10 月の回と、年度の境目（平成 31 年度春期・令和元年度秋期は同じ年度）',
+      learning: 'ip',
+      given: ['2019h31h', '2020r02o', '2021r03', '2019r01a'],
+      expected: ['2021r03', '2020r02o', '2019r01a', '2019h31h'],
+    },
+    {
+      label: 'fe: 同じ年度の春期と秋期が並ぶ回の集まり',
+      learning: 'fe',
+      given: ['2017h29a', '2019h31h', '2018h30h', '2019r01a', '2018h30a'],
+      expected: ['2019r01a', '2019h31h', '2018h30a', '2018h30h', '2017h29a'],
+    },
+    {
+      label: 'ip: 特別回は同じ年度の秋期の後（その年度に春期は無い）、前後の年度の春期・秋期とまぜる',
+      learning: 'ip',
+      given: ['2010h22h', '2011h23tokubetsu', '2012h24h', '2011h23a', '2010h22a', '2012h24a'],
+      expected: ['2012h24a', '2012h24h', '2011h23a', '2011h23tokubetsu', '2010h22a', '2010h22h'],
+    },
+    {
+      label: 'ロードマップ型（itc）: 最初の回から学ぶ順',
+      learning: 'itc',
+      given: ['itc-d10', 'itc-d02', 'itc-d14', 'itc-d01', 'itc-d09'],
+      expected: ['itc-d01', 'itc-d02', 'itc-d09', 'itc-d10', 'itc-d14'],
+    },
+  ])('一覧は BR-038 の並び（実施の時期の順）で、持ち込んだ順にも鍵の順にも依らない — $label', async ({ learning, given, expected }) => {
+    const labels = LABELS_BY_LEARNING[learning]
+    for (const exam of given) expect(labels[exam], `${exam} が ${learning} の回の登録に無い（この検査の前提が崩れる）`).toBeDefined()
+    expect(REGISTRY[learning], `${learning} が登録簿に無い`).toBeDefined()
+    const rows = given.map((exam) => ({ exam, examLabel: labels[exam], questions: 2, attempts: 0, bestScore: null }))
+    const registry: Table = {
+      match: EXAM_REGISTRY.match,
+      rows: Object.entries(labels).map(([exam, examLabel]) => ({ exam, examLabel })),
+    }
+    const res = await request('GET', '/api/exams', undefined, [{ match: EXAM_LIST, rows }, registry], [], learning)
     expect(res.status).toBe(200)
     const body = (await res.json()) as { exams: { exam: string }[] }
-    const expected = Object.keys(EXAM_LABELS).filter((exam) => exams.includes(exam))
     expect(body.exams.map((e) => e.exam)).toEqual(expected)
   })
 

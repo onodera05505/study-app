@@ -4,7 +4,7 @@ title: 配信した新しい版を、開いたままの画面に知らせる
 actor: ACT-03
 goal: GOAL-06
 status: active
-phase: 定義
+phase: 完了
 ---
 
 # UC-016 配信した新しい版を、開いたままの画面に知らせる

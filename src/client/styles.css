@@ -542,6 +542,10 @@ a.row:hover { border-color: var(--accent); text-decoration: none; }
 .fieldrow .fb { flex: 1; min-width: 0; }
 .fieldrow .fv { flex: none; font-size: 0.74rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 .fieldrow .fv b { font-size: 0.95rem; color: var(--text); }
+.field-sums { margin: 0.8rem 0 0.4rem; }
+.field-sum { padding: 0.2rem 0 0.5rem; border-bottom: 1px solid var(--border-soft); }
+.field-sum:last-child { border-bottom: 0; }
+.field-sum .legend { margin-top: 0; }
 
 .stat { font-size: 1.5rem; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
 .stat small { font-size: 0.85rem; font-weight: 400; color: var(--muted); }

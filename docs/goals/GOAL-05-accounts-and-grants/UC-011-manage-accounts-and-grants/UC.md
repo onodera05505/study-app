@@ -4,7 +4,7 @@ title: アカウントを作り、学びの権限とパスワードを付け替�
 actor: ACT-02
 goal: GOAL-05
 status: active
-phase: 定義
+phase: 完了
 ---
 
 # UC-011 アカウントを作り、学びの権限とパスワードを付け替え、削除する

@@ -4,7 +4,7 @@ title: 学びとまなびばの要求の受け口を一様に守る
 actor: ACT-03
 goal: GOAL-06
 status: active
-phase: 実装
+phase: 完了
 ---
 
 # UC-017 学びとまなびばの要求の受け口を一様に守る

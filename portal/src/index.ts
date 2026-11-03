@@ -323,6 +323,7 @@ admin.delete('/accounts/:id', async (c) => {
   return c.json({ ok: true })
 })
 
+// @implements REQ-171
 api.route('/admin', admin)
 app.route('/api', api)
 

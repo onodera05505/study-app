@@ -83,6 +83,8 @@ describe('最初の印の保ち方（UC-016）', () => {
     ['版を見分ける値が空文字', async () => ({ build: '', at: '2026-09-28T09:00:00Z' })],
     ['印そのものが null', async () => null],
     ['JSON として読めない', async () => { throw new SyntaxError('Unexpected token <') }],
+    ['配信の時点が文字列でない', async () => ({ build: 'abc1234', at: 0 })],
+    ['配信の時点が空文字', async () => ({ build: 'abc1234', at: '' })],
   ])('配信物の印が読めない形（%s）のときは印が無いものとして扱い、合図を立てない', async (_label, body) => {
     const shelf: Shelf = { stamp: A }
     stubFetch(shelf)
@@ -96,8 +98,12 @@ describe('最初の印の保ち方（UC-016）', () => {
   // @covers REQ-233#adopted-then-changed
   it('開いたときに取れず次に取れた印を覚えたあとは、その印と違う印で合図が立つ', async () => {
     const shelf: Shelf = { stamp: null }
-    stubFetch(shelf)
+    const fetched = stubFetch(shelf)
     const v = await openWindow()
+
+    // 画面を開く: 取りに行くが取れず、最初の印を覚えていない状態になる
+    expect(await v.rememberBuild(), '取れないのに最初の印を覚えている').toBeNull()
+    expect(fetched.calls(), '画面を開いたときに取りに行っていない').toBe(1)
 
     shelf.stamp = A
     // その回は合図を立てず、A を最初の印として覚える

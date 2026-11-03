@@ -9,7 +9,8 @@ import { compareExam, dedupe } from '../lib/session-builder'
 
 export const catalogRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
-/** 分野ごとの論点数と理解度の内訳。トップ画面の骨格になる。 */
+/** 分野ごとの論点数と理解度の内訳。トップ画面の骨格になる。
+ *  未理解（untouched）は status=1 の記録と、記録の無い論点を合わせて数える。 */
 // @implements REQ-014
 catalogRoutes.get('/fields', async (c) => {
   const db = getDb(c.env)
@@ -27,7 +28,7 @@ catalogRoutes.get('/fields', async (c) => {
            COALESCE(SUM(t.question_count), 0)             AS questions,
            SUM(CASE WHEN p.status = 3 THEN 1 ELSE 0 END)  AS understood,
            SUM(CASE WHEN p.status = 2 THEN 1 ELSE 0 END)  AS partly,
-           SUM(CASE WHEN p.status IS NULL THEN 1 ELSE 0 END) AS untouched
+           SUM(CASE WHEN p.status IS NULL OR p.status = 1 THEN 1 ELSE 0 END) AS untouched
       FROM topics t
       JOIN syllabus_items s ON s.id = t.syllabus_item_id
       LEFT JOIN progress p ON p.topic_id = t.id AND p.user_id = ${userId}
@@ -340,7 +341,7 @@ catalogRoutes.get('/glossary', async (c) => {
 })
 
 /** 過去問の一覧（回ごと）。過去問実践の入口で使う。 */
-// @implements REQ-102
+// @implements REQ-102, BR-038
 catalogRoutes.get('/exams', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -362,9 +363,10 @@ catalogRoutes.get('/exams', async (c) => {
                              AS bestScore
       FROM past_questions q
      GROUP BY q.exam, q.exam_label
-     ${examOf(c.env.EXAM).roadmap
-       ? sql`ORDER BY q.exam ASC` /* ロードマップ型は最初の回から順に並べる。資格版は新しい回が先 */
-       : sql`ORDER BY q.exam DESC`}
+     ORDER BY q.exam ASC
   `)
+  // ロードマップ型は最初の回から順に並べる。資格版は新しい回が先で、同じ年度は
+  // 秋期（a）・10 月（o）・特別（tokubetsu）・春期（h）の順。順位は SEASON_RANK が持つ。
+  if (!examOf(c.env.EXAM).roadmap) rows.sort((x, y) => compareExam(y.exam, x.exam))
   return c.json({ exams: rows })
 })

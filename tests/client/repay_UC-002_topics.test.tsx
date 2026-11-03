@@ -128,6 +128,15 @@ function blockText(el: Element): string {
   return `${el.textContent ?? ''} ${labels}`
 }
 
+/** 語（用語集の語）の直後に置かれた数を、出てくる順にすべて返す。語と数の間は空白・区切り記号だけを許し、
+ *  数の後ろは問わない（「過去問 243」でも「過去問 243問」でも 243）。「理解」は「やや理解」「未理解」の一部としては数えない。 */
+function numbersAfter(text: string, label: string): number[] {
+  const flat = text.replace(/\s+/g, ' ')
+  const guard = label === '理解' ? '(?<![や未])' : ''
+  const re = new RegExp(`${guard}${label}[\\s:：]*(\\d+)(?!\\d)`, 'g')
+  return [...flat.matchAll(re)].map((m) => Number(m[1]))
+}
+
 const allElements = () => [...container.querySelectorAll<HTMLElement>('*')]
 
 type StubOpts = {
@@ -250,23 +259,29 @@ afterEach(async () => {
 
 describe('単元の一覧（UC-002）', () => {
   // @covers REQ-014#field-aggregate
-  it('分野ごとに、論点数・過去問数と理解度の内訳（理解・やや理解・未理解）を一か所にまとめて出す', async () => {
+  it('分野ごとに、論点・過去問の数と理解度の内訳（理解・やや理解・未理解）を、語と数の組で一か所にまとめて出す', async () => {
     stubApi()
     await draw()
     // 分野の名前は末尾の「系」を省いて示してもよい
     const nameOf = (field: string) => field.replace(/系$/, '')
     for (const f of FIELDS.fields) {
       const other = nameOf(FIELDS.fields.find((x) => x !== f)!.field)
-      const numbers = [f.topics, f.questions, f.understood, f.partly, f.untouched].map(String)
+      const pairs: [string, number][] = [
+        ['論点', f.topics],
+        ['過去問', f.questions],
+        ['理解', f.understood],
+        ['やや理解', f.partly],
+        ['未理解', f.untouched],
+      ]
       const blocks = allElements().filter((el) => {
         const t = blockText(el)
         return t.includes(nameOf(f.field)) && !t.includes(other)
       })
       expect(blocks.length, `分野「${f.field}」が出ていない`).toBeGreaterThan(0)
-      const hit = blocks.find((el) => numbers.every((n) => blockText(el).includes(n)))
+      const hit = blocks.find((el) => pairs.every(([label, n]) => numbersAfter(blockText(el), label).includes(n)))
       expect(
         hit,
-        `分野「${f.field}」の名前と一緒に 論点数 ${f.topics}・過去問数 ${f.questions}・理解 ${f.understood}・やや理解 ${f.partly}・未理解 ${f.untouched} がそろって出ている場所が無い（出ているのは: ${blocks.map((b) => (b.textContent ?? '').trim()).filter((t) => t.length < 40).join(' / ')}）`,
+        `分野「${f.field}」の名前と一緒に ${pairs.map(([l, n]) => `${l} ${n}`).join('・')} が語と数の組で出ている場所が無い（出ているのは: ${blocks.map((b) => (b.textContent ?? '').trim()).filter((t) => t.length < 80).join(' / ')}）`,
       ).toBeTruthy()
     }
   })
