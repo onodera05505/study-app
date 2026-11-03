@@ -1,0 +1,84 @@
+{
+  "topic_id": 38,
+  "term": "仮想記憶（メモリが足りないときの仕組み）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "同じ 100 番地でも、プロセスごとの対応表で本物の置き場が別になります。メモリに無い区画はストレージから読み込み、空きが無ければ書き出して空けます。",
+      "nodes": [
+        {
+          "id": "pa",
+          "label": "プロセス A\n100 番地を読む",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "ta",
+          "label": "A の対応表",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "mem",
+          "label": "メモリ\n本物の置き場",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "pb",
+          "label": "プロセス B\n100 番地を読む",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "tb",
+          "label": "B の対応表",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "st",
+          "label": "ストレージ\n遅い逃がし先",
+          "row": 2,
+          "col": 2,
+          "shape": "cylinder"
+        }
+      ],
+      "edges": [
+        {
+          "from": "pa",
+          "to": "ta",
+          "label": "見せかけの番地"
+        },
+        {
+          "from": "ta",
+          "to": "mem",
+          "label": "5,100 番地"
+        },
+        {
+          "from": "pb",
+          "to": "tb",
+          "label": "見せかけの番地"
+        },
+        {
+          "from": "tb",
+          "to": "mem",
+          "label": "8,100 番地"
+        },
+        {
+          "from": "st",
+          "to": "mem",
+          "label": "ページフォールト"
+        },
+        {
+          "from": "mem",
+          "to": "st",
+          "label": "スワップ"
+        }
+      ]
+    }
+  ]
+}

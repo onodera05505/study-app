@@ -1,6 +1,6 @@
 {
- "topic_count": 200,
- "question_count": 400,
+ "topic_count": 202,
+ "question_count": 404,
  "exams": [
   "eng-c01",
   "eng-c02",
@@ -3546,8 +3546,8 @@
   },
   {
    "id": 126,
-   "term": "ロックと分離レベル（同時の読み書きをどこまで隔てるか）",
-   "match_key": "ロックと分離レベル（同時の読み書きをどこまで隔てるか）",
+   "term": "同時の読み書きで起きるずれの種類（ダーティリード・ノンリピータブルリード・ファントムリード）",
+   "match_key": "同時の読み書きで起きるずれの種類（ダーティリード・ノンリピータブルリード・ファントムリード）",
    "syllabus_item": 25,
    "syllabus_item_name": "同時に使っても壊れないように",
    "field": "データベース",
@@ -3573,9 +3573,9 @@
    "tier": 1
   },
   {
-   "id": 127,
-   "term": "障害からの回復（ログで進め直す・巻き戻す）",
-   "match_key": "障害からの回復（ログで進め直す・巻き戻す）",
+   "id": 201,
+   "term": "ロックと分離レベル（どこまで隔てるかの 4 段階）",
+   "match_key": "ロックと分離レベル（どこまで隔てるかの 4 段階）",
    "syllabus_item": 25,
    "syllabus_item_name": "同時に使っても壊れないように",
    "field": "データベース",
@@ -3601,6 +3601,34 @@
    "tier": 1
   },
   {
+   "id": 127,
+   "term": "障害からの回復（ログで進め直す・巻き戻す）",
+   "match_key": "障害からの回復（ログで進め直す・巻き戻す）",
+   "syllabus_item": 25,
+   "syllabus_item_name": "同時に使っても壊れないように",
+   "field": "データベース",
+   "major": "データベース",
+   "middle": "同時に使っても壊れないように",
+   "is_new": false,
+   "related_terms": [],
+   "question_count": 2,
+   "sort_order": 128,
+   "questions": [
+    {
+     "exam": "eng-c25",
+     "number": 9
+    },
+    {
+     "exam": "eng-c25",
+     "number": 10
+    }
+   ],
+   "aliases": [],
+   "round": "eng-c25",
+   "round_label": "同時に使っても壊れないように",
+   "tier": 1
+  },
+  {
    "id": 128,
    "term": "インデックス（索引で速く探す）",
    "match_key": "インデックス（索引で速く探す）",
@@ -3612,7 +3640,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 128,
+   "sort_order": 129,
    "questions": [
     {
      "exam": "eng-c26",
@@ -3640,7 +3668,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 129,
+   "sort_order": 130,
    "questions": [
     {
      "exam": "eng-c26",
@@ -3668,7 +3696,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 130,
+   "sort_order": 131,
    "questions": [
     {
      "exam": "eng-c26",
@@ -3696,7 +3724,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 131,
+   "sort_order": 132,
    "questions": [
     {
      "exam": "eng-c26",
@@ -3724,7 +3752,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 132,
+   "sort_order": 133,
    "questions": [
     {
      "exam": "eng-c27",
@@ -3752,7 +3780,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 133,
+   "sort_order": 134,
    "questions": [
     {
      "exam": "eng-c27",
@@ -3780,7 +3808,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 134,
+   "sort_order": 135,
    "questions": [
     {
      "exam": "eng-c27",
@@ -3808,7 +3836,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 135,
+   "sort_order": 136,
    "questions": [
     {
      "exam": "eng-c27",
@@ -3836,7 +3864,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 136,
+   "sort_order": 137,
    "questions": [
     {
      "exam": "eng-c27",
@@ -3864,7 +3892,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 137,
+   "sort_order": 138,
    "questions": [
     {
      "exam": "eng-c28",
@@ -3892,7 +3920,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 138,
+   "sort_order": 139,
    "questions": [
     {
      "exam": "eng-c28",
@@ -3920,7 +3948,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 139,
+   "sort_order": 140,
    "questions": [
     {
      "exam": "eng-c28",
@@ -3948,7 +3976,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 140,
+   "sort_order": 141,
    "questions": [
     {
      "exam": "eng-c28",
@@ -3966,8 +3994,8 @@
   },
   {
    "id": 141,
-   "term": "トークンによる認可（OAuth と JWT：ほかのサービスに権限を貸す）",
-   "match_key": "トークンによる認可（OAuth と JWT：ほかのサービスに権限を貸す）",
+   "term": "OAuth（ほかのサービスに権限を貸す流れ）",
+   "match_key": "OAuth（ほかのサービスに権限を貸す流れ）",
    "syllabus_item": 28,
    "syllabus_item_name": "本人を確かめ、できることを絞る",
    "field": "セキュリティ",
@@ -3976,7 +4004,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 141,
+   "sort_order": 142,
    "questions": [
     {
      "exam": "eng-c28",
@@ -3985,6 +4013,34 @@
     {
      "exam": "eng-c28",
      "number": 10
+    }
+   ],
+   "aliases": [],
+   "round": "eng-c28",
+   "round_label": "本人を確かめ、できることを絞る",
+   "tier": 1
+  },
+  {
+   "id": 202,
+   "term": "JWT（署名つきの札で本人と権限を運ぶ）",
+   "match_key": "JWT（署名つきの札で本人と権限を運ぶ）",
+   "syllabus_item": 28,
+   "syllabus_item_name": "本人を確かめ、できることを絞る",
+   "field": "セキュリティ",
+   "major": "セキュリティ",
+   "middle": "本人を確かめ、できることを絞る",
+   "is_new": false,
+   "related_terms": [],
+   "question_count": 2,
+   "sort_order": 143,
+   "questions": [
+    {
+     "exam": "eng-c28",
+     "number": 11
+    },
+    {
+     "exam": "eng-c28",
+     "number": 12
     }
    ],
    "aliases": [],
@@ -4004,7 +4060,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 142,
+   "sort_order": 144,
    "questions": [
     {
      "exam": "eng-c29",
@@ -4032,7 +4088,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 143,
+   "sort_order": 145,
    "questions": [
     {
      "exam": "eng-c29",
@@ -4060,7 +4116,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 144,
+   "sort_order": 146,
    "questions": [
     {
      "exam": "eng-c29",
@@ -4088,7 +4144,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 145,
+   "sort_order": 147,
    "questions": [
     {
      "exam": "eng-c29",
@@ -4116,7 +4172,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 146,
+   "sort_order": 148,
    "questions": [
     {
      "exam": "eng-c29",
@@ -4144,7 +4200,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 147,
+   "sort_order": 149,
    "questions": [
     {
      "exam": "eng-c29",
@@ -4172,7 +4228,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 148,
+   "sort_order": 150,
    "questions": [
     {
      "exam": "eng-c29",
@@ -4200,7 +4256,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 149,
+   "sort_order": 151,
    "questions": [
     {
      "exam": "eng-c30",
@@ -4228,7 +4284,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 150,
+   "sort_order": 152,
    "questions": [
     {
      "exam": "eng-c30",
@@ -4256,7 +4312,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 151,
+   "sort_order": 153,
    "questions": [
     {
      "exam": "eng-c30",
@@ -4284,7 +4340,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 152,
+   "sort_order": 154,
    "questions": [
     {
      "exam": "eng-c30",
@@ -4312,7 +4368,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 153,
+   "sort_order": 155,
    "questions": [
     {
      "exam": "eng-c30",
@@ -4340,7 +4396,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 154,
+   "sort_order": 156,
    "questions": [
     {
      "exam": "eng-c31",
@@ -4368,7 +4424,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 155,
+   "sort_order": 157,
    "questions": [
     {
      "exam": "eng-c31",
@@ -4396,7 +4452,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 156,
+   "sort_order": 158,
    "questions": [
     {
      "exam": "eng-c31",
@@ -4424,7 +4480,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 157,
+   "sort_order": 159,
    "questions": [
     {
      "exam": "eng-c32",
@@ -4452,7 +4508,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 158,
+   "sort_order": 160,
    "questions": [
     {
      "exam": "eng-c32",
@@ -4480,7 +4536,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 159,
+   "sort_order": 161,
    "questions": [
     {
      "exam": "eng-c32",
@@ -4508,7 +4564,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 160,
+   "sort_order": 162,
    "questions": [
     {
      "exam": "eng-c32",
@@ -4536,7 +4592,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 161,
+   "sort_order": 163,
    "questions": [
     {
      "exam": "eng-c33",
@@ -4564,7 +4620,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 162,
+   "sort_order": 164,
    "questions": [
     {
      "exam": "eng-c33",
@@ -4592,7 +4648,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 163,
+   "sort_order": 165,
    "questions": [
     {
      "exam": "eng-c33",
@@ -4620,7 +4676,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 164,
+   "sort_order": 166,
    "questions": [
     {
      "exam": "eng-c33",
@@ -4648,7 +4704,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 165,
+   "sort_order": 167,
    "questions": [
     {
      "exam": "eng-c33",
@@ -4676,7 +4732,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 166,
+   "sort_order": 168,
    "questions": [
     {
      "exam": "eng-c33",
@@ -4704,7 +4760,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 167,
+   "sort_order": 169,
    "questions": [
     {
      "exam": "eng-c33",
@@ -4732,7 +4788,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 168,
+   "sort_order": 170,
    "questions": [
     {
      "exam": "eng-c34",
@@ -4760,7 +4816,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 169,
+   "sort_order": 171,
    "questions": [
     {
      "exam": "eng-c34",
@@ -4788,7 +4844,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 170,
+   "sort_order": 172,
    "questions": [
     {
      "exam": "eng-c34",
@@ -4816,7 +4872,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 171,
+   "sort_order": 173,
    "questions": [
     {
      "exam": "eng-c34",
@@ -4844,7 +4900,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 172,
+   "sort_order": 174,
    "questions": [
     {
      "exam": "eng-c34",
@@ -4872,7 +4928,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 173,
+   "sort_order": 175,
    "questions": [
     {
      "exam": "eng-c35",
@@ -4900,7 +4956,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 174,
+   "sort_order": 176,
    "questions": [
     {
      "exam": "eng-c35",
@@ -4928,7 +4984,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 175,
+   "sort_order": 177,
    "questions": [
     {
      "exam": "eng-c35",
@@ -4956,7 +5012,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 176,
+   "sort_order": 178,
    "questions": [
     {
      "exam": "eng-c35",
@@ -4984,7 +5040,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 177,
+   "sort_order": 179,
    "questions": [
     {
      "exam": "eng-c35",
@@ -5012,7 +5068,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 178,
+   "sort_order": 180,
    "questions": [
     {
      "exam": "eng-c36",
@@ -5040,7 +5096,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 179,
+   "sort_order": 181,
    "questions": [
     {
      "exam": "eng-c36",
@@ -5068,7 +5124,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 180,
+   "sort_order": 182,
    "questions": [
     {
      "exam": "eng-c36",
@@ -5096,7 +5152,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 181,
+   "sort_order": 183,
    "questions": [
     {
      "exam": "eng-c36",
@@ -5124,7 +5180,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 182,
+   "sort_order": 184,
    "questions": [
     {
      "exam": "eng-c36",
@@ -5152,7 +5208,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 183,
+   "sort_order": 185,
    "questions": [
     {
      "exam": "eng-c37",
@@ -5180,7 +5236,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 184,
+   "sort_order": 186,
    "questions": [
     {
      "exam": "eng-c37",
@@ -5208,7 +5264,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 185,
+   "sort_order": 187,
    "questions": [
     {
      "exam": "eng-c37",
@@ -5236,7 +5292,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 186,
+   "sort_order": 188,
    "questions": [
     {
      "exam": "eng-c37",
@@ -5264,7 +5320,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 187,
+   "sort_order": 189,
    "questions": [
     {
      "exam": "eng-c37",
@@ -5292,7 +5348,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 188,
+   "sort_order": 190,
    "questions": [
     {
      "exam": "eng-c37",
@@ -5320,7 +5376,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 189,
+   "sort_order": 191,
    "questions": [
     {
      "exam": "eng-c38",
@@ -5348,7 +5404,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 190,
+   "sort_order": 192,
    "questions": [
     {
      "exam": "eng-c38",
@@ -5376,7 +5432,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 191,
+   "sort_order": 193,
    "questions": [
     {
      "exam": "eng-c38",
@@ -5404,7 +5460,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 192,
+   "sort_order": 194,
    "questions": [
     {
      "exam": "eng-c39",
@@ -5432,7 +5488,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 193,
+   "sort_order": 195,
    "questions": [
     {
      "exam": "eng-c39",
@@ -5460,7 +5516,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 194,
+   "sort_order": 196,
    "questions": [
     {
      "exam": "eng-c39",
@@ -5488,7 +5544,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 195,
+   "sort_order": 197,
    "questions": [
     {
      "exam": "eng-c39",
@@ -5516,7 +5572,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 196,
+   "sort_order": 198,
    "questions": [
     {
      "exam": "eng-c39",
@@ -5544,7 +5600,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 197,
+   "sort_order": 199,
    "questions": [
     {
      "exam": "eng-c39",
@@ -5572,7 +5628,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 198,
+   "sort_order": 200,
    "questions": [
     {
      "exam": "eng-c40",
@@ -5600,7 +5656,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 199,
+   "sort_order": 201,
    "questions": [
     {
      "exam": "eng-c40",
@@ -5628,7 +5684,7 @@
    "is_new": false,
    "related_terms": [],
    "question_count": 2,
-   "sort_order": 200,
+   "sort_order": 202,
    "questions": [
     {
      "exam": "eng-c40",
