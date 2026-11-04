@@ -1,0 +1,25 @@
+{
+  "topic_id": 46,
+  "term": "RAID（複数のディスクを束ねて守る・速くする）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "パリティは桁ごとに 1 が偶数個になるよう決めてあります。1 台目が壊れても、残る 2 台の同じ桁から上の桁順に埋め直すと 1010 に戻ります。",
+      "nodes": [
+        {"id": "d1", "label": "1 台目（壊れた）\n1010 が読めない", "row": 0, "col": 0},
+        {"id": "d2", "label": "2 台目\n0110", "row": 0, "col": 1},
+        {"id": "p", "label": "パリティ\n1100", "row": 0, "col": 2},
+        {"id": "r", "label": "桁ごとに 1 を偶数個に\n0と1→1　1と1→0\n1と0→1　0と0→0", "row": 1, "col": 1},
+        {"id": "back", "label": "戻した 1 台目\n1010", "row": 1, "col": 0, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "d2", "to": "r", "label": "0110"},
+        {"from": "p", "to": "r", "label": "1100"},
+        {"from": "r", "to": "back", "label": "埋めた桁"},
+        {"from": "d1", "to": "back", "label": "入れ替え", "style": "dashed"}
+      ]
+    }
+  ]
+}

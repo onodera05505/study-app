@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="184" viewBox="0 0 784.8 226" role="img">
+<title>上の段が前向きの計算、下の段がずれを手前へ伝え戻す流れです。中間層は後ろからの知らせを目当ての代わりにして重みを直します。</title>
+<rect x="0.5" y="0.5" width="783.8" height="225" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<polyline points="103,28 313.85,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="313.85,28 305.85,31.6 305.85,24.4" fill="#1f2937"/>
+<polyline points="409.85,28 613.7,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="613.7,28 605.7,31.6 605.7,24.4" fill="#1f2937"/>
+<polyline points="679.25,56 679.25,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="679.25,102 675.65,94 682.85,94" fill="#1f2937"/>
+<polyline points="613.7,130 435.1,130" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polygon points="435.1,130 443.1,126.4 443.1,133.6" fill="#1f2937"/>
+<rect x="7" y="0" width="96" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="55" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">入力の層</text>
+<text x="55" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">1</text>
+<rect x="313.85" y="0" width="96" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="361.85" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">中間層</text>
+<text x="361.85" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">0.5</text>
+<rect x="613.7" y="0" width="131.1" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="679.25" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">答えの層</text>
+<text x="679.25" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">1（目当ては 2）</text>
+<rect x="613.7" y="102" width="131.1" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="679.25" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">1 足りない</text>
+<text x="679.25" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">重み 2 を増やす</text>
+<rect x="288.6" y="102" width="146.5" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="361.85" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">知らせを受けて</text>
+<text x="361.85" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">重み 0.5 を増やす</text>
+<rect x="172.62" y="11" width="71.6" height="16" rx="3" fill="#ffffff"/>
+<text x="208.43" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">× 重み 0.5</text>
+<rect x="482.58" y="11" width="58.4" height="16" rx="3" fill="#ffffff"/>
+<text x="511.78" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">× 重み 2</text>
+<rect x="633.25" y="70" width="92" height="16" rx="3" fill="#ffffff"/>
+<text x="679.25" y="83.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">目当てと比べる</text>
+<rect x="439.1" y="113" width="170.6" height="16" rx="3" fill="#ffffff"/>
+<text x="524.4" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">中間の値も
+大きいほうがよい</text>
+</g>
+<text x="392.4" y="206" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">上の段が前向きの計算、下の段がずれを手前へ伝え戻す流れです。中間層は後ろからの知らせを目当ての代わりにして重みを直します。</text>
+</svg>

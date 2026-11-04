@@ -1,0 +1,47 @@
+{
+  "topic_id": 115,
+  "term": "E-R 図（データのつながりを図にする）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "本の通販を E-R 図にした例です。箱が管理する「もの」、線がつながりで、線には相手 1 つにいくつ対応するかを添えて読みます。",
+      "nodes": [
+        {
+          "id": "cu",
+          "label": "顧客\n氏名・住所",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "od",
+          "label": "注文\n注文日",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "bk",
+          "label": "本\n書名・価格",
+          "row": 0,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "cu",
+          "to": "od",
+          "label": "注文する（1 人に何件も）",
+          "arrow": "none"
+        },
+        {
+          "from": "od",
+          "to": "bk",
+          "label": "含まれる（1 件に何冊も）",
+          "arrow": "none"
+        }
+      ]
+    }
+  ]
+}

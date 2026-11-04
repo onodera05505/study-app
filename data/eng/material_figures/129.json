@@ -1,0 +1,55 @@
+{
+  "topic_id": 129,
+  "term": "関係データベースと NoSQL の違い（表で持つか、別の形で持つか）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### しくみ",
+      "caption": "元の機械は写しを待たずに「書けた」と返すので、写しへ届く前に読むと古い 20 が返ります。",
+      "actors": [
+        {
+          "id": "app",
+          "label": "アプリ"
+        },
+        {
+          "id": "main",
+          "label": "元の機械"
+        },
+        {
+          "id": "copy",
+          "label": "写しの機械"
+        }
+      ],
+      "steps": [
+        {
+          "from": "app",
+          "to": "main",
+          "label": "佐藤さんの年齢を 21 に書く"
+        },
+        {
+          "from": "main",
+          "to": "app",
+          "label": "写しを待たずに「書けた」と返す"
+        },
+        {
+          "from": "app",
+          "to": "copy",
+          "label": "佐藤さんの年齢を読む"
+        },
+        {
+          "from": "copy",
+          "to": "app",
+          "label": "20 を返す",
+          "note": "21 はまだ写しに届いていない"
+        },
+        {
+          "from": "main",
+          "to": "copy",
+          "label": "少し後に 21 を写す",
+          "note": "この後に読めば 21 が返る"
+        }
+      ]
+    }
+  ]
+}

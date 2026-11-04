@@ -1,0 +1,24 @@
+{
+  "topic_id": 102,
+  "term": "同じ出どころの決まりと CORS（ほかのサイトからの呼び出しを制限する）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### しくみ",
+      "caption": "通販サイトにログインしたまま悪いサイトを開いた場面です。ブラウザは頼みを送りますが、返事の印と出どころが合わないので読ませません。",
+      "actors": [
+        {"id": "js", "label": "悪いページの\nJavaScript"},
+        {"id": "br", "label": "ブラウザ"},
+        {"id": "api", "label": "通販サイトの\nAPI"}
+      ],
+      "steps": [
+        {"from": "js", "to": "br", "label": "注文履歴を頼む"},
+        {"from": "br", "to": "api", "label": "札（Cookie）を付けて送る", "note": "送ることは止めない"},
+        {"from": "api", "to": "br", "label": "注文履歴と印を返す", "note": "印＝Access-Control-Allow-Origin"},
+        {"from": "br", "to": "br", "label": "印と今のページの出どころを比べる"},
+        {"from": "br", "to": "js", "label": "合わないので読ませない", "note": "一致したときだけ読ませる"}
+      ]
+    }
+  ]
+}

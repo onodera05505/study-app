@@ -1,0 +1,96 @@
+{
+  "topic_id": 108,
+  "term": "コンテナ（アプリを動く環境ごと箱に詰める：Docker）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "Dockerfile からイメージを作り、そこから箱を 3 つ起こします。3 つの頼みは機械 1 台の係に届き、Windows 用の頼みは通じません。",
+      "nodes": [
+        {
+          "id": "df",
+          "label": "Dockerfile\n入れる物の設計図",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "img",
+          "label": "イメージ\n箱の型",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "c1",
+          "label": "コンテナ 1\nアプリ＋部品",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "c2",
+          "label": "コンテナ 2\nアプリ＋部品",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "c3",
+          "label": "コンテナ 3\nアプリ＋部品",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "win",
+          "label": "Windows 用\nアプリの箱",
+          "row": 2,
+          "col": 3
+        },
+        {
+          "id": "k",
+          "label": "Linux の機械 1 台の\nOS の中心部分（係）\n箱の間で共有する",
+          "row": 2,
+          "col": 1,
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "df",
+          "to": "img",
+          "label": "作る"
+        },
+        {
+          "from": "img",
+          "to": "c1"
+        },
+        {
+          "from": "img",
+          "to": "c2",
+          "label": "起こす"
+        },
+        {
+          "from": "img",
+          "to": "c3"
+        },
+        {
+          "from": "c1",
+          "to": "k"
+        },
+        {
+          "from": "c2",
+          "to": "k",
+          "label": "頼み"
+        },
+        {
+          "from": "c3",
+          "to": "k"
+        },
+        {
+          "from": "win",
+          "to": "k",
+          "label": "通じない",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

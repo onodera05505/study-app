@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="362" viewBox="0 0 640 362" role="img">
+<title>A が「残高 1,000円以上の口座」を 2 回読む間に B が書き込む例です。B が何をしたかで、A に見えるずれが 3 つに分かれます。</title>
+<rect x="0.5" y="0.5" width="639" height="361" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(94.4 20)">
+<text x="295.6" y="18" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">比べる所</text>
+<text x="83" y="30" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">ずれ</text>
+<text x="217.8" y="45.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">その間に B がしたこと</text>
+<text x="373.4" y="45.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">A に見えたこと</text>
+<text x="83" y="97.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">ダーティリード</text>
+<text x="83" y="163.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">ノンリピータブル</text>
+<text x="83" y="179.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">リード</text>
+<text x="83" y="245.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">ファントムリード</text>
+<rect x="140" y="56" width="155.6" height="74" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="217.8" y="81.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">X を 2,000円に変え</text>
+<text x="217.8" y="97.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">確定しないまま</text>
+<text x="217.8" y="113.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">後で取り消す</text>
+<rect x="295.6" y="56" width="155.6" height="74" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="373.4" y="81.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">未確定の 2,000円を読み</text>
+<text x="373.4" y="97.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">一度も確定しない値で</text>
+<text x="373.4" y="113.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">動いてしまう</text>
+<rect x="140" y="130" width="155.6" height="74" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="217.8" y="163.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">X を 2,000円に変え</text>
+<text x="217.8" y="179.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">確定する</text>
+<rect x="295.6" y="130" width="155.6" height="74" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="373.4" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">1 回目 X は 1,000円</text>
+<text x="373.4" y="171.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">2 回目 X は 2,000円</text>
+<text x="373.4" y="187.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">同じ行の値が変わる</text>
+<rect x="140" y="204" width="155.6" height="74" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="217.8" y="229.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">残高 1,000円の</text>
+<text x="217.8" y="245.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">口座 Z を足して</text>
+<text x="217.8" y="261.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">確定する</text>
+<rect x="295.6" y="204" width="155.6" height="74" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="373.4" y="229.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">1 回目 2 件</text>
+<text x="373.4" y="245.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">2 回目 3 件</text>
+<text x="373.4" y="261.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">当たる行の数が変わる</text>
+</g>
+<text x="320" y="326" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">A が「残高 1,000円以上の口座」を 2 回読む間に B が書き込む例です。B が何をしたかで、A に見えるずれ</text>
+<text x="320" y="342" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">が 3 つに分かれます。</text>
+</svg>

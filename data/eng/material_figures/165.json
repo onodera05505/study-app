@@ -1,0 +1,76 @@
+{
+  "topic_id": 165,
+  "term": "スクラム（短い区切りで作って振り返る進め方）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "1〜4 週のスプリントの中で 4 つの集まりをこの順に開き、終わると次の計画へ戻ります。レビューは物を、レトロスペクティブは進め方を確かめます。",
+      "nodes": [
+        {
+          "id": "plan",
+          "label": "計画\n一覧の上から\n今回やる分を選ぶ",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "daily",
+          "label": "デイリー（毎日 15 分）\n昨日・今日・\n困りごとを伝え合う",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "review",
+          "label": "スプリントレビュー\nできた物を見せて\n意見をもらう",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "retro",
+          "label": "レトロスペクティブ\n進め方を見直し\n次に変えることを決める",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "next",
+          "label": "次のスプリント",
+          "row": 1,
+          "col": 0,
+          "shape": "round"
+        }
+      ],
+      "edges": [
+        {
+          "from": "plan",
+          "to": "daily"
+        },
+        {
+          "from": "daily",
+          "to": "daily"
+        },
+        {
+          "from": "daily",
+          "to": "review",
+          "label": "区切りの終わり"
+        },
+        {
+          "from": "review",
+          "to": "retro",
+          "label": "物の確かめの後に"
+        },
+        {
+          "from": "retro",
+          "to": "next",
+          "label": "進め方を変えて"
+        },
+        {
+          "from": "next",
+          "to": "plan"
+        }
+      ]
+    }
+  ]
+}

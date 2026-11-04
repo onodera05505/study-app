@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="375" viewBox="0 0 663 388" role="img">
+<title>A さんの変更は push で共有の置き場に送り、プルリクエストで読んでもらってから本流に入ります。B さんの手元には pull するまで入りません。</title>
+<rect x="0.5" y="0.5" width="662" height="387" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<line x1="55.7" y1="34" x2="55.7" y2="304" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="311.5" y1="34" x2="311.5" y2="304" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="567.3" y1="34" x2="567.3" y2="304" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="111.4" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="55.7" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">A さんの手元</text>
+<rect x="256.5" y="0" width="110" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="311.5" y="11.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">共有の置き場</text>
+<text x="311.5" y="31.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">（リモート）</text>
+<rect x="511.6" y="0" width="111.4" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="567.3" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">B さんの手元</text>
+<polyline points="55.7,60 81.7,60 81.7,74 57.7,74" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="57.7,74 65.7,70.4 65.7,77.6" fill="#1f2937"/>
+<text x="89.7" y="68" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">1. 枝でコミット（まだ手元だけ）</text>
+<polyline points="58.7,102 308.5,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="308.5,102 300.5,105.6 300.5,98.4" fill="#1f2937"/>
+<text x="183.6" y="95" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. git push で枝を送る</text>
+<polyline points="58.7,142 308.5,142" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="308.5,142 300.5,145.6 300.5,138.4" fill="#1f2937"/>
+<text x="183.6" y="135" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. プルリクエスト（この枝を取り込んで）</text>
+<rect x="49.1" y="147" width="269" height="16" rx="3" fill="#ffffff"/>
+<text x="183.6" y="160.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">pull と違い、手元の操作ではなく人に出す頼み</text>
+<polyline points="564.3,198 314.5,198" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="314.5,198 322.5,194.4 322.5,201.6" fill="#1f2937"/>
+<text x="439.4" y="191" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 変更を読み、意見を付けて了承</text>
+<polyline points="311.5,230 337.5,230 337.5,244 313.5,244" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="313.5,244 321.5,240.4 321.5,247.6" fill="#1f2937"/>
+<text x="345.5" y="238" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. 本流にマージ</text>
+<polyline points="314.5,272 564.3,272" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="564.3,272 556.3,275.6 556.3,268.4" fill="#1f2937"/>
+<text x="439.4" y="265" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">6. git pull で本流を手元に取り込む</text>
+</g>
+<text x="331.5" y="352" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">A さんの変更は push で共有の置き場に送り、プルリクエストで読んでもらってから本流に入ります。B さんの手</text>
+<text x="331.5" y="368" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">元には pull するまで入りません。</text>
+</svg>
