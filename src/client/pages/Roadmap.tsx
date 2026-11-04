@@ -6,6 +6,7 @@ import { discardCurrentSession } from '../lib/discardCurrent'
 import { exam } from '../exam'
 import { roundCountOf, roundHeadingOf, tierLabelOf } from '../../shared/exam'
 import { StatusBadge, statusRowClass } from '../components/StatusBadge'
+import { TierBadge, TierText } from '../components/TierBadge'
 
 /** 回ごとの確認。exam は回の ID で、論点の round と同じ値 */
 type DayExam = { exam: string; examLabel: string; questions: number; attempts: number; bestScore: number | null }
@@ -206,7 +207,7 @@ export function Roadmap() {
   const visibleExtras = extras.filter(visible)
   const tierLabel = (u: Unit) => {
     const label = tierLabelOf(spec, u.tier)
-    return label ? <span className="rm-tier">{label}</span> : null
+    return label ? <TierBadge level={u.tier} label={label} /> : null
   }
 
   return (
@@ -245,14 +246,14 @@ export function Roadmap() {
           {TIERS.map((t) => {
             const on = tierSel.includes(t.level)
             return (
-              <label key={t.level}>
+              <label key={t.level} className={`rm-tier-toggle t-${t.level}${on ? ' on' : ''}`}>
                 <input
                   type="checkbox"
                   checked={on}
                   disabled={on && tierSel.length === 1}
                   onChange={() => toggleTier(t.level)}
-                />{' '}
-                {t.label}
+                />
+                <TierText label={t.label} />
               </label>
             )
           })}
@@ -376,14 +377,16 @@ export function Roadmap() {
                   const isHere = here?.id === u.id
                   return (
                     <li key={u.id}>
-                      <Link to={`/topics/${u.id}`} className={statusRowClass(st, isHere ? 'rm-here' : '')}>
+                      <Link to={`/topics/${u.id}`} className={statusRowClass(st, isHere ? 'rm-unit rm-here' : 'rm-unit')}>
                         <span className="rm-order">{u.sortOrder ?? '-'}</span>
                         <span className="grow">
                           <span className="term">{u.term}</span>
-                          <span className="meta">{u.middle}</span>
+                          <span className="rm-sub">
+                            <span className="meta">{u.middle}</span>
+                            {tierLabel(u)}
+                            {isHere && <span className="rm-here-label">ここから</span>}
+                          </span>
                         </span>
-                        {tierLabel(u)}
-                        {isHere && <span className="rm-here-label">ここから</span>}
                         <StatusBadge status={st} />
                       </Link>
                     </li>
@@ -407,13 +410,15 @@ export function Roadmap() {
               const st = u.status ?? 1
               return (
                 <li key={u.id}>
-                  <Link to={`/topics/${u.id}`} className={statusRowClass(st)}>
+                  <Link to={`/topics/${u.id}`} className={statusRowClass(st, 'rm-unit')}>
                     <span className="rm-order">＋</span>
                     <span className="grow">
                       <span className="term">{u.term}</span>
-                      <span className="meta">{u.middle}</span>
+                      <span className="rm-sub">
+                        <span className="meta">{u.middle}</span>
+                        {tierLabel(u)}
+                      </span>
                     </span>
-                    {tierLabel(u)}
                     <StatusBadge status={st} />
                   </Link>
                 </li>

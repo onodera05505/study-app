@@ -10,6 +10,7 @@ import { Figure } from '../components/Figure'
 import { Markdown } from '../components/Markdown'
 import { STATUS_LABEL, api, setLastTopic, invalidateCached } from '../lib/api'
 import { formatChoice } from '../lib/choice'
+import { TierBadge } from '../components/TierBadge'
 
 type Detail = {
   topic: {
@@ -150,7 +151,7 @@ export function TopicDetail() {
       {/* @implements REQ-284, REQ-285 */}
       {exam.roadmap && tierLabelOf(exam.roadmapSpec, t.tier) && (
         <p className="rm-tier-topic">
-          <span className="rm-tier">{tierLabelOf(exam.roadmapSpec, t.tier)}</span>
+          <TierBadge level={t.tier} label={tierLabelOf(exam.roadmapSpec, t.tier)!} />
         </p>
       )}
       <p className="lead">
