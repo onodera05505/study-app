@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="377" viewBox="0 0 686.2 404" role="img">
+<title>プロセス A の 2 つのスレッドは同じメモリの区画を読み書きします。プロセス B は区画が分かれ、A の中身に触れません。</title>
+<rect x="0.5" y="0.5" width="685.2" height="403" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<polyline points="55,76 55,99 232.55,99 232.55,122" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="232.55,122 228.95,114 236.15,114" fill="#1f2937"/>
+<polygon points="55,76 58.6,84 51.4,84" fill="#1f2937"/>
+<polyline points="55,244 55,221 232.55,221 232.55,198" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="232.55,198 236.15,206 228.95,206" fill="#1f2937"/>
+<polygon points="55,244 51.4,236 58.6,236" fill="#1f2937"/>
+<polyline points="291.1,160 355.1,160" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polyline points="543.2,160 472.2,160" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="472.2,160 480.2,156.4 480.2,163.6" fill="#1f2937"/>
+<polygon points="543.2,160 535.2,163.6 535.2,156.4" fill="#1f2937"/>
+<rect x="7" y="0" width="96" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="55" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">プロセス A</text>
+<text x="55" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">スレッド 1</text>
+<text x="55" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">重い処理</text>
+<rect x="7" y="244" width="96" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="55" y="266.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">プロセス A</text>
+<text x="55" y="286.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">スレッド 2</text>
+<text x="55" y="306.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">画面の操作</text>
+<rect x="174" y="122" width="117.1" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="232.55" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">プロセス A の</text>
+<text x="232.55" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">メモリの区画</text>
+<text x="232.55" y="184.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">2 つで共有</text>
+<rect x="355.1" y="132" width="117.1" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="413.65" y="154.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">プロセス B の</text>
+<text x="413.65" y="174.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">メモリの区画</text>
+<rect x="543.2" y="132" width="96" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="591.2" y="154.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">プロセス B</text>
+<text x="591.2" y="174.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">スレッド 1</text>
+<rect x="109.78" y="85" width="68" height="16" rx="3" fill="#ffffff"/>
+<text x="143.78" y="98.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">読む・書く</text>
+<rect x="109.78" y="207" width="68" height="16" rx="3" fill="#ffffff"/>
+<text x="143.78" y="220.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">読む・書く</text>
+<rect x="295.1" y="143" width="56" height="16" rx="3" fill="#ffffff"/>
+<text x="323.1" y="156.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">触れない</text>
+</g>
+<text x="343.1" y="368" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">プロセス A の 2 つのスレッドは同じメモリの区画を読み書きします。プロセス B は区画が分かれ、A の中身に触れ</text>
+<text x="343.1" y="384" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ません。</text>
+</svg>

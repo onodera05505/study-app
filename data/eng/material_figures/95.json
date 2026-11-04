@@ -1,0 +1,27 @@
+{
+  "topic_id": 95,
+  "term": "ブラウザが画面を描く仕組み（HTML・CSS・JavaScript）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "HTML を受け取ってから画面に描くまでの段です。JavaScript が部品の木を書き換えると、そこから先をやり直して描き直します。",
+      "nodes": [
+        {"id": "html", "label": "HTML を\n上から読む", "row": 0, "col": 0},
+        {"id": "tree", "label": "部品の木を組む\nh1・p などのタグ", "row": 0, "col": 1},
+        {"id": "fetch", "label": "CSS・JavaScript・\n画像を追加の\nリクエストで取る", "row": 0, "col": 2},
+        {"id": "css", "label": "CSS を部品に当て\n置き場所を計算", "row": 1, "col": 2},
+        {"id": "draw", "label": "画面に描く\n（レンダリング）", "row": 1, "col": 1, "emphasis": true},
+        {"id": "js", "label": "JavaScript が\n部品を足す・\n書き換える", "row": 1, "col": 0}
+      ],
+      "edges": [
+        {"from": "html", "to": "tree"},
+        {"from": "tree", "to": "fetch"},
+        {"from": "fetch", "to": "css"},
+        {"from": "css", "to": "draw"},
+        {"from": "js", "to": "tree", "label": "ボタンを押したときなど", "style": "dashed"}
+      ]
+    }
+  ]
+}

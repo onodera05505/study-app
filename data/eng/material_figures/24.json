@@ -1,0 +1,29 @@
+{
+  "topic_id": 24,
+  "term": "OS の役割（CPU・メモリ・機器をアプリに分け与える）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "アプリは資源を直接触らず OS に頼みます。OS が CPU の時間・メモリの区画・ファイルと機器を配るので、同時に動いても取り合いません。",
+      "nodes": [
+        {"id": "a", "label": "アプリ A", "row": 0, "col": 0},
+        {"id": "b", "label": "アプリ B", "row": 0, "col": 1},
+        {"id": "c", "label": "アプリ C", "row": 0, "col": 2},
+        {"id": "os", "label": "OS\n頼みを受けて配る", "row": 1, "col": 1, "emphasis": true},
+        {"id": "cpu", "label": "CPU の時間\n順番を細かく\n切り替える", "row": 2, "col": 0},
+        {"id": "mem", "label": "メモリ\nアプリごとに\n区画を分ける", "row": 2, "col": 1},
+        {"id": "dev", "label": "ファイル・機器\nキーボード・画面\nプリンタ", "row": 2, "col": 2}
+      ],
+      "edges": [
+        {"from": "a", "to": "os", "label": "頼む"},
+        {"from": "b", "to": "os", "label": "頼む"},
+        {"from": "c", "to": "os", "label": "頼む"},
+        {"from": "os", "to": "cpu"},
+        {"from": "os", "to": "mem"},
+        {"from": "os", "to": "dev"}
+      ]
+    }
+  ]
+}

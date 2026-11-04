@@ -1,0 +1,27 @@
+{
+  "topic_id": 27,
+  "term": "パス（絶対パス・相対パス）と今いる場所",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "docs にいるとき、相対パス ../photo/cat.png は「..」で a へ上がってから下ります。絶対パスは / から /home/a/photo/cat.png と書きます。",
+      "nodes": [
+        {"id": "root", "label": "/\nルート", "row": 0, "col": 0},
+        {"id": "home", "label": "home", "row": 0, "col": 1},
+        {"id": "a", "label": "a\n/home/a", "row": 0, "col": 2},
+        {"id": "docs", "label": "docs\n今いる場所", "row": 1, "col": 2, "emphasis": true},
+        {"id": "photo", "label": "photo", "row": 0, "col": 3},
+        {"id": "cat", "label": "cat.png\n/home/a/photo/cat.png", "row": 1, "col": 3, "shape": "round", "emphasis": true}
+      ],
+      "edges": [
+        {"from": "root", "to": "home", "arrow": "none"},
+        {"from": "home", "to": "a", "arrow": "none"},
+        {"from": "docs", "to": "a", "label": "1. .. で上へ"},
+        {"from": "a", "to": "photo", "label": "2. photo へ"},
+        {"from": "photo", "to": "cat", "label": "3. cat.png"}
+      ]
+    }
+  ]
+}

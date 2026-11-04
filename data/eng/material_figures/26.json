@@ -1,0 +1,27 @@
+{
+  "topic_id": 26,
+  "term": "ファイルとディレクトリ（木の形の置き場）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "ルートディレクトリから枝分かれする木です。同じ名前のメモ.txt でも、仕事と家に分けて置けば別の物になります。",
+      "nodes": [
+        {"id": "root", "label": "/\nルートディレクトリ", "row": 0, "col": 1},
+        {"id": "work", "label": "仕事\nディレクトリ", "row": 1, "col": 0},
+        {"id": "home", "label": "家\nディレクトリ", "row": 1, "col": 2},
+        {"id": "wmemo", "label": "メモ.txt\nファイル", "row": 2, "col": 0, "shape": "round", "emphasis": true},
+        {"id": "doc", "label": "資料\nディレクトリ", "row": 2, "col": 1},
+        {"id": "hmemo", "label": "メモ.txt\nファイル", "row": 2, "col": 2, "shape": "round", "emphasis": true}
+      ],
+      "edges": [
+        {"from": "root", "to": "work"},
+        {"from": "root", "to": "home"},
+        {"from": "work", "to": "wmemo"},
+        {"from": "work", "to": "doc"},
+        {"from": "home", "to": "hmemo"}
+      ]
+    }
+  ]
+}

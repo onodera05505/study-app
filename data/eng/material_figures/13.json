@@ -1,0 +1,26 @@
+{
+  "topic_id": 13,
+  "term": "ビットとバイト（情報の最小単位と容量の数え方）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "容量はバイトを 1,000 倍ずつ上の段へ数えます。通信の速さはビットで数えるので、8 で割るとバイトに直せます。",
+      "nodes": [
+        {"id": "bit", "label": "1 ビット\n0 か 1 の\n1 桁", "row": 0, "col": 0},
+        {"id": "byte", "label": "1 バイト（B）\n8 ビット\n256 通り", "row": 0, "col": 1, "emphasis": true},
+        {"id": "kb", "label": "1KB\n1,000B", "row": 0, "col": 2},
+        {"id": "mb", "label": "1MB は 1,000KB\n1GB は 1,000MB", "row": 0, "col": 3},
+        {"id": "bps", "label": "通信の速さ\n例えば 80Mbps\n1 秒に 8,000 万ビット", "row": 1, "col": 0},
+        {"id": "mbs", "label": "1 秒に 10MB\n送れる", "row": 1, "col": 1}
+      ],
+      "edges": [
+        {"from": "bit", "to": "byte", "label": "8 個まとめる"},
+        {"from": "byte", "to": "kb", "label": "×1,000"},
+        {"from": "kb", "to": "mb", "label": "×1,000"},
+        {"from": "bps", "to": "mbs", "label": "8 で割る"}
+      ]
+    }
+  ]
+}

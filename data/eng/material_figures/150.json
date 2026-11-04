@@ -1,0 +1,26 @@
+{
+  "topic_id": 150,
+  "term": "SQL インジェクション（入力で SQL を書き換える攻撃）とプリペアドステートメント",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "上は入力を文につなぐので、入力の ' が文の ' を閉じて条件が常に真になります。下は文の形を先に渡すので、入力は値のままです。",
+      "nodes": [
+        {"id": "in1", "label": "名前の欄の入力\n' OR '1'='1", "row": 0, "col": 0},
+        {"id": "cat", "label": "文につなぐ\n氏名 = '〈入力〉'", "row": 0, "col": 1},
+        {"id": "bad", "label": "氏名 = '' OR '1'='1'\n条件が常に真\n全員分が出る", "row": 0, "col": 2, "emphasis": true},
+        {"id": "form", "label": "文の形を先に渡す\n氏名 = ?", "row": 1, "col": 0},
+        {"id": "bind", "label": "値を後から結び付ける\n' OR '1'='1 も値のまま", "row": 1, "col": 1},
+        {"id": "ok", "label": "文の形は変わらない\nその綴りの名前を\n探すだけ", "row": 1, "col": 2, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "in1", "to": "cat"},
+        {"from": "cat", "to": "bad", "label": "' が文の ' を閉じる"},
+        {"from": "form", "to": "bind", "label": "? の所に"},
+        {"from": "bind", "to": "ok"}
+      ]
+    }
+  ]
+}

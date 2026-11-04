@@ -1,0 +1,27 @@
+{
+  "topic_id": 91,
+  "term": "URL とドメイン名（Web の住所の読み方）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "https://www.example.com/news/top.html を方式・サーバ・場所の 3 つに分けた図です。サーバの部分の右側がドメイン名です。",
+      "nodes": [
+        {"id": "url", "label": "https://www.example.com/news/top.html", "row": 0, "col": 1},
+        {"id": "sch", "label": "https\n方式\n暗号にして送る", "row": 1, "col": 0},
+        {"id": "srv", "label": "www.example.com\nどのサーバか", "row": 1, "col": 1},
+        {"id": "path", "label": "/news/top.html\nサーバの中の場所\n/ で区切った道筋", "row": 1, "col": 2},
+        {"id": "www", "label": "www\nその中の 1 台の名前", "row": 2, "col": 0},
+        {"id": "dom", "label": "example.com\nドメイン名\n右の com ほど大きな区分", "row": 2, "col": 1, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "url", "to": "sch", "arrow": "none"},
+        {"from": "url", "to": "srv", "arrow": "none"},
+        {"from": "url", "to": "path", "arrow": "none"},
+        {"from": "srv", "to": "www", "arrow": "none"},
+        {"from": "srv", "to": "dom", "arrow": "none"}
+      ]
+    }
+  ]
+}

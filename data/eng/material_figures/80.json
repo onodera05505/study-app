@@ -1,0 +1,29 @@
+{
+  "topic_id": 80,
+  "term": "ネットワークとインターネット（LAN と WAN）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "家や事務所の中の LAN が、ルータを通じてインターネットにつながります。東京と大阪の事務所は、通信会社の回線を借りた WAN で結びます。",
+      "nodes": [
+        {"id": "home", "label": "家の LAN\nPC・スマホ・Wi-Fi", "row": 0, "col": 0},
+        {"id": "hr", "label": "ルータ", "row": 0, "col": 1},
+        {"id": "net", "label": "インターネット\nネットワークの網", "row": 1, "col": 2, "shape": "cloud", "emphasis": true},
+        {"id": "tk", "label": "東京の事務所\nの LAN", "row": 1, "col": 0},
+        {"id": "tr", "label": "ルータ", "row": 1, "col": 1},
+        {"id": "os", "label": "大阪の事務所\nの LAN", "row": 2, "col": 0},
+        {"id": "or", "label": "ルータ", "row": 2, "col": 1}
+      ],
+      "edges": [
+        {"from": "home", "to": "hr", "arrow": "both"},
+        {"from": "hr", "to": "net", "arrow": "both"},
+        {"from": "tk", "to": "tr", "arrow": "both"},
+        {"from": "tr", "to": "net", "arrow": "both"},
+        {"from": "os", "to": "or", "arrow": "both"},
+        {"from": "tr", "to": "or", "label": "WAN（通信会社の回線）", "arrow": "both"}
+      ]
+    }
+  ]
+}

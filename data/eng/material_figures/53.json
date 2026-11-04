@@ -1,0 +1,25 @@
+{
+  "topic_id": 53,
+  "term": "関数（処理に名前を付けて呼び出す：引数と戻り値）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "呼ぶときの引数が値段に入り、中身を実行して戻り値を返します。値を変えて何度呼んでも、中身は 1 か所だけです。",
+      "nodes": [
+        {"id": "c1", "label": "税込み（100）\nと呼ぶ", "row": 0, "col": 0},
+        {"id": "c2", "label": "税込み（200）\nと呼ぶ", "row": 2, "col": 0},
+        {"id": "fn", "label": "関数 税込みの中身\n結果 ← 値段 × 1.1\n結果 を返す", "row": 1, "col": 1, "emphasis": true},
+        {"id": "r1", "label": "110 が返る", "row": 0, "col": 2, "shape": "round"},
+        {"id": "r2", "label": "220 が返る", "row": 2, "col": 2, "shape": "round"}
+      ],
+      "edges": [
+        {"from": "c1", "to": "fn", "label": "引数 値段 ← 100"},
+        {"from": "c2", "to": "fn", "label": "引数 値段 ← 200"},
+        {"from": "fn", "to": "r1", "label": "戻り値"},
+        {"from": "fn", "to": "r2", "label": "戻り値"}
+      ]
+    }
+  ]
+}

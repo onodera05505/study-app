@@ -1,0 +1,27 @@
+{
+  "topic_id": 84,
+  "term": "IP アドレス（ネットワーク上の住所）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "IPv4 は 8 ビットずつの 4 つの数を点で区切り、前半でネットワーク、後半でその中の機器を指します。IPv6 は 128 ビットを 16 進数で書きます。",
+      "nodes": [
+        {"id": "b1", "label": "192\n8 ビット\n0〜255 のどれか", "row": 0, "col": 0},
+        {"id": "b2", "label": "0\n8 ビット\n0〜255 のどれか", "row": 0, "col": 1},
+        {"id": "b3", "label": "2\n8 ビット\n0〜255 のどれか", "row": 0, "col": 2},
+        {"id": "b4", "label": "10\n8 ビット\n0〜255 のどれか", "row": 0, "col": 3},
+        {"id": "net", "label": "前半\nどのネットワークか", "row": 1, "col": 1, "emphasis": true},
+        {"id": "host", "label": "後半\nその中のどの機器か", "row": 1, "col": 3},
+        {"id": "v6", "label": "IPv6 の形: 2001:db8::1\n128 ビットを 16 進数で書き\n0 だけの組を :: と縮める", "row": 2, "col": 2}
+      ],
+      "edges": [
+        {"from": "b1", "to": "net", "arrow": "none"},
+        {"from": "b2", "to": "net", "arrow": "none"},
+        {"from": "b3", "to": "net", "arrow": "none"},
+        {"from": "b4", "to": "host", "arrow": "none"}
+      ]
+    }
+  ]
+}

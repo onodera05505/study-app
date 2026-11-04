@@ -1,0 +1,25 @@
+{
+  "topic_id": 179,
+  "term": "Git の基本（リポジトリとコミット：変更を区切って記録する）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "同時にいじった 2 つの変更を、git add で意味のまとまりごとに選び、git commit で 1 回分ずつ記録します。記録 1 だけを後で取り消せます。",
+      "nodes": [
+        {"id": "work", "label": "作業中の変更 2 つ\nログイン処理のバグ直し\n画面の文言", "row": 0, "col": 0},
+        {"id": "add1", "label": "git add\nログイン処理の\nファイルだけ選ぶ", "row": 0, "col": 1},
+        {"id": "c1", "label": "git commit\n記録 1\nバグ直し", "row": 0, "col": 2, "emphasis": true},
+        {"id": "add2", "label": "git add\n文言のファイル\nを選ぶ", "row": 1, "col": 1},
+        {"id": "c2", "label": "git commit\n記録 2\n文言の変更", "row": 1, "col": 2}
+      ],
+      "edges": [
+        {"from": "work", "to": "add1", "label": "先に"},
+        {"from": "add1", "to": "c1", "label": "説明を付けて"},
+        {"from": "work", "to": "add2", "label": "続けて"},
+        {"from": "add2", "to": "c2", "label": "説明を付けて"}
+      ]
+    }
+  ]
+}
