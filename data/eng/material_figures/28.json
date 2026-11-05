@@ -15,6 +15,22 @@
         ["実行する\nプログラムとして\n動かせる", "中へ手を伸ばす\ndocs/memo.txt を\n開ける"]
       ],
       "emphasis": [[2, 1]]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "ls -l の 1 行の頭「-rw-r--r--」を 4 つに区切った図です。上の段が今の権限で、下の段は chmod u+x の後の持ち主の 3 文字です。",
+      "nodes": [
+        {"id": "t", "label": "-\n種類の印\n- はファイル\nd はディレクトリ", "row": 0, "col": 0},
+        {"id": "u", "label": "rw-\n持ち主 u\n読む・書く", "row": 0, "col": 1},
+        {"id": "g", "label": "r--\nグループ g\n読むだけ", "row": 0, "col": 2},
+        {"id": "o", "label": "r--\nその他 o\n読むだけ", "row": 0, "col": 3},
+        {"id": "ux", "label": "rwx\n持ち主 u\n実行もできる", "row": 1, "col": 1, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "u", "to": "ux", "label": "chmod u+x"}
+      ]
     }
   ]
 }

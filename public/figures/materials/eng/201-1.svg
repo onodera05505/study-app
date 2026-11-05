@@ -1,31 +1,54 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="288" viewBox="0 0 640 288" role="img">
-<title>A が「残高 1,000円以上」で 2 回読む間に、B の書き込みが待たされるかを比べます。違いは札を読んだ行に置くか、条件に当たる場所全体に置くかです。</title>
-<rect x="0.5" y="0.5" width="639" height="287" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(106.4 20)">
-<text x="275.2" y="18" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">B がしたいこと</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="362" viewBox="0 0 640 362" role="img">
+<title>A が「残高 1,000円以上」の口座を 2 回読む間に B と出会う 3 つの場面を、段階ごとに比べます。下の段ほど待つ場面が 1 つずつ増えます。どこでも待たない READ UNCOMMITTED は図に入れていません。</title>
+<rect x="0.5" y="0.5" width="639" height="361" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(28.6 20)">
+<text x="353" y="18" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">場面</text>
 <text x="74.6" y="30" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">A の段階</text>
-<text x="199.2" y="45.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">X を書き換える</text>
-<text x="351.2" y="45.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">新しい口座 Z を足す</text>
-<text x="74.6" y="89.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">REPEATABLE</text>
-<text x="74.6" y="105.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">READ</text>
-<text x="74.6" y="171.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">SERIALIZABLE</text>
-<rect x="123.2" y="56" width="152" height="74" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
-<text x="199.2" y="81.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">待たされる</text>
-<text x="199.2" y="97.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">読んだ X・Y の 2 行に</text>
-<text x="199.2" y="113.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">札があるから</text>
-<rect x="275.2" y="56" width="152" height="74" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
-<text x="351.2" y="81.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">入れる</text>
-<text x="351.2" y="97.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">まだ無い Z には</text>
-<text x="351.2" y="113.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">札が無いから</text>
-<rect x="123.2" y="130" width="152" height="74" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
-<text x="199.2" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">待たされる</text>
-<text x="199.2" y="171.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">読んだ行にも</text>
-<text x="199.2" y="187.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">札があるから</text>
-<rect x="275.2" y="130" width="152" height="74" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="351.2" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">待たされる</text>
-<text x="351.2" y="171.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">「1,000円以上」の</text>
-<text x="351.2" y="187.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">場所全体に札があるから</text>
+<text x="199.8" y="37.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">B が書き込み中の</text>
+<text x="199.8" y="53.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">X を A が読む</text>
+<text x="353" y="37.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">A が読んだ X を</text>
+<text x="353" y="53.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">B が書き換える</text>
+<text x="506.2" y="37.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">B が新しい</text>
+<text x="506.2" y="53.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">口座 Z を足す</text>
+<text x="74.6" y="89.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">READ</text>
+<text x="74.6" y="105.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">COMMITTED</text>
+<text x="74.6" y="163.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">REPEATABLE</text>
+<text x="74.6" y="179.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">READ</text>
+<text x="74.6" y="245.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">SERIALIZABLE</text>
+<rect x="123.2" y="56" width="153.2" height="74" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="199.8" y="81.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">A が待つ</text>
+<text x="199.8" y="97.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">B の札は確定まで</text>
+<text x="199.8" y="113.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">外れないから</text>
+<rect x="276.4" y="56" width="153.2" height="74" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="353" y="81.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">B が書ける</text>
+<text x="353" y="97.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">A は読み終えると</text>
+<text x="353" y="113.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">すぐ札を外すから</text>
+<rect x="429.6" y="56" width="153.2" height="74" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="506.2" y="81.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">B が足せる</text>
+<text x="506.2" y="97.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">Z には札が</text>
+<text x="506.2" y="113.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">無いから</text>
+<rect x="123.2" y="130" width="153.2" height="74" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="199.8" y="163.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">A が待つ</text>
+<text x="199.8" y="179.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">上と同じ</text>
+<rect x="276.4" y="130" width="153.2" height="74" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="353" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">B が待つ</text>
+<text x="353" y="171.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">読んだ行の札を</text>
+<text x="353" y="187.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">A が終わりまで持つから</text>
+<rect x="429.6" y="130" width="153.2" height="74" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="506.2" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">B が足せる</text>
+<text x="506.2" y="171.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">まだ無い Z には</text>
+<text x="506.2" y="187.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">札が無いから</text>
+<rect x="123.2" y="204" width="153.2" height="74" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="199.8" y="237.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">A が待つ</text>
+<text x="199.8" y="253.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">上と同じ</text>
+<rect x="276.4" y="204" width="153.2" height="74" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="353" y="237.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">B が待つ</text>
+<text x="353" y="253.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">上と同じ</text>
+<rect x="429.6" y="204" width="153.2" height="74" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="506.2" y="229.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">B が待つ</text>
+<text x="506.2" y="245.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">「1,000円以上」の</text>
+<text x="506.2" y="261.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">場所全体に札があるから</text>
 </g>
-<text x="320" y="252" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">A が「残高 1,000円以上」で 2 回読む間に、B の書き込みが待たされるかを比べます。違いは札を読んだ行</text>
-<text x="320" y="268" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">に置くか、条件に当たる場所全体に置くかです。</text>
+<text x="320" y="326" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">A が「残高 1,000円以上」の口座を 2 回読む間に B と出会う 3 つの場面を、段階ごとに比べます。下の段</text>
+<text x="320" y="342" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ほど待つ場面が 1 つずつ増えます。どこでも待たない READ UNCOMMITTED は図に入れていません。</text>
 </svg>
