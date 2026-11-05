@@ -224,15 +224,25 @@ describe('新しい版の帯（UC-016）', () => {
     const before = versionCalls()
     world.stamp = B
 
-    // 間隔が過ぎる前は取り直さない
-    await elapse(versionMod.CHECK_INTERVAL_MS - 1)
-    expect(versionCalls(), '間隔が過ぎる前に取り直している').toBe(before)
-    expect(text()).not.toContain(NOTICE)
-
-    // 間隔が過ぎたら取り直して見比べる
-    await elapse(1)
+    await elapse(versionMod.CHECK_INTERVAL_MS)
     expect(versionCalls(), '間隔が過ぎても版の印を取り直していない').toBeGreaterThan(before)
     expect(text(), '取り直した印を覚えている印と見比べていない').toContain(NOTICE)
+  })
+
+  // 間隔の長さは実装の定数を読む。取り直しは version.json を取りに行った回数で観測する
+  // @covers REQ-230#interval-length
+  it('画面を開いてから決められた長さの直前までは取り直さず、その長さちょうどで取り直す', async () => {
+    vi.useFakeTimers()
+    const world: World = { stamp: A, fields: { fields: [] } }
+    const { versionCalls } = await start(world)
+    await open('/')
+    const opened = versionCalls()
+
+    await elapse(versionMod.CHECK_INTERVAL_MS - 1)
+    expect(versionCalls(), '決められた長さの直前に取り直している').toBe(opened)
+
+    await elapse(1)
+    expect(versionCalls(), '決められた長さちょうどで取り直していない').toBeGreaterThan(opened)
   })
 
   // @covers REQ-234#notice-persists-across-navigation

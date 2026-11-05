@@ -99,12 +99,4 @@ describe('新しい版の検知（UC-016）', () => {
     expect(await v.checkForUpdate()).toBe(true)
     expect(reload).not.toHaveBeenCalled()
   })
-
-  // 仕様外: 間隔の値は機械可読なのでコードが正本（R-102）で、利用者から観測できない。
-  //         間隔ごとに取り直して見比べること自体は REQ-230#interval-recheck の観測。
-  it('見比べる間隔は 5 分', async () => {
-    stubFetch([{ build: 'abc1234', at: '2026-09-28T00:00:00Z' }])
-    const v = await load()
-    expect(v.CHECK_INTERVAL_MS).toBe(5 * 60 * 1000)
-  })
 })

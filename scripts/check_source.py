@@ -31,6 +31,7 @@ EMPTY_LIST_RE = re.compile(r"useState(?:<[^\n]*?>)?\(\s*\[\s*\]\s*\)")
 ALLOW_MARK = "空で開始可"
 
 
+# @implements BR-039
 def check_iterations(auth: Path, errors: list[str]) -> None:
     if not auth.exists():
         errors.append(f"O5: {auth} が無い（改名したらこの検査も直す）")
