@@ -2,7 +2,7 @@
  "exam": "eng-c29",
  "source": "roadmap 確認問題（自作）",
  "normalized": true,
- "question_count": 14,
+ "question_count": 16,
  "questions": [
   {
    "number": 1,
@@ -255,6 +255,42 @@
    "source_qid": "t148-2",
    "tests_goal": 6,
    "topic_id": 148
+  },
+  {
+   "number": 15,
+   "page": null,
+   "text": "OAuth と JWT の受け持ちの違いを説明したものはどれか。",
+   "choices": {
+    "ア": "OAuth は札に何を載せるかの形で、JWT は権限を渡す流れを定めた決まりである",
+    "イ": "OAuth は本人を確かめる仕組みで、JWT は相手をサーバ側の記録で覚える形である",
+    "ウ": "OAuth も JWT も札に載せる形の名前で、違いは中身を暗号にして隠すかどうかである",
+    "エ": "OAuth は権限を渡す流れを定めた決まりで、JWT はその札に何を載せるかの形である"
+   },
+   "has_figure": false,
+   "figure_description": null,
+   "confidence": "high",
+   "notes": null,
+   "source_qid": "t202-1",
+   "tests_goal": 6,
+   "topic_id": 202
+  },
+  {
+   "number": 16,
+   "page": null,
+   "text": "ある Web のサービスは、ログインした人に JWT の札を渡している。A さんは手元の札の中身を読み、権限の欄を「読むだけ」から「書き換えもできる」に直して、末尾の印は元のまま残して送った。サーバはこの札を受け付けなかった。サーバが書き換えに気づけた理由として正しいものはどれか。",
+   "choices": {
+    "ア": "印は札に書いた利用者の番号とサーバだけが知る値から計算するので、届いた札で計算し直すと、残した印と食い違うから",
+    "イ": "サーバは出した札の中身を手元に記録しておくので、届いた札の中身をその記録と比べると、直した権限の欄と食い違うから",
+    "ウ": "印は札に書いた中身とサーバだけが知る値から計算するので、届いた札で計算し直すと、残した印と食い違うから",
+    "エ": "印をサーバだけが知る値で開くと元の中身が出てくるので、届いた札の中身と比べると、直した権限の欄と食い違うから"
+   },
+   "has_figure": false,
+   "figure_description": null,
+   "confidence": "high",
+   "notes": null,
+   "source_qid": "t202-2",
+   "tests_goal": 6,
+   "topic_id": 202
   }
  ]
 }

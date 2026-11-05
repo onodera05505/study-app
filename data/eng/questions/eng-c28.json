@@ -2,7 +2,7 @@
  "exam": "eng-c28",
  "source": "roadmap 確認問題（自作）",
  "normalized": true,
- "question_count": 12,
+ "question_count": 10,
  "questions": [
   {
    "number": 1,
@@ -183,42 +183,6 @@
    "source_qid": "t141-2",
    "tests_goal": 6,
    "topic_id": 141
-  },
-  {
-   "number": 11,
-   "page": null,
-   "text": "OAuth と JWT の受け持ちの違いを説明したものはどれか。",
-   "choices": {
-    "ア": "OAuth は札に何を載せるかの形で、JWT は権限を渡す流れを定めた決まりである",
-    "イ": "OAuth は本人を確かめる仕組みで、JWT は相手をサーバ側の記録で覚える形である",
-    "ウ": "OAuth も JWT も札に載せる形の名前で、違いは中身を暗号にして隠すかどうかである",
-    "エ": "OAuth は権限を渡す流れを定めた決まりで、JWT はその札に何を載せるかの形である"
-   },
-   "has_figure": false,
-   "figure_description": null,
-   "confidence": "high",
-   "notes": null,
-   "source_qid": "t202-1",
-   "tests_goal": 6,
-   "topic_id": 202
-  },
-  {
-   "number": 12,
-   "page": null,
-   "text": "ある Web のサービスが、ログインした人に JWT の札を渡し、以後のリクエストに添えさせる。札の作り方と受け取り方として適切なものはどれか。",
-   "choices": {
-    "ア": "中身に利用者の番号と期限を書き、届くたびに中身と秘密の値から印を計算し直し、末尾の印と比べて合えば通す",
-    "イ": "中身に利用者の番号とパスワードを書き、届くたびに中身と秘密の値から印を計算し直し、末尾の印と比べて合えば通す",
-    "ウ": "中身に利用者の番号と期限を書き、届くたびに末尾に印が付いているかを確かめ、付いていれば中身は計算せずに通す",
-    "エ": "中身に利用者の番号と期限を書き、印は利用者の番号だけから計算し、届くたびに番号から計算し直して合えば通す"
-   },
-   "has_figure": false,
-   "figure_description": null,
-   "confidence": "high",
-   "notes": null,
-   "source_qid": "t202-2",
-   "tests_goal": 6,
-   "topic_id": 202
   }
  ]
 }
