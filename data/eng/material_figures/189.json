@@ -1,0 +1,29 @@
+{
+  "topic_id": 189,
+  "term": "プロジェクトと WBS（目的と期限のある仕事を作業に分解する）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "一番上に作る物を置き、その部品へ、さらに 1 人が数日で終えられる作業へと割ります。一番下の作業ごとに手間と担当を決めます。",
+      "nodes": [
+        {"id": "top", "label": "会員登録の機能\n作る物", "row": 0, "col": 1, "emphasis": true},
+        {"id": "ui", "label": "画面", "row": 1, "col": 0},
+        {"id": "db", "label": "データベース", "row": 1, "col": 1},
+        {"id": "ts", "label": "テスト", "row": 1, "col": 2},
+        {"id": "ui1", "label": "入力の画面を\n作る", "row": 2, "col": 0},
+        {"id": "db1", "label": "会員の表を\n作る", "row": 2, "col": 1},
+        {"id": "ts1", "label": "登録できるかを\n確かめる", "row": 2, "col": 2}
+      ],
+      "edges": [
+        {"from": "top", "to": "ui", "arrow": "none"},
+        {"from": "top", "to": "db", "arrow": "none"},
+        {"from": "top", "to": "ts", "arrow": "none"},
+        {"from": "ui", "to": "ui1", "arrow": "none"},
+        {"from": "db", "to": "db1", "arrow": "none"},
+        {"from": "ts", "to": "ts1", "arrow": "none"}
+      ]
+    }
+  ]
+}

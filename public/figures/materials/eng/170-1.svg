@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="282" viewBox="0 0 640 282" role="img">
+<title>点数から合否を返す関数をテスト駆動開発で作る輪です。テストを先に書いて失敗を見て、通るだけのコードを書き、整えてから次のテストへ進みます。</title>
+<rect x="0.5" y="0.5" width="639" height="281" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(82.75 20)">
+<polyline points="174.5,38 312.25,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="312.25,38 304.25,41.6 304.25,34.4" fill="#1f2937"/>
+<polyline points="392.5,76 392.5,122" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="392.5,122 388.9,114 396.1,114" fill="#1f2937"/>
+<polyline points="310.5,160 160.5,160" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="160.5,160 168.5,156.4 168.5,163.6" fill="#1f2937"/>
+<polyline points="87.25,122 87.25,76" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="87.25,76 90.85,84 83.65,84" fill="#1f2937"/>
+<rect x="0" y="0" width="174.5" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="87.25" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">1. テストを先に書く</text>
+<text x="87.25" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">合否(60) が「合格」</text>
+<text x="87.25" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">合否(59) が「不合格」</text>
+<rect x="312.25" y="0" width="160.5" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="392.5" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">2. 2 つが通るだけの</text>
+<text x="392.5" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">最小のコード</text>
+<text x="392.5" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">60 以上なら合格</text>
+<rect x="310.5" y="122" width="164" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="392.5" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">3. 動きを変えずに</text>
+<text x="392.5" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">書き方を整える</text>
+<text x="392.5" y="184.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">（リファクタリング）</text>
+<rect x="14" y="122" width="146.5" height="76" rx="38" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="87.25" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">次の動きの</text>
+<text x="87.25" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">テストへ</text>
+<text x="87.25" y="184.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">例えば 100 点超え</text>
+<rect x="179.38" y="21" width="128" height="16" rx="3" fill="#ffffff"/>
+<text x="243.38" y="34.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">回して失敗を見てから</text>
+<rect x="339.9" y="90" width="105.2" height="16" rx="3" fill="#ffffff"/>
+<text x="392.5" y="103.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2 つとも通ったら</text>
+<rect x="207.5" y="143" width="56" height="16" rx="3" fill="#ffffff"/>
+<text x="235.5" y="156.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">整えたら</text>
+<rect x="55.35" y="90" width="63.8" height="16" rx="3" fill="#ffffff"/>
+<text x="87.25" y="103.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">また 1 へ</text>
+</g>
+<text x="320" y="246" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">点数から合否を返す関数をテスト駆動開発で作る輪です。テストを先に書いて失敗を見て、通るだけのコードを</text>
+<text x="320" y="262" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">書き、整えてから次のテストへ進みます。</text>
+</svg>

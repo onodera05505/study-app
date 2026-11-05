@@ -1,0 +1,78 @@
+{
+  "topic_id": 131,
+  "term": "レプリケーションとシャーディング（写しを持つ・分けて持つ）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "上はレプリケーションで、同じ中身の写しを増やします。下はシャーディングで、行を利用者の番号で分けて別々の機械に置きます。",
+      "nodes": [
+        {
+          "id": "m",
+          "label": "元（書き込みを受ける）",
+          "row": 0,
+          "col": 1,
+          "shape": "cylinder",
+          "emphasis": true
+        },
+        {
+          "id": "r1",
+          "label": "写し 1（読むだけ）",
+          "row": 1,
+          "col": 0,
+          "shape": "cylinder"
+        },
+        {
+          "id": "r2",
+          "label": "写し 2（読むだけ）",
+          "row": 1,
+          "col": 2,
+          "shape": "cylinder"
+        },
+        {
+          "id": "rt",
+          "label": "利用者の番号で\n振り分ける",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "a",
+          "label": "A の機械（半分）",
+          "row": 3,
+          "col": 0,
+          "shape": "cylinder"
+        },
+        {
+          "id": "b",
+          "label": "B の機械（残り）",
+          "row": 3,
+          "col": 2,
+          "shape": "cylinder"
+        }
+      ],
+      "edges": [
+        {
+          "from": "m",
+          "to": "r1",
+          "label": "変更を送る"
+        },
+        {
+          "from": "m",
+          "to": "r2",
+          "label": "変更を送る"
+        },
+        {
+          "from": "rt",
+          "to": "a",
+          "label": "読みも書き込みも"
+        },
+        {
+          "from": "rt",
+          "to": "b",
+          "label": "読みも書き込みも"
+        }
+      ]
+    }
+  ]
+}

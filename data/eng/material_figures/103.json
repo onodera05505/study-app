@@ -1,0 +1,23 @@
+{
+  "topic_id": 103,
+  "term": "キャッシュと CDN（近くに写しを置いて速く返す）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "10,000 人の頼みは近い拠点が写しで返します。オリジンに届くのは拠点に写しが無いときだけで、期限の内は多くても 10 回です。",
+      "nodes": [
+        {"id": "u", "label": "利用者\n10,000 人", "row": 0, "col": 0},
+        {"id": "edge", "label": "各地の拠点 10 か所\n写しを持つ", "row": 0, "col": 1, "emphasis": true},
+        {"id": "org", "label": "オリジン\n元の中身を持つ", "row": 0, "col": 2},
+        {"id": "ret", "label": "写しがあれば\n拠点から返す", "row": 1, "col": 1}
+      ],
+      "edges": [
+        {"from": "u", "to": "edge", "label": "近い拠点へ"},
+        {"from": "edge", "to": "org", "label": "写しが無いときだけ\n多くても 10 回"},
+        {"from": "edge", "to": "ret"}
+      ]
+    }
+  ]
+}

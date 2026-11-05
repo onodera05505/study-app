@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" role="img">
+<title>罠のページが仕掛けた送金にも Cookie が自動で付くので、本人の操作に見えます。サイト A はトークンの有無を確かめて止めます。</title>
+<rect x="0.5" y="0.5" width="639" height="359" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(88.2 20)">
+<line x1="62" y1="34" x2="62" y2="276" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="245.8" y1="34" x2="245.8" y2="276" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="415.6" y1="34" x2="415.6" y2="276" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="124" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="62" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">本人のブラウザ</text>
+<rect x="197.8" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="245.8" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">罠のページ</text>
+<rect x="367.6" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="415.6" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">サイト A</text>
+<polyline points="65,68 412.6,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="412.6,68 404.6,71.6 404.6,64.4" fill="#1f2937"/>
+<text x="238.8" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. ログインして Cookie を受け取る</text>
+<polyline points="65,108 242.8,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="242.8,108 234.8,111.6 234.8,104.4" fill="#1f2937"/>
+<text x="153.9" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 罠のページを開く</text>
+<polyline points="242.8,148 65,148" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="65,148 73,144.4 73,151.6" fill="#1f2937"/>
+<text x="153.9" y="141" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 隠した送信の仕掛けを渡す</text>
+<polyline points="65,188 412.6,188" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="412.6,188 404.6,191.6 404.6,184.4" fill="#1f2937"/>
+<text x="238.8" y="181" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 〈B さんに10,000円を送金〉＋自動で付く Cookie</text>
+<rect x="85.7" y="193" width="306.2" height="16" rx="3" fill="#ffffff"/>
+<text x="238.8" y="206.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">Cookie だけで確かめる作りなら本人の操作として通る</text>
+<polyline points="412.6,244 65,244" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="65,244 73,240.4 73,247.6" fill="#1f2937"/>
+<text x="238.8" y="237" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. CSRF トークンが無いので断る</text>
+</g>
+<text x="320" y="324" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">罠のページが仕掛けた送金にも Cookie が自動で付くので、本人の操作に見えます。サイト A はトークンの</text>
+<text x="320" y="340" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">有無を確かめて止めます。</text>
+</svg>

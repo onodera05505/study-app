@@ -1,0 +1,24 @@
+{
+  "topic_id": 33,
+  "term": "排他制御とデッドロック（同じ物の取り合いを防ぐ）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "A は札 X を持って Y を、B は札 Y を持って X を待つので、待ちが輪になり止まります。全員が X の次に Y を取れば輪はできません。",
+      "nodes": [
+        {"id": "a", "label": "処理 A", "row": 0, "col": 0},
+        {"id": "y", "label": "札 Y\nB が使用中", "row": 0, "col": 1, "shape": "round"},
+        {"id": "x", "label": "札 X\nA が使用中", "row": 1, "col": 0, "shape": "round"},
+        {"id": "b", "label": "処理 B", "row": 1, "col": 1}
+      ],
+      "edges": [
+        {"from": "x", "to": "a", "label": "持っている"},
+        {"from": "a", "to": "y", "label": "返るのを待つ", "style": "dashed"},
+        {"from": "y", "to": "b", "label": "持っている"},
+        {"from": "b", "to": "x", "label": "返るのを待つ", "style": "dashed"}
+      ]
+    }
+  ]
+}

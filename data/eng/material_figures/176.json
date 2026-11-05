@@ -1,0 +1,95 @@
+{
+  "topic_id": 176,
+  "term": "環境変数と設定ファイル（コードに書かずに外から渡す設定）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "コードは同じで、接続先の名前で値を読むだけです。手元と本番の環境で入れる値が違うので、つながるデータベースが替わります。",
+      "nodes": [
+        {
+          "id": "el",
+          "label": "手元の PC\n自分がターミナルで\n接続先＝試し用",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "ep",
+          "label": "本番の環境\n担当者が設定で\n接続先＝本物",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "cl",
+          "label": "コード\n「接続先」の値を読む",
+          "row": 1,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "cp",
+          "label": "同じコード\n「接続先」の値を読む",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "dl",
+          "label": "試し用の\nデータベース",
+          "row": 2,
+          "col": 0,
+          "shape": "cylinder"
+        },
+        {
+          "id": "dp",
+          "label": "本物の\nデータベース",
+          "row": 2,
+          "col": 2,
+          "shape": "cylinder"
+        },
+        {
+          "id": "same",
+          "label": "中身は\n1 文字も同じ",
+          "row": 1,
+          "col": 1,
+          "shape": "round"
+        }
+      ],
+      "edges": [
+        {
+          "from": "el",
+          "to": "cl",
+          "label": "環境変数で渡す"
+        },
+        {
+          "from": "ep",
+          "to": "cp",
+          "label": "環境変数で渡す"
+        },
+        {
+          "from": "cl",
+          "to": "same",
+          "arrow": "none",
+          "style": "dashed"
+        },
+        {
+          "from": "same",
+          "to": "cp",
+          "arrow": "none",
+          "style": "dashed"
+        },
+        {
+          "from": "cl",
+          "to": "dl",
+          "label": "つなぐ"
+        },
+        {
+          "from": "cp",
+          "to": "dp",
+          "label": "つなぐ"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "topic_id": 109,
+  "term": "仮想化（1 台の機械を何台にも見せる）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "物理的な機械 1 台の上でハイパーバイザが動き、CPU の時間とメモリを分けます。仮想マシンはそれぞれ OS を丸ごと持つので、Windows と Linux が同時に動きます。",
+      "nodes": [
+        {"id": "vm1", "label": "仮想マシン 1\nゲスト OS: Windows\nアプリ", "row": 0, "col": 0},
+        {"id": "vm2", "label": "仮想マシン 2\nゲスト OS: Linux\nアプリ", "row": 0, "col": 2},
+        {"id": "hv", "label": "ハイパーバイザ\n（ソフトウェア）\nCPU の時間とメモリを分ける", "row": 1, "col": 1, "emphasis": true},
+        {"id": "hw", "label": "物理的な機械 1 台\nCPU・メモリ・ストレージ", "row": 2, "col": 1}
+      ],
+      "edges": [
+        {"from": "hw", "to": "hv", "label": "上で動く"},
+        {"from": "hv", "to": "vm1", "label": "割り当て"},
+        {"from": "hv", "to": "vm2", "label": "割り当て"}
+      ]
+    }
+  ]
+}

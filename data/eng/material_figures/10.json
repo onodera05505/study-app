@@ -1,0 +1,19 @@
+{
+  "topic_id": 10,
+  "term": "クロックと CPU の速さの測り方",
+  "figures": [
+    {
+      "id": 1,
+      "type": "chart",
+      "after": "### しくみ",
+      "caption": "2GHz の A は拍が 2 倍でも 1 命令に 4 拍要るので 1 秒に 5 億命令、1GHz で CPI 1 の B は 10 億命令で A の 2 倍です。",
+      "kind": "bar",
+      "x": {"label": "比べる CPU", "values": ["A（2GHz・CPI 4）", "B（1GHz・CPI 1）"]},
+      "y": {"label": "1 秒あたりの数（億）", "min": 0},
+      "series": [
+        {"label": "1 秒の拍の数", "values": [20, 10]},
+        {"label": "1 秒に終える命令の数（拍 ÷ CPI）", "values": [5, 10], "emphasis": true}
+      ]
+    }
+  ]
+}

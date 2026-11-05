@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="262" viewBox="0 0 640 262" role="img">
+<title>OS が順番と持ち時間を決め、切れたら入れ替えて A を列の後ろへ戻します。この輪を回すと A・B・C が 30 ミリ秒ほどで一回りします。</title>
+<rect x="0.5" y="0.5" width="639" height="261" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(84.75 20)">
+<polyline points="161.9,28 289.7,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="289.7,28 281.7,31.6 281.7,24.4" fill="#1f2937"/>
+<polyline points="366.8,56 366.8,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="366.8,102 363.2,94 370.4,94" fill="#1f2937"/>
+<polyline points="263.1,140 136.35,140" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="136.35,140 144.35,136.4 144.35,143.6" fill="#1f2937"/>
+<polyline points="80.95,112 80.95,56" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="80.95,56 84.55,64 77.35,64" fill="#1f2937"/>
+<rect x="0" y="0" width="161.9" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="80.95" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">スケジューリング</text>
+<text x="80.95" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">次は A に 10 ミリ秒</text>
+<rect x="289.7" y="0" width="154.2" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="366.8" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">CPU</text>
+<text x="366.8" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">A を 10 ミリ秒計算</text>
+<rect x="25.55" y="112" width="110.8" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="80.95" y="134.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">待ちの列</text>
+<text x="80.95" y="154.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">B・C・A の順</text>
+<rect x="263.1" y="102" width="207.4" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="366.8" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">コンテキストスイッチ</text>
+<text x="366.8" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">A のレジスタの中身をしまい</text>
+<text x="366.8" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">B の分を戻す</text>
+<rect x="209.8" y="11" width="32" height="16" rx="3" fill="#ffffff"/>
+<text x="225.8" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">渡す</text>
+<rect x="326.8" y="70" width="80" height="16" rx="3" fill="#ffffff"/>
+<text x="366.8" y="83.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">持ち時間切れ</text>
+<rect x="153.13" y="123" width="93.2" height="16" rx="3" fill="#ffffff"/>
+<text x="199.73" y="136.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">A を列の後ろへ</text>
+<rect x="31.05" y="75" width="99.8" height="16" rx="3" fill="#ffffff"/>
+<text x="80.95" y="88.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">先頭の B を選ぶ</text>
+</g>
+<text x="320" y="226" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">OS が順番と持ち時間を決め、切れたら入れ替えて A を列の後ろへ戻します。この輪を回すと A・B・C が 30</text>
+<text x="320" y="242" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ミリ秒ほどで一回りします。</text>
+</svg>

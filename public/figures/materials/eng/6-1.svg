@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="416" viewBox="0 0 640 416" role="img">
+<title>1 回目は手元に無いミスなので、メモリから隣の物ごと写します。次に隣を読むときは手元にあるヒットなので、メモリまで行きません。</title>
+<rect x="0.5" y="0.5" width="639" height="415" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(33.2 20)">
+<line x1="48" y1="34" x2="48" y2="332" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="279.8" y1="34" x2="279.8" y2="332" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="518.6" y1="34" x2="518.6" y2="332" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">CPU</text>
+<rect x="224.8" y="0" width="110" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="279.8" y="11.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">キャッシュ</text>
+<text x="279.8" y="31.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">速くて小さい</text>
+<rect x="463.6" y="0" width="110" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="518.6" y="11.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">メモリ</text>
+<text x="518.6" y="31.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">遅くて大きい</text>
+<polyline points="51,68 276.8,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="276.8,68 268.8,71.6 268.8,64.4" fill="#1f2937"/>
+<text x="163.9" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. A を読みたい</text>
+<polyline points="282.8,108 515.6,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="515.6,108 507.6,111.6 507.6,104.4" fill="#1f2937"/>
+<text x="399.2" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 手元に無い（ミス）ので取りに行く</text>
+<polyline points="515.6,148 282.8,148" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="282.8,148 290.8,144.4 290.8,151.6" fill="#1f2937"/>
+<text x="399.2" y="141" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. A と隣の B をまとめて写す</text>
+<rect x="311.2" y="153" width="176" height="16" rx="3" fill="#ffffff"/>
+<text x="399.2" y="166.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">近くの物は続けて使われやすい</text>
+<polyline points="276.8,204 51,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,204 59,200.4 59,207.6" fill="#1f2937"/>
+<text x="163.9" y="197" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. A を渡す</text>
+<polyline points="51,244 276.8,244" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="276.8,244 268.8,247.6 268.8,240.4" fill="#1f2937"/>
+<text x="163.9" y="237" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. 次に B を読みたい</text>
+<polyline points="276.8,284 51,284" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,284 59,280.4 59,287.6" fill="#1f2937"/>
+<text x="163.9" y="277" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">6. 手元にある（ヒット）のですぐ返す</text>
+<rect x="93.9" y="289" width="140" height="16" rx="3" fill="#ffffff"/>
+<text x="163.9" y="302.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">メモリまで行かずに済む</text>
+</g>
+<text x="320" y="380" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">1 回目は手元に無いミスなので、メモリから隣の物ごと写します。次に隣を読むときは手元にあるヒットなの</text>
+<text x="320" y="396" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">で、メモリまで行きません。</text>
+</svg>

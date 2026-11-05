@@ -1,0 +1,30 @@
+{
+  "topic_id": 18,
+  "term": "画像と音をデジタルにする（標本化・量子化・データ量）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "データ量は、読み取る回数と 1 回分のバイト数の掛け算です。音は回数×1 回分×秒数、画像は横×縦×1 画素分で求めます。",
+      "nodes": [
+        {"id": "s1", "label": "音\n1 秒に 8,000 回", "row": 0, "col": 0},
+        {"id": "s2", "label": "1 回 8 ビット\n＝1B", "row": 0, "col": 1},
+        {"id": "s3", "label": "60 秒", "row": 0, "col": 2},
+        {"id": "s4", "label": "480,000B\n＝480KB", "row": 0, "col": 3, "emphasis": true},
+        {"id": "p1", "label": "画像\n横 100 画素", "row": 1, "col": 0},
+        {"id": "p2", "label": "縦 100 画素", "row": 1, "col": 1},
+        {"id": "p3", "label": "1 画素の色\n3B", "row": 1, "col": 2},
+        {"id": "p4", "label": "30,000B\n＝30KB", "row": 1, "col": 3, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "s1", "to": "s2", "label": "×"},
+        {"from": "s2", "to": "s3", "label": "×"},
+        {"from": "s3", "to": "s4", "label": "＝"},
+        {"from": "p1", "to": "p2", "label": "×"},
+        {"from": "p2", "to": "p3", "label": "×"},
+        {"from": "p3", "to": "p4", "label": "＝"}
+      ]
+    }
+  ]
+}

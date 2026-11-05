@@ -1,0 +1,21 @@
+{
+  "topic_id": 117,
+  "term": "1 対多と多対多（つながりの数と中間の表）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "学生と授業の多対多は、間に履修の表を置くと 2 つの 1 対多に分かれます。履修は 2 つの番号の組が主キーです。",
+      "nodes": [
+        {"id": "st", "label": "学生\n学生番号が主キー", "row": 0, "col": 0},
+        {"id": "en", "label": "履修\n学生番号＋授業番号\n複合主キー", "row": 0, "col": 1, "emphasis": true},
+        {"id": "cl", "label": "授業\n授業番号が主キー", "row": 0, "col": 2}
+      ],
+      "edges": [
+        {"from": "st", "to": "en", "label": "1 対多"},
+        {"from": "cl", "to": "en", "label": "1 対多"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="324" viewBox="0 0 640 324" role="img">
+<title>CPU 自身が続けられない命令に気づいたときも割り込みが起きます。異常のための処理を経て、プログラムが続けるか止めるかを決めます。</title>
+<rect x="0.5" y="0.5" width="639" height="323" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(99 20)">
+<line x1="48" y1="34" x2="48" y2="240" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="214" y1="34" x2="214" y2="240" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="387" y1="34" x2="387" y2="240" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">CPU</text>
+<rect x="166" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="214" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">プログラム</text>
+<rect x="332" y="0" width="110" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="387" y="11.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">異常のための</text>
+<text x="387" y="31.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">処理</text>
+<polyline points="48,60 74,60 74,74 50,74" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="50,74 58,70.4 58,77.6" fill="#1f2937"/>
+<text x="82" y="68" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">1. 「10 ÷ 0」の答えを決められず止まる</text>
+<polyline points="51,102 384,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="384,102 376,105.6 376,98.4" fill="#1f2937"/>
+<text x="217.5" y="95" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 割り込みを起こして移る</text>
+<rect x="123.5" y="107" width="188" height="16" rx="3" fill="#ffffff"/>
+<text x="217.5" y="120.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">途中の値は別の場所に取っておく</text>
+<polyline points="384,158 217,158" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="217,158 225,154.4 225,161.6" fill="#1f2937"/>
+<text x="300.5" y="151" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 「0 で割った」と伝える</text>
+<polyline points="214,190 240,190 240,204 216,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="216,204 224,200.4 224,207.6" fill="#1f2937"/>
+<text x="248" y="198" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. 例外処理が続けるか止めるかを決める</text>
+<rect x="138" y="209" width="152" height="16" rx="3" fill="#ffffff"/>
+<text x="214" y="222.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">例外処理は後の単位で扱う</text>
+</g>
+<text x="320" y="288" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">CPU 自身が続けられない命令に気づいたときも割り込みが起きます。異常のための処理を経て、プログラムが</text>
+<text x="320" y="304" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">続けるか止めるかを決めます。</text>
+</svg>

@@ -1,0 +1,68 @@
+{
+  "topic_id": 122,
+  "term": "並べ替えと集計（ORDER BY・GROUP BY・件数や合計）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "注文 3 行を会員番号でまとめた後の流れです。WHERE はまとめる前の 1 行ずつに、HAVING はまとめた後の合計に効きます。",
+      "nodes": [
+        {
+          "id": "rows",
+          "label": "注文 3 行\nA 100円\nB 500円\nA 300円",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "grp",
+          "label": "GROUP BY 会員番号\nA 400円\nB 500円",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "hav",
+          "label": "HAVING SUM(金額) >= 450\nB 500円 だけ残る\nA は行ごと外れる",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "whr",
+          "label": "WHERE\nまとめる前の\n1 行ずつを絞る",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "ord",
+          "label": "ORDER BY SUM(金額) DESC\n多い順（降順）\nB 500円 → A 400円",
+          "row": 1,
+          "col": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": "rows",
+          "to": "grp",
+          "label": "まとめる"
+        },
+        {
+          "from": "grp",
+          "to": "hav",
+          "label": "まとめた後を絞る"
+        },
+        {
+          "from": "grp",
+          "to": "ord",
+          "label": "並べる"
+        },
+        {
+          "from": "whr",
+          "to": "rows",
+          "style": "dashed",
+          "label": "ここで効く"
+        }
+      ]
+    }
+  ]
+}

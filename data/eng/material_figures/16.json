@@ -1,0 +1,25 @@
+{
+  "topic_id": 16,
+  "term": "文字コード（文字に番号を割り当てる：ASCII・Unicode・UTF-8）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "「あ」は Unicode の表で番号になり、UTF-8 で 3 バイトに直ります。同じバイトを Shift_JIS として読むと区切りがずれ、文字化けします。",
+      "nodes": [
+        {"id": "ch", "label": "文字「あ」", "row": 0, "col": 0},
+        {"id": "uni", "label": "Unicode の表\n番号 12354", "row": 0, "col": 1},
+        {"id": "u8", "label": "UTF-8 で\n3 バイトの並び", "row": 0, "col": 2},
+        {"id": "ok", "label": "UTF-8 として読む\n3 バイトで 1 文字\n「あ」に戻る", "row": 1, "col": 1},
+        {"id": "ng", "label": "Shift_JIS として読む\n2 バイトずつ区切る\n別の文字＝文字化け", "row": 1, "col": 3, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "ch", "to": "uni", "label": "表で引く"},
+        {"from": "uni", "to": "u8", "label": "決まりで直す"},
+        {"from": "u8", "to": "ok", "label": "そろえて開く"},
+        {"from": "u8", "to": "ng", "label": "違えて開く"}
+      ]
+    }
+  ]
+}

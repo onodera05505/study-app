@@ -1,0 +1,26 @@
+{
+  "topic_id": 144,
+  "term": "ハッシュ関数（元に戻せない要約を作る）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "ファイルと値は別の道で受け取り、手元で計算した値と比べます。一致すれば途中で書き換わっていないと分かります。",
+      "nodes": [
+        {"id": "src", "label": "配る側\nファイルの\nハッシュ値を出す", "row": 0, "col": 0},
+        {"id": "file", "label": "受け取った\nファイル", "row": 0, "col": 1},
+        {"id": "mine", "label": "自分で計算した\nハッシュ値", "row": 0, "col": 2},
+        {"id": "pub", "label": "公開された\nハッシュ値", "row": 1, "col": 1},
+        {"id": "cmp", "label": "比べる\n一致すれば\n書き換わっていない", "row": 1, "col": 2, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "src", "to": "file", "label": "ダウンロード"},
+        {"from": "file", "to": "mine", "label": "計算"},
+        {"from": "src", "to": "pub", "label": "別の経路で公開", "style": "dashed"},
+        {"from": "pub", "to": "cmp"},
+        {"from": "mine", "to": "cmp"}
+      ]
+    }
+  ]
+}

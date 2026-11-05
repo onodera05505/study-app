@@ -1,0 +1,23 @@
+{
+  "topic_id": 62,
+  "term": "連結リスト（次の場所を指して数珠つなぎにする）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "A と B の間に X を入れる場面です。X に B の番地を持たせ、A の指す先を X に変える 2 か所だけで、後ろはずらしません。",
+      "nodes": [
+        {"id": "a", "label": "100 番地\n値 A\n次は 340 → 500", "row": 0, "col": 0},
+        {"id": "b", "label": "340 番地\n値 B\n次は 120", "row": 0, "col": 2},
+        {"id": "c", "label": "120 番地\n値 C\n次は無い", "row": 0, "col": 3},
+        {"id": "x", "label": "500 番地（空き）\n値 X\n次は 340", "row": 0, "col": 1, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "b", "to": "c"},
+        {"from": "x", "to": "b", "label": "① B を指す"},
+        {"from": "a", "to": "x", "label": "② X を指す"}
+      ]
+    }
+  ]
+}

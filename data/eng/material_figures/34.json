@@ -1,0 +1,24 @@
+{
+  "topic_id": 34,
+  "term": "スケジューリングとコンテキストスイッチ（順番に CPU を回す）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "OS が順番と持ち時間を決め、切れたら入れ替えて A を列の後ろへ戻します。この輪を回すと A・B・C が 30 ミリ秒ほどで一回りします。",
+      "nodes": [
+        {"id": "s", "label": "スケジューリング\n次は A に 10 ミリ秒", "row": 0, "col": 0},
+        {"id": "cpu", "label": "CPU\nA を 10 ミリ秒計算", "row": 0, "col": 1},
+        {"id": "q", "label": "待ちの列\nB・C・A の順", "row": 1, "col": 0},
+        {"id": "cs", "label": "コンテキストスイッチ\nA のレジスタの中身をしまい\nB の分を戻す", "row": 1, "col": 1, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "s", "to": "cpu", "label": "渡す"},
+        {"from": "cpu", "to": "cs", "label": "持ち時間切れ"},
+        {"from": "cs", "to": "q", "label": "A を列の後ろへ"},
+        {"from": "q", "to": "s", "label": "先頭の B を選ぶ"}
+      ]
+    }
+  ]
+}

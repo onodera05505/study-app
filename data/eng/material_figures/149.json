@@ -1,0 +1,25 @@
+{
+  "topic_id": 149,
+  "term": "外から来た値を信じない（入力の確かめと出力のエスケープ）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "確かめは値が入る入口のサーバで、エスケープは値を出す出口で、出す先に合わせて行います。",
+      "nodes": [
+        {"id": "in", "label": "外から来た値\n画面を通さず\n直接も届く", "row": 0, "col": 0},
+        {"id": "val", "label": "入口のバリデーション\n年齢は 0 から 150 の整数\n外れたら断る", "row": 0, "col": 1, "emphasis": true},
+        {"id": "srv", "label": "サーバの処理", "row": 0, "col": 2},
+        {"id": "html", "label": "出口のエスケープ\n画面へは「<」を\n部品と読まれない形に", "row": 0, "col": 3, "emphasis": true},
+        {"id": "sql", "label": "出口：SQL へは\n値を文と分けて渡す", "row": 1, "col": 2}
+      ],
+      "edges": [
+        {"from": "in", "to": "val"},
+        {"from": "val", "to": "srv", "label": "形の合う値"},
+        {"from": "srv", "to": "html", "label": "画面に出す"},
+        {"from": "srv", "to": "sql", "label": "SQL に渡す"}
+      ]
+    }
+  ]
+}

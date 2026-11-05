@@ -1,0 +1,25 @@
+{
+  "topic_id": 110,
+  "term": "インフラをコードで書く（IaC）とサーバレス",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "IaC の道具はファイルに書いたあるべき姿と今の姿を比べ、差の 1 台だけを事業者に頼みます。2 台そろっていれば次は何も頼みません。",
+      "nodes": [
+        {"id": "file", "label": "IaC のファイル\nあるべき姿\nサーバ 2 台・メモリ各 4GB", "row": 0, "col": 0},
+        {"id": "tool", "label": "IaC の道具\nファイルと\n今の姿を比べる", "row": 0, "col": 1, "emphasis": true},
+        {"id": "api", "label": "事業者の窓口\n差の 1 台を作る", "row": 0, "col": 2},
+        {"id": "now", "label": "今の姿\nサーバ 1 台", "row": 1, "col": 1},
+        {"id": "after", "label": "サーバ 2 台\n次に読んでも\n差が無く何もしない", "row": 1, "col": 2}
+      ],
+      "edges": [
+        {"from": "file", "to": "tool", "label": "読む"},
+        {"from": "now", "to": "tool", "label": "調べる"},
+        {"from": "tool", "to": "api", "label": "差は 1 台"},
+        {"from": "api", "to": "after"}
+      ]
+    }
+  ]
+}

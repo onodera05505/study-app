@@ -1,0 +1,25 @@
+{
+  "topic_id": 186,
+  "term": "監視とログ（動いている様子を見張り、記録を残す）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "上の段の監視は数を測り、線を越えたら知らせて異常に気づかせます。下の段のログは、気づいた後になぜかを追う材料です。",
+      "nodes": [
+        {"id": "m", "label": "監視で測る\nCPU の使われ方\n応答時間・エラーの数", "row": 0, "col": 0},
+        {"id": "line", "label": "決めた線を\n越える", "row": 0, "col": 1},
+        {"id": "alert", "label": "アラート\nエンジニアに知らせる", "row": 0, "col": 2, "emphasis": true},
+        {"id": "log", "label": "ログ\nいつ・どの処理で\n何が起きたか", "row": 1, "col": 1, "shape": "cylinder"},
+        {"id": "why", "label": "さかのぼって\nなぜかを追う", "row": 1, "col": 2}
+      ],
+      "edges": [
+        {"from": "m", "to": "line"},
+        {"from": "line", "to": "alert"},
+        {"from": "alert", "to": "why", "label": "何かおかしい"},
+        {"from": "log", "to": "why", "label": "材料"}
+      ]
+    }
+  ]
+}

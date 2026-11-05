@@ -1,0 +1,29 @@
+{
+  "topic_id": 175,
+  "term": "パッケージ管理（必要な部品を入れて版をそろえる道具）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "頼んだ A から使う部品を先の先までたどって入れます。設定ファイルは頼んだ名前と幅だけ、ロックファイルは入った全部の実際のバージョンを書きます。",
+      "nodes": [
+        {"id": "cfg", "label": "設定ファイル\n頼んだ 3 つの名前と\n「この版以上」の幅", "row": 0, "col": 0},
+        {"id": "a", "label": "頼んだ A", "row": 0, "col": 1},
+        {"id": "b", "label": "A が使う B", "row": 0, "col": 2},
+        {"id": "d", "label": "B が使う D", "row": 0, "col": 3},
+        {"id": "c", "label": "A が使う C", "row": 1, "col": 2},
+        {"id": "all", "label": "入った物 全部\n頼んだ 3 ＋ 先の 37\n＝ 40 個", "row": 2, "col": 2},
+        {"id": "lock", "label": "ロックファイル\n40 個全部の\n実際のバージョン", "row": 2, "col": 0, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "cfg", "to": "a", "label": "頼む"},
+        {"from": "a", "to": "b", "label": "使う"},
+        {"from": "b", "to": "d", "label": "使う"},
+        {"from": "a", "to": "c", "label": "使う"},
+        {"from": "c", "to": "all", "label": "ほかの 2 つの先も", "style": "dashed"},
+        {"from": "all", "to": "lock", "label": "書き留める"}
+      ]
+    }
+  ]
+}
