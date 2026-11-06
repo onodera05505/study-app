@@ -3,6 +3,24 @@
   "term": "同じ出どころの決まりと CORS（ほかのサイトからの呼び出しを制限する）",
   "figures": [
     {
+      "id": 2,
+      "type": "sequence",
+      "after": "### しくみ",
+      "caption": "画面の JavaScript が別の出どころの API に削除を頼む場面です。ブラウザは本物の前に下見の頼みで許しを確かめます。",
+      "actors": [
+        {"id": "js", "label": "画面の\nJavaScript"},
+        {"id": "br", "label": "ブラウザ"},
+        {"id": "api", "label": "API の\nサーバ"}
+      ],
+      "steps": [
+        {"from": "js", "to": "br", "label": "DELETE で消すよう頼む"},
+        {"from": "br", "to": "api", "label": "下見の頼み「DELETE を送ってよいか」", "note": "本物はまだ送らない"},
+        {"from": "api", "to": "br", "label": "許す出どころとメソッドを返す"},
+        {"from": "br", "to": "br", "label": "許しの中に入っているかを見る"},
+        {"from": "br", "to": "api", "label": "入っていれば本物の DELETE を送る", "note": "入っていなければ送らず CORS のエラー"}
+      ]
+    },
+    {
       "id": 1,
       "type": "sequence",
       "after": "### しくみ",

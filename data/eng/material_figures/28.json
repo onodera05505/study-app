@@ -6,7 +6,7 @@
       "id": 1,
       "type": "matrix",
       "after": "### しくみ",
-      "caption": "同じ r・w・x でも、ディレクトリでは中の名前と中のファイルへの許しになります。docs に r だけなら、名前は見えても memo.txt は開けません。",
+      "caption": "同じ r・w・x でも、ディレクトリでは中の名前と中のファイルへの許しになります。docs に x だけなら、ls docs で一覧は出なくても、名前を知っている docs/memo.txt は開けます。",
       "x": {"label": "付ける先", "values": ["ファイル", "ディレクトリ（例 docs）"]},
       "y": {"label": "印", "values": ["r", "w", "x"]},
       "cells": [
