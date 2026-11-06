@@ -1,75 +1,328 @@
 #!/usr/bin/env python3
-"""学習者ロールの別エージェントに渡す学習パックを作る（開発側の情報を含めない）。
+"""周の番号を付けて学習者役のパックを作り、その周のパックの写しを学びの置き場の eval の下に残す。
 
-    python3 scripts/build_learner_pack.py --data data/itc --out <パックの出力先ディレクトリ>
+    python3 scripts/build_learner_pack.py --data data/eng --cycle 8 --out ../learner_packs/eng_c8
 
-出すもの: roadmap.md（日ごとの単位）、units/NN_<論点>.md（教材。出典も見せる）、quiz.md（確認問題。正解と根拠は入れない）。
-正解は data 側の questions/ にしかない（学習者には渡さない）。
+契約は UC-019 の contract.yaml の buildLearnerPack。標準出力に結果の JSON を 1 つ出す（成功 0、errors に当たれば 1）。
+パックの中: roadmap.md・units/NN_<単位の名前>.md・quiz.md・explain.md（語の一覧を持つ学びだけ）・figures/（図の PNG）。
+本文は利用者に配る本文（投入と同じく教材の世代を後勝ちで選んだ物）で、正解・正解の根拠・選択肢ごとの説明は入れない。
+図の SVG は scripts/render_svg_png.mjs（Playwright の Chromium）で PNG に描く。
 """
 from __future__ import annotations
-import argparse, json, re, sys
+import json
+import re
+import shutil
+import subprocess
+import sys
 from pathlib import Path
 
-def main() -> int:
-    ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--out", required=True)
-    a = ap.parse_args(); d = Path(a.data); out = Path(a.out); (out / "units").mkdir(parents=True, exist_ok=True)
-    rm = json.loads((d / "roadmap.json").read_text(encoding="utf-8"))
-    # パックを作った時点の並びを残す（作った後に roadmap.json の並びが変わると、学習者の「順番の番号」を採点で写せない。
-    # mkt 2 周目で発生 2026-09-15）。採点は grade_learner.py --roadmap <この写し> で読む
-    snap = d / "eval" / f"roadmap_{Path(a.out).name}.json"; snap.parent.mkdir(exist_ok=True)
-    key = {}
-    for qp in sorted((d / "roadmap_questions").glob("*.json")):
-        for q in json.loads(qp.read_text(encoding="utf-8")).get("questions", []): key[q["qid"]] = q["answer"]
-    rm_snap = dict(rm); rm_snap["answer_key"] = key  # パック時点の正解表（作った後に問題を書き直すと採点が食い違う。mkt 2 周目 2026-09-15）
-    snap.write_text(json.dumps(rm_snap, ensure_ascii=False, indent=2), encoding="utf-8")
-    mats = {}
-    for mp in sorted((d / "materials").glob("bundle_*.json")):
-        for x in json.loads(mp.read_text(encoding="utf-8"))["materials"]: mats[x["topic_id"]] = x
-    qs = []
-    unit_ids = {u["topic_id"] for u in rm["units"]}
-    for qp in sorted((d / "roadmap_questions").glob("bundle_*.json")):
-        qs += [q for q in json.loads(qp.read_text(encoding="utf-8"))["questions"] if q["topic_id"] in unit_ids]  # ロードマップ外（除外済み）の問題は渡さない
-    sys.path.insert(0, str(Path(__file__).resolve().parent)); from targets import target
-    by_chapter = rm.get("group_by") == "chapter"  # 章で束ねる学びは見出しを章の番号と名前にする
-    head = f"全 {rm['rounds']} 章、{rm['unit_count']} 単位" if by_chapter else f"1 日 {rm['per_day']} 単位、全 {rm['days']} 日、{rm['unit_count']} 単位"
-    lines = [f"# 学習ロードマップ: {rm['target']}", "", f"{head}。1 単位は 5 分が目安。順番どおりに読む。", ""]
-    day = 0
-    for u in rm["units"]:
-        if by_chapter:
-            if u["round"] != day:
-                day = u["round"]; rl = (target(d.name).get("roadmapSpec") or {}).get("roundLabel", "{day}")
-                lines += ["", "## " + (rl.format(day=day, label=u["chapter"]) if "{label}" in rl else f"{rl.format(day=day)} {u['chapter']}")]
-        elif u["day"] != day: day = u["day"]; lines += ["", f"## {day} 日目"]
-        safe = re.sub(r"[/\\ ]", "_", u["term"])
-        fn = f"{u['order']:02d}_{safe}.md"
-        lines.append(f"- {u['order']}. [{u['term']}](units/{fn}) — {u['summary']}")
-        m = mats.get(u["topic_id"])
-        body = [f"# {u['term']}", "", f"（{u['field']} / {u['middle']}）", "", m["explanation"] if m else "（教材なし）", "", m["detail"] if m else "", ""]
-        if m and m.get("sources"):
-            body += ["---", "出典: " + "、".join(f"{s['name']}（{s.get('where','')}）" for s in m["sources"])]
-        (out / "units" / fn).write_text("\n".join(body) + "\n", encoding="utf-8")
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+from build_seed import load_materials  # noqa: E402
+from learner_eval import (Refused, contract_args, current_questions, read_json, result_path,  # noqa: E402
+                          roadmap_learning, run, snapshot_path)
+
+# 配る本文の図の行の参照先。/figures/materials/<key>/<サブパス>
+FIGURE_REF = re.compile(r"(!\[[^\]]*\]\()/figures/materials/([a-z]+)/([^)\s]+)(\))")
+CHOICES = ("ア", "イ", "ウ", "エ")
+
+
+# @implements REQ-331
+def check_out(out: Path) -> None:
+    data_root = Path("data").resolve()
+    o = out.resolve()
+    if o == data_root or data_root in o.parents:
+        raise Refused("INVALID_INPUT", "出力先が学びの置き場の中")
+    if o.exists() and (not o.is_dir() or any(o.iterdir())):
+        raise Refused("CONFLICT", "出力先に中身がある")
+
+
+# @implements REQ-321
+def check_cycle_free(d: Path, cycle: int) -> None:
+    if snapshot_path(d, cycle).exists():
+        raise Refused("CONFLICT", "その周の写しがある")
+    if result_path(d, cycle).exists():
+        raise Refused("CONFLICT", "その周の周の結果がある")
+
+
+# 契約の readRoadmap の行の欄 → (型, 欠けてはならないか)
+ROADMAP_FIELDS = {"order": ("pos", True), "topic_id": ("pos", True), "term": ("text", True), "field": ("text", True),
+                  "middle": ("text", True), "summary": ("str", True),
+                  "day": ("pos", False), "round": ("pos", False), "chapter": ("str", False)}
+
+
+def _typed(kind: str, v) -> bool:
+    if kind == "pos":
+        return type(v) is int and v >= 1
+    if kind == "text":
+        return isinstance(v, str) and v != ""
+    return isinstance(v, str)
+
+
+# @implements REQ-338
+def roadmap_units(d: Path) -> tuple[dict, list[dict]]:
+    """ロードマップを読み、欠けてはならない欄が無いか型の違う欄（任意の欄は有るときだけ見る）を持つ行をすべて挙げて止める。"""
+    rm = read_json(d / "roadmap.json")
+    bad = []
+    for i, u in enumerate(rm["units"]):
+        if not isinstance(u, dict):
+            bad.append({"index": i, "fields": [k for k, (_, req) in ROADMAP_FIELDS.items() if req]})
+            continue
+        fields = [k for k, (kind, req) in ROADMAP_FIELDS.items()
+                  if (k not in u and req) or (k in u and not _typed(kind, u[k]))]
+        if fields:
+            bad.append({"index": i, "fields": fields})
+    if bad:
+        raise Refused("INVALID_INPUT", "ロードマップに欠けてはならない欄が無いか型の違う行がある", roadmapRows=bad)
+    return rm, sorted(rm["units"], key=lambda u: u["order"])
+
+
+# @implements REQ-319
+def delivered_bodies(d: Path, units: list[dict]) -> dict[int, dict]:
+    """投入（build_seed.load_materials）と同じく教材の世代を後勝ちで重ね、論点ごとに配る本文を選ぶ。"""
+    bodies = {tid: m for tid, m in load_materials(d).items()
+              if isinstance(m.get("explanation"), str) and m["explanation"] and isinstance(m.get("detail"), str) and m["detail"]}
+    missing = [u["topic_id"] for u in units if u["topic_id"] not in bodies]
+    if missing:
+        raise Refused("NOT_FOUND", "配る本文の無い単位がある", units=missing)
+    return bodies
+
+
+def png_target(subpath: str) -> str:
+    """key のディレクトリより下のサブパスを保ち、拡張子だけを .png にしたパックの中のパス。"""
+    return f"figures/{Path(subpath).with_suffix('.png').as_posix()}"
+
+
+# @implements REQ-320
+def figure_refs(units: list[dict], bodies: dict[int, dict]) -> list[dict]:
+    """本文の図の行を {unit, ref, src, target} で並べる。指す画像が置き場所に無ければ、その単位と図を挙げて止める。"""
+    refs, missing = [], []
+    for u in units:
+        m = bodies[u["topic_id"]]
+        for x in FIGURE_REF.finditer(m["explanation"] + "\n" + m["detail"]):
+            ref = f"/figures/materials/{x.group(2)}/{x.group(3)}"
+            src = Path("public") / "figures" / "materials" / x.group(2) / x.group(3)
+            if src.is_file():
+                refs.append({"unit": u["topic_id"], "ref": ref, "src": src, "target": png_target(x.group(3))})
+            else:
+                missing.append({"unit": u["topic_id"], "ref": ref})
+    if missing:
+        raise Refused("NOT_FOUND", "配る本文が指す図の画像が無い", figures=missing)
+    return refs
+
+
+# @implements REQ-337
+def figures_by_target(refs: list[dict]) -> dict[str, Path]:
+    """パックの中の PNG のパス → 元の画像。別の画像が同じ PNG の名前になるときは、どれも上書きせず挙げて止める。"""
+    srcs: dict[str, set[Path]] = {}
+    for r in refs:
+        srcs.setdefault(r["target"], set()).add(r["src"])
+    clash = {t for t, s in srcs.items() if len(s) > 1}
+    if clash:
+        hit = [{"unit": r["unit"], "ref": r["ref"]} for r in refs if r["target"] in clash]
+        raise Refused("INVALID_INPUT", "同じ PNG の名前になる図が 2 つ以上ある", figures=hit)
+    return {t: next(iter(s)) for t, s in srcs.items()}
+
+
+def to_pack_refs(text: str) -> str:
+    """図の参照先だけを、単位のファイルから見たパックの中の PNG に変える。"""
+    return FIGURE_REF.sub(lambda r: f"{r.group(1)}../{png_target(r.group(3))}{r.group(4)}", text)
+
+
+# @implements REQ-306
+def write_figures(out: Path, figures: dict[str, Path], refs: list[dict]) -> list[str]:
+    """配る本文の図を、サブパスを保ち拡張子を .png にした PNG にして figures/ の下に置く（本文の参照先は to_pack_refs が合わせる）。
+    元が PNG の図は写し、SVG はブラウザの文字の描画で元の幅と高さのまま描く。"""
+    jobs = []
+    for target, src in figures.items():
+        (out / target).parent.mkdir(parents=True, exist_ok=True)
+        if src.suffix == ".png":
+            shutil.copyfile(src, out / target)
+        else:
+            jobs.append({"src": str(src.resolve()), "dst": str((out / target).resolve()), "target": target})
+    failed: set[str] = set()
+    if jobs:
+        failed = render_svgs(jobs)
+    if failed:
+        hit = [{"unit": r["unit"], "ref": r["ref"]} for r in refs if r["target"] in failed]
+        raise Refused("INTERNAL", "図を PNG に描けない", figures=hit)
+    return sorted(figures)
+
+
+# @implements REQ-336
+def render_svgs(jobs: list[dict]) -> set[str]:
+    """SVG を描き、描けなかった物のパックの中のパスを返す（node か Chromium が無いときは全部）。"""
+    try:
+        p = subprocess.run(["node", str(HERE / "render_svg_png.mjs")], input=json.dumps([{"src": j["src"], "dst": j["dst"]} for j in jobs]),
+                           capture_output=True, text=True, cwd=str(HERE.parent))
+        bad_src = {f["src"] for f in json.loads(p.stdout or "{}").get("failed", [])}
+    except (OSError, ValueError):
+        return {j["target"] for j in jobs}
+    return {j["target"] for j in jobs if j["src"] in bad_src or not Path(j["dst"]).is_file()}
+
+
+# @implements REQ-305
+def write_unit(out: Path, u: dict, body: dict) -> str:
+    fn = unit_file(u)
+    text = [f"# {u['term']}", "", f"単位の ID: {u['topic_id']} ／ 分野: {u['field']} ／ 単元: {u['middle']}", "",
+            to_pack_refs(body["explanation"]), "", to_pack_refs(body["detail"]), ""]
+    (out / fn).write_text("\n".join(text), encoding="utf-8")
+    return fn
+
+
+def unit_file(u: dict) -> str:
+    safe = re.sub(r"[/\\ ]", "_", u["term"])
+    return f"units/{u['order']:02d}_{safe}.md"
+
+
+def round_label(u: dict, by_chapter: bool, spec: dict) -> str:
+    """回の見出しの語。章で束ねる学びは roundLabel を章の番号と名前で、日で束ねる学びは日で埋める。
+    ロードマップの任意の欄（round・chapter・day）が無い行は、ある欄だけで見出しを作る。"""
+    rl = spec.get("roundLabel", "{day} 日目")
+    if by_chapter:
+        if "round" not in u:
+            return u.get("chapter") or "回の指定なし"
+        name = u.get("chapter", "")
+        if "{label}" in rl:
+            return rl.format(day=u["round"], label=name)
+        return f"{rl.format(day=u['round'])} {name}".strip()
+    return rl.format(day=u["day"]) if "day" in u else "回の指定なし"
+
+
+ANSWER_FORMAT = {"answers": {}, "units": [{"topic_id": 1, "minutes": 5, "understood": 3, "confusing": "", "unknown_terms": []}]}
+
+
+# @implements REQ-304
+def write_roadmap_quiz_explain(out: Path, rm: dict, units: list[dict], spec: dict, files: list[str],
+                               questions: list[dict], terms: list[str] | None) -> None:
+    by_chapter = rm.get("group_by") == "chapter"
+    lines = [f"# 学習ロードマップ: {rm.get('target', '')}", "",
+             f"全 {len(units)} 単位。上から順番に読む。各行の「ID」が単位の ID で、自己申告にはこの ID を書く。", ""]
+    head = None
+    for u, fn in zip(units, files):
+        r = round_label(u, by_chapter, spec)
+        if r != head:
+            head = r
+            lines += ["", f"## {r}"]
+        lines.append(f"- {u['order']}. [{u['term']}]({fn})（ID {u['topic_id']}・{r}）— {u['summary']}")
     (out / "roadmap.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
-    q_lines = ["# 確認問題（各単位を読んだ直後に答える）", "",
-               "答えと自己申告は `learner_answers.json` に、次の形で書く（採点はこのキー名で読む）:", "",
-               "```json",
-               '{"answers": {"<qid>": "ア|イ|ウ|エ"},',
-               ' "units": [{"topic_id": <単位の番号>, "minutes": <読んだ分数>, "understood": 3|2|1,',
-               '            "confusing": "どの単位と混ざったか", "unknown_terms": ["説明が無くて分からなかった語"]}]}',
-               "```", "",
-               "- `topic_id` はロードマップに出ている単位の番号。`understood` は 3＝人に説明できる / 2＝分かった気がする / 1＝分からなかった", ""]
-    order = {u["topic_id"]: u["order"] for u in rm["units"]}
-    for q in sorted(qs, key=lambda q: (order.get(q["topic_id"], 999), q["qid"])):
-        q_lines += [f"## {q['qid']}（単位 {order.get(q['topic_id'])}: {q['term']}）", q["stem"], ""] + [f"- {k}. {v}" for k, v in q["choices"].items()] + [""]
-    (out / "quiz.md").write_text("\n".join(q_lines) + "\n", encoding="utf-8")
-    et = d / "explain_terms.json"
-    if et.exists():
-        terms = json.loads(et.read_text(encoding="utf-8"))["terms"]
-        e_lines = ["# 説明テスト（全部読み終えた後、教材を読み返さずに書く）", "",
-                   "次の語を、この分野に詳しくない友人に向けて 1〜2 文で説明してください。分からなければ「分からない」と正直に書きます。",
-                   "答えは `explain_answers.json` に `{\"answers\": {\"語\": \"説明\", ...}}` の形で。", ""] + [f"- {t['term']}" for t in terms]
-        (out / "explain.md").write_text("\n".join(e_lines) + "\n", encoding="utf-8")
-    print(f"パック: {out} / 単位 {len(rm['units'])} / 教材あり {sum(1 for u in rm['units'] if u['topic_id'] in mats)} / 問題 {len(qs)}")
-    return 0
+
+    by_tid = {u["topic_id"]: u for u in units}
+    q = ["# 確認問題（各単位を読んだ直後に答える）", "",
+         "答えと自己申告は `learner_answers.json` に、次の形で書く。`units` の各行の `topic_id`（ロードマップの単位の ID）は必須。",
+         "`answers` は問題の識別子 → 選んだ答え（ア・イ・ウ・エ のどれか）。", "",
+         "```json", json.dumps(ANSWER_FORMAT, ensure_ascii=False, indent=1), "```", "",
+         "- `minutes`: 読んだ分数",
+         "- `understood`: 理解の段。3＝人に説明できる / 2＝分かった気がする / 1＝分からなかった",
+         "- `confusing`: どの単位と混ざったか（無ければ空）",
+         "- `unknown_terms`: 説明が無くて分からなかった語", ""]
+    for x in questions:
+        u = by_tid[x["topic_id"]]
+        q += [f"## {x['qid']}（単位 {u['order']}・ID {x['topic_id']}: {x['term']}）", x["stem"], ""]
+        q += [f"- {k}. {x['choices'][k]}" for k in CHOICES] + [""]
+    (out / "quiz.md").write_text("\n".join(q) + "\n", encoding="utf-8")
+
+    if terms:
+        e = ["# 説明テスト（全部読み終えた後、教材を読み返さずに書く）", "",
+             "次の語を、この分野に詳しくない友人に向けて 1〜2 文で説明する。分からなければ「分からない」と正直に書く。",
+             "答えは `explain_answers.json` に `{\"answers\": {\"語\": \"説明\"}}` の形で書く。", ""] + [f"- {t}" for t in terms]
+        (out / "explain.md").write_text("\n".join(e) + "\n", encoding="utf-8")
+
+
+# @implements REQ-335
+def explain_terms(d: Path) -> list[str] | None:
+    """説明テストの語の一覧。一覧の無い学びと語が 1 つも無い学びは None（説明テストを出さない）。"""
+    p = d / "explain_terms.json"
+    if not p.exists():
+        return None
+    try:
+        terms = read_json(p)["terms"]
+        assert isinstance(terms, list)
+        for t in terms:
+            assert isinstance(t, dict) and isinstance(t.get("term"), str) and t["term"]
+            g = t.get("goal")
+            assert g is None or (type(g) is int and g >= 1)
+    except (OSError, ValueError, KeyError, TypeError, AssertionError):
+        raise Refused("INVALID_INPUT", "説明テストの語の一覧が読めない", unreadable=[p.as_posix()])
+    return [t["term"] for t in terms] or None
+
+
+# @implements REQ-308
+def roadmap_questions(units: list[dict], current: list[dict]) -> list[dict]:
+    """その時点のロードマップの単位の問題だけを、単位の学ぶ順に（同じ単位の中は今の確認問題の順で）並べる。"""
+    order = {u["topic_id"]: u["order"] for u in units}
+    return sorted((q for q in current if q["topic_id"] in order), key=lambda q: order[q["topic_id"]])
+
+
+# @implements REQ-307
+def quiz_items(units: list[dict], questions: list[dict]) -> list[dict]:
+    """パックの確認問題に出す欄だけを取り出す。正解・正解の根拠・選択肢ごとの説明・測る到達基準は持たない。"""
+    order = {u["topic_id"]: u["order"] for u in units}
+    return [{"qid": q["qid"], "topic_id": q["topic_id"], "order": order[q["topic_id"]], "term": q["term"], "stem": q["stem"],
+             "choices": {k: q["choices"][k] for k in CHOICES}} for q in questions]
+
+
+# @implements REQ-309
+def make_snapshot(cycle: int, units: list[dict], questions: list[dict]) -> dict:
+    field = {u["topic_id"]: u["field"] for u in units}
+    return {"cycle": cycle,
+            "units": [{"order": u["order"], "topic_id": u["topic_id"], "term": u["term"], "field": u["field"]} for u in units],
+            "questions": [{"qid": q["qid"], "topic_id": q["topic_id"], "tests_goal": q["tests_goal"], "field": field[q["topic_id"]],
+                           "answer": q["answer"]} for q in questions]}
+
+
+def _missing_ancestors(p: Path) -> list[Path]:
+    """p とその親のうち、今は無い物（作るとコマンドが作った物になる）を、深い順に並べる。"""
+    out = []
+    p = p.resolve()
+    while not p.exists():
+        out.append(p)
+        p = p.parent
+    return out
+
+
+# @implements UC-019
+def build() -> dict:
+    a = contract_args("build_learner_pack.py", {"data": "data", "cycle": "cycle", "out": "text"}, ("data", "cycle", "out"))
+    d, key, t = roadmap_learning(a.data)
+    out = Path(a.out)
+    check_out(out)
+    check_cycle_free(d, a.cycle)
+    current = current_questions(d)
+    terms = explain_terms(d)
+    rm, units = roadmap_units(d)
+    bodies = delivered_bodies(d, units)
+    refs = figure_refs(units, bodies)
+    figures = figures_by_target(refs)
+    questions = roadmap_questions(units, current)
+    snapshot = make_snapshot(a.cycle, units, questions)
+    sp = snapshot_path(d, a.cycle)
+
+    created = _missing_ancestors(out)
+    created_eval = _missing_ancestors(sp.parent)
+    try:
+        (out / "units").mkdir(parents=True, exist_ok=True)
+        figs = write_figures(out, figures, refs)
+        files = [write_unit(out, u, bodies[u["topic_id"]]) for u in units]
+        write_roadmap_quiz_explain(out, rm, units, t.get("roadmapSpec") or {}, files, quiz_items(units, questions), terms)
+        sp.parent.mkdir(parents=True, exist_ok=True)
+        sp.write_text(json.dumps(snapshot, ensure_ascii=False, indent=1), encoding="utf-8")
+    except BaseException:
+        # 失敗したときはパックも写しも、コマンドが作った出力先とその親のディレクトリも残さない
+        if created:
+            shutil.rmtree(created[-1], ignore_errors=True)
+        else:
+            for c in list(out.iterdir()):
+                shutil.rmtree(c, ignore_errors=True) if c.is_dir() else c.unlink(missing_ok=True)
+        sp.unlink(missing_ok=True)
+        if created_eval:
+            shutil.rmtree(created_eval[-1], ignore_errors=True)
+        raise
+    res_files = {"roadmap": "roadmap.md", "units": files, "quiz": "quiz.md", "figures": figs}
+    if terms:
+        res_files["explain"] = "explain.md"
+    return {"snapshotPath": sp.as_posix(), "snapshot": snapshot, "files": res_files}
+
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(run(build))

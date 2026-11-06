@@ -13,8 +13,11 @@
    - `learner_answers.json`: `{"answers": {"t1-1": "ア", ...}, "units": [{"topic_id": 1, "understood": 3, "minutes": 5, "confusing": "分からなかった点（無ければ空）", "unknown_terms": ["説明が無いのに出てきた語"], "note": "気づいたこと"}], "overall": {"order_ok": true, "order_issue": "順番で困った点", "too_long": [topic_id], "too_short": [topic_id], "most_useful": [topic_id], "least_useful": [topic_id], "would_you_continue": true, "comment": "14 日続けられるか、暮らしの判断に使える気がするか、率直に"}}`
    - `learner_report.md`: 学んだ立場からの率直なレポート（何が分かって何が分からなかったか、どこで詰まったか、順番・長さ・言葉遣いの感想。褒める必要はない）
 4. `understood` は 1（分からない）/ 2（なんとなく）/ 3（人に説明できる）
-5. `topic_id` と単位を指す番号には、**`roadmap.md` に付いている順番の番号（1〜N。教材ファイル名の先頭の数字と同じ）**を書く。他の番号は使わない
+5. `topic_id` と単位を指す番号には、**`roadmap.md` の各単位に括弧で付いている ID** を書く（`quiz.md` の先頭の書き方と同じ）。教材ファイル名の先頭の数字（順番の番号）は ID ではないので使わない。`units` は単位ごとに 1 行で、どの行にも `topic_id` を書く
 
 ## 守ること
 - 教材の書き方や作り方を改善する提案は書かなくてよい。**学習者として困ったこと・分かったこと**だけを書く
 - 分からなかったことを「分かった」と書かない。正直な理解度が唯一の価値
+
+## 改訂履歴
+- 2026-11-06 単位を指す番号を、順番の番号から roadmap.md の括弧の ID に変えた（自己申告は ID 必須の本人の決定。UC-019 REQ-304・REQ-312）

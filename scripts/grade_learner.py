@@ -1,102 +1,283 @@
 #!/usr/bin/env python3
-"""学習者ロールの答えを採点し、サイクルの結果を残す。
+"""学習者役の答えと自己申告を、その周のパックの写しで採点し、周の結果を学びの置き場の eval の下に残す。
 
-    python3 scripts/grade_learner.py --data data/itc --answers <learner_answers.json> --cycle N
+    python3 scripts/grade_learner.py --data data/eng --cycle 8 --answers ../learner_packs/eng_c8/learner_answers.json [--explain <説明テストの採点>]
 
-出力: data/itc/eval/cycle_N.json（正答率 全体・分野別・到達基準別・単位別、理解度の自己申告、詰まった単位、前サイクルとの差）
+契約は UC-019 の contract.yaml の gradeLearnerAnswers。標準出力に周の結果の JSON を 1 つ出す（成功 0、errors に当たれば 1）。
 """
 from __future__ import annotations
-import argparse, json, sys
+import json
+import sys
 from pathlib import Path
 
-def main() -> int:
-    ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--answers", required=True); ap.add_argument("--cycle", type=int, required=True); ap.add_argument("--roadmap", help="学習者パックを作った時点の roadmap.json（順番→ID の写しに使う。作った後に並びが変わったとき。既定は data/<key>/roadmap.json）"); ap.add_argument("--explain", help="採点担当が書いた説明テストの採点 JSON（{\"grades\": {\"語\": 0|1|2, ...}}）")
-    a = ap.parse_args(); d = Path(a.data)
-    rm = json.loads(Path(a.roadmap or (d / "roadmap.json")).read_text(encoding="utf-8")); units = {u["topic_id"]: u for u in rm["units"]}
-    qs = {}
-    for qp in sorted((d / "roadmap_questions").glob("bundle_*.json")):
-        for q in json.loads(qp.read_text(encoding="utf-8"))["questions"]: qs[q["qid"]] = q
-    L = json.loads(Path(a.answers).read_text(encoding="utf-8")); ans = L.get("answers", {})
-    if rm.get("answer_key"):  # パック時点の正解表があればそれで採点（学習者が見た問題と今の問題が違いうる）
-        changed = [q for q, v in rm["answer_key"].items() if q in qs and qs[q]["answer"] != v]
-        for q, v in rm["answer_key"].items():
-            if q in qs: qs[q] = dict(qs[q], answer=v)
-        if changed: print(f"注: パック作成後に正解が変わった問題 {len(changed)} 件はパック時点の正解で採点: {', '.join(changed)}")
-    per_unit = {tid: {"term": u["term"], "field": u["field"], "correct": 0, "total": 0} for tid, u in units.items()}
-    wrong = []; by_field = {}
-    qs = {k: q for k, q in qs.items() if q["topic_id"] in units}  # ロードマップ外（除外済み）の問題は採点しない
-    # 到達基準の数は対象ごとに違うので、単位の goals と問題の tests_goal の最大の番号から読む
-    n_goals = max([g for u in units.values() for g in u.get("goals", [])] + [q["tests_goal"] for q in qs.values()] + [6])
-    by_goal = {g: [0, 0] for g in range(1, n_goals + 1)}
-    for qid, q in qs.items():
-        ok = ans.get(qid) == q["answer"]; pu = per_unit[q["topic_id"]]; pu["total"] += 1; pu["correct"] += ok
-        g = by_goal[q["tests_goal"]]; g[1] += 1; g[0] += ok
-        f = by_field.setdefault(units[q["topic_id"]]["field"], [0, 0]); f[1] += 1; f[0] += ok
-        if not ok: wrong.append({"qid": qid, "term": q["term"], "picked": ans.get(qid), "answer": q["answer"]})
-    total = len(qs); correct = sum(1 for qid, q in qs.items() if ans.get(qid) == q["answer"])
-    # 記録のずれの疑い: 連続する誤答の「選んだ答え」が、隣の問題の正解を 1 つずらした並びになっていないか。
-    # 理解の失敗ではなく、学習者役が答えを書き写すときに 1 問ずらした記録の誤り（msg 2 周目: 最後の 4 問が
-    # 正解イ・ウ・ア・エに対し エ・イ・ウ・ア と記録され、本人のメモは正しく理解していた 2026-09-17）。
-    order_q = list(qs.keys())
-    shift_suspect: list[str] = []
-    for i in range(len(order_q) - 2):
-        run = order_q[i:i + 3]
-        if all(ans.get(x) != qs[x]["answer"] for x in run):
-            picked = [ans.get(x) for x in run]; truth = [qs[x]["answer"] for x in run]
-            if picked[1:] == truth[:-1] or picked[:-1] == truth[1:]:
-                shift_suspect.extend(x for x in run if x not in shift_suspect)
-    # 自己申告のキー名は、学習者役に渡す指示文によって揺れる（cnv 2 周目: unit / understanding / unclear_terms で来て
-    # KeyError で落ちた 2026-09-20）。別名を正規の名前に写してから読む
-    ALIAS = {"unit": "topic_id", "no": "topic_id", "order": "topic_id",
-             "understanding": "understood", "understand": "understood",
-             "unclear_terms": "unknown_terms", "unexplained_terms": "unknown_terms",
-             "confusing_with": "confusing"}
-    def _norm(u: dict) -> dict:
-        v = dict(u)
-        for a, k in ALIAS.items():
-            if a in v and k not in v: v[k] = v.pop(a)
-        return v
-    rep = [_norm(u) for u in L.get("units", [])]
-    missing = [u for u in rep if "topic_id" not in u]
-    if missing: print(f"✘ 自己申告に単位の番号が無い行が {len(missing)} 件（キー名は topic_id / unit のどれか）"); return 1
-    self_rep = {u["topic_id"]: u for u in rep}
-    # 学習者パックは topic_id を見せず順番の番号だけを出すので、学習者は順番で報告してくる（mkt 1 周目: 42 件中 17 件しか一致せず
-    # 理解度が 1.12 と出た 2026-09-15）。報告の番号が topic_id より順番に多く一致するなら順番→topic_id に写す
-    order_to_tid = {u["order"]: tid for tid, u in units.items() if "order" in u}
-    rep_ids = set(self_rep)
-    if order_to_tid and len(rep_ids & set(order_to_tid)) > len(rep_ids & set(units)):
-        print(f"注: 学習者の単位番号を順番として読む（topic_id 一致 {len(rep_ids & set(units))} / 順番一致 {len(rep_ids & set(order_to_tid))}）")
-        self_rep = {order_to_tid[o]: u for o, u in self_rep.items() if o in order_to_tid}
-        for lst in ("too_long", "too_short", "most_useful", "least_useful"):
-            ov = L.get("overall", {}).get(lst)
-            if isinstance(ov, list): L["overall"][lst] = [order_to_tid.get(o, o) for o in ov]
-    for tid, pu in per_unit.items():
-        s = self_rep.get(tid, {}); pu["understood"] = s.get("understood"); pu["confusing"] = s.get("confusing", ""); pu["unknown_terms"] = s.get("unknown_terms", []); pu["minutes"] = s.get("minutes")
-    stuck = [tid for tid, pu in per_unit.items() if (pu["understood"] or 3) <= 1 or (pu["total"] and pu["correct"] == 0)]
-    overconfident = [tid for tid, pu in per_unit.items() if (pu["understood"] or 0) == 3 and pu["total"] and pu["correct"] < pu["total"]]
-    res = {"cycle": a.cycle, "score": f"{correct}/{total}", "rate": round(correct / max(1, total), 3),
-           "by_goal": {g: f"{c}/{n}" for g, (c, n) in by_goal.items()}, "by_field": {f: f"{c}/{n}" for f, (c, n) in by_field.items()},
-           "shift_suspect": shift_suspect,
-           "avg_understood": round(sum((pu["understood"] or 0) for pu in per_unit.values()) / max(1, len(per_unit)), 2),
-           "stuck_units": [{"topic_id": t, "term": per_unit[t]["term"], "confusing": per_unit[t]["confusing"]} for t in stuck],
-           "overconfident_units": [per_unit[t]["term"] for t in overconfident],
-           "unknown_terms": sorted({w for pu in per_unit.values() for w in (pu["unknown_terms"] or [])}),
-           "wrong": wrong, "overall": L.get("overall", {}), "per_unit": per_unit}
-    if a.explain:
-        gr = json.loads(Path(a.explain).read_text(encoding="utf-8")).get("grades", {})
-        res["explain"] = {"grades": gr, "rate": round(sum(gr.values()) / max(1, 2 * len(gr)), 3), "can_explain": sum(1 for v in gr.values() if v == 2), "n": len(gr)}
-    prev = d / "eval" / f"cycle_{a.cycle - 1}.json"
-    if prev.exists():
-        p = json.loads(prev.read_text(encoding="utf-8")); res["delta_rate"] = round(res["rate"] - p["rate"], 3); res["delta_understood"] = round(res["avg_understood"] - p["avg_understood"], 2)
-    (d / "eval").mkdir(exist_ok=True); (d / "eval" / f"cycle_{a.cycle}.json").write_text(json.dumps(res, ensure_ascii=False, indent=2), encoding="utf-8")
-    if shift_suspect:
-        print(f"注: 記録のずれの疑い {len(shift_suspect)} 問（連続する誤答が隣の正解を 1 つずらした並び）: {', '.join(shift_suspect)}。理解の失敗として教材を直す前に、学習者のメモと突き合わせる")
-    print(f"サイクル {a.cycle}: 正答 {res['score']}（{res['rate']:.0%}） 自己申告の理解度 平均 {res['avg_understood']} 詰まった単位 {len(stuck)} 過信 {len(overconfident)} 未説明の語 {len(res['unknown_terms'])}" + (f" 前回比 {res['delta_rate']:+.0%}" if "delta_rate" in res else ""))
-    if "explain" in res:
-        ex = res["explain"]; print(f"説明テスト: 説明できた {ex['can_explain']}/{ex['n']} 語（得点率 {ex['rate']:.0%}）")
-    print("到達基準別:", res["by_goal"]); print("分野別:", res["by_field"])
-    for w in wrong: print(f"   誤答 {w['qid']} {w['term']}: 選 {w['picked']} 正 {w['answer']}")
-    return 0
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from learner_eval import (CHOICES, Refused, contract_args, current_questions, read_json, result_path,  # noqa: E402
+                          roadmap_learning, run, snapshot_path)
+
+SHIFT_WINDOW = 3
+# 自己申告の欄の別名 → 決めた名前（契約の LearnerAnswers）
+ALIASES = {"understood": ("understanding", "understand"),
+           "confusing": ("confusing_with",),
+           "unknown_terms": ("unclear_terms", "unexplained_terms")}
+
+
+# @implements REQ-322
+def read_snapshot(d: Path, cycle: int) -> dict:
+    p = snapshot_path(d, cycle)
+    if not p.is_file():
+        raise Refused("NOT_FOUND", "その周のパックの写しが無い")
+    return readable_snapshot(p)
+
+
+def _pos_int(v) -> bool:
+    return type(v) is int and v >= 1
+
+
+def _text(v) -> bool:
+    return isinstance(v, str) and v != ""
+
+
+# @implements REQ-334
+def readable_snapshot(p: Path) -> dict:
+    """写しを契約の PackSnapshot の形として読む。読めなければその写しを挙げて止める。"""
+    try:
+        s = read_json(p)
+        assert isinstance(s, dict) and _pos_int(s.get("cycle"))
+        assert isinstance(s.get("units"), list) and isinstance(s.get("questions"), list)
+        for u in s["units"]:
+            assert isinstance(u, dict) and _pos_int(u.get("order")) and _pos_int(u.get("topic_id"))
+            assert _text(u.get("term")) and _text(u.get("field"))
+        for q in s["questions"]:
+            assert isinstance(q, dict) and _text(q.get("qid")) and _pos_int(q.get("topic_id")) and _pos_int(q.get("tests_goal"))
+            assert _text(q.get("field")) and q.get("answer") in CHOICES
+        units = {u["topic_id"] for u in s["units"]}
+        assert all(q["topic_id"] in units for q in s["questions"])
+    except (OSError, ValueError, AssertionError):
+        raise Refused("INVALID_INPUT", "その周のパックの写しが読めない", unreadable=[p.as_posix()])
+    return s
+
+
+# @implements REQ-332
+def check_result_free(d: Path, cycle: int) -> None:
+    p = result_path(d, cycle)
+    if p.exists():
+        raise Refused("CONFLICT", "その周の結果が既にある")
+
+
+# @implements REQ-329
+def read_answers(path: str) -> dict:
+    p = Path(path)
+    if not p.is_file():
+        raise Refused("NOT_FOUND", "答えのファイルが無い", unreadable=[path])
+    try:
+        L = read_json(p)
+        assert isinstance(L, dict) and isinstance(L.get("answers"), dict) and isinstance(L.get("units"), list)
+    except (OSError, ValueError, AssertionError):
+        raise Refused("INVALID_INPUT", "答えのファイルが読めない", unreadable=[path])
+    outside = sorted(q for q, v in L["answers"].items() if v not in CHOICES)
+    if outside:
+        raise Refused("INVALID_INPUT", "選択肢の外の答えがある", qids=outside)
+    return L
+
+
+# @implements REQ-330
+def read_explain_grades(path: str) -> dict:
+    p = Path(path)
+    if not p.is_file():
+        raise Refused("NOT_FOUND", "説明テストの採点のファイルが無い", unreadable=[path])
+    try:
+        g = read_json(p)["grades"]
+        assert isinstance(g, dict) and all(type(v) is int and v in (0, 1, 2) for v in g.values())
+    except (OSError, ValueError, KeyError, TypeError, AssertionError):
+        raise Refused("INVALID_INPUT", "説明テストの採点のファイルが読めない", unreadable=[path])
+    return g
+
+
+def _in_range(name: str, v) -> bool:
+    """契約の LearnerAnswers の欄の値の範囲。"""
+    if name == "understood":
+        return type(v) is int and v in (1, 2, 3)
+    if name == "confusing":
+        return isinstance(v, str)
+    if name == "unknown_terms":
+        return isinstance(v, list) and all(isinstance(w, str) for w in v)
+    if name == "minutes":
+        return type(v) in (int, float) and v >= 0
+    return True
+
+
+# @implements REQ-312
+def unreadable_rows(rows: list, unit_ids: set[int]) -> list[dict]:
+    """自己申告の読めない行を、当たった条件（契約の ToolError の conditions の語）とともにすべて挙げる。"""
+    ids = [r.get("topic_id") if isinstance(r, dict) else None for r in rows]
+    valid = lambda v: type(v) is int  # noqa: E731
+    count: dict[int, int] = {}
+    for v in ids:
+        if valid(v):
+            count[v] = count.get(v, 0) + 1
+    hits = []
+    for i, r in enumerate(rows):
+        cond = []
+        tid = r.get("topic_id") if isinstance(r, dict) else None
+        if not isinstance(r, dict) or "topic_id" not in r:
+            cond.append("missingId")
+        elif not valid(tid):
+            cond.append("idNotInteger")
+        else:
+            if tid not in unit_ids:
+                cond.append("idNotInSnapshot")
+            if count[tid] > 1:
+                cond.append("duplicateId")
+        if isinstance(r, dict):
+            conflict = out_of_range = False
+            for name, alts in (*ALIASES.items(), ("minutes", ())):
+                keys = [k for k in (name, *alts) if k in r]
+                if any(r[k] != r[keys[0]] for k in keys[1:]):
+                    conflict = True
+                if any(not _in_range(name, r[k]) for k in keys):
+                    out_of_range = True
+            cond += ["aliasConflict"] * conflict + ["valueOutOfRange"] * out_of_range
+        if cond:
+            hits.append({"index": i, "conditions": cond})
+    return hits
+
+
+# @implements REQ-311
+def normalize_row(r: dict) -> dict:
+    """別名を決めた名前に写す。"""
+    v = dict(r)
+    for name, alts in ALIASES.items():
+        for a in alts:
+            if a in v:
+                x = v.pop(a)
+                v.setdefault(name, x)
+    return v
+
+
+# @implements REQ-310
+def grade_questions(snap: dict, answers: dict, current: list[dict]) -> tuple[list[dict], list[str]]:
+    """写しの問題と正解で採点し、写しと今とで正解が変わった問題を挙げる。"""
+    now = {q["qid"]: q["answer"] for q in current}
+    graded = [dict(q, picked=answers.get(q["qid"]), ok=answers.get(q["qid"]) == q["answer"]) for q in snap["questions"]]
+    changed = [q["qid"] for q in snap["questions"] if q["qid"] in now and now[q["qid"]] != q["answer"]]
+    return graded, changed
+
+
+# @implements REQ-313
+def shift_suspects(graded: list[dict]) -> list[str]:
+    out: list[str] = []
+    for i in range(len(graded) - SHIFT_WINDOW + 1):
+        win = graded[i:i + SHIFT_WINDOW]
+        if any(q["ok"] for q in win):
+            continue
+        picked = [q["picked"] for q in win]
+        truth = [q["answer"] for q in win]
+        if picked[1:] == truth[:-1] or picked[:-1] == truth[1:]:
+            out.extend(q["qid"] for q in win if q["qid"] not in out)
+    return out
+
+
+def frac(c: int, n: int) -> str:
+    return f"{c}/{n}"
+
+
+# @implements REQ-339
+def previous_result(d: Path, cycle: int) -> dict | None:
+    """その周より小さい番号の周の結果のうち最も大きい番号の物。契約の readCycleResult の形として読めなければ挙げて止める。"""
+    prev = []
+    for p in (d / "eval").glob("cycle_*.json"):
+        n = p.stem[len("cycle_"):]
+        if n.isdigit() and int(n) < cycle:
+            prev.append((int(n), p))
+    if not prev:
+        return None
+    p = max(prev)[1]
+    num = lambda v, hi: type(v) in (int, float) and 0 <= v <= hi  # noqa: E731
+    try:
+        r = read_json(p)
+        assert isinstance(r, dict) and type(r.get("cycle")) is int and r["cycle"] >= 1
+        assert num(r.get("rate"), 1) and num(r.get("avg_understood"), 3)
+    except (OSError, ValueError, AssertionError):
+        raise Refused("INVALID_INPUT", "差を取る前の周の結果が読めない", unreadable=[p.as_posix()])
+    return r
+
+
+# @implements REQ-314
+def cycle_result(cycle: int, snap: dict, graded: list[dict], changed: list[str], rows: list[dict],
+                 grades: dict | None, prev: dict | None) -> dict:
+    per_unit: dict[str, dict] = {}
+    for u in snap["units"]:
+        per_unit[str(u["topic_id"])] = {"term": u["term"], "field": u["field"], "correct": 0, "total": 0, "understood": None}
+    by_goal: dict[int, list[int]] = {}
+    by_field: dict[str, list[int]] = {}
+    for q in graded:
+        pu = per_unit[str(q["topic_id"])]
+        pu["total"] += 1
+        pu["correct"] += q["ok"]
+        for acc in (by_goal.setdefault(q["tests_goal"], [0, 0]), by_field.setdefault(q["field"], [0, 0])):
+            acc[0] += q["ok"]
+            acc[1] += 1
+    for r in rows:
+        pu = per_unit[str(r["topic_id"])]
+        for k in ("understood", "confusing", "unknown_terms", "minutes"):
+            if k in r:
+                pu[k] = r[k]
+    correct = sum(q["ok"] for q in graded)
+    total = len(graded)
+    reported = [pu["understood"] for pu in per_unit.values() if pu["understood"] is not None]
+
+    def ref(tid: str) -> dict:
+        x = {"topic_id": int(tid), "term": per_unit[tid]["term"]}
+        if per_unit[tid].get("confusing"):
+            x["confusing"] = per_unit[tid]["confusing"]
+        return x
+
+    res = {"cycle": cycle, "score": frac(correct, total), "rate": round(correct / total, 3) if total else 0,
+           "by_goal": {str(g): frac(*by_goal[g]) for g in sorted(by_goal)},
+           "by_field": {f: frac(*v) for f, v in by_field.items()},
+           "per_unit": per_unit,
+           "reported_units": len(reported),
+           "avg_understood": round(sum(reported) / len(reported), 2) if reported else 0,
+           "stuck_units": [ref(t) for t, pu in per_unit.items()
+                           if pu["understood"] == 1 or (pu["total"] and pu["correct"] == 0)],
+           "overconfident_units": [ref(t) for t, pu in per_unit.items()
+                                   if pu["understood"] == 3 and pu["correct"] < pu["total"]],
+           "unknown_terms": sorted({w for pu in per_unit.values() for w in pu.get("unknown_terms", [])}),
+           "shift_suspect": shift_suspects(graded),
+           "shift_window": SHIFT_WINDOW,
+           "wrong": [{"qid": q["qid"], "picked": q["picked"], "answer": q["answer"]} for q in graded if not q["ok"]],
+           "changed_answers": changed}
+    if grades is not None:
+        res["explain"] = {"rate": round(sum(grades.values()) / (2 * len(grades)), 3) if grades else 0,
+                          "can_explain": sum(1 for v in grades.values() if v == 2), "n": len(grades)}
+    if prev is not None:
+        res["delta_rate"] = round(res["rate"] - prev["rate"], 3)
+        res["delta_understood"] = round(res["avg_understood"] - prev["avg_understood"], 2)
+    return res
+
+
+# @implements UC-019
+def grade() -> dict:
+    a = contract_args("grade_learner.py", {"data": "data", "cycle": "cycle", "answers": "text", "explain": "text"},
+                      ("data", "cycle", "answers"))
+    d, _, _ = roadmap_learning(a.data)
+    current = current_questions(d)
+    snap = read_snapshot(d, a.cycle)
+    check_result_free(d, a.cycle)
+    prev = previous_result(d, a.cycle)
+    L = read_answers(a.answers)
+    grades = read_explain_grades(a.explain) if a.explain is not None else None
+    hits = unreadable_rows(L["units"], {u["topic_id"] for u in snap["units"]})
+    if hits:
+        raise Refused("INVALID_INPUT", "自己申告に読めない行がある", rows=hits)
+    rows = [normalize_row(r) for r in L["units"]]
+    graded, changed = grade_questions(snap, L["answers"], current)
+    res = cycle_result(a.cycle, snap, graded, changed, rows, grades, prev)
+    p = result_path(d, a.cycle)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8")
+    return res
+
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(run(grade))

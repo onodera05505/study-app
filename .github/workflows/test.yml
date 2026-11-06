@@ -19,4 +19,6 @@ jobs:
           python-version: "3.12"
       - run: git clone --depth 1 --branch "$(grep -o 'develop-core#v[0-9.]*' apm.yml | cut -d'#' -f2)" https://github.com/tsay-dev/harness .harness
       - run: npm ci
+      # 学習者役のパックの図を PNG に描く Chromium と、日本語の字形を含む依存のフォント（scripts/render_svg_png.mjs）
+      - run: npx playwright install --with-deps chromium
       - run: npm test
