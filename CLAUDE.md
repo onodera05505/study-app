@@ -96,6 +96,7 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 | ポートフォリオ提出に向けて README・CLAUDE.md・経緯コメントを今の姿に揃えた記録（ずれの棚卸し・門の扱い・公開前に見るもの） | [`docs/作業ログ_2026-11-02_ポートフォリオ提出.md`](docs/作業ログ_2026-11-02_ポートフォリオ提出.md) |
 | **エンジニア入門（`eng`）を一晩で作った記録**（資格型と学び型のハイブリッド。章で束ねる・3 段の印・200 単位・確認問題 400・図 18。到達基準の数の決め打ち・D1 の LIKE の上限・独立解答の範囲・並行の作業場所） | [`docs/作業ログ_2026-11-02_エンジニア入門.md`](docs/作業ログ_2026-11-02_エンジニア入門.md) |
 | **学習者役 3〜6 周目と未返済 482 件の返済を Workflow で一晩回した記録**（収束しない指標と 3 周とも詰まった 28 単位の構造の案、baseline 482→24、門が閉じた UC の欠陥 13 件は別ブランチ `repay-baseline-2026-11-03`。朝の判断待ちの一覧） | [`docs/作業ログ_2026-11-03_学習者役と返済.md`](docs/作業ログ_2026-11-03_学習者役と返済.md) |
+| **残作業の台帳の一括消化**（OQ・DEFERRED・baseline を 5 分類 19 束に仕分け、仕様 31 本を承認 → テスト∥実装 → 審査 2 巡。baseline 19→0。教材の門 GOAL-10 は収束せず草案で止めた。本番の移行 0008 と配備は本人待ち） | [`docs/作業ログ_2026-11-06_台帳の一括消化.md`](docs/作業ログ_2026-11-06_台帳の一括消化.md) |
 | **原本 harness への移行の棚卸し**（docs-migrate Phase 0。文書ごとの分類と処遇、実体と状態値、矛盾。本人の答えは `OPEN-QUESTIONS.md`） | [`docs/INVENTORY.md`](docs/INVENTORY.md) |
 | attic: 旧の要件の正本 `spec.yaml`（REQ は `docs/goals/**/REQ-nnn.md` に移った。旧パスは退役の印だけ） | [`docs/attic/spec.yaml`](docs/attic/spec.yaml) / [`docs/spec.yaml`](docs/spec.yaml) |
 | attic: 旧のユースケースの書類 UC-001〜019（UC は `docs/goals/<GOAL>/<UC>/UC.md` に移った。旧パスは退役の印だけ） | [`docs/attic/usecases/`](docs/attic/usecases/) / [`docs/usecases/`](docs/usecases/) |
