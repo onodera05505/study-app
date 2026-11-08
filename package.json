@@ -12,7 +12,7 @@
     "db:apply:local": "wrangler d1 migrations apply study-app-db --local",
     "db:apply:remote": "wrangler d1 migrations apply study-app-db --remote",
     "db:seed:local": "node scripts/seed.mjs --local",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit -p . && tsc --noEmit -p tsconfig.node.json",
     "check:render": "bash scripts/check_render.sh",
     "audit:screens": "bash scripts/audit_screens.sh",
     "test": "node .harness/tools/spec-lint/spec-lint.mjs validate && node .harness/tools/trace-check/trace-check.mjs && vitest run && python3 scripts/check_source.py && python3 scripts/check_docs.py",
@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260823.1",
+    "@types/node": "^24.19.2",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
     "@vitejs/plugin-react": "^6.1.0",
