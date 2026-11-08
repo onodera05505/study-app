@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs'
 import { beforeAll, describe, expect, it } from 'vitest'
 
 /**
@@ -6,9 +7,6 @@ import { beforeAll, describe, expect, it } from 'vitest'
  * （理解度・受験履歴）へ向かう operation が 1 つも無いことを確かめる。
  * YAML の読み方は依存を足さず、契約の書式（operations の下の 2 段字下げが operation 名）に沿って行で読む。
  */
-
-/** node の組み込みは実行時に読む（型の解決を通さない）。 */
-const nodeModule = (name: string) => import(/* @vite-ignore */ name) as Promise<any>
 
 type Operation = {
   name: string
@@ -54,9 +52,8 @@ const RECORD_WORDS_IN_IDENTIFIERS = /progress|session|history|exam/i
 /** 業務語（summary）に現れてはならない、学び側の本人の記録の語（用語集の「本人の記録」「理解度」「受験履歴」）。 */
 const RECORD_WORDS_IN_SUMMARY = /理解度|受験履歴|本人の記録|進捗|progress|history|exam/i
 
-beforeAll(async () => {
-  const fs = await nodeModule('node:fs')
-  contractText = fs.readFileSync(
+beforeAll(() => {
+  contractText = readFileSync(
     new URL(
       '../../docs/goals/GOAL-05-accounts-and-grants/UC-011-manage-accounts-and-grants/contract.yaml',
       import.meta.url,

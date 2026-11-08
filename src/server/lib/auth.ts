@@ -99,7 +99,7 @@ export async function issueToken(
   return sign(payload, secret, 'HS256')
 }
 
-/** @implements REQ-289 */
+/** @implements REQ-289, BR-044 */
 export async function readToken(secret: string, token: string): Promise<TokenPayload | null> {
   try {
     return (await verify(token, secret, 'HS256')) as TokenPayload

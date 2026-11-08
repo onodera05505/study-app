@@ -3,13 +3,13 @@ import { describe, expect, it } from 'vitest'
 import app from '../../src/server/index'
 import type { Bindings } from '../../src/server/lib/db'
 import { issueToken } from '../../src/server/lib/auth'
+import { learningD1, sqliteOf } from '../portal/repay_UC-014_sqlite_d1'
 
 /** DB を束ねない環境。DB が要る処理まで進んだ呼び出しは例外になるので、
  *  「検証で断ったか（400）」と「処理に進んだか（400 でない）」を切り分けられる。 */
 const env = (over: Partial<Bindings> = {}) => ({ EXAM: 'ip', JWT_SECRET: 'test-secret', ...over }) as Bindings
 const SECRET = 'test-secret'
 const JAPANESE = /[ぁ-んァ-ヶ一-龥]/
-const json = (body: unknown) => ({ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
 
 /** /api の具体の経路の一覧を、サーバが登録した経路の表から導く（一覧の正本はサーバの経路の定義。
  *  BR-001・R-102）。手書きの一覧は経路を足したときに取り残され、守りの漏れを検査が見逃す。
@@ -34,8 +34,6 @@ const expectRoutesDerived = () => {
   expect(PUBLIC_ROUTES.map(label).sort(), '認証を要さない経路').toEqual([
     'GET /api/auth/config',
     'GET /api/health',
-    'POST /api/auth/login',
-    'POST /api/auth/register',
     'POST /api/auth/sso',
   ])
   // 手書きの一覧に入っていなかった :id 付きの経路も導けている
@@ -65,7 +63,7 @@ const errorOf = async (res: Response) => {
   return error
 }
 
-describe('認証の境界（保護された経路と公開の経路）', () => {
+describe('認証の境界（保護された経路と公開の経路。UC-017）', () => {
   // @covers REQ-255#credential-absent
   it('認証の要る経路は、経路の表から導いた全件が、トークン無し・壊れたトークン・別の秘密・期限切れのどれでも 401 の {error}', async () => {
     expectRoutesDerived()
@@ -100,7 +98,7 @@ describe('認証の境界（保護された経路と公開の経路）', () => {
   })
 })
 
-describe('セキュリティヘッダ（公開・認証の要る経路の両方）', () => {
+describe('セキュリティヘッダ（公開・認証の要る経路の両方。UC-017）', () => {
   // @covers REQ-259#headers-on-refusal
   it('公開の応答にも 401 の応答にも 5 つのヘッダが載る', async () => {
     for (const [method, path, token] of [['GET', '/api/health', undefined], ['GET', '/api/fields', undefined]] as const) {
@@ -114,52 +112,41 @@ describe('セキュリティヘッダ（公開・認証の要る経路の両方�
   })
 })
 
-describe('本文のスキーマ検証', () => {
-  // 400 で断ったもの＝処理に進んでいない（進めば DB が無い環境なので 400 にはならない）
-  it('register は条件を満たさない本文を処理に進めず 400、満たす本文は進む', async () => {
-    for (const body of [
-      {},
-      { email: 'not-an-email', password: 'password1', name: '名' },
-      { email: 'a@example.com', password: 'short', name: '名' },
-      { email: 'a@example.com', password: 'password1', name: '' },
-    ]) {
-      const res = await app.request('/api/auth/register', json(body), env())
-      expect(res.status, JSON.stringify(body)).toBe(400)
-      await errorOf(res)
-    }
-    const ok = await app.request('/api/auth/register', json({ email: 'a@example.com', password: 'password1', name: '名' }), env())
-    expect(ok.status).not.toBe(400)
-  })
-
-  it('login は条件を満たさない本文を照合に進めず 400、満たす本文は進む', async () => {
-    for (const body of [{}, { email: 'not-an-email', password: 'password1' }, { email: 'a@example.com', password: 'short' }]) {
-      const res = await app.request('/api/auth/login', json(body), env())
-      expect(res.status, JSON.stringify(body)).toBe(400)
-      await errorOf(res)
-    }
-    const ok = await app.request('/api/auth/login', json({ email: 'a@example.com', password: 'password1' }), env())
-    expect(ok.status).not.toBe(400)
-  })
-
+describe('本文のスキーマ検証（UC-017）', () => {
   // @covers REQ-257#reason-names-the-field
-  it('検証に失敗した 400 の {error} は、どの項目が悪いか分かる日本語（英語のスキーマの文言を出さない）', async () => {
-    const cases: Array<[unknown, RegExp | null]> = [
-      [{ email: 'not-an-email', password: 'password1', name: '名' }, /メール/],
-      [{ email: 'a@example.com', password: 'short', name: '名' }, /パスワード/],
-      [{}, null],
+  it('検証に失敗した 400 の {error} は、満たされていない項目を日本語で指す（英語のスキーマの文言を出さない）', async () => {
+    // 学び側で本文を取る経路は、認証を要さない発行（UC-013 signInWithCode）と認証を要する変更（UC-004 startSession）。
+    // 学び側のパスワードの経路は受け持たない経路で、この文の入力に取らない（REQ-204・REQ-256）。
+    const PORTAL = { SSO_PORTAL_URL: 'https://portal.example', SSO_SECRET: 'shared' }
+    const db = await learningD1()
+    sqliteOf(db)
+      .prepare('insert into users (id, email, name, password_hash, role) values (?, ?, ?, ?, ?)')
+      .run('u-1', 'yudai@example.com', '山田 太郎', 'not-used-for-login', 'MEMBER')
+    const token = await issueToken(SECRET, { id: 'u-1', name: '山田 太郎', role: 'MEMBER' })
+    const cases: Array<[string, string, unknown, Partial<Bindings>, RegExp]> = [
+      ['/api/auth/sso', 'anonymous', {}, PORTAL, /コード/],
+      ['/api/auth/sso', 'anonymous', { code: 12 }, PORTAL, /コード/],
+      ['/api/auth/sso', 'anonymous', { code: 'a'.repeat(101) }, PORTAL, /コード/],
+      ['/api/sessions', 'member', {}, { DB: db }, /種別/],
+      ['/api/sessions', 'member', { kind: 'zzz' }, { DB: db }, /種別/],
+      ['/api/sessions', 'member', { kind: 'drill' }, { DB: db }, /論点/],
+      ['/api/sessions', 'member', { kind: 'field' }, { DB: db }, /分野/],
     ]
-    for (const [body, needle] of cases) {
-      const res = await app.request('/api/auth/register', json(body), env())
-      expect(res.status, JSON.stringify(body)).toBe(400)
+    for (const [path, who, body, over, needle] of cases) {
+      const label = `${path} ${JSON.stringify(body)}`
+      const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+      if (who === 'member') headers.Authorization = `Bearer ${token}`
+      const res = await app.request(path, { method: 'POST', headers, body: JSON.stringify(body) }, env(over))
+      expect(res.status, label).toBe(400)
       const error = await errorOf(res)
-      if (needle) expect(error, JSON.stringify(body)).toMatch(needle)
-      // zod の既定の文言がそのまま出ていない（日本語の文に例示のメールアドレスが入るのは可）
-      expect(error, JSON.stringify(body)).not.toMatch(/Invalid|Required|String must|Expected|received/i)
+      expect(error, label).toMatch(needle)
+      // zod の既定の文言がそのまま出ていない
+      expect(error, label).not.toMatch(/Invalid|Required|String must|Expected|received/i)
     }
   })
 })
 
-describe('知らない経路と想定していない例外', () => {
+describe('知らない経路と想定していない例外（UC-017）', () => {
   // @covers REQ-256#unknown-path-authenticated
   it('知らない /api の経路は 404 の {error}（本人として呼んでも同じ）', async () => {
     const token = await issueToken(SECRET, { id: 'u-1', name: '名', role: 'MEMBER' })

@@ -21,6 +21,8 @@ export function Exams() {
   // 取得の失敗は操作の失敗と別に持つ。null のままにすると「読み込み中…」が消えない。
   const [loadError, setLoadError] = useState('')
   const [busy, setBusy] = useState(false)
+  // 作れなかったあとに進行中のテストそのものを取れなかった理由
+  const [guideError, setGuideError] = useState('')
   const navigate = useNavigate()
 
   const load = useCallback(() => {
@@ -37,18 +39,23 @@ export function Exams() {
 
   /** 進行中のテストがあって作れなかったときの案内。断りの本文は ErrorBody だけなので、
    *  範囲と回答の進み具合は GET /api/sessions/current で取り直して添える。
-   *  取り直せなかったときや、取り直したら進行中のテストが無かったときは、入口への案内だけを出す。 */
-  async function inProgressGuide(): Promise<string> {
+   *  取り直せなかったときは、範囲と進み具合の代わりに入口への案内と取れなかった理由を出し、読み直す手段を添える。
+   *  取り直したら進行中のテストが無かったときは、入口への案内だけを出す。 */
+  // @implements REQ-110, BR-017, BR-014
+  async function inProgressGuide() {
     const guide = '練習テスト画面から再開または破棄してください。'
+    setGuideError('')
     try {
       const d = await api<{ session: InProgress | null }>('/sessions/current')
-      if (d.session) {
-        return `進行中のテストがあります（${d.session.scopeLabel}・${d.session.answered}／${d.session.questionCount} 問 回答済み）。${guide}`
-      }
-    } catch {
-      // 範囲と進み具合が取れなくても、再開か破棄の入口への案内は出す
+      setError(
+        d.session
+          ? `進行中のテストがあります（${d.session.scopeLabel}・${d.session.answered}／${d.session.questionCount} 問 回答済み）。${guide}`
+          : `進行中のテストがあります。${guide}`,
+      )
+    } catch (e: any) {
+      setError(`進行中のテストがあります。${guide}`)
+      setGuideError(e.message)
     }
-    return `進行中のテストがあります。${guide}`
   }
 
   // @implements REQ-104, REQ-109, REQ-110
@@ -58,11 +65,13 @@ export function Exams() {
     if (!window.confirm(`${exam.mockMinutes}分のタイマーが始まります。受験を開始しますか？`)) return
     setBusy(true)
     setError('')
+    setGuideError('')
     try {
       const s = await api<{ id: string }>('/sessions', { method: 'POST', body })
       navigate(`/sessions/${s.id}`)
     } catch (e: any) {
-      setError(e.status === 409 ? await inProgressGuide() : e.message)
+      if (e.status === 409) await inProgressGuide()
+      else setError(e.message)
     } finally {
       setBusy(false)
     }
@@ -81,6 +90,18 @@ export function Exams() {
         {exam.passRule}
       </div>
       {error && <p className="error">{error}</p>}
+      {guideError && (
+        <div className="notice">
+          <p className="error" style={{ margin: 0 }}>
+            {guideError}
+          </p>
+          <div className="btn-row" style={{ marginTop: '0.6rem' }}>
+            <button className="btn" onClick={() => inProgressGuide()}>
+              再読み込み
+            </button>
+          </div>
+        </div>
+      )}
 
       <h2>{exam.roadmap ? '1 日分（3 単位・6 問）を解く' : '公開回をそのまま解く'}</h2>
       {/* @implements REQ-102, REQ-103 */}

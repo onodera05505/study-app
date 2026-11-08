@@ -18,13 +18,13 @@ API の形は静かに壊れる。SELECT の別名を1つ変えれば画面の�
 
 1. **認証の境界** — 保護された全経路に未認証・壊れたトークンで当てて 401 か。
    200 なら保護が外れている。500 ならトークン検証で落ちている。どちらも問題
-2. **失敗時の形** — 入力エラー 400 / 重複登録 409 / ログイン失敗 401 / 未知の経路 404。
+2. **失敗時の形** — 入力エラー 400 / 進行中の重複 409 / 換えられないコード 401 / 未知の経路と受け持たない経路 404。
    本文が `{error: string}` で日本語か（クライアントは `data?.error` をそのまま
    画面に出すので、この形が崩れると「通信に失敗しました」しか出せなくなる）
-3. **各 GET の形** — `src/server/routes/*.ts` の実装から書き起こした期待形と突き合わせる。
+3. **各 GET の形** — 各 UC の `contract.yaml` の response から書き起こした期待形と突き合わせる。
    配列は**全要素**を見る（1件目だけ見ても、NULL になる列は拾えない）。
-   期待形のキーには「クライアントが参照しているか」の印を付けてあり、
-   **クライアントが使うキーが欠けたらエラー**、それ以外は警告にする
+   期待形のキーには印を付けてあり、**契約が必須とするキーとクライアントが使うキーが欠けたらエラー**、
+   それ以外は警告にする
 4. **件数の整合** — /fields /glossary /exams の件数が、ローカル D1 の SELECT と一致するか。
    「API が 200 を返した」と「中身が全部入っている」は別（出典が全880問おかしいまま
    数か月気づかなかった事故と同じ構図）
@@ -43,7 +43,7 @@ API の形は静かに壊れる。SELECT の別名を1つ変えれば画面の�
 9. **セキュリティヘッダ** — 全応答に CSP・HSTS・X-Frame-Options DENY・nosniff・
    Referrer-Policy が載っているか
 10. **出題の範囲と畳み込み** — 論点別の出題がその論点に紐づく過去問だけで、1回の出題に
-    同じ内容の問題が2度出ないか。出題できる過去問が無い範囲は 400 で、セッションを作らないか
+    同じ内容の問題が2度出ないか。出題できる過去問が無い範囲は 404 で、セッションを作らないか
 11. **公開回の通し受験** — その回の過去問の件数のまま（同一内容を畳まない）で、
     問番号の昇順に出るか
 12. **完了していない結果と破棄** — 進行中のセッションの結果が 404 か（未回答の正解と解説が
@@ -60,7 +60,9 @@ API の形は静かに壊れる。SELECT の別名を1つ変えれば画面の�
 
 ## 触るもの・触らないもの
 
-- 検査用アカウント（`apicheck@example.com` / `apicheck-other@example.com`）の中だけで完結する。
+- 検査の本人（`apicheck@example.com` / `apicheck-other@example.com`）の中だけで完結する。検査の本人は、
+  この検査が起こす手元の SSO の偽物（まなびばの交換 exchangeCode の代役。`SSO_FAKE_PORT`）が換えた使い捨てコードを
+  学び側の signInWithCode に渡して作る。学び側のパスワードでの登録とログインの経路はどの配備にも無い（REQ-204）
   既存データの UPDATE / DELETE はしない。理解度の記録（progress）も書かない
 - 消すのは検査用アカウント自身の「進行中セッション」だけ（残っていると 409 で
   次回の検査が始められないため）。終わったセッションは残す
@@ -76,6 +78,8 @@ import json
 import re
 import subprocess
 import sys
+import threading
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -86,7 +90,12 @@ ROOT = Path(__file__).resolve().parent.parent
 
 EMAIL = "apicheck@example.com"
 EMAIL_OTHER = "apicheck-other@example.com"
-PASSWORD = "apicheck-pass-1234"
+
+# 手元の SSO の偽物。check_api.sh が学び側の配備にまなびばの場所（SSO_PORTAL_URL）としてこの場所を、
+# 共有秘密（SSO_SECRET）としてこの値を与える。値はローカルのこの検査専用で、本番の値ではない。
+SSO_FAKE_PORT = 8791
+SSO_FAKE_URL = f"http://127.0.0.1:{SSO_FAKE_PORT}"
+SSO_FAKE_SECRET = "check-api-local-shared-not-a-secret"
 
 # 日本語が1文字も無いエラーメッセージは、たいてい内部の例外がそのまま出ている
 JAPANESE = re.compile(r"[ぁ-んァ-ヶ一-龥]")
@@ -189,12 +198,12 @@ def compare_shape(value, spec, path, errors, warnings):
 
 
 # --------------------------------------------------------------------------
-# 期待形（src/server/routes/*.ts から書き起こし。* はクライアントが参照するキー）
+# 期待形（各 UC の contract.yaml の response から書き起こし。* は契約が必須とするキーかクライアントが参照するキー）
 # --------------------------------------------------------------------------
 
 ME = {
     "*user": {"*id": "str", "*name": "str", "*role": "str"},
-    "topics": {"total": "int", "understood": "int", "partly": "int"},
+    "*topics": {"*total": "int", "*understood": "int", "*partly": "int"},
     "*recentSessions": [
         {
             "*id": "str",
@@ -202,10 +211,10 @@ ME = {
             "*scopeLabel": "str",
             "*questionCount": "int",
             "*correctCount": "int?",
-            "finishedAt": "int?",
+            "*finishedAt": "int?",
         }
     ],
-    "nextTopics": [{"id": "int", "term": "str", "questionCount": "int", "field": "str"}],
+    "*nextTopics": [{"*id": "int", "*term": "str", "*questionCount": "int", "*field": "str"}],
     "*visits": {"*today": "str", "*streak": "int", "*longest": "int", "*total": "int"},
 }
 
@@ -248,6 +257,9 @@ TOPICS = {
             "*itemName": "str",
             "*isNew": "int",
             "*sortOrder": "int?",
+            "*round": "str?",
+            "*roundLabel": "str?",
+            "*tier": "int?",
         }
     ]
 }
@@ -265,13 +277,14 @@ TOPIC_DETAIL = {
         "*explanation": "str?",
         "*detail": "str?",
         "*questionCount": "int",
-        "isNew": "int",
+        "*isNew": "int",
         "*status": "int?",
         "*field": "str",
         "*major": "str",
         "*middle": "str",
         "*middleNo": "int",
         "*itemName": "str",
+        "*tier": "int?",
         "syllabusItemId": "int",
     },
     "*questions": [
@@ -565,39 +578,69 @@ class Report:
             self.warn(f"{label}: error が日本語でない（{body['error'][:60]}）")
 
 
-def signup_code(exam: str) -> str | None:
-    """.dev.vars か wrangler.jsonc の vars から合言葉を読む。未設定なら None。"""
-    dev = ROOT / ".dev.vars"
-    if dev.exists():
-        for line in dev.read_text(encoding="utf-8").splitlines():
-            if line.strip().startswith("SIGNUP_CODE="):
-                return line.split("=", 1)[1].strip().strip("'\"")
-    raw = (ROOT / "wrangler.jsonc").read_text(encoding="utf-8")
-    raw = re.sub(r"(?m)^\s*//.*$", "", raw)
-    cfg = json.loads(raw)
-    for vars_ in (cfg.get("env", {}).get(exam, {}).get("vars", {}), cfg.get("vars", {})):
-        if vars_.get("SIGNUP_CODE"):
-            return vars_["SIGNUP_CODE"]
-    return None
+class SsoFake:
+    """手元の SSO の偽物。まなびばの exchangeCode（POST /api/sso/exchange）の形だけを持つ。
+
+    使い捨てコードは issue() がこの検査の中で発行し、学び側サーバが共有秘密を添えて換えに来たら
+    1 回だけ本人のメールと名前に換える。断りの形は契約 exchangeCode の errors の並び
+    （共有秘密 → 入力の形 → コードの状態）。"""
+
+    def __init__(self, app_key: str):
+        self.app_key = app_key
+        self.codes: dict[str, dict] = {}
+        self.lock = threading.Lock()
+        fake = self
+
+        class Handler(BaseHTTPRequestHandler):
+            def log_message(self, *args):  # 検査の出力を汚さない
+                pass
+
+            def do_POST(self):
+                if self.path != "/api/sso/exchange":
+                    return self.reply(404, {"error": "見つかりません"})
+                try:
+                    body = json.loads(self.rfile.read(int(self.headers.get("Content-Length") or 0)) or b"{}")
+                except json.JSONDecodeError:
+                    body = None
+                if not isinstance(body, dict) or body.get("secret") != SSO_FAKE_SECRET:
+                    return self.reply(403, {"error": "共有秘密が合いません"})
+                code, app = body.get("code"), body.get("app")
+                if not isinstance(code, str) or not code or not isinstance(app, str) or not app:
+                    return self.reply(400, {"error": "入力が正しくありません"})
+                with fake.lock:
+                    held = fake.codes.get(code)
+                    if held is None or held["used"] or held["app"] != app:
+                        return self.reply(401, {"error": "コードが無効です"})
+                    held["used"] = True
+                self.reply(200, {"email": held["email"], "name": held["name"]})
+
+            def reply(self, status: int, body: dict):
+                data = json.dumps(body, ensure_ascii=False).encode()
+                self.send_response(status)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Content-Length", str(len(data)))
+                self.end_headers()
+                self.wfile.write(data)
+
+        self.server = ThreadingHTTPServer(("127.0.0.1", SSO_FAKE_PORT), Handler)
+        threading.Thread(target=self.server.serve_forever, daemon=True).start()
+
+    def issue(self, email: str, name: str) -> str:
+        """その本人・この学び宛ての未使用のコードを発行する（まなびばの startSso の代役）。"""
+        code = str(uuid.uuid4())
+        with self.lock:
+            self.codes[code] = {"email": email, "name": name, "app": self.app_key, "used": False}
+        return code
+
+    def close(self):
+        self.server.shutdown()
 
 
-def account(c: Client, r: Report, email: str, name: str, code: str | None) -> str | None:
-    """検査用アカウントを用意してトークンを返す。あれば login、無ければ register。"""
-    body = {"email": email, "password": PASSWORD, "name": name}
-    if code:
-        body["signupCode"] = code
-    st, data, _ = c.call("POST", "/auth/register", body, token=None)
-    if st == 201:
-        return data["token"]
-    if st != 409:
-        r.error(f"検査用アカウントの登録: {st} が返った（201 か 409 のはず）: {str(data)[:120]}")
-        if st != 409:
-            return None
-    st, data, _ = c.call(
-        "POST", "/auth/login", {"email": email, "password": PASSWORD}, token=None
-    )
-    if st != 200:
-        r.error(f"検査用アカウントのログイン: {st} が返った（200 のはず）: {str(data)[:120]}")
+def account(c: Client, r: Report, sso: SsoFake, email: str, name: str) -> str | None:
+    """検査の本人のトークンを返す。手元の SSO の偽物が発行したコードを学び側の signInWithCode で換える。"""
+    st, data, _ = c.call("POST", "/auth/sso", {"code": sso.issue(email, name)}, token=None)
+    if st != 200 or not (data or {}).get("token"):
+        r.error(f"検査の本人（{email}）のコードの交換: {st} が返った（200 とトークンのはず）: {str(data)[:120]}")
         return None
     return data["token"]
 
@@ -621,60 +664,31 @@ def check_auth_boundary(c: Client, r: Report):
     st, data, _ = c.call("GET", "/health", token=None)
     r.status("GET /health（公開）", st, 200)
     r.shape("GET /health", data, {"*ok": "bool"})
-    # SSO の設定（公開。要件 §15）。ローカルは未設定なので sso=false（パスワードの経路がそのまま検査できる）
+    # 認証の形（公開）。検査用の配備のまなびばの場所は手元の SSO の偽物
     st, data, _ = c.call("GET", "/auth/config", token=None)
     r.status("GET /auth/config（公開）", st, 200)
     r.shape("GET /auth/config", data, {"*sso": "bool", "*portal": "str?", "*app": "str"})
-    if isinstance(data, dict) and data.get("sso"):
-        r.warn("この環境は SSO が有効（SSO_PORTAL_URL / SSO_SECRET あり）。パスワードの登録・ログインは 404 になるので、以降の検査は成立しない")
-    # SSO 未設定の環境では /auth/sso は 404（有効な環境の一巡は scripts/check_sso_flow.py を受入で回す）
-    st, data, _ = c.call("POST", "/auth/sso", {"code": "x"}, token=None)
-    r.status("POST /auth/sso（未設定の環境では 404）", st, 404, data)
+    if isinstance(data, dict) and (not data.get("sso") or data.get("portal") != SSO_FAKE_URL):
+        r.error(f"GET /auth/config: まなびばの場所が手元の SSO の偽物（{SSO_FAKE_URL}）でない（{json.dumps(data, ensure_ascii=False)[:100]}）")
+    # 偽物が発行していないコードは換えられない
+    st, data, _ = c.call("POST", "/auth/sso", {"code": str(uuid.uuid4())}, token=None)
+    if r.status("POST /auth/sso（発行されていないコード）", st, 401, data):
+        r.error_body("POST /auth/sso（発行されていないコード）の本文", data)
 
 
-def check_failure_shapes(c: Client, r: Report, code: str | None):
+def check_failure_shapes(c: Client, r: Report):
     """失敗したときのステータスと本文。クライアントは data?.error をそのまま画面に出す。"""
-    cases = [
-        ("register 空ボディ", "POST", "/auth/register", {}, 400),
-        (
-            "register 短いパスワード",
-            "POST",
-            "/auth/register",
-            {"email": "x@example.com", "password": "short", "name": "x"},
-            400,
-        ),
-        (
-            "register 不正なメール",
-            "POST",
-            "/auth/register",
-            {"email": "not-an-email", "password": PASSWORD, "name": "x"},
-            400,
-        ),
-        ("login 空ボディ", "POST", "/auth/login", {}, 400),
-        (
-            "login パスワード違い",
-            "POST",
-            "/auth/login",
-            {"email": EMAIL, "password": "wrong-password-9999"},
-            401,
-        ),
-        (
-            "login 未登録のメール",
-            "POST",
-            "/auth/login",
-            {"email": "nobody-here@example.com", "password": PASSWORD},
-            401,
-        ),
-    ]
-    dup = {"email": EMAIL, "password": PASSWORD, "name": "apicheck"}
-    if code:
-        dup["signupCode"] = code
-    cases.append(("register 重複", "POST", "/auth/register", dup, 409))
-
-    for label, method, path, body, want in cases:
-        st, data, _ = c.call(method, path, body, token=None)
-        if r.status(label, st, want, data):
+    # 学び側のパスワードでのログインと登録は受け持たない経路の断り（REQ-204・REQ-256）
+    _, not_served, _ = c.call("POST", "/auth/no-such-endpoint", {}, token=None)
+    for label, path, body in [
+        ("学び側のパスワードでのログイン", "/auth/login", {"email": EMAIL, "password": "apicheck-pass-1234"}),
+        ("学び側の登録", "/auth/register", {"email": EMAIL, "password": "apicheck-pass-1234", "name": "apicheck"}),
+    ]:
+        st, data, _ = c.call("POST", path, body, token=None)
+        if r.status(f"{label}（受け持たない経路）", st, 404, data):
             r.error_body(f"{label} の本文", data)
+            if data != not_served:
+                r.error(f"{label}: 受け持たない経路への要求と同じ断りでない（{json.dumps(data, ensure_ascii=False)[:80]}）")
 
     # 認証後の失敗経路
     for label, method, path, body, want in [
@@ -687,11 +701,12 @@ def check_failure_shapes(c: Client, r: Report, code: str | None):
         ("progress に範囲外の status", "PUT", "/topics/1/progress", {"status": 9}, 400),
         ("存在しない論点の progress", "PUT", "/topics/99999999/progress", {"status": 2}, 404),
         ("セッション作成が空ボディ", "POST", "/sessions", {}, 400),
-        ("フィードバックが空ボディ", "POST", "/feedback", {}, 400),
-        ("フィードバックが空文", "POST", "/feedback", {"body": "   "}, 400),
-        ("フィードバックが長すぎ", "POST", "/feedback", {"body": "あ" * 2001}, 400),
+        ("フィードバックが本文なし", "POST", "/feedback", {"kind": "improve"}, 400),
+        ("フィードバックが種類なし", "POST", "/feedback", {"body": "x"}, 400),
+        ("フィードバックが空文", "POST", "/feedback", {"body": "   ", "kind": "improve"}, 400),
+        ("フィードバックが長すぎ", "POST", "/feedback", {"body": "あ" * 2001, "kind": "improve"}, 400),
         ("フィードバックの kind が不正", "POST", "/feedback", {"body": "x", "kind": "nope"}, 400),
-        ("フィードバックの topicId が文字列", "POST", "/feedback", {"body": "x", "topicId": "1"}, 400),
+        ("フィードバックの topicId が文字列", "POST", "/feedback", {"body": "x", "kind": "improve", "topicId": "1"}, 400),
     ]:
         st, data, _ = c.call(method, path, body)
         if r.status(label, st, want, data):
@@ -886,20 +901,22 @@ def check_session_flow(c: Client, r: Report, got: dict, other_token: str):
         if cur["question"]["idx"] != 1:
             r.error(f"再開後の idx が {cur['question']['idx']}（1 のはず）")
 
-    # 他人のセッションが引けないこと（別アカウントを実際に作って確かめる）
+    # 他人のセッションが引けないこと（別アカウントを実際に作って確かめる。契約の errors は本人のものでないテストを 404 で断る）
     for label, path in [
         (f"他人のセッション GET /sessions/{{id}}", f"/sessions/{sid}"),
         ("他人のセッション GET /sessions/{id}/current", f"/sessions/{sid}/current"),
     ]:
         st, data, _ = c.call("GET", path, token=other_token)
-        if r.status(label, st, (403, 404), data):
+        if r.status(label, st, 404, data):
             r.error_body(f"{label} の本文", data)
     st, data, _ = c.call(
         "POST", f"/sessions/{sid}/answer", {"idx": 1, "answer": "ア"}, token=other_token
     )
-    r.status("他人のセッションへの回答", st, (403, 404), data)
+    if r.status("他人のセッションへの回答", st, 404, data):
+        r.error_body("他人のセッションへの回答の本文", data)
     st, data, _ = c.call("POST", f"/sessions/{sid}/finish", None, token=other_token)
-    r.status("他人のセッションの finish", st, (403, 404), data)
+    if r.status("他人のセッションの finish", st, 404, data):
+        r.error_body("他人のセッションの finish の本文", data)
 
     # 残りを回答して終わらせる
     for i in range(1, total):
@@ -1178,7 +1195,7 @@ def squeeze(s: str) -> str:
 
 def check_session_scope(c: Client, r: Report, got: dict):
     """出題の範囲（論点別はその論点に紐づく過去問だけ）と畳み込み（1回の出題に同じ内容を2度出さない）、
-    出題できる過去問が無い範囲の 400。作ったセッションはその場で破棄する。"""
+    出題できる過去問が無い範囲の 404。作ったセッションはその場で破棄する。"""
     detail = got.get("topic_detail")
     if not detail:
         r.error("出題の範囲の検査: 出題できる論点が取れなかったので検査できない")
@@ -1216,9 +1233,9 @@ def check_session_scope(c: Client, r: Report, got: dict):
         r.error(f"1回の出題に同じ内容の問題が2度出ている {len(dupes)} 件: {dupes[0][:40]}…")
     c.call("DELETE", "/sessions/current")
 
-    # 出題できる過去問が1問も無い範囲は 400 で、セッションを作らない
+    # 出題できる過去問が1問も無い範囲は 404 で、セッションを作らない（startSession の errors）
     st, data, _ = c.call("POST", "/sessions", {"kind": "field", "field": "そんな分野は無い"})
-    if r.status("POST /sessions（出題できる過去問が無い範囲）", st, 400, data):
+    if r.status("POST /sessions（出題できる過去問が無い範囲）", st, 404, data):
         r.error_body("出題できる過去問が無い範囲の本文", data)
     st, cur, _ = c.call("GET", "/sessions/current")
     if r.status("GET /sessions/current（作られていないこと）", st, 200) and (cur or {}).get("session"):
@@ -1266,7 +1283,10 @@ def check_mock_by_exam(c: Client, r: Report, got: dict, exam: str):
         m = re.search(r"問(\d+)", q["citation"])
         if m:
             numbers.append(int(m.group(1)))
-        c.call("POST", f"/sessions/{sid}/answer", {"idx": q["idx"], "answer": "ア"})
+        st, ans, _ = c.call("POST", f"/sessions/{sid}/answer", {"idx": q["idx"], "answer": "ア"})
+        # 模試の回答の応答は残りの問数と終わったかだけ（正誤・正解・解説を返さない。answerQuestion の模試の応答）
+        if r.status(f"通し受験の {i + 1} 問目の回答", st, 200, ans) and sorted((ans or {}).keys()) != ["finished", "remaining"]:
+            r.error(f"通し受験の回答の応答に remaining・finished 以外の鍵がある: {sorted((ans or {}).keys())}")
     if len(numbers) == 2 and numbers[0] >= numbers[1]:
         r.error(f"通し受験が問番号の昇順でない: 問{numbers[0]} → 問{numbers[1]}")
     c.call("DELETE", "/sessions/current")
@@ -1448,19 +1468,20 @@ def check_feedback(c: Client, r: Report, exam: str, db_name: str):
     d1(exam, db_name, "DELETE FROM feedback WHERE body LIKE 'apicheck %'")
 
     marker = f"apicheck {uuid.uuid4()}"
-    st, data, text = c.call("POST", "/feedback", {"body": marker, "page": "/topics/1", "topicId": 1})
+    st, data, text = c.call("POST", "/feedback", {"body": marker, "kind": "improve", "page": "/topics/1", "topicId": 1})
     if not r.status("POST /feedback", st, 201, None if st == 201 else text[:200]):
         return
     fid = (data or {}).get("id")
     if not isinstance(fid, str) or not fid:
         r.error("POST /feedback: 本文に id（文字列）が無い")
         return
-    rows = d1(exam, db_name, f"SELECT body, status, page, topic_id FROM feedback WHERE id = '{fid}'")
+    rows = d1(exam, db_name, f"SELECT body, kind, status, page, topic_id FROM feedback WHERE id = '{fid}'")
     if not rows:
         r.error("POST /feedback: 201 が返ったのに feedback 表に行が無い")
     else:
         row = rows[0]
         if row.get("body") != marker: r.error(f"feedback.body が送った本文と違う: {row.get('body')!r}")
+        if row.get("kind") != "improve": r.error(f"feedback.kind が送った種類と違う: {row.get('kind')!r}")
         if row.get("status") != "new": r.error(f"feedback.status の初期値が new でない: {row.get('status')!r}")
         if row.get("topic_id") != 1 or row.get("page") != "/topics/1": r.error("feedback の page / topic_id が送った値と違う")
         r.notes.append("フィードバック: 送信 → feedback 表に保存（status=new）を確認")
@@ -1471,7 +1492,11 @@ def check_feedback(c: Client, r: Report, exam: str, db_name: str):
         return d1(exam, db_name, f"SELECT COUNT(*) AS n FROM feedback WHERE {where}")[0]["n"]
 
     before = count_rows("1 = 1")
-    for label, payload in [("本文が空", {"body": "   "}), ("2,001 字", {"body": "あ" * 2001})]:
+    for label, payload in [
+        ("本文が空", {"body": "   ", "kind": "improve"}),
+        ("2,001 字", {"body": "あ" * 2001, "kind": "improve"}),
+        ("種類なし", {"body": f"apicheck {uuid.uuid4()}"}),
+    ]:
         st, data, _ = c.call("POST", "/feedback", payload)
         if r.status(f"POST /feedback（{label}）", st, 400, data):
             r.error_body(f"POST /feedback（{label}）の本文", data)
@@ -1483,7 +1508,7 @@ def check_feedback(c: Client, r: Report, exam: str, db_name: str):
     limit = 20
     statuses = []
     for i in range(limit + 1):
-        st, _, _ = c.call("POST", "/feedback", {"body": f"apicheck limit {i}"})
+        st, _, _ = c.call("POST", "/feedback", {"body": f"apicheck limit {i}", "kind": "good"})
         statuses.append(st)
     if statuses[:limit] != [201] * limit:
         r.error(f"POST /feedback: 上限までの {limit} 件が通らない（返った status: {statuses[:limit]}）")
@@ -2021,68 +2046,42 @@ def check_same_content_questions(c: Client, r: Report, got: dict, exam: str, db_
 
 # @scenario UC-010
 def check_scenario_uc010(c: Client, r: Report, exam: str, db_name: str):
-    """本文と直前に開いていた画面を送ると、未処理で保存され、受け付けた印だけが返る。"""
+    """種類・本文・直前に開いていた画面を送ると、未処理で保存され、受け付けた印だけが返る。"""
     L = "UC-010"
-    # 1〜3. 直前に開いていた画面を端末に覚えるのと上部メニューは画面側（check_render.tsx）
+    # 1〜4. 直前に開いていた画面を端末に覚えて添え先として示すのは画面側（check_render.tsx）
     d1(exam, db_name, "DELETE FROM feedback WHERE body LIKE 'apicheck scenario %'")
     marker = f"apicheck scenario {uuid.uuid4()}"
 
-    # 4. 本文（2,000 字以内）と、直前に開いていた画面（パス・論点 ID）を送信する
-    st, data, text = c.call("POST", "/feedback", {"body": marker, "page": "/topics/1", "topicId": 1})
-    if not r.status(f"{L} 4 フィードバックを送る", st, 201, None if st == 201 else text[:200]):
+    # 5〜6. 種類を 1 つ選び、本文（2,000 字以内）と添え先（パス・論点 ID）を送る
+    st, data, text = c.call("POST", "/feedback", {"body": marker, "kind": "improve", "page": "/topics/1", "topicId": 1})
+    if not r.status(f"{L} 6 フィードバックを送る", st, 201, None if st == 201 else text[:200]):
         return
 
-    # 5. 本文と画面の情報を利用者に紐づけて保存し、受け付けた印を返す（その場で応答しない）
+    # 7. 本文・種類・添え先を利用者に紐づけて未処理で残し、受け付けたことだけを返す（その場の応答は返さない）
     fid = (data or {}).get("id")
     if not isinstance(fid, str) or not fid:
-        r.error(f"{L} 5: 受け付けた印（id）が返らない")
+        r.error(f"{L} 7: 受け付けた印（id）が返らない")
         return
     said = [v for v in (data or {}).values() if isinstance(v, str) and JAPANESE.search(v)]
     if said:
-        r.error(f"{L} 5: 応答に日本語の文が入っている（その場で応答しない。受付文は画面が出す）: {said[0][:40]}")
-    rows = d1(exam, db_name, f"SELECT body, status, page, topic_id FROM feedback WHERE id = '{fid}'")
+        r.error(f"{L} 7: 応答に日本語の文が入っている（その場で応答しない。受付文は画面が出す）: {said[0][:40]}")
+    rows = d1(exam, db_name, f"SELECT body, kind, status, page, topic_id FROM feedback WHERE id = '{fid}'")
     if not rows:
-        r.error(f"{L} 5: 201 が返ったのに feedback 表に行が無い")
+        r.error(f"{L} 7: 201 が返ったのに feedback 表に行が無い")
     else:
         row = rows[0]
         if row.get("body") != marker:
-            r.error(f"{L} 5: 保存された本文が送った本文と違う（{str(row.get('body'))[:40]}）")
+            r.error(f"{L} 7: 保存された本文が送った本文と違う（{str(row.get('body'))[:40]}）")
+        if row.get("kind") != "improve":
+            r.error(f"{L} 7: 保存された種類が送った種類と違う（{row.get('kind')!r}）")
         if row.get("page") != "/topics/1" or row.get("topic_id") != 1:
-            r.error(f"{L} 5: 保存された画面（パス・論点 ID）が送った値と違う")
+            r.error(f"{L} 7: 保存された画面（パス・論点 ID）が送った値と違う")
         # 事後条件: 未処理の状態で溜まり、開発側が取り出して改善に回せる
         if row.get("status") != "new":
             r.error(f"{L} 事後条件: 状態が未処理（new）でない（{row.get('status')!r}）")
-    # 6. 受付文だけを出すのは画面（check_render.tsx）
+    # 8. 受付文と導線を出し本文を残さないのは画面（check_render.tsx）
     d1(exam, db_name, f"DELETE FROM feedback WHERE id = '{fid}'")
-    r.notes.append(f"{L} の基本の流れ: 本文と直前の画面を送信 → 未処理で保存 → 受け付けた印だけが返る")
-
-
-# パスワードの保存の形と反復回数は不変条件 O5 の検査。UC-017 の主シナリオの外なので
-# @scenario は付けない（要件は作り方を決めていない）。
-def check_password_storage(c: Client, r: Report, exam: str, db_name: str):
-    """パスワードを含む本文は、平文で持たずハッシュにして保存し、照合もハッシュで行う。"""
-    L = "不変条件 O5"
-    st, data, _ = c.call("POST", "/auth/login", {"email": EMAIL, "password": PASSWORD}, token=None)
-    if st == 404:
-        r.warn(f"{L}: この環境は SSO でパスワードの経路が無いので、保存と照合は未検査")
-    else:
-        if r.status(f"{L} パスワードの照合", st, 200, data):
-            if not (data or {}).get("token"):
-                r.error(f"{L}: 照合が通ったのにトークンが返らない")
-        try:
-            rows = d1(exam, db_name, f"SELECT password_hash AS h FROM users WHERE email = '{EMAIL}'")
-        except Exception as ex:
-            r.warn(f"{L}: 保存されたパスワードの形を D1 で確かめられなかった: {str(ex)[:80]}")
-        else:
-            stored = (rows[0]["h"] if rows else None) or ""
-            if stored == PASSWORD:
-                r.error(f"{L}: パスワードが平文で保存されている")
-            m = re.match(r"^(\d+):[0-9a-f]+:[0-9a-f]+$", stored)
-            if not m:
-                r.error(f"{L}: 保存された値が <反復回数>:<ソルト>:<ハッシュ> の形でない（{stored[:40]}）")
-            elif int(m.group(1)) > 100_000:
-                r.error(f"{L}: 反復回数が {m.group(1)}（Cloudflare Workers の上限 100,000 以下のはず）")
-    r.notes.append(f"{L}: パスワードは <反復回数>:<ソルト>:<ハッシュ> で保存し、照合もハッシュ")
+    r.notes.append(f"{L} の基本の流れ: 種類・本文・添え先を送信 → 未処理で保存 → 受け付けた印だけが返る")
 
 
 # @scenario UC-017
@@ -2206,17 +2205,23 @@ def main() -> int:
               file=sys.stderr)
         return 1
 
-    code = signup_code(args.exam)
-    c.token = account(c, r, EMAIL, "apicheck", code)
-    other = account(c, r, EMAIL_OTHER, "apicheck-other", code)
+    try:
+        # 偽物が発行するコードの宛て先は、学び側の配備が認証の形で答える受け持つ学び（getAuthConfig の app）
+        _, config, _ = c.call("GET", "/auth/config", token=None)
+        sso = SsoFake(str((config or {}).get("app") or args.exam))
+    except OSError as ex:
+        print(f"手元の SSO の偽物を {SSO_FAKE_URL} に起こせない（{ex}）", file=sys.stderr)
+        return 1
+    c.token = account(c, r, sso, EMAIL, "apicheck")
+    other = account(c, r, sso, EMAIL_OTHER, "apicheck-other")
     if not c.token or not other:
-        print("検査用アカウントを用意できなかった", file=sys.stderr)
+        print("検査の本人を用意できなかった", file=sys.stderr)
         for e in r.errors:
             print(f"  - {e}", file=sys.stderr)
         return 1
 
     check_auth_boundary(c, r)
-    check_failure_shapes(c, r, code)
+    check_failure_shapes(c, r)
     got = check_get_shapes(c, r)
     check_counts(c, r, got, args.exam, db_name)
     check_empty_lists(c, r, other)
@@ -2239,7 +2244,6 @@ def main() -> int:
     check_same_content_questions(c, r, got, args.exam, db_name)
     check_scenario_uc010(c, r, args.exam, db_name)
     check_scenario_uc017(c, r, got)
-    check_password_storage(c, r, args.exam, db_name)
     check_scenario_uc015(c, r, args.exam, db_name)
 
     # --- 結果 -------------------------------------------------------------

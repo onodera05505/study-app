@@ -2,8 +2,7 @@
  *
  *  叩くのは契約の操作の入口だけ（startSession ＝ POST /api/sessions、getCurrentQuestion ＝
  *  GET /api/sessions/:id/current、answerQuestion ＝ POST /api/sessions/:id/answer、
- *  finishSession ＝ POST /api/sessions/:id/finish。結果は UC-008 getMockResult と同じ経路の
- *  GET /api/sessions/:id）。
+ *  finishSession ＝ POST /api/sessions/:id/finish、getSessionResult ＝ GET /api/sessions/:id）。
  *
  *  偽の D1 は列名で持った行を返し、UPDATE をその行に当てる（状態を持つ）。回答のあとの件数・
  *  2 回目の回答・2 回目の締め のように「前の要求が残した状態」で決まる振る舞いを、
@@ -205,7 +204,7 @@ function aggregate(rows: Row[], sql: string): Row {
   return out
 }
 
-/** 列名で持った行を返し、UPDATE を行に当てる偽の D1（prepare → bind → raw/all/first/run）。 */
+/** 列名で持った行を返し、UPDATE を行に当てる偽の D1（prepare → bind → raw/all/first/run、batch）。 */
 function fakeD1(tables: Table[], executed: Executed[]) {
   const stores: Record<string, Row[]> = {}
   for (const t of tables) if (t.name && !t.count) stores[t.name] = t.rows
@@ -233,6 +232,7 @@ function fakeD1(tables: Table[], executed: Executed[]) {
   const prepare = (sql: string) => {
     let params: unknown[] = []
     const stmt = {
+      sql,
       bind: (...bound: unknown[]) => {
         params = bound
         return stmt
@@ -259,7 +259,14 @@ function fakeD1(tables: Table[], executed: Executed[]) {
     }
     return stmt
   }
-  return { prepare, batch: async () => [], exec: async () => ({ count: 0, duration: 0 }) }
+  /** D1 の batch（1 つのトランザクション）。渡された文を順に、run と同じく記録して当てる。
+   *  読み出しの文は all と同じ行を返す。 */
+  const batch = async (stmts: { sql: string; run: () => Promise<unknown>; all: () => Promise<unknown> }[]) => {
+    const out: unknown[] = []
+    for (const s of stmts) out.push(/^\s*(select|with)\b/i.test(s.sql) ? await s.all() : await s.run())
+    return out
+  }
+  return { prepare, batch, exec: async () => ({ count: 0, duration: 0 }) }
 }
 
 const USER = 'u-1'
@@ -389,15 +396,15 @@ describe('演習の開始（POST /api/sessions。UC-004）', () => {
   })
 
   // @covers REQ-055#empty-scope
-  it('選んだ範囲に出題できる過去問が 1 問も無いときは、テストを作らず 400 の {error}', async () => {
+  it('選んだ範囲に出題できる過去問が 1 問も無いときは、テストを作らず 404 の {error}', async () => {
     const body = { kind: 'drill', topicId: 9999 }
-    // 空振り対策: 同じ要求は過去問が 1 問でもあれば作れる（下の 400 は 0 問だけが出している）
+    // 空振り対策: 同じ要求は過去問が 1 問でもあれば作れる（下の 404 は 0 問だけが出している）
     const ok = await post(world(startTables(1)), '/api/sessions', body)
     expect(ok.status, '過去問が 1 問ある範囲で作れない（この検査は空振りになる）').toBe(201)
 
     const w = world(startTables(0))
     const res = await post(w, '/api/sessions', body)
-    expect(res.status).toBe(400)
+    expect(res.status).toBe(404)
     await errorBody(res)
     expect(sessionWrites(w), '0 問なのにテストの行が書かれている').toEqual([])
   })
@@ -574,12 +581,13 @@ describe('回答（POST /api/sessions/:id/answer。UC-004）', () => {
   })
 
   // @covers REQ-066#duplicate-answer-kept-once
-  it('同じ問題への回答が続けて 2 回送られても、残る回答は最初の 1 件だけ', async () => {
+  it('同じ問題への回答が続けて 2 回送られたら、最初の 1 件だけを残し、2 回目は受け付けずに 409 の {error} で断る', async () => {
     const w = inProgress()
     const first = await answer(w, CURRENT, 'イ')
     expect(first.status).toBe(200)
     const second = await answer(w, CURRENT, 'ウ')
-    expect(second.status, '2 回目の同じ問題への回答が受け付けられている').not.toBe(200)
+    expect(second.status, '2 回目の同じ問題への回答が 409 で断られていない').toBe(409)
+    await errorBody(second)
     expect(answerWrites(w), '同じ問題の回答が 2 件書かれている').toHaveLength(1)
     const kept = row(w, CURRENT)
     expect(kept.result).toBe(2)

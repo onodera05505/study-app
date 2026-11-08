@@ -1,5 +1,5 @@
 /** UC-008 模試（通し受験）の、断る回答と 2 回目の締めの境界
- *  （submitMockAnswer ＝ POST /api/sessions/:id/answer、finishMockExam ＝ POST /api/sessions/:id/finish）。
+ *  （UC-004 の契約 answerQuestion ＝ POST /api/sessions/:id/answer、finishSession ＝ POST /api/sessions/:id/finish。模試も同じ経路）。
  *
  *  偽の D1 は列名で持った行を返し、UPDATE をその行に当てる（状態を持つ。repay_UC-004_sessions.test.ts の作法）。
  *  走らせた SQL と束ねた値を `executed` に残し、断られた要求が何も書いていないことを見る。
@@ -200,7 +200,7 @@ function aggregate(rows: Row[], sql: string): Row {
   return out
 }
 
-/** 列名で持った行を返し、UPDATE を行に当てる偽の D1（prepare → bind → raw/all/first/run）。 */
+/** 列名で持った行を返し、UPDATE を行に当てる偽の D1（prepare → bind → raw/all/first/run、batch）。 */
 function fakeD1(tables: Table[], executed: Executed[]) {
   const stores: Record<string, Row[]> = {}
   for (const t of tables) if (t.name && !t.count) stores[t.name] = t.rows
@@ -228,6 +228,7 @@ function fakeD1(tables: Table[], executed: Executed[]) {
   const prepare = (sql: string) => {
     let params: unknown[] = []
     const stmt = {
+      sql,
       bind: (...bound: unknown[]) => {
         params = bound
         return stmt
@@ -254,7 +255,14 @@ function fakeD1(tables: Table[], executed: Executed[]) {
     }
     return stmt
   }
-  return { prepare, batch: async () => [], exec: async () => ({ count: 0, duration: 0 }) }
+  /** D1 の batch（1 つのトランザクション）。渡された文を順に、run と同じく記録して当てる。
+   *  読み出しの文は all と同じ行を返す。 */
+  const batch = async (stmts: { sql: string; run: () => Promise<unknown>; all: () => Promise<unknown> }[]) => {
+    const out: unknown[] = []
+    for (const s of stmts) out.push(/^\s*(select|with)\b/i.test(s.sql) ? await s.all() : await s.run())
+    return out
+  }
+  return { prepare, batch, exec: async () => ({ count: 0, duration: 0 }) }
 }
 
 
@@ -315,7 +323,7 @@ const question = (n: number): Row => ({
   field: 'テクノロジ系',
 })
 
-/** 模試の sessions の行（列名は schema のまま。契約 getMockResult の例 ok の値）。 */
+/** 模試の sessions の行（列名は schema のまま。UC-004 の契約 getSessionResult の例 ok の値）。 */
 const mockSession = (over: Row): Row => ({
   id: SID,
   user_id: USER,

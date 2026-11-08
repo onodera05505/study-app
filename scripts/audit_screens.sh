@@ -12,6 +12,7 @@
 #   1. フロントを試験ごとにビルド（vite build --mode <試験>）
 #   2. wrangler dev を **8787** で起動（別の検査が 8788 を使うので固定する）
 #   3. scripts/audit_fixtures.mjs で状態の違うテストアカウントを API 経由で作る
+#      （手元の SSO の偽物が発行したコードを signInWithCode で換えて入る）
 #   4. scripts/audit_screens.mjs で採取（PNG ＋ manifest.json）
 #   5. 自分で起動した wrangler だけ止める
 #
@@ -59,7 +60,7 @@ running_title() {
 if curl -s -m 3 "${BASE}/api/health" >/dev/null 2>&1; then
   TITLE="$(running_title)"
   if [[ "$TITLE" == *"$EXPECT_TITLE"* ]]; then
-    echo "▶ 8787 で ${EXAM} が起動済み。そのまま使う（title: ${TITLE}）"
+    echo "▶ 8787 で ${EXAM} が起動済み。そのまま使う（title: ${TITLE}。まなびばの場所が手元の SSO の偽物でなければ audit_fixtures.mjs が止まる）"
   else
     echo "!! 8787 で別のものが動いている（title: ${TITLE:-不明}）。"
     echo "   ${EXAM} を撮るには止めてから実行するか、そちらを終了させること。"
@@ -70,9 +71,13 @@ else
   npx vite build --mode "$EXAM" >/dev/null || { echo "ビルドに失敗"; exit 1; }
 
   echo "▶ wrangler dev を起動（port ${PORT} / env ${EXAM}）"
+  # まなびばの場所と共有秘密は、audit_fixtures.mjs が起こす手元の SSO の偽物（SSO_FAKE_PORT・SSO_FAKE_SECRET と同じ値）。
+  # 検査用アカウントはその偽物が換えた使い捨てコードからだけ作る（学び側のパスワードの経路はどの配備にも無い）。
   # JWT_SECRET はこの採取専用の固定値（本番の値ではない）。渡さない配備ではトークンを発行も
   # 検証もしないので、検査用アカウントの作成（audit_fixtures.mjs）が 503 で止まる。
   npx wrangler dev --env "$EXAM" --port "$PORT" --ip 127.0.0.1 \
+    --var "SSO_PORTAL_URL:http://127.0.0.1:8793" \
+    --var "SSO_SECRET:audit-screens-local-shared-not-a-secret" \
     --var "JWT_SECRET:audit-screens-local-only-not-a-secret" >"$DEV_LOG" 2>&1 &
   DEV_PID=$!
   STARTED_BY_US=1

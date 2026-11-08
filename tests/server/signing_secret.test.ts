@@ -13,9 +13,8 @@ const PORTAL = { SSO_PORTAL_URL: 'https://portal.example', SSO_SECRET: 'shared' 
 const json = (body: unknown) => ({ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
 const JAPANESE = /[ぁ-んァ-ヶ一-龥]/
 
-/** 契約の examples の値（UC-013 signInWithCode・signInWithPassword・register）。 */
+/** 契約の examples の値（UC-013 signInWithCode）。 */
 const CODE = '3f1c9a52-7b0e-4a1d-9c3e-2f5b8d6a1e40'
-const CREDENTIAL = { email: 'yudai@example.com', password: 'harunokaze8' }
 const TOKEN =
   'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0ZDJiOGExMCIsIm5hbWUiOiJ0YXJvIiwicm9sZSI6Ik1FTUJFUiIsImV4cCI6MTc5OTk5OTk5OX0.c2lnbmF0dXJlLXNhbXBsZQ'
 
@@ -63,46 +62,13 @@ describe('署名の秘密が無い配備ではトークンを発行しない（U
     })
   })
 
-  // @covers REQ-274#password-login-refused
-  it('学び側のパスワードでのログインは、まなびばの場所の有無に関わらず断られる', async () => {
-    const cases: Array<[string, Bindings, unknown]> = [
-      ['まなびばの場所がある配備', noSecret(PORTAL), CREDENTIAL],
-      ['まなびばの場所が無い配備', noSecret(), CREDENTIAL],
-      ['形を満たさない本文', noSecret(), { email: CREDENTIAL.email, password: 'mijikai' }],
-    ]
-    for (const [label, env, body] of cases) {
-      await expectNotConfigured(await app.request('/api/auth/login', json(body), env), label)
-    }
-  })
-
-  // @covers REQ-274#register-refused
-  it('学び側の登録は、まなびばの場所の有無に関わらず断られる', async () => {
-    const account = { ...CREDENTIAL, name: '山田 太郎' }
-    const cases: Array<[string, Bindings, unknown]> = [
-      ['まなびばの場所がある配備', noSecret(PORTAL), account],
-      ['まなびばの場所が無い配備', noSecret(), account],
-      ['形を満たさない本文', noSecret(), { ...account, name: '' }],
-      ['合言葉を添えた本文', noSecret(), { ...account, signupCode: 'aikotoba' }],
-    ]
-    for (const [label, env, body] of cases) {
-      await expectNotConfigured(await app.request('/api/auth/register', json(body), env), label)
-    }
-  })
-
   // @covers REQ-274#signing-secret-present-not-refused
-  it('署名の秘密がある配備では、発行の 3 つの経路は設定の不足で止まらず、自分の入力の検証まで届く', async () => {
+  it('署名の秘密がある配備では、使い捨てコードの交換は設定の不足で止まらず、自分の入力の検証まで届く', async () => {
     await withFetchCounter(async () => {
-      // 形を満たさない本文を渡し、その経路自身の検証による断り（INVALID_INPUT・400）に達することで
+      // 形を満たさない code を渡し、その経路自身の検証による断り（INVALID_INPUT・400）に達することで
       // 設定の不足で止まっていないことを見る
-      const cases: Array<[string, Bindings, unknown]> = [
-        ['/api/auth/sso', withSecret(PORTAL), { code: '' }],
-        ['/api/auth/login', withSecret(), { email: CREDENTIAL.email, password: 'mijikai' }],
-        ['/api/auth/register', withSecret(), { ...CREDENTIAL, name: '' }],
-      ]
-      for (const [path, env, body] of cases) {
-        const res = await app.request(path, json(body), env)
-        expect(res.status, path).toBe(400)
-      }
+      const res = await app.request('/api/auth/sso', json({ code: '' }), withSecret(PORTAL))
+      expect(res.status).toBe(400)
     })
   })
 })

@@ -106,7 +106,7 @@ afterEach(() => {
   vi.unstubAllEnvs()
 })
 
-describe('上部メニュー', () => {
+describe('上部メニュー（UC-009）', () => {
   // @covers REQ-128#roadmap-type-destinations
   it('ロードマップ型はロードマップとフィードバックの 2 つだけで、資格の語を出さない', async () => {
     // ロードマップ型ではロードマップが /topics に載っている
@@ -132,7 +132,7 @@ describe('上部メニュー', () => {
   })
 })
 
-describe('無くした画面の経路', () => {
+describe('無くした画面の経路（UC-009）', () => {
   // @covers REQ-128#cert-only-location
   it('ロードマップ型ではホーム・練習テスト・確認テスト・履歴がロードマップ（/topics）へ送られる', async () => {
     for (const entry of ['/', '/practice', '/exams', '/history']) {

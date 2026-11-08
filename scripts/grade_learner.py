@@ -6,13 +6,12 @@
 契約は UC-019 の contract.yaml の gradeLearnerAnswers。標準出力に周の結果の JSON を 1 つ出す（成功 0、errors に当たれば 1）。
 """
 from __future__ import annotations
-import json
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from learner_eval import (CHOICES, Refused, contract_args, current_questions, read_json, result_path,  # noqa: E402
-                          roadmap_learning, run, snapshot_path)
+                          roadmap_learning, run, snapshot_path, write_exclusive)
 
 SHIFT_WINDOW = 3
 # 自己申告の欄の別名 → 決めた名前（契約の LearnerAnswers）
@@ -273,10 +272,15 @@ def grade() -> dict:
     rows = [normalize_row(r) for r in L["units"]]
     graded, changed = grade_questions(snap, L["answers"], current)
     res = cycle_result(a.cycle, snap, graded, changed, rows, grades, prev)
-    p = result_path(d, a.cycle)
-    p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8")
+    write_result(d, a.cycle, res)
     return res
+
+
+# @implements REQ-356
+def write_result(d: Path, cycle: int, res: dict) -> None:
+    """周の結果を排他の作成で書く。採点する間にほかの呼び出しが同じ周の結果を書いていれば、書き換えずに断る。"""
+    if not write_exclusive(result_path(d, cycle), res):
+        raise Refused("CONFLICT", "採点する間に同じ周の結果が書かれた")
 
 
 if __name__ == "__main__":

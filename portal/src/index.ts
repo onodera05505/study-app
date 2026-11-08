@@ -1,10 +1,10 @@
-/** まなびば — 認証と権限の正本（要件 §15、2026-09-17）。
+/** まなびば — 認証と権限の正本。
  *
- *  学び（ip / ap / itc / mkt）は別の Pages・別の D1 のまま。ここがアカウント（メール一意）と「誰がどの学びを見られるか」を持ち、
+ *  学び（ip / ap / itc / mkt）は別の Pages・別の D1。ここがアカウント（メール一意）と「誰がどの学びを見られるか」を持ち、
  *  学び側は `/sso/start` → 使い捨てコード → `/api/sso/exchange`（共有秘密）でメールと名前を受け取って自分のトークンを出す。
  *  管理（一覧・作成・権限の付け外し・パスワード再設定）は役割 ADMIN だけ。統計や CSV は作らない。
  *
- *  パスワードのハッシュは学び側と同じ関数（PBKDF2、100,000 回）。既存アカウントのハッシュをそのまま移せる。 */
+ *  パスワードの記録は `src/server/lib/auth` の 1 か所で作り、照合する。 */
 import { Hono } from 'hono'
 import type { Context, Next } from 'hono'
 import { deleteCookie, getCookie, setCookie } from 'hono/cookie'
@@ -69,7 +69,6 @@ const accountCreateBody = z.object({
   name: zName(NAME_MSG),
   password: zPassword('初期パスワードは 8 文字以上 200 文字以内にしてください'),
   grants: zGrants.default([]),
-  role: zRole.optional(),
 })
 // @implements REQ-178
 const accountUpdateBody = z.object({
@@ -159,7 +158,7 @@ async function openSession(c: any, accountId: string) {
   const id = crypto.randomUUID()
   const exp = now() + SESSION_DAYS * 86400
   await c.env.DB.prepare(`INSERT INTO sessions (id, account_id, expires_at) VALUES (?, ?, ?)`).bind(id, accountId, exp).run()
-  // Secure は https のときだけ（ローカルの http では Cookie が返らず、ログインしたのに未ログインに見える。2026-09-17 のリハーサル）
+  // Secure は https のときだけ（ローカルの http では Secure の Cookie が返らず、ログインしても未ログインに見える）
   setCookie(c, SESSION_COOKIE, id, { httpOnly: true, secure: new URL(c.req.url).protocol === 'https:', sameSite: 'Lax', path: '/', maxAge: SESSION_DAYS * 86400 })
 }
 
@@ -263,22 +262,28 @@ admin.get('/accounts', async (c) => {
   return c.json({ accounts: (rows.results ?? []).map((r) => ({ ...r, grants: r.grants ? r.grants.split(',').sort() : [] })) })
 })
 
-// @implements REQ-163, REQ-164
+// @implements REQ-163, REQ-164, REQ-405
 admin.post('/accounts', async (c) => {
   const p = await parseBody(c, accountCreateBody)
   if (!p.ok) return p.res
   const { email, name, password, grants } = p.data
-  const role = p.data.role ?? 'MEMBER'
+  // 作成の役割は求めから採らず、いつも利用者にする
+  const role = 'MEMBER'
   const dup = await c.env.DB.prepare(`SELECT id FROM accounts WHERE email = ?`).bind(email).first()
   if (dup) return c.json({ error: 'このメールアドレスは登録済みです' }, 409)
   const id = crypto.randomUUID()
   const stmts = [c.env.DB.prepare(`INSERT INTO accounts (id, email, name, password_hash, role) VALUES (?, ?, ?, ?, ?)`).bind(id, email, name, await hashPassword(password), role)]
   for (const g of grants) stmts.push(c.env.DB.prepare(`INSERT INTO grants (account_id, learning, granted_by) VALUES (?, ?, ?)`).bind(id, g, c.get('account').id))
+  // アカウントと権限は 1 つの書き込みにまとめる（途中で失敗すればどちらも残らない）
   await c.env.DB.batch(stmts)
   return c.json({ id, email, name, role, grants }, 201)
 })
 
-// @implements REQ-165, REQ-166, REQ-167, REQ-173
+/** 管理者を減らす書き込みに添える条件。書き込みの時点で、相手のほかに管理者が残るときだけ真になる。 */
+const OTHER_ADMIN_REMAINS = `EXISTS (SELECT 1 FROM accounts WHERE role = 'ADMIN' AND id != ?)`
+const LAST_ADMIN_MSG = '最後の管理者は外せません'
+
+// @implements REQ-165, REQ-166, REQ-167, REQ-173, REQ-404, REQ-405, BR-006
 admin.put('/accounts/:id', async (c) => {
   const id = c.req.param('id')
   const p = await parseBody(c, accountUpdateBody)
@@ -286,41 +291,65 @@ admin.put('/accounts/:id', async (c) => {
   const { name, role, grants } = p.data
   const target = await c.env.DB.prepare(`SELECT id, role FROM accounts WHERE id = ?`).bind(id).first<{ id: string; role: string }>()
   if (!target) return c.json({ error: 'アカウントが見つかりません' }, 404)
+  if (role !== undefined && role !== 'ADMIN' && id === c.get('account').id) return c.json({ error: '自分の管理者権限は外せません' }, 400)
+  // 降格は、重なった求めが先に書き込んでいても管理者が 0 人にならないときだけ書く。
+  // 同じ batch の文すべてに同じ条件を添え、通らなければどの項目も権限も変えない。
+  const demotion = role === 'MEMBER'
+  const guard = demotion ? ` AND ${OTHER_ADMIN_REMAINS}` : ''
+  const guardArgs = demotion ? [id] : []
+  const by = c.get('account').id
   const stmts: D1PreparedStatement[] = []
   if (name !== undefined) {
-    stmts.push(c.env.DB.prepare(`UPDATE accounts SET name = ?, updated_at = ? WHERE id = ?`).bind(name, now(), id))
-  }
-  if (role !== undefined) {
-    if (id === c.get('account').id && role !== 'ADMIN') return c.json({ error: '自分の管理者権限は外せません' }, 400)
-    stmts.push(c.env.DB.prepare(`UPDATE accounts SET role = ?, updated_at = ? WHERE id = ?`).bind(role, now(), id))
+    stmts.push(c.env.DB.prepare(`UPDATE accounts SET name = ?, updated_at = ? WHERE id = ?${guard}`).bind(name, now(), id, ...guardArgs))
   }
   if (grants !== undefined) {
-    stmts.push(c.env.DB.prepare(`DELETE FROM grants WHERE account_id = ?`).bind(id))
-    for (const g of grants) stmts.push(c.env.DB.prepare(`INSERT INTO grants (account_id, learning, granted_by) VALUES (?, ?, ?)`).bind(id, g, c.get('account').id))
+    stmts.push(c.env.DB.prepare(`DELETE FROM grants WHERE account_id = ?${guard}`).bind(id, ...guardArgs))
+    for (const g of grants) {
+      stmts.push(
+        c.env.DB.prepare(`INSERT INTO grants (account_id, learning, granted_by) SELECT ?, ?, ?${demotion ? ` WHERE ${OTHER_ADMIN_REMAINS}` : ''}`).bind(id, g, by, ...guardArgs),
+      )
+    }
   }
-  if (stmts.length) await c.env.DB.batch(stmts)
+  // 役割の文は最後に置く（管理者の数を変えるのはこの文だけなので、前の文は同じ条件を同じ状態で見る）
+  const roleAt = stmts.length
+  if (role !== undefined) {
+    stmts.push(c.env.DB.prepare(`UPDATE accounts SET role = ?, updated_at = ? WHERE id = ?${guard}`).bind(role, now(), id, ...guardArgs))
+  }
+  if (!stmts.length) return c.json({ ok: true })
+  const results = await c.env.DB.batch(stmts)
+  if (role !== undefined && !results[roleAt].meta.changes) {
+    const still = await c.env.DB.prepare(`SELECT 1 AS ok FROM accounts WHERE id = ?`).bind(id).first()
+    if (!still) return c.json({ error: 'アカウントが見つかりません' }, 404)
+    return c.json({ error: LAST_ADMIN_MSG }, 409)
+  }
   return c.json({ ok: true })
 })
 
-// @implements REQ-168, REQ-174, BR-007
+// @implements REQ-168, REQ-174, REQ-403, REQ-405, BR-007
 admin.post('/accounts/:id/password', async (c) => {
   const id = c.req.param('id')
   const p = await parseBody(c, passwordResetBody)
   if (!p.ok) return p.res
-  const r = await c.env.DB.prepare(`UPDATE accounts SET password_hash = ?, updated_at = ? WHERE id = ?`).bind(await hashPassword(p.data.password), now(), id).run()
+  if (id === c.get('account').id) return c.json({ error: '自分のパスワードはこの操作では変えられません。アカウントの欄から変えてください' }, 400)
+  // パスワードの入れ替えと、その相手の開いているセッションの終わらせは 1 つの書き込みにまとめる
+  const [r] = await c.env.DB.batch([
+    c.env.DB.prepare(`UPDATE accounts SET password_hash = ?, updated_at = ? WHERE id = ?`).bind(await hashPassword(p.data.password), now(), id),
+    c.env.DB.prepare(`DELETE FROM sessions WHERE account_id = ?`).bind(id),
+  ])
   if (!r.meta.changes) return c.json({ error: 'アカウントが見つかりません' }, 404)
-  // 再設定したら開いているセッションは切る
-  await c.env.DB.prepare(`DELETE FROM sessions WHERE account_id = ?`).bind(id).run()
   return c.json({ ok: true })
 })
 
-// @implements REQ-170, REQ-172, REQ-175
+// @implements REQ-170, REQ-172, REQ-175, REQ-404, REQ-405, BR-006
 admin.delete('/accounts/:id', async (c) => {
   const id = c.req.param('id')
   if (id === c.get('account').id) return c.json({ error: '自分は削除できません' }, 400)
-  const r = await c.env.DB.prepare(`DELETE FROM accounts WHERE id = ?`).bind(id).run()
-  if (!r.meta.changes) return c.json({ error: 'アカウントが見つかりません' }, 404)
-  return c.json({ ok: true })
+  // 権限とセッションは外部キーの CASCADE で同じ文の中で消える。管理者の削除は、ほかに管理者が残るときだけ書く
+  const r = await c.env.DB.prepare(`DELETE FROM accounts WHERE id = ? AND (role != 'ADMIN' OR ${OTHER_ADMIN_REMAINS})`).bind(id, id).run()
+  if (r.meta.changes) return c.json({ ok: true })
+  const still = await c.env.DB.prepare(`SELECT 1 AS ok FROM accounts WHERE id = ?`).bind(id).first()
+  if (!still) return c.json({ error: 'アカウントが見つかりません' }, 404)
+  return c.json({ error: LAST_ADMIN_MSG }, 409)
 })
 
 // @implements REQ-171
@@ -353,8 +382,7 @@ app.onError((err, c) => {
 
 // 知らない /api は 404。残りは静的ファイル（SPA）で、画面の経路は assets 側に委ねる。
 // ASSETS の応答はヘッダーが変更不可なので、写してから返す。そのまま返すと secureHeaders が
-// ヘッダーを足そうとして TypeError（Can't modify immutable headers）→ 画面が全部 500。
-// ローカルの wrangler dev では再現せず、本番だけで落ちた（2026-09-17。API は Hono が作る応答なので無事だった）
+// ヘッダーを足そうとして TypeError（Can't modify immutable headers）になり画面が 500 になる（本番の実行環境だけで起き、ローカルの wrangler dev では起きない）
 // @implements REQ-214, REQ-256
 app.notFound(async (c) => {
   if (c.req.path === '/api' || c.req.path.startsWith('/api/')) return c.json({ error: '見つかりません' }, 404)

@@ -27,9 +27,13 @@ EXAM="${1:-ip}"
 read -r PROJECT DB < <(python3 -c "import json;c=json.load(open('scripts/pages_projects.json'))['$EXAM'];print(c['project'],c['db'])")
 URL=$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['$EXAM'].get('url','https://${PROJECT}.pages.dev'))")
 
+# 配備の道具はプロジェクトが固定した版だけを使う（無ければ別の版に倒さず止まる）
+# @implements REQ-351, REQ-352
+source scripts/pinned_wrangler.sh
+
 # アカウントの取り違えを止める門（同じ Mac で別アカウントのログインに差し替わることがある）
 WANT=$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['account_id'])")
-HAVE=$(npx wrangler whoami 2>/dev/null | grep -oE '[0-9a-f]{32}' | head -1 || true)
+HAVE=$("$WRANGLER" whoami 2>/dev/null | grep -oE '[0-9a-f]{32}' | head -1 || true)
 [ "$HAVE" = "$WANT" ] || { echo "ログイン中のアカウント（${HAVE:-不明}）が想定（${WANT}）と違う。npx wrangler login で個人アカウントを選び直す"; exit 1; }
 
 echo "▶ D1 に migrations が全部当たっているか（未適用のまま出すと、新しい列を読む SQL が 500 になる）"
@@ -66,7 +70,7 @@ printf '{"build": "%s", "at": "%s"}\n' "$(git rev-parse --short HEAD 2>/dev/null
 
 echo "▶ Worker を1ファイルにまとめる（Pages の advanced mode 用）"
 # --env で wrangler.jsonc の env ブロックを選ぶ。試験ごとに D1 の bind 先が違う。
-npx wrangler deploy --dry-run --outdir=".worker-build-$EXAM" --env "$EXAM" >/dev/null
+"$WRANGLER" deploy --dry-run --outdir=".worker-build-$EXAM" --env "$EXAM" >/dev/null
 cp ".worker-build-$EXAM/index.js" dist/_worker.js
 
 echo "▶ Pages へデプロイ"
@@ -100,7 +104,7 @@ print(json.dumps({
 PY
 
 echo "  D1: $(python3 -c "import json,sys; print(json.load(open('wrangler.jsonc'))['d1_databases'][0]['database_name'])")"
-npx wrangler pages deploy dist --project-name "$PROJECT" --branch main --commit-dirty=true
+"$WRANGLER" pages deploy dist --project-name "$PROJECT" --branch main --commit-dirty=true
 
 echo
 echo "完了: ${URL}"

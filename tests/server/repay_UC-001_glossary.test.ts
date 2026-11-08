@@ -4,7 +4,9 @@
  *  表の中身と並びそのものなので、SQL の形を真似る偽物ではなく migrations を当てた本物の
  *  SQLite（node:sqlite）を D1 の口で包んで叩く。期待値は投入した側から作る。 */
 
-import { beforeAll, describe, expect, it } from 'vitest'
+import { readdirSync, readFileSync } from 'node:fs'
+import { DatabaseSync, type SQLInputValue } from 'node:sqlite'
+import { describe, expect, it } from 'vitest'
 import app from '../../src/server/index'
 import type { Bindings } from '../../src/server/lib/db'
 import { issueToken } from '../../src/server/lib/auth'
@@ -12,30 +14,12 @@ import { issueToken } from '../../src/server/lib/auth'
 const SECRET = 'test-secret'
 const USER = 'u-1'
 
-/** node:sqlite の同期 API のうち、ここで使う形だけ（プロジェクトの型は Workers 向けで node の型を持たない）。 */
-type Statement = {
-  all: (...params: unknown[]) => unknown[]
-  get: (...params: unknown[]) => unknown
-  run: (...params: unknown[]) => { changes: number | bigint; lastInsertRowid: number | bigint }
-  setReturnArrays: (on: boolean) => void
-}
-type DatabaseSync = { exec: (sql: string) => void; prepare: (sql: string) => Statement }
-
-/** node の組み込みは実行時に読む（型の解決を通さない）。 */
-const nodeModule = (name: string) => import(/* @vite-ignore */ name) as Promise<any>
-let openDb: () => DatabaseSync
-let migrations: string[] = []
-
-beforeAll(async () => {
-  const sqlite = await nodeModule('node:sqlite')
-  const fs = await nodeModule('node:fs')
-  const dir = new URL('../../migrations/', import.meta.url)
-  migrations = (fs.readdirSync(dir) as string[])
-    .filter((f) => f.endsWith('.sql'))
-    .sort()
-    .map((f) => fs.readFileSync(new URL(f, dir), 'utf8') as string)
-  openDb = () => new sqlite.DatabaseSync(':memory:') as DatabaseSync
-})
+const MIGRATIONS_DIR = new URL('../../migrations/', import.meta.url)
+const migrations = readdirSync(MIGRATIONS_DIR)
+  .filter((f) => f.endsWith('.sql'))
+  .sort()
+  .map((f) => readFileSync(new URL(f, MIGRATIONS_DIR), 'utf8'))
+const openDb = () => new DatabaseSync(':memory:')
 
 /** migrations/ の SQL を番号順に当てた空の DB。来訪の記録が指す本人だけ入れる。 */
 function freshDb() {
@@ -49,10 +33,10 @@ function freshDb() {
 function asD1(db: DatabaseSync) {
   const norm = (v: unknown) => (v === undefined ? null : typeof v === 'boolean' ? (v ? 1 : 0) : v)
   const prepare = (sql: string) => {
-    let params: unknown[] = []
+    let params: SQLInputValue[] = []
     const stmt = {
       bind: (...bound: unknown[]) => {
-        params = bound.map(norm)
+        params = bound.map(norm) as SQLInputValue[]
         return stmt
       },
       all: async () => ({ success: true, results: db.prepare(sql).all(...params), meta: {} }),

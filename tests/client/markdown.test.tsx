@@ -12,11 +12,21 @@ import { Markdown } from '../../src/client/components/Markdown'
 import { shortTerm } from '../../src/client/components/TermPop'
 import { ensureGlossary } from '../../src/client/lib/glossary'
 
-/** 用語集。論点に結び付いた語（topicId あり）と、そうでない語を 1 つずつ。 */
+/** 用語集。論点に結び付いた語（topicId あり）と、そうでない語を 1 つずつ。
+ *  あわせて、末尾の括弧書きを落とすと他の語と同じ表記になる語の組（REQ-341）と、
+ *  括弧書きを落としても何とも重ならない語を置く。 */
 const GLOSSARY = [
   { term: 'LTV', brief: '1 人の顧客が生涯で払う金額。', topicId: 231 },
   { term: 'CSRF', brief: '他人の権限で操作させる攻撃。', topicId: null },
+  { term: 'スループット', brief: '単位時間あたりの処理量。', topicId: null },
+  { term: 'スループット（ネットワーク）', brief: '単位時間あたりに運べるデータ量。', topicId: null },
+  { term: 'キャッシュ（CPU）', brief: '主記憶との速度差を埋める記憶。', topicId: null },
+  { term: 'キャッシュ（Web）', brief: '取得した応答を手元に残す仕組み。', topicId: null },
+  { term: '公開鍵（RSA）', brief: '誰に配ってもよい鍵。', topicId: null },
 ]
+
+/** 本文に描かれた押せる語の文字（出た順）。 */
+const pressableTexts = () => [...container.querySelectorAll('button.term-btn')].map((b) => b.textContent ?? '')
 
 let container: HTMLElement
 let root: Root
@@ -108,6 +118,19 @@ describe('用語の説明（UC-001）', () => {
     expect(card?.querySelector('a.term-link')).toBeNull()
   })
 
+  // @covers REQ-264#glossary-term-pressable
+  it('用語集を取ったあとの本文では、記法で書かれた用語集の語がどれも押せる語として出る', async () => {
+    await draw(h(Markdown, { source: '[[LTV]] を上げ、[[CSRF]] を防ぐ。' }))
+    expect(pressableTexts(), '用語集にある語が押せる語として出ていない').toEqual(['LTV', 'CSRF'])
+  })
+
+  // @covers REQ-008#display-name-drops-paren
+  it('落としても他の語と重ならない語は、重なる語の組がある用語集の中でも、本文で末尾の括弧書きを落とす', async () => {
+    await draw(h(Markdown, { source: '[[公開鍵（RSA）]] で暗号化する。' }))
+    expect(pressableTexts()).toEqual(['公開鍵'])
+    expect(text()).not.toContain('（RSA）')
+  })
+
   // @covers REQ-008#display-name-drops-paren
   it('本文に出す表示名は、末尾に括弧書き（読み・英字表記）があれば落とす', () => {
     // 末尾に括弧書きが無い語はそのまま
@@ -115,6 +138,35 @@ describe('用語の説明（UC-001）', () => {
     expect(shortTerm('リスク対応（リスク回避，リスク共有，リスク保有）')).toBe('リスク対応')
     // 短い語でも、末尾の括弧書き（英字表記）は落とす
     expect(shortTerm('公開鍵（RSA）')).toBe('公開鍵')
+  })
+})
+
+describe('用語の表示名の重なり（UC-001）', () => {
+  // @covers REQ-341#same-as-other-term
+  it('括弧書きを落とすと用語集の他の語と同じになる語は、本文でも正式な表記のまま出し、他の語と見分けられる', async () => {
+    await draw(h(Markdown, { source: '[[スループット（ネットワーク）]] と [[スループット]] は別の語。' }))
+    expect(pressableTexts(), '括弧書きを落として他の語と同じ表示名になっている').toEqual([
+      'スループット（ネットワーク）',
+      'スループット',
+    ])
+  })
+
+  // @covers REQ-341#same-as-other-shortened
+  it('括弧書きを落とすと互いに同じになる語どうしは、どちらも本文で正式な表記のまま出す', async () => {
+    await draw(h(Markdown, { source: '[[キャッシュ（CPU）]] と [[キャッシュ（Web）]] を比べる。' }))
+    expect(pressableTexts(), '括弧書きを落として互いに同じ表示名になっている').toEqual(['キャッシュ（CPU）', 'キャッシュ（Web）'])
+  })
+
+  // @covers REQ-341#same-as-other-term
+  it('重なる相手の語が本文に無くても、用語集の他の語と同じになる語は正式な表記のまま出す', async () => {
+    await draw(h(Markdown, { source: '[[スループット（ネットワーク）]] を測る。' }))
+    expect(pressableTexts(), '相手の語が本文に無いときに括弧書きを落としている').toEqual(['スループット（ネットワーク）'])
+  })
+
+  // @covers REQ-341#same-as-other-shortened
+  it('重なる相手の語が本文に無くても、括弧書きを落とすと他の語と同じになる語は正式な表記のまま出す', async () => {
+    await draw(h(Markdown, { source: '[[キャッシュ（Web）]] を効かせる。' }))
+    expect(pressableTexts(), '相手の語が本文に無いときに括弧書きを落としている').toEqual(['キャッシュ（Web）'])
   })
 })
 

@@ -12,7 +12,7 @@ export type Bindings = {
   SSO_PORTAL_URL?: string
   SSO_SECRET?: string
   APP_NAME?: string
-  /** どの試験のデプロイか（'ip' | 'ap'）。未設定なら ip。src/shared/exam.ts を参照 */
+  /** どの学びの配備か（登録簿の key）。解決できない配備はどの /api の要求も断る。src/shared/exam.ts を参照 */
   EXAM?: string
 }
 

@@ -37,7 +37,31 @@ function keyHolding(s: Storage, needle: string): string | null {
   return null
 }
 
-/** 偽の fetch。`goneTopicId` を渡すと、その論点の取得だけは無い（404）と応える。 */
+/** 覚えた論点が今もあるときの、その論点の教材（契約 getTopicDetail の response）。 */
+const REMEMBERED_DETAIL = {
+  topic: {
+    id: REMEMBERED.id,
+    term: REMEMBERED.term,
+    explanation: `${REMEMBERED.term} の短い説明です。`,
+    detail: null,
+    questionCount: 0,
+    isNew: 0,
+    status: null,
+    field: 'ストラテジ系',
+    major: '企業と法務',
+    middle: REMEMBERED.middle,
+    middleNo: REMEMBERED.middleNo,
+    itemName: '会計と財務',
+    tier: null,
+  },
+  questions: [],
+  siblings: [],
+  nextTopic: null,
+  neighbors: null,
+}
+
+/** 偽の fetch。`goneTopicId` を渡すと、その論点の取得だけは無い（404）と応える。
+ *  渡さなければ、覚えた論点は今もあり、その教材を返す。 */
 function stubApi(opts: { goneTopicId?: number } = {}) {
   vi.stubGlobal('fetch', async (raw: string) => {
     const url = new URL(String(raw), 'http://localhost')
@@ -45,7 +69,8 @@ function stubApi(opts: { goneTopicId?: number } = {}) {
       return { ok: false, status: 404, text: async () => JSON.stringify({ error: '論点が見つかりません' }) }
     }
     let body: unknown = {}
-    if (url.pathname.endsWith('/me')) body = ME
+    if (url.pathname.endsWith(`/topics/${REMEMBERED.id}`)) body = REMEMBERED_DETAIL
+    else if (url.pathname.endsWith('/me')) body = ME
     else if (url.pathname.endsWith('/sessions/current')) body = { session: null }
     else if (url.pathname.endsWith('/glossary')) body = { glossary: [] }
     else if (url.pathname.endsWith('/exams')) body = { exams: [] }
@@ -112,7 +137,7 @@ describe('ホームの前回の続き（UC-005）', () => {
   })
 
   // @covers REQ-081#follow-link-opens-topic
-  it('前回の続きの導線を選ぶと、覚えた論点の画面が開く', async () => {
+  it('覚えた論点が今もあるときに前回の続きの導線を選ぶと、覚えた論点の画面が開く', async () => {
     stubApi()
     setLastTopic(REMEMBERED)
     await draw()

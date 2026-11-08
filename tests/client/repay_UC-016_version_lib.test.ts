@@ -132,3 +132,60 @@ describe('最初の印の保ち方（UC-016）', () => {
     expect(await w2.checkForUpdate(), '別の窓の読み直しで合図が消えている').toBe(true)
   })
 })
+
+describe('印の見比べと最初の印の覚え方の境目（UC-016）', () => {
+  // @covers REQ-231#pair-not-concatenated
+  it('版を見分ける値と配信の時点をつなぐと同じ文字列になる 2 つの印も、組として違えば合図が立つ', async () => {
+    const pairs: Array<[Stamp, Stamp]> = [
+      [{ build: 'abc1234', at: '5Z' }, { build: 'abc12345', at: 'Z' }],
+      [{ build: 'abc-1', at: '2' }, { build: 'abc', at: '1-2' }],
+      [{ build: 'abc|1', at: '2' }, { build: 'abc', at: '1|2' }],
+      [{ build: 'abc@1', at: '2' }, { build: 'abc', at: '1@2' }],
+    ]
+    for (const [first, next] of pairs) {
+      const shelf: Shelf = { stamp: first }
+      stubFetch(shelf)
+      const v = await openWindow()
+      expect(await v.checkForUpdate(), `${JSON.stringify(first)} を覚えた直後に合図が立っている`).toBe(false)
+      shelf.stamp = next
+      expect(await v.checkForUpdate(), `${JSON.stringify(first)} と ${JSON.stringify(next)} を同じ印とみなしている`).toBe(true)
+      vi.unstubAllGlobals()
+    }
+  })
+
+  // @covers REQ-233#concurrent-adoption
+  it('最初の印を覚えていない状態で取り直しが重なり別々の印が返ると、先に返った印を覚え、後に返った印はそれを上書きせず見比べに回る', async () => {
+    /** 取得ごとに返す印と返すまでの遅れ。1 回目は画面を開いたときの取得（取れない）。 */
+    const plan: Array<{ stamp: Stamp | null; delayMs: number }> = [
+      { stamp: null, delayMs: 0 },
+      { stamp: B, delayMs: 40 },
+      { stamp: A, delayMs: 5 },
+    ]
+    let n = 0
+    let shelfAfterPlan: Stamp = A
+    vi.stubGlobal('fetch', async () => {
+      const step = plan[n++] ?? { stamp: shelfAfterPlan, delayMs: 0 }
+      await new Promise((resolve) => setTimeout(resolve, step.delayMs))
+      if (!step.stamp) return { ok: false, status: 500, json: async () => ({}) }
+      const s = step.stamp
+      return { ok: true, status: 200, json: async () => s }
+    })
+    const v = await openWindow()
+    expect(await v.rememberBuild(), '取れないのに最初の印を覚えている').toBeNull()
+
+    // 画面の移りと見比べの間隔の取り直しが重なる。後から求めた方（A）が先に返る
+    const slow = v.checkForUpdate()
+    const fast = v.checkForUpdate()
+    // どちらの取得もまだ返っていない間に、2 つの取得が出ていることを確かめる
+    await new Promise((resolve) => setTimeout(resolve, 1))
+    expect(n, '重なった取り直しが 2 回の取得になっていない（この検査は空振りになる）').toBe(3)
+    expect(await fast, '先に返った印を覚えた回に合図が立っている').toBe(false)
+    expect(await slow, '後に返った印が覚えた印との見比べに回っていない').toBe(true)
+
+    // 覚えた最初の印は先に返った A のまま（後に返った B で上書きされていない）
+    shelfAfterPlan = A
+    expect(await v.checkForUpdate(), '後に返った印で最初の印が上書きされている').toBe(false)
+    shelfAfterPlan = B
+    expect(await v.checkForUpdate()).toBe(true)
+  })
+})

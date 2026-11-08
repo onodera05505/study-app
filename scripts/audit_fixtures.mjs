@@ -8,22 +8,29 @@
  * SQL を直に叩かないのは、**その状態が本当に作れるかどうかも検査だから**。
  * 画面をモックすると「作れない状態」を撮ってしまう（検査観点カタログ L5 の方針）。
  *
- * 作るアカウント（パスワードは共通 audit-pass-1234）:
+ * 作るアカウント（学び側のパスワードでの登録とログインの経路はどの配備にも無い。REQ-204）:
  *   audit_new@example.com    登録だけ。進捗ゼロ・履歴ゼロ（＝空状態の見本）
  *   audit_mid@example.com    学習途中。進捗あり／完走1回／**過去問実践を中断したまま**
  *   audit_heavy@example.com  履歴が多い。完走10回以上（模試含む）／進捗多数
+ *
+ * 入り方は scripts/check_api.py の SsoFake と同じ。この検査が手元の SSO の偽物（まなびばの交換
+ * exchangeCode の代役。SSO_FAKE_PORT）を起こして使い捨てコードを発行し、学び側の signInWithCode
+ * （POST /api/auth/sso）に渡してトークンを受け取る。学び側の配備には、まなびばの場所（SSO_PORTAL_URL）
+ * として SSO_FAKE_URL、共有秘密（SSO_SECRET）として SSO_FAKE_SECRET を与えておく（audit_screens.sh が渡す）。
  *
  * 冪等。すでに居るアカウントは作り直さず、足りない分だけ足す。
  * **既存データは消さない**（DELETE を一切流さない。ローカル D1 には実データが入っている）。
  */
 import { writeFileSync } from 'node:fs'
-import { readFileSync, existsSync } from 'node:fs'
-import { dirname, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { createServer } from 'node:http'
+import { randomUUID } from 'node:crypto'
 
-const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+// 手元の SSO の偽物。audit_screens.sh が学び側の配備にまなびばの場所と共有秘密としてこの値を与える。
+// 値はローカルのこの検査専用で、本番の値ではない。ポートは check_api（8791）・check_sso_flow（8790）と分ける。
+export const SSO_FAKE_PORT = 8793
+export const SSO_FAKE_URL = `http://127.0.0.1:${SSO_FAKE_PORT}`
+export const SSO_FAKE_SECRET = 'audit-screens-local-shared-not-a-secret'
 
-export const PASSWORD = 'audit-pass-1234'
 export const ACCOUNTS = [
   { key: 'audit_new', email: 'audit_new@example.com', name: '検査 新規' },
   { key: 'audit_mid', email: 'audit_mid@example.com', name: '検査 学習中' },
@@ -34,14 +41,6 @@ const args = process.argv.slice(2)
 function arg(name, fallback) {
   const i = args.indexOf(name)
   return i >= 0 && args[i + 1] ? args[i + 1] : fallback
-}
-
-/** ローカルで SIGNUP_CODE が設定されていれば .dev.vars から拾う（未設定なら合言葉は不要）。 */
-function signupCodeFromDevVars() {
-  const p = resolve(ROOT, '.dev.vars')
-  if (!existsSync(p)) return undefined
-  const m = readFileSync(p, 'utf8').match(/^\s*SIGNUP_CODE\s*=\s*"?([^"\n]*)"?\s*$/m)
-  return m ? m[1] : undefined
 }
 
 export async function apiCall(base, path, { method = 'GET', body, token } = {}) {
@@ -69,22 +68,76 @@ export async function apiCall(base, path, { method = 'GET', body, token } = {}) 
   return data
 }
 
-/** 登録済みならログイン、いなければ登録する。 */
-async function ensureAccount(base, acc, signupCode) {
-  try {
-    const d = await apiCall(base, '/auth/login', {
-      method: 'POST',
-      body: { email: acc.email, password: PASSWORD },
-    })
-    return { ...acc, token: d.token, created: false }
-  } catch (e) {
-    if (e.status !== 401) throw e
+/**
+ * 手元の SSO の偽物を起こす。まなびばの exchangeCode（POST /api/sso/exchange）の形だけを持つ。
+ * 使い捨てコードは issue() がこの検査の中で発行し、学び側サーバが共有秘密を添えて換えに来たら
+ * 1 回だけ本人のメールと名前に換える。断りの形は契約 exchangeCode の errors の並び
+ * （共有秘密 → 入力の形 → コードの状態）。
+ */
+async function startSsoFake(appKey) {
+  const codes = new Map()
+  const reply = (res, status, body) => {
+    const data = Buffer.from(JSON.stringify(body))
+    res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': data.length })
+    res.end(data)
   }
-  const d = await apiCall(base, '/auth/register', {
-    method: 'POST',
-    body: { email: acc.email, password: PASSWORD, name: acc.name, signupCode },
+  const server = createServer((req, res) => {
+    if (req.method !== 'POST' || req.url !== '/api/sso/exchange') return reply(res, 404, { error: '見つかりません' })
+    const chunks = []
+    req.on('data', (c) => chunks.push(c))
+    req.on('end', () => {
+      let body
+      try {
+        const text = Buffer.concat(chunks).toString('utf8')
+        body = text ? JSON.parse(text) : {}
+      } catch {
+        body = null
+      }
+      if (!body || typeof body !== 'object' || Array.isArray(body) || body.secret !== SSO_FAKE_SECRET) {
+        return reply(res, 403, { error: '共有秘密が合いません' })
+      }
+      const { code, app } = body
+      if (typeof code !== 'string' || !code || typeof app !== 'string' || !app) {
+        return reply(res, 400, { error: '入力が正しくありません' })
+      }
+      const held = codes.get(code)
+      if (!held || held.used || held.app !== app) return reply(res, 401, { error: 'コードが無効です' })
+      held.used = true
+      reply(res, 200, { email: held.email, name: held.name })
+    })
   })
-  return { ...acc, token: d.token, created: true }
+  await new Promise((ok, ng) => {
+    server.once('error', ng)
+    server.listen(SSO_FAKE_PORT, '127.0.0.1', ok)
+  })
+  return {
+    /** その本人・この学び宛ての未使用のコードを発行する（まなびばの startSso の代役）。 */
+    issue(email, name) {
+      const code = randomUUID()
+      codes.set(code, { email, name, app: appKey, used: false })
+      return code
+    },
+    close: () => new Promise((ok) => server.close(() => ok())),
+  }
+}
+
+/** 検査の本人のトークンを返す。手元の SSO の偽物が発行したコードを学び側の signInWithCode で換える。 */
+async function ensureAccount(base, acc, sso) {
+  const d = await apiCall(base, '/auth/sso', { method: 'POST', body: { code: sso.issue(acc.email, acc.name) } })
+  if (!d?.token) throw new Error(`検査の本人（${acc.email}）のコードの交換: トークンが返らない`)
+  return { ...acc, token: d.token }
+}
+
+/** 学び側の配備のまなびばの場所が手元の SSO の偽物か確かめ、偽物が発行するコードの宛て先（受け持つ学び）を返す。 */
+async function ssoTarget(base) {
+  const config = await apiCall(base, '/auth/config')
+  if (!config?.sso || config.portal !== SSO_FAKE_URL) {
+    throw new Error(
+      `GET /api/auth/config: まなびばの場所が手元の SSO の偽物（${SSO_FAKE_URL}）でない（${JSON.stringify(config).slice(0, 100)}）。` +
+        ' wrangler dev に SSO_PORTAL_URL と SSO_SECRET を渡して起動し直すこと（audit_screens.sh が渡す）',
+    )
+  }
+  return String(config.app)
 }
 
 /** セッションを1本、最後まで解く。答えは巡回で選ぶので正誤が混ざる。 */
@@ -144,13 +197,15 @@ async function completedSessions(base, token) {
 }
 
 export async function buildFixtures(base, { log = console.log } = {}) {
-  const signupCode = arg('--signup-code', signupCodeFromDevVars())
   const out = {}
-
-  for (const acc of ACCOUNTS) {
-    const a = await ensureAccount(base, acc, signupCode)
-    out[acc.key] = a
-    log(`  ${acc.key}: ${a.created ? '新規登録' : '既存を流用'}`)
+  const sso = await startSsoFake(await ssoTarget(base))
+  try {
+    for (const acc of ACCOUNTS) {
+      out[acc.key] = await ensureAccount(base, acc, sso)
+      log(`  ${acc.key}: 手元の SSO の偽物のコードで入った`)
+    }
+  } finally {
+    await sso.close()
   }
 
   // 論点 ID は実データから採る（並び順ではなく API が返す ID をそのまま使う）

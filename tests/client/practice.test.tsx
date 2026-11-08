@@ -164,22 +164,34 @@ afterEach(async () => {
   vi.restoreAllMocks()
 })
 
+/** 作成の求めの問題数（契約 startSession の size）。省略できるので、送るときだけ整数 1〜100 を求める。
+ *  送るか省くかは REQ-050 が決めていない（省けば登録簿の値になる）。 */
+function expectSizeConforms(body: Record<string, unknown> | undefined, label: string) {
+  if (body === undefined || !('size' in body)) return
+  const size = body.size
+  expect(Number.isInteger(size), `${label}: 問題数が整数でない`).toBe(true)
+  expect(size as number, `${label}: 問題数が 1〜100 の外`).toBeGreaterThanOrEqual(1)
+  expect(size as number, `${label}: 問題数が 1〜100 の外`).toBeLessThanOrEqual(100)
+}
+
 describe('練習テストの画面', () => {
   // @covers REQ-049#fields-failed
-  it('分野の一覧が取れないときは、分野側の理由と読み直しだけを出す', async () => {
+  it('分野の一覧が取れないときは、分野側に取れなかったことと理由と読み直しだけを出す（BR-014）', async () => {
     stubApi(replies({ 'GET /api/fields': { status: 500, body: { error: '分野の一覧を取得できませんでした' } } }))
     await draw()
     expect(text()).toMatch(/取得できません|取れません|失敗/)
+    expect(text(), '取れなかった理由が出ていない').toContain('分野の一覧を取得できませんでした')
     expect(btn(/再読み込み|読み直/), '読み直しの導線が無い').toBeTruthy()
     // 進行中の取得は成功しているので、そちらの文言は出さない
     expect(text()).not.toContain('確認できていません')
   })
 
   // @covers REQ-049#current-failed
-  it('進行中の確認が取れないときは「確認できていません」を出し、分野の一覧は出す', async () => {
+  it('進行中の確認が取れないときは、その側に取れなかったことと理由と読み直しを出し、分野の一覧は出す（BR-014）', async () => {
     stubApi(replies({ 'GET /api/sessions/current': { status: 500, body: { error: '進行中を確認できませんでした' } } }))
     await draw()
     expect(text()).toContain('確認できていません')
+    expect(text(), '取れなかった理由が出ていない').toContain('進行中を確認できませんでした')
     expect(text()).toContain('テクノロジ系')
     expect(btn(/再読み込み|読み直/), '読み直しの導線が無い').toBeTruthy()
   })
@@ -230,7 +242,7 @@ describe('練習テストの画面', () => {
     expect(created, 'POST /api/sessions が呼ばれていない').toBeTruthy()
     expect(created!.body?.kind).toBe('middle')
     expect(created!.body?.middleNo).toBe(15)
-    expect(typeof created!.body?.size).toBe('number')
+    expectSizeConforms(created!.body, '単元演習')
   })
 
   // @covers REQ-056#block-middle
@@ -252,7 +264,7 @@ describe('練習テストの画面', () => {
   })
 
   // @covers REQ-050#start-field-and-review
-  it('分野を押すと分野別演習、弱点復習を押すと弱点復習が範囲と問題数つきで始まる', async () => {
+  it('分野を押すと分野別演習、弱点復習を押すと弱点復習がそれぞれの種別と範囲で始まる', async () => {
     const calls = stubApi(replies())
     await draw()
     await click(btnOutsideCategories(/テクノロジ系/), '分野別の開始')
@@ -260,7 +272,7 @@ describe('練習テストの画面', () => {
     expect(byField, 'POST /api/sessions が呼ばれていない').toBeTruthy()
     expect(byField!.body?.kind).toBe('field')
     expect(byField!.body?.field).toBe('テクノロジ系')
-    expect(typeof byField!.body?.size).toBe('number')
+    expectSizeConforms(byField!.body, '分野別演習')
 
     const calls2 = stubApi(replies())
     await draw()
@@ -268,7 +280,7 @@ describe('練習テストの画面', () => {
     const review = calls2.find((c) => c.method === 'POST' && c.url === '/api/sessions')
     expect(review, '弱点復習で POST /api/sessions が呼ばれていない').toBeTruthy()
     expect(review!.body?.kind).toBe('review')
-    expect(typeof review!.body?.size).toBe('number')
+    expectSizeConforms(review!.body, '弱点復習')
   })
 
   // @covers REQ-056#block-field-and-review

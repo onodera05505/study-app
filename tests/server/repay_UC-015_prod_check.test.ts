@@ -1,3 +1,9 @@
+import { execFile, execFileSync } from 'node:child_process'
+import { chmodSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { promisify } from 'node:util'
 import { beforeAll, describe, expect, it } from 'vitest'
 
 /**
@@ -13,29 +19,6 @@ import { beforeAll, describe, expect, it } from 'vitest'
  * 全部そろった入力の出力との差分（増えた行）に、その配備・項目の名前が現れるかで見る。
  */
 
-/** node の組み込みは実行時に読む（プロジェクトの型は Workers 向けで node の型を持たない）。ここで使う形だけを型に書く。 */
-const nodeModule = <T>(name: string) => import(/* @vite-ignore */ name) as Promise<T>
-type ExecOptions = { cwd: string; env?: Record<string, string | undefined>; maxBuffer?: number }
-type ExecResult = { stdout: string; stderr: string }
-type ExecFile = (file: string, args: string[], options: ExecOptions, callback: (error: Error | null, stdout: string, stderr: string) => void) => void
-const { execFile, execFileSync } = await nodeModule<{
-  execFile: ExecFile
-  execFileSync: (file: string, args: string[], options: ExecOptions & { encoding: 'utf8' }) => string
-}>('node:child_process')
-const { chmodSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } = await nodeModule<{
-  chmodSync: (path: string, mode: number) => void
-  mkdirSync: (path: string) => void
-  mkdtempSync: (prefix: string) => string
-  readFileSync: (path: string, encoding: 'utf8') => string
-  writeFileSync: (path: string, data: string) => void
-}>('node:fs')
-const { tmpdir } = await nodeModule<{ tmpdir: () => string }>('node:os')
-const { join } = await nodeModule<{ join: (...parts: string[]) => string }>('node:path')
-const { fileURLToPath } = await nodeModule<{ fileURLToPath: (url: URL) => string }>('node:url')
-const { promisify } = await nodeModule<{
-  promisify: (fn: ExecFile) => (file: string, args: string[], options: ExecOptions) => Promise<ExecResult>
-}>('node:util')
-
 const ROOT = join(fileURLToPath(new URL('.', import.meta.url)), '..', '..')
 const CHECK = join(ROOT, 'scripts', 'check_sso_prod.sh')
 const execFileAsync = promisify(execFile)
@@ -45,7 +28,10 @@ const SECRET_VALUE = 'STUB_SECRET_VALUE_7f3a9c1e_DO_NOT_PRINT'
 
 /** 登録簿（scripts/targets.py）と配備の値の正本（scripts/pages_projects.json）から、見るべき配備を導く。 */
 type Deployment = { key: string; label: RegExp; url: string; project: string }
-const pagesProjects = JSON.parse(readFileSync(join(ROOT, 'scripts', 'pages_projects.json'), 'utf8')) as Record<string, Record<string, string>>
+const pagesProjects = JSON.parse(readFileSync(join(ROOT, 'scripts', 'pages_projects.json'), 'utf8')) as {
+  account_id: string
+  _portal: { project: string; url: string }
+}
 const targets = (...args: string[]) => execFileSync('python3', [join(ROOT, 'scripts', 'targets.py'), ...args], { cwd: ROOT, encoding: 'utf8' }).trim()
 const ACCOUNT = pagesProjects.account_id
 const PORTAL: Deployment = {
@@ -69,17 +55,19 @@ const SIGNING_SECRET = 'JWT_SECRET'
 
 type HttpRule = { method?: string; url: string; status?: number; exit?: number; body?: string }
 type SecretRule = { project: string; exit?: number; names?: string[] }
-type Scenario = { http?: HttpRule[]; secrets?: SecretRule[]; account?: string; version?: string }
+/** whoami の出方。table は accounts の行を並べた表、notLoggedIn はログインしていない旨、noTable はアカウントの表が無い出力。 */
+type Whoami = { mode: 'table'; accounts: string[] } | { mode: 'notLoggedIn' } | { mode: 'noTable' }
+type Scenario = { http?: HttpRule[]; secrets?: SecretRule[]; secretsExit?: number; account?: string; whoami?: Whoami; version?: string }
 type Run = { code: number; out: string; lines: string[]; log: string[] }
 
 const CURL_STUB = `#!/usr/bin/env bash
-# 偽の curl。引数から method・URL・出力の形（-w は状態コード、-D - はヘッダ、-o は本文を捨てる）を読み、
+# 偽の curl。引数から method・URL・送る本文・出力の形（-w は状態コード、-D - はヘッダ、-o は本文を捨てる）を読み、
 # シナリオの規則（method<TAB>URL か URL 前置き*<TAB>status<TAB>exit<TAB>body）に無い URL は既定の応答を返す。
-method=GET; url=""; want_status=0; want_headers=0; discard_body=0; has_data=0
+method=GET; url=""; want_status=0; want_headers=0; discard_body=0; has_data=0; data=""
 while [ $# -gt 0 ]; do
   case "$1" in
     -X) method="$2"; shift ;;
-    -d|--data|--data-raw|--data-binary) has_data=1; shift ;;
+    -d|--data|--data-raw|--data-binary|--json) has_data=1; data="$2"; shift ;;
     -w) want_status=1; shift ;;
     -D) want_headers=1; shift ;;
     -o|--output) discard_body=1; shift ;;
@@ -89,7 +77,7 @@ while [ $# -gt 0 ]; do
   esac
   shift
 done
-printf '%s %s data=%s\\n' "$method" "$url" "$has_data" >> "$STUB_LOG"
+printf '%s %s data=%s body=%s\\n' "$method" "$url" "$has_data" "$data" >> "$STUB_LOG"
 status=""; code=0; body=""
 while IFS=$'\\t' read -r m pat st ex bd; do
   [ -n "$m" ] || continue
@@ -133,15 +121,22 @@ printf 'npx %s\\n' "$*" >> "$STUB_LOG"
 [ "$1" = wrangler ] || { echo "stub: npx $1 は想定外" >&2; exit 1; }
 shift
 if [ "$1" = whoami ]; then
-  printf ' ⛅️ wrangler 4.0.0\\nGetting User settings...\\n👋 You are logged in with an OAuth Token.\\n'
+  printf ' ⛅️ wrangler 4.0.0\\nGetting User settings...\\n'
+  case "$STUB_WHOAMI_MODE" in
+    notLoggedIn) printf 'You are not authenticated. Please run wrangler login.\\n'; exit 0 ;;
+    noTable) printf '👋 You are logged in with an OAuth Token.\\n'; exit 0 ;;
+  esac
+  printf '👋 You are logged in with an OAuth Token.\\n'
   printf '┌──────────────┬──────────────────────────────────┐\\n│ Account Name │ Account ID                       │\\n'
-  printf '│ Personal     │ %s │\\n└──────────────┴──────────────────────────────────┘\\n' "$STUB_ACCOUNT"
+  n=0
+  for a in $STUB_ACCOUNTS; do n=$((n+1)); printf '│ Account %s    │ %s │\\n' "$n" "$a"; done
+  printf '└──────────────┴──────────────────────────────────┘\\n'
   exit 0
 fi
 if [ "$1 $2 $3" = "pages secret list" ]; then
   project=""
   while [ $# -gt 0 ]; do [ "$1" = --project-name ] && project="$2"; shift; done
-  names="$STUB_DEFAULT_NAMES"; code=0
+  names="$STUB_DEFAULT_NAMES"; code="\${STUB_SECRETS_EXIT:-0}"
   while IFS=$'\\t' read -r p ex ns; do
     [ "$p" = "$project" ] && { code="$ex"; names="$ns"; break; }
   done < "$STUB_SCENARIO/secrets.rules"
@@ -177,7 +172,9 @@ const runCheck = async (name: string, scenario: Scenario): Promise<Run> => {
     PATH: `${bin}:${process.env.PATH ?? ''}`,
     STUB_SCENARIO: dir,
     STUB_LOG: log,
-    STUB_ACCOUNT: scenario.account ?? ACCOUNT,
+    STUB_ACCOUNTS: (scenario.whoami?.mode === 'table' ? scenario.whoami.accounts : [scenario.account ?? ACCOUNT]).join(' '),
+    STUB_WHOAMI_MODE: scenario.whoami?.mode ?? 'table',
+    STUB_SECRETS_EXIT: String(scenario.secretsExit ?? 0),
     STUB_DEFAULT_NAMES: `${SHARED_SECRET} ${SIGNING_SECRET}`,
     STUB_PORTAL_URL: PORTAL.url,
     STUB_VERSION: scenario.version ?? 'v1',
@@ -199,6 +196,25 @@ const runCheck = async (name: string, scenario: Scenario): Promise<Run> => {
   const calls = readFileSync(log, 'utf8').split('\n').filter((l) => l.length > 0)
   return { code, out, lines, log: calls }
 }
+
+/** 契約 openDeploymentEntry の成功の例が配備ごとに挙げる入口の経路（まなびばは path の enum の全部、学びは /）。 */
+const ENTRY_PATHS = { portal: ['/', '/app.js', '/style.css'], learning: ['/'] }
+
+/** 偽物が受けた呼び出しの 1 行を、その配備の項目（契約の operation の名前）に読み替える。その配備の呼び出しでなければ null。 */
+const operationOf = (line: string, d: Deployment): string | null => {
+  if (line.startsWith('npx ')) {
+    return line.startsWith('npx wrangler pages secret list') && line.includes(`--project-name ${d.project}`) ? 'listDeploymentSecretNames' : null
+  }
+  const [method, url] = line.split(' ')
+  if (!url || !url.startsWith(`${d.url}/`)) return null
+  const path = url.slice(d.url.length)
+  if (method === 'GET' && path === '/api/health') return 'checkDeploymentHealth'
+  if (method === 'GET' && path === '/api/auth/config') return 'getAuthConfig'
+  if (method === 'POST' && /^\/api\/auth\/(login|register)$/.test(path)) return 'probeRetiredPasswordRoute'
+  if (method === 'GET' && !path.startsWith('/api/')) return 'openDeploymentEntry'
+  return `契約に無い呼び出し:${line}`
+}
+const OPERATION_NAMES = ['checkDeploymentHealth', 'openDeploymentEntry', 'probeRetiredPasswordRoute', 'listDeploymentSecretNames', 'getAuthConfig']
 
 const IP = byKey('ip')
 const ITC = byKey('itc')
@@ -227,6 +243,15 @@ const SCENARIOS: Record<string, Scenario> = {
   wrongAccountAndUnavailable: { account: 'ffffffffffffffffffffffffffffffff', secrets: [{ project: IP.project, exit: 1 }] },
   versionOld: { version: 'old', secrets: [{ project: IP.project, names: [SHARED_SECRET] }] },
   versionNew: { version: 'new', secrets: [{ project: IP.project, names: [SHARED_SECRET] }] },
+  notLoggedIn: { whoami: { mode: 'notLoggedIn' }, secretsExit: 1 },
+  accountNotShown: { whoami: { mode: 'noTable' }, secretsExit: 1 },
+  ownerAmongAccounts: { whoami: { mode: 'table', accounts: ['ffffffffffffffffffffffffffffffff', ACCOUNT] } },
+  retiredRoutesOpen: {
+    http: [
+      { method: 'POST', url: `${IP.url}/api/auth/register`, status: 400, body: '{"error":"入力が正しくありません"}' },
+      { method: 'POST', url: `${TAIL.url}/api/auth/login`, exit: 7 },
+    ],
+  },
 }
 
 const runs = new Map<string, Run>()
@@ -253,7 +278,7 @@ beforeAll(async () => {
   expect(LEARNINGS.length, '登録簿から学びの配備が導けていない').toBeGreaterThanOrEqual(2)
   const entries = await Promise.all(Object.entries(SCENARIOS).map(async ([name, scenario]) => [name, await runCheck(name, scenario)] as const))
   for (const [name, r] of entries) runs.set(name, r)
-}, 180_000)
+}, 480_000)
 
 describe('UC-015 本番の検査（偽の配備先に対して scripts/check_sso_prod.sh を回す）', () => {
   describe('REQ-213 死活確認を認証なしで叩く', () => {
@@ -283,15 +308,17 @@ describe('UC-015 本番の検査（偽の配備先に対して scripts/check_sso
     })
 
     // @covers REQ-214#every-entry-path-visited
-    it('入口の画面を成す経路を配備ごとに全部開く（まなびばは / と画面の部品、学びは /。配備が増えても抜けない）', () => {
+    it('配備ごとに開く入口の経路の集合が、契約 openDeploymentEntry の成功の例の集合と等しい（抜けも余りも無い）', () => {
       const r = run('pass')
-      const opened = (d: Deployment) =>
-        r.log
-          .filter((l) => l.startsWith(`GET ${d.url}/`) && !l.includes('/api/'))
-          .map((l) => l.split(' ')[1].slice(d.url.length))
-      // まなびばの入口は / と、画面を成す部品（契約の例 notOpenable が挙げる /app.js）を含む
-      expect(opened(PORTAL)).toEqual(expect.arrayContaining(['/', '/app.js']))
-      for (const d of LEARNINGS) expect(opened(d), `${d.key} の入口の経路`).toContain('/')
+      const opened = (d: Deployment) => [
+        ...new Set(
+          r.log
+            .filter((l) => l.startsWith(`GET ${d.url}/`) && !l.includes('/api/'))
+            .map((l) => l.split(' ')[1].slice(d.url.length)),
+        ),
+      ].sort()
+      expect(opened(PORTAL), 'まなびばの入口の経路').toEqual([...ENTRY_PATHS.portal].sort())
+      for (const d of LEARNINGS) expect(opened(d), `${d.key} の入口の経路`).toEqual([...ENTRY_PATHS.learning].sort())
     })
   })
 
@@ -358,9 +385,21 @@ describe('UC-015 本番の検査（偽の配備先に対して scripts/check_sso
     })
 
     // @covers REQ-216#seen-items-listed
-    it('結果に、見た配備（まなびばと全ての学び）が現れる', () => {
+    it('結果に、見た配備ごとに見た項目が operation の名前で現れ、その集合が検査の叩いた operation の集合と等しい', () => {
       const r = run('pass')
-      for (const d of ALL) expect(mentions(r.lines, d), `${d.key} が結果に無い`).toBe(true)
+      for (const d of ALL) {
+        const called = new Set(r.log.map((l) => operationOf(l, d)).filter((x): x is string => x !== null))
+        expect(called.size, `${d.key} を 1 つも叩いていない`).toBeGreaterThan(0)
+        const lines = r.lines.filter((l) => d.label.test(l))
+        const listed = new Set(OPERATION_NAMES.filter((op) => lines.some((l) => l.includes(op))))
+        expect([...listed].sort(), `${d.key} の結果に出た項目`).toEqual([...called].sort())
+      }
+      // 学び側の死活確認と入口の経路を含む
+      for (const d of LEARNINGS) {
+        const lines = r.lines.filter((l) => d.label.test(l))
+        expect(lines.some((l) => l.includes('checkDeploymentHealth')), `${d.key} の死活確認が結果に無い`).toBe(true)
+        expect(lines.some((l) => l.includes('openDeploymentEntry')), `${d.key} の入口の経路が結果に無い`).toBe(true)
+      }
     })
   })
 
@@ -466,7 +505,7 @@ describe('UC-015 本番の検査（偽の配備先に対して scripts/check_sso
     })
 
     // @covers REQ-220#no-state-change
-    it('検査は読むだけで、配備の状態を変える要求を出さない（HTTP は GET と契約が挙げるログインの閉鎖の確認だけ、CLI は一覧だけ）', () => {
+    it('検査は読むだけで、配備の状態を変える要求を出さない（HTTP は GET と契約が挙げるパスワードの経路の閉鎖の確認だけ、CLI は一覧だけ）', () => {
       for (const name of ['pass', 'twoProblems'] as const) {
         const r = run(name)
         for (const call of r.log) {
@@ -475,7 +514,7 @@ describe('UC-015 本番の検査（偽の配備先に対して scripts/check_sso
             continue
           }
           const [method, url] = call.split(' ')
-          const allowed = method === 'GET' || (method === 'POST' && url.endsWith('/api/auth/login'))
+          const allowed = method === 'GET' || (method === 'POST' && /\/api\/auth\/(login|register)$/.test(url))
           expect(allowed, `${name}: 状態を変えうる要求 ${call}`).toBe(true)
         }
       }
@@ -534,6 +573,27 @@ describe('UC-015 本番の検査（偽の配備先に対して scripts/check_sso
       expect(mentions(raised('ipListUnavailable'), IP)).toBe(true)
     })
 
+    // @covers REQ-222#account-unknown-not-forbidden
+    it('ログインしていない・ログイン中のアカウントが分からないときは、アカウント違いに挙げず、一覧の取得を試みて取得の失敗の側に挙げる', () => {
+      for (const name of ['notLoggedIn', 'accountNotShown'] as const) {
+        const r = run(name)
+        expect(r.code, `${name}: 一覧が取れないのに全体が通っている`).not.toBe(0)
+        for (const d of ALL) {
+          expect(listedSecrets(r, d), `${name}: ${d.key} の一覧の取得を試みていない（アカウント違いに倒している）`).toBe(true)
+          expect(mentions(raised(name), d), `${name}: ${d.key} が取れなかった配備として挙がっていない`).toBe(true)
+        }
+        expect(raised(name), `${name}: アカウント違いと同じ問題の挙げ方になっている`).not.toEqual(raised('wrongAccount'))
+      }
+    })
+
+    // @covers REQ-222#any-logged-in-account-owns
+    it('複数のアカウントにログインしていてそのうち 1 つが配備を持つときは、アカウント違いに挙げず一覧を取りに行く', () => {
+      const r = run('ownerAmongAccounts')
+      for (const d of ALL) expect(listedSecrets(r, d), `${d.key} の一覧を取りに行っていない`).toBe(true)
+      expect(raised('ownerAmongAccounts')).toEqual([])
+      expect(r.code).toBe(0)
+    })
+
     // @covers REQ-222#forbidden-precedes-unavailable
     it('別のアカウントでログインしていて取得も失敗しうる入力では、挙がる理由はアカウントの側（取得の失敗は挙がらない）', () => {
       expect(run('wrongAccountAndUnavailable').code).not.toBe(0)
@@ -545,6 +605,56 @@ describe('UC-015 本番の検査（偽の配備先に対して scripts/check_sso
       const r = run('ipListUnavailable')
       expect(r.code).not.toBe(0)
       expect(mentions(dropped('ipListUnavailable'), IP), 'ip の確認が、取れないのに出たまま').toBe(true)
+    })
+  })
+
+  describe('REQ-350 学び側のパスワードでのログインと登録の経路が閉じているか', () => {
+    const PROBE_ROUTES = ['login', 'register'] as const
+    const probed = (r: Run, d: Deployment, route: string) => got(r, 'POST', `${d.url}/api/auth/${route}`)
+
+    // @covers REQ-350#retired-routes-closed-pass
+    it('どの学びでもログインと登録の経路が受け持たない経路として断られれば、問題に挙げない', () => {
+      const r = run('pass')
+      for (const d of LEARNINGS) for (const route of PROBE_ROUTES) expect(probed(r, d, route), `${d.key} の ${route} を叩いていない`).toBe(true)
+      expect(r.code).toBe(0)
+      expect(raised('pass')).toEqual([])
+    })
+
+    // @covers REQ-350#retired-route-open-raised
+    it('どちらかの経路が受け持たない経路の断り以外を返す・届かないとき、その配備とその経路を問題に挙げ全体を失敗にする', () => {
+      // ip の登録は 400（開いている）、末尾の学びのログインは届かない
+      expect(IP.key, '仕込み: ip と末尾の学びが同じ').not.toBe(TAIL.key)
+      const r = run('retiredRoutesOpen')
+      expect(r.code, '経路が開いているのに全体が通っている').not.toBe(0)
+      const lines = raised('retiredRoutesOpen')
+      for (const [d, route] of [[IP, 'register'], [TAIL, 'login']] as const) {
+        expect(lines.filter((l) => d.label.test(l)).some((l) => l.includes(route)), `${d.key} の ${route} を名指しした問題の行が無い`).toBe(true)
+      }
+      for (const other of LEARNINGS.filter((x) => x.key !== IP.key && x.key !== TAIL.key)) {
+        expect(mentions(lines, other), `開いていない ${other.key} が問題に混ざっている`).toBe(false)
+      }
+    })
+
+    // @covers REQ-350#no-state-changing-probe
+    it('確かめの要求は決められた形を満たさない空の本文（{}）だけを送り、まなびばには送らない', () => {
+      for (const name of ['pass', 'retiredRoutesOpen'] as const) {
+        const posted = run(name).log.filter((l) => l.startsWith('POST '))
+        expect(posted.length, `${name}: 確かめの要求を送っていない`).toBeGreaterThan(0)
+        for (const call of posted) {
+          const [, url] = call.split(' ')
+          expect(url, `${name}: パスワードの経路以外への POST ${call}`).toMatch(/\/api\/auth\/(login|register)$/)
+          expect(url.startsWith(`${PORTAL.url}/`), `${name}: まなびばに送っている ${call}`).toBe(false)
+          const body = call.match(/ body=(.*)$/)?.[1] ?? ''
+          const sent = (() => {
+            try {
+              return JSON.parse(body) as unknown
+            } catch {
+              return body
+            }
+          })()
+          expect(sent, `${name}: 空のオブジェクトでない本文 ${call}`).toEqual({})
+        }
+      }
     })
   })
 })

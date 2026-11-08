@@ -1,4 +1,4 @@
-import { examOf } from '../shared/exam'
+import { examOf, resolveExam } from '../shared/exam'
 import { Hono } from 'hono'
 import type { Context } from 'hono'
 import { matchedRoutes } from 'hono/route'
@@ -8,6 +8,7 @@ import { sql } from 'drizzle-orm'
 import { NOT_CONFIGURED, readToken } from './lib/auth'
 import type { Bindings, Variables } from './lib/db'
 import { getDb, getSecret } from './lib/db'
+import { nextTopics } from './lib/next-topics'
 import { authRoutes } from './routes/auth'
 import { catalogRoutes } from './routes/catalog'
 import { sessionRoutes } from './routes/sessions'
@@ -37,6 +38,17 @@ app.use(
 )
 
 const api = new Hono<{ Bindings: Bindings; Variables: Variables }>()
+
+/** 学びの key を解決できない配備は、受け持つどの経路（死活確認と認証の形を含む）も、
+ *  認証・本文・署名の秘密の断りより先に、設定が無いことに当たる形で断る。
+ *  受け持たない経路は notFound へ委ねる。
+ *  @implements REQ-354, BR-005
+ */
+api.use('*', async (c, next) => {
+  if (!hasRouteHandler(c)) return next()
+  if (!resolveExam(c.env.EXAM)) return c.json(NOT_CONFIGURED.body, NOT_CONFIGURED.status)
+  return next()
+})
 
 // @implements REQ-213, REQ-260
 api.get('/health', (c) => c.json({ ok: true }))
@@ -87,7 +99,7 @@ api.use('*', async (c, next) => {
   await next()
 })
 
-// @implements REQ-043, REQ-044, REQ-271, REQ-272, BR-030
+// @implements REQ-043, REQ-044, REQ-271, REQ-272
 api.get('/me', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -105,16 +117,7 @@ api.get('/me', async (c) => {
      WHERE user_id = ${userId} AND status = 'completed'
      ORDER BY finished_at DESC LIMIT 5
   `)
-  // 「頻出なのに、まだ理解できていない」論点。最短合格の次の一手。
-  const next = await db.all(sql`
-    SELECT t.id AS id, t.term AS term, t.question_count AS questionCount, s.field AS field
-      FROM topics t
-      JOIN syllabus_items s ON s.id = t.syllabus_item_id
-      LEFT JOIN progress p ON p.topic_id = t.id AND p.user_id = ${userId}
-     WHERE COALESCE(p.status, 1) < 3 AND t.question_count > 0
-     ${examOf(c.env.EXAM).roadmap ? sql`ORDER BY COALESCE(t.sort_order, 999999) ASC, t.term` : sql`ORDER BY t.question_count DESC, t.term`}
-     LIMIT 10
-  `)
+  const next = await nextTopics(db, userId, { roadmap: examOf(c.env.EXAM).roadmap, limit: 10 })
   // 記録そのものは認証ミドルウェアで入れている。ここでは集計するだけ。
   const today = jstDay(new Date())
   const visitRows = await db.all<{ day: string }>(sql`

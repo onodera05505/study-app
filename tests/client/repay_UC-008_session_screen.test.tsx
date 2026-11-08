@@ -66,7 +66,7 @@ const Q = (over: Record<string, unknown> = {}) => ({
   ...over,
 })
 
-/** 模試のテスト（契約 getMockCurrentQuestion の session は先頭 5 鍵）。 */
+/** 模試のテスト（UC-004 の契約 getCurrentQuestion の session は 5 鍵だけ）。 */
 const MOCK = (over: Record<string, unknown> = {}) => ({
   id: 's-1',
   kind: 'mock',
@@ -88,7 +88,8 @@ const CUR = (over: Record<string, unknown> = {}) => ({
 function replies(over: Record<string, Reply> = {}): (key: string) => Reply {
   const base: Record<string, Reply> = {
     'GET /api/sessions/s-1/current': { body: CUR() },
-    'POST /api/sessions/s-1/answer': { body: { correct: true, correctAnswer: 'ア', explanation: null, remaining: 99, finished: false } },
+    // 模試の回答の応答は残りの未回答の件数と終わったかだけ（REQ-343）
+    'POST /api/sessions/s-1/answer': { body: { remaining: 99, finished: false } },
     'POST /api/sessions/s-1/finish': { body: { ok: true, correct: 1, total: 3 } },
     ...over,
   }

@@ -41,7 +41,7 @@ trap cleanup EXIT
 # 中身の一致は check_api.py の「件数の整合」（API と ローカル D1 の突き合わせ）で
 # 落ちる。ip の dev を ap の D1 と突き合わせれば件数が合わずエラーになる。
 if curl -fsS --max-time 3 "${BASE}/api/health" >/dev/null 2>&1; then
-  echo "▶ すでに ${PORT} で動いているのでそれを使う（試験の取り違えは件数の整合で落ちる）"
+  echo "▶ すでに ${PORT} で動いているのでそれを使う（試験の取り違えは件数の整合で、まなびばの場所の違いは認証の形の検査で落ちる）"
 else
   # wrangler dev は dist を assets として bind する。無いとそもそも起動しない。
   if [ ! -f dist/index.html ]; then
@@ -50,12 +50,12 @@ else
   fi
 
   echo "▶ wrangler dev を起動（--env ${EXAM} / port ${PORT}）"
-  # wrangler.jsonc の env は本番どおり SSO_PORTAL_URL を持つ（学び側のパスワード登録・ログインは 404）。
-  # この検査はパスワードの経路で検査用アカウントを作るので、SSO を空で上書きして切る。
-  # SSO が有効な経路は scripts/check_sso_flow.py（ローカル）と check_sso_prod.sh（本番）が見る。
-  # JWT_SECRET はローカルのこの検査専用の固定値を渡す（本番の値ではない）。渡さない配備では
-  # トークンを発行も検証もしないので、ログインから先の検査が 503 で止まる。
-  npx wrangler dev --env "$EXAM" --port "$PORT" --ip 127.0.0.1 --var "SSO_PORTAL_URL:" \
+  # まなびばの場所と共有秘密は、check_api.py が起こす手元の SSO の偽物（SSO_FAKE_PORT・SSO_FAKE_SECRET と同じ値）。
+  # 検査の本人はその偽物が換えた使い捨てコードからだけ作る（学び側のパスワードの経路はどの配備にも無い）。
+  # JWT_SECRET はローカルのこの検査専用の固定値（本番の値ではない）。渡さない配備ではトークンを発行も検証もしない。
+  npx wrangler dev --env "$EXAM" --port "$PORT" --ip 127.0.0.1 \
+    --var "SSO_PORTAL_URL:http://127.0.0.1:8791" \
+    --var "SSO_SECRET:check-api-local-shared-not-a-secret" \
     --var "JWT_SECRET:check-api-local-only-not-a-secret" \
     --show-interactive-dev-session=false >"$LOG" 2>&1 &
   PID=$!

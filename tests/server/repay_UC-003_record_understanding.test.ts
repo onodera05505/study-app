@@ -9,28 +9,13 @@
  *  論点は ID の順・名前の順・出題頻度の順が互いに一致しないように置く（並びの観測が
  *  どれか 1 つの順でたまたま緑にならないため）。 */
 
+import { readdirSync, readFileSync } from 'node:fs'
+import { DatabaseSync } from 'node:sqlite'
+import { fileURLToPath } from 'node:url'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import app from '../../src/server/index'
 import type { Bindings } from '../../src/server/lib/db'
 import { issueToken } from '../../src/server/lib/auth'
-
-/** node:sqlite の同期 API のうち、ここで使う形だけ（プロジェクトの型は Workers 向けで node の型を持たない）。 */
-type Statement = {
-  all: (...params: unknown[]) => unknown[]
-  get: (...params: unknown[]) => unknown
-  run: (...params: unknown[]) => { changes: number | bigint; lastInsertRowid: number | bigint }
-  setReturnArrays: (on: boolean) => void
-}
-type DatabaseSync = { exec: (sql: string) => void; prepare: (sql: string) => Statement; close: () => void }
-
-/** node の組み込みは実行時に読む（型の解決を通さない）。 */
-const nodeModule = <T>(name: string) => import(/* @vite-ignore */ name) as Promise<T>
-const { DatabaseSync } = await nodeModule<{ DatabaseSync: new (path: string) => DatabaseSync }>('node:sqlite')
-const { readdirSync, readFileSync } = await nodeModule<{
-  readdirSync: (dir: string) => string[]
-  readFileSync: (path: string, encoding: 'utf8') => string
-}>('node:fs')
-const { fileURLToPath } = await nodeModule<{ fileURLToPath: (url: URL) => string }>('node:url')
 
 const MIGRATIONS_DIR = fileURLToPath(new URL('../../migrations/', import.meta.url))
 
@@ -350,5 +335,224 @@ describe('次に学ぶの候補（UC-003）', () => {
     // B 以外の論点を開いているときは、先頭の B がそのまま添えられる
     const onD = await getJson<Detail>(`/api/topics/${D}`)
     expect(onD.nextTopic?.id).toBe(B)
+  })
+})
+
+describe('整数として読めない論点の ID（UC-003）', () => {
+  // @covers REQ-268#non-integer-id-rejected
+  it('論点の ID が整数として読めない求めは受け付けず、先頭の数字だけなら在る論点になる表記でも理解度を残さない', async () => {
+    for (const id of ['abc', `${B}abc`, `${B}.5`]) {
+      const res = await record(id, { status: 3 })
+      expect(res.status, `ID「${id}」の求めが 400 にならない`).toBe(400)
+      const data = (await res.json()) as { error?: unknown; ok?: unknown }
+      expect(typeof data.error, `ID「${id}」の断りに理由が無い`).toBe('string')
+      expect(data.ok).toBeUndefined()
+    }
+    expect(await detailStatus(B), '整数として読めない ID の求めで、先頭の数字の論点に理解度が残った').toBeNull()
+    expect(storedRows(ME.id, B)).toBe(0)
+    expect(await counts()).toMatchObject({ understood: 0, partly: 0 })
+  })
+
+  // @covers REQ-268#before-not-found
+  it('整数として読めず、その ID の論点も無いことになる求めは、見つからないではなく受け付けないとして断る', async () => {
+    for (const id of ['abc', `${UNKNOWN_TOPIC}x`]) {
+      const res = await record(id, { status: 3 })
+      expect(res.status, `ID「${id}」が受け付けの拒み（400）より先に見つからない（404）になっている`).toBe(400)
+    }
+  })
+})
+
+/* ---------- ホームの集計（getHomeSummary） ---------- */
+
+type Visits = { today: string; streak: number; longest: number; total: number }
+type Recent = {
+  id: string
+  kind: string
+  scopeLabel: string
+  questionCount: number
+  correctCount: number | null
+  finishedAt: number | null
+}
+type Summary = { visits: Visits; recentSessions: Recent[] }
+
+/** ホームの集計を求める（それ自体が本人として学びを使うことになる）。 */
+const summary = async (who: Who = ME) => getJson<Summary>('/api/me', who)
+
+/** 本人として学びを使い、そのあとに読み返したホームの集計。 */
+async function useThenSummary(who: Who = ME) {
+  await summary(who)
+  return summary(who)
+}
+
+/** 'YYYY-MM-DD' の暦日から n 日前の暦日。 */
+function daysBefore(day: string, n: number): string {
+  const d = new Date(`${day}T00:00:00Z`)
+  d.setUTCDate(d.getUTCDate() - n)
+  return d.toISOString().slice(0, 10)
+}
+
+/** 学びを開いた日の記録を前の日に置く（保存先の正本は schema の daily_visits 表）。 */
+function visitedOn(userId: string, ...days: string[]) {
+  for (const day of days) db.prepare('INSERT INTO daily_visits (user_id, day) VALUES (?, ?)').run(userId, day)
+}
+
+/** 応答の今日（日本時間の暦日）。 */
+const today = async () => (await summary()).visits.today
+
+describe('学びを開いた日の記録（UC-003）', () => {
+  // @covers REQ-270#first-use-of-day
+  it('記録がまだ無い状態で本人として学びを使うと、その日が 1 件記録される', async () => {
+    const { visits } = await useThenSummary()
+    expect(visits.today).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+    expect(visits.total, '使った日が記録されていない').toBe(1)
+    expect(visits.streak).toBe(1)
+  })
+
+  // @covers REQ-270#same-day-again
+  it('同じ日に重ねて使っても、その日の記録は 1 件のまま', async () => {
+    await summary()
+    await getJson('/api/topics')
+    await getJson(`/api/topics/${B}`)
+    await summary()
+    const { visits } = await summary()
+    expect(visits.total, '同じ日の記録が 2 件以上になっている').toBe(1)
+    expect(visits.streak).toBe(1)
+    expect(visits.longest).toBe(1)
+  })
+
+  // @covers REQ-270#next-day
+  it('前の日の記録があり今日の記録が無い状態で使うと、前の日を残したまま今日が 1 件増える', async () => {
+    const day = await today()
+    db.prepare('DELETE FROM daily_visits WHERE user_id = ?').run(ME.id)
+    visitedOn(ME.id, daysBefore(day, 1))
+    const { visits } = await useThenSummary()
+    expect(visits.total, '前の日の記録が消えたか、今日が増えていない').toBe(2)
+    expect(visits.streak).toBe(2)
+  })
+})
+
+describe('連続記録と開いた日数（UC-003）', () => {
+  // @covers REQ-271#today-only
+  it('開いた日が今日だけなら、連続記録・最も長い連続記録・開いた日数の合計はいずれも 1', async () => {
+    const { visits } = await useThenSummary()
+    expect({ streak: visits.streak, longest: visits.longest, total: visits.total }).toEqual({ streak: 1, longest: 1, total: 1 })
+  })
+
+  // @covers REQ-271#consecutive-days
+  it('今日に続く途切れの無い記録なら、連続記録と合計がその日数になる', async () => {
+    const day = await today()
+    visitedOn(ME.id, daysBefore(day, 1), daysBefore(day, 2), daysBefore(day, 3))
+    const { visits } = await useThenSummary()
+    expect({ streak: visits.streak, longest: visits.longest, total: visits.total }).toEqual({ streak: 4, longest: 4, total: 4 })
+  })
+
+  // @covers REQ-271#broken-streak
+  it('間に開いていない日があれば、連続記録は今日に続く分だけで、最も長い連続記録は過去の分が残り、合計はすべての日数', async () => {
+    const day = await today()
+    // 今日・1 日前（今日に続く 2 日）／4〜7 日前（過去の 4 日連続）。2・3 日前は開いていない
+    visitedOn(ME.id, daysBefore(day, 1), ...[4, 5, 6, 7].map((n) => daysBefore(day, n)))
+    const { visits } = await useThenSummary()
+    expect({ streak: visits.streak, longest: visits.longest, total: visits.total }).toEqual({ streak: 2, longest: 4, total: 6 })
+    // 他の利用者の記録は数えない
+    visitedOn(OTHER.id, daysBefore(day, 2), daysBefore(day, 3))
+    expect((await summary()).visits).toMatchObject({ streak: 2, longest: 4, total: 6 })
+  })
+})
+
+describe('ホームの集計の最近の結果（UC-003）', () => {
+  const STARTED = 1_760_000_000
+
+  /** 締めたテストの行（保存先の正本は schema の sessions 表）。n が大きいほど新しく締めた。 */
+  function finishedSession(n: number, over: Row = {}) {
+    const row: Row = {
+      id: `done-${String(n).padStart(3, '0')}`,
+      user_id: ME.id,
+      kind: 'drill',
+      status: 'completed',
+      source_exam: null,
+      scope_label: `論点「損益分岐点」${n}`,
+      time_limit_sec: null,
+      question_count: 10,
+      correct_count: n % 10,
+      started_at: STARTED,
+      finished_at: STARTED + 600 + n * 60,
+      ...over,
+    }
+    const cols = Object.keys(row)
+    db.prepare(`INSERT INTO sessions (${cols.join(', ')}) VALUES (${cols.map(() => '?').join(', ')})`).run(
+      ...(cols.map((c) => toParam(row[c])) as never[]),
+    )
+    return row
+  }
+
+  /** 最近の結果の上限（契約の getHomeSummary の応答の recentSessions.maxItems）。 */
+  function limitFromContract(): number {
+    const yaml = readFileSync(
+      new URL('../../docs/goals/GOAL-01-learn-topics/UC-003-record-understanding/contract.yaml', import.meta.url),
+      'utf8',
+    )
+    const m = /recentSessions:\s*\n\s*type:\s*array\s*\n\s*maxItems:\s*(\d+)/.exec(yaml)
+    if (!m) throw new Error('契約に最近の結果の上限（recentSessions.maxItems）が無い')
+    return Number(m[1])
+  }
+
+  /** 受験履歴の一覧（UC-007 の契約の listExamHistory）の並び。 */
+  const historyIds = async (who: Who = ME) =>
+    (await getJson<{ sessions: { id: string }[] }>('/api/sessions', who)).sessions.map((s) => s.id)
+
+  // @covers REQ-272#fields-attached
+  it('完了した受験があれば、各件にテストの種別・範囲の名前・問題数・正答数・締めた時刻を添えて返す', async () => {
+    const row = finishedSession(1, { kind: 'mock', scope_label: '令和6年度 春期', question_count: 100, correct_count: 72 })
+    const { recentSessions } = await summary()
+    expect(recentSessions).toHaveLength(1)
+    expect(recentSessions[0]).toMatchObject({
+      id: row.id,
+      kind: 'mock',
+      scopeLabel: '令和6年度 春期',
+      questionCount: 100,
+      correctCount: 72,
+      finishedAt: row.finished_at,
+    })
+  })
+
+  // @covers REQ-272#no-sessions
+  it('受験履歴が無ければ、最近の結果は空で返る', async () => {
+    expect((await summary()).recentSessions).toEqual([])
+  })
+
+  // @covers REQ-272#capped-at-limit
+  it('決めた件数ちょうどなら全件を、それを超えれば受験履歴の先頭から決めた件数までを返す', async () => {
+    const limit = limitFromContract()
+    for (let n = 1; n <= limit; n++) finishedSession(n)
+    const atLimit = (await summary()).recentSessions.map((s) => s.id)
+    expect(atLimit, '決めた件数ちょうどの履歴が全件返っていない').toHaveLength(limit)
+    expect(atLimit).toEqual((await historyIds()).slice(0, limit))
+
+    finishedSession(limit + 1)
+    const over = (await summary()).recentSessions.map((s) => s.id)
+    expect(over, '決めた件数で止まっていない').toHaveLength(limit)
+    expect(over, '受験履歴の先頭からの件になっていない').toEqual((await historyIds()).slice(0, limit))
+    expect(over, '最も新しく締めた受験が入っていない').toContain(`done-${String(limit + 1).padStart(3, '0')}`)
+    expect(over, '最も古い受験が切り取られていない').not.toContain('done-001')
+  })
+
+  // @covers REQ-272#own-history-only
+  it('他の利用者の受験履歴があっても、本人の分だけを返す', async () => {
+    finishedSession(1)
+    finishedSession(2, { id: 'other-002', user_id: OTHER.id, scope_label: '別の人のテスト' })
+    const { recentSessions } = await summary()
+    expect(recentSessions.map((s) => s.id)).toEqual(['done-001'])
+    expect((await summary(OTHER)).recentSessions.map((s) => s.id)).toEqual(['other-002'])
+  })
+
+  // @covers REQ-272#nameless-session-not-stored
+  it('範囲の名前の無い（NULL・空の文字列の）テストは保存されず、最近の結果に範囲の名前の無い件が生まれない', async () => {
+    for (const label of [null, '']) {
+      expect(
+        () => finishedSession(label === null ? 1 : 2, { scope_label: label }),
+        `範囲の名前が ${JSON.stringify(label)} のテストが保存された`,
+      ).toThrow()
+    }
+    expect((await summary()).recentSessions).toEqual([])
   })
 })

@@ -1,8 +1,9 @@
 /**
  * 試験（対象）ごとの設定。正本は `targets.json`（対象を足すときは scripts/new_target.py が書く。手で足さない）。
  *
- * IT パスポート・応用情報（午前）・IT コンサル就活ロードマップで、コードは同じもの・データとデプロイ先だけ別。
- * クライアントは VITE_EXAM、サーバは env.EXAM で選ぶ。未指定なら ip。
+ * どの学びもコードは同じもの・データとデプロイ先だけ別。
+ * クライアントは VITE_EXAM、サーバは env.EXAM で選ぶ。key が無いか登録簿に無いときは既定の学びに倒さない
+ * （クライアントは読み込みで止まり、サーバはどの /api の要求も設定が無いことに当たる形で断る）。
  *
  * `roadmap: true` の対象は「出題頻度＝重要度」でなく学ぶ順（topics.sort_order）で並べ、問題は自作の確認問題。
  * 画面の文言（words）と API の並び順がここで切り替わる。
@@ -18,8 +19,12 @@ export type ExamConfig = {
   key: ExamKey
   brand: string
   title: string
+  /** 学びの種類（登録簿の kind） */
+  kind: string
   mockSize: number
   mockMinutes: number
+  /** 分野別演習・単元演習・弱点復習で問題数を指定しないときの問題数 */
+  practiceSize: number
   fieldThreshold: boolean
   passRule: string
   fieldRatio: Record<string, number>
@@ -86,7 +91,7 @@ export function tierLabelOf(spec: RoadmapSpec | undefined, tier: number | null |
   return spec?.tiers?.find((t) => t.level === tier)?.label ?? null
 }
 
-type Raw = Omit<ExamConfig, 'key'> & { kind: string; examName: string; questionsPerRound: number; exemptRounds: string[] }
+type Raw = Omit<ExamConfig, 'key'> & { examName: string; questionsPerRound: number; exemptRounds: string[] }
 
 export const EXAMS: Record<string, ExamConfig> = Object.fromEntries(
   Object.entries(targets as Record<string, unknown>)
@@ -94,14 +99,23 @@ export const EXAMS: Record<string, ExamConfig> = Object.fromEntries(
     .map(([k, v]) => {
       const r = v as Raw
       return [k, {
-        key: k, brand: r.brand, title: r.title, mockSize: r.mockSize, mockMinutes: r.mockMinutes,
+        key: k, brand: r.brand, title: r.title, kind: r.kind, mockSize: r.mockSize, mockMinutes: r.mockMinutes, practiceSize: r.practiceSize,
         fieldThreshold: r.fieldThreshold, passRule: r.passRule, fieldRatio: r.fieldRatio, fields: r.fields,
         roadmap: r.roadmap, words: r.words, roadmapSpec: (v as { roadmapSpec?: RoadmapSpec }).roadmapSpec,
       } satisfies ExamConfig]
     }),
 )
 
-// @implements BR-005
+/** 与えられた key に当たる登録簿の学び。key が無いか登録簿に無いときは null（既定の学びに倒さない）。 */
+// @implements REQ-353, BR-005
+export function resolveExam(key: string | undefined): ExamConfig | null {
+  return key !== undefined && Object.hasOwn(EXAMS, key) ? EXAMS[key] : null
+}
+
+/** 与えられた key に当たる登録簿の学び。解決できない key では例外で止まる。 */
+// @implements REQ-353, REQ-354, BR-005
 export function examOf(key: string | undefined): ExamConfig {
-  return EXAMS[key ?? 'ip'] ?? EXAMS.ip
+  const exam = resolveExam(key)
+  if (!exam) throw new Error(`学びの key「${key ?? ''}」は登録簿にありません`)
+  return exam
 }

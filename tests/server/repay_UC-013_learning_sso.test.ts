@@ -114,7 +114,7 @@ describe('UC-013 学び側がコードを換えて本人を受け入れる', () 
       seedExistingPerson('u-existing')
       sqlite.prepare('insert into progress (user_id, topic_id, status) values (?, ?, 3)').run('u-existing', TOPIC)
       sqlite
-        .prepare("insert into sessions (id, user_id, kind, status, question_count, correct_count, finished_at) values ('s-1', 'u-existing', 'mock', 'finished', 10, 7, unixepoch())")
+        .prepare("insert into sessions (id, user_id, kind, status, scope_label, question_count, correct_count, finished_at) values ('s-1', 'u-existing', 'mock', 'finished', '全範囲のランダム', 10, 7, unixepoch())")
         .run()
       ;({ restore } = fakePortal(replyPerson()))
       const res = await signIn()

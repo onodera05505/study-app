@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { api, apiCached } from '../lib/api'
 import type { Field } from '../lib/api'
 import { discardCurrentSession } from '../lib/discardCurrent'
+import { exam } from '../exam'
 
 /** シラバスの中分類。画面では「単元」と呼ぶ（「中分類」は学習者に通じない）。 */
 type Category = {
@@ -37,6 +38,8 @@ export function Practice() {
   // 進行中を見落としたまま開始を押して 409 で弾かれる。
   const [fieldsError, setFieldsError] = useState('')
   const [currentError, setCurrentError] = useState('')
+  // 作成が進行中のテストで断られたこと。そのあと進行中のテストを取れなくても、再開か破棄へ進める案内を出す
+  const [rejectedInProgress, setRejectedInProgress] = useState(false)
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
   // 分野を続けて押したとき、遅れて届いた前の分野の単元で上書きしないための目印
@@ -46,7 +49,10 @@ export function Practice() {
   const reload = useCallback(() => {
     setCurrentError('')
     api<Current>('/sessions/current')
-      .then((d) => setCurrent(d.session))
+      .then((d) => {
+        setCurrent(d.session)
+        setRejectedInProgress(false)
+      })
       .catch((e) => setCurrentError(e.message))
   }, [])
 
@@ -81,7 +87,7 @@ export function Practice() {
     loadCategories(field)
   }
 
-  // @implements REQ-050
+  // @implements REQ-050, REQ-057, REQ-347
   async function start(body: Record<string, unknown>) {
     setBusy(true)
     setError('')
@@ -90,6 +96,7 @@ export function Practice() {
       navigate(`/sessions/${s.id}`)
     } catch (e: any) {
       setError(e.message)
+      if (e.status === 409) setRejectedInProgress(true)
       reload()
     } finally {
       setBusy(false)
@@ -140,8 +147,11 @@ export function Practice() {
           <p className="error" style={{ margin: 0 }}>
             {currentError}
           </p>
+          {/* @implements REQ-057, BR-017 */}
           <p className="muted" style={{ margin: '0.2rem 0 0', fontSize: '0.85rem' }}>
-            進行中のテストがあるかどうかは確認できていません。
+            {rejectedInProgress
+              ? '進行中のテストがあります。読み込み直すと、そのテストを再開するか破棄するかを選べます。'
+              : '進行中のテストがあるかどうかは確認できていません。'}
           </p>
           <div className="btn-row" style={{ marginTop: '0.6rem' }}>
             <button className="btn" onClick={reload}>
@@ -172,21 +182,21 @@ export function Practice() {
             className="card"
             style={{ textAlign: 'left', cursor: 'pointer', font: 'inherit', color: 'inherit' }}
             disabled={busy || !!current}
-            onClick={() => start({ kind: 'field', field: f.field, size: 20 })}
+            onClick={() => start({ kind: 'field', field: f.field, size: exam.practiceSize })}
           >
             <div className="term">{f.field}</div>
             <div className="muted" style={{ fontSize: '0.85rem' }}>
-              {f.questions} 問から20問
+              {f.questions} 問から{exam.practiceSize}問
             </div>
           </button>
         ))}
       </div>
 
-      {/* カテゴリ別も2段。分野をフラットに20問取ると範囲が広すぎるので、
+      {/* カテゴリ別は2段。分野をそのまま取ると範囲が広すぎるので、
           分野を選んでからその分野の単元（シラバスの中分類）を選んで始める。 */}
       <h2>カテゴリ別演習</h2>
       <p className="muted" style={{ marginTop: 0 }}>
-        分野を選ぶと、その分野の単元が出ます。単元を選ぶとその範囲だけで20問出題します。
+        分野を選ぶと、その分野の単元が出ます。単元を選ぶとその範囲だけで{exam.practiceSize}問出題します。
       </p>
       <div className="chips">
         {(fields ?? []).map((f) => (
@@ -225,11 +235,11 @@ export function Practice() {
                 className="card"
                 style={{ textAlign: 'left', cursor: 'pointer', font: 'inherit', color: 'inherit' }}
                 disabled={busy || !!current}
-                onClick={() => start({ kind: 'middle', middleNo: c.middleNo, size: 20 })}
+                onClick={() => start({ kind: 'middle', middleNo: c.middleNo, size: exam.practiceSize })}
               >
                 <div className="term">{c.middle}</div>
                 <div className="muted" style={{ fontSize: '0.85rem' }}>
-                  {c.questions} 問から20問
+                  {c.questions} 問から{exam.practiceSize}問
                 </div>
               </button>
             ))}
@@ -240,13 +250,13 @@ export function Practice() {
       <h2>弱点復習</h2>
       <div className="card">
         <p style={{ marginTop: 0 }}>
-          これまでに間違えた問題を、直近のものから20問出題します。
+          これまでに間違えた問題を、直近のものから{exam.practiceSize}問出題します。
         </p>
         {/* @implements REQ-056 */}
         <button
           className="btn btn-primary"
           disabled={busy || !!current}
-          onClick={() => start({ kind: 'review', size: 20 })}
+          onClick={() => start({ kind: 'review', size: exam.practiceSize })}
         >
           間違えた問題を復習する
         </button>

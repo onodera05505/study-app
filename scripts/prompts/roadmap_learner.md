@@ -9,8 +9,13 @@
 1. `roadmap.md` を読み、日ごとの単位の順に `units/` の教材を読む
 2. 各単位を読んだ直後に、その単位の確認問題（`quiz.md`）に答える。**答えは教材から探してよい**が、分からなければ推測で選ぶ（空欄にしない）
 3. 全部終えたら、次の 2 つのファイルを書く
-   - `learner_answers.json`: `{"answers": {"t1-1": "ア", ...}, "units": [{"topic_id": 1, "understood": 3, "minutes": 5, "confusing": "分からなかった点（無ければ空）", "unknown_terms": ["説明が無いのに出てきた語"], "note": "気づいたこと"}], "overall": {"order_ok": true, "order_issue": "順番で困った点", "too_long": [topic_id], "too_short": [topic_id], "most_useful": [topic_id], "least_useful": [topic_id], "would_you_continue": true, "comment": "{{days}} 日続けられるか、{{goalVerb}}気がするか、率直に"}}`
-   - `learner_report.md`: 学んだ立場からの率直なレポート（何が分かって何が分からなかったか、どこで詰まったか、順番・長さ・言葉遣いの感想。褒める必要はない）
+   - `learner_answers.json`: 答えと単位ごとの自己申告。次の形で書く（`answers` は問題の識別子 → 選んだ答え（ア・イ・ウ・エ のどれか）、`units` は単位ごとに 1 行、`overall` は全体の感想。`too_long`・`too_short`・`most_useful`・`least_useful` は単位の ID の並び）
+   - `learner_report.md`: 学んだ立場からの率直なレポート（何が分かって何が分からなかったか、どこで詰まったか、順番・長さ・言葉遣いの感想、気づいたこと。褒める必要はない）
+
+```json
+{"answers": {"t1-1": "ア", "t1-2": "ウ"}, "units": [{"topic_id": 1, "understood": 3, "minutes": 5, "confusing": "分からなかった点（無ければ空）", "unknown_terms": ["説明が無いのに出てきた語"]}], "overall": {"order_ok": true, "order_issue": "順番で困った点", "too_long": [1], "too_short": [2], "most_useful": [1], "least_useful": [2], "would_you_continue": true, "comment": "{{#byDay}}{{days}} 日{{/byDay}}続けられるか、{{goalVerb}}気がするか、率直に"}}
+```
+
 4. `understood` は 1（分からない）/ 2（なんとなく）/ 3（人に説明できる）
 5. `topic_id` と単位を指す番号には、**`roadmap.md` の各単位に括弧で付いている ID** を書く（`quiz.md` の先頭の書き方と同じ）。教材ファイル名の先頭の数字（順番の番号）は ID ではないので使わない。`units` は単位ごとに 1 行で、どの行にも `topic_id` を書く
 
@@ -20,3 +25,5 @@
 
 ## 改訂履歴
 - 2026-11-06 単位を指す番号を、順番の番号から roadmap.md の括弧の ID に変えた（自己申告は ID 必須の本人の決定。UC-019 REQ-304・REQ-312）
+- 2026-11-07 答えと自己申告の書き方を、JSON として読める囲みにし、契約の LearnerAnswers に無い欄を外した（UC-019 REQ-360）
+- 2026-11-08 感想の欄の日数の文を、日で束ねる学びだけの塊の印で挟んだ（章で束ねる学びでは出さず、日数を既定値で埋めない。本人の決定。UC-019 REQ-359・REQ-412）

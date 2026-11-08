@@ -2,13 +2,14 @@ import { exam } from '../exam'
 import { tierLabelOf } from '../../shared/exam'
 import { useEffect, useState } from 'react'
 import { annotateLastPage } from '../lib/lastPage'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useNavigationType, useParams } from 'react-router-dom'
 import { BackLink } from '../components/BackLink'
 import { DupBadge } from '../components/DupBadge'
 import { Explanation, type ExplanationData } from '../components/Explanation'
 import { Figure } from '../components/Figure'
 import { Markdown } from '../components/Markdown'
-import { STATUS_LABEL, api, setLastTopic, invalidateCached } from '../lib/api'
+import { STATUS_LABEL, api, clearLastTopic, getLastTopic, setLastTopic, invalidateCached } from '../lib/api'
+import { isFromResumeLink, type ResumeGoneState } from '../lib/resume'
 import { formatChoice } from '../lib/choice'
 import { TierBadge } from '../components/TierBadge'
 
@@ -56,6 +57,12 @@ type Detail = {
 export function TopicDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const location = useLocation()
+  // 履歴で戻った・再読み込みで来た（POP）ときは、履歴に印が残っていても導線を選んだことにはならない
+  const navigationType = useNavigationType()
+  const fromResumeLink = navigationType !== 'POP' && isFromResumeLink(location.state)
+  // 取り直すたびに増やし、教材の取得をやり直す
+  const [attempt, setAttempt] = useState(0)
   const [data, setData] = useState<Detail | null>(null)
   const [status, setStatus] = useState<number>(1)
   const [openDetail, setOpenDetail] = useState(false)
@@ -93,8 +100,17 @@ export function TopicDetail() {
           middleNo: d.topic.middleNo,
         })
       })
-      .catch((e) => setError(e.message))
-  }, [id])
+      .catch((e) => {
+        // @implements REQ-342
+        if (fromResumeLink && e.status === 404) {
+          const gone: ResumeGoneState = { resumeGone: { term: getLastTopic()?.term ?? null } }
+          clearLastTopic()
+          navigate('/topics', { replace: true, state: gone })
+          return
+        }
+        setError(e.message)
+      })
+  }, [id, attempt, fromResumeLink, navigate])
 
   // @implements REQ-038, REQ-039, REQ-040, BR-014
   async function mark(next: number) {
@@ -129,8 +145,16 @@ export function TopicDetail() {
     }
   }
 
-  // @implements REQ-033
-  if (error) return <p className="error">{error}</p>
+  // @implements REQ-033, BR-014
+  if (error)
+    return (
+      <>
+        <p className="error">{error}</p>
+        <button className="btn" onClick={() => setAttempt((n) => n + 1)}>
+          再読み込み
+        </button>
+      </>
+    )
   if (!data) return <p className="muted">読み込み中…</p>
   const t = data.topic
   // @implements REQ-032
@@ -250,7 +274,7 @@ export function TopicDetail() {
               {open && openExpl[q.id] && (
                 <Explanation data={q.explanation} answer={q.answer} />
               )}
-              {/* 自作の確認問題（ロードマップ型）は出典を出さない。データは持っている（本人の決定 2026-09-15） */}
+              {/* 自作の確認問題（ロードマップ型）は出典を出さない。データは持っている */}
               {/* @implements BR-027 */}
               {!exam.roadmap && (
                 <p className="citation">
@@ -321,7 +345,7 @@ export function TopicDetail() {
       </div>
       )}
 
-      {/* ロードマップ型: 順番で前後へ。「他の論点」「次に学ぶ」は出さない（審議で採用 2026-09-16） */}
+      {/* ロードマップ型: 順番で前後へ。「他の論点」「次に学ぶ」は出さない */}
       {/* @implements REQ-139, REQ-140 */}
       {exam.roadmap && (
         <div className="btn-row rm-nav" style={{ margin: '1.2rem 0 0.4rem' }}>
@@ -338,8 +362,7 @@ export function TopicDetail() {
         </div>
       )}
 
-      {/* 読み終えた位置から戻れるようにする。戻るリンクは上にもあるが、教材を読み切った後は画面の下端にいる
-          （利用者のフィードバック「学習した後に画面を戻るのがやりづらい」2026-09-16）。 */}
+      {/* 読み終えた位置から戻れるようにする。戻るリンクは上にもあるが、教材を読み切った後は画面の下端にいる。 */}
       <div className="btn-row" style={{ margin: '0.8rem 0 1rem' }}>
         <Link className="btn" to={exam.roadmap ? '/topics' : `/topics?middleNo=${t.middleNo}`}>
           {exam.roadmap ? 'ロードマップに戻る' : `${t.middle} の一覧に戻る`}

@@ -62,6 +62,7 @@ def main() -> int:
     ap.add_argument("--exam-name", help="資格型: 出典に出す試験の正式名（例 基本情報技術者試験 科目A）")
     ap.add_argument("--mock-size", type=int, default=80, help="資格型: 模試の問題数")
     ap.add_argument("--mock-minutes", type=int, default=150, help="資格型: 模試の制限時間（分）")
+    ap.add_argument("--practice-size", type=int, default=20, help="分野別演習・単元演習・弱点復習で問題数を省いたときの問題数")
     ap.add_argument("--field-ratio", help="資格型: 模試の分野の内訳（例 テクノロジ系=38,マネジメント系=7,ストラテジ系=15）。合計は --mock-size")
     ap.add_argument("--pass-rule", help="資格型: 突破の条件を画面で説明する文")
     ap.add_argument("--questions-per-round", type=int, default=80, help="資格型: 1 回あたりの問題数（通し受験）")
@@ -76,13 +77,13 @@ def main() -> int:
     fields = [f.strip() for f in a.fields.split(",") if f.strip()] if a.fields else list(EXAM_FIELDS); extra = "補足（ロードマップ外）"
     t = load(T)
     if key not in t and exam:
-        t[key] = {"kind": "exam", "brand": a.name, "title": a.name, "examName": a.exam_name, "mockSize": a.mock_size, "mockMinutes": a.mock_minutes,
+        t[key] = {"kind": "exam", "brand": a.name, "title": a.name, "examName": a.exam_name, "mockSize": a.mock_size, "mockMinutes": a.mock_minutes, "practiceSize": a.practice_size,
                   "fieldThreshold": a.field_threshold, "passRule": a.pass_rule, "fieldRatio": parse_ratio(a.field_ratio, fields, a.mock_size),
                   "fields": fields, "questionsPerRound": a.questions_per_round, "exemptRounds": [], "roadmap": False, "words": dict(EXAM_WORDS)}
         save(T, t); print(f"targets.json に {key} を登録（資格型。模試 {a.mock_size} 問 / {a.mock_minutes} 分）")
     elif key not in t:
         n = a.per_day * a.days; ratio = {f: n // len(fields) for f in fields}; ratio[fields[0]] += n - sum(ratio.values())
-        t[key] = {"kind": "roadmap", "brand": a.name, "title": a.name, "examName": f"{a.name} 確認問題", "mockSize": n, "mockMinutes": max(10, round(n * 0.95)),
+        t[key] = {"kind": "roadmap", "brand": a.name, "title": a.name, "examName": f"{a.name} 確認問題", "mockSize": n, "mockMinutes": max(10, round(n * 0.95)), "practiceSize": a.practice_size,
                   "fieldThreshold": False, "passRule": "確認テストです。合否はありません。到達基準ごとの正答率を見て、弱い分野の単位に戻ります。問題は教材から作った自作の確認問題です。",
                   "fieldRatio": ratio, "fields": fields + [extra], "questionsPerRound": a.per_day * 2, "exemptRounds": [f"{key}-ex"], "roadmap": True,
                   "words": {"question": "確認問題", "questions": "確認問題", "mock": "確認テスト", "nextUp": "ロードマップの順で、まだ理解できていない単位"},

@@ -6,29 +6,11 @@
  *  学びの置き場と配信の図の置き場は、eng の今のデータをそのまま写したものを使う。
  *  学習者役の答えは、パックの写しに出た問題と単位から組んだ答えのファイルで置き換える。 */
 
+import { spawnSync } from 'node:child_process'
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-
-/** node の組み込みは実行時に読む（プロジェクトの型は Workers 向けで node の型を持たない）。ここで使う形だけを型に書く。 */
-const nodeModule = <T,>(name: string) => import(/* @vite-ignore */ name) as Promise<T>
-const { spawnSync } = await nodeModule<{
-  spawnSync: (
-    cmd: string,
-    args: string[],
-    opts: { cwd: string; encoding: 'utf8'; timeout: number },
-  ) => { status: number | null; stdout: string; stderr: string | null; error?: unknown }
-}>('node:child_process')
-const { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } = await nodeModule<{
-  cpSync: (src: string, dest: string, opts?: { recursive: boolean }) => void
-  existsSync: (path: string) => boolean
-  mkdirSync: (path: string, opts: { recursive: boolean }) => void
-  mkdtempSync: (prefix: string) => string
-  readFileSync: (path: string, encoding: 'utf8') => string
-  readdirSync: (path: string) => string[]
-  rmSync: (path: string, opts?: { recursive: boolean; force: boolean }) => void
-  writeFileSync: (path: string, data: string) => void
-}>('node:fs')
-const { tmpdir } = await nodeModule<{ tmpdir: () => string }>('node:os')
-const { join } = await nodeModule<{ join: (...parts: string[]) => string }>('node:path')
 
 const REPO = decodeURIComponent(new URL('../../', import.meta.url).pathname).replace(/\/$/, '')
 const DATA = 'data/eng'
@@ -111,7 +93,7 @@ describe('UC-019 学習者役のパックを作って読ませ、伝わったか
     expect(snapshot.cycle).toBe(cycle)
     expect(existsSync(repoSnapshot) && repoGuards.includes(repoSnapshot), '写しを作業の場所の外の学びの置き場に書いた').toBe(false)
 
-    // step 3: システムが、ロードマップ・単位ごとの配る本文と図・確認問題・説明テストをパックへ出す
+    // step 3: システムが、ロードマップ・単位ごとの配る本文と図・確認問題、語の一覧がある学びでは説明テストを、正解を含めずにパックへ出す
     expect(pack.files.roadmap).toBe('roadmap.md')
     expect(pack.files.quiz).toBe('quiz.md')
     expect(pack.files.explain, '語の一覧がある学びなのに説明テストが無い').toBe('explain.md')
@@ -120,8 +102,18 @@ describe('UC-019 学習者役のパックを作って読ませ、伝わったか
       expect(existsSync(join(root, out, f)), `パックに ${f} が無い`).toBe(true)
     }
 
-    // step 4: 作り手が、パックだけを学習者役に渡す（パックの出力先は学びの置き場の外）
-    // step 5: 学習者役が、確認問題に答え、単位ごとの自己申告を返す（答えのファイルで置き換える）
+    // step 4: 作り手が、学びの学習者役への指示を雛形から描き出す
+    const instructions = run('render_prompts.py', ['--data', DATA])
+    expect(instructions.status, `学習者役への指示を描き出せなかった: ${JSON.stringify(instructions.json)} ${instructions.stderr}`).toBe(0)
+    expect(instructions.json, '描き出した指示の道が標準出力の JSON に無い').toEqual({ path: `${DATA}/prompts/roadmap_learner.md` })
+    const instructionsPath = (instructions.json as { path: string }).path
+
+    // step 5: 作り手が、パックと学習者役への指示だけを学習者役に渡す（パックの出力先は学びの置き場の外）
+    expect(existsSync(join(root, instructionsPath)), '学習者役に渡す指示が描き出した道に無い').toBe(true)
+    expect(out.startsWith(`${DATA}/`), 'パックの出力先が学びの置き場の中にある').toBe(false)
+    expect(existsSync(join(root, out)), '学習者役に渡すパックが出力先に無い').toBe(true)
+
+    // step 6: 学習者役が、ロードマップの順に単位を読み、確認問題に答え、単位ごとの自己申告と説明テストの答えを返す（答えのファイルで置き換える）
     const [known, overconfident, lost] = snapshot.units
     const answers: Record<string, string> = {}
     snapshot.questions.forEach((q, i) => {
@@ -141,13 +133,13 @@ describe('UC-019 学習者役のパックを作って読ませ、伝わったか
       }),
     )
 
-    // step 6: 作り手が、同じ周の番号を指定して学習者役の答えを採点する
+    // step 7: 作り手が、同じ周の番号を指定して学習者役の答えを採点する
     const graded = run('grade_learner.py', ['--data', DATA, '--cycle', String(cycle), '--answers', answersFile])
     expect(graded.status, `採点できなかった: ${graded.stderr}`).toBe(0)
     const result = graded.json as Record<string, any>
     expect(result, '周の結果が標準出力の JSON に無い').not.toBeNull()
 
-    // step 7: システムが、その周のパックの写しで採点し、周の結果を残して作り手に示す
+    // step 8: システムが、その周のパックの写しで採点し、周の結果を残して作り手に示す
     const resultPath = join(root, DATA, 'eval', `cycle_${cycle}.json`)
     expect(existsSync(resultPath), 'その周の結果が学びの置き場に残っていない').toBe(true)
     expect(JSON.parse(readFileSync(resultPath, 'utf8')), '残した周の結果と作り手に示した周の結果が違う').toEqual(result)

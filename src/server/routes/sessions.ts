@@ -5,6 +5,7 @@ import type { Bindings, Variables } from '../lib/db'
 import { getDb, schema } from '../lib/db'
 import { explanationOf, type ExplanationColumns } from '../lib/explanations'
 import { buildQuestions, snapshotOf } from '../lib/session-builder'
+import { bodyErrorMessage } from '../lib/body-error'
 import { examOf } from '../../shared/exam'
 
 export const sessionRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>()
@@ -50,15 +51,20 @@ const createBody = z
   })
   // 種別に対応する範囲の有無も入力の形。無いまま組み立てに渡すと種別ごとの分岐から
   // 外れ、頼んでいない範囲（弱点復習）のテストが黙って出来てしまう。
-  .refine((body) => {
+  .superRefine((body, ctx) => {
     const key = SCOPE_FIELD[body.kind as keyof typeof SCOPE_FIELD]
-    return key === undefined || body[key] !== undefined
-  }, '種別に対応する範囲がありません')
+    if (key !== undefined && body[key] === undefined) ctx.addIssue({ code: 'custom', path: [key], message: '種別に対応する範囲がありません' })
+  })
 
-// @implements REQ-050, REQ-055, REQ-057, REQ-105, REQ-109, REQ-243, REQ-247, BR-017, REQ-281, REQ-273
+/** 本文の項目の、断りの理由で指す名前。 */
+const CREATE_LABELS = { kind: '種別', topicId: '論点', field: '分野', middleNo: '単元', exam: '回', size: '問題数' }
+const ANSWER_LABELS = { idx: '問題の番号', answer: '解答' }
+
+// @implements REQ-050, REQ-051, REQ-055, REQ-057, REQ-105, REQ-109, REQ-243, REQ-247, BR-017, REQ-281, REQ-273, REQ-347
 sessionRoutes.post('/', async (c) => {
-  const parsed = createBody.safeParse(await c.req.json().catch(() => null))
-  if (!parsed.success) return c.json({ error: '入力が正しくありません' }, 400)
+  const raw = await c.req.json().catch(() => null)
+  const parsed = createBody.safeParse(raw)
+  if (!parsed.success) return c.json({ error: bodyErrorMessage(parsed.error, raw, CREATE_LABELS) }, 400)
   const body = parsed.data
 
   const db = getDb(c.env)
@@ -74,10 +80,10 @@ sessionRoutes.post('/', async (c) => {
   }
 
   const cfg = await settings(db, c.env)
-  const size =
-    body.size ?? (body.kind === 'mock' ? cfg.mockSize : body.kind === 'drill' ? cfg.drillSize : 20)
-
   const target = examOf(c.env.EXAM)
+  const size =
+    body.size ?? (body.kind === 'mock' ? cfg.mockSize : body.kind === 'drill' ? cfg.drillSize : target.practiceSize)
+
   const built = await buildQuestions(db, userId, {
     kind: body.kind,
     topicId: body.topicId,
@@ -90,22 +96,12 @@ sessionRoutes.post('/', async (c) => {
     roadmap: target.roadmap ? { key: target.key, spec: target.roadmapSpec } : undefined,
   })
   if (built.questions.length === 0) {
-    return c.json({ error: '出題できる問題がありません' }, 400)
+    return c.json({ error: '出題できる問題がありません' }, 404)
   }
 
   const sessionId = crypto.randomUUID()
   const timeLimit = body.kind === 'mock' ? cfg.mockTimeLimitSec : null
 
-  await db.insert(schema.sessions).values({
-    id: sessionId,
-    userId,
-    kind: body.kind,
-    status: 'in_progress',
-    sourceExam: built.sourceExam,
-    scopeLabel: built.scopeLabel,
-    timeLimitSec: timeLimit,
-    questionCount: built.questions.length,
-  })
   const rows = built.questions.map((q, idx) => ({
     id: crypto.randomUUID(),
     sessionId,
@@ -113,17 +109,30 @@ sessionRoutes.post('/', async (c) => {
     idx,
     snapshot: JSON.stringify(snapshotOf(q)),
   }))
-  // D1 は1文あたりのバインド変数が100個まで。1行6個なので16行ずつに割る。
-  // 過去問実践は100問なので、まとめて1文にすると必ず超える。
+  // テストの行と出題の行は 1 つの batch（D1 では 1 つのトランザクション）で保存し、
+  // 途中の行で落ちたら何も残さない。残ると進行中のテストとして次の開始を塞ぐ。
+  // D1 は 1 文あたりのバインド変数が 100 個まで。出題は 1 行 6 個なので 16 行ずつに割る。
   const CHUNK = 16
-  const statements = []
-  for (let i = 0; i < rows.length; i += CHUNK) {
-    statements.push(db.insert(schema.sessionQuestions).values(rows.slice(i, i + CHUNK)))
-  }
-  if (statements.length === 1) {
-    await statements[0]
-  } else {
-    await db.batch(statements as [typeof statements[0], ...typeof statements])
+  const statements = [
+    db.insert(schema.sessions).values({
+      id: sessionId,
+      userId,
+      kind: body.kind,
+      status: 'in_progress',
+      sourceExam: built.sourceExam,
+      scopeLabel: built.scopeLabel,
+      timeLimitSec: timeLimit,
+      questionCount: built.questions.length,
+    }),
+    ...Array.from({ length: Math.ceil(rows.length / CHUNK) }, (_, i) =>
+      db.insert(schema.sessionQuestions).values(rows.slice(i * CHUNK, (i + 1) * CHUNK)),
+    ),
+  ] as const
+  try {
+    await db.batch(statements as unknown as Parameters<typeof db.batch>[0])
+  } catch (err) {
+    console.error('出題の保存に失敗', err)
+    return c.json({ error: '出題を保存できなかったため、テストを始められませんでした' }, 500)
   }
 
   return c.json(
@@ -186,12 +195,12 @@ function isExpired(s: {
 }): boolean {
   if (!s.timeLimitSec) return false
   const deadline = s.startedAt + s.timeLimitSec
-  if (s.status === 'in_progress') return Date.now() / 1000 >= deadline
+  if (s.status === 'in_progress') return Date.now() >= deadline * 1000
   return s.finishedAt !== null && s.finishedAt >= deadline
 }
 
 /** 現在の問題（未回答の最小 idx）。 */
-// @implements REQ-058, REQ-060, REQ-071, REQ-111, REQ-116, REQ-117, REQ-237, REQ-238, REQ-240, BR-021, BR-034
+// @implements REQ-058, REQ-060, REQ-071, REQ-111, REQ-116, REQ-117, REQ-237, REQ-238, REQ-240, REQ-344, REQ-346, BR-021, BR-034
 sessionRoutes.get('/:id/current', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -207,16 +216,26 @@ sessionRoutes.get('/:id/current', async (c) => {
     sql`SELECT COUNT(*) AS n FROM session_questions WHERE session_id = ${s.id} AND result <> 0`,
   )
 
+  // 端数はミリ秒の整数で切り上げる（秒の浮動小数で割ると、ちょうどの秒が 1 秒多く出る）
   const remainingSec = s.timeLimitSec
-    ? Math.max(0, Math.round(s.startedAt + s.timeLimitSec - Date.now() / 1000))
+    ? Math.max(0, Math.ceil(((s.startedAt + s.timeLimitSec) * 1000 - Date.now()) / 1000))
     : null
+  const record = {
+    id: s.id,
+    kind: s.kind,
+    scopeLabel: s.scopeLabel,
+    questionCount: s.questionCount,
+    // 通し受験（kind='mock' かつ回の指定あり）は原本どおり全問出しているので、
+    // 画面側で「同一の問題が n 回…」を出さない。その判別に使う。
+    sourceExam: s.sourceExam,
+  }
 
   // 締めた・破棄したテストは、未回答の行が残っていても出題しない（BR-034）。
   // 古い案内や残った URL をたどった利用者には、終わっていることだけを返す。
   // 破棄したテストは行そのものが無いので上の 404 で終わる。
   if (s.status !== 'in_progress' || !q || isExpired(s)) {
     return c.json({
-      session: s,
+      session: record,
       question: null,
       finished: true,
       expired: isExpired(s),
@@ -227,15 +246,7 @@ sessionRoutes.get('/:id/current', async (c) => {
 
   const snap = JSON.parse(q.snapshot)
   return c.json({
-    session: {
-      id: s.id,
-      kind: s.kind,
-      scopeLabel: s.scopeLabel,
-      questionCount: s.questionCount,
-      // 通し受験（kind='mock' かつ回の指定あり）は原本どおり全問出しているので、
-      // 画面側で「同一の問題が n 回…」を出さない。その判別に使う。
-      sourceExam: s.sourceExam,
-    },
+    session: record,
     question: {
       idx: q.idx,
       text: snap.text,
@@ -263,8 +274,9 @@ const answerBody = z.object({
 /** 1問回答する。採点は**出題時スナップショット**に対して行う。 */
 // @implements REQ-061, REQ-064, REQ-066, REQ-067, REQ-072, REQ-119, REQ-250, REQ-253, BR-020, BR-022, BR-023
 sessionRoutes.post('/:id/answer', async (c) => {
-  const parsed = answerBody.safeParse(await c.req.json().catch(() => null))
-  if (!parsed.success) return c.json({ error: '入力が正しくありません' }, 400)
+  const raw = await c.req.json().catch(() => null)
+  const parsed = answerBody.safeParse(raw)
+  if (!parsed.success) return c.json({ error: bodyErrorMessage(parsed.error, raw, ANSWER_LABELS) }, 400)
 
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -296,26 +308,35 @@ sessionRoutes.post('/:id/answer', async (c) => {
 
   const snap = JSON.parse(current.snapshot)
   const correct = snap.answer === parsed.data.answer
-  await db
+  // 未回答の SELECT から UPDATE までの間に同じ位置への別の回答が記録されうる。
+  // 未回答の行だけを書き換え、書き換えた行が無ければ先に記録された回答を残して断る。
+  // @implements REQ-066
+  const written = await db
     .update(schema.sessionQuestions)
     .set({
       userAnswer: parsed.data.answer,
       result: correct ? 1 : 2,
       answeredAt: sql`(unixepoch())`,
     })
-    .where(eq(schema.sessionQuestions.id, current.id))
+    .where(and(eq(schema.sessionQuestions.id, current.id), eq(schema.sessionQuestions.result, 0)))
+  if (written.meta.changes === 0) {
+    return c.json({ error: '同じ問題への回答が先に記録されています' }, 409)
+  }
 
   const remaining = await db.get<{ n: number }>(
     sql`SELECT COUNT(*) AS n FROM session_questions WHERE session_id = ${s.id} AND result = 0`,
   )
-  // 解説は**答え合わせの応答に載せる**。出題（/current）に載せると、答える前に
-  // 正解が読めてしまう。まだ解説が無い問題は null で、画面は解説の欄を出さない。
+  const left = remaining?.n ?? 0
+  // 模試は締めるまで正誤・正解・解説を渡さない。
+  // @implements REQ-343, BR-021
+  if (s.kind === 'mock') return c.json({ remaining: left, finished: left === 0 })
+  // 演習の解説は答え合わせの応答に載せる（出題には載せない）。まだ解説が無い問題は null。
   return c.json({
     correct,
     correctAnswer: snap.answer,
     explanation: explanationOf(current),
-    remaining: remaining?.n ?? 0,
-    finished: (remaining?.n ?? 0) === 0,
+    remaining: left,
+    finished: left === 0,
   })
 })
 

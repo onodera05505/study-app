@@ -4,7 +4,8 @@
  *  （scripts/deploy-pages.sh が書く）を出し、画面を移るときと 5 分おきに見比べる。違っていたら App が帯を出す。
  *  自動では読み直さない（テスト中の入力を失わせない）。
  *
- *  比べるのは build と at を合わせた印。同じコミットを出し直しても at が変わるので帯が出る。
+ *  比べるのは build と at の組。同じコミットを出し直しても at が変わるので帯が出る。
+ *  組は区切りでつながず JSON の配列にして持つので、つなぐと同じ文字列になる違う組も違う印になる。
  *  最初の印は 1 回だけ取り、取れなかったときは次に取れた値を最初の印とする（初回の取得が競っても
  *  片方の失敗で最初の印が消えないようにするため）。 */
 
@@ -14,7 +15,7 @@ let initialP: Promise<Stamp> | null = null
 // 最初の印の現在値。checkForUpdate が重なっても、取得のあとに同期で読み直して覚え直しを 1 回に保つ
 let initialStamp: Stamp = null
 
-// @implements REQ-232
+// @implements REQ-231, REQ-232, BR-041
 async function fetchStamp(): Promise<Stamp> {
   try {
     const res = await fetch('/version.json', { cache: 'no-store' })
@@ -23,9 +24,9 @@ async function fetchStamp(): Promise<Stamp> {
     // build が空でない文字列でない印は、読めない形として印が無いものに畳む
     if (!data || typeof data.build !== 'string' || data.build.length === 0) return null
     // at は省略できるが、有るなら空でない文字列でなければ読めない形として印が無いものに畳む
-    if (data.at === undefined) return `${data.build}@`
+    if (data.at === undefined) return JSON.stringify([data.build, null])
     if (typeof data.at !== 'string' || data.at.length === 0) return null
-    return `${data.build}@${data.at}`
+    return JSON.stringify([data.build, data.at])
   } catch {
     return null
   }

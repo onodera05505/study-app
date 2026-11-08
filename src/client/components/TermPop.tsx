@@ -15,6 +15,33 @@ export function shortTerm(term: string): string {
   return m ? m[1] : term
 }
 
+/** 用語集ごとに、表示名の短縮で他の語と同じ表記になる語の集合を覚える（用語集は取得後に差し替わらない）。 */
+const keepFormCache = new WeakMap<Map<string, unknown>, Set<string>>()
+
+/** 括弧書きを落とすと用語集の他の語の用語、または他の語を短くした表記と同じになる語の集合。 */
+function termsKeepingParen(glossary: Map<string, unknown>): Set<string> {
+  const hit = keepFormCache.get(glossary)
+  if (hit) return hit
+  const byShort = new Map<string, string[]>()
+  for (const t of glossary.keys()) {
+    const s = shortTerm(t)
+    byShort.set(s, [...(byShort.get(s) ?? []), t])
+  }
+  const keep = new Set<string>()
+  for (const group of byShort.values()) {
+    if (group.length < 2) continue
+    for (const t of group) if (shortTerm(t) !== t) keep.add(t)
+  }
+  keepFormCache.set(glossary, keep)
+  return keep
+}
+
+/** 本文に出す表示名。他の語と見分けられなくなる語は正式な表記のまま、それ以外は shortTerm。 */
+// @implements REQ-008, REQ-341
+export function displayTerm(term: string, glossary: Map<string, unknown>): string {
+  return termsKeepingParen(glossary).has(term) ? term : shortTerm(term)
+}
+
 /** 本文中の `[[用語]]` を、押すと1行の説明が出る文字にする。
  *
  *  **押しても画面は移らない。** 用語が出てくるたびに別ページへ飛ばされると、
@@ -106,7 +133,7 @@ export function TermPop({ term }: { term: string }) {
         onClick={() => setOpen((v) => !v)}
         title={term}
       >
-        {shortTerm(term)}
+        {displayTerm(term, glossary!)}
       </button>
       {open &&
         createPortal(

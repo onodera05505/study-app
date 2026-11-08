@@ -6,14 +6,11 @@
  *  取り出したあとで決めても、同じ応答になるようにするため。
  *  一覧の上限の値は契約（contract.yaml の listExamHistory の maxItems）から読む（R-102）。 */
 
+import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import app from '../../src/server/index'
 import type { Bindings } from '../../src/server/lib/db'
 import { issueToken } from '../../src/server/lib/auth'
-
-/** node の組み込みは実行時に読む（プロジェクトの型は Workers 向けで node の型を持たない）。ここで使う形だけを型に書く。 */
-const nodeModule = <T>(name: string) => import(/* @vite-ignore */ name) as Promise<T>
-const { readFileSync } = await nodeModule<{ readFileSync: (path: URL, encoding: 'utf8') => string }>('node:fs')
 
 const SECRET = 'test-secret'
 

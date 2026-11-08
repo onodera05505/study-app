@@ -1,5 +1,5 @@
 /** UC-008 模試（通し受験）の入口と開始の境界
- *  （listExams ＝ GET /api/exams、startMockExam ＝ POST /api/sessions）。
+ *  （UC-008 の契約 listExams ＝ GET /api/exams、UC-004 の契約 startSession ＝ POST /api/sessions）。
  *
  *  偽の D1 は列名で持った行を返し（finished_session.test.ts の作法）、ORDER BY と LIMIT を守る。
  *  並びを SQL に任せる実装も、取ってから並べ替える実装も、同じ検査で読めるようにするため。
@@ -14,6 +14,7 @@ import examLabels from '../../data/ip/exam_labels.json'
 import apExamLabels from '../../data/ap/exam_labels.json'
 import feExamLabels from '../../data/fe/exam_labels.json'
 import itcExamLabels from '../../data/itc/exam_labels.json'
+import engExamLabels from '../../data/eng/exam_labels.json'
 
 type Row = Record<string, unknown>
 type Table = { match: RegExp; rows: Row[] }
@@ -80,7 +81,7 @@ function orderAndLimit(sql: string, rows: Row[]): Row[] {
   return out
 }
 
-/** 列名で持った行を返す偽の D1（prepare → bind → raw/all/first）。
+/** 列名で持った行を返す偽の D1（prepare → bind → raw/all/first/run、batch）。
  *  走らせた書き込みの SQL を `executed` に記録する。テストが作られていないことを
  *  「sessions への INSERT が 1 件も無い」で見るのに使う。 */
 function fakeD1(tables: Table[], executed: string[] = []) {
@@ -99,6 +100,7 @@ function fakeD1(tables: Table[], executed: string[] = []) {
   const prepare = (sql: string) => {
     let params: unknown[] = []
     const stmt = {
+      sql,
       bind: (...bound: unknown[]) => {
         params = bound
         return stmt
@@ -116,7 +118,14 @@ function fakeD1(tables: Table[], executed: string[] = []) {
     }
     return stmt
   }
-  return { prepare, batch: async () => [], exec: async () => ({ count: 0, duration: 0 }) }
+  /** D1 の batch（1 つのトランザクション）。渡された文を順に、run と同じく記録して当てる。
+   *  読み出しの文は all と同じ行を返す。 */
+  const batch = async (stmts: { sql: string; run: () => Promise<unknown>; all: () => Promise<unknown> }[]) => {
+    const out: unknown[] = []
+    for (const s of stmts) out.push(/^\s*(select|with)\b/i.test(s.sql) ? await s.all() : await s.run())
+    return out
+  }
+  return { prepare, batch, exec: async () => ({ count: 0, duration: 0 }) }
 }
 
 type Registered = { kind: string; mockSize: number; mockMinutes: number; fields: string[] }
@@ -244,12 +253,6 @@ describe('模試の入口の回の一覧（GET /api/exams。UC-008）', () => {
       given: ['2010h22h', '2011h23tokubetsu', '2012h24h', '2011h23a', '2010h22a', '2012h24a'],
       expected: ['2012h24a', '2012h24h', '2011h23a', '2011h23tokubetsu', '2010h22a', '2010h22h'],
     },
-    {
-      label: 'ロードマップ型（itc）: 最初の回から学ぶ順',
-      learning: 'itc',
-      given: ['itc-d10', 'itc-d02', 'itc-d14', 'itc-d01', 'itc-d09'],
-      expected: ['itc-d01', 'itc-d02', 'itc-d09', 'itc-d10', 'itc-d14'],
-    },
   ])('一覧は BR-038 の並び（実施の時期の順）で、持ち込んだ順にも鍵の順にも依らない — $label', async ({ learning, given, expected }) => {
     const labels = LABELS_BY_LEARNING[learning]
     for (const exam of given) expect(labels[exam], `${exam} が ${learning} の回の登録に無い（この検査の前提が崩れる）`).toBeDefined()
@@ -263,6 +266,46 @@ describe('模試の入口の回の一覧（GET /api/exams。UC-008）', () => {
     expect(res.status).toBe(200)
     const body = (await res.json()) as { exams: { exam: string }[] }
     expect(body.exams.map((e) => e.exam)).toEqual(expected)
+  })
+
+  /** 学び learning の回の一覧を、回 given（持ち込む順）で引く。回の名前は labels から、無い回は ID のまま。 */
+  async function listedOrder(learning: string, given: string[], labels: Record<string, string>) {
+    const rows = given.map((exam) => ({ exam, examLabel: labels[exam] ?? exam, questions: 2, attempts: 0, bestScore: null }))
+    const registry: Table = {
+      match: EXAM_REGISTRY.match,
+      rows: Object.entries({ ...labels, ...Object.fromEntries(given.map((e) => [e, labels[e] ?? e])) }).map(([exam, examLabel]) => ({ exam, examLabel })),
+    }
+    const res = await request('GET', '/api/exams', undefined, [{ match: EXAM_LIST, rows }, registry], [], learning)
+    expect(res.status, learning).toBe(200)
+    return ((await res.json()) as { exams: { exam: string }[] }).exams.map((e) => e.exam)
+  }
+
+  // @covers REQ-102#no-season-first-in-year
+  it('資格対策の学びで季節の記号の無い回は、その年度の中で最も新しい回として年度の先頭（秋期より前）に置かれる', async () => {
+    // 同じ年度に季節の記号の無い回と春期・秋期が並ぶ集まり（ap の令和3年度に、記号の無い令和3年度の回を足す）
+    const labels = { ...(apExamLabels as Record<string, string>), '2021r03': (examLabels as Record<string, string>)['2021r03'] }
+    const cases: { given: string[]; expected: string[] }[] = [
+      { given: ['2021r03h', '2021r03a', '2021r03', '2022r04h', '2020r02o'], expected: ['2022r04h', '2021r03', '2021r03a', '2021r03h', '2020r02o'] },
+      { given: ['2021r03', '2021r03h', '2022r04a', '2021r03a'], expected: ['2022r04a', '2021r03', '2021r03a', '2021r03h'] },
+    ]
+    for (const { given, expected } of cases) expect(await listedOrder('ap', given, labels), given.join(',')).toEqual(expected)
+  })
+
+  // @covers REQ-102#roadmap-id-order-extra-last
+  it('ロードマップ型の学びでは回の識別子の順に最初の回から並び、補足の回は一覧の末尾に置かれる', async () => {
+    const itc = (REGISTRY.itc as unknown as { roadmapSpec?: { extraRoundId?: string } }).roadmapSpec?.extraRoundId
+    expect(itc, '登録簿に itc の補足の回が無い（この検査の前提が崩れる）').toBe('itc-ex')
+    expect(
+      await listedOrder('itc', ['itc-d10', 'itc-ex', 'itc-d02', 'itc-d14', 'itc-d01'], itcExamLabels as Record<string, string>),
+      'itc',
+    ).toEqual(['itc-d01', 'itc-d02', 'itc-d10', 'itc-d14', 'itc-ex'])
+    const engLabels = engExamLabels as Record<string, string>
+    const engExtra = (REGISTRY.eng as unknown as { roadmapSpec?: { extraRoundId?: string } }).roadmapSpec?.extraRoundId
+    expect(engExtra, '登録簿に eng の補足の回が無い（この検査の前提が崩れる）').toBeDefined()
+    expect(
+      await listedOrder('eng', ['eng-c10', String(engExtra), 'eng-c02', 'eng-c01'], engLabels),
+      'eng',
+    ).toEqual(['eng-c01', 'eng-c02', 'eng-c10', String(engExtra)])
   })
 
   // @covers REQ-102#only-answerable-exams
@@ -296,8 +339,8 @@ describe('模試の開始（POST /api/sessions。UC-008）', () => {
   })
 
   // @covers REQ-109#empty-scope-no-session
-  it('出題できる問題が 1 問も無い範囲（過去問の無い回・過去問が 1 問も無いランダム構成）ではテストを作らず 400 の {error}', async () => {
-    // 同じ偽の D1 で、過去問のある回は作れる（下の 400 が「出題できる問題が無い」だけで出ていることの裏づけ）
+  it('出題できる問題が 1 問も無い範囲（過去問の無い回・過去問が 1 問も無いランダム構成）ではテストを作らず 404 の {error}', async () => {
+    // 同じ偽の D1 で、過去問のある回は作れる（下の 404 が「出題できる問題が無い」だけで出ていることの裏づけ）
     const kept: string[] = []
     const ok = await request('POST', '/api/sessions', { kind: 'mock', exam: EXAM_ID }, [{ match: FETCH, rows: POOL }], kept)
     expect(ok.status, '過去問のある回が作れない（この検査は空振りになる）').toBe(201)
@@ -309,7 +352,7 @@ describe('模試の開始（POST /api/sessions。UC-008）', () => {
     ] as [string, unknown, Table[]][]) {
       const executed: string[] = []
       const res = await request('POST', '/api/sessions', body, tables, executed)
-      expect(res.status, label).toBe(400)
+      expect(res.status, label).toBe(404)
       const payload = (await res.json()) as Record<string, unknown>
       expect(Object.keys(payload), `${label}: 本文は {error} だけ`).toEqual(['error'])
       expect(String(payload.error), label).toMatch(/[ぁ-んァ-ヶ一-龥]/)

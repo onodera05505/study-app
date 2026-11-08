@@ -158,7 +158,8 @@ describe('模擬試験の入口の画面（UC-008）', () => {
   it('出題できる問題が無くて作れなかったときは、始めようとした画面にその旨が出て、画面を離れない', async () => {
     vi.spyOn(window, 'confirm').mockReturnValue(true)
     const REASON = '出題できる過去問がありません'
-    const calls = stubApi(replies({ 'POST /api/sessions': { status: 400, body: { error: REASON } } }))
+    // UC-004 の契約 startSession の NOT_FOUND（選んだ範囲に出題できる問題が 1 問も無い）
+    const calls = stubApi(replies({ 'POST /api/sessions': { status: 404, body: { error: REASON } } }))
     await draw()
     expect(text(), '押す前から出ている（出しっぱなしの文を拾っている）').not.toContain(REASON)
     await click(els('button')[0], '受験の開始')
@@ -183,5 +184,26 @@ describe('模擬試験の入口の画面（UC-008）', () => {
     expect(text(), '進行中の案内が出ない').toMatch(/練習テスト/)
     expect(text(), '進行中のテストの範囲が案内に無い').toContain('論点: RAID')
     expect(text(), '回答の進み具合（4／10）が案内に無い').toMatch(/4\s*[／/]\s*10|4\s*問/)
+  })
+
+  // @covers REQ-110#in-progress-fetch-failed
+  it('進行中のテストで作れなかったあとに進行中のテストそのものを取れなかったら、範囲と進み具合の代わりに練習テストで再開か破棄をする案内と取れなかった理由が出る（BR-017）', async () => {
+    vi.spyOn(window, 'confirm').mockReturnValue(true)
+    const REASON = '進行中のテストを取得できませんでした'
+    const calls = stubApi(
+      replies({
+        'POST /api/sessions': { status: 409, body: { error: '進行中のテストがあります' } },
+        'GET /api/sessions/current': { status: 500, body: { error: REASON } },
+      }),
+    )
+    await draw()
+    expect(text(), '押す前から理由が出ている（出しっぱなしの文を拾っている）').not.toContain(REASON)
+    await click(els('button')[0], '受験の開始')
+    expect(starts(calls), '受験を始めに行っていない（この検査は空振りになる）').not.toEqual([])
+    expect(text(), '練習テストへの案内が出ない').toMatch(/練習テスト/)
+    expect(text(), '再開か破棄をする案内になっていない').toMatch(/再開|破棄/)
+    expect(text(), '進行中のテストを取れなかった理由が出ない').toContain(REASON)
+    expect(text(), '作れなかったのに画面を離れている').not.toContain('PATH:')
+    expect(text(), '作れなかったのに回の一覧が消えている').toContain('令和6年度')
   })
 })

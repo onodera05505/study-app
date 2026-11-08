@@ -39,7 +39,7 @@ const errorText = async (res: Response) => {
   return body.error as string
 }
 
-describe('想定していない例外（まなびば）', () => {
+describe('想定していない例外（まなびば。UC-017）', () => {
   // @covers REQ-258#portal-internal-fixed
   it('DB が壊れている呼び出しは 500 で、本文は固定の日本語の {error} だけ（例外の message も stack も出さない）', async () => {
     const res = await app.request('/api/login', login('portal-onerror@example.com'), env())

@@ -5,13 +5,15 @@ import { issueToken } from '../../src/server/lib/auth'
 
 /** 入力の検証（出題を組む前に弾く所）だけを叩く。演習の種別（UC-004）と模試の種別（UC-008）は
  *  同じ経路を通るので、describe を種別で分けて持つ。
- *  出題の中身（進行中が既にある 409・範囲に過去問が無い 400）は本物のデータが要るので
+ *  出題の中身（進行中が既にある 409・範囲に過去問が無い 404）は本物のデータが要るので
  *  scripts/check_api.py が本番相当で見る。
  *
  *  偽の D1 は過去問の行を持つ（finished_session.test.ts の作法）。空の D1 だと
- *  形の正しい要求も「出題できる問題がありません」の 400 になり、形の検証を外しても
- *  緑のままになる（偽の緑）。各クラスの検査は、まず同じ種別の形の正しい要求が 201 で
- *  作れることを確かめてから、形の誤りだけが 400 になることを見る。 */
+ *  形の正しい要求も「出題できる問題がありません」で断られ、形の検証が無くても
+ *  テストが作られない（偽の緑）。各クラスの検査は、まず同じ種別の形の正しい要求が 201 で
+ *  作れることを確かめてから、形の誤りだけが 400 になることを見る。
+ *  作られたかどうかは sessions への INSERT の数で見る。INSERT は run でも batch（1 つの
+ *  トランザクション）でも記録する。 */
 type Row = Record<string, unknown>
 type Table = { match: RegExp; rows: Row[] }
 
@@ -57,7 +59,7 @@ function conditions(sql: string, params: unknown[]): { column: string; equal: bo
   return found
 }
 
-/** 列名で持った行を返す偽の D1（prepare → bind → raw/all/first）。
+/** 列名で持った行を返す偽の D1（prepare → bind → raw/all/first/run、batch）。
  *  走らせた SQL を `executed` に記録する。テストが作られていないことを
  *  「sessions への INSERT が 1 件も無い」で見るのに使う。 */
 function fakeD1(tables: Table[], executed: string[] = []) {
@@ -75,6 +77,7 @@ function fakeD1(tables: Table[], executed: string[] = []) {
   const prepare = (sql: string) => {
     let params: unknown[] = []
     const stmt = {
+      sql,
       bind: (...bound: unknown[]) => {
         params = bound
         return stmt
@@ -92,7 +95,14 @@ function fakeD1(tables: Table[], executed: string[] = []) {
     }
     return stmt
   }
-  return { prepare, batch: async () => [], exec: async () => ({ count: 0, duration: 0 }) }
+  /** D1 の batch（1 つのトランザクション）。渡された文を順に、run と同じく記録して当てる。
+   *  読み出しの文は all と同じ行を返す。 */
+  const batch = async (stmts: { sql: string; run: () => Promise<unknown>; all: () => Promise<unknown> }[]) => {
+    const out: unknown[] = []
+    for (const s of stmts) out.push(/^\s*(select|with)\b/i.test(s.sql) ? await s.all() : await s.run())
+    return out
+  }
+  return { prepare, batch, exec: async () => ({ count: 0, duration: 0 }) }
 }
 
 /** 偽の D1 が過去問を持つ回の ID（回を指定した要求もこの値を使う）。 */
@@ -100,7 +110,7 @@ const EXAM_ID = '2024r06'
 
 /** 範囲に合う過去問 1 問ぶんの行（列の別名は session-builder の QuestionRow のまま）。
  *  範囲を絞る列（論点・分野・単元）は持たせない。持たせると範囲の値を外した要求が
- *  「出題できる問題が 1 問も無い」の 400 になり、形の検証を外しても緑のままになる。 */
+ *  「出題できる問題が 1 問も無い」で断られ、形の検証を外してもテストが作られない（偽の緑）。 */
 const question = (n: number): Row => ({
   id: `q-${n}`,
   exam: EXAM_ID,
@@ -118,8 +128,8 @@ const question = (n: number): Row => ({
 })
 
 /** 回の指定の形を外れた値（空の ID・文字列でない値）を、そのまま回の列に当てても 1 問は引ける行。
- *  これが無いと、形を外れた回の指定が「その回に出題できる問題が 1 問も無い」の 400 になり、
- *  回の指定の形の検証（最小の長さ 1・文字列）を外しても緑のままになる（偽の緑）。 */
+ *  これが無いと、形を外れた回の指定が「その回に出題できる問題が 1 問も無い」で断られ、
+ *  回の指定の形の検証（最小の長さ 1・文字列）を外してもテストが作られない（偽の緑）。 */
 const MALFORMED_EXAM_ROWS: Row[] = [
   { ...question(101), exam: '' },
   { ...question(102), exam: '12345' },
@@ -128,8 +138,8 @@ const MALFORMED_EXAM_ROWS: Row[] = [
 /** 上限（100 問）まで組めるだけの過去問と、範囲の名前の引き当て。
  *  弱点復習（kind review）は範囲の列で絞る経路を通らず、誤答の記録（session_questions の
  *  result = 2）と理解度の記録（progress の status）から出題を組むので、その 2 本にも行を持たせる。
- *  行が無いと形の正しい `{ kind: 'review' }` が「出題できる問題がありません」の 400 になり、
- *  形の検証（種別→範囲）を外した要求が復習の経路に落ちても 400 のままで緑になる（偽の緑）。
+ *  行が無いと形の正しい `{ kind: 'review' }` が「出題できる問題がありません」で断られ、
+ *  形の検証（種別→範囲）を外した要求が復習の経路に落ちてもテストが作られない（偽の緑）。
  *  SQL の目印は session-builder.test.ts と同じ: 誤答＝MAX(sq.answered_at) の集約、
  *  出題回数の数え直し＝content_key AS contentKey、理解度＝progress と status。 */
 const TABLES: Table[] = [
@@ -168,7 +178,7 @@ async function post(path: string, body: unknown, executed: string[] = []) {
 const sessionInserts = (executed: string[]) => executed.filter((sql) => /insert into "sessions"/i.test(sql))
 
 /** 形の正しい要求が 201 で作れること（＝偽の D1 が過去問を渡せていること）の確認。
- *  これを欠くと、形の検証を外しても出題できる問題が無い 400 と区別できず空振りの緑になる。 */
+ *  これを欠くと、形の検証を外しても出題できる問題が無い断りと区別できず空振りの緑になる。 */
 async function expectCreated(body: unknown) {
   const executed: string[] = []
   const res = await post('/api/sessions', body, executed)
@@ -212,7 +222,7 @@ describe('POST /api/sessions の入力の検証', () => {
   it('種別が無い・知らない種別・問題数が整数でないときは、同じ種別が作れる状態でも 400', async () => {
     await expectCreated({ kind: 'field', field: 'テクノロジ系', size: 20 })
     // 範囲を取らない種別（復習）も作れる状態にしておく。これが無いと、種別の決めの値の検証を
-    // 外した要求が復習の経路に落ちて 0 件の 400 になり、検証を外しても緑のままになる
+    // 外した要求が復習の経路に落ちて 0 件で断られ、検証を外してもテストが作られない
     await expectCreated({ kind: 'review', size: 20 })
     // {} ＝ 種別が必須であること、{ kind: 'nope' } ＝ 種別が決めの値だけであること、
     // size: '20' ＝ 問題数が整数であること、を外すと通ってしまう入力
@@ -227,7 +237,7 @@ describe('POST /api/sessions の入力の検証', () => {
     await expectCreated({ kind: 'field', field: 'テクノロジ系' })
     await expectCreated({ kind: 'middle', middleNo: 23 })
     // 偽の D1 は範囲の値で絞らないので、形が正しければ当ての無い範囲でも作れる
-    // ＝ 下で見える 400 は形の検証だけが出している（出題できる問題が無い 400 ではない）
+    // ＝ 下で見える 400 は形の検証だけが出している（出題できる問題が無い断りではない）
     await expectCreated({ kind: 'drill', topicId: 9999 })
     await expectCreated({ kind: 'field', field: '当ての無い分野' })
     // 範囲を取らない種別（復習）が作れることも確かめる。範囲の無い要求が復習の経路に
@@ -244,7 +254,7 @@ describe('POST /api/sessions の入力の検証', () => {
     await expectCreated({ kind: 'drill', topicId: 2 })
     await expectCreated({ kind: 'middle', middleNo: 23 })
     await expectCreated({ kind: 'field', field: 'テクノロジ系' })
-    // 形が正しければ当ての無い範囲でも作れる（下の 400 は 0 件の 400 ではない）
+    // 形が正しければ当ての無い範囲でも作れる（下の 400 は 0 件の断りではない）
     await expectCreated({ kind: 'drill', topicId: 9999 })
     await expectCreated({ kind: 'middle', middleNo: 9999 })
     // 論点番号・単元番号の下限（1 以上）と、分野の空でないこと（最小の長さ 1）を
@@ -296,7 +306,7 @@ describe('POST /api/sessions の入力の検証（模試。UC-008）', () => {
     await expectCreated({ kind: 'mock', exam: EXAM_ID })
     // 偽の D1 は '' と '12345' の回にも 1 問ずつ持つ。形を満たす '12345' が作れることが、
     // 下の 400 を出しているのが形の検証だけであること（「その回に出題できる問題が 1 問も無い」の
-    // 400 ではないこと）の裏づけになる
+    // 断りではないこと）の裏づけになる
     await expectCreated({ kind: 'mock', exam: '12345' })
     for (const body of [{ kind: 'mock', exam: '' }, { kind: 'mock', exam: 12345 }]) {
       await expectRejected(body)

@@ -71,7 +71,7 @@ const Q = (over: Record<string, unknown> = {}) => ({
   ...over,
 })
 
-/** 模試のテスト（契約 getMockCurrentQuestion の session は先頭 5 鍵）。 */
+/** 模試のテスト（UC-004 の契約 getCurrentQuestion の session は 5 鍵だけ）。 */
 const MOCK = (over: Record<string, unknown> = {}) => ({
   id: 's-1',
   kind: 'mock',
@@ -93,7 +93,8 @@ const CUR = (over: Record<string, unknown> = {}) => ({
 function replies(over: Record<string, Reply> = {}): (key: string) => Reply {
   const base: Record<string, Reply> = {
     'GET /api/sessions/s-1/current': { body: CUR() },
-    'POST /api/sessions/s-1/answer': { body: { correct: true, correctAnswer: 'ア', explanation: null, remaining: 99, finished: false } },
+    // 模試の回答の応答は残りの未回答の件数と終わったかだけ（REQ-343）
+    'POST /api/sessions/s-1/answer': { body: { remaining: 99, finished: false } },
     'POST /api/sessions/s-1/finish': { body: { ok: true, correct: 1, total: 100 } },
     ...over,
   }
@@ -154,8 +155,8 @@ const refetches = (calls: Call[]) => calls.filter((c) => c.method === 'GET' && c
 const finishes = (calls: Call[]) => calls.filter((c) => c.method === 'POST' && c.url === '/api/sessions/s-1/finish')
 
 describe('断られた回答の取り直し（UC-008）', () => {
-  // @covers REQ-277#rejected-refetch-current
-  it('断られて取り直した結果がまだ問題を持つなら、取り直した問題（位置と進み具合も取り直した値）を示す', async () => {
+  // @covers REQ-277#stale-idx-refetch
+  it('断られて取り直した結果がまだ問題を持つなら、表示がずれていたことを伝え、取り直した問題（位置と進み具合も取り直した値）を示す', async () => {
     const calls = stubApi(
       replies({
         'POST /api/sessions/s-1/answer': REJECTED,
@@ -167,6 +168,7 @@ describe('断られた回答の取り直し（UC-008）', () => {
     )
     await draw()
     expect(text(), '描いた直後の問題が出ていない（この検査の前提）').toContain('模試の問題文その1')
+    expect(text(), '描いた直後からずれを伝えている（この検査は空振りになる）').not.toMatch(/ずれ/)
     const before = refetches(calls)
     await click(choiceBtn('ア'), '選択肢ア')
     expect(calls.some((c) => c.method === 'POST' && c.url === '/api/sessions/s-1/answer'), '回答を送っていない（この検査は空振りになる）').toBe(true)
@@ -174,6 +176,8 @@ describe('断られた回答の取り直し（UC-008）', () => {
     expect(text(), '取り直した現在の問題を示していない').toContain('模試の問題文その3')
     expect(text(), '断られた問題を出したままにしている').not.toContain('模試の問題文その1')
     expect(text(), '取り直した進み具合（2／100）になっていない').toMatch(/2\s*[／/]\s*100/)
+    // 断りの本文（REJECTED）は「ずれ」を含まないので、伝えているのは画面
+    expect(text(), '取り直した位置が送った位置と違うのに、表示がずれていたことを伝えていない').toMatch(/ずれ/)
     expect(finishes(calls), '問題が残っているのに締めている').toHaveLength(0)
   })
 
@@ -196,6 +200,7 @@ describe('断られた回答の取り直し（UC-008）', () => {
       await click(choiceBtn('ア'), `${label}: 選択肢ア`)
       expect(refetches(calls), `${label}: 断られたのに現在の問題を取り直していない`).toBeGreaterThan(before)
       expect(text(), `${label}: 断られた回答を正解として示している`).not.toMatch(/正解です|正解！|○\s*正解/)
+      expect(text(), `${label}: 取り直した結果に位置が無いのにずれを伝えている`).not.toMatch(/ずれ/)
       const movedOn = finishes(calls).length > 0 || /PATH:/.test(text())
       expect(movedOn, `${label}: 取り直した結果が終わっているのに締めと結果の流れへ進まない`).toBe(true)
     }

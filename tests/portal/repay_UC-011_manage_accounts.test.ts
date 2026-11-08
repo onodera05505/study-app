@@ -1,89 +1,16 @@
-import { beforeAll, describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import app from '../../portal/src/index'
 import { hashPassword } from '../../src/server/lib/auth'
+import { portalD1, sqliteOf, type DatabaseSync } from './repay_UC-014_sqlite_d1'
 
 /**
  * UC-011 アカウントを作り、学びの権限とパスワードを付け替え、削除する（まなびばの管理の経路）。
  *
- * まなびばの migrations を当てた本物の SQLite（node:sqlite）を D1 の口で包み、契約（contract.yaml）の
+ * まなびばの migrations を当てた本物の SQLite（node:sqlite）を D1 の口で包んだ共通の偽の D1（repay_UC-014_sqlite_d1）を使い、契約（contract.yaml）の
  * operation を HTTP の入口から叩く。観測は原則として境界（listAccounts・getMe・signIn）で行い、
  * 削除で消えた行の権限とセッションだけはスキーマ源（portal/migrations）の表を直に数える。
  * 最初の管理者はまなびばに作る API が無いので D1 に直に入れる（scripts/check_portal_api.py と同じ）。
  */
-
-/** node:sqlite の同期 API のうち、ここで使う形だけ（プロジェクトの型は Workers 向けで node の型を持たない）。 */
-type Statement = {
-  all: (...params: unknown[]) => unknown[]
-  get: (...params: unknown[]) => unknown
-  run: (...params: unknown[]) => { changes: number | bigint; lastInsertRowid: number | bigint }
-  setReturnArrays: (on: boolean) => void
-}
-type DatabaseSync = { exec: (sql: string) => void; prepare: (sql: string) => Statement }
-
-/** node の組み込みは実行時に読む（型の解決を通さない）。 */
-const nodeModule = (name: string) => import(/* @vite-ignore */ name) as Promise<any>
-let openDb: () => DatabaseSync
-let migrations: string[] = []
-
-beforeAll(async () => {
-  const sqlite = await nodeModule('node:sqlite')
-  const fs = await nodeModule('node:fs')
-  const dir = new URL('../../portal/migrations/', import.meta.url)
-  migrations = (fs.readdirSync(dir) as string[])
-    .filter((f) => f.endsWith('.sql'))
-    .sort()
-    .map((f) => fs.readFileSync(new URL(f, dir), 'utf8') as string)
-  openDb = () => new sqlite.DatabaseSync(':memory:') as DatabaseSync
-})
-
-/** node:sqlite を D1 の口（prepare → bind → all/first/raw/run と batch）で包む。 */
-function asD1(db: DatabaseSync) {
-  const norm = (v: unknown) => (v === undefined ? null : typeof v === 'boolean' ? (v ? 1 : 0) : v)
-  const prepare = (sql: string) => {
-    let params: unknown[] = []
-    const stmt = {
-      bind: (...bound: unknown[]) => {
-        params = bound.map(norm)
-        return stmt
-      },
-      all: async () => ({ success: true, results: db.prepare(sql).all(...params), meta: {} }),
-      first: async (col?: string) => {
-        const row = db.prepare(sql).get(...params) as Record<string, unknown> | undefined
-        if (!row) return null
-        return col ? row[col] : row
-      },
-      raw: async () => {
-        const s = db.prepare(sql)
-        s.setReturnArrays(true)
-        return s.all(...params)
-      },
-      run: async () => {
-        const r = db.prepare(sql).run(...params)
-        return { success: true, results: [], meta: { changes: Number(r.changes), last_row_id: Number(r.lastInsertRowid) } }
-      },
-    }
-    return stmt
-  }
-  return {
-    prepare,
-    batch: async (stmts: Array<{ all: () => Promise<unknown> }>) => {
-      db.exec('BEGIN')
-      try {
-        const out: unknown[] = []
-        for (const s of stmts) out.push(await s.all())
-        db.exec('COMMIT')
-        return out
-      } catch (e) {
-        db.exec('ROLLBACK')
-        throw e
-      }
-    },
-    exec: async (sql: string) => {
-      db.exec(sql)
-      return { count: 0, duration: 0 }
-    },
-  }
-}
 
 // ---- 登場人物（id・メール・権限の値は契約の examples から） ----
 
@@ -116,11 +43,11 @@ async function seed(db: DatabaseSync, p: Person) {
 
 /** 管理者 1 人の世界。people に足した人も D1 に入れる。 */
 async function world(...people: Person[]) {
-  const db = openDb()
-  for (const sql of migrations) db.exec(sql)
+  const DB = await portalD1()
+  const db = sqliteOf(DB)
   await seed(db, ADMIN)
   for (const p of people) await seed(db, p)
-  const env = { DB: asD1(db), ASSETS: assets, SSO_SECRET: 'shared' } as unknown as Env
+  const env = { DB, ASSETS: assets, SSO_SECRET: 'shared' } as unknown as Env
   const admin = await login(env, ADMIN.email, ADMIN.password)
   return { db, env, admin }
 }
@@ -231,6 +158,18 @@ describe('UC-011 アカウントと学びの権限の管理（まなびば）', 
       const made = (await res.json()) as Account
       expect(made.email).toBe(NEW.email)
       expect(find(await list(env, admin), made.id)!.email).toBe(NEW.email)
+    })
+  })
+
+  describe('REQ-163 作成で役割は求めから採らない', () => {
+    // @covers REQ-163#role-not-taken-from-request
+    it('作成の求めに管理者の役割を添えても、できるアカウントの役割は利用者', async () => {
+      const { env, admin } = await world()
+      const res = await create(env, admin, { ...NEW, role: 'ADMIN' })
+      expect(res.status, '役割を添えた作成が断られた').toBe(201)
+      const made = (await res.json()) as Account
+      expect(made.role).toBe('MEMBER')
+      expect(find(await list(env, admin), made.id)!.role).toBe('MEMBER')
     })
   })
 
@@ -477,6 +416,25 @@ describe('UC-011 アカウントと学びの権限の管理（まなびば）', 
       expect((await remove(env, admin, ADMIN.id)).status).toBe(400)
       expect(find(await list(env, admin), ADMIN.id)).toMatchObject({ role: 'ADMIN', grants: ADMIN.grants })
       expect(await meStatus(env, admin)).toBe(200)
+    })
+  })
+
+  describe('REQ-403 自分のパスワードの再設定', () => {
+    // @covers REQ-403#self-reset-rejected
+    it('自分の id を指す再設定は 400 の理由つきで、パスワードは入れ替わらず、自分のどの端末のセッションも終わらない', async () => {
+      const { db, env, admin } = await world()
+      const otherDevice = await login(env, ADMIN.email, ADMIN.password)
+      const NEXT = 'natsunoame9'
+      const res = await reset(env, admin, ADMIN.id, { password: NEXT })
+      expect(res.status).toBe(400)
+      const body = (await res.json()) as Record<string, unknown>
+      expect(Object.keys(body), '断りの本文が {error} の形でない').toEqual(['error'])
+      expect(String(body.error), '自分のパスワードはこの操作で変えられないことが日本語で示されない').toMatch(/[ぁ-んァ-ヶ一-龥]/)
+      expect(await meStatus(env, admin), '呼び出した端末のセッションが終わった').toBe(200)
+      expect(await meStatus(env, otherDevice), '別の端末のセッションが終わった').toBe(200)
+      expect(countRows(db, 'sessions', ADMIN.id), '自分のセッションの数が変わった').toBe(2)
+      expect(await loginStatus(env, ADMIN.email, ADMIN.password), '元のパスワードで入れない').toBe(200)
+      expect(await loginStatus(env, ADMIN.email, NEXT), '送ったパスワードに入れ替わっている').toBe(401)
     })
   })
 

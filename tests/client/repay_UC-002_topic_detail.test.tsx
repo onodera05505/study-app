@@ -9,7 +9,7 @@ import { act, type ReactNode } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { TopicDetail } from '../../src/client/pages/TopicDetail'
-import { invalidateCached } from '../../src/client/lib/api'
+import { invalidateCached, setLastTopic } from '../../src/client/lib/api'
 
 type Over = Record<string, unknown>
 
@@ -86,20 +86,37 @@ function blockText(el: Element): string {
 
 const allElements = () => [...container.querySelectorAll<HTMLElement>('*')]
 
+/** 取り直す手段（押せる要素で、取り直すことを言う文字か読み上げ用の名前を持つ物）。 */
+const retryControl = () =>
+  [...container.querySelectorAll<HTMLElement>('button, a, [role="button"]')].find((el) =>
+    /再読み込み|もう一度|取り直|再試行|やり直|再取得/.test(blockText(el)),
+  )
+
 type StubOpts = {
   body?: Over
   /** 論点の教材の取得を 500 で失敗させる。 */
   fail?: string
+  /** fail を最初の何回だけ返すか（省くと毎回）。 */
+  failTimes?: number
+  /** 論点の教材の取得を 404（契約の NOT_FOUND）で断る。値は断りの本文。 */
+  notFound?: string
 }
+
+/** 論点の教材を取りに来た回数。 */
+let detailFetches = 0
 
 /** 応答を決める偽の fetch。 */
 function stubApi(opts: StubOpts = {}) {
+  detailFetches = 0
   vi.stubGlobal('fetch', async (raw: string) => {
     const url = new URL(String(raw), 'http://localhost')
     if (url.pathname.endsWith('/glossary'))
       return { ok: true, status: 200, text: async () => JSON.stringify({ glossary: [] }) }
     if (/\/topics\/\d+$/.test(url.pathname)) {
-      if (opts.fail)
+      detailFetches++
+      if (opts.notFound)
+        return { ok: false, status: 404, text: async () => JSON.stringify({ error: opts.notFound }) }
+      if (opts.fail && (opts.failTimes === undefined || detailFetches <= opts.failTimes))
         return { ok: false, status: 500, text: async () => JSON.stringify({ error: opts.fail }) }
       return { ok: true, status: 200, text: async () => JSON.stringify(detail(opts.body ?? {})) }
     }
@@ -188,6 +205,36 @@ describe('論点の解説（UC-002）', () => {
     expect(text()).not.toContain('読み込み中')
     expect(text()).not.toContain('短い説明の本文です。')
     expect(text()).not.toContain('過去問 1 の本文です。')
+  })
+
+  // @covers REQ-033#detail-fetch-failed
+  it('教材が取れなかったら、その論点の教材を取り直す手段を添え、押すと取り直して教材を示す', async () => {
+    stubApi({ fail: '論点の教材を取得できませんでした', failTimes: 1 })
+    await draw()
+    expect(text()).toContain('論点の教材を取得できませんでした')
+    const retry = retryControl()
+    expect(retry, '取り直す手段が添えられていない').toBeTruthy()
+    const before = detailFetches
+    await act(async () => {
+      retry!.click()
+    })
+    await act(async () => {
+      await Promise.resolve()
+    })
+    expect(detailFetches, '取り直す手段を押しても教材を取り直しに行かない').toBeGreaterThan(before)
+    expect(text(), '取り直した教材が示されていない').toContain('短い説明の本文です。')
+    expect(text()).not.toContain('論点の教材を取得できませんでした')
+  })
+
+  // @covers REQ-033#detail-fetch-failed
+  it('前回の続きに覚えた論点でも、導線を経ずに開いて見つからなかったときは、単元の一覧へ移さず取れなかったことと取り直す手段を示す', async () => {
+    setLastTopic({ id: 231, term: 'LTV', middle: '事業の指標', middleNo: 4 })
+    stubApi({ notFound: '論点が見つかりません' })
+    await draw()
+    expect(text(), '論点の画面から移っている').not.toContain('論点の一覧')
+    expect(text()).toContain('論点が見つかりません')
+    expect(text()).not.toContain('読み込み中')
+    expect(retryControl(), '取り直す手段が添えられていない').toBeTruthy()
   })
 })
 

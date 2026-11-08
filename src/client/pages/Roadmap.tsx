@@ -205,6 +205,9 @@ export function Roadmap() {
   const visible = (u: Unit) => !filtering || (u.tier != null && tierSel.includes(u.tier))
   const here = main.filter(visible).find((u) => (u.status ?? 1) < 3)
   const visibleExtras = extras.filter(visible)
+  // 先頭の続きの導線の 3 段目。印の絞り込みに依らず学ぶ順で最初の論点
+  // @implements REQ-144, REQ-283
+  const first = all[0]
   const tierLabel = (u: Unit) => {
     const label = tierLabelOf(spec, u.tier)
     return label ? <TierBadge level={u.tier} label={label} /> : null
@@ -217,7 +220,7 @@ export function Roadmap() {
       {/* 「ここから」の段は一覧の「ここから」と同じ単位（印で絞り込んでいるあいだは絞り込んだ中の最初の未理解） */}
       {/* @implements REQ-144, REQ-145, REQ-283, BR-013 */}
       <Link
-        to={last ? `/topics/${last.id}` : here ? `/topics/${here.id}` : '/topics'}
+        to={last ? `/topics/${last.id}` : here ? `/topics/${here.id}` : first ? `/topics/${first.id}` : '/topics'}
         className="btn btn-primary btn-block go-study"
       >
         {last ? `前回の続きから（${last.term}）` : here ? `ここから（${here.term}）` : '最初の単位から始める'}

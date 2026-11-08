@@ -48,7 +48,7 @@ const TIMES = /SELECT id, content_key AS contentKey/
 /** 理解度の表（progress）とその段階（status）を引く SQL ＝ 理解度が低い論点の過去問。 */
 const WEAK = /(progress[\s\S]*status)|(status[\s\S]*progress)/
 
-/** 論点名・中分類名の引き当て（範囲の名前に使われる）。 */
+/** 論点名・単元名（syllabus_items.middle）の引き当て（範囲の名前に使われる）。 */
 const TERM: Handler = { match: /SELECT term FROM topics/, rows: [{ term: '損益分岐点' }] }
 const MIDDLE: Handler = { match: /SELECT middle FROM syllabus_items/, rows: [{ middle: '基礎理論' }] }
 
@@ -182,7 +182,7 @@ describe('buildQuestions（出題の組み立て）', () => {
   })
 
   // @covers REQ-051#scope-field-middle
-  it('field は分野、middle は中分類で絞る', async () => {
+  it('field は分野、middle は単元で絞り、単元の範囲の名前は 単元「<単元名>」（契約の例 okMiddle の形）', async () => {
     const f = fakeDb([{ match: FETCH, rows: [row({ id: 'q-1', exam: '2024r06', field: 'テクノロジ系' })] }])
     await buildQuestions(f.db, 'u-1', { ...base, kind: 'field', field: 'テクノロジ系' })
     expect(f.find(FETCH)[0].sql).toContain('s.field')
@@ -195,7 +195,7 @@ describe('buildQuestions（出題の組み立て）', () => {
     const built = await buildQuestions(m.db, 'u-1', { ...base, kind: 'middle', middleNo: 7 })
     expect(m.find(FETCH)[0].sql).toContain('s.middle_no')
     expect(m.find(FETCH)[0].params).toContain(7)
-    expect(built.scopeLabel).toBe('中分類「基礎理論」')
+    expect(built.scopeLabel).toBe('単元「基礎理論」')
   })
 
   // @covers REQ-053#fold-in-drill
@@ -215,8 +215,8 @@ describe('buildQuestions（出題の組み立て）', () => {
     expect(built.questions.find((q) => q.id === 'q-new')!.timesAsked).toBe(2)
   })
 
-  // @covers REQ-051#size-cap
-  it('size を超える数は出さない', async () => {
+  // @covers REQ-051#size-requested-cap
+  it('要求が指定した問題数（size）を超える数は出さない', async () => {
     const rows = [1, 2, 3, 4, 5].map((n) => row({ id: `q-${n}`, exam: '2024r06', contentKey: `ck-${n}` }))
     const { db } = fakeDb([
       { match: FETCH, rows },

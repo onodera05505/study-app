@@ -1,10 +1,11 @@
 import { exam } from '../exam'
 import { useCallback, useEffect, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useLocation, useNavigationType, useSearchParams } from 'react-router-dom'
 import { BackLink } from '../components/BackLink'
 import { STATUS_LABEL, api, apiCached } from '../lib/api'
 import { StatusBadge, statusRowClass } from '../components/StatusBadge'
 import type { Field, TopicRow } from '../lib/api'
+import { resumeGoneOf } from '../lib/resume'
 
 type Category = {
   middleNo: number
@@ -32,6 +33,10 @@ const FIELD_ORDER = exam.fields
  *  「中分類」はシラバスの用語で、学習者には通じない。画面では「単元」と呼ぶ。 */
 export function Topics() {
   const [params, setParams] = useSearchParams()
+  // 知らせは論点の画面から移ってきた時だけ出す。履歴で戻った・再読み込みで来た（POP）ときは出し直さない
+  const location = useLocation()
+  const navigationType = useNavigationType()
+  const resumeGone = navigationType === 'POP' ? null : resumeGoneOf(location.state)
   // null は「まだ取得していない」、[] は「取得した結果が空」。区別しないと
   // 読み込み中に「該当する論点がありません」と出てしまう。
   const [fields, setFields] = useState<Field[] | null>(null)
@@ -70,7 +75,7 @@ export function Topics() {
     if (!middleNo) return
     setTopicsError('')
     // 理解度をすべて外したら取りに行かない。サーバは status の指定が無いと
-    // 全件返すので、「全部オフ＝全件表示」という逆の見え方になっていた。
+    // 全件返すので、取りに行くと「全部オフ＝全件表示」という逆の見え方になる。
     if (statuses.length === 0) {
       setTopics([])
       return
@@ -164,8 +169,7 @@ export function Topics() {
                       一覧の高さが倍になるだけで、行を見分ける手がかりにならない。 */}
                   {t.itemName !== category.middle && <span className="meta">{t.itemName}</span>}
                 </span>
-                {/* 理解度は文字＋色＋塗りのバッジ（2026-09-16。以前の 3 本の棒は「分かりづらい」と指摘された。
-                    色だけに頼らず文字を持つのは、未理解の行が満タンに見えた過去の教訓）。 */}
+                {/* 理解度は文字＋色＋塗りのバッジ。色だけに頼らず文字を持たせ、段階を読み違えないようにする。 */}
                 <StatusBadge status={status} />
               </Link>
             </li>
@@ -215,6 +219,14 @@ export function Topics() {
   return (
     <>
       <h1>学習</h1>
+      {/* @implements REQ-342 */}
+      {resumeGone && (
+        <p className="notice" role="status">
+          {resumeGone.term
+            ? `前回の続きの論点「${resumeGone.term}」が見つかりませんでした。単元から選び直してください。`
+            : '前回の続きの論点が見つかりませんでした。単元から選び直してください。'}
+        </p>
+      )}
       <p className="lead">単元を選んで、その中の論点を順に読んでいきます。</p>
 
       <div className="chips">

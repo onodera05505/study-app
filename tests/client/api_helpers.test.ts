@@ -75,17 +75,17 @@ describe('トークンの保存（UC-013）', () => {
   })
 })
 
-describe('API 呼び出しの失敗の形', () => {
-  it('投げられる失敗は 1 つの型で、message・status・body を読める', async () => {
+describe('API 呼び出しの失敗の形（UC-017・UC-013）', () => {
+  // @covers REQ-261#reason-from-body
+  it('失敗の本文に理由と他の項目が添えられていても、利用者に伝える文はその理由だけ', async () => {
     const m = await load()
     vi.stubGlobal('fetch', vi.fn(async () => okJson({ error: '入力が正しくありません', detail: 'x' }, 400)))
     const err = await m.api('/x').catch((e: unknown) => e)
-    expect(err).toBeInstanceOf(m.ApiError)
     expect(err).toBeInstanceOf(Error)
     const e = err as InstanceType<typeof m.ApiError>
-    expect(typeof e.message).toBe('string')
+    expect(e.message).toBe('入力が正しくありません')
+    expect(e.message).not.toContain('x')
     expect(e.status).toBe(400)
-    expect(e.body).toEqual({ error: '入力が正しくありません', detail: 'x' })
   })
 
   // @covers REQ-261#reason-from-body

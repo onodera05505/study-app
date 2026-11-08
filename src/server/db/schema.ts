@@ -1,5 +1,5 @@
 import { sql } from 'drizzle-orm'
-import { index, integer, primaryKey, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core'
+import { check, index, integer, primaryKey, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core'
 
 const now = sql`(unixepoch())`
 
@@ -171,8 +171,9 @@ export const sessions = sqliteTable(
     status: text('status').notNull(), // in_progress | completed
     /** mock のとき、どの回を再現しているか。ランダム構成なら null。 */
     sourceExam: text('source_exam'),
-    /** 出題範囲の説明。「論点: RAID」「分野: テクノロジ系」など画面表示用。 */
-    scopeLabel: text('scope_label'),
+    /** 範囲の名前。「論点「RAID」」「分野「テクノロジ系」」など画面表示用。NULL も空の文字列も持たない。 */
+    // @implements BR-040
+    scopeLabel: text('scope_label').notNull(),
     /** 制限時間（秒）。無制限なら null。過去問実践は 7200。 */
     timeLimitSec: integer('time_limit_sec'),
     questionCount: integer('question_count').notNull(),
@@ -180,7 +181,11 @@ export const sessions = sqliteTable(
     startedAt: integer('started_at').notNull().default(now),
     finishedAt: integer('finished_at'),
   },
-  (t) => [index('idx_session_user_status').on(t.userId, t.status, t.startedAt)],
+  (t) => [
+    index('idx_session_user_status').on(t.userId, t.status, t.startedAt),
+    // @implements BR-040
+    check('ck_sessions_scope_label_not_empty', sql`${t.scopeLabel} <> ''`),
+  ],
 )
 
 /** 出題された1問。出題時点の内容をスナップショットとして固定する。
@@ -213,8 +218,7 @@ export const sessionQuestions = sqliteTable(
 )
 
 /** アプリ全体設定。1行想定（id='default'）。
- *  前身アプリ では出題数や除外条件がコードに埋まっていて変えられなかったので、
- *  変えたくなるものは最初からここに置く。 */
+ *  出題数や除外条件など、運用で変えたくなる値をコードに埋めずにここに置く。 */
 export const appSettings = sqliteTable('app_settings', {
   id: text('id').primaryKey(),
   /** 練習テストの既定出題数 */

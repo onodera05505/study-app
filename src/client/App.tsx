@@ -90,9 +90,11 @@ export function App() {
 
   // 用語集は本文を描くときに要る。画面を開いてから取りにいくと、`[[用語]]` が
   // 一瞬ただの文字で出てから色が付く。ログインした時点で先に取っておく。
+  // まなびばから戻った経路ではコードを換えたトークンで取りに行く（前のトークンを添えない）
+  const onCallback = location.pathname === '/sso/callback'
   useEffect(() => {
-    if (authed) ensureGlossary()
-  }, [authed])
+    if (authed && !onCallback) ensureGlossary()
+  }, [authed, onCallback])
 
   // 401 でトークンが破棄されたら、どの画面からでもログインに戻す
   useEffect(() => {
@@ -105,16 +107,17 @@ export function App() {
     }
   }, [])
 
+  // まなびばから戻ってきた経路。端末のトークンの有無を問わず、コードを換えてからホームへ
+  if (location.pathname === '/sso/callback') {
+    return (
+      <main>
+        <SsoCallback onDone={() => { setAuthed(true); navigate('/', { replace: true }) }} />
+      </main>
+    )
+  }
+
   // @implements REQ-190, REQ-195
   if (!authed) {
-    // まなびばから戻ってきた経路。コードをトークンに換えてからホームへ
-    if (location.pathname === '/sso/callback') {
-      return (
-        <main>
-          <SsoCallback onDone={() => { setAuthed(true); navigate('/', { replace: true }) }} />
-        </main>
-      )
-    }
     return (
       <main>
         <Login onDone={() => setAuthed(true)} />

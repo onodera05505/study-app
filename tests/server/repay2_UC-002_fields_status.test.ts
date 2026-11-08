@@ -5,28 +5,13 @@
  *  包んで渡し、観測は HTTP の境界（listFields の応答）で行う。学びの種類は資格対策（EXAM=ip）。
  *  理解度は 1=未理解・2=やや理解・3=理解。記録の無い論点は未理解として数える（用語集「未理解」）。 */
 
+import { readdirSync, readFileSync } from 'node:fs'
+import { DatabaseSync } from 'node:sqlite'
+import { fileURLToPath } from 'node:url'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import app from '../../src/server/index'
 import type { Bindings } from '../../src/server/lib/db'
 import { issueToken } from '../../src/server/lib/auth'
-
-/** node:sqlite の同期 API のうち、ここで使う形だけ（プロジェクトの型は Workers 向けで node の型を持たない）。 */
-type Statement = {
-  all: (...params: unknown[]) => unknown[]
-  get: (...params: unknown[]) => unknown
-  run: (...params: unknown[]) => { changes: number | bigint; lastInsertRowid: number | bigint }
-  setReturnArrays: (on: boolean) => void
-}
-type DatabaseSync = { exec: (sql: string) => void; prepare: (sql: string) => Statement; close: () => void }
-
-/** node の組み込みは実行時に読む（型の解決を通さない）。 */
-const nodeModule = <T>(name: string) => import(/* @vite-ignore */ name) as Promise<T>
-const { DatabaseSync } = await nodeModule<{ DatabaseSync: new (path: string) => DatabaseSync }>('node:sqlite')
-const { readdirSync, readFileSync } = await nodeModule<{
-  readdirSync: (dir: string) => string[]
-  readFileSync: (path: string, encoding: 'utf8') => string
-}>('node:fs')
-const { fileURLToPath } = await nodeModule<{ fileURLToPath: (url: URL) => string }>('node:url')
 
 const MIGRATIONS_DIR = fileURLToPath(new URL('../../migrations/', import.meta.url))
 

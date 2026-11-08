@@ -193,7 +193,7 @@ const IN_PROGRESS = {
   answered: 4,
 }
 
-/** UC-008 の契約 startMockExam の CONFLICT（409）の本文。失敗の本文は共有語彙の ErrorBody だけで
+/** UC-004 の契約 startSession の CONFLICT（409）の本文。失敗の本文は共有語彙の ErrorBody だけで
  *  （additionalProperties: false）、進行中のテストの行は載らない。範囲と進み具合は UC-006 の
  *  getCurrentSession で取り直す。error の文は仕様が決めていないので契約のエラーコードを置く。 */
 const CONFLICT_BODY = { error: 'CONFLICT' }
@@ -359,14 +359,16 @@ async function drawRoadmap(target: Target = 'itc') {
     [...host.querySelectorAll<HTMLElement>('button, summary, [role="button"]')].filter((b) =>
       ROUND_WORD.test(b.textContent ?? ''),
     )
-  /** 並びの中の単位の導線（先頭の続きの導線と、先頭の 1 行の中の導線は除く）。 */
-  const rowLinks = () =>
-    links().filter(
-      (a) =>
-        /^\/topics\/\d+$/.test(a.getAttribute('href') ?? '') &&
-        !/前回の続き|ここから（/.test(a.textContent ?? '') &&
-        !a.closest('p.lead'),
+  /** 並びの中の単位の導線。先頭の続きの導線（headLinkOf と同じ規則で決まる文書の順で最初の 1 つ。
+   *  行き先と文言は前回の続き・未理解・学ぶ順の 1 番目で変わるので、文言では見分けない）と、
+   *  先頭の 1 行の中の導線は除く。 */
+  const rowLinks = () => {
+    const all = links()
+    const head = headLinkOf(all)
+    return all.filter(
+      (a) => a !== head && /^\/topics\/\d+$/.test(a.getAttribute('href') ?? '') && !a.closest('p.lead'),
     )
+  }
   /** 並びの中の単位 id の導線のうち、隠されていないもの。 */
   const unitLink = (id: number) => rowLinks().find((a) => a.getAttribute('href') === `/topics/${id}` && shown(a))
   /** 印の絞り込みの操作。印の語を持つ、押せる・選べる要素（単位の行の導線は除く）。 */
@@ -808,9 +810,9 @@ describe('各日の確認テスト（UC-009）', () => {
 
   // @covers REQ-276#start-failed-shows-reason-keeps-list
   it('進行中の有無以外の理由で作れなかったときは、押した日のそばに理由を出し、日ごとの並びを消さない', async () => {
-    // UC-008 の契約 startMockExam の INVALID_INPUT（選んだ範囲に出題できる問題が 1 問も無い）
+    // UC-004 の契約 startSession の NOT_FOUND（選んだ範囲に出題できる問題が 1 問も無い）
     const reason = 'この日の確認問題がまだ登録されていません'
-    stubApi({ startFails: { status: 400, error: reason } })
+    stubApi({ startFails: { status: 404, error: reason } })
     stubConfirm(true)
     const v = await drawRoadmap()
     await v.clickDay(2)
@@ -879,6 +881,27 @@ describe('先頭の導線（UC-009）', () => {
     const to = v.links().find((a) => /ここから（/.test(a.textContent ?? ''))
     expect(to?.textContent).toContain('ここから（単位 5 の名前）')
     expect(to?.getAttribute('href')).toBe('/topics/105')
+    await v.close()
+  })
+})
+
+/** 先頭の続きの導線（文書の順で最初の、論点の画面かロードマップへ向く導線。先頭の 1 行の中の導線は除く）。 */
+const headLinkOf = (links: HTMLAnchorElement[]) =>
+  links.find((a) => /^\/topics(\/\d+)?$/.test(a.getAttribute('href') ?? '') && !a.closest('p.lead'))
+
+describe('先頭の導線の 3 段目（UC-009）', () => {
+  // @covers REQ-144#fallback-list-head
+  it('前回の続きも未理解の単位も無いときは、行き先が学ぶ順で最初の単位の画面になり、ロードマップ自身ではない', async () => {
+    // 並びの応答の順は学ぶ順と逆にし、学ぶ順を持たない補足の単位を先頭に置く（応答の先頭を行き先にしていないかを見る）
+    const allUnderstood = [{ ...EXTRA, status: 3 }, ...UNITS.map((u) => ({ ...u, status: 3 })).reverse()]
+    stubApi({ units: allUnderstood })
+    const v = await drawRoadmap()
+    expect(v.text(), '仕込み: 前回の続きがある').not.toContain('前回の続きから')
+    expect(v.hereLabels(), '仕込み: 未理解の単位がある').toHaveLength(0)
+    const head = headLinkOf(v.links())
+    expect(head, '先頭の続きの導線が無い').toBeDefined()
+    expect(head?.getAttribute('href'), '行き先がロードマップ自身になっている').not.toBe('/topics')
+    expect(head?.getAttribute('href'), '行き先が学ぶ順で最初の単位でない').toBe('/topics/101')
     await v.close()
   })
 })
@@ -1357,6 +1380,23 @@ describe('印の絞り込み（UC-009）', () => {
     expect(v.unitLink(305), '印 2 の単位が残っていない（この検査は空振りになる）').toBeDefined()
     expect(v.hereLabels(), '残した単位が全て理解なのに「ここから」が出ている').toHaveLength(0)
     expect(v.rowText(305)).not.toContain('ここから')
+    await v.close()
+  })
+
+  // @covers REQ-283#no-unlearned-in-filter-continue-falls-back
+  it('先頭の続きの導線が「ここから」へ向いていて残した単位が全て理解のときは、行き先が学ぶ順で最初の単位に下がり、絞り込みの外の「ここから」を指さない', async () => {
+    stubApi({ target: 'eng' })
+    const v = await drawRoadmap('eng')
+    const head = () => headLinkOf(v.links())
+    expect(head()?.getAttribute('href'), '絞り込む前の行き先が「ここから」の 303 でない（この検査は空振りになる）').toBe('/topics/303')
+    await v.toggleTier(1)
+    await v.toggleTier(3)
+    expect(v.unitLink(305), '印 2 の単位が残っていない（この検査は空振りになる）').toBeDefined()
+    expect(v.hereLabels(), '仕込み: 残した単位に「ここから」が出ている').toHaveLength(0)
+    expect(head(), '先頭の続きの導線が消えている').toBeDefined()
+    expect(head()?.getAttribute('href'), '絞り込みの外の「ここから」を指したまま').not.toBe('/topics/303')
+    // 学ぶ順で最初の単位は 301（印 3。絞り込みに依らない）
+    expect(head()?.getAttribute('href'), '行き先が学ぶ順で最初の単位に下がっていない').toBe('/topics/301')
     await v.close()
   })
 

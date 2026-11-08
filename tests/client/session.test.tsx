@@ -328,14 +328,14 @@ describe('出題の画面', () => {
 
   /** 「取り直す手段」を探してその文を返す。押して現在の問題の取得が実際に増え、回答の送り直しが
    *  起きないものだけを手段と見なす（在るだけ・押しても何も起きないものは手段にしない）。
-   *  中断（REQ-070）と締め（REQ-069）は別の操作なので候補から外す。 */
+   *  中断（REQ-070）と締め（REQ-069）と練習テストへ戻る導線（REQ-348）は別の操作なので候補から外す。 */
   async function findRetry(calls: Call[]): Promise<string | undefined> {
     const answers = () => calls.filter((c) => c.url === '/api/sessions/s-1/answer').length
     const choices = choiceBtns()
     const labels = els('button,a,[role="button"]')
       .filter((b) => !choices.includes(b as HTMLButtonElement))
       .map((b) => (b.textContent ?? '').trim())
-      .filter((t) => t !== '' && !/中断|採点/.test(t))
+      .filter((t) => t !== '' && !/中断|採点|練習テスト/.test(t))
     for (const label of labels) {
       const el = byLabel(label)
       if (!el) continue
@@ -442,6 +442,49 @@ describe('出題の画面', () => {
     expect(text(), '取り直せた進捗（2／3）になっていない').toMatch(/2\s*[／/]\s*3/)
   })
 
+  /** 見つからないものとして断られた取得の本文（契約 getCurrentQuestion の NOT_FOUND。本文は ErrorBody だけで、
+   *  「続けられない」の語を含めない＝画面が自分で示しているかを見分ける）。 */
+  const NOT_FOUND = { status: 404, body: { error: 'その ID のテストはありません' } }
+  const CANNOT_CONTINUE = /続けられ/
+
+  // @covers REQ-348#not-found-cannot-continue
+  it('現在の問題の取得が見つからないものとして断られたら、画面を開いた直後でも断られた回答のあとでも、そのテストでは続けられないことを示す', async () => {
+    // 空振り対策: 見つからない以外の失敗（サーバの失敗）では続けられないとは言わない
+    stubApi(replies({ 'GET /api/sessions/s-1/current': { status: 500, body: { error: '現在の問題を取得できませんでした' } } }))
+    await draw()
+    expect(text(), 'サーバの失敗なのに続けられないと示している（この検査は空振りになる）').not.toMatch(CANNOT_CONTINUE)
+
+    // 画面を開いた直後の取得
+    const opened = stubApi(replies({ 'GET /api/sessions/s-1/current': NOT_FOUND }))
+    await draw()
+    expect(refetches(opened), '現在の問題を取りに行っていない').toBeGreaterThan(0)
+    expect(text(), '開いた直後に見つからないのに、続けられないことを示していない').toMatch(CANNOT_CONTINUE)
+    expect(finishes(opened), '見つからないのに締めへ進んでいる').toBe(0)
+
+    // 断られた回答のあとの取り直し
+    const { calls } = stubRefetchFailure(NOT_FOUND)
+    await draw()
+    await click(choiceBtn('ア'), '選択肢ア')
+    expect(refetches(calls), '断られたのに現在の問題を取り直していない').toBeGreaterThan(1)
+    expect(text(), '取り直しで見つからないのに、続けられないことを示していない').toMatch(CANNOT_CONTINUE)
+    expect(text(), '見つからないテストの問題を出したままにしている').not.toContain('問題文その1')
+    expect(finishes(calls), '見つからないのに締めへ進んでいる').toBe(0)
+  })
+
+  // @covers REQ-348#back-to-practice
+  it('見つからないものとして断られたときに添えた導線をたどると、練習テストへ戻る', async () => {
+    for (const label of ['開いた直後', '断られた回答のあと']) {
+      if (label === '開いた直後') stubApi(replies({ 'GET /api/sessions/s-1/current': NOT_FOUND }))
+      else stubRefetchFailure(NOT_FOUND)
+      await draw()
+      if (label !== '開いた直後') await click(choiceBtn('ア'), '選択肢ア')
+      const back = els('button,a,[role="button"]').find((b) => /練習テスト/.test(b.textContent ?? ''))
+      expect(back, `${label}: 練習テストへ戻る導線が無い`).toBeDefined()
+      await click(back, `${label}: 練習テストへ戻る導線`)
+      expect(path(), `${label}: 導線をたどっても練習テストへ戻らない`).toBe('/practice')
+    }
+  })
+
   // @covers REQ-074#finish-failed-retryable
   it('締めに失敗したら理由と「まだ採点できていません」を出し、押し直せる', async () => {
     const calls = stubApi(
@@ -539,6 +582,8 @@ describe('模擬試験の出題', () => {
             CUR({ session: SESSION({ kind: 'mock' }), question: Q({ idx: 2, text: '問題文その2' }), answered: 2 }),
           ],
         },
+        // 模試の回答の応答は残りの未回答の件数と終わったかだけ（REQ-343）
+        'POST /api/sessions/s-1/answer': { body: { remaining: 1, finished: false } },
       }),
     )
     await draw()

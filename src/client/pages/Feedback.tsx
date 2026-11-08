@@ -7,9 +7,9 @@ import { getLastPage } from '../lib/lastPage'
  *  その場で AI は応答しない（溜めて開発側が改善フェーズで読む）。 */
 export function Feedback() {
   const last = getLastPage()
-  // 途中の入力は遷移しても消さない（利用者の指摘 2026-09-16。警告ではなく下書きの保持で応える。送信で消す）
+  // 途中の入力は遷移しても消さない（警告ではなく下書きの保持で応える。受け付けられたら消す）
   const [text, setText] = useState(() => readDraft())
-  // 種類（良かった／改善の提案／その他）。どれか 1 つを選んでから送る（本人の指摘 2026-09-18）
+  // 種類（良かった／改善の提案／その他）。どれか 1 つを選んでから送る
   const [kind, setKind] = useState<'good' | 'improve' | 'other' | ''>('')
   const [attach, setAttach] = useState(!!last)
   const [busy, setBusy] = useState(false)
@@ -20,7 +20,8 @@ export function Feedback() {
     writeDraft(text)
   }, [text])
 
-  // @implements REQ-155, REQ-156, REQ-157, BR-014
+  // 送信中に画面を離れても送信は取り消さない。受け付けられれば下書きを消し、拒まれるか届かなければ下書きを残す
+  // @implements REQ-155, REQ-156, REQ-157, REQ-349, BR-014
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (busy) return

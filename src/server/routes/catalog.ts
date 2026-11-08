@@ -5,6 +5,8 @@ import { z } from 'zod'
 import type { Bindings, Variables } from '../lib/db'
 import { getDb, schema } from '../lib/db'
 import { explanationOf, type ExplanationColumns } from '../lib/explanations'
+import { nextTopics } from '../lib/next-topics'
+import { bodyErrorMessage } from '../lib/body-error'
 import { compareExam, dedupe } from '../lib/session-builder'
 
 export const catalogRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>()
@@ -40,7 +42,7 @@ catalogRoutes.get('/fields', async (c) => {
   return c.json({ fields: rows })
 })
 
-/** 分野配下の中分類。テーマ分けの中間階層。 */
+/** 分野配下の単元。テーマ分けの中間階層。 */
 // @implements REQ-015, REQ-019
 catalogRoutes.get('/categories', async (c) => {
   const db = getDb(c.env)
@@ -157,7 +159,7 @@ catalogRoutes.get('/topics', async (c) => {
 })
 
 /** 論点の詳細。解説・周辺知識と、その論点が出題された過去問。 */
-// @implements REQ-023, REQ-045, BR-030, REQ-284
+// @implements REQ-023, REQ-045, REQ-284
 catalogRoutes.get('/topics/:id', async (c) => {
   const id = Number(c.req.param('id'))
   if (!Number.isInteger(id)) return c.json({ error: '不正な ID です' }, 400)
@@ -236,18 +238,10 @@ catalogRoutes.get('/topics/:id', async (c) => {
      LIMIT 8
   `)
 
-  // 「次の一手」＝頻出なのにまだ理解できていない論点の先頭。ホームの nextTopics と
-  // 同じ定義（COALESCE(status,1) < 3・頻度降順）にして、"次" の意味をアプリ全体で揃える。
-  // いま開いている論点自身は除く。理解にすると自動で候補から外れ、次が繰り上がる。
-  // 空（頻出をひととおり潰した）なら null を返し、画面はグレーアウトにする。
-  const nextP = db.get<{ id: number; term: string; questionCount: number }>(sql`
-    SELECT t.id AS id, t.term AS term, t.question_count AS questionCount
-      FROM topics t
-      LEFT JOIN progress p ON p.topic_id = t.id AND p.user_id = ${userId}
-     WHERE COALESCE(p.status, 1) < 3 AND t.question_count > 0 AND t.id <> ${id}
-     ORDER BY t.question_count DESC, t.term
-     LIMIT 1
-  `)
+  // 「次に学ぶ」の先頭。いま開いている論点自身は除く。尽きたら null で、画面はグレーアウトにする。
+  const nextP = nextTopics(db, userId, { roadmap, limit: 1, exclude: id }).then((rows) =>
+    rows[0] ? { id: rows[0].id, term: rows[0].term, questionCount: rows[0].questionCount } : undefined,
+  )
 
   // ロードマップ型: 学ぶ順の前後（sort_order）。資格版は sort_order を参照しない（D13）ので null。
   // ロードマップ型は前後の単位だけを出す。「他の論点」「次に学ぶ（次の未理解）」は学ぶ道を散らす
@@ -305,10 +299,10 @@ const progressBody = z.object({ status: z.number().int().min(1).max(3) })
 // @implements REQ-034, REQ-035, REQ-036, REQ-037, REQ-268
 catalogRoutes.put('/topics/:id/progress', async (c) => {
   const id = Number(c.req.param('id'))
-  const parsed = progressBody.safeParse(await c.req.json().catch(() => null))
-  if (!Number.isInteger(id) || !parsed.success) {
-    return c.json({ error: '入力が正しくありません' }, 400)
-  }
+  const raw = await c.req.json().catch(() => null)
+  const parsed = progressBody.safeParse(raw)
+  if (!Number.isInteger(id)) return c.json({ error: '論点の番号が正しくありません' }, 400)
+  if (!parsed.success) return c.json({ error: bodyErrorMessage(parsed.error, raw, { status: '理解度' }) }, 400)
   const db = getDb(c.env)
   const userId = c.get('user').id
   // 存在しない論点は 404（外部キー違反で 500 にしない）

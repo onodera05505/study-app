@@ -1,9 +1,6 @@
+import { readFileSync } from 'node:fs'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { TOKEN_TTL_SEC, hashPassword, issueToken, readToken, verifyPassword } from '../../src/server/lib/auth'
-
-/** node の組み込みは実行時に読む（プロジェクトの型は Workers 向けで node の型を持たない）。ここで使う形だけを型に書く。 */
-const nodeModule = <T>(name: string) => import(/* @vite-ignore */ name) as Promise<T>
-const { readFileSync } = await nodeModule<{ readFileSync: (path: URL, encoding: 'utf8') => string }>('node:fs')
 
 const SECRET = 'test-secret'
 const user = { id: 'u-1', name: '小野寺', role: 'MEMBER' }
@@ -135,6 +132,21 @@ describe('パスワードのハッシュ', () => {
     expect(typeof answer).toBe('boolean')
     expect(iterations()).toContain(limit)
     expect(iterations().filter((n) => !(n <= limit))).toEqual([])
+  })
+
+  // @covers REQ-290#persist-v1-compat
+  it('配備された版が作った記録の見本は、今のコードで、作ったときのパスワードでだけ照合に通る', async () => {
+    const golden = JSON.parse(readFileSync(new URL('../../contracts/fixtures/password-records-v1.json', import.meta.url), 'utf8')) as {
+      records: Array<{ password: string; record: string }>
+    }
+    expect(golden.records.length, '見本が 1 件も無い').toBeGreaterThan(0)
+    for (const { password, record } of golden.records) {
+      expect(await verifyPassword(password, record), `見本の記録が作ったときのパスワードで通らない: ${record.slice(0, 16)}…`).toBe(true)
+      expect(await verifyPassword(`${password}x`, record), `見本の記録が違うパスワードで通る: ${record.slice(0, 16)}…`).toBe(false)
+    }
+    // 見本どうしでパスワードを取り違えても通らない
+    const [first, second] = golden.records
+    if (first && second) expect(await verifyPassword(second.password, first.record)).toBe(false)
   })
 })
 

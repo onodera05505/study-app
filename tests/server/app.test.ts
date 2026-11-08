@@ -8,7 +8,7 @@ const env = (over: Partial<Bindings> = {}) => ({ EXAM: 'ip', JWT_SECRET: 'test-s
 const sso = () => env({ SSO_PORTAL_URL: 'https://portal.example', SSO_SECRET: 'shared' })
 const json = (body: unknown) => ({ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
 
-describe('認証の境界', () => {
+describe('認証の境界（UC-015・UC-017）', () => {
   // @covers REQ-223#learning-protected-refused
   it('トークンが無いと保護された経路は 401', async () => {
     const res = await app.request('/api/fields', {}, env())
@@ -32,7 +32,7 @@ describe('認証の境界', () => {
   })
 })
 
-describe('セキュリティヘッダ', () => {
+describe('セキュリティヘッダ（UC-017）', () => {
   // @covers REQ-259#headers-on-public
   it('応答に CSP・HSTS・X-Frame-Options・nosniff・Referrer-Policy が付く', async () => {
     const res = await app.request('/api/health', {}, env())
@@ -45,20 +45,6 @@ describe('セキュリティヘッダ', () => {
 })
 
 describe('SSO の環境（まなびばが認証の正本。UC-013）', () => {
-  // @covers REQ-204#password-login-rejected
-  it('従来のパスワードログイン（/api/auth/login）は 404', async () => {
-    const res = await app.request('/api/auth/login', json({ email: 'a@example.com', password: 'password1' }), sso())
-    expect(res.status).toBe(404)
-    expect(await res.json()).toHaveProperty('error')
-  })
-
-  // @covers REQ-204#register-rejected
-  it('登録（/api/auth/register）は 404', async () => {
-    const res = await app.request('/api/auth/register', json({ email: 'a@example.com', password: 'password1', name: '名' }), sso())
-    expect(res.status).toBe(404)
-    expect(await res.json()).toHaveProperty('error')
-  })
-
   // @covers REQ-205#config-shape
   it('config は sso・portal・app だけを返し、秘密の有無（secretSet）を出さない', async () => {
     const res = await app.request('/api/auth/config', {}, sso())
@@ -73,13 +59,18 @@ describe('SSO の環境（まなびばが認証の正本。UC-013）', () => {
   })
 })
 
-describe('失敗の形', () => {
+describe('失敗の形（UC-013・UC-017）', () => {
   // @covers REQ-193#malformed-code
   it('/api/auth/sso は壊れた入力を 400 の {error} で返す', async () => {
     for (const init of [json({}), json({ code: 12 }), { method: 'POST', body: 'not json' }]) {
       const res = await app.request('/api/auth/sso', init, sso())
       expect(res.status).toBe(400)
-      expect(await res.json()).toEqual({ error: '入力が正しくありません' })
+      // 契約が決めるのは ErrorBody の形だけ（文言の語は REQ-257 が検証しないと置く）
+      const body = (await res.json()) as Record<string, unknown>
+      expect(Object.keys(body)).toEqual(['error'])
+      expect(typeof body.error).toBe('string')
+      expect(String(body.error).trim()).not.toBe('')
+      expect(String(body.error)).toMatch(/[ぁ-んァ-ヶ一-龥]/)
     }
   })
 

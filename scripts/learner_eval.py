@@ -1,10 +1,12 @@
 """学習者役のパックを作る入口（build_learner_pack.py）と採点の入口（grade_learner.py）が共に読む物。
 契約は docs/goals/GOAL-12-measure-with-learner-role/UC-019-measure-with-learner-pack/contract.yaml。
-data・out・answers・explain と図の置き場 public/ は、コマンドを呼んだ作業ディレクトリからのパスとして読む。
-登録簿は targets.py（リポジトリの src/shared/targets.json）から読む。"""
+data・out・answers・explain は、コマンドを呼んだ作業ディレクトリからのパスとして読む。
+置き場の根は data の 2 段上（リポジトリなら作業ディレクトリ、検査用の作り物なら tests/fixtures/learner-pack/<名前>）で、
+学びの置き場は根の data/<key>、図の置き場は根の public/。登録簿は targets.py（リポジトリの src/shared/targets.json）から読む。"""
 from __future__ import annotations
 import argparse
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -13,7 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from targets import targets  # noqa: E402
 
 CHOICES = ("ア", "イ", "ウ", "エ")
-DATA_ARG = re.compile(r"^data/[a-z]+$")
+DATA_ARG = re.compile(r"^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+$")
 
 
 class Refused(Exception):
@@ -64,7 +66,7 @@ def contract_args(prog: str, shape: dict[str, str], required: tuple[str, ...]) -
     bad += [u.split("=", 1)[0].lstrip("-") for u in unknown if u.startswith("-")]
     if bad or unknown:
         raise Refused("INVALID_INPUT", "引数が契約の形の外", arguments=bad or unknown)
-    if a.cycle is not None:
+    if getattr(a, "cycle", None) is not None:
         a.cycle = int(a.cycle)
     return a
 
@@ -73,16 +75,39 @@ def read_json(p: Path):
     return json.loads(p.read_text(encoding="utf-8"))
 
 
+def place_root(d: Path) -> Path:
+    """学びの置き場 <根>/data/<key> の根。"""
+    return d.parent.parent
+
+
+def registry_learning(key: str) -> dict | None:
+    """登録簿の 1 つの学び（契約の readRegistryLearning）。登録簿に無ければ None。"""
+    t = targets().get(key)
+    if t is None:
+        return None
+    res = {"roadmap": t.get("roadmap") is True, "entry": t}
+    if res["roadmap"]:
+        res["roadmapSpec"] = t.get("roadmapSpec") or {}
+    return res
+
+
+# @implements REQ-318, REQ-410
+def registered_roadmap(key: str) -> dict:
+    """登録簿にあり、ロードマップを持つ学びだけを通し、その登録簿の項目を返す。"""
+    r = registry_learning(key)
+    if r is None:
+        raise Refused("INVALID_INPUT", "登録簿に無い学び")
+    if not r["roadmap"]:
+        raise Refused("INVALID_INPUT", "ロードマップを持たない学び")
+    return r
+
+
 # @implements REQ-318
 def roadmap_learning(data: str) -> tuple[Path, str, dict]:
     """登録簿にあり種類がロードマップ型で、ロードマップを持つ学びだけを通す。(置き場, key, 登録簿の項目) を返す。"""
     d = Path(data)
     key = d.name
-    t = targets().get(key)
-    if t is None:
-        raise Refused("INVALID_INPUT", "登録簿に無い学び")
-    if t.get("kind", "roadmap") != "roadmap":
-        raise Refused("INVALID_INPUT", "ロードマップを持たない学び")
+    t = registered_roadmap(key)["entry"]
     rp = d / "roadmap.json"
     try:
         rm = read_json(rp)
@@ -135,3 +160,29 @@ def snapshot_path(d: Path, cycle: int) -> Path:
 
 def result_path(d: Path, cycle: int) -> Path:
     return d / "eval" / f"cycle_{cycle}.json"
+
+
+# @implements REQ-355, REQ-356
+def write_exclusive(p: Path, obj) -> bool:
+    """obj を p に、p がまだ無いときだけ書く（排他の作成）。同時に書く呼び出しがあっても、書けるのは 1 つだけ。
+    中身を書き終えた一時のファイルを p に固定するので、p は書きかけの中身を見せない。p が既にあれば False。"""
+    p.parent.mkdir(parents=True, exist_ok=True)
+    tmp = p.with_name(f".{p.name}.{os.getpid()}.tmp")
+    try:
+        tmp.write_text(json.dumps(obj, ensure_ascii=False, indent=1), encoding="utf-8")
+        try:
+            os.link(tmp, p)
+        except FileExistsError:
+            return False
+        return True
+    finally:
+        tmp.unlink(missing_ok=True)
+
+
+def remove_created_dirs(created: list[Path]) -> None:
+    """コマンドが作ったディレクトリを深い順に、空のときだけ消す（同時に進む呼び出しが置いた物は消さない）。"""
+    for c in created:
+        try:
+            c.rmdir()
+        except OSError:
+            pass

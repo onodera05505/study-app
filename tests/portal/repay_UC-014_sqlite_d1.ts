@@ -5,18 +5,10 @@
  * 外のプロセスも起動しない（Node 組み込みの SQLite）。
  */
 
-/** node:sqlite の同期 API のうち、ここで使う形だけ（プロジェクトの型は Workers 向けで node の型を持たない）。 */
-type Statement = {
-  all: (...params: unknown[]) => unknown[]
-  get: (...params: unknown[]) => unknown
-  run: (...params: unknown[]) => { changes: number | bigint; lastInsertRowid: number | bigint }
-  setReturnArrays: (on: boolean) => void
-  columns: () => Array<{ name: string }>
-}
-export type DatabaseSync = { exec: (sql: string) => void; prepare: (sql: string) => Statement }
+import { readdirSync, readFileSync } from 'node:fs'
+import { DatabaseSync, type StatementSync } from 'node:sqlite'
 
-/** node の組み込みは実行時に読む（型の解決を通さない）。 */
-const nodeModule = (name: string) => import(/* @vite-ignore */ name) as Promise<any>
+export type { DatabaseSync }
 
 type Param = string | number | bigint | null | Uint8Array
 
@@ -45,7 +37,7 @@ class SqliteStatement {
     return new SqliteStatement(this.db, this.sql, values.map(toParam))
   }
 
-  private statement(): Statement {
+  private statement(): StatementSync {
     return this.db.prepare(this.sql)
   }
 
@@ -108,11 +100,10 @@ class SqliteD1 {
 }
 
 /** drizzle の migration ファイル群を番号順に読み、`--> statement-breakpoint` で割って順に流す。 */
-const applyMigrations = async (db: DatabaseSync, dir: URL) => {
-  const fs = await nodeModule('node:fs')
-  const files = (fs.readdirSync(dir) as string[]).filter((name) => name.endsWith('.sql')).sort()
+const applyMigrations = (db: DatabaseSync, dir: URL) => {
+  const files = readdirSync(dir).filter((name) => name.endsWith('.sql')).sort()
   for (const file of files) {
-    const statements = (fs.readFileSync(new URL(file, dir), 'utf8') as string)
+    const statements = readFileSync(new URL(file, dir), 'utf8')
       .split(/-->\s*statement-breakpoint/)
       .map((statement) => statement.trim())
       .filter((statement) => statement.length > 0)
@@ -121,9 +112,8 @@ const applyMigrations = async (db: DatabaseSync, dir: URL) => {
 }
 
 const openD1 = async (migrationsDir: URL): Promise<D1Database> => {
-  const sqlite = await nodeModule('node:sqlite')
-  const db = new sqlite.DatabaseSync(':memory:') as DatabaseSync
-  await applyMigrations(db, migrationsDir)
+  const db = new DatabaseSync(':memory:')
+  applyMigrations(db, migrationsDir)
   return new SqliteD1(db) as unknown as D1Database
 }
 

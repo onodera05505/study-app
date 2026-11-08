@@ -6,7 +6,7 @@ import { issueToken } from '../../src/server/lib/auth'
 import { learningD1, sqliteOf } from '../portal/repay_UC-014_sqlite_d1'
 
 /**
- * UC-017 学びとまなびばの要求の受け口を一様に守る（学び側。REQ-255・257・259・260）。
+ * UC-017 学びとまなびばの要求の受け口を一様に守る（学び側。REQ-255・256・257・259・260）。
  *
  * 叩くのは契約の操作の入口だけ（認証を要する取得＝UC-002 の GET /api/fields、認証を要する変更＝
  * UC-004 startSession の POST /api/sessions、認証を要さない発行＝UC-013 signInWithCode の POST /api/auth/sso、
@@ -164,6 +164,21 @@ describe('UC-017 要求の受け口（学び側）', () => {
         }
         expect(calls.count, 'まなびばへの呼び出し').toBe(0)
       })
+    })
+  })
+
+  describe('REQ-256 受け持たない /api の経路', () => {
+    // @covers REQ-256#unknown-path-unresolved-key
+    it('学びの key が与えられていない・登録簿に無い配備でも、受け持たない経路の断りは見つからないこと（設定の不足の断りに変わらない）', async () => {
+      const token = await memberToken()
+      for (const [label, env] of [
+        ['key が与えられていない', { JWT_SECRET: SECRET } as Bindings],
+        ['key が登録簿に無い', noStore({ EXAM: 'no-such-target' })],
+      ] as const) {
+        for (const [who, t] of [['匿名', undefined], ['本人として', token]] as const) {
+          await expectRefused(await app.request('/api/no-such-path', init('GET', undefined, t), env), 404, `${label}・${who}`)
+        }
+      }
     })
   })
 

@@ -58,6 +58,8 @@ export function Session() {
   // 現在の問題を取れなかった理由。最初の取得も、断られた回答のあとの取り直しもここに入る。
   // 取れていない問題は出せないので、問題が出るはずだった場所にこの理由を出す
   const [loadError, setLoadError] = useState('')
+  // 現在の問題の取得が「見つからない」（404）で断られたこと。このテストでは続けられない
+  const [notFound, setNotFound] = useState(false)
   // 送信中は選択肢を押せなくする。模試は判定を出さない（＝ judged が入らない）ので、
   // judged だけを見ていると答えが二重に送られる。
   const [sending, setSending] = useState(false)
@@ -96,11 +98,13 @@ export function Session() {
       setJudged(null)
       setSending(false)
       setLoadError('')
+      setNotFound(false)
       // 終わっているテストは出題を返さない（時間切れもこちらに入る）。そのまま締めの流れへ送る
       if (d.finished) await finish(true)
       return d
     } catch (e: any) {
       setLoadError(e.message)
+      setNotFound(e.status === 404)
       return null
     }
   }, [id, finish])
@@ -131,20 +135,17 @@ export function Session() {
     setPicked(choice)
     setSending(true)
     try {
-      const res = await api<{
-        correct: boolean
-        correctAnswer: string
-        explanation: ExplanationData | null
-        finished: boolean
-      }>(`/sessions/${id}/answer`, {
+      // 演習の応答は正誤・正解・解説を持ち、模試の応答は残りと終わったかだけを持つ
+      const res = await api<
+        | { correct: boolean; correctAnswer: string; explanation: ExplanationData | null; remaining: number; finished: boolean }
+        | { remaining: number; finished: boolean }
+      >(`/sessions/${id}/answer`, {
         method: 'POST',
         body: { idx, answer: choice },
       })
-      // 過去問実践（模試）は**本番と同じ**通し受験なので、1問ごとの正誤も解説も
-      // 出さずに次へ送る。即時フィードバックがあると実力の見積もりが甘くなるし、
-      // /exams に「本番と同じ」と書いていることとも食い違う。
+      // 過去問実践（模試）は本番と同じ通し受験なので、1問ごとの正誤も解説も出さずに次へ送る。
       // 振り返りは結果画面でまとめて行う（解説はそちらに出る）。
-      if (isMock) {
+      if (isMock || !('correct' in res)) {
         await load()
         return
       }
@@ -177,7 +178,8 @@ export function Session() {
 
   // 取れていない問題は出せないので、問題が出るはずだった場所に理由と取り直す手段を置く。
   // 再読み込みは問題の取得だけをやり直す（回答は送り直さない）
-  // @implements REQ-278, BR-014
+  // 見つからないものとして断られたときは、このテストでは続けられないことと練習テストへ戻る導線も添える
+  // @implements REQ-278, REQ-348, BR-014
   if (loadError)
     return (
       <div className="card">
@@ -186,11 +188,18 @@ export function Session() {
           {loadError}
         </p>
         <p className="muted" style={{ margin: '0.2rem 0 0.6rem', fontSize: '0.85rem' }}>
-          現在の問題を取れていません。
+          {notFound ? 'このテストでは続けられません。' : '現在の問題を取れていません。'}
         </p>
-        <button type="button" className="btn" onClick={() => load()}>
-          再読み込み
-        </button>
+        <div className="btn-row">
+          <button type="button" className="btn" onClick={() => load()}>
+            再読み込み
+          </button>
+          {notFound && (
+            <button type="button" className="btn btn-primary" onClick={() => navigate('/practice')}>
+              練習テストへ戻る
+            </button>
+          )}
+        </div>
       </div>
     )
   if (!data)

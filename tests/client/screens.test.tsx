@@ -158,10 +158,16 @@ describe('ログイン画面（UC-013）', () => {
     expect(link?.getAttribute('href')).toBe('https://manabiba.example/sso/start?app=ip')
   })
 
-  it('SSO でない環境（ローカルの検査用）ではパスワードのフォームを出す', async () => {
-    stubApi(() => ({ sso: false, portal: null, app: 'ip' }))
+  // @covers REQ-204#no-password-form
+  it.each([
+    ['まなびばの場所が与えられている配備', SSO_CONFIG],
+    ['まなびばの場所が与えられていない配備', { sso: false, portal: null, app: 'ip' }],
+  ])('%s でも、ログイン画面にパスワードと登録の入力の欄を出さない', async (_label, config) => {
+    stubApi(() => config)
     await draw(h(Login, { onDone: () => {} }))
-    expect(container.querySelector('input[type="password"]')).not.toBeNull()
+    // ログイン画面はまなびばへの導線だけを置く画面（用語集）なので、入力の欄は 1 つも無い
+    expect(container.querySelectorAll('input').length, `${_label}: 入力の欄がある`).toBe(0)
+    expect(container.querySelector('form'), `${_label}: 送信の形の欄がある`).toBeNull()
   })
 
   // @covers REQ-197#notice-on-login-screen

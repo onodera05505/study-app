@@ -6,7 +6,7 @@
 契約は UC-019 の contract.yaml の buildLearnerPack。標準出力に結果の JSON を 1 つ出す（成功 0、errors に当たれば 1）。
 パックの中: roadmap.md・units/NN_<単位の名前>.md・quiz.md・explain.md（語の一覧を持つ学びだけ）・figures/（図の PNG）。
 本文は利用者に配る本文（投入と同じく教材の世代を後勝ちで選んだ物）で、正解・正解の根拠・選択肢ごとの説明は入れない。
-図の SVG は scripts/render_svg_png.mjs（Playwright の Chromium）で PNG に描く。
+図の SVG は XML として読めることを確かめてから、scripts/render_svg_png.mjs（Playwright の Chromium）で PNG に描く。
 """
 from __future__ import annotations
 import json
@@ -15,21 +15,26 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+from xml.parsers import expat
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from build_seed import load_materials  # noqa: E402
-from learner_eval import (Refused, contract_args, current_questions, read_json, result_path,  # noqa: E402
-                          roadmap_learning, run, snapshot_path)
+from build_seed import MATERIAL_DIRS  # noqa: E402
+from learner_eval import (Refused, contract_args, current_questions, place_root, read_json,  # noqa: E402
+                          remove_created_dirs, result_path, roadmap_learning, run, snapshot_path, write_exclusive)
 
 # 配る本文の図の行の参照先。/figures/materials/<key>/<サブパス>
 FIGURE_REF = re.compile(r"(!\[[^\]]*\]\()/figures/materials/([a-z]+)/([^)\s]+)(\))")
 CHOICES = ("ア", "イ", "ウ", "エ")
+# 1 つの図を描く待ち時間の上限（契約の writePackFigure の renderTimeoutSeconds）
+RENDER_TIMEOUT_SECONDS = 30
+# 描き手（node と Chromium）を起こすのに見込む時間
+RENDER_LAUNCH_SECONDS = 60
 
 
 # @implements REQ-331
-def check_out(out: Path) -> None:
-    data_root = Path("data").resolve()
+def check_out(out: Path, d: Path) -> None:
+    data_root = (place_root(d) / "data").resolve()
     o = out.resolve()
     if o == data_root or data_root in o.parents:
         raise Refused("INVALID_INPUT", "出力先が学びの置き場の中")
@@ -77,10 +82,36 @@ def roadmap_units(d: Path) -> tuple[dict, list[dict]]:
     return rm, sorted(rm["units"], key=lambda u: u["order"])
 
 
+# @implements REQ-358
+def read_generations(d: Path) -> dict[int, dict]:
+    """投入（build_seed.load_materials）と同じく教材の世代を materials・materials_v2・materials_v3 の順に、
+    世代の中はファイル名の順に読み、論点ごとに後の物を選ぶ。契約の教材の世代の形（JSON で、どの行も整数の topic_id を持つ）
+    として読めないファイルが 1 つでもあれば、選ばれるかに依らず、読めないファイルをすべて挙げて止める。"""
+    out: dict[int, dict] = {}
+    bad: list[str] = []
+    for sub in MATERIAL_DIRS:
+        if not (d / sub).is_dir():
+            continue
+        for f in sorted((d / sub).glob("*.json")):
+            try:
+                rows = read_json(f).get("materials", [])
+                assert isinstance(rows, list)
+                for m in rows:
+                    assert isinstance(m, dict) and type(m.get("topic_id")) is int
+            except (OSError, ValueError, AttributeError, AssertionError):
+                bad.append(f.as_posix())
+                continue
+            for m in rows:
+                out[m["topic_id"]] = m
+    if bad:
+        raise Refused("INVALID_INPUT", "配る本文を選ぶ教材の世代のファイルが読めない", unreadable=bad)
+    return out
+
+
 # @implements REQ-319
 def delivered_bodies(d: Path, units: list[dict]) -> dict[int, dict]:
-    """投入（build_seed.load_materials）と同じく教材の世代を後勝ちで重ね、論点ごとに配る本文を選ぶ。"""
-    bodies = {tid: m for tid, m in load_materials(d).items()
+    """教材の世代を後勝ちで重ねて選んだ論点ごとの配る本文。配る本文の無い単位があれば挙げて止める。"""
+    bodies = {tid: m for tid, m in read_generations(d).items()
               if isinstance(m.get("explanation"), str) and m["explanation"] and isinstance(m.get("detail"), str) and m["detail"]}
     missing = [u["topic_id"] for u in units if u["topic_id"] not in bodies]
     if missing:
@@ -94,14 +125,15 @@ def png_target(subpath: str) -> str:
 
 
 # @implements REQ-320
-def figure_refs(units: list[dict], bodies: dict[int, dict]) -> list[dict]:
-    """本文の図の行を {unit, ref, src, target} で並べる。指す画像が置き場所に無ければ、その単位と図を挙げて止める。"""
+def figure_refs(root: Path, units: list[dict], bodies: dict[int, dict]) -> list[dict]:
+    """本文の図の行を {unit, ref, src, target} で並べる。画像は置き場の根の public の下の同じパスにある。
+    指す画像が置き場所に無ければ、その単位と図を挙げて止める。"""
     refs, missing = [], []
     for u in units:
         m = bodies[u["topic_id"]]
         for x in FIGURE_REF.finditer(m["explanation"] + "\n" + m["detail"]):
             ref = f"/figures/materials/{x.group(2)}/{x.group(3)}"
-            src = Path("public") / "figures" / "materials" / x.group(2) / x.group(3)
+            src = root / "public" / "figures" / "materials" / x.group(2) / x.group(3)
             if src.is_file():
                 refs.append({"unit": u["topic_id"], "ref": ref, "src": src, "target": png_target(x.group(3))})
             else:
@@ -140,6 +172,10 @@ def write_figures(out: Path, figures: dict[str, Path], refs: list[dict]) -> list
             shutil.copyfile(src, out / target)
         else:
             jobs.append({"src": str(src.resolve()), "dst": str((out / target).resolve()), "target": target})
+    broken = {j["target"] for j in jobs if not well_formed(Path(j["src"]))}
+    if broken:
+        hit = [{"unit": r["unit"], "ref": r["ref"]} for r in refs if r["target"] in broken]
+        raise Refused("INTERNAL", "図が XML として整わない", figures=hit)
     failed: set[str] = set()
     if jobs:
         failed = render_svgs(jobs)
@@ -150,13 +186,26 @@ def write_figures(out: Path, figures: dict[str, Path], refs: list[dict]) -> list
 
 
 # @implements REQ-336
-def render_svgs(jobs: list[dict]) -> set[str]:
-    """SVG を描き、描けなかった物のパックの中のパスを返す（node か Chromium が無いときは全部）。"""
+def well_formed(svg: Path) -> bool:
+    """図のファイルが XML として整っているか（途中で切れた・要素が閉じない・XML で決まっていない実体参照・引用符が閉じない物は整わない）。"""
     try:
-        p = subprocess.run(["node", str(HERE / "render_svg_png.mjs")], input=json.dumps([{"src": j["src"], "dst": j["dst"]} for j in jobs]),
-                           capture_output=True, text=True, cwd=str(HERE.parent))
+        expat.ParserCreate().Parse(svg.read_bytes(), True)
+    except (OSError, expat.ExpatError):
+        return False
+    return True
+
+
+# @implements REQ-336
+def render_svgs(jobs: list[dict]) -> set[str]:
+    """SVG を描き、描けなかった物のパックの中のパスを返す（node か Chromium が無いとき、描き手が待ち時間の上限のうちに返らないときは全部）。
+    1 つの図の待ち時間の上限は描き手が守り、ここでは図の数だけの上限と起動の見込みを足した長さで描き手そのものを打ち切る。"""
+    try:
+        p = subprocess.run(["node", str(HERE / "render_svg_png.mjs"), str(RENDER_TIMEOUT_SECONDS)],
+                           input=json.dumps([{"src": j["src"], "dst": j["dst"]} for j in jobs]),
+                           capture_output=True, text=True, cwd=str(HERE.parent),
+                           timeout=RENDER_TIMEOUT_SECONDS * len(jobs) + RENDER_LAUNCH_SECONDS)
         bad_src = {f["src"] for f in json.loads(p.stdout or "{}").get("failed", [])}
-    except (OSError, ValueError):
+    except (OSError, ValueError, subprocess.TimeoutExpired):
         return {j["target"] for j in jobs}
     return {j["target"] for j in jobs if j["src"] in bad_src or not Path(j["dst"]).is_file()}
 
@@ -281,42 +330,55 @@ def _missing_ancestors(p: Path) -> list[Path]:
     return out
 
 
+def discard_pack(out: Path, created: list[Path]) -> None:
+    """作りかけのパックを消す。コマンドが作った出力先はディレクトリごと、前からあった出力先は中身だけを消し、
+    コマンドが作った親のディレクトリは空のときだけ消す。"""
+    if created:
+        shutil.rmtree(created[0], ignore_errors=True)
+        remove_created_dirs(created[1:])
+    else:
+        for c in list(out.iterdir()):
+            shutil.rmtree(c, ignore_errors=True) if c.is_dir() else c.unlink(missing_ok=True)
+
+
+# @implements REQ-355
+def keep_snapshot(d: Path, snapshot: dict) -> Path:
+    """その周の写しを排他の作成で書く。作る間にほかの呼び出しが同じ周の写しを書いていれば、写しを書き換えずに止める。"""
+    sp = snapshot_path(d, snapshot["cycle"])
+    if not write_exclusive(sp, snapshot):
+        raise Refused("CONFLICT", "作る間に同じ周の写しが書かれた")
+    return sp
+
+
 # @implements UC-019
 def build() -> dict:
     a = contract_args("build_learner_pack.py", {"data": "data", "cycle": "cycle", "out": "text"}, ("data", "cycle", "out"))
     d, key, t = roadmap_learning(a.data)
     out = Path(a.out)
-    check_out(out)
+    check_out(out, d)
     check_cycle_free(d, a.cycle)
     current = current_questions(d)
     terms = explain_terms(d)
     rm, units = roadmap_units(d)
     bodies = delivered_bodies(d, units)
-    refs = figure_refs(units, bodies)
+    refs = figure_refs(place_root(d), units, bodies)
     figures = figures_by_target(refs)
     questions = roadmap_questions(units, current)
     snapshot = make_snapshot(a.cycle, units, questions)
-    sp = snapshot_path(d, a.cycle)
 
     created = _missing_ancestors(out)
-    created_eval = _missing_ancestors(sp.parent)
+    created_eval = _missing_ancestors(snapshot_path(d, a.cycle).parent)
     try:
         (out / "units").mkdir(parents=True, exist_ok=True)
         figs = write_figures(out, figures, refs)
         files = [write_unit(out, u, bodies[u["topic_id"]]) for u in units]
         write_roadmap_quiz_explain(out, rm, units, t.get("roadmapSpec") or {}, files, quiz_items(units, questions), terms)
-        sp.parent.mkdir(parents=True, exist_ok=True)
-        sp.write_text(json.dumps(snapshot, ensure_ascii=False, indent=1), encoding="utf-8")
+        sp = keep_snapshot(d, snapshot)
     except BaseException:
-        # 失敗したときはパックも写しも、コマンドが作った出力先とその親のディレクトリも残さない
-        if created:
-            shutil.rmtree(created[-1], ignore_errors=True)
-        else:
-            for c in list(out.iterdir()):
-                shutil.rmtree(c, ignore_errors=True) if c.is_dir() else c.unlink(missing_ok=True)
-        sp.unlink(missing_ok=True)
-        if created_eval:
-            shutil.rmtree(created_eval[-1], ignore_errors=True)
+        # 失敗したときはパックも、コマンドが作った出力先とその親のディレクトリも残さない。
+        # 写しは最後に排他の作成で書くので、ここに来たときこの呼び出しの写しは無い（あるのはほかの呼び出しの写し）
+        discard_pack(out, created)
+        remove_created_dirs(created_eval)
         raise
     res_files = {"roadmap": "roadmap.md", "units": files, "quiz": "quiz.md", "figures": figs}
     if terms:

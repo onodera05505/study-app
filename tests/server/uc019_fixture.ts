@@ -8,32 +8,12 @@
  *  学びの種類は登録簿（リポジトリの src/shared/targets.json）が決めるので、鍵は登録簿にある eng（ロードマップ型）と
  *  ip（資格型）を使う。実データの data/ は読みも書きもしない。 */
 
-/** node の組み込みは実行時に読む（プロジェクトの型は Workers 向けで node の型を持たない）。ここで使う形だけを型に書く。 */
-const nodeModule = <T>(name: string) => import(/* @vite-ignore */ name) as Promise<T>
-const fs = await nodeModule<{
-  mkdtempSync: (prefix: string) => string
-  mkdirSync: (path: string, options: { recursive: true }) => void
-  writeFileSync: (path: string, data: string | Uint8Array) => void
-  readFileSync: { (path: string, encoding: 'utf8'): string; (path: string): Uint8Array }
-  existsSync: (path: string) => boolean
-  readdirSync: (path: string) => string[]
-  statSync: (path: string) => { isDirectory: () => boolean }
-  rmSync: (path: string, options: { recursive: true; force: true }) => void
-  symlinkSync: (target: string, path: string) => void
-}>('node:fs')
-const { tmpdir } = await nodeModule<{ tmpdir: () => string }>('node:os')
-const path = await nodeModule<{
-  join: (...parts: string[]) => string
-  dirname: (p: string) => string
-  resolve: (...parts: string[]) => string
-  relative: (from: string, to: string) => string
-  isAbsolute: (p: string) => boolean
-}>('node:path')
-const { fileURLToPath } = await nodeModule<{ fileURLToPath: (url: URL) => string }>('node:url')
-const { spawnSync } = await nodeModule<{
-  spawnSync: (cmd: string, args: string[], options: { cwd: string; encoding: 'utf8'; maxBuffer: number; env?: Record<string, string | undefined> }) => { status: number | null; stdout: string; stderr: string }
-}>('node:child_process')
-const { env: processEnv } = await nodeModule<{ env: Record<string, string | undefined> }>('node:process')
+import { spawn, spawnSync } from 'node:child_process'
+import * as fs from 'node:fs'
+import { tmpdir } from 'node:os'
+import * as path from 'node:path'
+import { env as processEnv } from 'node:process'
+import { fileURLToPath } from 'node:url'
 
 export const ROOT = path.join(fileURLToPath(new URL('.', import.meta.url)), '..', '..')
 const BUILD = path.join(ROOT, 'scripts', 'build_learner_pack.py')
@@ -251,4 +231,42 @@ export const resolveIn = (fromFile: string, ref: string) => path.resolve(path.di
 export const isInside = (root: string, p: string) => {
   const r = path.relative(root, p)
   return r !== '' && !r.startsWith('..') && !path.isAbsolute(r)
+}
+
+// ---- 検査用の作り物（tests/fixtures/learner-pack/<名前>/）と、同時に進む呼び出し。 ----
+
+/** 入口の実体（契約の操作名 → コマンド）。同時に進む呼び出しを組むテストが使う。 */
+export const BUILD_SCRIPT = BUILD
+export const GRADE_SCRIPT = GRADE
+/** 学習者役への指示を描き出す入口（renderLearnerInstructions ＝ `python3 scripts/render_prompts.py --data <学びの置き場>`）。 */
+export const RENDER_SCRIPT = path.join(ROOT, 'scripts', 'render_prompts.py')
+
+/** 契約の例が指す作り物の置き場の根（リポジトリからの相対）。 */
+export const fixtureRoot = (name: string) => `tests/fixtures/learner-pack/${name}`
+
+/** リポジトリの作り物を、同じ前置き（tests/fixtures/learner-pack/<名前>/）のまま作業場所へ写す。
+ *  入口は作業場所を起点に呼ぶので、リポジトリの作り物は読みも書きもしない。 */
+export function copyFixture(ws: Workspace, name: string) {
+  fs.cpSync(path.join(ROOT, fixtureRoot(name)), ws.abs(fixtureRoot(name)), { recursive: true })
+  return fixtureRoot(name)
+}
+
+/** 標準出力の JSON と終了コードを、呼び出しを待たずに受け取る（同時に 2 つ以上を走らせるため）。 */
+export function runAsync(script: string, ws: Workspace, args: string[]): Promise<Run> {
+  return new Promise((resolve) => {
+    const child = spawn('python3', [script, ...args], { cwd: ws.dir, env: processEnv })
+    let stdout = ''
+    let stderr = ''
+    child.stdout.setEncoding('utf8').on('data', (s: string) => (stdout += s))
+    child.stderr.setEncoding('utf8').on('data', (s: string) => (stderr += s))
+    child.on('close', (status) => {
+      let json: Json = undefined
+      try {
+        json = JSON.parse(stdout.trim())
+      } catch {
+        json = undefined
+      }
+      resolve({ status, stdout, stderr, json, code: errorCode(json) })
+    })
+  })
 }

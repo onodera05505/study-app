@@ -453,3 +453,69 @@ describe('送信の失敗と重ねた送信（UC-010）', () => {
     expect(posts(calls), '送り直せない').toHaveLength(2)
   })
 })
+
+describe('送信中に画面を離れたとき（UC-010）', () => {
+  /** 送信の応答を手で返す偽の fetch。返すまで送信中のまま止まる。 */
+  function holdSend() {
+    const calls: Call[] = []
+    let settle!: (outcome: Reply | 'network') => void
+    const outcome = new Promise<Reply | 'network'>((resolve) => {
+      settle = resolve
+    })
+    vi.stubGlobal('fetch', async (url: string, init?: RequestInit) => {
+      calls.push({ url: String(url), init })
+      const got = await outcome
+      if (got === 'network') throw new TypeError('Failed to fetch')
+      const { status = 200, body } = got
+      return { ok: status < 400, status, text: async () => JSON.stringify(body), json: async () => body }
+    })
+    return { calls, settle: async (o: Reply | 'network') => act(async () => settle(o)) }
+  }
+
+  /** 送信を取り消していない（中断の合図が立っていない）。 */
+  const notAborted = (call: Call) => (call.init?.signal as AbortSignal | undefined)?.aborted !== true
+
+  // @covers REQ-349#left-then-accepted
+  it('送信中に離れてその送信が受け付けられると、送信は 1 件のまま取り消されず、戻ったときの本文は空で始まる', async () => {
+    const held = holdSend()
+    await draw()
+    await fillAndSend()
+    expect(posts(held.calls), '送信が始まっていない').toHaveLength(1)
+
+    await leave()
+    expect(notAborted(posts(held.calls)[0]), '画面を離れたら送信を取り消している').toBe(true)
+    await held.settle({ status: 201, body: { id: 'f-1' } })
+
+    expect(posts(held.calls), '送信が 1 件でない').toHaveLength(1)
+    expect(remembered(TYPED), '受け付けられたのに本文が下書きに残っている').toBe(false)
+    await draw()
+    expect(input(), '戻ったときに本文を書く場が無い').not.toBeNull()
+    expect(input()?.value, '受け付けられたのに戻ると本文が残っている').toBe('')
+  })
+
+  // @covers REQ-349#left-then-rejected
+  it('送信中に離れてその送信が拒まれた・届かなかったときは、取り消されず、戻ると書いた本文が下書きから戻る', async () => {
+    const outcomes: Array<[string, Reply | 'network']> = [
+      ['拒まれた', { status: 429, body: { error: '1 日に送れる件数の上限に達しました' } }],
+      ['届かなかった', 'network'],
+    ]
+    for (const [label, outcome] of outcomes) {
+      localStorage.clear()
+      sessionStorage.clear()
+      const held = holdSend()
+      await draw()
+      await fillAndSend()
+      expect(posts(held.calls), `${label}: 送信が始まっていない`).toHaveLength(1)
+
+      await leave()
+      expect(notAborted(posts(held.calls)[0]), `${label}: 画面を離れたら送信を取り消している`).toBe(true)
+      await held.settle(outcome)
+
+      expect(posts(held.calls), `${label}: 送信が 1 件でない`).toHaveLength(1)
+      await draw()
+      expect(input()?.value, `${label}: 書いた本文が下書きから戻らない`).toBe(TYPED)
+      await leave()
+      vi.unstubAllGlobals()
+    }
+  })
+})

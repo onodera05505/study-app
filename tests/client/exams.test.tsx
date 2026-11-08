@@ -177,7 +177,7 @@ describe('模擬試験の画面', () => {
     expect(text(), '進行中の案内が出ない').toMatch(/練習テスト/)
 
     // 別の理由で作れなかったときは、進行中の案内にしない
-    stubApi(replies({ 'POST /api/sessions': { status: 400, body: { error: '出題できる過去問がありません' } } }))
+    stubApi(replies({ 'POST /api/sessions': { status: 404, body: { error: '出題できる過去問がありません' } } }))
     await draw()
     await click(els('button')[0], '受験の開始')
     expect(text()).toContain('出題できる過去問がありません')

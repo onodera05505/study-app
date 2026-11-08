@@ -34,27 +34,38 @@
   }
   const esc = (s) => String(s).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch])
 
-  // @implements REQ-184
+  /** 学びの一覧。セッションの無い端末にはどれも開ける形にせず、ログインを促す。 */
+  // @implements REQ-183, REQ-184
   function renderGrid() {
     const grid = $('#grid')
     grid.innerHTML = learnings
       .map((l) => {
-        const ok = grants.includes(l.key)
+        const ok = me && grants.includes(l.key)
         const inner = `<span class="kind">${esc(l.kind)}</span><span class="brand">${esc(l.brand)}</span><span class="desc">${esc(l.desc)}</span>`
-        return ok
-          ? `<a class="card learning" href="/sso/start?app=${encodeURIComponent(l.key)}">${inner}<span class="go">開く →</span></a>`
-          : `<div class="card learning locked">${inner}<span class="go muted">権限なし</span></div>`
+        if (ok) return `<a class="card learning" href="/sso/start?app=${encodeURIComponent(l.key)}">${inner}<span class="go">開く →</span></a>`
+        const why = me ? '権限なし' : 'ログインすると開けます'
+        return `<div class="card learning locked">${inner}<span class="go muted">${why}</span></div>`
       })
       .join('')
   }
 
+  /** 作成時刻（unixepoch の秒）を年/月/日で出す。 */
+  const dateOf = (sec) => {
+    const d = new Date(sec * 1000)
+    return `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`
+  }
+  /** 行に付いている権限を学びの名前で並べる。 */
+  const grantNames = (keys) =>
+    keys.map((k) => (learnings.find((l) => l.key === k) || { brand: k }).brand).join('、') || 'なし'
+
+  // @implements REQ-162
   function renderAdmin(accounts) {
     const thead = $('#acc-table thead')
     const tbody = $('#acc-table tbody')
     thead.innerHTML =
       '<tr><th>名前</th><th>メール</th>' +
       learnings.map((l) => `<th class="c">${esc(l.brand)}</th>`).join('') +
-      '<th>役割</th><th></th></tr>'
+      '<th>開ける学び</th><th>役割</th><th>作成時刻</th><th></th></tr>'
     tbody.innerHTML = accounts
       .map(
         (a) =>
@@ -65,8 +76,10 @@
                 `<td class="c"><input type="checkbox" data-grant="${esc(l.key)}" ${a.grants.includes(l.key) ? 'checked' : ''} aria-label="${esc(a.name)} に ${esc(l.brand)}"></td>`,
             )
             .join('') +
+          `<td data-grant-names>${esc(grantNames(a.grants))}</td>` +
           `<td>${a.role === 'ADMIN' ? '管理者' : '利用者'}</td>` +
-          `<td class="ops"><button type="button" class="btn small" data-reset>PW 再設定</button>${a.id !== me.id ? '<button type="button" class="btn small" data-del>削除</button>' : ''}</td></tr>`,
+          `<td class="mono">${esc(dateOf(a.createdAt))}</td>` +
+          `<td class="ops">${a.id !== me.id ? '<button type="button" class="btn small" data-reset>PW 再設定</button><button type="button" class="btn small" data-del>削除</button>' : ''}</td></tr>`,
       )
       .join('')
     tbody.querySelectorAll('input[type=checkbox]').forEach((cb) => {
@@ -76,6 +89,7 @@
         const gs = [...tr.querySelectorAll('input[type=checkbox]')].filter((x) => x.checked).map((x) => x.dataset.grant)
         try {
           await api('/admin/accounts/' + id, { method: 'PUT', body: { grants: gs } })
+          tr.querySelector('[data-grant-names]').textContent = grantNames(gs)
           notice('権限を保存しました', 'ok')
         } catch (err) {
           notice(err.message, 'ng')
@@ -126,7 +140,7 @@
     grants = data.grants
     $('#who').textContent = `${me.name} としてログイン中`
     if (me.role === 'ADMIN') {
-      // 管理の欄は学びの一覧の下にあり、スクロールしないと見えない（本人「管理ボタンがどこ」2026-09-17）
+      // 管理の欄は学びの一覧の下にあり、スクロールしないと見えないので、上部に管理の欄への導線を置く
       const link = document.createElement('a')
       link.href = '#admin'
       link.className = 'admin-link'
@@ -135,6 +149,7 @@
     }
     show('#who', true)
     show('#login', false)
+    show('#account', true)
     if (next && next.startsWith('/sso/start')) {
       location.replace(next)
       return
@@ -163,6 +178,8 @@
       await afterLogin(d)
     } catch {
       show('#login', true)
+      show('#home', true)
+      renderGrid()
       if (next) notice('ログインすると、選んだ学びへ進みます', '')
     }
   }

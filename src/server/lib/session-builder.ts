@@ -213,7 +213,7 @@ export async function buildQuestions(
     return kept.length > 0 ? kept : rows
   }
 
-  // @implements REQ-106, REQ-107, REQ-108
+  // @implements REQ-106, REQ-107, REQ-108, REQ-345
   if (input.kind === 'mock') {
     if (input.exam && input.roadmap) return buildRoundCheck(db, input.exam, input.roadmap)
     if (input.exam) {
@@ -265,7 +265,7 @@ export async function buildQuestions(
     }
   }
 
-  // 中分類は「体系」画面の箱と対応する。読む（論点）と解く（演習）を
+  // 単元は学習の画面の単元の一覧と対応する。読む（論点）と解く（演習）を
   // 同じまとまりの中で完結させるための範囲。
   if (input.kind === 'middle' && input.middleNo !== undefined) {
     const rows = await fetchQuestions(db, sql`WHERE s.middle_no = ${input.middleNo}`)
@@ -274,7 +274,7 @@ export async function buildQuestions(
     )
     return {
       questions: shuffle(drop(dedupe(rows))).slice(0, input.size),
-      scopeLabel: `中分類「${middle?.middle ?? ''}」`,
+      scopeLabel: `単元「${middle?.middle ?? ''}」`,
       sourceExam: null,
     }
   }

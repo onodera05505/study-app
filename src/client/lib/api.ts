@@ -89,9 +89,10 @@ function parseBody(text: string, ok: boolean): any {
 // @implements REQ-196
 export async function api<T = any>(
   path: string,
-  init: { method?: string; body?: unknown } = {},
+  /** anonymous: 端末のトークンを添えず、401 でもトークンを捨てない（本人を得る前の要求に使う）。 */
+  init: { method?: string; body?: unknown; anonymous?: boolean } = {},
 ): Promise<T> {
-  const token = getToken()
+  const token = init.anonymous ? null : getToken()
   let res: Response
   try {
     res = await fetch(`/api${path}`, {
@@ -116,7 +117,7 @@ export async function api<T = any>(
   const text = await res.text()
   const data = parseBody(text, res.ok)
   if (!res.ok) {
-    if (res.status === 401) {
+    if (res.status === 401 && !init.anonymous) {
       // トークンを持って行って弾かれた＝期限切れ。持っていなければ元から
       // 未ログインなので、期限切れとは言わない。
       // @implements REQ-194, REQ-197
@@ -166,13 +167,37 @@ const LAST_TOPIC_KEY = 'study-app.lastTopic'
 
 export type LastTopic = { id: number; term: string; middle: string; middleNo: number }
 
-// @implements REQ-082, BR-011, BR-012
+/** 端末から読んだ値が LastTopic の形か。形でない値は覚えていないのと同じに扱う。 */
+function isLastTopic(v: unknown): v is LastTopic {
+  if (!v || typeof v !== 'object') return false
+  const t = v as Record<string, unknown>
+  return (
+    Number.isInteger(t.id) && (t.id as number) >= 1 &&
+    typeof t.term === 'string' && t.term !== '' &&
+    typeof t.middle === 'string' && t.middle !== '' &&
+    Number.isInteger(t.middleNo) && (t.middleNo as number) >= 1
+  )
+}
+
+// @implements REQ-082, BR-011, BR-012, BR-041
 export function getLastTopic(): LastTopic | null {
   try {
     const raw = localStorage.getItem(LAST_TOPIC_KEY)
-    return raw ? (JSON.parse(raw) as LastTopic) : null
+    if (!raw) return null
+    const v: unknown = JSON.parse(raw)
+    return isLastTopic(v) ? v : null
   } catch {
     return null
+  }
+}
+
+/** この端末が覚えた前回の続きを捨てる。 */
+// @implements REQ-342
+export function clearLastTopic() {
+  try {
+    localStorage.removeItem(LAST_TOPIC_KEY)
+  } catch {
+    // 端末の記憶が使えなければ、読み出しも null になるので捨てられないままでよい
   }
 }
 

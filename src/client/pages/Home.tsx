@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { api, getLastTopic } from '../lib/api'
 import type { LastTopic } from '../lib/api'
+import { RESUME_LINK_STATE } from '../lib/resume'
 import { KIND_LABEL } from '../lib/labels'
 
 type Me = {
@@ -196,7 +197,7 @@ export function Home() {
 
       {/* @implements REQ-079, REQ-080, REQ-081, REQ-082 */}
       {last ? (
-        <Link to={`/topics/${last.id}`} className="resume">
+        <Link to={`/topics/${last.id}`} state={RESUME_LINK_STATE} className="resume">
           <span className="resume-label">前回の続き</span>
           <span className="resume-term">{last.term}</span>
           <span className="resume-meta">{last.middle}</span>

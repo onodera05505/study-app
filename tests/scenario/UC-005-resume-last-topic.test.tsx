@@ -1,11 +1,7 @@
 // @vitest-environment jsdom
-/** UC-005「前回の続きから論点へ戻る」の主シナリオを 1 本で実行する写し
- *  （正常系のみ。覚えた値が壊れているときは要件のテストが見る）。
- *
- *  step 3・4 の「ホーム」は資格版とロードマップ型（ロードマップの先頭。BR-013）で
- *  別の画面になるので、同じ流れ（論点を開いて覚えさせる → 先頭の導線を見る）を
- *  対象を替えてもう一度辿る。
- *  画面の文字は要件の文面から採る。 */
+/** UC-005「前回の続きから論点へ戻る」の主シナリオ 1〜6 を 1 本で実行する写し
+ *  （正常系のみ。事前条件どおり資格版の学びで辿る。覚えた値が壊れているとき・論点がもう無いときは要件のテストが見る）。
+ *  導線は用語集の「前回の続き」の語と論点名で探す。 */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { act, createElement as h } from 'react'
@@ -39,12 +35,6 @@ const DETAIL = {
   neighbors: { prev: null, next: null },
 }
 
-/** ロードマップ型の単位の一覧（覚えた単位を含む）。 */
-const UNITS = [
-  { id: TOPIC.id, term: TOPIC.term, questionCount: 2, status: null, field: '業界と仕事', middle: 'コンサルの仕事', itemName: 'コンサルの仕事', isNew: 0, sortOrder: 1 },
-  { id: 232, term: '次の単位', questionCount: 2, status: null, field: '業界と仕事', middle: 'コンサルの仕事', itemName: 'コンサルの仕事', isNew: 0, sortOrder: 2 },
-]
-
 /** おすすめは空にしておく（「次に学ぶ」と「前回の続き」を混ぜないため）。 */
 const ME = {
   user: { id: 'u-1', name: '学ぶ人', role: 'MEMBER' },
@@ -62,7 +52,7 @@ function stubApi() {
     if (p.includes('version.json')) body = { build: 'abc1234', at: '2026-09-28T00:00:00Z' }
     else if (p.endsWith('/auth/config')) body = { sso: true, portal: 'https://manabiba.example', app: 'ip' }
     else if (/\/topics\/\d+$/.test(p)) body = DETAIL
-    else if (p.endsWith('/topics')) body = { topics: UNITS }
+    else if (p.endsWith('/topics')) body = { topics: [] }
     else if (p.endsWith('/fields')) body = { fields: [] }
     else if (p.endsWith('/categories')) body = { categories: [] }
     else if (p.endsWith('/glossary')) body = { glossary: [] }
@@ -82,7 +72,6 @@ let host: HTMLElement
 let root: Root | null = null
 
 const text = () => (host.textContent ?? '').replace(/\s+/g, ' ')
-const hrefs = () => [...host.querySelectorAll('a')].map((a) => a.getAttribute('href') ?? '')
 
 /** 資格版（既定の対象）で App を描く（毎回根を作り直す）。 */
 async function openShikaku(entry: string) {
@@ -103,38 +92,6 @@ async function closeShikaku() {
   }
 }
 
-type View = { text: () => string; hrefs: () => string[]; close: () => Promise<void> }
-let view: View | null = null
-
-/** ロードマップ型（VITE_EXAM=itc）で読み込み直して App を描く。 */
-async function openRoadmap(entry: string): Promise<View> {
-  if (view) await view.close()
-  vi.stubEnv('VITE_EXAM', 'itc')
-  vi.resetModules()
-  const React = await import('react')
-  const { createRoot: create } = await import('react-dom/client')
-  const { MemoryRouter: Router } = await import('react-router-dom')
-  const api = await import('../../src/client/lib/api')
-  api.setToken('token-for-scenario')
-  const { App: RoadmapApp } = await import('../../src/client/App')
-  const el = document.createElement('div')
-  document.body.appendChild(el)
-  const r = create(el)
-  window.history.replaceState({}, '', entry)
-  await React.act(async () => {
-    r.render(React.createElement(Router, { initialEntries: [entry] }, React.createElement(RoadmapApp)))
-  })
-  view = {
-    text: () => (el.textContent ?? '').replace(/\s+/g, ' '),
-    hrefs: () => [...el.querySelectorAll('a')].map((a) => a.getAttribute('href') ?? ''),
-    close: async () => {
-      await React.act(async () => r.unmount())
-      el.remove()
-    },
-  }
-  return view
-}
-
 beforeEach(() => {
   ;(globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true
   localStorage.clear()
@@ -145,46 +102,50 @@ beforeEach(() => {
 
 afterEach(async () => {
   await closeShikaku()
-  if (view) {
-    await view.close()
-    view = null
-  }
   vi.unstubAllGlobals()
   vi.unstubAllEnvs()
 })
 
+/** 「前回の続き」の語と覚えた論点名を持つ導線（用語集の語で探す）。 */
+const resumeLink = () =>
+  [...host.querySelectorAll('a')].find((a) => {
+    const t = a.textContent ?? ''
+    return t.includes('前回の続き') && t.includes(TOPIC.term)
+  })
+
 describe('UC-005 前回の続きに戻る', () => {
   // @scenario UC-005
-  it('論点の画面を開くと端末が覚え、資格版のホームとロードマップの先頭が前回の続きの導線になる', async () => {
-    // step 1: 利用者が論点の画面を開く。画面はその論点を「前回の続き」として覚える
+  it('論点の画面を開くと端末が覚え、開き直したホームの前回の続きの導線を選ぶとその論点の画面が開く', async () => {
+    // step 1: 利用者が論点の画面を開く
     await openShikaku(`/topics/${TOPIC.id}`)
     expect(text(), '論点の画面が出ていない').toContain(`${TOPIC.term} の短い説明です。`)
 
-    // step 2: 画面は最後に開いた論点（ID・名前・単元）を端末に 1 件だけ保存する
+    // step 2: システムが、その論点（ID・名前・単元）を前回の続きとして端末に覚える
     const stored = storedValues(localStorage)
     expect(stored, '論点の名前を端末に覚えていない').toContain(TOPIC.term)
     expect(stored, '論点の ID を端末に覚えていない').toContain(String(TOPIC.id))
     expect(stored, '単元名を端末に覚えていない').toContain(TOPIC.middle)
     expect(stored, '単元の番号を端末に覚えていない').toContain(String(TOPIC.middleNo))
 
-    // step 3・4: 利用者が学びを開き直してホームを開く。画面は端末の値から覚えた論点を組み立て、
-    // 論点名と単元を添えた「前回の続き」の導線を出す（まず資格版のホームで見る）
+    // step 3: 利用者が学びを開き直し、ホームを開く
     await openShikaku('/')
+    expect(text(), 'ホームの論点の画面の説明が出たまま（ホームが開いていない）').not.toContain(`${TOPIC.term} の短い説明です。`)
+
+    // step 4: システムが、覚えた論点名と単元を添えた前回の続きの導線を出す
     expect(text(), 'ホームに「前回の続き」が出ていない').toContain('前回の続き')
-    expect(text()).toContain(TOPIC.term)
     expect(text(), '前回の続きに単元が出ていない').toContain(TOPIC.middle)
-    expect(hrefs()).toContain(`/topics/${TOPIC.id}`)
+    const link = resumeLink()
+    expect(link, '覚えた論点名を持つ前回の続きの導線が無い').toBeTruthy()
 
-    // 同じ step 3・4 を、ロードマップ型のロードマップの先頭でもう一度辿る
-    //（step 1・2 と同じように、まず単位を開いて覚えさせる）
-    await closeShikaku()
-    await openRoadmap(`/topics/${TOPIC.id}`)
-    const map = await openRoadmap('/topics')
-    expect(map.text(), 'ロードマップの先頭に「前回の続きから」が出ていない').toContain('前回の続きから')
-    expect(map.text()).toContain(TOPIC.term)
-    expect(map.hrefs()).toContain(`/topics/${TOPIC.id}`)
+    // step 5: 利用者がその導線を選ぶ
+    await act(async () => {
+      link!.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, button: 0 }))
+    })
 
-    // 事後条件: 端末に最後に開いた論点が残り、次に開いたときの導線になっている
+    // step 6: システムが、覚えた論点の画面を開く
+    expect(text(), '前回の続きの導線を選んでも、覚えた論点の画面が開かない').toContain(`${TOPIC.term} の短い説明です。`)
+
+    // 事後条件: 最後に開いた論点が端末に残っている
     expect(storedValues(localStorage), '覚えた論点が端末から消えている').toContain(TOPIC.term)
   })
 })

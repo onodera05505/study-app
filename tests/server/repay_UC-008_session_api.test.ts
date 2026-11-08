@@ -1,6 +1,6 @@
 /** UC-008 模試（通し受験）の進行と結果の境界
- *  （getMockCurrentQuestion ＝ GET /api/sessions/:id/current、submitMockAnswer ＝ POST /api/sessions/:id/answer、
- *  getMockResult ＝ GET /api/sessions/:id）。
+ *  （UC-004 の契約 getCurrentQuestion ＝ GET /api/sessions/:id/current、answerQuestion ＝ POST /api/sessions/:id/answer、
+ *  getSessionResult ＝ GET /api/sessions/:id。模試も同じ経路）。
  *
  *  偽の D1 は列名で持った行を返し（finished_session.test.ts の作法）、ORDER BY と LIMIT を守る。
  *  回答の経路だけは書き込みを状態に反映する（回答した行が未回答から外れ、件数が動く）。
@@ -94,6 +94,7 @@ function fakeD1(tables: Table[], writes: Write[] = [], onWrite?: (w: Write) => v
   const prepare = (sql: string) => {
     let params: unknown[] = []
     const stmt = {
+      sql,
       bind: (...bound: unknown[]) => {
         params = bound
         return stmt
@@ -113,7 +114,14 @@ function fakeD1(tables: Table[], writes: Write[] = [], onWrite?: (w: Write) => v
     }
     return stmt
   }
-  return { prepare, batch: async () => [], exec: async () => ({ count: 0, duration: 0 }) }
+  /** D1 の batch（1 つのトランザクション）。渡された文を順に、run と同じく記録して当てる。
+   *  読み出しの文は all と同じ行を返す。 */
+  const batch = async (stmts: { sql: string; run: () => Promise<unknown>; all: () => Promise<unknown> }[]) => {
+    const out: unknown[] = []
+    for (const s of stmts) out.push(/^\s*(select|with)\b/i.test(s.sql) ? await s.all() : await s.run())
+    return out
+  }
+  return { prepare, batch, exec: async () => ({ count: 0, duration: 0 }) }
 }
 
 type Registered = { kind: string; fieldThreshold: boolean }
@@ -146,7 +154,7 @@ async function request(
 }
 
 const SID = '3f2a7c1e-5b84-4d6a-9e10-2c7b8a4f0d55'
-/** 制限時間つきの模試の時刻の基点（契約 UC-008 の例 okExpired の startedAt と timeLimitSec）。 */
+/** 制限時間つきの模試の時刻の基点（UC-004 の契約 getSessionResult の例 ok の startedAt と timeLimitSec）。 */
 const START = 1759276800
 const LIMIT = 7200
 

@@ -244,4 +244,61 @@ describe('練習テストの画面（UC-004。単元の一覧の失敗と、進�
     expect(text(), '回答の進み具合（7 · 20）が出ていない').toMatch(/7\s*·\s*20/)
     expect(btn(/再開/), '進行中のテストへ戻る導線が無い').toBeTruthy()
   })
+
+  // @covers REQ-057#in-progress-fetch-failed
+  it('作成が断られたあとに進行中のテストそのものを取れなかったら、範囲と進み具合の代わりに再開か破棄へ進める案内と取れなかった理由を出し、読み直すと再開と破棄を選べる', async () => {
+    const REASON = '進行中のテストを取得できませんでした'
+    // 画面を開いた時点では進行中が無く、断られたあとの取り直しだけが落ち、その次の読み直しは通る偽のサーバ
+    let gets = 0
+    const base = replies({ 'POST /api/sessions': { status: 409, body: { error: '進行中のテストがあります' } } })
+    const calls = stubApi((key) => {
+      if (key !== 'GET /api/sessions/current') return base(key)
+      gets += 1
+      if (gets === 1) return { body: { session: null } }
+      if (gets === 2) return { status: 500, body: { error: REASON } }
+      return { body: IN_PROGRESS }
+    })
+    const currentGets = () => calls.filter((c) => c.method === 'GET' && c.url.split('?')[0] === '/api/sessions/current').length
+    await draw()
+    expect(text(), '描いた直後から理由が出ている（この検査は空振りになる）').not.toContain(REASON)
+
+    await click(btnOutsideCategories(/テクノロジ系/), '分野別の開始')
+    expect(sessionPosts(calls), '作成を頼んでいない').toBe(1)
+    expect(currentGets(), '断られたのに進行中のテストを取り直していない').toBe(2)
+    expect(text(), '新しいテストの出題の画面へ移っている').not.toMatch(/PATH:\/sessions?\//)
+    expect(text(), '取れなかった理由が出ていない').toContain(REASON)
+    expect(text(), '再開か破棄へ進める案内が出ていない').toMatch(/再開|破棄/)
+    expect(text(), '取れていない進行中のテストの進み具合を出している').not.toMatch(/7\s*·\s*20/)
+
+    // 読み直す手段（押すと進行中のテストの取得が走る）。取れたら再開と破棄を選べる
+    // 範囲を選んで始めるボタンは候補にしない（押すと演習を始めてしまう）
+    const candidates = els('button').filter((b) => !/テクノロジ系|マネジメント系|弱点|復習/.test(b.textContent ?? ''))
+    let reloaded = false
+    for (const el of candidates) {
+      const before = currentGets()
+      await click(el, el.textContent ?? '候補')
+      if (/PATH:/.test(text())) break
+      if (currentGets() > before) {
+        reloaded = true
+        break
+      }
+    }
+    expect(reloaded, '進行中のテストを読み直す手段が添えられていない').toBe(true)
+    expect(text(), '読み直して取れたのに進行中のテストの範囲が出ない').toContain('分野「テクノロジ系」')
+    expect(btn(/再開/), '読み直して取れたのに再開を選べない').toBeTruthy()
+    expect(btn(/破棄/), '読み直して取れたのに破棄を選べない').toBeTruthy()
+  })
+
+  // @covers REQ-347#reason-shown-on-screen
+  it('テストを作る途中の失敗で始められなかったときは、始めようとした画面に理由を出し、画面を離れず範囲の一覧も残す', async () => {
+    const REASON = '出題を保存できなかったため、テストを始められませんでした'
+    const calls = stubApi(replies({ 'POST /api/sessions': { status: 500, body: { error: REASON } } }))
+    await draw()
+    expect(text(), '押す前から理由が出ている（出しっぱなしの文を拾っている）').not.toContain(REASON)
+    await click(btnOutsideCategories(/テクノロジ系/), '分野別の開始')
+    expect(sessionPosts(calls), '作成を頼んでいない（この検査は空振りになる）').toBe(1)
+    expect(text(), '始められなかった理由が出ていない').toContain(REASON)
+    expect(text(), '始められなかったのに画面を離れている').not.toContain('PATH:')
+    expect(btnOutsideCategories(/マネジメント系/), '始められなかったのに範囲の一覧が消えている').toBeTruthy()
+  })
 })
