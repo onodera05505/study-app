@@ -1,11 +1,11 @@
 # UC-007 受験履歴の境界。読み方の決まりは docs/adr/ADR-0001、共有語彙は ../../../_shared/components.yaml。
 # 振る舞いと規則は ./UC.md と REQ-095〜101 が持つ。ここは形だけ。
-# 1 件を選んで結果を開く経路（REQ-098）は UC-008 の getMockResult が持つ（同じ GET /api/sessions/{id}）。
+# 1 件を選んで結果を開く経路（REQ-098）は UC-004 の getSessionResult が持つ（同じ GET /api/sessions/{id}）。
 # 端末の記憶は無い（一覧は毎回サーバから取り直す）。
 x-uc: UC-007
-x-status: draft
+x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-10-02
+x-updated: 2026-11-06
 
 operations:
   listExamHistory:
@@ -29,7 +29,7 @@ operations:
             properties:
               id: { type: string, minLength: 1 }
               kind: { $ref: "../../../_shared/components.yaml#/schemas/SessionKind" }
-              scopeLabel: { type: [string, "null"] }
+              scopeLabel: { type: string, minLength: 1 }
               questionCount: { type: integer, minimum: 1 }
               correctCount: { type: [integer, "null"], minimum: 0 }
               startedAt: { type: integer }

@@ -1,10 +1,10 @@
-# UC-011 アカウントと学びの権限の管理 — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-162〜179）
+# UC-011 アカウントと学びの権限の管理 — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-162〜179・403〜405）
 # 読み方の決まりは docs/adr/ADR-0001（transport・direction・auth・operation 名の当て方）
 # 共有語彙（authSchemes・errorCodes・共有の形）は ../../../_shared/components.yaml
 x-uc: UC-011
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-10-02
+x-updated: 2026-11-06
 
 operations:
   # ---- まなびばの管理の経路（役割が管理者のセッションだけが通る） ----
@@ -67,7 +67,6 @@ operations:
           type: array
           description: 省略時は空。重複した key は 1 つに畳む
           items: { type: string, minLength: 1, description: 学びの登録簿にある key }
-        role: { type: string, enum: [ADMIN, MEMBER], description: 省略時は MEMBER }
     response:
       allOf:
         - $ref: "../../../_shared/components.yaml#/schemas/AccountCore"
@@ -83,7 +82,7 @@ operations:
         when: セッションの本人の役割が管理者でない
         wire: { status: 403 }
       - code: INVALID_INPUT
-        when: 本文が JSON でない、メール・名前・初期パスワード・役割が形を満たさない、または grants に登録簿に無い key がある
+        when: 本文が JSON でない、メール・名前・初期パスワードが形を満たさない、または grants に登録簿に無い key がある
         wire: { status: 400 }
       - code: CONFLICT
         when: そのメールのアカウントが既にある
@@ -149,6 +148,9 @@ operations:
       - code: INVALID_INPUT
         when: 呼び出した本人の id に対して役割を MEMBER にしようとしている
         wire: { status: 400 }
+      - code: CONFLICT
+        when: 重なった別の求めが先に書き込まれ、受け付けると管理者が 0 人になる
+        wire: { status: 409 }
     examples:
       ok:
         request: { id: 1c7e4b05-9a26-4d83-b7f1-6e0c3a9d2544, name: 鈴木 花, role: ADMIN, grants: [ap, ip] }
@@ -171,6 +173,9 @@ operations:
       invalidBeforeNotFound:
         request: { id: 00000000-0000-4000-8000-000000000000, name: "" }
         error: INVALID_INPUT
+      lastAdminDemotion:
+        request: { id: 3e9a7c21-5b84-4f06-a1d3-7c2b9e4f8a10, role: MEMBER }
+        error: CONFLICT
 
   resetAccountPassword:
     transport: http
@@ -196,6 +201,9 @@ operations:
       - code: INVALID_INPUT
         when: 本文が JSON でない、またはパスワードが 8 文字未満か 200 文字超
         wire: { status: 400 }
+      - code: INVALID_INPUT
+        when: id が呼び出した本人の id と同じ
+        wire: { status: 400 }
       - code: NOT_FOUND
         when: その id のアカウントが無い
         wire: { status: 404 }
@@ -217,6 +225,9 @@ operations:
         error: NOT_FOUND
       invalidBeforeNotFound:
         request: { id: 00000000-0000-4000-8000-000000000000, password: mijikai }
+        error: INVALID_INPUT
+      selfReset:
+        request: { id: 8a0f1d62-3c47-4b10-9f85-d2e6a1c70b33, password: natsunoame9 }
         error: INVALID_INPUT
 
   deleteAccount:
@@ -245,6 +256,9 @@ operations:
       - code: NOT_FOUND
         when: その id のアカウントが無い
         wire: { status: 404 }
+      - code: CONFLICT
+        when: 重なった別の求めが先に書き込まれ、受け付けると管理者が 0 人になる
+        wire: { status: 409 }
     examples:
       ok:
         request: { id: 1c7e4b05-9a26-4d83-b7f1-6e0c3a9d2544 }
@@ -261,3 +275,6 @@ operations:
       notFound:
         request: { id: 00000000-0000-4000-8000-000000000000 }
         error: NOT_FOUND
+      lastAdminDelete:
+        request: { id: 3e9a7c21-5b84-4f06-a1d3-7c2b9e4f8a10 }
+        error: CONFLICT

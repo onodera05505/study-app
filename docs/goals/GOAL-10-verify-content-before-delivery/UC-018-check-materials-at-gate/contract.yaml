@@ -1,9 +1,9 @@
-# UC-018 の境界: 作り手が手元で呼ぶ教材の門の入口 1 つと、門が読むファイル（書き手の出力・登録簿の必須の要素・独立解答）の形。
-# 読み方は docs/adr/ADR-0008（手元の道具の境界を local-store で読む）。
+# UC-018 の境界: 作り手が手元で呼ぶ資格対策の教材の門の入口 1 つと、門が読むファイル（教材の世代・論点・過去問・登録簿の学びの種類・図）の形。
+# 読み方は docs/adr/ADR-0008（手元の道具の境界を local-store で読む）。パスは相対ならコマンドを呼んだ作業ディレクトリが起点。
 x-uc: UC-018
 x-status: draft
 x-spec: ./UC.md
-x-updated: 2026-11-05
+x-updated: 2026-11-07
 
 schemas:
   Finding:
@@ -11,129 +11,212 @@ schemas:
     required: [kind, where, reason]
     properties:
       kind: { type: string, minLength: 1 }
-      where: { type: string, minLength: 1, description: 論点・問題・単位・章・束・ファイルのどれか }
+      where: { type: string, minLength: 1, description: ファイル・論点・箇所のどれか }
       reason: { type: string, minLength: 1 }
 
 operations:
-  checkContent:
+  checkMaterials:
     transport: local-store
     direction: inbound
     owned: true
     auth: none
-    summary: 束または学び全体の教材・確認問題・問題解説を教材の門にかけ、通すか止めるかと理由を返す
+    summary: 資格対策の学びの教材の世代を教材の門にかけ、通すか止めるかと理由を返す
     request:
       type: object
       required: [data]
       additionalProperties: false
       properties:
         data: { type: string, pattern: "^data/[a-z]+$", description: 学びの置き場。末尾が登録簿の学びの key }
-        part: { type: string, enum: [materials, explanations], description: 省略は materials。explanations は資格対策の問題解説 }
-        bundle: { type: string, pattern: "^bundle_[a-z0-9_]+$", description: 束の名前。省略すると学び全体 }
-        solutions:
+        dirs:
           type: array
-          description: 独立解答のファイル。ロードマップ型の学び全体のときだけ。1 本ずつ数える
-          items: { type: string, minLength: 1 }
+          minItems: 1
+          description: 見る教材の世代の置き場の並び。省略すると materials・materials_v2・materials_v3 の並び
+          items: { type: string, pattern: "^materials(_v[0-9]+)?$" }
+        public: { type: string, minLength: 1, description: 図の画像の配信の置き場。省略すると public }
     response:
       type: object
-      required: [exitCode, topics, questions, stops, warnings, limits]
+      required: [exitCode, topics, stops, warnings, limits]
       properties:
         exitCode: { type: integer, enum: [0, 1], description: 0 は通した、1 は stops が 1 件以上 }
-        topics: { type: integer, minimum: 0, description: 門が見た教材の論点の数（補足の論点を含む） }
-        questions: { type: integer, minimum: 0 }
+        topics: { type: integer, minimum: 0, description: 門が見た教材の論点の数 }
         stops:
           type: array
+          description: 当たった物を件数で打ち切らずにすべて持つ
           items:
             allOf:
               - { $ref: "#/schemas/Finding" }
               - properties:
                   kind:
-                    enum: [missingElement, unreadableOutput, bundleMismatch, termMismatch, duplicate, missingMaterial, orphanMaterial, brokenTable, headingLevel, figureMissing, unknownSource, unresolvedTerm, bannedPattern, pastQuestionQuote, questionShape, questionCount, unknownGoal, duplicateQid, independentMismatch, chapterMissing, tierMissing, prereqAfter, summaryMissing, answerKeyMismatch, questionMissing, contentKeyMismatch, correctMarkMismatch]
+                    enum: [unreadableOutput, termMismatch, orphanMaterial, missingMaterial, duplicate, missingElement, brokenTable, headingLevel, figureMissing, unresolvedTerm, pastQuestionQuote]
         warnings:
           type: array
-          description: exitCode を変えない。情報の量（字数・文数・見出しの数・箇条書きと比較の項目の数）の種類は無い
+          description: exitCode を変えない。当たった物を件数で打ち切らずにすべて持つ。情報の量の種類は無い
           items:
             allOf:
               - { $ref: "#/schemas/Finding" }
               - properties:
                   kind:
-                    enum: [avoidWord, solvingHint, sameAsChoiceNote, notationOutside, unclosedEmphasis, styleMinority, plainListEnding, firstSentenceNotTerm, calcWithoutFormula, termMarkupMixed, indentedLine, sourcePunctuation, sourceWhereCode, choiceSymbol, explanationHeading, verbatimBody, verbatimSummary, answerPositionBias, pairAnswerNeverSame, answerLongest, answerTopTwoLength, answerCommas, absoluteWordsWrong, quoteOnlyInAnswer, stemSaysMaterial, bothLongestInUnit, plainNote, noteValueOnly, termNotesDiffer, labelOrder, representativeNotNewest, prereqUnknown, lowestTierNotLast, tableTooNarrow, tableTooShort, tableTooWide, tableTooLong, tableCellLong, choiceNoteLong]
+                    enum: [solvingHint, sameAsChoiceNote, notationOutside, unclosedEmphasis, styleMinority, plainListEnding, firstSentenceNotTerm, calcWithoutFormula, termMarkupMixed, indentedLine, sourcePunctuation, choiceSymbol, explanationHeading, tableTooNarrow, tableTooShort, tableTooWide, tableTooLong, tableCellLong]
         limits:
           type: object
-          description: 門が使った閾値（止める・警告の境目）と表示の制約
-          required: [quoteLength, verbatimLength, independentMismatchRate, questionsPerUnit, tableColumns, tableRows, tableCellLength, choiceNoteLength, answerPositionShare, pairSameShare, answerLongestShare, answerTopTwoShare, absoluteWrongShare, biasMinQuestions]
+          description: 門が使った閾値と表示の制約
+          required: [quoteLength, headingLevel, requiredExplanationLine, tableColumns, tableRows, tableCellLength]
           properties:
             quoteLength: { type: integer, const: 30, description: 過去問の原文とこの字数以上連続して一致したら止める }
-            verbatimLength: { type: integer, const: 14, description: 正解の選択肢と本文か要約がこの字数以上連続して一致したら警告 }
-            independentMismatchRate: { type: number, const: 0.2, description: 1 本の独立解答の食い違いの割合がこれを超えたら止める }
-            questionsPerUnit: { type: integer, const: 2 }
-            tableColumns: { type: object, properties: { min: { const: 2 }, max: { const: 4 } }, description: 下回っても超えても警告（止めない） }
-            tableRows: { type: object, description: ヘッダを含み区切りの行を数えない, properties: { min: { const: 2 }, max: { const: 8 } } }
-            tableCellLength: { type: integer, const: 40 }
-            choiceNoteLength: { type: integer, const: 90 }
-            answerPositionShare: { type: number, const: 0.45, description: 1 つの正解の位置の割合がこれを超えたら警告 }
-            pairSameShare: { type: number, const: 0.1, description: 同じ単位の 2 問で正解の記号が重なる割合がこれを下回ったら警告 }
-            answerLongestShare: { type: number, const: 0.6 }
-            answerTopTwoShare: { type: number, const: 0.75 }
-            absoluteWrongShare: { type: number, const: 0.85 }
-            biasMinQuestions: { type: integer, const: 20, description: 偏りの警告は問題がこの数以上のときだけ }
+            headingLevel: { type: string, const: "###", description: 詳しい解説の見出しはこの階層だけ }
+            requiredExplanationLine: { type: string, const: 見分けワード, description: 説明が必ず含む行の語 }
+            tableColumns: { type: object, properties: { min: { const: 2 }, max: { const: 4 } }, description: 下回っても超えても警告 }
+            tableRows: { type: object, description: ヘッダを含み区切りの行を数えない。下回っても超えても警告, properties: { min: { const: 2 }, max: { const: 8 } } }
+            tableCellLength: { type: integer, const: 40, description: 超えたら警告 }
     errors:
       - code: INVALID_INPUT
         when: 登録簿に無い学び
       - code: INVALID_INPUT
-        when: 割り当ての無い束
-      - code: INVALID_INPUT
-        when: 学びの種類が持たない部分か、資格対策の学びか束に添えた独立解答
+        when: 資格対策でない学び
       - code: NOT_FOUND
-        when: 添えた独立解答のファイルが無い
-      - code: INVALID_INPUT
-        when: 添えた独立解答が形として読めない
+        when: 指定した教材の世代の置き場が無い
     examples:
-      passLearning:
-        request: { data: data/itc }
+      pass:
+        request: { data: data/ip }
         response:
           exitCode: 0
-          topics: 47
-          questions: 94
+          topics: 532
           stops: []
           warnings: []
-          limits: { quoteLength: 30, verbatimLength: 14, independentMismatchRate: 0.2, questionsPerUnit: 2, tableColumns: { min: 2, max: 4 }, tableRows: { min: 2, max: 8 }, tableCellLength: 40, choiceNoteLength: 90, answerPositionShare: 0.45, pairSameShare: 0.1, answerLongestShare: 0.6, answerTopTwoShare: 0.75, absoluteWrongShare: 0.85, biasMinQuestions: 20 }
+          limits: { quoteLength: 30, headingLevel: "###", requiredExplanationLine: 見分けワード, tableColumns: { min: 2, max: 4 }, tableRows: { min: 2, max: 8 }, tableCellLength: 40 }
       unknownLearning:
         request: { data: data/zzz }
         error: INVALID_INPUT
-      unknownBundle:
-        request: { data: data/itc, bundle: bundle_99 }
+      notQualification:
+        request: { data: data/itc }
         error: INVALID_INPUT
-      partNotHeld:
-        request: { data: data/itc, part: explanations }
-        error: INVALID_INPUT
-      solutionsOnQualification:
-        request: { data: data/ip, solutions: [data/itc/eval/solve_B.json] }
-        error: INVALID_INPUT
-      solutionsMissing:
-        request: { data: data/itc, solutions: [data/itc/eval/solve_Z.json] }
+      dirMissing:
+        request: { data: data/ip, dirs: [materials_v9] }
         error: NOT_FOUND
-      solutionsUnreadable:
-        request: { data: data/itc, solutions: [data/itc/eval/cycle_3.json] }
-        error: INVALID_INPUT
-      qualificationBeforeMissingSolutions:
-        request: { data: data/ip, solutions: [data/itc/eval/solve_Z.json] }
+      notQualificationBeforeDirMissing:
+        request: { data: data/itc, dirs: [materials_v9] }
         error: INVALID_INPUT
 
-  readWriterOutput:
+  readLearningKind:
     transport: local-store
     direction: outbound
     owned: true
     auth: none
-    summary: 書き手の出力（教材・確認問題・問題解説の束）のファイルを読む
+    summary: 登録簿（src/shared/targets.json）から、その学びの種類を読む
+    request:
+      type: object
+      required: [learning]
+      properties:
+        learning: { type: string, pattern: "^[a-z]+$", description: 登録簿の学びの key }
+    response:
+      type: object
+      description: 登録簿のその学びの項のうち門が読む欄
+      required: [kind]
+      properties:
+        kind: { type: string, enum: [exam, roadmap], description: exam が資格対策 }
+    errors:
+      - code: NOT_FOUND
+        when: 登録簿に無い学び
+    examples:
+      ok:
+        request: { learning: ip }
+        response: { kind: exam }
+      unknown:
+        request: { learning: zzz }
+        error: NOT_FOUND
+
+  readTopics:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 学びの論点の一覧を読む
     request:
       type: object
       required: [path]
       properties:
-        path: { type: string, pattern: "^data/[a-z]+/(materials|materials_v2|materials_v3|roadmap_questions|question_explanations)/[A-Za-z0-9_]+\\.json$" }
+        path: { type: string, pattern: "^data/[a-z]+/topics\\.json$" }
     response:
       type: object
+      required: [topics]
       properties:
-        bundle: { type: string }
+        topics:
+          type: array
+          items:
+            type: object
+            required: [topic_id, term]
+            properties:
+              topic_id: { type: integer, minimum: 1 }
+              term: { type: string, minLength: 1 }
+    errors:
+      - code: NOT_FOUND
+        when: ファイルが無い
+      - code: INVALID_INPUT
+        when: 形として読めない
+    examples:
+      ok:
+        request: { path: data/ip/topics.json }
+        response: { topics: [{ topic_id: 1, term: 個人情報保護法 }] }
+      missing:
+        request: { path: data/zzz/topics.json }
+        error: NOT_FOUND
+      unreadable:
+        request: { path: data/ip/topics.json }
+        error: INVALID_INPUT
+
+  readPastQuestions:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 1 回分の過去問の原文を読む（引用の一致を見るため）
+    request:
+      type: object
+      required: [path]
+      properties:
+        path: { type: string, pattern: "^data/[a-z]+/questions/[0-9a-z]+\\.json$" }
+    response:
+      type: object
+      required: [questions]
+      properties:
+        questions:
+          type: array
+          items:
+            type: object
+            required: [text]
+            properties:
+              text: { type: string }
+    errors:
+      - code: NOT_FOUND
+        when: ファイルが無い
+      - code: INVALID_INPUT
+        when: 形として読めない
+    examples:
+      ok:
+        request: { path: data/ip/questions/2018h30h.json }
+        response: { questions: [{ text: "…" }] }
+      missing:
+        request: { path: data/ip/questions/1999h11h.json }
+        error: NOT_FOUND
+      unreadable:
+        request: { path: data/ip/questions/2018h30a.json }
+        error: INVALID_INPUT
+
+  readMaterialFile:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 教材の世代の置き場にある 1 つのファイルの教材を読む
+    request:
+      type: object
+      required: [path]
+      properties:
+        path: { type: string, pattern: "^data/[a-z]+/materials(_v[0-9]+)?/[A-Za-z0-9_]+\\.json$" }
+    response:
+      type: object
+      required: [materials]
+      properties:
         materials:
           type: array
           items:
@@ -144,62 +227,6 @@ operations:
               term: { type: string, minLength: 1 }
               explanation: { type: string, minLength: 1 }
               detail: { type: string, minLength: 1 }
-              sources:
-                type: array
-                items:
-                  type: object
-                  required: [name]
-                  properties:
-                    name: { type: string, minLength: 1, not: { const: 一般常識 }, description: 集めた資料の名前か、「〜の集計」（括弧に英小文字の鍵を添えてよい） }
-                    where: { type: string }
-        questions:
-          type: array
-          items:
-            type: object
-            required: [qid, topic_id, term, stem, choices, answer, reason, choice_notes, tests_goal]
-            properties:
-              qid: { type: string, minLength: 1 }
-              topic_id: { type: integer, minimum: 1 }
-              term: { type: string, minLength: 1 }
-              stem: { type: string, minLength: 1 }
-              choices:
-                type: object
-                required: ["ア", "イ", "ウ", "エ"]
-                additionalProperties: false
-                properties:
-                  "ア": { type: string, minLength: 1 }
-                  "イ": { type: string, minLength: 1 }
-                  "ウ": { type: string, minLength: 1 }
-                  "エ": { type: string, minLength: 1 }
-              answer: { type: string, enum: ["ア", "イ", "ウ", "エ"] }
-              reason: { type: string, minLength: 1 }
-              choice_notes:
-                type: object
-                required: ["ア", "イ", "ウ", "エ"]
-                description: 正解の説明は「正解」で始まり、誤答の説明は「正解」で始まらない
-                additionalProperties: { type: string, minLength: 1 }
-              tests_goal: { type: integer, minimum: 1 }
-        explanations:
-          type: array
-          items:
-            type: object
-            required: [question_id, content_key, correct, correct_reason, choices]
-            properties:
-              question_id: { type: string, minLength: 1 }
-              content_key: { type: string, minLength: 1 }
-              correct: { type: string, enum: ["ア", "イ", "ウ", "エ"] }
-              correct_reason: { type: string, minLength: 1 }
-              choices:
-                type: array
-                minItems: 4
-                maxItems: 4
-                items:
-                  type: object
-                  required: [label, note]
-                  properties:
-                    label: { type: string, enum: ["ア", "イ", "ウ", "エ"] }
-                    term: { type: [string, "null"] }
-                    note: { type: string, minLength: 1, description: 正解の説明は「正解」で始まり、誤答の説明は「正解」で始まらない }
     errors:
       - code: NOT_FOUND
         when: ファイルが無い
@@ -207,73 +234,38 @@ operations:
         when: 形として読めない
     examples:
       ok:
-        request: { path: data/itc/materials/bundle_01.json }
-        response:
-          bundle: bundle_01
-          materials: [{ topic_id: 1, term: ITコンサルタントの仕事, explanation: "**ITコンサルタントの仕事**は…", detail: "### しくみ\n…" }]
+        request: { path: data/ip/materials_v3/expl_01.json }
+        response: { materials: [{ topic_id: 1, term: 個人情報保護法, explanation: "**個人情報保護法**は…", detail: "### しくみ\n…" }] }
       missing:
-        request: { path: data/itc/materials/bundle_99.json }
+        request: { path: data/ip/materials_v3/expl_99.json }
         error: NOT_FOUND
       unreadable:
-        request: { path: data/itc/materials/bundle_c2_new_a.json }
+        request: { path: data/ip/materials_v3/expl_02.json }
         error: INVALID_INPUT
 
-  readMaterialRequirements:
+  readFigure:
     transport: local-store
     direction: outbound
     owned: true
     auth: none
-    summary: 登録簿から、その学びの教材の必須の要素（見出しと行）を読む
+    summary: 教材の図の行が指す画像を、配信の置き場から読む
     request:
       type: object
-      required: [learning]
+      required: [src]
       properties:
-        learning: { type: string, pattern: "^[a-z]+$", description: 登録簿の学びの key }
+        src: { type: string, pattern: "^/figures/[a-z]+/.+\\.(svg|png)$", description: 本文の図の行の参照先。実体は配信の置き場の下の同じパス }
     response:
       type: object
-      required: [requiredHeadings, requiredExplanationLines]
+      required: [file]
       properties:
-        requiredHeadings: { type: array, description: 詳しい解説が持つ見出し（### を含む文字列）, items: { type: string, pattern: "^### .+" } }
-        requiredExplanationLines: { type: array, description: 説明が含む行の語, items: { type: string, minLength: 1 } }
+        file: { type: string, pattern: "^public/figures/[a-z]+/.+\\.(svg|png)$" }
     errors:
       - code: NOT_FOUND
-        when: 登録簿に無い学び
+        when: 画像が置き場所に無い
     examples:
       ok:
-        request: { learning: itc }
-        response: { requiredHeadings: ["### しくみ"], requiredExplanationLines: [見分けワード] }
-      unknown:
-        request: { learning: zzz }
-        error: NOT_FOUND
-
-  readIndependentAnswers:
-    transport: local-store
-    direction: outbound
-    owned: true
-    auth: none
-    summary: 独立解答のファイルを読む
-    request:
-      type: object
-      required: [path]
-      properties:
-        path: { type: string, minLength: 1 }
-    response:
-      type: object
-      required: [answers]
-      properties:
-        answers: { type: object, description: 問題の識別子 → 選んだ答え, additionalProperties: { type: string, enum: ["ア", "イ", "ウ", "エ"] } }
-    errors:
-      - code: NOT_FOUND
-        when: ファイルが無い
-      - code: INVALID_INPUT
-        when: 形として読めない
-    examples:
-      ok:
-        request: { path: data/itc/eval/solve_B.json }
-        response: { answers: { t1-1: ア, t1-2: イ } }
+        request: { src: /figures/ip/2018h30h-q5.png }
+        response: { file: public/figures/ip/2018h30h-q5.png }
       missing:
-        request: { path: data/itc/eval/solve_Z.json }
+        request: { src: /figures/ip/9999-q1.png }
         error: NOT_FOUND
-      unreadable:
-        request: { path: data/itc/eval/cycle_3.json }
-        error: INVALID_INPUT

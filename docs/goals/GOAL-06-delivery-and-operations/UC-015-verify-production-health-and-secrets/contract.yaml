@@ -1,8 +1,9 @@
-# UC-015 本番が生きていることと秘密がそろっていることを機械で確かめる — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-213〜223）
+# UC-015 本番が生きていることと秘密がそろっていることを機械で確かめる — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-213〜223・350）
 # 読み方の決まりは docs/adr/ADR-0001（決め 6: 外から叩く死活確認と入口の画面、および秘密の名前の一覧）
 # 共有語彙（authSchemes・errorCodes・共有の形）は ../../../_shared/components.yaml
-# 検査が叩く経路のうち、認証の形（/api/auth/config）とパスワードのログインが閉じていること（/api/auth/login）は
-#   UC-013 の getAuthConfig・signInWithPassword が形の正本。ここには再掲しない（R-101）
+# 検査が叩く経路のうち、認証の形（/api/auth/config）は UC-013 の getAuthConfig が形の正本。ここには再掲しない（R-101）
+# 学び側のパスワードでのログインと登録の経路は学び側が受け持たない（UC-013 の REQ-204）ので、どの契約にもその operation は無い。
+#   検査がその 2 つの経路を叩く形（REQ-350）はこの契約の probeRetiredPasswordRoute が正本
 # REQ-223（認証の要る応答を認証なしで叩くと断られる）の形は、各 UC の auth: bearer / session の operation の
 #   UNAUTHENTICATED が持つ。ここには再掲しない（R-101）
 # 配備ごとの URL・Pages プロジェクト名・必要な秘密の名前・配備先のアカウントは値なので書かない（R-102）。
@@ -10,7 +11,7 @@
 x-uc: UC-015
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-10-01
+x-updated: 2026-11-06
 
 operations:
   checkDeploymentHealth:
@@ -54,8 +55,8 @@ operations:
           description: 開く配備の key。key と URL の値の正本は scripts/pages_projects.json
         path:
           type: string
-          pattern: '^/'
-          description: 入口の画面を成す公開の経路（/ を含む）。配備ごとに見る経路の一覧の正本は scripts/check_sso_prod.sh
+          enum: [/, /app.js, /style.css]
+          description: 入口の画面を成す公開の経路。まなびばは enum の全部、学びは / だけを開く（配備ごとの一覧は成功の例のとおり）
     response:
       type: object
       required: [status]
@@ -69,8 +70,51 @@ operations:
         when: その経路が 200 を返さない（届かないときも状態コードが得られないまま同じ扱い）
     examples:
       ok: { request: { deployment: _portal, path: / }, response: { status: 200 } }
+      okPortalScript: { request: { deployment: _portal, path: /app.js }, response: { status: 200 } }
+      okPortalStyle: { request: { deployment: _portal, path: /style.css }, response: { status: 200 } }
       okLearning: { request: { deployment: ip, path: / }, response: { status: 200 } }
       notOpenable: { request: { deployment: _portal, path: /app.js }, error: UPSTREAM_UNAVAILABLE }
+
+  probeRetiredPasswordRoute:
+    transport: http
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 学び側の配備のパスワードでのログインと登録の経路に、決められた形を満たさない空の本文を認証なしで送り、返った状態コードを受け取る
+    wire: { method: POST, path: '/api/auth/{route}', success: 404 }
+    request:
+      type: object
+      required: [deployment, route, body]
+      properties:
+        deployment:
+          type: string
+          minLength: 1
+          description: 叩く学びの配備の key（まなびばは叩かない）。key と URL の値の正本は scripts/pages_projects.json
+        route:
+          type: string
+          enum: [login, register]
+          description: 叩く経路の名前。どの学びでも両方を叩く
+        body:
+          type: object
+          maxProperties: 0
+          description: 送る本文。空のオブジェクトだけで、経路が開いていても決められた形を満たさないので状態は変わらない
+    response:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+          description: 返った状態コード。受け持たない経路の断りは 404 で、それ以外の値はその経路が開いている側
+    errors:
+      - code: UPSTREAM_UNAVAILABLE
+        when: 配備に届かず状態コードが得られない
+    examples:
+      ok: { request: { deployment: ip, route: register, body: {} }, response: { status: 404 } }
+      okLogin: { request: { deployment: ip, route: login, body: {} }, response: { status: 404 } }
+      registerOpen: { request: { deployment: ap, route: register, body: {} }, response: { status: 400 } }
+      noAnswer: { request: { deployment: ip, route: login, body: {} }, error: UPSTREAM_UNAVAILABLE }
 
   listDeploymentSecretNames:
     transport: sdk
@@ -97,11 +141,12 @@ operations:
           description: その配備に設定されている秘密の名前。値は含まれない。必要な名前が欠けている配備ではその名前がこの一覧に無い
     errors:
       - code: FORBIDDEN
-        when: ログイン中の配備先のアカウントが、その配備を持つアカウントと違う
+        when: ログイン中の配備先のアカウントが 1 つ以上分かり、そのどれもがその配備を持つアカウントでない
       - code: UPSTREAM_UNAVAILABLE
-        when: 一覧の取得が失敗する（配備先に届かない・プロジェクトが見つからない・ログインしていない）
+        when: 一覧の取得が失敗する（配備先に届かない・プロジェクトが見つからない・ログインしていない・ログイン中のアカウントが分からない）
     examples:
       ok: { request: { deployment: ip } }
       noSecretsConfigured: { request: { deployment: itc }, response: { names: [] } }
       wrongAccount: { request: { deployment: ip }, error: FORBIDDEN }
       listUnavailable: { request: { deployment: ip }, error: UPSTREAM_UNAVAILABLE }
+      notLoggedIn: { request: { deployment: ip }, error: UPSTREAM_UNAVAILABLE }

@@ -1,0 +1,340 @@
+# UC-020 の境界: 作り手が手元で呼ぶ束の門の入口 1 つと、門が読むファイル（割り当て・書き手の教材と確認問題・ロードマップ・集めた資料・登録簿）の形。
+# 読み方は docs/adr/ADR-0008（手元の道具の境界を local-store で読む）。パスは相対ならコマンドを呼んだ作業ディレクトリが起点。
+x-uc: UC-020
+x-status: draft
+x-spec: ./UC.md
+x-updated: 2026-11-07
+
+schemas:
+  Finding:
+    type: object
+    required: [kind, where, reason]
+    properties:
+      kind: { type: string, minLength: 1 }
+      where: { type: string, minLength: 1, description: 束・ファイル・論点・問題・箇所のどれか }
+      reason: { type: string, minLength: 1 }
+
+operations:
+  checkRoadmapBundle:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: ロードマップ型の束 1 つを教材の門にかけ、通すか止めるかと理由を返す
+    request:
+      type: object
+      required: [data, bundle]
+      additionalProperties: false
+      properties:
+        data: { type: string, pattern: "^data/[a-z]+$", description: 学びの置き場。末尾が登録簿の学びの key }
+        bundle: { type: string, pattern: "^bundle_[a-z0-9_]+$" }
+    response:
+      type: object
+      required: [exitCode, topics, questions, stops, warnings, limits]
+      properties:
+        exitCode: { type: integer, enum: [0, 1], description: 0 は通した、1 は stops が 1 件以上 }
+        topics: { type: integer, minimum: 0, description: 門が見た束の教材の論点の数 }
+        questions: { type: integer, minimum: 0, description: 門が見た束の確認問題の数 }
+        stops:
+          type: array
+          items:
+            allOf:
+              - { $ref: "#/schemas/Finding" }
+              - properties:
+                  kind:
+                    enum: [unreadableOutput, bundleMismatch, termMismatch, missingElement, brokenTable, headingLevel, unknownSource, unresolvedTerm, bannedPattern, questionShape, unknownGoal]
+        warnings:
+          type: array
+          description: exitCode を変えない。情報の量の種類は無い
+          items:
+            allOf:
+              - { $ref: "#/schemas/Finding" }
+              - properties:
+                  kind:
+                    enum: [avoidWord, usageSectionMissing, notationOutside, unclosedEmphasis, styleMinority, termMarkupMixed, indentedLine, sourceWhereCode, verbatimBody, tableTooNarrow, tableTooShort, tableTooWide, tableTooLong, tableCellLong]
+        limits:
+          type: object
+          description: 門が使った閾値と表示の制約
+          required: [verbatimLength, headingLevel, tableColumns, tableRows, tableCellLength]
+          properties:
+            verbatimLength: { type: integer, const: 14, description: 正解の選択肢と教材の本文がこの字数以上連続して一致したら警告 }
+            headingLevel: { type: string, const: "###", description: 詳しい解説の見出しはこの階層だけ }
+            tableColumns: { type: object, properties: { min: { const: 2 }, max: { const: 4 } }, description: 下回っても超えても警告 }
+            tableRows: { type: object, description: ヘッダを含み区切りの行を数えない。下回っても超えても警告, properties: { min: { const: 2 }, max: { const: 8 } } }
+            tableCellLength: { type: integer, const: 40, description: 超えたら警告 }
+    errors:
+      - code: INVALID_INPUT
+        when: 登録簿に無い学び
+      - code: INVALID_INPUT
+        when: ロードマップ型でない学び
+      - code: NOT_FOUND
+        when: 束の割り当てが無い
+    examples:
+      pass:
+        request: { data: data/itc, bundle: bundle_01 }
+        response:
+          exitCode: 0
+          topics: 8
+          questions: 16
+          stops: []
+          warnings: []
+          limits: { verbatimLength: 14, headingLevel: "###", tableColumns: { min: 2, max: 4 }, tableRows: { min: 2, max: 8 }, tableCellLength: 40 }
+      unknownLearning:
+        request: { data: data/zzz, bundle: bundle_01 }
+        error: INVALID_INPUT
+      notRoadmap:
+        request: { data: data/ip, bundle: bundle_01 }
+        error: INVALID_INPUT
+      noAssignment:
+        request: { data: data/itc, bundle: bundle_99 }
+        error: NOT_FOUND
+      notRoadmapBeforeNoAssignment:
+        request: { data: data/ip, bundle: bundle_99 }
+        error: INVALID_INPUT
+
+  readBundleAssignment:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 束の割り当て（書き手に渡した論点）を読む
+    request:
+      type: object
+      required: [path]
+      properties:
+        path: { type: string, pattern: "^data/[a-z]+/material_bundles/bundle_[a-z0-9_]+\\.json$" }
+    response:
+      type: object
+      required: [topics]
+      properties:
+        topics:
+          type: array
+          items:
+            type: object
+            required: [topic_id, term]
+            properties:
+              topic_id: { type: integer, minimum: 1 }
+              term: { type: string, minLength: 1 }
+    errors:
+      - code: NOT_FOUND
+        when: 割り当てが無い
+    examples:
+      ok:
+        request: { path: data/itc/material_bundles/bundle_01.json }
+        response: { topics: [{ topic_id: 1, term: ITコンサルタントの仕事 }] }
+      missing:
+        request: { path: data/itc/material_bundles/bundle_99.json }
+        error: NOT_FOUND
+
+  readBundleMaterials:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 書き手が書いた束の教材を読む
+    request:
+      type: object
+      required: [path]
+      properties:
+        path: { type: string, pattern: "^data/[a-z]+/materials/bundle_[a-z0-9_]+\\.json$" }
+    response:
+      type: object
+      required: [materials]
+      properties:
+        materials:
+          type: array
+          items:
+            type: object
+            required: [topic_id, term, explanation, detail]
+            properties:
+              topic_id: { type: integer, minimum: 1 }
+              term: { type: string, minLength: 1 }
+              explanation: { type: string, minLength: 1 }
+              detail: { type: string, minLength: 1 }
+              sources:
+                type: array
+                items:
+                  type: object
+                  required: [name]
+                  properties:
+                    name: { type: string, minLength: 1, not: { const: 一般常識 }, description: 集めた資料の名前か、「〜の集計」（括弧に英小文字の鍵を添えてよい） }
+                    where: { type: string }
+    errors:
+      - code: NOT_FOUND
+        when: ファイルが無い
+      - code: INVALID_INPUT
+        when: 形として読めない
+    examples:
+      ok:
+        request: { path: data/itc/materials/bundle_01.json }
+        response: { materials: [{ topic_id: 1, term: ITコンサルタントの仕事, explanation: "**ITコンサルタントの仕事**は…", detail: "### しくみ\n…" }] }
+      missing:
+        request: { path: data/itc/materials/bundle_99.json }
+        error: NOT_FOUND
+      unreadable:
+        request: { path: data/itc/materials/bundle_c2_new_a.json }
+        error: INVALID_INPUT
+
+  readBundleQuestions:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 書き手が書いた束の確認問題を読む
+    request:
+      type: object
+      required: [path]
+      properties:
+        path: { type: string, pattern: "^data/[a-z]+/roadmap_questions/bundle_[a-z0-9_]+\\.json$" }
+    response:
+      type: object
+      required: [questions]
+      properties:
+        questions:
+          type: array
+          items:
+            type: object
+            required: [qid, topic_id, term, stem, choices, answer, reason, choice_notes, tests_goal]
+            properties:
+              qid: { type: string, minLength: 1 }
+              topic_id: { type: integer, minimum: 1 }
+              term: { type: string, minLength: 1 }
+              stem: { type: string, minLength: 1 }
+              choices:
+                type: object
+                required: ["ア", "イ", "ウ", "エ"]
+                additionalProperties: false
+                properties:
+                  "ア": { type: string, minLength: 1 }
+                  "イ": { type: string, minLength: 1 }
+                  "ウ": { type: string, minLength: 1 }
+                  "エ": { type: string, minLength: 1 }
+              answer: { type: string, enum: ["ア", "イ", "ウ", "エ"] }
+              reason: { type: string, minLength: 1 }
+              choice_notes:
+                type: object
+                required: ["ア", "イ", "ウ", "エ"]
+                description: 正解の説明は「正解」で始まり、誤答の説明は「正解」で始まらない
+                additionalProperties: { type: string, minLength: 1 }
+              tests_goal: { type: integer, minimum: 1 }
+    errors:
+      - code: NOT_FOUND
+        when: ファイルが無い
+      - code: INVALID_INPUT
+        when: 形として読めない
+    examples:
+      ok:
+        request: { path: data/itc/roadmap_questions/bundle_01.json }
+        response:
+          questions: [{ qid: t1-1, topic_id: 1, term: ITコンサルタントの仕事, stem: "…", choices: { "ア": "…", "イ": "…", "ウ": "…", "エ": "…" }, answer: イ, reason: "…", choice_notes: { "ア": "…", "イ": "正解。…", "ウ": "…", "エ": "…" }, tests_goal: 1 }]
+      missing:
+        request: { path: data/itc/roadmap_questions/bundle_99.json }
+        error: NOT_FOUND
+      unreadable:
+        request: { path: data/itc/roadmap_questions/bundle_c2_new_a.json }
+        error: INVALID_INPUT
+
+  readRoadmap:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: ロードマップの論点名と到達基準を読む
+    request:
+      type: object
+      required: [path]
+      properties:
+        path: { type: string, pattern: "^data/[a-z]+/roadmap\\.json$" }
+    response:
+      type: object
+      required: [units]
+      properties:
+        units:
+          type: array
+          items:
+            type: object
+            required: [topic_id, term]
+            properties:
+              topic_id: { type: integer, minimum: 1 }
+              term: { type: string, minLength: 1 }
+              goals: { type: array, description: その単位の到達基準, items: { type: integer, minimum: 1 } }
+    errors:
+      - code: NOT_FOUND
+        when: ロードマップが無い
+      - code: INVALID_INPUT
+        when: JSON として読めないか、units が無い
+    examples:
+      ok:
+        request: { path: data/itc/roadmap.json }
+        response: { units: [{ topic_id: 1, term: ITコンサルタントの仕事, goals: [1] }] }
+      missing:
+        request: { path: data/ip/roadmap.json }
+        error: NOT_FOUND
+      unreadable:
+        request: { path: data/zzz/roadmap.json }
+        error: INVALID_INPUT
+
+  readSources:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 学びで集めた資料の 1 ファイルから資料の名前を読む（入れ子の資料も含む）
+    request:
+      type: object
+      required: [path]
+      properties:
+        path: { type: string, pattern: "^data/[a-z]+/sources/[A-Za-z0-9_]+\\.json$" }
+    response:
+      type: object
+      required: [names]
+      properties:
+        names: { type: array, items: { type: string, minLength: 1 } }
+    errors:
+      - code: INVALID_INPUT
+        when: JSON として読めない
+    examples:
+      ok:
+        request: { path: data/itc/sources/public_official.json }
+        response: { names: [経済産業省「DXレポート」] }
+      unreadable:
+        request: { path: data/itc/sources/broken.json }
+        error: INVALID_INPUT
+
+  readMaterialRequirements:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 登録簿（src/shared/targets.json）から、その学びの種類と、ロードマップ型の値のうち見分けの語・使い方の見出し・避ける語・禁じた書き方を読む
+    request:
+      type: object
+      required: [learning]
+      properties:
+        learning: { type: string, pattern: "^[a-z]+$", description: 登録簿の学びの key }
+    response:
+      type: object
+      description: 登録簿のその学びの項のうち門が読む欄
+      required: [kind]
+      properties:
+        kind: { type: string, enum: [exam, roadmap], description: exam が資格対策 }
+        roadmapSpec:
+          type: object
+          description: ロードマップ型の学びだけが持つ
+          required: [keywordLabel, usageSection]
+          properties:
+            keywordLabel: { type: string, minLength: 1, description: 説明が必ず含む見分けの語の行の語 }
+            usageSection: { type: string, minLength: 1, description: 詳しい解説の使い方の見出しの語。無いときは警告 }
+            ngWords: { type: array, description: 避ける語の正規表現, items: { type: string, minLength: 1 } }
+            bannedPatterns: { type: object, description: 禁じた書き方の正規表現から禁じた理由へ, additionalProperties: { type: string, minLength: 1 } }
+    errors:
+      - code: NOT_FOUND
+        when: 登録簿に無い学び
+    examples:
+      ok:
+        request: { learning: itc }
+        response: { kind: roadmap, roadmapSpec: { keywordLabel: 見分けワード, usageSection: 面接で話すなら, ngWords: [激務, "ブラック(?!ボックス)", 年収, 万円, 最新, 近年] } }
+      unknown:
+        request: { learning: zzz }
+        error: NOT_FOUND
+

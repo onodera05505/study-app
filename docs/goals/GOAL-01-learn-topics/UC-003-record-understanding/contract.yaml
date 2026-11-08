@@ -4,9 +4,9 @@
 # おすすめ順の一覧（GET /api/topics の sort=recommended）と論点の画面の次に学ぶ（GET /api/topics/{id} の nextTopic）は、
 # 同じ経路の operation が UC-002 の契約（listTopics / getTopicDetail）にあるため、ここには書かない（ADR-0001 決め 1）
 x-uc: UC-003
-x-status: draft
+x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-10-01
+x-updated: 2026-11-06
 
 operations:
   recordUnderstanding:
@@ -95,7 +95,7 @@ operations:
             properties:
               id: { type: string }
               kind: { type: string }
-              scopeLabel: { type: [string, "null"] }
+              scopeLabel: { type: string, minLength: 1 }
               questionCount: { type: integer, minimum: 0 }
               correctCount: { type: [integer, "null"], minimum: 0 }
               finishedAt: { type: [integer, "null"], description: "終えた時刻（epoch 秒）" }

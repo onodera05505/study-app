@@ -1,28 +1,27 @@
 x-uc: UC-004
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-10-03
+x-updated: 2026-11-06
 
 operations:
   # 分野の一覧（GET /api/fields）と単元の一覧（GET /api/categories）は同じ経路なので UC-002 の契約が正本（UC-002: listFields / listCategories。ADR-0001 の決め 10）
+  # テストの経路（作る・現在の問題・回答・締め・結果）は演習と模試（UC-008）で同じなので、この契約が正本。模試に固有の経路は UC-008 の listExams だけ
   startSession:
     transport: http
     direction: inbound
     owned: true
     auth: bearer
-    summary: 選んだ種別と範囲で進行中のテストを 1 つ作り、範囲の名前と問題数を返す（失敗の本文は ErrorBody だけ。断られた画面は UC-006 の getCurrentSession で進行中のテストを取り直す）
+    summary: 選んだ種別と範囲で進行中のテストを 1 つ作り、範囲の名前・問題数・制限時間を返す（失敗の本文は ErrorBody だけ。断られた画面は UC-006 の getCurrentSession で進行中のテストを取り直す）
     wire:
       method: POST
       path: /api/sessions
       success: 201
     request:
-      # 同じ経路の模試（kind: mock）は UC-008 の startMockExam が持つ
       type: object
       required: [kind]
       properties:
         kind:
-          type: string
-          enum: [drill, field, middle, review]
+          $ref: "../../../_shared/components.yaml#/schemas/SessionKind"
         topicId:
           type: integer
           minimum: 1
@@ -32,37 +31,46 @@ operations:
         middleNo:
           type: integer
           minimum: 1
+        exam:
+          type: string
+          minLength: 1
+          description: 模試の回の ID（UC-008 の listExams の exam）。模試で省略すると全範囲のランダム構成になる
         size:
           type: integer
           minimum: 1
           maximum: 100
+          description: 省略時は登録簿の値。模試で回を指定したときは無視される
       oneOf:
         - { properties: { kind: { const: drill } }, required: [kind, topicId] }
         - { properties: { kind: { const: field } }, required: [kind, field] }
         - { properties: { kind: { const: middle } }, required: [kind, middleNo] }
         - { properties: { kind: { const: review } }, required: [kind] }
+        - { properties: { kind: { const: mock } }, required: [kind] }
     response:
       type: object
       required: [id, kind, scopeLabel, questionCount, timeLimitSec]
       properties:
         id: { type: string, format: uuid }
-        kind: { type: string, enum: [drill, field, middle, review] }
+        kind: { $ref: "../../../_shared/components.yaml#/schemas/SessionKind" }
         scopeLabel: { type: string, minLength: 1 }
         questionCount: { type: integer, minimum: 1 }
-        timeLimitSec: { type: [integer, "null"] }
+        timeLimitSec: { type: [integer, "null"], minimum: 1, description: 模試だけが持ち、演習は null }
+      oneOf:
+        - { properties: { kind: { const: mock }, timeLimitSec: { type: integer, minimum: 1 } } }
+        - { properties: { kind: { enum: [drill, field, middle, review] }, timeLimitSec: { type: "null" } } }
     errors:
       - code: UNAUTHENTICATED
         when: Authorization の Bearer トークンが無い、または読めない
         wire: { status: 401 }
       - code: INVALID_INPUT
-        when: 本文が kind・topicId・field・middleNo・size の形を満たさない
+        when: 本文が kind・topicId・field・middleNo・exam・size の形を満たさない
         wire: { status: 400 }
       - code: CONFLICT
         when: 進行中のテストが既にある
         wire: { status: 409 }
-      - code: INVALID_INPUT
+      - code: NOT_FOUND
         when: 選んだ範囲に出題できる問題が 1 問も無い
-        wire: { status: 400 }
+        wire: { status: 404 }
     examples:
       okDrill:
         request: { kind: drill, topicId: 2 }
@@ -80,6 +88,14 @@ operations:
           scopeLabel: "分野「テクノロジ系」"
           questionCount: 20
           timeLimitSec: null
+      okMiddle:
+        request: { kind: middle, middleNo: 12 }
+        response:
+          id: "4e7a2b90-c13d-4f56-8a07-2d9b6e1f3c85"
+          kind: middle
+          scopeLabel: "単元「セキュリティ」"
+          questionCount: 20
+          timeLimitSec: null
       okReview:
         request: { kind: review }
         response:
@@ -88,6 +104,22 @@ operations:
           scopeLabel: "間違えた問題の復習"
           questionCount: 20
           timeLimitSec: null
+      okMockExam:
+        request: { kind: mock, exam: 2024r06 }
+        response:
+          id: "3f2a7c1e-5b84-4d6a-9e10-2c7b8a4f0d55"
+          kind: mock
+          scopeLabel: 令和6年度 を通しで受験
+          questionCount: 100
+          timeLimitSec: 7200
+      okMockRandom:
+        request: { kind: mock }
+        response:
+          id: "9c5d41b2-0e7a-4f38-b6c1-5a0d3e92f7aa"
+          kind: mock
+          scopeLabel: 全範囲からランダム100問
+          questionCount: 100
+          timeLimitSec: 7200
       invalidKind:
         request: { kind: daily }
         error: INVALID_INPUT
@@ -97,12 +129,18 @@ operations:
       invalidSize:
         request: { kind: field, field: "テクノロジ系", size: 101 }
         error: INVALID_INPUT
+      invalidMockSize:
+        request: { kind: mock, size: 0 }
+        error: INVALID_INPUT
       inProgress:
         request: { kind: middle, middleNo: 23 }
         error: CONFLICT
       emptyScope:
         request: { kind: drill, topicId: 9999 }
-        error: INVALID_INPUT
+        error: NOT_FOUND
+      emptyMockScope:
+        request: { kind: mock, exam: 2009h21a }
+        error: NOT_FOUND
       inProgressBeforeEmptyScope:
         request: { kind: drill, topicId: 9999 }
         error: CONFLICT
@@ -115,7 +153,7 @@ operations:
     direction: inbound
     owned: true
     auth: bearer
-    summary: 進行中のテストの現在の問題（未回答の最小位置）を、範囲と進み具合とともに返す
+    summary: 進行中のテストの現在の問題（未回答の最小位置）を、範囲と進み具合と残り時間とともに返す
     wire:
       method: GET
       path: /api/sessions/{id}/current
@@ -131,21 +169,23 @@ operations:
       properties:
         session:
           type: object
-          required: [id, kind, scopeLabel, questionCount]
+          required: [id, kind, scopeLabel, questionCount, sourceExam]
+          additionalProperties: false
+          description: テストが終わっていてもこの 5 鍵だけ
           properties:
             id: { type: string, format: uuid }
-            kind: { type: string, enum: [drill, field, middle, review] }
+            kind: { $ref: "../../../_shared/components.yaml#/schemas/SessionKind" }
             scopeLabel: { type: string, minLength: 1 }
             questionCount: { type: integer, minimum: 1 }
-            sourceExam: { type: [string, "null"] }
+            sourceExam: { type: [string, "null"], description: 模試の回の ID。ランダム構成と演習は null }
         question:
           oneOf:
             - $ref: "../../../_shared/components.yaml#/schemas/QuestionSnapshot"
             - type: "null"
         answered: { type: integer, minimum: 0 }
-        remainingSec: { type: [integer, "null"] }
+        remainingSec: { type: [integer, "null"], minimum: 0, description: 制限時間の無いテストは null }
         finished: { type: boolean }
-        expired: { type: boolean }
+        expired: { type: boolean, description: finished が true の応答にだけ入る }
     errors:
       - code: UNAUTHENTICATED
         when: Authorization の Bearer トークンが無い、または読めない
@@ -185,11 +225,39 @@ operations:
             kind: drill
             scopeLabel: "論点「オープンソースソフトウェア」"
             questionCount: 10
+            sourceExam: null
           question: null
           finished: true
           expired: false
           answered: 10
           remainingSec: null
+      okMockQuestion:
+        request: { id: "3f2a7c1e-5b84-4d6a-9e10-2c7b8a4f0d55" }
+        response:
+          session: { id: "3f2a7c1e-5b84-4d6a-9e10-2c7b8a4f0d55", kind: mock, scopeLabel: 令和6年度 を通しで受験, questionCount: 100, sourceExam: 2024r06 }
+          question:
+            idx: 0
+            text: 情報セキュリティの三要素のうち、可用性に該当するものはどれか。
+            choices: { ア: 許可された者だけが情報を参照できる, イ: 必要なときに情報を利用できる, ウ: 情報が改ざんされていない, エ: 行為者を後から特定できる }
+            citation: 令和6年度 問1
+            modified: false
+            hasFigure: false
+            figureDescription: null
+            figureImage: null
+            timesAsked: 1
+            otherCitations: []
+          answered: 0
+          remainingSec: 7200
+          finished: false
+      okMockExpired:
+        request: { id: "3f2a7c1e-5b84-4d6a-9e10-2c7b8a4f0d55" }
+        response:
+          session: { id: "3f2a7c1e-5b84-4d6a-9e10-2c7b8a4f0d55", kind: mock, scopeLabel: 令和6年度 を通しで受験, questionCount: 100, sourceExam: 2024r06 }
+          question: null
+          finished: true
+          expired: true
+          answered: 42
+          remainingSec: 0
       notFound:
         request: { id: "00000000-0000-4000-8000-000000000000" }
         error: NOT_FOUND
@@ -202,7 +270,7 @@ operations:
     direction: inbound
     owned: true
     auth: bearer
-    summary: 現在の問題に選んだ選択肢を送り、正誤・正解の選択肢・問題解説・残りの未回答数を受け取る（失敗の本文は ErrorBody だけ。断られた画面は getCurrentQuestion で位置・finished・expired を取り直す）
+    summary: 現在の問題に選んだ選択肢を送り、演習では正誤・正解の選択肢・問題解説・残りの未回答数を、模試では残りの未回答数と終わったかだけを受け取る（失敗の本文は ErrorBody だけ。断られた画面は getCurrentQuestion で位置・finished・expired を取り直す）
     wire:
       method: POST
       path: /api/sessions/{id}/answer
@@ -215,29 +283,26 @@ operations:
         idx: { type: integer, minimum: 0 }
         answer: { type: string, enum: ["ア", "イ", "ウ", "エ"] }
     response:
-      type: object
-      required: [correct, correctAnswer, explanation, remaining, finished]
-      properties:
-        correct: { type: boolean }
-        correctAnswer: { type: string, enum: ["ア", "イ", "ウ", "エ"] }
-        explanation:
-          oneOf:
-            - type: object
-              required: [correctReason, choices]
-              properties:
-                correctReason: { type: string, minLength: 1 }
-                choices:
-                  type: array
-                  items:
-                    type: object
-                    required: [label, term, note]
-                    properties:
-                      label: { type: string, enum: ["ア", "イ", "ウ", "エ"] }
-                      term: { type: [string, "null"] }
-                      note: { type: string, minLength: 1 }
-            - type: "null"
-        remaining: { type: integer, minimum: 0 }
-        finished: { type: boolean }
+      oneOf:
+        - type: object
+          description: 演習の応答
+          required: [correct, correctAnswer, explanation, remaining, finished]
+          properties:
+            correct: { type: boolean }
+            correctAnswer: { type: string, enum: ["ア", "イ", "ウ", "エ"] }
+            explanation:
+              oneOf:
+                - $ref: "../../../_shared/components.yaml#/schemas/Explanation"
+                - type: "null"
+            remaining: { type: integer, minimum: 0 }
+            finished: { type: boolean }
+        - type: object
+          description: 模試の応答
+          required: [remaining, finished]
+          additionalProperties: false
+          properties:
+            remaining: { type: integer, minimum: 0 }
+            finished: { type: boolean }
     errors:
       - code: UNAUTHENTICATED
         when: Authorization の Bearer トークンが無い、または読めない
@@ -252,13 +317,16 @@ operations:
         when: テストが進行中でない
         wire: { status: 409 }
       - code: CONFLICT
-        when: 制限時間を過ぎている（演習の種別には制限時間が無い）
+        when: 残り時間が 0 に達している（演習の種別には制限時間が無い）
         wire: { status: 409 }
       - code: CONFLICT
         when: 未回答の問題が 1 問も無い
         wire: { status: 409 }
       - code: CONFLICT
         when: 送られた位置が現在の問題の位置と違う
+        wire: { status: 409 }
+      - code: CONFLICT
+        when: 同じ位置への回答が先に記録された
         wire: { status: 409 }
     examples:
       okCorrect:
@@ -283,6 +351,9 @@ operations:
           explanation: null
           remaining: 5
           finished: false
+      okMock:
+        request: { id: "3f2a7c1e-5b84-4d6a-9e10-2c7b8a4f0d55", idx: 0, answer: "イ" }
+        response: { remaining: 99, finished: false }
       invalidAnswer:
         request: { id: "8f14e45f-ea2b-4f1c-9a3e-6b1d2c7f4a90", idx: 3, answer: "A" }
         error: INVALID_INPUT
@@ -291,6 +362,9 @@ operations:
         error: NOT_FOUND
       alreadyCompleted:
         request: { id: "b5d6c1a0-3f48-4e97-9d52-7a1c8e0b6f34", idx: 0, answer: "ア" }
+        error: CONFLICT
+      mockExpired:
+        request: { id: "3f2a7c1e-5b84-4d6a-9e10-2c7b8a4f0d55", idx: 7, answer: "ア" }
         error: CONFLICT
       staleIdx:
         request: { id: "8f14e45f-ea2b-4f1c-9a3e-6b1d2c7f4a90", idx: 1, answer: "ア" }
@@ -341,9 +415,154 @@ operations:
       okAgain:
         request: { id: "8f14e45f-ea2b-4f1c-9a3e-6b1d2c7f4a90" }
         response: { ok: true, correct: 7, total: 10 }
+      okMock:
+        request: { id: "3f2a7c1e-5b84-4d6a-9e10-2c7b8a4f0d55" }
+        response: { ok: true, correct: 64, total: 100 }
       notFound:
         request: { id: "00000000-0000-4000-8000-000000000000" }
         error: NOT_FOUND
       unauthenticated:
         request: { id: "8f14e45f-ea2b-4f1c-9a3e-6b1d2c7f4a90" }
         error: UNAUTHENTICATED
+
+  getSessionResult:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: bearer
+    summary: 締めたテストの総合と分野別の正答率、合否の目安とその基準、問題ごとの振り返りを返す
+    wire:
+      method: GET
+      path: /api/sessions/{id}
+      success: 200
+    request:
+      type: object
+      required: [id]
+      properties:
+        id: { type: string, format: uuid }
+    response:
+      type: object
+      required: [session, overall, fields, passed, expired, criteria, approximation, items]
+      properties:
+        session:
+          type: object
+          required: [id, kind, scopeLabel, questionCount, sourceExam]
+          properties:
+            id: { type: string, format: uuid }
+            kind: { $ref: "../../../_shared/components.yaml#/schemas/SessionKind" }
+            scopeLabel: { type: string, minLength: 1 }
+            questionCount: { type: integer, minimum: 1 }
+            sourceExam: { type: [string, "null"], description: 模試の回の ID。ランダム構成と演習は null }
+            status: { type: string, enum: [in_progress, completed] }
+            timeLimitSec: { type: [integer, "null"] }
+            correctCount: { type: [integer, "null"] }
+            startedAt: { type: integer }
+            finishedAt: { type: [integer, "null"] }
+            userId: { type: string }
+        overall:
+          type: object
+          required: [total, correct, pct]
+          properties:
+            total: { type: integer, minimum: 0 }
+            correct: { type: integer, minimum: 0 }
+            pct: { type: integer, minimum: 0, maximum: 100 }
+        fields:
+          type: array
+          items:
+            type: object
+            required: [field, total, correct, pct]
+            properties:
+              field: { type: string, minLength: 1 }
+              total: { type: integer, minimum: 1 }
+              correct: { type: integer, minimum: 0 }
+              pct: { type: integer, minimum: 0, maximum: 100 }
+        passed: { type: boolean }
+        expired: { type: boolean }
+        criteria:
+          type: object
+          required: [overallPct, fieldPct]
+          properties:
+            overallPct: { type: integer, minimum: 0, maximum: 100 }
+            fieldPct: { type: integer, minimum: 0, maximum: 100 }
+        approximation: { type: string, minLength: 1 }
+        items:
+          type: array
+          items:
+            type: object
+            required: [idx, text, choices, answer, userAnswer, result, citation, modified, hasFigure, figureDescription, figureImage, timesAsked, otherCitations, topicId, topicTerm, explanation]
+            properties:
+              idx: { type: integer, minimum: 0 }
+              text: { type: string, minLength: 1 }
+              choices: { type: object, description: ア・イ・ウ・エ を鍵にした選択肢の文 }
+              answer: { type: string, enum: ["ア", "イ", "ウ", "エ"] }
+              userAnswer: { type: [string, "null"], enum: ["ア", "イ", "ウ", "エ", null] }
+              result: { type: integer, enum: [0, 1, 2], description: 0 未回答 / 1 正答 / 2 誤答 }
+              citation: { type: string, minLength: 1 }
+              modified: { type: boolean }
+              hasFigure: { type: boolean }
+              figureDescription: { type: [string, "null"] }
+              figureImage: { type: [string, "null"] }
+              timesAsked: { type: integer, minimum: 1 }
+              otherCitations: { type: array, items: { type: string } }
+              topicId: { type: [integer, "null"] }
+              topicTerm: { type: [string, "null"] }
+              explanation:
+                oneOf:
+                  - $ref: "../../../_shared/components.yaml#/schemas/Explanation"
+                  - type: "null"
+    errors:
+      - code: UNAUTHENTICATED
+        when: Authorization の Bearer トークンが無い、または読めない
+        wire: { status: 401 }
+      - code: NOT_FOUND
+        when: その ID のテストが無い、または本人のものでない
+        wire: { status: 404 }
+      - code: NOT_FOUND
+        when: そのテストはまだ締められていない
+        wire: { status: 404 }
+    examples:
+      ok:
+        request: { id: "3f2a7c1e-5b84-4d6a-9e10-2c7b8a4f0d55" }
+        response:
+          session: { id: "3f2a7c1e-5b84-4d6a-9e10-2c7b8a4f0d55", kind: mock, status: completed, sourceExam: 2024r06, scopeLabel: 令和6年度 を通しで受験, timeLimitSec: 7200, questionCount: 100, correctCount: 64, startedAt: 1759276800, finishedAt: 1759283500 }
+          overall: { total: 100, correct: 64, pct: 64 }
+          fields:
+            - { field: ストラテジ系, total: 35, correct: 20, pct: 57 }
+            - { field: マネジメント系, total: 20, correct: 11, pct: 55 }
+            - { field: テクノロジ系, total: 45, correct: 33, pct: 73 }
+          passed: true
+          expired: false
+          criteria: { overallPct: 60, fieldPct: 30 }
+          approximation: IPA の合否は項目応答理論（IRT）で算出され換算式が非公開のため、ここでの点数は素点による目安です。
+          items:
+            - idx: 0
+              text: 情報セキュリティの三要素のうち、可用性に該当するものはどれか。
+              choices: { ア: 許可された者だけが情報を参照できる, イ: 必要なときに情報を利用できる, ウ: 情報が改ざんされていない, エ: 行為者を後から特定できる }
+              answer: イ
+              userAnswer: ア
+              result: 2
+              citation: 令和6年度 問1
+              modified: false
+              hasFigure: false
+              figureDescription: null
+              figureImage: null
+              timesAsked: 1
+              otherCitations: []
+              topicId: 118
+              topicTerm: 情報セキュリティの三要素
+              explanation:
+                correctReason: 正解はイ。可用性は必要なときに使える状態を保つ性質を指す。
+                choices:
+                  - { label: ア, term: 機密性, note: 許可された者だけが参照できる性質。 }
+                  - { label: イ, term: null, note: 正解。必要なときに利用できる性質が可用性。 }
+                  - { label: ウ, term: 完全性, note: 情報が改ざんされていない性質。 }
+                  - { label: エ, term: 責任追跡性, note: 行為者を後から特定できる性質。 }
+      unauthenticated:
+        request: { id: "3f2a7c1e-5b84-4d6a-9e10-2c7b8a4f0d55" }
+        error: UNAUTHENTICATED
+      notFound:
+        request: { id: "00000000-0000-4000-8000-000000000000" }
+        error: NOT_FOUND
+      notFinished:
+        request: { id: "9c5d41b2-0e7a-4f38-b6c1-5a0d3e92f7aa" }
+        error: NOT_FOUND

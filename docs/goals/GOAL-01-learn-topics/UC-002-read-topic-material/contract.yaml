@@ -4,7 +4,7 @@
 x-uc: UC-002
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-02
+x-updated: 2026-11-06
 
 operations:
   listFields:
@@ -32,7 +32,7 @@ operations:
               questions: { type: integer, minimum: 0 }
               understood: { type: integer, minimum: 0 }
               partly: { type: integer, minimum: 0 }
-              untouched: { type: integer, minimum: 0 }
+              untouched: { type: integer, minimum: 0, description: "未理解の論点の数（理解度の記録が無い論点と、未理解を記録した論点の両方を数える）" }
     errors:
       - code: UNAUTHENTICATED
         when: トークンが無い、または読めない

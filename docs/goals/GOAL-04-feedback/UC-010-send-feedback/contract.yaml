@@ -1,10 +1,10 @@
-# UC-010 開いていた画面を添えてフィードバックを送る — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-146〜161）
+# UC-010 開いていた画面を添えてフィードバックを送る — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-146〜161・242・349）
 # 読み方の決まりは docs/adr/ADR-0001（transport・direction・auth・operation 名の当て方）
 # 共有語彙（authSchemes・errorCodes・共有の形）は ../../../_shared/components.yaml
 x-uc: UC-010
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-10-02
+x-updated: 2026-11-06
 
 operations:
   # ---- 学び側（この配備。フィードバックの受け口） ----
@@ -18,7 +18,7 @@ operations:
     wire: { method: POST, path: /api/feedback, success: 201 }
     request:
       type: object
-      required: [body]
+      required: [body, kind]
       properties:
         body:
           type: string
@@ -28,7 +28,6 @@ operations:
         kind:
           type: string
           enum: [text, unclear, good, improve, other]
-          default: text
           description: 画面が選ばせるのは good / improve / other。text・unclear は既に残っている行の値で、受け付けたままにする
         page:
           type: string
@@ -55,7 +54,7 @@ operations:
         when: 本文が空（空白だけ）または長すぎる。利用者が直せるので具体の文を返す
         wire: { status: 400 }
       - code: INVALID_INPUT
-        when: 本文以外が決められた形でない（本文の型違い・本文ごと JSON でない場合も含む）。固定の文を返す
+        when: 本文以外が決められた形でない（種類が無い・本文の型違い・本文ごと JSON でない場合も含む）。固定の文を返す
         wire: { status: 400 }
       - code: RATE_LIMITED
         when: 同じ利用者の直近 1 日の受付が上限に達している
@@ -72,6 +71,9 @@ operations:
         error: INVALID_INPUT
       badKind:
         request: { body: 分かりにくかった, kind: zzz }
+        error: INVALID_INPUT
+      missingKind:
+        request: { body: 分かりにくかった }
         error: INVALID_INPUT
       noToken:
         request: { body: 分かりにくかった, kind: improve }
@@ -107,6 +109,7 @@ operations:
     summary: 読み終えた論点・問題とその人が読む名前を、覚えている添え先に足す（場所は変えない）
     request:
       type: object
+      additionalProperties: false
       properties:
         label: { type: string, description: 人が読む名前。論点名や問の位置を含む }
         topicId: { type: integer, minimum: 1 }
@@ -138,6 +141,7 @@ operations:
         when: 端末の記憶が読めない、または覚えた値が壊れている（捕まえて null を返す）
     examples:
       ok: { response: { lastPage: { path: /topics/412, label: 学習の単位「LTV」, topicId: 412 } } }
+      okTopicThenQuestion: { response: { lastPage: { path: /topics/412, label: 学習の単位「LTV」 の 3 問目, topicId: 412, questionId: "51d0e9b7-6a24-4c83-9f15-7b2e0d8a43c6#2" } } }
       none: { response: { lastPage: null } }
       unavailable: { error: STORAGE_UNAVAILABLE }
 

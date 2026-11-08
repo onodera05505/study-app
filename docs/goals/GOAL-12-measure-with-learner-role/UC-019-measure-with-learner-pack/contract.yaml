@@ -1,10 +1,12 @@
 # UC-019 の境界: 作り手が手元で呼ぶパックを作る入口と採点の入口、それらが読み書きするファイルの形。
 # 読み方は docs/adr/ADR-0008（手元の道具の境界を local-store で読む）。
 # この契約のパス（data・out・answers・explain・path・file）は、相対ならコマンドを呼んだ作業ディレクトリが起点。登録簿はリポジトリの src/shared/targets.json。
+# 置き場の根は data/ と public/ を持つ場所で、リポジトリ（前置き無し）か、検査用の作り物 tests/fixtures/learner-pack/<名前>/ のどちらか。
+#   学びの置き場はその根の data/<学びの key>、配る本文の図の画像はその根の public/figures/materials/<学びの key> の下。学びの key は data の最後の段
 x-uc: UC-019
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-06
+x-updated: 2026-11-08
 
 schemas:
   PackSnapshot:
@@ -69,7 +71,7 @@ schemas:
       overall: { type: object }
   ToolError:
     type: object
-    description: 両入口が断ったときに返す形。当たった物は、その失敗が挙げる物の欄だけを持つ
+    description: 入口が断ったときに返す形。当たった物は、その失敗が挙げる物の欄だけを持つ
     required: [error]
     properties:
       error:
@@ -99,6 +101,7 @@ schemas:
                 fields: { type: array, minItems: 1, items: { type: string } }
           arguments: { type: array, description: 契約の引数の形の外にある引数の名前, items: { type: string } }
           qids: { type: array, description: 選択肢の外の答えを書いた問題, items: { type: string } }
+          placeholders: { type: array, description: 学習者役への指示の雛形の埋まらない差し込みの名前, items: { type: string, minLength: 1 } }
           unreadable: { type: array, description: 無いか読めないファイル, items: { type: string } }
           rows:
             type: array
@@ -172,14 +175,14 @@ operations:
       required: [data, cycle, out]
       additionalProperties: false
       properties:
-        data: { type: string, pattern: "^data/[a-z]+$" }
+        data: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+$" }
         cycle: { type: integer, minimum: 1 }
-        out: { type: string, minLength: 1, description: パックの出力先。学びの置き場（data/ の下全体）の外で、無いか空の場所 }
+        out: { type: string, minLength: 1, description: パックの出力先。学びの置き場（置き場の根の data/ の下全体）の外で、無いか空の場所 }
     response:
       type: object
       required: [snapshotPath, snapshot, files]
       properties:
-        snapshotPath: { type: string, pattern: "^data/[a-z]+/eval/pack_cycle_[0-9]+\\.json$" }
+        snapshotPath: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+/eval/pack_cycle_[0-9]+\\.json$" }
         snapshot: { $ref: "#/schemas/PackSnapshot" }
         files:
           type: object
@@ -210,6 +213,8 @@ operations:
         when: 説明テストの語の一覧が読めない
       - code: INVALID_INPUT
         when: ロードマップに欠けてはならない欄が無いか型の違う行がある
+      - code: INVALID_INPUT
+        when: 配る本文を選ぶ教材の世代のファイルが読めない
       - code: NOT_FOUND
         when: 配る本文の無い単位がある
       - code: NOT_FOUND
@@ -217,7 +222,9 @@ operations:
       - code: INVALID_INPUT
         when: 同じ PNG の名前になる図が 2 つ以上ある
       - code: INTERNAL
-        when: 図を PNG に描けない
+        when: 図が XML として整わないか、描く待ち時間の上限のうちに PNG に描けない
+      - code: CONFLICT
+        when: 作る間に同じ周の写しが書かれた
     examples:
       ok:
         request: { data: data/eng, cycle: 8, out: ../learner_packs/eng_c8 }
@@ -250,35 +257,43 @@ operations:
         error: CONFLICT
         response: { error: { code: CONFLICT, reason: その周の周の結果がある } }
       questionsMissing:
-        request: { data: data/ecl, cycle: 9, out: ../learner_packs/ecl_c9 }
+        request: { data: tests/fixtures/learner-pack/questions-missing/data/itc, cycle: 1, out: ../learner_packs/questions-missing }
         error: NOT_FOUND
         response: { error: { code: NOT_FOUND, reason: 今の確認問題が無い } }
       questionsUnreadable:
-        request: { data: data/eca, cycle: 9, out: ../learner_packs/eca_c9 }
+        request: { data: tests/fixtures/learner-pack/questions-unreadable/data/itc, cycle: 1, out: ../learner_packs/questions-unreadable }
         error: INVALID_INPUT
-        response: { error: { code: INVALID_INPUT, reason: 今の確認問題が読めない, unreadable: [data/eca/roadmap_questions/bundle_01.json] } }
+        response: { error: { code: INVALID_INPUT, reason: 今の確認問題が読めない, unreadable: [tests/fixtures/learner-pack/questions-unreadable/data/itc/roadmap_questions/bundle_01.json] } }
       explainTermsUnreadable:
-        request: { data: data/cnv, cycle: 9, out: ../learner_packs/cnv_c9 }
+        request: { data: tests/fixtures/learner-pack/explain-terms-unreadable/data/eng, cycle: 1, out: ../learner_packs/explain-terms-unreadable }
         error: INVALID_INPUT
-        response: { error: { code: INVALID_INPUT, reason: 説明テストの語の一覧が読めない, unreadable: [data/cnv/explain_terms.json] } }
+        response: { error: { code: INVALID_INPUT, reason: 説明テストの語の一覧が読めない, unreadable: [tests/fixtures/learner-pack/explain-terms-unreadable/data/eng/explain_terms.json] } }
+      roadmapRowBroken:
+        request: { data: tests/fixtures/learner-pack/roadmap-row-broken/data/itc, cycle: 1, out: ../learner_packs/roadmap-row-broken }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: ロードマップに欠けてはならない欄が無いか型の違う行がある, roadmapRows: [{ index: 3, fields: [topic_id] }] } }
+      materialsUnreadable:
+        request: { data: tests/fixtures/learner-pack/materials-unreadable/data/itc, cycle: 1, out: ../learner_packs/materials-unreadable }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: 配る本文を選ぶ教材の世代のファイルが読めない, unreadable: [tests/fixtures/learner-pack/materials-unreadable/data/itc/materials_v3/bundle_02.json] } }
       bodyMissing:
-        request: { data: data/msg, cycle: 9, out: ../learner_packs/msg_c9 }
+        request: { data: tests/fixtures/learner-pack/body-missing/data/itc, cycle: 1, out: ../learner_packs/body-missing }
         error: NOT_FOUND
         response: { error: { code: NOT_FOUND, reason: 配る本文の無い単位がある, units: [12] } }
       figureMissing:
-        request: { data: data/mkt, cycle: 9, out: ../learner_packs/mkt_c9 }
+        request: { data: tests/fixtures/learner-pack/figure-missing/data/itc, cycle: 1, out: ../learner_packs/figure-missing }
         error: NOT_FOUND
-        response: { error: { code: NOT_FOUND, reason: 配る本文が指す図の画像が無い, figures: [{ unit: 12, ref: /figures/materials/mkt/12-1.svg }] } }
-      roadmapRowBroken:
-        request: { data: data/ecl, cycle: 9, out: ../learner_packs/ecl_c9 }
-        error: INVALID_INPUT
-        response: { error: { code: INVALID_INPUT, reason: ロードマップに欠けてはならない欄が無いか型の違う行がある, roadmapRows: [{ index: 3, fields: [topic_id] }] } }
+        response: { error: { code: NOT_FOUND, reason: 配る本文が指す図の画像が無い, figures: [{ unit: 12, ref: /figures/materials/itc/12-1.svg }] } }
       figureNameCollision:
-        request: { data: data/msg, cycle: 9, out: ../learner_packs/msg_c9 }
+        request: { data: tests/fixtures/learner-pack/figure-name-collision/data/msg, cycle: 1, out: ../learner_packs/figure-name-collision }
         error: INVALID_INPUT
         response: { error: { code: INVALID_INPUT, reason: 同じ PNG の名前になる図が 2 つ以上ある, figures: [{ unit: 5, ref: /figures/materials/msg/5-1.svg }, { unit: 6, ref: /figures/materials/msg/5-1.png }] } }
+      figureNotWellFormed:
+        request: { data: tests/fixtures/learner-pack/figure-not-well-formed/data/itc, cycle: 1, out: ../learner_packs/figure-not-well-formed }
+        error: INTERNAL
+        response: { error: { code: INTERNAL, reason: 図が XML として整わない, figures: [{ unit: 16, ref: /figures/materials/itc/16-2.svg }] } }
       figureNotDrawable:
-        request: { data: data/itc, cycle: 9, out: ../learner_packs/itc_c9 }
+        request: { data: tests/fixtures/learner-pack/figure-not-drawable/data/itc, cycle: 1, out: ../learner_packs/figure-not-drawable }
         error: INTERNAL
         response: { error: { code: INTERNAL, reason: 図を PNG に描けない, figures: [{ unit: 16, ref: /figures/materials/itc/16-1.svg }] } }
       badArgumentsBeforeNotRoadmap:
@@ -305,7 +320,7 @@ operations:
       required: [data, cycle, answers]
       additionalProperties: false
       properties:
-        data: { type: string, pattern: "^data/[a-z]+$" }
+        data: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+$" }
         cycle: { type: integer, minimum: 1 }
         answers: { type: string, minLength: 1, description: 答えのファイル（読んだままの形は readLearnerAnswers、書き方は writePackQuiz の answerFormat） }
         explain: { type: string, minLength: 1, description: 説明テストの採点のファイル（形は readExplainGrades） }
@@ -337,6 +352,8 @@ operations:
         when: 説明テストの採点のファイルが読めない
       - code: INVALID_INPUT
         when: 自己申告に読めない行がある（当たった行をすべて挙げる）
+      - code: CONFLICT
+        when: 採点する間に同じ周の結果が書かれた
     examples:
       ok:
         request: { data: data/eng, cycle: 8, answers: ../learner_packs/eng_c8/learner_answers.json }
@@ -432,13 +449,13 @@ operations:
         error: INVALID_INPUT
         response: { error: { code: INVALID_INPUT, reason: ロードマップを持たない学び } }
       questionsMissing:
-        request: { data: data/ecl, cycle: 9, answers: data/eng/eval/learner_c7_answers.json }
+        request: { data: tests/fixtures/learner-pack/questions-missing/data/itc, cycle: 1, answers: data/eng/eval/learner_c7_answers.json }
         error: NOT_FOUND
         response: { error: { code: NOT_FOUND, reason: 今の確認問題が無い } }
       questionsUnreadable:
-        request: { data: data/eca, cycle: 9, answers: data/eng/eval/learner_c7_answers.json }
+        request: { data: tests/fixtures/learner-pack/questions-unreadable/data/itc, cycle: 1, answers: data/eng/eval/learner_c7_answers.json }
         error: INVALID_INPUT
-        response: { error: { code: INVALID_INPUT, reason: 今の確認問題が読めない, unreadable: [data/eca/roadmap_questions/bundle_01.json] } }
+        response: { error: { code: INVALID_INPUT, reason: 今の確認問題が読めない, unreadable: [tests/fixtures/learner-pack/questions-unreadable/data/itc/roadmap_questions/bundle_01.json] } }
       noSnapshot:
         request: { data: data/eng, cycle: 7, answers: data/eng/eval/learner_c7_answers.json }
         error: NOT_FOUND
@@ -476,6 +493,120 @@ operations:
         error: NOT_FOUND
         response: { error: { code: NOT_FOUND, reason: その周のパックの写しが無い } }
 
+  renderLearnerInstructions:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 学びの学習者役への指示を雛形から描き出す
+    request:
+      type: object
+      required: [data]
+      additionalProperties: false
+      properties:
+        data: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+$", description: 学びの置き場。最後の段が登録簿の学びの key }
+    response:
+      type: object
+      required: [path]
+      properties:
+        path: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+/prompts/roadmap_learner\\.md$", description: 描き出した指示。中身の形は writeLearnerInstructions }
+    errors:
+      - code: INVALID_INPUT
+        when: 引数が契約の形の外
+      - code: INVALID_INPUT
+        when: 登録簿に無い学びか、ロードマップを持たない学び
+      - code: INVALID_INPUT
+        when: 雛形の差し込みに埋まらない物が残る
+    examples:
+      ok:
+        request: { data: data/itc }
+        response: { path: data/itc/prompts/roadmap_learner.md }
+      okChapter:
+        request: { data: data/eng }
+        response: { path: data/eng/prompts/roadmap_learner.md }
+      placeholderUnfilled:
+        request: { data: tests/fixtures/learner-pack/instructions-no-days/data/itc }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: 雛形の差し込みに埋まらない物が残る, placeholders: [days] } }
+      badArguments:
+        request: {}
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: 引数が契約の形の外, arguments: [data] } }
+      unknownLearning:
+        request: { data: data/zzz }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: 登録簿に無い学び } }
+      notRoadmap:
+        request: { data: data/ip }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: ロードマップを持たない学び } }
+      badArgumentsBeforeNotRoadmap:
+        request: { data: data/ip, cycle: 1 }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: 引数が契約の形の外, arguments: [cycle] } }
+
+  readLearnerTemplate:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 学習者役への指示の雛形を読み、節の見出しと、雛形の差し込みの名前と、日で束ねる学びだけの塊の中の差し込みの名前を返す
+    request:
+      type: object
+      required: [path]
+      additionalProperties: false
+      properties:
+        path: { type: string, const: scripts/prompts/roadmap_learner.md }
+    response:
+      type: object
+      required: [headings, placeholders, byDayPlaceholders]
+      properties:
+        headings: { type: array, description: 雛形の節の見出し（改訂履歴の節を含む）, items: { type: string, minLength: 1 } }
+        placeholders: { type: array, description: "雛形の差し込み（{{名前}}）の名前。値は登録簿の学びの語（readRegistryLearning）と、日で束ねる学び（readRoadmap に group_by が無い）ではロードマップの days（readRoadmap）が埋め、既定値では埋めない", items: { type: string, minLength: 1 } }
+        byDayPlaceholders: { type: array, description: "日で束ねる学びだけの塊（雛形で {{#byDay}} と {{/byDay}} に挟んだ文。行の中に置けて入れ子にしない）の中の差し込みの名前。日で束ねる学びでは塊の文を印を除いて出し、章で束ねる学び（readRoadmap の group_by が chapter）では塊を印ごと出さず、中の差し込みを埋めない", items: { type: string, minLength: 1 } }
+    errors: []
+    examples:
+      ok:
+        request: { path: scripts/prompts/roadmap_learner.md }
+        response: { headings: ["# 学習者ロール（理解度を測るための別エージェント。開発側の情報は渡さない）", "## やること", "## 守ること", "## 改訂履歴"], placeholders: [learnerRole, days, goalVerb], byDayPlaceholders: [days] }
+
+  readRegistryLearning:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 登録簿から 1 つの学びの種類と、学習者役への指示に差し込む学びの語を読む
+    request:
+      type: object
+      required: [key]
+      additionalProperties: false
+      properties:
+        key: { type: string, pattern: "^[a-z]+$", description: 学びの key（data の最後の段） }
+    response:
+      type: object
+      required: [roadmap]
+      properties:
+        roadmap: { type: boolean, description: ロードマップを持つ学びか }
+        roadmapSpec:
+          type: object
+          description: ロードマップを持つ学びだけ
+          properties:
+            learnerRole: { type: string, minLength: 1 }
+            goalVerb: { type: string, minLength: 1 }
+    errors:
+      - code: NOT_FOUND
+        when: 登録簿に無い学び
+    examples:
+      ok:
+        request: { key: itc }
+        response: { roadmap: true, roadmapSpec: { learnerRole: "あなたは文系の大学 3 年生です。IT の知識はスマホとレポート作成くらいで、プログラミングの経験はありません。\nIT コンサルの就活を考え始めたところで、業界の言葉は聞いたことがあっても説明できません。", goalVerb: 面接で示せる } }
+      notRoadmap:
+        request: { key: ip }
+        response: { roadmap: false }
+      missing:
+        request: { key: zzz }
+        error: NOT_FOUND
+
   readRoadmap:
     transport: local-store
     direction: outbound
@@ -486,12 +617,13 @@ operations:
       type: object
       required: [data]
       properties:
-        data: { type: string, pattern: "^data/[a-z]+$" }
+        data: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+$" }
     response:
       type: object
       required: [units]
       properties:
         group_by: { type: string, enum: [chapter], description: 章で束ねる学びだけ。無ければ日で束ねる }
+        days: { type: integer, minimum: 1, description: 学ぶ日数。日で束ねる学びだけ }
         units:
           type: array
           items:
@@ -520,7 +652,7 @@ operations:
         request: { data: data/ip }
         error: NOT_FOUND
       unreadable:
-        request: { data: data/ecl }
+        request: { data: tests/fixtures/learner-pack/roadmap-unreadable/data/itc }
         error: INVALID_INPUT
 
   readRoadmapQuestions:
@@ -533,7 +665,7 @@ operations:
       type: object
       required: [data]
       properties:
-        data: { type: string, pattern: "^data/[a-z]+$" }
+        data: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+$" }
     response:
       type: object
       required: [questions]
@@ -566,7 +698,7 @@ operations:
         request: { data: data/ip }
         error: NOT_FOUND
       unreadable:
-        request: { data: data/eca }
+        request: { data: tests/fixtures/learner-pack/questions-unreadable/data/itc }
         error: INVALID_INPUT
 
   readExplainTerms:
@@ -579,7 +711,7 @@ operations:
       type: object
       required: [data]
       properties:
-        data: { type: string, pattern: "^data/[a-z]+$" }
+        data: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+$" }
     response:
       type: object
       required: [terms]
@@ -598,7 +730,7 @@ operations:
         request: { data: data/ip }
         error: NOT_FOUND
       unreadable:
-        request: { data: data/cnv }
+        request: { data: tests/fixtures/learner-pack/explain-terms-unreadable/data/eng }
         error: INVALID_INPUT
 
   readDeliveredBody:
@@ -611,7 +743,7 @@ operations:
       type: object
       required: [data]
       properties:
-        data: { type: string, pattern: "^data/[a-z]+$" }
+        data: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+$" }
     response:
       type: object
       required: [materials]
@@ -629,7 +761,12 @@ operations:
     errors:
       - code: NOT_FOUND
         when: 配る本文が無い
+      - code: INVALID_INPUT
+        when: 教材の世代のファイルが JSON として読めないか、topic_id の無い行がある
     examples:
+      unreadable:
+        request: { data: tests/fixtures/learner-pack/materials-unreadable/data/itc }
+        error: INVALID_INPUT
       ok:
         request: { data: data/eng }
         response: { materials: [{ topic_id: 1, term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）, explanation: "**コンピュータの 5 つの働き**は…", detail: "### しくみ\n![…](/figures/materials/eng/1-1.svg)\n…" }] }
@@ -647,12 +784,13 @@ operations:
       type: object
       required: [src]
       properties:
-        src: { type: string, pattern: "^/figures/materials/[a-z]+/.+\\.(svg|png)$", description: 本文の図の行の参照先。実体は public の下の同じパス }
+        src: { type: string, pattern: "^/figures/materials/[a-z]+/.+\\.(svg|png)$", description: 本文の図の行の参照先。実体は置き場の根の public の下の同じパス }
+        root: { type: string, pattern: "^tests/fixtures/learner-pack/[a-z0-9-]+$", description: 置き場の根。リポジトリのときは持たない }
     response:
       type: object
       required: [file]
       properties:
-        file: { type: string, pattern: "^public/figures/materials/[a-z]+/.+\\.(svg|png)$" }
+        file: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?public/figures/materials/[a-z]+/.+\\.(svg|png)$" }
     errors:
       - code: NOT_FOUND
         when: 画像が置き場所に無い
@@ -660,6 +798,9 @@ operations:
       ok:
         request: { src: /figures/materials/eng/1-1.svg }
         response: { file: public/figures/materials/eng/1-1.svg }
+      okInFixture:
+        request: { src: /figures/materials/itc/16-1.svg, root: tests/fixtures/learner-pack/figure-not-drawable }
+        response: { file: tests/fixtures/learner-pack/figure-not-drawable/public/figures/materials/itc/16-1.svg }
       missing:
         request: { src: /figures/materials/eng/999-9.svg }
         error: NOT_FOUND
@@ -785,10 +926,11 @@ operations:
     summary: 図を PNG に描いてパックの中に書く（元が PNG ならそのまま写す）
     request:
       type: object
-      required: [out, file, target]
+      required: [out, file, target, renderTimeoutSeconds]
       properties:
         out: { type: string, minLength: 1 }
-        file: { type: string, pattern: "^public/figures/materials/[a-z]+/.+\\.(svg|png)$" }
+        renderTimeoutSeconds: { type: integer, const: 30, description: 1 つの図を描く待ち時間の上限 }
+        file: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?public/figures/materials/[a-z]+/.+\\.(svg|png)$" }
         target: { type: string, pattern: "^figures/.+\\.png$", description: file の public/figures/materials/ の下の学びの key のディレクトリより下のパスを、サブパスごと figures/ の下に保ち、拡張子だけを .png にする }
     response:
       type: object
@@ -798,16 +940,19 @@ operations:
         mediaType: { type: string, const: image/png, description: 元の図に書かれた文字（長音符・中黒を含む）を欠かさずに描いた画像 }
     errors:
       - code: INTERNAL
-        when: 図を PNG に描けない
+        when: 図が XML として整わないか、待ち時間の上限のうちに PNG に描けない
     examples:
       ok:
-        request: { out: ../learner_packs/eng_c8, file: public/figures/materials/eng/1-1.svg, target: figures/1-1.png }
+        request: { out: ../learner_packs/eng_c8, file: public/figures/materials/eng/1-1.svg, target: figures/1-1.png, renderTimeoutSeconds: 30 }
         response: { path: figures/1-1.png, mediaType: image/png }
       keepsSubpath:
-        request: { out: ../learner_packs/eng_c8, file: public/figures/materials/eng/a/1-1.svg, target: figures/a/1-1.png }
+        request: { out: ../learner_packs/eng_c8, file: public/figures/materials/eng/a/1-1.svg, target: figures/a/1-1.png, renderTimeoutSeconds: 30 }
         response: { path: figures/a/1-1.png, mediaType: image/png }
       notDrawable:
-        request: { out: ../learner_packs/itc_c9, file: public/figures/materials/itc/16-1.svg, target: figures/16-1.png }
+        request: { out: ../learner_packs/figure-not-drawable, file: tests/fixtures/learner-pack/figure-not-drawable/public/figures/materials/itc/16-1.svg, target: figures/16-1.png, renderTimeoutSeconds: 30 }
+        error: INTERNAL
+      notWellFormed:
+        request: { out: ../learner_packs/figure-not-well-formed, file: tests/fixtures/learner-pack/figure-not-well-formed/public/figures/materials/itc/16-2.svg, target: figures/16-2.png, renderTimeoutSeconds: 30 }
         error: INTERNAL
 
   readLearnerAnswers:
@@ -885,7 +1030,7 @@ operations:
       type: object
       required: [data, cycle]
       properties:
-        data: { type: string, pattern: "^data/[a-z]+$" }
+        data: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+$" }
         cycle: { type: integer, minimum: 1 }
     response: { $ref: "#/schemas/PackSnapshot" }
     errors:
@@ -914,7 +1059,7 @@ operations:
       type: object
       required: [data, cycle]
       properties:
-        data: { type: string, pattern: "^data/[a-z]+$" }
+        data: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+$" }
         cycle: { type: integer, minimum: 1 }
     response:
       type: object
@@ -950,11 +1095,16 @@ operations:
       type: object
       required: [data, snapshot]
       properties:
-        data: { type: string, pattern: "^data/[a-z]+$" }
+        data: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+$" }
         snapshot: { $ref: "#/schemas/PackSnapshot" }
-    response: { type: object, required: [path], properties: { path: { type: string, pattern: "^data/[a-z]+/eval/pack_cycle_[0-9]+\\.json$" } } }
-    errors: []
+    response: { type: object, required: [path], properties: { path: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+/eval/pack_cycle_[0-9]+\\.json$" } } }
+    errors:
+      - code: CONFLICT
+        when: その周の写しが既にある
     examples:
+      exists:
+        request: { data: data/eng, snapshot: { cycle: 6, units: [{ order: 1, topic_id: 1, term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）, field: コンピュータの仕組み }], questions: [{ qid: t1-1, topic_id: 1, tests_goal: 1, field: コンピュータの仕組み, answer: イ }] } }
+        error: CONFLICT
       ok:
         request: { data: data/eng, snapshot: { cycle: 8, units: [{ order: 1, topic_id: 1, term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）, field: コンピュータの仕組み }], questions: [{ qid: t1-1, topic_id: 1, tests_goal: 1, field: コンピュータの仕組み, answer: イ }] } }
         response: { path: data/eng/eval/pack_cycle_8.json }
@@ -969,13 +1119,47 @@ operations:
       type: object
       required: [data, result]
       properties:
-        data: { type: string, pattern: "^data/[a-z]+$" }
+        data: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+$" }
         result: { $ref: "#/schemas/CycleResult" }
-    response: { type: object, required: [path], properties: { path: { type: string, pattern: "^data/[a-z]+/eval/cycle_[0-9]+\\.json$" } } }
-    errors: []
+    response: { type: object, required: [path], properties: { path: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+/eval/cycle_[0-9]+\\.json$" } } }
+    errors:
+      - code: CONFLICT
+        when: その周の結果が既にある
     examples:
+      exists:
+        request:
+          data: data/eng
+          result: { cycle: 6, score: 0/0, rate: 0, by_goal: {}, by_field: {}, per_unit: {}, reported_units: 0, avg_understood: 0, stuck_units: [], overconfident_units: [], unknown_terms: [], shift_suspect: [], shift_window: 3, wrong: [], changed_answers: [] }
+        error: CONFLICT
       ok:
         request:
           data: data/eng
           result: { cycle: 8, score: 0/0, rate: 0, by_goal: {}, by_field: {}, per_unit: {}, reported_units: 0, avg_understood: 0, stuck_units: [], overconfident_units: [], unknown_terms: [], shift_suspect: [], shift_window: 3, wrong: [], changed_answers: [] }
         response: { path: data/eng/eval/cycle_8.json }
+
+  writeLearnerInstructions:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 雛形から描き出した学びの学習者役への指示を書く
+    request:
+      type: object
+      required: [path, headings, answerFormat]
+      properties:
+        path: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+/prompts/roadmap_learner\\.md$" }
+        headings:
+          type: array
+          description: 指示の節の見出し。雛形の改訂履歴の節を持たない
+          items: { type: string, minLength: 1, not: { const: "## 改訂履歴" } }
+        answerFormat:
+          description: 指示が示す答えと自己申告の書き方。units の topic_id を必須とする
+          allOf:
+            - { $ref: "#/schemas/LearnerAnswers" }
+            - { properties: { units: { type: array, minItems: 1 } } }
+    response: { type: object, required: [path], properties: { path: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+/prompts/roadmap_learner\\.md$" } } }
+    errors: []
+    examples:
+      ok:
+        request: { path: data/eng/prompts/roadmap_learner.md, headings: ["# 学習者ロール", "## やること", "## 守ること"], answerFormat: { answers: { t1-1: ア }, units: [{ topic_id: 1, understood: 3, minutes: 5, confusing: "", unknown_terms: [] }] } }
+        response: { path: data/eng/prompts/roadmap_learner.md }

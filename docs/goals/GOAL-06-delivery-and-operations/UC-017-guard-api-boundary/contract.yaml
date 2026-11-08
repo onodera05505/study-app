@@ -1,10 +1,10 @@
-# UC-017 学びとまなびばの要求の受け口を一様に守る — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-255〜262・275）
+# UC-017 学びとまなびばの要求の受け口を一様に守る — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-255〜262・275・353・354）
 # 読み方の決まりは docs/adr/ADR-0001（境界の読み方）、共有語彙は ../../../_shared/components.yaml
 # この UC は新しい経路を露わにしない（下の x-no-boundary が、横切る境界をどの契約が持つかを名指す）。
 x-uc: UC-017
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-10-02
+x-updated: 2026-11-06
 
 operations: {}
-x-no-boundary: 横切る境界はすべて各 UC の operation で、この UC が足す経路は無い（通るトークンまたはセッションが無い要求の断りは各 UC の auth が bearer か session の operation の UNAUTHENTICATED、決められた形を満たさない本文の断りは同じ operation の INVALID_INPUT、死活確認は UC-015 の checkDeploymentHealth、配備にトークンの署名の秘密が無いときの発行の断りは UC-013 の signInWithCode・signInWithPassword・register の NOT_CONFIGURED、まなびばのセッションを要する経路は UC-011・UC-013・UC-014 の operation が形の正本）。受け持たない経路の断り・想定していない失敗の固定の 1 文（errorCodes の INTERNAL）・配備にトークンの署名の秘密が無いときの認証を要するどの経路でも同じ断り（errorCodes の NOT_CONFIGURED）・どの応答にも載るセキュリティヘッダは 1 つの operation に属さない全経路の最終段で、画面が失敗を受け取る形は各 operation の errors がそのまま持つので、同じ経路の形の第 2 の正を立てない（R-101）
+x-no-boundary: 横切る境界はすべて各 UC の operation で、この UC が足す経路は無い（通るトークンまたはセッションが無い要求の断りは各 UC の auth が bearer か session の operation の UNAUTHENTICATED、決められた形を満たさない本文の断りは同じ operation の INVALID_INPUT、死活確認は UC-015 の checkDeploymentHealth、配備にトークンの署名の秘密が無いときの発行の断りは UC-013 の signInWithCode の NOT_CONFIGURED、まなびばのセッションを要する経路は UC-011・UC-013・UC-014 の operation が形の正本）。受け持たない経路の断り・想定していない失敗の固定の 1 文（errorCodes の INTERNAL）・配備にトークンの署名の秘密が無いときの認証を要するどの経路でも同じ断り（errorCodes の NOT_CONFIGURED）・学びの key が無い・登録簿に無い学び側の配備での死活確認を含む受け持つどの経路でも同じ断り（errorCodes の NOT_CONFIGURED。受け持たない経路は受け持たない経路の断りのまま）・どの応答にも載るセキュリティヘッダは 1 つの operation に属さない全経路の最終段で、画面が失敗を受け取る形は各 operation の errors がそのまま持つので、同じ経路の形の第 2 の正を立てない（R-101）

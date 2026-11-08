@@ -1,10 +1,12 @@
-# UC-013 まなびばから権限のある学びに入る — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-181〜208・263・274）
+# UC-013 まなびばから権限のある学びに入る — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-181〜208・263・274・289・406・407）
 # 読み方の決まりは docs/adr/ADR-0001（transport・direction・auth・operation 名の当て方）
 # 共有語彙（authSchemes・errorCodes・共有の形）は ../../../_shared/components.yaml
+# 学び側のパスワードでのログインと登録の経路は受け持たない経路で、この契約に operation を持たない（断りの形は UC-017 の x-no-boundary が名指す受け持たない経路の断り。本番で閉じていることを叩く形は UC-015 の probeRetiredPasswordRoute）
+# 学び側の operation の形は、与えられた学びの key が登録簿にある配備の形。key を解決できない配備の断りは UC-017 の x-no-boundary が名指す全経路の最終段の断りで、各 operation の errors に持たない
 x-uc: UC-013
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-10-02
+x-updated: 2026-11-07
 
 operations:
   # ---- まなびば（認証と権限の正本。学びとは別の配備・別の DB） ----
@@ -190,7 +192,18 @@ operations:
       required: [code]
       properties:
         code: { type: string, minLength: 1, maxLength: 100 }
-    response: { $ref: "#/schemas/TokenAndUser" }
+    response:
+      type: object
+      required: [token, user]
+      properties:
+        token: { type: string, minLength: 1 }
+        user:
+          type: object
+          required: [id, name, role]
+          properties:
+            id: { type: string }
+            name: { type: string, minLength: 1, maxLength: 50 }
+            role: { type: string, enum: [ADMIN, MEMBER] }
     errors:
       - code: NOT_CONFIGURED
         when: トークンの署名の秘密が配備に無い
@@ -221,80 +234,6 @@ operations:
       portalUnreachable: { request: { code: 3f1c9a52-7b0e-4a1d-9c3e-2f5b8d6a1e40 }, error: UPSTREAM_UNAVAILABLE }
       noGrant: { request: { code: c90d4e71-6f58-4a22-b1d3-7e8f05ac2461 }, error: FORBIDDEN }
       usedCode: { request: { code: 5b7e0c14-2a93-4de6-8f21-0c4ab9e35d77 }, error: UNAUTHENTICATED }
-
-  signInWithPassword:
-    transport: http
-    direction: inbound
-    owned: true
-    auth: none
-    summary: まなびばの場所が無い配備で、メールとパスワードからこの学びのトークンを発行する
-    wire: { method: POST, path: /api/auth/login, success: 200 }
-    request:
-      type: object
-      required: [email, password]
-      properties:
-        email: { type: string, format: email, maxLength: 200 }
-        password: { type: string, minLength: 8, maxLength: 200 }
-    response: { $ref: "#/schemas/TokenAndUser" }
-    errors:
-      - code: NOT_CONFIGURED
-        when: トークンの署名の秘密が配備に無い
-        wire: { status: 503 }
-      - code: NOT_FOUND
-        when: まなびばの場所が与えられている配備ではこの経路を受け付けない
-        wire: { status: 404 }
-      - code: INVALID_INPUT
-        when: メールが形を満たさない、またはパスワードが 8 文字未満か 200 文字超
-        wire: { status: 400 }
-      - code: UNAUTHENTICATED
-        when: メールかパスワードが合わない
-        wire: { status: 401 }
-    examples:
-      ok: { request: { email: yudai@example.com, password: harunokaze8 }, response: { token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0ZDJiOGExMCIsIm5hbWUiOiJ0YXJvIiwicm9sZSI6Ik1FTUJFUiIsImV4cCI6MTc5OTk5OTk5OX0.c2lnbmF0dXJlLXNhbXBsZQ, user: { id: 4d2b8a10-9c61-4f03-8a7d-15b2e6c94f88, name: 山田 太郎, role: MEMBER } } }
-      noSigningSecret: { request: { email: yudai@example.com, password: harunokaze8 }, error: NOT_CONFIGURED }
-      ssoDeployment: { request: { email: yudai@example.com, password: harunokaze8 }, error: NOT_FOUND }
-      shortPassword: { request: { email: yudai@example.com, password: mijikai }, error: INVALID_INPUT }
-      wrongPassword: { request: { email: yudai@example.com, password: chigaupass9 }, error: UNAUTHENTICATED }
-
-  register:
-    transport: http
-    direction: inbound
-    owned: true
-    auth: none
-    summary: まなびばの場所が無い配備で、メールと名前と合言葉からこの学びのアカウントを作りトークンを発行する
-    wire: { method: POST, path: /api/auth/register, success: 201 }
-    request:
-      type: object
-      required: [email, password, name]
-      properties:
-        email: { type: string, format: email, maxLength: 200 }
-        password: { type: string, minLength: 8, maxLength: 200 }
-        name: { type: string, minLength: 1, maxLength: 50 }
-        signupCode: { type: string, maxLength: 100, description: 配備に合言葉があるときだけ要る }
-    response: { $ref: "#/schemas/TokenAndUser" }
-    errors:
-      - code: NOT_CONFIGURED
-        when: トークンの署名の秘密が配備に無い
-        wire: { status: 503 }
-      - code: NOT_FOUND
-        when: まなびばの場所が与えられている配備ではこの経路を受け付けない
-        wire: { status: 404 }
-      - code: INVALID_INPUT
-        when: メール・パスワード・名前・合言葉のいずれかが形を満たさない
-        wire: { status: 400 }
-      - code: FORBIDDEN
-        when: 配備の合言葉と合わない、または空のまま送られた
-        wire: { status: 403 }
-      - code: CONFLICT
-        when: 同じメールのアカウントが既にある
-        wire: { status: 409 }
-    examples:
-      ok: { request: { email: yudai@example.com, password: harunokaze8, name: 山田 太郎, signupCode: aikotoba }, response: { token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0ZDJiOGExMCIsIm5hbWUiOiJ0YXJvIiwicm9sZSI6Ik1FTUJFUiIsImV4cCI6MTc5OTk5OTk5OX0.c2lnbmF0dXJlLXNhbXBsZQ, user: { id: 4d2b8a10-9c61-4f03-8a7d-15b2e6c94f88, name: 山田 太郎, role: MEMBER } } }
-      noSigningSecret: { request: { email: yudai@example.com, password: harunokaze8, name: 山田 太郎 }, error: NOT_CONFIGURED }
-      ssoDeployment: { request: { email: yudai@example.com, password: harunokaze8, name: 山田 太郎 }, error: NOT_FOUND }
-      emptyName: { request: { email: yudai@example.com, password: harunokaze8, name: "" }, error: INVALID_INPUT }
-      wrongSignupCode: { request: { email: yudai@example.com, password: harunokaze8, name: 山田 太郎, signupCode: chigau }, error: FORBIDDEN }
-      duplicateEmail: { request: { email: yudai@example.com, password: harunokaze8, name: 山田 太郎, signupCode: aikotoba }, error: CONFLICT }
 
   # ---- 端末の記憶（この端末に残る。鍵の名前は operation 名が表し、値の形だけを書く） ----
 
@@ -368,15 +307,3 @@ schemas:
       grants:
         type: array
         items: { type: string, minLength: 1, description: 権限のある学びの key。learning の昇順 }
-  TokenAndUser:
-    type: object
-    required: [token, user]
-    properties:
-      token: { type: string, minLength: 1 }
-      user:
-        type: object
-        required: [id, name, role]
-        properties:
-          id: { type: string }
-          name: { type: string, minLength: 1, maxLength: 50 }
-          role: { type: string, enum: [ADMIN, MEMBER] }
