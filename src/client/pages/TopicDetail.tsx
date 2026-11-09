@@ -8,15 +8,19 @@ import { DupBadge } from '../components/DupBadge'
 import { Explanation, type ExplanationData } from '../components/Explanation'
 import { Figure } from '../components/Figure'
 import { Markdown } from '../components/Markdown'
-import { STATUS_LABEL, api, clearLastTopic, getLastTopic, setLastTopic, invalidateCached } from '../lib/api'
+import { api, clearLastTopic, getLastTopic, setLastTopic, invalidateCached } from '../lib/api'
 import { isFromResumeLink, type ResumeGoneState } from '../lib/resume'
 import { formatChoice } from '../lib/choice'
 import { TierBadge } from '../components/TierBadge'
+import { StatusChoice } from '../components/StatusBadge'
 
 type Detail = {
   topic: {
     id: number
+    /** 論点の名前。副題を含まない */
     term: string
+    /** 名前に添える副題。副題を持たない論点では null */
+    subtitle: string | null
     explanation: string | null
     detail: string | null
     questionCount: number
@@ -166,25 +170,30 @@ export function TopicDetail() {
     <>
       {/* @implements REQ-029, REQ-141, BR-016 */}
       <BackLink to={exam.roadmap ? '/topics' : `/topics?middleNo=${t.middleNo}`} label={exam.roadmap ? 'ロードマップに戻る' : `${t.middle} に戻る`} />
-      {/* パンくずは押せるようにする。1論点を読んだあと、同じ単元の隣へ進めるため。 */}
-      <p className="crumb">
-        <Link to="/topics">学習</Link> / {t.field} / {t.major} /{' '}
-        <Link to={`/topics?middleNo=${t.middleNo}`}>{t.middle}</Link>
-      </p>
-      <h1>{t.term}</h1>
+      {/* 階層の道筋は資格対策の学びだけに示し、ロードマップ型の学びでは示さない */}
+      {/* 段は 単元の一覧 → 分野 → 単元 → 論点。単元の一覧と単元は押せるようにする。1論点を読んだあと、同じ単元の隣へ進めるため。 */}
+      {/* @implements REQ-423, REQ-424 */}
+      {!exam.roadmap && (
+        <nav className="crumb" aria-label="階層の道筋">
+          <Link to="/topics">単元の一覧</Link> / {t.field} /{' '}
+          <Link to={`/topics?middleNo=${t.middleNo}`}>{t.middle}</Link> / <span aria-current="page">{t.term}</span>
+        </nav>
+      )}
+      {/* 見出しは名前だけにし、副題は見出しの外に従として添える */}
+      {/* @implements REQ-416 */}
+      <h1 className={t.subtitle ? 'has-subtitle' : undefined}>{t.term}</h1>
+      {t.subtitle && <p className="topic-subtitle">{t.subtitle}</p>}
       {/* @implements REQ-284, REQ-285 */}
       {exam.roadmap && tierLabelOf(exam.roadmapSpec, t.tier) && (
         <p className="rm-tier-topic">
           <TierBadge level={t.tier} label={tierLabelOf(exam.roadmapSpec, t.tier)!} />
         </p>
       )}
-      <p className="lead">
-        {exam.roadmap ? (
-          <>ロードマップの単位です。読み終えたら下の確認問題 <b>{t.questionCount} 問</b>で確かめます。</>
-        ) : (
-          <>過去問で <b>{t.questionCount} 回</b> 出題されています。</>
-        )}
-      </p>
+      {!exam.roadmap && (
+        <p className="lead">
+          過去問で <b>{t.questionCount} 回</b> 出題されています。
+        </p>
+      )}
 
       {/* @implements REQ-026 */}
       {t.explanation ? (
@@ -387,18 +396,7 @@ export function TopicDetail() {
       )}
       <div className="dock">
         <span className="lab">理解度</span>
-        <span className="seg">
-          {[1, 2, 3].map((s) => (
-            <button
-              key={s}
-              type="button"
-              aria-pressed={status === s}
-              onClick={() => mark(s)}
-            >
-              {STATUS_LABEL[s]}
-            </button>
-          ))}
-        </span>
+        <StatusChoice status={status} onChoose={mark} />
       </div>
     </>
   )

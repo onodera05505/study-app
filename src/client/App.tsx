@@ -40,6 +40,56 @@ export function App() {
     return () => window.removeEventListener('resize', check)
   })
 
+  // タブの段が学びの名前・アカウントと別の段に並ぶ狭い画面でだけ、下へ読み進めるあいだヘッダーを縮め、タブの段だけを残す。
+  // 直前の読み位置から少しでも上へ動くと元に戻す。広い画面では縮めず、縮んだまま広がったら元に戻す。
+  // 縮める量はタブの段より上の高さ
+  // @implements BR-046, REQ-425, REQ-426
+  const headerRef = useRef<HTMLElement | null>(null)
+  const [headerCollapsed, setHeaderCollapsed] = useState(false)
+  /** タブの段が別の段に並んでいるか（狭い画面か） */
+  const [stacked, setStacked] = useState(false)
+  /** タブの段の外（縮むと操作できなくなる部品）にフォーカスがあるか。タブの段の中のフォーカスは数えない */
+  const [outsideFocused, setOutsideFocused] = useState(false)
+  const shrunk = stacked && headerCollapsed && !menuOpen && !outsideFocused
+  useEffect(() => {
+    const header = headerRef.current
+    const nav = navRef.current
+    if (!header || !nav) return
+    let isStacked = false
+    const measure = () => {
+      const lift = Math.max(0, Math.round(nav.getBoundingClientRect().top - header.getBoundingClientRect().top) - 4)
+      isStacked = lift > 12
+      header.style.setProperty('--header-lift', `${isStacked ? lift : 0}px`)
+      setStacked(isStacked)
+      if (!isStacked) setHeaderCollapsed(false)
+    }
+    measure()
+    let lastY = window.scrollY
+    // 下へ動き続けている区間の起点。下へは起点から 6px を超えて進んだときに縮める
+    let downFrom = lastY
+    let frame = 0
+    const onScroll = () => {
+      if (frame) return
+      frame = requestAnimationFrame(() => {
+        frame = 0
+        const y = window.scrollY
+        if (y < 48 || y < lastY) {
+          setHeaderCollapsed(false)
+          downFrom = y
+        } else if (isStacked && y > downFrom + 6) setHeaderCollapsed(true)
+        // 直前の読み位置は動くたびに更新する（少しでも上へ動いたら戻すため）
+        lastY = y
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', measure)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', measure)
+      if (frame) cancelAnimationFrame(frame)
+    }
+  }, [authed, portal])
+
   useEffect(() => {
     // 入口の URL は公開の設定から取る（学び側は SSO_PORTAL_URL を知っているが、画面には焼き込まない）
     api<{ sso: boolean; portal: string | null }>('/auth/config')
@@ -136,20 +186,37 @@ export function App() {
           </button>
         </div>
       )}
-      <header className="header">
+      {/* 縮んでいる間は、タブの段の外を画面の外へ送るだけでなく読み上げとキーボードからも外す。
+          アカウントのメニューを開いている間と、タブの段の外の部品にフォーカスがある間は縮めない */}
+      {/* @implements BR-046, REQ-425, REQ-426 */}
+      <header
+        ref={headerRef}
+        className={shrunk ? 'header header-collapsed' : 'header'}
+        onFocus={(e) => setOutsideFocused(!navRef.current?.contains(e.target as Node))}
+        onBlur={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setOutsideFocused(false)
+        }}
+      >
         <div className="header-inner">
-          <span className="brand">{exam.brand}</span>
+          <span className="brand" inert={shrunk} aria-hidden={shrunk || undefined}>
+            {exam.brand}
+          </span>
 
           {/* まなびば（入口）へ戻る。SSO が有効なときだけ出す */}
           {portal && (
-            <a className="portal-link" href={portal}>
+            <a className="portal-link" href={portal} inert={shrunk} aria-hidden={shrunk || undefined}>
               ← まなびば
             </a>
           )}
 
           {/* ログアウトはナビに並べない。スマホではナビが横スクロールするため、
               移動のつもりで触ってログアウトしてしまう。メニューに畳んで2手にする。 */}
-          <div className="account" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="account"
+            inert={shrunk}
+            aria-hidden={shrunk || undefined}
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
               type="button"
               className="account-btn"

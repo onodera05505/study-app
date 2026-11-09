@@ -86,7 +86,7 @@ const topicQuery = z.object({
 })
 
 /** 論点一覧。既定は出題頻度の降順＝最短合格の優先順位そのもの。 */
-// @implements REQ-020, REQ-021, REQ-042, REQ-265, BR-029, BR-031, REQ-279, REQ-282
+// @implements REQ-020, REQ-021, REQ-042, REQ-265, BR-029, BR-031, REQ-279, REQ-282, REQ-413
 catalogRoutes.get('/topics', async (c) => {
   const parsed = topicQuery.safeParse(c.req.query())
   if (!parsed.success) return c.json({ error: '検索条件が正しくありません' }, 400)
@@ -109,7 +109,7 @@ catalogRoutes.get('/topics', async (c) => {
   ]
   // recommended = 「頻出なのに、まだ理解できていない」順。これが最短経路の実体。
   // ロードマップ型は出題頻度が一定（確認問題 2 問）なので、学ぶ順（sort_order）で並べる。
-  // 資格版の SQL はロードマップ型の列（sort_order・round・round_label・tier）を参照しない。
+  // 資格版の SQL はロードマップ型の列（sort_order・round・round_label・tier・subtitle）を参照しない。
   const byRoadmap = examOf(c.env.EXAM).roadmap
   const ordering =
     sort === 'name'
@@ -125,6 +125,7 @@ catalogRoutes.get('/topics', async (c) => {
   const rows = await db.all<{
     id: number
     term: string
+    subtitle: string | null
     questionCount: number
     status: number | null
     field: string
@@ -138,6 +139,7 @@ catalogRoutes.get('/topics', async (c) => {
   }>(sql`
     SELECT t.id            AS id,
            t.term          AS term,
+           ${byRoadmap ? sql`t.subtitle` : sql`NULL`} AS subtitle,
            t.question_count AS questionCount,
            p.status        AS status,
            s.field         AS field,
@@ -159,7 +161,7 @@ catalogRoutes.get('/topics', async (c) => {
 })
 
 /** 論点の詳細。解説・周辺知識と、その論点が出題された過去問。 */
-// @implements REQ-023, REQ-045, REQ-284
+// @implements REQ-023, REQ-045, REQ-284, REQ-413
 catalogRoutes.get('/topics/:id', async (c) => {
   const id = Number(c.req.param('id'))
   if (!Number.isInteger(id)) return c.json({ error: '不正な ID です' }, 400)
@@ -174,6 +176,7 @@ catalogRoutes.get('/topics/:id', async (c) => {
   const topicP = db.get<{
     id: number
     term: string
+    subtitle: string | null
     explanation: string | null
     detail: string | null
     questionCount: number
@@ -187,7 +190,8 @@ catalogRoutes.get('/topics/:id', async (c) => {
     syllabusItemId: number
     tier: number | null
   }>(sql`
-    SELECT t.id AS id, t.term AS term, t.explanation AS explanation, t.detail AS detail,
+    SELECT t.id AS id, t.term AS term, ${roadmap ? sql`t.subtitle` : sql`NULL`} AS subtitle,
+           t.explanation AS explanation, t.detail AS detail,
            t.question_count AS questionCount, t.is_new AS isNew, p.status AS status,
            ${roadmap ? sql`t.tier` : sql`NULL`} AS tier,
            s.field AS field, s.major AS major, s.middle AS middle, s.name AS itemName,

@@ -221,7 +221,10 @@ export type Field = {
 
 export type TopicRow = {
   id: number
+  /** 論点の名前。副題を含まない */
   term: string
+  /** 名前に添える副題。副題を持たない論点では null */
+  subtitle: string | null
   questionCount: number
   status: number | null
   field: string

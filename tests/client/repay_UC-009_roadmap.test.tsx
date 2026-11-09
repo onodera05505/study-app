@@ -128,10 +128,13 @@ async function drawRoadmap() {
     text,
     links,
     path: () => (text().match(/PATH:([^|]*)\|/) ?? [])[1] ?? '',
-    /** 一覧の中の「ここから」の印（単位の行に付くもの）。 */
+    /** 先頭の続きの導線（文書の順で最初の、論点の画面かロードマップへ向く導線。先頭の 1 行の中の導線は除く）。
+     *  文言は行き先で変わるので、文言では見分けない。 */
+    headLink: () => headLinkOf(links()),
+    /** 一覧の中の「ここから」の印（単位の行に付くもの）。先頭の続きの導線は除く。 */
     hereRows: () =>
       links()
-        .filter((a) => /^\/topics\/\d+$/.test(a.getAttribute('href') ?? '') && !/ここから（|前回の続き/.test(a.textContent ?? ''))
+        .filter((a) => a !== headLinkOf(links()) && /^\/topics\/\d+$/.test(a.getAttribute('href') ?? ''))
         .map((a) => a.closest('li, tr, [role="listitem"]') ?? a)
         .filter((row) => (row.textContent ?? '').includes('ここから'))
         .map((row) => row.querySelector('a')?.getAttribute('href') ?? ''),
@@ -151,6 +154,10 @@ async function drawRoadmap() {
     },
   }
 }
+
+/** 先頭の続きの導線（文書の順で最初の、論点の画面かロードマップへ向く導線。先頭の 1 行の中の導線は除く）。 */
+const headLinkOf = (links: HTMLAnchorElement[]) =>
+  links.find((a) => /^\/topics(\/\d+)?$/.test(a.getAttribute('href') ?? '') && !a.closest('p.lead'))
 
 beforeEach(() => {
   ;(globalThis as any).IS_REACT_ACT_ENVIRONMENT = true
@@ -229,7 +236,7 @@ describe('先頭の続きの導線（UC-009）', () => {
     stubApi()
     setLastTopic({ id: 103, term: '単位 3 の名前', middle: 'コンサルの仕事', middleNo: 1 })
     const v = await drawRoadmap()
-    const go = v.links().find((a) => /前回の続きから/.test(a.textContent ?? ''))
+    const go = v.headLink()
     expect(go, '先頭に続きの導線が無い（この検査は空振りになる）').toBeTruthy()
     const to = go!.getAttribute('href')
     expect(to, '行き先が宣言されていない（この検査は空振りになる）').toMatch(/^\/topics\/\d+$/)

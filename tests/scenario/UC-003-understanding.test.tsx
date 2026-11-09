@@ -4,7 +4,8 @@
  *
  *  事前条件（ログインして論点の画面を開いている）は、トークンを置いて単元の一覧から
  *  論点の画面まで辿ることで作る。
- *  画面の文字は要件の文面から採り、理解度の 3 段階の文字は「未理解／やや理解／理解」。 */
+ *  画面の文字は用語集から採り、理解度の 3 段階は段階の名前「未理解／やや理解／理解」で探す。
+ *  選ばれている段階は、色ではなく読み上げに届く選択の状態（押されている・選ばれている）で読む。 */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { act, createElement as h } from 'react'
@@ -26,14 +27,18 @@ const CATEGORIES = [
 let recorded: number | null = null
 const PARTLY = 2
 
+/** 同じ単元の論点 2 つ。記録するのは損益分岐点で、もう 1 つは理解のまま（一覧の行を見分けるため）。 */
+const OTHER_TERM = '固定費と変動費'
 const TOPICS = [
-  { id: 11, term: '損益分岐点', questionCount: 9, status: recorded, field: 'ストラテジ系', middle: '企業活動', itemName: '会計と財務', isNew: 0, sortOrder: null },
+  { id: 11, term: '損益分岐点', subtitle: null, questionCount: 9, status: recorded as number | null, field: 'ストラテジ系', middle: '企業活動', itemName: '会計と財務', isNew: 0, sortOrder: null },
+  { id: 12, term: OTHER_TERM, subtitle: null, questionCount: 5, status: 3 as number | null, field: 'ストラテジ系', middle: '企業活動', itemName: '会計と財務', isNew: 0, sortOrder: null },
 ]
 
 const detail = (id: number, term: string, next: unknown) => ({
   topic: {
     id,
     term,
+    subtitle: null,
     explanation: `${term} の短い説明です。`,
     detail: `${term} の詳しい解説です。`,
     questionCount: 1,
@@ -87,7 +92,7 @@ function stubApi() {
     else if (p.endsWith('/topics/11')) body = detail(11, '損益分岐点', null)
     else if (p.endsWith('/topics/555'))
       body = detail(555, '頻出の未理解の論点', { id: 556, term: 'その次に学ぶ論点', questionCount: 6, field: 'ストラテジ系' })
-    else if (p.endsWith('/topics')) body = { topics: TOPICS.map((t) => ({ ...t, status: recorded })) }
+    else if (p.endsWith('/topics')) body = { topics: TOPICS.map((t) => (t.id === 11 ? { ...t, status: recorded } : t)) }
     else if (p.endsWith('/glossary')) body = { glossary: [] }
     else if (p.endsWith('/sessions/current')) body = { session: null }
     else if (p.endsWith('/me')) body = ME
@@ -120,31 +125,70 @@ async function press(name: string | RegExp) {
   })
 }
 
-/** 理解度の 3 段階（画面に出る段階の文字）。 */
+/** 理解度の 3 段階（用語集の段階の名前）。「理解」は他の 2 つに含まれるので、長いものから当てる。 */
 const STAGES = ['未理解', 'やや理解', '理解']
+const squash = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim()
+const stageIn = (t: string) =>
+  t.includes('やや理解') && !t.replace(/やや理解/g, '').includes('理解')
+    ? 'やや理解'
+    : t.includes('未理解') && !t.replace(/未理解/g, '').includes('理解')
+      ? '未理解'
+      : t.includes('理解') && !t.includes('未理解') && !t.includes('やや理解')
+        ? '理解'
+        : null
+/** 操作の名前（読み上げで分かる名前を先に、無ければ見えている文字）。 */
+const nameOf = (el: Element) => {
+  const aria = el.getAttribute('aria-label')
+  if (aria) return squash(aria)
+  const labels = (el as HTMLInputElement).labels
+  if (labels && labels.length) return squash([...labels].map((l) => l.textContent).join(' '))
+  return squash(el.textContent)
+}
+/** 理解度の操作: 選ぶと記録される段階の名前を持つ選択肢。 */
+const STAGE_CONTROLS = 'button, [role="button"], [role="radio"], input[type="radio"]'
 const stageButtons = () =>
-  [...host.querySelectorAll<HTMLButtonElement>('button')].filter((b) =>
-    STAGES.includes((b.textContent ?? '').trim()),
-  )
+  [...host.querySelectorAll<HTMLElement>(STAGE_CONTROLS)].filter((b) => stageIn(nameOf(b)) !== null)
 async function pressStage(label: string) {
-  const b = stageButtons().find((x) => (x.textContent ?? '').trim() === label)
+  const b = stageButtons().find((x) => stageIn(nameOf(x)) === label)
   if (!b) throw new Error(`理解度「${label}」の操作が画面に無い`)
   await act(async () => {
     b.click()
   })
 }
-/** 選ばれている段階の文字（押した状態を持つ段階はいつも 1 つ）。 */
+/** 選ばれていることが色によらず分かる形（読み上げに届く選択の状態）を持つ選択肢か。 */
+const isChosen = (el: HTMLElement) =>
+  el.getAttribute('aria-pressed') === 'true' ||
+  el.getAttribute('aria-checked') === 'true' ||
+  el.getAttribute('aria-selected') === 'true' ||
+  (el.getAttribute('aria-current') ?? 'false') !== 'false' ||
+  (el instanceof HTMLInputElement && el.checked)
+/** 今記録されている段階として示されている選択肢の段階の名前（いつも 1 つ）。 */
 function selectedStage(): string {
   const els = stageButtons()
   if (els.length < STAGES.length)
     throw new Error('理解度の 3 段階（未理解・やや理解・理解）の操作が画面に無い')
-  const marked = els.filter((el) => el.getAttribute('aria-pressed') === 'true')
+  const marked = els.filter(isChosen)
   if (marked.length !== 1)
     throw new Error(
-      `選ばれている段階が ${marked.length} 個ある（1 個のはず）: ` +
-        els.map((e) => `${(e.textContent ?? '').trim()}=${e.getAttribute('aria-pressed')}`).join(' / '),
+      `選ばれている段階が色によらず分かる形で ${marked.length} 個ある（1 個のはず）: ` +
+        els.map((e) => `${nameOf(e)}=${isChosen(e)}`).join(' / '),
     )
-  return (marked[0].textContent ?? '').trim()
+  return stageIn(nameOf(marked[0]))!
+}
+
+/** 論点の一覧の 1 行: 論点名を持つ最も内側の要素から、ほかの論点名を含まない限り外へ広げた範囲。 */
+function rowOf(term: string): HTMLElement {
+  const others = TOPICS.map((t) => t.term).filter((t) => t !== term)
+  const els = [...host.querySelectorAll<HTMLElement>('*')].filter(
+    (el) => squash(el.textContent).includes(term) && ![...el.children].some((c) => squash(c.textContent).includes(term)),
+  )
+  let el = els[els.length - 1]
+  if (!el) throw new Error(`論点「${term}」が一覧に出ていない`)
+  while (el.parentElement && el.parentElement !== host) {
+    if (others.some((o) => squash(el.parentElement!.textContent).includes(o))) break
+    el = el.parentElement
+  }
+  return el
 }
 
 async function open(entry: string) {
@@ -190,7 +234,7 @@ describe('UC-003 理解度を記録して、おすすめ順に学ぶ', () => {
     expect(puts[0].url).toContain('/api/topics/11/progress')
     expect(puts[0].body ?? '', '記録に理解度が入っていない').not.toBe('')
 
-    // step 2: 画面は記録の結果を待たずに、選んだ理解度を押した状態にする
+    // step 2: 記録の完了を待たずに、選ばれた段階を選ばれているものとして示す
     expect(selectedStage(), '押した段階が選ばれていない').toBe('やや理解')
 
     // step 4: 画面は覚えていた分野・単元の集計を捨て、次に一覧を開いたときに数え直させる
@@ -198,12 +242,20 @@ describe('UC-003 理解度を記録して、おすすめ順に学ぶ', () => {
     await press(/戻る/)
     expect(countOf('/api/fields'), '理解度を変えたのに集計を数え直していない').toBeGreaterThan(before)
 
-    // step 4: 画面は記録した理解度を、論点の画面で文字と印の両方で示す
+    // step 4: 記録した理解度を論点の一覧の行で段階の名前で示す
     //（戻り先が単元の一覧のときは単元をもう一度選ぶ。UC はどちらの一覧に戻るかを決めていない）
     if (!controls('損益分岐点').length) await press('企業活動')
+    expect(stageIn(squash(rowOf('損益分岐点').textContent)), '論点の一覧の行に記録した段階の名前が出ていない').toBe(
+      'やや理解',
+    )
+
+    // step 4: 論点の画面で、理解度の操作は今記録されている段階の選択肢を色によらず見分けられる形で示す
     await press('損益分岐点')
-    expect(stageButtons().map((b) => (b.textContent ?? '').trim()), '3 段階の文字が出ていない').toEqual(STAGES)
-    expect(selectedStage(), '記録した段階が示されていない').toBe('やや理解')
+    expect(
+      stageButtons().map((b) => stageIn(nameOf(b))),
+      '理解度の操作の選択肢が段階の名前（未理解・やや理解・理解）を持っていない',
+    ).toEqual(STAGES)
+    expect(selectedStage(), '今記録されている段階の選択肢が色によらず見分けられる形で示されていない').toBe('やや理解')
 
     // step 5・6: 利用者がホームを開く。システムは「出題頻度が高く、まだ理解していない論点」を返す
     await press('ホーム')

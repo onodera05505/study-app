@@ -20,3 +20,38 @@ export function TierBadge({ level, label }: { level: number | null | undefined; 
     </span>
   )
 }
+
+/** ロードマップの単位の行に付ける印。見た目は星だけにし、登録簿の印の語は
+ *  読み上げの名前とツールチップに持たせる。星を持たない語はそのまま見せる。 */
+// @implements REQ-282
+export function TierMark({ level, label }: { level: number | null | undefined; label: string }) {
+  const stars = label.match(/^★+/)?.[0]
+  if (!stars)
+    return (
+      <span className={`rm-tier t-${level ?? 0}`} title={label}>
+        {label}
+      </span>
+    )
+  return (
+    <span className={`rm-tier-mark t-${level ?? 0}`} title={label}>
+      <span aria-hidden="true">{stars}</span>
+      <span className="sr-only">{label}</span>
+    </span>
+  )
+}
+
+/** 印の絞り込みの札の中身。見た目は星だけにし、登録簿の印の語は読み上げの名前に持たせる
+ *  （ツールチップは札の title が持つ）。星を持たない語はそのまま見せる。 */
+// @implements REQ-282
+export function TierStars({ label }: { label: string }) {
+  const stars = label.match(/^★+/)?.[0]
+  if (!stars) return <>{label}</>
+  return (
+    <>
+      <span className="rm-tier-star" aria-hidden="true">
+        {stars}
+      </span>
+      <span className="sr-only">{label}</span>
+    </>
+  )
+}

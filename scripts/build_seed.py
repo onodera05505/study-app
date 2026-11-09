@@ -434,11 +434,13 @@ def main() -> int:
         if m and m.get("term") and m["term"] != t["term"]:
             material_mismatch.append(f"id={tid} 教材『{m['term']}』 ⇔ 論点『{t['term']}』")
             m = None
-        # sort_order・round・round_label・tier はロードマップ型だけが持つ。資格版の topics.json に無いときは列そのものを出さない
+        # sort_order・round・round_label・tier・subtitle はロードマップ型だけが持つ。資格版の topics.json に無いときは列そのものを出さない
         # （資格版の D1 に列が無くても投入できる）。
+        # @implements REQ-414
+        # 副題は topics.json の subtitle をそのまま subtitle 列へ移し、名前（term）とは混ぜない。欄の無い論点は NULL。
         has_order = any("sort_order" in x for x in topics["topics"])
         has_round = any("round" in x for x in topics["topics"])
-        extra_cols = (["sort_order"] if has_order else []) + (["round", "round_label", "tier"] if has_round else [])
+        extra_cols = (["sort_order"] if has_order else []) + (["round", "round_label", "tier", "subtitle"] if has_round else [])
         cols = ", ".join(["id", "term", "syllabus_item_id", "is_new", "explanation", "detail", "question_count"] + extra_cols)
         # 出題頻度（question_count）と topic_questions は同一内容（content_key）の重複を畳まずに数える。
         # 1 問にまとめるのは学習側の出題だけ。

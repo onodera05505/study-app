@@ -8,7 +8,8 @@
 出力（すべて data/itc/ 直下。手で編集しない）:
   syllabus.json         自前の階層。分野（4）→ 中分類 を syllabus_items に写す（major は分野名と同じ）
   topics.json           単位＝論点。id は候補 id で固定（topic_ids.json にも書く）。sort_order がロードマップの順。
-                        round（回の ID）・round_label（回のラベル）・tier（印。登録簿 roadmapSpec.tiers を持つ学びだけ値、他は null）
+                        round（回の ID）・round_label（回のラベル）・tier（印。登録簿 roadmapSpec.tiers を持つ学びだけ値、他は null）・
+                        subtitle（副題。roadmap.json の units[].subtitle をそのまま移す。持たない単位と補足の単位は null）
   exam_labels.json      回の ID → 回の見出し
   answer_keys.json      確認問題の正解
   questions/<回の ID>.json   回に属する単位 × 2 問を「回」として持つ（past_questions に入る。出典は自作の確認問題）
@@ -67,6 +68,10 @@ def main() -> int:
         levels = {t.get("level") for t in spec["tiers"]}
         lack = [u["term"] for u in units if u.get("tier") not in levels]
         assert not lack, f"印が登録簿 roadmapSpec.tiers の段に無い単位: {lack[:5]}"
+    # @implements REQ-414, REQ-422
+    # 副題は名前とは別の欄で受け取り、名前から切り出さない。欄が無い単位は副題なし。空の文字列や文字列でない値は投入しない
+    bad_sub = [u["term"] for u in units if "subtitle" in u and u["subtitle"] is not None and (not isinstance(u["subtitle"], str) or not u["subtitle"].strip())]
+    assert not bad_sub, f"副題が空か文字列でない単位（副題が無いなら subtitle の欄を書かない）: {bad_sub[:5]}"
 
     # --- 階層: 分野 → 中分類 ---
     fields = list(target(key)["fields"])  # 登録簿の並び（補足の分野を含む）
@@ -103,7 +108,7 @@ def main() -> int:
     topics = []
     for u in units:
         c = cands.get(u["topic_id"], {})
-        topics.append({"id": u["topic_id"], "term": u["term"], "match_key": u["term"], "syllabus_item": item_no[(u["field"], u["middle"])],
+        topics.append({"id": u["topic_id"], "term": u["term"], "subtitle": u.get("subtitle"), "match_key": u["term"], "syllabus_item": item_no[(u["field"], u["middle"])],
                        "syllabus_item_name": u["middle"], "field": u["field"], "major": u["field"], "middle": u["middle"], "is_new": False,
                        "related_terms": [], "question_count": len(qs.get(u["topic_id"], [])), "sort_order": u["order"],
                        "questions": [{"exam": qid_of[q["qid"]].rsplit("-q", 1)[0], "number": int(qid_of[q["qid"]].rsplit("-q", 1)[1])} for q in qs.get(u["topic_id"], [])],

@@ -25,6 +25,8 @@ export const topics = sqliteTable(
   {
     id: integer('id').primaryKey({ autoIncrement: true }),
     term: text('term').notNull(),
+    /** ロードマップ型で単位の名前に添える副題。名前（term）とは分けて持ち、副題を持たない単位と資格版は NULL。 */
+    subtitle: text('subtitle'),
     syllabusItemId: integer('syllabus_item_id')
       .notNull()
       .references(() => syllabusItems.id),

@@ -222,6 +222,7 @@ function stubApi(
     inProgress?: boolean
     gone?: boolean
     startFails?: 'network' | { status: number; error: string }
+    me?: typeof ME
   } = {},
 ) {
   calls = []
@@ -278,7 +279,7 @@ function stubApi(
     let body: unknown = {}
     if (url.pathname.endsWith('/topics')) body = { topics: opts.units ?? (eng ? ENG_UNITS : UNITS) }
     else if (url.pathname.endsWith('/exams')) body = opts.exams ?? (eng ? ENG_EXAMS : EXAMS)
-    else if (url.pathname.endsWith('/me')) body = eng ? ENG_ME : ME
+    else if (url.pathname.endsWith('/me')) body = opts.me ?? (eng ? ENG_ME : ME)
     else if (url.pathname.endsWith('/sessions/current')) body = { session: inProgress ? IN_PROGRESS : null }
     else if (url.pathname.endsWith('/glossary')) body = { glossary: [] }
     return { ok: true, status: 200, text: async () => JSON.stringify(body) }
@@ -553,6 +554,34 @@ describe('先頭の 1 行（UC-009）', () => {
     stubApi()
     const v = await drawRoadmap()
     expect(v.lead()).toContain('理解 4 / 7 単位')
+    await v.close()
+  })
+
+  // @covers REQ-131#extras-not-counted
+  it('補足の論点を含む並びでも、補足の論点は理解の数にも総数にも入らない', async () => {
+    // 補足の論点 2 件（理解 1 件・記録なし 1 件）。本人の記録の集計（/me）は学びの論点をすべて数える
+    const extras = [
+      { ...EXTRA, id: 201, term: '補足の単位 甲', status: 3 },
+      { ...EXTRA, id: 202, term: '補足の単位 乙', status: null },
+    ]
+    stubApi({ units: [...UNITS, ...extras], me: { ...ME, topics: { total: 9, understood: 5, partly: 0 } } })
+    const v = await drawRoadmap()
+    expect(v.text(), '補足の論点が描けていない（この検査は空振りになる）').toContain('補足の単位 甲')
+    expect(v.lead(), '補足の論点が理解の数か総数に入っている').toContain('理解 4 / 7 単位')
+    await v.close()
+  })
+
+  // @covers REQ-131#unordered-not-counted
+  it('学ぶ順を持たない補足でない単位を含む並びでも、その単位は理解の数にも総数にも入らない', async () => {
+    // 順序なしの単位 2 件（理解 1 件・記録なし 1 件）。本人の記録の集計（/me）は学びの論点をすべて数える
+    const loose = [
+      { ...unordered(150, '順序なしの単位 甲'), status: 3 },
+      { ...unordered(151, '順序なしの単位 乙'), status: null },
+    ]
+    stubApi({ units: [...UNITS, ...loose], me: { ...ME, topics: { total: 9, understood: 5, partly: 0 } } })
+    const v = await drawRoadmap()
+    expect(v.text(), '順序なしの単位が描けていない（この検査は空振りになる）').toContain('順序なしの単位 甲')
+    expect(v.lead(), '順序なしの単位が理解の数か総数に入っている').toContain('理解 4 / 7 単位')
     await v.close()
   })
 })
@@ -849,13 +878,14 @@ describe('各日の確認テスト（UC-009）', () => {
 
 describe('先頭の導線（UC-009）', () => {
   // @covers REQ-144#last-topic-destination
-  it('覚えた単位があれば「前回の続きから」にする', async () => {
+  it('覚えた単位があれば、先頭の続きの導線の行き先をその単位にし、導線の名前にその単位の名前を入れる', async () => {
     stubApi()
     setLastTopic({ id: 103, term: '単位 3 の名前', middle: 'コンサルの仕事', middleNo: 1 })
     const v = await drawRoadmap()
-    expect(v.text()).toContain('前回の続きから（単位 3 の名前）')
-    const to = v.links().find((a) => /前回の続きから/.test(a.textContent ?? ''))
-    expect(to?.getAttribute('href')).toBe('/topics/103')
+    const to = headLinkOf(v.links())
+    expect(to, '先頭の続きの導線が無い').toBeDefined()
+    expect(to?.getAttribute('href'), '行き先が前回の続きの単位（103）でない').toBe('/topics/103')
+    expect(to?.textContent, '導線の名前に行き先の単位の名前が無い').toContain('単位 3 の名前')
     await v.close()
   })
 
@@ -864,23 +894,25 @@ describe('先頭の導線（UC-009）', () => {
     stubApi({ target: 'eng' })
     setLastTopic({ id: 302, term: '章の単位 302', middle: 'コンピュータの仕組み', middleNo: 1 })
     const v = await drawRoadmap('eng')
-    const go = () => v.links().find((a) => /前回の続きから/.test(a.textContent ?? ''))
+    const go = () => headLinkOf(v.links())
     expect(go()?.getAttribute('href'), '前回の続きが行き先になっていない（この検査は空振りになる）').toBe('/topics/302')
     // 302 は印 1。外すと一覧からは隠れる
     await v.toggleTier(1)
     expect(v.unitLink(302), '印を外せていない（この検査は空振りになる）').toBeUndefined()
     expect(go()?.getAttribute('href'), '絞り込みで前回の続きの行き先が変わっている').toBe('/topics/302')
+    expect(go()?.textContent, '導線の名前に行き先の単位の名前が無い').toContain('章の単位 302')
     await v.close()
   })
 
   // @covers REQ-144#fallback-here
-  it('覚えた単位が無ければ、いま学ぶ位置（status が 3 でない最初の単位）へ送る', async () => {
+  it('覚えた単位が無ければ、先頭の続きの導線の行き先を「ここから」の単位（status が 3 でない最初の単位）にする', async () => {
     stubApi()
     const v = await drawRoadmap()
-    expect(v.text()).not.toContain('前回の続きから')
-    const to = v.links().find((a) => /ここから（/.test(a.textContent ?? ''))
-    expect(to?.textContent).toContain('ここから（単位 5 の名前）')
-    expect(to?.getAttribute('href')).toBe('/topics/105')
+    expect(v.rowText(105), '仕込み: 「ここから」が 5 番に付いていない').toContain('ここから')
+    const to = headLinkOf(v.links())
+    expect(to, '先頭の続きの導線が無い').toBeDefined()
+    expect(to?.getAttribute('href'), '行き先が「ここから」の単位（105）でない').toBe('/topics/105')
+    expect(to?.textContent, '導線の名前に行き先の単位の名前が無い').toContain('単位 5 の名前')
     await v.close()
   })
 })
@@ -896,7 +928,6 @@ describe('先頭の導線の 3 段目（UC-009）', () => {
     const allUnderstood = [{ ...EXTRA, status: 3 }, ...UNITS.map((u) => ({ ...u, status: 3 })).reverse()]
     stubApi({ units: allUnderstood })
     const v = await drawRoadmap()
-    expect(v.text(), '仕込み: 前回の続きがある').not.toContain('前回の続きから')
     expect(v.hereLabels(), '仕込み: 未理解の単位がある').toHaveLength(0)
     const head = headLinkOf(v.links())
     expect(head, '先頭の続きの導線が無い').toBeDefined()
@@ -989,14 +1020,29 @@ describe('回ごとの並び（日で束ねる学び・章で束ねる学び）�
   })
 
   // @covers REQ-129#completed-round-marked
-  it('その日の単位が全て理解の日にだけ、完了した旨を付ける', async () => {
-    stubApi()
+  it('その日の単位が全て理解の日にだけ、回の側に完了した旨を付ける', async () => {
+    // 1 日目は全部理解、2 日目は 3 つのうち 2 つが理解、3 日目は理解なし。回ごとの確認の結果は 3 日とも同じにする
+    const units = [unit(1, 3), unit(2, 3), unit(3, 3), unit(4, 3), unit(5, 3), unit(6, 1), unit(7, 1), unit(8, null), unit(9, 1)]
+    const exams = {
+      exams: EXAMS.exams.map((e) => ({ ...e, attempts: 0, bestScore: null })),
+    }
+    stubApi({ units, exams })
     const v = await drawRoadmap()
-    // 1 日目は 1〜3 が全部理解、2 日目は 5・6 が未理解
-    const done = /完了|済み|✓|✔/
-    expect(v.section(DAY_HEADINGS, 0), '全部理解の 1 日目に完了した旨が無い').toMatch(done)
-    expect(v.section(DAY_HEADINGS, 1), '未理解が残る 2 日目に完了した旨が付いている').not.toMatch(done)
-    expect(v.section(DAY_HEADINGS, 2), '未理解が残る 3 日目に完了した旨が付いている').not.toMatch(done)
+    /** k 日目の回の側の文字（その回の単位の行を取り除き、数と空白を詰めたもの）。
+     *  単位ごとの理解度の記号は行の側にあるので、ここには入らない。 */
+    const roundSide = (k: number) => {
+      let sec = v.section(DAY_HEADINGS, k)
+      for (const u of units.filter((x) => x.round === `itc-d0${k + 1}`)) {
+        const row = v.rowText(Number(u.id))
+        expect(sec, `${DAY_HEADINGS[k]}に単位 ${u.id} の行が無い`).toContain(row)
+        sec = sec.replace(row, '')
+      }
+      return sec.replace(/[0-9０-９]+/g, '').replace(/\s+/g, '')
+    }
+    const [done, partly, none] = [0, 1, 2].map(roundSide)
+    // 完了していない 2 つの回は、回の側の示し方が同じ（違いは完了した旨だけに帰せる）
+    expect(partly, '完了していない 2 日目と 3 日目で、回の側の示し方が違う').toBe(none)
+    expect(done, `全部理解の 1 日目の回の側に、完了していない回と違う示し（完了した旨）が無い: ${done}`).not.toBe(partly)
     await v.close()
   })
 })
@@ -1360,7 +1406,7 @@ describe('印の絞り込み（UC-009）', () => {
   it('先頭の続きの導線が「ここから」へ向くときは、絞り込みのあいだ一覧の「ここから」と同じ単位へ向き、全部に戻すと元へ戻る', async () => {
     stubApi({ target: 'eng' })
     const v = await drawRoadmap('eng')
-    const go = () => v.links().find((a) => /ここから（/.test(a.textContent ?? ''))
+    const go = () => headLinkOf(v.links())
     expect(go()?.getAttribute('href'), '絞り込む前の行き先が 303 でない（この検査は空振りになる）').toBe('/topics/303')
     await v.toggleTier(1)
     expect(go()?.getAttribute('href'), '絞り込んだのに行き先が一覧の「ここから」（304）でない').toBe('/topics/304')

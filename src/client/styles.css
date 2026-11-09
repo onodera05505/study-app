@@ -105,7 +105,14 @@ p a:not(.btn), .md li a, .md-table a { text-decoration: underline; }
   position: sticky;
   top: 0;
   z-index: 10;
+  transition: transform 0.2s ease;
 }
+/* 下へ読み進めるあいだは、タブの段より上（ブランド・まなびば・アカウント）を画面の外へ送る。
+   画面の外へ送るタブの段の外（inert にした部品）は、送り終えてから見えなくする。
+   縮めるのはタブの段が別の段に並ぶ幅だけで、その判定は App.tsx が持つ。動きを減らす設定では下の reduced-motion が動きを止める
+   @implements BR-046, REQ-425, REQ-426 */
+.header.header-collapsed { transform: translateY(calc(-1 * var(--header-lift, 0px))); }
+.header.header-collapsed .header-inner > [inert] { visibility: hidden; transition: visibility 0s linear 0.2s; }
 .header-inner {
   max-width: 960px;
   margin: 0 auto;
@@ -645,6 +652,11 @@ a.row:hover { border-color: var(--accent); text-decoration: none; }
 }
 .seg button:last-child { border-right: 0; }
 .seg button[aria-pressed='true'] { background: var(--accent); color: var(--on-accent); }
+/* 理解度の操作。今記録されている段階は塗りに加えてチェックの印でも示す（色によらず見分けられる）。
+   印は読み上げの名前に入れず、名前は段階の名前だけにする */
+.status-choice button[aria-pressed='true'] { font-weight: 800; }
+.status-choice button[aria-pressed='true']::before { content: '✓ '; content: '✓ ' / ''; }
+.status-choice button:focus-visible { outline-offset: -3px; }
 
 /* ---- 教材本文（Markdown.tsx が出す要素だけを想定）------------- */
 
@@ -1075,6 +1087,8 @@ button.choice:hover:not(:disabled) { border-color: var(--accent); }
 /* コードは横スクロールで読ませる。途中で折ると字下げが崩れて読めなくなる。 */
 .fig-code { overflow-wrap: normal; }
 
+/* 動きを減らす設定では、ヘッダーの縮みと戻りも含めて動きを伴わずに切り替える
+   @implements BR-046, REQ-425, REQ-426 */
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
@@ -1201,62 +1215,101 @@ button.choice:hover:not(:disabled) { border-color: var(--accent); }
 }
 .fb-kind.on { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); font-weight: 600; }
 
-/* ロードマップ型の学習画面（日ごとの一覧）とホーム */
-.rm-day { margin-top: 1.2rem; }
-.rm-day-head { display: flex; align-items: baseline; gap: 0.6rem; font-size: 1rem; margin: 0 0 0.4rem; }
-.rm-day-head small { font-size: 0.72rem; color: var(--s3); font-weight: 700; }
+/* ロードマップ型の学習画面（回ごとの一覧）
+   文字の大きさは 3 段（見出し 1.05rem・本文 0.95rem・補足 0.78rem）に揃える。
+   補足の灰色は --muted（明 5.9:1・暗 7.3:1 で 4.5:1 を超える）だけを使う。 */
+.rm-go { flex-direction: column; align-items: flex-start; gap: 0.15rem; padding: 0.6rem 1rem 0.7rem; text-align: left; margin: 0 0 0.8rem; }
+/* 行き先の種類（「前回の続きから」「ここから」）。名前の上に小さな札で置く */
+.rm-go-kicker {
+  display: inline-flex; align-items: center; font-size: 0.78rem; font-weight: 600; line-height: 1.5;
+  padding: 0 0.5rem; border-radius: 999px; border: 1px solid currentColor; opacity: 0.92;
+}
+.rm-go-term { font-size: 1.15rem; font-weight: 800; line-height: 1.35; overflow-wrap: anywhere; }
+.rm-go-sub { font-size: 0.78rem; font-weight: 400; line-height: 1.4; opacity: 0.92; overflow-wrap: anywhere; }
+.lead.rm-stats { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0 0 0.5rem; color: var(--text); }
+.rm-chip {
+  display: inline-flex; align-items: baseline; gap: 0.2rem;
+  font-size: 0.78rem; line-height: 1.5; padding: 0.1rem 0.6rem;
+  border: 1px solid var(--border); border-radius: 999px; background: var(--panel); color: var(--muted); white-space: nowrap;
+}
+.rm-chip b { color: var(--text); font-size: 0.95rem; }
+.rm-howto { margin: 0 0 0.8rem; }
+.rm-howto-toggle {
+  display: inline-flex; align-items: center; gap: 0.3rem; min-height: 44px; padding: 0 0.2rem;
+  border: 0; background: none; color: var(--muted); font: inherit; font-size: 0.78rem; font-weight: 600; cursor: pointer;
+}
+.rm-howto-toggle::before { content: '▸'; content: '▸' / ''; display: inline-block; transition: transform 0.15s; }
+.rm-howto-toggle[aria-expanded='true']::before { transform: rotate(90deg); }
+.rm-howto-toggle:hover { color: var(--text); }
+.rm-howto-body { margin: 0 0 0.2rem; font-size: 0.78rem; line-height: 1.6; color: var(--muted); }
+
+.rm-day { margin-top: 1.4rem; }
+.rm-day-top { display: flex; align-items: center; gap: 0.6rem; margin: 0 0 0.45rem; }
+.rm-day-head { flex: 1; min-width: 0; font-size: 1.05rem; line-height: 1.4; margin: 0; text-wrap: pretty; }
+.rm-day-head small { margin-left: 0.4rem; font-size: 0.78rem; color: var(--s3-ink); font-weight: 700; white-space: nowrap; }
 .rm-day-head.done { color: var(--muted); }
-.rm-order { flex: none; width: 2rem; text-align: center; font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; }
-.rm-status { flex: none; align-self: center; font-size: 0.75rem; white-space: nowrap; }
+/* 回の進み具合。数字と細い帯を見出しと横並びに置く */
+.rm-prog { position: relative; flex: none; display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.rm-prog .sr-only, .rm-tier-mark .sr-only, .rm-tier-toggle .sr-only { top: 0; right: 0; }
+.rm-prog-bar { display: block; width: 3rem; height: 4px; border-radius: 999px; background: var(--border); overflow: hidden; }
+.rm-prog-bar i { display: block; height: 100%; background: var(--s3); border-radius: inherit; }
+.rm-order { flex: none; width: 1.8rem; text-align: center; font-size: 0.78rem; font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; align-self: center; }
 .rm-here { border-color: var(--accent); background: var(--accent-soft); }
-/* 札（印・ここから）は小さい文字・角丸・余白少なめ。単位名の幅を取らないよう、行の副の段に並べる */
 .rm-here-label {
   flex: none; display: inline-flex; align-items: center;
-  font-size: 0.7rem; font-weight: 700; line-height: 1.5; padding: 0 0.45rem;
+  font-size: 0.78rem; font-weight: 700; line-height: 1.5; padding: 0 0.5rem;
   border-radius: 999px; background: var(--accent); color: var(--on-accent); white-space: nowrap;
 }
+/* 論点の画面の印の札。登録簿の語をそのまま見せる */
 .rm-tier {
   flex: none; display: inline-flex; align-items: center; gap: 0.15rem;
-  font-size: 0.7rem; line-height: 1.5; padding: 0 0.45rem;
+  font-size: 0.78rem; line-height: 1.5; padding: 0 0.45rem;
   border-radius: 999px; border: 1px solid var(--tier1-line); color: var(--tier1-ink); white-space: nowrap;
 }
 .rm-tier-star { color: var(--tier-star); letter-spacing: -0.06em; font-size: 0.95em; }
 .rm-tier.t-3 { background: var(--tier3-bg); border-color: var(--tier3-bg); color: var(--tier3-ink); font-weight: 700; }
 .rm-tier.t-3 .rm-tier-star { color: inherit; }
 .rm-tier.t-2 { background: var(--tier2-bg); border-color: var(--tier2-line); color: var(--tier2-ink); font-weight: 600; }
-.rm-tier-topic { margin: -0.4rem 0 0.6rem; }
-.rm-tier-topic .rm-tier { font-size: 0.78rem; padding: 0.05rem 0.6rem; }
+.rm-tier-topic { margin: 0 0 0.6rem; }
+.rm-tier-topic .rm-tier { padding: 0.05rem 0.6rem; }
+/* 単位の行の印。星だけを見せ、語は読み上げの名前とツールチップが持つ */
+.rm-tier-mark { position: relative; flex: none; font-size: 0.78rem; line-height: 1.5; letter-spacing: -0.06em; color: var(--tier-star); white-space: nowrap; }
+.rm-tier-mark.t-1 { color: var(--tier1-ink); }
 
-/* 単位の行: 番号 | 単位名と副の段（中分類・印・ここから） | 理解度 */
+/* 単位の行: 番号 | 名前（太字）・副題（補足の灰）・印と「ここから」 | 理解度 */
+.row.rm-unit { align-items: center; gap: 0.55rem; padding: 0.55rem 0.7rem; }
 .row.rm-unit .grow { gap: 0.15rem; }
-.rm-sub { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.4rem; min-width: 0; }
-.rm-sub .meta { margin-right: 0.1rem; }
-@media (max-width: 640px) {
-  /* 狭い画面では 2 段にする。1 段目は番号と単位名を全幅で、2 段目に副の段と理解度を並べる */
-  .row.rm-unit { flex-wrap: wrap; row-gap: 0.3rem; column-gap: 0.5rem; align-items: center; }
-  .row.rm-unit .grow { display: contents; }
-  .row.rm-unit .rm-order { width: 1.6rem; }
-  .row.rm-unit .term { flex: 1 1 calc(100% - 2.1rem); min-width: 0; }
-  /* 副の段は残りの幅に収めて中で折り返し、理解度の札を 2 段目の右端に留める */
-  .row.rm-unit .rm-sub { flex: 1 1 0; margin-left: 2.1rem; }
-  .row.rm-unit .rm-order { align-self: flex-start; }
-  .row.rm-unit .status-badge { font-size: 0.7rem; padding: 0.05rem 0.5rem; }
-}
+.row.rm-unit .term { font-size: 0.95rem; line-height: 1.4; }
+.rm-subtitle { font-size: 0.78rem; line-height: 1.45; color: var(--muted); overflow-wrap: anywhere; }
+.row.st-3 .rm-subtitle { color: var(--muted); }
+.rm-sub { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.45rem; min-width: 0; margin-top: 0.1rem; }
+.row.rm-unit .status-badge { font-size: 0.78rem; padding: 0.1rem 0.5rem; }
+/* 論点の画面の副題。名前だけの見出しのすぐ下に補足の大きさで添える */
+h1.has-subtitle { margin-bottom: 0.15rem; }
+.topic-subtitle { margin: 0 0 0.6rem; font-size: 0.95rem; color: var(--muted); line-height: 1.5; overflow-wrap: anywhere; }
 
-/* 印の絞り込み。札の形のトグルで、印の凡例を兼ねる。押せる領域は 44px を保つ */
-.rm-tier-filter { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.4rem; border: 0; padding: 0; margin: 0 0 1rem; min-width: 0; }
-.rm-tier-filter legend { float: left; font-size: 0.78rem; color: var(--muted); padding: 0; margin-right: 0.2rem; }
-.rm-tier-toggle {
-  display: inline-flex; align-items: center; gap: 0.3rem; min-height: 44px;
-  padding: 0 0.7rem 0 0.5rem; border-radius: 999px; border: 1px solid var(--tier1-line);
-  background: var(--panel); color: var(--tier1-ink); font-size: 0.8rem; white-space: nowrap; cursor: pointer;
+/* 印の絞り込み。同じ大きさの札 3 つを 1 行に並べる。札は星だけなので 375px でも 1 行に収まる。押せる領域は 44px を保つ */
+.rm-tier-filter {
+  display: flex; flex-wrap: nowrap; align-items: center; gap: 0.4rem;
+  border: 0; padding: 0; margin: 0 0 0.9rem; min-width: 0;
 }
-.rm-tier-toggle input { margin: 0; accent-color: var(--tier3-bg); }
-.rm-tier-toggle.t-3.on { background: var(--tier3-bg); border-color: var(--tier3-bg); color: var(--tier3-ink); font-weight: 700; }
-.rm-tier-toggle.t-3.on .rm-tier-star { color: inherit; }
-.rm-tier-toggle.t-2.on { background: var(--tier2-bg); border-color: var(--tier2-line); color: var(--tier2-ink); font-weight: 600; }
-.rm-tier-toggle.t-1.on { border-color: var(--tier2-line); }
-.rm-tier-toggle:not(.on) { color: var(--muted); border-style: dashed; }
+.rm-tier-toggle {
+  position: relative; flex: 1 1 0; min-width: 0; justify-content: center;
+  display: inline-flex; align-items: center; gap: 0.35rem; min-height: 44px;
+  padding: 0 0.5rem; border-radius: 999px; border: 1px solid var(--tier1-line);
+  background: var(--panel); color: var(--muted); font-size: 0.95rem; white-space: nowrap; cursor: pointer;
+}
+/* 選ぶ操作そのものは checkbox が持ち、見た目は全ての札で同じ丸いチェックにする */
+.rm-tier-toggle input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.rm-tier-toggle input:disabled { cursor: default; }
+.rm-tier-check {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 1rem; height: 1rem; border-radius: 999px; border: 1.5px solid currentColor; font-size: 0.65rem; line-height: 1;
+}
+.rm-tier-toggle.on .rm-tier-check::before { content: '✓'; content: '✓' / ''; font-weight: 800; }
+.rm-tier-toggle.on { border-color: var(--tier2-line); background: var(--tier2-bg); color: var(--tier2-ink); font-weight: 700; }
+.rm-tier-toggle.on .rm-tier-star { color: inherit; }
+.rm-tier-toggle:not(.on) { border-style: dashed; }
 .rm-tier-toggle:not(.on) .rm-tier-star { color: var(--muted); }
 .rm-tier-toggle:focus-within { outline: 2px solid var(--accent); outline-offset: 1px; }
 .account-name { margin: 0 0 0.4rem; padding: 0.3rem 0.6rem; font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
@@ -1287,10 +1340,6 @@ button.choice:hover:not(:disabled) { border-color: var(--accent); }
 .row.st-3 .term { color: var(--s3-ink); }
 /* 「ここから」の行は理解度の左の縁よりも強く示す */
 .row.rm-here { border-left: 4px solid var(--accent); }
-.rm-dots { display: inline-flex; gap: 3px; align-items: center; }
-.rm-dots i { width: 10px; height: 10px; border-radius: 999px; background: var(--s1); display: block; }
-.rm-dots i.st-2 { background: var(--s2); }
-.rm-dots i.st-3 { background: var(--s3); }
 
 /* 新しい版の帯（要件 §5.6） */
 .update-bar {
@@ -1306,6 +1355,10 @@ button.choice:hover:not(:disabled) { border-color: var(--accent); }
 .update-bar .btn { padding: 0.3rem 0.9rem; min-height: 0; }
 
 
-/* 日ごとの確認テスト（要件 §13.6）。上部メニューから独立した画面を無くし、日の見出しの下に置いた */
-.rm-day-exam { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin: 0.2rem 0 0.5rem; }
-.rm-day-score { color: var(--muted); font-size: 0.82rem; }
+/* 回ごとの確認の入口。その回の単位の並びの後に、枠線とアイコンのあるボタンで置く */
+.rm-day-exam { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin: 0.5rem 0 0.2rem; }
+.rm-day-exam-btn { border: 1.5px solid var(--accent); color: var(--accent); font-weight: 700; font-size: 0.95rem; padding: 0 0.9rem; }
+.rm-day-exam-btn::before { content: '✎'; content: '✎' / ''; font-size: 1rem; }
+.rm-day-exam-btn:hover:not(:disabled) { background: var(--accent-soft); }
+.rm-day-score { color: var(--muted); font-size: 0.78rem; }
+.rm-extra-note { color: var(--muted); font-size: 0.78rem; margin: 0 0 0.5rem; }
