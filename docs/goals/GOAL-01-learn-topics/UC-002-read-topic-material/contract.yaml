@@ -1,10 +1,10 @@
-# UC-002 の境界契約。境界の形だけを持つ（振る舞いと規則は ./UC.md と REQ-014〜033）
+# UC-002 の境界契約。境界の形だけを持つ（振る舞いと規則は ./UC.md と同じ場所の REQ。ロードマップ型の応答の振る舞いは UC-009 の REQ）
 # 読み方の決まりは ../../../adr/ADR-0001-boundary-reading.md（transport / direction / auth の当て方）
 # 論点の教材からドリルを始める経路（REQ-273）は同じ POST /api/sessions なので UC-004 の契約が正本（UC-004: startSession。ADR-0001 の決め 10）
 x-uc: UC-002
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-06
+x-updated: 2026-11-09
 
 operations:
   listFields:
@@ -118,10 +118,11 @@ operations:
           type: array
           items:
             type: object
-            required: [id, term, questionCount, status, field, middle, itemName, isNew, sortOrder, round, roundLabel, tier]
+            required: [id, term, subtitle, questionCount, status, field, middle, itemName, isNew, sortOrder, round, roundLabel, tier]
             properties:
               id: { type: integer }
-              term: { type: string }
+              term: { type: string, description: "論点の名前。副題を含まない" }
+              subtitle: { type: [string, "null"], minLength: 1, description: "論点の名前に添える副題。投入データに副題が無い論点（資格対策の論点を含む）では null" }
               questionCount: { type: integer, minimum: 0 }
               status: { type: [integer, "null"], enum: [1, 2, 3, null] }
               field: { type: string }
@@ -144,8 +145,8 @@ operations:
         request: { middleNo: 12, sort: frequency, status: "1,2" }
         response:
           topics:
-            - { id: 418, term: "公開鍵暗号方式", questionCount: 9, status: 2, field: "テクノロジ系", middle: "セキュリティ", itemName: "暗号技術", isNew: 0, sortOrder: null, round: null, roundLabel: null, tier: null }
-            - { id: 419, term: "共通鍵暗号方式", questionCount: 7, status: 1, field: "テクノロジ系", middle: "セキュリティ", itemName: "暗号技術", isNew: 0, sortOrder: null, round: null, roundLabel: null, tier: null }
+            - { id: 418, term: "公開鍵暗号方式", subtitle: null, questionCount: 9, status: 2, field: "テクノロジ系", middle: "セキュリティ", itemName: "暗号技術", isNew: 0, sortOrder: null, round: null, roundLabel: null, tier: null }
+            - { id: 419, term: "共通鍵暗号方式", subtitle: null, questionCount: 7, status: 1, field: "テクノロジ系", middle: "セキュリティ", itemName: "暗号技術", isNew: 0, sortOrder: null, round: null, roundLabel: null, tier: null }
       invalidLimit:
         request: { middleNo: 12, limit: 0 }
         error: INVALID_INPUT
@@ -177,10 +178,11 @@ operations:
       properties:
         topic:
           type: object
-          required: [id, term, explanation, detail, questionCount, isNew, status, field, major, middle, middleNo, itemName, tier]
+          required: [id, term, subtitle, explanation, detail, questionCount, isNew, status, field, major, middle, middleNo, itemName, tier]
           properties:
             id: { type: integer }
-            term: { type: string }
+            term: { type: string, description: "論点の名前。副題を含まない" }
+            subtitle: { type: [string, "null"], minLength: 1, description: "論点の名前に添える副題。投入データに副題が無い論点（資格対策の論点を含む）では null" }
             explanation: { type: [string, "null"] }
             detail: { type: [string, "null"] }
             questionCount: { type: integer, minimum: 0 }
@@ -232,7 +234,7 @@ operations:
       ok:
         request: { id: 418 }
         response:
-          topic: { id: 418, term: "公開鍵暗号方式", explanation: "暗号化する鍵と復号する鍵を分け、暗号化する側の鍵を公開してよい方式。", detail: null, questionCount: 9, isNew: 0, status: 2, field: "テクノロジ系", major: "技術要素", middle: "セキュリティ", middleNo: 12, itemName: "暗号技術", tier: null }
+          topic: { id: 418, term: "公開鍵暗号方式", subtitle: null, explanation: "暗号化する鍵と復号する鍵を分け、暗号化する側の鍵を公開してよい方式。", detail: null, questionCount: 9, isNew: 0, status: 2, field: "テクノロジ系", major: "技術要素", middle: "セキュリティ", middleNo: 12, itemName: "暗号技術", tier: null }
           questions:
             - { id: "2018h30a-38", number: 38, examLabel: "平成30年度秋期", text: "公開鍵暗号方式を用いて送信者が受信者宛てのメッセージを暗号化するとき、暗号化に使う鍵はどれか。", choices: { "ア": "受信者の公開鍵", "イ": "受信者の秘密鍵", "ウ": "送信者の公開鍵", "エ": "送信者の秘密鍵" }, answer: "ア", hasFigure: 0, figureDescription: null, figureImage: null, citation: "平成30年度秋期 問38", modified: 0, timesAsked: 2, otherCitations: ["平成28年度春期 問40"], explanation: { correctReason: "正解。公開鍵暗号方式では、受信者だけが持つ秘密鍵でしか復号できないようにするため、受信者の公開鍵で暗号化する。", choices: [{ label: "ア", term: null, note: "正解。受信者の公開鍵で暗号化する。" }, { label: "イ", term: "秘密鍵", note: "本人だけが持ち、復号や署名に使う鍵。" }] } }
           siblings:

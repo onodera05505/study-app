@@ -1,10 +1,10 @@
-# UC-009 の境界契約。振る舞いと規則は ./UC.md と REQ-126〜145 が持つ。
+# UC-009 の境界契約。振る舞いと規則は ./UC.md と同じ場所の REQ が持つ。
 # 読み方の決まりは ../../../adr/ADR-0001-boundary-reading.md、共有語彙は ../../../_shared/components.yaml。
 # この UC は新しい経路を露わにしない（下の x-no-boundary が、横切る境界をどの契約が持つかを名指す）。
 x-uc: UC-009
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-06
+x-updated: 2026-11-09
 
 operations: {}
-x-no-boundary: 横切る境界はすべて他 UC の契約が持つ（論点の並びと属する回と回のラベル（回の見出しはこれだけで決まる）と印は UC-002 の listTopics、論点の教材と確認問題と学ぶ順の前後と印は UC-002 の getTopicDetail、回ごとの確認の一覧は UC-008 の listExams、回ごとの確認の開始は UC-004 の startSession、連続記録は UC-003 の /api/me、前回の続きの端末の記憶は UC-005、進行中の有無は UC-004 の startSession の CONFLICT、その範囲と進み具合は UC-006 の getCurrentSession、その場からの破棄は UC-006 の discardCurrentSession）。ロードマップ型で違うのは応答の並びと sortOrder・neighbors・round・roundLabel が非 null になること（印を持つ学びでは tier も）だけで、どちらも UC-002 の契約が宣言済みの形なので、同じ経路の形の第 2 の正を立てない（R-101）
+x-no-boundary: 横切る境界はすべて他 UC の契約が持つ（論点の並びと名前と副題と属する回と回のラベル（回の見出しはこれだけで決まる）と印は UC-002 の listTopics、論点の教材と名前と副題と確認問題と学ぶ順の前後と印は UC-002 の getTopicDetail、回ごとの確認の一覧は UC-008 の listExams、回ごとの確認の開始は UC-004 の startSession、連続記録は UC-003 の /api/me、前回の続きの端末の記憶は UC-005、進行中の有無は UC-004 の startSession の CONFLICT、その範囲と進み具合は UC-006 の getCurrentSession、その場からの破棄は UC-006 の discardCurrentSession）。ロードマップ型で違うのは応答の並びと sortOrder・neighbors・round・roundLabel が非 null になること（印を持つ学びでは tier も、副題を持つ単位では subtitle も）だけで、どちらも UC-002 の契約が宣言済みの形なので、同じ経路の形の第 2 の正を立てない（R-101）
