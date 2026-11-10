@@ -5,10 +5,10 @@
 from __future__ import annotations
 import argparse, json, re, sys
 from pathlib import Path
-NG_DEFAULT = ["激務", "ブラック(?!ボックス)", "年収", "万円", "最新", "近年"]  # 対象の登録簿 roadmapSpec.ngWords で上書き（2026-09-15: マーケの金額例に「万円」が要る）
+NG_DEFAULT = ["激務", "ブラック(?!ボックス)", "年収", "万円", "最新", "近年"]  # 対象の登録簿 roadmapSpec.ngWords で上書きする（金額例が要る対象は「万円」を外す）
 def _kw(key: str) -> str:
     sys.path.insert(0, str(Path(__file__).resolve().parent)); from targets import target
-    return (target(key).get("roadmapSpec") or {}).get("keywordLabel", "見分けワード")  # 資格版の「見分けワード」は対象ごとに呼び方を変える（mkt は「キーワード」2026-09-15）
+    return (target(key).get("roadmapSpec") or {}).get("keywordLabel", "キーワード")  # 教材の行の見出し語は登録簿 roadmapSpec.keywordLabel が決める
 
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--bundle", required=True)

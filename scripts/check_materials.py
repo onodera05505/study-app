@@ -206,13 +206,13 @@ def check_notation_v2(
 
     headings = HEADING.findall(det)
     if "materials_v3" in where:
-        # v3（2026-09-01）: 出題パターンの見出しは廃止。代わりに explanation に見分けワードの行を置く
+        # 出題パターンの見出しは置かず、explanation にキーワードの行を置く
         if len(headings) > HEADING_RANGE_V2[1]:
             out.append(f"{where}: detail の見出しが {len(headings)} 個（目安 IP 1〜3・AP 3〜4。5 個まで）")
         if any("出題" in h for h in headings):
             out.append(f"{where}: v3 なのに出題パターンの見出しが残っている（問題解説側へ）")
-        if "見分けワード" not in ex:
-            out.append(f"{where}: explanation に見分けワードの行が無い")
+        if "**キーワード**" not in ex:
+            out.append(f"{where}: explanation にキーワードの行が無い")
         # 2026-09-25 の読み直しで出た型（資格版 1,806 件のうち役割分担 438・文体 168・記法）
         for mo in SOLVING_HINT.finditer(ex + "\n" + det):
             out.append(f"{where}: 選択肢の消し方が教材に残っている『…{(ex + chr(10) + det)[max(0, mo.start() - 12): mo.end()]}』（解説 note の持ち場）")

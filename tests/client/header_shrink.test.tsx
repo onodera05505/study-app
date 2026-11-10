@@ -22,6 +22,11 @@ const kindOf = (kind: string) =>
 const EXAM_TARGETS = kindOf('exam')
 const ROADMAP_TARGETS = kindOf('roadmap')
 
+/** 状態になるまで待つ上限（並行して別の検査が走って遅い時も足りる長さ）。 */
+const WAIT = { timeout: 5000, interval: 20 }
+/** 1 本のテストの上限（対象の全画面を読み込み直して描くので既定の 5 秒では足りないことがある）。 */
+const TEST_TIMEOUT = 60_000
+
 const NARROW = 360
 const WIDE = 1440
 const USER_NAME = '学ぶ人'
@@ -181,8 +186,30 @@ function isHidden(el: Element, host: Element): boolean {
 
 type View = Awaited<ReturnType<typeof drawApp>>
 
+/** 開いている描画。テストが途中で落ちても afterEach で必ず片付ける（古い描画が window の知らせを拾い続けないように）。 */
+const openViews = new Set<{ close: () => Promise<void> }>()
+
+/** 読み位置を 0 に戻す。 */
+function resetScroll() {
+  Object.defineProperty(window, 'scrollY', { value: 0, configurable: true })
+  Object.defineProperty(window, 'pageYOffset', { value: 0, configurable: true })
+  document.documentElement.scrollTop = 0
+}
+
 /** 対象を決めて App を描く。 */
+/** いま走っているテストの印。afterEach で取り替える。上限時間で打ち切られたテストの続き（非同期の残り）が
+ *  次のテストの最中に対象の差し替え・読み込み直し・描画・読み位置や幅の変更をしないよう、印が古ければ止める。 */
+let currentRun = {}
+
+function guardOf(run: object) {
+  return () => {
+    if (run !== currentRun) throw new Error('打ち切られたテストの続きなので止める')
+  }
+}
+
 async function drawApp(exam: string, entry: string) {
+  const guard = guardOf(currentRun)
+  guard()
   vi.stubEnv('VITE_EXAM', exam)
   vi.resetModules()
   const React = await import('react')
@@ -191,6 +218,7 @@ async function drawApp(exam: string, entry: string) {
   const api = await import('../../src/client/lib/api')
   api.setToken(jwtWith({ sub: 'u-1', name: USER_NAME, role: 'MEMBER' }))
   const { App } = await import('../../src/client/App')
+  guard()
   const host = document.createElement('div')
   document.body.appendChild(host)
   const root = createRoot(host)
@@ -242,15 +270,25 @@ async function drawApp(exam: string, entry: string) {
     return !!d && d.hasAttribute('open')
   }
 
+  /** 起こした知らせの処理が終わるまで待つ。時間ではなく順番で待つ（次の 2 フレームと、その後のタスク）。
+   *  間引きにフレームやタスクを使う作りでも、知らせの後に予約された処理はこの間に必ず走る。 */
+  const settle = async () => {
+    await new Promise((r) => setTimeout(r, 0))
+    if (typeof window.requestAnimationFrame === 'function')
+      await new Promise((r) => window.requestAnimationFrame(() => window.requestAnimationFrame(() => r(null))))
+    await new Promise((r) => setTimeout(r, 0))
+  }
   const act = async (fn: () => void) => {
+    guard()
     await React.act(async () => {
       fn()
-      await new Promise((r) => setTimeout(r, 50))
+      await settle()
     })
   }
 
   /** 読み位置を y にする（window の scrollY を変えて scroll を起こし、反映を待つ）。 */
   const scrollTo = async (y: number) => {
+    guard()
     Object.defineProperty(window, 'scrollY', { value: y, configurable: true })
     Object.defineProperty(window, 'pageYOffset', { value: y, configurable: true })
     document.documentElement.scrollTop = y
@@ -267,11 +305,12 @@ async function drawApp(exam: string, entry: string) {
 
   /** 画面の幅を変える。 */
   const resize = async (width: number) => {
+    guard()
     device.width = width
     await act(() => applyDevice())
   }
 
-  return {
+  const view = {
     host,
     banner,
     tabRow,
@@ -285,16 +324,22 @@ async function drawApp(exam: string, entry: string) {
     readDown,
     resize,
     close: async () => {
+      if (!openViews.has(view)) return
+      openViews.delete(view)
       await React.act(async () => root.unmount())
       host.remove()
-      Object.defineProperty(window, 'scrollY', { value: 0, configurable: true })
-      Object.defineProperty(window, 'pageYOffset', { value: 0, configurable: true })
     },
   }
+  openViews.add(view)
+  return view
 }
 
 /** 描いた直後のヘッダーが、縮む前の姿（学びの名前とタブの段が見える）になっていることを確かめる。 */
-function expectFull(v: View, where: string, target: string) {
+async function expectFull(v: View, where: string, target: string) {
+  await vi.waitFor(() => expectFullNow(v, where, target), WAIT)
+}
+
+function expectFullNow(v: View, where: string, target: string) {
   expect(v.banner(), `${where} にヘッダー（header か role="banner"）が無い`).toBeTruthy()
   expect(v.tabRow(), `${where} のヘッダーにタブの段（navigation）が無い`).toBeTruthy()
   expect(v.tabs().length, `${where} のタブの段に項目が無い`).toBeGreaterThan(0)
@@ -303,13 +348,21 @@ function expectFull(v: View, where: string, target: string) {
 }
 
 /** 縮んだ姿（タブの段の外が見えず、タブの段の項目と行き先は縮む前と同じ）になっていることを確かめる。 */
-function expectShrunk(v: View, where: string, tabsBefore: string[]) {
+async function expectShrunk(v: View, where: string, tabsBefore: string[]) {
+  await vi.waitFor(() => expectShrunkNow(v, where, tabsBefore), WAIT)
+}
+
+function expectShrunkNow(v: View, where: string, tabsBefore: string[]) {
   expect(v.outsideTabs(), `${where} で縮んでいない（タブの段の外が見えている）`).toEqual([])
   expect(v.tabs(), `${where} で縮んだあとのタブの段の項目か行き先が縮む前と違う`).toEqual(tabsBefore)
 }
 
 /** 縮む前の姿のままか、元の姿に戻っていることを確かめる。 */
-function expectFullAgain(v: View, where: string, full: string[], tabsBefore: string[]) {
+async function expectFullAgain(v: View, where: string, full: string[], tabsBefore: string[]) {
+  await vi.waitFor(() => expectFullAgainNow(v, where, full, tabsBefore), WAIT)
+}
+
+function expectFullAgainNow(v: View, where: string, full: string[], tabsBefore: string[]) {
   expect(v.outsideTabs(), `${where} で元の姿になっていない`).toEqual(full)
   expect(v.tabs(), `${where} でタブの段の項目か行き先が縮む前と違う`).toEqual(tabsBefore)
 }
@@ -328,7 +381,7 @@ async function screensOf(target: string): Promise<string[]> {
 async function open(target: string, entry: string) {
   const v = await drawApp(target, entry)
   const where = `幅 ${device.width}${device.reduce ? '・動きを減らす設定' : ''} の ${target} の ${entry}`
-  expectFull(v, where, target)
+  await expectFull(v, where, target)
   return { v, where, full: v.outsideTabs(), before: v.tabs() }
 }
 
@@ -338,12 +391,16 @@ beforeEach(() => {
   sessionStorage.clear()
   device.width = NARROW
   device.reduce = false
+  resetScroll()
   stubApi()
   stubDevice()
 })
 
-afterEach(() => {
+afterEach(async () => {
+  currentRun = {}
   ;(document.activeElement as HTMLElement | null)?.blur?.()
+  for (const v of [...openViews]) await v.close()
+  resetScroll()
   vi.restoreAllMocks()
   vi.unstubAllGlobals()
   vi.unstubAllEnvs()
@@ -354,7 +411,7 @@ async function checkNarrowShrinks(target: string) {
   for (const entry of await screensOf(target)) {
     const { v, where, before } = await open(target, entry)
     await v.readDown()
-    expectShrunk(v, where, before)
+    await expectShrunk(v, where, before)
     await v.close()
   }
   const { v, where, before } = await open(target, '/')
@@ -362,7 +419,7 @@ async function checkNarrowShrinks(target: string) {
   await v.act(() => tab.focus())
   expect(document.activeElement, 'タブの段のリンクにフォーカスを置けていない（この検査は空振りになる）').toBe(tab)
   await v.readDown()
-  expectShrunk(v, `${where}（タブの段のリンクにフォーカス）`, before)
+  await expectShrunk(v, `${where}（タブの段のリンクにフォーカス）`, before)
   await v.close()
 }
 
@@ -371,17 +428,17 @@ async function checkNarrowRestores(target: string) {
   for (const entry of await screensOf(target)) {
     const { v, where, full, before } = await open(target, entry)
     await v.readDown()
-    expectShrunk(v, where, before)
+    await expectShrunk(v, where, before)
     await v.scrollTo(595)
-    expectFullAgain(v, `${where}（600 から 595 へ上へ）`, full, before)
+    await expectFullAgain(v, `${where}（600 から 595 へ上へ）`, full, before)
     await v.close()
   }
   const { v, where, full, before } = await open(target, '/')
   await v.readDown()
   await v.scrollTo(604)
-  expectShrunk(v, `${where}（600 から 604 へ下へ）`, before)
+  await expectShrunk(v, `${where}（600 から 604 へ下へ）`, before)
   await v.scrollTo(601)
-  expectFullAgain(v, `${where}（604 から 601 へ上へ）`, full, before)
+  await expectFullAgain(v, `${where}（604 から 601 へ上へ）`, full, before)
   await v.close()
 }
 
@@ -391,7 +448,7 @@ async function checkWideKeeps(target: string) {
   stubDevice()
   const { v, where, full, before } = await open(target, '/')
   await v.readDown()
-  expectFullAgain(v, `${where}（下へ読み進めた）`, full, before)
+  await expectFullAgain(v, `${where}（下へ読み進めた）`, full, before)
   await v.close()
 }
 
@@ -399,9 +456,9 @@ async function checkWideKeeps(target: string) {
 async function checkWideningRestores(target: string) {
   const { v, where, full, before } = await open(target, '/')
   await v.readDown()
-  expectShrunk(v, where, before)
+  await expectShrunk(v, where, before)
   await v.resize(WIDE)
-  expectFullAgain(v, `${where}（縮んだまま幅 ${WIDE} へ広がった）`, full, before)
+  await expectFullAgain(v, `${where}（縮んだまま幅 ${WIDE} へ広がった）`, full, before)
   await v.close()
 }
 
@@ -411,7 +468,13 @@ async function checkAccountMenuKeeps(target: string) {
   const opener = v.accountOpener()
   expect(opener, `${where} のヘッダーにアカウントのメニューを開く操作が無い`).toBeTruthy()
   await v.act(() => opener!.click())
-  expect(v.accountOpen(), `${where} でアカウントのメニューが開いた形（aria-expanded か details の open）にならない`).toBe(true)
+  await vi.waitFor(
+    () =>
+      expect(v.accountOpen(), `${where} でアカウントのメニューが開いた形（aria-expanded か details の open）にならない`).toBe(
+        true,
+      ),
+    WAIT,
+  )
   const opened = v.outsideTabs()
   await v.readDown()
   expect(v.accountOpen(), `${where} で読み進めるとアカウントのメニューが閉じた`).toBe(true)
@@ -430,7 +493,7 @@ async function checkOutsideFocusKeeps(target: string) {
     expect(document.activeElement, 'タブの段の外の部品にフォーカスを置けていない').toBe(part)
     await v.readDown()
     const name = (part.textContent ?? '').trim() || part.getAttribute('href') || part.tagName
-    expectFullAgain(v, `${where}（タブの段の外の「${name}」にフォーカスを置いて読み進めた）`, full, before)
+    await expectFullAgain(v, `${where}（タブの段の外の「${name}」にフォーカスを置いて読み進めた）`, full, before)
     await v.act(() => part.blur())
   }
   await v.close()
@@ -442,9 +505,9 @@ async function checkReducedMotion(target: string) {
   stubDevice()
   const { v, where, full, before } = await open(target, '/')
   await v.readDown()
-  expectShrunk(v, where, before)
+  await expectShrunk(v, where, before)
   await v.scrollTo(595)
-  expectFullAgain(v, `${where}（上へ）`, full, before)
+  await expectFullAgain(v, `${where}（上へ）`, full, before)
   await v.close()
 }
 
@@ -456,37 +519,37 @@ describe('資格対策の上部のヘッダーの縮みと戻り（UC-001）', (
     // @covers REQ-425#narrow-shrinks-on-reading-down
     it(`${target} の狭い画面では、どの画面でも下へ読み進めるとタブの段だけを残して縮み、タブの段の中のフォーカスは止めない`, async () => {
       await checkNarrowShrinks(target)
-    })
+    }, TEST_TIMEOUT)
 
     // @covers REQ-425#narrow-restores-on-any-upward-move
     it(`${target} の狭い画面では、縮んだあと直前の読み位置から少しでも上へ動くと元に戻る`, async () => {
       await checkNarrowRestores(target)
-    })
+    }, TEST_TIMEOUT)
 
     // @covers REQ-425#wide-does-not-shrink
     it(`${target} の広い画面では、下へ読み進めても縮まない`, async () => {
       await checkWideKeeps(target)
-    })
+    }, TEST_TIMEOUT)
 
     // @covers REQ-425#widening-restores
     it(`${target} で縮んでいる間に画面が広がると元に戻る`, async () => {
       await checkWideningRestores(target)
-    })
+    }, TEST_TIMEOUT)
 
     // @covers REQ-425#account-menu-open-keeps
     it(`${target} でアカウントのメニューを開いている間は、下へ読み進めても縮まない`, async () => {
       await checkAccountMenuKeeps(target)
-    })
+    }, TEST_TIMEOUT)
 
     // @covers REQ-425#outside-focus-keeps
     it(`${target} でタブの段の外の部品にフォーカスがある間は、下へ読み進めても縮まない`, async () => {
       await checkOutsideFocusKeeps(target)
-    })
+    }, TEST_TIMEOUT)
 
     // @covers REQ-425#reduced-motion-still-switches
     it(`${target} で動きを減らす設定でも、縮みと戻りが切り替わる`, async () => {
       await checkReducedMotion(target)
-    })
+    }, TEST_TIMEOUT)
   }
 })
 
@@ -498,36 +561,36 @@ describe('ロードマップ型の上部のヘッダーの縮みと戻り（UC-0
     // @covers REQ-426#narrow-shrinks-on-reading-down
     it(`${target} の狭い画面では、どの画面でも下へ読み進めるとタブの段だけを残して縮み、タブの段の中のフォーカスは止めない`, async () => {
       await checkNarrowShrinks(target)
-    })
+    }, TEST_TIMEOUT)
 
     // @covers REQ-426#narrow-restores-on-any-upward-move
     it(`${target} の狭い画面では、縮んだあと直前の読み位置から少しでも上へ動くと元に戻る`, async () => {
       await checkNarrowRestores(target)
-    })
+    }, TEST_TIMEOUT)
 
     // @covers REQ-426#wide-does-not-shrink
     it(`${target} の広い画面では、下へ読み進めても縮まない`, async () => {
       await checkWideKeeps(target)
-    })
+    }, TEST_TIMEOUT)
 
     // @covers REQ-426#widening-restores
     it(`${target} で縮んでいる間に画面が広がると元に戻る`, async () => {
       await checkWideningRestores(target)
-    })
+    }, TEST_TIMEOUT)
 
     // @covers REQ-426#account-menu-open-keeps
     it(`${target} でアカウントのメニューを開いている間は、下へ読み進めても縮まない`, async () => {
       await checkAccountMenuKeeps(target)
-    })
+    }, TEST_TIMEOUT)
 
     // @covers REQ-426#outside-focus-keeps
     it(`${target} でタブの段の外の部品にフォーカスがある間は、下へ読み進めても縮まない`, async () => {
       await checkOutsideFocusKeeps(target)
-    })
+    }, TEST_TIMEOUT)
 
     // @covers REQ-426#reduced-motion-still-switches
     it(`${target} で動きを減らす設定でも、縮みと戻りが切り替わる`, async () => {
       await checkReducedMotion(target)
-    })
+    }, TEST_TIMEOUT)
   }
 })

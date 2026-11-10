@@ -3,7 +3,7 @@
  *  その単位の名前を示すこと。UC-009
  *
  *  学びの置き場は日で束ねる学び（itc）の写しを一時の作業場に置き、ケースごとに全単位の副題の欄を外してから
- *  1 単位（学ぶ順 1 番）の副題の欄にだけ値を入れる。組み立ては作業場を cwd にしてコマンドとして呼び、
+ *  1 単位（写しの中で学ぶ順がいちばん小さい単位）の副題の欄にだけ値を入れる。実データの名前や番号には頼らない。組み立ては作業場を cwd にしてコマンドとして呼び、
  *  観測するのは終了コード、組み立ての出力（標準出力と標準エラー）、作業場の投入データ（data/itc/topics.json）が
  *  組み立ての前から書き換わったかどうか（中身と更新時刻）だけ。 */
 
@@ -19,8 +19,6 @@ vi.setConfig({ testTimeout: 60_000, hookTimeout: 120_000 })
 const ROOT = fileURLToPath(new URL('../../', import.meta.url))
 const BUILD = path.join(ROOT, 'scripts', 'build_target_dataset.py')
 const LEARNING = 'itc'
-/** 副題の欄に値を入れる単位の学ぶ順。 */
-const TARGET_ORDER = 1
 
 type Json = Record<string, any>
 
@@ -45,12 +43,13 @@ afterAll(() => {
   if (ws) fs.rmSync(ws, { recursive: true, force: true })
 })
 
-/** 学ぶ順 1 番の単位の副題の欄に value を入れたロードマップのデータで組み立て、観測できるものを返す。 */
+/** 学ぶ順がいちばん小さい単位の副題の欄に value を入れたロードマップのデータで組み立て、観測できるものを返す。 */
 const buildWith = (value: unknown) => {
   const roadmap = structuredClone(original)
   for (const u of roadmap.units as Json[]) delete u.subtitle
-  const target = (roadmap.units as Json[]).find((u) => u.order === TARGET_ORDER)
-  if (!target) throw new Error(`ロードマップのデータに学ぶ順 ${TARGET_ORDER} の単位が無い（この検査は空振りになる）`)
+  const ordered = (roadmap.units as Json[]).filter((u) => typeof u.order === 'number').sort((a, b) => a.order - b.order)
+  const target = ordered[0]
+  if (!target) throw new Error('ロードマップのデータに学ぶ順を持つ単位が無い（この検査は空振りになる）')
   target.subtitle = value
   fs.writeFileSync(roadmapFile, JSON.stringify(roadmap, null, 2))
   // 投入データの組み立て前の姿（中身と更新時刻）。時刻の刻みで同じ値にならないよう、過去の時刻に置き直す

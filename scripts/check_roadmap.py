@@ -6,7 +6,7 @@
 見るもの:
 - 章で束ねる学び（roadmap.json の group_by: chapter）: 各単位に章の番号・章の名前・登録簿にある段の印
 - 教材: 全単位に教材があり、担当バンドルと topic_id/term が一致する（自己申告を信じない）。sources は一次資料に当たる記述だけ（無い単位は出典無しでよい）。
-  explanation / detail の長さが仕様の範囲（下限は落とす、上限は警告）。見分けワードの行がある。記法が 5 つ以外でない（`**`/`###`/`- `/`1. `/表）。
+  explanation / detail の長さが仕様の範囲（下限は落とす、上限は警告）。キーワードの行がある。記法が 5 つ以外でない（`**`/`###`/`- `/`1. `/表）。
   `[[用語]]` はロードマップ内の論点名だけ。会社の評価・年収・「最新」「近年」を含まない
 - 問題: 1 論点 2 問、四択、answer が選択肢にある、qid 一意、正解位置が 1 つに偏りすぎない（1 位置が 45% 超で警告）、tests_goal が 1〜（到達基準の数。roadmap.json の単位の goals の最大）。\n  正解の選択肢が教材と 14 字以上連続一致するものを数えて警告（サイクル 1 で独立解答 2 体が「再認で当たる」と指摘）
 - 独立解答（--solutions）: 教材だけで解いた担当の答えと answer を比べ、不一致を列挙する。不一致率 20% 超でエラー
@@ -15,7 +15,7 @@ from __future__ import annotations
 import argparse, glob, json, re, sys
 from pathlib import Path
 
-NG_DEFAULT = ["激務", "ブラック(?!ボックス)", "年収", "万円", "最新", "近年"]  # 対象の登録簿 roadmapSpec.ngWords で上書き（2026-09-15: マーケの金額例に「万円」が要る）
+NG_DEFAULT = ["激務", "ブラック(?!ボックス)", "年収", "万円", "最新", "近年"]  # 対象の登録簿 roadmapSpec.ngWords で上書きする（金額例が要る対象は「万円」を外す）
 VERBATIM = 14
 
 def verbatim(choice: str, text: str) -> bool:
@@ -36,7 +36,7 @@ ALLOWED_INLINE = re.compile(r"^(#{3} |- |\d+\. |\||!\[)")
 
 def _kw(key: str) -> str:
     sys.path.insert(0, str(Path(__file__).resolve().parent)); from targets import target
-    return (target(key).get("roadmapSpec") or {}).get("keywordLabel", "見分けワード")  # 資格版の「見分けワード」は対象ごとに呼び方を変える（mkt は「キーワード」2026-09-15）
+    return (target(key).get("roadmapSpec") or {}).get("keywordLabel", "キーワード")  # 教材の行の見出し語は登録簿 roadmapSpec.keywordLabel が決める
 
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--solutions", nargs="*", default=[])
