@@ -6,6 +6,8 @@
 # セキュリティヘッダ、各学びの SSO の設定と、学び側のパスワードでのログインと登録の経路が閉じていること。
 # 状態を変える要求（決められた形を満たす本文）は投げない。デプロイ後に必ず 1 回。
 set -euo pipefail
+# 道具の出力は一度変数に受け、判定の grep にはヒアストリングで渡す（パイプで渡すと grep -q が一致の時点で抜け、
+# 書き手が SIGPIPE で落ちて pipefail がパイプライン全体を失敗にし、有る項目を無いと報告する）
 cd "$(dirname "$0")/.."
 UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36"
 # @implements REQ-219
@@ -20,7 +22,7 @@ check_headers() {
   h="$(curl -s -D - -o /dev/null -A "$UA" "$url/api/health" | tr -d '\r' | tr 'A-Z' 'a-z' || true)"
   for want in "content-security-policy:" "strict-transport-security:" "x-frame-options: deny" \
               "x-content-type-options: nosniff" "referrer-policy:"; do
-    printf '%s\n' "$h" | grep -q "^${want}" || { echo "  ✘ ${name} の応答に ${want} が無い（secureHeaders）"; NG=1; }
+    grep -q "^${want}" <<< "$h" || { echo "  ✘ ${name} の応答に ${want} が無い（secureHeaders）"; NG=1; }
   done
 }
 # 本番の Pages プロジェクトの秘密の一覧を機械で確かめる（O13）。共有秘密 SSO_SECRET は まなびばと各学び、
@@ -41,7 +43,7 @@ check_secrets() {
   expect="$(python3 scripts/targets.py account)"
   have="$(npx wrangler whoami 2>/dev/null | grep -oE '[0-9a-f]{32}' | sort -u | tr '\n' ' ' || true)"
   list="$(secret_targets)"
-  if [ -n "${have// /}" ] && ! printf '%s\n' $have | grep -qx "$expect"; then
+  if [ -n "${have// /}" ] && ! grep -qx "$expect" <<< "$(printf '%s\n' $have)"; then
     while IFS=$'\t' read -r name project want; do
       echo "  ✘ ${name}（${project}）の秘密の一覧を見られない: ログイン中の Cloudflare アカウント（${have% }）のどれも想定（${expect}）でない（npx wrangler login で個人アカウントを選び直す）"
     done <<< "$list"
@@ -57,7 +59,7 @@ check_secrets() {
     fi
     # 一覧の各行（「  - 名前: Value Encrypted」）の名前の部分と完全一致で判定する（前後に文字を足した別名は数えない）
     for s in $want; do
-      printf '%s\n' "$out" | grep -qE "(^|[[:space:]-])${s}:" \
+      grep -qE "(^|[[:space:]-])${s}:" <<< "$out" \
         || { echo "  ✘ ${name}（${project}）に ${s} が設定されていない（SSO_SECRET は bash scripts/set_sso_secret.sh、JWT_SECRET は npx wrangler pages secret put JWT_SECRET --project-name ${project}。置いた後に deploy-pages.sh で出し直す）"; NG=1; }
     done
     printf '%-6s %-14s 秘密 %s を確認\n' "$name" "$project" "$(printf '%s' "$want" | tr ' ' '・')"
@@ -90,7 +92,7 @@ for k in $(python3 scripts/targets.py keys); do
   seen "$k" getAuthConfig
   C="$(curl -s -A "$UA" "$U/api/auth/config" || true)"
   printf '%-6s %s -> %s\n' "$k" "$U" "$C"
-  echo "$C" | grep -q '"sso":true' || { echo "  ✘ ${k} の sso が有効でない（SSO_PORTAL_URL が env に無い）"; NG=1; }
+  grep -q '"sso":true' <<< "$C" || { echo "  ✘ ${k} の sso が有効でない（SSO_PORTAL_URL が env に無い）"; NG=1; }
   # 学び側はパスワードでのログインと登録の経路を受け持たない（受け持たない経路の断り＝404）。
   # 本文は決められた形を満たさない {} だけにして、経路が開いていても状態を変えない
   # @implements REQ-350
