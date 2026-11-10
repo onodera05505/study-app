@@ -16,14 +16,14 @@
 #
 # Pages 用の設定に D1 バインディングを書くのが要点:
 #   設定ファイル無しでデプロイすると、そのデプロイには D1 が bind されない。
-#   env.DB が undefined になり、ログインも登録も 500 で落ちる（2026-08-29 に応用情報側で発生）。
+#   env.DB が undefined になり、ログインも登録も 500 で落ちる。
 #   バインディングは wrangler.jsonc の env.<試験> から機械的に写すので、二重管理にはならない。
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
 EXAM="${1:-ip}"
 [ "$(python3 scripts/targets.py has "$EXAM")" = yes ] || { echo "第1引数は対象の ID（$(python3 scripts/targets.py keys)）"; exit 1; }
-# プロジェクト名と DB は scripts/pages_projects.json が正本（2026-09-15 に個人アカウントへ移した際に 1 か所に集約）
+# プロジェクト名と DB は scripts/pages_projects.json が正本
 read -r PROJECT DB < <(python3 -c "import json;c=json.load(open('scripts/pages_projects.json'))['$EXAM'];print(c['project'],c['db'])")
 URL=$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['$EXAM'].get('url','https://${PROJECT}.pages.dev'))")
 
@@ -52,11 +52,6 @@ echo "▶ ロードマップ型の回の語・印の語が登録簿に揃って�
 # @implements BR-037
 python3 scripts/check_roadmap_registry.py "$EXAM"
 
-echo "▶ 描画検査（実データ全件を jsdom で描いて見る。落ちたらデプロイしない）"
-# データ側の検査が通っても画面だけ壊れることがある（2026-09-01 の用語ポップ）。
-# 何を見ているかは scripts/check_render.tsx の先頭。
-bash scripts/check_render.sh "$EXAM"
-
 echo "▶ 文書の索引と「不変条件と門」の対応表が現物と合っているか"
 # 索引に無い文書は無いのと同じ。表が名指しするスクリプトが消えていたら表が嘘になる。
 python3 scripts/check_docs.py
@@ -64,9 +59,15 @@ python3 scripts/check_docs.py
 echo "▶ フロントをビルド"
 # 試験名とタイトルは .env / .env.ap から読ませる（--mode で切り替わる）
 npx vite build --mode "$EXAM"
-# 新しい版の印（要件 §5.6）。画面が 5 分おきに見比べ、違えば「更新」の帯を出す
+# 版の印。画面が一定の間隔で見比べ、違えば新しい版の知らせを出す。
+# 書き出しは配信より前で、失敗すれば set -e で止まり配信しない（保証点。ADR-0007）
 # @implements REQ-224, REQ-225, REQ-226
 printf '{"build": "%s", "at": "%s"}\n' "$(git rev-parse --short HEAD 2>/dev/null || echo unknown)" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > dist/version.json
+
+echo "▶ 描画検査（実データ全件を jsdom で描いて見る。配信する dist の版の印も見る。落ちたらデプロイしない）"
+# データ側の検査が通っても画面だけ壊れることがある。版の印の項目は配信する dist を見るので、
+# 版の印を書いた後・配信の前に回す。何を見ているかは scripts/check_render.tsx の先頭。
+bash scripts/check_render.sh "$EXAM"
 
 echo "▶ Worker を1ファイルにまとめる（Pages の advanced mode 用）"
 # --env で wrangler.jsonc の env ブロックを選ぶ。試験ごとに D1 の bind 先が違う。

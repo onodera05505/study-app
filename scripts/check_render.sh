@@ -8,9 +8,10 @@
 # 何を見ているかは scripts/check_render.tsx の先頭に書いてある。
 #
 # データ側の検査（check_materials / check_explanations / check_seed）が全部通っていても
-# 画面だけ壊れていることがある（2026-09-01 の用語ポップがそれ）。そこを埋める。
+# 画面だけ壊れていることがある。そこを埋める。
 #
-# scripts/deploy-pages.sh がビルドの前にこれを呼ぶので、落ちればデプロイは走らない。
+# scripts/deploy-pages.sh が、ビルドして版の印を書いた後・配信の前にこれを呼ぶので、落ちればデプロイは走らない。
+# 単独で回すと、版の印の項目は手元の dist/ を見る（dist/ が無ければ警告、時刻の無い印はエラー）。
 set -euo pipefail
 cd "$(dirname "$0")/.."
 

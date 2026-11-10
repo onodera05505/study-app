@@ -5,15 +5,10 @@
  *
  * ## なぜ要るか
  *
- * 2026-09-01、用語ポップ `[[用語]]` を反映した直後に「ポップが見つからない」と
- * 報告があった。原因は `Markdown.tsx` の行内パーサが `**[[用語]]**`
- * （教材の「混同しやすい用語」の定型。教材内の用語指定の IP 93% / AP 88%）で
- * `[[…]]` を文字のまま出していたこと。
- *
- * このとき **データ側の検査（check_materials / check_explanations / check_seed）は
- * 全部通っていた。** DB に入る文字列としては正しく、壊れていたのは描画だけだったから。
- * 表示側には機械の検査が1つも無く、「画面の確認は毎回やる」という文章しか無かった。
- * それを門にするのがこのスクリプト。
+ * データ側の検査（check_materials / check_explanations / check_seed）は DB に入る
+ * 文字列を見るので、描画だけが壊れる不具合（例: `Markdown.tsx` の行内パーサが
+ * `**[[用語]]**` の `[[…]]` を文字のまま出す）を素通りする。描画の結果を門にするのが
+ * このスクリプト。
  *
  * ## 何をするか
  *
@@ -37,7 +32,8 @@
  *      論点に結び付いた語だけ「この論点を学ぶ」が出る
  *   7. 用語集が未取得（null）の間も `[[` が文字として出ない
  *   8. 配信物に版の印 `dist/version.json` があり、`build`（コミットの短い ID）と
- *      `at`（時刻）を持つ（ビルドの出力がある環境だけで見る）
+ *      `at`（時刻）を持つ（ビルドの出力がある環境だけで見る）。配備の手続きは版の印を
+ *      書いた後・配信の前にこの検査を回すので、配信する dist そのものを見る
  *
  * error は終了コード1（デプロイを止める）、warning は0。
  */
@@ -530,7 +526,11 @@ function checkVersionStamp(): { errors: Issue[]; warnings: Issue[] } {
     errors.push({ where, what: 'build（コミットの短い ID）が無い', excerpt })
   }
   if (typeof data?.at !== 'string' || Number.isNaN(Date.parse(data.at))) {
-    errors.push({ where, what: 'at（時刻）が無い、または時刻として読めない', excerpt })
+    errors.push({
+      where,
+      what: 'at（時刻）が無い、または時刻として読めない（時刻は配備の手続きが書く。手元のビルドだけの dist なら scripts/deploy-pages.sh の順で回すこと）',
+      excerpt,
+    })
   }
   return { errors, warnings }
 }
