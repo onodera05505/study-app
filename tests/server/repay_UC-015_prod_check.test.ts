@@ -1,10 +1,10 @@
 import { execFile, execFileSync } from 'node:child_process'
-import { chmodSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
+import { chmodSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
-import { beforeAll, describe, expect, it } from 'vitest'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
 /**
  * UC-015 本番の検査（REQ-213〜222 のうち、検査そのものの振る舞い）。
@@ -98,20 +98,26 @@ if [ -z "$status" ]; then
     *) status=200; body='<!doctype html><title>entry</title>' ;;
   esac
 fi
+# 出力は全体を組んでから 1 回の書き込みで出す。行ごとに書くと、読み手が先に読み終えて閉じた管に
+# 残りの行を書いて SIGPIPE で落ち、負荷の具合で応答の一部が欠けたように見える。
+out=""
 if [ "$code" != 0 ]; then
-  [ "$want_status" = 1 ] && printf '000'
+  [ "$want_status" = 1 ] && out='000'
+  printf '%s' "$out"
   exit "$code"
 fi
+CR=$'\\r'; NL=$'\\n'
 if [ "$want_headers" = 1 ]; then
-  printf 'HTTP/2 %s\\r\\n' "$status"
-  printf 'content-security-policy: default-src %s\\r\\n' "'self'"
-  printf 'strict-transport-security: max-age=31536000; includeSubDomains\\r\\n'
-  printf 'x-frame-options: DENY\\r\\n'
-  printf 'x-content-type-options: nosniff\\r\\n'
-  printf 'referrer-policy: strict-origin-when-cross-origin\\r\\n'
-  printf 'x-version: %s\\r\\n\\r\\n' "\${STUB_VERSION:-v1}"
+  out+="HTTP/2 $status$CR$NL"
+  out+="content-security-policy: default-src 'self'$CR$NL"
+  out+="strict-transport-security: max-age=31536000; includeSubDomains$CR$NL"
+  out+="x-frame-options: DENY$CR$NL"
+  out+="x-content-type-options: nosniff$CR$NL"
+  out+="referrer-policy: strict-origin-when-cross-origin$CR$NL"
+  out+="x-version: \${STUB_VERSION:-v1}$CR$NL$CR$NL"
 fi
-if [ "$want_status" = 1 ]; then printf '%s' "$status"; elif [ "$discard_body" = 0 ]; then printf '%s' "$body"; fi
+if [ "$want_status" = 1 ]; then out+="$status"; elif [ "$discard_body" = 0 ]; then out+="$body"; fi
+printf '%s' "$out"
 `
 
 const NPX_STUB = `#!/usr/bin/env bash
@@ -120,17 +126,20 @@ const NPX_STUB = `#!/usr/bin/env bash
 printf 'npx %s\\n' "$*" >> "$STUB_LOG"
 [ "$1" = wrangler ] || { echo "stub: npx $1 は想定外" >&2; exit 1; }
 shift
+# 出力は全体を組んでから 1 回の書き込みで出す（偽の curl と同じ理由）。
+NL=$'\\n'
 if [ "$1" = whoami ]; then
-  printf ' ⛅️ wrangler 4.0.0\\nGetting User settings...\\n'
+  out=" ⛅️ wrangler 4.0.0\${NL}Getting User settings...\${NL}"
   case "$STUB_WHOAMI_MODE" in
-    notLoggedIn) printf 'You are not authenticated. Please run wrangler login.\\n'; exit 0 ;;
-    noTable) printf '👋 You are logged in with an OAuth Token.\\n'; exit 0 ;;
+    notLoggedIn) printf '%s' "\${out}You are not authenticated. Please run wrangler login.\${NL}"; exit 0 ;;
+    noTable) printf '%s' "\${out}👋 You are logged in with an OAuth Token.\${NL}"; exit 0 ;;
   esac
-  printf '👋 You are logged in with an OAuth Token.\\n'
-  printf '┌──────────────┬──────────────────────────────────┐\\n│ Account Name │ Account ID                       │\\n'
+  out+="👋 You are logged in with an OAuth Token.\${NL}"
+  out+="┌──────────────┬──────────────────────────────────┐\${NL}│ Account Name │ Account ID                       │\${NL}"
   n=0
-  for a in $STUB_ACCOUNTS; do n=$((n+1)); printf '│ Account %s    │ %s │\\n' "$n" "$a"; done
-  printf '└──────────────┴──────────────────────────────────┘\\n'
+  for a in $STUB_ACCOUNTS; do n=$((n+1)); out+="│ Account $n    │ $a │\${NL}"; done
+  out+="└──────────────┴──────────────────────────────────┘\${NL}"
+  printf '%s' "$out"
   exit 0
 fi
 if [ "$1 $2 $3" = "pages secret list" ]; then
@@ -144,17 +153,25 @@ if [ "$1 $2 $3" = "pages secret list" ]; then
     echo "✘ [ERROR] A request to the Cloudflare API failed. Could not route to /pages/projects/$project [code: 7003]" >&2
     exit "$code"
   fi
-  printf ' ⛅️ wrangler 4.0.0\\n'
-  for n in $names; do printf '%s: Value Encrypted\\n' "$n"; done
+  out=" ⛅️ wrangler 4.0.0\${NL}"
+  for n in $names; do out+="$n: Value Encrypted\${NL}"; done
+  printf '%s' "$out"
   exit 0
 fi
 printf '%s\\n' "$SECRET_VALUE_SENTINEL"
 exit 0
 `
 
+/** 1 回の検査の上限。全部の入力を並行して回す beforeAll の上限より短くし、終わらない実行を後に残さない。 */
+const RUN_TIMEOUT = 240_000
+
+/** 実行ごとの作業場。入力は並行して回すので、偽物・規則・記録・一時ファイルの置き場を実行ごとに分け、終わったら消す。 */
+const workDirs: string[] = []
+
 /** 偽の curl・npx を置いた bin と、シナリオの規則ファイルを作って検査を 1 回回す。 */
 const runCheck = async (name: string, scenario: Scenario): Promise<Run> => {
   const dir = mkdtempSync(join(tmpdir(), `uc015-${name}-`))
+  workDirs.push(dir)
   const bin = join(dir, 'bin')
   mkdirSync(bin)
   writeFileSync(join(bin, 'curl'), CURL_STUB)
@@ -167,8 +184,13 @@ const runCheck = async (name: string, scenario: Scenario): Promise<Run> => {
   writeFileSync(join(dir, 'secrets.rules'), secrets + '\n')
   const log = join(dir, 'calls.log')
   writeFileSync(log, '')
+  const tmp = join(dir, 'tmp')
+  mkdirSync(tmp)
   const env = {
     ...process.env,
+    TMPDIR: tmp,
+    TMP: tmp,
+    TEMP: tmp,
     PATH: `${bin}:${process.env.PATH ?? ''}`,
     STUB_SCENARIO: dir,
     STUB_LOG: log,
@@ -185,10 +207,11 @@ const runCheck = async (name: string, scenario: Scenario): Promise<Run> => {
   let code = 0
   let out = ''
   try {
-    const r = await execFileAsync('bash', [CHECK], { cwd: ROOT, env, maxBuffer: 1 << 24 })
+    const r = await execFileAsync('bash', [CHECK], { cwd: ROOT, env, maxBuffer: 1 << 24, timeout: RUN_TIMEOUT, killSignal: 'SIGKILL' })
     out = r.stdout + r.stderr
   } catch (error) {
-    const e = error as { code?: number; stdout?: string; stderr?: string }
+    const e = error as { code?: number; stdout?: string; stderr?: string; killed?: boolean }
+    if (e.killed) throw new Error(`${name}: 検査が ${RUN_TIMEOUT / 1000} 秒で終わらない`)
     code = typeof e.code === 'number' ? e.code : 1
     out = (e.stdout ?? '') + (e.stderr ?? '')
   }
@@ -279,6 +302,10 @@ beforeAll(async () => {
   const entries = await Promise.all(Object.entries(SCENARIOS).map(async ([name, scenario]) => [name, await runCheck(name, scenario)] as const))
   for (const [name, r] of entries) runs.set(name, r)
 }, 480_000)
+
+afterAll(() => {
+  for (const dir of workDirs.splice(0)) rmSync(dir, { recursive: true, force: true })
+})
 
 describe('UC-015 本番の検査（偽の配備先に対して scripts/check_sso_prod.sh を回す）', () => {
   describe('REQ-213 死活確認を認証なしで叩く', () => {
