@@ -3,7 +3,7 @@
 x-uc: UC-018
 x-status: draft
 x-spec: ./UC.md
-x-updated: 2026-11-07
+x-updated: 2026-11-11
 
 schemas:
   Finding:
@@ -64,7 +64,7 @@ operations:
           properties:
             quoteLength: { type: integer, const: 30, description: 過去問の原文とこの字数以上連続して一致したら止める }
             headingLevel: { type: string, const: "###", description: 詳しい解説の見出しはこの階層だけ }
-            requiredExplanationLine: { type: string, const: 見分けワード, description: 説明が必ず含む行の語 }
+            requiredExplanationLine: { type: string, const: キーワード, description: 説明が必ず含む行の語 }
             tableColumns: { type: object, properties: { min: { const: 2 }, max: { const: 4 } }, description: 下回っても超えても警告 }
             tableRows: { type: object, description: ヘッダを含み区切りの行を数えない。下回っても超えても警告, properties: { min: { const: 2 }, max: { const: 8 } } }
             tableCellLength: { type: integer, const: 40, description: 超えたら警告 }
@@ -83,7 +83,7 @@ operations:
           topics: 532
           stops: []
           warnings: []
-          limits: { quoteLength: 30, headingLevel: "###", requiredExplanationLine: 見分けワード, tableColumns: { min: 2, max: 4 }, tableRows: { min: 2, max: 8 }, tableCellLength: 40 }
+          limits: { quoteLength: 30, headingLevel: "###", requiredExplanationLine: キーワード, tableColumns: { min: 2, max: 4 }, tableRows: { min: 2, max: 8 }, tableCellLength: 40 }
       unknownLearning:
         request: { data: data/zzz }
         error: INVALID_INPUT

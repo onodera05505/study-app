@@ -3,7 +3,7 @@
 x-uc: UC-021
 x-status: draft
 x-spec: ./UC.md
-x-updated: 2026-11-07
+x-updated: 2026-11-11
 
 schemas:
   Finding:
@@ -346,7 +346,7 @@ operations:
     examples:
       ok:
         request: { learning: eng }
-        response: { kind: roadmap, roadmapSpec: { keywordLabel: 見分けワード, usageSection: 面接で聞かれたら, ngWords: [最新, 近年, 年収, 万円, 激務], tiers: [{ level: 3, label: "★★★ まず押さえる", rule: IT 面接で聞かれる・初日から会話に出る・他の多くの単位の前提になる }, { level: 2, label: "★★ 1 年目に要る", rule: 入社 1 年目の仕事で使う・知らないと事故や手戻りになる }, { level: 1, label: "★ 必要になったら", rule: 基本情報の水準・特定の職種や場面で要る }] } }
+        response: { kind: roadmap, roadmapSpec: { keywordLabel: キーワード, usageSection: ひとことで説明すると, ngWords: [最新, 近年, 年収, 万円, 激務], tiers: [{ level: 3, label: "★★★ まず押さえる", rule: IT 面接で聞かれる・初日から会話に出る・他の多くの単位の前提になる }, { level: 2, label: "★★ 1 年目に要る", rule: 入社 1 年目の仕事で使う・知らないと事故や手戻りになる }, { level: 1, label: "★ 必要になったら", rule: 基本情報の水準・特定の職種や場面で要る }] } }
       unknown:
         request: { learning: zzz }
         error: NOT_FOUND

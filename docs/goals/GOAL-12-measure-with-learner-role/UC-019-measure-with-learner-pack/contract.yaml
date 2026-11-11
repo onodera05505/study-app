@@ -6,7 +6,7 @@
 x-uc: UC-019
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-08
+x-updated: 2026-11-11
 
 schemas:
   PackSnapshot:
@@ -230,8 +230,8 @@ operations:
         request: { data: data/eng, cycle: 8, out: ../learner_packs/eng_c8 }
         response:
           snapshotPath: data/eng/eval/pack_cycle_8.json
-          snapshot: { cycle: 8, units: [{ order: 1, topic_id: 1, term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）, field: コンピュータの仕組み }], questions: [{ qid: t1-1, topic_id: 1, tests_goal: 1, field: コンピュータの仕組み, answer: イ }, { qid: t1-2, topic_id: 1, tests_goal: 1, field: コンピュータの仕組み, answer: エ }] }
-          files: { roadmap: roadmap.md, units: ["units/01_コンピュータの_5_つの働き（入力・記憶・演算・制御・出力）.md"], quiz: quiz.md, explain: explain.md, figures: [figures/1-1.png] }
+          snapshot: { cycle: 8, units: [{ order: 1, topic_id: 1, term: コンピュータの 5 つの働き, field: コンピュータの仕組み }], questions: [{ qid: t1-1, topic_id: 1, tests_goal: 1, field: コンピュータの仕組み, answer: イ }, { qid: t1-2, topic_id: 1, tests_goal: 1, field: コンピュータの仕組み, answer: エ }] }
+          files: { roadmap: roadmap.md, units: ["units/01_コンピュータの_5_つの働き.md"], quiz: quiz.md, explain: explain.md, figures: [figures/1-1.png] }
       badArguments:
         request: { data: data/eng, cycle: 0, out: "" }
         error: INVALID_INPUT
@@ -364,12 +364,12 @@ operations:
           by_goal: { "1": 3/4 }
           by_field: { コンピュータの仕組み: 3/4 }
           per_unit:
-            "1": { term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）, field: コンピュータの仕組み, correct: 1, total: 2, understood: 3 }
-            "2": { term: CPU（命令を読んで計算する中心の部品）, field: コンピュータの仕組み, correct: 2, total: 2, understood: null, minutes: 4 }
+            "1": { term: コンピュータの 5 つの働き, field: コンピュータの仕組み, correct: 1, total: 2, understood: 3 }
+            "2": { term: CPU, field: コンピュータの仕組み, correct: 2, total: 2, understood: null, minutes: 4 }
           reported_units: 1
           avg_understood: 3
           stuck_units: []
-          overconfident_units: [{ topic_id: 1, term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力） }]
+          overconfident_units: [{ topic_id: 1, term: コンピュータの 5 つの働き }]
           unknown_terms: []
           shift_suspect: []
           shift_window: 3
@@ -384,12 +384,12 @@ operations:
           by_goal: { "1": 3/4 }
           by_field: { コンピュータの仕組み: 3/4 }
           per_unit:
-            "1": { term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）, field: コンピュータの仕組み, correct: 1, total: 2, understood: 3 }
-            "2": { term: CPU（命令を読んで計算する中心の部品）, field: コンピュータの仕組み, correct: 2, total: 2, understood: null, minutes: 4 }
+            "1": { term: コンピュータの 5 つの働き, field: コンピュータの仕組み, correct: 1, total: 2, understood: 3 }
+            "2": { term: CPU, field: コンピュータの仕組み, correct: 2, total: 2, understood: null, minutes: 4 }
           reported_units: 1
           avg_understood: 3
           stuck_units: []
-          overconfident_units: [{ topic_id: 1, term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力） }]
+          overconfident_units: [{ topic_id: 1, term: コンピュータの 5 つの働き }]
           unknown_terms: []
           shift_suspect: []
           shift_window: 3
@@ -405,12 +405,12 @@ operations:
           by_goal: { "1": 1/4 }
           by_field: { コンピュータの仕組み: 1/4 }
           per_unit:
-            "1": { term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）, field: コンピュータの仕組み, correct: 0, total: 2, understood: 3 }
-            "2": { term: CPU（命令を読んで計算する中心の部品）, field: コンピュータの仕組み, correct: 1, total: 2, understood: 3 }
+            "1": { term: コンピュータの 5 つの働き, field: コンピュータの仕組み, correct: 0, total: 2, understood: 3 }
+            "2": { term: CPU, field: コンピュータの仕組み, correct: 1, total: 2, understood: 3 }
           reported_units: 2
           avg_understood: 3
-          stuck_units: [{ topic_id: 1, term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力） }]
-          overconfident_units: [{ topic_id: 1, term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力） }, { topic_id: 2, term: CPU（命令を読んで計算する中心の部品） }]
+          stuck_units: [{ topic_id: 1, term: コンピュータの 5 つの働き }]
+          overconfident_units: [{ topic_id: 1, term: コンピュータの 5 つの働き }, { topic_id: 2, term: CPU }]
           unknown_terms: []
           shift_suspect: [t1-1, t1-2, t2-1]
           shift_window: 3
@@ -425,12 +425,12 @@ operations:
           by_goal: { "1": 1/4 }
           by_field: { コンピュータの仕組み: 1/4 }
           per_unit:
-            "1": { term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）, field: コンピュータの仕組み, correct: 0, total: 2, understood: 3 }
-            "2": { term: CPU（命令を読んで計算する中心の部品）, field: コンピュータの仕組み, correct: 1, total: 2, understood: 3 }
+            "1": { term: コンピュータの 5 つの働き, field: コンピュータの仕組み, correct: 0, total: 2, understood: 3 }
+            "2": { term: CPU, field: コンピュータの仕組み, correct: 1, total: 2, understood: 3 }
           reported_units: 2
           avg_understood: 3
-          stuck_units: [{ topic_id: 1, term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力） }]
-          overconfident_units: [{ topic_id: 1, term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力） }, { topic_id: 2, term: CPU（命令を読んで計算する中心の部品） }]
+          stuck_units: [{ topic_id: 1, term: コンピュータの 5 つの働き }]
+          overconfident_units: [{ topic_id: 1, term: コンピュータの 5 つの働き }, { topic_id: 2, term: CPU }]
           unknown_terms: []
           shift_suspect: []
           shift_window: 3
@@ -647,7 +647,7 @@ operations:
     examples:
       ok:
         request: { data: data/eng }
-        response: { group_by: chapter, units: [{ order: 1, topic_id: 1, term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）, field: コンピュータの仕組み, middle: コンピュータを形づくる部品, summary: どんなコンピュータも、受け取る・覚える・…, round: 1, chapter: コンピュータを形づくる部品 }] }
+        response: { group_by: chapter, units: [{ order: 1, topic_id: 1, term: コンピュータの 5 つの働き, field: コンピュータの仕組み, middle: コンピュータを形づくる部品, summary: どんなコンピュータも、受け取る・覚える・…, round: 1, chapter: コンピュータを形づくる部品 }] }
       missing:
         request: { data: data/ip }
         error: NOT_FOUND
@@ -693,7 +693,7 @@ operations:
     examples:
       ok:
         request: { data: data/eng }
-        response: { questions: [{ qid: t1-1, topic_id: 1, term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）, stem: …, choices: { "ア": …, "イ": …, "ウ": …, "エ": … }, answer: イ, reason: 制御は部品の動く順と中身を指図する働きで…, choice_notes: { "イ": 正解。どの部品がいつ動くかを決めて指図するのが制御に当たる。 }, tests_goal: 1 }] }
+        response: { questions: [{ qid: t1-1, topic_id: 1, term: コンピュータの 5 つの働き, stem: …, choices: { "ア": …, "イ": …, "ウ": …, "エ": … }, answer: イ, reason: 制御は部品の動く順と中身を指図する働きで…, choice_notes: { "イ": 正解。どの部品がいつ動くかを決めて指図するのが制御に当たる。 }, tests_goal: 1 }] }
       missing:
         request: { data: data/ip }
         error: NOT_FOUND
@@ -725,7 +725,7 @@ operations:
     examples:
       ok:
         request: { data: data/eng }
-        response: { terms: [{ term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）, goal: 1 }] }
+        response: { terms: [{ term: コンピュータの 5 つの働き, goal: 1 }] }
       missing:
         request: { data: data/ip }
         error: NOT_FOUND
@@ -769,7 +769,7 @@ operations:
         error: INVALID_INPUT
       ok:
         request: { data: data/eng }
-        response: { materials: [{ topic_id: 1, term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）, explanation: "**コンピュータの 5 つの働き**は…", detail: "### しくみ\n![…](/figures/materials/eng/1-1.svg)\n…" }] }
+        response: { materials: [{ topic_id: 1, term: コンピュータの 5 つの働き, explanation: "**コンピュータの 5 つの働き**は…", detail: "### しくみ\n![…](/figures/materials/eng/1-1.svg)\n…" }] }
       missing:
         request: { data: data/ip }
         error: NOT_FOUND
@@ -833,7 +833,7 @@ operations:
     errors: []
     examples:
       ok:
-        request: { out: ../learner_packs/eng_c8, units: [{ order: 1, topic_id: 1, term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）, round: 第 1 章 コンピュータを形づくる部品, summary: どんなコンピュータも、受け取る・覚える・…, file: "units/01_コンピュータの_5_つの働き（入力・記憶・演算・制御・出力）.md" }] }
+        request: { out: ../learner_packs/eng_c8, units: [{ order: 1, topic_id: 1, term: コンピュータの 5 つの働き, round: 第 1 章 コンピュータを形づくる部品, summary: どんなコンピュータも、受け取る・覚える・…, file: "units/01_コンピュータの_5_つの働き.md" }] }
         response: { path: roadmap.md }
 
   writePackUnit:
@@ -859,8 +859,8 @@ operations:
     errors: []
     examples:
       ok:
-        request: { out: ../learner_packs/eng_c8, file: "units/01_コンピュータの_5_つの働き（入力・記憶・演算・制御・出力）.md", topic_id: 1, term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）, field: コンピュータの仕組み, middle: コンピュータを形づくる部品, explanation: "**コンピュータの 5 つの働き**は…", detail: "### しくみ\n![…](../figures/1-1.png)\n…" }
-        response: { path: "units/01_コンピュータの_5_つの働き（入力・記憶・演算・制御・出力）.md" }
+        request: { out: ../learner_packs/eng_c8, file: "units/01_コンピュータの_5_つの働き.md", topic_id: 1, term: コンピュータの 5 つの働き, field: コンピュータの仕組み, middle: コンピュータを形づくる部品, explanation: "**コンピュータの 5 つの働き**は…", detail: "### しくみ\n![…](../figures/1-1.png)\n…" }
+        response: { path: "units/01_コンピュータの_5_つの働き.md" }
 
   writePackQuiz:
     transport: local-store
@@ -896,7 +896,7 @@ operations:
     errors: []
     examples:
       ok:
-        request: { out: ../learner_packs/eng_c8, answerFormat: { answers: {}, units: [{ topic_id: 1, minutes: 5, understood: 3, confusing: "", unknown_terms: [] }] }, questions: [{ qid: t1-1, topic_id: 1, order: 1, term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）, stem: …, choices: { "ア": …, "イ": …, "ウ": …, "エ": … } }] }
+        request: { out: ../learner_packs/eng_c8, answerFormat: { answers: {}, units: [{ topic_id: 1, minutes: 5, understood: 3, confusing: "", unknown_terms: [] }] }, questions: [{ qid: t1-1, topic_id: 1, order: 1, term: コンピュータの 5 つの働き, stem: …, choices: { "ア": …, "イ": …, "ウ": …, "エ": … } }] }
         response: { path: quiz.md }
 
   writePackExplain:
@@ -915,7 +915,7 @@ operations:
     errors: []
     examples:
       ok:
-        request: { out: ../learner_packs/eng_c8, terms: [コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）] }
+        request: { out: ../learner_packs/eng_c8, terms: [コンピュータの 5 つの働き] }
         response: { path: explain.md }
 
   writePackFigure:
@@ -1012,7 +1012,7 @@ operations:
     examples:
       ok:
         request: { path: data/eng/eval/explain_c6_grade.json }
-        response: { grades: { "CPU（命令を読んで計算する中心の部品）": 2 } }
+        response: { grades: { "CPU": 2 } }
       missing:
         request: { path: data/eng/eval/explain_c99_grade.json }
         error: NOT_FOUND
@@ -1041,7 +1041,7 @@ operations:
     examples:
       ok:
         request: { data: data/eng, cycle: 8 }
-        response: { cycle: 8, units: [{ order: 1, topic_id: 1, term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）, field: コンピュータの仕組み }], questions: [{ qid: t1-1, topic_id: 1, tests_goal: 1, field: コンピュータの仕組み, answer: イ }] }
+        response: { cycle: 8, units: [{ order: 1, topic_id: 1, term: コンピュータの 5 つの働き, field: コンピュータの仕組み }], questions: [{ qid: t1-1, topic_id: 1, tests_goal: 1, field: コンピュータの仕組み, answer: イ }] }
       missing:
         request: { data: data/eng, cycle: 99 }
         error: NOT_FOUND
@@ -1103,10 +1103,10 @@ operations:
         when: その周の写しが既にある
     examples:
       exists:
-        request: { data: data/eng, snapshot: { cycle: 6, units: [{ order: 1, topic_id: 1, term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）, field: コンピュータの仕組み }], questions: [{ qid: t1-1, topic_id: 1, tests_goal: 1, field: コンピュータの仕組み, answer: イ }] } }
+        request: { data: data/eng, snapshot: { cycle: 6, units: [{ order: 1, topic_id: 1, term: コンピュータの 5 つの働き, field: コンピュータの仕組み }], questions: [{ qid: t1-1, topic_id: 1, tests_goal: 1, field: コンピュータの仕組み, answer: イ }] } }
         error: CONFLICT
       ok:
-        request: { data: data/eng, snapshot: { cycle: 8, units: [{ order: 1, topic_id: 1, term: コンピュータの 5 つの働き（入力・記憶・演算・制御・出力）, field: コンピュータの仕組み }], questions: [{ qid: t1-1, topic_id: 1, tests_goal: 1, field: コンピュータの仕組み, answer: イ }] } }
+        request: { data: data/eng, snapshot: { cycle: 8, units: [{ order: 1, topic_id: 1, term: コンピュータの 5 つの働き, field: コンピュータの仕組み }], questions: [{ qid: t1-1, topic_id: 1, tests_goal: 1, field: コンピュータの仕組み, answer: イ }] } }
         response: { path: data/eng/eval/pack_cycle_8.json }
 
   writeCycleResult:

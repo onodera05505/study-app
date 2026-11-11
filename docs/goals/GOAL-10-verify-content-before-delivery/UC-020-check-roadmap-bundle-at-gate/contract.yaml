@@ -3,7 +3,7 @@
 x-uc: UC-020
 x-status: draft
 x-spec: ./UC.md
-x-updated: 2026-11-07
+x-updated: 2026-11-11
 
 schemas:
   Finding:
@@ -333,7 +333,7 @@ operations:
     examples:
       ok:
         request: { learning: itc }
-        response: { kind: roadmap, roadmapSpec: { keywordLabel: 見分けワード, usageSection: 面接で話すなら, ngWords: [激務, "ブラック(?!ボックス)", 年収, 万円, 最新, 近年] } }
+        response: { kind: roadmap, roadmapSpec: { keywordLabel: キーワード, usageSection: 面接で話すなら, ngWords: [激務, "ブラック(?!ボックス)", 年収, 万円, 最新, 近年] } }
       unknown:
         request: { learning: zzz }
         error: NOT_FOUND
