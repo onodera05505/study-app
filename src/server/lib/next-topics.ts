@@ -3,8 +3,8 @@ import type { Db } from './db'
 
 export type NextTopic = { id: number; term: string; questionCount: number; field: string }
 
-/* 以下の SQL の断片は、論点を t（topics）、その利用者の理解度の記録を p（progress の LEFT JOIN）と
- * 名付けた問い合わせの中でだけ使える。 */
+/* 以下の SQL の断片は、論点を t（topics）、論点のシラバスの項目を s（syllabus_items の JOIN）、
+ * その利用者の理解度の記録を p（progress の LEFT JOIN）と名付けた問い合わせの中でだけ使える。 */
 
 /** まだ理解していない論点の条件。記録の無い論点は未理解として扱い、未理解とやや理解を分けない。 */
 // @implements BR-029, BR-030
@@ -13,10 +13,18 @@ export function notUnderstood(): SQL {
 }
 
 /** その学びの種類の並び（ORDER BY の中身）。資格対策は出題頻度の降順、ロードマップ型は学ぶ順（sort_order）。
+ *  資格対策で出題頻度が同じ論点どうしは、分野の順 → シラバスの項目の順 → 論点の ID の順に並べる。
+ *  投入されたシラバスの項目の id は syllabus.json の項目の番号なので、分野の順はその分野の項目の番号の最小値、
+ *  項目の順は番号そのもので表す。論点の項目を s（syllabus_items の JOIN）と名付けた問い合わせの中でだけ使える。
  *  資格対策の並びはロードマップ型の列を参照しない。 */
 // @implements BR-031
 export function learningOrder(roadmap: boolean): SQL {
-  return roadmap ? sql`COALESCE(t.sort_order, 999999) ASC, t.term` : sql`t.question_count DESC, t.term`
+  return roadmap
+    ? sql`COALESCE(t.sort_order, 999999) ASC, t.term`
+    : sql`t.question_count DESC,
+          (SELECT MIN(sf.id) FROM syllabus_items sf WHERE sf.field = s.field) ASC,
+          s.id ASC,
+          t.id ASC`
 }
 
 /** 一覧のおすすめ順（ORDER BY 句）。まだ理解していない論点を学びの種類の並びで先に、理解にした論点を

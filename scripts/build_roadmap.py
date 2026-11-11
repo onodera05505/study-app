@@ -66,6 +66,15 @@ def unmatched_config_ids(cfg: dict, cand_ids: set[int]) -> list[str]:
     return [f"{where}: {v!r}" for where, v in config_refs(cfg) if not (_is_id(v) and v in cand_ids)]
 
 
+# @implements REQ-437
+def duplicate_terms(cands: list[dict]) -> list[str]:
+    """候補の中で 2 つ以上の単位が持つ名前（term）を、候補ファイルでの初出の順に返す。"""
+    count: dict[str, int] = {}
+    for c in cands:
+        count[c["term"]] = count.get(c["term"], 0) + 1
+    return [t for t, n in count.items() if n >= 2]
+
+
 # @implements REQ-430
 def apply_config_to_candidates(cands: list[dict], cfg: dict) -> None:
     """前提を足す・置き換える設定と要約の差し替えを、候補の論点の ID で当てる。"""
@@ -135,6 +144,11 @@ def main() -> int:
     unmatched = unmatched_config_ids(cfg, cand_ids)
     if unmatched:
         print(f"ロードマップの設定が指す論点の ID のうち、どの候補にも当たらない物 {len(unmatched)} 件（何も書き出していない）:", *unmatched, sep="\n  ")
+        return 1
+    # 単位の前提は名前で書き出すので、名前が同じ単位があると前提が取り違えられる
+    dups = duplicate_terms(cands)
+    if dups:
+        print(f"候補の中で名前が同じ単位 {len(dups)} 件（何も書き出していない）:", *dups, sep="\n  ")
         return 1
     # 候補の前提は論点の ID。どの候補にも当たらない前提は並べるときに使われないので知らせる
     stray = [(c["id"], p) for c in cands for p in c.get("prereq", []) if not (_is_id(p) and p in cand_ids)]

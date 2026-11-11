@@ -292,3 +292,70 @@ describe('当たらない ID があれば書き出さずに止める（UC-009）
     }
   })
 })
+
+describe('候補に名前が同じ単位があれば書き出さずに止める（UC-009）', () => {
+  function expectStopped(cands: Candidate[], cfg: Json, name: string, where: string) {
+    const b = build(cands, cfg)
+    expect(b.status, `${where}: 止まらずに終了 0 で終わった:\n${b.out}`).not.toBe(0)
+    expect(b.roadmapExists, `${where}: roadmap.json が書き出されている`).toBe(false)
+    expect(b.out, `${where}: どの名前が重なっているかを示していない`).toContain(name)
+  }
+
+  const DUP = '重なる名前の単位'
+
+  // @covers REQ-437#duplicate-among-selected
+  it('ロードマップに載る候補どうしに名前が同じ単位があると（副題が違っても・3 つでも）、書き出さずに止め、その名前を示す', () => {
+    const variants: [string, (c: Candidate[]) => void][] = [
+      ['副題なしの 2 つ', (c) => {
+        c[0].term = DUP
+        c[2].term = DUP
+      }],
+      ['副題だけが違う 2 つ', (c) => {
+        c[0].term = DUP
+        c[0].subtitle = '一つ目の副題'
+        c[2].term = DUP
+        c[2].subtitle = '二つ目の副題'
+      }],
+      ['3 つ', (c) => {
+        c[0].term = DUP
+        c[2].term = DUP
+        c[4].term = DUP
+      }],
+    ]
+    for (const [where, edit] of variants) {
+      const cands = candidates()
+      edit(cands)
+      expectStopped(cands, config(), DUP, where)
+    }
+  })
+
+  // @covers REQ-437#duplicate-outside-selection
+  it('名前が同じ単位のどちらかが重みの上限や除く一覧でロードマップに載らない候補でも、書き出さずに止め、その名前を示す', () => {
+    const cut = candidates()
+    cut[0].term = DUP
+    cut[COUNT - 1].term = DUP
+    expectStopped(cut, config(), DUP, '上限で落ちる候補と重なる')
+
+    const excluded = candidates()
+    excluded[0].term = DUP
+    excluded[1].term = DUP
+    expectStopped(excluded, config({ exclude: [ID(1)] }), DUP, '除く一覧の候補と重なる')
+
+    const bothOut = candidates()
+    bothOut[COUNT - 2].term = DUP
+    bothOut[COUNT - 1].term = DUP
+    expectStopped(bothOut, config(), DUP, '載らない候補どうしで重なる')
+  })
+
+  // @covers REQ-437#distinct-names-built
+  it('名前がどれも違えば、一方の名前が他方の名前を含んでも、他方の名前と副題をつないだ文字と同じでも、止めずに書き出す', () => {
+    const cands = candidates()
+    cands[0].term = '基礎'
+    cands[0].subtitle = '（入門）'
+    cands[1].term = '基礎（入門）'
+    cands[2].term = '基礎の応用'
+    const b = built(cands, config())
+    for (const i of [0, 1, 2]) expect(unit(b, ID(i + 1)).term).toBe(cands[i].term)
+    expect(unit(b, ID(1)).subtitle).toBe('（入門）')
+  })
+})
