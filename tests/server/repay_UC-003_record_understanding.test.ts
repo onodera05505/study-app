@@ -286,21 +286,47 @@ describe('おすすめ順の一覧（UC-003）', () => {
     expect(new Set(ids)).toEqual(new Set(WITH_QUESTIONS))
   })
 
-  // @covers REQ-042#low-understanding-first
-  it('理解度の低い論点が先に並ぶ（記録の無い論点は未理解として並ぶ）', async () => {
+  /** 理解にした論点（status=3）か。記録なし・未理解・やや理解はまだ理解していない論点（BR-029・BR-030）。 */
+  const isUnderstood = (t: Listed) => t.status === 3
+
+  // @covers REQ-042#not-understood-first
+  it('まだ理解していない論点（未理解・やや理解・記録なし）がすべて先に、理解にした論点がすべて最後に並ぶ', async () => {
+    // 理解にしたのは出題頻度の最も高い B。頻度の順のままなら先頭に来る論点を選ぶ
     await recordMixed()
-    const stages = (await recommended()).map((t) => t.status ?? 1)
-    for (let i = 1; i < stages.length; i++)
-      expect(stages[i], `並び ${stages.join(',')} の ${i} 番目で理解度が下がっている`).toBeGreaterThanOrEqual(stages[i - 1])
-    expect(stages).toEqual([1, 1, 1, 2, 3])
+    const listed = await recommended()
+    const firstUnderstood = listed.findIndex(isUnderstood)
+    expect(firstUnderstood, '理解にした論点が一覧に無い（この検査は空振りになる）').toBeGreaterThanOrEqual(0)
+    expect(
+      listed.slice(firstUnderstood).every(isUnderstood),
+      `理解にした論点のあとに、まだ理解していない論点がある: ${listed.map((t) => `${t.id}(${t.status})`).join(',')}`,
+    ).toBe(true)
+    expect(firstUnderstood, '理解にした論点がまだ理解していない論点より前にある').toBe(listed.length - 1)
+    expect(listed[firstUnderstood].id).toBe(B)
   })
 
-  // @covers REQ-042#same-stage-follows-learning-type
-  it('同じ理解度の中は、資格対策の並び（出題頻度の降順）に従う', async () => {
-    await recordMixed()
-    const unlearned = (await recommended()).filter((t) => (t.status ?? 1) === 1)
-    // C(5 問) → A(3 問) → E(1 問)。ID の順（A, C, E）でも名前の順でもない
-    expect(unlearned.map((t) => t.id)).toEqual([C, A, E])
+  // @covers REQ-042#not-understood-one-order
+  it('まだ理解していない論点は、未理解とやや理解を分けず、資格対策の並び（出題頻度の降順）の 1 つの並びになる', async () => {
+    // 記録が 1 つも無い: 全件がまだ理解していない論点で、出題頻度の降順 B(9)→D(7)→C(5)→A(3)→E(1)
+    expect((await recommended()).map((t) => t.id)).toEqual([B, D, C, A, E])
+
+    // 未理解の B(9)・やや理解の D(7)・記録なしの C(5) と A(3)・やや理解の E(1) が、出題頻度の降順の 1 つの並びになる
+    // （未理解とやや理解を分けると B,C,A,D,E になる）
+    expect((await record(B, { status: 1 })).status).toBe(200)
+    expect((await record(D, { status: 2 })).status).toBe(200)
+    expect((await record(E, { status: 2 })).status).toBe(200)
+    expect((await recommended()).map((t) => t.id)).toEqual([B, D, C, A, E])
+  })
+
+  // @covers REQ-042#understood-follow-learning-type
+  it('理解にした論点どうしも、最後の塊の中で資格対策の並び（出題頻度の降順）に従う', async () => {
+    // 理解にするのを A(3)・C(5)・D(7) の順で記録する。ID の順（A,C,D）・名前の順（C,D,A）・記録した順（A,C,D）の
+    // どれとも違う出題頻度の降順 D→C→A になる
+    for (const id of [A, C, D]) expect((await record(id, { status: 3 })).status).toBe(200)
+    expect((await recommended()).map((t) => t.id)).toEqual([B, E, D, C, A])
+
+    // 全件を理解にしても、除かれずに出題頻度の降順のまま
+    for (const id of [B, E]) expect((await record(id, { status: 3 })).status).toBe(200)
+    expect((await recommended()).map((t) => t.id)).toEqual([B, D, C, A, E])
   })
 })
 

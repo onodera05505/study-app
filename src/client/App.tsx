@@ -43,14 +43,45 @@ export function App() {
   // タブの段が学びの名前・アカウントと別の段に並ぶ狭い画面でだけ、下へ読み進めるあいだヘッダーを縮め、タブの段だけを残す。
   // 直前の読み位置から少しでも上へ動くと元に戻す。広い画面では縮めず、縮んだまま広がったら元に戻す。
   // 縮める量はタブの段より上の高さ
-  // @implements BR-046, REQ-425, REQ-426
+  // アカウントのメニューを開いている間とタブの段の外にフォーカスがある間は、下へ動いても縮む状態にせず、
+  // 下へ動き続けている区間の起点もその位置に置き直す。だから止める条件が解けた瞬間には縮まず、
+  // 解けたあとに下へ読み進めたときに縮む。
+  // メニューを閉じた後にメニューを開くボタンに残ったフォーカスは縮むのを止めない。縮むときにタブの段の外に
+  // フォーカスがあれば、縮んで操作できなくなる部品と一緒に失われないよう本文の先頭（main）へ移す
+  // @implements BR-046, REQ-425, REQ-426, REQ-431, REQ-432
   const headerRef = useRef<HTMLElement | null>(null)
+  const mainRef = useRef<HTMLElement | null>(null)
+  const accountBtnRef = useRef<HTMLButtonElement | null>(null)
   const [headerCollapsed, setHeaderCollapsed] = useState(false)
   /** タブの段が別の段に並んでいるか（狭い画面か） */
   const [stacked, setStacked] = useState(false)
-  /** タブの段の外（縮むと操作できなくなる部品）にフォーカスがあるか。タブの段の中のフォーカスは数えない */
+  /** タブの段の外（縮むと操作できなくなる部品）にフォーカスがあるか。タブの段の中のフォーカスと、
+   *  メニューを閉じた後にメニューを開くボタンに残ったフォーカスは数えない */
   const [outsideFocused, setOutsideFocused] = useState(false)
-  const shrunk = stacked && headerCollapsed && !menuOpen && !outsideFocused
+  const keepFull = menuOpen || outsideFocused
+  /** 読み位置の監視（effect の外）から、縮むのを止める条件を読むための写し */
+  const keepFullRef = useRef(keepFull)
+  useEffect(() => {
+    keepFullRef.current = keepFull
+    if (keepFull) setHeaderCollapsed(false)
+  }, [keepFull])
+  const menuOpenRef = useRef(menuOpen)
+  /** 今のフォーカスが、ヘッダーの中のタブの段の外の部品にあるか */
+  const focusOutsideTabs = () => {
+    const active = document.activeElement
+    return !!active && !!headerRef.current?.contains(active) && !navRef.current?.contains(active)
+  }
+  // メニューを閉じたときは、閉じる前の知らせではなく今のフォーカスの位置で決め直す。
+  // メニューの項目は閉じると消え、フォーカスは focusout を出さずに文書の外へ落ちることがある。
+  // メニューを開くボタンに残ったフォーカスは数えない
+  const menuWasOpen = useRef(menuOpen)
+  useEffect(() => {
+    menuOpenRef.current = menuOpen
+    if (menuWasOpen.current && !menuOpen)
+      setOutsideFocused(focusOutsideTabs() && document.activeElement !== accountBtnRef.current)
+    menuWasOpen.current = menuOpen
+  }, [menuOpen])
+  const shrunk = stacked && headerCollapsed && !keepFull
   useEffect(() => {
     const header = headerRef.current
     const nav = navRef.current
@@ -73,10 +104,20 @@ export function App() {
       frame = requestAnimationFrame(() => {
         frame = 0
         const y = window.scrollY
-        if (y < 48 || y < lastY) {
+        // タブの段の外のフォーカスによる止めは、そのフォーカスが今もそこにあるときだけ効かせる。
+        // 部品が消えて focusout の無いままフォーカスが落ちた取り残しは、ここで解く
+        const stale = keepFullRef.current && !menuOpenRef.current && !focusOutsideTabs()
+        if (stale) setOutsideFocused(false)
+        if (y < 48 || y < lastY || (keepFullRef.current && !stale)) {
           setHeaderCollapsed(false)
           downFrom = y
-        } else if (isStacked && y > downFrom + 6) setHeaderCollapsed(true)
+        } else if (isStacked && y > downFrom + 6) {
+          // 縮むと inert になる部品にフォーカスを置いたまま縮めると、フォーカスが文書の外へ落ちる
+          const active = document.activeElement
+          if (active && header.contains(active) && !nav.contains(active))
+            mainRef.current?.focus({ preventScroll: true })
+          setHeaderCollapsed(true)
+        }
         // 直前の読み位置は動くたびに更新する（少しでも上へ動いたら戻すため）
         lastY = y
       })
@@ -188,7 +229,7 @@ export function App() {
       )}
       {/* 縮んでいる間は、タブの段の外を画面の外へ送るだけでなく読み上げとキーボードからも外す。
           アカウントのメニューを開いている間と、タブの段の外の部品にフォーカスがある間は縮めない */}
-      {/* @implements BR-046, REQ-425, REQ-426 */}
+      {/* @implements BR-046, REQ-425, REQ-426, REQ-431, REQ-432 */}
       <header
         ref={headerRef}
         className={shrunk ? 'header header-collapsed' : 'header'}
@@ -218,6 +259,7 @@ export function App() {
             onClick={(e) => e.stopPropagation()}
           >
             <button
+              ref={accountBtnRef}
               type="button"
               className="account-btn"
               aria-haspopup="menu"
@@ -271,7 +313,8 @@ export function App() {
           </nav>
         </div>
       </header>
-      <main>
+      {/* 縮むヘッダーから移すフォーカスの受け先（本文の先頭）。Tab の順には入れない */}
+      <main ref={mainRef} tabIndex={-1}>
         {/* @implements REQ-128, REQ-195 */}
         <Routes>
           {/* ロードマップ型にホームは無い。進捗と続きはロードマップの先頭に出す */}

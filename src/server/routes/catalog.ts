@@ -5,7 +5,7 @@ import { z } from 'zod'
 import type { Bindings, Variables } from '../lib/db'
 import { getDb, schema } from '../lib/db'
 import { explanationOf, type ExplanationColumns } from '../lib/explanations'
-import { nextTopics } from '../lib/next-topics'
+import { learningOrder, nextTopics, recommendedOrder } from '../lib/next-topics'
 import { bodyErrorMessage } from '../lib/body-error'
 import { compareExam, dedupe } from '../lib/session-builder'
 
@@ -86,7 +86,7 @@ const topicQuery = z.object({
 })
 
 /** 論点一覧。既定は出題頻度の降順＝最短合格の優先順位そのもの。 */
-// @implements REQ-020, REQ-021, REQ-042, REQ-265, BR-029, BR-031, REQ-279, REQ-282, REQ-413
+// @implements REQ-020, REQ-021, REQ-042, REQ-265, BR-029, BR-030, BR-031, REQ-279, REQ-282, REQ-413
 catalogRoutes.get('/topics', async (c) => {
   const parsed = topicQuery.safeParse(c.req.query())
   if (!parsed.success) return c.json({ error: '検索条件が正しくありません' }, 400)
@@ -107,20 +107,15 @@ catalogRoutes.get('/topics', async (c) => {
       ? sql`AND COALESCE(p.status, 1) IN (${sql.join(wanted.map((n) => sql`${n}`), sql`, `)})`
       : sql``,
   ]
-  // recommended = 「頻出なのに、まだ理解できていない」順。これが最短経路の実体。
-  // ロードマップ型は出題頻度が一定（確認問題 2 問）なので、学ぶ順（sort_order）で並べる。
+  // recommended は「次に学ぶ」と同じ定義（lib/next-topics）で並べる。
   // 資格版の SQL はロードマップ型の列（sort_order・round・round_label・tier・subtitle）を参照しない。
   const byRoadmap = examOf(c.env.EXAM).roadmap
   const ordering =
     sort === 'name'
       ? sql`ORDER BY t.term`
       : sort === 'recommended'
-        ? byRoadmap
-          ? sql`ORDER BY COALESCE(p.status, 1) ASC, COALESCE(t.sort_order, 999999) ASC, t.term`
-          : sql`ORDER BY COALESCE(p.status, 1) ASC, t.question_count DESC, t.term`
-        : byRoadmap
-          ? sql`ORDER BY COALESCE(t.sort_order, 999999) ASC, t.term`
-          : sql`ORDER BY t.question_count DESC, t.term`
+        ? recommendedOrder(byRoadmap)
+        : sql`ORDER BY ${learningOrder(byRoadmap)}`
 
   const rows = await db.all<{
     id: number

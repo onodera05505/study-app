@@ -201,8 +201,12 @@ function Table({ head, rows }: { head: string[] | null; rows: string[][] }) {
 /** 教材の図。過去問の図（Figure.tsx）と同じくタップで原寸に切り替える。
  *
  *  スマホでは幅に合わせて縮むと文字が読めなくなる図がある。過去問側にだけ
- *  拡大があって教材側に無いのは、同じ絵なのに扱いが違って見える。 */
-// @implements REQ-006, BR-035
+ *  拡大があって教材側に無いのは、同じ絵なのに扱いが違って見える。
+ *
+ *  図の説明文は figure の唯一の figcaption として 1 回だけ示し、図と結び付けて読ませる。
+ *  画像の代替文は空にして説明文を重ねて読ませない。拡大の案内は figcaption にせず、
+ *  ボタンの名前と重なるので読み上げから外す。 */
+// @implements REQ-006, REQ-427, BR-035
 function MdFigure({ src, caption }: { src: string; caption: string }) {
   const [zoomed, setZoomed] = useState(false)
   return (
@@ -214,12 +218,12 @@ function MdFigure({ src, caption }: { src: string; caption: string }) {
         aria-label={zoomed ? '図を画面幅に合わせる' : '図を原寸で表示する'}
       >
         {/* 教材の図は本文を読む助けなので、画面に来てから読み込めばよい */}
-        <img src={src} alt={caption} loading="lazy" />
+        <img src={src} alt="" loading="lazy" />
       </button>
       {caption && <figcaption>{caption}</figcaption>}
-      <figcaption className="figure-hint">
+      <p className="figure-hint" aria-hidden="true">
         {zoomed ? 'タップで画面幅に戻す（横にスクロールできます）' : 'タップで拡大'}
-      </figcaption>
+      </p>
     </figure>
   )
 }

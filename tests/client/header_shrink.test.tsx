@@ -511,6 +511,229 @@ async function checkReducedMotion(target: string) {
   await v.close()
 }
 
+/** アカウントのメニューを開く。開いた形になるまで待つ。 */
+async function openAccountMenu(v: View, where: string) {
+  const opener = v.accountOpener()
+  expect(opener, `${where} のヘッダーにアカウントのメニューを開く操作が無い`).toBeTruthy()
+  await v.act(() => opener!.click())
+  await vi.waitFor(
+    () =>
+      expect(v.accountOpen(), `${where} でアカウントのメニューが開いた形（aria-expanded か details の open）にならない`).toBe(
+        true,
+      ),
+    WAIT,
+  )
+}
+
+/** アカウントのメニューを閉じる。閉じ方は作りによるので、開く操作をもう一度押す・Esc・メニューの外を押す の順に試し、
+ *  閉じた形になったところで止める。どれでも閉じなければ落とす（この検査が空振りにならないように）。 */
+async function closeAccountMenu(v: View, where: string) {
+  const tries: (() => void)[] = [
+    () => v.accountOpener()?.click(),
+    () => {
+      const t = (document.activeElement as HTMLElement | null) ?? document.body
+      for (const el of [t, document.body]) {
+        el.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', bubbles: true }))
+        el.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape', code: 'Escape', bubbles: true }))
+      }
+    },
+    () => {
+      for (const type of ['pointerdown', 'mousedown', 'pointerup', 'mouseup', 'click'])
+        document.body.dispatchEvent(new MouseEvent(type, { bubbles: true }))
+    },
+  ]
+  for (const t of tries) {
+    if (!v.accountOpen()) break
+    await v.act(t)
+  }
+  expect(v.accountOpen(), `${where} でアカウントのメニューを閉じられない（この検査は空振りになる）`).toBe(false)
+}
+
+/** その場で何も動かさずに、知らせの処理が何巡か済むのを待つ（閉じた瞬間・外れた瞬間に遅れて縮む作りを拾う）。 */
+async function idle(v: View) {
+  for (let i = 0; i < 3; i++) await v.act(() => {})
+}
+
+/** 次に下へ読み進める（読み位置 600 から、さらに下へ）。 */
+async function readFurtherDown(v: View) {
+  for (const y of [700, 800]) await v.scrollTo(y)
+}
+
+/** Esc でアカウントのメニューを閉じる（フォーカスのある部品と文書の両方に送る）。閉じなければ落とす。 */
+async function closeAccountMenuByEscape(v: View, where: string) {
+  await v.act(() => {
+    const t = (document.activeElement as HTMLElement | null) ?? document.body
+    for (const el of t === document.body ? [document.body] : [t, document.body]) {
+      el.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', bubbles: true }))
+      el.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape', code: 'Escape', bubbles: true }))
+    }
+  })
+  expect(v.accountOpen(), `${where} で Esc を押してもアカウントのメニューが閉じない`).toBe(false)
+}
+
+/** メニューを開く部品にフォーカスを置いて開き、Esc で閉じて、フォーカスがその部品に残った状態にする。
+ *  ブラウザでは押した部品にフォーカスが残るので、閉じたあとフォーカスがどこにも無ければ（メニューの項目が消えて
+ *  body に落ちた）その部品へ戻して同じ状態を作る。ヘッダーの別の部品へ移っていれば落とす（この状態が作れない）。 */
+async function openThenEscapeWithFocusOnOpener(v: View, where: string) {
+  const opener = v.accountOpener()
+  expect(opener, `${where} のヘッダーにアカウントのメニューを開く操作が無い`).toBeTruthy()
+  await v.act(() => opener!.focus())
+  expect(document.activeElement, `${where} でメニューを開く部品にフォーカスを置けていない`).toBe(opener)
+  await openAccountMenu(v, where)
+  await v.readDown()
+  await closeAccountMenuByEscape(v, where)
+  const now = v.accountOpener()!
+  if (document.activeElement === document.body || document.activeElement === null) await v.act(() => now.focus())
+  expect(document.activeElement, `${where} でメニューを閉じたあと、フォーカスがメニューを開く部品に無い`).toBe(now)
+  return now
+}
+
+/** 狭い画面で、メニューを開いたまま読み進めたあとに閉じても、その瞬間には縮まず、次に下へ読み進めたときに縮む。
+ *  閉じ方は、フォーカスを動かさずに閉じる（値の変種 1）と、メニューを開く部品にフォーカスを置いて開き Esc で閉じ、
+ *  フォーカスがその部品に残る（値の変種 2。残ったフォーカスは縮むのを止めない）と、メニューの項目にフォーカスを
+ *  移して Esc で閉じ、項目が消えてフォーカスがどこにも無くなる（値の変種 3。フォーカスを開く部品へ戻さない）。 */
+async function checkMenuCloseWaits(target: string) {
+  {
+    const { v, where, full, before } = await open(target, '/')
+    await openAccountMenu(v, where)
+    await v.readDown()
+    await closeAccountMenu(v, where)
+    await idle(v)
+    expectFullAgainNow(v, `${where}（メニューを開いたまま読み進め、閉じた瞬間）`, full, before)
+    await readFurtherDown(v)
+    await expectShrunk(v, `${where}（メニューを閉じたあと次に下へ読み進めた）`, before)
+    await v.close()
+  }
+  {
+    const { v, where, full, before } = await open(target, '/')
+    await openThenEscapeWithFocusOnOpener(v, where)
+    await idle(v)
+    expectFullAgainNow(v, `${where}（メニューを開く部品から開いて Esc で閉じた瞬間）`, full, before)
+    await readFurtherDown(v)
+    await expectShrunk(v, `${where}（Esc で閉じ、メニューを開く部品にフォーカスが残ったまま次に下へ読み進めた）`, before)
+    await v.close()
+  }
+  {
+    const { v, where, full, before } = await open(target, '/')
+    await openAccountMenu(v, where)
+    const item = v.host.querySelector<HTMLElement>('[role="menuitem"]') ?? document.querySelector<HTMLElement>('[role="menuitem"]')
+    expect(item, `${where} の開いたアカウントのメニューに項目（role="menuitem"）が無い（この変種は空振りになる）`).toBeTruthy()
+    const itemName = (item!.textContent ?? '').trim() || item!.tagName
+    await v.act(() => item!.focus())
+    expect(document.activeElement, `${where} でメニューの項目「${itemName}」にフォーカスを置けていない`).toBe(item)
+    await v.readDown()
+    await closeAccountMenuByEscape(v, where)
+    // フォーカスは開く部品へ戻さない（項目が消えてどこにも無くなった状態のまま見る）
+    await idle(v)
+    expectFullAgainNow(v, `${where}（メニューの項目「${itemName}」にフォーカスを置いて読み進め、Esc で閉じた瞬間）`, full, before)
+    const active = document.activeElement
+    const focusNote =
+      active && active !== document.body
+        ? `（閉じたあとフォーカスは「${(active.textContent ?? '').trim() || active.tagName}」にある）`
+        : '（閉じたあとフォーカスはどこにも無い）'
+    await readFurtherDown(v)
+    await expectShrunk(v, `${where}（メニューの項目から Esc で閉じたあと次に下へ読み進めた）${focusNote}`, before)
+    await v.close()
+  }
+}
+
+/** 本文（画面の main の目印）の先頭にフォーカスがあるか。main そのものか、main の中で、それより前に
+ *  見えている文字もフォーカスを受ける部品も無い要素なら先頭とする。 */
+function focusAtBodyStart(v: View): { ok: boolean; why: string } {
+  const main = v.host.querySelector<HTMLElement>('main, [role="main"]')
+  if (!main) return { ok: false, why: '画面に本文の目印（main か role="main"）が無い' }
+  const a = document.activeElement
+  if (!a || a === document.body) return { ok: false, why: 'フォーカスがどこにも無い（失われた）' }
+  if (a === main) return { ok: true, why: '' }
+  if (!main.contains(a)) {
+    const name = (a.textContent ?? '').trim() || a.tagName
+    return { ok: false, why: `フォーカスが本文の外の「${name}」にある` }
+  }
+  const walker = document.createTreeWalker(main, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT)
+  for (let n = walker.nextNode(); n && n !== a; n = walker.nextNode()) {
+    if (n.contains(a)) continue
+    if (n.nodeType === Node.TEXT_NODE && (n.textContent ?? '').trim() !== '' && !isHidden(n.parentElement!, v.host))
+      return { ok: false, why: `フォーカスより前に本文の文字「${(n.textContent ?? '').trim().slice(0, 20)}」がある` }
+    if (n.nodeType === Node.ELEMENT_NODE && (n as Element).matches('a[href], button, summary, input, select, textarea'))
+      return { ok: false, why: 'フォーカスより前に本文のフォーカスを受ける部品がある' }
+  }
+  return { ok: true, why: '' }
+}
+
+/** 狭い画面で、メニューを閉じた後にメニューを開く部品に残ったフォーカスのまま次に下へ読み進めて縮むと、
+ *  縮むと操作できなくなるその部品にあったフォーカスは本文の先頭へ移り、失われない。 */
+async function checkFocusMovedToBodyStart(target: string) {
+  const { v, where, before } = await open(target, '/')
+  await openThenEscapeWithFocusOnOpener(v, where)
+  await readFurtherDown(v)
+  await expectShrunk(v, `${where}（メニューを開く部品にフォーカスが残ったまま下へ読み進めた）`, before)
+  await vi.waitFor(() => {
+    const r = focusAtBodyStart(v)
+    expect(r.ok, `${where} で縮んだあと、フォーカスが本文の先頭に移っていない: ${r.why}`).toBe(true)
+  }, WAIT)
+  await v.close()
+}
+
+/** 狭い画面で、タブの段の外の部品にフォーカスを置いて読み進めたあとにフォーカスが外れても、その瞬間には縮まず、
+ *  次に下へ読み進めたときに縮む。外れ方は、どこにもフォーカスが無くなる（全部品）と、タブの段の中へ移る（先頭の部品）。 */
+async function checkOutsideBlurWaits(target: string) {
+  const { v, where, full, before } = await open(target, '/')
+  const count = v.outsideFocusables().length
+  expect(count, `${where} のタブの段の外にフォーカスを受ける部品が無い（この検査は空振りになる）`).toBeGreaterThan(0)
+  const ways: { label: string; leave: (part: HTMLElement) => void }[] = [
+    { label: 'フォーカスを外した', leave: (part) => part.blur() },
+    { label: 'タブの段のリンクへフォーカスを移した', leave: () => v.tabRow()?.querySelector<HTMLElement>('a')?.focus() },
+  ]
+  const cases = [
+    ...Array.from({ length: count }, (_, i) => ({ i, way: ways[0] })),
+    { i: 0, way: ways[1] },
+  ]
+  for (const { i, way } of cases) {
+    await v.scrollTo(0)
+    await expectFullAgain(v, `${where}（読み位置を先頭に戻した）`, full, before)
+    const part = v.outsideFocusables()[i]
+    expect(part, `${where} のタブの段の外の ${i + 1} 番目の部品が見つからない`).toBeTruthy()
+    const name = (part.textContent ?? '').trim() || part.getAttribute('href') || part.tagName
+    await v.act(() => part.focus())
+    expect(document.activeElement, `タブの段の外の「${name}」にフォーカスを置けていない`).toBe(part)
+    await v.readDown()
+    await v.act(() => way.leave(part))
+    expect(document.activeElement, `「${name}」から${way.label}つもりがフォーカスが残っている`).not.toBe(part)
+    await idle(v)
+    expectFullAgainNow(v, `${where}（「${name}」にフォーカスを置いて読み進め、${way.label}瞬間）`, full, before)
+    await readFurtherDown(v)
+    await expectShrunk(v, `${where}（「${name}」から${way.label}あと次に下へ読み進めた）`, before)
+    await v.act(() => (document.activeElement as HTMLElement | null)?.blur?.())
+  }
+  await v.close()
+}
+
+/** 広い画面では、メニューを閉じても、タブの段の外の部品からフォーカスが外れても、次に下へ読み進めても縮まない。 */
+async function checkWideCloseOrBlurKeeps(target: string) {
+  device.width = WIDE
+  stubDevice()
+  const { v, where, full, before } = await open(target, '/')
+  await openAccountMenu(v, where)
+  await v.readDown()
+  await closeAccountMenu(v, where)
+  await idle(v)
+  expectFullAgainNow(v, `${where}（メニューを閉じた瞬間）`, full, before)
+  await readFurtherDown(v)
+  await expectFullAgain(v, `${where}（メニューを閉じたあと下へ読み進めた）`, full, before)
+
+  await v.scrollTo(0)
+  const part = v.outsideFocusables()[0]
+  expect(part, `${where} のタブの段の外にフォーカスを受ける部品が無い（この検査は空振りになる）`).toBeTruthy()
+  await v.act(() => part.focus())
+  await v.readDown()
+  await v.act(() => part.blur())
+  await idle(v)
+  expectFullAgainNow(v, `${where}（タブの段の外の部品からフォーカスが外れた瞬間）`, full, before)
+  await readFurtherDown(v)
+  await expectFullAgain(v, `${where}（フォーカスが外れたあと下へ読み進めた）`, full, before)
+  await v.close()
+}
+
 describe('資格対策の上部のヘッダーの縮みと戻り（UC-001）', () => {
   // 対象が無ければ下の検査が 1 本も作られず空振りになる
   if (!EXAM_TARGETS.length) throw new Error('登録簿に資格対策の対象が無い')
@@ -549,6 +772,26 @@ describe('資格対策の上部のヘッダーの縮みと戻り（UC-001）', (
     // @covers REQ-425#reduced-motion-still-switches
     it(`${target} で動きを減らす設定でも、縮みと戻りが切り替わる`, async () => {
       await checkReducedMotion(target)
+    }, TEST_TIMEOUT)
+
+    // @covers REQ-431#menu-close-waits-for-next-read-down
+    it(`${target} の狭い画面では、アカウントのメニューを閉じた瞬間には縮まず、次に下へ読み進めたときに縮む`, async () => {
+      await checkMenuCloseWaits(target)
+    }, TEST_TIMEOUT)
+
+    // @covers REQ-431#focus-moved-to-body-start
+    it(`${target} の狭い画面では、メニューを閉じた後に開く部品に残ったフォーカスのまま縮むと、フォーカスが本文の先頭へ移る`, async () => {
+      await checkFocusMovedToBodyStart(target)
+    }, TEST_TIMEOUT)
+
+    // @covers REQ-431#outside-blur-waits-for-next-read-down
+    it(`${target} の狭い画面では、タブの段の外の部品からフォーカスが外れた瞬間には縮まず、次に下へ読み進めたときに縮む`, async () => {
+      await checkOutsideBlurWaits(target)
+    }, TEST_TIMEOUT)
+
+    // @covers REQ-431#wide-close-or-blur-keeps
+    it(`${target} の広い画面では、メニューを閉じてもタブの段の外からフォーカスが外れても、そのあと下へ読み進めても縮まない`, async () => {
+      await checkWideCloseOrBlurKeeps(target)
     }, TEST_TIMEOUT)
   }
 })
@@ -591,6 +834,26 @@ describe('ロードマップ型の上部のヘッダーの縮みと戻り（UC-0
     // @covers REQ-426#reduced-motion-still-switches
     it(`${target} で動きを減らす設定でも、縮みと戻りが切り替わる`, async () => {
       await checkReducedMotion(target)
+    }, TEST_TIMEOUT)
+
+    // @covers REQ-432#menu-close-waits-for-next-read-down
+    it(`${target} の狭い画面では、アカウントのメニューを閉じた瞬間には縮まず、次に下へ読み進めたときに縮む`, async () => {
+      await checkMenuCloseWaits(target)
+    }, TEST_TIMEOUT)
+
+    // @covers REQ-432#focus-moved-to-body-start
+    it(`${target} の狭い画面では、メニューを閉じた後に開く部品に残ったフォーカスのまま縮むと、フォーカスが本文の先頭へ移る`, async () => {
+      await checkFocusMovedToBodyStart(target)
+    }, TEST_TIMEOUT)
+
+    // @covers REQ-432#outside-blur-waits-for-next-read-down
+    it(`${target} の狭い画面では、タブの段の外の部品からフォーカスが外れた瞬間には縮まず、次に下へ読み進めたときに縮む`, async () => {
+      await checkOutsideBlurWaits(target)
+    }, TEST_TIMEOUT)
+
+    // @covers REQ-432#wide-close-or-blur-keeps
+    it(`${target} の広い画面では、メニューを閉じてもタブの段の外からフォーカスが外れても、そのあと下へ読み進めても縮まない`, async () => {
+      await checkWideCloseOrBlurKeeps(target)
     }, TEST_TIMEOUT)
   }
 })

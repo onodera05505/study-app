@@ -213,8 +213,7 @@ describe('本文の記法（UC-001）', () => {
     await draw(h(Markdown, { source: '![LTV の図](/figures/materials/mkt/231-1.svg)' }))
     const img = container.querySelector('img')
     expect(img?.getAttribute('src')).toBe('/figures/materials/mkt/231-1.svg')
-    expect(img?.getAttribute('alt')).toBe('LTV の図')
-    expect(container.querySelector('figcaption')?.textContent).toBe('LTV の図')
+    // 説明文の出し方（画像に持たせず、図に結び付けた文字として 1 回）は REQ-427 が持つ
   })
 
   // @covers REQ-004#other-path
@@ -222,5 +221,136 @@ describe('本文の記法（UC-001）', () => {
     await draw(h(Markdown, { source: '![外部](https://example.com/zu.png)' }))
     expect(container.querySelector('img')).toBeNull()
     expect(text()).toContain('![外部](https://example.com/zu.png)')
+  })
+})
+
+/* ---------- 図の説明文（REQ-427） ---------- */
+
+/** 観測できる形で見えないか（hidden・インラインの display / visibility）。aria-hidden は見た目を隠さない。 */
+function visuallyHidden(el: Element): boolean {
+  for (let e: Element | null = el; e && e !== container.parentElement; e = e.parentElement) {
+    if (e.hasAttribute('hidden')) return true
+    const st = (e as HTMLElement).style
+    if (st && (st.display === 'none' || st.visibility === 'hidden')) return true
+  }
+  return false
+}
+
+/** 読み上げから外れているか（見えない形か、aria-hidden か inert）。 */
+function unannounced(el: Element): boolean {
+  if (visuallyHidden(el)) return true
+  for (let e: Element | null = el; e && e !== container.parentElement; e = e.parentElement) {
+    if (e.getAttribute('aria-hidden') === 'true' || e.hasAttribute('inert')) return true
+  }
+  return false
+}
+
+/** s の中に word が何回現れるか。 */
+const occurrences = (s: string, word: string) => s.split(word).length - 1
+
+/** 本文の中の文字の節（text node）を、その親の要素と一緒に集める。 */
+function textNodes(): { text: string; parent: Element }[] {
+  const out: { text: string; parent: Element }[] = []
+  const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT)
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+    if (n.parentElement && (n.textContent ?? '') !== '') out.push({ text: n.textContent ?? '', parent: n.parentElement })
+  }
+  return out
+}
+
+/** id の並び（空白区切り）が指す要素の文字。 */
+const referencedText = (ids: string | null) =>
+  (ids ?? '')
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((id) => document.getElementById(id)?.textContent ?? '')
+    .join(' ')
+
+/** 画像そのものが持つ文字（代替文・title・aria-label・aria-labelledby / aria-describedby が指す文字）。 */
+const imageCarried = (img: Element) =>
+  [
+    img.getAttribute('alt') ?? '',
+    img.getAttribute('title') ?? '',
+    img.getAttribute('aria-label') ?? '',
+    referencedText(img.getAttribute('aria-labelledby')),
+    referencedText(img.getAttribute('aria-describedby')),
+  ].join(' ')
+
+/** 見た目に現れる回数（見えている文字の節と、見えている要素の title の吹き出し）。 */
+function visibleCount(caption: string): number {
+  let n = 0
+  for (const t of textNodes()) if (!visuallyHidden(t.parent)) n += occurrences(t.text, caption)
+  for (const el of container.querySelectorAll('[title]'))
+    if (!visuallyHidden(el)) n += occurrences(el.getAttribute('title') ?? '', caption)
+  return n
+}
+
+/** 読み上げに届く回数（読み上げから外れていない文字の節と、外れていない要素の代替文・aria-label・title、
+ *  画像が aria-labelledby / aria-describedby で指す文字）。 */
+function announcedCount(caption: string): number {
+  let n = 0
+  for (const t of textNodes()) if (!unannounced(t.parent)) n += occurrences(t.text, caption)
+  for (const el of container.querySelectorAll('*')) {
+    if (unannounced(el)) continue
+    n += occurrences(el.getAttribute('aria-label') ?? '', caption)
+    n += occurrences(el.getAttribute('title') ?? '', caption)
+    if (el.tagName === 'IMG') {
+      n += occurrences(el.getAttribute('alt') ?? '', caption)
+      n += occurrences(referencedText(el.getAttribute('aria-labelledby')), caption)
+      n += occurrences(referencedText(el.getAttribute('aria-describedby')), caption)
+    }
+  }
+  return n
+}
+
+/** 説明文が、その画像の図（figure か role="figure"）に結び付いた画面の文字か。
+ *  結び付きは、同じ図の中の figcaption にあるか、図が aria-labelledby / aria-describedby で指す要素にあること。 */
+function linkedTo(img: Element, caption: string): boolean {
+  const fig = img.closest('figure, [role="figure"]')
+  if (!fig) return false
+  const captions = [...fig.querySelectorAll('figcaption')].filter((c) => c.closest('figure, [role="figure"]') === fig)
+  if (captions.some((c) => !visuallyHidden(c) && (c.textContent ?? '').includes(caption))) return true
+  return [fig.getAttribute('aria-labelledby'), fig.getAttribute('aria-describedby')].some((ids) =>
+    (ids ?? '')
+      .split(/\s+/)
+      .filter(Boolean)
+      .some((id) => {
+        const el = document.getElementById(id)
+        return !!el && fig.contains(el) && !visuallyHidden(el) && (el.textContent ?? '').includes(caption)
+      }),
+  )
+}
+
+/** 1 枚の図について、説明文の出し方を確かめる。 */
+function expectCaptionOnce(src: string, caption: string) {
+  const img = container.querySelector(`img[src="${src}"]`)
+  expect(img, `${src} の図が画像として出ていない`).toBeTruthy()
+  expect(imageCarried(img!), `${src} の画像そのものが説明文を持っている`).not.toContain(caption)
+  expect(linkedTo(img!, caption), `${src} の説明文が、その図に結び付いた画面の文字になっていない`).toBe(true)
+  expect(visibleCount(caption), `「${caption}」が見た目で 1 回でない`).toBe(1)
+  expect(announcedCount(caption), `「${caption}」が読み上げで 1 回でない`).toBe(1)
+}
+
+describe('図の説明文（UC-001）', () => {
+  const CAPTION_1 = '売上高の線と総費用の線が交わる点が損益分岐点です。横軸の売上高で読みます。'
+  const CAPTION_2 = '固定費は売上高によらず一定で、変動費は売上高に比例して増えます。'
+  const SRC_1 = '/figures/materials/ip/102-1.svg'
+  const SRC_2 = '/figures/materials/ip/102-2.svg'
+
+  // @covers REQ-427#single-figure
+  it('図が 1 枚の本文では、説明文は画像に持たせず、図に結び付いた画面の文字として見た目でも読み上げでも 1 回だけ出る', async () => {
+    await draw(h(Markdown, { source: `損益分岐点を図で見ます。\n\n![${CAPTION_1}](${SRC_1})\n\n図のあとの本文です。` }))
+    expectCaptionOnce(SRC_1, CAPTION_1)
+  })
+
+  // @covers REQ-427#several-figures
+  it('説明文の違う図が 2 枚ある本文では、それぞれの説明文がそれぞれの図に結び付き、取り違えずに各 1 回だけ出る', async () => {
+    await draw(h(Markdown, { source: `![${CAPTION_1}](${SRC_1})\n\n間の本文です。\n\n![${CAPTION_2}](${SRC_2})` }))
+    expectCaptionOnce(SRC_1, CAPTION_1)
+    expectCaptionOnce(SRC_2, CAPTION_2)
+    const img1 = container.querySelector(`img[src="${SRC_1}"]`)!
+    const img2 = container.querySelector(`img[src="${SRC_2}"]`)!
+    expect(linkedTo(img1, CAPTION_2), '1 枚目の図に 2 枚目の説明文が結び付いている').toBe(false)
+    expect(linkedTo(img2, CAPTION_1), '2 枚目の図に 1 枚目の説明文が結び付いている').toBe(false)
   })
 })

@@ -189,6 +189,8 @@ p a:not(.btn), .md li a, .md-table a { text-decoration: underline; }
 .account-menu button:hover { background: var(--bg); color: var(--ng); }
 
 main { max-width: 960px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+/* 本文の先頭はフォーカスの受け先で、操作する部品ではないので枠を出さない */
+main[tabindex="-1"]:focus { outline: none; }
 
 /* ---- タイポグラフィ ------------------------------------------
    差をつける場所を絞る。見出しと本文の差より、数字と補助ラベルの差を大きく取る。
@@ -715,8 +717,10 @@ a.row:hover { border-color: var(--accent); text-decoration: none; }
   text-align: center;
   margin-top: 0.4rem;
 }
+/* 拡大の案内は本文の段落（.md p）ではないので、段落の余白・字の大きさ・幅を受けない */
+.md-figure .figure-hint { font-size: 0.78rem; margin: 0.4rem 0 0; max-width: none; }
 
-/* ---- 出題画面 ------------------------------------------------ */
+/* ---- 出題画面------------------------------------------------ */
 
 .exam-top {
   position: sticky;

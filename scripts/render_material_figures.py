@@ -100,35 +100,6 @@ def block_width(label: str, size: float = FS_BODY) -> float:
     return max(text_width(ln, size) for ln in lines_of(label))
 
 
-def wrap(s: str, size: float, max_w: float) -> list:
-    """caption 用の折り返し。英単語の途中では割らない。"""
-    tokens, buf = [], ""
-    for ch in str(s):
-        if ch.isascii() and not ch.isspace():
-            buf += ch
-            continue
-        if buf:
-            tokens.append(buf)
-            buf = ""
-        tokens.append(ch)
-    if buf:
-        tokens.append(buf)
-
-    out, cur, cur_w = [], "", 0.0
-    for t in tokens:
-        w = text_width(t, size)
-        if cur and cur_w + w > max_w and t != " ":
-            out.append(cur.rstrip())
-            cur, cur_w = "", 0.0
-        if not cur and t == " ":
-            continue
-        cur += t
-        cur_w += w
-    if cur.strip():
-        out.append(cur.rstrip())
-    return out or [""]
-
-
 # ---------------------------------------------------------------- SVG の部品
 
 def esc(s) -> str:
@@ -756,29 +727,26 @@ DRAWERS = {"blocks": draw_blocks, "sequence": draw_sequence,
 
 # ---------------------------------------------------------------- 組み立て
 
+# @implements REQ-428
 def render(fig) -> str:
+    """図 1 枚の SVG。説明文（caption）は画面が図の下に文字として出すので、SVG には見える文字としても
+    <title> などの読み上げに届く文字としても持たせず、画像の高さも図の中身の分だけにする。"""
     body, w, h = DRAWERS[fig["type"]](fig)
 
     inner_w = max(WIDTH - 2 * PAD, w)
     nat_w = inner_w + 2 * PAD
-    cap_lines = wrap(fig["caption"], FS_SMALL, inner_w)
-    cap_top = PAD + h + 16
-    nat_h = cap_top + LINE_H_S * len(cap_lines) + PAD - 4
+    nat_h = PAD + h + PAD
 
     parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" '
         f'height="{n(round(WIDTH * nat_h / nat_w))}" '
-        f'viewBox="0 0 {n(nat_w)} {n(nat_h)}" role="img">',
-        f'<title>{esc(fig["caption"])}</title>',
+        f'viewBox="0 0 {n(nat_w)} {n(nat_h)}">',
         # 白いカードを焼き込む。画面がダークテーマでも図は白いまま出す
         rect(0.5, 0.5, nat_w - 1, nat_h - 1, CARD, CARD_EDGE, 1.0, rx=12),
         f'<g transform="translate({n(PAD + (inner_w - w) / 2)} {n(PAD)})">',
     ]
     parts += body
     parts.append("</g>")
-    for i, ln in enumerate(cap_lines):
-        parts.append(text(nat_w / 2, cap_top + LINE_H_S * i + FS_SMALL, ln,
-                          FS_SMALL, MUTED))
     parts.append("</svg>")
     return "\n".join(parts) + "\n"
 
@@ -818,15 +786,13 @@ def _figure_texts(fig) -> list:
 
 
 def validate_figure(fig, where, problems) -> None:
-    t = fig.get("type")
-    if t not in FIGURE_TYPES:
-        problems.append(f"{where}: 未知の type {t!r}（{'/'.join(FIGURE_TYPES)} のいずれか）")
-        return
-    cap = str(fig.get("caption", "")).strip()
-    if not cap:
-        problems.append(f"{where}: caption が空")
+    cap = fig.get("caption")
+    if not isinstance(cap, str) or not cap.strip():
+        # @implements REQ-433
+        problems.append(f"{where}: caption が無いか、空か空白だけか、文字列でない（この図は描かない）")
     else:
-        # 2026-09-27 の決定: caption は敬体で、答え・誤答の否定・選択肢の記号・回と問番号を書かない
+        cap = cap.strip()
+        # caption は敬体で、答え・誤答の否定・選択肢の記号・回と問番号を書かない
         if not CAPTION_POLITE.search(cap):
             problems.append(f"{where}: caption の文末が敬体（です・ます）でない: {cap[-20:]!r}")
         if CAPTION_BANNED.search(cap):
@@ -836,6 +802,10 @@ def validate_figure(fig, where, problems) -> None:
     for txt in _figure_texts(fig):
         if FIGURE_BANNED.search(txt):
             problems.append(f"{where}: 図の中身に誤答の否定・正誤の印・問の名指しか禁止記法: {txt[:40]!r}")
+    t = fig.get("type")
+    if t not in FIGURE_TYPES:
+        problems.append(f"{where}: 未知の type {t!r}（{'/'.join(FIGURE_TYPES)} のいずれか）")
+        return
 
     if t == "blocks":
         if not _need(fig, ["nodes"], where, problems):
@@ -994,7 +964,7 @@ def main() -> int:
 
     problems: list = []
     docs = load(paths, problems)
-    # after の見出しが教材（materials_v3）に実在するか。無いと attach が explanation 末尾へ黙って逃がす（2026-09-27）
+    # after の見出しが教材（materials_v3）に実在するか。無いと attach が explanation 末尾へ黙って逃がす
     heads = {}
     for mp in sorted((args.data / "materials_v3").glob("*.json")) if (args.data / "materials_v3").exists() else []:
         try:
