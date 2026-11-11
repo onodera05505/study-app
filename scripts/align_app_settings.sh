@@ -15,7 +15,10 @@ DB=$(python3 scripts/targets.py db "$EXAM")
 WHERE="--remote"; [ "${2:-}" = "--local" ] && WHERE="--local"
 if [ "$WHERE" = "--remote" ]; then
   WANT=$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['account_id'])")
-  HAVE=$(npx wrangler whoami 2>/dev/null | grep -oE '[0-9a-f]{32}' | head -1 || true)
+  # 道具の出力は一度変数に受けてから読む（pipefail の下で読み手が先に抜けると、書き手が SIGPIPE で落ちる）
+  WHOAMI=$(npx wrangler whoami 2>/dev/null || true)
+  ACCOUNT_RE='[0-9a-f]{32}'; HAVE=""
+  [[ $WHOAMI =~ $ACCOUNT_RE ]] && HAVE="${BASH_REMATCH[0]}"
   [ "$HAVE" = "$WANT" ] || { echo "ログイン中のアカウント（${HAVE:-不明}）が想定（${WANT}）と違う。npx wrangler login で個人アカウントを選び直す"; exit 1; }
 fi
 read -r SIZE SEC < <(python3 -c "import sys; sys.path.insert(0,'scripts'); from targets import exam_settings as E; print(*E()['$EXAM'])")

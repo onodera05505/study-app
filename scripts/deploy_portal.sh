@@ -15,7 +15,9 @@ cd "$(dirname "$0")/.."
 source scripts/pinned_wrangler.sh
 
 ACCOUNT="$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['account_id'])")"
-if ! "$WRANGLER" whoami 2>/dev/null | grep -q "$ACCOUNT"; then
+# 道具の出力は一度変数に受けてから読む（pipefail の下で読み手が先に抜けると、書き手が SIGPIPE で落ちる）
+WHOAMI="$("$WRANGLER" whoami 2>/dev/null || true)"
+if ! grep -q "$ACCOUNT" <<< "$WHOAMI"; then
   echo "ログイン中の Cloudflare アカウントが登録簿（$ACCOUNT）と違う。npx wrangler login で個人アカウントに" >&2; exit 1
 fi
 PROJECT="$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json')).get('_portal',{}).get('project','manabiba'))")"
@@ -25,14 +27,16 @@ if [ "${1:-}" = "--setup" ]; then
   if grep -q PLACEHOLDER portal/wrangler.jsonc; then
     echo "▶ D1 ${DB} を作る"
     OUT="$("$WRANGLER" d1 create "$DB" 2>&1 | tee /dev/stderr)"
-    ID="$(printf '%s' "$OUT" | grep -o '"database_id": "[^"]*"' | head -1 | cut -d'"' -f4)"
+    ID_RE='"database_id": "([^"]*)"'; ID=""
+    [[ $OUT =~ $ID_RE ]] && ID="${BASH_REMATCH[1]}"
     [ -n "$ID" ] || { echo "database_id が取れなかった" >&2; exit 1; }
     sed -i '' "s|PLACEHOLDER-run-scripts/deploy_portal.sh|$ID|" portal/wrangler.jsonc
     echo "  id=$ID を portal/wrangler.jsonc に書いた"
   fi
   echo "▶ マイグレーション（--remote）"
   ( cd portal && "$WRANGLER" d1 migrations apply "$DB" --remote )
-  if ! "$WRANGLER" pages project list 2>/dev/null | grep -q "│ ${PROJECT} "; then
+  PROJECTS="$("$WRANGLER" pages project list 2>/dev/null || true)"
+  if ! grep -q "│ ${PROJECT} " <<< "$PROJECTS"; then
     echo "▶ Pages ${PROJECT} を作る"; "$WRANGLER" pages project create "$PROJECT" --production-branch main
   fi
   echo "▶ SSO_SECRET（乱数。学び側 4 つにも同じ値を置く: scripts/set_sso_secret.sh）"
@@ -66,7 +70,9 @@ grep -q PLACEHOLDER "$TMP/wrangler.jsonc" && { echo "D1 の id が未設定。�
 ( cd "$TMP" && "$WRANGLER" pages deploy dist --project-name "$PROJECT" --branch main --commit-dirty=true )
 rm -rf "$TMP"
 
-DOMAIN="$("$WRANGLER" pages project list 2>/dev/null | awk -F'│' -v p="$PROJECT" '{gsub(/ /,"",$2); if ($2==p) {gsub(/ /,"",$3); print $3}}' | head -1)"
+# 一覧が取れなければ止まる（推した名前を実ドメインとして登録簿に書かない）
+PROJECTS="$("$WRANGLER" pages project list 2>/dev/null)"
+DOMAIN="$(awk -F'│' -v p="$PROJECT" '{gsub(/ /,"",$2); if ($2==p && !found) {gsub(/ /,"",$3); print $3; found=1}}' <<< "$PROJECTS")"
 URL="https://${DOMAIN:-${PROJECT}.pages.dev}"
 python3 - "$PROJECT" "$URL" <<'PY'
 import json, sys

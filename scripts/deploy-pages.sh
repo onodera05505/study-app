@@ -12,7 +12,8 @@
 #   他に影響を出さずに済む。
 #
 # Pages は wrangler の設定ファイルにカスタムパスを指定できないため、
-# Workers 用の wrangler.jsonc を一時的に退避し、代わりに Pages 用の設定を置いてデプロイする。
+# Pages 用の設定と配信物を一時の場所に組み、そこを今いる場所にして wrangler を呼ぶ。
+# 作業ツリーの wrangler.jsonc（Workers 用）は動かさない（同じ作業ツリーで並行する検査が読む）。
 #
 # Pages 用の設定に D1 バインディングを書くのが要点:
 #   設定ファイル無しでデプロイすると、そのデプロイには D1 が bind されない。
@@ -33,7 +34,10 @@ source scripts/pinned_wrangler.sh
 
 # アカウントの取り違えを止める門（同じ Mac で別アカウントのログインに差し替わることがある）
 WANT=$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['account_id'])")
-HAVE=$("$WRANGLER" whoami 2>/dev/null | grep -oE '[0-9a-f]{32}' | head -1 || true)
+# 道具の出力は一度変数に受けてから読む（pipefail の下で読み手が先に抜けると、書き手が SIGPIPE で落ちる）
+WHOAMI=$("$WRANGLER" whoami 2>/dev/null || true)
+ACCOUNT_RE='[0-9a-f]{32}'; HAVE=""
+[[ $WHOAMI =~ $ACCOUNT_RE ]] && HAVE="${BASH_REMATCH[0]}"
 [ "$HAVE" = "$WANT" ] || { echo "ログイン中のアカウント（${HAVE:-不明}）が想定（${WANT}）と違う。npx wrangler login で個人アカウントを選び直す"; exit 1; }
 
 echo "▶ D1 に migrations が全部当たっているか（未適用のまま出すと、新しい列を読む SQL が 500 になる）"
@@ -75,13 +79,14 @@ echo "▶ Worker を1ファイルにまとめる（Pages の advanced mode 用�
 cp ".worker-build-$EXAM/index.js" dist/_worker.js
 
 echo "▶ Pages へデプロイ"
-STASH=$(mktemp -d)/wrangler.jsonc
-mv wrangler.jsonc "$STASH"
-trap 'mv "$STASH" wrangler.jsonc' EXIT
+# Pages 用の設定と配信物を一時の場所に組む。作業ツリーの wrangler.jsonc は読むだけで動かさない
+PAGES_DIR=$(mktemp -d)
+trap 'rm -rf "$PAGES_DIR"' EXIT
+cp -R dist "$PAGES_DIR/dist"
 
 # Workers 用設定の env.<試験> から D1 と vars を写して、Pages 用の設定を組む
 # @implements BR-033
-python3 - "$STASH" "$EXAM" "$PROJECT" > wrangler.jsonc <<'PY'
+python3 - wrangler.jsonc "$EXAM" "$PROJECT" > "$PAGES_DIR/wrangler.jsonc" <<'PY'
 import json, re, sys
 
 src, exam, project = sys.argv[1], sys.argv[2], sys.argv[3]
@@ -104,8 +109,14 @@ print(json.dumps({
 }, indent=2, ensure_ascii=False))
 PY
 
-echo "  D1: $(python3 -c "import json,sys; print(json.load(open('wrangler.jsonc'))['d1_databases'][0]['database_name'])")"
-"$WRANGLER" pages deploy dist --project-name "$PROJECT" --branch main --commit-dirty=true
+echo "  D1: $(python3 -c "import json,sys; print(json.load(open(sys.argv[1]))['d1_databases'][0]['database_name'])" "$PAGES_DIR/wrangler.jsonc")"
+# 一時の場所は git の外なので、配信に添える版の値（コミット）は作業ツリーで読んで渡す。読めなければ添えない
+COMMIT_ARGS=()
+COMMIT_HASH=$(git rev-parse HEAD 2>/dev/null || true)
+if [ -n "$COMMIT_HASH" ]; then
+  COMMIT_ARGS=(--commit-hash "$COMMIT_HASH" --commit-message "$(git log -1 --format=%s 2>/dev/null || true)")
+fi
+( cd "$PAGES_DIR" && "$WRANGLER" pages deploy dist --project-name "$PROJECT" --branch main --commit-dirty=true ${COMMIT_ARGS[@]+"${COMMIT_ARGS[@]}"} )
 
 echo
 echo "完了: ${URL}"

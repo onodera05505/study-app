@@ -22,8 +22,9 @@ DB=$(python3 scripts/targets.py db "$EXAM")
 pending () {
   local out
   out=$(npx wrangler d1 migrations list "$DB" --env "$EXAM" "$WHERE" </dev/null 2>&1) || { echo "$out" | tail -5 >&2; echo "  migrations の一覧が取れない（${DB} ${WHERE}）" >&2; return 2; }
-  if echo "$out" | grep -q "No migrations to apply"; then return 0; fi
-  if echo "$out" | grep -q "Migrations to be applied"; then
+  # 出力は変数から直に読ませる（pipefail の下で echo からパイプで渡すと、grep -q が先に抜けて echo が SIGPIPE で落ちる）
+  if grep -q "No migrations to apply" <<< "$out"; then return 0; fi
+  if grep -q "Migrations to be applied" <<< "$out"; then
     echo "$out" | grep -oE "[0-9]{4}_[A-Za-z0-9_]+\.sql" | sed 's/^/    未適用: /' >&2
     return 1
   fi

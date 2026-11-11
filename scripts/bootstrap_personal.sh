@@ -14,7 +14,10 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 CFG=scripts/pages_projects.json
 WANT=$(python3 -c "import json;print(json.load(open('$CFG'))['account_id'])")
-HAVE=$(npx wrangler whoami 2>/dev/null | grep -oE '[0-9a-f]{32}' | head -1 || true)
+# 道具の出力は一度変数に受けてから読む（pipefail の下で読み手が先に抜けると、書き手が SIGPIPE で落ちる）
+WHOAMI=$(npx wrangler whoami 2>/dev/null || true)
+ACCOUNT_RE='[0-9a-f]{32}'; HAVE=""
+[[ $WHOAMI =~ $ACCOUNT_RE ]] && HAVE="${BASH_REMATCH[0]}"
 [ "$HAVE" = "$WANT" ] || { echo "ログイン中のアカウント（${HAVE:-不明}）が想定（${WANT}）と違う。npx wrangler login で個人アカウントを選び直す"; exit 1; }
 
 EXAMS=("$@")
@@ -25,7 +28,8 @@ done
 for EXAM in "${EXAMS[@]}"; do
   read -r PROJECT DB CODE < <(python3 -c "import json;c=json.load(open('$CFG'))['$EXAM'];print(c['project'],c['db'],c['signup_code'])")
   echo "▶ ${EXAM}: Pages ${PROJECT}"
-  if npx wrangler pages project list 2>/dev/null | grep -q "│ ${PROJECT} "; then
+  PROJECTS=$(npx wrangler pages project list 2>/dev/null || true)
+  if grep -q "│ ${PROJECT} " <<< "$PROJECTS"; then
     echo "  既にある"
   elif ! npx wrangler pages project create "$PROJECT" --production-branch main; then
     # 名前が世界で一意なので、社用側に残っている名前は取れない。-app を付けて pages_projects.json を書き換える
