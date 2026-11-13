@@ -6,18 +6,61 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "4 つは独立していないので、高い価格を選ぶなら中身・売り場・伝え方もそれに揃えます。",
+      "caption": "真ん中の狙いに 4 つの打ち手を揃えて一組で決めます。1 つでも逆を向くと、顧客には高いだけに映ります。",
       "nodes": [
-        {"id": "prod", "label": "製品\n価格に見合う中身", "row": 0, "col": 0},
-        {"id": "price", "label": "価格\n競合の 1.5 倍", "row": 0, "col": 1, "emphasis": true},
-        {"id": "place", "label": "流通\n値引きの多い売り場を避ける", "row": 1, "col": 0},
-        {"id": "promo", "label": "販促\n値段の理由を語る", "row": 1, "col": 1}
+        {
+          "id": "aim",
+          "label": "狙い\n高くても選ばれる",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "prod",
+          "label": "製品\n導入の支援を標準で付ける",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "price",
+          "label": "価格\n競合の 1.5 倍で値引きしない",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "place",
+          "label": "流通\n値引きの多い売り場を避ける",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "promo",
+          "label": "販促\n値段の理由を語る",
+          "row": 2,
+          "col": 1
+        }
       ],
       "edges": [
-        {"from": "prod", "to": "price", "arrow": "both", "label": "見合うか"},
-        {"from": "price", "to": "promo", "arrow": "both", "label": "値引きは逆を向く"},
-        {"from": "place", "to": "promo", "arrow": "both"},
-        {"from": "prod", "to": "place", "arrow": "both"}
+        {
+          "from": "aim",
+          "to": "prod",
+          "label": "中身で裏付ける"
+        },
+        {
+          "from": "aim",
+          "to": "price",
+          "label": "値で示す"
+        },
+        {
+          "from": "aim",
+          "to": "place",
+          "label": "売り場で崩さない"
+        },
+        {
+          "from": "aim",
+          "to": "promo",
+          "label": "理由を伝える"
+        }
       ]
     }
   ]

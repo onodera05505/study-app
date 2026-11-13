@@ -6,43 +6,56 @@
       "id": 1,
       "type": "blocks",
       "after": "### 計算の解き方",
-      "caption": "並列につないだ部分をまず1つにまとめ、直列部分と掛け合わせて全体の稼働率を出す順序を表します。",
+      "caption": "並列につないだ部分をまず1つの稼働率にまとめ、それを直列の装置と掛け合わせて全体を出す順序を表します。",
       "nodes": [
         {
           "id": "w1",
-          "label": "Web サーバ\n0.8",
+          "label": "Web サーバ\n稼働率 0.8",
           "row": 0,
           "col": 0
         },
         {
           "id": "w2",
-          "label": "Web サーバ\n0.8",
-          "row": 1,
+          "label": "Web サーバ\n稼働率 0.8",
+          "row": 2,
           "col": 0
         },
         {
+          "id": "par",
+          "label": "並列部分を1つにまとめる\n1 −（0.2 × 0.2）＝ 0.96",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
           "id": "db",
-          "label": "DB サーバ\n0.9",
-          "row": 0,
-          "col": 1
+          "label": "DB サーバ\n稼働率 0.9",
+          "row": 1,
+          "col": 2
         },
         {
           "id": "sys",
           "label": "システム全体\n0.96 × 0.9 ＝ 0.864\n→ 0.86",
-          "row": 0,
-          "col": 2,
+          "row": 1,
+          "col": 3,
           "emphasis": true
         }
       ],
       "edges": [
         {
           "from": "w1",
-          "to": "db",
-          "label": "並列は 1 －（1 － 0.8）の 2 乗 ＝ 0.96"
+          "to": "par",
+          "label": "止まる確率 0.2"
         },
         {
           "from": "w2",
-          "to": "db"
+          "to": "par",
+          "label": "止まる確率 0.2"
+        },
+        {
+          "from": "par",
+          "to": "db",
+          "label": "直列につながる"
         },
         {
           "from": "db",

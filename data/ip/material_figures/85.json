@@ -6,17 +6,52 @@
       "id": 1,
       "type": "blocks",
       "after": "### STP の3段階",
-      "caption": "市場を分け、狙う市場を選び、競合との違いを決める STP の3段階と、そのあとの 4P での実行を表します。",
+      "caption": "市場を分け、狙う市場を選び、競合との違いを決める STP の3段階と、そのあとの 4P での実行を表します。矢印は次の段階へ渡す物です。",
       "nodes": [
-        {"id": "s", "label": "セグメンテーション\n市場を細かく分ける", "row": 0, "col": 0},
-        {"id": "t", "label": "ターゲティング\n狙う市場を選ぶ", "row": 0, "col": 1},
-        {"id": "p", "label": "ポジショニング\n競合との違いを決める", "row": 0, "col": 2, "emphasis": true},
-        {"id": "mix", "label": "4P で実行\n製品・価格・流通・\nプロモーション", "row": 1, "col": 2, "shape": "round"}
+        {
+          "id": "s",
+          "label": "セグメンテーション\n市場を細かく分ける",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "t",
+          "label": "ターゲティング\n狙う市場を選ぶ",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "p",
+          "label": "ポジショニング\n競合との違いと\n立ち位置を決める",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "mix",
+          "label": "4P で実行\n製品・価格・流通・\nプロモーション",
+          "row": 1,
+          "col": 2,
+          "shape": "round"
+        }
       ],
       "edges": [
-        {"from": "s", "to": "t"},
-        {"from": "t", "to": "p"},
-        {"from": "p", "to": "mix", "label": "決めた方針を実行", "style": "dashed"}
+        {
+          "from": "s",
+          "to": "t",
+          "label": "分けた区分"
+        },
+        {
+          "from": "t",
+          "to": "p",
+          "label": "誰に売るか"
+        },
+        {
+          "from": "p",
+          "to": "mix",
+          "label": "決めた立ち位置",
+          "style": "dashed"
+        }
       ]
     }
   ]

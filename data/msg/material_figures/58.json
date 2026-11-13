@@ -6,21 +6,75 @@
       "id": 1,
       "type": "blocks",
       "after": "### 施すときに意識すること",
-      "caption": "後頭部の骨の下のくぼみは動脈と神経の通り道なので指を入れず、頭の重さを手のひらで受けます。",
+      "caption": "上の段は骨の縁からくぼみの奥の通り道まで、下の段はそこで手をどうするかを示します。指はくぼみに入れず、頭の重さを手のひらで受けます。",
       "nodes": [
-        {"id": "edge", "label": "後頭部の骨の下の縁\nここより下へ指を入れない", "row": 0, "col": 0},
-        {"id": "hollow", "label": "縁と首の骨の間のくぼみ", "row": 0, "col": 1, "emphasis": true},
-        {"id": "pass", "label": "脳へ向かう動脈\n後頭部へ行く神経", "row": 0, "col": 2},
-        {"id": "instead", "label": "仰向けで後頭部の丸みを手のひらに乗せ\n頭の重さを受けて待つだけ", "row": 1, "col": 0, "shape": "round", "emphasis": true},
-        {"id": "no", "label": "くぼみに指も手のひらの縁も入れない\n押し上げる・引っぱる・急に回すもしない", "row": 1, "col": 1},
-        {"id": "stop", "label": "ふらつき・めまい・吐き気\nが出たら中止して医療へ", "row": 1, "col": 2}
+        {
+          "id": "edge",
+          "label": "後頭部の骨の下の縁\n頭の丸みの下の端",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "hollow",
+          "label": "縁と首の骨の間のくぼみ\n奥に小さな筋の集まり",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "pass",
+          "label": "脳へ向かう動脈\n後頭部へ行く神経",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "instead",
+          "label": "仰向けで後頭部の丸みを手のひらに乗せ\n頭の重さを受けて待つだけ",
+          "row": 1,
+          "col": 0,
+          "shape": "round",
+          "emphasis": true
+        },
+        {
+          "id": "no",
+          "label": "くぼみに指も手のひらの縁も入れない\n押し上げる・引っぱる・急に回すもしない",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "stop",
+          "label": "ふらつき・めまい・吐き気\nが出たら中止して医療へ",
+          "row": 1,
+          "col": 2
+        }
       ],
       "edges": [
-        {"from": "edge", "to": "hollow", "label": "その下"},
-        {"from": "hollow", "to": "pass", "label": "通り道"},
-        {"from": "hollow", "to": "no", "label": "だから"},
-        {"from": "no", "to": "instead", "label": "代わりに"},
-        {"from": "no", "to": "stop", "label": "それでも出たら", "style": "dashed"}
+        {
+          "from": "edge",
+          "to": "hollow",
+          "label": "縁のすぐ下"
+        },
+        {
+          "from": "hollow",
+          "to": "pass",
+          "label": "奥を通る"
+        },
+        {
+          "from": "hollow",
+          "to": "no",
+          "label": "押すと通り道に力が入る"
+        },
+        {
+          "from": "no",
+          "to": "instead",
+          "label": "代わりに"
+        },
+        {
+          "from": "no",
+          "to": "stop",
+          "label": "それでも出たら",
+          "style": "dashed"
+        }
       ]
     }
   ]

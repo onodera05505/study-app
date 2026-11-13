@@ -6,19 +6,61 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "1台のサーバに届いた通信が、ポート番号ごとに別のアプリケーションへ振り分けられることを表した図です。",
+      "caption": "1台のサーバに届いた通信が、ポート番号ごとに別のアプリケーションへ振り分けられることを表した図です。左の線が機械を、右の線が機械の中の機能を決めます。",
       "nodes": [
-        {"id": "pc", "label": "端末", "row": 1, "col": 0},
-        {"id": "sv", "label": "サーバ（1 台）\nIP アドレスは 1 つ", "row": 1, "col": 1, "emphasis": true},
-        {"id": "web", "label": "Web の機能", "row": 0, "col": 2},
-        {"id": "smtp", "label": "メール送信の機能", "row": 1, "col": 2},
-        {"id": "pop", "label": "メール受信の機能", "row": 2, "col": 2}
+        {
+          "id": "pc",
+          "label": "端末\n宛先を指定して送る",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "sv",
+          "label": "サーバ（1 台）\nIP アドレスは 1 つ",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "web",
+          "label": "Web の機能\nHTTP で応える",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "smtp",
+          "label": "メール送信の機能\nSMTP で受け取る",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "pop",
+          "label": "メール受信の機能\nPOP3 で渡す",
+          "row": 2,
+          "col": 2
+        }
       ],
       "edges": [
-        {"from": "pc", "to": "sv", "label": "IP アドレス"},
-        {"from": "sv", "to": "web", "label": "ポート 80"},
-        {"from": "sv", "to": "smtp", "label": "ポート 25"},
-        {"from": "sv", "to": "pop", "label": "ポート 110"}
+        {
+          "from": "pc",
+          "to": "sv",
+          "label": "IP アドレスで\nどの機械か"
+        },
+        {
+          "from": "sv",
+          "to": "web",
+          "label": "ポート 80"
+        },
+        {
+          "from": "sv",
+          "to": "smtp",
+          "label": "ポート 25"
+        },
+        {
+          "from": "sv",
+          "to": "pop",
+          "label": "ポート 110"
+        }
       ]
     }
   ]

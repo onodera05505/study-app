@@ -6,7 +6,7 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "どの枝で数字が動いたかまで下ろすと、打ち手を新規の集客に絞れます。",
+      "caption": "上から枝をたどり、数字が動いた色付きの枝を下ろしていくと、打ち手を平日の集客に絞れます。",
       "nodes": [
         {
           "id": "sales",
@@ -28,15 +28,15 @@
           "col": 2
         },
         {
-          "id": "new",
-          "label": "新規\n300 → 200 人",
+          "id": "wd",
+          "label": "平日\n300 → 200 人",
           "row": 2,
           "col": 0,
           "emphasis": true
         },
         {
-          "id": "old",
-          "label": "既存\n700 人のまま",
+          "id": "we",
+          "label": "休日\n700 人のまま",
           "row": 2,
           "col": 1
         }
@@ -45,22 +45,22 @@
         {
           "from": "sales",
           "to": "cnt",
-          "label": "×"
+          "label": "× 掛ける"
         },
         {
           "from": "sales",
           "to": "price",
-          "label": "×"
+          "label": "× 掛ける"
         },
         {
           "from": "cnt",
-          "to": "new",
-          "label": "＋"
+          "to": "wd",
+          "label": "＋ 足す"
         },
         {
           "from": "cnt",
-          "to": "old",
-          "label": "＋"
+          "to": "we",
+          "label": "＋ 足す"
         }
       ]
     }

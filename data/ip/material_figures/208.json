@@ -5,21 +5,62 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### どこで使われるか",
-      "caption": "URL と電子メールアドレスを部分ごとに分けた図です。どちらにも同じドメイン名が現れることを見比べて読みます。",
+      "after": "### IP アドレスとの関係",
+      "caption": "人が使う名前であるドメイン名を、DNS が通信に使う IP アドレスに変えて相手を特定する流れを表した図です。",
       "nodes": [
-        {"id": "u1", "label": "https://\nプロトコル", "row": 0, "col": 0},
-        {"id": "u2", "label": "www\nホスト名", "row": 0, "col": 1},
-        {"id": "u3", "label": "example.co.jp\nドメイン名", "row": 0, "col": 2, "emphasis": true},
-        {"id": "m1", "label": "taro\n利用者名", "row": 1, "col": 0},
-        {"id": "m2", "label": "@", "row": 1, "col": 1},
-        {"id": "m3", "label": "example.co.jp\nドメイン名", "row": 1, "col": 2, "emphasis": true}
+        {
+          "id": "user",
+          "label": "利用者\n名前で相手を指定",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "dom",
+          "label": "ドメイン名\nexample.co.jp\n人が見分けやすい文字列",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "dns",
+          "label": "DNS\n名前を IP アドレスに変換",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "ip",
+          "label": "IP アドレス\n192.0.2.10\n通信で使う数字",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "sv",
+          "label": "相手のサーバ\n世界で 1 つに決まる",
+          "row": 1,
+          "col": 1
+        }
       ],
       "edges": [
-        {"from": "u1", "to": "u2", "arrow": "none"},
-        {"from": "u2", "to": "u3", "arrow": "none"},
-        {"from": "m1", "to": "m2", "arrow": "none"},
-        {"from": "m2", "to": "m3", "arrow": "none"}
+        {
+          "from": "user",
+          "to": "dom",
+          "label": "URL・メールに書く"
+        },
+        {
+          "from": "dom",
+          "to": "dns",
+          "label": "名前解決"
+        },
+        {
+          "from": "dns",
+          "to": "ip",
+          "label": "変換の結果"
+        },
+        {
+          "from": "ip",
+          "to": "sv",
+          "label": "この数字で通信"
+        }
       ]
     }
   ]

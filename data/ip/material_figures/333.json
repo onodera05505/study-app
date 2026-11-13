@@ -6,19 +6,53 @@
       "id": 1,
       "type": "blocks",
       "after": "### 1対多を読む手順",
-      "caption": "管理対象の間にある一対多の関係を表します。向きの読み方はその図の定義に従います。",
+      "caption": "業務の管理対象を箱に、そのつながりを線に描いた E-R 図の例です。線の上の数は、片方から見て相手がいくつあるかを表します。",
       "nodes": [
-        {"id": "pub", "label": "出版社", "row": 0, "col": 0},
-        {"id": "aut", "label": "著者", "row": 0, "col": 1, "emphasis": true},
-        {"id": "bok", "label": "本", "row": 0, "col": 2},
-        {"id": "c1", "label": "出版社は複数の著者と契約\n著者は 1 社とだけ契約", "row": 1, "col": 0},
-        {"id": "c2", "label": "著者は複数の本を書く\n1 冊を書くのは 1 人", "row": 1, "col": 2}
+        {
+          "id": "dep",
+          "label": "部署\n管理対象\n（エンティティ）",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "emp",
+          "label": "社員\n管理対象\n（エンティティ）",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "rep",
+          "label": "日報\n管理対象\n（エンティティ）",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "pos",
+          "label": "役職\n管理対象\n（エンティティ）",
+          "row": 1,
+          "col": 1
+        }
       ],
       "edges": [
-        {"from": "pub", "to": "aut", "label": "1 対 多"},
-        {"from": "aut", "to": "bok", "label": "1 対 多"},
-        {"from": "c1", "to": "pub", "style": "dashed", "arrow": "none"},
-        {"from": "c2", "to": "bok", "style": "dashed", "arrow": "none"}
+        {
+          "from": "dep",
+          "to": "emp",
+          "label": "部署 1 対 社員 多",
+          "arrow": "none"
+        },
+        {
+          "from": "emp",
+          "to": "rep",
+          "label": "社員 1 対 日報 多",
+          "arrow": "none"
+        },
+        {
+          "from": "pos",
+          "to": "emp",
+          "label": "役職 1 対 社員 多",
+          "arrow": "none"
+        }
       ]
     }
   ]

@@ -6,19 +6,51 @@
       "id": 1,
       "type": "blocks",
       "after": "### 既定の出口という意味",
-      "caption": "宛先が LAN の外なら、同じ LAN にいるルーターへ渡します。その IP アドレスを設定します。",
+      "caption": "PC は宛先が同じ LAN なら直接届け、LAN の外ならデフォルトゲートウェイに渡します。設定するのはルーターの LAN 側の IP アドレスです。",
       "nodes": [
-        {"id": "pc", "label": "PC1", "row": 0, "col": 0},
-        {"id": "rt", "label": "ルーター\n（LAN 側の口）", "row": 0, "col": 1, "emphasis": true},
-        {"id": "fw", "label": "ファイア\nウォール", "row": 0, "col": 2},
-        {"id": "net", "label": "インターネット", "row": 0, "col": 3, "shape": "cloud"},
-        {"id": "dh", "label": "DHCP サーバ", "row": 1, "col": 0}
+        {
+          "id": "pc",
+          "label": "PC1\n宛先を見て振り分け",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "rt",
+          "label": "ルーター（LAN 側の口）\nデフォルトゲートウェイ",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "net",
+          "label": "インターネット\nLAN の外の相手",
+          "row": 0,
+          "col": 2,
+          "shape": "round"
+        },
+        {
+          "id": "pc2",
+          "label": "PC2\n同じ LAN の相手",
+          "row": 1,
+          "col": 0
+        }
       ],
       "edges": [
-        {"from": "pc", "to": "rt", "label": "LAN の外へ"},
-        {"from": "rt", "to": "fw"},
-        {"from": "fw", "to": "net"},
-        {"from": "dh", "to": "pc", "label": "設定を配る", "style": "dashed"}
+        {
+          "from": "pc",
+          "to": "rt",
+          "label": "宛先が LAN の外"
+        },
+        {
+          "from": "rt",
+          "to": "net",
+          "label": "外のネットワークへ中継"
+        },
+        {
+          "from": "pc",
+          "to": "pc2",
+          "label": "宛先が LAN の中なら直接"
+        }
       ]
     }
   ]

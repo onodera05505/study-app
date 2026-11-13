@@ -10,7 +10,7 @@
       "nodes": [
         {
           "id": "user",
-          "label": "利用者",
+          "label": "利用者\nどこに聞くか迷わない",
           "row": 0,
           "col": 0
         },
@@ -63,8 +63,9 @@
         {
           "from": "second",
           "to": "prob",
+          "label": "根本原因は別に調べる",
           "style": "dashed",
-          "arrow": "none"
+          "arrow": "to"
         }
       ]
     }

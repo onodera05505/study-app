@@ -8,14 +8,42 @@
       "after": "### 列をどちらの表に置くか",
       "caption": "1つの表から、商品番号で決まる列だけを別の表に分け、外部キーでつなぎ直す様子を表します。",
       "nodes": [
-        {"id": "one", "label": "分割前の1つの表\n受注番号・発注者名・商品番号\n商品名・個数・単価", "row": 0, "col": 0},
-        {"id": "juchu", "label": "受注表\n受注番号・発注者名\n商品番号・個数", "row": 1, "col": 0},
-        {"id": "shohin", "label": "商品表\n商品番号（主キー）\n商品名・単価", "row": 1, "col": 1, "emphasis": true}
+        {
+          "id": "one",
+          "label": "分割前の1つの表\n受注番号・発注者名・商品番号\n商品名・個数・単価\n同じ商品名・単価が何度も並ぶ",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "juchu",
+          "label": "受注表\n受注番号・発注者名\n商品番号・個数",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "shohin",
+          "label": "商品表\n商品番号（主キー）\n商品名・単価",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "one", "to": "juchu", "label": "正規化"},
-        {"from": "one", "to": "shohin"},
-        {"from": "juchu", "to": "shohin", "label": "外部キー"}
+        {
+          "from": "one",
+          "to": "juchu",
+          "label": "受注ごとに変わる列"
+        },
+        {
+          "from": "one",
+          "to": "shohin",
+          "label": "商品番号で決まる列を分ける"
+        },
+        {
+          "from": "juchu",
+          "to": "shohin",
+          "label": "商品番号（外部キー）でたどる"
+        }
       ]
     }
   ]

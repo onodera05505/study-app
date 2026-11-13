@@ -6,35 +6,35 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "硬い所は壊れた組織ではなく縮んだ筋で、痛みがまた筋を縮ませるので張りが続きます。",
+      "caption": "硬い所は壊れた組織ではなく縮んだ筋です。痛みがまた筋を縮ませるので、下の段から上へ戻る輪になって張りが続きます。",
       "nodes": [
         {
           "id": "pose",
-          "label": "同じ姿勢が続く",
+          "label": "同じ姿勢が続く\nきっかけ",
           "row": 0,
           "col": 0
         },
         {
           "id": "short",
-          "label": "筋が縮んだまま",
+          "label": "筋が縮んだまま\nゆるまない",
           "row": 0,
           "col": 1
         },
         {
           "id": "knot",
-          "label": "周りより硬い部分\n押すと痛みやすい",
+          "label": "周りより硬い所\n壊れた組織ではない",
           "row": 0,
           "col": 2
         },
         {
           "id": "blood",
-          "label": "血流と酸素が\n足りない",
+          "label": "血流と酸素の不足\n筋に届きにくい",
           "row": 1,
           "col": 2
         },
         {
           "id": "pain",
-          "label": "張り／痛み",
+          "label": "張り・痛み\n押すと痛みやすい",
           "row": 1,
           "col": 1,
           "emphasis": true
@@ -43,19 +43,23 @@
       "edges": [
         {
           "from": "pose",
-          "to": "short"
+          "to": "short",
+          "label": "続くと"
         },
         {
           "from": "short",
-          "to": "knot"
+          "to": "knot",
+          "label": "中に硬い部分ができる"
         },
         {
           "from": "knot",
-          "to": "blood"
+          "to": "blood",
+          "label": "血のめぐりが細る"
         },
         {
           "from": "blood",
-          "to": "pain"
+          "to": "pain",
+          "label": "酸素が足りず痛む"
         },
         {
           "from": "pain",

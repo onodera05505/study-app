@@ -4,19 +4,46 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "sequence",
       "after": "### LIFO のしくみ",
-      "caption": "出し入れできるのは一番上だけです。最後に入れたものから取り出す後入れ先出しになります。",
-      "nodes": [
-        {"id": "op", "label": "PUSH（積む）\nPOP（取り出す）", "row": 0, "col": 1, "shape": "round"},
-        {"id": "c", "label": "c ← 最後に入れた", "row": 0, "col": 0, "emphasis": true},
-        {"id": "b", "label": "b", "row": 1, "col": 0},
-        {"id": "a", "label": "a ← 最初に入れた", "row": 2, "col": 0}
+      "caption": "上から順に読みます。最後に積んだ c が最初に出て、先に積んだものほど後から出ます。",
+      "actors": [
+        {
+          "id": "p",
+          "label": "プログラム"
+        },
+        {
+          "id": "s",
+          "label": "スタック（口は上だけ）"
+        }
       ],
-      "edges": [
-        {"from": "op", "to": "c", "label": "出し入れは上端だけ", "arrow": "both"},
-        {"from": "c", "to": "b", "arrow": "none"},
-        {"from": "b", "to": "a", "arrow": "none"}
+      "steps": [
+        {
+          "from": "p",
+          "to": "s",
+          "label": "PUSH a（a を積む）"
+        },
+        {
+          "from": "p",
+          "to": "s",
+          "label": "PUSH b（a の上に積む）"
+        },
+        {
+          "from": "p",
+          "to": "s",
+          "label": "PUSH c（一番上は c）"
+        },
+        {
+          "from": "s",
+          "to": "p",
+          "label": "POP で c が出る（最後に入れた物）"
+        },
+        {
+          "from": "s",
+          "to": "p",
+          "label": "POP で b が出る",
+          "note": "a は上の物を全部出すまで取り出せない"
+        }
       ]
     }
   ]

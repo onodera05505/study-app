@@ -6,21 +6,78 @@
       "id": 1,
       "type": "blocks",
       "after": "### 鎖でつなぐしくみ",
-      "caption": "各ブロックが直前のブロックのハッシュ値を持つつながりを表した図です。1か所を書き換えると以降がすべて食い違います。",
+      "caption": "各ブロックが直前のブロックのハッシュ値を持つつながりを表した図です。下の段は、1か所を書き換えたときに食い違いが後ろへ広がる順です。",
       "nodes": [
-        {"id": "b1", "label": "ブロック 1\n取引記録", "row": 0, "col": 0},
-        {"id": "b2", "label": "ブロック 2\n取引記録\n＋ 1 のハッシュ値", "row": 0, "col": 1},
-        {"id": "b3", "label": "ブロック 3\n取引記録\n＋ 2 のハッシュ値", "row": 0, "col": 2},
-        {"id": "t", "label": "① ここを書き換える", "row": 1, "col": 0, "shape": "round", "emphasis": true},
-        {"id": "d2", "label": "② 1 のハッシュ値が\n変わり食い違う", "row": 1, "col": 1, "shape": "round"},
-        {"id": "d3", "label": "③ 以降もすべて\n食い違う", "row": 1, "col": 2, "shape": "round"}
+        {
+          "id": "b1",
+          "label": "ブロック 1\n取引記録",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "b2",
+          "label": "ブロック 2\n取引記録\n＋ 1 のハッシュ値",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "b3",
+          "label": "ブロック 3\n取引記録\n＋ 2 のハッシュ値",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "t",
+          "label": "① ブロック 1 を\n書き換える",
+          "row": 1,
+          "col": 0,
+          "shape": "round",
+          "emphasis": true
+        },
+        {
+          "id": "d2",
+          "label": "② 2 が持つ値と\n合わなくなる",
+          "row": 1,
+          "col": 1,
+          "shape": "round"
+        },
+        {
+          "id": "d3",
+          "label": "③ 以降もすべて\n食い違う",
+          "row": 1,
+          "col": 2,
+          "shape": "round"
+        }
       ],
       "edges": [
-        {"from": "b1", "to": "b2", "label": "ハッシュ値"},
-        {"from": "b2", "to": "b3", "label": "ハッシュ値"},
-        {"from": "t", "to": "b1", "style": "dashed"},
-        {"from": "t", "to": "d2", "style": "dashed"},
-        {"from": "d2", "to": "d3", "style": "dashed"}
+        {
+          "from": "b1",
+          "to": "b2",
+          "label": "ハッシュ値を渡す"
+        },
+        {
+          "from": "b2",
+          "to": "b3",
+          "label": "ハッシュ値を渡す"
+        },
+        {
+          "from": "t",
+          "to": "b1",
+          "label": "中身が変わる",
+          "style": "dashed"
+        },
+        {
+          "from": "t",
+          "to": "d2",
+          "label": "値が変わる",
+          "style": "dashed"
+        },
+        {
+          "from": "d2",
+          "to": "d3",
+          "label": "後ろへ波及",
+          "style": "dashed"
+        }
       ]
     }
   ]

@@ -4,17 +4,47 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "matrix",
       "after": "### 混同しやすい用語",
-      "caption": "NFC が届くのは 10cm 程度で、かざして使います。方式ごとに届く距離の桁が違います。",
-      "nodes": [
-        {"id": "nfc", "label": "NFC\n約 10cm\nIC 乗車券・決済", "row": 0, "col": 0, "emphasis": true},
-        {"id": "bt", "label": "Bluetooth\n数 m\nイヤホン接続", "row": 0, "col": 1},
-        {"id": "wl", "label": "無線 LAN\n数十 m\nPC やスマホ", "row": 0, "col": 2}
+      "caption": "NFC は 10cm 程度までかざして使い、離れたまま使う方式とは届く距離の桁が違います。列ごとに距離と使い方を見比べます。",
+      "x": {
+        "label": "方式",
+        "values": [
+          "NFC",
+          "Bluetooth",
+          "無線 LAN"
+        ]
+      },
+      "y": {
+        "label": "観点",
+        "values": [
+          "届く距離",
+          "使い方",
+          "代表例"
+        ]
+      },
+      "cells": [
+        [
+          "約 10cm",
+          "数 m",
+          "数十 m"
+        ],
+        [
+          "かざす\n触れるほど近づける",
+          "離れたまま\n機器どうしを組む",
+          "離れたまま\nエリアでつなぐ"
+        ],
+        [
+          "IC 乗車券\n非接触の決済",
+          "イヤホン\nキーボード",
+          "PC やスマホの\nネット接続"
+        ]
       ],
-      "edges": [
-        {"from": "nfc", "to": "bt", "label": "約 100 倍"},
-        {"from": "bt", "to": "wl", "label": "約 10 倍"}
+      "emphasis": [
+        [
+          0,
+          0
+        ]
       ]
     }
   ]

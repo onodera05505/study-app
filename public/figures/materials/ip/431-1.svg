@@ -1,21 +1,28 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="280" viewBox="0 0 640 280">
-<rect x="0.5" y="0.5" width="639" height="279" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(123.05 20)">
-<polyline points="262.8,28 138.8,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="138.8,28 146.8,24.4 146.8,31.6" fill="#1f2937"/>
-<polygon points="262.8,28 254.8,31.6 254.8,24.4" fill="#1f2937"/>
-<polyline points="69.4,51 69.4,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polyline points="69.4,148 69.4,194" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<rect x="262.8" y="0" width="131.1" height="56" rx="28" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="328.35" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">PUSH（積む）</text>
-<text x="328.35" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">POP（取り出す）</text>
-<rect x="0" y="5" width="138.8" height="46" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="69.4" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">c ← 最後に入れた</text>
-<rect x="21.4" y="102" width="96" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="69.4" y="129.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">b</text>
-<rect x="0" y="194" width="138.8" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="69.4" y="221.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">a ← 最初に入れた</text>
-<rect x="142.8" y="11" width="116" height="16" rx="3" fill="#ffffff"/>
-<text x="200.8" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">出し入れは上端だけ</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="316" viewBox="0 0 640 316">
+<rect x="0.5" y="0.5" width="639" height="315" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(130 20)">
+<line x1="48" y1="34" x2="48" y2="276" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="290" y1="34" x2="290" y2="276" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">プログラム</text>
+<rect x="200" y="0" width="180" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="290" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">スタック（口は上だけ）</text>
+<polyline points="51,68 287,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="287,68 279,71.6 279,64.4" fill="#1f2937"/>
+<text x="169" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. PUSH a（a を積む）</text>
+<polyline points="51,108 287,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="287,108 279,111.6 279,104.4" fill="#1f2937"/>
+<text x="169" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. PUSH b（a の上に積む）</text>
+<polyline points="51,148 287,148" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="287,148 279,151.6 279,144.4" fill="#1f2937"/>
+<text x="169" y="141" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. PUSH c（一番上は c）</text>
+<polyline points="287,188 51,188" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,188 59,184.4 59,191.6" fill="#1f2937"/>
+<text x="169" y="181" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. POP で c が出る（最後に入れた物）</text>
+<polyline points="287,228 51,228" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,228 59,224.4 59,231.6" fill="#1f2937"/>
+<text x="169" y="221" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. POP で b が出る</text>
+<rect x="56.4" y="233" width="225.2" height="16" rx="3" fill="#ffffff"/>
+<text x="169" y="246.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">a は上の物を全部出すまで取り出せない</text>
 </g>
 </svg>

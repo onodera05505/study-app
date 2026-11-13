@@ -6,61 +6,19 @@
       "id": 1,
       "type": "blocks",
       "after": "### 現場で判断するなら",
-      "caption": "施策の指標を件数、件数を利益、利益を回収期間へ 3 段で置き換えると（金額の単位は万）、増額してよいかの材料になります。",
+      "caption": "上の段で施策の指標を増えた粗利まで置き換え、一度きりの改修費をその粗利で割ると、経営が見る回収期間になります。",
       "nodes": [
-        {
-          "id": "kpi",
-          "label": "施策の言葉\nCVR 1.0% → 1.5%",
-          "row": 0,
-          "col": 0
-        },
-        {
-          "id": "cnt",
-          "label": "件数\n申込 100 → 150 件",
-          "row": 0,
-          "col": 1
-        },
-        {
-          "id": "cost",
-          "label": "かけた費用\n広告 月 100",
-          "row": 1,
-          "col": 0
-        },
-        {
-          "id": "profit",
-          "label": "増えた利益\n＋50 件 × 粗利 2 ＝ 月 100",
-          "row": 1,
-          "col": 1
-        },
-        {
-          "id": "payback",
-          "label": "回収期間\n100 ÷ 100 ＝ 1 か月",
-          "row": 2,
-          "col": 1,
-          "emphasis": true
-        }
+        {"id": "kpi", "label": "施策の言葉\nCVR 1.0% → 1.5%", "row": 0, "col": 0},
+        {"id": "cnt", "label": "増えた件数\n申込 月 ＋50 件", "row": 0, "col": 1},
+        {"id": "profit", "label": "増えた粗利\n月 100 万円", "row": 0, "col": 2},
+        {"id": "cost", "label": "一度きりの費用\n改修 400 万円", "row": 1, "col": 0},
+        {"id": "payback", "label": "回収期間\n4 か月で戻る", "row": 1, "col": 2, "emphasis": true}
       ],
       "edges": [
-        {
-          "from": "kpi",
-          "to": "cnt",
-          "label": "1 段目"
-        },
-        {
-          "from": "cnt",
-          "to": "profit",
-          "label": "2 段目 × 1 件の粗利"
-        },
-        {
-          "from": "profit",
-          "to": "payback",
-          "label": "3 段目"
-        },
-        {
-          "from": "cost",
-          "to": "payback",
-          "label": "÷ 増えた利益"
-        }
+        {"from": "kpi", "to": "cnt", "label": "× 流入 月 1 万件"},
+        {"from": "cnt", "to": "profit", "label": "× 1 件の粗利 2 万円"},
+        {"from": "cost", "to": "payback", "label": "400 万 ÷ 月 100 万"},
+        {"from": "profit", "to": "payback", "label": "割る数"}
       ]
     }
   ]

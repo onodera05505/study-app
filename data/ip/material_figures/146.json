@@ -6,18 +6,56 @@
       "id": 1,
       "type": "blocks",
       "after": "### PDCA のどこで何をするか",
-      "caption": "サービスレベル管理の活動を PDCA の4段階に当てはめた図です。どの活動がどの段階にあたるかを順に追って読みます。",
+      "caption": "サービスレベル管理の活動を PDCA の4段階に当てはめた図です。矢印に沿って、各段階が次の段階へ渡す物をたどって読みます。",
       "nodes": [
-        {"id": "p", "label": "P 計画\n目標を合意し\nSLA を作る", "row": 0, "col": 0},
-        {"id": "d", "label": "D 提供\nSLA に沿って\nサービスを提供", "row": 0, "col": 1},
-        {"id": "c", "label": "C 点検\n監視・測定し\nサービス報告書", "row": 1, "col": 1, "emphasis": true},
-        {"id": "a", "label": "A 改善\nサービスの\n改善計画を作る", "row": 1, "col": 0, "emphasis": true}
+        {
+          "id": "p",
+          "label": "P 計画\n目標を合意し\nSLA を作る",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "d",
+          "label": "D 実行\nSLA に沿って\nサービスを提供",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "c",
+          "label": "C 確認\n監視・測定し\nサービス報告書",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "a",
+          "label": "A 改善\nサービスの\n改善計画を作る",
+          "row": 1,
+          "col": 0,
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "p", "to": "d"},
-        {"from": "d", "to": "c"},
-        {"from": "c", "to": "a"},
-        {"from": "a", "to": "p"}
+        {
+          "from": "p",
+          "to": "d",
+          "label": "合意した SLA"
+        },
+        {
+          "from": "d",
+          "to": "c",
+          "label": "提供の実績"
+        },
+        {
+          "from": "c",
+          "to": "a",
+          "label": "サービス報告書"
+        },
+        {
+          "from": "a",
+          "to": "p",
+          "label": "改善計画・合意の見直し"
+        }
       ]
     }
   ]

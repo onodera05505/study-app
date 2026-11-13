@@ -4,21 +4,50 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "sequence",
       "after": "### 代理で外につなぐしくみ",
-      "caption": "PC の代わりにプロキシが外へ接続します。アクセス先の記録や業務外サイトの遮断もここで行えます。",
-      "nodes": [
-        {"id": "pc", "label": "社内の PC", "row": 0, "col": 0},
-        {"id": "px", "label": "プロキシサーバ", "row": 0, "col": 1, "emphasis": true},
-        {"id": "net", "label": "インターネット", "row": 0, "col": 2, "shape": "cloud"},
-        {"id": "web", "label": "Web サーバ", "row": 0, "col": 3},
-        {"id": "log", "label": "アクセス先の記録\n業務外サイトの遮断", "row": 1, "col": 1}
+      "caption": "PC は外へ直接出ず、プロキシが代わりに Web サーバへ接続します。通信が一か所を通るので、記録と遮断もここで行えます。",
+      "actors": [
+        {
+          "id": "pc",
+          "label": "社内の PC"
+        },
+        {
+          "id": "px",
+          "label": "プロキシサーバ"
+        },
+        {
+          "id": "web",
+          "label": "Web サーバ"
+        }
       ],
-      "edges": [
-        {"from": "pc", "to": "px", "label": "ページを頼む", "arrow": "both"},
-        {"from": "px", "to": "net", "label": "PC に代わって接続", "arrow": "both"},
-        {"from": "net", "to": "web", "arrow": "both"},
-        {"from": "px", "to": "log", "style": "dashed", "arrow": "none"}
+      "steps": [
+        {
+          "from": "pc",
+          "to": "px",
+          "label": "欲しいページを頼む"
+        },
+        {
+          "from": "px",
+          "to": "px",
+          "label": "アクセス先を記録し、業務外なら遮断"
+        },
+        {
+          "from": "px",
+          "to": "web",
+          "label": "PC に代わって自分が接続する",
+          "note": "Web サーバから見える相手はプロキシだけ"
+        },
+        {
+          "from": "web",
+          "to": "px",
+          "label": "ページを返す"
+        },
+        {
+          "from": "px",
+          "to": "pc",
+          "label": "受け取ったページを PC に渡す"
+        }
       ]
     }
   ]

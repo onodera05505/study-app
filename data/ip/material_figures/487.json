@@ -4,24 +4,16 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "matrix",
       "after": "### 解き方の手順",
-      "caption": "二台の機械を並行して動かします。後の機械が待つ時間と最後の後処理が、全体の時間を決めます。",
-      "nodes": [
-        {"id": "hx", "label": "機械 X", "row": 0, "col": 0, "shape": "round"},
-        {"id": "x1", "label": "作業 C\n0 → 6 分", "row": 0, "col": 1},
-        {"id": "x2", "label": "作業 A\n6 → 14 分", "row": 0, "col": 2},
-        {"id": "x3", "label": "作業 B\n14 → 24 分", "row": 0, "col": 3},
-        {"id": "hy", "label": "機械 Y", "row": 1, "col": 0, "shape": "round"},
-        {"id": "y1", "label": "作業 C\n6 → 14 分", "row": 1, "col": 1},
-        {"id": "y2", "label": "作業 A\n14 → 24 分", "row": 1, "col": 2},
-        {"id": "y3", "label": "作業 B\n24 → 29 分", "row": 1, "col": 3, "emphasis": true}
+      "caption": "同じ三つの作業でも、順番によって機械 Y が最初に待つ時間と最後に Y だけが動く時間が変わり、総所要時間が変わります。X が短い作業を先に、Y が短い作業を最後に置いた順が最短です。",
+      "x": {"label": "機械 X → 機械 Y の順に通す作業 A（X 8 分 Y 10 分）B（X 10 分 Y 5 分）C（X 6 分 Y 8 分）", "values": ["最初に Y が待つ時間", "最後に Y だけが動く時間", "総所要時間"]},
+      "y": {"label": "割り当てる順番", "values": ["C → A → B", "A → B → C"]},
+      "cells": [
+        ["6 分\nX が短い C を先に\nY がすぐ動き出す", "5 分\nY が短い B を\n最後に残す", "29 分\n最短"],
+        ["8 分\nA の X が終わるまで\nY が待つ", "8 分\nC の Y が\n最後に残る", "32 分\n3 分長い"]
       ],
-      "edges": [
-        {"from": "x1", "to": "y1", "label": "X の後に Y", "style": "dashed"},
-        {"from": "x2", "to": "y2", "style": "dashed"},
-        {"from": "x3", "to": "y3", "style": "dashed"}
-      ]
+      "emphasis": [[0, 2]]
     }
   ]
 }

@@ -8,15 +8,50 @@
       "after": "### 計算の解き方",
       "caption": "部品構成を段ごとに並べた図です。所要量から在庫を引いた個数に、次の段で必要な個数を掛けて下へ展開します。",
       "nodes": [
-        {"id": "p", "label": "製品 P\n6個つくる", "row": 0, "col": 0},
-        {"id": "q", "label": "部品 Q\n必要 6×2＝12個\n在庫 1個 → つくる 11個", "row": 1, "col": 0, "emphasis": true},
-        {"id": "r", "label": "部品 R\n必要 11×4＝44個\n在庫 3個 → 発注 41個", "row": 2, "col": 0},
-        {"id": "note", "label": "在庫を引くのは\n段ごとに1回", "row": 1, "col": 1, "shape": "round"}
+        {
+          "id": "p",
+          "label": "製品 P\n6個つくる",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "q",
+          "label": "部品 Q\n必要 6×2＝12個\n在庫 1個 → つくる 11個",
+          "row": 1,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "r",
+          "label": "部品 R\n必要 11×4＝44個\n在庫 3個 → 発注 41個",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "note",
+          "label": "在庫を引くのは\n段ごとに1回",
+          "row": 1,
+          "col": 1,
+          "shape": "round"
+        }
       ],
       "edges": [
-        {"from": "p", "to": "q", "label": "P 1個に Q 2個"},
-        {"from": "q", "to": "r", "label": "Q 1個に R 4個"},
-        {"from": "note", "to": "q", "style": "dashed", "arrow": "none"}
+        {
+          "from": "p",
+          "to": "q",
+          "label": "P 1個に Q 2個"
+        },
+        {
+          "from": "q",
+          "to": "r",
+          "label": "Q 1個に R 4個"
+        },
+        {
+          "from": "note",
+          "to": "q",
+          "label": "ここで在庫を引く",
+          "style": "dashed"
+        }
       ]
     }
   ]

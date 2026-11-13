@@ -5,30 +5,63 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 3つの方式",
-      "caption": "積み重ねる層の違いで三つの方式を見分けます。コンテナ型はゲスト OS を積まず、OS の中核を共有します。",
+      "after": "### しくみと利点",
+      "caption": "下から上へ読みます。物理サーバ 1 台分の資源を仮想化ソフトが切り分け、OS の違う仮想サーバを同時に動かします。",
       "nodes": [
-        {"id": "h0", "label": "ホスト型", "row": 0, "col": 0, "shape": "round"},
-        {"id": "v0", "label": "ハイパーバイザー型", "row": 0, "col": 1, "shape": "round"},
-        {"id": "c0", "label": "コンテナ型", "row": 0, "col": 2, "shape": "round"},
-
-        {"id": "h1", "label": "ゲスト OS\n＋ アプリ", "row": 1, "col": 0},
-        {"id": "v1", "label": "ゲスト OS\n＋ アプリ", "row": 1, "col": 1},
-        {"id": "c1", "label": "アプリだけ\nゲスト OS なし", "row": 1, "col": 2, "emphasis": true},
-
-        {"id": "h2", "label": "仮想化ソフト", "row": 2, "col": 0},
-        {"id": "v2", "label": "ハイパーバイザー", "row": 2, "col": 1},
-        {"id": "c2", "label": "コンテナエンジン", "row": 2, "col": 2},
-
-        {"id": "h3", "label": "ホスト OS", "row": 3, "col": 0},
-        {"id": "v3", "label": "ホスト OS なし", "row": 3, "col": 1, "emphasis": true},
-        {"id": "c3", "label": "ホスト OS\nカーネルを共有", "row": 3, "col": 2},
-
-        {"id": "h4", "label": "ハードウェア 1 台", "row": 4, "col": 0},
-        {"id": "v4", "label": "ハードウェア 1 台", "row": 4, "col": 1},
-        {"id": "c4", "label": "ハードウェア 1 台", "row": 4, "col": 2}
+        {
+          "id": "vm1",
+          "label": "仮想サーバ A\nOS は Windows",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "vm2",
+          "label": "仮想サーバ B\nOS は Linux",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "vm3",
+          "label": "仮想サーバ C\n別のバージョンの OS",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "hv",
+          "label": "仮想化ソフト\n資源を切り分けて配る",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "hw",
+          "label": "物理サーバ 1 台\n能力の合計は 1 台分のまま",
+          "row": 2,
+          "col": 1
+        }
       ],
-      "edges": []
+      "edges": [
+        {
+          "from": "hw",
+          "to": "hv",
+          "label": "CPU・メモリ・ディスク"
+        },
+        {
+          "from": "hv",
+          "to": "vm1",
+          "label": "A の分"
+        },
+        {
+          "from": "hv",
+          "to": "vm2",
+          "label": "B の分"
+        },
+        {
+          "from": "hv",
+          "to": "vm3",
+          "label": "C の分"
+        }
+      ]
     }
   ]
 }

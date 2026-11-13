@@ -6,19 +6,67 @@
       "id": 1,
       "type": "blocks",
       "after": "### アクティビティ図で表せるもの",
-      "caption": "角丸で作業、矢印で順序を表し、スイムレーンの区画で誰が受け持つかを示した図です。",
+      "caption": "アクティビティ図の例です。行ごとに受け持つ人（スイムレーン）を分け、角丸の作業を矢印で順につないで、受け渡す物を矢印に書いています。",
       "nodes": [
-        {"id": "lx", "label": "レーン\n申込担当", "row": 0, "col": 0, "emphasis": true},
-        {"id": "a1", "label": "申込を\n受け付ける", "row": 0, "col": 1, "shape": "round"},
-        {"id": "a2", "label": "内容を\n入力する", "row": 0, "col": 2, "shape": "round"},
-        {"id": "ly", "label": "レーン\n課長", "row": 1, "col": 0, "emphasis": true},
-        {"id": "a3", "label": "内容を\n承認する", "row": 1, "col": 2, "shape": "round"},
-        {"id": "a4", "label": "完了", "row": 1, "col": 3, "shape": "round"}
+        {
+          "id": "lx",
+          "label": "スイムレーン\n申込担当",
+          "row": 0,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "a1",
+          "label": "申込を\n受け付ける",
+          "row": 0,
+          "col": 1,
+          "shape": "round"
+        },
+        {
+          "id": "a2",
+          "label": "内容を\n入力する",
+          "row": 0,
+          "col": 2,
+          "shape": "round"
+        },
+        {
+          "id": "ly",
+          "label": "スイムレーン\n課長",
+          "row": 1,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "a3",
+          "label": "内容を\n承認する",
+          "row": 1,
+          "col": 2,
+          "shape": "round"
+        },
+        {
+          "id": "a4",
+          "label": "完了\n手続きを終える",
+          "row": 1,
+          "col": 3,
+          "shape": "round"
+        }
       ],
       "edges": [
-        {"from": "a1", "to": "a2"},
-        {"from": "a2", "to": "a3", "label": "承認へ回す"},
-        {"from": "a3", "to": "a4"}
+        {
+          "from": "a1",
+          "to": "a2",
+          "label": "申込書"
+        },
+        {
+          "from": "a2",
+          "to": "a3",
+          "label": "入力した申込を回す"
+        },
+        {
+          "from": "a3",
+          "to": "a4",
+          "label": "承認済み"
+        }
       ]
     }
   ]

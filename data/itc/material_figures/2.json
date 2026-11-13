@@ -6,21 +6,73 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "前半は何をやるか・何を作るかを決める上流、後半は作って使われ続ける状態にする下流で、後の段は前の段で決めたことを前提に動きます。",
+      "caption": "上の段で何をやるか・何を作るかを決め、下の段で作って使われ続ける状態にします。矢印の文字は、次の段が前提にする決めごとです。",
       "nodes": [
-        {"id": "teian", "label": "提案\nどう解くかを示す", "row": 0, "col": 0},
-        {"id": "kousou", "label": "構想策定\nそもそも何をやるか", "row": 0, "col": 1},
-        {"id": "youken", "label": "要件定義\n何を作るかを決める", "row": 0, "col": 2, "emphasis": true},
-        {"id": "sekkei", "label": "設計\nどう作るかを決める", "row": 1, "col": 0},
-        {"id": "dounyu", "label": "導入\n作って動かす", "row": 1, "col": 1},
-        {"id": "teichaku", "label": "定着\n使われ続ける状態に", "row": 1, "col": 2, "emphasis": true}
+        {
+          "id": "teian",
+          "label": "提案\nどう解くかを示す",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "kousou",
+          "label": "構想策定\nそもそも何をやるか",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "youken",
+          "label": "要件定義\n何を作るかを決める",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "sekkei",
+          "label": "設計\nどう作るかを決める",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "dounyu",
+          "label": "導入\n作って動かす",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "teichaku",
+          "label": "定着\n使われ続ける状態に",
+          "row": 1,
+          "col": 0,
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "teian", "to": "kousou"},
-        {"from": "kousou", "to": "youken"},
-        {"from": "youken", "to": "sekkei", "label": "ここから下流（作る側）"},
-        {"from": "sekkei", "to": "dounyu"},
-        {"from": "dounyu", "to": "teichaku"}
+        {
+          "from": "teian",
+          "to": "kousou",
+          "label": "採用された解き方"
+        },
+        {
+          "from": "kousou",
+          "to": "youken",
+          "label": "やると決めたこと"
+        },
+        {
+          "from": "youken",
+          "to": "sekkei",
+          "label": "作るものの条件\n（ここから下流）"
+        },
+        {
+          "from": "sekkei",
+          "to": "dounyu",
+          "label": "作り方の図面"
+        },
+        {
+          "from": "dounyu",
+          "to": "teichaku",
+          "label": "動くシステム"
+        }
       ]
     }
   ]

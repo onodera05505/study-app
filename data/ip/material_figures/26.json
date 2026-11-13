@@ -6,18 +6,60 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "入力層と出力層の間に中間層を何層も重ね、誤差を逆向きに伝えて重みを直しながら特徴をつかみます。",
+      "caption": "入力層と出力層の間に中間層を何層も重ねた図です。下の破線は、出した答えのずれをもとに重みを直す学習の向きを表します。",
       "nodes": [
-        {"id": "in", "label": "入力層\n画像データ", "row": 0, "col": 0, "shape": "round"},
-        {"id": "h1", "label": "中間層1", "row": 0, "col": 1, "shape": "round"},
-        {"id": "h2", "label": "中間層2\nさらに何層も重ねる", "row": 0, "col": 2, "shape": "round", "emphasis": true},
-        {"id": "out", "label": "出力層\n犬か猫かを判定", "row": 0, "col": 3, "shape": "round"}
+        {
+          "id": "in",
+          "label": "入力層\n画像データ",
+          "row": 0,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "h1",
+          "label": "中間層1\n細かな手がかり",
+          "row": 0,
+          "col": 1,
+          "shape": "round"
+        },
+        {
+          "id": "h2",
+          "label": "中間層2〜\nさらに何層も重ねる",
+          "row": 0,
+          "col": 2,
+          "shape": "round",
+          "emphasis": true
+        },
+        {
+          "id": "out",
+          "label": "出力層\n犬か猫かを判定",
+          "row": 0,
+          "col": 3,
+          "shape": "round"
+        }
       ],
       "edges": [
-        {"from": "in", "to": "h1"},
-        {"from": "h1", "to": "h2"},
-        {"from": "h2", "to": "out"},
-        {"from": "out", "to": "in", "label": "誤差を逆向きに伝えて重みを修正", "style": "dashed"}
+        {
+          "from": "in",
+          "to": "h1",
+          "label": "重みを掛けて伝える"
+        },
+        {
+          "from": "h1",
+          "to": "h2",
+          "label": "特徴を自分で見つける"
+        },
+        {
+          "from": "h2",
+          "to": "out",
+          "label": "見つけた特徴で判断"
+        },
+        {
+          "from": "out",
+          "to": "in",
+          "label": "出した答えのずれで重みを直す",
+          "style": "dashed"
+        }
       ]
     }
   ]

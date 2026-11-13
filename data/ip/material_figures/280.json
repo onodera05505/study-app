@@ -6,17 +6,52 @@
       "id": 1,
       "type": "blocks",
       "after": "### なぜ手元で処理するのか",
-      "caption": "デバイスとクラウドの間にエッジを置いた図です。手元で処理して減らしてから送るので、通信量もサーバの負荷も小さくなります。",
+      "caption": "デバイスとクラウドの間にエッジを置いた図です。線の上の量を左右で見比べると、手元で減らしてから送る効果が読めます。",
       "nodes": [
-        {"id": "dev", "label": "IoT デバイス\nカメラ・センサ", "row": 0, "col": 0},
-        {"id": "edge", "label": "エッジ\n（IoT ゲートウェイ）\nその場で処理", "row": 0, "col": 1, "emphasis": true},
-        {"id": "cloud", "label": "クラウドの\nIoT サーバ", "row": 0, "col": 2, "shape": "cloud"},
-        {"id": "cut", "label": "いらない分は\nここで捨てる", "row": 1, "col": 1}
+        {
+          "id": "dev",
+          "label": "IoT デバイス\nカメラ・センサ",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "edge",
+          "label": "エッジ\nデバイスの近くで\nその場で処理",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "cloud",
+          "label": "クラウド\n負荷が軽く済む",
+          "row": 0,
+          "col": 2,
+          "shape": "cloud"
+        },
+        {
+          "id": "cut",
+          "label": "捨てる分\nクラウドへ送らない",
+          "row": 1,
+          "col": 1
+        }
       ],
       "edges": [
-        {"from": "dev", "to": "edge", "label": "生データ（大量）"},
-        {"from": "edge", "to": "cloud", "label": "必要な結果だけ（少量）"},
-        {"from": "edge", "to": "cut", "style": "dashed", "arrow": "none"}
+        {
+          "from": "dev",
+          "to": "edge",
+          "label": "生データ（大量）"
+        },
+        {
+          "from": "edge",
+          "to": "cloud",
+          "label": "必要な結果だけ（少量）"
+        },
+        {
+          "from": "edge",
+          "to": "cut",
+          "label": "不要なデータ",
+          "style": "dashed"
+        }
       ]
     }
   ]

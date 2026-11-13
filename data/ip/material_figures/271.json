@@ -6,20 +6,56 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "入力層・中間層・出力層のつながりを表した図です。各素子は入力に重みを掛けて足し合わせ、次の層へ渡します。",
+      "caption": "入力から出力までの流れと、学習で重みを直す戻りの線を表した図です。下の点線が、望む答えとのずれを減らすように重みを調整する学習にあたります。",
       "nodes": [
-        {"id": "hi", "label": "入力層", "row": 0, "col": 0, "shape": "round"},
-        {"id": "hh", "label": "中間層（隠れ層）\n深く重ねると深層学習", "row": 0, "col": 1, "shape": "round", "emphasis": true},
-        {"id": "ho", "label": "出力層", "row": 0, "col": 2, "shape": "round"},
-        {"id": "i1", "label": "入力 1\n画素の明るさ", "row": 1, "col": 0},
-        {"id": "h1", "label": "素子\n入力×重みの合計を\n活性化関数に通す", "row": 1, "col": 1},
-        {"id": "o1", "label": "出力\n「犬」らしさ", "row": 1, "col": 2},
-        {"id": "i2", "label": "入力 2\n画素の明るさ", "row": 2, "col": 0}
+        {
+          "id": "i1",
+          "label": "入力層\n画素の明るさなど",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "h1",
+          "label": "中間層の素子\n入力×重みの合計で\n出力を決める",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "o1",
+          "label": "出力層\n「犬」らしさ",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "cmp",
+          "label": "答え合わせ\n望む答えとの\nずれを出す",
+          "row": 1,
+          "col": 2
+        }
       ],
       "edges": [
-        {"from": "i1", "to": "h1", "label": "重み"},
-        {"from": "i2", "to": "h1", "label": "重み"},
-        {"from": "h1", "to": "o1"}
+        {
+          "from": "i1",
+          "to": "h1",
+          "label": "重みを掛けて渡す"
+        },
+        {
+          "from": "h1",
+          "to": "o1",
+          "label": "結果を次の層へ"
+        },
+        {
+          "from": "o1",
+          "to": "cmp",
+          "label": "出力"
+        },
+        {
+          "from": "cmp",
+          "to": "h1",
+          "label": "重みを調整（学習）",
+          "style": "dashed"
+        }
       ]
     }
   ]

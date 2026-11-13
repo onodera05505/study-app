@@ -6,19 +6,72 @@
       "id": 1,
       "type": "blocks",
       "after": "### 範囲の広さ",
-      "caption": "発注側も受注側も、契約の無い協力会社も含めて利害関係者になります。",
+      "caption": "矢印がプロジェクトへ向かう人は影響を与え、プロジェクトから矢印を受ける人は影響を受けます。どちらも利害関係者です。",
       "nodes": [
-        {"id": "ceo", "label": "発注側の経営者", "row": 0, "col": 0},
-        {"id": "usr", "label": "発注側の利用部門", "row": 0, "col": 2},
-        {"id": "prj", "label": "プロジェクト", "row": 1, "col": 1, "emphasis": true},
-        {"id": "pm", "label": "受注側の PM\nメンバー", "row": 2, "col": 0},
-        {"id": "sub", "label": "受注側を支援する\n協力会社", "row": 2, "col": 2}
+        {
+          "id": "ceo",
+          "label": "発注側の経営者\n費用と目的を決める",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "usr",
+          "label": "発注側の利用部門\n完成後に使う",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "prj",
+          "label": "プロジェクト\n周りの全員が\nステークホルダ",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "ext",
+          "label": "地域住民・監督官庁\nプロジェクトの外側",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "pm",
+          "label": "受注側の PM\nメンバー（作る人）",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "sub",
+          "label": "協力会社\n発注元と直接の\n契約なし",
+          "row": 2,
+          "col": 2
+        }
       ],
       "edges": [
-        {"from": "ceo", "to": "prj", "label": "費用を出す", "arrow": "both"},
-        {"from": "usr", "to": "prj", "label": "完成後に使う", "arrow": "both"},
-        {"from": "pm", "to": "prj", "label": "作る", "arrow": "both"},
-        {"from": "sub", "to": "prj", "label": "作業を手伝う", "arrow": "both"}
+        {
+          "from": "ceo",
+          "to": "prj",
+          "label": "費用を出す（与える）"
+        },
+        {
+          "from": "prj",
+          "to": "usr",
+          "label": "結果を使う（受ける）"
+        },
+        {
+          "from": "prj",
+          "to": "ext",
+          "label": "工事などの影響（受ける）"
+        },
+        {
+          "from": "pm",
+          "to": "prj",
+          "label": "作る（与える）"
+        },
+        {
+          "from": "sub",
+          "to": "prj",
+          "label": "作業を手伝う（与える）"
+        }
       ]
     }
   ]

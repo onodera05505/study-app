@@ -6,17 +6,61 @@
       "id": 1,
       "type": "blocks",
       "after": "### 計算の解き方（電話番号の桁数）",
-      "caption": "桁ごとの選び方の数を掛け合わせて、作れる番号の個数を求める考え方を表します。",
+      "caption": "矢印に沿って桁ごとの選び方の数を掛け合わせると番号の個数が出ます。そこから足りる桁数を逆算します。",
       "nodes": [
-        {"id": "p", "label": "020\n固定の3桁", "row": 0, "col": 0},
-        {"id": "d1", "label": "□\n1〜3・5〜9\n8通り", "row": 0, "col": 1},
-        {"id": "dn", "label": "□□…□\n各桁 0〜9\n10通りが 9桁", "row": 0, "col": 2},
-        {"id": "t", "label": "3 ＋ 1 ＋ 9 ＝ 13桁", "row": 1, "col": 2, "emphasis": true}
+        {
+          "id": "p",
+          "label": "先頭 020\n固定の 3 桁\n1 通り",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "d1",
+          "label": "次の 1 桁\n1〜3 と 5〜9\n8 通り",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "dn",
+          "label": "残りの n 桁\n各桁 0〜9\n10 通りずつ",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "cnt",
+          "label": "作れる番号の個数\n8 × 10 の n 乗",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "ans",
+          "label": "80億 ＝ 8 × 10 の 9 乗\nn ＝ 9\n3 ＋ 1 ＋ 9 ＝ 13 桁",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "p", "to": "d1", "arrow": "none"},
-        {"from": "d1", "to": "dn", "arrow": "none"},
-        {"from": "dn", "to": "t", "label": "8 × 10の9乗 ＝ 80億個", "style": "dashed"}
+        {
+          "from": "p",
+          "to": "d1",
+          "label": "× 掛ける"
+        },
+        {
+          "from": "d1",
+          "to": "dn",
+          "label": "× 掛ける"
+        },
+        {
+          "from": "dn",
+          "to": "cnt",
+          "label": "掛け合わせた数"
+        },
+        {
+          "from": "cnt",
+          "to": "ans",
+          "label": "80億以上になる最小の n"
+        }
       ]
     }
   ]

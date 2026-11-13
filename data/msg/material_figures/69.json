@@ -6,22 +6,61 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "四つの骨の目印を手のひらを置いて先に確かめると、そこに付く筋の位置を言葉で言えるので、骨は押して探らず目印に使います。",
+      "caption": "真ん中の手のひらから四つの骨へ矢印をたどります。上の段が腰、下の段が尻と脚の付け根の目印です。",
       "nodes": [
-        {"id": "ic", "label": "腸骨稜\n腰の横で\nベルトが乗る骨の縁", "row": 0, "col": 0, "emphasis": true},
-        {"id": "sa", "label": "仙骨\n腰の真ん中の下の\n平たい骨", "row": 0, "col": 1},
-        {"id": "gt", "label": "大転子\n脚の付け根の外の\n硬い丸み", "row": 0, "col": 2},
-        {"id": "is", "label": "坐骨結節\n座ると椅子に\n当たる骨", "row": 0, "col": 3},
-        {"id": "ic2", "label": "縁のすぐ上＝腰の筋\n縁のすぐ下＝殿部の筋", "row": 1, "col": 0, "shape": "round"},
-        {"id": "sa2", "label": "左右の大きな骨と\n組んで骨盤になる", "row": 1, "col": 1, "shape": "round"},
-        {"id": "gt2", "label": "殿部の筋が\n集まる所", "row": 1, "col": 2, "shape": "round"},
-        {"id": "is2", "label": "腰と殿部の筋の\n下側が付く所", "row": 1, "col": 3, "shape": "round"}
+        {
+          "id": "ilium",
+          "label": "腸骨稜\n腰の横で\nベルトが乗る骨の縁",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "sacrum",
+          "label": "仙骨\n腰の真ん中の下の\n手のひらほどの平たい骨",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "palm",
+          "label": "手のひらを置く\n押して探さず\n乗せて目印を確かめる",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "ischium",
+          "label": "坐骨結節\n座ると椅子に\n当たる骨",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "trochanter",
+          "label": "大転子\n脚の付け根の外の\n硬い丸み",
+          "row": 2,
+          "col": 2
+        }
       ],
       "edges": [
-        {"from": "ic", "to": "ic2"},
-        {"from": "sa", "to": "sa2"},
-        {"from": "gt", "to": "gt2"},
-        {"from": "is", "to": "is2"}
+        {
+          "from": "palm",
+          "to": "ilium",
+          "label": "手の下に硬い骨の縁"
+        },
+        {
+          "from": "palm",
+          "to": "sacrum",
+          "label": "手の下に平たく硬い面"
+        },
+        {
+          "from": "palm",
+          "to": "ischium",
+          "label": "手の下に硬い出っぱり"
+        },
+        {
+          "from": "palm",
+          "to": "trochanter",
+          "label": "手の下に硬い丸み"
+        }
       ]
     }
   ]

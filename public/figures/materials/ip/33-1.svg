@@ -1,27 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="238" viewBox="0 0 640 238">
-<rect x="0.5" y="0.5" width="639" height="237" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(103 20)">
-<polyline points="110,76 110,122" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="110,122 106.4,114 113.6,114" fill="#1f2937"/>
-<polyline points="110,76 110,99 359,99 359,122" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="359,122 355.4,114 362.6,114" fill="#1f2937"/>
-<polyline points="185,160 284,160" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="284,160 276,163.6 276,156.4" fill="#1f2937"/>
-<rect x="0" y="0" width="220" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="258" viewBox="0 0 640 258">
+<rect x="0.5" y="0.5" width="639" height="257" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(43 20)">
+<polyline points="110,96 110,142" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="110,142 106.4,134 113.6,134" fill="#1f2937"/>
+<polyline points="110,96 110,119 479,119 479,142" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="479,142 475.4,134 482.6,134" fill="#1f2937"/>
+<polyline points="185,180 404,180" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="404,180 396,183.6 396,176.4" fill="#1f2937"/>
+<rect x="0" y="0" width="220" height="96" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
 <text x="110" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">分割前の1つの表</text>
 <text x="110" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">受注番号・発注者名・商品番号</text>
 <text x="110" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">商品名・個数・単価</text>
-<rect x="35" y="122" width="150" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="110" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">受注表</text>
-<text x="110" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">受注番号・発注者名</text>
-<text x="110" y="184.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">商品番号・個数</text>
-<rect x="284" y="122" width="150" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="359" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">商品表</text>
-<text x="359" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">商品番号（主キー）</text>
-<text x="359" y="184.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">商品名・単価</text>
-<rect x="88" y="90" width="44" height="16" rx="3" fill="#ffffff"/>
-<text x="110" y="103.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">正規化</text>
-<rect x="206.5" y="143" width="56" height="16" rx="3" fill="#ffffff"/>
-<text x="234.5" y="156.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">外部キー</text>
+<text x="110" y="82.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">同じ商品名・単価が何度も並ぶ</text>
+<rect x="35" y="142" width="150" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="110" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">受注表</text>
+<text x="110" y="184.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">受注番号・発注者名</text>
+<text x="110" y="204.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">商品番号・個数</text>
+<rect x="404" y="142" width="150" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="479" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">商品表</text>
+<text x="479" y="184.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">商品番号（主キー）</text>
+<text x="479" y="204.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">商品名・単価</text>
+<rect x="52" y="110" width="116" height="16" rx="3" fill="#ffffff"/>
+<text x="110" y="123.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">受注ごとに変わる列</text>
+<rect x="212.5" y="105" width="164" height="16" rx="3" fill="#ffffff"/>
+<text x="294.5" y="118.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">商品番号で決まる列を分ける</text>
+<rect x="206.5" y="163" width="176" height="16" rx="3" fill="#ffffff"/>
+<text x="294.5" y="176.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">商品番号（外部キー）でたどる</text>
 </g>
 </svg>

@@ -4,118 +4,42 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
-      "after": "### 3つの方式の違い",
-      "caption": "同じ台数でも方式によって使える容量が変わることを表した図です。各方式のディスクに何が置かれるかを見比べて読みます。",
-      "nodes": [
-        {
-          "id": "r0",
-          "label": "RAID0\nストライピング\n使える容量 2T",
-          "row": 0,
-          "col": 0,
-          "shape": "round"
-        },
-        {
-          "id": "r0a",
-          "label": "A",
-          "row": 0,
-          "col": 1,
-          "shape": "cylinder"
-        },
-        {
-          "id": "r0b",
-          "label": "B",
-          "row": 0,
-          "col": 2,
-          "shape": "cylinder"
-        },
-        {
-          "id": "r0c",
-          "label": "C",
-          "row": 0,
-          "col": 3,
-          "shape": "cylinder"
-        },
-        {
-          "id": "r0d",
-          "label": "D",
-          "row": 0,
-          "col": 4,
-          "shape": "cylinder"
-        },
-        {
-          "id": "r1",
-          "label": "RAID1\nミラーリング\n使える容量 1T",
-          "row": 1,
-          "col": 0,
-          "shape": "round"
-        },
-        {
-          "id": "r1a",
-          "label": "A",
-          "row": 1,
-          "col": 1,
-          "shape": "cylinder"
-        },
-        {
-          "id": "r1b",
-          "label": "A",
-          "row": 1,
-          "col": 2,
-          "shape": "cylinder"
-        },
-        {
-          "id": "r1c",
-          "label": "B",
-          "row": 1,
-          "col": 3,
-          "shape": "cylinder"
-        },
-        {
-          "id": "r1d",
-          "label": "B",
-          "row": 1,
-          "col": 4,
-          "shape": "cylinder"
-        },
-        {
-          "id": "r5",
-          "label": "RAID5\nパリティを分散\n使える容量 1.5T",
-          "row": 2,
-          "col": 0,
-          "shape": "round"
-        },
-        {
-          "id": "r5a",
-          "label": "A",
-          "row": 2,
-          "col": 1,
-          "shape": "cylinder"
-        },
-        {
-          "id": "r5b",
-          "label": "B",
-          "row": 2,
-          "col": 2,
-          "shape": "cylinder"
-        },
-        {
-          "id": "r5c",
-          "label": "C",
-          "row": 2,
-          "col": 3,
-          "shape": "cylinder"
-        },
-        {
-          "id": "r5d",
-          "label": "パリティ",
-          "row": 2,
-          "col": 4,
-          "shape": "cylinder",
-          "emphasis": true
-        }
+      "type": "matrix",
+      "after": "### 計算の解き方",
+      "caption": "1T バイトのディスク 4 台を 3 つの方式でまとめたときの、使える容量と 1 台壊れたときの結果を並べた表です。列ごとに上下の段を見比べて読みます。",
+      "x": {
+        "label": "方式（1T バイト × 4 台）",
+        "values": [
+          "RAID0\nストライピング",
+          "RAID1\nミラーリング",
+          "RAID5\nパリティを分散"
+        ]
+      },
+      "y": {
+        "label": "観点",
+        "values": [
+          "使える容量",
+          "1 台壊れると"
+        ]
+      },
+      "cells": [
+        [
+          "4T バイト\n全台の合計",
+          "2T バイト\n半分は同じ内容の写し",
+          "3T バイト\n1 台分がパリティ"
+        ],
+        [
+          "全体が読めない\n予備が無い",
+          "使い続けられる\n残った写しで読む",
+          "使い続けられる\nパリティで復元"
+        ]
       ],
-      "edges": []
+      "emphasis": [
+        [
+          1,
+          0
+        ]
+      ]
     }
   ]
 }

@@ -6,50 +6,38 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "前半の書類と適性検査はどの社もほぼ共通で、分かれるのはその場で考えさせる段と、別入口のジョブ型選考です。",
+      "caption": "左から順に進みます。書類選考までは多くの社で共通で、その後はコンサル系と SIer 系で道が分かれます。",
       "nodes": [
         {
           "id": "es",
           "label": "ES\n志望動機と経験を書く",
-          "row": 0,
+          "row": 1,
           "col": 0
         },
         {
           "id": "web",
           "label": "Web テスト\n速さ・正確さ・性格",
-          "row": 0,
+          "row": 1,
           "col": 1
         },
         {
           "id": "doc",
-          "label": "書類選考",
-          "row": 0,
-          "col": 2
-        },
-        {
-          "id": "gd",
-          "label": "グループ\nディスカッション\n議論の進め方を見る",
+          "label": "書類選考\nここまでは\n多くの社で共通",
           "row": 1,
-          "col": 2
-        },
-        {
-          "id": "case",
-          "label": "ケース面接\n筋道を口で説明する",
-          "row": 1,
-          "col": 1,
+          "col": 2,
           "emphasis": true
         },
         {
-          "id": "fin",
-          "label": "個人面接\n最終選考",
-          "row": 1,
-          "col": 0
+          "id": "cons",
+          "label": "GD・ケース面接\nその場で考えさせる\n段が入る",
+          "row": 0,
+          "col": 3
         },
         {
-          "id": "job",
-          "label": "ジョブ型選考\n数日の実務体験からの\n別の入口",
+          "id": "sier",
+          "label": "面接\n書類のあと\n面接が続く",
           "row": 2,
-          "col": 0
+          "col": 3
         }
       ],
       "edges": [
@@ -61,24 +49,18 @@
         },
         {
           "from": "web",
-          "to": "doc"
+          "to": "doc",
+          "label": "結果で絞る"
         },
         {
           "from": "doc",
-          "to": "gd"
+          "to": "cons",
+          "label": "コンサル系"
         },
         {
-          "from": "gd",
-          "to": "case"
-        },
-        {
-          "from": "case",
-          "to": "fin"
-        },
-        {
-          "from": "job",
-          "to": "fin",
-          "style": "dashed"
+          "from": "doc",
+          "to": "sier",
+          "label": "SIer 系"
         }
       ]
     }
