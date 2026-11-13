@@ -4,45 +4,51 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
-      "after": "### 押さえどころ",
-      "caption": "暗号化と認証が働くのは TLS を張った 2 点の間だけなので、その先の区間は別に守ります。",
-      "nodes": [
+      "type": "sequence",
+      "after": "### ハンドシェイクの流れ",
+      "caption": "上から順にやり取りが進みます。サーバ証明書が先に届き、クライアント証明書はサーバが求めたときだけ後から送り、受け取った側が検証します。",
+      "actors": [
         {
-          "id": "pc",
-          "label": "利用者の PC\nクライアント証明書",
-          "row": 0,
-          "col": 0,
-          "emphasis": true
+          "id": "c",
+          "label": "クライアント"
         },
         {
-          "id": "web",
-          "label": "Web サーバ（DMZ）\nサーバ証明書",
-          "row": 0,
-          "col": 1,
-          "emphasis": true
-        },
-        {
-          "id": "db",
-          "label": "DB サーバ\n内部ネットワーク",
-          "row": 0,
-          "col": 2,
-          "shape": "cylinder"
+          "id": "s",
+          "label": "サーバ"
         }
       ],
-      "edges": [
+      "steps": [
         {
-          "from": "pc",
-          "to": "web",
-          "label": "TLS で暗号化・認証",
-          "arrow": "both"
+          "from": "c",
+          "to": "s",
+          "label": "接続要求（使える暗号方式の一覧）"
         },
         {
-          "from": "web",
-          "to": "db",
-          "label": "TLS の対象外",
-          "arrow": "both",
-          "style": "dashed"
+          "from": "s",
+          "to": "c",
+          "label": "暗号方式の決定 ＋ サーバ証明書",
+          "note": "クライアント認証をするときは、ここで証明書を要求する"
+        },
+        {
+          "from": "c",
+          "to": "c",
+          "label": "サーバ証明書を認証局の公開鍵で検証"
+        },
+        {
+          "from": "c",
+          "to": "s",
+          "label": "クライアント証明書 ＋ 秘密鍵で署名したデータ",
+          "note": "要求されたときだけ。サーバが証明書の公開鍵で検証する"
+        },
+        {
+          "from": "c",
+          "to": "s",
+          "label": "共通鍵の素（サーバの公開鍵で暗号化）"
+        },
+        {
+          "from": "c",
+          "to": "s",
+          "label": "以降は共通鍵で暗号化して通信"
         }
       ]
     }

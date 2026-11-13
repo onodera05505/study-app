@@ -5,24 +5,19 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 計算の解き方",
-      "caption": "先行後続の関係と、各ジョブが動く回を表しています。前の回の一時ファイルが後続に読まれるまで残る点を追って読みます。",
+      "after": "### ジョブの生起と実行待ち行列",
+      "caption": "ジョブスケジューラーがジョブを動かす流れで、左上から時計回りに読みます。生起は待ち行列に並ぶことで、実行が始まるのは多重度の枠が空いてからです。",
       "nodes": [
-        {"id": "a", "label": "A\n1 回目", "row": 1, "col": 0, "shape": "round"},
-        {"id": "b", "label": "B\n2 回目", "row": 0, "col": 1, "shape": "round"},
-        {"id": "c", "label": "C\n2 回目", "row": 2, "col": 1, "shape": "round"},
-        {"id": "d", "label": "D\n3 回目", "row": 0, "col": 2, "shape": "round", "emphasis": true},
-        {"id": "e", "label": "E\n3 回目", "row": 2, "col": 2, "shape": "round", "emphasis": true},
-        {"id": "f", "label": "F\n4 回目", "row": 1, "col": 3, "shape": "round"}
+        {"id": "next", "label": "後続ジョブ\n先行が 2 つなら\n両方の終了を待つ", "row": 0, "col": 0, "shape": "round"},
+        {"id": "q", "label": "実行待ち行列\nジョブスケジューラーが\n生起した順に並べる", "row": 0, "col": 1, "emphasis": true},
+        {"id": "run", "label": "実行中の枠\n多重度 2 なら\n同時に 2 つまで", "row": 1, "col": 1},
+        {"id": "done", "label": "ジョブの終了\n枠が 1 つ空く", "row": 1, "col": 0, "shape": "round"}
       ],
       "edges": [
-        {"from": "a", "to": "b"},
-        {"from": "a", "to": "c"},
-        {"from": "b", "to": "d"},
-        {"from": "b", "to": "e"},
-        {"from": "c", "to": "e"},
-        {"from": "d", "to": "f"},
-        {"from": "e", "to": "f"}
+        {"from": "next", "to": "q", "label": "先行がすべて終わると生起\n（行列に追加するだけ）"},
+        {"from": "q", "to": "run", "label": "枠が空いた順に\n先頭から投入"},
+        {"from": "run", "to": "done", "label": "処理が終わる"},
+        {"from": "done", "to": "next", "label": "終了を後続に伝える"}
       ]
     }
   ]

@@ -6,19 +6,61 @@
       "id": 1,
       "type": "blocks",
       "after": "### 計算の解き方",
-      "caption": "その時点で待っているもののうち処理時間の短いものを選んでいく実行順を、時刻の線に沿って並べています。",
+      "caption": "左から実行した順にジョブを並べ、線には 1 つ終わった時点で待っているジョブと選ばれた理由を書いています。",
       "nodes": [
-        {"id": "a", "label": "A\n0→2", "row": 0, "col": 0},
-        {"id": "c", "label": "C\n2→5", "row": 0, "col": 1},
-        {"id": "e", "label": "E\n5→6", "row": 0, "col": 2},
-        {"id": "d", "label": "D\n6→8", "row": 0, "col": 3},
-        {"id": "b", "label": "B\n8→12\n到着 1", "row": 0, "col": 4, "emphasis": true}
+        {
+          "id": "a",
+          "label": "A　2 秒\n時刻 0→2",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "c",
+          "label": "C　3 秒\n時刻 2→5",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "e",
+          "label": "E　1 秒\n時刻 5→6",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "d",
+          "label": "D　2 秒\n時刻 6→8",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "b",
+          "label": "B　4 秒\n時刻 8→12\n到着 1 から追い越され続けた",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "a", "to": "c"},
-        {"from": "c", "to": "e"},
-        {"from": "e", "to": "d"},
-        {"from": "d", "to": "b"}
+        {
+          "from": "a",
+          "to": "c",
+          "label": "B 4 秒と C 3 秒が待つ、短い C へ"
+        },
+        {
+          "from": "c",
+          "to": "e",
+          "label": "B 4 秒、D 2 秒、E 1 秒が待つ、最短の E へ"
+        },
+        {
+          "from": "e",
+          "to": "d",
+          "label": "B 4 秒と D 2 秒が待つ、短い D へ"
+        },
+        {
+          "from": "d",
+          "to": "b",
+          "label": "残るのは B だけ"
+        }
       ]
     }
   ]

@@ -1,22 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="126" viewBox="0 0 640 126">
-<rect x="0.5" y="0.5" width="639" height="125" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(27 20)">
-<polyline points="178,28 218,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="218,28 210,31.6 210,24.4" fill="#1f2937"/>
-<polyline points="368,28 408,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="408,28 400,31.6 400,24.4" fill="#1f2937"/>
-<polyline points="497,56 497,78 89,78 89,56" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="103" viewBox="0 0 784 126">
+<rect x="0.5" y="0.5" width="783" height="125" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<polyline points="178,28 290,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="290,28 282,31.6 282,24.4" fill="#1f2937"/>
+<polyline points="454,28 566,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="566,28 558,31.6 558,24.4" fill="#1f2937"/>
+<polyline points="655,56 655,78 89,78 89,56" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
 <polygon points="89,56 92.6,64 85.4,64" fill="#1f2937"/>
 <rect x="0" y="0" width="178" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="89" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">① テストコードを書く</text>
+<text x="89" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">① テストを先に書く</text>
 <text x="89" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">実装が無いので失敗する</text>
-<rect x="218" y="0" width="150" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="293" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">② テストが通る</text>
-<text x="293" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">最小限の実装を書く</text>
-<rect x="408" y="0" width="178" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="497" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">③ リファクタリング</text>
-<text x="497" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">振る舞いは変えずに整理</text>
-<rect x="275.8" y="64" width="116" height="16" rx="3" fill="#ffffff"/>
-<text x="333.8" y="77.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">次の機能へ繰り返す</text>
+<rect x="290" y="0" width="164" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="372" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">② 最小限の実装</text>
+<text x="372" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">テストが通るだけ書く</text>
+<rect x="566" y="0" width="178" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="655" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">③ リファクタリング</text>
+<text x="655" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">振る舞いは変えずに整理</text>
+<rect x="182" y="11" width="104" height="16" rx="3" fill="#ffffff"/>
+<text x="234" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">失敗を確かめたら</text>
+<rect x="458" y="11" width="104" height="16" rx="3" fill="#ffffff"/>
+<text x="510" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">テストが通ったら</text>
+<rect x="340.6" y="64" width="176" height="16" rx="3" fill="#ffffff"/>
+<text x="428.6" y="77.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">次の機能へ同じ周期を繰り返す</text>
 </g>
 </svg>

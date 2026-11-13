@@ -6,18 +6,18 @@
       "id": 1,
       "type": "blocks",
       "after": "### 記号の読み方",
-      "caption": "値を入れて 1 周ずつ追うと、判断に来た時点で変数が 1 つ先へ進んでいることが見えます。",
+      "caption": "M＝3 で 1 周ずつ追った図です。判断に来た時点の n は掛け終えた値より 1 大きく、3 まで掛けて抜けるときの n は 4 です。",
       "nodes": [
-        {"id": "ini", "label": "x←1, n←1", "row": 0, "col": 0, "shape": "round"},
+        {"id": "ini", "label": "開始\nx←1, n←1, M＝3", "row": 0, "col": 0, "shape": "round"},
         {"id": "bod", "label": "x←x×n（掛ける値 1, 2, 3）\nそのあと n←n＋1", "row": 1, "col": 0},
-        {"id": "jud", "label": "判断 a\nn＞M", "row": 1, "col": 1, "emphasis": true},
+        {"id": "jud", "label": "判断\n抜けるかどうか", "row": 1, "col": 1, "emphasis": true},
         {"id": "end", "label": "終了\nx＝1×2×3＝6", "row": 0, "col": 1, "shape": "round"}
       ],
       "edges": [
-        {"from": "ini", "to": "bod"},
+        {"from": "ini", "to": "bod", "label": "1 周目へ"},
         {"from": "bod", "to": "jud", "label": "判断時の n＝2 → 3 → 4"},
-        {"from": "jud", "to": "bod", "label": "No", "style": "dashed"},
-        {"from": "jud", "to": "end", "label": "Yes：n＝4＝M＋1"}
+        {"from": "jud", "to": "bod", "label": "n＝2, 3：もう 1 周", "style": "dashed"},
+        {"from": "jud", "to": "end", "label": "n＝4＝M＋1 で抜ける"}
       ]
     }
   ]

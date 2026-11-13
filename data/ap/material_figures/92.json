@@ -6,27 +6,73 @@
       "id": 1,
       "type": "blocks",
       "after": "### アドレスの求め方",
-      "caption": "画素は x 方向へ1つずつ並び、右端の次は行を1つ下げて左端に戻ります。この並びから画素の先頭アドレスが決まります。",
+      "caption": "横 640 画素・1 画素 2 バイトの例です。右端の次は 1 行下の左端に続くので、y 行ぶんと x 個ぶんを数えて 2 を掛けた所が先頭アドレスになります。",
       "nodes": [
-        {"id": "a00", "label": "(0,0)\n0 番地", "row": 0, "col": 0},
-        {"id": "a10", "label": "(1,0)\n2 番地", "row": 0, "col": 1},
-        {"id": "am0", "label": "…", "row": 0, "col": 2, "shape": "round"},
-        {"id": "ae0", "label": "(639,0)\n1278 番地", "row": 0, "col": 3},
-        {"id": "a01", "label": "(0,1)\n1280 番地", "row": 1, "col": 0},
-        {"id": "a11", "label": "(1,1)\n1282 番地", "row": 1, "col": 1},
-        {"id": "am1", "label": "…", "row": 1, "col": 2, "shape": "round"},
-        {"id": "ae1", "label": "(639,1)\n2558 番地", "row": 1, "col": 3},
-        {"id": "ans", "label": "(7,6)\n(6×640＋7)×2\n＝7694 番地", "row": 2, "col": 0, "emphasis": true}
+        {
+          "id": "a00",
+          "label": "(0,0)\n0 番地から",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "a10",
+          "label": "(1,0)\n2 番地",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "ae0",
+          "label": "(639,0)\n右端 1278 番地",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "a01",
+          "label": "(0,1)\n1280 番地",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "a11",
+          "label": "(1,1)\n1282 番地",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "gen",
+          "label": "(x,y)\n(y×640＋x)×2 番地",
+          "row": 2,
+          "col": 1,
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "a00", "to": "a10", "label": "＋2 番地"},
-        {"from": "a10", "to": "am0"},
-        {"from": "am0", "to": "ae0"},
-        {"from": "ae0", "to": "a01", "label": "右端の次は左端\n（y を1増やす）"},
-        {"from": "a01", "to": "a11", "label": "＋2 番地"},
-        {"from": "a11", "to": "am1"},
-        {"from": "am1", "to": "ae1"},
-        {"from": "a01", "to": "ans", "label": "y を 6 まで進める", "style": "dashed"}
+        {
+          "from": "a00",
+          "to": "a10",
+          "label": "x を 1 増やす\n＋2 番地"
+        },
+        {
+          "from": "a10",
+          "to": "ae0",
+          "label": "右端まで\n2 番地ずつ"
+        },
+        {
+          "from": "ae0",
+          "to": "a01",
+          "label": "右端の次は\ny を 1 増やし左端へ"
+        },
+        {
+          "from": "a01",
+          "to": "a11",
+          "label": "＋2 番地"
+        },
+        {
+          "from": "a01",
+          "to": "gen",
+          "label": "1 行＝640 画素を\ny 回、さらに x 個",
+          "style": "dashed"
+        }
       ]
     }
   ]

@@ -8,18 +8,64 @@
       "after": "### 横に並んだ列を縦に並べ直す",
       "caption": "同じ列構成の SELECT を UNION でつなぐと、結果に行が縦に積まれて増えることを表しています。",
       "nodes": [
-        {"id": "src", "label": "部門別売上\n3 行", "row": 1, "col": 0},
-        {"id": "s1", "label": "第 1 期を取り出す\nSELECT", "row": 0, "col": 1},
-        {"id": "s2", "label": "第 2 期を取り出す\nSELECT", "row": 2, "col": 1},
-        {"id": "u", "label": "UNION\n行を縦に積む", "row": 1, "col": 2, "emphasis": true},
-        {"id": "res", "label": "問合せ結果\n6 行", "row": 1, "col": 3}
+        {
+          "id": "src",
+          "label": "部門別売上\n1 行に第 1 期と第 2 期の列",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "s1",
+          "label": "SELECT ①\n期の列に定数「第 1 期」",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "s2",
+          "label": "SELECT ②\n期の列に定数「第 2 期」",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "u",
+          "label": "UNION\n行を縦に積む",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "res",
+          "label": "問合せ結果\n期ごとに 1 行",
+          "row": 1,
+          "col": 3
+        }
       ],
       "edges": [
-        {"from": "src", "to": "s1"},
-        {"from": "src", "to": "s2"},
-        {"from": "s1", "to": "u", "label": "3 行"},
-        {"from": "s2", "to": "u", "label": "3 行"},
-        {"from": "u", "to": "res", "label": "3 ＋ 3 ＝ 6 行"}
+        {
+          "from": "src",
+          "to": "s1",
+          "label": "3 行を読む"
+        },
+        {
+          "from": "src",
+          "to": "s2",
+          "label": "3 行を読む"
+        },
+        {
+          "from": "s1",
+          "to": "u",
+          "label": "3 行（部門・期・売上）"
+        },
+        {
+          "from": "s2",
+          "to": "u",
+          "label": "3 行（同じ列構成）"
+        },
+        {
+          "from": "u",
+          "to": "res",
+          "label": "3 ＋ 3 ＝ 6 行"
+        }
       ]
     }
   ]

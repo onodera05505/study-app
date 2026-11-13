@@ -6,42 +6,42 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "要因を原因から結果へ矢印でつなぐと、多くの矢印の元にある要因が根本原因の候補として浮かび上がります。",
+      "caption": "要因を原因から結果へ矢印でつなぎます。矢印を問題からさかのぼると、複数の要因につながる元の要因に行き着き、そこが根本原因の候補になります。",
       "nodes": [
         {
+          "id": "edu",
+          "label": "教育が追いつかない\n新人は古い手順で習う",
+          "row": 0,
+          "col": 0
+        },
+        {
           "id": "root",
-          "label": "手順書が\n更新されない",
+          "label": "手順書が更新されない\n根本原因の候補",
           "row": 0,
           "col": 1,
           "emphasis": true
         },
         {
-          "id": "edu",
-          "label": "教育が\n追いつかない",
-          "row": 0,
-          "col": 0
-        },
-        {
           "id": "chk",
-          "label": "点検表が\n実態と合わない",
+          "label": "点検表が実態と合わない\n古い項目のまま",
           "row": 0,
           "col": 2
         },
         {
           "id": "var",
-          "label": "作業手順が\nばらつく",
+          "label": "作業手順がばらつく\n人ごとに我流",
           "row": 1,
-          "col": 0
+          "col": 1
         },
         {
           "id": "miss",
-          "label": "確認が\n漏れる",
+          "label": "確認が漏れる\n見る所がずれる",
           "row": 1,
           "col": 2
         },
         {
           "id": "prob",
-          "label": "不良品が増える",
+          "label": "不良品が増える\n解決したい問題",
           "row": 2,
           "col": 1,
           "shape": "round"
@@ -50,31 +50,38 @@
       "edges": [
         {
           "from": "root",
-          "to": "edu"
+          "to": "edu",
+          "label": "教材が古いまま"
         },
         {
           "from": "root",
-          "to": "chk"
+          "to": "chk",
+          "label": "項目が直らない"
         },
         {
           "from": "root",
-          "to": "var"
+          "to": "var",
+          "label": "読んでも今と違う"
         },
         {
           "from": "edu",
-          "to": "var"
+          "to": "var",
+          "label": "我流が広がる"
         },
         {
           "from": "chk",
-          "to": "miss"
+          "to": "miss",
+          "label": "見落とす"
         },
         {
           "from": "var",
-          "to": "prob"
+          "to": "prob",
+          "label": "品質がぶれる"
         },
         {
           "from": "miss",
-          "to": "prob"
+          "to": "prob",
+          "label": "不良が流出"
         }
       ]
     }

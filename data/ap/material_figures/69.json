@@ -4,32 +4,17 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "matrix",
       "after": "### 数え上げの手順",
-      "caption": "最初に出す要素で場合分けして数え上げます。先に積まれた要素は、上に積まれた要素より後にしか出せません。",
-      "nodes": [
-        {"id": "root", "label": "入力は A → B → C\n出す時点は自由", "row": 0, "col": 2},
-        {"id": "fa", "label": "最初に A", "row": 1, "col": 0},
-        {"id": "fb", "label": "最初に B", "row": 1, "col": 2},
-        {"id": "fc", "label": "最初に C", "row": 1, "col": 4},
-        {"id": "o1", "label": "A B C", "row": 2, "col": 0},
-        {"id": "o2", "label": "A C B", "row": 2, "col": 1},
-        {"id": "o3", "label": "B A C", "row": 2, "col": 2},
-        {"id": "o4", "label": "B C A", "row": 2, "col": 3},
-        {"id": "o5", "label": "C B A", "row": 2, "col": 4},
-        {"id": "ng", "label": "C の下は B\n出せるのは B → A", "row": 2, "col": 5, "emphasis": true}
+      "caption": "入力が A、B、C の順のとき、行が最初に出す要素です。その時点でスタックに残る要素が、後の出し方を縛ります。3 行の通り数を足すと 5 通りです。",
+      "x": {"label": "最初の 1 つを出した直後", "values": ["スタックの中", "残りを出せる順", "通り数"]},
+      "y": {"label": "最初に出す", "values": ["A", "B", "C"]},
+      "cells": [
+        ["空\n（B と C はまだ）", "B C か C B", "2 通り"],
+        ["A\n（C はまだ）", "C を入れて出し A\nか A を出して C", "2 通り"],
+        ["A の上に B\n頂上は B", "B → A だけ\nA は B より先に出せない", "1 通り"]
       ],
-      "edges": [
-        {"from": "root", "to": "fa"},
-        {"from": "root", "to": "fb"},
-        {"from": "root", "to": "fc"},
-        {"from": "fa", "to": "o1"},
-        {"from": "fa", "to": "o2"},
-        {"from": "fb", "to": "o3"},
-        {"from": "fb", "to": "o4"},
-        {"from": "fc", "to": "o5"},
-        {"from": "fc", "to": "ng", "style": "dashed", "arrow": "none"}
-      ]
+      "emphasis": [[2, 1]]
     }
   ]
 }

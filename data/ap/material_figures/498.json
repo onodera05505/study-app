@@ -4,23 +4,47 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "matrix",
       "after": "### KGI・CSF・KPI の並び順",
-      "caption": "最終目標、鍵になる要因、進捗を測る数値という順に組み立てることを、設定例と並べて表しています。",
-      "nodes": [
-        {"id": "kgi", "label": "① KGI の設定\n最終目標", "row": 0, "col": 0},
-        {"id": "csf", "label": "② CSF の抽出\n鍵になる要因", "row": 0, "col": 1},
-        {"id": "kpi", "label": "③ KPI の設定\n進捗を測る数値", "row": 0, "col": 2, "emphasis": true},
-        {"id": "e1", "label": "例：年間売上を\n10% 増やす", "row": 1, "col": 0, "shape": "round"},
-        {"id": "e2", "label": "例：新規顧客の開拓\n解約の防止", "row": 1, "col": 1, "shape": "round"},
-        {"id": "e3", "label": "例：新規契約 月 20 件\n解約率 2% 以内", "row": 1, "col": 2, "shape": "round", "emphasis": true}
+      "caption": "左から決める順に KGI・CSF・KPI を並べ、表すもの・表し方・例を行で比べています。数値と基準値で進み具合を測るのが KPI です。",
+      "x": {
+        "label": "決める順（左から）",
+        "values": [
+          "KGI",
+          "CSF",
+          "KPI"
+        ]
+      },
+      "y": {
+        "label": "観点",
+        "values": [
+          "表すもの",
+          "表し方",
+          "例"
+        ]
+      },
+      "cells": [
+        [
+          "最終目標\n到達点そのもの",
+          "鍵になる要因\n何を良くするか",
+          "中間指標\n鍵の進み具合"
+        ],
+        [
+          "数値の目標",
+          "数値なし\n方向性だけ",
+          "数値＋基準値\n日常的に計測"
+        ],
+        [
+          "年間売上を\n10% 増やす",
+          "新規顧客の開拓\n解約の防止",
+          "新規契約 月 20 件\n解約率 2% 以内"
+        ]
       ],
-      "edges": [
-        {"from": "kgi", "to": "csf"},
-        {"from": "csf", "to": "kpi"},
-        {"from": "kgi", "to": "e1", "style": "dashed", "arrow": "none"},
-        {"from": "csf", "to": "e2", "style": "dashed", "arrow": "none"},
-        {"from": "kpi", "to": "e3", "style": "dashed", "arrow": "none"}
+      "emphasis": [
+        [
+          1,
+          2
+        ]
       ]
     }
   ]

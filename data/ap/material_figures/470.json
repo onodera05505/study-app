@@ -4,19 +4,48 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
-      "after": "### 混同しやすい用語",
-      "caption": "高速化や容量拡張の仕組みを、何と何の間の話かで並べた図です。インタリーブは主記憶の内部を分ける方式に当たります。",
-      "nodes": [
-        {"id": "cpu", "label": "CPU", "row": 0, "col": 0},
-        {"id": "mem", "label": "主記憶\nバンク 0〜3 に分割\n＝ メモリインタリーブ", "row": 1, "col": 0, "emphasis": true},
-        {"id": "io", "label": "入出力装置", "row": 1, "col": 1},
-        {"id": "disk", "label": "磁気ディスク装置", "row": 2, "col": 0, "shape": "cylinder"}
+      "type": "sequence",
+      "after": "### しくみ — 回復待ちの時間を重ねる",
+      "caption": "連続するアドレスが交互に別のバンクへ割り当てられるので、一方のバンクが回復待ちの間にもう一方を読めます。",
+      "actors": [
+        {
+          "id": "cpu",
+          "label": "CPU"
+        },
+        {
+          "id": "b0",
+          "label": "バンク 0（偶数番地）"
+        },
+        {
+          "id": "b1",
+          "label": "バンク 1（奇数番地）"
+        }
       ],
-      "edges": [
-        {"from": "cpu", "to": "mem", "label": "キャッシュメモリ", "arrow": "both"},
-        {"from": "mem", "to": "io", "label": "DMA", "arrow": "both"},
-        {"from": "mem", "to": "disk", "label": "ディスクキャッシュ／仮想記憶", "arrow": "both"}
+      "steps": [
+        {
+          "from": "cpu",
+          "to": "b0",
+          "label": "アドレス 0 を読む",
+          "note": "読んだバンク 0 は回復待ちに入る"
+        },
+        {
+          "from": "cpu",
+          "to": "b1",
+          "label": "アドレス 1 を読む",
+          "note": "バンク 0 の回復待ちと重ねて読める"
+        },
+        {
+          "from": "cpu",
+          "to": "b0",
+          "label": "アドレス 2 を読む",
+          "note": "バンク 0 はもう回復しているので待たない"
+        },
+        {
+          "from": "cpu",
+          "to": "b1",
+          "label": "アドレス 3 を読む",
+          "note": "交互に読む限り、回復待ちは積み上がらない"
+        }
       ]
     }
   ]

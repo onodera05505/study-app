@@ -38,6 +38,12 @@
           "row": 2,
           "col": 1,
           "emphasis": true
+        },
+        {
+          "id": "ok",
+          "label": "誤りなし\nそのまま使う",
+          "row": 2,
+          "col": 2
         }
       ],
       "edges": [
@@ -58,7 +64,13 @@
         },
         {
           "from": "pos",
-          "to": "fix"
+          "to": "fix",
+          "label": "i が 0 でない"
+        },
+        {
+          "from": "pos",
+          "to": "ok",
+          "label": "i＝0（全部 0）"
         }
       ]
     }

@@ -4,62 +4,47 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "sequence",
       "after": "### 止めずに移せるしくみ",
-      "caption": "移るのは稼働中の仮想マシンで、ディスクは共有ストレージに置いたままなので、止めずに物理サーバを保守できます。",
-      "nodes": [
+      "caption": "移行元から移行先へ仮想マシンを移す手順を上から順に表します。止まるのは 3 の一瞬だけで、ほかの間は動いたまま送ります。",
+      "actors": [
         {
-          "id": "pa",
-          "label": "物理サーバ A\n保守したい",
-          "row": 0,
-          "col": 0
+          "id": "a",
+          "label": "物理サーバ A（移行元）"
         },
         {
-          "id": "vm",
-          "label": "仮想マシン\nOS もソフトも稼働中",
-          "row": 0,
-          "col": 1,
-          "shape": "round",
-          "emphasis": true
-        },
-        {
-          "id": "pb",
-          "label": "物理サーバ B\n移行先",
-          "row": 0,
-          "col": 2
-        },
-        {
-          "id": "st",
-          "label": "共有ストレージ",
-          "row": 1,
-          "col": 1,
-          "shape": "cylinder"
+          "id": "b",
+          "label": "物理サーバ B（移行先）"
         }
       ],
-      "edges": [
+      "steps": [
         {
-          "from": "pa",
-          "to": "vm",
-          "label": "移行前はここで稼働",
-          "arrow": "none"
+          "from": "a",
+          "to": "b",
+          "label": "稼働中のままメモリの内容をコピー",
+          "note": "ディスクは共有ストレージにあるので送らない"
         },
         {
-          "from": "vm",
-          "to": "pb",
-          "label": "停止させずに移す"
+          "from": "a",
+          "to": "b",
+          "label": "書き換わった箇所だけを再送",
+          "note": "繰り返すほど差分が小さくなる"
         },
         {
-          "from": "pa",
-          "to": "st",
-          "style": "dashed",
-          "arrow": "none"
+          "from": "a",
+          "to": "a",
+          "label": "仮想マシンを一瞬だけ止める"
         },
         {
-          "from": "pb",
-          "to": "st",
-          "label": "ディスクは共有のまま",
-          "style": "dashed",
-          "arrow": "none"
+          "from": "a",
+          "to": "b",
+          "label": "残りの差分と CPU の状態を送る"
+        },
+        {
+          "from": "b",
+          "to": "b",
+          "label": "移行先で仮想マシンを再開",
+          "note": "利用者からは止まっていないように見える"
         }
       ]
     }

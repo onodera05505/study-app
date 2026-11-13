@@ -1,23 +1,44 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
-<rect x="0.5" y="0.5" width="639" height="359" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(105.2 20)">
-<polyline points="97.4,76 97.4,99 332.2,99 332.2,122" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="332.2,122 328.6,114 335.8,114" fill="#1f2937"/>
-<polyline points="97.4,244 97.4,221 332.2,221 332.2,198" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="332.2,198 335.8,206 328.6,206" fill="#1f2937"/>
-<rect x="0" y="0" width="194.8" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="97.4" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">192.168.0.0/23</text>
-<text x="97.4" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ネットワーク部 23 ビット</text>
-<text x="97.4" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">192.168.0.0 〜 1.255</text>
-<rect x="234.8" y="122" width="194.8" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="332.2" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">192.168.0.0/22</text>
-<text x="332.2" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">ネットワーク部 22 ビット</text>
-<text x="332.2" y="184.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">192.168.0.0 〜 3.255</text>
-<rect x="0" y="244" width="194.8" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="97.4" y="266.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">192.168.2.0/23</text>
-<text x="97.4" y="286.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ネットワーク部 23 ビット</text>
-<text x="97.4" y="306.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">192.168.2.0 〜 3.255</text>
-<rect x="144.8" y="85" width="140" height="16" rx="3" fill="#ffffff"/>
-<text x="214.8" y="98.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">共通部分まで縮めて集約</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="326" viewBox="0 0 640 326">
+<rect x="0.5" y="0.5" width="639" height="325" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<line x1="52.4" y1="216" x2="588" y2="216" stroke="#e5e7eb" stroke-width="1"/>
+<text x="44.4" y="220.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">0</text>
+<line x1="52.4" y1="164.63" x2="588" y2="164.63" stroke="#e5e7eb" stroke-width="1"/>
+<text x="44.4" y="168.83" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">250</text>
+<line x1="52.4" y1="113.26" x2="588" y2="113.26" stroke="#e5e7eb" stroke-width="1"/>
+<text x="44.4" y="117.46" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">500</text>
+<line x1="52.4" y1="61.89" x2="588" y2="61.89" stroke="#e5e7eb" stroke-width="1"/>
+<text x="44.4" y="66.09" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">750</text>
+<line x1="52.4" y1="10.52" x2="588" y2="10.52" stroke="#e5e7eb" stroke-width="1"/>
+<text x="44.4" y="14.72" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">1000</text>
+<line x1="52.4" y1="6" x2="52.4" y2="216" stroke="#1f2937" stroke-width="1.2"/>
+<line x1="52.4" y1="216" x2="588" y2="216" stroke="#1f2937" stroke-width="1.2"/>
+<line x1="243.69" y1="6" x2="243.69" y2="216" stroke="#2563eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="245.69" y="5" width="109.8" height="17" rx="3" fill="#ffffff"/>
+<text x="248.69" y="18" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="start">クラス C の区切り</text>
+<rect x="77.66" y="6" width="26" height="210" rx="2" fill="#2563eb"/>
+<rect x="154.17" y="111.21" width="26" height="104.79" rx="2" fill="#2563eb"/>
+<rect x="230.69" y="163.81" width="26" height="52.19" rx="2" fill="#2563eb"/>
+<rect x="307.2" y="190.11" width="26" height="25.89" rx="2" fill="#2563eb"/>
+<rect x="383.71" y="203.26" width="26" height="12.74" rx="2" fill="#2563eb"/>
+<rect x="460.23" y="209.84" width="26" height="6.16" rx="2" fill="#2563eb"/>
+<rect x="536.74" y="213.12" width="26" height="2.88" rx="2" fill="#2563eb"/>
+<circle cx="90.66" cy="6" r="3.4" fill="#2563eb"/>
+<rect x="98.66" y="8" width="57" height="19" rx="4" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+<text x="127.16" y="22" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle">1022 台</text>
+<circle cx="396.71" cy="203.26" r="3.4" fill="#2563eb"/>
+<rect x="404.71" y="181.26" width="43.8" height="19" rx="4" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+<text x="426.61" y="195.26" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle">62 台</text>
+<text x="90.66" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">/22</text>
+<text x="167.17" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">/23</text>
+<text x="243.69" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">/24</text>
+<text x="320.2" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">/25</text>
+<text x="396.71" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">/26</text>
+<text x="473.23" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">/27</text>
+<text x="549.74" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">/28</text>
+<text x="320.2" y="256" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">プレフィックス長</text>
+<text x="16" y="-4" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="start" font-weight="600">つなげる台数（台）</text>
+<line x1="194.4" y1="278" x2="214.4" y2="278" stroke="#2563eb" stroke-width="2.6"/>
+<text x="220.4" y="282.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">つなげる台数（2 の (32 − n) 乗 − 2）</text>
 </g>
 </svg>

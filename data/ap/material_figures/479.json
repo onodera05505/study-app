@@ -6,19 +6,62 @@
       "id": 1,
       "type": "blocks",
       "after": "### 宛先アドレスの書き方が範囲を決める",
-      "caption": "送信は一度だけで、同一セグメントの全ノードが同じフレームを受け取ることを表しています。",
+      "caption": "送信は一度だけで、ルーターで区切られた同一セグメントの全ノードが同じフレームを受け取ることを表しています。",
       "nodes": [
-        {"id": "src", "label": "送信元", "row": 1, "col": 0, "emphasis": true},
-        {"id": "sw", "label": "同一セグメント", "row": 1, "col": 1, "shape": "cloud"},
-        {"id": "a", "label": "ノード A", "row": 0, "col": 2},
-        {"id": "b", "label": "ノード B", "row": 1, "col": 2},
-        {"id": "c", "label": "ノード C", "row": 2, "col": 2}
+        {
+          "id": "src",
+          "label": "送信元\nフレームを 1 つだけ出す",
+          "row": 1,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "sw",
+          "label": "同一セグメント\nルーターの手前まで",
+          "row": 1,
+          "col": 1,
+          "shape": "cloud"
+        },
+        {
+          "id": "a",
+          "label": "ノード A\n自分宛てとして受け取る",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "b",
+          "label": "ノード B\n自分宛てとして受け取る",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "c",
+          "label": "ノード C\n自分宛てとして受け取る",
+          "row": 2,
+          "col": 2
+        }
       ],
       "edges": [
-        {"from": "src", "to": "sw", "label": "送信は 1 回だけ"},
-        {"from": "sw", "to": "a", "label": "同じフレームが届く"},
-        {"from": "sw", "to": "b"},
-        {"from": "sw", "to": "c", "label": "宛先 MAC は全ビット 1"}
+        {
+          "from": "src",
+          "to": "sw",
+          "label": "宛先 MAC 全ビット 1"
+        },
+        {
+          "from": "sw",
+          "to": "a",
+          "label": "同じフレーム"
+        },
+        {
+          "from": "sw",
+          "to": "b",
+          "label": "同じフレーム"
+        },
+        {
+          "from": "sw",
+          "to": "c",
+          "label": "同じフレーム"
+        }
       ]
     }
   ]

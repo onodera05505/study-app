@@ -60,40 +60,65 @@
       "id": 2,
       "type": "blocks",
       "after": "### 復旧の手順",
-      "caption": "復旧はフルバックアップで復元してから、最新の差分を 1 つ反映する 2 段階で進みます。",
+      "caption": "差分は前の差分の変更も含むので、復旧はフルで復元したうえに最新の差分を 1 つ反映するだけで済みます。",
       "nodes": [
         {
           "id": "full",
-          "label": "フルバックアップ",
+          "label": "フルバックアップ\n月初日にすべて",
           "row": 0,
           "col": 0,
           "shape": "cylinder"
         },
         {
-          "id": "diff",
-          "label": "最新の差分",
+          "id": "d1",
+          "label": "差分 1 日目\n復旧には使わない",
           "row": 0,
           "col": 1,
           "shape": "cylinder"
         },
         {
-          "id": "ok",
-          "label": "障害直前の\n状態に復旧",
+          "id": "d2",
+          "label": "差分 2 日目\n復旧には使わない",
           "row": 0,
+          "col": 2,
+          "shape": "cylinder"
+        },
+        {
+          "id": "d3",
+          "label": "最新の差分\nフル以降の変更すべて",
+          "row": 0,
+          "col": 3,
+          "shape": "cylinder",
+          "emphasis": true
+        },
+        {
+          "id": "ok",
+          "label": "障害直前の状態\nフル＋最新の差分",
+          "row": 1,
           "col": 2,
           "emphasis": true
         }
       ],
       "edges": [
         {
-          "from": "full",
-          "to": "diff",
-          "label": "① 復元する"
+          "from": "d1",
+          "to": "d2",
+          "label": "変更を含んで増える"
         },
         {
-          "from": "diff",
+          "from": "d2",
+          "to": "d3",
+          "label": "変更を含んで増える"
+        },
+        {
+          "from": "full",
           "to": "ok",
-          "label": "② 1 つだけ反映する"
+          "label": "① まず復元する"
+        },
+        {
+          "from": "d3",
+          "to": "ok",
+          "label": "② 上に反映する"
         }
       ]
     }

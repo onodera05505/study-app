@@ -6,108 +6,72 @@
       "id": 1,
       "type": "blocks",
       "after": "### 価値がどこで生まれているかを分解する",
-      "caption": "下段の主活動 5 つの流れを、上段の支援活動 4 つが支えます。社内の活動を機能ごとに分けて価値の源泉を探します。",
+      "caption": "下段の主活動が左から右へ価値を積み上げ、上段の支援活動がその全体を支えます。活動ごとに価値とコストを比べて、利益の源泉を探します。",
       "nodes": [
         {
-          "id": "s1",
-          "label": "支援活動\n全般管理",
+          "id": "s",
+          "label": "支援活動（4 つ）\n全般管理・人事労務管理\n技術開発・調達活動",
           "row": 0,
-          "col": 0
-        },
-        {
-          "id": "s2",
-          "label": "支援活動\n人事・労務管理",
-          "row": 0,
-          "col": 1
-        },
-        {
-          "id": "s3",
-          "label": "支援活動\n技術開発",
-          "row": 0,
-          "col": 2
-        },
-        {
-          "id": "s4",
-          "label": "支援活動\n調達活動",
-          "row": 0,
-          "col": 3
-        },
-        {
-          "id": "m1",
-          "label": "購買物流",
-          "row": 1,
-          "col": 0,
-          "emphasis": true
-        },
-        {
-          "id": "m2",
-          "label": "製造",
-          "row": 1,
-          "col": 1,
-          "emphasis": true
-        },
-        {
-          "id": "m3",
-          "label": "出荷物流",
-          "row": 1,
           "col": 2,
           "emphasis": true
         },
         {
-          "id": "m4",
-          "label": "販売・\nマーケティング",
+          "id": "m1",
+          "label": "購買物流\n原材料を受け入れる",
           "row": 1,
-          "col": 3,
-          "emphasis": true
+          "col": 0
+        },
+        {
+          "id": "m2",
+          "label": "製造\n製品にする",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "m3",
+          "label": "出荷物流\n顧客へ届ける",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "m4",
+          "label": "販売・\nマーケティング\n買ってもらう",
+          "row": 1,
+          "col": 3
         },
         {
           "id": "m5",
-          "label": "サービス",
+          "label": "サービス\n販売後の支援",
           "row": 1,
-          "col": 4,
-          "emphasis": true
+          "col": 4
         }
       ],
       "edges": [
         {
           "from": "m1",
-          "to": "m2"
+          "to": "m2",
+          "label": "原材料"
         },
         {
           "from": "m2",
-          "to": "m3"
+          "to": "m3",
+          "label": "完成品"
         },
         {
           "from": "m3",
-          "to": "m4"
+          "to": "m4",
+          "label": "商品"
         },
         {
           "from": "m4",
-          "to": "m5"
+          "to": "m5",
+          "label": "顧客"
         },
         {
-          "from": "s1",
-          "to": "m1",
-          "style": "dashed",
-          "arrow": "none"
-        },
-        {
-          "from": "s2",
-          "to": "m2",
-          "style": "dashed",
-          "arrow": "none"
-        },
-        {
-          "from": "s3",
+          "from": "s",
           "to": "m3",
-          "style": "dashed",
-          "arrow": "none"
-        },
-        {
-          "from": "s4",
-          "to": "m4",
-          "style": "dashed",
-          "arrow": "none"
+          "label": "主活動 5 つ全体を支える",
+          "style": "dashed"
         }
       ]
     }

@@ -5,31 +5,75 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 高さの差の測り方",
-      "caption": "挿入の後に左右の高さの差が 2 になった節を探します。回す中心は、差が 2 になった最も深い節です。",
-      "nodes": [
-        {"id": "b2", "label": "2\n左2段・右0段\n差＝2", "row": 0, "col": 2, "emphasis": true},
-        {"id": "b1", "label": "1", "row": 1, "col": 1},
-        {"id": "b0", "label": "0\n最後に挿入", "row": 2, "col": 0}
-      ],
-      "edges": [
-        {"from": "b2", "to": "b1", "arrow": "to"},
-        {"from": "b1", "to": "b0", "arrow": "to"}
-      ]
-    },
-    {
-      "id": 2,
-      "type": "blocks",
       "after": "### 4つの回転パターン",
-      "caption": "左の子の左側に挿入した形は右へ 1 回転します。左の子が新しい根に上がり、元の根はその右の子になります。",
+      "caption": "左が回転の前、右が後です。左の子の左側に挿入して差が 2 になった節を右へ 1 回転すると、左の子が根に上がり、どの節も差が 1 以内に戻ります。",
       "nodes": [
-        {"id": "a1", "label": "1\n新しい根", "row": 0, "col": 1, "emphasis": true},
-        {"id": "a0", "label": "0", "row": 1, "col": 0},
-        {"id": "a2", "label": "2\n元の根", "row": 1, "col": 2}
+        {
+          "id": "b2",
+          "label": "2\n左の高さ 2・右 0\n差 2 で崩れた",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "b1",
+          "label": "1\n差 1",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "b0",
+          "label": "0\n最後に挿入",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "a1",
+          "label": "1\n新しい根\n差 0",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "a0",
+          "label": "0\n葉",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "a2",
+          "label": "2\n元の根\n右の子に下がる",
+          "row": 1,
+          "col": 3
+        }
       ],
       "edges": [
-        {"from": "a1", "to": "a0", "arrow": "to"},
-        {"from": "a1", "to": "a2", "arrow": "to"}
+        {
+          "from": "b2",
+          "to": "b1",
+          "label": "左の子"
+        },
+        {
+          "from": "b1",
+          "to": "b0",
+          "label": "左の子"
+        },
+        {
+          "from": "b2",
+          "to": "a1",
+          "label": "右へ 1 回転",
+          "style": "dashed"
+        },
+        {
+          "from": "a1",
+          "to": "a0",
+          "label": "左の子"
+        },
+        {
+          "from": "a1",
+          "to": "a2",
+          "label": "右の子"
+        }
       ]
     }
   ]

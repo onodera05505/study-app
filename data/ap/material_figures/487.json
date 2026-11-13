@@ -6,24 +6,91 @@
       "id": 1,
       "type": "blocks",
       "after": "### 何を主役にした図か",
-      "caption": "処理をアクションに分けて制御の流れを書く図です。フォークで並行に分け、ジョインで揃うのを待ちます。",
+      "caption": "アクションを矢印でつなぎ、制御の流れを書く図です。フォークで並行に分け、ジョインで両方が終わるのを待ちます。",
       "nodes": [
-        {"id": "st", "label": "開始", "row": 0, "col": 0, "shape": "round"},
-        {"id": "a1", "label": "受注を登録する", "row": 0, "col": 1},
-        {"id": "fk", "label": "フォーク\n並行に分ける", "row": 0, "col": 2, "emphasis": true},
-        {"id": "a2", "label": "在庫を引き当てる", "row": 1, "col": 1},
-        {"id": "a3", "label": "請求書を作成する", "row": 1, "col": 3},
-        {"id": "jn", "label": "ジョイン\n両方の完了を待つ", "row": 2, "col": 2, "emphasis": true},
-        {"id": "en", "label": "終了", "row": 2, "col": 3, "shape": "round"}
+        {
+          "id": "st",
+          "label": "開始\n初期ノード",
+          "row": 0,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "a1",
+          "label": "受注を登録する\nアクション",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "fk",
+          "label": "フォーク\n並行に分ける",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "a2",
+          "label": "在庫を引き当てる\nアクション",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "a3",
+          "label": "請求書を作成する\nアクション",
+          "row": 1,
+          "col": 3
+        },
+        {
+          "id": "jn",
+          "label": "ジョイン\n両方の完了を待つ",
+          "row": 2,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "en",
+          "label": "終了\n終了ノード",
+          "row": 2,
+          "col": 3,
+          "shape": "round"
+        }
       ],
       "edges": [
-        {"from": "st", "to": "a1"},
-        {"from": "a1", "to": "fk"},
-        {"from": "fk", "to": "a2"},
-        {"from": "fk", "to": "a3"},
-        {"from": "a2", "to": "jn"},
-        {"from": "a3", "to": "jn"},
-        {"from": "jn", "to": "en"}
+        {
+          "from": "st",
+          "to": "a1",
+          "label": "処理を始める"
+        },
+        {
+          "from": "a1",
+          "to": "fk",
+          "label": "登録が済んだら"
+        },
+        {
+          "from": "fk",
+          "to": "a2",
+          "label": "同時に開始"
+        },
+        {
+          "from": "fk",
+          "to": "a3",
+          "label": "同時に開始"
+        },
+        {
+          "from": "a2",
+          "to": "jn",
+          "label": "引当て完了"
+        },
+        {
+          "from": "a3",
+          "to": "jn",
+          "label": "作成完了"
+        },
+        {
+          "from": "jn",
+          "to": "en",
+          "label": "両方そろったら"
+        }
       ]
     }
   ]

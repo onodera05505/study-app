@@ -1,28 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="180" viewBox="0 0 667.1 188">
-<rect x="0.5" y="0.5" width="666.1" height="187" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(20 20)">
-<polyline points="109.7,28 234,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polyline points="393.1,28 517.4,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="517.4,28 509.4,31.6 509.4,24.4" fill="#1f2937"/>
-<polyline points="55,56 55,79 313.55,79 313.55,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
-<polyline points="572.1,56 572.1,79 313.55,79 313.55,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
-<rect x="0.3" y="0" width="109.4" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="55" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">物理サーバ A</text>
-<text x="55" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">保守したい</text>
-<rect x="234" y="0" width="159.1" height="56" rx="28" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="313.55" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">仮想マシン</text>
-<text x="313.55" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">OS もソフトも稼働中</text>
-<rect x="517.4" y="0" width="109.4" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="572.1" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">物理サーバ B</text>
-<text x="572.1" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">移行先</text>
-<path d="M 252.55 111 A 61 9 0 0 0 374.55 111 L 374.55 139 A 61 9 0 0 1 252.55 139 Z" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<path d="M 252.55 111 A 61 9 0 0 1 374.55 111" fill="none" stroke="#1f2937" stroke-width="1"/>
-<text x="313.55" y="131.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">共有ストレージ</text>
-<rect x="113.85" y="11" width="116" height="16" rx="3" fill="#ffffff"/>
-<text x="171.85" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">移行前はここで稼働</text>
-<rect x="403.25" y="11" width="104" height="16" rx="3" fill="#ffffff"/>
-<text x="455.25" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">停止させずに移す</text>
-<rect x="378.83" y="65" width="128" height="16" rx="3" fill="#ffffff"/>
-<text x="442.83" y="78.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">ディスクは共有のまま</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="336" viewBox="0 0 640 336">
+<rect x="0.5" y="0.5" width="639" height="335" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(110.6 20)">
+<line x1="90.7" y1="34" x2="90.7" y2="296" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="328.1" y1="34" x2="328.1" y2="296" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="181.4" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="90.7" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">物理サーバ A（移行元）</text>
+<rect x="237.4" y="0" width="181.4" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="328.1" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">物理サーバ B（移行先）</text>
+<polyline points="93.7,68 325.1,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="325.1,68 317.1,71.6 317.1,64.4" fill="#1f2937"/>
+<text x="209.4" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 稼働中のままメモリの内容をコピー</text>
+<rect x="79.4" y="73" width="260" height="16" rx="3" fill="#ffffff"/>
+<text x="209.4" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ディスクは共有ストレージにあるので送らない</text>
+<polyline points="93.7,124 325.1,124" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="325.1,124 317.1,127.6 317.1,120.4" fill="#1f2937"/>
+<text x="209.4" y="117" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 書き換わった箇所だけを再送</text>
+<rect x="121.4" y="129" width="176" height="16" rx="3" fill="#ffffff"/>
+<text x="209.4" y="142.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">繰り返すほど差分が小さくなる</text>
+<polyline points="90.7,172 116.7,172 116.7,186 92.7,186" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="92.7,186 100.7,182.4 100.7,189.6" fill="#1f2937"/>
+<text x="124.7" y="180" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">3. 仮想マシンを一瞬だけ止める</text>
+<polyline points="93.7,214 325.1,214" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="325.1,214 317.1,217.6 317.1,210.4" fill="#1f2937"/>
+<text x="209.4" y="207" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 残りの差分と CPU の状態を送る</text>
+<polyline points="328.1,246 354.1,246 354.1,260 330.1,260" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="330.1,260 338.1,256.4 338.1,263.6" fill="#1f2937"/>
+<text x="362.1" y="254" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. 移行先で仮想マシンを再開</text>
+<rect x="210.1" y="265" width="236" height="16" rx="3" fill="#ffffff"/>
+<text x="328.1" y="278.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">利用者からは止まっていないように見える</text>
 </g>
 </svg>

@@ -4,35 +4,41 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "matrix",
       "after": "### 5段パイプラインの各段",
-      "caption": "各命令の帯が 1 クロックずつ右にずれて重なります。段数と命令数から全体のクロック数が決まります。",
-      "nodes": [
-        {"id": "k1", "label": "クロック1", "row": 0, "col": 0, "shape": "round"},
-        {"id": "k2", "label": "2", "row": 0, "col": 1, "shape": "round"},
-        {"id": "k3", "label": "3", "row": 0, "col": 2, "shape": "round"},
-        {"id": "k4", "label": "4", "row": 0, "col": 3, "shape": "round"},
-        {"id": "k5", "label": "5", "row": 0, "col": 4, "shape": "round"},
-        {"id": "k6", "label": "6", "row": 0, "col": 5, "shape": "round"},
-        {"id": "k7", "label": "7", "row": 0, "col": 6, "shape": "round", "emphasis": true},
-
-        {"id": "a1", "label": "命令1\nフェッチ", "row": 1, "col": 0},
-        {"id": "a2", "label": "デコード", "row": 1, "col": 1},
-        {"id": "a3", "label": "実行", "row": 1, "col": 2},
-        {"id": "a4", "label": "メモリ", "row": 1, "col": 3},
-        {"id": "a5", "label": "書込み", "row": 1, "col": 4},
-
-        {"id": "b1", "label": "命令2\nフェッチ", "row": 2, "col": 1},
-        {"id": "b2", "label": "デコード", "row": 2, "col": 2},
-        {"id": "b3", "label": "実行", "row": 2, "col": 3},
-        {"id": "b4", "label": "メモリ", "row": 2, "col": 4},
-        {"id": "b5", "label": "書込み", "row": 2, "col": 5},
-
-        {"id": "c1", "label": "命令3\nフェッチ", "row": 3, "col": 2},
-        {"id": "c2", "label": "デコード", "row": 3, "col": 3},
-        {"id": "c3", "label": "実行", "row": 3, "col": 4},
-        {"id": "c4", "label": "メモリ", "row": 3, "col": 5},
-        {"id": "c5", "label": "書込み", "row": 3, "col": 6, "emphasis": true}
+      "caption": "列を縦に読むと、クロック3 では 3 つの命令がそれぞれ別の段を同時に進めています。図は 5 段のうち最初の 3 段だけを示しています。",
+      "x": {
+        "label": "時間",
+        "values": [
+          "クロック1",
+          "クロック2",
+          "クロック3\n3 命令が同時に進む"
+        ]
+      },
+      "y": {
+        "label": "命令",
+        "values": [
+          "命令1",
+          "命令2",
+          "命令3"
+        ]
+      },
+      "cells": [
+        [
+          "フェッチ\n命令を読む",
+          "デコード\n意味を解釈",
+          "実行\n演算する"
+        ],
+        [
+          "（待ち）",
+          "フェッチ\n命令を読む",
+          "デコード\n意味を解釈"
+        ],
+        [
+          "（待ち）",
+          "（待ち）",
+          "フェッチ\n命令を読む"
+        ]
       ]
     }
   ]

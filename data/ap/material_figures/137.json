@@ -6,17 +6,52 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみと見た目",
-      "caption": "固定した表示領域の中を、複数の画像が横方向に順に切り替わります。下に並ぶ丸が枚数と現在位置を表します。",
+      "caption": "真ん中の表示窓は動かず、左右に控えた画像が矢印の操作で窓へ入れ替わります。下の丸は何枚目を見ているかを表します。",
       "nodes": [
-        {"id": "p1", "label": "画像1\n表示領域の外", "row": 0, "col": 0},
-        {"id": "p2", "label": "画像2\n今見えている", "row": 0, "col": 1, "emphasis": true},
-        {"id": "p3", "label": "画像3\n表示領域の外", "row": 0, "col": 2},
-        {"id": "dots", "label": "下に並ぶ小さな丸が\n全5枚中の3枚目を示す", "row": 1, "col": 1}
+        {
+          "id": "p1",
+          "label": "画像1\n窓の外に控える",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "p2",
+          "label": "画像2\n固定の表示窓に\n今見えている",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "p3",
+          "label": "画像3\n窓の外に控える",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "dots",
+          "label": "● ○ ○ ○ ○ の丸\n全 5 枚中の 2 枚目",
+          "row": 1,
+          "col": 1
+        }
       ],
       "edges": [
-        {"from": "p1", "to": "p2", "label": "左の矢印で戻す"},
-        {"from": "p3", "to": "p2", "label": "右の矢印で送る"},
-        {"from": "dots", "to": "p2", "arrow": "none", "style": "dashed"}
+        {
+          "from": "p1",
+          "to": "p2",
+          "label": "左の矢印で窓へ"
+        },
+        {
+          "from": "p3",
+          "to": "p2",
+          "label": "右の矢印・自動送りで窓へ"
+        },
+        {
+          "from": "dots",
+          "to": "p2",
+          "label": "現在位置を示す",
+          "arrow": "none",
+          "style": "dashed"
+        }
       ]
     }
   ]

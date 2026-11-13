@@ -4,22 +4,41 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "sequence",
       "after": "### 実態を見る順序",
-      "caption": "指示を出す責任者がどちらの会社に属するかで、請負として正常か偽装請負かに分かれることを表しています。",
-      "nodes": [
-        {"id": "mb", "label": "B 社の責任者", "row": 0, "col": 0},
-        {"id": "eb", "label": "B 社の従業員\n作業場所は A 社", "row": 0, "col": 1},
-        {"id": "ok", "label": "請負として正常", "row": 0, "col": 2, "shape": "round"},
-        {"id": "ma", "label": "A 社の責任者", "row": 1, "col": 0, "emphasis": true},
-        {"id": "eb2", "label": "B 社の従業員\n作業場所は A 社", "row": 1, "col": 1},
-        {"id": "ng", "label": "偽装請負", "row": 1, "col": 2, "shape": "round", "emphasis": true}
+      "caption": "受託側の従業員に指示を出すのが受託側の責任者なら請負として正常で、発注側の責任者が直接指示すると偽装請負になります。",
+      "actors": [
+        {
+          "id": "a",
+          "label": "A 社の責任者（発注者）"
+        },
+        {
+          "id": "b",
+          "label": "B 社の責任者（受託者）"
+        },
+        {
+          "id": "e",
+          "label": "B 社の従業員"
+        }
       ],
-      "edges": [
-        {"from": "mb", "to": "eb", "label": "指揮命令"},
-        {"from": "eb", "to": "ok"},
-        {"from": "ma", "to": "eb2", "label": "指揮命令"},
-        {"from": "eb2", "to": "ng"}
+      "steps": [
+        {
+          "from": "a",
+          "to": "b",
+          "label": "仕事の完成を発注する（請負契約）"
+        },
+        {
+          "from": "b",
+          "to": "e",
+          "label": "作業を指示する",
+          "note": "受託側が指示するので請負として正常"
+        },
+        {
+          "from": "a",
+          "to": "e",
+          "label": "作業を直接指示する",
+          "note": "発注側が指示すると偽装請負（作業場所は問わない）"
+        }
       ]
     }
   ]

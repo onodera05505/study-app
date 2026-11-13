@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="300" viewBox="0 0 640 300">
 <rect x="0.5" y="0.5" width="639" height="299" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(29.75 20)">
-<polyline points="59.25,102 59.25,76.5 294.5,76.5 294.5,51" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="294.5,51 298.1,59 290.9,59" fill="#1f2937"/>
-<polyline points="59.25,158 59.25,183.5 294.5,183.5 294.5,209" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="294.5,209 290.9,201 298.1,201" fill="#1f2937"/>
+<polyline points="59.25,102 59.25,79 294.5,79 294.5,56" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="294.5,56 298.1,64 290.9,64" fill="#1f2937"/>
+<polyline points="59.25,158 59.25,181 294.5,181 294.5,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="294.5,204 290.9,196 298.1,196" fill="#1f2937"/>
 <polyline points="348.5,28 477.5,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="477.5,28 469.5,31.6 469.5,24.4" fill="#1f2937"/>
 <polyline points="342.5,232 477.5,232" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
@@ -12,16 +12,22 @@
 <rect x="0" y="102" width="118.5" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
 <text x="59.25" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">入力 A と B</text>
 <text x="59.25" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">1 桁の 2 進数</text>
-<rect x="240.5" y="5" width="108" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="294.5" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">排他的論理和</text>
-<rect x="246.5" y="209" width="96" height="46" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="294.5" y="236.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">論理積</text>
+<rect x="240.5" y="0" width="108" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="294.5" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">排他的論理和</text>
+<text x="294.5" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">XOR 素子</text>
+<rect x="246.5" y="204" width="96" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="294.5" y="226.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">論理積</text>
+<text x="294.5" y="246.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">AND 素子</text>
 <rect x="477.5" y="0" width="96" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
 <text x="525.5" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">和 S</text>
 <text x="525.5" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">1 桁目</text>
 <rect x="477.5" y="204" width="96" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
 <text x="525.5" y="226.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">桁上がり C</text>
 <text x="525.5" y="246.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">2 桁目</text>
+<rect x="132.38" y="65" width="89" height="16" rx="3" fill="#ffffff"/>
+<text x="176.88" y="78.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">A と B を分岐</text>
+<rect x="132.38" y="167" width="89" height="16" rx="3" fill="#ffffff"/>
+<text x="176.88" y="180.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">A と B を分岐</text>
 <rect x="356.5" y="11" width="113" height="16" rx="3" fill="#ffffff"/>
 <text x="413" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">一方だけ 1 なら 1</text>
 <rect x="365.5" y="215" width="89" height="16" rx="3" fill="#ffffff"/>

@@ -6,19 +6,61 @@
       "id": 1,
       "type": "blocks",
       "after": "### 星形になる理由",
-      "caption": "中心にあって数値をもつのがファクト、周りにあって分析の切り口をもつのがディメンジョンです。",
+      "caption": "中心にあって数値をもつのがファクト、周りにあって分析の切り口をもつのがディメンジョンです。どのディメンジョンへも 1 段の結合で届きます。",
       "nodes": [
-        {"id": "d_time", "label": "期間ディメンジョン\n年・月・日", "row": 0, "col": 1},
-        {"id": "d_item", "label": "商品ディメンジョン\n商品名・単価", "row": 1, "col": 0},
-        {"id": "fact", "label": "売上ファクト\n商品コード・店舗コード\n顧客コード・数量・金額", "row": 1, "col": 1, "emphasis": true},
-        {"id": "d_shop", "label": "販売店ディメンジョン\n店舗名・所在地", "row": 1, "col": 2},
-        {"id": "d_cust", "label": "顧客ディメンジョン\n氏名・住所", "row": 2, "col": 1}
+        {
+          "id": "d_time",
+          "label": "期間ディメンジョン\n切り口：年・月・日",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "d_item",
+          "label": "商品ディメンジョン\n切り口：商品名・分類",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "fact",
+          "label": "売上ファクト\n数値：数量・金額\n各ディメンジョンのコード",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "d_shop",
+          "label": "販売店ディメンジョン\n切り口：店舗名・地域",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "d_cust",
+          "label": "顧客ディメンジョン\n切り口：年代・住所",
+          "row": 2,
+          "col": 1
+        }
       ],
       "edges": [
-        {"from": "fact", "to": "d_time"},
-        {"from": "fact", "to": "d_item", "label": "外部キーで1段結合"},
-        {"from": "fact", "to": "d_shop"},
-        {"from": "fact", "to": "d_cust"}
+        {
+          "from": "fact",
+          "to": "d_time",
+          "label": "日付コードで結合"
+        },
+        {
+          "from": "fact",
+          "to": "d_item",
+          "label": "商品コードで結合"
+        },
+        {
+          "from": "fact",
+          "to": "d_shop",
+          "label": "店舗コードで結合"
+        },
+        {
+          "from": "fact",
+          "to": "d_cust",
+          "label": "顧客コードで結合"
+        }
       ]
     }
   ]

@@ -16,13 +16,13 @@
         },
         {
           "id": "x",
-          "label": "排他的論理和",
+          "label": "排他的論理和\nXOR 素子",
           "row": 0,
           "col": 1
         },
         {
           "id": "n",
-          "label": "論理積",
+          "label": "論理積\nAND 素子",
           "row": 2,
           "col": 1,
           "emphasis": true
@@ -43,11 +43,13 @@
       "edges": [
         {
           "from": "in",
-          "to": "x"
+          "to": "x",
+          "label": "A と B を分岐"
         },
         {
           "from": "in",
-          "to": "n"
+          "to": "n",
+          "label": "A と B を分岐"
         },
         {
           "from": "x",

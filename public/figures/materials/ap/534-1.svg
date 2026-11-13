@@ -1,25 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="85" viewBox="0 0 726.7 96">
-<rect x="0.5" y="0.5" width="725.7" height="95" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(20 20)">
-<polyline points="150,28 276.4,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="276.4,28 268.4,31.6 268.4,24.4" fill="#1f2937"/>
-<polygon points="150,28 158,24.4 158,31.6" fill="#1f2937"/>
-<polyline points="424.3,28 550.7,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
-<polygon points="550.7,28 542.7,31.6 542.7,24.4" fill="#1f2937"/>
-<polygon points="424.3,28 432.3,24.4 432.3,31.6" fill="#1f2937"/>
-<rect x="0" y="0" width="150" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="75" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">利用者の PC</text>
-<text x="75" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">クライアント証明書</text>
-<rect x="276.4" y="0" width="147.9" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="350.35" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">Web サーバ（DMZ）</text>
-<text x="350.35" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">サーバ証明書</text>
-<path d="M 550.7 9 A 68 9 0 0 0 686.7 9 L 686.7 47 A 68 9 0 0 1 550.7 47 Z" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<path d="M 550.7 9 A 68 9 0 0 1 686.7 9" fill="none" stroke="#1f2937" stroke-width="1"/>
-<text x="618.7" y="24.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">DB サーバ</text>
-<text x="618.7" y="44.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">内部ネットワーク</text>
-<rect x="154" y="11" width="118.4" height="16" rx="3" fill="#ffffff"/>
-<text x="213.2" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">TLS で暗号化・認証</text>
-<rect x="446.3" y="11" width="82.4" height="16" rx="3" fill="#ffffff"/>
-<text x="487.5" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">TLS の対象外</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="366" viewBox="0 0 640 366">
+<rect x="0.5" y="0.5" width="639" height="365" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(116 20)">
+<line x1="55" y1="34" x2="55" y2="326" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="360" y1="34" x2="360" y2="326" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="110" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="55" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">クライアント</text>
+<rect x="312" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="360" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">サーバ</text>
+<polyline points="58,68 357,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="357,68 349,71.6 349,64.4" fill="#1f2937"/>
+<text x="207.5" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 接続要求（使える暗号方式の一覧）</text>
+<polyline points="357,108 58,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="58,108 66,104.4 66,111.6" fill="#1f2937"/>
+<text x="207.5" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 暗号方式の決定 ＋ サーバ証明書</text>
+<rect x="47.5" y="113" width="320" height="16" rx="3" fill="#ffffff"/>
+<text x="207.5" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">クライアント認証をするときは、ここで証明書を要求する</text>
+<polyline points="55,156 81,156 81,170 57,170" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="57,170 65,166.4 65,173.6" fill="#1f2937"/>
+<text x="89" y="164" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">3. サーバ証明書を認証局の公開鍵で検証</text>
+<polyline points="58,198 357,198" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="357,198 349,201.6 349,194.4" fill="#1f2937"/>
+<text x="207.5" y="191" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. クライアント証明書 ＋ 秘密鍵で署名したデータ</text>
+<rect x="47.5" y="203" width="320" height="16" rx="3" fill="#ffffff"/>
+<text x="207.5" y="216.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">要求されたときだけ。サーバが証明書の公開鍵で検証する</text>
+<polyline points="58,254 357,254" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="357,254 349,257.6 349,250.4" fill="#1f2937"/>
+<text x="207.5" y="247" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. 共通鍵の素（サーバの公開鍵で暗号化）</text>
+<polyline points="58,294 357,294" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="357,294 349,297.6 349,290.4" fill="#1f2937"/>
+<text x="207.5" y="287" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">6. 以降は共通鍵で暗号化して通信</text>
 </g>
 </svg>

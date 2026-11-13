@@ -6,20 +6,67 @@
       "id": 1,
       "type": "blocks",
       "after": "### 置く場所と役割",
-      "caption": "同じ中継でも向きが逆です。外から内の公開サーバへ中継するのがリバースプロキシです。",
+      "caption": "上の段は内から外、下の段は外から内への中継です。同じ中継でも向きが逆で、下の段のリバースプロキシは公開サーバを奥に隠します。",
       "nodes": [
-        {"id": "pc", "label": "社内 PC", "row": 0, "col": 0},
-        {"id": "fp", "label": "プロキシ\n（内→外の中継）", "row": 0, "col": 1},
-        {"id": "net1", "label": "インターネット", "row": 0, "col": 2, "shape": "cloud"},
-        {"id": "web", "label": "公開 Web サーバ\n（アドレスは隠れる）", "row": 1, "col": 0},
-        {"id": "rp", "label": "リバースプロキシ\n（外→内の中継）", "row": 1, "col": 1, "emphasis": true},
-        {"id": "user", "label": "外部の利用者", "row": 1, "col": 2}
+        {
+          "id": "pc",
+          "label": "社内 PC\n外部サイトを見る側",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "fp",
+          "label": "プロキシ\n（内→外の中継）",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "net1",
+          "label": "外部サイト\n社外にある",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "web",
+          "label": "公開 Web サーバ\n（アドレスは隠れる）",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "rp",
+          "label": "リバースプロキシ\n（外→内の中継）",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "user",
+          "label": "外部の利用者\nインターネット側",
+          "row": 1,
+          "col": 2
+        }
       ],
       "edges": [
-        {"from": "pc", "to": "fp"},
-        {"from": "fp", "to": "net1", "label": "社内から外部サイトへの要求"},
-        {"from": "user", "to": "rp", "label": "外部から公開サーバへの要求"},
-        {"from": "rp", "to": "web"}
+        {
+          "from": "pc",
+          "to": "fp",
+          "label": "外部サイトへの要求"
+        },
+        {
+          "from": "fp",
+          "to": "net1",
+          "label": "代わりに送る"
+        },
+        {
+          "from": "user",
+          "to": "rp",
+          "label": "公開サーバへの要求"
+        },
+        {
+          "from": "rp",
+          "to": "web",
+          "label": "代わりに渡す"
+        }
       ]
     }
   ]

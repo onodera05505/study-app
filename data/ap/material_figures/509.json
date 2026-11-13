@@ -6,23 +6,89 @@
       "id": 1,
       "type": "blocks",
       "after": "### 配列表現と巡回の順序",
-      "caption": "根を先頭に置く配列表現では、添字の順が深さの浅い順、同じ深さでは左から右の順になることを表しています。",
+      "caption": "根を A[1] に置き、子の添字を線の上の式（左が 2i、右が 2i＋1）で決めています。添字の小さい順に読むと、浅い段から、同じ段は左から右へたどる幅優先の順になります。",
       "nodes": [
-        {"id": "n1", "label": "A[1]\n深さ 1", "row": 0, "col": 1, "emphasis": true},
-        {"id": "n2", "label": "A[2]\n深さ 2", "row": 1, "col": 0},
-        {"id": "n3", "label": "A[3]\n深さ 2", "row": 1, "col": 2},
-        {"id": "n4", "label": "A[4]\n深さ 3", "row": 2, "col": 0},
-        {"id": "n5", "label": "A[5]\n深さ 3", "row": 2, "col": 1},
-        {"id": "n6", "label": "A[6]\n深さ 3", "row": 2, "col": 2},
-        {"id": "n7", "label": "A[7]\n深さ 3", "row": 2, "col": 3}
+        {
+          "id": "n1",
+          "label": "A[1]\n深さ 1\n1 番目に訪問",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "n2",
+          "label": "A[2]\n深さ 2\n2 番目に訪問",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "n3",
+          "label": "A[3]\n深さ 2\n3 番目に訪問",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "n4",
+          "label": "A[4]\n深さ 3\n4 番目に訪問",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "n5",
+          "label": "A[5]\n深さ 3\n5 番目に訪問",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "n6",
+          "label": "A[6]\n深さ 3\n6 番目に訪問",
+          "row": 2,
+          "col": 2
+        },
+        {
+          "id": "n7",
+          "label": "A[7]\n深さ 3\n7 番目に訪問",
+          "row": 2,
+          "col": 3
+        }
       ],
       "edges": [
-        {"from": "n1", "to": "n2", "arrow": "none"},
-        {"from": "n1", "to": "n3", "arrow": "none"},
-        {"from": "n2", "to": "n4", "arrow": "none"},
-        {"from": "n2", "to": "n5", "arrow": "none"},
-        {"from": "n3", "to": "n6", "arrow": "none"},
-        {"from": "n3", "to": "n7", "arrow": "none"}
+        {
+          "from": "n1",
+          "to": "n2",
+          "label": "2i",
+          "arrow": "none"
+        },
+        {
+          "from": "n1",
+          "to": "n3",
+          "label": "2i＋1",
+          "arrow": "none"
+        },
+        {
+          "from": "n2",
+          "to": "n4",
+          "label": "2i",
+          "arrow": "none"
+        },
+        {
+          "from": "n2",
+          "to": "n5",
+          "label": "2i＋1",
+          "arrow": "none"
+        },
+        {
+          "from": "n3",
+          "to": "n6",
+          "label": "2i",
+          "arrow": "none"
+        },
+        {
+          "from": "n3",
+          "to": "n7",
+          "label": "2i＋1",
+          "arrow": "none"
+        }
       ]
     }
   ]

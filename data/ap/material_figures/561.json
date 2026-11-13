@@ -6,21 +6,64 @@
       "id": 1,
       "type": "blocks",
       "after": "### サブルーチン呼出しで何が起きるか",
-      "caption": "SP が指すのは退避先メモリのアドレスです。呼出しで 1 段積まれると、SP が指す位置も動きます。",
+      "caption": "SP はスタック領域の一番上のアドレスを持ちます。呼出しのたびに上へ積み、復帰では上から取り出すので、内側の呼出しから順に戻れます。",
       "nodes": [
-        {"id": "tb", "label": "呼出し前", "row": 0, "col": 1, "shape": "round"},
-        {"id": "ta", "label": "呼出し後", "row": 0, "col": 2, "shape": "round"},
-        {"id": "b0", "label": "空き", "row": 1, "col": 1},
-        {"id": "b1", "label": "main のデータ", "row": 2, "col": 1},
-        {"id": "a0", "label": "戻り番地\nレジスタの内容", "row": 1, "col": 2, "emphasis": true},
-        {"id": "a1", "label": "main のデータ", "row": 2, "col": 2},
-        {"id": "spb", "label": "SP", "row": 2, "col": 0, "shape": "round"},
-        {"id": "spa", "label": "SP", "row": 1, "col": 3, "shape": "round"}
+        {
+          "id": "cr",
+          "label": "呼出し命令と復帰命令\n戻り番地を出し入れする",
+          "row": 0,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "b",
+          "label": "戻り番地 B\n内側の呼出しで積んだ",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "sp",
+          "label": "スタックポインタ\nCPU のレジスタ\n中身はアドレス",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "a",
+          "label": "戻り番地 A\n外側の呼出しで積んだ",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "m",
+          "label": "main のデータ\n呼出し前からある",
+          "row": 2,
+          "col": 1
+        }
       ],
       "edges": [
-        {"from": "tb", "to": "ta", "label": "呼出しで積む"},
-        {"from": "spb", "to": "b1", "label": "指すのはアドレス"},
-        {"from": "spa", "to": "a0", "label": "1 段動く"}
+        {
+          "from": "cr",
+          "to": "b",
+          "label": "積む／上から取り出す",
+          "arrow": "both"
+        },
+        {
+          "from": "sp",
+          "to": "b",
+          "label": "一番上の位置を指す",
+          "style": "dashed"
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "label": "後に積むほど上"
+        },
+        {
+          "from": "m",
+          "to": "a",
+          "label": "その上に積む"
+        }
       ]
     }
   ]
