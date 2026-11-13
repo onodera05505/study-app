@@ -785,7 +785,11 @@ def _figure_texts(fig) -> list:
     return out
 
 
-def validate_figure(fig, where, problems) -> None:
+def validate_figure(fig, where, problems, warnings=None) -> None:
+    """problems はエラー（描かずに止める）、warnings は警告（出すだけ）。
+    判定の文は scripts/prompts/material_figures_spec.md の「図だけで分かること」と揃える。"""
+    if warnings is None:
+        warnings = []
     cap = fig.get("caption")
     if not isinstance(cap, str) or not cap.strip():
         # @implements REQ-433
@@ -829,6 +833,24 @@ def validate_figure(fig, where, problems) -> None:
                 problems.append(f"{where}: edges[{i}] の未知の style {e.get('style')!r}")
             if e.get("arrow", "to") not in ("to", "both", "none"):
                 problems.append(f"{where}: edges[{i}] の未知の arrow {e.get('arrow')!r}")
+            # 線は何が流れるか・何が起きるか・どの条件で移るかを運ぶ（arrow: none の線と自己ループも同じ）
+            # @implements REQ-438
+            if not str(e.get("label") or "").strip():
+                problems.append(f"{where}: edges[{i}]（{e['from']}→{e['to']}）に label が無い"
+                                "（線には何が流れるか／何が起きるか／どの条件で移るかを書く）")
+        # 箱は「名前＋一言」。1 行だけの箱が全ノードの半分を超えればエラー
+        # @implements REQ-438
+        labels = [str(nd.get("label") or "") for nd in fig["nodes"] if isinstance(nd, dict)]
+        one_line = [l for l in labels if "\n" not in l.strip()]
+        if labels and len(one_line) * 2 > len(labels):
+            problems.append(f"{where}: 1 行だけ（名前だけ）の箱が {len(one_line)}/{len(labels)} 個で半分を超える"
+                            "（箱は「名前＋一言」を \\n で 2 行以上に）")
+        # 小さすぎる blocks は描くが、警告として作り手に示す（main が stderr に出し、件数を集計行に出す）
+        # @implements REQ-439
+        n_edges = len(fig.get("edges", []))
+        if len(labels) <= 3 and n_edges <= 2:
+            warnings.append(f"{where}: ノード {len(labels)} 個・線 {n_edges} 本の blocks"
+                            "（本文の 1 文で足りる疑い。閉じた図のテストに通るか見直す）")
 
     elif t == "sequence":
         if not _need(fig, ["actors", "steps"], where, problems):
@@ -901,7 +923,7 @@ def validate_figure(fig, where, problems) -> None:
                 problems.append(f"{where}: annotations[{i}] の x {a['x']!r} が x.values にない")
 
 
-def load(paths, problems) -> list:
+def load(paths, problems, warnings=None) -> list:
     docs, seen = [], {}
     for p in paths:
         try:
@@ -926,9 +948,17 @@ def load(paths, problems) -> list:
                 problems.append(f"{w}: 図の id が重複")
             else:
                 fids.append(fid)
-            validate_figure(fig, w, problems)
+            validate_figure(fig, w, problems, warnings)
         docs.append((p, doc))
     return docs
+
+
+def _topic_id_of(path):
+    try:
+        doc = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return None
+    return doc.get("topic_id") if isinstance(doc, dict) else None
 
 
 # ---------------------------------------------------------------- 実行
@@ -961,9 +991,15 @@ def main() -> int:
         # 取り違えを防ぐのはディレクトリの存在確認のほうなので、ここは 0 で返す
         print(f"{src} に *.json がありません（図はまだありません）")
         return 0
+    # --only のときは絞った論点のファイルだけを判定する（他の論点のエラーで描けなくならない）。
+    # 読めないファイルは論点が分からないので、絞り無しの --check に任せる
+    # @implements REQ-438
+    if args.only is not None:
+        paths = [p for p in paths if _topic_id_of(p) in args.only]
 
     problems: list = []
-    docs = load(paths, problems)
+    warnings: list = []
+    docs = load(paths, problems, warnings)
     # after の見出しが教材（materials_v3）に実在するか。無いと attach が explanation 末尾へ黙って逃がす
     heads = {}
     for mp in sorted((args.data / "materials_v3").glob("*.json")) if (args.data / "materials_v3").exists() else []:
@@ -978,14 +1014,15 @@ def main() -> int:
                 a = str(fig.get("after", "")).strip()
                 if a and a != "explanation" and d.get("topic_id") in heads and a not in heads[d["topic_id"]]:
                     problems.append(f"[{p.name}] 論点 {d['topic_id']} 図 {fig.get('id')}: after {a!r} が教材の見出しに無い（explanation 末尾へ逃げる）")
-    if args.only is not None:
-        docs = [(p, d) for p, d in docs if d.get("topic_id") in args.only]
+
+    for w in warnings:
+        print(f"  - 警告: {w}", file=sys.stderr)
 
     if args.check:
         for p in problems:
             print(f"  - {p}", file=sys.stderr)
         print(f"\n{len(paths)} ファイル / "
-              f"{sum(len(d.get('figures', [])) for _, d in docs)} 図を検証しました")
+              f"{sum(len(d.get('figures', [])) for _, d in docs)} 図を検証しました（警告 {len(warnings)} 件）")
         if problems:
             print(f"問題 {len(problems)} 件", file=sys.stderr)
             return 1

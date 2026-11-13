@@ -23,14 +23,14 @@ type Json = Record<string, any>
 /** 図の中の文字（ラベル）と 1 字も重ならない語だけで書いた説明文。 */
 const CAPTION = '朱色の目印をたどって北の端から順に読みます。濃い枠が肝心な所です。'
 
-/** 4 つの型の図（説明文は呼ぶ側で差す）。 */
+/** 4 つの型の図（説明文は呼ぶ側で差す）。blocks は図の仕様書の決まり（箱は名前＋一言の 2 行、線に label）に従う。 */
 const FIGURES: Record<string, Json> = {
   blocks: {
     type: 'blocks',
     nodes: [
-      { id: 'cl', label: 'クライアント', row: 0, col: 0 },
-      { id: 'ap', label: 'アプリサーバ', row: 0, col: 1, emphasis: true },
-      { id: 'db', label: 'DB サーバ', row: 0, col: 2, shape: 'cylinder' },
+      { id: 'cl', label: 'クライアント\n画面を出す', row: 0, col: 0 },
+      { id: 'ap', label: 'アプリサーバ\n業務を処理', row: 0, col: 1, emphasis: true },
+      { id: 'db', label: 'DB サーバ\nデータを保存', row: 0, col: 2, shape: 'cylinder' },
     ],
     edges: [
       { from: 'cl', to: 'ap', label: '入力', arrow: 'both' },
