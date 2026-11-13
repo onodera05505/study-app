@@ -6,21 +6,64 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "入口は受付 1 つで、1 秒 300 件を後ろの 3 台に 100 件ずつ配ります。死活監視で返事をしない 1 台には配りません。",
+      "caption": "利用者の頼みは 1 つの受付が受け、動いているサーバに分けて配ります。死活監視で返事の無い 1 台には配らないので、サービスは続きます。",
       "nodes": [
-        {"id": "u", "label": "利用者\n1 秒 300 件", "row": 0, "col": 1},
-        {"id": "lb", "label": "受付 1 つ\nロードバランサ\nリバースプロキシ", "row": 1, "col": 1, "emphasis": true},
-        {"id": "a", "label": "サーバ A\n100 件", "row": 2, "col": 0},
-        {"id": "b", "label": "サーバ B\n100 件", "row": 2, "col": 1},
-        {"id": "c", "label": "サーバ C\n100 件", "row": 2, "col": 2},
-        {"id": "d", "label": "サーバ D\n止まった 1 台\n配らない", "row": 2, "col": 3}
+        {
+          "id": "u",
+          "label": "利用者\n見えるのは受付だけ",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "lb",
+          "label": "受付 1 つ\n振り分ける・代わりに受ける",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "a",
+          "label": "サーバ A\n同じ働き",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "b",
+          "label": "サーバ B\n同じ働き",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "c",
+          "label": "サーバ C\n止まった 1 台\n頼みは 0 件",
+          "row": 2,
+          "col": 2
+        }
       ],
       "edges": [
-        {"from": "u", "to": "lb", "label": "頼み", "arrow": "both"},
-        {"from": "lb", "to": "a"},
-        {"from": "lb", "to": "b"},
-        {"from": "lb", "to": "c"},
-        {"from": "lb", "to": "d", "style": "dashed", "arrow": "none"}
+        {
+          "from": "u",
+          "to": "lb",
+          "label": "頼みと返事 1 秒 300 件",
+          "arrow": "both"
+        },
+        {
+          "from": "lb",
+          "to": "a",
+          "label": "150 件"
+        },
+        {
+          "from": "lb",
+          "to": "b",
+          "label": "150 件"
+        },
+        {
+          "from": "lb",
+          "to": "c",
+          "label": "死活監視で返事なし",
+          "style": "dashed",
+          "arrow": "none"
+        }
       ]
     }
   ]

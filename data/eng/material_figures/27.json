@@ -6,21 +6,74 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "docs にいるとき、相対パス ../photo/cat.png は「..」で a へ上がってから下ります。絶対パスは / から /home/a/photo/cat.png と書きます。",
+      "caption": "同じ cat.png へ、絶対パスはルートから、相対パスは今いる docs から .. で上がってたどります。今いる場所が変わると、相対パスの道順も変わります。",
       "nodes": [
-        {"id": "root", "label": "/\nルート", "row": 0, "col": 0},
-        {"id": "home", "label": "home", "row": 0, "col": 1},
-        {"id": "a", "label": "a\n/home/a", "row": 0, "col": 2},
-        {"id": "docs", "label": "docs\n今いる場所", "row": 1, "col": 2, "emphasis": true},
-        {"id": "photo", "label": "photo", "row": 0, "col": 3},
-        {"id": "cat", "label": "cat.png\n/home/a/photo/cat.png", "row": 1, "col": 3, "shape": "round", "emphasis": true}
+        {
+          "id": "root",
+          "label": "/\nルート\n絶対パスの起点",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "home",
+          "label": "home\n/home",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "a",
+          "label": "a\n/home/a",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "photo",
+          "label": "photo\n/home/a/photo",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "docs",
+          "label": "docs\n今いる場所\n相対パスの起点",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "cat",
+          "label": "cat.png\n絶対 /home/a/photo/cat.png\n相対 ../photo/cat.png",
+          "row": 1,
+          "col": 3,
+          "shape": "round",
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "root", "to": "home", "arrow": "none"},
-        {"from": "home", "to": "a", "arrow": "none"},
-        {"from": "docs", "to": "a", "label": "1. .. で上へ"},
-        {"from": "a", "to": "photo", "label": "2. photo へ"},
-        {"from": "photo", "to": "cat", "label": "3. cat.png"}
+        {
+          "from": "root",
+          "to": "home",
+          "label": "絶対は / から"
+        },
+        {
+          "from": "home",
+          "to": "a",
+          "label": "a へ下る"
+        },
+        {
+          "from": "docs",
+          "to": "a",
+          "label": "相対は .. で上へ"
+        },
+        {
+          "from": "a",
+          "to": "photo",
+          "label": "photo へ下る"
+        },
+        {
+          "from": "photo",
+          "to": "cat",
+          "label": "cat.png へ"
+        }
       ]
     }
   ]

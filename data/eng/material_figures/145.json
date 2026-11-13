@@ -6,21 +6,74 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "登録とログインは同じソルトと同じ計算を通るので、保存したハッシュ値と一致するかだけで本人と分かります。",
+      "caption": "上の段が登録、下の段がログインです。保存するのはソルトとハッシュ値だけで、ログインでは同じ計算の結果が一致するかで本人と見分けます。",
       "nodes": [
-        {"id": "reg", "label": "登録するパスワード\n＋利用者ごとのソルト", "row": 0, "col": 0},
-        {"id": "h1", "label": "ハッシュ関数", "row": 0, "col": 1},
-        {"id": "db", "label": "保存する物\nソルト と ハッシュ値\nパスワードは持たない", "row": 0, "col": 2, "shape": "cylinder"},
-        {"id": "login", "label": "ログインの入力\n＋保存したソルト", "row": 1, "col": 0},
-        {"id": "h2", "label": "同じハッシュ関数", "row": 1, "col": 1},
-        {"id": "cmp", "label": "2 つのハッシュ値が\n一致するかだけ見る", "row": 1, "col": 2, "emphasis": true}
+        {
+          "id": "reg",
+          "label": "登録するパスワード\n＋利用者ごとのソルト\n同じパスワードでも別の値に",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "h1",
+          "label": "ハッシュ関数\n元へは戻せない計算",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "db",
+          "label": "保存する物\nソルト と ハッシュ値\nパスワードは持たない",
+          "row": 0,
+          "col": 2,
+          "shape": "cylinder",
+          "emphasis": true
+        },
+        {
+          "id": "login",
+          "label": "ログインの入力\n＋保存したソルト",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "h2",
+          "label": "同じハッシュ関数\n同じ入力なら同じ値",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "cmp",
+          "label": "2 つのハッシュ値が\n一致すれば本人",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "reg", "to": "h1"},
-        {"from": "h1", "to": "db", "label": "ハッシュ値"},
-        {"from": "login", "to": "h2"},
-        {"from": "h2", "to": "cmp", "label": "ハッシュ値"},
-        {"from": "db", "to": "cmp", "label": "保存したハッシュ値"}
+        {
+          "from": "reg",
+          "to": "h1",
+          "label": "混ぜて計算"
+        },
+        {
+          "from": "h1",
+          "to": "db",
+          "label": "ハッシュ値だけ"
+        },
+        {
+          "from": "login",
+          "to": "h2",
+          "label": "混ぜて計算"
+        },
+        {
+          "from": "h2",
+          "to": "cmp",
+          "label": "ハッシュ値"
+        },
+        {
+          "from": "db",
+          "to": "cmp",
+          "label": "保存したハッシュ値"
+        }
       ]
     }
   ]

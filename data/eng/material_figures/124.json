@@ -28,7 +28,7 @@
         },
         {
           "id": "commit",
-          "label": "確定する",
+          "label": "確定する\n2 つの更新を\nまとめて残す",
           "row": 0,
           "col": 3
         },
@@ -55,28 +55,34 @@
       "edges": [
         {
           "from": "start",
-          "to": "dec"
+          "to": "dec",
+          "label": "1 つ目の更新"
         },
         {
           "from": "dec",
-          "to": "inc"
+          "to": "inc",
+          "label": "2 つ目の更新"
         },
         {
           "from": "inc",
-          "to": "commit"
+          "to": "commit",
+          "label": "両方済んだら"
         },
         {
           "from": "dec",
           "to": "stop",
-          "style": "dashed"
+          "style": "dashed",
+          "label": "入金の前に"
         },
         {
           "from": "stop",
-          "to": "back"
+          "to": "back",
+          "label": "再起動で\n確定前の分を消す"
         },
         {
           "from": "commit",
-          "to": "keep"
+          "to": "keep",
+          "label": "確定の後に\n止まっても"
         }
       ]
     }

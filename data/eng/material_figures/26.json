@@ -6,21 +6,75 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "ルートディレクトリから枝分かれする木です。同じ名前のメモ.txt でも、仕事と家に分けて置けば別の物になります。",
+      "caption": "線は「この中に置く」を表し、根元のルートディレクトリから枝分かれする木になります。同じ名前のメモ.txt でも、入れ物が違えば別の物です。",
       "nodes": [
-        {"id": "root", "label": "/\nルートディレクトリ", "row": 0, "col": 1},
-        {"id": "work", "label": "仕事\nディレクトリ", "row": 1, "col": 0},
-        {"id": "home", "label": "家\nディレクトリ", "row": 1, "col": 2},
-        {"id": "wmemo", "label": "メモ.txt\nファイル", "row": 2, "col": 0, "shape": "round", "emphasis": true},
-        {"id": "doc", "label": "資料\nディレクトリ", "row": 2, "col": 1},
-        {"id": "hmemo", "label": "メモ.txt\nファイル", "row": 2, "col": 2, "shape": "round", "emphasis": true}
+        {
+          "id": "root",
+          "label": "/\nルートディレクトリ\n木の根元",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "work",
+          "label": "仕事\nディレクトリ\n入れ物",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "home",
+          "label": "家\nディレクトリ\n入れ物",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "wmemo",
+          "label": "メモ.txt\nファイル\n仕事の中の 1 つ",
+          "row": 2,
+          "col": 0,
+          "shape": "round",
+          "emphasis": true
+        },
+        {
+          "id": "doc",
+          "label": "資料\nディレクトリ\n入れ物の中の入れ物",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "hmemo",
+          "label": "メモ.txt\nファイル\n家の中の別の物",
+          "row": 2,
+          "col": 2,
+          "shape": "round",
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "root", "to": "work"},
-        {"from": "root", "to": "home"},
-        {"from": "work", "to": "wmemo"},
-        {"from": "work", "to": "doc"},
-        {"from": "home", "to": "hmemo"}
+        {
+          "from": "root",
+          "to": "work",
+          "label": "中に置く"
+        },
+        {
+          "from": "root",
+          "to": "home",
+          "label": "中に置く"
+        },
+        {
+          "from": "work",
+          "to": "wmemo",
+          "label": "中に置く"
+        },
+        {
+          "from": "work",
+          "to": "doc",
+          "label": "入れ子にする"
+        },
+        {
+          "from": "home",
+          "to": "hmemo",
+          "label": "中に置く"
+        }
       ]
     }
   ]

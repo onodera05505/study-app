@@ -6,18 +6,58 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "A は札 X を持って Y を、B は札 Y を持って X を待つので、待ちが輪になり止まります。全員が X の次に Y を取れば輪はできません。",
+      "caption": "札は一度に 1 つの処理しか持てません。矢印をたどると待ちが輪になって元に戻り、この輪がデッドロックです。",
       "nodes": [
-        {"id": "a", "label": "処理 A", "row": 0, "col": 0},
-        {"id": "y", "label": "札 Y\nB が使用中", "row": 0, "col": 1, "shape": "round"},
-        {"id": "x", "label": "札 X\nA が使用中", "row": 1, "col": 0, "shape": "round"},
-        {"id": "b", "label": "処理 B", "row": 1, "col": 1}
+        {
+          "id": "a",
+          "label": "処理 A\nX を持ったまま止まる",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "y",
+          "label": "札 Y（ロック）\nB が使用中",
+          "row": 0,
+          "col": 1,
+          "shape": "round"
+        },
+        {
+          "id": "x",
+          "label": "札 X（ロック）\nA が使用中",
+          "row": 1,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "b",
+          "label": "処理 B\nY を持ったまま止まる",
+          "row": 1,
+          "col": 1
+        }
       ],
       "edges": [
-        {"from": "x", "to": "a", "label": "持っている"},
-        {"from": "a", "to": "y", "label": "返るのを待つ", "style": "dashed"},
-        {"from": "y", "to": "b", "label": "持っている"},
-        {"from": "b", "to": "x", "label": "返るのを待つ", "style": "dashed"}
+        {
+          "from": "x",
+          "to": "a",
+          "label": "持っている"
+        },
+        {
+          "from": "a",
+          "to": "y",
+          "label": "返るのを待つ",
+          "style": "dashed"
+        },
+        {
+          "from": "y",
+          "to": "b",
+          "label": "持っている"
+        },
+        {
+          "from": "b",
+          "to": "x",
+          "label": "返るのを待つ",
+          "style": "dashed"
+        }
       ]
     }
   ]

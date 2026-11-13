@@ -58,6 +58,52 @@
           "style": "dashed"
         }
       ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "カプセル化の図です。外のコードは窓口のメソッドを通してだけ残高を変えられ、窓口が決まりを確かめます。",
+      "nodes": [
+        {
+          "id": "o",
+          "label": "外のコード\n残高を減らしたい",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "w",
+          "label": "窓口「引き出す」\n多すぎる額は断る",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "b",
+          "label": "残高\n外からは見えない",
+          "row": 1,
+          "col": 2,
+          "shape": "cylinder"
+        }
+      ],
+      "edges": [
+        {
+          "from": "o",
+          "to": "w",
+          "label": "引き出す（額）を頼む"
+        },
+        {
+          "from": "w",
+          "to": "b",
+          "label": "確かめてから減らす"
+        },
+        {
+          "from": "o",
+          "to": "b",
+          "label": "直接の書き換えは通らない",
+          "style": "dashed"
+        }
+      ]
     }
   ]
 }

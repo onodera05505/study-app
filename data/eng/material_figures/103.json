@@ -4,19 +4,52 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "sequence",
       "after": "### しくみ",
-      "caption": "10,000 人の頼みは近い拠点が写しで返します。オリジンに届くのは拠点に写しが無いときだけで、期限の内は多くても 10 回です。",
-      "nodes": [
-        {"id": "u", "label": "利用者\n10,000 人", "row": 0, "col": 0},
-        {"id": "edge", "label": "各地の拠点 10 か所\n写しを持つ", "row": 0, "col": 1, "emphasis": true},
-        {"id": "org", "label": "オリジン\n元の中身を持つ", "row": 0, "col": 2},
-        {"id": "ret", "label": "写しがあれば\n拠点から返す", "row": 1, "col": 1}
+      "caption": "初めての頼みだけが遠いオリジンまで届き、途中の拠点とブラウザが写しを残します。次からは近くの写しで返るので速くなります。",
+      "actors": [
+        {
+          "id": "br",
+          "label": "ブラウザ"
+        },
+        {
+          "id": "edge",
+          "label": "近くの拠点\n（CDN）"
+        },
+        {
+          "id": "org",
+          "label": "オリジン\n（元の中身）"
+        }
       ],
-      "edges": [
-        {"from": "u", "to": "edge", "label": "近い拠点へ"},
-        {"from": "edge", "to": "org", "label": "写しが無いときだけ\n多くても 10 回"},
-        {"from": "edge", "to": "ret"}
+      "steps": [
+        {
+          "from": "br",
+          "to": "edge",
+          "label": "画像を頼む（初めて）"
+        },
+        {
+          "from": "edge",
+          "to": "org",
+          "label": "写しが無いので取りに行く"
+        },
+        {
+          "from": "org",
+          "to": "edge",
+          "label": "中身と有効期限を返す",
+          "note": "拠点が写しを残し、近くのほかの人にもここから返す"
+        },
+        {
+          "from": "edge",
+          "to": "br",
+          "label": "中身を返す",
+          "note": "ブラウザも手元に写しを残す"
+        },
+        {
+          "from": "br",
+          "to": "br",
+          "label": "次に開くときは手元の写しを使う",
+          "note": "期限の内は通信しない"
+        }
       ]
     }
   ]

@@ -8,17 +8,64 @@
       "after": "### しくみ",
       "caption": "プロセス A の 2 つのスレッドは同じメモリの区画を読み書きします。プロセス B は区画が分かれ、A の中身に触れません。",
       "nodes": [
-        {"id": "t1", "label": "プロセス A\nスレッド 1\n重い処理", "row": 0, "col": 0},
-        {"id": "t2", "label": "プロセス A\nスレッド 2\n画面の操作", "row": 2, "col": 0},
-        {"id": "ma", "label": "プロセス A の\nメモリの区画\n2 つで共有", "row": 1, "col": 1, "emphasis": true},
-        {"id": "mb", "label": "プロセス B の\nメモリの区画", "row": 1, "col": 2},
-        {"id": "tb", "label": "プロセス B\nスレッド 1", "row": 1, "col": 3}
+        {
+          "id": "t1",
+          "label": "プロセス A\nスレッド 1\n重い処理",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "t2",
+          "label": "プロセス A\nスレッド 2\n画面の操作",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "ma",
+          "label": "プロセス A の\nメモリの区画\n2 つで共有\n同時に書くと取り合い",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "mb",
+          "label": "プロセス B の\nメモリの区画",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "tb",
+          "label": "プロセス B\nスレッド 1",
+          "row": 1,
+          "col": 3
+        }
       ],
       "edges": [
-        {"from": "t1", "to": "ma", "label": "読む・書く", "arrow": "both"},
-        {"from": "t2", "to": "ma", "label": "読む・書く", "arrow": "both"},
-        {"from": "ma", "to": "mb", "label": "触れない", "style": "dashed", "arrow": "none"},
-        {"from": "tb", "to": "mb", "arrow": "both"}
+        {
+          "from": "t1",
+          "to": "ma",
+          "label": "読む・書く",
+          "arrow": "both"
+        },
+        {
+          "from": "t2",
+          "to": "ma",
+          "label": "読む・書く",
+          "arrow": "both"
+        },
+        {
+          "from": "ma",
+          "to": "mb",
+          "label": "触れない",
+          "style": "dashed",
+          "arrow": "none"
+        },
+        {
+          "from": "tb",
+          "to": "mb",
+          "arrow": "both",
+          "label": "読む・書く"
+        }
       ]
     }
   ]

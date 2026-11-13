@@ -6,21 +6,74 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "まず利用者の 1 割に届けてエラーの数を見ます。増えなければ全員へ広げ、増えたら残しておいた前のバージョンへ戻します。",
+      "caption": "上の段が少しずつ広げる道、下の段が戻す道です。戻す道は出す前に用意しておきます。",
       "nodes": [
-        {"id": "new", "label": "新しいバージョン\nを出す", "row": 0, "col": 0},
-        {"id": "part", "label": "利用者の 1 割に\n届ける", "row": 0, "col": 1},
-        {"id": "watch", "label": "エラーの数が\n増えないか見る", "row": 0, "col": 2},
-        {"id": "all", "label": "全員へ広げる", "row": 0, "col": 3},
-        {"id": "keep", "label": "前のバージョンを残し\n戻す手順を\n出す前に試しておく", "row": 1, "col": 1},
-        {"id": "back", "label": "前のバージョンへ\n切り戻す", "row": 1, "col": 2, "emphasis": true}
+        {
+          "id": "new",
+          "label": "新しいバージョン\n検証の環境で\n確かめ済み",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "part",
+          "label": "一部に公開\n利用者の 1 割だけ",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "watch",
+          "label": "見張る\nエラーの数・\n応答の時間",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "all",
+          "label": "全員に公開\n残りの 9 割へ",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "keep",
+          "label": "前のバージョン\n消さずに残す\n戻す手順は試し済み",
+          "row": 1,
+          "col": 1,
+          "shape": "cylinder"
+        },
+        {
+          "id": "back",
+          "label": "切り戻し\n前のバージョンへ\nすぐ戻す",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "new", "to": "part"},
-        {"from": "part", "to": "watch"},
-        {"from": "watch", "to": "all", "label": "増えない"},
-        {"from": "watch", "to": "back", "label": "増えた"},
-        {"from": "keep", "to": "back", "label": "用意", "style": "dashed"}
+        {
+          "from": "new",
+          "to": "part",
+          "label": "まず 1 割へ"
+        },
+        {
+          "from": "part",
+          "to": "watch",
+          "label": "本番で動かす"
+        },
+        {
+          "from": "watch",
+          "to": "all",
+          "label": "エラーが増えない"
+        },
+        {
+          "from": "watch",
+          "to": "back",
+          "label": "エラーが増えた"
+        },
+        {
+          "from": "keep",
+          "to": "back",
+          "label": "すぐ使える",
+          "style": "dashed"
+        }
       ]
     }
   ]

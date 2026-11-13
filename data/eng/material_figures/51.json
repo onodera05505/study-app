@@ -15,10 +15,10 @@
         {"id": "inc", "label": "数 ← 数 ＋ 1\n無いと止まらない", "row": 1, "col": 3, "emphasis": true}
       ],
       "edges": [
-        {"from": "init", "to": "cond"},
+        {"from": "init", "to": "cond", "label": "始める"},
         {"from": "cond", "to": "end", "label": "偽（数が 6）"},
         {"from": "cond", "to": "add", "label": "真"},
-        {"from": "add", "to": "inc"},
+        {"from": "add", "to": "inc", "label": "次に"},
         {"from": "inc", "to": "cond", "label": "戻る"}
       ]
     }

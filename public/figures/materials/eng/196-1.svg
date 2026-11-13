@@ -1,32 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="258" viewBox="0 0 640 258">
-<rect x="0.5" y="0.5" width="639" height="257" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(108.2 20)">
-<polyline points="152.8,48 228.8,48" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="228.8,48 220.8,51.6 220.8,44.4" fill="#1f2937"/>
-<polyline points="326.2,86 326.2,114 76.4,114 76.4,142" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="76.4,142 72.8,134 80,134" fill="#1f2937"/>
-<polyline points="130.4,180 244.2,180" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="244.2,180 236.2,183.6 236.2,176.4" fill="#1f2937"/>
-<rect x="0" y="0" width="152.8" height="96" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="76.4" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">① 読む</text>
-<text x="76.4" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">エラー: 0 で割った</text>
-<text x="76.4" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">平均を出す 8 行目</text>
-<text x="76.4" y="82.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">→ 割り算 120 行目</text>
-<rect x="228.8" y="10" width="194.8" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="326.2" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">自分のコードの</text>
-<text x="326.2" y="52.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">8 行目を探す</text>
-<text x="326.2" y="72.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">（120 行目はライブラリ）</text>
-<rect x="22.4" y="142" width="108" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="76.4" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">② 再現する</text>
-<text x="76.4" y="184.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">同じ操作で</text>
-<text x="76.4" y="204.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">毎回起きるか</text>
-<rect x="244.2" y="142" width="164" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="326.2" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">③ 絞り込む</text>
-<text x="326.2" y="184.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">正しい所と誤った所の</text>
-<text x="326.2" y="204.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">境目を半分ずつ狭める</text>
-<rect x="162.8" y="31" width="56" height="16" rx="3" fill="#ffffff"/>
-<text x="190.8" y="44.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">呼んだ順</text>
-<rect x="153.3" y="163" width="68" height="16" rx="3" fill="#ffffff"/>
-<text x="187.3" y="176.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">毎回起きる</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="382" viewBox="0 0 640 382">
+<rect x="0.5" y="0.5" width="639" height="381" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(114.1 20)">
+<line x1="48" y1="34" x2="48" y2="342" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="363.8" y1="34" x2="363.8" y2="342" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">自分</text>
+<rect x="315.8" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="363.8" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">プログラム</text>
+<polyline points="360.8,68 51,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,68 59,64.4 59,71.6" fill="#1f2937"/>
+<text x="205.9" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. エラーメッセージ（種類と、呼んだ順の関数と行）</text>
+<polyline points="48,100 74,100 74,114 50,114" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="50,114 58,110.4 58,117.6" fill="#1f2937"/>
+<text x="82" y="108" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2. 最後まで読み、自分のコードの行を探す</text>
+<rect x="-46" y="119" width="188" height="16" rx="3" fill="#ffffff"/>
+<text x="48" y="132.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ライブラリの中の行より先に見る</text>
+<polyline points="51,158 360.8,158" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="360.8,158 352.8,161.6 352.8,154.4" fill="#1f2937"/>
+<text x="205.9" y="151" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 同じ操作で起こし直す</text>
+<rect x="81.9" y="163" width="248" height="16" rx="3" fill="#ffffff"/>
+<text x="205.9" y="176.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">毎回起きれば、直すたびに結果を比べられる</text>
+<polyline points="51,214 360.8,214" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="360.8,214 352.8,217.6 352.8,210.4" fill="#1f2937"/>
+<text x="205.9" y="207" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 途中の値を表示／デバッガで止める</text>
+<polyline points="360.8,254 51,254" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,254 59,250.4 59,257.6" fill="#1f2937"/>
+<text x="205.9" y="247" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. 途中の値（どこまで正しいか）</text>
+<rect x="24" y="259" width="363.8" height="16" rx="3" fill="#ffffff"/>
+<text x="205.9" y="272.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">正しい所と誤った所の境目を半分ずつ狭め、原因の行を 1 か所に</text>
+<polyline points="51,310 360.8,310" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="360.8,310 352.8,313.6 352.8,306.4" fill="#1f2937"/>
+<text x="205.9" y="303" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">6. 原因の行を直して、もう一度動かす</text>
 </g>
 </svg>

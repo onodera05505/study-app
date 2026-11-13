@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="364" viewBox="0 0 640 364">
+<rect x="0.5" y="0.5" width="639" height="363" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(133.22 20)">
+<line x1="73.55" y1="34" x2="73.55" y2="324" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="318.55" y1="34" x2="318.55" y2="324" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="147.1" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="73.55" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">プログラム（ORM）</text>
+<rect x="263.55" y="0" width="110" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="318.55" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">データベース</text>
+<polyline points="76.55,68 315.55,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="315.55,68 307.55,71.6 307.55,64.4" fill="#1f2937"/>
+<text x="196.05" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 社員 100 人の一覧を取る（1 回）</text>
+<polyline points="76.55,108 315.55,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="315.55,108 307.55,111.6 307.55,104.4" fill="#1f2937"/>
+<text x="196.05" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 1 人目の部署を取る</text>
+<rect x="79.55" y="113" width="233" height="16" rx="3" fill="#ffffff"/>
+<text x="196.05" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">部署は頼まれた瞬間に ORM が取りに行く</text>
+<polyline points="76.55,164 315.55,164" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="315.55,164 307.55,167.6 307.55,160.4" fill="#1f2937"/>
+<text x="196.05" y="157" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 2 人目の部署を取る</text>
+<rect x="107.45" y="169" width="177.2" height="16" rx="3" fill="#ffffff"/>
+<text x="196.05" y="182.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">1 往復ごとに待ち時間がかかる</text>
+<polyline points="76.55,220 315.55,220" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="315.55,220 307.55,223.6 307.55,216.4" fill="#1f2937"/>
+<text x="196.05" y="213" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. … 100 人目の部署を取る</text>
+<rect x="91.55" y="225" width="209" height="16" rx="3" fill="#ffffff"/>
+<text x="196.05" y="238.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">合計 101 往復。行が増えるほど遅い</text>
+<polyline points="76.55,276 315.55,276" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="315.55,276 307.55,279.6 307.55,272.4" fill="#1f2937"/>
+<text x="196.05" y="269" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. 直した後: 社員と部署をまとめて取る</text>
+<rect x="88.85" y="281" width="214.4" height="16" rx="3" fill="#ffffff"/>
+<text x="196.05" y="294.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">結合やまとめて読む指定で 1〜2 往復</text>
+</g>
+</svg>

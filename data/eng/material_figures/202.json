@@ -8,22 +8,88 @@
       "after": "### しくみ",
       "caption": "印は中身と秘密の値から計算します。中身を書き換えても秘密の値を知らないと印を作り直せず、受け取るサーバの計算と合いません。",
       "nodes": [
-        {"id": "body", "label": "中身\nA さん・読むだけ\n15時まで", "row": 0, "col": 0},
-        {"id": "calc", "label": "決まった計算", "row": 0, "col": 1},
-        {"id": "token", "label": "札\n中身 ＋ 印 7302", "row": 0, "col": 2},
-        {"id": "secret", "label": "秘密の値\n発行したサーバ\nだけが知る", "row": 1, "col": 1, "emphasis": true},
-        {"id": "result", "label": "計算し直すと 1958\n7302 と合わず\n書き換えと分かる", "row": 2, "col": 0, "emphasis": true},
-        {"id": "check", "label": "受け取るサーバが\n中身と秘密の値で\n計算し直す", "row": 2, "col": 1},
-        {"id": "fake", "label": "書き換えた札\n中身「消してもよい」\n印は 7302 のまま", "row": 2, "col": 2}
+        {
+          "id": "body",
+          "label": "中身\nA さん・読むだけ\n15時まで",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "calc",
+          "label": "決まった計算",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "token",
+          "label": "札\n中身 ＋ 印 7302",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "secret",
+          "label": "秘密の値\n発行したサーバ\nだけが知る",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "result",
+          "label": "計算し直すと 1958\n7302 と合わず\n書き換えと分かる",
+          "row": 2,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "check",
+          "label": "受け取るサーバが\n中身と秘密の値で\n計算し直す",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "fake",
+          "label": "書き換えた札\n中身「消してもよい」\n印は 7302 のまま",
+          "row": 2,
+          "col": 2
+        }
       ],
       "edges": [
-        {"from": "body", "to": "calc"},
-        {"from": "secret", "to": "calc"},
-        {"from": "calc", "to": "token", "label": "印"},
-        {"from": "token", "to": "fake", "label": "途中で書き換え", "style": "dashed"},
-        {"from": "fake", "to": "check", "label": "届く"},
-        {"from": "secret", "to": "check"},
-        {"from": "check", "to": "result"}
+        {
+          "from": "body",
+          "to": "calc",
+          "label": "入れる"
+        },
+        {
+          "from": "secret",
+          "to": "calc",
+          "label": "入れる"
+        },
+        {
+          "from": "calc",
+          "to": "token",
+          "label": "印"
+        },
+        {
+          "from": "token",
+          "to": "fake",
+          "label": "途中で書き換え",
+          "style": "dashed"
+        },
+        {
+          "from": "fake",
+          "to": "check",
+          "label": "届く"
+        },
+        {
+          "from": "secret",
+          "to": "check",
+          "label": "同じ値で"
+        },
+        {
+          "from": "check",
+          "to": "result",
+          "label": "印を比べる"
+        }
       ]
     }
   ]

@@ -1,32 +1,45 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="348" viewBox="0 0 640 348">
-<rect x="0.5" y="0.5" width="639" height="347" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(140.22 20)">
-<line x1="59.55" y1="34" x2="59.55" y2="308" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="304.55" y1="34" x2="304.55" y2="308" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<rect x="0" y="0" width="119.1" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="59.55" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">アプリ（ORM）</text>
-<rect x="249.55" y="0" width="110" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="304.55" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">データベース</text>
-<polyline points="62.55,68 301.55,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="301.55,68 293.55,71.6 293.55,64.4" fill="#1f2937"/>
-<text x="182.05" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 社員 100 人の一覧を取る（1 回）</text>
-<polyline points="62.55,108 301.55,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="301.55,108 293.55,111.6 293.55,104.4" fill="#1f2937"/>
-<text x="182.05" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 1 人目の部署を取る</text>
-<rect x="88.05" y="113" width="188" height="16" rx="3" fill="#ffffff"/>
-<text x="182.05" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">部署は頼まれた瞬間に取りに行く</text>
-<polyline points="62.55,164 301.55,164" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="301.55,164 293.55,167.6 293.55,160.4" fill="#1f2937"/>
-<text x="182.05" y="157" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 2 人目の部署を取る</text>
-<polyline points="62.55,204 301.55,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="301.55,204 293.55,207.6 293.55,200.4" fill="#1f2937"/>
-<text x="182.05" y="197" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. … 100 人目の部署を取る</text>
-<rect x="118.35" y="209" width="127.4" height="16" rx="3" fill="#ffffff"/>
-<text x="182.05" y="222.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">合計 1＋100＝101 回</text>
-<polyline points="62.55,260 301.55,260" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="301.55,260 293.55,263.6 293.55,256.4" fill="#1f2937"/>
-<text x="182.05" y="253" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. 直した後: 社員と部署をまとめて取る</text>
-<rect x="80.85" y="265" width="202.4" height="16" rx="3" fill="#ffffff"/>
-<text x="182.05" y="278.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">結合やまとめて読む指定で 1〜2 回</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="235" viewBox="0 0 728.4 268">
+<rect x="0.5" y="0.5" width="727.4" height="267" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<polyline points="124.8,38 281.8,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="281.8,38 273.8,41.6 273.8,34.4" fill="#1f2937"/>
+<polyline points="406.6,38 563.6,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="563.6,38 555.6,41.6 555.6,34.4" fill="#1f2937"/>
+<polygon points="406.6,38 414.6,34.4 414.6,41.6" fill="#1f2937"/>
+<polyline points="344.2,76 344.2,99 62.4,99 62.4,122" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="62.4,122 58.8,114 66,114" fill="#1f2937"/>
+<polyline points="62.4,198 62.4,220 626,220 626,188" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polygon points="626,188 629.6,196 622.4,196" fill="#1f2937"/>
+<rect x="0" y="0" width="124.8" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="62.4" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">プログラム</text>
+<text x="62.4" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">SQL を書かずに</text>
+<text x="62.4" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">物に頼む</text>
+<rect x="281.8" y="0" width="124.8" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="344.2" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">ORM</text>
+<text x="344.2" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">SQL を組み立て</text>
+<text x="344.2" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">行を物に変える</text>
+<path d="M 563.6 9 A 62.4 9 0 0 0 688.4 9 L 688.4 67 A 62.4 9 0 0 1 563.6 67 Z" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<path d="M 563.6 9 A 62.4 9 0 0 1 688.4 9" fill="none" stroke="#1f2937" stroke-width="1"/>
+<text x="626" y="24.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">社員の表</text>
+<text x="626" y="44.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">1 行＝名前 A、</text>
+<text x="626" y="64.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">部署番号 3</text>
+<rect x="1.4" y="122" width="122" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="62.4" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">物「A さん」</text>
+<text x="62.4" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">名前や部署を</text>
+<text x="62.4" y="184.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">頼めば値が返る</text>
+<path d="M 571.3 141 A 54.7 9 0 0 0 680.7 141 L 680.7 179 A 54.7 9 0 0 1 571.3 179 Z" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<path d="M 571.3 141 A 54.7 9 0 0 1 680.7 141" fill="none" stroke="#1f2937" stroke-width="1"/>
+<text x="626" y="156.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">部署の表</text>
+<text x="626" y="176.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">3 番＝営業部</text>
+<rect x="163.3" y="21" width="80" height="16" rx="3" fill="#ffffff"/>
+<text x="203.3" y="34.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">社員を取って</text>
+<rect x="410.6" y="21" width="149" height="16" rx="3" fill="#ffffff"/>
+<text x="485.1" y="34.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">SQL を送り
+行を受け取る</text>
+<rect x="151.3" y="85" width="104" height="16" rx="3" fill="#ffffff"/>
+<text x="203.3" y="98.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">行を物にして渡す</text>
+<rect x="153.34" y="206" width="269" height="16" rx="3" fill="#ffffff"/>
+<text x="287.84" y="219.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">部署を頼まれた瞬間に
+ORM が初めて取りに行く</text>
 </g>
 </svg>

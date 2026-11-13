@@ -6,19 +6,50 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "作業ごとの手間を足して 10 人日と出し、2 人なら暦の上で約 5 日と見ます。伝えるときは幅を添えます。",
+      "caption": "左の 2 つが見込みの根拠、右端が人に伝える形です。矢印の文字が見込み方の名前です。",
       "nodes": [
-        {"id": "ui", "label": "画面 1 つ 2 人日\n× 4 つ", "row": 0, "col": 0},
-        {"id": "sum", "label": "8 人日", "row": 0, "col": 1},
-        {"id": "total", "label": "テスト 2 人日を足して\n10 人日", "row": 0, "col": 2, "emphasis": true},
-        {"id": "days", "label": "2 人で分けると\n暦の上で約 5 日\n人数に比例しては縮まない", "row": 1, "col": 1},
-        {"id": "say", "label": "伝える形\n10 人日\nずれても 8〜13 人日", "row": 1, "col": 2}
+        {
+          "id": "past",
+          "label": "似た過去の仕事\n実績の人日を元にする",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "wbs",
+          "label": "WBS の作業ごと\n画面 2 人日 × 4 つ\nテスト 2 人日",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "est",
+          "label": "見積り 10 人日\n1 人日＝\n1 人が 1 日働く量",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "say",
+          "label": "伝える形\n10 人日\nずれても 8〜13 人日",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "ui", "to": "sum"},
-        {"from": "sum", "to": "total"},
-        {"from": "total", "to": "days"},
-        {"from": "total", "to": "say"}
+        {
+          "from": "past",
+          "to": "est",
+          "label": "類推する"
+        },
+        {
+          "from": "wbs",
+          "to": "est",
+          "label": "足し上げる"
+        },
+        {
+          "from": "est",
+          "to": "say",
+          "label": "幅と前提を添える"
+        }
       ]
     }
   ]

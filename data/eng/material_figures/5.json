@@ -10,26 +10,26 @@
       "nodes": [
         {
           "id": "reg",
-          "label": "レジスタ\nCPU の中\n最も速い・小さい",
+          "label": "レジスタ\nCPU の中\n最も速い・最も小さい",
           "row": 0,
           "col": 0,
           "emphasis": true
         },
         {
           "id": "cache",
-          "label": "キャッシュ\nよく使う物の写し",
+          "label": "キャッシュ\nよく使う物の写し\n速い・小さい",
           "row": 0,
           "col": 1
         },
         {
           "id": "mem",
-          "label": "メモリ\n作業中の記憶",
+          "label": "メモリ\n作業中の記憶\n遅め・大きい",
           "row": 0,
           "col": 2
         },
         {
           "id": "sto",
-          "label": "ストレージ\n遅い・大きい",
+          "label": "ストレージ\n長くしまう\n最も遅い・最も大きい",
           "row": 0,
           "col": 3
         }
@@ -38,17 +38,17 @@
         {
           "from": "reg",
           "to": "cache",
-          "label": "無ければ"
+          "label": "無ければ\n次の段へ"
         },
         {
           "from": "cache",
           "to": "mem",
-          "label": "無ければ"
+          "label": "無ければ\n次の段へ"
         },
         {
           "from": "mem",
           "to": "sto",
-          "label": "無ければ"
+          "label": "無ければ\n次の段へ"
         }
       ]
     }

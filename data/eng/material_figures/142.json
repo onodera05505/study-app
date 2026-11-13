@@ -8,23 +8,96 @@
       "after": "### しくみ",
       "caption": "方式は公開してよく、秘密にするのは鍵だけです。暗号文を途中で盗んでも、鍵が無ければ平文に戻せません。",
       "nodes": [
-        {"id": "k1", "label": "鍵（秘密）", "row": 0, "col": 1, "emphasis": true},
-        {"id": "k2", "label": "同じ鍵", "row": 0, "col": 3, "emphasis": true},
-        {"id": "p1", "label": "平文\n読める文", "row": 1, "col": 0},
-        {"id": "en", "label": "暗号化\n鍵と混ぜる計算\n方式は公開", "row": 1, "col": 1, "shape": "round"},
-        {"id": "ct", "label": "暗号文\n読めない並び", "row": 1, "col": 2},
-        {"id": "de", "label": "復号\n逆の計算", "row": 1, "col": 3, "shape": "round"},
-        {"id": "th", "label": "盗んだ人\n鍵が無いので\n読めない", "row": 2, "col": 2},
-        {"id": "p2", "label": "平文\n元に戻る", "row": 2, "col": 3}
+        {
+          "id": "k1",
+          "label": "鍵\n秘密にするのはここだけ",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "k2",
+          "label": "同じ鍵\n持つ人だけが開けられる",
+          "row": 0,
+          "col": 3,
+          "emphasis": true
+        },
+        {
+          "id": "p1",
+          "label": "平文\n読める文",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "en",
+          "label": "暗号化\n鍵と混ぜる計算\n方式は公開",
+          "row": 1,
+          "col": 1,
+          "shape": "round"
+        },
+        {
+          "id": "ct",
+          "label": "暗号文\n読めない並び",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "de",
+          "label": "復号\n逆の計算",
+          "row": 1,
+          "col": 3,
+          "shape": "round"
+        },
+        {
+          "id": "th",
+          "label": "盗んだ人\n鍵が無いので\n読めない",
+          "row": 2,
+          "col": 2
+        },
+        {
+          "id": "p2",
+          "label": "平文\n元に戻る",
+          "row": 2,
+          "col": 3
+        }
       ],
       "edges": [
-        {"from": "k1", "to": "en"},
-        {"from": "k2", "to": "de"},
-        {"from": "p1", "to": "en"},
-        {"from": "en", "to": "ct"},
-        {"from": "ct", "to": "de"},
-        {"from": "de", "to": "p2"},
-        {"from": "ct", "to": "th", "label": "途中で盗む", "style": "dashed"}
+        {
+          "from": "k1",
+          "to": "en",
+          "label": "閉めるのに使う"
+        },
+        {
+          "from": "k2",
+          "to": "de",
+          "label": "開けるのに使う"
+        },
+        {
+          "from": "p1",
+          "to": "en",
+          "label": "入れる"
+        },
+        {
+          "from": "en",
+          "to": "ct",
+          "label": "読めない形で出る"
+        },
+        {
+          "from": "ct",
+          "to": "de",
+          "label": "送る・保存する"
+        },
+        {
+          "from": "de",
+          "to": "p2",
+          "label": "元に戻る"
+        },
+        {
+          "from": "ct",
+          "to": "th",
+          "label": "途中で盗む",
+          "style": "dashed"
+        }
       ]
     }
   ]

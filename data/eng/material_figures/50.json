@@ -10,11 +10,11 @@
       "nodes": [
         {"id": "in", "label": "点数\n例えば 70 か 50", "row": 1, "col": 0},
         {"id": "if", "label": "もし 点数 が\n60 以上 なら", "row": 1, "col": 1, "emphasis": true},
-        {"id": "ok", "label": "「合格」と表示", "row": 0, "col": 2, "shape": "round"},
-        {"id": "ng", "label": "「不合格」と表示", "row": 2, "col": 2, "shape": "round"}
+        {"id": "ok", "label": "「合格」と表示\n真の道だけ実行", "row": 0, "col": 2, "shape": "round"},
+        {"id": "ng", "label": "「不合格」と表示\n偽の道だけ実行", "row": 2, "col": 2, "shape": "round"}
       ],
       "edges": [
-        {"from": "in", "to": "if"},
+        {"from": "in", "to": "if", "label": "点数を比べる"},
         {"from": "if", "to": "ok", "label": "真（70 なら）"},
         {"from": "if", "to": "ng", "label": "偽（50 なら）"}
       ]

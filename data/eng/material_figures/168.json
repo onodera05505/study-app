@@ -6,25 +6,99 @@
       "id": 1,
       "type": "blocks",
       "after": "### しくみ",
-      "caption": "左を上から下へ作り、右を下から上へ確かめます。横の線は、その段階がどの工程で決めたことを確かめるかを表します。",
+      "caption": "左を上から下へ作り、右を下から上へ範囲を広げて確かめます。点線は、その段階がどの工程で決めたことを確かめるかを表します。",
       "nodes": [
-        {"id": "req", "label": "要件定義\n何を作るか", "row": 0, "col": 0},
-        {"id": "des", "label": "設計\n部品の分け方", "row": 2, "col": 0},
-        {"id": "imp", "label": "実装\n部品のコード", "row": 3, "col": 0},
-        {"id": "acc", "label": "受入テスト\n依頼主や利用者が\n仕事に使えるか", "row": 0, "col": 1, "emphasis": true},
-        {"id": "sys", "label": "システムテスト\n全体で要件どおりの\n機能と速さが出るか", "row": 1, "col": 1},
-        {"id": "itg", "label": "結合テスト\n渡すデータの形や\n呼び出し方がかみ合うか", "row": 2, "col": 1},
-        {"id": "uni", "label": "単体テスト\n部品 1 つに値を渡し\n決めた戻り値が返るか", "row": 3, "col": 1}
+        {
+          "id": "req",
+          "label": "要件定義\n何を作るか",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "des",
+          "label": "設計\n部品の分け方",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "imp",
+          "label": "実装\n部品のコード",
+          "row": 3,
+          "col": 0
+        },
+        {
+          "id": "acc",
+          "label": "受入テスト\n依頼主や利用者が\n仕事に使えるか",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "sys",
+          "label": "システムテスト\n全体で要件どおりの\n機能と速さが出るか",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "itg",
+          "label": "結合テスト\n渡すデータの形や\n呼び出し方がかみ合うか",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "uni",
+          "label": "単体テスト\n部品 1 つに値を渡し\n決めた戻り値が返るか",
+          "row": 3,
+          "col": 1
+        }
       ],
       "edges": [
-        {"from": "req", "to": "des"},
-        {"from": "des", "to": "imp"},
-        {"from": "uni", "to": "itg"},
-        {"from": "itg", "to": "sys"},
-        {"from": "sys", "to": "acc"},
-        {"from": "req", "to": "acc", "label": "決めたことを確かめる", "style": "dashed", "arrow": "none"},
-        {"from": "des", "to": "itg", "label": "決めたことを確かめる", "style": "dashed", "arrow": "none"},
-        {"from": "imp", "to": "uni", "label": "決めたことを確かめる", "style": "dashed", "arrow": "none"}
+        {
+          "from": "req",
+          "to": "des",
+          "label": "部品に分ける"
+        },
+        {
+          "from": "des",
+          "to": "imp",
+          "label": "部品ごとに書く"
+        },
+        {
+          "from": "uni",
+          "to": "itg",
+          "label": "通った部品をつなぐ"
+        },
+        {
+          "from": "itg",
+          "to": "sys",
+          "label": "全体を動かす"
+        },
+        {
+          "from": "sys",
+          "to": "acc",
+          "label": "利用者に渡す"
+        },
+        {
+          "from": "req",
+          "to": "acc",
+          "label": "決めたことを確かめる",
+          "style": "dashed",
+          "arrow": "none"
+        },
+        {
+          "from": "des",
+          "to": "itg",
+          "label": "決めたことを確かめる",
+          "style": "dashed",
+          "arrow": "none"
+        },
+        {
+          "from": "imp",
+          "to": "uni",
+          "label": "決めたことを確かめる",
+          "style": "dashed",
+          "arrow": "none"
+        }
       ]
     }
   ]

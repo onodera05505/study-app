@@ -8,19 +8,73 @@
       "after": "### しくみ",
       "caption": "写真を撮って送る場面です。データは入力から記憶を通って出力へ流れ、演算は記憶とやり取りし、制御が全体に指図します。",
       "nodes": [
-        {"id": "ctl", "label": "制御\nいつ何をするか\n指図する", "row": 0, "col": 1, "emphasis": true},
-        {"id": "in", "label": "入力\nカメラで撮る", "row": 1, "col": 0},
-        {"id": "mem", "label": "記憶\n写真を覚える", "row": 1, "col": 1},
-        {"id": "out", "label": "出力\n相手の画面に\n出す", "row": 1, "col": 2},
-        {"id": "alu", "label": "演算\n送れる形に\n計算する", "row": 2, "col": 1}
+        {
+          "id": "ctl",
+          "label": "制御\nいつ何をするか\n指図する",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "in",
+          "label": "入力\nカメラで撮る",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "mem",
+          "label": "記憶\n写真を覚える",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "out",
+          "label": "出力\n相手の画面に\n出す",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "alu",
+          "label": "演算\n送れる形に\n計算する",
+          "row": 2,
+          "col": 1
+        }
       ],
       "edges": [
-        {"from": "in", "to": "mem", "label": "データ"},
-        {"from": "mem", "to": "out", "label": "結果"},
-        {"from": "mem", "to": "alu", "arrow": "both"},
-        {"from": "ctl", "to": "in", "style": "dashed", "label": "指図"},
-        {"from": "ctl", "to": "mem", "style": "dashed"},
-        {"from": "ctl", "to": "out", "style": "dashed", "label": "指図"}
+        {
+          "from": "in",
+          "to": "mem",
+          "label": "データ"
+        },
+        {
+          "from": "mem",
+          "to": "out",
+          "label": "結果"
+        },
+        {
+          "from": "mem",
+          "to": "alu",
+          "arrow": "both",
+          "label": "値と計算の結果"
+        },
+        {
+          "from": "ctl",
+          "to": "in",
+          "style": "dashed",
+          "label": "指図"
+        },
+        {
+          "from": "ctl",
+          "to": "mem",
+          "style": "dashed",
+          "label": "指図"
+        },
+        {
+          "from": "ctl",
+          "to": "out",
+          "style": "dashed",
+          "label": "指図"
+        }
       ]
     }
   ]

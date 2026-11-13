@@ -4,23 +4,47 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "matrix",
       "after": "### しくみ",
-      "caption": "一番上の URL を、下の段へ向かって細かい部分に分けて読みます。強調した箱が、URL のどの部分がドメイン名にあたるかを示します。",
-      "nodes": [
-        {"id": "url", "label": "https://www.example.com/news/top.html", "row": 0, "col": 1},
-        {"id": "sch", "label": "https\n方式\n暗号にして送る", "row": 1, "col": 0},
-        {"id": "srv", "label": "www.example.com\nどのサーバか", "row": 1, "col": 1},
-        {"id": "path", "label": "/news/top.html\nサーバの中の場所\n/ で区切った道筋", "row": 1, "col": 2},
-        {"id": "www", "label": "www\nその中の 1 台の名前", "row": 2, "col": 0},
-        {"id": "dom", "label": "example.com\nドメイン名\n右の com ほど大きな区分", "row": 2, "col": 1, "emphasis": true}
+      "caption": "URL を方式・サーバ・場所の 3 列に分け、行ごとに見比べます。強調したセルが、ドメイン名にあたる部分です。",
+      "x": {
+        "label": "https://www.example.com/news/top.html",
+        "values": [
+          "方式",
+          "サーバ",
+          "サーバの中の場所"
+        ]
+      },
+      "y": {
+        "label": "見る所",
+        "values": [
+          "URL の中の文字",
+          "表すこと",
+          "読む向き"
+        ]
+      },
+      "cells": [
+        [
+          "https",
+          "www.example.com",
+          "/news/top.html"
+        ],
+        [
+          "やり取りの方式\ns は暗号にして送る",
+          "どのサーバか\nexample.com がドメイン名\nwww はその中の 1 台",
+          "サーバの中のどの場所か\n/ で区切った道筋"
+        ],
+        [
+          "先頭の 1 語",
+          "右端の com ほど\n大きな区分",
+          "左から順に\n細かくなる"
+        ]
       ],
-      "edges": [
-        {"from": "url", "to": "sch", "arrow": "none"},
-        {"from": "url", "to": "srv", "arrow": "none"},
-        {"from": "url", "to": "path", "arrow": "none"},
-        {"from": "srv", "to": "www", "arrow": "none"},
-        {"from": "srv", "to": "dom", "arrow": "none"}
+      "emphasis": [
+        [
+          1,
+          1
+        ]
       ]
     }
   ]
