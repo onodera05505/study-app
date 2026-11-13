@@ -85,13 +85,15 @@
   "id": 1, "type": "blocks", "after": "explanation",
   "caption": "業務処理をアプリケーションサーバに集めるので、クライアントは画面だけを持てばよくなります。",
   "nodes": [
-    {"id": "cl", "label": "クライアント\nプレゼンテーション層", "row": 0, "col": 0},
-    {"id": "ap", "label": "アプリサーバ\nファンクション層", "row": 0, "col": 1, "emphasis": true},
-    {"id": "db", "label": "DB サーバ\nデータ層", "row": 0, "col": 2, "shape": "cylinder"}
+    {"id": "cl1", "label": "クライアント A\n画面の表示と入力", "row": 0, "col": 0},
+    {"id": "cl2", "label": "クライアント B\n画面の表示と入力", "row": 1, "col": 0},
+    {"id": "ap", "label": "アプリサーバ\n業務処理を一手に", "row": 0, "col": 1, "emphasis": true},
+    {"id": "db", "label": "DB サーバ\nデータを一元管理", "row": 0, "col": 2, "shape": "cylinder"}
   ],
   "edges": [
-    {"from": "cl", "to": "ap", "label": "画面の入力", "arrow": "both"},
-    {"from": "ap", "to": "db", "label": "SQL", "arrow": "both"}
+    {"from": "cl1", "to": "ap", "label": "入力と処理結果", "arrow": "both"},
+    {"from": "cl2", "to": "ap", "label": "入力と処理結果", "arrow": "both"},
+    {"from": "ap", "to": "db", "label": "SQL と検索結果", "arrow": "both"}
   ]
 }
 ```
@@ -132,7 +134,7 @@
 
 ```json
 {
-  "id": 1, "type": "matrix", "after": "### 4 つの成長戦略",
+  "id": 1, "type": "matrix", "after": "### 4つの戦略の中身",
   "caption": "既存か新規かの2軸で成長戦略を4つに分けます。右下ほどリスクが大きくなります。",
   "x": {"label": "製品", "values": ["既存製品", "新製品"]},
   "y": {"label": "市場", "values": ["既存市場", "新市場"]},
@@ -197,7 +199,7 @@ python3 scripts/render_material_figures.py --data data/ap --samples --check
 `--only` を付けたときは、絞った論点の図だけを判定する（他の論点の図にエラーがあっても、絞った論点の図は描く）。
 絞った論点の図にエラーがあれば、描かずに止めてその図を示す。`--check` を絞り無しで回すと全部の図を判定する。
 
-手本は `data/ap/material_figures/_samples/` にある（`_` 始まりは本番の入力に入らない）。
+手本は `data/ap/material_figures/_samples/` にある（`_` 始まりは本番の入力に入らない）。上の 4 つの型の例は、手本の図 1 の写し（例を変えたら手本も同じに直し、`--samples --check` が通ることを見る）。
 **書いたら必ず PNG を目で見ること。** 文字がはみ出していないか、矢印が箱に届いているか、
 凡例が重なっていないかは、検証では分からない。
 
@@ -212,6 +214,7 @@ PNG 化に使う PyMuPDF の SVG 描画には穴がある。ブラウザでは�
 
 ## 改訂履歴（本文は常に現在形。変えるときは該当の文を書き換え、ここに 1 行）
 
+- 2026-11-13: `blocks` と `matrix` の例を手本（`_samples/708-blocks.json`・`11-matrix.json`）と同じ中身に揃えた（箱は名前＋一言・線はすべて label 付き、`after` は教材に実在する見出し）。例は手本の写しであることを明記（台帳 `brain/spec_consolidation/material_figures_spec.md`）
 - 2026-11-13: `--only` のときは絞った論点の図だけを判定する（他の論点のエラーで絞った論点を描けなかった）。空や空白だけの `label` も「`label` の無い線」に数えることを明記（REQ-438。台帳 `brain/spec_consolidation/material_figures_spec.md`）
 - 2026-11-13: 「図だけで分かること」の判断基準（閉じた図のテスト・1 図 1 要点・型の選び方・blocks の箱は名前＋一言、線は label 必須）を足し、`--check` に blocks の線の label・1 行だけの箱の割合のエラーと、小さすぎる blocks の警告を足した（本人の決定。フィードバック cf94913b。台帳 `brain/spec_consolidation/material_figures_spec.md`）
 
