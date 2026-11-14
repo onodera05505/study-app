@@ -1,0 +1,72 @@
+{
+  "topic_id": 149,
+  "term": "SOA（Service Oriented Architecture：サービス指向アーキテクチャ）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### サービスという単位",
+      "caption": "上の段が業務、下の段が公開されたサービスです。業務は必要なサービスを呼び出して組み合わせ、強調した在庫照会は 2 つの業務が作り直さずに共用しています。",
+      "nodes": [
+        {
+          "id": "order",
+          "label": "受注業務\nサービスを順に呼ぶ",
+          "row": 0,
+          "col": 0,
+          "icon": "people"
+        },
+        {
+          "id": "ship",
+          "label": "出荷業務\n要るサービスだけ呼ぶ",
+          "row": 0,
+          "col": 2,
+          "icon": "people"
+        },
+        {
+          "id": "s1",
+          "label": "受注登録サービス\n受注を記録する",
+          "row": 1,
+          "col": 0,
+          "icon": "gear"
+        },
+        {
+          "id": "s3",
+          "label": "在庫照会サービス\n在庫の数を答える",
+          "row": 1,
+          "col": 1,
+          "icon": "gear",
+          "emphasis": true
+        },
+        {
+          "id": "s4",
+          "label": "出荷指示サービス\n倉庫に出荷を頼む",
+          "row": 1,
+          "col": 2,
+          "icon": "gear"
+        }
+      ],
+      "edges": [
+        {
+          "from": "order",
+          "to": "s1",
+          "label": "呼び出す"
+        },
+        {
+          "from": "order",
+          "to": "s3",
+          "label": "呼び出す"
+        },
+        {
+          "from": "ship",
+          "to": "s3",
+          "label": "同じものを呼ぶ"
+        },
+        {
+          "from": "ship",
+          "to": "s4",
+          "label": "呼び出す"
+        }
+      ]
+    }
+  ]
+}

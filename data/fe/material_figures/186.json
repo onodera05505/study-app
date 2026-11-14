@@ -1,0 +1,32 @@
+{
+  "topic_id": 186,
+  "term": "MIPS",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 計算の解き方",
+      "caption": "平均命令実行時間 20 ナノ秒の例で、段を下りながら単位を変えて MIPS まで進みます。矢印の上が各段でする計算です。",
+      "direction": "down",
+      "stages": [
+        {"label": "20 ナノ秒\n平均命令実行時間", "next_label": "秒に直す"},
+        {"label": "2×10 のマイナス 8 乗 秒\n1 命令にかかる秒数", "next_label": "1 秒をこの時間で割る"},
+        {"label": "5×10 の 7 乗 命令\n1 秒間に実行できる数", "next_label": "100 万で割る"},
+        {"label": "50 MIPS\n100 万命令単位の性能", "emphasis": true}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 単位の換算",
+      "caption": "単位が 1 段下がるごとに 1,000 分の 1 になります。ナノ秒は秒から 3 段下で、10 のマイナス 9 乗秒です。",
+      "direction": "down",
+      "stages": [
+        {"label": "秒\n基準の 1 秒", "next_label": "1,000 分の 1"},
+        {"label": "ミリ秒\n10 のマイナス 3 乗 秒", "next_label": "1,000 分の 1"},
+        {"label": "マイクロ秒\n10 のマイナス 6 乗 秒\n100 万分の 1 秒", "next_label": "1,000 分の 1"},
+        {"label": "ナノ秒\n10 のマイナス 9 乗 秒\n10 億分の 1 秒", "emphasis": true}
+      ]
+    }
+  ]
+}

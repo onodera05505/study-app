@@ -1,0 +1,70 @@
+{
+  "topic_id": 257,
+  "term": "無線LANセキュリティ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 公衆無線LANで効くもの",
+      "caption": "同じアクセスポイントにつながった端末どうしを結ぶ破線は、アクセスポイントが遮る経路です。外部との通信だけが中継されます。",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "端末 A\n利用者 1 人目",
+          "row": 1,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "b",
+          "label": "端末 B\n隣の席の利用者",
+          "row": 1,
+          "col": 2,
+          "icon": "device"
+        },
+        {
+          "id": "ap",
+          "label": "アクセスポイント\n端末間の通信を遮断",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "lock"
+        },
+        {
+          "id": "net",
+          "label": "インターネット\n外部のサービス",
+          "row": 0,
+          "col": 1,
+          "shape": "cloud"
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "ap",
+          "label": "外部宛ては通す",
+          "arrow": "both"
+        },
+        {
+          "from": "b",
+          "to": "ap",
+          "label": "外部宛ては通す",
+          "arrow": "both"
+        },
+        {
+          "from": "ap",
+          "to": "net",
+          "label": "外部へ中継する",
+          "arrow": "both"
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "label": "A と B の行き来は AP が遮断",
+          "style": "dashed",
+          "arrow": "none"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "topic_id": 83,
+  "term": "SIEM（Security Information and Event Management ）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### なぜログを集めるのか",
+      "caption": "別々の機器のログが SIEM に集まり、分析した警告が管理者へ届きます。遮断するかを決めるのは管理者です。",
+      "nodes": [
+        {
+          "id": "fw",
+          "label": "ファイアウォール\n外からの接続を記録",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "auth",
+          "label": "認証サーバ\nログインの成否を記録",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "px",
+          "label": "プロキシ\n外向きの通信を記録",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "siem",
+          "label": "SIEM\n時刻を揃えて相関分析",
+          "row": 1,
+          "col": 1,
+          "icon": "search",
+          "emphasis": true
+        },
+        {
+          "id": "adm",
+          "label": "管理者\n調べて遮断を判断",
+          "row": 1,
+          "col": 2,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "fw",
+          "to": "siem",
+          "label": "接続のログ"
+        },
+        {
+          "from": "auth",
+          "to": "siem",
+          "label": "認証のログ"
+        },
+        {
+          "from": "px",
+          "to": "siem",
+          "label": "通信のログ"
+        },
+        {
+          "from": "siem",
+          "to": "adm",
+          "label": "攻撃の兆候の警告"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "timeline",
+      "after": "### なぜログを集めるのか",
+      "caption": "点は別々の機器に残った出来事で、1 つずつではよくあることに見えます。時刻順につなぐと帯の疑いとして浮かびます。",
+      "axis": {
+        "label": "時刻（例）",
+        "ticks": [
+          "10:00",
+          "10:05",
+          "10:10",
+          "10:15",
+          "10:20"
+        ]
+      },
+      "events": [
+        {
+          "at": 0.5,
+          "label": "認証失敗が続く\n認証サーバのログ"
+        },
+        {
+          "at": 1.5,
+          "label": "認証に成功\n認証サーバのログ"
+        },
+        {
+          "at": 3,
+          "label": "見慣れない宛先へ大量の通信\nプロキシのログ"
+        },
+        {
+          "from": 0.3,
+          "to": 3.3,
+          "label": "つなぐと見える流れ\n侵入と持ち出しの疑い",
+          "emphasis": true
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "steps",
+      "after": "### 分析の流れ",
+      "caption": "SIEM の分析は上から順に 4 段で進み、段の間の矢印がその段で次へ渡す物です。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "収集\n各機器からログを集める",
+          "next_label": "形式のばらばらなログ"
+        },
+        {
+          "label": "正規化\n形式と時刻のずれを揃える",
+          "next_label": "揃ったログ"
+        },
+        {
+          "label": "相関分析\nルールや基準に当てはめる",
+          "icon": "search",
+          "next_label": "当てはまった並び",
+          "emphasis": true
+        },
+        {
+          "label": "警告\n管理者に示す",
+          "icon": "warning"
+        }
+      ]
+    }
+  ]
+}

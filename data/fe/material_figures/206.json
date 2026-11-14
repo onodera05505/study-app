@@ -1,0 +1,68 @@
+{
+  "topic_id": 206,
+  "term": "絶対パス名",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 相対パス名との使い分け",
+      "caption": "同じファイルへ、絶対パス名はルートから下り、相対パス名はカレントディレクトリから「..」で上ってから下ります。共通の道筋は後半だけです。",
+      "nodes": [
+        {
+          "id": "root",
+          "label": "/ ルート\n絶対パス名の起点",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "home",
+          "label": "home\n2 本の道筋が合流する",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "user",
+          "label": "user\nカレント＝相対の起点",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "docs",
+          "label": "docs\n目的のファイルの親",
+          "row": 2,
+          "col": 2
+        },
+        {
+          "id": "file",
+          "label": "a.txt 目的のファイル\n絶対 /home/docs/a.txt\n相対 ../docs/a.txt",
+          "row": 3,
+          "col": 2,
+          "shape": "round",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "root",
+          "to": "home",
+          "label": "絶対：/ から下る"
+        },
+        {
+          "from": "user",
+          "to": "home",
+          "label": "相対：.. で 1 つ上へ"
+        },
+        {
+          "from": "home",
+          "to": "docs",
+          "label": "共通：docs へ下る"
+        },
+        {
+          "from": "docs",
+          "to": "file",
+          "label": "共通：a.txt に着く"
+        }
+      ]
+    }
+  ]
+}

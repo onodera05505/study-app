@@ -1,0 +1,101 @@
+{
+  "topic_id": 100,
+  "term": "ファンクションポイント法",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 何を数えるのか",
+      "caption": "線の名前が数える 5 種類です。上下の線は利用者とのやり取り、左右の線はファイルとの関係で、境界の内側のファイルか、他システムのファイルを参照するだけかで種類が分かれます。",
+      "nodes": [
+        {
+          "id": "u",
+          "label": "利用者（登録と帳票）\n画面で入れ、帳票で受け取る",
+          "row": 0,
+          "col": 1,
+          "icon": "person"
+        },
+        {
+          "id": "eif",
+          "label": "他システムのファイル\n境界の外にある",
+          "row": 1,
+          "col": 0,
+          "shape": "cylinder"
+        },
+        {
+          "id": "sys",
+          "label": "数えるシステム\n境界の内側",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "gear"
+        },
+        {
+          "id": "ilf",
+          "label": "自分のファイル\n自分で保持して更新",
+          "row": 1,
+          "col": 2,
+          "shape": "cylinder"
+        },
+        {
+          "id": "q",
+          "label": "利用者（検索）\n加工せずにそのまま見る",
+          "row": 2,
+          "col": 1,
+          "icon": "search"
+        }
+      ],
+      "edges": [
+        {
+          "from": "u",
+          "to": "sys",
+          "label": "外部入力"
+        },
+        {
+          "from": "sys",
+          "to": "u",
+          "label": "外部出力"
+        },
+        {
+          "from": "q",
+          "to": "sys",
+          "label": "外部照会",
+          "arrow": "both"
+        },
+        {
+          "from": "sys",
+          "to": "ilf",
+          "label": "内部論理ファイル",
+          "arrow": "both"
+        },
+        {
+          "from": "eif",
+          "to": "sys",
+          "label": "外部インタフェースファイル",
+          "style": "dashed"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 計算の解き方",
+      "caption": "上から順に、種類ごとの点数を出し、足してから最後に補正係数を掛けます。補正は合計に 1 回だけ掛けます。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "種類ごとに個数×重み\n入力 1×4・出力 2×5\nファイル 1×10",
+          "next_label": "4・10・10 の点数"
+        },
+        {
+          "label": "足して合計\n4＋10＋10＝24",
+          "next_label": "補正前の合計 24"
+        },
+        {
+          "label": "補正係数を掛ける\n24×0.75＝18 が FP 値",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

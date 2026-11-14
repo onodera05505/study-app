@@ -1,0 +1,19 @@
+{
+  "topic_id": 150,
+  "term": "IoT（Internet of Things）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 4 つの基本要素",
+      "caption": "IoT のデータは上の段から順に流れます。各段の 2 行目がその段を担うもので、段の間の矢印は次の段へ渡すものです。",
+      "direction": "down",
+      "stages": [
+        {"label": "収集\nセンサで温度や振動を測る", "icon": "search", "next_label": "測った値"},
+        {"label": "伝送\n無線や通信回線で運ぶ", "icon": "network", "next_label": "届いた値"},
+        {"label": "解析\n異常な値かを判定する", "icon": "gear", "next_label": "判定の結果"},
+        {"label": "活用\n作業の指示や機器の制御", "icon": "person"}
+      ]
+    }
+  ]
+}

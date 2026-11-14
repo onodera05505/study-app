@@ -1,0 +1,37 @@
+{
+  "topic_id": 27,
+  "term": "アクティビティ図",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 流れを表す部品",
+      "caption": "ひし形の分岐では条件でどちらか一方へ進み、フォークでは両方へ同時に進みます。ジョインは並行した処理が両方終わるのを待ちます。",
+      "nodes": [
+        {"id": "st", "label": "開始\n黒く塗った丸", "row": 0, "col": 0, "shape": "round"},
+        {"id": "rv", "label": "注文を受ける\n角の丸い四角＝処理", "row": 0, "col": 1, "shape": "round"},
+        {"id": "dc", "label": "在庫の確認\nひし形＝条件で分岐", "row": 0, "col": 2, "emphasis": true},
+        {"id": "od", "label": "取り寄せる\n在庫が無いときだけ", "row": 0, "col": 3, "shape": "round"},
+        {"id": "pk", "label": "梱包する\n請求と同時に進む", "row": 1, "col": 1, "shape": "round"},
+        {"id": "fk", "label": "フォーク\n太い線＝並行に分かれる", "row": 1, "col": 2, "emphasis": true},
+        {"id": "bl", "label": "請求する\n梱包と同時に進む", "row": 1, "col": 3, "shape": "round"},
+        {"id": "ed", "label": "終了\n二重の丸", "row": 2, "col": 0, "shape": "round"},
+        {"id": "sh", "label": "発送する\n角の丸い四角＝処理", "row": 2, "col": 1, "shape": "round"},
+        {"id": "jn", "label": "ジョイン\n太い線＝両方を待つ", "row": 2, "col": 2}
+      ],
+      "edges": [
+        {"from": "st", "to": "rv", "label": "始まる"},
+        {"from": "rv", "to": "dc", "label": "注文の内容"},
+        {"from": "dc", "to": "od", "label": "在庫なし"},
+        {"from": "od", "to": "dc", "label": "入荷したら確かめ直す"},
+        {"from": "dc", "to": "fk", "label": "在庫あり"},
+        {"from": "fk", "to": "pk", "label": "同時に始める"},
+        {"from": "fk", "to": "bl", "label": "同時に始める"},
+        {"from": "pk", "to": "jn", "label": "梱包が済んだ"},
+        {"from": "bl", "to": "jn", "label": "請求が済んだ"},
+        {"from": "jn", "to": "sh", "label": "両方そろった"},
+        {"from": "sh", "to": "ed", "label": "終わる"}
+      ]
+    }
+  ]
+}

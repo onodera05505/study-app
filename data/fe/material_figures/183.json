@@ -1,0 +1,43 @@
+{
+  "topic_id": 183,
+  "term": "Java",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 仮想マシンで動かすしくみ",
+      "caption": "1 回のコンパイルでできたバイトコードを、環境ごとの JVM がそれぞれ解釈して実行します。CPU や OS の違いは右の列の JVM が吸収します。",
+      "nodes": [
+        {"id": "src", "label": "ソースコード\n人が書いた Java", "row": 1, "col": 0, "icon": "document"},
+        {"id": "bc", "label": "バイトコード\nCPU に依らない\n中間コード", "row": 1, "col": 1, "emphasis": true},
+        {"id": "win", "label": "JVM（Windows）\nこの環境用に\n解釈して実行", "row": 0, "col": 2, "icon": "device"},
+        {"id": "lin", "label": "JVM（Linux）\nこの環境用に\n解釈して実行", "row": 1, "col": 2, "icon": "device"},
+        {"id": "mac", "label": "JVM（macOS）\nこの環境用に\n解釈して実行", "row": 2, "col": 2, "icon": "device"}
+      ],
+      "edges": [
+        {"from": "src", "to": "bc", "label": "コンパイルする"},
+        {"from": "bc", "to": "win", "label": "同じ物を配る"},
+        {"from": "bc", "to": "lin", "label": "同じ物を配る"},
+        {"from": "bc", "to": "mac", "label": "同じ物を配る"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### メモリの扱い",
+      "caption": "矢印は変数からオブジェクトへの参照です。参照の矢印が 1 本も来ない Y を、ガーベジコレクションが見つけて自動で解放します。",
+      "nodes": [
+        {"id": "a", "label": "変数 a\nX を指している", "row": 0, "col": 0},
+        {"id": "b", "label": "変数 b\nX を指している", "row": 1, "col": 0},
+        {"id": "x", "label": "オブジェクト X\n参照がある＝使用中", "row": 0, "col": 1},
+        {"id": "y", "label": "オブジェクト Y\nどこからも\n参照されていない", "row": 1, "col": 1, "emphasis": true},
+        {"id": "gc", "label": "ガーベジコレクション\n処理系が自動で動く", "row": 1, "col": 2, "icon": "gear"}
+      ],
+      "edges": [
+        {"from": "a", "to": "x", "label": "参照"},
+        {"from": "b", "to": "x", "label": "参照"},
+        {"from": "gc", "to": "y", "label": "参照の無い領域を回収"}
+      ]
+    }
+  ]
+}

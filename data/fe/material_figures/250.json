@@ -1,0 +1,131 @@
+{
+  "topic_id": 250,
+  "term": "IDS（Intrusion Detection System：侵入検知システム）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "上の段が通信の経路です。IPS は経路の上にいるので通信を止められ、強調した IDS は経路の脇で写しを見るので、見つけて知らせるところまでを受け持ちます。",
+      "nodes": [
+        {
+          "id": "net",
+          "label": "インターネット\n外から来る通信",
+          "row": 0,
+          "col": 0,
+          "shape": "round",
+          "icon": "cloud"
+        },
+        {
+          "id": "ips",
+          "label": "IPS\n経路上で遮断する",
+          "row": 0,
+          "col": 1,
+          "icon": "lock"
+        },
+        {
+          "id": "sw",
+          "label": "スイッチ\n通信を写して渡す",
+          "row": 0,
+          "col": 2,
+          "icon": "network"
+        },
+        {
+          "id": "srv",
+          "label": "社内のサーバ\n守る相手",
+          "row": 0,
+          "col": 3,
+          "icon": "server"
+        },
+        {
+          "id": "ids",
+          "label": "IDS\n通信の写しを監視",
+          "row": 1,
+          "col": 2,
+          "icon": "search",
+          "emphasis": true
+        },
+        {
+          "id": "adm",
+          "label": "管理者\n知らせを受けて対処",
+          "row": 1,
+          "col": 3,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "net",
+          "to": "ips",
+          "label": "通信"
+        },
+        {
+          "from": "ips",
+          "to": "sw",
+          "label": "不正な物を止めた残り"
+        },
+        {
+          "from": "sw",
+          "to": "srv",
+          "label": "通信"
+        },
+        {
+          "from": "sw",
+          "to": "ids",
+          "label": "写しを受け取る",
+          "style": "dashed"
+        },
+        {
+          "from": "ids",
+          "to": "adm",
+          "label": "異常を通知"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### 検知の方式と誤りの扱い",
+      "caption": "2 つの検知の方式を、照らす物と攻撃の種類で並べます。強調した未知の攻撃の行では、得手と不得手が左右で逆になります。",
+      "x": {
+        "label": "検知の方式",
+        "values": [
+          "シグネチャ型",
+          "アノマリ型"
+        ]
+      },
+      "y": {
+        "label": "観点",
+        "values": [
+          "照らす物",
+          "既知の攻撃",
+          "未知の攻撃"
+        ]
+      },
+      "cells": [
+        [
+          "攻撃の定義\n既知の特徴を登録",
+          "普段の様子\n通信量や使われ方"
+        ],
+        [
+          "強い\n定義と合えば\n取りこぼしにくい",
+          "反応する\n普段と違えば拾う"
+        ],
+        [
+          "弱い\n定義に無いので\n素通りする",
+          "反応する\n正常な変化にも\n反応しやすい"
+        ]
+      ],
+      "emphasis": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ]
+      ]
+    }
+  ]
+}

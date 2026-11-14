@@ -1,0 +1,113 @@
+{
+  "topic_id": 221,
+  "term": "カーソル",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### なぜカーソルが要るのか",
+      "caption": "SQL が返す行の集合と、1 件ずつ処理するプログラムの間にカーソルが立ちます。カーソルが指す 1 行だけがホスト変数へ渡ります。",
+      "nodes": [
+        {
+          "id": "rs",
+          "label": "問合せの結果\n条件に合う行の集合",
+          "row": 0,
+          "col": 0,
+          "icon": "database"
+        },
+        {
+          "id": "cur",
+          "label": "カーソル\n今見ている 1 行を指す",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "hv",
+          "label": "ホスト変数 :x\nプログラム側の 1 件",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "proc",
+          "label": "手続き型の処理\n1 件ずつ順に処理",
+          "row": 1,
+          "col": 2,
+          "icon": "gear"
+        }
+      ],
+      "edges": [
+        {
+          "from": "rs",
+          "to": "cur",
+          "label": "先頭から位置を進める"
+        },
+        {
+          "from": "cur",
+          "to": "hv",
+          "label": "FETCH で 1 行ずつ"
+        },
+        {
+          "from": "hv",
+          "to": "proc",
+          "label": "1 件の値"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 使う順番",
+      "caption": "カーソルを使う 4 つの命令を、DECLARE から矢印の順にたどります。FETCH だけが自分に戻って繰り返し、行が尽きたら CLOSE へ抜けます。",
+      "nodes": [
+        {
+          "id": "d",
+          "label": "DECLARE\n問合せに名前を付ける",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "o",
+          "label": "OPEN\n問合せを実行する",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "f",
+          "label": "FETCH\n次の行を変数へ",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "c",
+          "label": "CLOSE\n領域を解放する",
+          "row": 1,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "d",
+          "to": "o",
+          "label": "たどる問合せ"
+        },
+        {
+          "from": "o",
+          "to": "f",
+          "label": "位置は先頭の前"
+        },
+        {
+          "from": "f",
+          "to": "f",
+          "label": "行がある間は次の行へ"
+        },
+        {
+          "from": "f",
+          "to": "c",
+          "label": "行が尽きたら"
+        }
+      ]
+    }
+  ]
+}

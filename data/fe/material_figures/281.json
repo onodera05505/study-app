@@ -1,0 +1,115 @@
+{
+  "topic_id": 281,
+  "term": "ステークホルダ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 一連のプロセスの中での位置",
+      "caption": "要件定義は、強調した「誰が関わるかの識別」から始まります。聞いた要望と制約を要件に落とし、合意を取るところまでが要件定義です。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "ステークホルダの識別\n誰が関わるかを洗い出す",
+          "icon": "people",
+          "emphasis": true,
+          "next_label": "要望を聞く相手の一覧"
+        },
+        {
+          "label": "ニーズと要望を聞く\n業務で何を実現したいか",
+          "next_label": "集めた要望"
+        },
+        {
+          "label": "制約条件を洗い出す\n予算・期限・法令・連携",
+          "next_label": "要望と守るべき枠"
+        },
+        {
+          "label": "要件に落とす\n業務・機能・非機能",
+          "next_label": "要件の案"
+        },
+        {
+          "label": "合意して要件仕様に\n優先順位を決めてまとめる",
+          "icon": "check"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### なぜ識別から始めるのか",
+      "caption": "利用部門と運用部門の要望は、強調した箱でぶつかります。見落としやすい立場の要望も集めたうえで、どれをどこまで採るかの優先順位を決めます。",
+      "nodes": [
+        {
+          "id": "user",
+          "label": "利用部門\n業務で使う",
+          "row": 0,
+          "col": 0,
+          "icon": "people"
+        },
+        {
+          "id": "clash",
+          "label": "要望がぶつかる\n機能を足すほど\n運用の手間も増える",
+          "row": 0,
+          "col": 1,
+          "icon": "warning",
+          "emphasis": true
+        },
+        {
+          "id": "ops",
+          "label": "運用部門\n日々動かす",
+          "row": 0,
+          "col": 2,
+          "icon": "people"
+        },
+        {
+          "id": "gov",
+          "label": "監督官庁\n見落としやすい立場",
+          "row": 1,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "prio",
+          "label": "優先順位を決める\nどの要望をどこまで採るか",
+          "row": 1,
+          "col": 1,
+          "icon": "gear"
+        },
+        {
+          "id": "mnt",
+          "label": "保守の委託先\n見落としやすい立場",
+          "row": 1,
+          "col": 2,
+          "icon": "building"
+        }
+      ],
+      "edges": [
+        {
+          "from": "user",
+          "to": "clash",
+          "label": "機能を多く"
+        },
+        {
+          "from": "ops",
+          "to": "clash",
+          "label": "手間を少なく"
+        },
+        {
+          "from": "clash",
+          "to": "prio",
+          "label": "両立しない要望"
+        },
+        {
+          "from": "gov",
+          "to": "prio",
+          "label": "法令を守る"
+        },
+        {
+          "from": "mnt",
+          "to": "prio",
+          "label": "保守しやすく"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="338" viewBox="0 0 640 338">
+<rect x="0.5" y="0.5" width="639" height="337" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(52.2 20)">
+<g transform="translate(37 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6.6"/><circle cx="12" cy="12" r="2.4"/><path d="M 18.6 12 L 21.6 12 M 16.67 16.67 L 18.79 18.79 M 12 18.6 L 12 21.6 M 7.33 16.67 L 5.21 18.79 M 5.4 12 L 2.4 12 M 7.33 7.33 L 5.21 5.21 M 12 5.4 L 12 2.4 M 16.67 7.33 L 18.79 5.21" stroke-width="3" stroke-linecap="butt"/></g>
+<g transform="translate(256.8 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.5" rx="7" ry="2.6"/><path d="M5 5.5 V18.5 C5 21.2 19 21.2 19 18.5 V5.5"/><path d="M5 12 C5 14.7 19 14.7 19 12"/></g>
+<g transform="translate(476.6 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2 L21.4 20 H2.6 Z"/><path d="M12 9 V14"/><circle cx="12" cy="17" r="1" fill="#1f2937" stroke="none"/></g>
+<g transform="translate(0 28)">
+<line x1="48" y1="34" x2="48" y2="270" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="267.8" y1="34" x2="267.8" y2="270" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="487.6" y1="34" x2="487.6" y2="270" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">プロセッサ</text>
+<rect x="219.8" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="267.8" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">スタック</text>
+<rect x="439.6" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="487.6" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">割込み処理</text>
+<polyline points="51,68 264.8,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="264.8,68 256.8,71.6 256.8,64.4" fill="#1f2937"/>
+<text x="157.9" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 命令アドレスレジスタの値を退避</text>
+<rect x="63.9" y="73" width="188" height="16" rx="3" fill="#ffffff"/>
+<text x="157.9" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">再開する位置を決めるのはこの値</text>
+<polyline points="51,124 484.6,124" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="484.6,124 476.6,127.6 476.6,120.4" fill="#1f2937"/>
+<text x="267.8" y="117" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 割込み処理へ移る</text>
+<polyline points="484.6,164 51,164" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,164 59,160.4 59,167.6" fill="#1f2937"/>
+<text x="267.8" y="157" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 処理を終えて戻る</text>
+<polyline points="264.8,204 51,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,204 59,200.4 59,207.6" fill="#1f2937"/>
+<text x="157.9" y="197" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 退避した値をレジスタへ戻す</text>
+<polyline points="48,236 74,236 74,250 50,250" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="50,250 58,246.4 58,253.6" fill="#1f2937"/>
+<text x="82" y="244" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. 中断点の命令から再開</text>
+</g>
+</g>
+</svg>

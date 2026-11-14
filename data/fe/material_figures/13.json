@@ -1,0 +1,160 @@
+{
+  "topic_id": 13,
+  "term": "命題論理",
+  "figures": [
+    {
+      "id": 1,
+      "type": "venn",
+      "after": "### 基本の演算と真理値",
+      "caption": "円の中は、その命題が真の組合せです。領域ごとに真になる演算を書いています。xor だけは重なりで偽になります。",
+      "layout": "overlap",
+      "universe": "P と Q の真偽の組合せ",
+      "sets": [
+        {
+          "id": "p",
+          "label": "P が真"
+        },
+        {
+          "id": "q",
+          "label": "Q が真"
+        }
+      ],
+      "regions": [
+        {
+          "in": [
+            "p"
+          ],
+          "label": "P だけ真\nor と xor が真"
+        },
+        {
+          "in": [
+            "q"
+          ],
+          "label": "Q だけ真\nor と xor が真"
+        },
+        {
+          "in": [
+            "p",
+            "q"
+          ],
+          "label": "両方とも真\nand と or が真",
+          "emphasis": true
+        },
+        {
+          "in": [],
+          "label": "どちらも偽\nどの演算も偽"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 真理値を順に確定させる解き方",
+      "caption": "P が真、not P or Q が真、not Q or R が真の例です。決まった値を次の式へ持ち込むと、Q と R が順に真と決まります。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "P を真と置く\n与えられた条件",
+          "next_label": "not P は偽になる"
+        },
+        {
+          "label": "Q が真に決まる\nnot P or Q が真で\nnot P が偽だから",
+          "next_label": "not Q は偽になる",
+          "emphasis": true
+        },
+        {
+          "label": "R が真に決まる\nnot Q or R が真で\nnot Q が偽だから"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "venn",
+      "after": "### 覚えておく同値変形",
+      "caption": "「P ならば Q」の値を領域ごとに書いています。偽になるのは P が真で Q が偽の 1 か所だけで、not P or Q と同じ値です。",
+      "layout": "overlap",
+      "universe": "P と Q の真偽の組合せ",
+      "sets": [
+        {
+          "id": "p",
+          "label": "P が真"
+        },
+        {
+          "id": "q",
+          "label": "Q が真"
+        }
+      ],
+      "regions": [
+        {
+          "in": [
+            "p"
+          ],
+          "label": "P 真で Q 偽\nならばは偽",
+          "emphasis": true
+        },
+        {
+          "in": [
+            "q"
+          ],
+          "label": "P 偽で Q 真\nならばは真"
+        },
+        {
+          "in": [
+            "p",
+            "q"
+          ],
+          "label": "両方とも真\nならばは真"
+        },
+        {
+          "in": [],
+          "label": "どちらも偽\nならばは真"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "matrix",
+      "after": "### 覚えておく同値変形",
+      "caption": "列ごとに、否定した式と同じ値になる式を上から並べています。否定を括弧の中へ入れると、and と or が入れ替わります。",
+      "x": {
+        "label": "否定する式",
+        "values": [
+          "and の否定",
+          "or の否定"
+        ]
+      },
+      "y": {
+        "label": "見るもの",
+        "values": [
+          "元の式",
+          "同じ値の式",
+          "真になる組合せ"
+        ]
+      },
+      "cells": [
+        [
+          "not(P and Q)\n「両方とも真」\nを打ち消す",
+          "not(P or Q)\n「どちらかが真」\nを打ち消す"
+        ],
+        [
+          "not P or not Q\n否定を中へ入れ\nand が or に変わる",
+          "not P and not Q\n否定を中へ入れ\nor が and に変わる"
+        ],
+        [
+          "P と Q の\n少なくとも片方が偽\n（4 通り中 3 通り）",
+          "P も Q も偽\n（4 通り中 1 通り）"
+        ]
+      ],
+      "emphasis": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    }
+  ]
+}

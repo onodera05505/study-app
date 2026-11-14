@@ -1,0 +1,23 @@
+{
+  "topic_id": 152,
+  "term": "シーケンス図",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### 図の読み方",
+      "caption": "横に並ぶのがオブジェクト、縦が時間で、メッセージは上から下へ順に送られます。呼び出した側は戻りが返ってから先へ進みます。",
+      "actors": [
+        {"id": "ui", "label": "画面"},
+        {"id": "order", "label": "注文"},
+        {"id": "stock", "label": "在庫"}
+      ],
+      "steps": [
+        {"from": "ui", "to": "order", "label": "呼び出し：注文する"},
+        {"from": "order", "to": "stock", "label": "呼び出し：在庫を確かめる"},
+        {"from": "stock", "to": "order", "label": "戻り：在庫あり"},
+        {"from": "order", "to": "ui", "label": "戻り：注文を受け付けた", "note": "下にあるメッセージほど後に起きる"}
+      ]
+    }
+  ]
+}

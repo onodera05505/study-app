@@ -1,0 +1,40 @@
+{
+  "topic_id": 112,
+  "term": "開発・運用・保守プロセスの信頼性・効率性",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 工程ごとのチェックポイント",
+      "caption": "監査は工程の流れに沿って進み、各段の 2 行目がその工程で監査人が確かめる点です。矢印は次の工程へ渡す成果物です。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "要件定義\n要求が文書で承認されているか",
+          "icon": "document",
+          "next_label": "承認された要求"
+        },
+        {
+          "label": "設計\n要件との対応が追えるか",
+          "icon": "search",
+          "next_label": "設計書"
+        },
+        {
+          "label": "テスト\nケースの網羅と双方の承認",
+          "icon": "check",
+          "next_label": "承認されたテスト結果",
+          "emphasis": true
+        },
+        {
+          "label": "移行\n切戻しの判断基準があるか",
+          "icon": "gear",
+          "next_label": "切り替えたシステム"
+        },
+        {
+          "label": "運用・保守\n変更の記録が残っているか",
+          "icon": "arrow-cycle"
+        }
+      ]
+    }
+  ]
+}

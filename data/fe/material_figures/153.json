@@ -1,0 +1,25 @@
+{
+  "topic_id": 153,
+  "term": "USB",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 接続と給電のしくみ",
+      "caption": "接続は PC を根とする木の形で、ハブが枝を増やします。どの機器も PC から 1 本の道でつながり、ケーブルで電力も受け取れます。",
+      "nodes": [
+        {"id": "pc", "label": "PC\nホスト（木の根）", "row": 0, "col": 0, "icon": "device", "emphasis": true},
+        {"id": "kb", "label": "キーボード\nPC に直につなぐ", "row": 0, "col": 1},
+        {"id": "hub", "label": "ハブ\n枝を分けて増やす", "row": 1, "col": 1},
+        {"id": "pr", "label": "プリンタ\nハブの先の枝", "row": 1, "col": 2},
+        {"id": "disk", "label": "外付けディスク\nハブの先の枝", "row": 2, "col": 2}
+      ],
+      "edges": [
+        {"from": "pc", "to": "kb", "label": "データ ＋ 給電"},
+        {"from": "pc", "to": "hub", "label": "データ ＋ 給電"},
+        {"from": "hub", "to": "pr", "label": "データ"},
+        {"from": "hub", "to": "disk", "label": "データ ＋ 給電"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "topic_id": 185,
+  "term": "DTD（Document Type Definition： 文書型定義）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "venn",
+      "after": "### 整形式と妥当",
+      "caption": "妥当な文書は整形式の内側にあります。まず外の円（整形式）に入るかを見て、次に内の円（DTD の規則どおり）に入るかを見ます。",
+      "layout": "nested",
+      "universe": "XML として書いた文書",
+      "sets": [
+        {"id": "wf", "label": "整形式"},
+        {"id": "valid", "label": "妥当"}
+      ],
+      "regions": [
+        {"in": ["wf"], "label": "整形式だが妥当でない\nタグは正しいが\nDTD の規則から外れる"},
+        {"in": ["wf", "valid"], "label": "妥当\nDTD の規則どおり", "emphasis": true},
+        {"in": [], "label": "整形式でない\nタグが閉じていない"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### 混同しやすい用語",
+      "caption": "3 つを、何を受け持つかと、どう書くかで比べています。構造の規則を書くのは DTD と XML Schema で、XML 宣言は構造を決めません。",
+      "x": {"label": "用語", "values": ["DTD", "XML 宣言", "XML Schema"]},
+      "y": {"label": "観点", "values": ["受け持つもの", "書き方"]},
+      "cells": [
+        ["構造の規則\n要素・属性・\n入れ子の並び", "バージョンと\n文字コード", "構造の規則\nデータ型まで\n細かく指定"],
+        ["DTD 独自の書き方\n文書の中か\n別ファイルに置く", "文書の先頭に\n置く 1 行", "XML の文法で\n書く"]
+      ],
+      "emphasis": [[0, 0]]
+    }
+  ]
+}

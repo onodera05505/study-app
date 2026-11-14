@@ -1,0 +1,40 @@
+{
+  "topic_id": 272,
+  "term": "サージ防護デバイス",
+  "figures": [
+    {
+      "id": 1, "type": "blocks", "after": "### 雷の過電圧はどこから入るか",
+      "caption": "雷の過電圧は電源線と通信線の 2 本の経路から機器へ向かいます。経路ごとに SPD を挟み、サージの電流を接地から大地へ逃がします。",
+      "nodes": [
+        {"id": "th", "label": "近くへの落雷\n線に高い電圧を誘起", "row": 1, "col": 0, "icon": "warning"},
+        {"id": "pw", "label": "電源線\n引込口から入る", "row": 0, "col": 1},
+        {"id": "cm", "label": "通信線\nLAN・電話線から入る", "row": 2, "col": 1, "icon": "network"},
+        {"id": "spd1", "label": "SPD\n電源側に挟む", "row": 0, "col": 2},
+        {"id": "spd2", "label": "SPD\n通信側にも挟む", "row": 2, "col": 2, "emphasis": true},
+        {"id": "gnd", "label": "接地\n大地へ逃がす", "row": 1, "col": 2},
+        {"id": "dev", "label": "機器\nサーバ・通信機器", "row": 1, "col": 3, "icon": "server"}
+      ],
+      "edges": [
+        {"from": "th", "to": "pw", "label": "誘起された過電圧"},
+        {"from": "th", "to": "cm", "label": "誘起された過電圧"},
+        {"from": "pw", "to": "spd1", "label": "過電圧が届く"},
+        {"from": "cm", "to": "spd2", "label": "過電圧が届く"},
+        {"from": "spd1", "to": "gnd", "label": "サージ電流"},
+        {"from": "spd2", "to": "gnd", "label": "サージ電流"},
+        {"from": "spd1", "to": "dev", "label": "抑えた電圧"},
+        {"from": "spd2", "to": "dev", "label": "抑えた電圧"}
+      ]
+    },
+    {
+      "id": 2, "type": "matrix", "after": "### 停電対策との役割分担",
+      "caption": "列が電源に関わる 3 つの装置、行が観点です。強調した SPD だけが電圧の高さに備え、残りの 2 つは電気が来ないことに備えます。",
+      "x": {"label": "装置", "values": ["SPD", "UPS", "自家発電装置"]},
+      "y": {"label": "観点", "values": ["備える事象", "働き"]},
+      "cells": [
+        ["過電圧\n雷サージが\n流れ込む", "瞬断・短い停電\n電気が少しの間\n来ない", "長い停電\n電気が長い間\n来ない"],
+        ["大地へ逃がす\n機器にかかる\n電圧を抑える", "電池から供給\n安全に止める\n時間を稼ぐ", "燃料で発電\n電気の供給を\n続ける"]
+      ],
+      "emphasis": [[0, 0], [1, 0]]
+    }
+  ]
+}

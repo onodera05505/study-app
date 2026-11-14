@@ -1,0 +1,18 @@
+{
+  "topic_id": 202,
+  "term": "ポーリング制御",
+  "figures": [
+    {
+      "id": 1, "type": "sequence", "after": "### しくみ",
+      "caption": "問い合わせはいつも CPU の側から始まります。準備ができる前の問い合わせは空振りで、その分の CPU 時間が使われます。",
+      "actors": [{"id": "cpu", "label": "CPU", "icon": "gear"}, {"id": "dev", "label": "入出力装置", "icon": "device"}],
+      "steps": [
+        {"from": "cpu", "to": "dev", "label": "状態レジスタを読む（1 回目）"},
+        {"from": "dev", "to": "cpu", "label": "ビジー（まだ処理中）", "note": "空振り。この問い合わせの CPU 時間は無駄になる"},
+        {"from": "cpu", "to": "dev", "label": "間隔をおいて、また状態を読む", "note": "準備ができるまで何度でも繰り返す"},
+        {"from": "dev", "to": "cpu", "label": "準備完了"},
+        {"from": "cpu", "to": "dev", "label": "データを渡す"}
+      ]
+    }
+  ]
+}

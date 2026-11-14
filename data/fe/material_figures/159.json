@@ -1,0 +1,150 @@
+{
+  "topic_id": 159,
+  "term": "C&C サーバ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### ボットネットのしくみ",
+      "caption": "矢印は命令と攻撃の向きです。感染端末は自分から C&C サーバへ命令を取りに行き、標的を攻撃するのは感染端末なので、攻撃者は奥に隠れます。",
+      "nodes": [
+        {
+          "id": "atk",
+          "label": "攻撃者\n直接は攻撃しない",
+          "row": 1,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "cc",
+          "label": "C&C サーバ\n命令を置き結果を集める",
+          "row": 1,
+          "col": 1,
+          "icon": "server",
+          "emphasis": true
+        },
+        {
+          "id": "b1",
+          "label": "感染端末 1\n命令どおり動く",
+          "row": 0,
+          "col": 2,
+          "icon": "device"
+        },
+        {
+          "id": "b2",
+          "label": "感染端末 2\n命令どおり動く",
+          "row": 1,
+          "col": 2,
+          "icon": "device"
+        },
+        {
+          "id": "b3",
+          "label": "感染端末 3\n命令どおり動く",
+          "row": 2,
+          "col": 2,
+          "icon": "device"
+        },
+        {
+          "id": "tg",
+          "label": "標的\n発信元は感染端末に見える",
+          "row": 1,
+          "col": 3,
+          "icon": "building"
+        }
+      ],
+      "edges": [
+        {
+          "from": "atk",
+          "to": "cc",
+          "label": "命令を登録"
+        },
+        {
+          "from": "b1",
+          "to": "cc",
+          "label": "命令を取りに行く"
+        },
+        {
+          "from": "b2",
+          "to": "cc",
+          "label": "命令を取りに行く"
+        },
+        {
+          "from": "b3",
+          "to": "cc",
+          "label": "命令を取りに行く"
+        },
+        {
+          "from": "b1",
+          "to": "tg",
+          "label": "攻撃"
+        },
+        {
+          "from": "b2",
+          "to": "tg",
+          "label": "攻撃"
+        },
+        {
+          "from": "b3",
+          "to": "tg",
+          "label": "攻撃"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 対策の考え方",
+      "caption": "社内から外へ出る通信をすべて出口に集めます。出口で記録を残し、C&C サーバ宛ての通信を止めれば、ボットは命令を受け取れません。",
+      "nodes": [
+        {
+          "id": "bot",
+          "label": "感染端末\n社内で命令を待つ",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "gw",
+          "label": "プロキシ・ファイアウォール\n外への通信を集める出口",
+          "row": 0,
+          "col": 1,
+          "icon": "lock",
+          "emphasis": true
+        },
+        {
+          "id": "log",
+          "label": "通信の記録\n不審な宛先を探す",
+          "row": 1,
+          "col": 1,
+          "shape": "cylinder",
+          "icon": "search"
+        },
+        {
+          "id": "cc",
+          "label": "C&C サーバ\n社外の指令役",
+          "row": 0,
+          "col": 2,
+          "icon": "server"
+        }
+      ],
+      "edges": [
+        {
+          "from": "bot",
+          "to": "gw",
+          "label": "外への通信"
+        },
+        {
+          "from": "gw",
+          "to": "log",
+          "label": "宛先と間隔を記録"
+        },
+        {
+          "from": "gw",
+          "to": "cc",
+          "label": "遮断する",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

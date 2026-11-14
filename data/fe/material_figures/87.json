@@ -1,0 +1,105 @@
+{
+  "topic_id": 87,
+  "term": "WPA3",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "WPA3 が暗号化するのは、端末とアクセスポイントの間の電波の区間だけです。有線に入った先は別の仕組みで守ります。",
+      "nodes": [
+        {
+          "id": "dev",
+          "label": "端末\nスマートフォンや PC",
+          "row": 0,
+          "col": 0,
+          "icon": "phone",
+          "emphasis": true
+        },
+        {
+          "id": "ap",
+          "label": "アクセスポイント\n無線と有線の境目",
+          "row": 0,
+          "col": 1,
+          "icon": "network",
+          "emphasis": true
+        },
+        {
+          "id": "lan",
+          "label": "社内の有線 LAN\nケーブルの区間",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "web",
+          "label": "Web サーバ\n通信の相手",
+          "row": 0,
+          "col": 3,
+          "icon": "server"
+        }
+      ],
+      "edges": [
+        {
+          "from": "dev",
+          "to": "ap",
+          "label": "WPA3 で暗号化（無線の区間）",
+          "arrow": "both"
+        },
+        {
+          "from": "ap",
+          "to": "lan",
+          "label": "WPA3 の守りはここまで",
+          "arrow": "both",
+          "style": "dashed"
+        },
+        {
+          "from": "lan",
+          "to": "web",
+          "label": "TLS など別の仕組みが守る",
+          "arrow": "both",
+          "style": "dashed"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### SAE が変えたところ",
+      "caption": "攻撃の 2 つの場面で WPA2 と WPA3 を比べます。下の行の WPA3 では、どちらの場面でも鍵と過去の通信が守られます。",
+      "x": {
+        "label": "攻撃の場面",
+        "values": [
+          "接続のやり取りを\n記録されると",
+          "後で事前共有鍵が\n漏れると"
+        ]
+      },
+      "y": {
+        "label": "規格",
+        "values": [
+          "WPA2\n事前共有鍵",
+          "WPA3\nSAE"
+        ]
+      },
+      "cells": [
+        [
+          "鍵を当てられる\n手元で候補を\n試せる",
+          "過去の通信も\n読まれる\n記録を復号できる"
+        ],
+        [
+          "鍵を当てられない\n試す材料に\nならない",
+          "過去の通信は\n守られる\n接続ごとに鍵が違う"
+        ]
+      ],
+      "emphasis": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    }
+  ]
+}

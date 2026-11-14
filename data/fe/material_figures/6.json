@@ -1,0 +1,40 @@
+{
+  "topic_id": 6,
+  "term": "集約関数",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "GROUP BY クラスで成績表の行をクラスの値ごとに分け、AVG が各グループを 1 行に畳みます。返る行の数はグループの数と同じです。",
+      "nodes": [
+        {"id": "table", "label": "成績表\n5 行（クラスと点数）", "row": 0, "col": 0, "shape": "cylinder"},
+        {"id": "ga", "label": "クラス A のグループ\n80・70・90 点の 3 行", "row": 0, "col": 1},
+        {"id": "gb", "label": "クラス B のグループ\n60・80 点の 2 行", "row": 1, "col": 1},
+        {"id": "ra", "label": "A の結果\n平均 80 点の 1 行", "row": 0, "col": 2, "emphasis": true},
+        {"id": "rb", "label": "B の結果\n平均 70 点の 1 行", "row": 1, "col": 2, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "table", "to": "ga", "label": "クラスが A の行"},
+        {"from": "table", "to": "gb", "label": "クラスが B の行"},
+        {"from": "ga", "to": "ra", "label": "AVG で 1 行に畳む"},
+        {"from": "gb", "to": "rb", "label": "AVG で 1 行に畳む"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 句が処理される順序",
+      "caption": "SQL の句が処理される順に上から並べた図です。グループができるのは GROUP BY の後なので、集約の結果で絞れるのは強調した HAVING からです。",
+      "direction": "down",
+      "stages": [
+        {"label": "FROM\n使う表を決める", "next_label": "表の全部の行"},
+        {"label": "WHERE\n個々の行を選ぶ\n集約の結果はまだ無い", "next_label": "条件に合う行"},
+        {"label": "GROUP BY\n行をグループに分ける", "next_label": "グループができる"},
+        {"label": "HAVING\nグループを選ぶ\n集約の結果で絞れる", "emphasis": true, "next_label": "条件に合うグループ"},
+        {"label": "SELECT\n返す列と別名を決める", "next_label": "結果の行"},
+        {"label": "ORDER BY\n結果を並べ替える"}
+      ]
+    }
+  ]
+}

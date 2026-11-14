@@ -1,0 +1,94 @@
+{
+  "topic_id": 55,
+  "term": "dpi（dot per inch）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### インチ・ポイント・ドットの関係",
+      "caption": "文字の大きさのポイント数をドット数に直す順です。強調したインチを間に挟み、矢印の演算を上から順に行います。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "ポイント数\n文字の大きさ",
+          "next_label": "÷72"
+        },
+        {
+          "label": "インチ\n72 ポイント＝1 インチ",
+          "next_label": "×dpi",
+          "emphasis": true
+        },
+        {
+          "label": "ドット数\n1 インチに dpi 個"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "chart",
+      "after": "### 画像の大きさとデータ量",
+      "caption": "同じ大きさの画像を取り込むときの dpi とデータ量の関係です。dpi が 2 倍になるごとに、棒の高さは 4 倍になります。",
+      "kind": "bar",
+      "x": {
+        "label": "取り込む dpi",
+        "values": [
+          "150 dpi",
+          "300 dpi",
+          "600 dpi"
+        ]
+      },
+      "y": {
+        "label": "データ量（150 dpi を 1 とした倍率）",
+        "min": 0
+      },
+      "series": [
+        {
+          "label": "データ量の倍率",
+          "values": [
+            1,
+            4,
+            16
+          ]
+        }
+      ],
+      "annotations": [
+        {
+          "x": "150 dpi",
+          "y": 1,
+          "text": "1 倍"
+        },
+        {
+          "x": "300 dpi",
+          "y": 4,
+          "text": "縦横 2 倍で 4 倍"
+        },
+        {
+          "x": "600 dpi",
+          "y": 16,
+          "text": "16 倍"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "steps",
+      "after": "### 画像の大きさとデータ量",
+      "caption": "仕上がりの大きさと dpi から画像のデータ量を求める順です。矢印は各段で出た値を表し、最後に 8 で割ってバイトにします。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "ドット数\n縦横それぞれ\nインチ数×dpi",
+          "next_label": "縦×横の総ドット数"
+        },
+        {
+          "label": "ビット数\n×1 画素のビット数",
+          "next_label": "全体のビット数"
+        },
+        {
+          "label": "バイト数\n÷8",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

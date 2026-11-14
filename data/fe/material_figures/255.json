@@ -1,0 +1,73 @@
+{
+  "topic_id": 255,
+  "term": "データベースのセキュリティ対策",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 守る場所ごとに手立てが変わる",
+      "caption": "クライアントから経路を通って DB サーバに届き、データは保存ファイルに残ります。箱の 2 行目がそこで起きること、線の名前がそこに効く手立てです。",
+      "nodes": [
+        {
+          "id": "cl",
+          "label": "クライアント\nコマンドを送る",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "net",
+          "label": "通信の経路\n流れる平文が盗聴される",
+          "row": 0,
+          "col": 1,
+          "shape": "cloud"
+        },
+        {
+          "id": "db",
+          "label": "DB サーバ\n権限を超えた参照や更新",
+          "row": 0,
+          "col": 2,
+          "icon": "server"
+        },
+        {
+          "id": "file",
+          "label": "保存ファイル\n媒体ごと持ち出される",
+          "row": 1,
+          "col": 2,
+          "shape": "cylinder"
+        },
+        {
+          "id": "user",
+          "label": "操作する人\n権限の外まで触ろうとする",
+          "row": 0,
+          "col": 3,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "cl",
+          "to": "net",
+          "label": "コマンドと実行結果",
+          "arrow": "both"
+        },
+        {
+          "from": "net",
+          "to": "db",
+          "label": "通信の暗号化で守る",
+          "arrow": "both"
+        },
+        {
+          "from": "db",
+          "to": "file",
+          "label": "格納データの暗号化で守る"
+        },
+        {
+          "from": "user",
+          "to": "db",
+          "label": "アクセス権と監査ログで守る"
+        }
+      ]
+    }
+  ]
+}

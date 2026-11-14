@@ -1,0 +1,49 @@
+{
+  "topic_id": 45,
+  "term": "インタプリタ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 翻訳して動かす流れとの違い",
+      "caption": "上がインタプリタ、下がコンパイラで動かす流れです。上は解釈してすぐ実行するので途中に残る物が無く、下は目的プログラムを作ってから読み込んで実行します。",
+      "nodes": [
+        {"id": "s1", "label": "原始プログラム\nソースコード", "row": 0, "col": 0, "icon": "document"},
+        {"id": "ip", "label": "インタプリタ\n1 文ずつ解釈して実行", "row": 0, "col": 1, "icon": "gear", "emphasis": true},
+        {"id": "r1", "label": "実行結果\n目的プログラムは残らない", "row": 0, "col": 2},
+        {"id": "s2", "label": "原始プログラム\nソースコード", "row": 1, "col": 0, "icon": "document"},
+        {"id": "cp", "label": "コンパイラ\n全体を一括で翻訳", "row": 1, "col": 1, "icon": "gear"},
+        {"id": "obj", "label": "目的プログラム\n翻訳結果が残る", "row": 1, "col": 2, "shape": "cylinder"},
+        {"id": "ld", "label": "ローダ\n主記憶へ読み込む", "row": 1, "col": 3},
+        {"id": "r2", "label": "実行結果\n読み込んでから実行", "row": 1, "col": 4}
+      ],
+      "edges": [
+        {"from": "s1", "to": "ip", "label": "1 文ずつ読む"},
+        {"from": "ip", "to": "r1", "label": "その場で実行"},
+        {"from": "s2", "to": "cp", "label": "全体を渡す"},
+        {"from": "cp", "to": "obj", "label": "書き出す"},
+        {"from": "obj", "to": "ld", "label": "読み込む"},
+        {"from": "ld", "to": "r2", "label": "実行する"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 翻訳して動かす流れとの違い",
+      "caption": "中間言語方式の流れです。翻訳は一度だけで、できた中間コードを環境ごとの処理系が解釈するので、同じコードが別の環境でも動きます。",
+      "nodes": [
+        {"id": "src", "label": "原始プログラム\nソースコード", "row": 1, "col": 0, "icon": "document"},
+        {"id": "tr", "label": "翻訳\n一度だけ行う", "row": 1, "col": 1, "icon": "gear"},
+        {"id": "mid", "label": "中間コード\n環境に依らない形", "row": 1, "col": 2, "shape": "cylinder", "emphasis": true},
+        {"id": "ea", "label": "環境 A の処理系\n中間コードを解釈実行", "row": 0, "col": 3, "icon": "device"},
+        {"id": "eb", "label": "環境 B の処理系\n中間コードを解釈実行", "row": 2, "col": 3, "icon": "phone"}
+      ],
+      "edges": [
+        {"from": "src", "to": "tr", "label": "全体を渡す"},
+        {"from": "tr", "to": "mid", "label": "書き出す"},
+        {"from": "mid", "to": "ea", "label": "同じ中間コード"},
+        {"from": "mid", "to": "eb", "label": "同じ中間コード"}
+      ]
+    }
+  ]
+}

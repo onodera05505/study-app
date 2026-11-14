@@ -1,0 +1,44 @@
+{
+  "topic_id": 251,
+  "term": "アクセス権の設定",
+  "figures": [
+    {
+      "id": 1,
+      "type": "venn",
+      "after": "### 必要最小限にする理由",
+      "caption": "権限は内側ほど狭く、各領域の文はそこまで与えたアカウントが乗っ取られたときの被害です。読み出しだけの機能は強調した一番内側で足ります。",
+      "layout": "nested",
+      "sets": [
+        {"id": "adm", "label": "管理者の権限"},
+        {"id": "upd", "label": "更新の権限"},
+        {"id": "ref", "label": "参照の権限"}
+      ],
+      "regions": [
+        {"in": ["adm"], "label": "管理者まで\n表の作成や削除まで届く"},
+        {"in": ["adm", "upd"], "label": "更新まで\n改ざん・消去まで届く"},
+        {"in": ["adm", "upd", "ref"], "label": "参照だけ\n読まれるだけで済む", "emphasis": true}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 運用で確かめること",
+      "caption": "権限は左の利用者に直接付けず、真ん中の役割に付けます。異動した利用者は、破線の割り当てを外して別の役割へ付け替えるだけで、権限の側は触りません。",
+      "nodes": [
+        {"id": "ua", "label": "利用者 A\n営業のまま", "row": 0, "col": 0, "icon": "person"},
+        {"id": "ub", "label": "利用者 B\n営業から経理へ異動", "row": 1, "col": 0, "icon": "person", "emphasis": true},
+        {"id": "r1", "label": "役割 営業\n顧客を扱う", "row": 0, "col": 1, "icon": "people"},
+        {"id": "r2", "label": "役割 経理\n伝票を扱う", "row": 1, "col": 1, "icon": "people"},
+        {"id": "p1", "label": "顧客表の更新\n営業に要る権限", "row": 0, "col": 2, "icon": "key"},
+        {"id": "p2", "label": "伝票表の更新\n経理に要る権限", "row": 1, "col": 2, "icon": "key"}
+      ],
+      "edges": [
+        {"from": "ua", "to": "r1", "label": "割り当て"},
+        {"from": "ub", "to": "r1", "label": "異動前（外す）", "style": "dashed"},
+        {"from": "ub", "to": "r2", "label": "異動後の割り当て"},
+        {"from": "r1", "to": "p1", "label": "役割が持つ権限"},
+        {"from": "r2", "to": "p2", "label": "役割が持つ権限"}
+      ]
+    }
+  ]
+}

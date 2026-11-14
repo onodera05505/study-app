@@ -1,0 +1,19 @@
+{
+  "topic_id": 148,
+  "term": "IETF（Internet Engineering Task Force：インターネット技術タスクフォース）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### RFC と標準化の進み方",
+      "caption": "提案が RFC になるまでの段を上から順に並べています。段の間の矢印は次の段へ渡るものです。",
+      "direction": "down",
+      "stages": [
+        {"label": "Internet-Draft\n提案を誰でも読める形で公開", "icon": "document", "next_label": "提案の本文"},
+        {"label": "議論\nメーリングリストで意見を出し合う", "icon": "mail", "next_label": "論点を整理した案"},
+        {"label": "ラフコンセンサス\nおおよその合意を得る", "icon": "people", "next_label": "合意した仕様"},
+        {"label": "RFC\n通し番号を付けて公開\n改訂は新しい番号で置き換える", "icon": "document", "emphasis": true}
+      ]
+    }
+  ]
+}

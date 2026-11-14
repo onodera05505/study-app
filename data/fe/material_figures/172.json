@@ -1,0 +1,29 @@
+{
+  "topic_id": 172,
+  "term": "ハフマン符号",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 木を作る手順",
+      "caption": "頻度の低い C と D から束ねた木で、根から葉までの線の 0 と 1 を並べたものが符号です。頻度の高い A は根に近いので符号が短く、先に束ねた C と D は根から遠く長くなります。",
+      "nodes": [
+        {"id": "root", "label": "根 100％\n最後に束ねた節", "row": 0, "col": 1},
+        {"id": "a", "label": "A 40％\n符号 0", "row": 1, "col": 0, "emphasis": true},
+        {"id": "n60", "label": "節 60％\n2 番目に束ねた", "row": 1, "col": 2},
+        {"id": "b", "label": "B 30％\n符号 10", "row": 2, "col": 1},
+        {"id": "n30", "label": "節 30％\n最初に束ねた", "row": 2, "col": 3},
+        {"id": "c", "label": "C 20％\n符号 110", "row": 3, "col": 2},
+        {"id": "d", "label": "D 10％\n符号 111", "row": 3, "col": 4}
+      ],
+      "edges": [
+        {"from": "root", "to": "a", "label": "0"},
+        {"from": "root", "to": "n60", "label": "1"},
+        {"from": "n60", "to": "b", "label": "0"},
+        {"from": "n60", "to": "n30", "label": "1"},
+        {"from": "n30", "to": "c", "label": "0"},
+        {"from": "n30", "to": "d", "label": "1"}
+      ]
+    }
+  ]
+}

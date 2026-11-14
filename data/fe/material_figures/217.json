@@ -1,0 +1,97 @@
+{
+  "topic_id": 217,
+  "term": "レンダリング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### レンダリングの工程",
+      "caption": "三次元の形から二次元の画像ができるまでの工程を上から順に並べています。各段は前の段の結果を使い、強調した隠面消去は陰影を付ける前に行います。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "形状の定義\n物体の座標を決める",
+          "next_label": "三次元の形"
+        },
+        {
+          "label": "投影\n視点から見た形にする",
+          "next_label": "見えている向きの形"
+        },
+        {
+          "label": "隠面消去\n隠れる面を省く",
+          "next_label": "見える面だけ",
+          "emphasis": true
+        },
+        {
+          "label": "陰影と質感\n明るさと模様を付ける",
+          "next_label": "色の決まった面"
+        },
+        {
+          "label": "書き出し\n画素の並んだ画像にする"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 隠線消去と隠面消去",
+      "caption": "Z バッファ法が画素ごとに行う判定です。新しい面の奥行きを記録と比べ、手前のときだけ色と奥行きを書き換えるので、最後に一番手前の面が残ります。",
+      "nodes": [
+        {
+          "id": "new",
+          "label": "新しい面の点\nこの画素での奥行き Z",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "cmp",
+          "label": "比べる\n記録の Z より手前か",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "upd",
+          "label": "書き換える\n記録の色と Z を新しい面に",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "buf",
+          "label": "Z バッファ\n画素ごとに今の Z を記録",
+          "row": 0,
+          "col": 1,
+          "shape": "cylinder"
+        },
+        {
+          "id": "drop",
+          "label": "捨てる\n奥の面は描かない",
+          "row": 2,
+          "col": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": "new",
+          "to": "cmp",
+          "label": "新しい Z"
+        },
+        {
+          "from": "buf",
+          "to": "cmp",
+          "label": "記録の Z"
+        },
+        {
+          "from": "cmp",
+          "to": "upd",
+          "label": "手前なら"
+        },
+        {
+          "from": "cmp",
+          "to": "drop",
+          "label": "奥なら"
+        }
+      ]
+    }
+  ]
+}

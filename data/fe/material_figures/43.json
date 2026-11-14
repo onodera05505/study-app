@@ -1,0 +1,37 @@
+{
+  "topic_id": 43,
+  "term": "割込み",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### しくみ",
+      "caption": "割込みで止めてから元の処理に戻るまでの段です。退避してからハンドラを動かし、終わったら退避した内容を戻すので、中断した所から続けられます。",
+      "direction": "down",
+      "stages": [
+        {"label": "割込みが起きる\n装置やプログラムが知らせる", "icon": "warning", "next_label": "割込みの要求"},
+        {"label": "命令の区切りで止める\n実行中の命令は終える", "next_label": "止めた位置"},
+        {"label": "状態を退避する\nプログラムカウンタと\nレジスタを保存", "icon": "database", "next_label": "ハンドラへ分岐"},
+        {"label": "割込みハンドラを実行\n種類に応じた処理", "icon": "gear", "emphasis": true, "next_label": "処理が終わる"},
+        {"label": "戻して再開する\n退避した内容を戻し\n中断した所から続ける", "icon": "arrow-cycle"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "timeline",
+      "after": "### 計算の解き方",
+      "caption": "帯は CPU がその時に動かしている処理です。優先度の高い A が来ると低い B は途中で止められ、A が終わってから B の続きが動きます。",
+      "axis": {"label": "時間（ミリ秒）。A は優先度が高く、B は低い", "ticks": ["0", "1", "2", "3", "4", "5"]},
+      "events": [
+        {"from": 0, "to": 1, "label": "B\n先に動く"},
+        {"from": 1, "to": 1.5, "label": "A\nB を中断", "emphasis": true},
+        {"from": 1.5, "to": 2, "label": "B\n続き"},
+        {"from": 2, "to": 2.5, "label": "メイン\n戻る"},
+        {"from": 2.5, "to": 3, "label": "A\n2 回目"},
+        {"from": 3, "to": 3.5, "label": "メイン\n戻る"},
+        {"from": 3.5, "to": 4, "label": "A\n3 回目"},
+        {"from": 4, "to": 5, "label": "メイン\n戻る"}
+      ]
+    }
+  ]
+}

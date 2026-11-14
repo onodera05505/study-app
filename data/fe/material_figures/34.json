@@ -1,0 +1,38 @@
+{
+  "topic_id": 34,
+  "term": "3D プリンター",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 積み上げて造るしくみ",
+      "caption": "左下の形状データから段を上るほど立体に近づきます。強調した段を断面の数だけ繰り返し、層を下から重ねて形にします。",
+      "direction": "up",
+      "stages": [
+        {"label": "形状データ\n3D CAD などで作る", "icon": "document", "next_label": "立体の形"},
+        {"label": "断面に切る\n水平な薄い層の列にする", "icon": "gear", "next_label": "断面の列"},
+        {"label": "1 層ずつ描く\n材料を置いて固める\n断面の数だけ繰り返す", "emphasis": true, "next_label": "固めた層"},
+        {"label": "積み上げる\n層が重なって立体物になる", "icon": "box"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 積み上げて造るしくみ",
+      "caption": "強調した形状データをはさんで、3D スキャナは物からデータを作り、3D プリンターはデータから物を造ります。向きが逆の 2 つの装置です。",
+      "nodes": [
+        {"id": "real", "label": "実物\n形を写したい物", "row": 0, "col": 0, "icon": "box"},
+        {"id": "scan", "label": "3D スキャナ\n形を読み取る", "row": 0, "col": 1, "icon": "search"},
+        {"id": "data", "label": "形状データ\n立体の形の記録", "row": 0, "col": 2, "icon": "document", "emphasis": true},
+        {"id": "prn", "label": "3D プリンター\n材料を積んで造る", "row": 0, "col": 3, "icon": "gear"},
+        {"id": "obj", "label": "立体物\n造られた物", "row": 0, "col": 4, "icon": "box"}
+      ],
+      "edges": [
+        {"from": "real", "to": "scan", "label": "形を測る"},
+        {"from": "scan", "to": "data", "label": "データにする"},
+        {"from": "data", "to": "prn", "label": "データを渡す"},
+        {"from": "prn", "to": "obj", "label": "造形する"}
+      ]
+    }
+  ]
+}

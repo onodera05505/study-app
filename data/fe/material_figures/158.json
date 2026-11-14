@@ -1,0 +1,71 @@
+{
+  "topic_id": 158,
+  "term": "転送速度",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 伝送効率の扱い",
+      "caption": "上の段が割られる数、下の段が割る数です。伝送効率は回線速度の側に掛けて実効速度を作り、それでビットに直したデータ量を割ります。",
+      "nodes": [
+        {
+          "id": "byte",
+          "label": "データ量（バイト）\n問題文の与え方",
+          "row": 0,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "bit",
+          "label": "データ量（ビット）\n割られる数",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "line",
+          "label": "回線速度\n公称のビット／秒",
+          "row": 1,
+          "col": 0,
+          "icon": "network"
+        },
+        {
+          "id": "eff",
+          "label": "実効速度\n実際に運べる速さ",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "time",
+          "label": "転送時間\n秒",
+          "row": 0,
+          "col": 2,
+          "icon": "clock",
+          "shape": "round"
+        }
+      ],
+      "edges": [
+        {
+          "from": "byte",
+          "to": "bit",
+          "label": "8 倍する"
+        },
+        {
+          "from": "line",
+          "to": "eff",
+          "label": "伝送効率を掛ける"
+        },
+        {
+          "from": "bit",
+          "to": "time",
+          "label": "割られる数"
+        },
+        {
+          "from": "eff",
+          "to": "time",
+          "label": "この速さで割る"
+        }
+      ]
+    }
+  ]
+}

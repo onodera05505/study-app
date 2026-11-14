@@ -1,0 +1,112 @@
+{
+  "topic_id": 236,
+  "term": "SMTP",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 転送の流れとエンベロープ",
+      "caption": "メールが左から右へ動く経路と、区間ごとのプロトコルを示します。相手の箱に届けるまでが SMTP で、強調した受信者が取り出す区間だけが POP3 や IMAP4 です。",
+      "nodes": [
+        {
+          "id": "ps",
+          "label": "送信者の PC\nメールソフトで書く",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "ss",
+          "label": "送信側のサーバ\n相手のサーバへ回す",
+          "row": 0,
+          "col": 1,
+          "icon": "server"
+        },
+        {
+          "id": "sr",
+          "label": "受信側のサーバ\n受信者の箱に置く",
+          "row": 0,
+          "col": 2,
+          "icon": "server"
+        },
+        {
+          "id": "pr",
+          "label": "受信者の PC\n箱から取り出す",
+          "row": 0,
+          "col": 3,
+          "icon": "device",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "ps",
+          "to": "ss",
+          "label": "SMTP で送信"
+        },
+        {
+          "from": "ss",
+          "to": "sr",
+          "label": "SMTP で転送"
+        },
+        {
+          "from": "sr",
+          "to": "pr",
+          "label": "POP3／IMAP4 で取り出す"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 転送の流れとエンベロープ",
+      "caption": "配送先を決めるエンベロープと、受信者に見えるヘッダの宛先が別であることを示します。強調した C にも届きますが、C の名前はどの受信者のヘッダにも残りません。",
+      "nodes": [
+        {
+          "id": "snd",
+          "label": "送信者の指定\nTo：A　Bcc：C",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "srv",
+          "label": "送信側のサーバ\n配送先は A と C\n（RCPT TO）",
+          "row": 0,
+          "col": 1,
+          "icon": "server"
+        },
+        {
+          "id": "a",
+          "label": "受信者 A\n見える宛先は To：A だけ",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "c",
+          "label": "受信者 C\n見える宛先は To：A だけ",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "snd",
+          "to": "srv",
+          "label": "宛先を渡す"
+        },
+        {
+          "from": "srv",
+          "to": "a",
+          "label": "配送（Bcc の行は消す）"
+        },
+        {
+          "from": "srv",
+          "to": "c",
+          "label": "配送（Bcc の行は消す）"
+        }
+      ]
+    }
+  ]
+}

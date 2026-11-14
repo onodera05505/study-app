@@ -1,0 +1,45 @@
+{
+  "topic_id": 69,
+  "term": "SDN（Software-Defined Networking）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 何と何を分けるのか",
+      "caption": "経路を決めるのは上のコントローラだけで、下の機器は破線で渡された規則どおりに運びます。決める所と運ぶ所が分かれています。",
+      "nodes": [
+        {"id": "ctl", "label": "コントローラ\n全体を見て経路を決める", "row": 0, "col": 1, "icon": "server", "emphasis": true},
+        {"id": "s1", "label": "転送機器 1\n規則どおり運ぶだけ", "row": 1, "col": 0},
+        {"id": "s2", "label": "転送機器 2\n規則どおり運ぶだけ", "row": 1, "col": 1},
+        {"id": "s3", "label": "転送機器 3\n規則どおり運ぶだけ", "row": 1, "col": 2}
+      ],
+      "edges": [
+        {"from": "ctl", "to": "s1", "label": "転送の規則", "style": "dashed"},
+        {"from": "ctl", "to": "s2", "label": "転送の規則", "style": "dashed"},
+        {"from": "ctl", "to": "s3", "label": "転送の規則", "style": "dashed"},
+        {"from": "s1", "to": "s2", "label": "パケット"},
+        {"from": "s2", "to": "s3", "label": "パケット"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "sequence",
+      "after": "### OpenFlow によるやり取り",
+      "caption": "表に合う行が無いときだけ転送機器がコントローラへ問い合わせます。規則が書き込まれた後のパケットは問い合わせずに運ばれます。",
+      "actors": [
+        {"id": "src", "label": "送信元", "icon": "device"},
+        {"id": "sw", "label": "転送機器"},
+        {"id": "ctl", "label": "コントローラ", "icon": "server"},
+        {"id": "dst", "label": "宛先", "icon": "device"}
+      ],
+      "steps": [
+        {"from": "src", "to": "sw", "label": "パケットが届く"},
+        {"from": "sw", "to": "sw", "label": "フローテーブルを探す", "note": "条件に合う行が無い"},
+        {"from": "sw", "to": "ctl", "label": "どう運ぶかを問い合わせる"},
+        {"from": "ctl", "to": "sw", "label": "新しい規則を書き込む"},
+        {"from": "sw", "to": "dst", "label": "規則どおり転送する"},
+        {"from": "sw", "to": "dst", "label": "同じ条件の次のパケットも転送", "note": "表に合う行があるので問い合わせない"}
+      ]
+    }
+  ]
+}

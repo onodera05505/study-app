@@ -1,0 +1,18 @@
+{
+  "topic_id": 201,
+  "term": "ページフォールト",
+  "figures": [
+    {
+      "id": 1, "type": "steps", "after": "### 発生したあとの流れ",
+      "caption": "主記憶に無いページへのアクセスから命令の再開までの段です。書き戻しの段は追い出すページが更新済みのときだけ挟まります。",
+      "direction": "down",
+      "stages": [
+        {"label": "割込みの発生\n無効の印のページに触れる", "icon": "warning", "next_label": "制御が OS へ移る"},
+        {"label": "追い出すページを選ぶ\n空き枠が無ければ LRU など", "icon": "search", "next_label": "追い出すページ"},
+        {"label": "ページアウト\n更新済みのときだけ書き戻す", "icon": "database", "next_label": "空いたページ枠"},
+        {"label": "ページイン\n目的のページを読み込む", "icon": "database", "emphasis": true, "next_label": "ページテーブルを更新"},
+        {"label": "命令の再開\n中断した命令からやり直す", "icon": "arrow-cycle"}
+      ]
+    }
+  ]
+}

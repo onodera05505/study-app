@@ -1,0 +1,37 @@
+{
+  "topic_id": 90,
+  "term": "DFD",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 4 つの記号",
+      "caption": "注文から出荷までを例に、源泉・プロセス・データストア・吸収をデータの流れで結びます。矢印にはデータの名前だけを書きます。",
+      "nodes": [
+        {"id": "cust", "label": "顧客\n源泉：データを出す", "row": 0, "col": 0, "icon": "person"},
+        {"id": "ord", "label": "受注処理\nプロセス：データを加工", "row": 0, "col": 1, "shape": "round", "emphasis": true},
+        {"id": "store", "label": "注文データ\nデータストア：保管", "row": 1, "col": 1, "shape": "cylinder"},
+        {"id": "ship", "label": "出荷処理\nプロセス：データを加工", "row": 1, "col": 2, "shape": "round"},
+        {"id": "wh", "label": "倉庫\n吸収：データを受け取る", "row": 1, "col": 3, "icon": "building"}
+      ],
+      "edges": [
+        {"from": "cust", "to": "ord", "label": "注文"},
+        {"from": "ord", "to": "store", "label": "注文データ"},
+        {"from": "store", "to": "ship", "label": "注文データ"},
+        {"from": "ship", "to": "wh", "label": "出荷指示"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 階層化して詳しくする",
+      "caption": "上の段ほど大まかで、下るたびにプロセスを分けて詳しくします。段の間で外部との出入りをそろえることをバランスと言います。",
+      "direction": "down",
+      "stages": [
+        {"label": "コンテキストダイアグラム\n全体を 1 つのプロセスに", "next_label": "外部との出入りは\nそのまま（バランス）", "emphasis": true},
+        {"label": "数個のプロセスに分ける\nデータストアともつなぐ", "next_label": "外部との出入りは\nそのまま（バランス）"},
+        {"label": "さらに詳しく分ける\n必要な段まで重ねる"}
+      ]
+    }
+  ]
+}

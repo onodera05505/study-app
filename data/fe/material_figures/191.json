@@ -1,0 +1,92 @@
+{
+  "topic_id": 191,
+  "term": "SD カード",
+  "figures": [
+    {
+      "id": 1,
+      "type": "matrix",
+      "after": "### 大きさの種類",
+      "caption": "行が容量の世代、列が形の大きさで、呼び名は行と列の組合せです。容量は行で決まり、形を変えても変わりません。",
+      "x": {
+        "label": "形の大きさ",
+        "values": [
+          "SD サイズ",
+          "microSD サイズ"
+        ]
+      },
+      "y": {
+        "label": "容量の世代",
+        "values": [
+          "SD",
+          "SDHC",
+          "SDXC"
+        ]
+      },
+      "cells": [
+        [
+          "SD\n2G バイトまで\n標準の形",
+          "microSD\n2G バイトまで\n小さい形"
+        ],
+        [
+          "SDHC\n32G バイトまで\n標準の形",
+          "microSDHC\n32G バイトまで\n小さい形"
+        ],
+        [
+          "SDXC\n2T バイトまで\n標準の形",
+          "microSDXC\n2T バイトまで\n小さい形"
+        ]
+      ],
+      "emphasis": [
+        [
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "id": 2,
+      "type": "venn",
+      "after": "### 容量とファイルシステムで世代が分かれます",
+      "layout": "nested",
+      "caption": "円は機器が読めるカードの範囲で、外側の円ほど上位の世代に対応した機器です。内側のカードは外側の機器でも読めます。",
+      "sets": [
+        {
+          "id": "xc",
+          "label": "SDXC 対応の機器が読める"
+        },
+        {
+          "id": "hc",
+          "label": "SDHC 対応の機器が読める"
+        },
+        {
+          "id": "sd",
+          "label": "SD 対応の機器が読める"
+        }
+      ],
+      "regions": [
+        {
+          "in": [
+            "xc"
+          ],
+          "label": "SDXC カード\nSDXC 対応の機器だけ"
+        },
+        {
+          "in": [
+            "xc",
+            "hc"
+          ],
+          "label": "SDHC カード\nSDHC 以上の機器"
+        },
+        {
+          "in": [
+            "xc",
+            "hc",
+            "sd"
+          ],
+          "label": "SD カード\nどの機器でも読める",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

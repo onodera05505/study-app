@@ -1,0 +1,103 @@
+{
+  "topic_id": 308,
+  "term": "著作権",
+  "figures": [
+    {
+      "id": 1,
+      "type": "parts",
+      "after": "### 何が保護されるか",
+      "caption": "1 つのプログラムを、守られる部分と守られない部分に分けた図です。強調した書き表し方だけが守られ、残りの 3 つは誰でも使えます。",
+      "whole": {
+        "label": "プログラム",
+        "icon": "document"
+      },
+      "parts": [
+        {
+          "label": "ソースコードの表現\n守られる\nどう書き表したか",
+          "emphasis": true
+        },
+        {
+          "label": "プログラム言語\n守られない\n文法は誰でも使える"
+        },
+        {
+          "label": "規約\n守られない\n通信やインタフェースの約束"
+        },
+        {
+          "label": "解法\n守られない\n課題を解く手順"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 誰に権利が生まれるか",
+      "caption": "上の段は外部への委託、下の段は社内の雇用の場合です。委託では作った受託者に権利が生まれ、点線の譲渡の契約があるときだけ発注者へ移ります。",
+      "nodes": [
+        {
+          "id": "jutaku",
+          "label": "受託者\n実際に創作する",
+          "row": 0,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "ken1",
+          "label": "著作権\n受託者に生まれる",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "hatchu",
+          "label": "発注者\n要求仕様を示して委託",
+          "row": 0,
+          "col": 2,
+          "icon": "building"
+        },
+        {
+          "id": "jugyoin",
+          "label": "従業員\n雇用されて職務で作る",
+          "row": 1,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "ken2",
+          "label": "職務著作\n会社に生まれる",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "kaisha",
+          "label": "自社（会社）\n雇用している側",
+          "row": 1,
+          "col": 2,
+          "icon": "building"
+        }
+      ],
+      "edges": [
+        {
+          "from": "jutaku",
+          "to": "ken1",
+          "label": "創作した時点で発生"
+        },
+        {
+          "from": "ken1",
+          "to": "hatchu",
+          "label": "譲渡の契約があれば移る",
+          "style": "dashed"
+        },
+        {
+          "from": "jugyoin",
+          "to": "ken2",
+          "label": "職務として作る"
+        },
+        {
+          "from": "ken2",
+          "to": "kaisha",
+          "label": "最初から会社のもの"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "topic_id": 82,
+  "term": "DMZ（非武装地帯）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 三つのセグメントの役割",
+      "caption": "外部・DMZ・内部の三つの区画と、その間で通す通信を示します。外部から内部へは直接届かず、関門が二段になります。",
+      "nodes": [
+        {
+          "id": "net",
+          "label": "インターネット（外部）\n誰でもつながる",
+          "row": 1,
+          "col": 0,
+          "shape": "cloud"
+        },
+        {
+          "id": "dmz",
+          "label": "DMZ\n公開 Web・メールサーバ",
+          "row": 0,
+          "col": 1,
+          "icon": "server",
+          "emphasis": true
+        },
+        {
+          "id": "in",
+          "label": "内部\n社内端末・DB サーバ",
+          "row": 1,
+          "col": 2,
+          "icon": "database"
+        }
+      ],
+      "edges": [
+        {
+          "from": "net",
+          "to": "dmz",
+          "label": "HTTP・SMTP だけ通す"
+        },
+        {
+          "from": "dmz",
+          "to": "in",
+          "label": "Web サーバから\nDB への問合せだけ"
+        },
+        {
+          "from": "net",
+          "to": "in",
+          "label": "直接は通さない",
+          "style": "dashed",
+          "arrow": "none"
+        }
+      ]
+    }
+  ]
+}

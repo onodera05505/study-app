@@ -1,0 +1,54 @@
+{
+  "topic_id": 11,
+  "term": "ROI（Return On Investment：投資利益率）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "chart",
+      "after": "### 計算の解き方",
+      "caption": "2 つの案件の投資額と利益を棒で比べ、上の注記に ROI を添えました。利益の棒が高い案件 B の方が、ROI では低くなります。",
+      "kind": "bar",
+      "x": {
+        "label": "案件（例）",
+        "values": [
+          "案件 A",
+          "案件 B"
+        ]
+      },
+      "y": {
+        "label": "金額（万円）",
+        "min": 0,
+        "max": 400
+      },
+      "series": [
+        {
+          "label": "投資額",
+          "values": [
+            100,
+            300
+          ]
+        },
+        {
+          "label": "利益",
+          "values": [
+            130,
+            330
+          ],
+          "emphasis": true
+        }
+      ],
+      "annotations": [
+        {
+          "x": "案件 A",
+          "y": 130,
+          "text": "ROI 130%"
+        },
+        {
+          "x": "案件 B",
+          "y": 330,
+          "text": "ROI 110%"
+        }
+      ]
+    }
+  ]
+}

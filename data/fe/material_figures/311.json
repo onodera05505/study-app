@@ -1,0 +1,54 @@
+{
+  "topic_id": 311,
+  "term": "偽装請負",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### どこを見て判断するか",
+      "caption": "実線が請負での指示の経路で、発注者の要請は受託者の責任者を通って労働者へ届きます。点線のように発注者が直接指示すると、実態は労働者派遣になります。",
+      "nodes": [
+        {
+          "id": "client",
+          "label": "発注者\n仕事を頼む会社",
+          "row": 0,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "lead",
+          "label": "受託者の責任者\n要請の窓口になる",
+          "row": 1,
+          "col": 0,
+          "icon": "person",
+          "emphasis": true
+        },
+        {
+          "id": "worker",
+          "label": "受託者の労働者\n現場で作業する",
+          "row": 1,
+          "col": 1,
+          "icon": "people"
+        }
+      ],
+      "edges": [
+        {
+          "from": "client",
+          "to": "lead",
+          "label": "要請を伝える"
+        },
+        {
+          "from": "lead",
+          "to": "worker",
+          "label": "指揮命令と労務管理"
+        },
+        {
+          "from": "client",
+          "to": "worker",
+          "label": "直接の作業指示\n＝実態は労働者派遣",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "topic_id": 276,
+  "term": "内部統制報告制度",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 誰が何を担うのか",
+      "caption": "経営者が自ら評価して報告書を作り、会計士の監査を経て開示します。取締役会は監督し、最終責任は強調した経営者にあります。",
+      "nodes": [
+        {"id": "board", "label": "取締役会\n方針を決め監督する", "row": 1, "col": 0, "icon": "people"},
+        {"id": "ceo", "label": "経営者\n整備・運用し評価する\n最終責任を負う", "row": 0, "col": 0, "icon": "person", "emphasis": true},
+        {"id": "rep", "label": "内部統制報告書\n評価の結果", "row": 0, "col": 1, "icon": "document"},
+        {"id": "cpa", "label": "公認会計士・監査法人\n報告書を監査する", "row": 0, "col": 2, "icon": "search"},
+        {"id": "pub", "label": "開示\n投資家が読める", "row": 1, "col": 2, "icon": "building"}
+      ],
+      "edges": [
+        {"from": "board", "to": "ceo", "label": "方針と監督"},
+        {"from": "ceo", "to": "rep", "label": "自ら評価して作る"},
+        {"from": "rep", "to": "cpa", "label": "監査を受ける"},
+        {"from": "cpa", "to": "pub", "label": "有価証券報告書とともに"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 評価の進め方",
+      "caption": "評価は全社の統制から始め、その結果をふまえて業務の統制へ降ります。見つけた不備の重さを判断してから報告書にまとめます。",
+      "direction": "down",
+      "stages": [
+        {"label": "全社的な内部統制を評価\n統制環境・モニタリングなど", "icon": "building", "next_label": "全社の評価結果", "emphasis": true},
+        {"label": "業務プロセスの統制を評価\n売上・在庫など重要な物", "icon": "gear", "next_label": "見つかった不備"},
+        {"label": "不備の重さを判断\n開示すべき重要な不備か", "icon": "warning", "next_label": "評価の結論"},
+        {"label": "報告書にまとめる\n監査を受けて開示", "icon": "document"}
+      ]
+    }
+  ]
+}

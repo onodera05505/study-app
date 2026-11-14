@@ -1,0 +1,102 @@
+{
+  "topic_id": 274,
+  "term": "指摘事項",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 職務の分離と自己承認",
+      "caption": "計画と承認を担う人と、実行して記録する人を分けた姿です。記録を別の人が点検するので、誤りや不正を途中で止められます。",
+      "nodes": [
+        {
+          "id": "mgr",
+          "label": "運用責任者\n作業を計画し承認する",
+          "row": 0,
+          "col": 0,
+          "icon": "person",
+          "emphasis": true
+        },
+        {
+          "id": "op",
+          "label": "オペレータ\n作業を実行し記録する",
+          "row": 0,
+          "col": 1,
+          "icon": "person"
+        },
+        {
+          "id": "log",
+          "label": "作業の記録\n期間を定めて保管",
+          "row": 1,
+          "col": 0,
+          "icon": "document",
+          "shape": "cylinder"
+        }
+      ],
+      "edges": [
+        {
+          "from": "mgr",
+          "to": "op",
+          "label": "承認した作業計画"
+        },
+        {
+          "from": "op",
+          "to": "log",
+          "label": "実行した内容を記録"
+        },
+        {
+          "from": "mgr",
+          "to": "log",
+          "label": "別の人として点検する"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "sequence",
+      "after": "### 報告とフォローアップ",
+      "caption": "指摘事項を受けて改善を指示するのは経営者で、直すのは被監査部門です。監査人は改善を命じず、計画の妥当性と期限後の実行を確かめます。",
+      "actors": [
+        {
+          "id": "aud",
+          "label": "監査人",
+          "icon": "search"
+        },
+        {
+          "id": "ceo",
+          "label": "経営者（依頼者）",
+          "icon": "person"
+        },
+        {
+          "id": "dep",
+          "label": "被監査部門",
+          "icon": "people"
+        }
+      ],
+      "steps": [
+        {
+          "from": "aud",
+          "to": "ceo",
+          "label": "指摘事項と改善勧告を報告",
+          "note": "監査人には改善を命じる権限が無い"
+        },
+        {
+          "from": "ceo",
+          "to": "dep",
+          "label": "改善を指示"
+        },
+        {
+          "from": "dep",
+          "to": "aud",
+          "label": "改善計画を示す",
+          "note": "監査人は計画が妥当かを確かめる"
+        },
+        {
+          "from": "aud",
+          "to": "dep",
+          "label": "期限の後に改善の実行を確かめる",
+          "note": "済んでいなければ次の監査で再び指摘"
+        }
+      ]
+    }
+  ]
+}

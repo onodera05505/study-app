@@ -1,0 +1,41 @@
+{
+  "topic_id": 239,
+  "term": "セキュリティバイデザイン（セキュアバイデザイン）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 開発の工程に織り込む",
+      "caption": "強調した企画と設計の段で対策を決め、後ろの段はそれを作り、確かめ、守り続ける役に回ります。段の間の矢印は次の段へ渡す物です。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "企画で決める\n守る情報と脅威を洗い出す",
+          "icon": "search",
+          "next_label": "脅威の一覧",
+          "emphasis": true
+        },
+        {
+          "label": "設計で決める\n認証・権限・暗号化を要件に",
+          "icon": "lock",
+          "next_label": "対策を入れた設計",
+          "emphasis": true
+        },
+        {
+          "label": "実装\n安全な書き方の規約で作る",
+          "icon": "gear",
+          "next_label": "プログラム"
+        },
+        {
+          "label": "テストで確かめる\n設計どおり守れるか診断",
+          "icon": "check",
+          "next_label": "確かめた製品"
+        },
+        {
+          "label": "運用で見直す\n監視と更新を続ける",
+          "icon": "arrow-cycle"
+        }
+      ]
+    }
+  ]
+}

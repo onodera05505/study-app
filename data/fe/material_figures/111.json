@@ -1,0 +1,17 @@
+{
+  "topic_id": 111,
+  "term": "監査証拠の入手と評価",
+  "figures": [
+    {
+      "id": 1, "type": "steps", "after": "### 入手のしかた",
+      "caption": "聞き取りで止めず、記録での裏付けと観察・テストまで進めてから調書に残します。強調した段で話が確かな証拠に変わります。",
+      "direction": "down",
+      "stages": [
+        {"label": "聞き取り\n担当者に手順と実態を聞く", "icon": "person", "next_label": "聞いた内容"},
+        {"label": "記録の入手\n規程・帳票・ログと突き合わせる", "icon": "document", "next_label": "裏付けた事実", "emphasis": true},
+        {"label": "観察とテスト\nデータを流して結果を見る", "icon": "search", "next_label": "確かめた結果"},
+        {"label": "監査調書\n証拠と判断の過程を残す", "icon": "check"}
+      ]
+    }
+  ]
+}

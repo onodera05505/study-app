@@ -1,0 +1,42 @@
+{
+  "topic_id": 275,
+  "term": "監査調書の作成と保管",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 監査調書に残すもの",
+      "caption": "上の列は結論に至る道筋で、各段で残した物が下の監査調書に集まります。手続・証拠・判断が対応づくので、結論を後から再現できます。",
+      "nodes": [
+        {"id": "proc", "label": "監査手続\n予備調査と本調査", "row": 0, "col": 0, "icon": "search"},
+        {"id": "evi", "label": "監査証拠\n資料とヒアリング", "row": 0, "col": 1, "icon": "document"},
+        {"id": "eval", "label": "事実と評価\n書き分ける", "row": 0, "col": 2},
+        {"id": "res", "label": "結論・指摘事項\n報告書へ上げる物", "row": 0, "col": 3, "icon": "check"},
+        {"id": "doc", "label": "監査調書\n道筋をまとめて残す", "row": 1, "col": 1, "icon": "document", "shape": "cylinder", "emphasis": true}
+      ],
+      "edges": [
+        {"from": "proc", "to": "evi", "label": "実施して入手"},
+        {"from": "evi", "to": "eval", "label": "事実を読み取る"},
+        {"from": "eval", "to": "res", "label": "判断尺度に照らす"},
+        {"from": "proc", "to": "doc", "label": "日付と担当者"},
+        {"from": "evi", "to": "doc", "label": "整理した証拠"},
+        {"from": "eval", "to": "doc", "label": "事実と評価"},
+        {"from": "res", "to": "doc", "label": "選んだ理由"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### 混同しやすい用語",
+      "caption": "監査の 2 つの成果物を、渡す先・中身・役目の 3 観点で比べます。列をたどると、外へ出す文書か内に残す記録かの違いが読めます。",
+      "x": {"label": "成果物", "values": ["監査報告書", "監査調書"]},
+      "y": {"label": "観点", "values": ["渡す先", "中身", "役目"]},
+      "cells": [
+        ["依頼者へ提出\n外へ出す文書", "監査人が保管\n内に残す記録"],
+        ["結論・指摘事項\n改善勧告の要点", "手続と証拠\n結論に至る詳細"],
+        ["結論を伝える", "結論の根拠を示す\n次回監査の出発点"]
+      ],
+      "emphasis": [[0, 1]]
+    }
+  ]
+}

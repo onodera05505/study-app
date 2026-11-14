@@ -1,0 +1,41 @@
+{
+  "topic_id": 31,
+  "term": "SRAM",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### フリップフロップで覚えるしくみ",
+      "caption": "2 つのゲートが出力を互いの入力へ戻し合うので、値が回り続けて保たれます。外から書き直すまで、読み直して書き戻す必要がありません。",
+      "nodes": [
+        {"id": "wr", "label": "書き込み\n外から 0 か 1 を入れる", "row": 0, "col": 0, "icon": "hand"},
+        {"id": "g1", "label": "ゲート 1\n相手の出力を入力に受ける", "row": 0, "col": 1, "icon": "gear", "emphasis": true},
+        {"id": "g2", "label": "ゲート 2\n相手の出力を入力に受ける", "row": 1, "col": 1, "icon": "gear", "emphasis": true},
+        {"id": "rd", "label": "読み出し\n保たれている 0 か 1", "row": 1, "col": 2, "icon": "search"}
+      ],
+      "edges": [
+        {"from": "wr", "to": "g1", "label": "書き込む値"},
+        {"from": "g1", "to": "g2", "label": "出力を相手の入力へ"},
+        {"from": "g2", "to": "g1", "label": "出力を相手の入力へ"},
+        {"from": "g2", "to": "rd", "label": "保った値を読む"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "layers",
+      "after": "### 記憶階層の中での位置",
+      "caption": "上ほど CPU に近く、速くて小さい記憶です。強調したキャッシュに SRAM、その下の主記憶に DRAM を当てて、速さと容量を両立させます。",
+      "shape": "pyramid",
+      "layers": [
+        {"label": "レジスタ\n最も速く最も小さい", "note": "CPU の中"},
+        {"label": "キャッシュメモリ\nSRAM（速いが高価）", "note": "CPU のそばに少しだけ", "emphasis": true},
+        {"label": "主記憶\nDRAM（遅いが安い）", "note": "大容量を安く"},
+        {"label": "補助記憶\n最も遅く最も大きい", "note": "SSD・HDD"}
+      ],
+      "brackets": [
+        {"from": 0, "to": 1, "label": "速さを取る\n高価なので少し"},
+        {"from": 2, "to": 3, "label": "容量を取る\n安いので多く"}
+      ]
+    }
+  ]
+}

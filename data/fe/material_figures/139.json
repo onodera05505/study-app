@@ -1,0 +1,27 @@
+{
+  "topic_id": 139,
+  "term": "企業の社会的責任（CSR：Corporate Social Responsibility）",
+  "figures": [
+    {
+      "id": 1, "type": "blocks", "after": "### 誰に対する責任か",
+      "caption": "強調した企業から、株主だけでなく周りの関係者すべてへ線が伸びます。線の言葉が、それぞれに負う責任の中身です。",
+      "nodes": [
+        {"id": "c", "label": "企業\n利益を上げつつ\n影響に責任を持つ", "row": 1, "col": 1, "icon": "building", "emphasis": true},
+        {"id": "sh", "label": "株主\n資金を出す", "row": 0, "col": 0, "icon": "money"},
+        {"id": "em", "label": "従業員\n企業で働く", "row": 0, "col": 1, "icon": "people"},
+        {"id": "cu", "label": "顧客\n製品を使う", "row": 0, "col": 2, "icon": "person"},
+        {"id": "su", "label": "取引先\n部品や業務を担う", "row": 2, "col": 0, "icon": "box"},
+        {"id": "lo", "label": "地域の住民\n事業所の周りで暮らす", "row": 2, "col": 1, "icon": "people"},
+        {"id": "go", "label": "行政\n法令を定める", "row": 2, "col": 2, "icon": "document"}
+      ],
+      "edges": [
+        {"from": "c", "to": "sh", "label": "情報の開示"},
+        {"from": "c", "to": "em", "label": "働き方の整備"},
+        {"from": "c", "to": "cu", "label": "安全な製品"},
+        {"from": "c", "to": "su", "label": "公正な取引"},
+        {"from": "c", "to": "lo", "label": "地域への貢献"},
+        {"from": "c", "to": "go", "label": "法令の順守"}
+      ]
+    }
+  ]
+}

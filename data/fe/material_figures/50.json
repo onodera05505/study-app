@@ -1,0 +1,144 @@
+{
+  "topic_id": 50,
+  "term": "真理値表",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 回路図から表を作る",
+      "caption": "排他的論理和の回路の例です。入力側から番号の順に、途中の素子の出力を列 P・列 Q として埋め、最後に出力の列を埋めます。",
+      "nodes": [
+        {
+          "id": "in",
+          "label": "① 入力の列 A と B\n全組合せの 4 行を並べる",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "p",
+          "label": "② 途中の列 P\nA の反転と B の AND",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "q",
+          "label": "② 途中の列 Q\nA と B の反転の AND",
+          "row": 2,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "x",
+          "label": "③ 出力の列 X\nP と Q の OR",
+          "row": 1,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "in",
+          "to": "p",
+          "label": "A を反転して B と"
+        },
+        {
+          "from": "in",
+          "to": "q",
+          "label": "B を反転して A と"
+        },
+        {
+          "from": "p",
+          "to": "x",
+          "label": "列 P の値"
+        },
+        {
+          "from": "q",
+          "to": "x",
+          "label": "列 Q の値"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 表から回路を組む",
+      "caption": "3 入力の多数決回路の例です。出力が 1 になる組を論理積で作り、それを論理和でまとめると、式の形がそのまま回路の形になります。",
+      "nodes": [
+        {
+          "id": "in",
+          "label": "入力 A・B・C\n3 本",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "ab",
+          "label": "AND\nA と B がともに 1",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "bc",
+          "label": "AND\nB と C がともに 1",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "ac",
+          "label": "AND\nA と C がともに 1",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "or",
+          "label": "OR\nどれかの AND が 1",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "y",
+          "label": "出力 Y\n2 つ以上が 1 なら 1",
+          "row": 1,
+          "col": 3
+        }
+      ],
+      "edges": [
+        {
+          "from": "in",
+          "to": "ab",
+          "label": "A と B"
+        },
+        {
+          "from": "in",
+          "to": "bc",
+          "label": "B と C"
+        },
+        {
+          "from": "in",
+          "to": "ac",
+          "label": "A と C"
+        },
+        {
+          "from": "ab",
+          "to": "or",
+          "label": "A·B"
+        },
+        {
+          "from": "bc",
+          "to": "or",
+          "label": "B·C"
+        },
+        {
+          "from": "ac",
+          "to": "or",
+          "label": "A·C"
+        },
+        {
+          "from": "or",
+          "to": "y",
+          "label": "A·B＋B·C＋A·C"
+        }
+      ]
+    }
+  ]
+}

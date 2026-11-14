@@ -1,0 +1,72 @@
+{
+  "topic_id": 135,
+  "term": "HEMS（Home Energy Management System）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "家の中の測った値が強調した管理装置に集まり、住人へは見える形で、機器へは制御として返ります。",
+      "nodes": [
+        {
+          "id": "m",
+          "label": "家電・太陽光発電\n分電盤で使用電力を測る",
+          "row": 1,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "sm",
+          "label": "スマートメーター\n電力会社と通信する",
+          "row": 0,
+          "col": 1,
+          "icon": "network"
+        },
+        {
+          "id": "h",
+          "label": "HEMS の管理装置\n集めて判断する",
+          "row": 1,
+          "col": 1,
+          "icon": "gear",
+          "emphasis": true
+        },
+        {
+          "id": "p",
+          "label": "スマートフォン\n使用量をグラフで見る",
+          "row": 2,
+          "col": 1,
+          "icon": "phone"
+        },
+        {
+          "id": "c",
+          "label": "蓄電池・エアコン\n指示どおりに動く",
+          "row": 1,
+          "col": 2,
+          "icon": "box"
+        }
+      ],
+      "edges": [
+        {
+          "from": "m",
+          "to": "h",
+          "label": "機器ごとの使用電力"
+        },
+        {
+          "from": "sm",
+          "to": "h",
+          "label": "料金の時間帯と家全体の使用量"
+        },
+        {
+          "from": "h",
+          "to": "p",
+          "label": "使用量"
+        },
+        {
+          "from": "h",
+          "to": "c",
+          "label": "安い時間に蓄電・上限近くで出力を抑える"
+        }
+      ]
+    }
+  ]
+}

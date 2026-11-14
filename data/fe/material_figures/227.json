@@ -1,0 +1,175 @@
+{
+  "topic_id": 227,
+  "term": "Apache Hadoop",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 2 つの柱",
+      "caption": "各サーバの箱の 2 行目が持っているブロックです。どのブロックも 3 台にあるので、強調したサーバが止まっても残りの台から読めます。",
+      "nodes": [
+        {
+          "id": "file",
+          "label": "大きなファイル\nブロック 1 と 2 に割る",
+          "row": 0,
+          "col": 1,
+          "icon": "document"
+        },
+        {
+          "id": "s1",
+          "label": "サーバ 1\nブロック 1",
+          "row": 1,
+          "col": 0,
+          "icon": "server"
+        },
+        {
+          "id": "s2",
+          "label": "サーバ 2（停止）\nブロック 1 と 2",
+          "row": 1,
+          "col": 1,
+          "icon": "warning",
+          "emphasis": true
+        },
+        {
+          "id": "s3",
+          "label": "サーバ 3\nブロック 1 と 2",
+          "row": 1,
+          "col": 2,
+          "icon": "server"
+        },
+        {
+          "id": "s4",
+          "label": "サーバ 4\nブロック 2",
+          "row": 1,
+          "col": 3,
+          "icon": "server"
+        }
+      ],
+      "edges": [
+        {
+          "from": "file",
+          "to": "s1",
+          "label": "複製を置く"
+        },
+        {
+          "from": "file",
+          "to": "s2",
+          "label": "複製を置く"
+        },
+        {
+          "from": "file",
+          "to": "s3",
+          "label": "複製を置く"
+        },
+        {
+          "from": "file",
+          "to": "s4",
+          "label": "複製を置く"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 置いた場所で処理する",
+      "caption": "上から下へ読みます。線を流れるのは処理のプログラムと計算した結果だけで、データそのものは各サーバから動きません。",
+      "nodes": [
+        {
+          "id": "prog",
+          "label": "処理のプログラム\n各サーバへ配る",
+          "row": 0,
+          "col": 1,
+          "icon": "gear"
+        },
+        {
+          "id": "s1",
+          "label": "サーバ 1\n持つデータをその場で計算",
+          "row": 1,
+          "col": 0,
+          "icon": "server"
+        },
+        {
+          "id": "s2",
+          "label": "サーバ 2\n持つデータをその場で計算",
+          "row": 1,
+          "col": 1,
+          "icon": "server"
+        },
+        {
+          "id": "s3",
+          "label": "サーバ 3\n持つデータをその場で計算",
+          "row": 1,
+          "col": 2,
+          "icon": "server"
+        },
+        {
+          "id": "agg",
+          "label": "集計\n結果だけを集める",
+          "row": 2,
+          "col": 1,
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "prog",
+          "to": "s1",
+          "label": "処理を送る"
+        },
+        {
+          "from": "prog",
+          "to": "s2",
+          "label": "処理を送る"
+        },
+        {
+          "from": "prog",
+          "to": "s3",
+          "label": "処理を送る"
+        },
+        {
+          "from": "s1",
+          "to": "agg",
+          "label": "計算した結果"
+        },
+        {
+          "from": "s2",
+          "to": "agg",
+          "label": "計算した結果"
+        },
+        {
+          "from": "s3",
+          "to": "agg",
+          "label": "計算した結果"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "steps",
+      "after": "### MapReduce の進み方",
+      "caption": "段は左上から右下へ進み、矢印の横は段の間で渡る物です。Map が出した組を単語ごとに束ねてから、強調した Reduce が数を足し上げます。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "ログ\n大量の文章を分けて持つ",
+          "icon": "document",
+          "next_label": "1 行ずつの文章"
+        },
+        {
+          "label": "Map\n単語ごとに組を出す",
+          "icon": "gear",
+          "next_label": "「単語, 1」の組"
+        },
+        {
+          "label": "振り分け\n同じ単語を同じ先へ",
+          "next_label": "単語ごとの組の束"
+        },
+        {
+          "label": "Reduce\n単語ごとに 1 を足し上げる",
+          "icon": "chart",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

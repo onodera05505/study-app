@@ -1,0 +1,112 @@
+{
+  "topic_id": 86,
+  "term": "SMTP-AUTH",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### 認証のやり取り",
+      "caption": "メールを渡す前に、認証方式の提示・認証情報の送付・照合が挟まります。照合が通った利用者だけがメールを送れます。",
+      "actors": [
+        {
+          "id": "c",
+          "label": "メールソフト",
+          "icon": "device"
+        },
+        {
+          "id": "s",
+          "label": "送信用メールサーバ",
+          "icon": "server"
+        }
+      ],
+      "steps": [
+        {
+          "from": "c",
+          "to": "s",
+          "label": "接続する"
+        },
+        {
+          "from": "s",
+          "to": "c",
+          "label": "対応する認証方式の一覧を返す"
+        },
+        {
+          "from": "c",
+          "to": "s",
+          "label": "方式を選び、利用者 ID と認証情報を送る",
+          "note": "認証情報が流れるので TLS で通信ごと暗号化しておく"
+        },
+        {
+          "from": "s",
+          "to": "s",
+          "label": "ID と認証情報を照合する"
+        },
+        {
+          "from": "s",
+          "to": "c",
+          "label": "照合が通れば以後の送信を受け付ける",
+          "note": "通らなければメールを受け付けない"
+        },
+        {
+          "from": "c",
+          "to": "s",
+          "label": "メールを送る"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 送信ドメイン認証との違い",
+      "caption": "2 つの対策は、メールの経路の上で立つ位置が違います。送る側の入口で利用者を確かめるのが SMTP-AUTH、受け取る側で送信元ドメインを確かめるのが SPF・DKIM です。",
+      "nodes": [
+        {
+          "id": "user",
+          "label": "利用者\nメールを書いて送る",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "snd",
+          "label": "送信用メールサーバ\nSMTP-AUTH\n依頼者は契約者か",
+          "row": 0,
+          "col": 1,
+          "icon": "server",
+          "emphasis": true
+        },
+        {
+          "id": "rcv",
+          "label": "受信側のメールサーバ\nSPF・DKIM\n送信元ドメインは本物か",
+          "row": 1,
+          "col": 1,
+          "icon": "server"
+        },
+        {
+          "id": "to",
+          "label": "受信者\nメールを読む",
+          "row": 1,
+          "col": 2,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "user",
+          "to": "snd",
+          "label": "送信の依頼（ID と認証情報）"
+        },
+        {
+          "from": "snd",
+          "to": "rcv",
+          "label": "メールを中継"
+        },
+        {
+          "from": "rcv",
+          "to": "to",
+          "label": "確かめたメール"
+        }
+      ]
+    }
+  ]
+}
