@@ -1,0 +1,35 @@
+{
+  "topic_id": 468,
+  "term": "ワークフロー",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### しくみ",
+      "direction": "down",
+      "caption": "申請はあらかじめ決めた承認者の順路を自動で回ります。強調した段のように、今どこで止まっているかが画面で分かります。",
+      "stages": [
+        {
+          "label": "申請者\n画面から申請する",
+          "icon": "person",
+          "next_label": "申請書が自動で回る"
+        },
+        {
+          "label": "上司\n承認する",
+          "icon": "person",
+          "next_label": "承認済みの申請"
+        },
+        {
+          "label": "部長\n決裁する\n今ここで止まっている",
+          "icon": "clock",
+          "next_label": "決裁済みの申請",
+          "emphasis": true
+        },
+        {
+          "label": "経理\n支払いなどを処理する",
+          "icon": "money"
+        }
+      ]
+    }
+  ]
+}

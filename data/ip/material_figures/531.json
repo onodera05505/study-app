@@ -1,0 +1,69 @@
+{
+  "topic_id": 531,
+  "term": "シングルサインオン",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみと弱点",
+      "caption": "ログインは左の 1 回だけで、強調した認証の仕組みが出した情報を右の各サービスが受け取ります。",
+      "nodes": [
+        {
+          "id": "u",
+          "label": "利用者\nID とパスワードは\n1 回だけ入力",
+          "row": 1,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "auth",
+          "label": "認証の仕組み\n本人を確かめ\n認証済みの情報を発行",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "key"
+        },
+        {
+          "id": "a",
+          "label": "サービス A\n追加のログイン無し",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "b",
+          "label": "サービス B\n追加のログイン無し",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "c",
+          "label": "サービス C\n追加のログイン無し",
+          "row": 2,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "u",
+          "to": "auth",
+          "label": "一度だけログイン"
+        },
+        {
+          "from": "auth",
+          "to": "a",
+          "label": "認証済みの情報"
+        },
+        {
+          "from": "auth",
+          "to": "b",
+          "label": "認証済みの情報"
+        },
+        {
+          "from": "auth",
+          "to": "c",
+          "label": "認証済みの情報"
+        }
+      ]
+    }
+  ]
+}

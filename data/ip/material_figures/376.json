@@ -1,0 +1,67 @@
+{
+  "topic_id": 376,
+  "term": "仮想移動体通信事業者（MVNO：Mobile Virtual Network Operator）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 設備を借りて売る事業者",
+      "caption": "上の段が事業者の取引、下の段が通信の通り道です。MVNO は設備を持たず、利用者の通信は MNO の設備を通ります。",
+      "nodes": [
+        {
+          "id": "mno",
+          "label": "MNO\n設備を自前で持つ",
+          "row": 0,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "mvno",
+          "label": "MVNO\n設備を持たない",
+          "row": 0,
+          "col": 1,
+          "icon": "building",
+          "emphasis": true
+        },
+        {
+          "id": "user",
+          "label": "利用者\n格安 SIM で使う",
+          "row": 1,
+          "col": 1,
+          "icon": "phone"
+        },
+        {
+          "id": "eq",
+          "label": "基地局・交換設備\n電波と回線の大本",
+          "row": 1,
+          "col": 0,
+          "shape": "cloud"
+        }
+      ],
+      "edges": [
+        {
+          "from": "mno",
+          "to": "eq",
+          "label": "建てて運用する"
+        },
+        {
+          "from": "mno",
+          "to": "mvno",
+          "label": "回線を貸す"
+        },
+        {
+          "from": "mvno",
+          "to": "user",
+          "label": "自社ブランドの\nSIM と料金プラン"
+        },
+        {
+          "from": "user",
+          "to": "eq",
+          "label": "実際の通信は\n借りた回線を通る",
+          "style": "dashed",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

@@ -42,6 +42,30 @@
           0
         ]
       ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 指標を決める順番",
+      "caption": "指標は上の段から順に決めます。ゴールの KGI から決め手の CSF を選び、それを数えられる形にしたものが KPI です。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "KGI を決める\n何をゴールにするか",
+          "icon": "check",
+          "next_label": "ゴールに近づく\n決め手を探す"
+        },
+        {
+          "label": "CSF を選ぶ\n決め手を言葉で示す",
+          "icon": "document",
+          "next_label": "行動を\n数えられる形にする"
+        },
+        {
+          "label": "KPI にする\n行動の量や質を数える",
+          "icon": "chart",
+          "emphasis": true
+        }
+      ]
     }
   ]
 }

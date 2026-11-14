@@ -32,27 +32,29 @@
       "nodes": [
         {
           "id": "in",
-          "label": "入力\nA1＝49\nA2＝11",
+          "label": "入力\nA1＝49、A2＝11",
           "row": 0,
           "col": 0
         },
         {
           "id": "b1",
-          "label": "1個目\nB1＝11\nB2＝49÷11 の余り＝5",
+          "label": "ボックス 1 回目\nB1＝A2、B2＝A1÷A2 の余り\n49÷11 → B1＝11、B2＝5",
           "row": 0,
-          "col": 1
+          "col": 1,
+          "icon": "gear"
         },
         {
           "id": "b2",
-          "label": "2個目\nA1＝11 A2＝5\n11÷5 の余り＝1",
-          "row": 0,
-          "col": 2
+          "label": "同じボックス 2 回目\nB1＝A2、B2＝A1÷A2 の余り\n11÷5 → B1＝5、B2＝1",
+          "row": 1,
+          "col": 1,
+          "icon": "gear"
         },
         {
           "id": "out",
-          "label": "B2＝1",
-          "row": 0,
-          "col": 3,
+          "label": "結果\nB2＝1",
+          "row": 1,
+          "col": 0,
           "emphasis": true
         }
       ],
@@ -60,17 +62,17 @@
         {
           "from": "in",
           "to": "b1",
-          "label": "49 と 11"
+          "label": "49 と 11 を入れる"
         },
         {
           "from": "b1",
           "to": "b2",
-          "label": "11 と 5 を渡す"
+          "label": "割る数 11 を次の A1、余り 5 を次の A2 へ"
         },
         {
           "from": "b2",
           "to": "out",
-          "label": "結果"
+          "label": "最後の余り"
         }
       ]
     }

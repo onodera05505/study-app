@@ -1,0 +1,65 @@
+{
+  "topic_id": 236,
+  "term": "リスクベース認証",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 危険度に応じて手間を配分する",
+      "caption": "ログインをふだんと照らし合わせ、いつもどおりならそのまま通し、違うときだけ強調した追加の認証へ回します。線の名前で分かれ道をたどれます。",
+      "nodes": [
+        {
+          "id": "login",
+          "label": "ログイン\nID とパスワード",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "cmp",
+          "label": "ふだんと照合\n端末・場所・時間帯",
+          "row": 0,
+          "col": 1,
+          "icon": "search"
+        },
+        {
+          "id": "ok",
+          "label": "ログイン成功\n利用を始める",
+          "row": 1,
+          "col": 2,
+          "icon": "check"
+        },
+        {
+          "id": "add",
+          "label": "追加の認証\n秘密の質問や\nワンタイムパスワード",
+          "row": 0,
+          "col": 2,
+          "icon": "key",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "login",
+          "to": "cmp",
+          "label": "ログインの状況"
+        },
+        {
+          "from": "cmp",
+          "to": "ok",
+          "label": "いつもどおり"
+        },
+        {
+          "from": "cmp",
+          "to": "add",
+          "label": "いつもと違う"
+        },
+        {
+          "from": "add",
+          "to": "ok",
+          "label": "正しく答えた"
+        }
+      ]
+    }
+  ]
+}

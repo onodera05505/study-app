@@ -1,0 +1,35 @@
+{
+  "topic_id": 349,
+  "term": "代表的なシステム監査技法",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 証拠がなければ結論は書けない",
+      "caption": "監査は上の段から順に進みます。強調した本調査で監査技法を使って証拠を集め、その証拠が結論を裏付けます。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "予備調査\n全体像とリスクの所在をつかむ",
+          "icon": "search",
+          "next_label": "リスクの高い所"
+        },
+        {
+          "label": "本調査\nここで監査技法を使う",
+          "icon": "document",
+          "next_label": "集めた監査証拠",
+          "emphasis": true
+        },
+        {
+          "label": "証拠の評価\n事実で裏付けられるか見る",
+          "icon": "check",
+          "next_label": "裏付けの取れた事実"
+        },
+        {
+          "label": "結論\n主観でなく証拠で書く",
+          "icon": "person"
+        }
+      ]
+    }
+  ]
+}

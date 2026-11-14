@@ -1,0 +1,31 @@
+{
+  "topic_id": 86,
+  "term": "マーケティングオートメーション（MA）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 混同しやすい用語",
+      "caption": "顧客の段階に沿って受け持つ仕組みが替わる流れです。強調した MA は、買う前の見込み客を育てて商談へ渡すまでを受け持ちます。",
+      "direction": "down",
+      "stages": [
+        {"label": "MA\n見込み客を見つけて育てる\n（まだ買っていない）", "icon": "mail", "next_label": "買う気の高い見込み客", "emphasis": true},
+        {"label": "SFA\n商談と訪問の進みを管理", "icon": "person", "next_label": "受注した顧客"},
+        {"label": "CRM\n買った後の関係を長く保つ", "icon": "people"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "cycle",
+      "after": "### しくみ",
+      "caption": "見込み客を育てる仕組みを輪で表します。送った情報への反応がまた記録に戻り、輪を回るたびに買う気の高い相手が絞られます。",
+      "center": "見込み客の\n育成",
+      "stages": [
+        {"label": "行動を記録する\n閲覧・メール開封・資料請求", "icon": "search", "next_label": "記録した行動"},
+        {"label": "点数で選ぶ\n買う気の高い相手を絞る", "icon": "chart", "next_label": "選んだ相手", "emphasis": true},
+        {"label": "情報を自動で送る\n関心に合う内容を良い時に", "icon": "mail", "next_label": "届いた情報"},
+        {"label": "相手が反応する\n開封・クリック・再訪問", "icon": "person", "next_label": "新しい行動"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "topic_id": 113,
+  "term": "自動運転レベル",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### レベルごとの水準",
+      "caption": "上の段ほど自動化が進みます。人と歯車の絵は運転の主体を表し、レベル 2 と 3、3 と 4 の間の矢印が区分の切れ目です。",
+      "direction": "up",
+      "stages": [
+        {"label": "レベル 1\n操作の一部を支援", "icon": "person", "next_label": "支援する操作が増える"},
+        {"label": "レベル 2\nハンドルと加減速を支援", "icon": "person", "next_label": "主体が人からシステムへ"},
+        {"label": "レベル 3\n条件付きでシステムが運転\n難しくなれば人が引き継ぐ", "icon": "gear", "next_label": "人の引き継ぎが要らなくなる", "emphasis": true},
+        {"label": "レベル 4\n限られた条件の中で\n引き継ぎ不要", "icon": "gear", "next_label": "条件の限りがなくなる"},
+        {"label": "レベル 5\n場所も条件も問わず\nシステムがすべて担う", "icon": "gear"}
+      ]
+    }
+  ]
+}

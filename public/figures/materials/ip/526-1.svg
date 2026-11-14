@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="338" viewBox="0 0 640 338">
+<rect x="0.5" y="0.5" width="639" height="337" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(56.4 20)">
+<g transform="translate(37 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7.5" r="3.6"/><path d="M4.5 21 C4.5 14.2 19.5 14.2 19.5 21"/></g>
+<g transform="translate(245.6 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2 L21.4 20 H2.6 Z"/><path d="M12 9 V14"/><circle cx="12" cy="17" r="1" fill="#1f2937" stroke="none"/></g>
+<g transform="translate(461.2 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3.5" width="16" height="7" rx="1.2"/><rect x="4" y="13.5" width="16" height="7" rx="1.2"/><circle cx="7.5" cy="7" r="0.9" fill="#1f2937" stroke="none"/><circle cx="7.5" cy="17" r="0.9" fill="#1f2937" stroke="none"/><path d="M11 7 H17 M11 17 H17"/></g>
+<g transform="translate(0 28)">
+<line x1="48" y1="34" x2="48" y2="270" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="256.6" y1="34" x2="256.6" y2="270" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="472.2" y1="34" x2="472.2" y2="270" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">利用者</text>
+<rect x="152.6" y="0" width="208" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="256.6" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ブラウザ（中にマルウェア）</text>
+<rect x="417.2" y="0" width="110" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="472.2" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">銀行のサーバ</text>
+<polyline points="51,68 253.6,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="253.6,68 245.6,71.6 245.6,64.4" fill="#1f2937"/>
+<text x="152.3" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 振込先 A を入力</text>
+<polyline points="256.6,100 282.6,100 282.6,114 258.6,114" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="258.6,114 266.6,110.4 266.6,117.6" fill="#1f2937"/>
+<text x="290.6" y="108" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2. 振込先を攻撃者の口座 X に書き換え</text>
+<rect x="168.6" y="119" width="176" height="16" rx="3" fill="#ffffff"/>
+<text x="256.6" y="132.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">通信の暗号化より手前で起きる</text>
+<polyline points="259.6,158 469.2,158" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="469.2,158 461.2,161.6 461.2,154.4" fill="#1f2937"/>
+<text x="364.4" y="151" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 振込先 X として暗号化して送る</text>
+<polyline points="469.2,198 259.6,198" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="259.6,198 267.6,194.4 267.6,201.6" fill="#1f2937"/>
+<text x="364.4" y="191" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. X への振込を受け付け</text>
+<polyline points="253.6,238 51,238" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,238 59,234.4 59,241.6" fill="#1f2937"/>
+<text x="152.3" y="231" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. 画面には振込先 A のまま表示</text>
+</g>
+</g>
+</svg>

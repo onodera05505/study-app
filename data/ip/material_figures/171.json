@@ -1,0 +1,36 @@
+{
+  "topic_id": 171,
+  "term": "温度センサー",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "### IoT での役割",
+      "caption": "IoT は現実の状態を取り込み、判断して現実へ返す輪で回ります。強調したセンサーが入口で、アクチュエーターが出口です。",
+      "center": "IoT の\n循環",
+      "stages": [
+        {
+          "label": "現実世界\n温度・窓・部屋",
+          "icon": "building",
+          "next_label": "温度などの状態"
+        },
+        {
+          "label": "センサー（入口）\n測って電気信号に変える",
+          "icon": "search",
+          "next_label": "測った値の電気信号",
+          "emphasis": true
+        },
+        {
+          "label": "コンピュータ\nデータにして判断する",
+          "icon": "device",
+          "next_label": "動かす指示の信号"
+        },
+        {
+          "label": "アクチュエーター（出口）\n信号を受けて物を動かす",
+          "icon": "gear",
+          "next_label": "窓の開閉などの動き"
+        }
+      ]
+    }
+  ]
+}

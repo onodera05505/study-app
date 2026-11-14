@@ -1,0 +1,80 @@
+{
+  "topic_id": 417,
+  "term": "エネルギーハーベスティング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 捨てられていた電力をかき集める",
+      "caption": "上と左の 4 つは周りで捨てられていたエネルギーで、強調した中央の仕組みが集めて電力に変え、右の IoT センサーへ渡します。配線も送り手も無く、ごく小さな電力で動く機器向けです。",
+      "nodes": [
+        {
+          "id": "light",
+          "label": "光\n太陽光や室内の照明",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "heat",
+          "label": "温度差\n機械と外気の差",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "vib",
+          "label": "振動\n人や車が通る揺れ",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "wave",
+          "label": "電波\n周りに飛んでいる電波",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "hv",
+          "label": "ハーベスティング\n集めて電力に変える",
+          "row": 1,
+          "col": 1,
+          "icon": "gear",
+          "emphasis": true
+        },
+        {
+          "id": "iot",
+          "label": "IoT センサー\n測って時々送る\n電池交換は要らない",
+          "row": 1,
+          "col": 2,
+          "icon": "device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "light",
+          "to": "hv",
+          "label": "わずかな光"
+        },
+        {
+          "from": "heat",
+          "to": "hv",
+          "label": "わずかな熱"
+        },
+        {
+          "from": "vib",
+          "to": "hv",
+          "label": "わずかな揺れ"
+        },
+        {
+          "from": "wave",
+          "to": "hv",
+          "label": "わずかな電波"
+        },
+        {
+          "from": "hv",
+          "to": "iot",
+          "label": "ごく小さな電力"
+        }
+      ]
+    }
+  ]
+}

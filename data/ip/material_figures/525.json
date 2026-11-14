@@ -1,0 +1,61 @@
+{
+  "topic_id": 525,
+  "term": "インターネット接続サービス事業者（ISP：Internet Service Provider）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 回線事業者との役割の違い",
+      "caption": "利用者からインターネットまでの道のりです。回線を敷く役と、回線をインターネットへつなぐ役が別に並びます。",
+      "nodes": [
+        {
+          "id": "u",
+          "label": "自宅・会社\n利用者の機器",
+          "row": 0,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "l",
+          "label": "回線事業者\n光ファイバーなどの\n回線を敷く",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "i",
+          "label": "ISP\n接続の入口と\nIP アドレスの割り当て",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "n",
+          "label": "インターネット\n世界中のネットワーク",
+          "row": 0,
+          "col": 3,
+          "shape": "cloud"
+        }
+      ],
+      "edges": [
+        {
+          "from": "u",
+          "to": "l",
+          "label": "利用者の通信",
+          "arrow": "both"
+        },
+        {
+          "from": "l",
+          "to": "i",
+          "label": "回線で運ぶ",
+          "arrow": "both"
+        },
+        {
+          "from": "i",
+          "to": "n",
+          "label": "インターネットへつなぐ",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

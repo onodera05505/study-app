@@ -1,0 +1,60 @@
+{
+  "topic_id": 104,
+  "term": "生成 AI",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "強調した学習済みモデルが出力の土台です。利用者の指示はモデルに入るだけで、出力はモデルが覚えた傾向から組み立てられます。",
+      "nodes": [
+        {
+          "id": "d",
+          "label": "大量の文章・画像\n学習の材料",
+          "row": 0,
+          "col": 0,
+          "icon": "database"
+        },
+        {
+          "id": "m",
+          "label": "学習済みモデル\n並び方の傾向を覚えた",
+          "row": 0,
+          "col": 1,
+          "emphasis": true,
+          "icon": "gear"
+        },
+        {
+          "id": "u",
+          "label": "利用者の指示\n話し言葉で頼む",
+          "row": 1,
+          "col": 1,
+          "icon": "person"
+        },
+        {
+          "id": "o",
+          "label": "出力\n新しく作った文章や画像",
+          "row": 0,
+          "col": 2,
+          "icon": "document"
+        }
+      ],
+      "edges": [
+        {
+          "from": "d",
+          "to": "m",
+          "label": "事前学習"
+        },
+        {
+          "from": "u",
+          "to": "m",
+          "label": "指示を渡す"
+        },
+        {
+          "from": "m",
+          "to": "o",
+          "label": "傾向に沿って組み立てる"
+        }
+      ]
+    }
+  ]
+}

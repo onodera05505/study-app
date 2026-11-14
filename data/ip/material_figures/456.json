@@ -1,0 +1,60 @@
+{
+  "topic_id": 456,
+  "term": "ゾーニング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "左から奥へ進むほど重要な区画で、境目を通る条件が厳しくなります。業者は入口脇の受渡しエリアで止まります。",
+      "nodes": [
+        {
+          "id": "gate",
+          "label": "建物の入口\n来客も業者も来る",
+          "row": 0,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "open",
+          "label": "オープンエリア\n来客も入れる",
+          "row": 0,
+          "col": 1,
+          "icon": "people"
+        },
+        {
+          "id": "sec",
+          "label": "セキュリティエリア\nサーバ室など\n重要な区画",
+          "row": 0,
+          "col": 2,
+          "icon": "server",
+          "emphasis": true
+        },
+        {
+          "id": "recv",
+          "label": "受渡しエリア\n業者と荷物を\nやり取りする",
+          "row": 1,
+          "col": 0,
+          "icon": "box"
+        }
+      ],
+      "edges": [
+        {
+          "from": "gate",
+          "to": "open",
+          "label": "受付を通れば誰でも"
+        },
+        {
+          "from": "open",
+          "to": "sec",
+          "label": "IC カード認証・共連れ防止の扉"
+        },
+        {
+          "from": "gate",
+          "to": "recv",
+          "label": "業者は荷物の受渡しだけ"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "topic_id": 476,
+  "term": "3D プリンター",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 積層造形のしくみ",
+      "caption": "データから実物までを、左下の段から順に上っていきます。強調した段で、材料を下から一層ずつ重ねて立体にします。",
+      "direction": "up",
+      "stages": [
+        {"label": "3次元の形状データ\n作りたい物の設計", "icon": "document", "next_label": "形のデータ"},
+        {"label": "輪切りに分ける\n薄い層の断面にする", "icon": "gear", "next_label": "層ごとの断面"},
+        {"label": "一層ずつ重ねる\n材料を下から固めて積む", "next_label": "積み上がった層", "emphasis": true},
+        {"label": "立体物\n手に取れる実物（中空も可）", "icon": "box"}
+      ]
+    }
+  ]
+}

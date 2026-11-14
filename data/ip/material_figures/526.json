@@ -1,0 +1,110 @@
+{
+  "topic_id": 526,
+  "term": "MITB（Man In The Browser）攻撃",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### なぜ気づけないのか",
+      "caption": "書き換えは暗号化より手前のブラウザの中で起き、利用者の画面には入力どおりの内容が見えたままです。",
+      "actors": [
+        {
+          "id": "u",
+          "label": "利用者",
+          "icon": "person"
+        },
+        {
+          "id": "b",
+          "label": "ブラウザ（中にマルウェア）",
+          "icon": "warning"
+        },
+        {
+          "id": "s",
+          "label": "銀行のサーバ",
+          "icon": "server"
+        }
+      ],
+      "steps": [
+        {
+          "from": "u",
+          "to": "b",
+          "label": "振込先 A を入力"
+        },
+        {
+          "from": "b",
+          "to": "b",
+          "label": "振込先を攻撃者の口座 X に書き換え",
+          "note": "通信の暗号化より手前で起きる"
+        },
+        {
+          "from": "b",
+          "to": "s",
+          "label": "振込先 X として暗号化して送る"
+        },
+        {
+          "from": "s",
+          "to": "b",
+          "label": "X への振込を受け付け"
+        },
+        {
+          "from": "b",
+          "to": "u",
+          "label": "画面には振込先 A のまま表示"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 混同しやすい用語",
+      "caption": "利用者から銀行までの道のりで、2 つの攻撃が割り込む場所を示します。強調したブラウザの内側が MITB 攻撃の場所です。",
+      "nodes": [
+        {
+          "id": "u",
+          "label": "利用者\n画面を見て入力",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "b",
+          "label": "ブラウザ\nMITB は\nここに入り込む",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "p",
+          "label": "通信経路\n中間者攻撃は\nここに割り込む",
+          "row": 0,
+          "col": 2,
+          "shape": "cloud"
+        },
+        {
+          "id": "s",
+          "label": "銀行のサーバ\n正規の相手",
+          "row": 0,
+          "col": 3,
+          "icon": "server"
+        }
+      ],
+      "edges": [
+        {
+          "from": "u",
+          "to": "b",
+          "label": "入力"
+        },
+        {
+          "from": "b",
+          "to": "p",
+          "label": "暗号化された通信"
+        },
+        {
+          "from": "p",
+          "to": "s",
+          "label": "暗号化された通信"
+        }
+      ]
+    }
+  ]
+}

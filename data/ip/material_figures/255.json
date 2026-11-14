@@ -1,0 +1,31 @@
+{
+  "topic_id": 255,
+  "term": "リーンスタートアップ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "### 失敗を早く小さく済ませる",
+      "caption": "作る・測る・学ぶの輪を、時計回りに短い周期で何度も回す図です。学ぶの段で仮説が外れたと分かれば、方向を直して次の輪に入ります。",
+      "center": "短い周期で\n何度も回す",
+      "stages": [
+        {
+          "label": "作る\n必要最小限の MVP",
+          "icon": "box",
+          "next_label": "MVP を早く\n顧客に出す"
+        },
+        {
+          "label": "測る\n顧客の行動を数える",
+          "icon": "chart",
+          "next_label": "使い続けたか・\n払ったかの数字"
+        },
+        {
+          "label": "学ぶ\n仮説の当たり外れを決める",
+          "icon": "search",
+          "emphasis": true,
+          "next_label": "方向を直した\n次の仮説"
+        }
+      ]
+    }
+  ]
+}

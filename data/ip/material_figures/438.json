@@ -1,0 +1,109 @@
+{
+  "topic_id": 438,
+  "term": "ハイパーメディア",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "上の段は先頭から順に読む普通の文書、下の段はハイパーメディアです。下では文字・画像・音声・動画がリンクで結ばれ、どこからどこへでもたどれます。",
+      "nodes": [
+        {
+          "id": "plain",
+          "label": "普通の文書\n読む順が決まった一本道",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "p1",
+          "label": "ページ 1\n最初に読む",
+          "row": 0,
+          "col": 1,
+          "icon": "document"
+        },
+        {
+          "id": "p2",
+          "label": "ページ 2\n1 の次に読む",
+          "row": 0,
+          "col": 2,
+          "icon": "document"
+        },
+        {
+          "id": "p3",
+          "label": "ページ 3\n2 の次に読む",
+          "row": 0,
+          "col": 3,
+          "icon": "document"
+        },
+        {
+          "id": "hyper",
+          "label": "ハイパーメディア\n読む順を読み手が選ぶ",
+          "row": 1,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "txt",
+          "label": "文字のページ\n語にリンクを置く",
+          "row": 1,
+          "col": 1,
+          "icon": "document"
+        },
+        {
+          "id": "img",
+          "label": "画像\n図や写真",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "snd",
+          "label": "音声\n説明の声",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "mov",
+          "label": "動画\n動きを見せる",
+          "row": 2,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "p1",
+          "to": "p2",
+          "label": "次のページへ"
+        },
+        {
+          "from": "p2",
+          "to": "p3",
+          "label": "次のページへ"
+        },
+        {
+          "from": "txt",
+          "to": "img",
+          "label": "語を押して画像へ",
+          "arrow": "both"
+        },
+        {
+          "from": "txt",
+          "to": "snd",
+          "label": "語を押して音声へ",
+          "arrow": "both"
+        },
+        {
+          "from": "img",
+          "to": "mov",
+          "label": "図を押して動画へ",
+          "arrow": "both"
+        },
+        {
+          "from": "snd",
+          "to": "mov",
+          "label": "関連する動画へ",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

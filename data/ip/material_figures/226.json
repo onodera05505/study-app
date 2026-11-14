@@ -1,0 +1,92 @@
+{
+  "topic_id": 226,
+  "term": "PKI（Public Key Infrastructure：公開鍵基盤）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "parts",
+      "after": "explanation",
+      "caption": "PKI という仕組み全体を部位に分けた図です。強調した CA は証明書を発行する機関で、全体の一部分です。",
+      "whole": {
+        "label": "PKI（公開鍵基盤）",
+        "icon": "gear"
+      },
+      "parts": [
+        {
+          "label": "CA（認証局）\n証明書を発行・失効する機関",
+          "emphasis": true,
+          "icon": "building"
+        },
+        {
+          "label": "デジタル証明書\n公開鍵と持ち主を結ぶ",
+          "icon": "document"
+        },
+        {
+          "label": "ルート証明書\n検証の起点になる",
+          "icon": "key"
+        },
+        {
+          "label": "CRL\n失効した証明書の一覧",
+          "icon": "warning"
+        },
+        {
+          "label": "運用のきまり\n発行と管理の手順"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 証明書をたどって確かめる",
+      "caption": "左から右へ、証明書を検証するたどり方を表した図です。ブラウザに入っているルート証明書を起点に、CA の署名を確かめます。",
+      "nodes": [
+        {
+          "id": "root",
+          "label": "ルート証明書\nブラウザに入っている\nCA の公開鍵を持つ",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "sig",
+          "label": "CA の署名\n相手の証明書に付く",
+          "row": 0,
+          "col": 1,
+          "icon": "key"
+        },
+        {
+          "id": "cert",
+          "label": "相手の証明書\n公開鍵と持ち主",
+          "row": 0,
+          "col": 2,
+          "icon": "document"
+        },
+        {
+          "id": "ok",
+          "label": "公開鍵は本人のもの\n安心して使える",
+          "row": 1,
+          "col": 2,
+          "emphasis": true,
+          "icon": "check"
+        }
+      ],
+      "edges": [
+        {
+          "from": "root",
+          "to": "sig",
+          "label": "CA の公開鍵で確かめる"
+        },
+        {
+          "from": "sig",
+          "to": "cert",
+          "label": "署名が正しい"
+        },
+        {
+          "from": "cert",
+          "to": "ok",
+          "label": "書き換えも偽物も無い"
+        }
+      ]
+    }
+  ]
+}

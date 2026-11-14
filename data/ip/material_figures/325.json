@@ -1,0 +1,27 @@
+{
+  "topic_id": 325,
+  "term": "特許ポートフォリオ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### なぜまとめて見るのか",
+      "caption": "左の特許を一件ずつでなく中央でまとめて分析し、その結果を右の三つの打ち手に変える流れです。",
+      "nodes": [
+        {"id": "own", "label": "保有の特許\n一件ずつでは\n効き方が見えない", "row": 0, "col": 0, "icon": "document"},
+        {"id": "app", "label": "出願中の特許\nこれから\n権利になる", "row": 2, "col": 0, "icon": "document"},
+        {"id": "ana", "label": "まとめて分析\n事業への貢献・組合せ\n・将来使える分野", "row": 1, "col": 1, "emphasis": true, "icon": "search"},
+        {"id": "keep", "label": "維持する\n事業を支える特許", "row": 0, "col": 2},
+        {"id": "drop", "label": "手放す\n効いていない特許", "row": 1, "col": 2},
+        {"id": "focus", "label": "出願を集中する\n手薄な分野を補う", "row": 2, "col": 2}
+      ],
+      "edges": [
+        {"from": "own", "to": "ana", "label": "棚卸し"},
+        {"from": "app", "to": "ana", "label": "棚卸し"},
+        {"from": "ana", "to": "keep", "label": "貢献が大きい"},
+        {"from": "ana", "to": "drop", "label": "貢献が小さい"},
+        {"from": "ana", "to": "focus", "label": "弱い領域が見える"}
+      ]
+    }
+  ]
+}

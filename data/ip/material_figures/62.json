@@ -1,0 +1,72 @@
+{
+  "topic_id": 62,
+  "term": "名寄せ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### なぜ必要か",
+      "caption": "データは左から右へ進みます。表記をそろえるのがクレンジング、そろえた後に同じ相手を 1 件にまとめるのが名寄せです。",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "口座の登録\n山田 太郎\n港区一丁目",
+          "row": 0,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "b",
+          "label": "会員の登録\nヤマダ タロウ\n港区1丁目",
+          "row": 2,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "c",
+          "label": "データクレンジング\n表記のゆれを整える",
+          "row": 1,
+          "col": 1,
+          "icon": "gear"
+        },
+        {
+          "id": "d",
+          "label": "名寄せ\n同じ相手を\n1 つにまとめる",
+          "row": 1,
+          "col": 2,
+          "emphasis": true,
+          "icon": "search"
+        },
+        {
+          "id": "e",
+          "label": "顧客ごとに 1 件\n預金の総額を\nつかめる",
+          "row": 1,
+          "col": 3,
+          "shape": "cylinder"
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "c",
+          "label": "表記が違い別人に見える"
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "label": "表記が違い別人に見える"
+        },
+        {
+          "from": "c",
+          "to": "d",
+          "label": "表記をそろえたデータ"
+        },
+        {
+          "from": "d",
+          "to": "e",
+          "label": "氏名・生年月日・住所が一致"
+        }
+      ]
+    }
+  ]
+}

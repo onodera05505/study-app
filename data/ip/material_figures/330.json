@@ -1,0 +1,23 @@
+{
+  "topic_id": 330,
+  "term": "コネクテッドカー",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### しくみ",
+      "caption": "車とサーバが通信で往き来する順を上から番号で示します。車から送るだけでなくサーバから返ってくる双方向のやり取りが要点です。",
+      "actors": [
+        {"id": "car", "label": "車（通信機能つき）", "icon": "device"},
+        {"id": "srv", "label": "サーバ", "icon": "server"}
+      ],
+      "steps": [
+        {"from": "car", "to": "srv", "label": "センサーのデータを送る（速度・エンジンの状態・位置）"},
+        {"from": "srv", "to": "srv", "label": "解析する"},
+        {"from": "srv", "to": "car", "label": "渋滞・危険箇所・異常の予兆を返す"},
+        {"from": "car", "to": "car", "label": "運転支援に生かす"},
+        {"from": "srv", "to": "car", "label": "ソフトウェアを遠隔で更新する"}
+      ]
+    }
+  ]
+}

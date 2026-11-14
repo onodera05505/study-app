@@ -1,0 +1,35 @@
+{
+  "topic_id": 179,
+  "term": "マクロ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### しくみ",
+      "caption": "人の操作がソフトに記録され、プログラムとして保存されます。保存した中身は手を入れて動きを足せ、実行すると上から順に再現されます。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "操作する\n人がいつもの手順で",
+          "icon": "person",
+          "next_label": "記録した操作の並び"
+        },
+        {
+          "label": "手順として保存\nマクロ言語のプログラム",
+          "icon": "document",
+          "next_label": "保存した手順",
+          "emphasis": true
+        },
+        {
+          "label": "編集する（任意）\n条件分岐や繰り返しを足す",
+          "icon": "gear",
+          "next_label": "手を入れたプログラム"
+        },
+        {
+          "label": "実行する\n手順を上から順に再現",
+          "icon": "arrow-cycle"
+        }
+      ]
+    }
+  ]
+}

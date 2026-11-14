@@ -1,0 +1,25 @@
+{
+  "topic_id": 161,
+  "term": "基盤モデル",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 事前学習とファインチューニング",
+      "caption": "大量のデータで作った 1 つの土台から、右の用途へ枝分かれして使い回します。用途ごとに一から学習させないのが要点です。",
+      "nodes": [
+        {"id": "data", "label": "大量のデータ\n広い範囲の文章や画像", "row": 1, "col": 0, "shape": "cylinder"},
+        {"id": "base", "label": "基盤モデル\n汎用の土台", "row": 1, "col": 1, "emphasis": true, "icon": "gear"},
+        {"id": "tr", "label": "翻訳\n言葉を置き換える", "row": 0, "col": 2},
+        {"id": "sum", "label": "要約\n長い文を短くする", "row": 1, "col": 2},
+        {"id": "chat", "label": "対話\n問いに答える", "row": 2, "col": 2}
+      ],
+      "edges": [
+        {"from": "data", "to": "base", "label": "事前学習"},
+        {"from": "base", "to": "tr", "label": "ファインチューニング\nで少し調整"},
+        {"from": "base", "to": "sum", "label": "ファインチューニング\nで少し調整"},
+        {"from": "base", "to": "chat", "label": "ファインチューニング\nで少し調整"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "topic_id": 332,
+  "term": "エンタープライズサーチ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "別々の場所にある社内の情報を前もって巡回して索引にまとめておくので、利用者は保存場所を知らなくても一度に探せます。",
+      "nodes": [
+        {
+          "id": "fs",
+          "label": "ファイルサーバ\n文書（非定型）",
+          "row": 0,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "mail",
+          "label": "メールサーバ\nメール本文（非定型）",
+          "row": 1,
+          "col": 0,
+          "icon": "mail"
+        },
+        {
+          "id": "db",
+          "label": "業務データベース\n表のデータ（定型）",
+          "row": 2,
+          "col": 0,
+          "shape": "cylinder"
+        },
+        {
+          "id": "idx",
+          "label": "索引\n巡回して作っておく",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "search"
+        },
+        {
+          "id": "user",
+          "label": "利用者\nキーワードを入れるだけ",
+          "row": 1,
+          "col": 2,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "fs",
+          "to": "idx",
+          "label": "巡回して中身を集める"
+        },
+        {
+          "from": "mail",
+          "to": "idx",
+          "label": "巡回して中身を集める"
+        },
+        {
+          "from": "db",
+          "to": "idx",
+          "label": "巡回して中身を集める"
+        },
+        {
+          "from": "user",
+          "to": "idx",
+          "label": "キーワードと検索結果",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

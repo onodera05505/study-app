@@ -1,0 +1,24 @@
+{
+  "topic_id": 201,
+  "term": "マルチホップ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### バケツリレーで届かせるしくみ",
+      "caption": "電波が隣の機器までしか届かないので、途中の機器が受け取って次へ渡します。実線の矢印 1 本が 1 ホップで、これを重ねて遠くまで届かせます。",
+      "nodes": [
+        {"id": "a", "label": "センサー A\n電波は隣までしか届かない", "row": 1, "col": 0},
+        {"id": "b", "label": "センサー B\n受け取って次へ渡す", "row": 0, "col": 1},
+        {"id": "c", "label": "センサー C\n受け取って次へ渡す", "row": 0, "col": 2},
+        {"id": "g", "label": "集約する機器\n遠くにあるデータの集め先", "row": 1, "col": 3, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "a", "to": "b", "label": "1 ホップ目"},
+        {"from": "b", "to": "c", "label": "2 ホップ目"},
+        {"from": "c", "to": "g", "label": "3 ホップ目"},
+        {"from": "a", "to": "g", "label": "遠すぎて直接は届かない", "style": "dashed", "arrow": "none"}
+      ]
+    }
+  ]
+}

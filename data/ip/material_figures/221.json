@@ -1,0 +1,58 @@
+{
+  "topic_id": 221,
+  "term": "CA（Certification Authority：認証局）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### 証明書の発行と失効",
+      "caption": "上から順に、申請から確認までのやり取りを表した図です。CA が署名で鍵の持ち主を保証し、受け取る側はその署名を確かめます。",
+      "actors": [
+        {
+          "id": "r",
+          "label": "受け取る側",
+          "icon": "person"
+        },
+        {
+          "id": "ca",
+          "label": "CA（認証局）",
+          "icon": "building"
+        },
+        {
+          "id": "a",
+          "label": "申請者",
+          "icon": "person"
+        }
+      ],
+      "steps": [
+        {
+          "from": "a",
+          "to": "ca",
+          "label": "公開鍵と身元を添えて申請"
+        },
+        {
+          "from": "ca",
+          "to": "ca",
+          "label": "申請者の身元を確かめる"
+        },
+        {
+          "from": "ca",
+          "to": "a",
+          "label": "CA の署名付きの証明書を発行",
+          "note": "第三者が鍵の持ち主を保証する"
+        },
+        {
+          "from": "a",
+          "to": "r",
+          "label": "証明書付きの公開鍵を渡す"
+        },
+        {
+          "from": "r",
+          "to": "r",
+          "label": "CA の署名を確かめる",
+          "note": "署名が正しければ本人の鍵と分かる"
+        }
+      ]
+    }
+  ]
+}

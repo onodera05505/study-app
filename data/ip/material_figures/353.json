@@ -1,0 +1,60 @@
+{
+  "topic_id": 353,
+  "term": "マッシュアップ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### Web API を組み合わせて作る",
+      "caption": "左の 3 つはどれも既にある物で、矢印が渡す情報を組み合わせて右の新しいサービスができます。自分で作るのは組み合わせる部分だけです。",
+      "nodes": [
+        {
+          "id": "list",
+          "label": "店舗一覧のページ\n自社に既にある",
+          "row": 0,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "map",
+          "label": "地図の Web API\n他社が公開",
+          "row": 1,
+          "col": 0,
+          "icon": "cloud"
+        },
+        {
+          "id": "wx",
+          "label": "天気の Web API\n他社が公開",
+          "row": 2,
+          "col": 0,
+          "icon": "cloud"
+        },
+        {
+          "id": "new",
+          "label": "店舗マップ\n作るのは組み合わせだけ",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "gear"
+        }
+      ],
+      "edges": [
+        {
+          "from": "list",
+          "to": "new",
+          "label": "住所の一覧"
+        },
+        {
+          "from": "map",
+          "to": "new",
+          "label": "地図の表示"
+        },
+        {
+          "from": "wx",
+          "to": "new",
+          "label": "店舗周辺の天気"
+        }
+      ]
+    }
+  ]
+}

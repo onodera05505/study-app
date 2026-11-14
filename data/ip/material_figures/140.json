@@ -1,0 +1,30 @@
+{
+  "topic_id": 140,
+  "term": "プロジェクト憲章",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 混同しやすい用語",
+      "caption": "強調した憲章で認可が済んでから、計画書で中身を決め、実行へ進みます。矢印の文字は次の段へ渡るものです。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "プロジェクト憲章\n経営層や発注者が承認し PM を任命",
+          "icon": "document",
+          "next_label": "認可と PM の権限",
+          "emphasis": true
+        },
+        {
+          "label": "プロジェクト計画書\n日程・体制・コストを決める",
+          "icon": "clock",
+          "next_label": "承認された計画"
+        },
+        {
+          "label": "実行\n計画に沿って作業を進める",
+          "icon": "people"
+        }
+      ]
+    }
+  ]
+}

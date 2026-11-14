@@ -1,0 +1,73 @@
+{
+  "topic_id": 452,
+  "term": "TPM（Trusted Platform Module：セキュリティチップ）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "鍵は TPM の中から出ず、復号もチップの中で行います。ディスクだけを別の PC へ移すと鍵が無いので、中身は読めません。",
+      "nodes": [
+        {
+          "id": "disk",
+          "label": "ディスク\n暗号化されたデータ",
+          "row": 0,
+          "col": 0,
+          "shape": "cylinder"
+        },
+        {
+          "id": "tpm",
+          "label": "TPM（元の PC）\n鍵を内部に持ち\n復号もチップの中で",
+          "row": 0,
+          "col": 1,
+          "icon": "key",
+          "emphasis": true
+        },
+        {
+          "id": "use",
+          "label": "元の PC\n復号した中身を使える",
+          "row": 0,
+          "col": 2,
+          "icon": "device"
+        },
+        {
+          "id": "other",
+          "label": "別の PC\nTPM の鍵を持たない",
+          "row": 1,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "ng",
+          "label": "読めない\n暗号のまま",
+          "row": 1,
+          "col": 1,
+          "icon": "lock"
+        }
+      ],
+      "edges": [
+        {
+          "from": "disk",
+          "to": "tpm",
+          "label": "暗号化されたデータ"
+        },
+        {
+          "from": "tpm",
+          "to": "use",
+          "label": "復号した中身"
+        },
+        {
+          "from": "disk",
+          "to": "other",
+          "label": "ディスクだけ取り外して接続",
+          "style": "dashed"
+        },
+        {
+          "from": "other",
+          "to": "ng",
+          "label": "鍵が無く復号できない"
+        }
+      ]
+    }
+  ]
+}

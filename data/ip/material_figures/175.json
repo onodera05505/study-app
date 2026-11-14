@@ -1,0 +1,65 @@
+{
+  "topic_id": 175,
+  "term": "ベンチマーク",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 使いどころと限界",
+      "caption": "同じ標準のプログラムを候補の機種それぞれで実際に動かし、測った値を並べます。処理が同じなので、機種の違いだけが値の差になります。",
+      "nodes": [
+        {
+          "id": "prog",
+          "label": "標準のプログラム\n決めておいた同じ処理",
+          "row": 1,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "a",
+          "label": "機種 A\n候補の 1 台目",
+          "row": 0,
+          "col": 1,
+          "icon": "server"
+        },
+        {
+          "id": "b",
+          "label": "機種 B\n候補の 2 台目",
+          "row": 2,
+          "col": 1,
+          "icon": "server"
+        },
+        {
+          "id": "val",
+          "label": "測った値を比べる\n応答時間・スループット",
+          "row": 1,
+          "col": 2,
+          "icon": "chart",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "prog",
+          "to": "a",
+          "label": "同じ処理を実際に動かす"
+        },
+        {
+          "from": "prog",
+          "to": "b",
+          "label": "同じ処理を実際に動かす"
+        },
+        {
+          "from": "a",
+          "to": "val",
+          "label": "かかった時間を測る"
+        },
+        {
+          "from": "b",
+          "to": "val",
+          "label": "かかった時間を測る"
+        }
+      ]
+    }
+  ]
+}

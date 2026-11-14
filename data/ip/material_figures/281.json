@@ -1,0 +1,39 @@
+{
+  "topic_id": 281,
+  "term": "TCP/IP",
+  "figures": [
+    {
+      "id": 1,
+      "type": "layers",
+      "after": "### 4階層と TCP・IP の役割",
+      "caption": "TCP/IP の 4 階層を上から積んだ図です。用途ごとのプロトコルは一番上に並び、下の 3 層がどの用途にも共通の土台になります。",
+      "shape": "stack",
+      "layers": [
+        {
+          "label": "アプリケーション層\n用途ごとの約束を決める",
+          "note": "HTTP・SMTP・POP・FTP・DNS"
+        },
+        {
+          "label": "トランスポート層\n届いたか確かめて再送する",
+          "note": "TCP",
+          "emphasis": true
+        },
+        {
+          "label": "インターネット層\n相手を指して経路を決める",
+          "note": "IP",
+          "emphasis": true
+        },
+        {
+          "label": "ネットワークインタフェース層\n隣の機器まで信号を届ける"
+        }
+      ],
+      "brackets": [
+        {
+          "from": 1,
+          "to": 3,
+          "label": "どの用途にも\n共通の土台"
+        }
+      ]
+    }
+  ]
+}

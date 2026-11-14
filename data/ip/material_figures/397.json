@@ -1,0 +1,25 @@
+{
+  "topic_id": 397,
+  "term": "データマイニング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 名前のとおり「掘り出す」技術",
+      "caption": "データがためられ、掘り出され、売場で使われるまでの流れです。ためる役のデータウェアハウスと、掘り出す役のデータマイニングの位置を見比べます。",
+      "nodes": [
+        {"id": "rec", "label": "販売の記録\nレジの購買データ", "row": 0, "col": 0, "icon": "document"},
+        {"id": "dwh", "label": "データウェアハウス\nためる", "row": 0, "col": 1, "shape": "cylinder"},
+        {"id": "dm", "label": "データマイニング\n規則性を掘り出す", "row": 0, "col": 2, "emphasis": true, "icon": "search"},
+        {"id": "rule", "label": "見つかった規則性\n一緒に買われやすい\n商品の組合せ", "row": 1, "col": 2},
+        {"id": "use", "label": "陳列・おすすめ\n並べ方と表示に生かす", "row": 1, "col": 1, "icon": "building"}
+      ],
+      "edges": [
+        {"from": "rec", "to": "dwh", "label": "毎日の購買データ"},
+        {"from": "dwh", "to": "dm", "label": "分析しやすい形の\n過去のデータ"},
+        {"from": "dm", "to": "rule", "label": "人が気付かなかった\n関連"},
+        {"from": "rule", "to": "use", "label": "売場と画面に反映"}
+      ]
+    }
+  ]
+}

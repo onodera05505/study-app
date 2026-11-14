@@ -1,0 +1,124 @@
+{
+  "topic_id": 373,
+  "term": "アドホックネットワーク",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### アクセスポイントを置かないつなぎ方",
+      "caption": "上の段は AP が間に入るインフラストラクチャモード、下の段は AP を置かないアドホックネットワークです。真ん中に中継の機器があるかを比べます。",
+      "nodes": [
+        {
+          "id": "t1",
+          "label": "端末\nAP を経由する",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "ap",
+          "label": "アクセスポイント\nすべての通信を中継",
+          "row": 0,
+          "col": 1,
+          "icon": "network"
+        },
+        {
+          "id": "t2",
+          "label": "端末\nAP を経由する",
+          "row": 0,
+          "col": 2,
+          "icon": "device"
+        },
+        {
+          "id": "a1",
+          "label": "端末\n相手と直接つながる",
+          "row": 1,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "a2",
+          "label": "端末\n相手と直接つながる",
+          "row": 1,
+          "col": 2,
+          "icon": "device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "t1",
+          "to": "ap",
+          "label": "AP 経由",
+          "arrow": "both"
+        },
+        {
+          "from": "ap",
+          "to": "t2",
+          "label": "AP 経由",
+          "arrow": "both"
+        },
+        {
+          "from": "a1",
+          "to": "a2",
+          "label": "AP を置かず直接の電波",
+          "arrow": "both"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### アクセスポイントを置かないつなぎ方",
+      "caption": "A から D へは電波が届かないので、間にいる端末 B と C がデータを受け取って次へ渡します。中継役は専用の機器でなく端末です。",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "端末 A\n送り手（D に電波が届かない）",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "b",
+          "label": "端末 B\n中継役",
+          "row": 0,
+          "col": 1,
+          "icon": "device",
+          "emphasis": true
+        },
+        {
+          "id": "c",
+          "label": "端末 C\n中継役",
+          "row": 0,
+          "col": 2,
+          "icon": "device",
+          "emphasis": true
+        },
+        {
+          "id": "dd",
+          "label": "端末 D\n受け手",
+          "row": 0,
+          "col": 3,
+          "icon": "device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "b",
+          "label": "データを渡す"
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "label": "受け取って次へ"
+        },
+        {
+          "from": "c",
+          "to": "dd",
+          "label": "受け取って次へ"
+        }
+      ]
+    }
+  ]
+}

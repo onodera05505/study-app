@@ -1,0 +1,84 @@
+{
+  "topic_id": 522,
+  "term": "SIMカード",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 契約情報を持ち運ぶしくみ",
+      "caption": "通信事業者は端末でなく、強調した SIM カードの契約情報で利用者を見分けます。カードを別の端末へ差し替えると、同じ電話番号で使えます。",
+      "nodes": [
+        {
+          "id": "op",
+          "label": "通信事業者\n契約情報で利用者を見分ける",
+          "row": 0,
+          "col": 1,
+          "icon": "building"
+        },
+        {
+          "id": "sim",
+          "label": "SIM カード\n電話番号と契約情報を持つ",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "key"
+        },
+        {
+          "id": "pa",
+          "label": "端末 A\n差していれば使える",
+          "row": 2,
+          "col": 0,
+          "icon": "phone"
+        },
+        {
+          "id": "pb",
+          "label": "端末 B\n差し替えれば同じ番号",
+          "row": 2,
+          "col": 2,
+          "icon": "phone"
+        }
+      ],
+      "edges": [
+        {
+          "from": "op",
+          "to": "sim",
+          "label": "契約情報で本人か確かめる",
+          "arrow": "both"
+        },
+        {
+          "from": "sim",
+          "to": "pa",
+          "label": "差し込む"
+        },
+        {
+          "from": "sim",
+          "to": "pb",
+          "label": "差し替える",
+          "style": "dashed"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "parts",
+      "after": "### 契約情報を持ち運ぶしくみ",
+      "caption": "SIM カードの IC チップに記録されている契約情報の中身です。勝手に読み書きされないよう IC チップに収めています。",
+      "whole": {
+        "label": "SIM カード（IC チップ）",
+        "icon": "lock"
+      },
+      "parts": [
+        {
+          "label": "電話番号\nこの回線の番号"
+        },
+        {
+          "label": "契約者の番号\n契約者を一意に表す"
+        },
+        {
+          "label": "本人確認の情報\n事業者が本人か確かめる",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

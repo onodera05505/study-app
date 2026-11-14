@@ -1,0 +1,39 @@
+{
+  "topic_id": 509,
+  "term": "ポートリプリケータ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "本体からはケーブル 1 本だけで、ポートリプリケータが種類の違う端子に分けて各機器へつなぎます。",
+      "nodes": [
+        {"id": "pc", "label": "ノート PC\n端子が少ない", "row": 1, "col": 0, "icon": "device"},
+        {"id": "pr", "label": "ポートリプリケータ\n端子をまとめて増やす", "row": 1, "col": 1, "emphasis": true},
+        {"id": "disp", "label": "ディスプレイ\n大きな画面に映す", "row": 0, "col": 2},
+        {"id": "lan", "label": "有線 LAN\n社内の通信網", "row": 1, "col": 2, "icon": "network"},
+        {"id": "mouse", "label": "マウス\n机で操作する", "row": 2, "col": 2}
+      ],
+      "edges": [
+        {"from": "pc", "to": "pr", "label": "1 本のケーブルで\nまとめて", "arrow": "both"},
+        {"from": "pr", "to": "disp", "label": "HDMI 端子", "arrow": "both"},
+        {"from": "pr", "to": "lan", "label": "LAN 端子", "arrow": "both"},
+        {"from": "pr", "to": "mouse", "label": "USB 端子", "arrow": "both"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### 混同しやすい用語",
+      "caption": "似た 3 つの機器を、増える端子とつなぎ方で比べます。種類の違う端子が増えるか、USB の口だけが増えるかが分かれ目です。",
+      "x": {"label": "観点", "values": ["増える端子", "つなぎ方・形"]},
+      "y": {"label": "機器", "values": ["ポートリプリケータ", "USB ハブ", "ドッキング\nステーション"]},
+      "cells": [
+        ["種類の違う端子\nHDMI・LAN・USB など", "外付けの機器\n本体の 1 つのコネクタへ"],
+        ["USB の口だけ\n数が増える", "1 つの USB の口を\n枝分かれさせる"],
+        ["種類の違う端子\nまとめて使える", "本体を台に載せる\n固定と給電もする"]
+      ],
+      "emphasis": [[0, 0]]
+    }
+  ]
+}

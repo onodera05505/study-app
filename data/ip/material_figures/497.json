@@ -1,0 +1,84 @@
+{
+  "topic_id": 497,
+  "term": "POS（Point of Sales：販売時点情報管理）システム",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 集めたデータを何に使うか",
+      "caption": "レジで売れた時点に集めた販売データが、右の 4 つの判断に流れる図です。レジの電子化で終わらず、集めたデータを使うところまでが POS です。",
+      "nodes": [
+        {
+          "id": "reg",
+          "label": "レジ\nバーコードを読む\n客層を入力する",
+          "row": 1,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "data",
+          "label": "販売データ\n何がいつ\nどれだけ売れたか",
+          "row": 1,
+          "col": 1,
+          "shape": "cylinder",
+          "emphasis": true
+        },
+        {
+          "id": "hit",
+          "label": "売れ筋の見極め\n売れない商品も分かる",
+          "row": 0,
+          "col": 2,
+          "icon": "search"
+        },
+        {
+          "id": "order",
+          "label": "発注と在庫の補充\n棚卸しを待たずに",
+          "row": 1,
+          "col": 2,
+          "icon": "box"
+        },
+        {
+          "id": "shelf",
+          "label": "品ぞろえの調整\n時間帯ごとに変える",
+          "row": 2,
+          "col": 2,
+          "icon": "clock"
+        },
+        {
+          "id": "maker",
+          "label": "仕入先\n発注や生産の\n計画を立てる",
+          "row": 1,
+          "col": 3,
+          "icon": "building"
+        }
+      ],
+      "edges": [
+        {
+          "from": "reg",
+          "to": "data",
+          "label": "売れた時点で記録"
+        },
+        {
+          "from": "data",
+          "to": "hit",
+          "label": "商品ごとの売上"
+        },
+        {
+          "from": "data",
+          "to": "order",
+          "label": "減った数"
+        },
+        {
+          "from": "data",
+          "to": "shelf",
+          "label": "時間帯の売れ方"
+        },
+        {
+          "from": "order",
+          "to": "maker",
+          "label": "発注と販売実績"
+        }
+      ]
+    }
+  ]
+}

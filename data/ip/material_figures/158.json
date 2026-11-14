@@ -1,0 +1,35 @@
+{
+  "topic_id": 158,
+  "term": "アノテーション",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 教師あり学習と正解ラベル",
+      "caption": "正しい答えはもとのデータに無く、人が付けて初めて教師あり学習に渡せます。強調した段がアノテーションで、学習の前に入ります。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "元のデータ\n画像や文。答えは\n書かれていない",
+          "icon": "database",
+          "next_label": "1 件ずつ人に渡す"
+        },
+        {
+          "label": "ラベル付け\n人が見て答えを付ける",
+          "icon": "person",
+          "next_label": "答えの付いたデータ",
+          "emphasis": true
+        },
+        {
+          "label": "教師データ\n入力と答えの組",
+          "icon": "document",
+          "next_label": "組をたくさん与える"
+        },
+        {
+          "label": "教師あり学習\n入力から答えを導く\n規則を学ぶ",
+          "icon": "gear"
+        }
+      ]
+    }
+  ]
+}

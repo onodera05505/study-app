@@ -1,0 +1,19 @@
+{
+  "topic_id": 119,
+  "term": "プロセスマイニング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "### 操作ログから実態を掘り起こす",
+      "caption": "輪は操作ログから改善までの流れで、直した後の業務のログも集めてもう一度回ります。一度きりの調査で終わらないことを輪で表します。",
+      "center": "記録から\n業務を改善",
+      "stages": [
+        {"label": "操作ログを集める\n誰が・どの順・何分か", "icon": "database", "next_label": "記録の山"},
+        {"label": "実際の流れを描く\n手順書でなく実態を", "icon": "chart", "next_label": "見える形の流れ"},
+        {"label": "課題を見つける\n差し戻しや滞り", "icon": "search", "next_label": "直す箇所", "emphasis": true},
+        {"label": "直して運用する\n効果の大きい所から", "icon": "gear", "next_label": "改善後のログも集めて監視"}
+      ]
+    }
+  ]
+}

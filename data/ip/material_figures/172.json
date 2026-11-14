@@ -1,0 +1,96 @@
+{
+  "topic_id": 172,
+  "term": "NAS",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "上は PC にケーブルで直結する外付けハードディスク、下は LAN につなぐ NAS です。NAS は LAN の先の機器すべてから同じ保存領域を使えます。",
+      "nodes": [
+        {
+          "id": "hdd",
+          "label": "外付けハードディスク\nケーブルの先の 1 台専用",
+          "row": 0,
+          "col": 0,
+          "icon": "database"
+        },
+        {
+          "id": "pc0",
+          "label": "PC\nこの 1 台だけが使える",
+          "row": 0,
+          "col": 1,
+          "icon": "device"
+        },
+        {
+          "id": "nas",
+          "label": "NAS\nファイル共有をする\n小さなサーバ",
+          "row": 2,
+          "col": 0,
+          "emphasis": true,
+          "icon": "database"
+        },
+        {
+          "id": "lan",
+          "label": "LAN\n家や部署のネットワーク",
+          "row": 2,
+          "col": 1,
+          "shape": "cloud"
+        },
+        {
+          "id": "pc1",
+          "label": "PC\n同じ領域を使う",
+          "row": 1,
+          "col": 2,
+          "icon": "device"
+        },
+        {
+          "id": "ph",
+          "label": "スマートフォン\n同じ領域を使う",
+          "row": 2,
+          "col": 2,
+          "icon": "phone"
+        },
+        {
+          "id": "tb",
+          "label": "タブレット\n同じ領域を使う",
+          "row": 3,
+          "col": 2,
+          "icon": "device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "hdd",
+          "to": "pc0",
+          "label": "ケーブルで直結",
+          "arrow": "both"
+        },
+        {
+          "from": "nas",
+          "to": "lan",
+          "label": "LAN に直接つなぐ",
+          "arrow": "both"
+        },
+        {
+          "from": "lan",
+          "to": "pc1",
+          "label": "ネットワーク経由で共有",
+          "arrow": "both"
+        },
+        {
+          "from": "lan",
+          "to": "ph",
+          "label": "ネットワーク経由で共有",
+          "arrow": "both"
+        },
+        {
+          "from": "lan",
+          "to": "tb",
+          "label": "ネットワーク経由で共有",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

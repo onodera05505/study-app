@@ -1,0 +1,27 @@
+{
+  "topic_id": 396,
+  "term": "BI（Business Intelligence）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 基幹システムのデータを分析に使う",
+      "caption": "左の基幹システムがデータを集め、右の BI ツールがそれを使って経営者に見せます。BI は流れの使う側にあたります。",
+      "nodes": [
+        {"id": "sales", "label": "販売管理\n日々の売上を記録", "row": 0, "col": 0},
+        {"id": "acct", "label": "会計\n日々の仕訳を記録", "row": 1, "col": 0},
+        {"id": "buy", "label": "購買\n日々の仕入を記録", "row": 2, "col": 0},
+        {"id": "dwh", "label": "データウェアハウス\n分析用に集めた保管庫", "row": 1, "col": 1, "shape": "cylinder"},
+        {"id": "bi", "label": "BI ツール\n横断で集計し\n画面に表示", "row": 1, "col": 2, "emphasis": true, "icon": "chart"},
+        {"id": "mgr", "label": "経営者\n数字で判断する", "row": 1, "col": 3, "icon": "person"}
+      ],
+      "edges": [
+        {"from": "sales", "to": "dwh", "label": "売上データ"},
+        {"from": "acct", "to": "dwh", "label": "会計データ"},
+        {"from": "buy", "to": "dwh", "label": "仕入データ"},
+        {"from": "dwh", "to": "bi", "label": "システムを\nまたいだデータ"},
+        {"from": "bi", "to": "mgr", "label": "ダッシュボード\n切り口を変えて見る", "arrow": "both"}
+      ]
+    }
+  ]
+}

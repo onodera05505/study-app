@@ -1,0 +1,120 @@
+{
+  "topic_id": 276,
+  "term": "クラスタ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 負荷分散型と高可用性型",
+      "caption": "負荷分散型のクラスタの経路です。利用者は 1 つの宛先にアクセスするだけで、裏では複数台が処理を分担します。",
+      "nodes": [
+        {
+          "id": "u",
+          "label": "利用者\n宛先は 1 つだけ",
+          "row": 1,
+          "col": 0,
+          "icon": "people"
+        },
+        {
+          "id": "lb",
+          "label": "振り分け\n1 つの宛先で受ける",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "gear"
+        },
+        {
+          "id": "a",
+          "label": "サーバ A\n分担して処理",
+          "row": 0,
+          "col": 2,
+          "icon": "server"
+        },
+        {
+          "id": "b",
+          "label": "サーバ B\n分担して処理",
+          "row": 1,
+          "col": 2,
+          "icon": "server"
+        },
+        {
+          "id": "c",
+          "label": "サーバ C\n分担して処理",
+          "row": 2,
+          "col": 2,
+          "icon": "server"
+        }
+      ],
+      "edges": [
+        {
+          "from": "u",
+          "to": "lb",
+          "label": "多量のアクセス"
+        },
+        {
+          "from": "lb",
+          "to": "a",
+          "label": "振り分けた処理"
+        },
+        {
+          "from": "lb",
+          "to": "b",
+          "label": "振り分けた処理"
+        },
+        {
+          "from": "lb",
+          "to": "c",
+          "label": "振り分けた処理"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 負荷分散型と高可用性型",
+      "caption": "高可用性型のクラスタの経路です。実線が通常の処理、破線が稼働系の故障で待機系に切り替えた後の処理を表します。",
+      "nodes": [
+        {
+          "id": "u",
+          "label": "利用者\n止まらずに使える",
+          "row": 0,
+          "col": 1,
+          "icon": "people"
+        },
+        {
+          "id": "act",
+          "label": "稼働系\nふだん処理する",
+          "row": 1,
+          "col": 0,
+          "icon": "server"
+        },
+        {
+          "id": "stb",
+          "label": "待機系\n故障に備えて待つ",
+          "row": 1,
+          "col": 2,
+          "icon": "server",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "u",
+          "to": "act",
+          "label": "通常の処理"
+        },
+        {
+          "from": "act",
+          "to": "stb",
+          "label": "障害時に\n処理を引き継ぐ"
+        },
+        {
+          "from": "u",
+          "to": "stb",
+          "label": "切替後の処理",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

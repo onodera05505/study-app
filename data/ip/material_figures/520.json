@@ -1,0 +1,25 @@
+{
+  "topic_id": 520,
+  "term": "ネットワークトポロジ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 4 つの形と、切れたときの影響",
+      "caption": "スター型は中心の装置から各機器へ 1 本ずつつなぎます。破線のケーブルが切れても止まるのはその PC だけで、強調した中心が壊れると全体が止まります。",
+      "nodes": [
+        {"id": "hub", "label": "ハブ／スイッチ\n壊れると全体が止まる", "row": 1, "col": 1, "emphasis": true, "icon": "network"},
+        {"id": "a", "label": "PC A\n通信を続けられる", "row": 0, "col": 1, "icon": "device"},
+        {"id": "b", "label": "PC B\n通信を続けられる", "row": 1, "col": 0, "icon": "device"},
+        {"id": "c", "label": "PC C\n通信を続けられる", "row": 1, "col": 2, "icon": "device"},
+        {"id": "d", "label": "PC D\nこの PC だけ止まる", "row": 2, "col": 1, "icon": "device"}
+      ],
+      "edges": [
+        {"from": "hub", "to": "a", "label": "ケーブル 1 本", "arrow": "none"},
+        {"from": "hub", "to": "b", "label": "ケーブル 1 本", "arrow": "none"},
+        {"from": "hub", "to": "c", "label": "ケーブル 1 本", "arrow": "none"},
+        {"from": "hub", "to": "d", "label": "ここが切れた", "arrow": "none", "style": "dashed"}
+      ]
+    }
+  ]
+}

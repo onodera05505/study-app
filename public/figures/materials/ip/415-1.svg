@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="286" viewBox="0 0 640 286">
+<rect x="0.5" y="0.5" width="639" height="285" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(150.1 20)">
+<g transform="translate(37 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18.5 H13"/></g>
+<g transform="translate(0 28)">
+<line x1="48" y1="34" x2="48" y2="218" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="291.8" y1="34" x2="291.8" y2="218" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">端末</text>
+<rect x="243.8" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="291.8" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">GPS 衛星</text>
+<polyline points="288.8,68 51,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,68 59,64.4 59,71.6" fill="#1f2937"/>
+<text x="169.9" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 発信時刻を含む電波（一方的に発信）</text>
+<rect x="81.9" y="73" width="176" height="16" rx="3" fill="#ffffff"/>
+<text x="169.9" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">端末から衛星へは何も送らない</text>
+<polyline points="48,116 74,116 74,130 50,130" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="50,130 58,126.4 58,133.6" fill="#1f2937"/>
+<text x="82" y="124" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2. 受信時刻との差を求める</text>
+<polyline points="48,150 74,150 74,164 50,164" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="50,164 58,160.4 58,167.6" fill="#1f2937"/>
+<text x="82" y="158" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">3. 時間差 × 電波の速さ ＝ 距離</text>
+<polyline points="48,184 74,184 74,198 50,198" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="50,198 58,194.4 58,201.6" fill="#1f2937"/>
+<text x="82" y="192" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. 3 つ以上の衛星の距離を重ねて位置を決める</text>
+</g>
+</g>
+</svg>

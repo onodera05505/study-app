@@ -1,0 +1,46 @@
+{
+  "topic_id": 415,
+  "term": "GPS（Global Positioning System：全地球測位システム）応用システム",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### 測位のしくみ",
+      "caption": "矢印は右の衛星から左の端末への 1 本だけで、残りは端末の中の計算です。端末は受信だけで位置を求めるので、衛星側には測位したことが伝わりません。",
+      "actors": [
+        {
+          "id": "dev",
+          "label": "端末",
+          "icon": "phone"
+        },
+        {
+          "id": "sat",
+          "label": "GPS 衛星"
+        }
+      ],
+      "steps": [
+        {
+          "from": "sat",
+          "to": "dev",
+          "label": "発信時刻を含む電波（一方的に発信）",
+          "note": "端末から衛星へは何も送らない"
+        },
+        {
+          "from": "dev",
+          "to": "dev",
+          "label": "受信時刻との差を求める"
+        },
+        {
+          "from": "dev",
+          "to": "dev",
+          "label": "時間差 × 電波の速さ ＝ 距離"
+        },
+        {
+          "from": "dev",
+          "to": "dev",
+          "label": "3 つ以上の衛星の距離を重ねて位置を決める"
+        }
+      ]
+    }
+  ]
+}

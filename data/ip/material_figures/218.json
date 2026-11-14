@@ -1,0 +1,32 @@
+{
+  "topic_id": 218,
+  "term": "ISMS内部監査",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "### 点検を担う活動",
+      "caption": "ISMS は計画から改善までの輪を回して保ちます。強調した点検の段を、内部監査が受け持ちます。",
+      "center": "ISMS",
+      "stages": [
+        {"label": "計画（P）\n目標と管理策を決める", "icon": "document", "next_label": "決めた管理策"},
+        {"label": "実行（D）\n管理策を運用する", "icon": "gear", "next_label": "運用の記録"},
+        {"label": "点検（C）\n内部監査で確かめる", "icon": "search", "next_label": "見つかった問題", "emphasis": true},
+        {"label": "改善（A）\n問題の原因を直す", "icon": "arrow-cycle", "next_label": "直した仕組み"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### 混同しやすい用語",
+      "caption": "似た 3 つの監査を、誰が行うかと何を見るかで並べた表です。強調した ISMS 内部監査だけが、組織が自分で行う点検です。",
+      "x": {"label": "活動", "values": ["ISMS 内部監査", "認証機関の審査", "システム監査"]},
+      "y": {"label": "観点", "values": ["誰が行うか", "何を見るか"]},
+      "cells": [
+        ["組織が自ら\n社内の監査員", "認証機関\n組織の外から", "独立した監査人\n対象と利害の無い立場"],
+        ["ISMS\n決めたとおり働くか", "ISMS\n認証の基準に合うか", "情報システム\n適切に作り使われているか"]
+      ],
+      "emphasis": [[0, 0]]
+    }
+  ]
+}
