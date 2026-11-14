@@ -1,0 +1,17 @@
+{
+  "topic_id": 50,
+  "term": "生活費と分けておくお金",
+  "figures": [
+    {
+      "id": 1, "type": "steps", "after": "explanation",
+      "caption": "手取りを上の段から順に取り分けます。強調した備えの分が数か月ぶんに届くまでは、次の段へ進みません。",
+      "direction": "down",
+      "stages": [
+        {"label": "手取り\n口座に入る額", "next_label": "生活費の分を先に取る"},
+        {"label": "生活費を確保\n決まって出るお金と\n月ごとの支出", "next_label": "残りを備えへ"},
+        {"label": "備えの分\nすぐ引き出せる形で\n数か月ぶんまで積む", "next_label": "数か月ぶんに届いてから", "emphasis": true},
+        {"label": "余裕資金\n増やす目的に回せる"}
+      ]
+    }
+  ]
+}

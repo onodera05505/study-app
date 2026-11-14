@@ -1,0 +1,28 @@
+{
+  "topic_id": 53,
+  "term": "うまい話の見分け方と相談先",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 自分の暮らしで考えると",
+      "caption": "振り込む前に、上の段を左から順に確かめます。どこかで引っかかれば下へ分かれ、契約しないで断り、そのあと 188 に電話して相談します。",
+      "nodes": [
+        {"id": "ask", "label": "もうけ話の誘い\n振り込む前に判断する", "row": 0, "col": 0, "icon": "person"},
+        {"id": "reg", "label": "業者の登録を見る\n金融庁の登録業者の一覧", "row": 0, "col": 1, "icon": "search"},
+        {"id": "loan", "label": "借り入れを勧めるか\n借りて投資させる誘い", "row": 0, "col": 2, "icon": "money"},
+        {"id": "next", "label": "次の確かめへ\n置く先の中身を見る", "row": 0, "col": 3},
+        {"id": "no", "label": "契約しない\nその場で断ってよい", "row": 1, "col": 2, "emphasis": true, "icon": "warning"},
+        {"id": "call", "label": "188 に電話して相談\n消費者ホットライン\n近くの消費生活センターへ", "row": 2, "col": 2, "emphasis": true, "icon": "phone"}
+      ],
+      "edges": [
+        {"from": "ask", "to": "reg", "label": "まず確かめる"},
+        {"from": "reg", "to": "loan", "label": "登録がある"},
+        {"from": "reg", "to": "no", "label": "登録が無い"},
+        {"from": "loan", "to": "no", "label": "勧めている"},
+        {"from": "loan", "to": "next", "label": "勧めていない"},
+        {"from": "no", "to": "call", "label": "断ったあと電話する"}
+      ]
+    }
+  ]
+}
