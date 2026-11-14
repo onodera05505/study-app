@@ -1,0 +1,36 @@
+{
+  "topic_id": 220,
+  "term": "ファジング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "### しくみ",
+      "caption": "人がテストケースを考えず、ツールが作って浴びせて見張る輪を回し続けます。強調した監視で脆弱性が表に出ます。",
+      "center": "想定外の入力への\n強さを確かめる",
+      "stages": [
+        {
+          "label": "ファズを生成\nツールが想定外の\nデータを自動で作る",
+          "icon": "gear",
+          "next_label": "大量の異常なデータ"
+        },
+        {
+          "label": "入力\n動いている対象の\nソフトウェアに浴びせる",
+          "icon": "device",
+          "next_label": "対象の反応"
+        },
+        {
+          "label": "監視\n異常終了・応答停止\nを見張る",
+          "icon": "search",
+          "emphasis": true,
+          "next_label": "見つかった異常"
+        },
+        {
+          "label": "記録\n異常を起こした\n入力を残す",
+          "icon": "document",
+          "next_label": "次の入力へ"
+        }
+      ]
+    }
+  ]
+}

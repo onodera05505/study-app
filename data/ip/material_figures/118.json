@@ -1,0 +1,63 @@
+{
+  "topic_id": 118,
+  "term": "シェアリングエコノミー",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 遊休資産が動き出すしくみ",
+      "caption": "持ち主と使いたい人は直接ではなく仲介のサービスを通してつながります。強調した仲介が、探す・決める・払う・信頼を確かめる手間を引き受けます。",
+      "nodes": [
+        {
+          "id": "own",
+          "label": "持ち主\n空いた部屋・車・時間",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "mid",
+          "label": "仲介のサービス\n探す・決める・払う",
+          "row": 0,
+          "col": 1,
+          "icon": "phone",
+          "emphasis": true
+        },
+        {
+          "id": "use",
+          "label": "使いたい人\n一時的に借りたい",
+          "row": 0,
+          "col": 2,
+          "icon": "person"
+        },
+        {
+          "id": "rev",
+          "label": "評価の蓄積\n過去の取引の評判",
+          "row": 1,
+          "col": 1,
+          "shape": "cylinder"
+        }
+      ],
+      "edges": [
+        {
+          "from": "own",
+          "to": "mid",
+          "label": "出品して代金を受け取る",
+          "arrow": "both"
+        },
+        {
+          "from": "use",
+          "to": "mid",
+          "label": "申し込んで代金を払う",
+          "arrow": "both"
+        },
+        {
+          "from": "mid",
+          "to": "rev",
+          "label": "評価を蓄えて信頼を見せる",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

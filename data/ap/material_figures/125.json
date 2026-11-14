@@ -4,20 +4,31 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "cycle",
       "after": "### 制御系の中での位置",
-      "caption": "測るのがセンサー、操作量を決めるのがコントローラー、エネルギーを動きに変えるのがアクチュエーターです。",
-      "nodes": [
-        {"id": "ctl", "label": "コントローラー\n操作量を決める", "row": 0, "col": 0},
-        {"id": "act", "label": "アクチュエーター\n動きに変える", "row": 0, "col": 1, "emphasis": true},
-        {"id": "obj", "label": "制御対象", "row": 0, "col": 2},
-        {"id": "sen", "label": "センサー\n電気信号に変える", "row": 1, "col": 1}
-      ],
-      "edges": [
-        {"from": "ctl", "to": "act", "label": "操作量"},
-        {"from": "act", "to": "obj", "label": "回転・直進"},
-        {"from": "obj", "to": "sen", "label": "位置・速度・温度"},
-        {"from": "sen", "to": "ctl", "label": "測った値"}
+      "caption": "測る・決める・動かすがひと回りするとフィードバック制御になります。強調したアクチュエーターは輪の出口で、対象を実際に動かします。",
+      "center": "フィードバック\n制御",
+      "stages": [
+        {
+          "label": "センサー\n物理量を電気信号に",
+          "icon": "search",
+          "next_label": "測った値"
+        },
+        {
+          "label": "コントローラー\n目標値と比べ操作量を決める",
+          "icon": "gear",
+          "next_label": "操作量"
+        },
+        {
+          "label": "アクチュエーター\nエネルギーを動きに",
+          "emphasis": true,
+          "next_label": "回転・直進の動き"
+        },
+        {
+          "label": "制御対象\n動かされる物",
+          "icon": "box",
+          "next_label": "位置・速度・温度"
+        }
       ]
     }
   ]

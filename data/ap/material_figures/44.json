@@ -1,0 +1,39 @@
+{
+  "topic_id": 44,
+  "term": "監査調書の作成と保管",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 監査調書の役割",
+      "caption": "下の段から上へ、各段で得た物を監査調書に書き残していきます。上の結論から段を逆にたどると、何を根拠にしたかが分かります。",
+      "direction": "up",
+      "stages": [
+        {
+          "label": "監査手続を実施\n調書に何を実施したかを書く",
+          "icon": "search",
+          "next_label": "入手した資料"
+        },
+        {
+          "label": "監査証拠\n調書に資料を対応づける",
+          "icon": "document",
+          "next_label": "資料で確かめた事実"
+        },
+        {
+          "label": "発見した事実\n調書に事実を書く",
+          "next_label": "事実の評価"
+        },
+        {
+          "label": "所見\n調書に事実の評価を書く",
+          "icon": "person",
+          "next_label": "結論を支える合理的な根拠"
+        },
+        {
+          "label": "監査の結論\n調書の記録が根拠になる",
+          "icon": "check",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

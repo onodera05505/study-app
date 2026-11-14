@@ -4,55 +4,30 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "cycle",
       "after": "### 四つの段階が何をする段階か",
-      "caption": "四つの段階を矢印の順に回り続ける循環です。各箱の 2 行目からの動詞で、どの段階かを見分けます。",
-      "nodes": [
+      "caption": "JIS Q 20000-1 のサービスマネジメントシステム（SMS）を回す PDCA の輪です。各段の 2 行目からの動詞で、どの段階かを見分けます。",
+      "center": "JIS Q 20000-1\nSMS の継続的改善",
+      "stages": [
         {
-          "id": "p",
-          "label": "計画 Plan\nSMS を確立し\n文書化して合意する",
-          "row": 0,
-          "col": 0
+          "label": "計画 Plan\nSMS を確立、文書化し\n関係者と合意する",
+          "icon": "document",
+          "next_label": "合意した計画"
         },
         {
-          "id": "d",
           "label": "実行 Do\nSMS を導入し\n運用する",
-          "row": 0,
-          "col": 1
+          "icon": "gear",
+          "next_label": "運用の実績"
         },
         {
-          "id": "c",
-          "label": "点検 Check\n監視・測定・レビューし\n結果を報告する",
-          "row": 1,
-          "col": 1
+          "label": "点検 Check\n監視、測定、レビューし\n結果を報告する",
+          "icon": "search",
+          "next_label": "測定と報告の結果"
         },
         {
-          "id": "a",
-          "label": "処置 Act\n継続的な改善のための\n処置を実施する",
-          "row": 1,
-          "col": 0
-        }
-      ],
-      "edges": [
-        {
-          "from": "p",
-          "to": "d",
-          "label": "合意した計画"
-        },
-        {
-          "from": "d",
-          "to": "c",
-          "label": "運用の実績"
-        },
-        {
-          "from": "c",
-          "to": "a",
-          "label": "測定と報告の結果"
-        },
-        {
-          "from": "a",
-          "to": "p",
-          "label": "改善を次の計画へ"
+          "label": "処置 Act\nパフォーマンス改善の\n処置を実施する",
+          "icon": "arrow-cycle",
+          "next_label": "改善を次の計画へ"
         }
       ]
     }

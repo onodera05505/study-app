@@ -1,0 +1,93 @@
+{
+  "topic_id": 210,
+  "term": "cookie",
+  "figures": [
+    {
+      "id": 1,
+      "type": "matrix",
+      "after": "### しくみ — なぜ Secure 属性が要るのか",
+      "caption": "Secure 属性の有無と URL の種類の組み合わせで、cookie を送るかが決まります。強調したマスが、平文の経路を塞いでいる所です。",
+      "x": {
+        "label": "アクセスする URL",
+        "values": [
+          "http の URL\n（平文）",
+          "https の URL\n（暗号化）"
+        ]
+      },
+      "y": {
+        "label": "cookie の属性",
+        "values": [
+          "Secure なし",
+          "Secure あり"
+        ]
+      },
+      "cells": [
+        [
+          "送る\n平文で流れ\n盗聴されうる",
+          "送る\n暗号化され\n盗聴されにくい"
+        ],
+        [
+          "送らない\n平文に載らず\n漏れない",
+          "送る\n暗号化され\n盗聴されにくい"
+        ]
+      ],
+      "emphasis": [
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### ファーストパーティとサードパーティ",
+      "caption": "3 つのサイトに同じ事業者のタグがあると、どのサイトを見ても同じ cookie が事業者へ届きます。事業者の側で、別々のサイトの閲覧が 1 人分につながります。",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "ニュースサイト A\n事業者 X の\nタグを置く",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "b",
+          "label": "通販サイト B\n事業者 X の\nタグを置く",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "c",
+          "label": "旅行サイト C\n事業者 X の\nタグを置く",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "x",
+          "label": "広告事業者 X\n同じ cookie で\n3 サイトの閲覧を束ねる",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "search"
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "x",
+          "label": "X の cookie＋閲覧先 A"
+        },
+        {
+          "from": "b",
+          "to": "x",
+          "label": "X の cookie＋閲覧先 B"
+        },
+        {
+          "from": "c",
+          "to": "x",
+          "label": "X の cookie＋閲覧先 C"
+        }
+      ]
+    }
+  ]
+}

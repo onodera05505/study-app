@@ -1,0 +1,107 @@
+{
+  "topic_id": 417,
+  "term": "情報セキュリティ監査",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 監査で指摘すべきもの",
+      "caption": "監査人は基準の要求事項と実際の運用を突き合わせ、ずれだけを指摘事項にします。起きた出来事の善し悪しは判断の軸に入らないことを、破線で読みます。",
+      "nodes": [
+        {
+          "id": "req",
+          "label": "基準の要求事項\n決められた手順と条件",
+          "row": 0,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "ev",
+          "label": "起きた出来事の善し悪し\n事故が有ったか無かったか",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "ops",
+          "label": "実際の運用\n現場で行っていること",
+          "row": 2,
+          "col": 0,
+          "icon": "people"
+        },
+        {
+          "id": "cmp",
+          "label": "突き合わせ\n監査人が両者を比べる",
+          "row": 1,
+          "col": 1,
+          "icon": "search"
+        },
+        {
+          "id": "ok",
+          "label": "ずれが無い\n指摘事項にしない",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "rep",
+          "label": "監査報告書の指摘事項\n要求からの逸脱＝不適合",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "req",
+          "to": "cmp",
+          "label": "求めていること"
+        },
+        {
+          "from": "ops",
+          "to": "cmp",
+          "label": "運用の事実"
+        },
+        {
+          "from": "ev",
+          "to": "cmp",
+          "label": "判断の軸にしない",
+          "style": "dashed",
+          "arrow": "none"
+        },
+        {
+          "from": "cmp",
+          "to": "ok",
+          "label": "一致する"
+        },
+        {
+          "from": "cmp",
+          "to": "rep",
+          "label": "ずれがある"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### JIS Q 27001 が求める順序",
+      "caption": "受容基準はアセスメントより前の段で決め、その基準で評価の結果を判断します。段の向きが逆になると、結果に合わせて基準を動かせてしまうので不適合です。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "① 基準を確立する\nリスク受容基準と\nアセスメント実施の基準",
+          "icon": "document",
+          "next_label": "決めた基準",
+          "emphasis": true
+        },
+        {
+          "label": "② リスクアセスメント\n基準に沿ってリスクを評価",
+          "icon": "search",
+          "next_label": "評価の結果"
+        },
+        {
+          "label": "③ リスク対応\n受容か対応かを基準で判断",
+          "icon": "check"
+        }
+      ]
+    }
+  ]
+}

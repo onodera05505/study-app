@@ -1,0 +1,78 @@
+{
+  "topic_id": 241,
+  "term": "FAQ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### FAQ が効くところ",
+      "caption": "過去の対処法を FAQ に蓄えると、利用者側と窓口側の 2 つの経路で答えが出ます。強調したサービスデスクが FAQ を見て即答できる分、専門部署への引き継ぎ（点線）が減ります。",
+      "nodes": [
+        {
+          "id": "past",
+          "label": "過去のインシデント\n問合せと対処法の記録",
+          "row": 0,
+          "col": 1,
+          "icon": "document"
+        },
+        {
+          "id": "faq",
+          "label": "FAQ\nよくある質問と回答の\nデータベース",
+          "row": 1,
+          "col": 1,
+          "shape": "cylinder"
+        },
+        {
+          "id": "user",
+          "label": "利用者\n困りごとを抱えている",
+          "row": 1,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "desk",
+          "label": "サービスデスク\n最初の窓口",
+          "row": 1,
+          "col": 2,
+          "icon": "people",
+          "emphasis": true
+        },
+        {
+          "id": "pro",
+          "label": "専門部署\n窓口で解けない\n問題を引き受ける",
+          "row": 1,
+          "col": 3,
+          "icon": "gear"
+        }
+      ],
+      "edges": [
+        {
+          "from": "past",
+          "to": "faq",
+          "label": "対処法を蓄える"
+        },
+        {
+          "from": "user",
+          "to": "faq",
+          "label": "Web で見て\n自分で解決"
+        },
+        {
+          "from": "user",
+          "to": "desk",
+          "label": "問合せ"
+        },
+        {
+          "from": "desk",
+          "to": "faq",
+          "label": "見て即答"
+        },
+        {
+          "from": "desk",
+          "to": "pro",
+          "label": "引き継ぎが減る",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

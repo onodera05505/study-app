@@ -4,63 +4,77 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "layers",
       "after": "### 層で整理する",
       "caption": "暗号化の仕組みは動く層で見分けます。ネットワーク層で IP パケットごと守るのが IPsec です。",
-      "nodes": [
+      "shape": "stack",
+      "layers": [
         {
-          "id": "l1",
-          "label": "アプリケーション層",
-          "row": 0,
-          "col": 0,
-          "shape": "round"
+          "label": "アプリケーション層\nSSH・S/MIME\n用途ごとの通信を守る"
         },
         {
-          "id": "p1",
-          "label": "SSH\nログインや転送を暗号化",
-          "row": 0,
-          "col": 1
+          "label": "トランスポート層（の上）\nSSL/TLS\nHTTPS などの通信を守る"
         },
         {
-          "id": "l2",
-          "label": "トランスポート層",
-          "row": 1,
-          "col": 0,
-          "shape": "round"
-        },
-        {
-          "id": "p2",
-          "label": "TLS\nアプリの通信を暗号化",
-          "row": 1,
-          "col": 1
-        },
-        {
-          "id": "l3",
-          "label": "ネットワーク層（IP）",
-          "row": 2,
-          "col": 0,
-          "shape": "round"
-        },
-        {
-          "id": "p3",
-          "label": "IPsec\nIP パケットごと暗号化\nAH・ESP・IKE",
-          "row": 2,
-          "col": 1,
+          "label": "ネットワーク層（IP）\nIPsec\nIP パケットごと守る",
           "emphasis": true
         },
         {
-          "id": "l4",
-          "label": "データリンク層",
-          "row": 3,
-          "col": 0,
-          "shape": "round"
+          "label": "データリンク層\n隣の機器まで運ぶ"
+        }
+      ],
+      "brackets": [
+        {
+          "from": 0,
+          "to": 1,
+          "label": "アプリごとに\n組み込んで守る"
         },
         {
-          "id": "p4",
-          "label": "PPP\n接続の手順",
-          "row": 3,
-          "col": 1
+          "from": 2,
+          "to": 2,
+          "label": "アプリを変えずに\n通信全体を守る"
         }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### しくみ",
+      "caption": "IPsec の 2 つのモードを同じ観点で比べています。暗号化する範囲の違いが、IP ヘッダと使いどころの違いにつながります。",
+      "x": {
+        "label": "モード",
+        "values": [
+          "トンネルモード",
+          "トランスポートモード"
+        ]
+      },
+      "y": {
+        "label": "観点",
+        "values": [
+          "暗号化する範囲",
+          "IP ヘッダ",
+          "使いどころ"
+        ]
+      },
+      "cells": [
+        [
+          "パケット全体を包む",
+          "データ部分だけ"
+        ],
+        [
+          "新しい IP ヘッダを付ける",
+          "元の IP ヘッダのまま"
+        ],
+        [
+          "拠点間の VPN\n拠点のネットワークどうしをつなぐ",
+          "端末間の通信\n端末どうしで守る"
+        ]
+      ],
+      "emphasis": [
+        [
+          0,
+          0
+        ]
       ]
     }
   ]

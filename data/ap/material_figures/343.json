@@ -1,0 +1,77 @@
+{
+  "topic_id": 343,
+  "term": "ライトスルー",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 2方式のしくみ",
+      "caption": "上の段がライトスルー、下の段がライトバックです。右端の主記憶へ書く時点が、書込みのたびか追い出すときだけかで分かれます。",
+      "nodes": [
+        {
+          "id": "c1",
+          "label": "CPU\nライトスルー方式",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "k1",
+          "label": "キャッシュ\n主記憶と常に一致",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "m1",
+          "label": "主記憶\n常に最新",
+          "row": 0,
+          "col": 2,
+          "shape": "cylinder",
+          "emphasis": true
+        },
+        {
+          "id": "c2",
+          "label": "CPU\nライトバック方式",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "k2",
+          "label": "キャッシュ\n書き換えた印を付ける",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "m2",
+          "label": "主記憶\n追い出すまで古いまま",
+          "row": 1,
+          "col": 2,
+          "shape": "cylinder",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "c1",
+          "to": "k1",
+          "label": "書込み"
+        },
+        {
+          "from": "k1",
+          "to": "m1",
+          "label": "同時に書く\n（書込みのたび）"
+        },
+        {
+          "from": "c2",
+          "to": "k2",
+          "label": "書込み\n（ここだけ）"
+        },
+        {
+          "from": "k2",
+          "to": "m2",
+          "label": "追い出すときに\n書き戻す",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

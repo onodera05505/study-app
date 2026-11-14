@@ -1,0 +1,152 @@
+{
+  "topic_id": 239,
+  "term": "無線LANのセキュリティ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 三つの対策を役割で分ける",
+      "caption": "アクセスポイントで接続を絞っても、電波そのものは第三者に届きます。強調した暗号化の端末から出る 2 本の線を見比べると、中身を守るのが暗号化だけだと読めます。",
+      "nodes": [
+        {
+          "id": "ok",
+          "label": "登録した端末\nWPA2・WPA3 で\n暗号化して送る",
+          "row": 0,
+          "col": 0,
+          "icon": "device",
+          "emphasis": true
+        },
+        {
+          "id": "ng",
+          "label": "未登録の端末\nMAC アドレスが\n一覧に無い",
+          "row": 1,
+          "col": 1,
+          "icon": "device"
+        },
+        {
+          "id": "ap",
+          "label": "アクセスポイント\nMAC アドレスで絞る\n名前を隠す",
+          "row": 0,
+          "col": 1,
+          "icon": "lock"
+        },
+        {
+          "id": "lan",
+          "label": "社内ネットワーク\n接続を許した\n端末だけ入れる",
+          "row": 0,
+          "col": 2,
+          "icon": "network"
+        },
+        {
+          "id": "spy",
+          "label": "電波を拾う第三者\n接続はしないで\n受信だけする",
+          "row": 1,
+          "col": 0,
+          "icon": "warning"
+        }
+      ],
+      "edges": [
+        {
+          "from": "ok",
+          "to": "ap",
+          "label": "暗号化した通信"
+        },
+        {
+          "from": "ng",
+          "to": "ap",
+          "label": "接続を断られる",
+          "style": "dashed"
+        },
+        {
+          "from": "ap",
+          "to": "lan",
+          "label": "通す"
+        },
+        {
+          "from": "ok",
+          "to": "spy",
+          "label": "電波は拾えても\n中身は読めない",
+          "style": "dashed"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### ゲスト用の ESSID",
+      "caption": "1 台のアクセスポイントに ESSID を 2 つ持たせ、つないだ ESSID で行き先を分けた図です。強調したゲスト用からは、社内ネットワークへの線が通じていません。",
+      "nodes": [
+        {
+          "id": "emp",
+          "label": "社員の端末\n社内の業務に使う",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "gst",
+          "label": "来客の端末\n外から持ち込まれた",
+          "row": 1,
+          "col": 0,
+          "icon": "phone"
+        },
+        {
+          "id": "inner",
+          "label": "社内用 ESSID\n社内へも外へも\n出られる",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "guest",
+          "label": "ゲスト用 ESSID\n外にだけ出られる",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "lan",
+          "label": "社内ネットワーク\n社内の機器とデータ",
+          "row": 0,
+          "col": 2,
+          "icon": "building"
+        },
+        {
+          "id": "net",
+          "label": "インターネット\n外のサービス",
+          "row": 1,
+          "col": 2,
+          "shape": "cloud"
+        }
+      ],
+      "edges": [
+        {
+          "from": "emp",
+          "to": "inner",
+          "label": "接続する"
+        },
+        {
+          "from": "gst",
+          "to": "guest",
+          "label": "接続する"
+        },
+        {
+          "from": "inner",
+          "to": "lan",
+          "label": "通す"
+        },
+        {
+          "from": "guest",
+          "to": "net",
+          "label": "通す"
+        },
+        {
+          "from": "guest",
+          "to": "lan",
+          "label": "通さない",
+          "style": "dashed",
+          "arrow": "none"
+        }
+      ]
+    }
+  ]
+}

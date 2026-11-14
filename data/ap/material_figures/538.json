@@ -1,0 +1,60 @@
+{
+  "topic_id": 538,
+  "term": "ペアプログラミング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 2つの役割",
+      "caption": "ドライバが打ったコードをナビゲータがその場で見て指摘するので、書くのと同時にレビューが進みます。破線の矢印は役割の交代を表します。",
+      "nodes": [
+        {
+          "id": "d",
+          "label": "ドライバ\n目の前の 1 行に集中",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "n",
+          "label": "ナビゲータ\n方針と影響範囲を見る",
+          "row": 0,
+          "col": 1,
+          "icon": "person",
+          "emphasis": true
+        },
+        {
+          "id": "c",
+          "label": "1 本のプログラム\n1 つの画面で書く",
+          "row": 1,
+          "col": 0,
+          "icon": "device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "d",
+          "to": "c",
+          "label": "キーボードで打つ"
+        },
+        {
+          "from": "c",
+          "to": "n",
+          "label": "書いた直後に見る"
+        },
+        {
+          "from": "n",
+          "to": "d",
+          "label": "抜けや誤りを指摘"
+        },
+        {
+          "from": "d",
+          "to": "n",
+          "label": "一定時間ごとに交代",
+          "arrow": "both",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

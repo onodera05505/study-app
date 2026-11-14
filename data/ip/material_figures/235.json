@@ -79,6 +79,72 @@
           "style": "dashed"
         }
       ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 鎖でつなぐしくみ",
+      "caption": "同じ台帳を参加者が持ち合う形を表した図です。管理者の箱は無く、1 人だけが書き換えた台帳は他の参加者の台帳と照らし合わせて退けられます。",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "参加者 A\n同じ台帳の写し",
+          "row": 1,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "b",
+          "label": "参加者 B\n同じ台帳の写し",
+          "row": 0,
+          "col": 1,
+          "icon": "document"
+        },
+        {
+          "id": "c",
+          "label": "参加者 C\n同じ台帳の写し",
+          "row": 1,
+          "col": 2,
+          "icon": "document"
+        },
+        {
+          "id": "d",
+          "label": "参加者 D\n自分の台帳だけ\nこっそり書き換え",
+          "row": 1,
+          "col": 1,
+          "icon": "warning",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "b",
+          "label": "中身が一致",
+          "arrow": "both"
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "label": "中身が一致",
+          "arrow": "both"
+        },
+        {
+          "from": "d",
+          "to": "a",
+          "label": "合わず退けられる"
+        },
+        {
+          "from": "d",
+          "to": "b",
+          "label": "合わず退けられる"
+        },
+        {
+          "from": "d",
+          "to": "c",
+          "label": "合わず退けられる"
+        }
+      ]
     }
   ]
 }

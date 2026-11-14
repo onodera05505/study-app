@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="338" viewBox="0 0 722.5 382">
+<rect x="0.5" y="0.5" width="721.5" height="381" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<rect x="192" y="0" width="274.5" height="342" rx="10" fill="#ffffff" stroke="#1f2937" stroke-width="1.4"/>
+<g transform="translate(218 10) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.3"/><circle cx="5" cy="18.5" r="2.3"/><circle cx="19" cy="18.5" r="2.3"/><path d="M10.9 7.1 L6.1 16.4 M13.1 7.1 L17.9 16.4 M7.3 18.5 H16.7"/></g>
+<text x="344.25" y="25.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle" font-weight="600">IPv6 パケット（前から順に）</text>
+<rect x="206" y="38" width="246.5" height="40" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="329.25" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle" font-weight="600">基本ヘッダ</text>
+<line x1="162" y1="58" x2="206" y2="58" stroke="#1f2937" stroke-width="0.9"/>
+<circle cx="206" cy="58" r="2.6" fill="#1f2937"/>
+<text x="156" y="54.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="end" font-weight="600">基本ヘッダ</text>
+<text x="156" y="70.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="end">固定長で宛先と送信元を持つ</text>
+<rect x="206" y="88" width="246.5" height="40" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="329.25" y="112.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle" font-weight="600">拡張ヘッダ（経路制御）</text>
+<line x1="162" y1="108" x2="206" y2="108" stroke="#1f2937" stroke-width="0.9"/>
+<circle cx="206" cy="108" r="2.6" fill="#1f2937"/>
+<text x="156" y="104.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="end" font-weight="600">拡張ヘッダ（経路制御）</text>
+<text x="156" y="120.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="end">通る経路を指定する</text>
+<rect x="206" y="138" width="246.5" height="40" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="329.25" y="162.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle" font-weight="600">拡張ヘッダ（分割）</text>
+<line x1="162" y1="158" x2="206" y2="158" stroke="#1f2937" stroke-width="0.9"/>
+<circle cx="206" cy="158" r="2.6" fill="#1f2937"/>
+<text x="156" y="154.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="end" font-weight="600">拡張ヘッダ（分割）</text>
+<text x="156" y="170.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="end">分割したときの情報を運ぶ</text>
+<rect x="206" y="188" width="246.5" height="40" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="329.25" y="212.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">認証ヘッダ AH</text>
+<line x1="452.5" y1="208" x2="496.5" y2="208" stroke="#1f2937" stroke-width="0.9"/>
+<circle cx="452.5" cy="208" r="2.6" fill="#1f2937"/>
+<text x="502.5" y="204.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="start" font-weight="600">認証ヘッダ AH</text>
+<text x="502.5" y="220.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">送信元と改ざんの有無を確かめる</text>
+<rect x="206" y="238" width="246.5" height="40" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="329.25" y="262.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">暗号ペイロード ESP</text>
+<line x1="452.5" y1="258" x2="496.5" y2="258" stroke="#1f2937" stroke-width="0.9"/>
+<circle cx="452.5" cy="258" r="2.6" fill="#1f2937"/>
+<text x="502.5" y="254.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="start" font-weight="600">暗号ペイロード ESP</text>
+<text x="502.5" y="270.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">データ本体を暗号化する</text>
+<rect x="206" y="288" width="246.5" height="40" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="329.25" y="312.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle" font-weight="600">データ</text>
+<line x1="452.5" y1="308" x2="496.5" y2="308" stroke="#1f2937" stroke-width="0.9"/>
+<circle cx="452.5" cy="308" r="2.6" fill="#1f2937"/>
+<text x="502.5" y="304.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">データ</text>
+<text x="502.5" y="320.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">上の層へ渡す中身</text>
+</g>
+</svg>

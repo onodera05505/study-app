@@ -37,6 +37,64 @@
           0
         ]
       ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 4つの象限",
+      "caption": "下の金のなる木から上の 2 つへ資金が流れます。上の段では、問題児がシェアを取れたかどうかで左右どちらへ移るかを点線で表します。",
+      "nodes": [
+        {
+          "id": "star",
+          "label": "花形\n成長市場で\nシェアが高い",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "q",
+          "label": "問題児\n成長市場で\nシェアが低い",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "cow",
+          "label": "金のなる木\n資金を生む\n投資は抑える",
+          "row": 1,
+          "col": 0,
+          "icon": "money",
+          "emphasis": true
+        },
+        {
+          "id": "dog",
+          "label": "負け犬\n撤退・縮小を\n検討する",
+          "row": 0,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "cow",
+          "to": "star",
+          "label": "資金を回す"
+        },
+        {
+          "from": "cow",
+          "to": "q",
+          "label": "資金を回す"
+        },
+        {
+          "from": "q",
+          "to": "star",
+          "label": "投資して\nシェアを取れた",
+          "style": "dashed"
+        },
+        {
+          "from": "q",
+          "to": "dog",
+          "label": "シェアを\n取れなかった",
+          "style": "dashed"
+        }
+      ]
     }
   ]
 }

@@ -4,21 +4,80 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "layers",
       "after": "### 記憶階層のしくみ",
-      "caption": "CPU は近い階層から順に探します。近いほど速くて容量が小さく、遠いほど遅くて大容量です。",
-      "nodes": [
-        {"id": "cpu", "label": "CPU", "row": 0, "col": 0},
-        {"id": "l1", "label": "1次キャッシュ\nSRAM・最も速い", "row": 0, "col": 1, "emphasis": true},
-        {"id": "l2", "label": "2次キャッシュ\nSRAM", "row": 0, "col": 2},
-        {"id": "main", "label": "主記憶\nDRAM", "row": 0, "col": 3},
-        {"id": "aux", "label": "補助記憶\nSSD・HDD", "row": 0, "col": 4, "shape": "cylinder"}
+      "caption": "上ほど CPU に近く、幅の狭さが容量の小ささを表します。CPU は上の層から順に探します。",
+      "shape": "pyramid",
+      "layers": [
+        {
+          "label": "1 次キャッシュ\nSRAM・最も速く最も小さい",
+          "note": "CPU が最初に探す",
+          "emphasis": true
+        },
+        {
+          "label": "2 次キャッシュ\nSRAM・1 次より大きい",
+          "note": "1 次に無ければ探す"
+        },
+        {
+          "label": "主記憶\nDRAM",
+          "note": "キャッシュに無ければ探す"
+        },
+        {
+          "label": "補助記憶\nSSD・HDD・最も遅く大容量",
+          "note": "主記憶に無ければ読み込む元"
+        }
       ],
-      "edges": [
-        {"from": "cpu", "to": "l1", "label": "まず探す"},
-        {"from": "l1", "to": "l2", "label": "無ければ", "arrow": "both"},
-        {"from": "l2", "to": "main", "label": "無ければ", "arrow": "both"},
-        {"from": "main", "to": "aux", "label": "最も遅く大容量", "arrow": "both", "style": "dashed"}
+      "brackets": [
+        {
+          "from": 0,
+          "to": 1,
+          "label": "キャッシュ\nメモリ"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### 使われる部品",
+      "caption": "行ごとに 2 つのメモリの値が逆になります。上の 2 行の違いから、最下行の使われる所が決まると読みます。",
+      "x": {
+        "label": "メモリ",
+        "values": [
+          "SRAM",
+          "DRAM"
+        ]
+      },
+      "y": {
+        "label": "観点",
+        "values": [
+          "速さと\nリフレッシュ",
+          "値段と容量",
+          "使われる所"
+        ]
+      },
+      "cells": [
+        [
+          "非常に速い\nリフレッシュ不要",
+          "SRAM より遅い\nリフレッシュが要る"
+        ],
+        [
+          "高価\n大容量にできない",
+          "安い\n大容量にできる"
+        ],
+        [
+          "キャッシュメモリ",
+          "主記憶"
+        ]
+      ],
+      "emphasis": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ]
       ]
     }
   ]

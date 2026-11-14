@@ -4,53 +4,29 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "steps",
       "after": "### 企画プロセスの中身",
+      "direction": "down",
       "caption": "企画はシステム化構想と計画の 2 段で、何を解決するかを決めて要件定義へ渡すまでを表します。矢印は次の段階へ渡す物です。",
-      "nodes": [
+      "stages": [
         {
-          "id": "k",
-          "label": "経営戦略\n事業上の課題",
-          "row": 0,
-          "col": 0,
-          "shape": "round"
+          "label": "経営上の課題\n経営戦略から出てくる",
+          "icon": "building",
+          "next_label": "課題"
         },
         {
-          "id": "c1",
-          "label": "企画①\nシステム化構想\n課題とニーズを把握",
-          "row": 0,
-          "col": 1,
-          "emphasis": true
+          "label": "システム化構想（企画）\n課題とニーズを把握する",
+          "emphasis": true,
+          "next_label": "構想"
         },
         {
-          "id": "c2",
-          "label": "企画②\nシステム化計画\n業務の問題点を分析",
-          "row": 1,
-          "col": 1,
-          "emphasis": true
+          "label": "システム化計画（企画）\n問題点を分析し課題を定める",
+          "emphasis": true,
+          "next_label": "解決する課題と見通し"
         },
         {
-          "id": "r",
-          "label": "要件定義\n機能の範囲と\n内容を決める",
-          "row": 1,
-          "col": 2
-        }
-      ],
-      "edges": [
-        {
-          "from": "k",
-          "to": "c1",
-          "label": "課題"
-        },
-        {
-          "from": "c1",
-          "to": "c2",
-          "label": "構想"
-        },
-        {
-          "from": "c2",
-          "to": "r",
-          "label": "解決する課題と見通し"
+          "label": "要件定義\n機能の範囲と内容を決める",
+          "icon": "document"
         }
       ]
     }

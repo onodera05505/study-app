@@ -1,0 +1,63 @@
+{
+  "topic_id": 368,
+  "term": "DBMS",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### なぜ DBMS が要るのか",
+      "caption": "どのプログラムの読み書きも DBMS を通ります。DBMS が権限・復旧・同時利用を引き受け、共有のデータの一貫性を保ちます。",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "プログラム A\n在庫を更新する",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "b",
+          "label": "プログラム B\n同じ在庫を更新する",
+          "row": 2,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "dbms",
+          "label": "DBMS\n権限を確かめる・障害から戻す\n使用中は鍵をかける",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "gear"
+        },
+        {
+          "id": "db",
+          "label": "データベース\n皆で使う共有のデータ",
+          "row": 1,
+          "col": 2,
+          "shape": "cylinder"
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "dbms",
+          "label": "読み書きを頼む",
+          "arrow": "both"
+        },
+        {
+          "from": "b",
+          "to": "dbms",
+          "label": "同時に読み書きを頼む",
+          "arrow": "both"
+        },
+        {
+          "from": "dbms",
+          "to": "db",
+          "label": "鍵をかけて更新",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

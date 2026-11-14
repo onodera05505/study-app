@@ -1,0 +1,36 @@
+{
+  "topic_id": 299,
+  "term": "デジタルツイン",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "### しくみ",
+      "caption": "現実の設備から集めたデータで仮想のモデルを最新に保ち、モデル上で試した結果を現実の運用へ戻します。強調した仮想のモデルを持つことが芯です。",
+      "center": "現実と仮想を\n往き来する",
+      "stages": [
+        {
+          "label": "現実の設備\n工場・機械・都市",
+          "icon": "building",
+          "next_label": "稼働データ"
+        },
+        {
+          "label": "センサー\nデータを集め続ける",
+          "icon": "network",
+          "next_label": "最新の状態"
+        },
+        {
+          "label": "仮想空間のモデル\n現実を写した双子",
+          "icon": "device",
+          "next_label": "試す材料",
+          "emphasis": true
+        },
+        {
+          "label": "モデル上で試す\n故障の予測・設計変更",
+          "icon": "gear",
+          "next_label": "試した結果で\n運用を改善"
+        }
+      ]
+    }
+  ]
+}

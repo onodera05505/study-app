@@ -8,17 +8,84 @@
       "after": "### 3つの方式が残すもの",
       "caption": "3つの方式は選ぶ空き領域が違います。最小の空きを選ぶと余りが小さくなり、どの要求にも使えない空きが溜まりやすくなります。",
       "nodes": [
-        {"id": "ff", "label": "ファーストフィット\n先頭から最初に\n足りたもの", "row": 0, "col": 0},
-        {"id": "bf", "label": "ベストフィット\n満たす最小の\nもの", "row": 0, "col": 1, "emphasis": true},
-        {"id": "wf", "label": "ワーストフィット\n最大のもの", "row": 0, "col": 2},
-        {"id": "ba", "label": "空き A 200K\n→ 余り 50K", "row": 1, "col": 0},
-        {"id": "bb", "label": "空き B 160K\n→ 余り 10K", "row": 1, "col": 1, "emphasis": true},
-        {"id": "bc", "label": "空き C 500K\n→ 余り 350K", "row": 1, "col": 2}
+        {
+          "id": "ff",
+          "label": "ファーストフィット\n先頭から最初に\n足りたもの",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "bf",
+          "label": "ベストフィット\n満たす最小の\nもの",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "wf",
+          "label": "ワーストフィット\n最大のもの",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "ba",
+          "label": "空き A 200K\n→ 余り 50K",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "bb",
+          "label": "空き B 160K\n→ 余り 10K",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "bc",
+          "label": "空き C 500K\n→ 余り 350K",
+          "row": 1,
+          "col": 2
+        }
       ],
       "edges": [
-        {"from": "ff", "to": "ba", "label": "150K"},
-        {"from": "bf", "to": "bb", "label": "150K"},
-        {"from": "wf", "to": "bc", "label": "150K"}
+        {
+          "from": "ff",
+          "to": "ba",
+          "label": "150K"
+        },
+        {
+          "from": "bf",
+          "to": "bb",
+          "label": "150K"
+        },
+        {
+          "from": "wf",
+          "to": "bc",
+          "label": "150K"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 断片化との関係",
+      "direction": "down",
+      "caption": "割当てと解放を繰り返すと空きが散らばり、合計は足りても入らなくなります。寄せる操作のあとは空きが 1 つに戻ります。",
+      "stages": [
+        {
+          "label": "割当てと解放\n使用中と空きが入り混じる",
+          "next_label": "空きが細切れに散らばる"
+        },
+        {
+          "label": "外部断片化\n空きの合計は足りるのに\n1 か所に入らない",
+          "icon": "warning",
+          "next_label": "使用中の領域を片側へ寄せる",
+          "emphasis": true
+        },
+        {
+          "label": "メモリコンパクション\n空きが 1 つにまとまる",
+          "icon": "check"
+        }
       ]
     }
   ]

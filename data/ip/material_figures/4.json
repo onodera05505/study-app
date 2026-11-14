@@ -1,0 +1,73 @@
+{
+  "topic_id": 4,
+  "term": "RPA（Robotic Process Automation）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "ロボットは画面の中のソフトウェアで、2 つのシステムの画面から項目を読み取り、伝票へ転記します。人は手順を決めて任せるだけです。",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "システム A の画面\n受注データ",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "b",
+          "label": "システム B の画面\n在庫データ",
+          "row": 2,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "r",
+          "label": "ソフトウェアロボット\n決まった手順で操作",
+          "row": 1,
+          "col": 1,
+          "icon": "gear",
+          "emphasis": true
+        },
+        {
+          "id": "d",
+          "label": "伝票\n1 枚にまとめた結果",
+          "row": 1,
+          "col": 2,
+          "icon": "document"
+        },
+        {
+          "id": "p",
+          "label": "担当者\n手順を決めて任せる",
+          "row": 0,
+          "col": 2,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "r",
+          "label": "項目を読み取る"
+        },
+        {
+          "from": "b",
+          "to": "r",
+          "label": "項目を読み取る"
+        },
+        {
+          "from": "r",
+          "to": "d",
+          "label": "転記してまとめる"
+        },
+        {
+          "from": "p",
+          "to": "r",
+          "label": "毎回同じ手順を登録",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

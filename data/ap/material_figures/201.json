@@ -1,0 +1,103 @@
+{
+  "topic_id": 201,
+  "term": "WAF（Web Application Firewall）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "matrix",
+      "after": "### しくみ",
+      "caption": "3 つの守りを、見るものと止められる攻撃で並べます。WAF の行だけが HTTP の中身を見て Web アプリへの攻撃を止めます。",
+      "x": {
+        "label": "観点",
+        "values": [
+          "見るもの",
+          "止められる攻撃"
+        ]
+      },
+      "y": {
+        "label": "仕組み",
+        "values": [
+          "ファイアウォール",
+          "IPS",
+          "WAF"
+        ]
+      },
+      "cells": [
+        [
+          "IP アドレスと\nポート番号",
+          "正規のポートを通る\n攻撃は通してしまう"
+        ],
+        [
+          "ネットワーク全体の\n通信と攻撃パターン",
+          "登録された攻撃\nWeb アプリ固有は細かく見ない"
+        ],
+        [
+          "HTTP の中身\nURL・パラメータ・ヘッダ・ボディ",
+          "SQL インジェクション\nクロスサイトスクリプティング"
+        ]
+      ],
+      "emphasis": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 設置場所",
+      "caption": "線の名前で暗号の区間と平文の区間を見分けます。WAF は復号された後、Web サーバの手前の平文の区間に置きます。",
+      "nodes": [
+        {
+          "id": "u",
+          "label": "利用者\nブラウザから送る",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "ssl",
+          "label": "SSL アクセラレータ\nTLS の暗号を復号する",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "waf",
+          "label": "WAF\n平文なので中身を検査できる",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "web",
+          "label": "Web サーバ\nアプリが処理する",
+          "row": 0,
+          "col": 3,
+          "icon": "server"
+        }
+      ],
+      "edges": [
+        {
+          "from": "u",
+          "to": "ssl",
+          "label": "HTTPS\n（暗号化）"
+        },
+        {
+          "from": "ssl",
+          "to": "waf",
+          "label": "HTTP\n（平文）"
+        },
+        {
+          "from": "waf",
+          "to": "web",
+          "label": "検査済みの\nリクエスト"
+        }
+      ]
+    }
+  ]
+}

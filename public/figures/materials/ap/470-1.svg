@@ -1,34 +1,61 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="324" viewBox="0 0 640 324">
-<rect x="0.5" y="0.5" width="639" height="323" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(48.6 20)">
-<line x1="48" y1="34" x2="48" y2="284" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="235.7" y1="34" x2="235.7" y2="284" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="459.1" y1="34" x2="459.1" y2="284" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">CPU</text>
-<rect x="152" y="0" width="167.4" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="235.7" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">バンク 0（偶数番地）</text>
-<rect x="375.4" y="0" width="167.4" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="459.1" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">バンク 1（奇数番地）</text>
-<polyline points="51,68 232.7,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="232.7,68 224.7,71.6 224.7,64.4" fill="#1f2937"/>
-<text x="141.85" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. アドレス 0 を読む</text>
-<rect x="43.95" y="73" width="195.8" height="16" rx="3" fill="#ffffff"/>
-<text x="141.85" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">読んだバンク 0 は回復待ちに入る</text>
-<polyline points="51,124 456.1,124" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="456.1,124 448.1,127.6 448.1,120.4" fill="#1f2937"/>
-<text x="253.55" y="117" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. アドレス 1 を読む</text>
-<rect x="149.65" y="129" width="207.8" height="16" rx="3" fill="#ffffff"/>
-<text x="253.55" y="142.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">バンク 0 の回復待ちと重ねて読める</text>
-<polyline points="51,180 232.7,180" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="232.7,180 224.7,183.6 224.7,176.4" fill="#1f2937"/>
-<text x="141.85" y="173" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. アドレス 2 を読む</text>
-<rect x="19.95" y="185" width="243.8" height="16" rx="3" fill="#ffffff"/>
-<text x="141.85" y="198.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">バンク 0 はもう回復しているので待たない</text>
-<polyline points="51,236 456.1,236" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="456.1,236 448.1,239.6 448.1,232.4" fill="#1f2937"/>
-<text x="253.55" y="229" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. アドレス 3 を読む</text>
-<rect x="129.55" y="241" width="248" height="16" rx="3" fill="#ffffff"/>
-<text x="253.55" y="254.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">交互に読む限り、回復待ちは積み上がらない</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="215" viewBox="0 0 640 215">
+<rect x="0.5" y="0.5" width="639" height="214" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(32.7 20)">
+<g transform="translate(7.3 0)">
+<line x1="0" y1="110" x2="0" y2="128" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="140" y1="110" x2="140" y2="128" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="140" y1="110" x2="140" y2="128" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="280" y1="110" x2="280" y2="128" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="280" y1="110" x2="280" y2="128" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="420" y1="110" x2="420" y2="128" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="420" y1="110" x2="420" y2="128" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="560" y1="110" x2="560" y2="128" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="140" y1="50" x2="140" y2="128" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="280" y1="50" x2="280" y2="128" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="280" y1="50" x2="280" y2="128" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="420" y1="50" x2="420" y2="128" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="420" y1="50" x2="420" y2="128" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="560" y1="50" x2="560" y2="128" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<rect x="0" y="96" width="140" height="14" rx="3" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<rect x="14.1" y="60" width="111.8" height="32" rx="3" fill="#ffffff"/>
+<text x="70" y="72.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">バンク 0</text>
+<text x="70" y="88.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">アドレス 0 を読む</text>
+<rect x="140" y="96" width="140" height="14" rx="3" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<rect x="181.4" y="60" width="57.2" height="32" rx="3" fill="#ffffff"/>
+<text x="210" y="72.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">バンク 0</text>
+<text x="210" y="88.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">回復待ち</text>
+<rect x="280" y="96" width="140" height="14" rx="3" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<rect x="294.1" y="60" width="111.8" height="32" rx="3" fill="#ffffff"/>
+<text x="350" y="72.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">バンク 0</text>
+<text x="350" y="88.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">アドレス 2 を読む</text>
+<rect x="420" y="96" width="140" height="14" rx="3" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<rect x="461.4" y="60" width="57.2" height="32" rx="3" fill="#ffffff"/>
+<text x="490" y="72.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">バンク 0</text>
+<text x="490" y="88.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">回復待ち</text>
+<rect x="140" y="36" width="140" height="14" rx="3" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<rect x="154.1" y="0" width="111.8" height="32" rx="3" fill="#ffffff"/>
+<text x="210" y="12.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">バンク 1</text>
+<text x="210" y="28.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">アドレス 1 を読む</text>
+<rect x="280" y="36" width="140" height="14" rx="3" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<rect x="321.4" y="0" width="57.2" height="32" rx="3" fill="#ffffff"/>
+<text x="350" y="12.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">バンク 1</text>
+<text x="350" y="28.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">回復待ち</text>
+<rect x="420" y="36" width="140" height="14" rx="3" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<rect x="434.1" y="0" width="111.8" height="32" rx="3" fill="#ffffff"/>
+<text x="490" y="12.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">バンク 1</text>
+<text x="490" y="28.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">アドレス 3 を読む</text>
+<line x1="0" y1="128" x2="560" y2="128" stroke="#1f2937" stroke-width="1.4"/>
+<line x1="0" y1="128" x2="0" y2="133" stroke="#1f2937" stroke-width="1.2"/>
+<text x="0" y="147" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">0</text>
+<line x1="140" y1="128" x2="140" y2="133" stroke="#1f2937" stroke-width="1.2"/>
+<text x="140" y="147" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">1</text>
+<line x1="280" y1="128" x2="280" y2="133" stroke="#1f2937" stroke-width="1.2"/>
+<text x="280" y="147" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">2</text>
+<line x1="420" y1="128" x2="420" y2="133" stroke="#1f2937" stroke-width="1.2"/>
+<text x="420" y="147" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">3</text>
+<line x1="560" y1="128" x2="560" y2="133" stroke="#1f2937" stroke-width="1.2"/>
+<text x="560" y="147" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">4</text>
+<text x="280" y="171" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">時間（1 目盛り＝1 回の読出し）</text>
+</g>
 </g>
 </svg>

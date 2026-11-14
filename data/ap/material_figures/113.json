@@ -8,16 +8,110 @@
       "after": "### 集中型と分散型",
       "caption": "分散型は開発者の手元にも全履歴の複製があるので、サーバにつながらなくても履歴をたどってコミットできます。",
       "nodes": [
-        {"id": "cl", "label": "集中型\nSVN・CVS・RCS", "row": 0, "col": 0, "shape": "round"},
-        {"id": "cs", "label": "サーバ\n全履歴", "row": 0, "col": 1, "shape": "cylinder"},
-        {"id": "cd", "label": "開発者の手元\n作業コピーだけ", "row": 0, "col": 2},
-        {"id": "dl", "label": "分散型\nGit", "row": 1, "col": 0, "shape": "round", "emphasis": true},
-        {"id": "ds", "label": "共有リポジトリ\n全履歴", "row": 1, "col": 1, "shape": "cylinder"},
-        {"id": "dd", "label": "開発者の手元\n全履歴の複製", "row": 1, "col": 2, "shape": "cylinder", "emphasis": true}
+        {
+          "id": "cl",
+          "label": "集中型\nSVN・CVS・RCS",
+          "row": 0,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "cs",
+          "label": "サーバ\n全履歴",
+          "row": 0,
+          "col": 1,
+          "shape": "cylinder"
+        },
+        {
+          "id": "cd",
+          "label": "開発者の手元\n作業コピーだけ",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "dl",
+          "label": "分散型\nGit",
+          "row": 1,
+          "col": 0,
+          "shape": "round",
+          "emphasis": true
+        },
+        {
+          "id": "ds",
+          "label": "共有リポジトリ\n全履歴",
+          "row": 1,
+          "col": 1,
+          "shape": "cylinder"
+        },
+        {
+          "id": "dd",
+          "label": "開発者の手元\n全履歴の複製",
+          "row": 1,
+          "col": 2,
+          "shape": "cylinder",
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "cs", "to": "cd", "label": "接続が必要", "arrow": "both"},
-        {"from": "ds", "to": "dd", "label": "push で共有", "arrow": "both"}
+        {
+          "from": "cs",
+          "to": "cd",
+          "label": "接続が必要",
+          "arrow": "both"
+        },
+        {
+          "from": "ds",
+          "to": "dd",
+          "label": "push で共有",
+          "arrow": "both"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "sequence",
+      "after": "### 分散型で増える操作",
+      "caption": "1 は手元だけで終わり、2 と 3 で初めて中央とやり取りします。記録と共有が別の操作に分かれていることを読みます。",
+      "actors": [
+        {
+          "id": "dev",
+          "label": "開発者",
+          "icon": "person"
+        },
+        {
+          "id": "loc",
+          "label": "手元のリポジトリ",
+          "icon": "database"
+        },
+        {
+          "id": "cen",
+          "label": "中央のリポジトリ",
+          "icon": "server"
+        }
+      ],
+      "steps": [
+        {
+          "from": "dev",
+          "to": "loc",
+          "label": "コミット（変更を手元に記録）",
+          "note": "ネットワークにつながらなくてよい"
+        },
+        {
+          "from": "loc",
+          "to": "cen",
+          "label": "push（たまったコミットを共有）",
+          "note": "ここで初めて仲間に届く"
+        },
+        {
+          "from": "cen",
+          "to": "loc",
+          "label": "pull（他の人の変更を取得して併合）"
+        },
+        {
+          "from": "dev",
+          "to": "dev",
+          "label": "同じ箇所の競合を手作業で解決"
+        }
       ]
     }
   ]

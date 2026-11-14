@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="364" viewBox="0 0 640 364">
+<rect x="0.5" y="0.5" width="639" height="363" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(31.2 20)">
+<line x1="48" y1="34" x2="48" y2="324" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="288.8" y1="34" x2="288.8" y2="324" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="529.6" y1="34" x2="529.6" y2="324" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">PC-A</text>
+<rect x="200.55" y="0" width="176.5" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="288.8" y="11.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ファイル</text>
+<text x="288.8" y="31.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">データ n（初期値 10）</text>
+<rect x="481.6" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="529.6" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">PC-B</text>
+<polyline points="51,68 285.8,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="285.8,68 277.8,71.6 277.8,64.4" fill="#1f2937"/>
+<text x="168.4" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. ロックして n を読む → 10</text>
+<rect x="91.2" y="73" width="154.4" height="16" rx="3" fill="#ffffff"/>
+<text x="168.4" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">5 を引いて手元の結果は 5</text>
+<polyline points="526.6,124 291.8,124" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="291.8,124 299.8,120.4 299.8,127.6" fill="#1f2937"/>
+<text x="409.2" y="117" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. n を読もうとする → ロック中で待つ</text>
+<rect x="316.7" y="129" width="185" height="16" rx="3" fill="#ffffff"/>
+<text x="409.2" y="142.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">PC-A が書き終わるまで読めない</text>
+<polyline points="51,180 285.8,180" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="285.8,180 277.8,183.6 277.8,176.4" fill="#1f2937"/>
+<text x="168.4" y="173" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 5 を書き込み、ロックを解放</text>
+<polyline points="526.6,220 291.8,220" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="291.8,220 299.8,216.4 299.8,223.6" fill="#1f2937"/>
+<text x="409.2" y="213" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. ロックして n を読む → 5</text>
+<rect x="328.7" y="225" width="161" height="16" rx="3" fill="#ffffff"/>
+<text x="409.2" y="238.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">7 を足して手元の結果は 12</text>
+<polyline points="526.6,276 291.8,276" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="291.8,276 299.8,272.4 299.8,279.6" fill="#1f2937"/>
+<text x="409.2" y="269" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. 12 を書き込み、ロックを解放</text>
+<rect x="357.2" y="281" width="104" height="16" rx="3" fill="#ffffff"/>
+<text x="409.2" y="294.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">両方の更新が残る</text>
+</g>
+</svg>

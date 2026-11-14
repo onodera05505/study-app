@@ -8,18 +8,119 @@
       "after": "### 端から端まで守るしくみ",
       "caption": "区間ごとの暗号化では守られない区間が残ります。S/MIME はメール自体を暗号化し、送信者から受信者まで守ります。",
       "nodes": [
-        {"id": "s", "label": "送信者の PC", "row": 0, "col": 0},
-        {"id": "ms", "label": "自社の\nメールサーバ", "row": 0, "col": 1},
-        {"id": "mr", "label": "相手の\nメールサーバ", "row": 0, "col": 2},
-        {"id": "r", "label": "受信者の PC", "row": 0, "col": 3},
-        {"id": "sm", "label": "S/MIME\nメールそのものを暗号化", "row": 1, "col": 1, "emphasis": true}
+        {
+          "id": "s",
+          "label": "送信者の PC",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "ms",
+          "label": "自社の\nメールサーバ",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "mr",
+          "label": "相手の\nメールサーバ",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "r",
+          "label": "受信者の PC",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "sm",
+          "label": "S/MIME\nメールそのものを暗号化",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "s", "to": "ms", "label": "SSL/TLS が守る"},
-        {"from": "ms", "to": "mr", "label": "守られない区間"},
-        {"from": "mr", "to": "r", "label": "SSL/TLS が守る"},
-        {"from": "sm", "to": "s", "label": "受信者の公開鍵で暗号化", "style": "dashed", "arrow": "none"},
-        {"from": "sm", "to": "r", "label": "受信者の秘密鍵で復号", "style": "dashed", "arrow": "none"}
+        {
+          "from": "s",
+          "to": "ms",
+          "label": "SSL/TLS が守る"
+        },
+        {
+          "from": "ms",
+          "to": "mr",
+          "label": "守られない区間"
+        },
+        {
+          "from": "mr",
+          "to": "r",
+          "label": "SSL/TLS が守る"
+        },
+        {
+          "from": "sm",
+          "to": "s",
+          "label": "受信者の公開鍵で暗号化",
+          "style": "dashed",
+          "arrow": "none"
+        },
+        {
+          "from": "sm",
+          "to": "r",
+          "label": "受信者の秘密鍵で復号",
+          "style": "dashed",
+          "arrow": "none"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "sequence",
+      "after": "### 鍵とデジタル証明書",
+      "caption": "誰のどの鍵をどの順で使うかを表します。暗号化も復号も受信者の鍵で、公開鍵が本人の物かは証明書で確かめます。",
+      "actors": [
+        {
+          "id": "s",
+          "label": "送信者",
+          "icon": "person"
+        },
+        {
+          "id": "r",
+          "label": "受信者",
+          "icon": "person"
+        },
+        {
+          "id": "ca",
+          "label": "認証局",
+          "icon": "building"
+        }
+      ],
+      "steps": [
+        {
+          "from": "ca",
+          "to": "r",
+          "label": "受信者の公開鍵にデジタル証明書を発行"
+        },
+        {
+          "from": "r",
+          "to": "s",
+          "label": "デジタル証明書（公開鍵入り）を渡す"
+        },
+        {
+          "from": "s",
+          "to": "s",
+          "label": "証明書で、公開鍵が受信者本人の物か確かめる"
+        },
+        {
+          "from": "s",
+          "to": "r",
+          "label": "受信者の公開鍵で暗号化したメールを送る",
+          "note": "途中で盗まれても秘密鍵が無ければ読めない"
+        },
+        {
+          "from": "r",
+          "to": "r",
+          "label": "受信者だけが持つ秘密鍵で復号する"
+        }
       ]
     }
   ]

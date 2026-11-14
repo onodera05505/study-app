@@ -1,0 +1,112 @@
+{
+  "topic_id": 89,
+  "term": "ERP（Enterprise Resource Planning：企業資源計画）パッケージ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 一元管理が効く理由",
+      "caption": "全部門が中央の一つのデータベースを使います。販売が受注を 1 回入れるだけで、在庫と経理の数字も同じデータで変わります。",
+      "nodes": [
+        {
+          "id": "hr",
+          "label": "人事\n要員と人件費",
+          "row": 0,
+          "col": 1,
+          "icon": "people"
+        },
+        {
+          "id": "sales",
+          "label": "販売\n受注を入力する",
+          "row": 1,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "db",
+          "label": "一つのデータベース\n全部門の業務データ",
+          "row": 1,
+          "col": 1,
+          "icon": "database",
+          "emphasis": true
+        },
+        {
+          "id": "stock",
+          "label": "生産・在庫\n在庫を引き当てる",
+          "row": 1,
+          "col": 2,
+          "icon": "box"
+        },
+        {
+          "id": "acc",
+          "label": "経理\n売上と原価を計上",
+          "row": 2,
+          "col": 1,
+          "icon": "money"
+        }
+      ],
+      "edges": [
+        {
+          "from": "sales",
+          "to": "db",
+          "label": "受注を 1 回入力"
+        },
+        {
+          "from": "db",
+          "to": "stock",
+          "label": "同じデータで\n在庫が減る"
+        },
+        {
+          "from": "db",
+          "to": "acc",
+          "label": "同じデータで売上に反映"
+        },
+        {
+          "from": "hr",
+          "to": "db",
+          "label": "人件費のデータ",
+          "arrow": "both"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### 混同しやすい用語",
+      "caption": "3 つの仕組みを、対象の範囲と最適にするものの 2 つの観点で並べています。強調した ERP の範囲は自社の中の全社です。",
+      "x": {
+        "label": "仕組み",
+        "values": [
+          "ERP",
+          "SCM",
+          "MRP"
+        ]
+      },
+      "y": {
+        "label": "観点",
+        "values": [
+          "対象の範囲",
+          "何を最適にするか"
+        ]
+      },
+      "cells": [
+        [
+          "自社の中の全社\n経理・人事・生産・販売",
+          "企業をまたぐ\n調達から販売まで",
+          "生産の資材\n資材の流れだけ"
+        ],
+        [
+          "ヒト・モノ・カネの\n配分",
+          "供給の流れ全体",
+          "資材の量と\n必要な時期"
+        ]
+      ],
+      "emphasis": [
+        [
+          0,
+          0
+        ]
+      ]
+    }
+  ]
+}

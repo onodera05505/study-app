@@ -1,0 +1,33 @@
+{
+  "topic_id": 425,
+  "term": "BCP（Business Continuity Plan：事業継続計画）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "chart",
+      "after": "### しくみ",
+      "caption": "災害で落ちた操業度が戻る様子を、BCP がある場合とない場合で比べたグラフです。BCP は縦線の目標復旧時間までに、注記の目標復旧レベルへ戻すことを狙います。",
+      "kind": "line",
+      "x": {"label": "災害の発生からの日数（例）", "values": [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]},
+      "y": {"label": "操業度（%）", "min": 0, "max": 100},
+      "series": [
+        {"label": "BCP がある場合", "values": [100, 30, 40, 55, 70, 75, 80, 85, 90, 95, 100, 100], "emphasis": true},
+        {"label": "BCP がない場合", "values": [100, 10, 10, 12, 15, 20, 25, 30, 38, 45, 52, 60]}
+      ],
+      "vlines": [{"x": 3, "label": "目標復旧時間（RTO）"}],
+      "annotations": [{"x": 3, "y": 70, "text": "目標復旧レベル（RLO）"}]
+    },
+    {
+      "id": 2,
+      "type": "cycle",
+      "after": "### 混同しやすい用語",
+      "caption": "輪全体が BCM で、BCP は輪の中で作られる計画書です。訓練と見直しを回すたびに、計画書が改訂されます。",
+      "center": "BCM\n事業継続マネジメント",
+      "stages": [
+        {"label": "BCP を策定する\n優先業務・目標・手順を文書に", "icon": "document", "next_label": "計画書（BCP）", "emphasis": true},
+        {"label": "訓練する\n計画どおり動けるか確かめる", "icon": "people", "next_label": "見つかった不備"},
+        {"label": "見直す\n事業や体制の変化に合わせる", "icon": "search", "next_label": "改訂の内容"}
+      ]
+    }
+  ]
+}

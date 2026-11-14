@@ -1,0 +1,73 @@
+{
+  "topic_id": 384,
+  "term": "MAC アドレスフィルタリング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "アクセスポイントが接続要求の MAC アドレスを許可リストと照らし合わせ、載っている端末だけをつなぎます。",
+      "nodes": [
+        {
+          "id": "ok",
+          "label": "登録済みの端末\nMAC アドレス A",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "ng",
+          "label": "未登録の端末\nMAC アドレス X",
+          "row": 1,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "ap",
+          "label": "アクセスポイント\n許可リストと照合\n（登録: A だけ）",
+          "row": 0,
+          "col": 1,
+          "emphasis": true,
+          "icon": "network"
+        },
+        {
+          "id": "lan",
+          "label": "無線 LAN\nつながった先",
+          "row": 0,
+          "col": 2,
+          "shape": "cloud"
+        },
+        {
+          "id": "deny",
+          "label": "接続できない\n要求を拒まれる",
+          "row": 1,
+          "col": 2,
+          "icon": "warning"
+        }
+      ],
+      "edges": [
+        {
+          "from": "ok",
+          "to": "ap",
+          "label": "A で接続要求"
+        },
+        {
+          "from": "ng",
+          "to": "ap",
+          "label": "X で接続要求"
+        },
+        {
+          "from": "ap",
+          "to": "lan",
+          "label": "載っている：通す"
+        },
+        {
+          "from": "ap",
+          "to": "deny",
+          "label": "載っていない：拒む",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

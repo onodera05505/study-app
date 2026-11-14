@@ -1,0 +1,35 @@
+{
+  "topic_id": 484,
+  "term": "プロジェクト品質マネジメント",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 品質は数値で測る",
+      "caption": "先に目標値を決めておき、テストの実績を数値にしてから比べます。最後の段で、目標値との差から何が悪いかを判断します。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "尺度と目標値を決める\n受入れ基準を数値で持つ",
+          "icon": "document",
+          "next_label": "目標値が決まってから"
+        },
+        {
+          "label": "テストで不良を数える\n見つけた不良の件数",
+          "icon": "search",
+          "next_label": "不良の件数"
+        },
+        {
+          "label": "不良密度を出す\n件数を開発規模で割る",
+          "icon": "chart",
+          "next_label": "不良密度"
+        },
+        {
+          "label": "目標値と比べて判断\n少なすぎればテストが甘い\n多すぎれば設計に問題",
+          "icon": "check",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

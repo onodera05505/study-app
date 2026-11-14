@@ -1,0 +1,85 @@
+{
+  "topic_id": 20,
+  "term": "IaC（Infrastructure as Code)",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### なぜコードにするのか",
+      "caption": "人が直すのは構成コードだけで、環境への設定は適用ツールが行います。同じコードから作った環境は同じ構成になり、変更は差分として残ります。",
+      "nodes": [
+        {
+          "id": "p",
+          "label": "担当者\nコードだけを直す",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "c",
+          "label": "構成コード\nあるべき姿を記述",
+          "row": 0,
+          "col": 1,
+          "icon": "document",
+          "emphasis": true
+        },
+        {
+          "id": "t",
+          "label": "適用ツール\n記述の状態に合わせる",
+          "row": 0,
+          "col": 2,
+          "icon": "gear"
+        },
+        {
+          "id": "a",
+          "label": "環境 A\nコードどおりの構成",
+          "row": 0,
+          "col": 3,
+          "icon": "server"
+        },
+        {
+          "id": "b",
+          "label": "作り直した環境 B\nA と同じ構成",
+          "row": 1,
+          "col": 3,
+          "icon": "server"
+        },
+        {
+          "id": "h",
+          "label": "変更履歴\nいつ何を変えたか",
+          "row": 1,
+          "col": 1,
+          "icon": "database",
+          "shape": "cylinder"
+        }
+      ],
+      "edges": [
+        {
+          "from": "p",
+          "to": "c",
+          "label": "変更を書く"
+        },
+        {
+          "from": "c",
+          "to": "h",
+          "label": "差分を記録"
+        },
+        {
+          "from": "c",
+          "to": "t",
+          "label": "あるべき姿"
+        },
+        {
+          "from": "t",
+          "to": "a",
+          "label": "自動で設定"
+        },
+        {
+          "from": "t",
+          "to": "b",
+          "label": "同じ設定を自動で"
+        }
+      ]
+    }
+  ]
+}

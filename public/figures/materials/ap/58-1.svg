@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="135" viewBox="0 0 938 198">
+<rect x="0.5" y="0.5" width="937" height="197" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<polyline points="109,28 222,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="222,28 214,31.6 214,24.4" fill="#1f2937"/>
+<polyline points="372,28 484,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="484,28 476,31.6 476,24.4" fill="#1f2937"/>
+<polyline points="620,28 767,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="767,28 759,31.6 759,24.4" fill="#1f2937"/>
+<polyline points="815,56 815,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="815,102 811.4,94 818.6,94" fill="#1f2937"/>
+<polyline points="815,102 815,79 552,79 552,56" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polygon points="552,56 555.6,64 548.4,64" fill="#1f2937"/>
+<rect x="1" y="0" width="108" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="55" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">入力層</text>
+<text x="55" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">値を受け取る</text>
+<rect x="222" y="0" width="150" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="297" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">中間層 1</text>
+<text x="297" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">単純な特徴を捉える</text>
+<rect x="484" y="0" width="136" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="552" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">中間層 2・3…</text>
+<text x="552" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">ここを深く重ねる</text>
+<rect x="767" y="0" width="96" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="815" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">出力層</text>
+<text x="815" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">判断を出す</text>
+<rect x="732" y="102" width="166" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<g transform="translate(744 119) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M7.6 12.4 L10.6 15.4 L16.4 9.2"/></g>
+<text x="830" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">目標の値と比べる</text>
+<text x="830" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">誤差を求める</text>
+<rect x="113.5" y="11" width="104" height="16" rx="3" fill="#ffffff"/>
+<text x="165.5" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">重みを掛けて足す</text>
+<rect x="376" y="11" width="104" height="16" rx="3" fill="#ffffff"/>
+<text x="428" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">重みを掛けて足す</text>
+<rect x="641.5" y="11" width="104" height="16" rx="3" fill="#ffffff"/>
+<text x="693.5" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">重みを掛けて足す</text>
+<rect x="799" y="70" width="32" height="16" rx="3" fill="#ffffff"/>
+<text x="815" y="83.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">出力</text>
+<rect x="598.2" y="65" width="170.6" height="16" rx="3" fill="#ffffff"/>
+<text x="683.5" y="78.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">誤差を後ろへ伝え
+重みを直す</text>
+</g>
+</svg>

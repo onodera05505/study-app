@@ -1,0 +1,60 @@
+{
+  "topic_id": 277,
+  "term": "EMS（Electronics Manufacturing Services）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 受託と発注の分業",
+      "caption": "中央が工場をもたない発注側、右が工場をもつ受託側です。右へ向かう 2 本の線のラベルで、設計まで委ねるかどうかの違いを読みます。",
+      "nodes": [
+        {
+          "id": "fab",
+          "label": "ファブレス（発注側）\n工場をもたず\n企画・設計・販売に集中",
+          "row": 0,
+          "col": 1,
+          "icon": "building"
+        },
+        {
+          "id": "ems",
+          "label": "EMS（受託側）\n工場をもち\n製造だけを担う",
+          "row": 0,
+          "col": 2,
+          "icon": "gear",
+          "emphasis": true
+        },
+        {
+          "id": "odm",
+          "label": "ODM（受託側）\n工場をもち\n設計から担う",
+          "row": 1,
+          "col": 2,
+          "icon": "gear"
+        },
+        {
+          "id": "mkt",
+          "label": "市場\n委託元のブランドで\n売られる",
+          "row": 0,
+          "col": 0,
+          "icon": "people"
+        }
+      ],
+      "edges": [
+        {
+          "from": "fab",
+          "to": "ems",
+          "label": "図面を渡し\n製造を委託"
+        },
+        {
+          "from": "fab",
+          "to": "odm",
+          "label": "設計から委託"
+        },
+        {
+          "from": "fab",
+          "to": "mkt",
+          "label": "自社ブランドで販売"
+        }
+      ]
+    }
+  ]
+}

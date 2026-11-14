@@ -1,0 +1,61 @@
+{
+  "topic_id": 56,
+  "term": "データサイエンティスト",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "### 求められる3つの力",
+      "center": "知見",
+      "caption": "課題を決めてから判断につなげるまでを一巡して、初めてデータが知見になります。分析の段で止めず、強調した段まで回します。",
+      "stages": [
+        {
+          "label": "課題を決める\n何を解くかを定める",
+          "icon": "search",
+          "next_label": "解く問い"
+        },
+        {
+          "label": "集めて整える\nデータを使える形にする",
+          "icon": "database",
+          "next_label": "使える形のデータ"
+        },
+        {
+          "label": "分析する\n統計や機械学習で調べる",
+          "icon": "chart",
+          "next_label": "規則性や傾向"
+        },
+        {
+          "label": "判断につなげる\n業務や経営に生かす",
+          "icon": "building",
+          "next_label": "次の課題",
+          "emphasis": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "parts",
+      "after": "### 求められる3つの力",
+      "caption": "1 人のデータサイエンティストに 3 方向の力が要ります。強調したビジネスの力が欠けると、分析の結果が判断に使われません。",
+      "whole": {
+        "label": "データサイエンティスト",
+        "icon": "person"
+      },
+      "parts": [
+        {
+          "label": "ビジネスの力\n課題を決め判断に結び付ける",
+          "icon": "building",
+          "emphasis": true
+        },
+        {
+          "label": "分析の力\n統計や機械学習で規則性を出す",
+          "icon": "chart"
+        },
+        {
+          "label": "技術の力\n大量のデータを集めて整える",
+          "icon": "database"
+        }
+      ]
+    }
+  ]
+}

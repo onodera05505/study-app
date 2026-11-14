@@ -1,0 +1,64 @@
+{
+  "topic_id": 26,
+  "term": "ビュー表",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 実表と導出表",
+      "caption": "データは下の実表だけにあり、ビューは定義だけを持ちます。利用者がビューを更新すると、左のビューは実表の 1 行へ届き、右のビューは書き換える行が決まりません。",
+      "nodes": [
+        {
+          "id": "u",
+          "label": "利用者\nビューの行を更新する",
+          "row": 0,
+          "col": 1,
+          "icon": "person"
+        },
+        {
+          "id": "v1",
+          "label": "ビュー：営業部の社員\n列の抜き出し・WHERE で定義\nデータは持たない",
+          "row": 1,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "v2",
+          "label": "ビュー：部署ごとの人数\nGROUP BY・集約関数で定義\nデータは持たない",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "t",
+          "label": "実表（社員表）\nデータを格納する\n社員ごとに 1 行",
+          "row": 2,
+          "col": 1,
+          "shape": "cylinder"
+        }
+      ],
+      "edges": [
+        {
+          "from": "u",
+          "to": "v1",
+          "label": "UPDATE"
+        },
+        {
+          "from": "u",
+          "to": "v2",
+          "label": "UPDATE"
+        },
+        {
+          "from": "v1",
+          "to": "t",
+          "label": "1 行が 1 行に対応し届く（可）"
+        },
+        {
+          "from": "v2",
+          "to": "t",
+          "label": "元の行が決まらない（不可）",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

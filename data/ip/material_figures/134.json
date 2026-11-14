@@ -14,6 +14,20 @@
         {"label": "要員の数", "values": [2, 5, 9, 7, 4]},
         {"label": "訂正1件あたりのコスト", "values": [1, 2, 4, 8, 16]}
       ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 後戻りしない前提で進める",
+      "caption": "工程は階段を下るように一方向へ進みます。矢印の上の成果物はレビューを済ませてから次の工程へ渡り、上へ戻る矢印はありません。",
+      "direction": "down",
+      "stages": [
+        {"label": "要件定義\n何を作るかを決める", "icon": "person", "next_label": "レビュー済みの要件定義書"},
+        {"label": "設計\n作り方を決める", "icon": "document", "next_label": "レビュー済みの設計書"},
+        {"label": "プログラミング\n設計どおりに書く", "icon": "device", "next_label": "完成したプログラム"},
+        {"label": "テスト\n要件どおりか確かめる", "icon": "check", "next_label": "合格した製品"},
+        {"label": "運用\n使い始める", "icon": "gear"}
+      ]
     }
   ]
 }

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="258" viewBox="0 0 876.55 354">
+<rect x="0.5" y="0.5" width="875.55" height="353" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<polyline points="269,28 297,28 297,86" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="297,86 293.4,78 300.6,78" fill="#1f2937"/>
+<polyline points="409.1,114 437.1,114 437.1,172" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="437.1,172 433.5,164 440.7,164" fill="#1f2937"/>
+<polyline points="601.35,200 629.35,200 629.35,258" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="629.35,258 625.75,250 632.95,250" fill="#1f2937"/>
+<rect x="0" y="0" width="269" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="134.5" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">まとめる 2 つのネットワーク</text>
+<text x="134.5" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">192.168.0.0/23 と 192.168.2.0/23</text>
+<rect x="184.9" y="86" width="224.2" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="297" y="108.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">第 3 オクテットを 2 進に直す</text>
+<text x="297" y="128.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">00000000 と 00000010</text>
+<rect x="272.85" y="172" width="328.5" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="437.1" y="194.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">共通するビットを数える</text>
+<text x="437.1" y="214.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">上位 6 ビットが同じ（7 ビット目で分かれる）</text>
+<rect x="456.35" y="258" width="346" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="629.35" y="280.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">下位のビットを 0 にする</text>
+<text x="629.35" y="300.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">192.168.0.0/22（第 3 オクテットは 4 の倍数）</text>
+<text x="305" y="32.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">違いが出るのは第 3 オクテット（0 と 2）</text>
+<text x="445.1" y="118.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">上位のビットから順に比べる</text>
+<text x="637.35" y="204.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">先頭 16 ビット ＋ 6 ＝ 22 ビット</text>
+</g>
+</svg>

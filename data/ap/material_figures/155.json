@@ -1,0 +1,20 @@
+{
+  "topic_id": 155,
+  "term": "集合関数",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### WHERE と HAVING の使い分け",
+      "caption": "SQL の句が評価される順を上から並べています。強調した 2 つの句が、まとめる段の前と後のどちらにあるかで、書ける条件が分かれます。",
+      "direction": "down",
+      "stages": [
+        {"label": "FROM\n表から行を集める", "next_label": "集めた行"},
+        {"label": "WHERE\n個々の行の値で絞る\n集約の前", "emphasis": true, "next_label": "絞った行"},
+        {"label": "GROUP BY\n行をグループにまとめる", "next_label": "グループ"},
+        {"label": "HAVING\n集合関数の値で絞る\n集約の後", "emphasis": true, "next_label": "絞ったグループ"},
+        {"label": "SELECT\n出力する列を作る"}
+      ]
+    }
+  ]
+}

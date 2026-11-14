@@ -1,0 +1,68 @@
+{
+  "topic_id": 404,
+  "term": "標準化",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### そろえると何がよいのか",
+      "caption": "メーカーの違う機器どうしが、中央の共通の形式を通してデータを受け渡します。形式がそろっているので、作った会社を問わず読めます。",
+      "nodes": [
+        {
+          "id": "cam",
+          "label": "A 社のカメラ\n撮った画像を記録",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "sp",
+          "label": "C 社のスマホ\n撮った画像を記録",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "fmt",
+          "label": "共通の画像形式\n標準で決めた\n記録の形",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "document"
+        },
+        {
+          "id": "pr",
+          "label": "B 社のプリンタ\n画像を印刷",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "pc",
+          "label": "D 社の PC\n画像を表示",
+          "row": 2,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "cam",
+          "to": "fmt",
+          "label": "形式に沿って保存"
+        },
+        {
+          "from": "sp",
+          "to": "fmt",
+          "label": "形式に沿って保存"
+        },
+        {
+          "from": "fmt",
+          "to": "pr",
+          "label": "メーカーを問わず読める"
+        },
+        {
+          "from": "fmt",
+          "to": "pc",
+          "label": "メーカーを問わず読める"
+        }
+      ]
+    }
+  ]
+}

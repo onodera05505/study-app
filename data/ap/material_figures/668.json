@@ -1,0 +1,188 @@
+{
+  "topic_id": 668,
+  "term": "構成管理",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 何を管理するプロセスか",
+      "caption": "CMDB は CI ごとに、どの CI とどうつながるかを記録しています。停止した CI から記録された関係をたどると、影響を受けるサービスが分かります。",
+      "nodes": [
+        {
+          "id": "ops",
+          "label": "障害の担当者\nサーバ A の停止を受けた",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "cmdb",
+          "label": "CMDB\nCI と CI 間の関係を記録",
+          "row": 0,
+          "col": 1,
+          "shape": "cylinder",
+          "emphasis": true
+        },
+        {
+          "id": "res",
+          "label": "影響範囲\n販売サービスが\n止まると分かる",
+          "row": 0,
+          "col": 2,
+          "icon": "search"
+        },
+        {
+          "id": "srv",
+          "label": "CI サーバ A\n停止した機器",
+          "row": 1,
+          "col": 0,
+          "icon": "server"
+        },
+        {
+          "id": "app",
+          "label": "CI 販売ソフト\nサーバ A の上で動く",
+          "row": 1,
+          "col": 1,
+          "icon": "gear"
+        },
+        {
+          "id": "svc",
+          "label": "CI 販売サービス\n影響を受ける",
+          "row": 1,
+          "col": 2,
+          "icon": "people",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "ops",
+          "to": "cmdb",
+          "label": "サーバ A の関係を照会"
+        },
+        {
+          "from": "cmdb",
+          "to": "res",
+          "label": "関係をたどった結果"
+        },
+        {
+          "from": "srv",
+          "to": "app",
+          "label": "記録した関係: 上で動かす"
+        },
+        {
+          "from": "app",
+          "to": "svc",
+          "label": "記録した関係: 実現する"
+        },
+        {
+          "from": "cmdb",
+          "to": "app",
+          "label": "下の段の CI と関係を記録",
+          "style": "dashed",
+          "arrow": "none"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 隣接プロセスとの線引き",
+      "caption": "構成管理は正確な構成情報を周りのプロセスへ渡します。矢印のラベルが渡すもので、費用や品質の効果は受け取った側で現れます。",
+      "nodes": [
+        {
+          "id": "chg",
+          "label": "変更管理\n変更を評価して承認",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "rel",
+          "label": "リリース及び展開管理\n本番へ配付する",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "cm",
+          "label": "構成管理\nCMDB を正確に保つ",
+          "row": 1,
+          "col": 1,
+          "shape": "cylinder",
+          "emphasis": true
+        },
+        {
+          "id": "inc",
+          "label": "インシデント管理\n障害を復旧する",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "ast",
+          "label": "資産管理\n財務の価値で捉える",
+          "row": 2,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "cm",
+          "to": "chg",
+          "label": "影響評価の構成情報"
+        },
+        {
+          "from": "cm",
+          "to": "rel",
+          "label": "配付先の構成情報"
+        },
+        {
+          "from": "cm",
+          "to": "inc",
+          "label": "影響範囲と依存関係"
+        },
+        {
+          "from": "cm",
+          "to": "ast",
+          "label": "価値を付ける CI の情報"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "matrix",
+      "after": "### 開発の構成管理との違い",
+      "caption": "同じ構成管理という名前の 2 つの活動を、同じ観点で比べます。本番の実態と CI 間の関係まで持つのがサービスマネジメント側です。",
+      "x": {
+        "label": "観点",
+        "values": [
+          "対象",
+          "追うもの",
+          "前提"
+        ]
+      },
+      "y": {
+        "label": "文脈",
+        "values": [
+          "サービス\nマネジメント",
+          "ソフトウェア\n開発"
+        ]
+      },
+      "cells": [
+        [
+          "本番の環境\n稼働中の CI",
+          "実態と CI 間の関係\n記録と実物を検証",
+          "JIS Q 20000\nサービスの規格"
+        ],
+        [
+          "開発中の成果物\nソースコード・設計書",
+          "版とベースライン\nいつ誰が何を変えたか",
+          "開発プロセス\nPMBOK でいう\n構成の管理"
+        ]
+      ],
+      "emphasis": [
+        [
+          0,
+          1
+        ]
+      ]
+    }
+  ]
+}

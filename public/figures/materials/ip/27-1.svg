@@ -1,27 +1,37 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="292" viewBox="0 0 640 292">
-<rect x="0.5" y="0.5" width="639" height="291" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(156.7 20)">
-<line x1="48" y1="34" x2="48" y2="252" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="278.6" y1="34" x2="278.6" y2="252" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">変数 x</text>
-<rect x="230.6" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="278.6" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">変数 y</text>
-<polyline points="275.6,68 51,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="51,68 59,64.4 59,71.6" fill="#1f2937"/>
-<text x="163.3" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. x＞y なので x ← 98 － 42 ＝ 56</text>
-<rect x="81" y="73" width="164.6" height="16" rx="3" fill="#ffffff"/>
-<text x="163.3" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">はじめは x が 98、y が 42</text>
-<polyline points="275.6,124 51,124" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="51,124 59,120.4 59,127.6" fill="#1f2937"/>
-<text x="163.3" y="117" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. x＞y なので x ← 56 － 42 ＝ 14</text>
-<polyline points="51,164 275.6,164" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="275.6,164 267.6,167.6 267.6,160.4" fill="#1f2937"/>
-<text x="163.3" y="157" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. x≦y なので y ← 42 － 14 ＝ 28</text>
-<polyline points="51,204 275.6,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="275.6,204 267.6,207.6 267.6,200.4" fill="#1f2937"/>
-<text x="163.3" y="197" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. x≦y なので y ← 28 － 14 ＝ 14</text>
-<rect x="36.9" y="209" width="252.8" height="16" rx="3" fill="#ffffff"/>
-<text x="163.3" y="222.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">x＝y になり終了条件を満たす。x の値は 14</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="540" viewBox="0 0 640 540">
+<rect x="0.5" y="0.5" width="639" height="539" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(61.7 20)">
+<polyline points="120,38 148,38 148,106" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="148,106 144.4,98 151.6,98" fill="#1f2937"/>
+<polyline points="208,144 236,144 236,212" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="236,212 232.4,204 239.6,204" fill="#1f2937"/>
+<polyline points="296,250 324,250 324,318" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="324,318 320.4,310 327.6,310" fill="#1f2937"/>
+<polyline points="384,356 412,356 412,424" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="412,424 408.4,416 415.6,416" fill="#1f2937"/>
+<rect x="0" y="0" width="120" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="60" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">はじめ</text>
+<text x="60" y="52.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">x＝98、y＝42</text>
+<rect x="88" y="106" width="120" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="148" y="138.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">1 回目の後</text>
+<text x="148" y="158.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">x＝56、y＝42</text>
+<rect x="176" y="212" width="120" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="236" y="244.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">2 回目の後</text>
+<text x="236" y="264.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">x＝14、y＝42</text>
+<rect x="264" y="318" width="120" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="324" y="350.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">3 回目の後</text>
+<text x="324" y="370.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">x＝14、y＝28</text>
+<rect x="351" y="424" width="122" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="412" y="446.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">4 回目の後</text>
+<text x="412" y="466.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">x＝14、y＝14</text>
+<text x="412" y="486.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">等しいので終了</text>
+<text x="156" y="34.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">x＞y なので</text>
+<text x="156" y="50.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">x を 98 − 42 に</text>
+<text x="244" y="140.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">x＞y なので</text>
+<text x="244" y="156.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">x を 56 − 42 に</text>
+<text x="332" y="246.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">x≦y なので</text>
+<text x="332" y="262.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">y を 42 − 14 に</text>
+<text x="420" y="352.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">x≦y なので</text>
+<text x="420" y="368.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">y を 28 − 14 に</text>
 </g>
 </svg>

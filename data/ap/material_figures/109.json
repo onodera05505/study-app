@@ -1,0 +1,99 @@
+{
+  "topic_id": 109,
+  "term": "IDE（統合開発環境）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "parts",
+      "after": "### 何を統合しているのか",
+      "caption": "IDE という 1 つのソフトウェアの中に、開発の工程ごとの道具が区画として収まっています。左右の注記で各道具の受け持ちを読みます。",
+      "whole": {
+        "label": "IDE（統合開発環境）",
+        "icon": "device"
+      },
+      "parts": [
+        {
+          "label": "エディター\nソースコードを書く"
+        },
+        {
+          "label": "コンパイラ\n機械語に翻訳する"
+        },
+        {
+          "label": "リンカ\nオブジェクトをつなぐ"
+        },
+        {
+          "label": "デバッガ\n動かして不具合を追う"
+        },
+        {
+          "label": "ビルド管理\n一連の工程をまとめて回す"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 組込み開発での使われ方",
+      "caption": "「IDE の中」の箱はホストで動くソフトウェア、「IDE の外の装置」の箱は別の機器です。矢印で、機械語と CPU の内部状態がどちらへ渡るかを読みます。",
+      "nodes": [
+        {
+          "id": "edit",
+          "label": "エディター\nIDE の中（ホストで動く）\nソースコードを書く",
+          "row": 0,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "cc",
+          "label": "クロスコンパイラ\nIDE の中（ホストで動く）\nターゲット CPU 用の\n機械語を作る",
+          "row": 0,
+          "col": 1,
+          "icon": "gear",
+          "emphasis": true
+        },
+        {
+          "id": "dbg",
+          "label": "デバッガ\nIDE の中（ホストで動く）\nICE を操作して\n不具合を追う",
+          "row": 1,
+          "col": 2,
+          "icon": "search"
+        },
+        {
+          "id": "ice",
+          "label": "ICE\nIDE の外の装置\nCPU の内部状態を\n読み出す",
+          "row": 0,
+          "col": 2,
+          "icon": "device"
+        },
+        {
+          "id": "board",
+          "label": "評価ボード\nIDE の外の装置\nターゲット CPU で動かす",
+          "row": 0,
+          "col": 3,
+          "icon": "box"
+        }
+      ],
+      "edges": [
+        {
+          "from": "edit",
+          "to": "cc",
+          "label": "ソースコード"
+        },
+        {
+          "from": "cc",
+          "to": "ice",
+          "label": "ターゲット用の機械語"
+        },
+        {
+          "from": "ice",
+          "to": "board",
+          "label": "書き込んで動かす"
+        },
+        {
+          "from": "ice",
+          "to": "dbg",
+          "label": "CPU の内部状態"
+        }
+      ]
+    }
+  ]
+}

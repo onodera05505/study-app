@@ -1,0 +1,112 @@
+{
+  "topic_id": 363,
+  "term": "TPM（Trusted Platform Module）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "鍵は元の PC の TPM に留まり、ディスクだけが移ります。破線は、別の PC では鍵が無く復号できないことを示します。",
+      "nodes": [
+        {
+          "id": "tpm",
+          "label": "元の PC の TPM\n鍵をチップの中に保管",
+          "row": 0,
+          "col": 0,
+          "icon": "lock",
+          "emphasis": true
+        },
+        {
+          "id": "d0",
+          "label": "暗号化したディスク\n元の PC に付けた状態",
+          "row": 0,
+          "col": 1,
+          "icon": "database"
+        },
+        {
+          "id": "pc2",
+          "label": "別の PC\n元の TPM の鍵が無い",
+          "row": 1,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "d1",
+          "label": "同じディスク\n別の PC に付け替えた",
+          "row": 1,
+          "col": 1,
+          "icon": "database"
+        }
+      ],
+      "edges": [
+        {
+          "from": "tpm",
+          "to": "d0",
+          "label": "中の鍵で復号して読める"
+        },
+        {
+          "from": "d0",
+          "to": "d1",
+          "label": "ディスクだけを移す"
+        },
+        {
+          "from": "tpm",
+          "to": "pc2",
+          "label": "鍵は付いて来ない",
+          "style": "dashed"
+        },
+        {
+          "from": "pc2",
+          "to": "d1",
+          "label": "復号できない",
+          "style": "dashed"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### 混同しやすい用語",
+      "caption": "列ごとに 3 者を比べます。鍵を守る役割は同じで、形と載る先で見分けます。",
+      "x": {
+        "label": "鍵を守る仕組み",
+        "values": [
+          "TPM",
+          "セキュア\nエレメント",
+          "HSM"
+        ]
+      },
+      "y": {
+        "label": "観点",
+        "values": [
+          "守るもの",
+          "形",
+          "載る先"
+        ]
+      },
+      "cells": [
+        [
+          "暗号鍵\n外へ出さない",
+          "暗号鍵\n外へ出さない",
+          "暗号鍵\n外へ出さない"
+        ],
+        [
+          "機器に内蔵のチップ\nPC 向けの標準仕様",
+          "耐タンパ性のチップ",
+          "独立した専用装置\n機器に内蔵しない"
+        ],
+        [
+          "PC\nマザーボード",
+          "IC カード・\nスマートフォン",
+          "サーバ・認証局"
+        ]
+      ],
+      "emphasis": [
+        [
+          1,
+          0
+        ]
+      ]
+    }
+  ]
+}

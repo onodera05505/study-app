@@ -1,0 +1,92 @@
+{
+  "topic_id": 263,
+  "term": "監査証拠の入手と評価",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 監査手続と監査証拠の関係",
+      "caption": "監査手続で入手した監査証拠が、指摘や結論を裏付けます。手続と証拠は下の監査調書に記録し、結論までの過程を後から追えるようにします。",
+      "nodes": [
+        {
+          "id": "proc",
+          "label": "監査手続\n閲覧・質問・観察\n突合・テストデータ",
+          "row": 0,
+          "col": 0,
+          "icon": "search"
+        },
+        {
+          "id": "evi",
+          "label": "監査証拠\n十分かつ適切な事実",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "con",
+          "label": "指摘・結論\n改善提案",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "doc",
+          "label": "監査調書\n手続と証拠を記録\n結論までを後から追える",
+          "row": 1,
+          "col": 1,
+          "icon": "document"
+        }
+      ],
+      "edges": [
+        {
+          "from": "proc",
+          "to": "evi",
+          "label": "入手する"
+        },
+        {
+          "from": "evi",
+          "to": "con",
+          "label": "裏付ける"
+        },
+        {
+          "from": "proc",
+          "to": "doc",
+          "label": "実施した手続"
+        },
+        {
+          "from": "evi",
+          "to": "doc",
+          "label": "入手した証拠"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 証拠の集め方",
+      "direction": "down",
+      "caption": "段は上から順に進み、予備調査で得た理解を基に本調査の手続を決めます。強調した本調査で証拠を集め、最後に調書へまとめます。",
+      "stages": [
+        {
+          "label": "個別監査計画\n監査項目ごとに\n手続の大枠を決める",
+          "icon": "document",
+          "next_label": "監査項目と手続の案"
+        },
+        {
+          "label": "予備調査\n実態と関連資料を把握",
+          "icon": "search",
+          "next_label": "本調査の手続"
+        },
+        {
+          "label": "本調査\n手続を実施して\n証拠を入手",
+          "emphasis": true,
+          "icon": "hand",
+          "next_label": "入手した証拠"
+        },
+        {
+          "label": "監査調書\n手続と証拠を記録",
+          "icon": "check"
+        }
+      ]
+    }
+  ]
+}

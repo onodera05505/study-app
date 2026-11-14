@@ -1,0 +1,75 @@
+{
+  "topic_id": 36,
+  "term": "SBOM（Software Bill of Materials）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 何が書かれているか",
+      "caption": "矢印は部品がどこに組み込まれているかの依存関係です。脆弱性が出た部品から矢印をたどると、影響を受ける製品が決まります。",
+      "nodes": [
+        {
+          "id": "z",
+          "label": "部品 Z\n脆弱性が公表された",
+          "row": 0,
+          "col": 0,
+          "icon": "warning",
+          "emphasis": true
+        },
+        {
+          "id": "x",
+          "label": "ライブラリ X\n内部で Z を使う",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "a",
+          "label": "製品 A\n間接に Z を含み影響あり",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "w",
+          "label": "部品 W\n脆弱性の公表なし",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "y",
+          "label": "ライブラリ Y\n内部で W を使う",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "b",
+          "label": "製品 B\nZ を含まず影響なし",
+          "row": 1,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "z",
+          "to": "x",
+          "label": "組み込まれる"
+        },
+        {
+          "from": "x",
+          "to": "a",
+          "label": "組み込まれる"
+        },
+        {
+          "from": "w",
+          "to": "y",
+          "label": "組み込まれる"
+        },
+        {
+          "from": "y",
+          "to": "b",
+          "label": "組み込まれる"
+        }
+      ]
+    }
+  ]
+}

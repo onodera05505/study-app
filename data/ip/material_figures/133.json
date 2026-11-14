@@ -1,0 +1,41 @@
+{
+  "topic_id": 133,
+  "term": "DevOps",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "### 開発と運用をつなぐ理由",
+      "caption": "作る段から動かし続ける段までが 1 つの輪でつながります。強調した運用と監視の結果が、次の変更へ戻るところを読みます。",
+      "center": "開発と運用が\n一体で回す",
+      "stages": [
+        {
+          "label": "作る（開発側）\n小さな変更を書く",
+          "icon": "device",
+          "next_label": "変更"
+        },
+        {
+          "label": "自動でビルドとテスト\n手作業を道具に任せる",
+          "icon": "gear",
+          "next_label": "確かめた製品"
+        },
+        {
+          "label": "本番へ移す\n自動で安全に届ける",
+          "icon": "server",
+          "next_label": "稼働する機能"
+        },
+        {
+          "label": "運用と監視（運用側）\n安定して動かす",
+          "icon": "search",
+          "next_label": "運用の結果",
+          "emphasis": true
+        },
+        {
+          "label": "次の変更を決める\n動かした結果から学ぶ",
+          "icon": "people",
+          "next_label": "次の要望"
+        }
+      ]
+    }
+  ]
+}

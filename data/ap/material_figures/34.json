@@ -1,0 +1,35 @@
+{
+  "topic_id": 34,
+  "term": "PSIRT",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 何を担当するか",
+      "direction": "down",
+      "caption": "自社製品の脆弱性への対応が、届出の受付から顧客への告知まで一方向に進みます。矢印は次の段へ渡す物です。",
+      "stages": [
+        {
+          "label": "届出の受付\n研究者や顧客から",
+          "icon": "mail",
+          "next_label": "届出の内容"
+        },
+        {
+          "label": "影響範囲の調査\nどの製品のどの版か",
+          "icon": "search",
+          "next_label": "影響を受ける製品と版"
+        },
+        {
+          "label": "修正の用意\n修正プログラムを作る",
+          "icon": "gear",
+          "next_label": "修正プログラム"
+        },
+        {
+          "label": "公表と告知\n製品を使う顧客へ届ける",
+          "icon": "people",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

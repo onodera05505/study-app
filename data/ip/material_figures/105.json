@@ -1,0 +1,82 @@
+{
+  "topic_id": 105,
+  "term": "FMS（Flexible Manufacturing System：フレキシブル生産システム）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "注文が変わっても、中央の制御コンピュータが各設備の設定を切り替えるだけで別の品種を作れます。人手の段取り替えが要りません。",
+      "nodes": [
+        {
+          "id": "order",
+          "label": "注文\n品種 A を 3 個・\n品種 B を 5 個",
+          "row": 0,
+          "col": 1,
+          "icon": "document"
+        },
+        {
+          "id": "ctl",
+          "label": "制御コンピュータ\n生産の流れ全体を統括",
+          "row": 1,
+          "col": 1,
+          "icon": "device",
+          "emphasis": true
+        },
+        {
+          "id": "mc",
+          "label": "工作機械\n部品を削る・加工する",
+          "row": 2,
+          "col": 0,
+          "icon": "gear"
+        },
+        {
+          "id": "rb",
+          "label": "産業用ロボット\n部品を組み付ける",
+          "row": 2,
+          "col": 1,
+          "icon": "hand"
+        },
+        {
+          "id": "tr",
+          "label": "運搬装置\n機械の間で部品を運ぶ",
+          "row": 2,
+          "col": 2,
+          "icon": "box"
+        }
+      ],
+      "edges": [
+        {
+          "from": "order",
+          "to": "ctl",
+          "label": "作る品種と数"
+        },
+        {
+          "from": "ctl",
+          "to": "mc",
+          "label": "加工の切替"
+        },
+        {
+          "from": "ctl",
+          "to": "rb",
+          "label": "組付けの切替"
+        },
+        {
+          "from": "ctl",
+          "to": "tr",
+          "label": "運ぶ順の切替"
+        },
+        {
+          "from": "mc",
+          "to": "rb",
+          "label": "加工した部品"
+        },
+        {
+          "from": "tr",
+          "to": "rb",
+          "label": "運んだ部品"
+        }
+      ]
+    }
+  ]
+}

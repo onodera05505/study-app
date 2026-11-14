@@ -40,6 +40,35 @@
           "完成の約束\n契約不適合責任"
         ]
       ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 多段階契約",
+      "direction": "down",
+      "caption": "工程ごとに別の契約を結び、段の間で前の工程の結果を見て次の工程を見積り直します。全体を最初に一括で契約しないのが要点です。",
+      "stages": [
+        {
+          "label": "要件定義の契約\n準委任型",
+          "icon": "document",
+          "next_label": "決まった要件で\n見積り直す"
+        },
+        {
+          "label": "外部設計の契約\n準委任型か請負型",
+          "emphasis": true,
+          "icon": "document",
+          "next_label": "外部設計の結果で\n見積り直す"
+        },
+        {
+          "label": "内部設計〜結合の契約\n請負型",
+          "icon": "document",
+          "next_label": "作った物を見て\n見積り直す"
+        },
+        {
+          "label": "テストの契約\n準委任型か請負型",
+          "icon": "document"
+        }
+      ]
     }
   ]
 }

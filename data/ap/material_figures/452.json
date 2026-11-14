@@ -8,15 +8,93 @@
       "after": "### なぜ未知のマルウェアに効くのか",
       "caption": "閲覧用のサーバで受信データの処理を完結させ、PC へ渡すのは描画済みの画面だけという分け方を表しています。",
       "nodes": [
-        {"id": "web", "label": "インターネットの\nWeb サイト", "row": 0, "col": 0, "shape": "cloud"},
-        {"id": "vdi", "label": "VDI（閲覧用）サーバ\nDMZ に設置", "row": 0, "col": 1, "emphasis": true},
-        {"id": "pc", "label": "内部ネットワークの PC", "row": 0, "col": 2},
-        {"id": "iso", "label": "受信データの処理も\nマルウェアの実行もここで完結", "row": 1, "col": 1, "shape": "round"}
+        {
+          "id": "web",
+          "label": "インターネットの\nWeb サイト",
+          "row": 0,
+          "col": 0,
+          "shape": "cloud"
+        },
+        {
+          "id": "vdi",
+          "label": "VDI（閲覧用）サーバ\nDMZ に設置",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "pc",
+          "label": "内部ネットワークの PC",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "iso",
+          "label": "受信データの処理も\nマルウェアの実行もここで完結",
+          "row": 1,
+          "col": 1,
+          "shape": "round"
+        }
       ],
       "edges": [
-        {"from": "web", "to": "vdi", "label": "実行できる形のデータ", "arrow": "both"},
-        {"from": "vdi", "to": "pc", "label": "画面の画像と操作情報だけ", "arrow": "both"},
-        {"from": "vdi", "to": "iso", "label": "セッションごとに破棄", "style": "dashed", "arrow": "none"}
+        {
+          "from": "web",
+          "to": "vdi",
+          "label": "実行できる形のデータ",
+          "arrow": "both"
+        },
+        {
+          "from": "vdi",
+          "to": "pc",
+          "label": "画面の画像と操作情報だけ",
+          "arrow": "both"
+        },
+        {
+          "from": "vdi",
+          "to": "iso",
+          "label": "セッションごとに破棄",
+          "style": "dashed",
+          "arrow": "none"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### 混同しやすい用語",
+      "caption": "Web の脅威への 3 つの対策を、何をするかと判定できない物への効き目の 2 観点で並べた表です。下の行で、検知に頼らず効くのは左の列だけだと分かります。",
+      "x": {
+        "label": "対策",
+        "values": [
+          "Web\nアイソレーション",
+          "サンドボックス",
+          "コンテンツ\nフィルタリング"
+        ]
+      },
+      "y": {
+        "label": "観点",
+        "values": [
+          "何をするか",
+          "判定できない\n物への効き目"
+        ]
+      },
+      "cells": [
+        [
+          "判定せず別環境で処理\nPC へは画面の画像だけ",
+          "隔離環境で実行し\n危険かを判定する",
+          "URL やカテゴリで\n接続先を制限する"
+        ],
+        [
+          "効く\n実行できる形が届かない",
+          "効かない\n判定を回避されると通す",
+          "効かない\n未分類のサイトは素通り"
+        ]
+      ],
+      "emphasis": [
+        [
+          1,
+          0
+        ]
       ]
     }
   ]

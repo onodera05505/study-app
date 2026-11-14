@@ -4,52 +4,65 @@
   "figures": [
     {
       "id": 1,
-      "type": "sequence",
+      "type": "steps",
       "after": "### 実施項目の順序",
-      "caption": "組織の状況の理解から始まり、適用範囲と方針、リスクアセスメント、内部監査、是正へ進む順序を表します。",
-      "actors": [
+      "direction": "down",
+      "caption": "ISMS を始めるときの順序を上から下へ並べた階段です。矢印に書いた物が決まると、次の段へ進めます。",
+      "stages": [
         {
-          "id": "m",
-          "label": "経営層"
+          "label": "組織の状況を理解する\n利害関係者の要求をつかむ",
+          "icon": "people",
+          "next_label": "誰の何を守るか",
+          "emphasis": true
         },
         {
-          "id": "g",
-          "label": "各部門"
+          "label": "適用範囲を決める\n部署・業務・資産の範囲",
+          "icon": "building",
+          "next_label": "守る範囲"
+        },
+        {
+          "label": "方針を定める\n情報セキュリティ方針",
+          "icon": "document",
+          "next_label": "守り方の方針"
+        },
+        {
+          "label": "リスクアセスメント\n特定・分析・評価",
+          "icon": "search",
+          "next_label": "選んだ対応"
+        },
+        {
+          "label": "対応と点検\n運用し内部監査で直す",
+          "icon": "check"
         }
-      ],
-      "steps": [
+      ]
+    },
+    {
+      "id": 2,
+      "type": "cycle",
+      "after": "### リスクを管理する仕組みとして回す",
+      "caption": "ISMS は 4 つの段を輪で回し続けます。評価で見つけた不適合を直し、次の計画へ戻るところを読みます。",
+      "center": "情報資産の\nリスク管理",
+      "stages": [
         {
-          "from": "m",
-          "to": "m",
-          "label": "組織の状況と利害関係者のニーズを理解する",
-          "note": "ここが出発点。範囲も方針もまだ決めない"
+          "label": "計画\nリスクと対策を決める",
+          "icon": "document",
+          "next_label": "対策の計画"
         },
         {
-          "from": "m",
-          "to": "g",
-          "label": "ISMS の適用範囲を決めて示す"
+          "label": "運用\n対策を回す",
+          "icon": "gear",
+          "next_label": "運用の記録"
         },
         {
-          "from": "m",
-          "to": "g",
-          "label": "情報セキュリティ方針を定めて示す"
+          "label": "パフォーマンス評価\n決めたとおりか測る",
+          "icon": "search",
+          "next_label": "見つかった不適合",
+          "emphasis": true
         },
         {
-          "from": "g",
-          "to": "g",
-          "label": "リスクアセスメント",
-          "note": "特定・分析・評価を行い、回避・低減・共有・保有から対応を選ぶ"
-        },
-        {
-          "from": "g",
-          "to": "m",
-          "label": "内部監査の結果を報告する",
-          "note": "内部監査はパフォーマンス評価の段階"
-        },
-        {
-          "from": "m",
-          "to": "g",
-          "label": "不適合の是正を指示する（改善）"
+          "label": "改善\n不適合を直す",
+          "icon": "arrow-cycle",
+          "next_label": "直した手順"
         }
       ]
     }

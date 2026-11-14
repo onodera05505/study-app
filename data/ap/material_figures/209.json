@@ -4,50 +4,23 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "layers",
       "after": "### 3つのプロトコルの層",
       "caption": "上から TLS・IPsec・L2TP の順に並びます。下の層で包むほど、中身のプロトコルを選ばず保護できます。",
-      "nodes": [
+      "shape": "stack",
+      "layers": [
         {
-          "id": "l1",
-          "label": "上位層\n（アプリケーション）",
-          "row": 0,
-          "col": 0,
-          "shape": "round"
+          "label": "TLS（トランスポート層より上）\nアプリのデータを包む",
+          "note": "保護はアプリの通信ごと"
         },
         {
-          "id": "p1",
-          "label": "TLS\nアプリのデータを暗号化",
-          "row": 0,
-          "col": 1,
+          "label": "IPsec（ネットワーク層）\nIP パケットを包む",
+          "note": "IP の上のアプリを選ばない",
           "emphasis": true
         },
         {
-          "id": "l2",
-          "label": "ネットワーク層",
-          "row": 1,
-          "col": 0,
-          "shape": "round"
-        },
-        {
-          "id": "p2",
-          "label": "IPsec\nIP パケットを暗号化",
-          "row": 1,
-          "col": 1
-        },
-        {
-          "id": "l3",
-          "label": "データリンク層\n（レイヤ 2）",
-          "row": 2,
-          "col": 0,
-          "shape": "round"
-        },
-        {
-          "id": "p3",
-          "label": "L2TP\nレイヤ 2 のフレームを包む",
-          "row": 2,
-          "col": 1,
-          "emphasis": true
+          "label": "L2TP（データリンク層）\nレイヤ 2 のフレームを包む",
+          "note": "IP 以外のプロトコルも運べる"
         }
       ]
     }

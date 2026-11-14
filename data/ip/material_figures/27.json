@@ -4,18 +4,31 @@
   "figures": [
     {
       "id": 1,
-      "type": "sequence",
+      "type": "steps",
       "after": "### 流れ図をたどる例",
-      "caption": "流れ図のとおりに変数の値を1行ずつ書き出した表です。値の動きと、どこで終わるかを追って読みます。",
-      "actors": [
-        {"id": "x", "label": "変数 x"},
-        {"id": "y", "label": "変数 y"}
-      ],
-      "steps": [
-        {"from": "y", "to": "x", "label": "x＞y なので x ← 98 － 42 ＝ 56", "note": "はじめは x が 98、y が 42"},
-        {"from": "y", "to": "x", "label": "x＞y なので x ← 56 － 42 ＝ 14"},
-        {"from": "x", "to": "y", "label": "x≦y なので y ← 42 － 14 ＝ 28"},
-        {"from": "x", "to": "y", "label": "x≦y なので y ← 28 － 14 ＝ 14", "note": "x＝y になり終了条件を満たす。x の値は 14"}
+      "caption": "段は繰返しの回ごとの変数の値で、段の間の矢印にその回の条件と操作を書いています。2 つの値が等しくなった強調の段で繰返しを抜けます。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "はじめ\nx＝98、y＝42",
+          "next_label": "x＞y なので\nx を 98 − 42 に"
+        },
+        {
+          "label": "1 回目の後\nx＝56、y＝42",
+          "next_label": "x＞y なので\nx を 56 − 42 に"
+        },
+        {
+          "label": "2 回目の後\nx＝14、y＝42",
+          "next_label": "x≦y なので\ny を 42 − 14 に"
+        },
+        {
+          "label": "3 回目の後\nx＝14、y＝28",
+          "next_label": "x≦y なので\ny を 28 − 14 に"
+        },
+        {
+          "label": "4 回目の後\nx＝14、y＝14\n等しいので終了",
+          "emphasis": true
+        }
       ]
     }
   ]

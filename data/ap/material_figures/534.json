@@ -51,6 +51,64 @@
           "label": "以降は共通鍵で暗号化して通信"
         }
       ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 押さえどころ",
+      "caption": "左から右へ通信がつながります。実線が TLS で暗号化される区間で、点線の Web サーバから DB サーバまでは TLS の外なので別に守ります。",
+      "nodes": [
+        {
+          "id": "cl",
+          "label": "クライアント\nTLS を張る一方の端",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "net",
+          "label": "インターネット\n途中では読めない",
+          "row": 0,
+          "col": 1,
+          "shape": "cloud"
+        },
+        {
+          "id": "web",
+          "label": "公開 Web サーバ\nTLS の終点・ここで復号",
+          "row": 0,
+          "col": 2,
+          "icon": "server",
+          "emphasis": true
+        },
+        {
+          "id": "db",
+          "label": "DB サーバ\nWeb サーバの奥",
+          "row": 1,
+          "col": 2,
+          "shape": "cylinder"
+        }
+      ],
+      "edges": [
+        {
+          "from": "cl",
+          "to": "net",
+          "label": "TLS で暗号化",
+          "arrow": "both"
+        },
+        {
+          "from": "net",
+          "to": "web",
+          "label": "TLS で暗号化",
+          "arrow": "both"
+        },
+        {
+          "from": "web",
+          "to": "db",
+          "label": "TLS の外・別に守る",
+          "style": "dashed",
+          "arrow": "both"
+        }
+      ]
     }
   ]
 }

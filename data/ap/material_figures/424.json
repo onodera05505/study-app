@@ -1,0 +1,53 @@
+{
+  "topic_id": 424,
+  "term": "ファブレス",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみと利点",
+      "caption": "ファブレスとファウンドリが製造を分け合う関係を、行き来する物で表しています。工場の固定費を負うのがどちらの箱かを読み比べます。",
+      "nodes": [
+        {
+          "id": "fab",
+          "label": "ファブレス企業\n企画・設計・販売に集中\n工場をもたない",
+          "row": 0,
+          "col": 0,
+          "icon": "building",
+          "emphasis": true
+        },
+        {
+          "id": "fdy",
+          "label": "ファウンドリ\n製造を請け負う\n工場の固定費を負う",
+          "row": 1,
+          "col": 0,
+          "icon": "gear"
+        },
+        {
+          "id": "cus",
+          "label": "顧客\nファブレスの製品を買う",
+          "row": 0,
+          "col": 1,
+          "icon": "people"
+        }
+      ],
+      "edges": [
+        {
+          "from": "fab",
+          "to": "fdy",
+          "label": "設計データと製造の委託"
+        },
+        {
+          "from": "fdy",
+          "to": "fab",
+          "label": "製品の納入"
+        },
+        {
+          "from": "fab",
+          "to": "cus",
+          "label": "販売"
+        }
+      ]
+    }
+  ]
+}

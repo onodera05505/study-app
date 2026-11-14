@@ -1,0 +1,26 @@
+{
+  "topic_id": 217,
+  "term": "ISMS クラウドセキュリティ認証",
+  "figures": [
+    {
+      "id": 1,
+      "type": "layers",
+      "after": "### ISMS 認証に上乗せする制度",
+      "shape": "stack",
+      "caption": "下の層が土台、上の層がその上に載せる認証です。下の層が無いと上の層は載りません。",
+      "layers": [
+        {
+          "label": "ISMS クラウドセキュリティ認証\nクラウド固有の管理策を追加で認証",
+          "note": "単独では取れない",
+          "emphasis": true,
+          "icon": "cloud"
+        },
+        {
+          "label": "ISMS 認証\n組織の情報セキュリティ管理の仕組み",
+          "note": "先に取っておく土台",
+          "icon": "lock"
+        }
+      ]
+    }
+  ]
+}

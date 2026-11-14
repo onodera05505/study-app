@@ -1,0 +1,35 @@
+{
+  "topic_id": 236,
+  "term": "スコープ（作業及び成果物）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 範囲を決めて、変更を手続きに乗せる",
+      "caption": "範囲は上の段から順に固まり、WBS で合意された範囲になります。合意の後に範囲を動かすときは、最後の段の手続きを通します。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "要求事項の収集\n利害関係者の要望を集める",
+          "icon": "people",
+          "next_label": "集めた要求事項"
+        },
+        {
+          "label": "スコープ規定書\n作業と成果物の範囲を文書に",
+          "icon": "document",
+          "next_label": "範囲の記述"
+        },
+        {
+          "label": "WBS の作成\n最下位まで分解＝合意された範囲",
+          "icon": "check",
+          "next_label": "合意された範囲",
+          "emphasis": true
+        },
+        {
+          "label": "変更管理の手続き\n範囲の増減・外出しはここを通す",
+          "icon": "lock"
+        }
+      ]
+    }
+  ]
+}

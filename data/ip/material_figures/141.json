@@ -1,0 +1,116 @@
+{
+  "topic_id": 141,
+  "term": "プロジェクト統合マネジメント",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 統合と個別の領域の境目",
+      "caption": "下の 4 つの箱が個別の管理領域で、領域どうしの線は一方を動かすと他方に及ぶ影響です。複数の領域にまたがる判断を、上の統合が引き受けます。",
+      "nodes": [
+        {
+          "id": "in",
+          "label": "統合マネジメント\n複数の領域を見比べて\n折り合いを付ける",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "co",
+          "label": "コスト\n費用を見積もる",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "sc",
+          "label": "スコープ\n範囲を決める",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "sh",
+          "label": "スケジュール\n日程を組む",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "re",
+          "label": "資源\n要員や設備を集める",
+          "row": 1,
+          "col": 3
+        }
+      ],
+      "edges": [
+        {
+          "from": "sc",
+          "to": "co",
+          "label": "範囲を広げると\n費用が膨らむ"
+        },
+        {
+          "from": "sc",
+          "to": "sh",
+          "label": "範囲を広げると\n期間が延びる"
+        },
+        {
+          "from": "sh",
+          "to": "re",
+          "label": "期間を縮めると\n要員に無理が出る"
+        },
+        {
+          "from": "in",
+          "to": "co",
+          "label": "調整"
+        },
+        {
+          "from": "in",
+          "to": "sc",
+          "label": "調整"
+        },
+        {
+          "from": "in",
+          "to": "sh",
+          "label": "調整"
+        },
+        {
+          "from": "in",
+          "to": "re",
+          "label": "調整"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 全体を束ねる役割",
+      "caption": "統合マネジメントが受け持つ仕事を、立ち上げから終わりまで順に並べた図です。どの段も統合の仕事で、矢印の上が次の段へ渡すものです。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "立ち上げ\nプロジェクト憲章を作る",
+          "icon": "document",
+          "next_label": "承認された憲章"
+        },
+        {
+          "label": "計画\n各領域の計画を1つにまとめる",
+          "icon": "gear",
+          "next_label": "全体の計画書"
+        },
+        {
+          "label": "指揮と管理\n計画どおりに作業を進める",
+          "icon": "people",
+          "next_label": "作業の実績"
+        },
+        {
+          "label": "変更の判断\n全体への影響込みで決める",
+          "icon": "search",
+          "next_label": "承認した変更"
+        },
+        {
+          "label": "終結\n教訓を組織の資産にする",
+          "icon": "building",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

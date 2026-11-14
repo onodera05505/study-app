@@ -1,0 +1,117 @@
+{
+  "topic_id": 45,
+  "term": "CRM ソリューション",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### CRM が何をまとめるのか",
+      "caption": "上下の 4 つの接点で得た情報を中央の CRM に集め、顧客ごとの状況から右の顧客一人ひとりに合わせた提案を返します。",
+      "nodes": [
+        {
+          "id": "e",
+          "label": "営業\n訪問で聞いた要望",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "c",
+          "label": "コールセンター\n電話での問合せ",
+          "row": 0,
+          "col": 2,
+          "icon": "phone"
+        },
+        {
+          "id": "w",
+          "label": "Web\nサイトでの閲覧と購入",
+          "row": 2,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "s",
+          "label": "店舗\n店頭での購買",
+          "row": 2,
+          "col": 2,
+          "icon": "building"
+        },
+        {
+          "id": "crm",
+          "label": "CRM\n顧客ごとに情報を統合",
+          "row": 1,
+          "col": 1,
+          "icon": "database",
+          "emphasis": true
+        },
+        {
+          "id": "k",
+          "label": "顧客\n関心や購買段階は人ごとに違う",
+          "row": 1,
+          "col": 2,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "e",
+          "to": "crm",
+          "label": "商談の記録"
+        },
+        {
+          "from": "c",
+          "to": "crm",
+          "label": "問合せ履歴"
+        },
+        {
+          "from": "w",
+          "to": "crm",
+          "label": "閲覧・購入履歴"
+        },
+        {
+          "from": "s",
+          "to": "crm",
+          "label": "購買履歴"
+        },
+        {
+          "from": "crm",
+          "to": "k",
+          "label": "一人ひとりに合わせた提案"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "venn",
+      "after": "### CRM と SFA の関係",
+      "caption": "内側の SFA は外側の CRM の一部です。外側だけの領域が、CRM が SFA より広く受け持つ範囲です。",
+      "layout": "nested",
+      "sets": [
+        {
+          "id": "a",
+          "label": "CRM（顧客との関係全体）"
+        },
+        {
+          "id": "b",
+          "label": "SFA（営業支援システム）"
+        }
+      ],
+      "regions": [
+        {
+          "in": [
+            "a"
+          ],
+          "label": "CRM だけが受け持つ\n購入後の問合せ・保守"
+        },
+        {
+          "in": [
+            "a",
+            "b"
+          ],
+          "label": "SFA も受け持つ\n商談・案件・訪問の管理",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

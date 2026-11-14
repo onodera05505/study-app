@@ -4,75 +4,30 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "steps",
       "after": "### 計算の解き方",
       "caption": "回線を流れるのは圧縮後のデータなので、転送時間は圧縮後のサイズを転送速度で割ります。展開が転送の後に行われるときは、その時間を足します。",
-      "nodes": [
+      "direction": "down",
+      "stages": [
         {
-          "id": "src",
-          "label": "元のデータ\n15Mバイト",
-          "row": 0,
-          "col": 0
+          "label": "元のデータ\n15M バイト",
+          "next_label": "40％に圧縮"
         },
         {
-          "id": "cmp",
-          "label": "圧縮して保存\n15×0.4＝6Mバイト",
-          "row": 0,
-          "col": 1,
+          "label": "圧縮後のサイズ\n15×0.4＝6M バイト",
+          "next_label": "回線に流すのは 6M バイト\n÷転送速度 20M バイト/秒",
           "emphasis": true
         },
         {
-          "id": "net",
-          "label": "回線\n転送速度 20Mバイト/秒",
-          "row": 0,
-          "col": 2,
-          "shape": "cloud"
+          "label": "転送時間\n6÷20＝0.3 秒",
+          "next_label": "展開は圧縮後\n1M バイトあたり 0.03 秒"
         },
         {
-          "id": "recv",
-          "label": "受信側に届く\n転送時間 6÷20＝0.3秒",
-          "row": 1,
-          "col": 2,
-          "emphasis": true
+          "label": "展開時間\n6×0.03＝0.18 秒",
+          "next_label": "転送と同時でないので足す"
         },
         {
-          "id": "out",
-          "label": "展開して元の15Mバイトへ\n展開時間 6×0.03＝0.18秒",
-          "row": 1,
-          "col": 1
-        },
-        {
-          "id": "total",
-          "label": "かかる時間の合計\n0.3＋0.18＝0.48秒",
-          "row": 1,
-          "col": 0
-        }
-      ],
-      "edges": [
-        {
-          "from": "src",
-          "to": "cmp",
-          "label": "40％に圧縮"
-        },
-        {
-          "from": "cmp",
-          "to": "net",
-          "label": "流すのは圧縮後の6Mバイト"
-        },
-        {
-          "from": "net",
-          "to": "recv",
-          "label": "データ量÷転送速度"
-        },
-        {
-          "from": "recv",
-          "to": "out",
-          "label": "圧縮後1Mバイトあたり0.03秒"
-        },
-        {
-          "from": "out",
-          "to": "total",
-          "label": "転送と同時でないので足す"
+          "label": "合計\n0.3＋0.18＝0.48 秒"
         }
       ]
     }

@@ -50,6 +50,35 @@
           0
         ]
       ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 作業を洗い出すための道具",
+      "direction": "down",
+      "caption": "WBS は上の段から下の段へ分解を進めます。強調した最下位の段がワークパッケージで、ここに担当と工数を割り当てます。",
+      "stages": [
+        {
+          "label": "プロジェクト全体\nやると決めた範囲",
+          "icon": "building",
+          "next_label": "成果物の単位で分ける"
+        },
+        {
+          "label": "成果物\n作る物ごとに分ける",
+          "icon": "box",
+          "next_label": "作業へ分ける"
+        },
+        {
+          "label": "作業\n作るためにすること",
+          "icon": "gear",
+          "next_label": "割り当てられる\n大きさまで分ける"
+        },
+        {
+          "label": "ワークパッケージ\n担当と工数を割り当てる",
+          "icon": "person",
+          "emphasis": true
+        }
+      ]
     }
   ]
 }

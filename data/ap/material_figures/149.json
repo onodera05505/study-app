@@ -8,16 +8,149 @@
       "after": "### 関連を表に置き換える規則",
       "caption": "1対多の関連では、「＊」側の表に外部キーを置き、そこから「1」側の表への参照制約を指定します。",
       "nodes": [
-        {"id": "c1", "label": "クラス「顧客」\n多重度 1", "row": 0, "col": 0},
-        {"id": "c2", "label": "クラス「付加情報」\n多重度 ＊", "row": 0, "col": 1},
-        {"id": "t1", "label": "顧客 表\n顧客番号（主キー）", "row": 1, "col": 0, "shape": "cylinder"},
-        {"id": "t2", "label": "付加情報 表\n顧客番号（外部キー）", "row": 1, "col": 1, "shape": "cylinder", "emphasis": true}
+        {
+          "id": "c1",
+          "label": "クラス「顧客」\n多重度 1",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "c2",
+          "label": "クラス「付加情報」\n多重度 ＊",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "t1",
+          "label": "顧客 表\n顧客番号（主キー）",
+          "row": 1,
+          "col": 0,
+          "shape": "cylinder"
+        },
+        {
+          "id": "t2",
+          "label": "付加情報 表\n顧客番号（外部キー）",
+          "row": 1,
+          "col": 1,
+          "shape": "cylinder",
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "c1", "to": "c2", "label": "1 対 ＊ の関連", "arrow": "none"},
-        {"from": "c1", "to": "t1", "label": "表にする", "style": "dashed"},
-        {"from": "c2", "to": "t2", "label": "表にする", "style": "dashed"},
-        {"from": "t2", "to": "t1", "label": "参照制約"}
+        {
+          "from": "c1",
+          "to": "c2",
+          "label": "1 対 ＊ の関連",
+          "arrow": "none"
+        },
+        {
+          "from": "c1",
+          "to": "t1",
+          "label": "表にする",
+          "style": "dashed"
+        },
+        {
+          "from": "c2",
+          "to": "t2",
+          "label": "表にする",
+          "style": "dashed"
+        },
+        {
+          "from": "t2",
+          "to": "t1",
+          "label": "参照制約"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 多重度から読み取れること",
+      "caption": "上は両側が「＊」の関連、下はそれを置き換えた表です。関連が中間の表になり、両側への外部キーを持つので、1 対多の関連 2 本に分かれます。",
+      "nodes": [
+        {
+          "id": "c1",
+          "label": "クラス「学生」\n多重度 ＊",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "r",
+          "label": "関連「受講」\n両側とも ＊",
+          "row": 0,
+          "col": 1,
+          "shape": "round"
+        },
+        {
+          "id": "c2",
+          "label": "クラス「科目」\n多重度 ＊",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "t1",
+          "label": "学生 表\n学生番号（主キー）",
+          "row": 1,
+          "col": 0,
+          "shape": "cylinder"
+        },
+        {
+          "id": "t3",
+          "label": "受講 表（中間の表）\n学生番号・科目番号（外部キー）\n＋受講日",
+          "row": 1,
+          "col": 1,
+          "shape": "cylinder",
+          "emphasis": true
+        },
+        {
+          "id": "t2",
+          "label": "科目 表\n科目番号（主キー）",
+          "row": 1,
+          "col": 2,
+          "shape": "cylinder"
+        }
+      ],
+      "edges": [
+        {
+          "from": "c1",
+          "to": "r",
+          "label": "＊",
+          "arrow": "none"
+        },
+        {
+          "from": "r",
+          "to": "c2",
+          "label": "＊",
+          "arrow": "none"
+        },
+        {
+          "from": "c1",
+          "to": "t1",
+          "label": "表にする",
+          "style": "dashed"
+        },
+        {
+          "from": "r",
+          "to": "t3",
+          "label": "中間の表にする",
+          "style": "dashed"
+        },
+        {
+          "from": "c2",
+          "to": "t2",
+          "label": "表にする",
+          "style": "dashed"
+        },
+        {
+          "from": "t3",
+          "to": "t1",
+          "label": "参照制約\n（1 対多の 1 本目）"
+        },
+        {
+          "from": "t3",
+          "to": "t2",
+          "label": "参照制約\n（1 対多の 2 本目）"
+        }
       ]
     }
   ]

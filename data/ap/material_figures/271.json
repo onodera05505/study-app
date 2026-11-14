@@ -1,0 +1,38 @@
+{
+  "topic_id": 271,
+  "term": "プロビジョニング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### しくみ",
+      "caption": "要求が来る前に予測と調達を済ませておくので、要求が来た時点では割り当てるだけで済みます。",
+      "direction": "down",
+      "stages": [
+        {"label": "需要を予測する\nどれだけ使われるかを見込む", "icon": "chart", "next_label": "必要な量の見込み"},
+        {"label": "計画的に調達する\n設備やリソースを用意する", "icon": "box", "next_label": "使える状態で待つリソース", "emphasis": true},
+        {"label": "要求に応じて割り当てる\n申し込みにすぐ応える", "icon": "server", "next_label": "割り当てたリソース"},
+        {"label": "利用者\n待たずに使い始める", "icon": "person"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### サーバプロビジョニングツール",
+      "caption": "1 つの定義ファイルから、ツールが同じ構成のサーバを何台でも作ります。手作業が入らないので設定がそろいます。",
+      "nodes": [
+        {"id": "def", "label": "定義ファイル\nOS・ミドルウェア・\n設定を記述", "row": 1, "col": 0, "icon": "document"},
+        {"id": "tool", "label": "プロビジョニングツール\n定義を読んで自動で実行", "row": 1, "col": 1, "icon": "gear", "emphasis": true},
+        {"id": "s1", "label": "サーバ 1\n定義どおりの構成", "row": 0, "col": 2, "icon": "server"},
+        {"id": "s2", "label": "サーバ 2\n定義どおりの構成", "row": 1, "col": 2, "icon": "server"},
+        {"id": "s3", "label": "サーバ 3\n定義どおりの構成", "row": 2, "col": 2, "icon": "server"}
+      ],
+      "edges": [
+        {"from": "def", "to": "tool", "label": "あるべき構成"},
+        {"from": "tool", "to": "s1", "label": "自動で構成"},
+        {"from": "tool", "to": "s2", "label": "自動で構成"},
+        {"from": "tool", "to": "s3", "label": "自動で構成"}
+      ]
+    }
+  ]
+}
