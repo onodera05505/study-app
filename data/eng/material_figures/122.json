@@ -4,64 +4,16 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "steps",
       "after": "### しくみ",
-      "caption": "注文 3 行を会員番号でまとめた後の流れです。WHERE はまとめる前の 1 行ずつに、HAVING はまとめた後の合計に効きます。",
-      "nodes": [
-        {
-          "id": "rows",
-          "label": "注文 3 行\nA 100円\nB 500円\nA 300円",
-          "row": 0,
-          "col": 0
-        },
-        {
-          "id": "grp",
-          "label": "GROUP BY 会員番号\nA 400円\nB 500円",
-          "row": 0,
-          "col": 1
-        },
-        {
-          "id": "hav",
-          "label": "HAVING SUM(金額) >= 450\nB 500円 だけ残る\nA は行ごと外れる",
-          "row": 0,
-          "col": 2,
-          "emphasis": true
-        },
-        {
-          "id": "whr",
-          "label": "WHERE\nまとめる前の\n1 行ずつを絞る",
-          "row": 1,
-          "col": 0
-        },
-        {
-          "id": "ord",
-          "label": "ORDER BY SUM(金額) DESC\n多い順（降順）\nB 500円 → A 400円",
-          "row": 1,
-          "col": 1
-        }
-      ],
-      "edges": [
-        {
-          "from": "rows",
-          "to": "grp",
-          "label": "まとめる"
-        },
-        {
-          "from": "grp",
-          "to": "hav",
-          "label": "まとめた後を絞る"
-        },
-        {
-          "from": "grp",
-          "to": "ord",
-          "label": "並べる"
-        },
-        {
-          "from": "whr",
-          "to": "rows",
-          "style": "dashed",
-          "label": "ここで効く"
-        }
+      "caption": "例えば注文 5 行に、句が上から順に効く様子です。WHERE はまとめる前の 1 行ずつに、強調した HAVING はまとめた後の合計に効きます。",
+      "direction": "down",
+      "stages": [
+        {"label": "FROM 注文（5 行）\nA 100円・B 500円・A 300円\nC 100円・A 200円（取消）", "icon": "database", "next_label": "5 行"},
+        {"label": "WHERE 状態 = '済'\nまとめる前の 1 行ずつを絞る", "next_label": "取消を外した 4 行"},
+        {"label": "GROUP BY 会員番号\n会員ごとに 1 行へまとめる\nA 400円・B 500円・C 100円", "next_label": "3 行（1 会員 1 行）"},
+        {"label": "HAVING SUM(金額) >= 300\nまとめた後の合計で絞る", "emphasis": true, "next_label": "A と B の 2 行"},
+        {"label": "ORDER BY SUM(金額) DESC\n最後に多い順に並べる\nB 500円 → A 400円"}
       ]
     }
   ]

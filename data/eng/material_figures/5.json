@@ -4,51 +4,39 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "layers",
       "after": "### しくみ",
-      "caption": "CPU に近い段ほど速くて小さく、遠い段ほど遅くて大きくなります。CPU は近い段から探し、無ければ 1 つ遠い段から取ってきます。",
-      "nodes": [
+      "shape": "pyramid",
+      "caption": "上の段ほど CPU に近くて速く、幅の狭さが持てる量の小ささを表します。右の注記で段ごとの速さと量を比べられます。",
+      "layers": [
         {
-          "id": "reg",
-          "label": "レジスタ\nCPU の中\n最も速い・最も小さい",
-          "row": 0,
-          "col": 0,
+          "label": "レジスタ\nCPU の中の小さな記憶",
+          "note": "最も速い・最も小さい",
           "emphasis": true
         },
         {
-          "id": "cache",
-          "label": "キャッシュ\nよく使う物の写し\n速い・小さい",
-          "row": 0,
-          "col": 1
+          "label": "キャッシュ\nよく使う物の写し",
+          "note": "速い・小さい"
         },
         {
-          "id": "mem",
-          "label": "メモリ\n作業中の記憶\n遅め・大きい",
-          "row": 0,
-          "col": 2
+          "label": "メモリ\n作業中の記憶",
+          "note": "遅め・大きい"
         },
         {
-          "id": "sto",
-          "label": "ストレージ\n長くしまう\n最も遅い・最も大きい",
-          "row": 0,
-          "col": 3
+          "label": "ストレージ\n電源を切っても残る",
+          "note": "最も遅い・最も大きい"
         }
       ],
-      "edges": [
+      "brackets": [
         {
-          "from": "reg",
-          "to": "cache",
-          "label": "無ければ\n次の段へ"
+          "from": 0,
+          "to": 1,
+          "label": "CPU に近い\n速くて小さい"
         },
         {
-          "from": "cache",
-          "to": "mem",
-          "label": "無ければ\n次の段へ"
-        },
-        {
-          "from": "mem",
-          "to": "sto",
-          "label": "無ければ\n次の段へ"
+          "from": 2,
+          "to": 3,
+          "label": "CPU から遠い\n遅くて大きい"
         }
       ]
     }

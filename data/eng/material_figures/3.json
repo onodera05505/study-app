@@ -1,0 +1,52 @@
+{
+  "topic_id": 3,
+  "term": "メモリ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "強調したメモリが作業の場で、下のストレージとの往き来は開くときと保存するときだけです。CPU はメモリだけを相手に読み書きします。",
+      "nodes": [
+        {
+          "id": "st",
+          "label": "ストレージ\nしまう棚\n遅いが電源を切っても残る",
+          "row": 1,
+          "col": 1,
+          "shape": "cylinder"
+        },
+        {
+          "id": "mem",
+          "label": "メモリ\n作業机\n速いが電源を切ると消える",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "cpu",
+          "label": "CPU\n計算の中心",
+          "row": 0,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "st",
+          "to": "mem",
+          "label": "開くと写す"
+        },
+        {
+          "from": "mem",
+          "to": "st",
+          "label": "保存する"
+        },
+        {
+          "from": "mem",
+          "to": "cpu",
+          "label": "読み書き",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

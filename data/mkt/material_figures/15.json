@@ -46,6 +46,34 @@
           2
         ]
       ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "explanation",
+      "caption": "段を下るごとに人数が絞られます。矢印の率は、前の段の人のうち次の段へ進んだ割合（通過率）です。数字は例です。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "訪問\n10,000 人",
+          "icon": "people",
+          "next_label": "通過率 2%"
+        },
+        {
+          "label": "資料請求\n200 人",
+          "icon": "document",
+          "next_label": "通過率 20%"
+        },
+        {
+          "label": "商談\n40 人",
+          "icon": "person",
+          "next_label": "通過率 20%"
+        },
+        {
+          "label": "受注\n8 人",
+          "icon": "check"
+        }
+      ]
     }
   ]
 }

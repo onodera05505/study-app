@@ -4,64 +4,20 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
-      "after": "### 現場で判断するなら",
-      "caption": "媒体ごとの成果を足すと 110 件ですが社内の受注は 80 件で、同じ 1 件の重複と、経路に乗らない接点の両方がずれを生みます。",
-      "nodes": [
-        {
-          "id": "a",
-          "label": "媒体 A の管理画面\n60 件",
-          "row": 0,
-          "col": 0
-        },
-        {
-          "id": "b",
-          "label": "媒体 B の管理画面\n50 件",
-          "row": 0,
-          "col": 1
-        },
-        {
-          "id": "sum",
-          "label": "媒体側の合計\n110 件",
-          "row": 1,
-          "col": 0
-        },
-        {
-          "id": "miss",
-          "label": "経路に乗らない接点\n紹介・展示会・メール",
-          "row": 2,
-          "col": 1
-        },
-        {
-          "id": "real",
-          "label": "社内の受注\n80 件",
-          "row": 2,
-          "col": 0,
-          "emphasis": true
-        }
+      "type": "venn",
+      "after": "### しくみ",
+      "caption": "2 つの円が媒体ごとに数えた成果で、枠が社内の受注です。重なりは 1 件なのに両方の円に入り、円の外の受注はどちらの数にも出ません。",
+      "layout": "overlap",
+      "universe": "社内の受注 80 件（数字は例）",
+      "sets": [
+        {"id": "a", "label": "媒体 A が数えた成果 60 件"},
+        {"id": "b", "label": "媒体 B が数えた成果 50 件"}
       ],
-      "edges": [
-        {
-          "from": "a",
-          "to": "sum",
-          "label": "＋"
-        },
-        {
-          "from": "b",
-          "to": "sum",
-          "label": "＋"
-        },
-        {
-          "from": "sum",
-          "to": "real",
-          "label": "差 30 件（二重計上）"
-        },
-        {
-          "from": "miss",
-          "to": "real",
-          "label": "数に出ない",
-          "style": "dashed"
-        }
+      "regions": [
+        {"in": ["a"], "label": "A だけ\nA の接点だけを経た受注"},
+        {"in": ["b"], "label": "B だけ\nB の接点だけを経た受注"},
+        {"in": ["a", "b"], "label": "両方\n同じ 1 件を両方が数える", "emphasis": true},
+        {"in": [], "label": "どちらでもない\n紹介・展示会など経路の外"}
       ]
     }
   ]

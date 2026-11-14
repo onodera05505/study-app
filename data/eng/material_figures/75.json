@@ -4,45 +4,26 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "cycle",
       "after": "### しくみ",
-      "caption": "生成 AI が文を作る 1 回分の流れです。輪を 1 周するたびに、文が 1 トークンずつ伸びます。",
-      "nodes": [
+      "center": "1 周で\n1 トークン伸びる",
+      "caption": "真上の「それまでの並び」から時計回りに回ります。1 周するたびに、選ばれたトークンが 1 つ付け足されて文が伸びます。",
+      "stages": [
         {
-          "id": "s",
           "label": "それまでの並び\n「今日は いい」",
-          "row": 0,
-          "col": 0
+          "icon": "document",
+          "next_label": "並びを渡す"
         },
         {
-          "id": "p",
           "label": "大規模言語モデル\n次に来やすいトークンを選ぶ\n事実かどうかは調べない",
-          "row": 0,
-          "col": 1,
-          "emphasis": true
+          "icon": "gear",
+          "emphasis": true,
+          "next_label": "「天気」を選ぶ"
         },
         {
-          "id": "n",
           "label": "付け足した並び\n「今日は いい 天気」",
-          "row": 1,
-          "col": 1
-        }
-      ],
-      "edges": [
-        {
-          "from": "s",
-          "to": "p",
-          "label": "並びを渡す"
-        },
-        {
-          "from": "p",
-          "to": "n",
-          "label": "「天気」を選ぶ"
-        },
-        {
-          "from": "n",
-          "to": "s",
-          "label": "伸びた並びで\nまた次を選ぶ"
+          "icon": "document",
+          "next_label": "伸びた並びで\nまた次を選ぶ"
         }
       ]
     }

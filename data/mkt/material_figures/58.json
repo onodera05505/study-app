@@ -1,0 +1,126 @@
+{
+  "topic_id": 58,
+  "term": "CPA（獲得単価）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "広告費が訪問になり、訪問が成果になり、成果の件数で CPA が決まる流れです。下の段の 2 つの手が、それぞれどの矢印を変えるかを読みます。",
+      "nodes": [
+        {
+          "id": "ad",
+          "label": "広告費\n出した金額",
+          "row": 0,
+          "col": 0,
+          "icon": "money"
+        },
+        {
+          "id": "click",
+          "label": "クリック（訪問）\n単価で買った数",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "cv",
+          "label": "成果\n訪問のうち進んだ件数",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "cpa",
+          "label": "CPA\n成果 1 件の広告費",
+          "row": 0,
+          "col": 3,
+          "icon": "chart"
+        },
+        {
+          "id": "lever1",
+          "label": "出す相手や媒体を変える\nクリック単価を下げる",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "lever2",
+          "label": "ページや訴求を直す\nCVR を上げる",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "ad",
+          "to": "click",
+          "label": "÷ クリック単価"
+        },
+        {
+          "from": "click",
+          "to": "cv",
+          "label": "× CVR"
+        },
+        {
+          "from": "cv",
+          "to": "cpa",
+          "label": "広告費 ÷ 成果の件数"
+        },
+        {
+          "from": "lever1",
+          "to": "click",
+          "label": "同じ費用で訪問が増える",
+          "style": "dashed"
+        },
+        {
+          "from": "lever2",
+          "to": "cv",
+          "label": "同じ訪問で成果が増える",
+          "style": "dashed"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "chart",
+      "after": "### 現場で判断するなら",
+      "caption": "広告ごとに CPA と成果 1 件の粗利を並べた棒です。CPA の棒が粗利の棒より高い広告は、成果を取るほど損が増えます。数字は例です。",
+      "kind": "bar",
+      "x": {
+        "label": "広告",
+        "values": [
+          "広告 A",
+          "広告 B"
+        ]
+      },
+      "y": {
+        "label": "成果 1 件あたりの金額（円）",
+        "min": 0,
+        "max": 5000
+      },
+      "series": [
+        {
+          "label": "CPA",
+          "values": [
+            2000,
+            4000
+          ],
+          "emphasis": true
+        },
+        {
+          "label": "成果 1 件の粗利",
+          "values": [
+            3000,
+            3000
+          ]
+        }
+      ],
+      "annotations": [
+        {
+          "x": "広告 B",
+          "y": 4000,
+          "text": "1 件ごとに 1,000円の損"
+        }
+      ]
+    }
+  ]
+}

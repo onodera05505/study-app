@@ -4,20 +4,31 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "cycle",
       "after": "### しくみ",
-      "caption": "OS が順番と持ち時間を決め、切れたら入れ替えて A を列の後ろへ戻します。この輪を回すと A・B・C が 30 ミリ秒ほどで一回りします。",
-      "nodes": [
-        {"id": "s", "label": "スケジューリング\n次は A に 10 ミリ秒", "row": 0, "col": 0},
-        {"id": "cpu", "label": "CPU\nA を 10 ミリ秒計算", "row": 0, "col": 1},
-        {"id": "q", "label": "待ちの列\nB・C・A の順", "row": 1, "col": 0},
-        {"id": "cs", "label": "コンテキストスイッチ\nA のレジスタの中身をしまい\nB の分を戻す", "row": 1, "col": 1, "emphasis": true}
-      ],
-      "edges": [
-        {"from": "s", "to": "cpu", "label": "渡す"},
-        {"from": "cpu", "to": "cs", "label": "持ち時間切れ"},
-        {"from": "cs", "to": "q", "label": "A を列の後ろへ"},
-        {"from": "q", "to": "s", "label": "先頭の B を選ぶ"}
+      "center": "ラウンドロビン\n順番に回す",
+      "caption": "例えば持ち時間を 10 ミリ秒とした輪で、1 周ごとに列の先頭の処理が少し進みます。強調した入れ替えの間は、誰の計算も進みません。",
+      "stages": [
+        {
+          "label": "待ちの列\nB・C・A の順に並ぶ",
+          "icon": "people",
+          "next_label": "先頭の B を選ぶ"
+        },
+        {
+          "label": "スケジューリング\n次は B に 10 ミリ秒と決める",
+          "icon": "clock",
+          "next_label": "持ち時間を渡す"
+        },
+        {
+          "label": "CPU\nB を 10 ミリ秒だけ計算",
+          "icon": "gear",
+          "next_label": "持ち時間切れ"
+        },
+        {
+          "label": "コンテキストスイッチ\nB のレジスタの中身をしまい\n次の C の分を戻す",
+          "emphasis": true,
+          "next_label": "B を列の後ろへ"
+        }
       ]
     }
   ]

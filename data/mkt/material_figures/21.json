@@ -4,52 +4,15 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "steps",
       "after": "### しくみ",
-      "caption": "左から順に、前の手順で決めたことが次の手順の材料になります。打ち手は位置が決まってから決めます。",
-      "nodes": [
-        {
-          "id": "s",
-          "label": "S 分ける\n市場を切り口で分ける\n例: 従業員の規模 × 今使う道具",
-          "row": 0,
-          "col": 0
-        },
-        {
-          "id": "t",
-          "label": "T 選ぶ\n狙う 1 マスを決める",
-          "row": 0,
-          "col": 1
-        },
-        {
-          "id": "p",
-          "label": "P 位置を決める\n顧客が比べる軸で位置取り",
-          "row": 0,
-          "col": 2,
-          "emphasis": true
-        },
-        {
-          "id": "mix",
-          "label": "打ち手\n価格・売り方・広告文",
-          "row": 1,
-          "col": 1
-        }
-      ],
-      "edges": [
-        {
-          "from": "s",
-          "to": "t",
-          "label": "分けた区画"
-        },
-        {
-          "from": "t",
-          "to": "p",
-          "label": "狙う相手"
-        },
-        {
-          "from": "p",
-          "to": "mix",
-          "label": "ここが決まってから"
-        }
+      "caption": "上から順に、前の段で決めたことが次の段の材料になります。打ち手は、位置が決まってから最後に決めます。",
+      "direction": "down",
+      "stages": [
+        {"label": "S 分ける\n市場を切り口で区画に分ける", "icon": "people", "next_label": "分けた区画"},
+        {"label": "T 選ぶ\n狙う区画を 1 つに決める", "icon": "person", "next_label": "狙う相手"},
+        {"label": "P 位置を決める\n顧客が比べる軸で位置を取る", "emphasis": true, "next_label": "顧客の頭の中の位置"},
+        {"label": "打ち手\n価格・売り方・広告文を決める"}
       ]
     }
   ]

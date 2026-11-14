@@ -1,0 +1,35 @@
+{
+  "topic_id": 54,
+  "term": "アトリビューション",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### しくみ",
+      "caption": "成果 1 件までに人がたどる経路の例です。最後のクリックだけで数えると、強調した最後の段が手柄を全部取り、前の 2 段は 0 件になります。",
+      "direction": "down",
+      "stages": [
+        {"label": "SNS で知る\n最初の接点\n数えると 0 件", "icon": "phone", "next_label": "名前を覚えて探す"},
+        {"label": "検索で調べる\n比べる接点\n数えると 0 件", "icon": "search", "next_label": "比べたうえで後日に戻る"},
+        {"label": "追いかけて出る広告\nここから申し込む\n手柄の 1 件を全部取る", "icon": "check", "emphasis": true}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "chart",
+      "after": "### 現場で判断するなら",
+      "caption": "月 100 件の申し込みを 2 つの数え方で配った例です。同じ成果でも、強調した経路から配る方式では SNS の件数が 4 倍になります。",
+      "kind": "bar",
+      "x": {"label": "接点", "values": ["検索広告", "SNS"]},
+      "y": {"label": "手柄として数えた申し込み（件）", "min": 0},
+      "series": [
+        {"label": "最後のクリックで数える", "values": [70, 5]},
+        {"label": "経路の記録から配る", "values": [45, 20], "emphasis": true}
+      ],
+      "annotations": [
+        {"x": "SNS", "y": 20, "text": "5 件 → 20 件"},
+        {"x": "検索広告", "y": 45, "text": "70 件 → 45 件"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "topic_id": 20,
+  "term": "論理演算（AND・OR・NOT）と真理値表",
+  "figures": [
+    {
+      "id": 1,
+      "type": "venn",
+      "after": "### しくみ",
+      "caption": "「学生 または 65 歳以上なら割引」を OR で書いたときの客の分かれ方です。強調した重なりの人も割引に入ります。",
+      "layout": "overlap",
+      "universe": "店に来た客",
+      "sets": [
+        {
+          "id": "a",
+          "label": "学生"
+        },
+        {
+          "id": "b",
+          "label": "65 歳以上"
+        }
+      ],
+      "regions": [
+        {
+          "in": [
+            "a"
+          ],
+          "label": "学生だけ\nOR は真・AND は偽\n割引になる"
+        },
+        {
+          "in": [
+            "b"
+          ],
+          "label": "65 歳以上だけ\nOR は真・AND は偽\n割引になる"
+        },
+        {
+          "in": [
+            "a",
+            "b"
+          ],
+          "label": "両方に当たる\nOR も AND も真\n割引になる",
+          "emphasis": true
+        },
+        {
+          "in": [],
+          "label": "どちらでもない\nOR も偽\n割引なし"
+        }
+      ]
+    }
+  ]
+}

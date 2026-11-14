@@ -1,0 +1,65 @@
+{
+  "topic_id": 159,
+  "term": "個人情報の扱い",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "個人情報が本人から自社へ、自社から外へ動く線ごとに、守る条件を書きました。強調したほかの会社へ渡す線には、原則として本人の同意が要ります。",
+      "nodes": [
+        {
+          "id": "me",
+          "label": "本人\n情報の持ち主",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "co",
+          "label": "自社\n集めて使う",
+          "row": 0,
+          "col": 1,
+          "icon": "building"
+        },
+        {
+          "id": "tp",
+          "label": "ほかの会社\n自社の外の第三者",
+          "row": 0,
+          "col": 2,
+          "icon": "building",
+          "emphasis": true
+        },
+        {
+          "id": "vd",
+          "label": "作業を任せる先\n自社に代わって扱う",
+          "row": 1,
+          "col": 1,
+          "icon": "people"
+        }
+      ],
+      "edges": [
+        {
+          "from": "me",
+          "to": "co",
+          "label": "目的を知らせて集める"
+        },
+        {
+          "from": "co",
+          "to": "co",
+          "label": "目的の中で使う（外なら同意を取り直す）"
+        },
+        {
+          "from": "co",
+          "to": "tp",
+          "label": "本人の同意を取って渡す"
+        },
+        {
+          "from": "co",
+          "to": "vd",
+          "label": "任せて渡し、扱いを見張る"
+        }
+      ]
+    }
+  ]
+}

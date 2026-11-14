@@ -1,0 +1,58 @@
+{
+  "topic_id": 173,
+  "term": "ターミナルとコマンド",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### しくみ",
+      "caption": "左の自分が 1 行ずつコマンドを打ち、右の OS が当たるプログラムを動かして結果を文字で返します。何も返らないコマンドもあります。",
+      "actors": [
+        {
+          "id": "me",
+          "label": "自分（ターミナル）",
+          "icon": "person"
+        },
+        {
+          "id": "os",
+          "label": "OS",
+          "icon": "device"
+        }
+      ],
+      "steps": [
+        {
+          "from": "me",
+          "to": "os",
+          "label": "「pwd」と打つ"
+        },
+        {
+          "from": "os",
+          "to": "me",
+          "label": "今いる場所「/home/a」を返す"
+        },
+        {
+          "from": "me",
+          "to": "os",
+          "label": "「mkdir work」と打つ",
+          "note": "work という置き場ができる（文字は返らない）"
+        },
+        {
+          "from": "me",
+          "to": "os",
+          "label": "「cd work」と打つ",
+          "note": "今いる場所が /home/a/work に移る"
+        },
+        {
+          "from": "me",
+          "to": "os",
+          "label": "「ls」と打つ"
+        },
+        {
+          "from": "os",
+          "to": "me",
+          "label": "中身の一覧を返す（まだ空で何も出ない）"
+        }
+      ]
+    }
+  ]
+}

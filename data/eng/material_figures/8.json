@@ -1,0 +1,57 @@
+{
+  "topic_id": 8,
+  "term": "プログラムは命令の並び（機械語とプログラム内蔵方式）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "強調したメモリの中に、命令の並びとデータが同じ所に置かれています。下の CPU はそこから命令を 1 つずつ取り出し、実行しては次へ進みます。",
+      "nodes": [
+        {
+          "id": "st",
+          "label": "ストレージ\nアプリを保存してある",
+          "row": 0,
+          "col": 0,
+          "shape": "cylinder"
+        },
+        {
+          "id": "mem",
+          "label": "メモリ\n命令 1・命令 2・命令 3…\nデータも同じ所に置く",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "cpu",
+          "label": "CPU\n命令を読んで実行する",
+          "row": 1,
+          "col": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": "st",
+          "to": "mem",
+          "label": "開くと写す"
+        },
+        {
+          "from": "mem",
+          "to": "cpu",
+          "label": "命令を 1 つ"
+        },
+        {
+          "from": "cpu",
+          "to": "mem",
+          "label": "データの読み書き",
+          "arrow": "both"
+        },
+        {
+          "from": "cpu",
+          "to": "cpu",
+          "label": "実行して次の命令へ"
+        }
+      ]
+    }
+  ]
+}

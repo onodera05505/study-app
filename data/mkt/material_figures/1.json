@@ -1,0 +1,52 @@
+{
+  "topic_id": 1,
+  "term": "マーケティングの定義",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "買い手は、受け取る値打ちが払う額を上回ると思えたときだけ対価を返します。価格・売り方・広告は、売り手が先に決めた値打ちを伝える手段です。",
+      "nodes": [
+        {
+          "id": "seller",
+          "label": "売り手\n渡す値打ちを決める",
+          "row": 0,
+          "col": 0,
+          "icon": "building",
+          "emphasis": true
+        },
+        {
+          "id": "means",
+          "label": "価格・売り方・広告\n値打ちを伝える手段",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "buyer",
+          "label": "買い手\n値打ちと払う額を比べる",
+          "row": 0,
+          "col": 2,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "seller",
+          "to": "means",
+          "label": "値打ちが決まってから選ぶ"
+        },
+        {
+          "from": "means",
+          "to": "buyer",
+          "label": "値打ちを伝える"
+        },
+        {
+          "from": "buyer",
+          "to": "seller",
+          "label": "対価（値打ち＞払う額のとき）"
+        }
+      ]
+    }
+  ]
+}

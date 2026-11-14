@@ -1,0 +1,122 @@
+{
+  "topic_id": 62,
+  "term": "ROAS・ROI（費用対効果）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "同じ広告費から、上の道で ROAS、下の道で ROI を例の数字で出します。2 つの道で分子に何が入るかを比べて読みます。",
+      "nodes": [
+        {
+          "id": "sales",
+          "label": "売上\n400,000 円",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "roas",
+          "label": "ROAS\n400%\n売上が何倍で返ったか",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "ad",
+          "label": "広告費\n100,000 円\n2 つの指標の分母",
+          "row": 1,
+          "col": 2,
+          "icon": "money"
+        },
+        {
+          "id": "gross",
+          "label": "粗利\n120,000 円",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "profit",
+          "label": "手元に残る額\n20,000 円",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "roi",
+          "label": "ROI\n20%\n利益が投じた額の何割か",
+          "row": 2,
+          "col": 2,
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "sales",
+          "to": "roas",
+          "label": "売上を分子に"
+        },
+        {
+          "from": "sales",
+          "to": "gross",
+          "label": "× 粗利率 30%"
+        },
+        {
+          "from": "gross",
+          "to": "profit",
+          "label": "− 広告費"
+        },
+        {
+          "from": "profit",
+          "to": "roi",
+          "label": "残る額を分子に"
+        },
+        {
+          "from": "ad",
+          "to": "roas",
+          "label": "÷ 広告費",
+          "style": "dashed"
+        },
+        {
+          "from": "ad",
+          "to": "roi",
+          "label": "÷ 広告費",
+          "style": "dashed"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "chart",
+      "after": "### 現場で判断するなら",
+      "kind": "bar",
+      "caption": "例の数字で、左の X は ROAS が高いのに ROI がマイナスになり、右の Y と順位が逆になります。続けるかは強調した ROI の棒で決めます。",
+      "x": {
+        "label": "媒体（売る商品の粗利率）",
+        "values": [
+          "媒体 X（粗利率 10%）",
+          "媒体 Y（粗利率 50%）"
+        ]
+      },
+      "y": {
+        "label": "広告費に対する割合（%）",
+        "min": -100,
+        "max": 600
+      },
+      "series": [
+        {
+          "label": "ROAS（売上 ÷ 広告費）",
+          "values": [
+            500,
+            300
+          ]
+        },
+        {
+          "label": "ROI（（粗利 − 広告費）÷ 広告費）",
+          "values": [
+            -50,
+            50
+          ],
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

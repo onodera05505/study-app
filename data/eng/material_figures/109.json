@@ -4,20 +4,34 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "layers",
       "after": "### しくみ",
-      "caption": "物理的な機械 1 台の上でハイパーバイザが動き、CPU の時間とメモリを分けます。仮想マシンはそれぞれ OS を丸ごと持つので、Windows と Linux が同時に動きます。",
-      "nodes": [
-        {"id": "vm1", "label": "仮想マシン 1\nゲスト OS: Windows\nアプリ", "row": 0, "col": 0},
-        {"id": "vm2", "label": "仮想マシン 2\nゲスト OS: Linux\nアプリ", "row": 0, "col": 2},
-        {"id": "hv", "label": "ハイパーバイザ\n（ソフトウェア）\nCPU の時間とメモリを分ける", "row": 1, "col": 1, "emphasis": true},
-        {"id": "hw", "label": "物理的な機械 1 台\nCPU・メモリ・ストレージ", "row": 2, "col": 1}
+      "caption": "下の層が上の層を支えます。強調したハイパーバイザが 1 台の機械を区切り、区切った台ごとに OS を丸ごと持つので、違う OS が同時に動きます。",
+      "shape": "stack",
+      "layers": [
+        {"label": "アプリ\n仮想マシンごとに動く", "icon": "document", "note": "台ごとに別のアプリ"},
+        {"label": "ゲスト OS\n仮想マシンごとに丸ごと持つ", "icon": "device", "note": "例えば A は Windows・B は Linux"},
+        {"label": "ハイパーバイザ\nCPU の時間とメモリを区切って渡す", "icon": "gear", "note": "土台の上で動くソフトウェア", "emphasis": true},
+        {"label": "物理的な機械 1 台\nCPU・メモリ・ストレージ", "icon": "server", "note": "性能は区切っても増えない"}
       ],
-      "edges": [
-        {"from": "hw", "to": "hv", "label": "上で動く"},
-        {"from": "hv", "to": "vm1", "label": "割り当て"},
-        {"from": "hv", "to": "vm2", "label": "割り当て"}
+      "brackets": [
+        {"from": 0, "to": 1, "label": "仮想マシン\n（何台も作れる）"},
+        {"from": 2, "to": 3, "label": "共有する\n土台"}
       ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### しくみ",
+      "caption": "仮想マシンとコンテナを 3 つの観点で比べた表です。OS を分けるか共有するかの違いが、重さと動かせる OS の違いになります。",
+      "x": {"label": "分け方", "values": ["仮想マシン", "コンテナ"]},
+      "y": {"label": "観点", "values": ["OS の持ち方", "重さと起動", "違う種類の OS"]},
+      "cells": [
+        ["OS ごと分ける\n台ごとにゲスト OS", "OS を共有する\n箱に OS は無い"],
+        ["重い\nOS の分だけ起動が遅い", "軽い\n速く起動し多く載る"],
+        ["動かせる\n隔たりも強い", "動かせない\n同じ種類の OS 向けだけ"]
+      ],
+      "emphasis": [[0, 0], [0, 1]]
     }
   ]
 }

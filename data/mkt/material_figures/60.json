@@ -8,19 +8,110 @@
       "after": "### しくみ",
       "caption": "上の段で月の粗利を出し、下の段の続く月数を掛けたものが LTV です。売上のまま掛けた右下の値と比べて読みます。",
       "nodes": [
-        {"id": "price", "label": "月額（売上）\n5,000 円", "row": 0, "col": 0},
-        {"id": "gross", "label": "月の粗利\n3,000 円", "row": 0, "col": 1},
-        {"id": "ltv", "label": "LTV\n60,000 円\n払える獲得費の上限", "row": 0, "col": 2, "emphasis": true},
-        {"id": "churn", "label": "月次解約率\n5%", "row": 1, "col": 0},
-        {"id": "months", "label": "続く月数\n20 か月", "row": 1, "col": 1},
-        {"id": "sales", "label": "売上で数えた値\n100,000 円\n1.7 倍に見誤る", "row": 1, "col": 2}
+        {
+          "id": "price",
+          "label": "月額（売上）\n5,000 円",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "gross",
+          "label": "月の粗利\n3,000 円",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "ltv",
+          "label": "LTV\n60,000 円\n払える獲得費の上限",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "churn",
+          "label": "月次解約率\n5%",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "months",
+          "label": "続く月数\n20 か月",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "sales",
+          "label": "売上で数えた値\n100,000 円\n1.7 倍に見誤る",
+          "row": 1,
+          "col": 2
+        }
       ],
       "edges": [
-        {"from": "price", "to": "gross", "label": "原価 2,000 円を引く"},
-        {"from": "gross", "to": "ltv", "label": "× 続く月数"},
-        {"from": "churn", "to": "months", "label": "1 ÷ 解約率"},
-        {"from": "months", "to": "ltv", "label": "× 月の粗利"},
-        {"from": "months", "to": "sales", "label": "× 月額のまま", "style": "dashed"}
+        {
+          "from": "price",
+          "to": "gross",
+          "label": "原価 2,000 円を引く"
+        },
+        {
+          "from": "gross",
+          "to": "ltv",
+          "label": "× 続く月数"
+        },
+        {
+          "from": "churn",
+          "to": "months",
+          "label": "1 ÷ 解約率"
+        },
+        {
+          "from": "months",
+          "to": "ltv",
+          "label": "× 月の粗利"
+        },
+        {
+          "from": "months",
+          "to": "sales",
+          "label": "× 月額のまま",
+          "style": "dashed"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### 現場で判断するなら",
+      "caption": "今と値上げ案を、月の粗利・続く月数・LTV の順に例の数字で比べます。粗利が増えても続く月数が縮み、右端の LTV で今を下回ります。",
+      "x": {
+        "label": "比べる観点",
+        "values": [
+          "月の粗利",
+          "続く月数",
+          "LTV"
+        ]
+      },
+      "y": {
+        "label": "案",
+        "values": [
+          "今\n月額 5,000 円・解約 5%",
+          "値上げ案\n月額 6,000 円・解約 7%"
+        ]
+      },
+      "cells": [
+        [
+          "3,000 円\n月額 − 原価 2,000 円",
+          "20 か月\n1 ÷ 0.05",
+          "60,000 円\n3,000 × 20"
+        ],
+        [
+          "4,000 円\n33% 増える",
+          "約 14.3 か月\n1 ÷ 0.07\n29% 縮む",
+          "約 57,000 円\n今の 95% に下がる"
+        ]
+      ],
+      "emphasis": [
+        [
+          1,
+          2
+        ]
       ]
     }
   ]

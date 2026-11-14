@@ -4,75 +4,15 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "cycle",
       "after": "### しくみ",
-      "caption": "1 つのスプリントの中で開く 4 つの集まりを、矢印の順にたどります。強調した 2 つは毎回両方行う集まりです。",
-      "nodes": [
-        {
-          "id": "plan",
-          "label": "スプリント計画\n一覧の上から\n今回やる分を選ぶ",
-          "row": 0,
-          "col": 0
-        },
-        {
-          "id": "daily",
-          "label": "デイリー（毎日 15 分）\n昨日・今日・\n困りごとを伝え合う",
-          "row": 0,
-          "col": 1
-        },
-        {
-          "id": "review",
-          "label": "スプリントレビュー\nできた物を見せて\n意見をもらう",
-          "row": 0,
-          "col": 2,
-          "emphasis": true
-        },
-        {
-          "id": "retro",
-          "label": "レトロスペクティブ\n進め方を見直し\n次に変えることを決める",
-          "row": 1,
-          "col": 2,
-          "emphasis": true
-        },
-        {
-          "id": "next",
-          "label": "次のスプリント\n1〜4 週の区切りを\nまた始める",
-          "row": 1,
-          "col": 0,
-          "shape": "round"
-        }
-      ],
-      "edges": [
-        {
-          "from": "plan",
-          "to": "daily",
-          "label": "選んだ分を\n作り始める"
-        },
-        {
-          "from": "daily",
-          "to": "daily",
-          "label": "毎日くり返す"
-        },
-        {
-          "from": "daily",
-          "to": "review",
-          "label": "区切りの終わり"
-        },
-        {
-          "from": "review",
-          "to": "retro",
-          "label": "物の確かめの後に"
-        },
-        {
-          "from": "retro",
-          "to": "next",
-          "label": "決めた変え方を持って"
-        },
-        {
-          "from": "next",
-          "to": "plan",
-          "label": "また計画から"
-        }
+      "caption": "1 つのスプリントの中で 4 つの集まりを時計回りに 1 周します。強調した振り返りで決めた変え方を、次の区切りの計画へ持ち込みます。",
+      "center": "スプリント\n1〜4 週",
+      "stages": [
+        {"label": "スプリント計画\n一覧の上から今回の分を選ぶ", "icon": "document", "next_label": "選んだ分を作り始める"},
+        {"label": "デイリー\n毎日 15 分、進みと困りごとを共有", "icon": "people", "next_label": "区切りの終わりに"},
+        {"label": "スプリントレビュー\nできた物を見せて意見をもらう", "icon": "box", "next_label": "物を確かめた後に"},
+        {"label": "レトロスペクティブ\n進め方を見直し変え方を決める", "icon": "search", "emphasis": true, "next_label": "決めた変え方を\n持って次の区切りへ"}
       ]
     }
   ]

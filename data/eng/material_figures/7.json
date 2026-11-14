@@ -1,0 +1,84 @@
+{
+  "topic_id": 7,
+  "term": "部品をつなぐ通り道と差し込み口（バス・USB）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "上の部品はどれも、強調したバスという 1 つの線の束を順番に使ってつながります。外の機器は下の USB の口から後で加わります。",
+      "nodes": [
+        {
+          "id": "cpu",
+          "label": "CPU\n計算の中心",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "mem",
+          "label": "メモリ\n作業中の記憶",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "st",
+          "label": "ストレージ\n残る記憶",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "bus",
+          "label": "バス\nみんなで順番に使う線の束\n一度に運べる量に上限",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "usb",
+          "label": "USB の口\n口の形と電気の送り方を\n決まりで揃えた差し込み口",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "ext",
+          "label": "外の機器\nマウスやキーボード",
+          "row": 2,
+          "col": 2,
+          "icon": "device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "cpu",
+          "to": "bus",
+          "label": "命令とデータ",
+          "arrow": "both"
+        },
+        {
+          "from": "mem",
+          "to": "bus",
+          "label": "命令とデータ",
+          "arrow": "both"
+        },
+        {
+          "from": "st",
+          "to": "bus",
+          "label": "保存するデータ",
+          "arrow": "both"
+        },
+        {
+          "from": "bus",
+          "to": "usb",
+          "label": "外とのデータ",
+          "arrow": "both"
+        },
+        {
+          "from": "usb",
+          "to": "ext",
+          "label": "後から抜き差し",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}
