@@ -1,0 +1,64 @@
+{
+  "topic_id": 84,
+  "term": "同じ言葉で違う絵を見ている",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "上の言葉一つから、二人の頭の絵が左右に分かれます。下の聞き返しで絵を口に出すと、ずれがその場で直ります。",
+      "nodes": [
+        {
+          "id": "w",
+          "label": "「棚の上、片づけておいて」\n言葉は二人とも分かる",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "me",
+          "label": "自分の絵\n古い雑誌を捨てる",
+          "row": 1,
+          "col": 0,
+          "emphasis": true,
+          "icon": "person"
+        },
+        {
+          "id": "you",
+          "label": "相手の絵\n箱に入れて残す",
+          "row": 1,
+          "col": 2,
+          "emphasis": true,
+          "icon": "person"
+        },
+        {
+          "id": "ask",
+          "label": "聞き返し\n「箱に入れるほう？\n雑誌は捨てていい？」",
+          "row": 2,
+          "col": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": "w",
+          "to": "me",
+          "label": "残りを自分の絵で埋める"
+        },
+        {
+          "from": "w",
+          "to": "you",
+          "label": "残りを自分の絵で埋める"
+        },
+        {
+          "from": "me",
+          "to": "ask",
+          "label": "自分の絵を口に出す"
+        },
+        {
+          "from": "you",
+          "to": "ask",
+          "label": "違う所を直す"
+        }
+      ]
+    }
+  ]
+}
