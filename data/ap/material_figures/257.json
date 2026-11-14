@@ -1,0 +1,72 @@
+{
+  "topic_id": 257,
+  "term": "GHGプロトコル",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 判断の手順",
+      "caption": "排出源について 2 つの問いを上から順に当てると、3 つのスコープのどれかに振り分けられます。",
+      "nodes": [
+        {
+          "id": "q1",
+          "label": "問 1\n排出源を自社が\n所有・管理しているか",
+          "row": 0,
+          "col": 0,
+          "icon": "search"
+        },
+        {
+          "id": "s1",
+          "label": "スコープ 1\n直接排出\n（自家発電・社有車）",
+          "row": 0,
+          "col": 1,
+          "icon": "building"
+        },
+        {
+          "id": "q2",
+          "label": "問 2\n自社が買った電力の\n発電に伴う排出か",
+          "row": 1,
+          "col": 0,
+          "icon": "search",
+          "emphasis": true
+        },
+        {
+          "id": "s2",
+          "label": "スコープ 2\n購入電力の間接排出",
+          "row": 1,
+          "col": 1,
+          "icon": "money"
+        },
+        {
+          "id": "s3",
+          "label": "スコープ 3\nそれ以外の間接排出\n（委託先など）",
+          "row": 2,
+          "col": 0,
+          "icon": "people"
+        }
+      ],
+      "edges": [
+        {
+          "from": "q1",
+          "to": "s1",
+          "label": "はい"
+        },
+        {
+          "from": "q1",
+          "to": "q2",
+          "label": "いいえ"
+        },
+        {
+          "from": "q2",
+          "to": "s2",
+          "label": "はい"
+        },
+        {
+          "from": "q2",
+          "to": "s3",
+          "label": "いいえ"
+        }
+      ]
+    }
+  ]
+}

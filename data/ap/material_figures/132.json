@@ -1,0 +1,107 @@
+{
+  "topic_id": 132,
+  "term": "直流給電",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 変換のたびに電力が失われる",
+      "caption": "上が交流給電、下が直流給電の経路です。交流と直流を行き来する変換（損失）を数えると、上は 3 回、下は 1 回です。",
+      "nodes": [
+        {
+          "id": "a0",
+          "label": "交流給電の受電\n交流で受け取る",
+          "row": 0,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "a1",
+          "label": "UPS の整流\n交流→直流（損失）",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "a2",
+          "label": "UPS の逆変換\n直流→交流（損失）",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "a3",
+          "label": "機器の電源\n交流→直流（損失）",
+          "row": 0,
+          "col": 3,
+          "icon": "server"
+        },
+        {
+          "id": "ab",
+          "label": "蓄電池\nもともと直流",
+          "row": 1,
+          "col": 1,
+          "shape": "round"
+        },
+        {
+          "id": "b0",
+          "label": "直流給電の受電\n交流で受け取る",
+          "row": 2,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "b1",
+          "label": "整流\n交流→直流（損失）",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "b3",
+          "label": "機器\n直流のまま受け取る",
+          "row": 2,
+          "col": 3,
+          "icon": "server",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "a0",
+          "to": "a1",
+          "label": "交流"
+        },
+        {
+          "from": "a1",
+          "to": "a2",
+          "label": "直流"
+        },
+        {
+          "from": "a2",
+          "to": "a3",
+          "label": "交流で配る"
+        },
+        {
+          "from": "a1",
+          "to": "ab",
+          "label": "直流で充電",
+          "arrow": "both"
+        },
+        {
+          "from": "b1",
+          "to": "ab",
+          "label": "直流のままつなぐ",
+          "arrow": "both"
+        },
+        {
+          "from": "b0",
+          "to": "b1",
+          "label": "交流"
+        },
+        {
+          "from": "b1",
+          "to": "b3",
+          "label": "直流のまま配る"
+        }
+      ]
+    }
+  ]
+}

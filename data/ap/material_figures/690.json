@@ -1,0 +1,105 @@
+{
+  "topic_id": 690,
+  "term": "3PL（3rd Party Logistics）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "venn",
+      "after": "### 受託する範囲",
+      "caption": "内側ほど狭い仕事の範囲です。運ぶ・預かるを内に含み、強調した一番外の物流企画の代行まで引き受けるのが 3PL です。",
+      "layout": "nested",
+      "sets": [
+        {
+          "id": "a",
+          "label": "3PL が引き受ける範囲"
+        },
+        {
+          "id": "b",
+          "label": "物流のアウトソーシング"
+        },
+        {
+          "id": "c",
+          "label": "運送業者・倉庫業者の仕事"
+        }
+      ],
+      "regions": [
+        {
+          "in": [
+            "a"
+          ],
+          "label": "物流企画の代行\n拠点の配置や輸送手段を設計",
+          "emphasis": true
+        },
+        {
+          "in": [
+            "a",
+            "b"
+          ],
+          "label": "流通加工・在庫管理\n出荷前の作業と在庫の見える化"
+        },
+        {
+          "in": [
+            "a",
+            "b",
+            "c"
+          ],
+          "label": "輸配送・保管\n運ぶ・預かる"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### なぜ第三者に任せるのか",
+      "caption": "矢印は仕事を任せる向きです。荷主でも運送業者でもない第三者が荷主の物流を丸ごと引き受け、運ぶ・預かるは手配します。",
+      "nodes": [
+        {
+          "id": "shipper",
+          "label": "荷主\n自社の物流を任せる",
+          "row": 0,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "tpl",
+          "label": "3PL 事業者（第三者）\n物流の設計と運営\n車両や倉庫は持たなくてよい",
+          "row": 0,
+          "col": 1,
+          "emphasis": true,
+          "icon": "people"
+        },
+        {
+          "id": "truck",
+          "label": "運送業者\n荷物を運ぶ",
+          "row": 0,
+          "col": 2,
+          "icon": "box"
+        },
+        {
+          "id": "wh",
+          "label": "倉庫業者\n荷物を預かる",
+          "row": 1,
+          "col": 2,
+          "icon": "building"
+        }
+      ],
+      "edges": [
+        {
+          "from": "shipper",
+          "to": "tpl",
+          "label": "物流業務を包括して委託"
+        },
+        {
+          "from": "tpl",
+          "to": "truck",
+          "label": "輸送を手配"
+        },
+        {
+          "from": "tpl",
+          "to": "wh",
+          "label": "保管を手配"
+        }
+      ]
+    }
+  ]
+}

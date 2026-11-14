@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="270" viewBox="0 0 640 270">
+<rect x="0.5" y="0.5" width="639" height="269" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(95.6 20)">
+<text x="308.8" y="18" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">桁</text>
+<text x="97.4" y="30" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">観点</text>
+<text x="238.8" y="45.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">上位ビット x1</text>
+<text x="378.8" y="45.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">下位ビット x2</text>
+<text x="97.4" y="89.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">桁の重み</text>
+<text x="97.4" y="147.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">x から取り出す式</text>
+<text x="97.4" y="205.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">例 x＝2（2 進で 10）</text>
+<rect x="168.8" y="56" width="140" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="238.8" y="81.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">重み 2</text>
+<text x="238.8" y="97.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">x の 2×x1 の分</text>
+<rect x="308.8" y="56" width="140" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="378.8" y="81.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">重み 1</text>
+<text x="378.8" y="97.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">x の ＋x2 の分</text>
+<rect x="168.8" y="114" width="140" height="58" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="238.8" y="139.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">x1＝int(x/2)</text>
+<text x="238.8" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">右シフト 1 回の値</text>
+<rect x="308.8" y="114" width="140" height="58" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="378.8" y="139.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">x2＝x－2×int(x/2)</text>
+<text x="378.8" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">上位の分を引いた残り</text>
+<rect x="168.8" y="172" width="140" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="238.8" y="197.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">int(2/2)＝1</text>
+<text x="238.8" y="213.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">上位は 1</text>
+<rect x="308.8" y="172" width="140" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="378.8" y="197.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2－2×1＝0</text>
+<text x="378.8" y="213.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">下位は 0</text>
+</g>
+</svg>

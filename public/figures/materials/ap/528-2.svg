@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="318" viewBox="0 0 681.2 338">
+<rect x="0.5" y="0.5" width="680.2" height="337" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<g transform="translate(51 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2 L21.4 20 H2.6 Z"/><path d="M12 9 V14"/><circle cx="12" cy="17" r="1" fill="#1f2937" stroke="none"/></g>
+<g transform="translate(323.6 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.2"/><path d="M12 16 V20 M8.5 20 H15.5"/></g>
+<g transform="translate(582.2 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3.5" width="16" height="7" rx="1.2"/><rect x="4" y="13.5" width="16" height="7" rx="1.2"/><circle cx="7.5" cy="7" r="0.9" fill="#1f2937" stroke="none"/><circle cx="7.5" cy="17" r="0.9" fill="#1f2937" stroke="none"/><path d="M11 7 H17 M11 17 H17"/></g>
+<g transform="translate(0 28)">
+<line x1="62" y1="34" x2="62" y2="270" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="334.6" y1="34" x2="334.6" y2="270" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="593.2" y1="34" x2="593.2" y2="270" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="124" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="62" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">攻撃者のサイト</text>
+<rect x="265.6" y="0" width="138" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="334.6" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">利用者のブラウザ</text>
+<rect x="545.2" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="593.2" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">標的サイト</text>
+<polyline points="331.6,68 65,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="65,68 73,64.4 73,71.6" fill="#1f2937"/>
+<text x="198.3" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 攻撃者のページを開く</text>
+<polyline points="65,108 331.6,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="331.6,108 323.6,111.6 323.6,104.4" fill="#1f2937"/>
+<text x="198.3" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 標的サイトを iframe で埋め込んだページ</text>
+<polyline points="337.6,148 590.2,148" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="590.2,148 582.2,151.6 582.2,144.4" fill="#1f2937"/>
+<text x="463.9" y="141" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 枠の中身として標的ページを要求</text>
+<polyline points="590.2,188 337.6,188" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="337.6,188 345.6,184.4 345.6,191.6" fill="#1f2937"/>
+<text x="463.9" y="181" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 応答ヘッダに X-Frame-Options: DENY</text>
+<polyline points="334.6,220 360.6,220 360.6,234 336.6,234" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="336.6,234 344.6,230.4 344.6,237.6" fill="#1f2937"/>
+<text x="368.6" y="228" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. 他サイトの枠の中での描画を拒否</text>
+<rect x="210.6" y="239" width="248" height="16" rx="3" fill="#ffffff"/>
+<text x="334.6" y="252.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">透明な枠には何も出ず、クリックが届かない</text>
+</g>
+</g>
+</svg>

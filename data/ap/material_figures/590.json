@@ -1,0 +1,90 @@
+{
+  "topic_id": 590,
+  "term": "ZigBee",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### ネットワークの構成",
+      "caption": "センサの値はルータを渡り歩いてコーディネータへ届きます。点線は予備の経路で、上の中継が切れても下のルータを回って届きます。",
+      "nodes": [
+        {
+          "id": "c",
+          "label": "コーディネータ\n網全体を管理する",
+          "row": 1,
+          "col": 0,
+          "emphasis": true,
+          "icon": "gear"
+        },
+        {
+          "id": "r1",
+          "label": "ルータ\n値を中継する",
+          "row": 0,
+          "col": 1,
+          "icon": "network"
+        },
+        {
+          "id": "r2",
+          "label": "ルータ\n値を中継する",
+          "row": 1,
+          "col": 2,
+          "icon": "network"
+        },
+        {
+          "id": "r3",
+          "label": "ルータ\n値を中継する",
+          "row": 0,
+          "col": 2,
+          "icon": "network"
+        },
+        {
+          "id": "e1",
+          "label": "エンドデバイス\nセンサ。ほとんど眠る",
+          "row": 0,
+          "col": 3,
+          "icon": "device"
+        },
+        {
+          "id": "e2",
+          "label": "エンドデバイス\nセンサ。ほとんど眠る",
+          "row": 1,
+          "col": 3,
+          "icon": "device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "e1",
+          "to": "r3",
+          "label": "センサの値"
+        },
+        {
+          "from": "r3",
+          "to": "r1",
+          "label": "中継"
+        },
+        {
+          "from": "r1",
+          "to": "c",
+          "label": "中継して届ける"
+        },
+        {
+          "from": "e2",
+          "to": "r2",
+          "label": "センサの値"
+        },
+        {
+          "from": "r3",
+          "to": "r2",
+          "label": "予備の経路",
+          "style": "dashed"
+        },
+        {
+          "from": "r2",
+          "to": "c",
+          "label": "中継して届ける"
+        }
+      ]
+    }
+  ]
+}

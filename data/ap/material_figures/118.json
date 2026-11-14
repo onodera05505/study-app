@@ -1,0 +1,52 @@
+{
+  "topic_id": 118,
+  "term": "コピーレフト（Copyleft）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 静的リンクと動的リンク",
+      "caption": "左の列が OSS のライブラリ、右の列が配布する実行ファイルです。上の段は静的リンク、下の段は動的リンクで、実行ファイルの中に OSS のコードが入るかを見比べます。",
+      "nodes": [
+        {
+          "id": "oss",
+          "label": "OSS のライブラリ\nコードの取り込み元",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "st",
+          "label": "静的リンクの実行ファイル\n自作部分＋OSS のコード\n配布物の中に OSS が入る",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "lib",
+          "label": "OSS のライブラリ\n別ファイルのまま置く",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "dyn",
+          "label": "動的リンクの実行ファイル\n自作部分だけ\n配布物と OSS が分かれる",
+          "row": 1,
+          "col": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": "oss",
+          "to": "st",
+          "label": "ビルド時に\nコードを取り込む"
+        },
+        {
+          "from": "dyn",
+          "to": "lib",
+          "label": "実行時に\n読み込む",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

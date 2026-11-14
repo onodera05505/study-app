@@ -1,0 +1,123 @@
+{
+  "topic_id": 449,
+  "term": "シングルサインオン",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### リバースプロキシ方式の流れ",
+      "caption": "認証するのはリバースプロキシだけで、Web サーバは付けられた利用者 ID を受け取って処理します。2 台目でも認証は求められません。",
+      "actors": [
+        {
+          "id": "pc",
+          "label": "利用者の PC",
+          "icon": "device"
+        },
+        {
+          "id": "rp",
+          "label": "リバースプロキシ",
+          "icon": "key"
+        },
+        {
+          "id": "w1",
+          "label": "Web サーバ 1",
+          "icon": "server"
+        },
+        {
+          "id": "w2",
+          "label": "Web サーバ 2",
+          "icon": "server"
+        }
+      ],
+      "steps": [
+        {
+          "from": "pc",
+          "to": "rp",
+          "label": "クライアント証明書を提示",
+          "note": "証明書と秘密鍵は事前に PC へ入れておく"
+        },
+        {
+          "from": "rp",
+          "to": "rp",
+          "label": "証明書を検証して利用者を特定（認証完了）"
+        },
+        {
+          "from": "rp",
+          "to": "w1",
+          "label": "要求に利用者 ID を付けて中継",
+          "note": "Web サーバは自分で認証しない"
+        },
+        {
+          "from": "pc",
+          "to": "rp",
+          "label": "別のサーバへの要求"
+        },
+        {
+          "from": "rp",
+          "to": "w2",
+          "label": "同じく利用者 ID を付けて中継"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### この構成が成り立つ条件",
+      "caption": "Web サーバは届いた利用者 ID を信じて処理します。破線のように直接届く経路が残ると、詐称した ID がそのまま通ります。",
+      "nodes": [
+        {
+          "id": "pc",
+          "label": "利用者の PC\n証明書を持つ",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "rp",
+          "label": "リバースプロキシ\nここだけが認証する",
+          "row": 0,
+          "col": 1,
+          "icon": "key"
+        },
+        {
+          "id": "web",
+          "label": "Web サーバ\n届いた ID を信じて処理",
+          "row": 0,
+          "col": 2,
+          "icon": "server",
+          "emphasis": true
+        },
+        {
+          "id": "atk",
+          "label": "攻撃者\n証明書を持たない",
+          "row": 1,
+          "col": 1,
+          "icon": "warning"
+        }
+      ],
+      "edges": [
+        {
+          "from": "pc",
+          "to": "rp",
+          "label": "証明書で認証"
+        },
+        {
+          "from": "rp",
+          "to": "web",
+          "label": "利用者 ID を付けて中継"
+        },
+        {
+          "from": "atk",
+          "to": "rp",
+          "label": "認証で止まる"
+        },
+        {
+          "from": "atk",
+          "to": "web",
+          "label": "ID を詐称した要求\n（直接の経路）",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

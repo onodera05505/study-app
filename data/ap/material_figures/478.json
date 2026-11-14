@@ -1,0 +1,128 @@
+{
+  "topic_id": 478,
+  "term": "透過性",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 複製が置かれる理由",
+      "caption": "同じ表の写しが 3 台にあっても、プログラムが問い合わせる相手は DBMS だけです。写しをそろえる手間は強調した DBMS が引き受けます。",
+      "nodes": [
+        {
+          "id": "p",
+          "label": "プログラム\n表は 1 つだと思っている",
+          "row": 1,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "d",
+          "label": "DBMS\n写しの存在を隠す",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "gear"
+        },
+        {
+          "id": "s1",
+          "label": "サーバ 1\n社員表の写し",
+          "row": 0,
+          "col": 2,
+          "shape": "cylinder"
+        },
+        {
+          "id": "s2",
+          "label": "サーバ 2\n社員表の写し",
+          "row": 1,
+          "col": 2,
+          "shape": "cylinder"
+        },
+        {
+          "id": "s3",
+          "label": "サーバ 3\n社員表の写し",
+          "row": 2,
+          "col": 2,
+          "shape": "cylinder"
+        }
+      ],
+      "edges": [
+        {
+          "from": "p",
+          "to": "d",
+          "label": "1 つの表として\n更新・参照",
+          "arrow": "both"
+        },
+        {
+          "from": "d",
+          "to": "s1",
+          "label": "更新を伝える"
+        },
+        {
+          "from": "d",
+          "to": "s2",
+          "label": "更新を伝え、\nここから読む",
+          "arrow": "both"
+        },
+        {
+          "from": "d",
+          "to": "s3",
+          "label": "更新を伝える"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 混同しやすい用語",
+      "caption": "1 つの表を行で 2 つに分け、別々のサーバに置いた例です。DBMS が断片を結合するので、プログラムには分かれる前の 1 つの表に見えます。",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "サーバ A\n社員表の前半の行",
+          "row": 0,
+          "col": 0,
+          "shape": "cylinder"
+        },
+        {
+          "id": "b",
+          "label": "サーバ B\n社員表の後半の行",
+          "row": 1,
+          "col": 0,
+          "shape": "cylinder"
+        },
+        {
+          "id": "d",
+          "label": "DBMS\n断片を結合する",
+          "row": 0,
+          "col": 1,
+          "emphasis": true,
+          "icon": "gear"
+        },
+        {
+          "id": "p",
+          "label": "プログラム\n分割を意識しない",
+          "row": 0,
+          "col": 2,
+          "icon": "device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "d",
+          "label": "断片 1"
+        },
+        {
+          "from": "b",
+          "to": "d",
+          "label": "断片 2"
+        },
+        {
+          "from": "d",
+          "to": "p",
+          "label": "結合した 1 つの表"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="308" viewBox="0 0 640 308">
+<rect x="0.5" y="0.5" width="639" height="307" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(168 20)">
+<g transform="translate(44 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.2"/><path d="M12 16 V20 M8.5 20 H15.5"/></g>
+<g transform="translate(224 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.3"/><circle cx="5" cy="18.5" r="2.3"/><circle cx="19" cy="18.5" r="2.3"/><path d="M10.9 7.1 L6.1 16.4 M13.1 7.1 L17.9 16.4 M7.3 18.5 H16.7"/></g>
+<g transform="translate(0 28)">
+<line x1="55" y1="34" x2="55" y2="240" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="235" y1="34" x2="235" y2="240" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="110" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="55" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">送信する端末</text>
+<rect x="166" y="0" width="138" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="235" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">アクセスポイント</text>
+<polyline points="55,60 81,60 81,74 57,74" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="57,74 65,70.4 65,77.6" fill="#1f2937"/>
+<text x="89" y="68" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">1. 一定時間、電波の空きを確かめる</text>
+<rect x="-81" y="79" width="272" height="16" rx="3" fill="#ffffff"/>
+<text x="55" y="92.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">送信中は衝突を検出できないので送る前に避ける</text>
+<polyline points="55,110 81,110 81,124 57,124" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="57,124 65,120.4 65,127.6" fill="#1f2937"/>
+<text x="89" y="118" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2. さらにランダムな時間待つ</text>
+<polyline points="58,152 232,152" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="232,152 224,155.6 224,148.4" fill="#1f2937"/>
+<text x="145" y="145" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. データを送る</text>
+<polyline points="232,192 58,192" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="58,192 66,188.4 66,195.6" fill="#1f2937"/>
+<text x="145" y="185" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. ACK（受け取った）</text>
+<rect x="49.8" y="197" width="190.4" height="16" rx="3" fill="#ffffff"/>
+<text x="145" y="210.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ACK が来なければ端末が再送する</text>
+</g>
+</g>
+</svg>

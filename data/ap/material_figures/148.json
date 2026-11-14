@@ -8,14 +8,65 @@
       "after": "explanation",
       "caption": "必要な属性がどの表にあるかを線でたどります。共通の属性でつながらなければ、その組合せの情報は得られません。",
       "nodes": [
-        {"id": "cust", "label": "顧客\n顧客ID・氏名\n性別・生年月日", "row": 0, "col": 0, "emphasis": true},
-        {"id": "buy", "label": "商品購入\n顧客ID・代理店ID\n商品ID・購入数量", "row": 0, "col": 1},
-        {"id": "sale", "label": "販売代理店別日別販売\n代理店ID・日付\n商品ID・販売数量", "row": 0, "col": 2, "emphasis": true}
+        {
+          "id": "want",
+          "label": "欲しい情報（例）\n店舗ごとに\n年代別の購入金額",
+          "row": 0,
+          "col": 1,
+          "icon": "search"
+        },
+        {
+          "id": "mem",
+          "label": "会員\n会員ID・氏名・年代",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "ord",
+          "label": "注文\n注文ID・会員ID・金額",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "st",
+          "label": "店舗売上\n店舗ID・日付・売上額",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "cust", "to": "buy", "label": "顧客ID", "arrow": "none"},
-        {"from": "buy", "to": "sale", "label": "商品ID・代理店ID", "arrow": "none"},
-        {"from": "cust", "to": "sale", "label": "顧客IDが無い", "arrow": "none", "style": "dashed"}
+        {
+          "from": "want",
+          "to": "mem",
+          "label": "軸の年代はここ",
+          "style": "dashed"
+        },
+        {
+          "from": "want",
+          "to": "ord",
+          "label": "値の金額はここ",
+          "style": "dashed"
+        },
+        {
+          "from": "want",
+          "to": "st",
+          "label": "軸の店舗はここ",
+          "style": "dashed"
+        },
+        {
+          "from": "mem",
+          "to": "ord",
+          "label": "会員IDで結合できる",
+          "arrow": "none"
+        },
+        {
+          "from": "ord",
+          "to": "st",
+          "label": "共通の属性が無い",
+          "arrow": "none",
+          "style": "dashed"
+        }
       ]
     }
   ]

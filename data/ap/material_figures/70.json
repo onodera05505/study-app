@@ -18,6 +18,89 @@
         {"from": "c", "to": "e", "label": "next[6]＝5"},
         {"from": "e", "to": "c", "label": "prev[5]＝6"}
       ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 配列で表した形の読み方",
+      "caption": "Head から next をたどった順に箱を並べてあります。たどる要素番号は飛び飛びで、配列の番号の順とリストの並びは一致しません。",
+      "nodes": [
+        {
+          "id": "h",
+          "label": "Head\n先頭は要素番号 1",
+          "row": 0,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "n1",
+          "label": "要素番号 1\n値 A",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "n4",
+          "label": "要素番号 4\n値 B",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "n3",
+          "label": "要素番号 3\n値 D",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "n5",
+          "label": "要素番号 5\n値 E",
+          "row": 1,
+          "col": 3
+        },
+        {
+          "id": "n2",
+          "label": "要素番号 2\n値 F",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "z",
+          "label": "0\n端の目印で終わり",
+          "row": 1,
+          "col": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": "h",
+          "to": "n1",
+          "label": "Head＝1"
+        },
+        {
+          "from": "n1",
+          "to": "n4",
+          "label": "next[1]＝4"
+        },
+        {
+          "from": "n4",
+          "to": "n3",
+          "label": "next[4]＝3"
+        },
+        {
+          "from": "n3",
+          "to": "n5",
+          "label": "next[3]＝5"
+        },
+        {
+          "from": "n5",
+          "to": "n2",
+          "label": "next[5]＝2"
+        },
+        {
+          "from": "n2",
+          "to": "z",
+          "label": "next[2]＝0"
+        }
+      ]
     }
   ]
 }

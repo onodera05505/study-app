@@ -1,0 +1,79 @@
+{
+  "topic_id": 741,
+  "term": "外部委託管理の監査",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 請負契約と派遣契約の違い",
+      "caption": "上が請負、下が派遣です。指揮命令の線が誰から出るかを比べると、請負では受託側の責任者から出ます。",
+      "nodes": [
+        {
+          "id": "c1",
+          "label": "委託側\n仕事の完成を頼む",
+          "row": 0,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "c2",
+          "label": "受託側の責任者\n自社の要員を指揮する",
+          "row": 0,
+          "col": 1,
+          "icon": "person",
+          "emphasis": true
+        },
+        {
+          "id": "c3",
+          "label": "受託側の要員\n責任者の指示で作る",
+          "row": 0,
+          "col": 2,
+          "icon": "people"
+        },
+        {
+          "id": "d1",
+          "label": "派遣元\n労働者を雇う",
+          "row": 1,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "d2",
+          "label": "派遣先（委託側）\n派遣労働者を指揮する",
+          "row": 1,
+          "col": 1,
+          "icon": "person"
+        },
+        {
+          "id": "d3",
+          "label": "派遣労働者\n派遣先の指示で働く",
+          "row": 1,
+          "col": 2,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "c1",
+          "to": "c2",
+          "label": "請負：完成を発注"
+        },
+        {
+          "from": "c2",
+          "to": "c3",
+          "label": "指揮命令"
+        },
+        {
+          "from": "d1",
+          "to": "d2",
+          "label": "派遣：労働者を送る"
+        },
+        {
+          "from": "d2",
+          "to": "d3",
+          "label": "指揮命令"
+        }
+      ]
+    }
+  ]
+}

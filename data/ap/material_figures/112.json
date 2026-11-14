@@ -1,0 +1,26 @@
+{
+  "topic_id": 112,
+  "term": "ドキュメント生成ツール",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### コメントから仕様書を作るしくみ",
+      "caption": "左のソースコードを入力に、右の仕様書を作る流れの図です。下の段は、コードを直すたびに生成が起きて仕様書が作り直される道筋を表します。",
+      "nodes": [
+        {"id": "src", "label": "ソースコード\n関数と書式つきコメント", "row": 0, "col": 0, "icon": "document"},
+        {"id": "tool", "label": "ドキュメント生成ツール\nコメントを読み取る", "row": 0, "col": 1, "emphasis": true, "icon": "gear"},
+        {"id": "doc", "label": "仕様書（HTML など）\n関数・引数・戻り値の一覧", "row": 0, "col": 2, "icon": "document"},
+        {"id": "dev", "label": "コードの修正\n開発者が直す", "row": 1, "col": 0, "icon": "person"},
+        {"id": "ci", "label": "ビルド・CI\n変更のたびに動く", "row": 1, "col": 1}
+      ],
+      "edges": [
+        {"from": "src", "to": "tool", "label": "タグつきコメント"},
+        {"from": "tool", "to": "doc", "label": "生成する"},
+        {"from": "dev", "to": "src", "label": "コードとコメントを直す"},
+        {"from": "dev", "to": "ci", "label": "変更を登録"},
+        {"from": "ci", "to": "tool", "label": "生成を起こす"}
+      ]
+    }
+  ]
+}

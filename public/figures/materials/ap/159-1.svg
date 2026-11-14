@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="400" viewBox="0 0 640 400">
+<rect x="0.5" y="0.5" width="639" height="399" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(100.2 20)">
+<g transform="translate(37 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7.5" r="3.6"/><path d="M4.5 21 C4.5 14.2 19.5 14.2 19.5 21"/></g>
+<g transform="translate(208.8 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3.5" width="16" height="7" rx="1.2"/><rect x="4" y="13.5" width="16" height="7" rx="1.2"/><circle cx="7.5" cy="7" r="0.9" fill="#1f2937" stroke="none"/><circle cx="7.5" cy="17" r="0.9" fill="#1f2937" stroke="none"/><path d="M11 7 H17 M11 17 H17"/></g>
+<g transform="translate(380.6 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3.5" width="16" height="7" rx="1.2"/><rect x="4" y="13.5" width="16" height="7" rx="1.2"/><circle cx="7.5" cy="7" r="0.9" fill="#1f2937" stroke="none"/><circle cx="7.5" cy="17" r="0.9" fill="#1f2937" stroke="none"/><path d="M11 7 H17 M11 17 H17"/></g>
+<g transform="translate(0 28)">
+<line x1="48" y1="34" x2="48" y2="332" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="219.8" y1="34" x2="219.8" y2="332" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="391.6" y1="34" x2="391.6" y2="332" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">利用者</text>
+<rect x="171.8" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="219.8" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ノード A</text>
+<rect x="343.6" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="391.6" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ノード B</text>
+<polyline points="51,68 216.8,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="216.8,68 208.8,71.6 208.8,64.4" fill="#1f2937"/>
+<text x="133.9" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 値を 1 から 2 に更新</text>
+<polyline points="216.8,108 51,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,108 59,104.4 59,111.6" fill="#1f2937"/>
+<text x="133.9" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. すぐ応答（受け付けた）</text>
+<polyline points="51,148 388.6,148" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="388.6,148 380.6,151.6 380.6,144.4" fill="#1f2937"/>
+<text x="219.8" y="141" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 同じ値を読む</text>
+<polyline points="388.6,188 51,188" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,188 59,184.4 59,191.6" fill="#1f2937"/>
+<text x="219.8" y="181" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. まだ古い 1 を返す</text>
+<rect x="113.8" y="193" width="212" height="16" rx="3" fill="#ffffff"/>
+<text x="219.8" y="206.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">反映前はノードによって値が食い違う</text>
+<polyline points="222.8,244 388.6,244" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="388.6,244 380.6,247.6 380.6,240.4" fill="#1f2937"/>
+<text x="305.7" y="237" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. 後から 2 を反映</text>
+<polyline points="388.6,284 51,284" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,284 59,280.4 59,287.6" fill="#1f2937"/>
+<text x="219.8" y="277" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">6. 次に読むと 2 を返す</text>
+<rect x="137.8" y="289" width="164" height="16" rx="3" fill="#ffffff"/>
+<text x="219.8" y="302.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">時間が経てば全ノードで揃う</text>
+</g>
+</g>
+</svg>

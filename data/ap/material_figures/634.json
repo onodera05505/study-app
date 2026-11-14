@@ -1,0 +1,114 @@
+{
+  "topic_id": 634,
+  "term": "ファンクションポイント法",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 何を数えて規模とするのか",
+      "caption": "利用者以外の 5 つの箱が数える機能で、中央の 3 つは利用者とのやり取り、右の 2 つはデータのまとまりです。どれも外から見える機能で、作り方は数えません。",
+      "nodes": [
+        {
+          "id": "u",
+          "label": "利用者\n画面や帳票を使う",
+          "row": 1,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "ei",
+          "label": "外部入力\nデータを登録・更新する",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "eo",
+          "label": "外部出力\n帳票や集計画面を出す",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "eq",
+          "label": "外部照会\n検索してそのまま表示する",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "ilf",
+          "label": "内部論理ファイル\nこのシステムが保持する",
+          "row": 0,
+          "col": 2,
+          "shape": "cylinder",
+          "emphasis": true
+        },
+        {
+          "id": "eif",
+          "label": "外部インタフェースファイル\n他システムが保持し参照する",
+          "row": 2,
+          "col": 2,
+          "shape": "cylinder"
+        }
+      ],
+      "edges": [
+        {
+          "from": "u",
+          "to": "ei",
+          "label": "入力"
+        },
+        {
+          "from": "eo",
+          "to": "u",
+          "label": "出力"
+        },
+        {
+          "from": "u",
+          "to": "eq",
+          "label": "条件と結果",
+          "arrow": "both"
+        },
+        {
+          "from": "ei",
+          "to": "ilf",
+          "label": "書き込む"
+        },
+        {
+          "from": "eif",
+          "to": "eq",
+          "label": "参照する"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 計算の考え方",
+      "caption": "件数に重みを掛けて合計し、係数を順に掛けて工数まで下ります。強調した調整前 FP までは実装の情報を使いません。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "件数を数える\n機能を 5 種に分ける",
+          "icon": "search",
+          "next_label": "種類ごとの件数"
+        },
+        {
+          "label": "重みを掛ける\n単純・普通・複雑で重みが違う",
+          "next_label": "重み付きの点数"
+        },
+        {
+          "label": "合計する\n種類をまたいで足す",
+          "next_label": "調整前 FP",
+          "emphasis": true
+        },
+        {
+          "label": "調整係数を掛ける\n性能などシステム全体の特性",
+          "icon": "gear",
+          "next_label": "調整済み FP"
+        },
+        {
+          "label": "工数に換算する\n1 FP あたりの工数を掛ける",
+          "icon": "clock"
+        }
+      ]
+    }
+  ]
+}

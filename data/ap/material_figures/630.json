@@ -1,0 +1,65 @@
+{
+  "topic_id": 630,
+  "term": "MVC モデル",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 三つのコンポーネントの役割",
+      "caption": "利用者の操作から画面までを時計回りにたどります。強調した Model は画面を持たないので、表示を変えても手が及びません。",
+      "nodes": [
+        {
+          "id": "u",
+          "label": "利用者\n操作して画面を見る",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "c",
+          "label": "Controller\n操作を受けて\n処理を依頼する",
+          "row": 0,
+          "col": 1,
+          "icon": "gear"
+        },
+        {
+          "id": "m",
+          "label": "Model\n業務データと処理\nアプリの本体",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "database"
+        },
+        {
+          "id": "v",
+          "label": "View\nModel の情報を\n画面に出す",
+          "row": 1,
+          "col": 0,
+          "icon": "device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "u",
+          "to": "c",
+          "label": "クリックや入力"
+        },
+        {
+          "from": "c",
+          "to": "m",
+          "label": "処理の依頼"
+        },
+        {
+          "from": "m",
+          "to": "v",
+          "label": "表示する情報"
+        },
+        {
+          "from": "v",
+          "to": "u",
+          "label": "画面"
+        }
+      ]
+    }
+  ]
+}

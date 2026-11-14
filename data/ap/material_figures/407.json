@@ -1,0 +1,126 @@
+{
+  "topic_id": 407,
+  "term": "JVN（Japan Vulnerability Notes）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### JVN のしくみ",
+      "caption": "脆弱性の情報が発見者から利用者へ届くまでの経路です。上の段で届出と調整が済み、強調した JVN が公表の場になります。",
+      "nodes": [
+        {
+          "id": "f",
+          "label": "発見者\n脆弱性を見つける",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "ipa",
+          "label": "IPA\n届出を受け付ける",
+          "row": 0,
+          "col": 1,
+          "icon": "building"
+        },
+        {
+          "id": "jp",
+          "label": "JPCERT/CC\n開発者と調整する",
+          "row": 0,
+          "col": 2,
+          "icon": "building"
+        },
+        {
+          "id": "dev",
+          "label": "製品開発者\n修正パッチを作る",
+          "row": 0,
+          "col": 3,
+          "icon": "gear"
+        },
+        {
+          "id": "jvn",
+          "label": "JVN\n調整済みの情報を公表",
+          "row": 1,
+          "col": 2,
+          "emphasis": true,
+          "icon": "document"
+        },
+        {
+          "id": "u",
+          "label": "利用者\n自分の製品を確かめる",
+          "row": 1,
+          "col": 1,
+          "icon": "device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "f",
+          "to": "ipa",
+          "label": "脆弱性を届け出る"
+        },
+        {
+          "from": "ipa",
+          "to": "jp",
+          "label": "調整を依頼する"
+        },
+        {
+          "from": "jp",
+          "to": "dev",
+          "label": "対策を調整する",
+          "arrow": "both"
+        },
+        {
+          "from": "jp",
+          "to": "jvn",
+          "label": "脆弱性情報と対策を公表"
+        },
+        {
+          "from": "jvn",
+          "to": "u",
+          "label": "影響と対処を伝える"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### 混同しやすい用語",
+      "caption": "脆弱性まわりの 3 つの名前を役割で並べています。JVN は情報を届ける場で、CVSS と CWE はそこに添えられる物差しと分類です。",
+      "x": {
+        "label": "観点",
+        "values": [
+          "何をするものか",
+          "JVN との関係"
+        ]
+      },
+      "y": {
+        "label": "名前",
+        "values": [
+          "JVN",
+          "CVSS",
+          "CWE"
+        ]
+      },
+      "cells": [
+        [
+          "情報を届ける場\n調整済みの脆弱性と\n対策を公表する",
+          "届ける側\nスコアと分類を\n添えて載せる"
+        ],
+        [
+          "深刻度のものさし\n脆弱性の重さを\nスコアで測る",
+          "JVN の各情報に\n深刻度として\n添えられる"
+        ],
+        [
+          "種類の分類\n脆弱性を\n型で分ける",
+          "JVN の各情報に\n種類として\n添えられる"
+        ]
+      ],
+      "emphasis": [
+        [
+          0,
+          0
+        ]
+      ]
+    }
+  ]
+}

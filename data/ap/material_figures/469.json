@@ -1,0 +1,71 @@
+{
+  "topic_id": 469,
+  "term": "スクリプト言語",
+  "figures": [
+    {
+      "id": 1,
+      "type": "matrix",
+      "after": "### 型付けとコンパイルの2つの軸",
+      "caption": "列が事前のコンパイルの要否、行が型付けの方式です。スクリプト言語は右の列にあり、その中で静的型付けを備えるのが強調したマスです。",
+      "x": {
+        "label": "実行の前に",
+        "values": [
+          "コンパイルが要る",
+          "要らない\n（スクリプト言語）"
+        ]
+      },
+      "y": {
+        "label": "型付け",
+        "values": [
+          "静的型付け",
+          "動的型付け"
+        ]
+      },
+      "cells": [
+        [
+          "コンパイル言語の多く\nコンパイル時に型を検査",
+          "TypeScript\n実行前の変換で型を検査"
+        ],
+        [
+          "少ない組合せ\n型は実行時に決まる",
+          "JavaScript\n誤りは実行して分かる"
+        ]
+      ],
+      "emphasis": [
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### JavaScript と TypeScript の関係",
+      "caption": "段は左上から右下へ進みます。型の誤りは変換の段で見つかり、出力された JavaScript には型の情報が残らないので、ブラウザは手を加えずに動かせます。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "TypeScript のソース\n型の記述つき",
+          "icon": "document",
+          "next_label": "ソースを変換へ"
+        },
+        {
+          "label": "変換\n型の誤りをここで見つける",
+          "icon": "search",
+          "next_label": "素の JavaScript",
+          "emphasis": true
+        },
+        {
+          "label": "JavaScript\n型の情報は残らない",
+          "icon": "document",
+          "next_label": "そのまま読み込む"
+        },
+        {
+          "label": "ブラウザで実行\n実行環境は変えない",
+          "icon": "device"
+        }
+      ]
+    }
+  ]
+}

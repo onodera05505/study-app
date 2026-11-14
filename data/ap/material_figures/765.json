@@ -1,0 +1,40 @@
+{
+  "topic_id": 765,
+  "term": "BI（Business Intelligence）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 支える技術",
+      "direction": "down",
+      "caption": "業務で生まれたデータを、蓄積・分析・提示の順に経営の判断へ運ぶ流れです。各段の技術が BI のどこを担うかを読みます。",
+      "stages": [
+        {
+          "label": "業務システム（ERP 等）\n日々の処理でデータを生む",
+          "icon": "server",
+          "next_label": "取り出して整える"
+        },
+        {
+          "label": "DWH・データマート\n時系列に統合して蓄積",
+          "icon": "database",
+          "next_label": "多次元に集計したデータ"
+        },
+        {
+          "label": "OLAP・データマイニング\n切り口を変えて分析",
+          "icon": "search",
+          "next_label": "分析の結果",
+          "emphasis": true
+        },
+        {
+          "label": "経営ダッシュボード\n指標を 1 画面に提示",
+          "icon": "chart",
+          "next_label": "変化に早く気づく"
+        },
+        {
+          "label": "経営の判断\n次に何をするか決める",
+          "icon": "person"
+        }
+      ]
+    }
+  ]
+}

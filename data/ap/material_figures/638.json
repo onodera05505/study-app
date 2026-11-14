@@ -1,0 +1,66 @@
+{
+  "topic_id": 638,
+  "term": "可監査性",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 監査できるように作っておくという要件",
+      "caption": "組織側が監査証跡を残す作りにしたシステムだけが、後から監査人に確かめられます。強調した証跡が無いと、監査人はコントロールの有効性を示せません。",
+      "nodes": [
+        {
+          "id": "org",
+          "label": "組織側\n可監査性を確保する責任",
+          "row": 0,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "sys",
+          "label": "情報システム\nコントロールを組み込んで処理",
+          "row": 0,
+          "col": 1,
+          "icon": "gear"
+        },
+        {
+          "id": "log",
+          "label": "監査証跡\nログ・連番・変更記録",
+          "row": 0,
+          "col": 2,
+          "emphasis": true,
+          "shape": "cylinder"
+        },
+        {
+          "id": "aud",
+          "label": "監査人\n後から追跡・検証する",
+          "row": 1,
+          "col": 2,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "org",
+          "to": "sys",
+          "label": "証跡が残るように\n設計・運用する"
+        },
+        {
+          "from": "sys",
+          "to": "log",
+          "label": "誰がいつ何をしたか\nを記録"
+        },
+        {
+          "from": "aud",
+          "to": "log",
+          "label": "証跡を辿る"
+        },
+        {
+          "from": "aud",
+          "to": "sys",
+          "label": "コントロールが有効かを確かめる",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

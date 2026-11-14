@@ -1,0 +1,19 @@
+{
+  "topic_id": 710,
+  "term": "Webサーバ",
+  "figures": [
+    {
+      "id": 1, "type": "steps", "after": "### 実行順序が決まる理由",
+      "caption": "DB を使うリクエストを Web サーバが処理する順です。矢印は次の段が前の段から受け取る物で、これが無いと次へ進めないので順序が一通りに決まります。",
+      "direction": "down",
+      "stages": [
+        {"label": "DB への接続\nSQL を送る道を開く", "icon": "database", "next_label": "開いた接続"},
+        {"label": "SQL 文の組立て\n検索キーや入力値を埋める", "icon": "document", "next_label": "組み立てた SQL 文"},
+        {"label": "DB へのアクセス\nSQL を実行する", "icon": "database", "next_label": "受け取った結果", "emphasis": true},
+        {"label": "HTML の組立て\n結果を画面の形に整える", "icon": "document", "next_label": "組み上がった HTML"},
+        {"label": "ブラウザへの送信\nHTML を返す", "icon": "network", "next_label": "結果はもう使わない"},
+        {"label": "DB の切断\n結果を受け取った後なら\nいつでもよい", "icon": "database"}
+      ]
+    }
+  ]
+}

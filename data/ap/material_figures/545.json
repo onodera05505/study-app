@@ -1,0 +1,61 @@
+{
+  "topic_id": 545,
+  "term": "情報セキュリティ管理基準",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 基準の作りと使い方",
+      "caption": "監査人が管理基準を尺度にして現場の運用を確かめる流れです。矢印をたどると、報告書に載るのは基準に満たない点だけだと分かります。",
+      "nodes": [
+        {
+          "id": "std",
+          "label": "情報セキュリティ管理基準\n備えるべき管理項目",
+          "row": 0,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "aud",
+          "label": "監査人\n基準と実態を比べる",
+          "row": 0,
+          "col": 1,
+          "icon": "person"
+        },
+        {
+          "id": "ops",
+          "label": "現場の運用\n実際に行っている管理",
+          "row": 1,
+          "col": 1,
+          "icon": "people"
+        },
+        {
+          "id": "rep",
+          "label": "監査報告書\n指摘事項と改善提案",
+          "row": 0,
+          "col": 2,
+          "icon": "document",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "std",
+          "to": "aud",
+          "label": "判断の尺度にする"
+        },
+        {
+          "from": "aud",
+          "to": "ops",
+          "label": "運用と突き合わせる",
+          "arrow": "both"
+        },
+        {
+          "from": "aud",
+          "to": "rep",
+          "label": "満たない点だけを\n指摘事項に"
+        }
+      ]
+    }
+  ]
+}

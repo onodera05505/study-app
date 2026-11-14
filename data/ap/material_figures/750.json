@@ -1,0 +1,93 @@
+{
+  "topic_id": 750,
+  "term": "オムニチャネル",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 「複数ある」と「統合されている」の違い",
+      "caption": "上の 3 つの接点が、下の一つに束ねた在庫と顧客 ID を共有します。裏側が一つなので、ネットで注文して店舗で受け取るように接点をまたげます。",
+      "nodes": [
+        {
+          "id": "shop",
+          "label": "実店舗\n店頭で見て買う",
+          "row": 0,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "ec",
+          "label": "EC サイト\nいつでも注文する",
+          "row": 0,
+          "col": 1,
+          "icon": "device"
+        },
+        {
+          "id": "cat",
+          "label": "カタログ通販\n電話や郵便で注文",
+          "row": 0,
+          "col": 2,
+          "icon": "document"
+        },
+        {
+          "id": "db",
+          "label": "在庫・顧客 ID\n購買履歴を一つに束ねる",
+          "row": 1,
+          "col": 1,
+          "shape": "cylinder",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "shop",
+          "to": "db",
+          "label": "同じ在庫と履歴",
+          "arrow": "both"
+        },
+        {
+          "from": "ec",
+          "to": "db",
+          "label": "同じ在庫と履歴",
+          "arrow": "both"
+        },
+        {
+          "from": "cat",
+          "to": "db",
+          "label": "同じ在庫と履歴",
+          "arrow": "both"
+        },
+        {
+          "from": "ec",
+          "to": "shop",
+          "label": "ネットで注文し\n店舗で受け取る"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 販売チャネルの4つの段階",
+      "direction": "up",
+      "caption": "段が上がるほど、経路どうしのつながりが進みます。強調したオムニチャネルは、裏側の連携に加えて顧客の体験まで統合した段です。",
+      "stages": [
+        {
+          "label": "シングルチャネル\n経路は一つだけ",
+          "next_label": "経路を増やす"
+        },
+        {
+          "label": "マルチチャネル\n経路ごとに在庫も顧客も独立",
+          "next_label": "裏側をつなぐ"
+        },
+        {
+          "label": "クロスチャネル\n在庫と顧客情報を連携",
+          "next_label": "体験まで統合する"
+        },
+        {
+          "label": "オムニチャネル\n一元化し体験も途切れない",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

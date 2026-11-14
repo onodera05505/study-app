@@ -1,0 +1,58 @@
+{
+  "topic_id": 720,
+  "term": "PPP",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### 1 対 1 の回線に足りないものを補う",
+      "caption": "上から時間の順です。LCP でリンクを確立し、認証を挟んで、NCP で上位の設定を済ませてからデータを送ります。",
+      "actors": [
+        {
+          "id": "a",
+          "label": "端末",
+          "icon": "device"
+        },
+        {
+          "id": "b",
+          "label": "接続先（ISP など）",
+          "icon": "server"
+        }
+      ],
+      "steps": [
+        {
+          "from": "a",
+          "to": "b",
+          "label": "LCP：最大受信サイズと認証方式を提案"
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "label": "LCP：合意してリンクを確立"
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "label": "認証：PAP か CHAP で利用者を示す",
+          "note": "相手が正当かをここで確かめる"
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "label": "認証の成功を返す"
+        },
+        {
+          "from": "b",
+          "to": "a",
+          "label": "NCP：IP アドレスなど上位の設定"
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "label": "データ（FCS 付きのフレーム）",
+          "note": "壊れたフレームは受信側で捨てる"
+        }
+      ]
+    }
+  ]
+}

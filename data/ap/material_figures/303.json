@@ -1,0 +1,18 @@
+{
+  "topic_id": 303,
+  "term": "PLM（Product Lifecycle Management）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "timeline",
+      "after": "### しくみ",
+      "caption": "横軸は製品 1 つの一生で、帯の長さが管理する範囲です。強調した帯は開発からリサイクルまで通しで、もう一方の帯は開発の段階だけです。",
+      "axis": {"label": "製品の一生", "ticks": ["開発", "製造", "販売", "保守", "リサイクル"]},
+      "events": [
+        {"from": 0, "to": 4, "label": "PLM\n開発からリサイクルまで\n製品情報を一元管理", "emphasis": true},
+        {"from": 0, "to": 0.9, "label": "PDM\n設計・開発段階の\n製品データだけ"},
+        {"at": 3, "label": "保守履歴\n次の製品開発に生かす"}
+      ]
+    }
+  ]
+}

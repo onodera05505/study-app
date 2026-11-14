@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="167" viewBox="0 0 757.6 198">
+<rect x="0.5" y="0.5" width="756.6" height="197" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<polyline points="122,28 296.4,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="296.4,28 288.4,31.6 288.4,24.4" fill="#1f2937"/>
+<polyline points="419.8,28 594.2,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="594.2,28 586.2,31.6 586.2,24.4" fill="#1f2937"/>
+<polyline points="358.1,102 358.1,79 655.9,79 655.9,56" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polygon points="655.9,56 659.5,64 652.3,64" fill="#1f2937"/>
+<rect x="0" y="0" width="122" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="61" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">間接方式の命令</text>
+<text x="61" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">アドレス部＝A</text>
+<rect x="296.4" y="0" width="123.4" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="358.1" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">主記憶の番地 A</text>
+<text x="358.1" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">中身は番地 B</text>
+<rect x="594.2" y="0" width="123.4" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="655.9" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">主記憶の番地 B</text>
+<text x="655.9" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">中身がデータ</text>
+<rect x="297.1" y="102" width="122" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="358.1" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">直接方式の命令</text>
+<text x="358.1" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">アドレス部＝B</text>
+<rect x="168.6" y="11" width="81.2" height="16" rx="3" fill="#ffffff"/>
+<text x="209.2" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1 回目の参照</text>
+<rect x="423.8" y="11" width="166.4" height="16" rx="3" fill="#ffffff"/>
+<text x="507" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2 回目の参照（B をたどる）</text>
+<rect x="454.4" y="65" width="105.2" height="16" rx="3" fill="#ffffff"/>
+<text x="507" y="78.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1 回の参照で届く</text>
+</g>
+</svg>

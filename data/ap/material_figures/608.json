@@ -1,0 +1,30 @@
+{
+  "topic_id": 608,
+  "term": "データサイエンティスト",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 3領域の切り分け方",
+      "caption": "仕事は上の段から下の段へ受け渡されます。扱う対象が課題か、分析の手法か、動かす基盤かで、どの領域かが決まります。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "ビジネス力\n何を解くか\n課題を整理する",
+          "icon": "building",
+          "next_label": "解くべき課題"
+        },
+        {
+          "label": "データサイエンス力\nどう解くか\n手法を選んで分析する",
+          "icon": "chart",
+          "next_label": "作ったモデル"
+        },
+        {
+          "label": "データエンジニアリング力\nどう動かすか\n分析の仕組みを実装・運用",
+          "icon": "server",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

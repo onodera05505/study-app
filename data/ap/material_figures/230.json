@@ -1,0 +1,85 @@
+{
+  "topic_id": 230,
+  "term": "プロセスアセスメント",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "規格が要求を課す相手はアセスメントを行う側です。アセスメントは診断結果を出すところで終わり、破線の先の改善や取引先の判定は、その結果を使うアセスメントとは別の活動です。",
+      "nodes": [
+        {
+          "id": "std",
+          "label": "JIS X 33002\n実施の要求事項",
+          "row": 0,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "asr",
+          "label": "アセスメントを行う側\n決まった手順で評価",
+          "row": 0,
+          "col": 1,
+          "emphasis": true,
+          "icon": "person"
+        },
+        {
+          "id": "proc",
+          "label": "組織のプロセス\n開発などの業務",
+          "row": 0,
+          "col": 2,
+          "icon": "gear"
+        },
+        {
+          "id": "res",
+          "label": "診断結果\nアセスメントはここで終わり",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "chart"
+        },
+        {
+          "id": "imp",
+          "label": "プロセス改善\nアセスメントとは別の活動\n弱点を直す",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "sel",
+          "label": "取引先の判定\nアセスメントとは別の活動\n能力を比べて選ぶ",
+          "row": 2,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "std",
+          "to": "asr",
+          "label": "評価の手順と\n評価者の要件"
+        },
+        {
+          "from": "asr",
+          "to": "proc",
+          "label": "測定・診断"
+        },
+        {
+          "from": "proc",
+          "to": "res",
+          "label": "測った能力の水準"
+        },
+        {
+          "from": "res",
+          "to": "imp",
+          "label": "結果を渡す\n（改善の出発点）",
+          "style": "dashed"
+        },
+        {
+          "from": "res",
+          "to": "sel",
+          "label": "結果を渡す\n（判定の材料）",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "topic_id": 665,
+  "term": "プロジェクトチームの育成",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "explanation",
+      "direction": "down",
+      "caption": "人に関わる 4 つのプロセスを、動詞と進む順で並べます。強調した育成は、集まったメンバの力量と関係を伸ばす段です。",
+      "stages": [
+        {
+          "label": "組織の定義\n決める：役割と体制",
+          "icon": "document",
+          "next_label": "決めた役割"
+        },
+        {
+          "label": "チームの編成\n集める：要員をそろえる",
+          "icon": "people",
+          "next_label": "集まったメンバ"
+        },
+        {
+          "label": "チームの育成\n育てる：力量と関係",
+          "icon": "arrow-cycle",
+          "next_label": "育ったチーム",
+          "emphasis": true
+        },
+        {
+          "label": "チームのマネジメント\n評価する：実績を測り手を打つ",
+          "icon": "chart"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### タックマンモデル",
+      "direction": "up",
+      "caption": "段が上がるほどチームが育ちます。強調した動乱期は避ける異常でなく、衝突を扱って越える段です。",
+      "stages": [
+        {
+          "label": "成立期\n集まって様子をうかがう",
+          "next_label": "意見を出し始める"
+        },
+        {
+          "label": "動乱期\n意見や利害がぶつかる",
+          "next_label": "衝突を扱って合意する",
+          "emphasis": true
+        },
+        {
+          "label": "安定期\n役割と規範が定まる",
+          "next_label": "規範に沿って動く"
+        },
+        {
+          "label": "遂行期\n成果が出る",
+          "next_label": "プロジェクトが終わる"
+        },
+        {
+          "label": "解散期\n目的を果たして解散"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "topic_id": 482,
+  "term": "IoT セキュリティガイドライン",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 製品の一生を時間順に追う構成",
+      "caption": "5 つの指針は、製品を作る前から世に出た後までを時間の順に並べたものです。前の段で決めたことが次の段の土台になり、強調した運用・保守は出荷後も続きます。",
+      "direction": "down",
+      "stages": [
+        {"label": "方針\n経営者が関与し体制を決める", "icon": "people", "next_label": "取り組む体制"},
+        {"label": "分析\n守る物とリスクを洗い出す", "icon": "search", "next_label": "洗い出したリスク"},
+        {"label": "設計\n守る造りを決めて検証する", "icon": "document", "next_label": "守る造り"},
+        {"label": "構築・接続\nつなぎ方・初期設定・認証", "icon": "network", "next_label": "つないだ機器"},
+        {"label": "運用・保守\n出荷後も更新を届け続ける", "icon": "arrow-cycle", "emphasis": true}
+      ]
+    }
+  ]
+}

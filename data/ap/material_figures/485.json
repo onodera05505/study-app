@@ -1,0 +1,115 @@
+{
+  "topic_id": 485,
+  "term": "DMZ（非武装地帯）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### なぜ中間の区画を作るのか",
+      "caption": "情報系から制御系へは直接通さず、修正プログラムも上の DMZ を経由して渡します。片方の関門が破られても、もう一段が残る形です。",
+      "nodes": [
+        {
+          "id": "i",
+          "label": "情報ネットワーク\n外部とつながる事務の PC",
+          "row": 1,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "z",
+          "label": "DMZ\nパッチ管理サーバだけ置く",
+          "row": 0,
+          "col": 1,
+          "emphasis": true,
+          "icon": "server"
+        },
+        {
+          "id": "c",
+          "label": "制御ネットワーク\nプラントの装置を動かす",
+          "row": 1,
+          "col": 2,
+          "icon": "gear"
+        }
+      ],
+      "edges": [
+        {
+          "from": "i",
+          "to": "z",
+          "label": "関門 1：DMZ まで入れる"
+        },
+        {
+          "from": "z",
+          "to": "c",
+          "label": "関門 2：DMZ からだけ通す"
+        },
+        {
+          "from": "i",
+          "to": "c",
+          "label": "直通は通さない",
+          "style": "dashed"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 一般のネットワークでの DMZ",
+      "caption": "外部からの接続はファイアウォールで DMZ の公開サーバまでに止め、内部ネットワークへは通しません。DMZ の機器が乗っ取られても、内部への通信は止めます。",
+      "nodes": [
+        {
+          "id": "n",
+          "label": "インターネット\n誰でも接続してくる",
+          "row": 0,
+          "col": 0,
+          "shape": "cloud"
+        },
+        {
+          "id": "f",
+          "label": "ファイアウォール\n通す通信を選ぶ",
+          "row": 0,
+          "col": 1,
+          "icon": "lock"
+        },
+        {
+          "id": "z",
+          "label": "DMZ\n公開 Web・外部向け DNS",
+          "row": 0,
+          "col": 2,
+          "emphasis": true,
+          "icon": "server"
+        },
+        {
+          "id": "l",
+          "label": "内部ネットワーク\n社員の PC・業務データ",
+          "row": 1,
+          "col": 2,
+          "icon": "device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "n",
+          "to": "f",
+          "label": "外部からの接続"
+        },
+        {
+          "from": "f",
+          "to": "z",
+          "label": "公開サービスへは通す"
+        },
+        {
+          "from": "f",
+          "to": "l",
+          "label": "内部へは止める",
+          "style": "dashed"
+        },
+        {
+          "from": "z",
+          "to": "l",
+          "label": "DMZ から内部へも止める",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

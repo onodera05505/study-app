@@ -1,0 +1,121 @@
+{
+  "topic_id": 448,
+  "term": "PPPoE（Point to Point Protocol over Ethernet）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "layers",
+      "after": "### しくみ",
+      "caption": "PPP の手順を、共有の LAN である Ethernet の上に載せるのが PPPoE の層です。下の層の中に上の層のフレームを包んで運びます。",
+      "shape": "stack",
+      "layers": [
+        {
+          "label": "PPP\n認証と IP アドレスの払い出し",
+          "note": "PAP・CHAP"
+        },
+        {
+          "label": "PPPoE\nセッション ID で 1 対 1 の\n論理的な回線を作る",
+          "note": "PPP のフレームを包む",
+          "emphasis": true
+        },
+        {
+          "label": "Ethernet\n複数の機器が共有する LAN",
+          "note": "1 対多"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "sequence",
+      "after": "### 接続の 2 段階",
+      "caption": "前半の発見段階でセッション ID を決め、後半のセッション段階でその ID を付けて PPP の認証と払い出しを行います。",
+      "actors": [
+        {
+          "id": "u",
+          "label": "利用者側の機器",
+          "icon": "device"
+        },
+        {
+          "id": "i",
+          "label": "ISP 側の装置",
+          "icon": "server"
+        }
+      ],
+      "steps": [
+        {
+          "from": "u",
+          "to": "i",
+          "label": "ブロードキャストで接続先を探す",
+          "note": "ここから発見段階"
+        },
+        {
+          "from": "i",
+          "to": "u",
+          "label": "接続先の装置が応答する"
+        },
+        {
+          "from": "u",
+          "to": "i",
+          "label": "応答した相手に接続を申し込む"
+        },
+        {
+          "from": "i",
+          "to": "u",
+          "label": "セッション ID を決めて通知する"
+        },
+        {
+          "from": "u",
+          "to": "i",
+          "label": "ID 付きで利用者 ID とパスワードを送る",
+          "note": "ここからセッション段階（PPP の認証）"
+        },
+        {
+          "from": "i",
+          "to": "u",
+          "label": "IP アドレスを払い出す"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "matrix",
+      "after": "### 混同しやすい用語",
+      "caption": "行が 3 つの方式、列が土台の回線と PPP の手順を使うかです。PPPoE は土台が IPoE と同じで、認証は PPP と同じです。",
+      "x": {
+        "label": "観点",
+        "values": [
+          "土台の回線",
+          "PPP の手順（認証）"
+        ]
+      },
+      "y": {
+        "label": "方式",
+        "values": [
+          "PPP",
+          "PPPoE",
+          "IPoE"
+        ]
+      },
+      "cells": [
+        [
+          "シリアル回線\n1 対 1 の回線",
+          "使う\nPAP・CHAP で認証"
+        ],
+        [
+          "Ethernet\n共有の LAN",
+          "使う\nEthernet に包んで流す"
+        ],
+        [
+          "Ethernet\n共有の LAN",
+          "使わない\n認証は回線側で済ませる"
+        ]
+      ],
+      "emphasis": [
+        [
+          1,
+          1
+        ]
+      ]
+    }
+  ]
+}

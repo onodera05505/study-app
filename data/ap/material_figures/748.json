@@ -1,0 +1,61 @@
+{
+  "topic_id": 748,
+  "term": "垂直統合",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### バリューチェーンのどこを取り込むか",
+      "caption": "縦の列が製品の流れで、上が川上、下が川下です。縦の向きに取り込むのが垂直統合、横の同じ段階の会社を取り込むのが水平統合です。",
+      "nodes": [
+        {
+          "id": "up",
+          "label": "部品・原材料の会社\n川上で供給する",
+          "row": 0,
+          "col": 1,
+          "icon": "box"
+        },
+        {
+          "id": "me",
+          "label": "自社（組立て）\n製品を作る",
+          "row": 1,
+          "col": 1,
+          "icon": "building",
+          "emphasis": true
+        },
+        {
+          "id": "down",
+          "label": "卸・小売\n川下で顧客に売る",
+          "row": 2,
+          "col": 1,
+          "icon": "people"
+        },
+        {
+          "id": "peer",
+          "label": "同業の組立て会社\n同じ段階で競う",
+          "row": 1,
+          "col": 2,
+          "icon": "building"
+        }
+      ],
+      "edges": [
+        {
+          "from": "me",
+          "to": "up",
+          "label": "後方統合（川上を取り込む）"
+        },
+        {
+          "from": "me",
+          "to": "down",
+          "label": "前方統合（川下を取り込む）"
+        },
+        {
+          "from": "me",
+          "to": "peer",
+          "label": "水平統合（同じ段階）",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

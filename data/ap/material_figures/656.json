@@ -1,0 +1,51 @@
+{
+  "topic_id": 656,
+  "term": "RARP（Reverse Address Resolution Protocol：逆アドレス解決プロトコル）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "matrix",
+      "after": "### ARP と RARP の向き",
+      "caption": "行ごとに、左の列の手掛かりを示すと右の列が返ってきます。ARP と RARP は向きが逆で、DHCP は設定一式まで返します。",
+      "x": {
+        "label": "やり取り",
+        "values": [
+          "手掛かりにする物",
+          "返ってくる物"
+        ]
+      },
+      "y": {
+        "label": "プロトコル",
+        "values": [
+          "ARP",
+          "RARP",
+          "DHCP"
+        ]
+      },
+      "cells": [
+        [
+          "相手の IP アドレス\n送り先は分かっている",
+          "相手の MAC アドレス\nフレームの宛先になる"
+        ],
+        [
+          "自分の MAC アドレス\n自分の IP を知らない",
+          "自分の IP アドレス\nこれだけ"
+        ],
+        [
+          "自分の MAC アドレス\n要求に添える",
+          "IP アドレス＋\nマスク・ゲートウェイ・DNS"
+        ]
+      ],
+      "emphasis": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    }
+  ]
+}

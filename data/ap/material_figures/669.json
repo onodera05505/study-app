@@ -1,0 +1,72 @@
+{
+  "topic_id": 669,
+  "term": "システム監査規程",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### なぜ経営者でなければならないのか",
+      "caption": "権限の出どころは組織の最上位にいる経営者です。経営者が承認した規程を根拠にするので、監査人はどの部門にも同じ権限で臨めます。",
+      "nodes": [
+        {
+          "id": "ceo",
+          "label": "経営者\n組織の最上位で\n全部門を統括する",
+          "row": 0,
+          "col": 1,
+          "emphasis": true,
+          "icon": "person"
+        },
+        {
+          "id": "aud",
+          "label": "監査人\n規程が権限の根拠",
+          "row": 1,
+          "col": 1,
+          "icon": "search"
+        },
+        {
+          "id": "a",
+          "label": "部門 A\n同じ立場で\n監査を受ける",
+          "row": 2,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "b",
+          "label": "部門 B\n同じ立場で\n監査を受ける",
+          "row": 2,
+          "col": 1,
+          "icon": "building"
+        },
+        {
+          "id": "c",
+          "label": "部門 C\n同じ立場で\n監査を受ける",
+          "row": 2,
+          "col": 2,
+          "icon": "building"
+        }
+      ],
+      "edges": [
+        {
+          "from": "ceo",
+          "to": "aud",
+          "label": "規程を承認し権限を与える"
+        },
+        {
+          "from": "aud",
+          "to": "a",
+          "label": "同じ権限"
+        },
+        {
+          "from": "aud",
+          "to": "b",
+          "label": "同じ権限"
+        },
+        {
+          "from": "aud",
+          "to": "c",
+          "label": "同じ権限"
+        }
+      ]
+    }
+  ]
+}

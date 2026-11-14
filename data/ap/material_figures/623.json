@@ -1,0 +1,126 @@
+{
+  "topic_id": 623,
+  "term": "ブロックチェーン",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 鎖でつながっているとはどういうことか",
+      "caption": "左から順に、各ブロックが直前のブロックのハッシュ値を持ちます。強調したブロックを書き換えると、破線の先がすべて食い違います。",
+      "nodes": [
+        {
+          "id": "b1",
+          "label": "ブロック 1\n取引データ\n前のハッシュ値",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "b2",
+          "label": "ブロック 2\n取引を書き換えた\nハッシュ値が変わる",
+          "row": 0,
+          "col": 1,
+          "emphasis": true,
+          "icon": "warning"
+        },
+        {
+          "id": "b3",
+          "label": "ブロック 3\n持っている前の値と\n合わなくなる",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "b4",
+          "label": "ブロック 4\nこれも合わなくなる",
+          "row": 0,
+          "col": 3
+        }
+      ],
+      "edges": [
+        {
+          "from": "b1",
+          "to": "b2",
+          "label": "ブロック 1 の\nハッシュ値"
+        },
+        {
+          "from": "b2",
+          "to": "b3",
+          "label": "変わった値と\n食い違う",
+          "style": "dashed"
+        },
+        {
+          "from": "b3",
+          "to": "b4",
+          "label": "作り直すと\nまた食い違う",
+          "style": "dashed"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 中央の管理者を置かない",
+      "caption": "中央の新しいブロックを、どのノードも合意して同じ台帳に足します。破線のノードが止まっても、残りのノードの台帳で続きます。",
+      "nodes": [
+        {
+          "id": "nb",
+          "label": "新しいブロック\n参加者の合意で\n追加を決める",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "shape": "round"
+        },
+        {
+          "id": "a",
+          "label": "ノード A\n同じ台帳を持つ",
+          "row": 0,
+          "col": 0,
+          "icon": "server"
+        },
+        {
+          "id": "b",
+          "label": "ノード B\n同じ台帳を持つ",
+          "row": 0,
+          "col": 2,
+          "icon": "server"
+        },
+        {
+          "id": "c",
+          "label": "ノード C\n同じ台帳を持つ",
+          "row": 2,
+          "col": 0,
+          "icon": "server"
+        },
+        {
+          "id": "d",
+          "label": "ノード D 停止中\n台帳は他に残る",
+          "row": 2,
+          "col": 2,
+          "icon": "warning"
+        }
+      ],
+      "edges": [
+        {
+          "from": "nb",
+          "to": "a",
+          "label": "合意して追加"
+        },
+        {
+          "from": "nb",
+          "to": "b",
+          "label": "合意して追加"
+        },
+        {
+          "from": "nb",
+          "to": "c",
+          "label": "合意して追加"
+        },
+        {
+          "from": "nb",
+          "to": "d",
+          "label": "届かない",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

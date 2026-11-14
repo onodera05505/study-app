@@ -1,0 +1,111 @@
+{
+  "topic_id": 423,
+  "term": "APIエコノミー",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "左の 3 社が公開した API を、中央の会社が組み合わせて新しいサービスにします。機能は右へ、利用料は左へ流れ、提供側にも収益が生まれます。",
+      "nodes": [
+        {
+          "id": "pay",
+          "label": "決済の会社\n決済の API を公開",
+          "row": 0,
+          "col": 0,
+          "icon": "money"
+        },
+        {
+          "id": "map",
+          "label": "地図の会社\n地図の API を公開",
+          "row": 1,
+          "col": 0,
+          "icon": "network"
+        },
+        {
+          "id": "auth",
+          "label": "認証の会社\nログインの API を公開",
+          "row": 2,
+          "col": 0,
+          "icon": "key"
+        },
+        {
+          "id": "new",
+          "label": "新サービスの会社\nAPI を組み合わせる",
+          "row": 1,
+          "col": 1,
+          "icon": "building",
+          "emphasis": true
+        },
+        {
+          "id": "user",
+          "label": "利用者\n新しいサービスを使う",
+          "row": 1,
+          "col": 2,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "pay",
+          "to": "new",
+          "label": "決済機能 ⇄ 利用料",
+          "arrow": "both"
+        },
+        {
+          "from": "map",
+          "to": "new",
+          "label": "地図機能 ⇄ 利用料",
+          "arrow": "both"
+        },
+        {
+          "from": "auth",
+          "to": "new",
+          "label": "認証機能 ⇄ 利用料",
+          "arrow": "both"
+        },
+        {
+          "from": "new",
+          "to": "user",
+          "label": "1 社では作れない\nサービス"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### 該当するかどうかの判断基準",
+      "caption": "2 つの条件を縦と横に置いた格子です。API エコノミーに当たるのは、両方を満たす左上の 1 マスだけです。",
+      "x": {
+        "label": "誰とつながったか",
+        "values": [
+          "企業の枠を越える",
+          "自社内だけ"
+        ]
+      },
+      "y": {
+        "label": "何が生まれたか",
+        "values": [
+          "新しいサービス・価値",
+          "効率化・コスト削減だけ"
+        ]
+      },
+      "cells": [
+        [
+          "API エコノミー\n両方の条件を満たす",
+          "当たらない\n社内の取り組み止まり"
+        ],
+        [
+          "当たらない\n他社と連携しても\n効率化で終わる",
+          "当たらない\n社内のシステム連携"
+        ]
+      ],
+      "emphasis": [
+        [
+          0,
+          0
+        ]
+      ]
+    }
+  ]
+}

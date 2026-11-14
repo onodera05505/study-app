@@ -1,0 +1,57 @@
+{
+  "topic_id": 705,
+  "term": "間接アドレス指定",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "上の段が間接アドレス指定で、アドレス部が指す番地 A の中身を、もう一度たどってデータに届きます。下の段の直接方式より参照が 1 回多くなります。",
+      "nodes": [
+        {
+          "id": "ii",
+          "label": "間接方式の命令\nアドレス部＝A",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "a",
+          "label": "主記憶の番地 A\n中身は番地 B",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "b",
+          "label": "主記憶の番地 B\n中身がデータ",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "di",
+          "label": "直接方式の命令\nアドレス部＝B",
+          "row": 1,
+          "col": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": "ii",
+          "to": "a",
+          "label": "1 回目の参照"
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "label": "2 回目の参照（B をたどる）"
+        },
+        {
+          "from": "di",
+          "to": "b",
+          "label": "1 回の参照で届く",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

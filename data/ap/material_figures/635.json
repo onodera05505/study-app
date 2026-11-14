@@ -4,69 +4,31 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "cycle",
       "after": "### 五つの段階と流れ",
       "caption": "戦略から設計・移行・提供へ矢印の順に進む四段階と、提供の実績を測って戦略へ返す改善の環を表します。改善は四段階すべてにかかります。",
-      "nodes": [
+      "center": "継続的\nサービス改善",
+      "stages": [
         {
-          "id": "st",
-          "label": "サービスストラテジ\n（計画立案）\n全体戦略を確立",
-          "row": 0,
-          "col": 0,
+          "label": "サービスストラテジ（計画立案）\n全体の戦略を確立する",
+          "icon": "document",
+          "next_label": "提供する価値",
           "emphasis": true
         },
         {
-          "id": "de",
-          "label": "サービスデザイン\n（設計）\n事業要件をサービスに",
-          "row": 0,
-          "col": 1
+          "label": "サービスデザイン（設計）\n事業要件をサービスの形に",
+          "icon": "gear",
+          "next_label": "設計したサービス"
         },
         {
-          "id": "tr",
-          "label": "サービストランジション\n（移行）\nテストして本番展開",
-          "row": 0,
-          "col": 2
+          "label": "サービストランジション（移行）\nテストして本番へ展開する",
+          "icon": "check",
+          "next_label": "本番のサービス"
         },
         {
-          "id": "op",
-          "label": "サービスオペレーション\n（提供）\n日々の提供とサポート",
-          "row": 1,
-          "col": 2
-        },
-        {
-          "id": "ci",
-          "label": "継続的サービス改善\n（改善）\n四段階すべてを測る",
-          "row": 1,
-          "col": 0,
-          "shape": "round"
-        }
-      ],
-      "edges": [
-        {
-          "from": "st",
-          "to": "de",
-          "label": "提供する価値"
-        },
-        {
-          "from": "de",
-          "to": "tr",
-          "label": "設計したサービス"
-        },
-        {
-          "from": "tr",
-          "to": "op",
-          "label": "本番のサービス"
-        },
-        {
-          "from": "op",
-          "to": "ci",
-          "label": "提供の実績"
-        },
-        {
-          "from": "ci",
-          "to": "st",
-          "label": "測定結果を戻す",
-          "style": "dashed"
+          "label": "サービスオペレーション（提供）\n日々の提供とサポート",
+          "icon": "people",
+          "next_label": "提供の実績を測って戻す"
         }
       ]
     }

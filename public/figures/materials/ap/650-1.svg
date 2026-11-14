@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="270" viewBox="0 0 640 270">
+<rect x="0.5" y="0.5" width="639" height="269" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(104 20)">
+<text x="280" y="18" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">軸</text>
+<text x="77" y="30" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">設計思想</text>
+<text x="204" y="45.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">故障したとき</text>
+<text x="356" y="45.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">処理の性能</text>
+<text x="77" y="89.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">フェールセーフ</text>
+<text x="77" y="147.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">フェールソフト</text>
+<text x="77" y="197.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">フォールト</text>
+<text x="77" y="213.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">トレラント</text>
+<rect x="128" y="56" width="152" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="204" y="81.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">止める</text>
+<text x="204" y="97.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">安全な側に倒して停止</text>
+<rect x="280" y="56" width="152" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="356" y="81.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">止まる</text>
+<text x="356" y="97.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">安全を性能より優先</text>
+<rect x="128" y="114" width="152" height="58" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="204" y="139.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">続ける</text>
+<text x="204" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">故障した部分を切り離す</text>
+<rect x="280" y="114" width="152" height="58" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="356" y="139.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">落とす</text>
+<text x="356" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">残った資源で処理</text>
+<rect x="128" y="172" width="152" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="204" y="197.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">続ける</text>
+<text x="204" y="213.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">予備が処理を引き継ぐ</text>
+<rect x="280" y="172" width="152" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="356" y="197.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">保つ</text>
+<text x="356" y="213.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">冗長構成で落とさない</text>
+</g>
+</svg>

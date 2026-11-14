@@ -1,0 +1,23 @@
+{
+  "topic_id": 178,
+  "term": "arp",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### ARP のはたらき",
+      "caption": "通信の直前の問い合わせで得た対応が ARP キャッシュに残り、arp はその残りを見せます。上から順に、キャッシュがいつできるかをたどれます。",
+      "actors": [
+        {"id": "me", "label": "自分の端末", "icon": "device"},
+        {"id": "peer", "label": "同じ LAN の相手", "icon": "device"}
+      ],
+      "steps": [
+        {"from": "me", "to": "peer", "label": "この IP アドレスの MAC は？（ARP 要求・ブロードキャスト）"},
+        {"from": "peer", "to": "me", "label": "自分の MAC アドレスを回答（ARP 応答）"},
+        {"from": "me", "to": "me", "label": "IP と MAC の対応を ARP キャッシュに保持", "note": "動的な項目は数分で消える"},
+        {"from": "me", "to": "peer", "label": "MAC アドレス宛てにフレームを送る"},
+        {"from": "me", "to": "me", "label": "arp -a でキャッシュの一覧を見る", "note": "通信していない相手は載らない"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="354" viewBox="0 0 640 354">
+<rect x="0.5" y="0.5" width="639" height="353" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(149.5 20)">
+<g transform="translate(37 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7.5" r="3.6"/><path d="M4.5 21 C4.5 14.2 19.5 14.2 19.5 21"/></g>
+<g transform="translate(282 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7.5" r="3.6"/><path d="M4.5 21 C4.5 14.2 19.5 14.2 19.5 21"/></g>
+<g transform="translate(0 28)">
+<line x1="48" y1="34" x2="48" y2="286" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="293" y1="34" x2="293" y2="286" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">送信者</text>
+<rect x="245" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="293" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">受信者</text>
+<polyline points="48,60 74,60 74,74 50,74" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="50,74 58,70.4 58,77.6" fill="#1f2937"/>
+<text x="82" y="68" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">1. 今回限りの共通鍵を乱数で作る</text>
+<polyline points="48,94 74,94 74,108 50,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="50,108 58,104.4 58,111.6" fill="#1f2937"/>
+<text x="82" y="102" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2. 本文を共通鍵で暗号化する</text>
+<polyline points="48,128 74,128 74,142 50,142" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="50,142 58,138.4 58,145.6" fill="#1f2937"/>
+<text x="82" y="136" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">3. 共通鍵を受信者の公開鍵で暗号化する</text>
+<rect x="-34" y="147" width="164" height="16" rx="3" fill="#ffffff"/>
+<text x="48" y="160.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">公開鍵で包むのは短い鍵だけ</text>
+<polyline points="51,186 290,186" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="290,186 282,189.6 282,182.4" fill="#1f2937"/>
+<text x="170.5" y="179" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 暗号化した本文 ＋ 暗号化した共通鍵</text>
+<polyline points="293,218 319,218 319,232 295,232" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="295,232 303,228.4 303,235.6" fill="#1f2937"/>
+<text x="327" y="226" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. 秘密鍵で共通鍵を復号</text>
+<polyline points="293,252 319,252 319,266 295,266" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="295,266 303,262.4 303,269.6" fill="#1f2937"/>
+<text x="327" y="260" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">6. 共通鍵で本文を復号</text>
+</g>
+</g>
+</svg>

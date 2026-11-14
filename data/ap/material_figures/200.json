@@ -1,0 +1,71 @@
+{
+  "topic_id": 200,
+  "term": "CSPM（Cloud Security Posture Management）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "### しくみ",
+      "caption": "CSPM はクラウドの設定を読み取り、基準と比べ、不備を直す輪を回し続けます。直した後も点検は止まらず次の一周に入ります。",
+      "center": "継続的な\n監視",
+      "stages": [
+        {
+          "label": "設定を読み取る\n公開範囲・アクセス権\n暗号化の有無",
+          "icon": "cloud",
+          "next_label": "今の設定"
+        },
+        {
+          "label": "基準と突き合わせる\nベストプラクティスと比べる",
+          "icon": "search",
+          "next_label": "見つけた不備",
+          "emphasis": true
+        },
+        {
+          "label": "警告・自動修正\n危険な設定を直す",
+          "icon": "gear",
+          "next_label": "直した設定"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### CASB との違い",
+      "caption": "2 つの仕組みを同じ観点で並べた表です。見る対象の列を比べると、設定なら CSPM、人の使い方なら CASB と切り分けられます。",
+      "x": {
+        "label": "観点",
+        "values": [
+          "見る対象",
+          "すること"
+        ]
+      },
+      "y": {
+        "label": "仕組み",
+        "values": [
+          "CSPM",
+          "CASB"
+        ]
+      },
+      "cells": [
+        [
+          "クラウド側の設定\n公開範囲・権限\n暗号化",
+          "設定の不備を\n検出して警告し\n自動で修正する"
+        ],
+        [
+          "利用者側の使い方\nどの SaaS を\nどう使っているか",
+          "利用を可視化し\n違反を検出して\n接続を制限する"
+        ]
+      ],
+      "emphasis": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    }
+  ]
+}

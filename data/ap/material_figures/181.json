@@ -1,0 +1,30 @@
+{
+  "topic_id": 181,
+  "term": "CRYPTREC 暗号リスト",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 危殆化とリストの入替え",
+      "caption": "暗号技術がリストの間を移る向きを示す図です。段の間の矢印は、どの条件で次のリストへ移るかを表します。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "推奨候補暗号リスト\n安全と確認済みで実績はこれから",
+          "icon": "search",
+          "next_label": "利用実績・普及の見込みが十分になる"
+        },
+        {
+          "label": "電子政府推奨暗号リスト\n新しく作るシステムで使う",
+          "icon": "check",
+          "emphasis": true,
+          "next_label": "危殆化して安全と言えなくなる"
+        },
+        {
+          "label": "運用監視暗号リスト\n互換性の維持のためだけに使う",
+          "icon": "warning"
+        }
+      ]
+    }
+  ]
+}

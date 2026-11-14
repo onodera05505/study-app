@@ -1,0 +1,86 @@
+{
+  "topic_id": 526,
+  "term": "IEEE 802.11a/b/g/n/ac/ax",
+  "figures": [
+    {
+      "id": 1,
+      "type": "venn",
+      "after": "### 規格ごとの周波数帯と速度",
+      "caption": "円は規格が使う周波数帯です。重ならない領域どうしの規格は使う帯が違うので、直接は通信できません。",
+      "layout": "overlap",
+      "sets": [
+        {
+          "id": "a",
+          "label": "2.4 GHz 帯"
+        },
+        {
+          "id": "b",
+          "label": "5 GHz 帯"
+        }
+      ],
+      "regions": [
+        {
+          "in": [
+            "a"
+          ],
+          "label": "11b・11g\n2.4 GHz 帯だけ"
+        },
+        {
+          "in": [
+            "b"
+          ],
+          "label": "11a・11ac\n5 GHz 帯だけ"
+        },
+        {
+          "in": [
+            "a",
+            "b"
+          ],
+          "label": "11n・11ax\n両方の帯を使える"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "sequence",
+      "after": "### CSMA/CA を使う理由",
+      "caption": "無線では送信中に衝突を検出できないので、送る前に空きを確かめて待ち、届いたかは ACK で確かめます。",
+      "actors": [
+        {
+          "id": "t",
+          "label": "送信する端末",
+          "icon": "device"
+        },
+        {
+          "id": "ap",
+          "label": "アクセスポイント",
+          "icon": "network"
+        }
+      ],
+      "steps": [
+        {
+          "from": "t",
+          "to": "t",
+          "label": "一定時間、電波の空きを確かめる",
+          "note": "送信中は衝突を検出できないので送る前に避ける"
+        },
+        {
+          "from": "t",
+          "to": "t",
+          "label": "さらにランダムな時間待つ"
+        },
+        {
+          "from": "t",
+          "to": "ap",
+          "label": "データを送る"
+        },
+        {
+          "from": "ap",
+          "to": "t",
+          "label": "ACK（受け取った）",
+          "note": "ACK が来なければ端末が再送する"
+        }
+      ]
+    }
+  ]
+}
