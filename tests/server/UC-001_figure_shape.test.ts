@@ -25,7 +25,10 @@ const CAPTION = '朱色の目印をたどって北の端から順に読みます
 type Json = Record<string, any>
 
 let ws = ''
+/** 権限を落としたファイル。後片付けで権限を戻してから作業場を消す。 */
+const locked: string[] = []
 afterEach(() => {
+  for (const f of locked.splice(0)) if (fs.existsSync(f)) fs.chmodSync(f, 0o644)
   if (ws) fs.rmSync(ws, { recursive: true, force: true })
   ws = ''
 })
@@ -38,12 +41,16 @@ function workspace(files: { topicId: number; term: string; figures: Json[] }[]) 
   for (const f of files)
     fs.writeFileSync(
       path.join(dir, `${f.topicId}-${f.term}.json`),
-      JSON.stringify({ topic_id: f.topicId, term: f.term, figures: f.figures }, null, 2),
+      rawJson(JSON.stringify({ topic_id: f.topicId, term: f.term, figures: f.figures }, null, 2)),
     )
 }
 
-function render() {
-  const r = spawnSync('python3', [RENDER, '--data', DATA, '--out', OUT], { cwd: ws, encoding: 'utf8' })
+/** JSON.stringify が書けない数（1e400・NaN）を、文字列の目印として置き、書き出すときに JSON の数の字面に戻す。 */
+const RAW = (literal: string) => `@@RAW:${literal}@@`
+const rawJson = (text: string) => text.replace(/"@@RAW:([^"@]+)@@"/g, '$1')
+
+function render(extra: string[] = []) {
+  const r = spawnSync('python3', [RENDER, '--data', DATA, '--out', OUT, ...extra], { cwd: ws, encoding: 'utf8' })
   return { status: r.status, out: `${r.stdout}\n${r.stderr}`.split(ws).join('<ws>') }
 }
 
@@ -174,18 +181,32 @@ const BAD_FIG = 58
 
 /** 決まりに従う図の論点と、調べたい図だけを id 58 として持つ論点を並べて描く。 */
 function drawWith(target: Json) {
+  return drawRaw({ id: BAD_FIG, after: 'explanation', caption: CAPTION, ...target })
+}
+
+/** 決まりに従う図の論点と、figures[] の 2 つ目に調べたい図をそのまま（id・after・caption も書いたとおりに）持つ論点を並べて描く。 */
+function drawRaw(figure: Json) {
   workspace([
     { topicId: GOOD_TOPIC, term: '決まりに従う図', figures: [{ id: 1, after: 'explanation', caption: CAPTION, ...blocks() }] },
     {
       topicId: BAD_TOPIC,
       term: '調べる図',
-      figures: [
-        { id: 1, after: 'explanation', caption: CAPTION, ...matrix(2, 2) },
-        { id: BAD_FIG, after: 'explanation', caption: CAPTION, ...target },
-      ],
+      figures: [{ id: 1, after: 'explanation', caption: CAPTION, ...matrix(2, 2) }, figure],
     },
   ])
   return render()
+}
+
+/** 決まりに従う図の論点と、中身をそのままの文字列で書いた論点 BAD_TOPIC のファイルを並べて描く。 */
+const BAD_FILE = `${BAD_TOPIC}-調べる図.json`
+function drawFile(content: string) {
+  return drawFileAt((file) => fs.writeFileSync(file, content))
+}
+/** 決まりに従う図の論点と並べて、論点 BAD_TOPIC のファイルの場所 file を setup で作り（OS の段で読めない物も）、描く。 */
+function drawFileAt(setup: (file: string) => void, extra: string[] = []) {
+  workspace([{ topicId: GOOD_TOPIC, term: '決まりに従う図', figures: [{ id: 1, after: 'explanation', caption: CAPTION, ...blocks() }] }])
+  setup(path.join(ws, DATA, 'material_figures', BAD_FILE))
+  return render(extra)
 }
 
 /** 終了 0 でなく、その図を描かず、その論点と図の番号を示し、理由の語（どれも）を示す。 */
@@ -200,6 +221,13 @@ function expectStoppedRun(r: { status: number | null; out: string }, reasons: Re
   expect(r.out, `${label} どの論点の図かを示していない`).toContain(String(BAD_TOPIC))
   expect(r.out, `${label} どの図かを示していない`).toContain(String(BAD_FIG))
   for (const reason of reasons) expect(r.out, `${label} 理由を示していない（${reason}）`).toMatch(reason)
+}
+
+/** 止めた上で、道具が例外で落ちずに（Python の traceback を出さずに）理由を示したこと。 */
+function expectStoppedClean(target: Json, reasons: RegExp[], label: string) {
+  const r = drawWith(target)
+  expectStoppedRun(r, reasons, label)
+  expect(r.out, `${label} 例外で落ちている:\n${r.out}`).not.toMatch(/Traceback/)
 }
 
 /** 決まりに従う形の図を 1 つの論点に並べて描き、どれも描かれて終了 0 で終わる。 */
@@ -534,7 +562,6 @@ describe('型ごとの形が図の仕様書に合わない図は描かずに止�
     const cases: [string, Json[]][] = [
       ['from > to', [{ from: 2, to: 1, label: '括弧\nの注記' }]],
       ['to が層の数と同じ', [{ from: 0, to: 5, label: '括弧\nの注記' }]],
-      ['from が負', [{ from: -1, to: 0, label: '括弧\nの注記' }]],
       ['from も to も層の外', [{ from: 5, to: 5, label: '括弧\nの注記' }]],
     ]
     for (const [label, brackets] of cases) expectStopped({ ...layers(5), brackets }, [/brackets|括弧/], label)
@@ -552,10 +579,12 @@ describe('型ごとの形が図の仕様書に合わない図は描かずに止�
   })
 
   // @covers REQ-440#bracket-label-absent
-  it('層の括弧に label が無い図は、止めてその図と括弧の理由を示す', () => {
+  it('層の括弧に label が無い・null・空・空白だけの図は、止めてその図と括弧の理由を示す', () => {
     const cases: [string, Json][] = [
       ['label の欄が無い', { from: 1, to: 4 }],
       ['label が null', { from: 1, to: 4, label: null }],
+      ['label が空の文字列', { from: 1, to: 4, label: '' }],
+      ['label が空白だけ', { from: 1, to: 4, label: ' 　\t\n ' }],
     ]
     for (const [label, bracket] of cases)
       expectStopped({ ...layers(5), brackets: [{ from: 0, to: 0, label: '端末の中で\n処理する' }, bracket] }, [/brackets|括弧/, /label|名前/], label)
@@ -573,12 +602,14 @@ describe('型ごとの形が図の仕様書に合わない図は描かずに止�
   })
 
   // @covers REQ-440#whole-label-absent
-  it('分解図の whole か whole の label が無い図は、止めてその図と分解する物の理由を示す', () => {
+  it('分解図の whole か whole の label が無い・null・空・空白だけの図は、止めてその図と分解する物の理由を示す', () => {
     const cases: [string, Json][] = [
       ['whole の欄が無い', edit(parts(), (f) => delete f.whole)],
       ['whole が空のオブジェクト', { ...parts(), whole: {} }],
       ['whole に icon だけ', { ...parts(), whole: { icon: 'gear' } }],
       ['whole の label が null', { ...parts(), whole: { label: null } }],
+      ['whole の label が空の文字列', { ...parts(), whole: { label: '' } }],
+      ['whole の label が空白だけ', { ...parts(), whole: { label: ' 　\t ' } }],
     ]
     for (const [label, fig] of cases) expectStopped(fig, [/whole|物/], label)
   })
@@ -727,5 +758,375 @@ describe('型ごとの形が図の仕様書に合わない図は描かずに止�
       'key', 'clock', 'gear', 'box', 'arrow-cycle', 'warning', 'check', 'mail', 'chart', 'search', 'hand',
     ]
     expectDrawn(VOCAB.flatMap((name) => ICON_PLACES.map(([place, make]) => [`${place} の ${name}`, make(name)] as [string, Json])))
+  })
+  /** 論点 BAD_TOPIC で、決まりに従う図 1 のほかに SVG が無いこと（id が整数でない図の SVG の名前は決まらないので、名前で探さない）。 */
+  const onlyFirstDrawn = () =>
+    !fs.existsSync(path.join(ws, OUT)) ||
+    fs.readdirSync(path.join(ws, OUT)).filter((f) => f.startsWith(`${BAD_TOPIC}-`) && f !== `${BAD_TOPIC}-1.svg`).length === 0
+
+  // @covers REQ-440#figure-id-not-positive-int
+  it('figures[].id が整数でない図は、止めてその論点と figures の id の理由を示す', () => {
+    const cases: [string, unknown, RegExp | null][] = [
+      ['小数', 1.5, /1\.5/],
+      ['数字の文字列', '2', null],
+      ['無限大（1e400）', RAW('1e400'), null],
+      ['NaN', RAW('NaN'), null],
+      ['真偽値 true', true, null],
+    ]
+    for (const [label, id, value] of cases) {
+      const r = drawRaw({ id, after: 'explanation', caption: CAPTION, ...blocks() })
+      expect(r.status, `${label} 止まらずに終了 0 で終わった:\n${r.out}`).not.toBe(0)
+      expect(onlyFirstDrawn(), `${label} 止めるべき図が描かれている`).toBe(true)
+      expect(r.out, `${label} 例外で落ちている:\n${r.out}`).not.toMatch(/Traceback/)
+      expect(r.out, `${label} どの論点の図かを示していない`).toContain(String(BAD_TOPIC))
+      expect(r.out, `${label} figures の id の理由を示していない`).toMatch(/\bid\b/)
+      expect(r.out, `${label} 1 始まりの整数の理由を示していない`).toMatch(/整数|1 始まり|integer/)
+      if (value) expect(r.out, `${label} その値を示していない`).toMatch(value)
+    }
+  })
+
+  // @covers REQ-440#required-field-absent
+  it('必須の欄（figures[] の id・after と、各型の節が必須と書く欄）が無い図は、止めてその図とその欄の名前を示す', () => {
+    const del = (make: () => Json, mutate: (f: Json) => void) => edit(make(), mutate)
+    const cases: [string, Json, RegExp[]][] = [
+      ['after', { id: BAD_FIG, caption: CAPTION, ...blocks() }, [/after/]],
+      ['blocks の nodes', del(blocks, (f) => delete f.nodes), [/nodes/]],
+      ['箱の id', del(blocks, (f) => { f.nodes.push({ label: two('部品', 9), row: 2, col: 0 }) }), [/nodes|箱/, /\bid\b/]],
+      ['箱の label', del(blocks, (f) => delete f.nodes[1].label), [/nodes|箱/, /label/]],
+      ['箱の row', del(blocks, (f) => delete f.nodes[1].row), [/row/]],
+      ['箱の col', del(blocks, (f) => delete f.nodes[1].col), [/col/]],
+      ['線の from', del(blocks, (f) => delete f.edges[1].from), [/edges|線/, /from/]],
+      ['線の to', del(blocks, (f) => delete f.edges[1].to), [/edges|線/, /\bto\b/]],
+      ['sequence の actors', del(sequence, (f) => delete f.actors), [/actors/]],
+      ['sequence の steps', del(sequence, (f) => delete f.steps), [/steps/]],
+      ['登場人物の id', del(sequence, (f) => { f.actors.push({ label: '認証局' }) }), [/actors|登場人物/, /\bid\b/]],
+      ['登場人物の label', del(sequence, (f) => delete f.actors[1].label), [/actors|登場人物/, /label/]],
+      ['手順の from', del(sequence, (f) => delete f.steps[1].from), [/steps|手順/, /from/]],
+      ['手順の to', del(sequence, (f) => delete f.steps[1].to), [/steps|手順/, /\bto\b/]],
+      ['手順の label', del(sequence, (f) => delete f.steps[1].label), [/steps|手順/, /label/]],
+      ['matrix の x', del(() => matrix(2, 2), (f) => delete f.x), [/\bx\b/]],
+      ['matrix の y', del(() => matrix(2, 2), (f) => delete f.y), [/\by\b/]],
+      ['matrix の cells', del(() => matrix(2, 2), (f) => delete f.cells), [/cells/]],
+      ['matrix の x.label', del(() => matrix(2, 2), (f) => delete f.x.label), [/\bx\b/, /label/]],
+      ['matrix の x.values', del(() => matrix(2, 2), (f) => delete f.x.values), [/\bx\b/, /values/]],
+      ['matrix の y.label', del(() => matrix(2, 2), (f) => delete f.y.label), [/\by\b/, /label/]],
+      ['matrix の y.values', del(() => matrix(2, 2), (f) => delete f.y.values), [/\by\b/, /values/]],
+      ['chart の x', del(chart, (f) => delete f.x), [/\bx\b/]],
+      ['chart の series', del(chart, (f) => delete f.series), [/series/]],
+      ['chart の x.label', del(chart, (f) => delete f.x.label), [/\bx\b/, /label/]],
+      ['chart の x.values', del(chart, (f) => delete f.x.values), [/\bx\b/, /values/]],
+      ['系列の label', del(chart, (f) => delete f.series[1].label), [/series|系列/, /label/]],
+      ['系列の values', del(chart, (f) => delete f.series[1].values), [/series|系列/, /values/]],
+      ['縦の補助線の x', { ...chart(), vlines: [{ label: '補助線' }] }, [/vlines/, /\bx\b/, /がありません/]],
+      ['注記の x', { ...chart(), annotations: [{ y: 300, text: '注記' }] }, [/annotations/, /\bx\b/, /がありません/]],
+      ['注記の y', { ...chart(), annotations: [{ x: 200, text: '注記' }] }, [/annotations/, /\by\b/, /がありません/]],
+      ['注記の text', { ...chart(), annotations: [{ x: 200, y: 300 }] }, [/annotations/, /text/, /がありません/]],
+      ['steps の stages', del(steps, (f) => delete f.stages), [/stages/]],
+      ['cycle の stages', del(cycle, (f) => delete f.stages), [/stages/]],
+      ['layers の layers', del(layers, (f) => delete f.layers), [/layers/]],
+      ['括弧の from', del(layers, (f) => delete f.brackets[1].from), [/brackets|括弧/, /from/, /がありません/]],
+      ['括弧の to', del(layers, (f) => delete f.brackets[1].to), [/brackets|括弧/, /\bto\b/, /がありません/]],
+      ['parts の parts', del(parts, (f) => delete f.parts), [/parts/]],
+      ['timeline の axis', del(timeline, (f) => delete f.axis), [/axis/]],
+      ['timeline の axis.ticks', del(timeline, (f) => delete f.axis.ticks), [/ticks/]],
+      ['timeline の events', del(timeline, (f) => delete f.events), [/events/]],
+      ['venn の sets', del(venn, (f) => delete f.sets), [/sets/]],
+      ['venn の regions', del(venn, (f) => delete f.regions), [/regions/]],
+      ['範囲の id', del(venn, (f) => { f.sets.push({ label: '範囲z' }) }), [/sets|範囲/, /\bid\b/]],
+      ['範囲の label', del(venn, (f) => delete f.sets[1].label), [/sets|範囲/, /label/]],
+      ['領域の in', del(venn, (f) => delete f.regions[2].in), [/regions|領域/, /\bin\b/]],
+    ]
+    for (const [label, fig, reasons] of cases) {
+      const r = label === 'after' ? drawRaw(fig) : drawWith(fig)
+      expectStoppedRun(r, reasons, `${label} が無い`)
+      expect(r.out, `${label} が無い 例外で落ちている:\n${r.out}`).not.toMatch(/Traceback/)
+    }
+  })
+
+  // @covers REQ-440#figure-id-absent
+  it('figures[] の id の欄が無いか null の図は、止めてその論点と id の理由を示す', () => {
+    const cases: [string, Json][] = [
+      ['id の欄が無い', { after: 'explanation', caption: CAPTION, ...blocks() }],
+      ['id が null', { id: null, after: 'explanation', caption: CAPTION, ...blocks() }],
+    ]
+    for (const [label, figure] of cases) {
+      const r = drawRaw(figure)
+      expect(r.status, `${label} 止まらずに終了 0 で終わった:\n${r.out}`).not.toBe(0)
+      expect(onlyFirstDrawn(), `${label} 止めるべき図が描かれている`).toBe(true)
+      expect(r.out, `${label} 例外で落ちている:\n${r.out}`).not.toMatch(/Traceback/)
+      expect(r.out, `${label} どの論点の図かを示していない`).toContain(String(BAD_TOPIC))
+      expect(r.out, `${label} id の理由を示していない`).toMatch(/\bid\b/)
+    }
+  })
+
+  // @covers REQ-440#array-not-array
+  it('項目の配列（nodes・edges・actors・steps・stages・layers・parts・events・sets・regions・series）が配列でない図は、止めてその図と配列の名前を示す', () => {
+    const cases: [string, Json, string][] = [
+      ['nodes が辞書', { ...blocks(), nodes: {} }, 'nodes'],
+      ['nodes が数', { ...blocks(), nodes: 5 }, 'nodes'],
+      ['edges が文字列', { ...blocks(), edges: 'n0→n1' }, 'edges'],
+      ['actors が数', { ...sequence(), actors: 2 }, 'actors'],
+      ['手順の steps が辞書', { ...sequence(), steps: {} }, 'steps'],
+      ['段階図の stages が文字列', { ...steps(), stages: '段' }, 'stages'],
+      ['循環の stages が辞書', { ...cycle(), stages: {} }, 'stages'],
+      ['layers が数', { ...layers(), layers: 5 }, 'layers'],
+      ['parts が文字列', { ...parts(), parts: '部位' }, 'parts'],
+      ['events が辞書', { ...timeline(), events: {} }, 'events'],
+      ['sets が文字列', { ...venn(), sets: 'ab' }, 'sets'],
+      ['regions が辞書', { ...venn(), regions: {} }, 'regions'],
+      ['series が数', { ...chart(), series: 3 }, 'series'],
+    ]
+    for (const [label, fig, name] of cases) expectStoppedClean(fig, [new RegExp(`\\b${name}\\b`), /配列|list|array/], label)
+  })
+
+  // @covers REQ-440#value-type-mismatch
+  it('欄の値の型が各型の節の書き方と違う図は、例外で落ちずに、止めてその論点と図の番号と欄の名前を示す', () => {
+    const cases: [string, Json, RegExp][] = [
+      ['matrix の x が文字列', { ...matrix(2, 2), x: '製品' }, /\bx\b/],
+      ['matrix の y が配列', { ...matrix(2, 2), y: ['市場0', '市場1'] }, /\by\b/],
+      ['matrix の cells が文字列', { ...matrix(2, 2), cells: '区分' }, /cells/],
+      ['matrix の cells の行が文字列', edit(matrix(2, 2), (f) => { f.cells[1] = '区分10' }), /cells/],
+      ['matrix の emphasis が文字列', { ...matrix(2, 2), emphasis: '[1, 1]' }, /emphasis/],
+      ['chart の x が文字列', { ...chart(), x: '売上高' }, /\bx\b/],
+      ['chart の y が文字列', { ...chart(), y: '金額' }, /\by\b/],
+      ['chart の x.values が文字列', edit(chart(), (f) => { f.x.values = '0,200,400,600' }), /values/],
+      ['chart の系列の要素が配列', edit(chart(), (f) => { f.series[0] = [100, 150, 200, 250] }), /series/],
+      ['chart の vlines が辞書', { ...chart(), vlines: { x: 200, label: '補助線' } }, /vlines/],
+      ['箱の要素が文字列', edit(blocks(), (f) => { f.nodes.push('n9') }), /nodes/],
+      ['箱の row が文字列', edit(blocks(), (f) => { f.nodes[1].row = '0' }), /row/],
+      ['登場人物の要素が文字列', edit(sequence(), (f) => { f.actors.push('監査役') }), /actors/],
+      ['段の要素が文字列', edit(steps(), (f) => { f.stages[2] = '設計' }), /stages/],
+      ['部位の label が数', edit(parts(), (f) => { f.parts[1].label = 5 }), /label/],
+      ['分解する物が文字列', { ...parts(), whole: '装置' }, /whole/],
+      ['層の括弧が辞書', { ...layers(), brackets: { from: 0, to: 1, label: '括弧\nの注記' } }, /brackets/],
+      ['括弧の from が文字列', edit(layers(), (f) => { f.brackets[1].from = '1' }), /from/],
+      ['時間軸の axis が文字列', { ...timeline(), axis: '発売からの時間' }, /axis/],
+      ['時間軸の ticks が文字列', edit(timeline(), (f) => { f.axis.ticks = '0 年,1 年,2 年' }), /ticks/],
+      ['出来事の要素が数', edit(timeline(), (f) => { f.events[1] = 3 }), /events/],
+      ['出来事の at が文字列', edit(timeline(), (f) => { f.events[1].at = '1' }), /\bat\b/],
+      ['範囲の要素が文字列', edit(venn(), (f) => { f.sets[1] = 'b' }), /sets/],
+      ['領域の要素が配列', edit(venn(), (f) => { f.regions[0] = ['a'] }), /regions/],
+      ['領域の in が文字列', edit(venn(), (f) => { f.regions[0].in = 'a' }), /\bin\b/],
+    ]
+    for (const [label, fig, field] of cases) expectStoppedClean(fig, [field], label)
+  })
+
+  // @covers REQ-440#sequence-step-endpoint-unknown
+  it('sequence の手順の from か to が actors に無い id を指す図は、止めてその図と、その id を示す', () => {
+    const cases: [string, Json][] = [
+      ['from が無い id', edit(sequence(), (f) => { f.steps[1].from = 'zq9' })],
+      ['to が無い id', edit(sequence(), (f) => { f.steps[1].to = 'zq9' })],
+      ['両端が無い id の自分への処理', edit(sequence(), (f) => { f.steps.push({ from: 'zq9', to: 'zq9', label: 'やり取り9' }) })],
+    ]
+    for (const [label, fig] of cases) expectStopped(fig, [/steps|手順/, /zq9/], label)
+  })
+
+  // @covers REQ-440#matrix-cells-size-mismatch
+  it('2 軸の分類の cells の大きさが y.values × x.values と違う図は、止めてその図と cells の理由を示す', () => {
+    const transpose = (f: Json) => { f.cells = f.cells[0].map((_: unknown, j: number) => f.cells.map((row: string[]) => row[j])) }
+    const cases: [string, Json][] = [
+      ['行が 1 つ少ない', edit(matrix(2, 3), (f) => { f.cells.pop() })],
+      ['行が 1 つ多い', edit(matrix(2, 3), (f) => { f.cells.push(['区分20\n一言', '区分21\n一言', '区分22\n一言']) })],
+      ['ある行の列が 1 つ少ない', edit(matrix(2, 3), (f) => { f.cells[1].pop() })],
+      ['ある行の列が 1 つ多い', edit(matrix(2, 3), (f) => { f.cells[1].push('区分13\n一言') })],
+      ['行と列を入れ替えた cells', edit(matrix(2, 3), transpose)],
+      ['cells が空の配列', { ...matrix(2, 2), cells: [] }],
+    ]
+    for (const [label, fig] of cases) expectStopped(fig, [/cells/], label)
+  })
+
+  // @covers REQ-440#matrix-emphasis-outside
+  it('2 軸の分類の emphasis が cells の外を指す図は、止めてその図と emphasis の理由を示す', () => {
+    const cases: [string, Json][] = [
+      ['行が y.values の個数', { ...matrix(2, 3), emphasis: [[2, 0]] }],
+      ['列が x.values の個数', { ...matrix(2, 3), emphasis: [[0, 3]] }],
+      ['3 行 2 列で列 2（行と列の取り違え）', { ...matrix(3, 2), emphasis: [[0, 2]] }],
+      ['内のセルと外のセルを並べる', { ...matrix(2, 2), emphasis: [[0, 0], [2, 2]] }],
+    ]
+    for (const [label, fig] of cases) expectStopped(fig, [/emphasis|強調/], label)
+  })
+
+  // @covers REQ-440#matrix-emphasis-at-edge
+  it('2 軸の分類の emphasis が cells の端のセルを指す図は、止めずに描く', () => {
+    expectDrawn([
+      ['2 行 3 列の左上', { ...matrix(2, 3), emphasis: [[0, 0]] }],
+      ['2 行 3 列の右下', { ...matrix(2, 3), emphasis: [[1, 2]] }],
+      ['3 行 2 列の右下', { ...matrix(3, 2), emphasis: [[2, 1]] }],
+      ['3×3 の左下と右上', { ...matrix(3, 3), emphasis: [[2, 0], [0, 2]] }],
+    ])
+  })
+
+  // @covers REQ-440#series-values-count-mismatch
+  it('chart の系列の values の個数が x.values と違う図は、止めてその図と系列の理由を示す', () => {
+    const cases: [string, Json][] = [
+      ['数値の軸で 1 つ少ない', edit(chart(2, 'line', 4), (f) => { f.series[1].values.pop() })],
+      ['数値の軸で 1 つ多い', edit(chart(2, 'line', 4), (f) => { f.series[1].values.push(500) })],
+      ['カテゴリの軸で 1 つ少ない', edit(chart(2, 'bar', 4), (f) => { f.series[0].values.pop() })],
+      ['カテゴリの軸で 1 つ多い', edit(chart(2, 'bar', 4), (f) => { f.series[0].values.push(500) })],
+      ['values が空', edit(chart(1, 'line', 4), (f) => { f.series[0].values = [] })],
+    ]
+    for (const [label, fig] of cases) expectStopped(fig, [/series|系列/, /values|個/], label)
+  })
+
+  // @covers REQ-440#series-values-non-numeric
+  it('chart の系列の values に数値でない物がある図は、止めてその図と系列の理由を示す', () => {
+    const cases: [string, unknown][] = [
+      ['数字の文字列', '250'],
+      ['空の文字列', ''],
+      ['null', null],
+      ['真偽値 true', true],
+      ['配列', [250]],
+    ]
+    for (const [label, value] of cases)
+      expectStoppedClean(edit(chart(2, 'line', 4), (f) => { f.series[1].values[2] = value }), [/series|系列/, /数値|values/], label)
+    expectStoppedClean(edit(chart(2, 'bar', 4), (f) => { f.series[0].values[1] = '区分1' }), [/series|系列/, /数値|values/], 'カテゴリの軸でカテゴリ名')
+  })
+
+  /** 縦の補助線と注記。 */
+  const vline = (x: unknown) => ({ x, label: '補助線' })
+  const note = (x: unknown) => ({ x, y: 300, text: '注記' })
+
+  // @covers REQ-440#chart-x-marker-out-of-range
+  it('数値の軸の chart で vlines か annotations の x が x.values の最小〜最大の外の図は、止めてその図とその鍵の理由を示す', () => {
+    const cases: [string, Json, RegExp][] = [
+      ['vlines の x が最小より下', { ...chart(2, 'line', 4), vlines: [vline(-1)] }, /vlines/],
+      ['vlines の x が最大より上', { ...chart(2, 'line', 4), vlines: [vline(601)] }, /vlines/],
+      ['annotations の x が最小より下（小数）', { ...chart(2, 'line', 4), annotations: [note(-0.5)] }, /annotations/],
+      ['annotations の x が最大より上', { ...chart(2, 'line', 4), annotations: [note(800)] }, /annotations/],
+      ['内の vlines と外の vlines を並べる', { ...chart(2, 'line', 4), vlines: [vline(200), vline(1000)] }, /vlines/],
+    ]
+    for (const [label, fig, key] of cases) expectStopped(fig, [key], label)
+  })
+
+  // @covers REQ-440#chart-x-marker-not-category
+  it('カテゴリの軸の chart で vlines か annotations の x が x.values に無い図は、止めてその図とその鍵の理由を示す', () => {
+    const cases: [string, Json, RegExp][] = [
+      ['vlines の x が無いカテゴリ名', { ...chart(2, 'bar', 4), vlines: [vline('区分9')] }, /vlines/],
+      ['annotations の x が無いカテゴリ名', { ...chart(2, 'bar', 4), annotations: [note('区分9')] }, /annotations/],
+      ['vlines の x が数', { ...chart(2, 'bar', 4), vlines: [vline(0)] }, /vlines/],
+      ['annotations の x が数', { ...chart(2, 'bar', 4), annotations: [note(1)] }, /annotations/],
+    ]
+    for (const [label, fig, key] of cases) expectStopped(fig, [key], label)
+  })
+
+  // @covers REQ-440#chart-x-marker-in-axis
+  it('vlines と annotations の x が、数値の軸で範囲の両端と内・カテゴリの軸で x.values のどれかの図は、止めずに描く', () => {
+    expectDrawn([
+      ['数値の軸の最小と最大と目盛りの間の vlines', { ...chart(2, 'line', 4), vlines: [vline(0), vline(600), vline(300)] }],
+      ['数値の軸の最小と最大と小数の annotations', { ...chart(2, 'line', 4), annotations: [note(0), note(600), note(250.5)] }],
+      ['カテゴリの軸の端と中の vlines', { ...chart(2, 'bar', 4), vlines: [vline('区分0'), vline('区分3')] }],
+      ['カテゴリの軸の annotations', { ...chart(2, 'bar', 4), annotations: [note('区分1')] }],
+    ])
+  })
+
+  // @covers REQ-440#number-not-finite
+  it('数・整数の欄が有限でない（無限大・NaN）図は、例外で落ちずに、止めてその論点と図の番号と欄の名前を示す', () => {
+    const cases: [string, Json, RegExp][] = [
+      ['chart の x.values に 1e400', edit(chart(2, 'line', 4), (f) => { f.x.values[3] = RAW('1e400') }), /values|\bx\b/],
+      ['chart の x.values に -1e400', edit(chart(2, 'line', 4), (f) => { f.x.values[0] = RAW('-1e400') }), /values|\bx\b/],
+      ['系列の values に 1e400', edit(chart(2, 'line', 4), (f) => { f.series[1].values[2] = RAW('1e400') }), /series|values/],
+      ['系列の values に -1e400', edit(chart(2, 'line', 4), (f) => { f.series[1].values[2] = RAW('-1e400') }), /series|values/],
+      ['系列の values に NaN', edit(chart(2, 'line', 4), (f) => { f.series[1].values[2] = RAW('NaN') }), /series|values/],
+      ['y.max が 1e400', edit(chart(), (f) => { f.y.max = RAW('1e400') }), /max|\by\b/],
+      ['y.min が -1e400', edit(chart(), (f) => { f.y.min = RAW('-1e400') }), /min|\by\b/],
+      ['注記の y が 1e400', { ...chart(2, 'line', 4), annotations: [{ x: 200, y: RAW('1e400'), text: '注記' }] }, /annotations|\by\b/],
+      ['注記の y が -1e400', { ...chart(2, 'line', 4), annotations: [{ x: 200, y: RAW('-1e400'), text: '注記' }] }, /annotations|\by\b/],
+      ['出来事の at が 1e400', edit(timeline(), (f) => { f.events[1].at = RAW('1e400') }), /events|\bat\b/],
+      ['出来事の at が -1e400', edit(timeline(), (f) => { f.events[1].at = RAW('-1e400') }), /events|\bat\b/],
+      ['chart の x.values に浮動小数点で表せない大きさの整数（1 の後に 0 が 400 個）', edit(chart(2, 'line', 4), (f) => { f.x.values[3] = RAW(`1${'0'.repeat(400)}`) }), /values|\bx\b/],
+    ]
+    for (const [label, fig, field] of cases) expectStoppedClean(fig, [field], label)
+  })
+
+  // @covers REQ-440#int-field-out-of-range
+  it('整数の欄の値が範囲（figures[].id は 1〜10000、他は 0〜10000）の外の図は、例外で落ちずに、止めてその欄と範囲の理由を示す', () => {
+    for (const [label, id, value] of [['0', 0, null], ['10001', 10001, /10001/]] as [string, number, RegExp | null][]) {
+      const r = drawRaw({ id, after: 'explanation', caption: CAPTION, ...blocks() })
+      expect(r.status, `id ${label} 止まらずに終了 0 で終わった:\n${r.out}`).not.toBe(0)
+      expect(onlyFirstDrawn(), `id ${label} 止めるべき図が描かれている`).toBe(true)
+      expect(r.out, `id ${label} 例外で落ちている:\n${r.out}`).not.toMatch(/Traceback/)
+      expect(r.out, `id ${label} どの論点の図かを示していない`).toContain(String(BAD_TOPIC))
+      expect(r.out, `id ${label} figures の id の理由を示していない`).toMatch(/\bid\b/)
+      expect(r.out, `id ${label} 範囲の理由を示していない`).toMatch(/1〜10000/)
+      if (value) expect(r.out, `id ${label} その値を示していない`).toMatch(value)
+    }
+    const cases: [string, Json, RegExp, RegExp][] = [
+      ['箱の row が -1', edit(blocks(), (f) => { f.nodes[1].row = -1 }), /row/, /-1/],
+      ['箱の row が 10001', edit(blocks(), (f) => { f.nodes[1].row = 10001 }), /row/, /10001/],
+      ['箱の col が -1', edit(blocks(), (f) => { f.nodes[1].col = -1 }), /col/, /-1/],
+      ['箱の col が 10001', edit(blocks(), (f) => { f.nodes[1].col = 10001 }), /col/, /10001/],
+      ['括弧の from が -1', { ...layers(5), brackets: [{ from: -1, to: 0, label: '括弧\nの注記' }] }, /from|brackets/, /-1/],
+      ['emphasis の行が -1', { ...matrix(2, 3), emphasis: [[-1, 0]] }, /emphasis/, /-1/],
+      ['emphasis の列が -1', { ...matrix(2, 3), emphasis: [[0, -1]] }, /emphasis/, /-1/],
+    ]
+    for (const [label, fig, field, value] of cases) expectStoppedClean(fig, [field, /0〜10000/, value], label)
+  })
+
+  // @covers REQ-440#int-field-in-range
+  it('整数の欄の値が範囲の端（figures[].id の 1 と 10000、row・col・括弧の from・emphasis の 0）と小さい値の図は、止めずに描く', () => {
+    workspace([
+      {
+        topicId: BAD_TOPIC,
+        term: '調べる図',
+        figures: [
+          { id: 1, after: 'explanation', caption: CAPTION, ...blocks() },
+          { id: 10000, after: 'explanation', caption: CAPTION, ...edit(blocks(), (f) => { f.nodes[0].row = 0; f.nodes[0].col = 0; f.nodes[4].row = 2; f.nodes[4].col = 3 }) },
+          { id: 2, after: 'explanation', caption: CAPTION, ...layers(5), brackets: [{ from: 0, to: 4, label: '括弧\nの注記' }] },
+          { id: 3, after: 'explanation', caption: CAPTION, ...matrix(2, 3), emphasis: [[0, 0], [0, 2]] },
+        ],
+      },
+    ])
+    const r = render()
+    expect(r.status, `止まった:\n${r.out}`).toBe(0)
+    for (const id of [1, 10000, 2, 3]) expect(fs.existsSync(svgPath(BAD_TOPIC, id)), `図 ${id} が描かれていない:\n${r.out}`).toBe(true)
+  })
+
+  /** ファイルの階層で止めた実行が、そのファイルと理由を示し、例外で落ちず、終了 0 でないこと。 */
+  function expectFileStopped(content: string | ((file: string) => void), reasons: RegExp[], label: string, extra: string[] = []) {
+    const r = typeof content === 'string' ? drawFile(content) : drawFileAt(content, extra)
+    expect(r.status, `${label} 止まらずに終了 0 で終わった:\n${r.out}`).not.toBe(0)
+    expect(r.out, `${label} 例外で落ちている:\n${r.out}`).not.toMatch(/Traceback/)
+    expect(r.out, `${label} どのファイルかを示していない`).toContain(BAD_FILE)
+    for (const reason of reasons) expect(r.out, `${label} 理由を示していない（${reason}）`).toMatch(reason)
+    expect(fs.existsSync(svgPath(BAD_TOPIC, 1)), `${label} 読めないファイルの図が描かれている`).toBe(false)
+  }
+  const fileBody = (figures: string) =>
+    `{"topic_id": ${BAD_TOPIC}, "term": "調べる図", "figures": ${figures}}`
+  const goodFigure = () => JSON.stringify({ id: 1, after: 'explanation', caption: CAPTION, ...blocks() })
+
+  // @covers REQ-440#file-unreadable
+  it('JSON として読めないか入れ子が深すぎる論点のファイルは、例外で落ちずに、止めてそのファイルと JSON が読めない理由を示す', () => {
+    const cases: [string, string][] = [
+      ['閉じ括弧の欠けた JSON', fileBody(`[${goodFigure()}`)],
+      ['末尾のカンマ', fileBody(`[${goodFigure()},]`)],
+      ['入れ子 2000 段', fileBody(`[${goodFigure().slice(0, -1)}, "deep": ${'['.repeat(2000)}${']'.repeat(2000)}}]`)],
+    ]
+    for (const [label, content] of cases) expectFileStopped(content, [/JSON/], label)
+    const osCases: [string, (file: string) => void, string[]][] = [
+      ['論点のファイルの名前のディレクトリ', (file) => fs.mkdirSync(file), []],
+      ['論点のファイルの名前のディレクトリを --only で絞る', (file) => fs.mkdirSync(file), ['--only', String(BAD_TOPIC)]],
+      ['無い先を指すシンボリックリンク', (file) => fs.symlinkSync(path.join(path.dirname(file), '無い先.json'), file), []],
+      [
+        '権限 000 のファイル',
+        (file) => {
+          fs.writeFileSync(file, fileBody(`[${goodFigure()}]`))
+          fs.chmodSync(file, 0o000)
+          locked.push(file)
+        },
+        [],
+      ],
+    ]
+    for (const [label, setup, extra] of osCases) expectFileStopped(setup, [/JSON/], label, extra)
+  })
+
+  // @covers REQ-440#file-top-type-mismatch
+  it('中身が辞書でない・topic_id が整数でない・term が文字列でない・figures が配列でない論点のファイルは、例外で落ちずに、止めてそのファイルとその欄の型の理由を示す', () => {
+    const cases: [string, string, RegExp][] = [
+      ['中身が配列', `[${goodFigure()}]`, /辞書|dict|object/],
+      ['topic_id が文字列', `{"topic_id": "${BAD_TOPIC}", "term": "調べる図", "figures": [${goodFigure()}]}`, /topic_id/],
+      ['term が数', `{"topic_id": ${BAD_TOPIC}, "term": 5, "figures": [${goodFigure()}]}`, /term/],
+      ['figures が辞書', fileBody(goodFigure()), /figures/],
+    ]
+    for (const [label, content, field] of cases) expectFileStopped(content, [field, /型/], label)
   })
 })

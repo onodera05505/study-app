@@ -52,6 +52,7 @@ import argparse
 import json
 import re
 import math
+import stat
 import sys
 from pathlib import Path
 
@@ -533,7 +534,40 @@ PLOT_H = 210.0
 
 
 def is_number(v) -> bool:
-    return isinstance(v, (int, float)) and not isinstance(v, bool)
+    """仕様書の「数」＝有限の数。真偽値は数に数えない。無限大・NaN（JSON の 1e400 は無限大に読まれる）と、
+    浮動小数点に収まらない大きさの整数は描く計算が成り立たないので数に数えない。"""
+    if isinstance(v, bool) or not isinstance(v, (int, float)):
+        return False
+    try:
+        return math.isfinite(v)
+    except OverflowError:
+        return False
+
+
+def _non_finite(v) -> bool:
+    """数の形をしているが有限の数でない値（無限大・NaN・浮動小数点に収まらない整数）。"""
+    return isinstance(v, (int, float)) and not isinstance(v, bool) and not is_number(v)
+
+
+def _widen(lo: float, hi: float) -> tuple:
+    """軸の幅が 0 以下にならないよう広げる。1 を足しても値が変わらない大きさでも幅を残す。"""
+    if hi > lo:
+        return lo, hi
+    if lo + 1.0 > lo:
+        return lo, lo + 1.0
+    d = abs(lo) * 1e-6
+    return (lo, lo + d) if math.isfinite(lo + d) else (lo - d, lo)
+
+
+def _ratio(v: float, lo: float, hi: float) -> float:
+    """lo〜hi の中での v の位置（0〜1）。差が浮動小数点の上限を超える大きさでも半分にして測る。
+    軸の外の値は描く座標が有限に収まるよう ±1e6 で頭打ちにする。"""
+    span, off = hi - lo, v - lo
+    if math.isfinite(span) and math.isfinite(off):
+        r = off / span
+    else:
+        r = (v / 2 - lo / 2) / (hi / 2 - lo / 2)
+    return min(max(r, -1e6), 1e6)
 
 
 def fmt_num(v: float) -> str:
@@ -543,21 +577,31 @@ def fmt_num(v: float) -> str:
 
 
 def nice_ticks(lo: float, hi: float, count: int = 5) -> list:
-    if hi <= lo:
-        hi = lo + 1.0
+    lo, hi = _widen(lo, hi)
     raw = (hi - lo) / count
+    if not math.isfinite(raw):
+        raw = hi / count - lo / count
     mag = 10 ** math.floor(math.log10(raw)) if raw > 0 else 1.0
     step = mag * 10
     for m in (1, 2, 2.5, 5, 10):
         if raw <= m * mag:
             step = m * mag
             break
+    # 幅が浮動小数点の刻みより細かいと刻みが 0 になり、目盛りを並べられない
+    if not (step > 0 and is_number(step)):
+        return [lo, hi]
     start = math.floor(lo / step) * step
+    if not is_number(start):
+        start = lo
     ticks, v = [], start
-    while v <= hi + step * 1e-6:
+    while v <= hi + step * 1e-6 and len(ticks) <= 100:
         ticks.append(round(v, 10))
-        v += step
-    return ticks
+        nv = v + step
+        # 刻みが値に対して細かすぎて進まない・浮動小数点に収まらない所まで進んだら打ち切る
+        if nv == v or not is_number(nv):
+            break
+        v = nv
+    return ticks or [lo, hi]
 
 
 def series_color(series, i: int) -> str:
@@ -580,8 +624,7 @@ def draw_chart(spec) -> tuple:
     ymax = spec["y"].get("max")
     lo = float(ymin) if ymin is not None else min(vals + [0.0])
     hi = float(ymax) if ymax is not None else max(vals)
-    if hi <= lo:
-        hi = lo + 1.0
+    lo, hi = _widen(lo, hi)
     ticks = nice_ticks(lo, hi)
     if ymin is None:
         lo = min(lo, ticks[0])
@@ -597,15 +640,13 @@ def draw_chart(spec) -> tuple:
     y0, y1 = 6.0, 6.0 + PLOT_H           # y0=上端, y1=下端
 
     def sy(v: float) -> float:
-        return y1 - (float(v) - lo) / (hi - lo) * (y1 - y0)
+        return y1 - _ratio(float(v), lo, hi) * (y1 - y0)
 
     if numeric_x:
-        xlo, xhi = float(min(xv)), float(max(xv))
-        if xhi <= xlo:
-            xhi = xlo + 1.0
+        xlo, xhi = _widen(float(min(xv)), float(max(xv)))
 
         def sx(v):
-            return x0 + (float(v) - xlo) / (xhi - xlo) * plot_w
+            return x0 + _ratio(float(v), xlo, xhi) * plot_w
         x_ticks = [(sx(v), fmt_num(float(v))) for v in xv]
     else:
         band = plot_w / len(xv)
@@ -1394,13 +1435,156 @@ def render(fig) -> str:
 
 # ---------------------------------------------------------------- 検証
 
-def _need(d, keys, where, problems) -> bool:
+def _need(d, keys, where, problems, path="") -> bool:
+    """必須の欄。無い・null・空の文字列は無いのと同じ。path は欄の名前の頭（"nodes[0]" など）。"""
+    if not isinstance(d, dict):
+        problems.append(f"{where}: {path or 'ファイルの中身'} の型が違う（辞書）")
+        return False
     ok = True
     for k in keys:
-        if k not in d or d[k] in (None, ""):
-            problems.append(f"{where}: {k} がありません")
+        if _absent(d.get(k)):
+            problems.append(f"{where}: {f'{path}.{k}' if path else k} がありません")
             ok = False
     return ok
+
+
+def _absent(v) -> bool:
+    return v is None or (isinstance(v, str) and v == "")
+
+
+# ---- 欄の値の型（仕様書の各型の節の書き方）。型が違えば中身の判定に進まず、その欄を示して止める
+
+def _is_int(v) -> bool:
+    return isinstance(v, int) and not isinstance(v, bool)
+
+
+T_STR = ("文字列", lambda v: isinstance(v, str))
+T_INT = ("整数", _is_int)
+T_NUM = ("数", lambda v: is_number(v))
+T_BOOL = ("真偽", lambda v: isinstance(v, bool))
+T_ID = ("文字列か整数", lambda v: isinstance(v, str) or _is_int(v))
+T_NUM_STR = ("数か文字列", lambda v: isinstance(v, str) or is_number(v))
+T_CELL = ("[行, 列] の整数 2 つ", lambda v: isinstance(v, list) and len(v) == 2 and all(_is_int(x) for x in v))
+T_ANY = ("", lambda v: True)
+
+
+class _Dict:
+    """辞書の欄。fields は 欄の名前 → (型, 必須か)。必須でない欄は無い・null なら見ない。
+    決められた語から選ぶ欄（type・kind・shape など）と icon は、語の門が値ごと判定するのでここに書かない。
+    個別の文言がある欄（項目の label・y・whole・axis.label など）は必須にせず、その判定に任せる。"""
+    def __init__(self, fields):
+        self.fields = fields
+
+
+class _List:
+    """配列の欄。item が真なら仕様書の「項目の配列」で、配列でないときの文言が `<配列名> は配列` になる。"""
+    def __init__(self, elem, item=False):
+        self.elem, self.item = elem, item
+
+
+def _check_shape(v, spec, path, where, problems) -> None:
+    if isinstance(spec, _Dict):
+        if not isinstance(v, dict):
+            problems.append(f"{where}: {path} の型が違う（辞書）")
+            return
+        for k, (sub, required) in spec.fields.items():
+            x = v.get(k)
+            p = f"{path}.{k}" if path else k
+            if _absent(x):
+                if required:
+                    problems.append(f"{where}: {p} がありません")
+                continue
+            _check_shape(x, sub, p, where, problems)
+    elif isinstance(spec, _List):
+        if not isinstance(v, list):
+            problems.append(f"{where}: {path} は配列" if spec.item else f"{where}: {path} の型が違う（配列）")
+            return
+        for i, x in enumerate(v):
+            _check_shape(x, spec.elem, f"{path}[{i}]", where, problems)
+    else:
+        name, ok = spec
+        if not ok(v):
+            # 数か文字列の欄に有限でない数が来たのは、数として型が違う
+            if name == T_NUM_STR[0] and _non_finite(v):
+                name = T_NUM[0]
+            problems.append(f"{where}: {path} の型が違う（{name}）")
+
+
+# 整数の欄（figures[].id・nodes[] の row／col・brackets[] の from／to・matrix の emphasis の行・列）の上限
+INT_MAX = 10000
+
+
+def _show(v) -> str:
+    """理由の文に入れる値の repr。長い値は頭だけにする。"""
+    try:
+        s = repr(v)
+    except ValueError:
+        s = f"<{type(v).__name__}>"
+    return s if len(s) <= 40 else s[:37] + "..."
+
+
+# @implements REQ-440
+def _check_range(v, name, where, problems, lo=0) -> bool:
+    """整数の欄の値が lo〜INT_MAX の内か。外ならその欄と値を示す。"""
+    if lo <= v <= INT_MAX:
+        return True
+    problems.append(f"{where}: {name} の値 {_show(v)} が範囲（{lo}〜{INT_MAX}）の外")
+    return False
+
+
+_ITEM = {"label": (T_STR, False), "emphasis": (T_BOOL, False)}
+_STAGES = _List(_Dict({**_ITEM, "next_label": (T_STR, False)}), item=True)
+
+# 図の一番上の階層の id・type・caption・after は load と validate_figure が見る
+FIGURE_SHAPES = {
+    "blocks": _Dict({
+        "nodes": (_List(_Dict({"id": (T_ID, True), "label": (T_STR, True), "row": (T_INT, True),
+                               "col": (T_INT, True), "emphasis": (T_BOOL, False)}), item=True), True),
+        "edges": (_List(_Dict({"from": (T_ID, True), "to": (T_ID, True), "label": (T_STR, False)}),
+                        item=True), False),
+    }),
+    "sequence": _Dict({
+        "actors": (_List(_Dict({"id": (T_ID, True), "label": (T_STR, True)}), item=True), True),
+        "steps": (_List(_Dict({"from": (T_ID, True), "to": (T_ID, True), "label": (T_STR, True),
+                               "note": (T_STR, False)}), item=True), True),
+    }),
+    "matrix": _Dict({
+        "x": (_Dict({"label": (T_STR, True), "values": (_List(T_STR), True)}), True),
+        "y": (_Dict({"label": (T_STR, True), "values": (_List(T_STR), True)}), True),
+        "cells": (_List(_List(T_STR)), True),
+        "emphasis": (_List(T_CELL), False),
+    }),
+    "chart": _Dict({
+        "x": (_Dict({"label": (T_STR, True), "values": (_List(T_NUM_STR), True)}), True),
+        "y": (_Dict({"label": (T_STR, False), "min": (T_NUM, False), "max": (T_NUM, False)}), False),
+        "series": (_List(_Dict({"label": (T_STR, True), "values": (_List(T_ANY), True),
+                                "emphasis": (T_BOOL, False)}), item=True), True),
+        "vlines": (_List(_Dict({"x": (T_NUM_STR, True), "label": (T_STR, False)})), False),
+        "annotations": (_List(_Dict({"x": (T_NUM_STR, True), "y": (T_NUM, True),
+                                     "text": (T_STR, True)})), False),
+    }),
+    "steps": _Dict({"stages": (_STAGES, True)}),
+    "cycle": _Dict({"stages": (_STAGES, True), "center": (T_STR, False)}),
+    "layers": _Dict({
+        "layers": (_List(_Dict({**_ITEM, "note": (T_STR, False)}), item=True), True),
+        "brackets": (_List(_Dict({"from": (T_INT, True), "to": (T_INT, True),
+                                  "label": (T_STR, False)})), False),
+    }),
+    "parts": _Dict({
+        "whole": (_Dict({"label": (T_STR, False)}), False),
+        "parts": (_List(_Dict(_ITEM), item=True), True),
+    }),
+    "timeline": _Dict({
+        "axis": (_Dict({"label": (T_STR, False), "ticks": (_List(T_STR), True)}), True),
+        "events": (_List(_Dict({**_ITEM, "at": (T_NUM, False), "from": (T_NUM, False),
+                                "to": (T_NUM, False)}), item=True), True),
+    }),
+    "venn": _Dict({
+        "universe": (T_STR, False),
+        "sets": (_List(_Dict({"id": (T_ID, True), "label": (T_STR, True)}), item=True), True),
+        "regions": (_List(_Dict({**_ITEM, "in": (_List(T_ID), True)}), item=True), True),
+    }),
+}
 
 
 CAPTION_POLITE = re.compile(r"(です|ます|ません|でしょう|ました)[。）)]*$")
@@ -1535,14 +1719,9 @@ def _check_next_labels(stages, cyclic, where, problems) -> None:
 def _validate_item_type(fig, t, where, problems) -> None:
     """5〜10 の型（steps・cycle・layers・parts・timeline・venn）の中身の門。"""
     arr, noun = ITEM_ARRAYS[t]
-    if not _need(fig, [arr], where, problems):
-        return
     items = fig[arr]
-    if not isinstance(items, list):
-        problems.append(f"{where}: {arr} は配列")
-        return
     c_arr, lo, hi, head = ITEM_COUNTS[t]
-    counted = fig.get(c_arr) if isinstance(fig.get(c_arr), list) else []
+    counted = fig[c_arr]
     if not lo <= len(counted) <= hi:
         problems.append(f"{where}: {head}（今は {len(counted)}）")
     _check_items(items, arr, noun, where, problems)
@@ -1556,13 +1735,12 @@ def _validate_item_type(fig, t, where, problems) -> None:
         if fig.get("shape", "stack") not in ("stack", "pyramid"):
             problems.append(f"{where}: 未知の shape {fig.get('shape')!r}（stack/pyramid）")
         taken = []
-        for i, b in enumerate(fig.get("brackets", []) or []):
-            if not isinstance(b, dict):
-                problems.append(f"{where}: brackets[{i}] に label が無い")
-                continue
+        for i, b in enumerate(fig.get("brackets") or []):
             if _blank(b.get("label")):
                 problems.append(f"{where}: brackets[{i}] に label が無い")
             f, to = b.get("from"), b.get("to")
+            _check_range(f, f"brackets[{i}].from", where, problems)
+            _check_range(to, f"brackets[{i}].to", where, problems)
             valid = (isinstance(f, int) and isinstance(to, int) and not isinstance(f, bool)
                      and not isinstance(to, bool) and 0 <= f <= to < len(items))
             if valid and any(f <= t1 and t0 <= to for t0, t1 in taken):
@@ -1574,25 +1752,18 @@ def _validate_item_type(fig, t, where, problems) -> None:
                 taken.append((f, to))
 
     elif t == "parts":
-        whole = fig.get("whole")
-        if not isinstance(whole, dict) or _blank(whole.get("label")):
+        if _blank((fig.get("whole") or {}).get("label")):
             problems.append(f"{where}: whole の label が無い（分解する物の名前を書く）")
 
     elif t == "timeline":
-        if not _need(fig, ["axis"], where, problems):
-            return
         axis = fig["axis"]
-        if not isinstance(axis, dict) or _blank(axis.get("label")):
+        if _blank(axis.get("label")):
             problems.append(f"{where}: axis の label が無い（軸の名前を書く）")
-        if not isinstance(axis, dict):
-            return
-        ticks = axis.get("ticks") if isinstance(axis.get("ticks"), list) else []
+        ticks = axis["ticks"]
         if not 2 <= len(ticks) <= 12:
             problems.append(f"{where}: axis.ticks は 2〜12（今は {len(ticks)}）")
         last = len(ticks) - 1
         for i, e in enumerate(items):
-            if not isinstance(e, dict):
-                continue
             has_at = "at" in e
             has_from, has_to = "from" in e, "to" in e
             if has_at == (has_from or has_to) or (has_from != has_to):
@@ -1606,24 +1777,17 @@ def _validate_item_type(fig, t, where, problems) -> None:
                 problems.append(f"{where}: events[{i}] の位置が範囲外（0〜ticks の個数 −1、期間は from < to）")
 
     elif t == "venn":
-        if not _need(fig, ["sets"], where, problems):
-            return
         layout = fig.get("layout")
         if layout not in ("overlap", "nested"):
             problems.append(f"{where}: 未知の layout {layout!r}（overlap/nested）")
         ids = []
-        for i, s in enumerate(counted):
-            if not isinstance(s, dict) or not _need(s, ["id", "label"], f"{where} sets[{i}]", problems):
-                continue
+        for s in counted:
             if s["id"] in ids:
                 problems.append(f"{where}: sets の id {s['id']!r} が重複する（範囲の id は図の中で一意）")
             ids.append(s["id"])
         combos = []
         for i, r in enumerate(items):
-            got = r.get("in") if isinstance(r, dict) else None
-            if not isinstance(got, list):
-                problems.append(f"{where}: regions[{i}] の in の {got!r} が sets にない")
-                continue
+            got = r["in"]
             # in は集合として比べる（書く順は問わない）。同じ id を 2 回書くのはエラー
             if len(got) != len(set(map(repr, got))):
                 problems.append(f"{where}: regions[{i}].in に同じ id がある（in は範囲の id を 1 回ずつ書く）")
@@ -1676,34 +1840,39 @@ def validate_figure(fig, where, problems, warnings=None) -> None:
             problems.append(f"{where}: caption の文末が敬体（です・ます）でない: {cap[-20:]!r}")
         if CAPTION_BANNED.search(cap):
             problems.append(f"{where}: caption に答え・誤答・選択肢・問の名指しか禁止記法（^ 上付き ，．）: {cap[:40]!r}")
-    if not str(fig.get("after", "")).strip():
-        problems.append(f"{where}: after が空")
+    after = fig.get("after")
+    if after is None or (isinstance(after, str) and not after.strip()):
+        problems.append(f"{where}: after がありません")
+    elif not isinstance(after, str):
+        problems.append(f"{where}: after の型が違う（文字列）")
     for txt in _figure_texts(fig):
         if FIGURE_BANNED.search(txt):
             problems.append(f"{where}: 図の中身に誤答の否定・正誤の印・問の名指しか禁止記法: {txt[:40]!r}")
-    # 型そのものと、blocks・sequence・matrix・chart の形
+    # 型そのものと、必須の欄・欄の値の型・blocks・sequence・matrix・chart の形
     # @implements REQ-440
     t = fig.get("type")
     if t not in FIGURE_TYPES:
         problems.append(f"{where}: 未知の type {t!r}（{'/'.join(FIGURE_TYPES)} のいずれか）")
         return
     _check_icons(fig, t, where, problems)
+    # 欄が無い・型が違う図は中身の判定に進まない（中身の判定は欄の型が書き方どおりであることを前提にする）
+    before = len(problems)
+    _check_shape(fig, FIGURE_SHAPES[t], "", where, problems)
+    if len(problems) > before:
+        return
 
     if t == "blocks":
-        if not _need(fig, ["nodes"], where, problems):
-            return
         ids = []
         for i, nd in enumerate(fig["nodes"]):
-            if not _need(nd, ["id", "label", "row", "col"], f"{where} nodes[{i}]", problems):
-                continue
             if nd["id"] in ids:
                 problems.append(f"{where}: nodes の id {nd['id']!r} が重複する（箱の id は図の中で一意）")
             ids.append(nd["id"])
+            for k in ("row", "col"):
+                _check_range(nd[k], f"nodes[{i}].{k}", where, problems)
             if nd.get("shape", "box") not in ("box", "round", "cylinder", "cloud"):
                 problems.append(f"{where}: nodes[{i}] の未知の shape {nd.get('shape')!r}（box/round/cylinder/cloud）")
-        for i, e in enumerate(fig.get("edges", [])):
-            if not _need(e, ["from", "to"], f"{where} edges[{i}]", problems):
-                continue
+        edges = fig.get("edges") or []
+        for i, e in enumerate(edges):
             for side in ("from", "to"):
                 if e[side] not in ids:
                     problems.append(f"{where}: edges[{i}] の {side} の {e[side]!r} が nodes にない")
@@ -1713,140 +1882,167 @@ def validate_figure(fig, where, problems, warnings=None) -> None:
                 problems.append(f"{where}: edges[{i}] の未知の arrow {e.get('arrow')!r}（to/both/none）")
             # 線は何が流れるか・何が起きるか・どの条件で移るかを運ぶ（arrow: none の線と自己ループも同じ）
             # @implements REQ-438
-            if not str(e.get("label") or "").strip():
+            if not (e.get("label") or "").strip():
                 problems.append(f"{where}: edges[{i}]（{e['from']}→{e['to']}）に label が無い"
                                 "（線には何が流れるか／何が起きるか／どの条件で移るかを書く）")
         # 箱は「名前＋一言」。1 行だけの箱が全ノードの半分を超えればエラー
         # @implements REQ-438
-        labels = [str(nd.get("label") or "") for nd in fig["nodes"] if isinstance(nd, dict)]
+        labels = [nd["label"] for nd in fig["nodes"]]
         one_line = [l for l in labels if "\n" not in l.strip()]
         if labels and len(one_line) * 2 > len(labels):
             problems.append(f"{where}: 1 行だけ（名前だけ）の箱が {len(one_line)}/{len(labels)} 個で半分を超える"
                             "（箱は「名前＋一言」を \\n で 2 行以上に）")
         # 小さすぎる blocks は描くが、警告として作り手に示す（main が stderr に出し、件数を集計行に出す）
         # @implements REQ-439
-        n_edges = len(fig.get("edges", []))
+        n_edges = len(edges)
         if len(labels) <= 3 and n_edges <= 2:
             warnings.append(f"{where}: ノード {len(labels)} 個・線 {n_edges} 本の blocks"
                             "（本文の 1 文で足りる疑い。閉じた図のテストに通るか見直す）")
 
     elif t == "sequence":
-        if not _need(fig, ["actors", "steps"], where, problems):
-            return
         ids = []
-        for i, a in enumerate(fig["actors"]):
-            if not _need(a, ["id", "label"], f"{where} actors[{i}]", problems):
-                continue
+        for a in fig["actors"]:
             if a["id"] in ids:
                 problems.append(f"{where}: actors の id {a['id']!r} が重複する（登場人物の id は図の中で一意）")
             ids.append(a["id"])
-        n_actors = len(fig["actors"]) if isinstance(fig["actors"], list) else 0
-        if not 2 <= n_actors <= 4:
-            problems.append(f"{where}: sequence の登場人物は 2〜4（今は {n_actors}）")
+        if not 2 <= len(fig["actors"]) <= 4:
+            problems.append(f"{where}: sequence の登場人物は 2〜4（今は {len(fig['actors'])}）")
         for i, s in enumerate(fig["steps"]):
-            if not _need(s, ["from", "to", "label"], f"{where} steps[{i}]", problems):
-                continue
             for side in ("from", "to"):
                 if s[side] not in ids:
-                    problems.append(f"{where}: steps[{i}] の {side} {s[side]!r} が actors にない")
+                    problems.append(f"{where}: steps[{i}] の {side} の {s[side]!r} が actors にない")
 
     elif t == "matrix":
-        if not _need(fig, ["x", "y", "cells"], where, problems):
-            return
-        for ax in ("x", "y"):
-            _need(fig[ax], ["label", "values"], f"{where} {ax}", problems)
-        xs, ys = fig["x"].get("values", []), fig["y"].get("values", [])
+        xs, ys, cells = fig["x"]["values"], fig["y"]["values"], fig["cells"]
         if not (2 <= len(xs) <= 3 and 2 <= len(ys) <= 3):
             problems.append(f"{where}: 行 {len(ys)} × 列 {len(xs)}（2〜3 × 2〜3）")
-        if len(fig["cells"]) != len(ys):
-            problems.append(f"{where}: cells の行数 {len(fig['cells'])} が y.values {len(ys)} と違う")
-        for r, row in enumerate(fig["cells"]):
-            if len(row) != len(xs):
-                problems.append(f"{where}: cells[{r}] の列数 {len(row)} が x.values {len(xs)} と違う")
-        for p in fig.get("emphasis", []):
-            if len(p) != 2 or not (0 <= p[0] < len(ys) and 0 <= p[1] < len(xs)):
-                problems.append(f"{where}: emphasis {p} が範囲外")
+        if len(cells) != len(ys) or any(len(row) != len(xs) for row in cells):
+            problems.append(f"{where}: cells の大きさが y.values × x.values（行 {len(ys)} × 列 {len(xs)}）と違う")
+        for i, (r, c) in enumerate(fig.get("emphasis") or []):
+            _check_range(r, f"emphasis[{i}][0]", where, problems)
+            _check_range(c, f"emphasis[{i}][1]", where, problems)
+            if not (0 <= r < len(ys) and 0 <= c < len(xs)):
+                problems.append(f"{where}: emphasis[{i}] の [行, 列] が cells の外（行 {len(ys)} × 列 {len(xs)}）")
 
     elif t == "chart":
         # kind は必須。欄が無いのも未知の kind として止める
         if fig.get("kind") not in ("line", "bar", "step"):
             problems.append(f"{where}: 未知の kind {fig.get('kind')!r}（line/bar/step）")
-        # series の欄が無い・配列でないのは 0 本と同じに止める
-        series = fig.get("series") if isinstance(fig.get("series"), list) else []
+        series = fig["series"]
         if len(series) > 3:
             problems.append(f"{where}: chart の系列は 3 本まで（今は {len(series)}）")
         elif not series:
             problems.append(f"{where}: chart の系列が無い（今は 0）")
-        if not _need(fig, ["x", "y"], where, problems):
-            return
-        _need(fig["x"], ["label", "values"], f"{where} x", problems)
-        if not isinstance(fig["y"], dict) or _blank(fig["y"].get("label")):
+        # y の欄が無いのも縦軸の名前が無いとして止める
+        if _blank((fig.get("y") or {}).get("label")):
             problems.append(f"{where}: y の label が無い（縦軸の名前を書く）")
-        xs = fig["x"].get("values", [])
+        xs = fig["x"]["values"]
         if len(xs) < 2:
             problems.append(f"{where}: x.values は 2 個以上（今は {len(xs)}）")
         for i, s in enumerate(series):
-            if not _need(s, ["label", "values"], f"{where} series[{i}]", problems):
-                continue
             if len(s["values"]) != len(xs):
-                problems.append(f"{where}: series[{i}] の値 {len(s['values'])} 個が "
-                                f"x.values {len(xs)} 個と違う")
-            for v in s["values"]:
-                if not is_number(v):
-                    problems.append(f"{where}: series[{i}] に数値でない値 {v!r}")
-                    break
-        numeric_x = all(is_number(v) for v in xs)
-        for i, v in enumerate(fig.get("vlines", [])):
-            if not _need(v, ["x"], f"{where} vlines[{i}]", problems):
-                continue
-            if not numeric_x and v["x"] not in xs:
-                problems.append(f"{where}: vlines[{i}] の x {v['x']!r} が x.values にない")
-        for i, a in enumerate(fig.get("annotations", [])):
-            if not _need(a, ["x", "y", "text"], f"{where} annotations[{i}]", problems):
-                continue
-            if not numeric_x and a["x"] not in xs:
-                problems.append(f"{where}: annotations[{i}] の x {a['x']!r} が x.values にない")
+                problems.append(f"{where}: series[{i}] の values は x.values と同じ {len(xs)} 個"
+                                f"（今は {len(s['values'])}）")
+            # 無限大・NaN は数の型の違い、文字列・null・真偽値などは数値でない物として示す
+            for j, v in enumerate(s["values"]):
+                if _non_finite(v):
+                    problems.append(f"{where}: series[{i}].values[{j}] の型が違う（数）")
+            if any(not is_number(v) and not _non_finite(v) for v in s["values"]):
+                problems.append(f"{where}: series[{i}] の values に数値でない物がある")
+        # x.values がすべて数なら数値軸、それ以外はカテゴリ軸
+        numeric_x = bool(xs) and all(is_number(v) for v in xs)
+        for arr in ("vlines", "annotations"):
+            for i, v in enumerate(fig.get(arr) or []):
+                x = v["x"]
+                if numeric_x:
+                    if not (is_number(x) and min(xs) <= x <= max(xs)):
+                        problems.append(f"{where}: {arr}[{i}] の x {x!r} が軸の範囲"
+                                        f"（{fmt_num(min(xs))}〜{fmt_num(max(xs))}）の外")
+                elif x not in xs:
+                    problems.append(f"{where}: {arr}[{i}] の x {x!r} が x.values にない")
 
     else:
         _validate_item_type(fig, t, where, problems)
 
 
+def _read_json(p):
+    """JSON のファイルを読む。読めない（通常のファイルでない・OS の段で開けない・壊れている・入れ子が深すぎる・
+    文字コードが違う・桁が多すぎる）ときは (None, 理由) を返す。"""
+    try:
+        # ディレクトリや名前付きパイプは開くと例外になるか読み込みが止まるので、開く前に通常のファイルか見る
+        if not stat.S_ISREG(p.stat().st_mode):
+            return None, "通常のファイルでない"
+        return json.loads(p.read_text(encoding="utf-8")), None
+    except RecursionError:
+        return None, "入れ子が深すぎる"
+    except (OSError, ValueError, OverflowError) as e:
+        # OSError は無い先を指すリンク・ループするリンク・権限・ディレクトリ、ValueError は UnicodeDecodeError を含む
+        return None, f"{type(e).__name__}: {str(e)[:120]}"
+
+
+# 欄の型が書き方と違う値が、型の門で見落とした形で計算に届いたときに出る例外（最後の砦で受け止める）
+FIGURE_ERRORS = (TypeError, AttributeError, KeyError, IndexError, ValueError, OverflowError,
+                 RecursionError, ZeroDivisionError)
+
+
+# @implements REQ-440
 def load(paths, problems, warnings=None) -> list:
     docs, seen = [], {}
     for p in paths:
-        try:
-            doc = json.loads(p.read_text(encoding="utf-8"))
-        except json.JSONDecodeError as e:
-            problems.append(f"[{p}] JSON が壊れています: {e}")
+        doc, why = _read_json(p)
+        if why is not None:
+            problems.append(f"[{p.name}]: JSON が読めません（{why}）")
             continue
         where = f"[{p.name}]"
         if not _need(doc, ["topic_id", "term", "figures"], where, problems):
             continue
         tid = doc["topic_id"]
+        if not _is_int(tid):
+            problems.append(f"{where}: topic_id の型が違う（整数）")
+            continue
+        if not isinstance(doc["term"], str):
+            problems.append(f"{where}: term の型が違う（文字列）")
+        if not isinstance(doc["figures"], list):
+            problems.append(f"{where}: figures の型が違う（配列）")
+            continue
         if tid in seen:
             problems.append(f"{where}: 論点 {tid} は {seen[tid]} にもあります（1論点1ファイル）")
         seen[tid] = p.name
         fids = []
         for i, fig in enumerate(doc["figures"]):
+            if not isinstance(fig, dict):
+                problems.append(f"[{p.name}] 論点 {tid} 図 #{i}: figures[{i}] の型が違う（辞書）")
+                continue
             fid = fig.get("id")
-            w = f"[{p.name}] 論点 {tid} 図 {fid if fid is not None else f'#{i}'}"
-            if not isinstance(fid, int) or fid < 1:
-                problems.append(f"{w}: id は1始まりの整数")
-            elif fid in fids:
-                problems.append(f"{w}: figures の id {fid} が重複する（id はファイル内で一意）")
+            shown = fid if _is_int(fid) and -INT_MAX <= fid <= INT_MAX else (f'#{i}' if fid is None else _show(fid))
+            w = f"[{p.name}] 論点 {tid} 図 {shown}"
+            # @implements REQ-440
+            if fid is None:
+                problems.append(f"{w}: id がありません")
+            elif not _is_int(fid):
+                problems.append(f"{w}: figures の id {_show(fid)} は 1 始まりの整数")
             else:
-                fids.append(fid)
-            validate_figure(fig, w, problems, warnings)
+                if fid < 1:
+                    problems.append(f"{w}: figures の id {fid!r} は 1 始まりの整数")
+                if _check_range(fid, "figures の id", w, problems, lo=1):
+                    if fid in fids:
+                        problems.append(f"{w}: figures の id {fid} が重複する（id はファイル内で一意）")
+                    fids.append(fid)
+            # 欄の型は validate_figure が先に見るが、見落とした形で例外になっても traceback で落とさず、
+            # その図の欄の型の違いとして示して止める
+            try:
+                validate_figure(fig, w, problems, warnings)
+            except FIGURE_ERRORS as e:
+                problems.append(f"{w}: 欄の型が違う（各型の節の書き方と照らす。{type(e).__name__}: {str(e)[:120]}）")
         docs.append((p, doc))
     return docs
 
 
 def _topic_id_of(path):
-    try:
-        doc = json.loads(path.read_text(encoding="utf-8"))
-    except json.JSONDecodeError:
-        return None
-    return doc.get("topic_id") if isinstance(doc, dict) else None
+    """(論点 ID か None, 読めない理由か None)。読めないファイルは論点が分からない。"""
+    doc, why = _read_json(path)
+    tid = doc.get("topic_id") if isinstance(doc, dict) else None
+    return (tid if _is_int(tid) else None), why
 
 
 # ---------------------------------------------------------------- 実行
@@ -1880,10 +2076,15 @@ def main() -> int:
         print(f"{src} に *.json がありません（図はまだありません）")
         return 0
     # --only のときは絞った論点のファイルだけを判定する（他の論点のエラーで描けなくならない）。
-    # 読めないファイルは論点が分からないので、絞り無しの --check に任せる
+    # 読めないファイルは論点が分からず絞った外と言えないので、残して load が JSON が読めないエラーとして止める
     # @implements REQ-438
     if args.only is not None:
-        paths = [p for p in paths if _topic_id_of(p) in args.only]
+        kept = []
+        for p in paths:
+            tid, why = _topic_id_of(p)
+            if why is not None or tid in args.only:
+                kept.append(p)
+        paths = kept
 
     problems: list = []
     warnings: list = []
@@ -1894,11 +2095,13 @@ def main() -> int:
         try:
             for m in json.loads(mp.read_text(encoding="utf-8")).get("materials", []):
                 heads[m["topic_id"]] = {l.strip() for l in (m.get("detail") or "").split("\n") if l.strip().startswith("### ")}
-        except (json.JSONDecodeError, KeyError, TypeError):
+        except (ValueError, KeyError, TypeError, AttributeError, RecursionError):
             pass
     if heads:
         for p, d in docs:
-            for fig in d.get("figures", []):
+            for fig in d["figures"]:
+                if not isinstance(fig, dict):
+                    continue
                 a = str(fig.get("after", "")).strip()
                 if a and a != "explanation" and d.get("topic_id") in heads and a not in heads[d["topic_id"]]:
                     problems.append(f"[{p.name}] 論点 {d['topic_id']} 図 {fig.get('id')}: after {a!r} が教材の見出しに無い（explanation 末尾へ逃げる）")
@@ -1928,21 +2131,35 @@ def main() -> int:
     if args.png_dir:
         args.png_dir.mkdir(parents=True, exist_ok=True)
 
-    written = []
-    for _p, doc in docs:
+    # 全部の図を描き終えてから書き出す。描く途中で例外になった図があれば、traceback でなく
+    # その論点・図・理由を示して 1 枚も書かずに止める
+    # @implements REQ-440
+    rendered, failed = [], []
+    for p, doc in docs:
         for fig in doc["figures"]:
-            name = f"{doc['topic_id']}-{fig['id']}"
-            svg = render(fig)
-            dest = out_dir / f"{name}.svg"
-            dest.write_text(svg, encoding="utf-8")
-            written.append((name, fig["type"], len(svg)))
-            if args.png_dir:
-                try:
-                    import fitz  # PyMuPDF
-                except ImportError:
-                    sys.exit("PNG 化には PyMuPDF が必要です:  pip install pymupdf")
-                with fitz.open(str(dest)) as d:
-                    d[0].get_pixmap(dpi=args.dpi).save(str(args.png_dir / f"{name}.png"))
+            try:
+                rendered.append((f"{doc['topic_id']}-{fig['id']}", fig, render(fig)))
+            except FIGURE_ERRORS as e:
+                failed.append(f"[{p.name}] 論点 {doc['topic_id']} 図 {_show(fig.get('id'))}: "
+                              f"描けません（{type(e).__name__}: {str(e)[:120]}）")
+    if failed:
+        for f in failed:
+            print(f"  - {f}", file=sys.stderr)
+        print(f"\n問題 {len(failed)} 件。描画しません。", file=sys.stderr)
+        return 1
+
+    written = []
+    for name, fig, svg in rendered:
+        dest = out_dir / f"{name}.svg"
+        dest.write_text(svg, encoding="utf-8")
+        written.append((name, fig["type"], len(svg)))
+        if args.png_dir:
+            try:
+                import fitz  # PyMuPDF
+            except ImportError:
+                sys.exit("PNG 化には PyMuPDF が必要です:  pip install pymupdf")
+            with fitz.open(str(dest)) as d:
+                d[0].get_pixmap(dpi=args.dpi).save(str(args.png_dir / f"{name}.png"))
 
     for name, t, size in written:
         print(f"  {name:<12} {t:<9} {size:>6} B")
