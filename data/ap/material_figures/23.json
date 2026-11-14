@@ -4,19 +4,21 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "sequence",
       "after": "### タスクの状態と遷移",
-      "caption": "タスクの 3 つの状態と遷移です。横取りされたタスクは何も待っていないので実行可能状態へ戻ります。",
-      "nodes": [
-        {"id": "rdy", "label": "実行可能状態\nCPU の順番待ち", "row": 0, "col": 0, "emphasis": true},
-        {"id": "run", "label": "実行状態\nCPU を使用中", "row": 0, "col": 1},
-        {"id": "wt", "label": "待ち状態\n入出力の完了待ち", "row": 0, "col": 2}
+      "caption": "優先度の高いタスクが実行可能になると、OS が実行中のタスクから CPU を取り上げて渡します。上から順に、各タスクの状態の移り方を読みます。",
+      "actors": [
+        {"id": "lo", "label": "タスク A（優先度 低）"},
+        {"id": "os", "label": "OS"},
+        {"id": "hi", "label": "タスク B（優先度 高）"}
       ],
-      "edges": [
-        {"from": "rdy", "to": "run", "label": "ディスパッチ"},
-        {"from": "run", "to": "rdy", "label": "プリエンプション（横取り）"},
-        {"from": "run", "to": "wt", "label": "自分から入出力を待つ"},
-        {"from": "wt", "to": "rdy", "label": "入出力が完了"}
+      "steps": [
+        {"from": "os", "to": "lo", "label": "ディスパッチ：A が実行状態になる"},
+        {"from": "hi", "to": "os", "label": "B が実行可能状態になる"},
+        {"from": "os", "to": "lo", "label": "横取り：A を強制的に中断して実行可能状態へ", "note": "A は何も待っていないので待ち状態には移らない"},
+        {"from": "os", "to": "hi", "label": "ディスパッチ：B が実行状態になる"},
+        {"from": "hi", "to": "os", "label": "B が自分から入出力を待つ（待ち状態へ）"},
+        {"from": "os", "to": "lo", "label": "ディスパッチ：A が中断した所から続ける"}
       ]
     }
   ]

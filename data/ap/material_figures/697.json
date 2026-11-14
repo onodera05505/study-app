@@ -6,78 +6,49 @@
       "id": 1,
       "type": "blocks",
       "after": "### 解き方",
-      "caption": "初期状態から入力を 1 文字ずつ読み、表を引いて移った先をたどります。最後に立っている状態が読み終わりの状態です。",
+      "caption": "初期状態から入力を 1 文字ずつ読んで状態を移し、読み終わりに立っている状態が受理状態かどうかで判定します。",
       "nodes": [
         {
           "id": "a",
-          "label": "a\n初期状態",
+          "label": "a\n初期状態\n読んだ列：なし",
           "row": 0,
-          "col": 0,
-          "shape": "round"
+          "col": 0
         },
         {
           "id": "b",
-          "label": "b\n末尾が 1",
+          "label": "b\n末尾が 1\n読んだ列：1",
           "row": 0,
-          "col": 1,
-          "shape": "round"
+          "col": 1
         },
         {
           "id": "d",
-          "label": "d\n末尾が 11",
+          "label": "d\n末尾が 11\n読んだ列：11",
           "row": 0,
-          "col": 2,
-          "shape": "round"
+          "col": 2
         },
         {
           "id": "c",
-          "label": "c\n末尾が 10",
-          "row": 1,
-          "col": 2,
-          "shape": "round",
+          "label": "c（受理状態）\n末尾が 10\n読んだ列：110",
+          "row": 0,
+          "col": 3,
           "emphasis": true
         }
       ],
       "edges": [
         {
           "from": "a",
-          "to": "a",
-          "label": "0"
-        },
-        {
-          "from": "a",
           "to": "b",
-          "label": "1"
+          "label": "1 文字目に 1 を読む"
         },
         {
           "from": "b",
           "to": "d",
-          "label": "1"
-        },
-        {
-          "from": "b",
-          "to": "c",
-          "label": "0"
-        },
-        {
-          "from": "d",
-          "to": "d",
-          "label": "1"
+          "label": "2 文字目に 1 を読む"
         },
         {
           "from": "d",
           "to": "c",
-          "label": "0"
-        },
-        {
-          "from": "c",
-          "to": "b",
-          "label": "1"
-        },
-        {
-          "from": "c",
-          "to": "a",
-          "label": "0"
+          "label": "3 文字目に 0 を読む"
         }
       ]
     }

@@ -5,18 +5,39 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 計算の解き方（自己資本比率）",
-      "caption": "左に資産、右に負債と純資産を並べた表です。自己資本比率は純資産を資産の合計で割って求めます。",
+      "after": "### 左右が一致するしくみ",
+      "caption": "右側でお金をどこから集めたか、左側でそのお金が今どんな形かを示します。同じお金を二通りに書くので、左右の合計は必ず一致します。",
       "nodes": [
-        {"id": "ca", "label": "流動資産\n730", "row": 0, "col": 0},
-        {"id": "cl", "label": "流動負債\n200", "row": 0, "col": 1},
-        {"id": "fa", "label": "固定資産\n270", "row": 1, "col": 0},
-        {"id": "fl", "label": "固定負債\n500", "row": 1, "col": 1},
-        {"id": "ta", "label": "資産合計 1,000\n＝総資産（分母）", "row": 2, "col": 0, "emphasis": true},
-        {"id": "eq", "label": "純資産 300\n＝自己資本（分子）", "row": 2, "col": 1, "emphasis": true}
+        {"id": "L", "label": "左側：資産\nお金が今どんな形か", "row": 0, "col": 0, "emphasis": true},
+        {"id": "R", "label": "右側：負債と純資産\nお金をどこから集めたか", "row": 0, "col": 1, "emphasis": true},
+        {"id": "ca", "label": "流動資産 730\n現金・商品など", "row": 1, "col": 0},
+        {"id": "cl", "label": "流動負債 200\n1年以内に返す借入", "row": 1, "col": 1},
+        {"id": "fa", "label": "固定資産 270\n設備・土地など", "row": 2, "col": 0},
+        {"id": "fl", "label": "固定負債 500\n1年より先に返す借入", "row": 2, "col": 1},
+        {"id": "eq", "label": "純資産 300\n返さなくてよい出資", "row": 3, "col": 1},
+        {"id": "lt", "label": "左の合計 1,000\n730＋270", "row": 4, "col": 0},
+        {"id": "rt", "label": "右の合計 1,000\n200＋500＋300", "row": 4, "col": 1}
       ],
       "edges": [
-        {"from": "eq", "to": "ta", "label": "300 ÷ 1,000 ＝ 30％"}
+        {"from": "R", "to": "L", "label": "集めたお金が\n形を変える"},
+        {"from": "lt", "to": "rt", "label": "必ず一致", "arrow": "both"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 計算の解き方（自己資本比率）",
+      "caption": "自己資本比率は、右側の純資産を左側の資産合計で割って求めます。分母は負債を含めた総資産です。",
+      "nodes": [
+        {"id": "ta", "label": "資産合計 1,000\n＝総資産（分母）", "row": 0, "col": 0, "emphasis": true},
+        {"id": "debt", "label": "負債 700\n返す義務のあるお金", "row": 0, "col": 1},
+        {"id": "eq", "label": "純資産 300\n＝自己資本（分子）", "row": 1, "col": 1, "emphasis": true},
+        {"id": "ratio", "label": "自己資本比率 30％\n集めたお金のうち\n返さなくてよい割合", "row": 1, "col": 0}
+      ],
+      "edges": [
+        {"from": "eq", "to": "ratio", "label": "分子 300"},
+        {"from": "ta", "to": "ratio", "label": "分母 1,000"},
+        {"from": "debt", "to": "ta", "label": "負債の 700 も\n分母に入る", "style": "dashed"}
       ]
     }
   ]
