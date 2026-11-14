@@ -17,9 +17,10 @@
 直すときに図形の座標を追う羽目になる。**担当は仕様 JSON だけを書き、様式はここが持つ。**
 そうすれば、直すのは JSON、見た目の統一はスクリプトの修正1か所、検証は機械でできる。
 
-型は 4 つだけ（`blocks` / `sequence` / `matrix` / `chart`）。増やさない。
-型が増えるほど担当が迷い、様式がばらつくのを避けるための制約。
-書き方は `scripts/prompts/material_figures_spec.md` にまとめてある。
+型は仕様書の 10（`blocks` / `sequence` / `matrix` / `chart` / `steps` / `cycle` / `layers` /
+`parts` / `timeline` / `venn`）だけで、絵は閉じた語彙の絵記号（`icon`）だけ。
+型と絵が仕様書の外に増えるほど担当が迷い、様式がばらつく。
+書き方と `--check` の門の文言は `scripts/prompts/material_figures_spec.md` にまとめてある。
 
 ## 様式
 
@@ -73,7 +74,8 @@ CARD_EDGE = "#e5e7eb"            # カードの縁・補助線
 LINE_H = 20                      # 本文の行送り
 LINE_H_S = 16                    # 小さい文字の行送り
 
-FIGURE_TYPES = ("blocks", "sequence", "matrix", "chart")
+FIGURE_TYPES = ("blocks", "sequence", "matrix", "chart",
+                "steps", "cycle", "layers", "parts", "timeline", "venn")
 SERIES_COLORS = (ACCENT, INK, "#9ca3af")
 # emphasis の系列があるときは、そこだけを強調色にして他は無彩色にする
 # （既定の1本目も強調色なので、そのままだと同じ色の系列が2本できる）
@@ -233,7 +235,8 @@ def draw_blocks(spec) -> tuple:
         ls = lines_of(nd["label"])
         pad_x = 30 if nd.get("shape") == "cloud" else 24
         pad_y = 20 if nd.get("shape") == "cloud" else 16
-        w = max(NODE_MIN_W, block_width(nd["label"]) + pad_x)
+        w = max(NODE_MIN_W, block_width(nd["label"]) + pad_x
+                + (ICON + ICON_GAP if nd.get("icon") else 0))
         h = max(NODE_MIN_H, len(ls) * LINE_H + pad_y)
         box[nd["id"]] = {"w": w, "h": h, "node": nd}
 
@@ -368,8 +371,7 @@ def draw_blocks(spec) -> tuple:
         emph = bool(nd.get("emphasis"))
         out += shape(b["x"], b["y"], b["w"], b["h"], nd.get("shape", "box"), emph)
         cy = b["cy"] + (2 if nd.get("shape") == "cylinder" else 0)
-        out += text_block(b["cx"], cy, nd["label"], FS_BODY,
-                          ACCENT if emph else INK, bold=emph)
+        out += item_content(b["cx"], cy, nd["label"], emph, nd.get("icon"))
     out += edge_labels
 
     # 同じ行を下から回り込む線がはみ出す分の余白
@@ -463,6 +465,12 @@ def draw_sequence(spec) -> tuple:
             for j, nl in enumerate(lines_of(s["note"])):
                 out += label_on_line(nx, ly + 14 + LINE_H_S * j, nl, FS_SMALL, MUTED)
 
+    # 絵記号は登場人物の名前の箱の上に出す。絵記号の分だけ図全体を下げる
+    if any(a.get("icon") for a in actors):
+        top = ICON + 6
+        icons = [icon_svg(a["icon"], xs[i] - ICON / 2, 0, INK)
+                 for i, a in enumerate(actors) if a.get("icon")]
+        return icons + _shift(out, 0, top), total_w, body_h + top
     return out, total_w, body_h
 
 
@@ -721,8 +729,641 @@ def draw_chart(spec) -> tuple:
     return out, x1 + right, y_after_x
 
 
+# ---------------------------------------------------------------- 絵の語彙（icon）
+
+ICON = 22.0          # 絵記号の一辺（全部の絵記号で同じ）
+ICON_GAP = 8.0       # 絵記号と文字の間
+ICON_SW = 1.6        # 24 の格子での線の太さ（全部の絵記号で同じ）
+
+ICON_NAMES = ("person", "people", "server", "database", "document", "device", "phone",
+              "cloud", "network", "money", "building", "lock", "key", "clock", "gear",
+              "box", "arrow-cycle", "warning", "check", "mail", "chart", "search", "hand")
+
+
+def _gear_teeth() -> str:
+    d = []
+    for k in range(8):
+        a = math.pi * 2 * k / 8
+        d.append(f"M {n(12 + 6.6 * math.cos(a))} {n(12 + 6.6 * math.sin(a))} "
+                 f"L {n(12 + 9.6 * math.cos(a))} {n(12 + 9.6 * math.sin(a))}")
+    return " ".join(d)
+
+
+# 24×24 の格子で描いた単色の線画。線の色と太さは icon_svg の <g> が与える。
+# "{c}" は塗りの点に入る色
+_ICONS = {
+    "person": ['<circle cx="12" cy="7.5" r="3.6"/>',
+               '<path d="M4.5 21 C4.5 14.2 19.5 14.2 19.5 21"/>'],
+    "people": ['<circle cx="9" cy="8" r="3.2"/>', '<circle cx="16.5" cy="9" r="2.6"/>',
+               '<path d="M2.8 20.5 C2.8 14.5 15.2 14.5 15.2 20.5"/>',
+               '<path d="M15 14.4 C18.5 13.8 21.4 15.8 21.4 20.5"/>'],
+    "server": ['<rect x="4" y="3.5" width="16" height="7" rx="1.2"/>',
+               '<rect x="4" y="13.5" width="16" height="7" rx="1.2"/>',
+               '<circle cx="7.5" cy="7" r="0.9" fill="{c}" stroke="none"/>',
+               '<circle cx="7.5" cy="17" r="0.9" fill="{c}" stroke="none"/>',
+               '<path d="M11 7 H17 M11 17 H17"/>'],
+    "database": ['<ellipse cx="12" cy="5.5" rx="7" ry="2.6"/>',
+                 '<path d="M5 5.5 V18.5 C5 21.2 19 21.2 19 18.5 V5.5"/>',
+                 '<path d="M5 12 C5 14.7 19 14.7 19 12"/>'],
+    "document": ['<path d="M6 3 H14 L19 8 V21 H6 Z"/>', '<path d="M14 3 V8 H19"/>',
+                 '<path d="M9 12 H16 M9 15 H16 M9 18 H13.5"/>'],
+    "device": ['<rect x="3" y="4" width="18" height="12" rx="1.2"/>',
+               '<path d="M12 16 V20 M8.5 20 H15.5"/>'],
+    "phone": ['<rect x="7" y="2.5" width="10" height="19" rx="2"/>',
+              '<path d="M11 18.5 H13"/>'],
+    "cloud": ['<path d="M7 18.5 H17.5 A3.6 3.6 0 0 0 17.6 11.3 A5.2 5.2 0 0 0 7.6 10.2 '
+              'A4.2 4.2 0 0 0 7 18.5 Z"/>'],
+    "network": ['<circle cx="12" cy="5" r="2.3"/>', '<circle cx="5" cy="18.5" r="2.3"/>',
+                '<circle cx="19" cy="18.5" r="2.3"/>',
+                '<path d="M10.9 7.1 L6.1 16.4 M13.1 7.1 L17.9 16.4 M7.3 18.5 H16.7"/>'],
+    "money": ['<circle cx="12" cy="12" r="9"/>',
+              '<path d="M8.6 6.8 L12 11.6 L15.4 6.8 M12 11.6 V17.6 M8.8 12.6 H15.2 M8.8 15.2 H15.2"/>'],
+    "building": ['<path d="M5.5 21 V3.5 H18.5 V21"/>', '<path d="M3 21 H21"/>',
+                 '<path d="M8.5 7 H10.5 M13.5 7 H15.5 M8.5 10.5 H10.5 M13.5 10.5 H15.5 '
+                 'M8.5 14 H10.5 M13.5 14 H15.5"/>',
+                 '<path d="M10.5 21 V17.5 H13.5 V21"/>'],
+    "lock": ['<rect x="5" y="10.5" width="14" height="10.5" rx="1.6"/>',
+             '<path d="M8 10.5 V7.5 A4 4 0 0 1 16 7.5 V10.5"/>',
+             '<circle cx="12" cy="15" r="1.3"/>', '<path d="M12 16.3 V18"/>'],
+    "key": ['<circle cx="7.5" cy="12" r="4"/>',
+            '<path d="M11.5 12 H21 M18.2 12 V15.6 M15 12 V14.6"/>'],
+    "clock": ['<circle cx="12" cy="12" r="9"/>', '<path d="M12 6.8 V12 L15.6 14.2"/>'],
+    "gear": ['<circle cx="12" cy="12" r="6.6"/>', '<circle cx="12" cy="12" r="2.4"/>',
+             f'<path d="{_gear_teeth()}" stroke-width="3" stroke-linecap="butt"/>'],
+    "box": ['<path d="M12 3 L20 7.5 V16.5 L12 21 L4 16.5 V7.5 Z"/>',
+            '<path d="M4 7.5 L12 12 L20 7.5 M12 12 V21"/>'],
+    "arrow-cycle": ['<path d="M5.2 10 A7 7 0 0 1 18.4 8.6"/>',
+                    '<path d="M18.9 4.6 L18.6 9 L14.4 8.2"/>',
+                    '<path d="M18.8 14 A7 7 0 0 1 5.6 15.4"/>',
+                    '<path d="M5.1 19.4 L5.4 15 L9.6 15.8"/>'],
+    "warning": ['<path d="M12 3.2 L21.4 20 H2.6 Z"/>', '<path d="M12 9 V14"/>',
+                '<circle cx="12" cy="17" r="1" fill="{c}" stroke="none"/>'],
+    "check": ['<circle cx="12" cy="12" r="9"/>', '<path d="M7.6 12.4 L10.6 15.4 L16.4 9.2"/>'],
+    "mail": ['<rect x="3" y="6" width="18" height="12.5" rx="1.2"/>',
+             '<path d="M3.6 6.8 L12 13 L20.4 6.8"/>'],
+    "chart": ['<path d="M4 3.5 V20 H21"/>',
+              '<rect x="7" y="13" width="3" height="7"/>',
+              '<rect x="11.5" y="8" width="3" height="12"/>',
+              '<rect x="16" y="11" width="3" height="9"/>'],
+    "search": ['<circle cx="10.5" cy="10.5" r="6"/>',
+               '<path d="M15 15 L20.5 20.5" stroke-width="2.6"/>'],
+    "hand": ['<path d="M8.2 21 C6.2 19.2 4.6 16.4 4.6 13.6 V11.2 A1.3 1.3 0 0 1 7.2 11.2 V13 '
+             'V6.2 A1.3 1.3 0 0 1 9.8 6.2 V11 V4.6 A1.3 1.3 0 0 1 12.4 4.6 V11 '
+             'V5.6 A1.3 1.3 0 0 1 15 5.6 V11.6 V8.2 A1.3 1.3 0 0 1 17.6 8.2 V14.6 '
+             'C17.6 17.6 16.6 19.6 15.4 21"/>'],
+}
+
+
+def icon_svg(name, x, y, color=INK, size=ICON) -> str:
+    """絵の語彙の 1 つを、左上 (x, y)・一辺 size の正方形に描く。"""
+    s = size / 24
+    body = "".join(p.replace("{c}", color) for p in _ICONS[name])
+    return (f'<g transform="translate({n(x)} {n(y)}) scale({s:.4f})" fill="none" '
+            f'stroke="{color}" stroke-width="{n(ICON_SW)}" stroke-linecap="round" '
+            f'stroke-linejoin="round">{body}</g>')
+
+
+# ---------------------------------------------------------------- 5〜10 の型に共通の項目
+
+ITEM_MIN_W = 120.0
+ITEM_MIN_H = 46.0
+
+
+def item_size(label, icon=None, size=FS_BODY) -> tuple:
+    """項目の箱の大きさ。文字の幅＋余白（絵記号があればその分も）。"""
+    lh = LINE_H if size >= FS_BODY else LINE_H_S
+    w = block_width(label, size) + 24 + (ICON + ICON_GAP if icon else 0)
+    h = len(lines_of(label)) * lh + 16
+    return max(ITEM_MIN_W, w), max(ITEM_MIN_H, h)
+
+
+def item_content(cx, cy, label, emphasis=False, icon=None, size=FS_BODY, bold=None) -> list:
+    """箱の中身。絵記号は文字の左に置き、絵記号と文字をひとまとまりで (cx, cy) に中央そろえする。"""
+    color = ACCENT if emphasis else INK
+    b = emphasis if bold is None else bold
+    if not icon:
+        return text_block(cx, cy, label, size, color, bold=b)
+    tw = block_width(label, size)
+    left = cx - (ICON + ICON_GAP + tw) / 2
+    return ([icon_svg(icon, left, cy - ICON / 2, color)]
+            + text_block(left + ICON + ICON_GAP + tw / 2, cy, label, size, color, bold=b))
+
+
+def _hit(a, b, m=0.0) -> bool:
+    """長方形 (x, y, w, h) どうしが m の余裕を含めて重なるか。"""
+    return (a[0] < b[0] + b[2] + m and b[0] < a[0] + a[2] + m
+            and a[1] < b[1] + b[3] + m and b[1] < a[1] + a[3] + m)
+
+
+def _inside(p, r, m=0.0) -> bool:
+    return r[0] - m <= p[0] <= r[0] + r[2] + m and r[1] - m <= p[1] <= r[1] + r[3] + m
+
+
+def _shift(elems, dx, dy) -> list:
+    """組んだ要素を (dx, dy) だけ動かす。座標を後から決める型で使う。"""
+    return [f'<g transform="translate({n(dx)} {n(dy)})">'] + elems + ["</g>"]
+
+
+# ---------------------------------------------------------------- steps
+
+STEP_RUN = 28.0      # 前の段の右端から、次の段の中心（矢印の折れる角）までの距離
+STEP_GAP_Y = 30.0    # 段の行の間（縦の矢印の長さ）
+
+
+def draw_steps(spec) -> tuple:
+    st = spec["stages"]
+    k = len(st)
+    up = spec.get("direction") == "up"
+    sizes = [item_size(s["label"], s.get("icon")) for s in st]
+    h = max(sz[1] for sz in sizes)
+    gy = h + STEP_GAP_Y
+
+    xs = [0.0]
+    for i in range(k - 1):
+        w0, w1 = sizes[i][0], sizes[i + 1][0]
+        xs.append(max(xs[i] + 24, xs[i] + w0 + STEP_RUN - w1 / 2))
+    ys = [((k - 1 - i) if up else i) * gy for i in range(k)]
+
+    out, labels = [], []
+    right = xs[-1] + sizes[-1][0]
+    for i in range(k - 1):
+        cy = ys[i] + h / 2
+        cx1 = xs[i + 1] + sizes[i + 1][0] / 2
+        ey = ys[i + 1] + h if up else ys[i + 1]
+        out += polyline([(xs[i] + sizes[i][0], cy), (cx1, cy), (cx1, ey)], INK, 1.2, False, "to")
+        lbl = str(st[i].get("next_label", ""))
+        # 段の間のラベルは、折れる角の右に線と同じ高さで置く（その高さには前の段しか無い）
+        labels += text_block(cx1 + 8, cy, lbl, FS_SMALL, INK, anchor="start")
+        right = max(right, cx1 + 8 + block_width(lbl, FS_SMALL))
+    for i, s in enumerate(st):
+        emph = bool(s.get("emphasis"))
+        out += shape(xs[i], ys[i], sizes[i][0], h, "box", emph)
+        out += item_content(xs[i] + sizes[i][0] / 2, ys[i] + h / 2, s["label"], emph, s.get("icon"))
+    out += labels
+    return out, right, (k - 1) * gy + h
+
+
+# ---------------------------------------------------------------- cycle
+
+def draw_cycle(spec) -> tuple:
+    st = spec["stages"]
+    k = len(st)
+    sizes = [item_size(s["label"], s.get("icon")) for s in st]
+    nls = [str(s.get("next_label", "")) for s in st]
+    lsz = [(block_width(t, FS_SMALL) + 4, len(lines_of(t)) * LINE_H_S) for t in nls]
+    center = spec.get("center")
+    crect = None
+    if center:
+        cw = block_width(center, FS_BODY) + 16
+        ch = len(lines_of(center)) * LINE_H + 8
+        crect = (-cw / 2, -ch / 2, cw, ch)
+    step = 2 * math.pi / k
+    ang = [-math.pi / 2 + step * i for i in range(k)]
+
+    def geom(rx, ry):
+        boxes = [(rx * math.cos(a) - w / 2, ry * math.sin(a) - hh / 2, w, hh)
+                 for a, (w, hh) in zip(ang, sizes)]
+        arcs, labs, mids = [], [], []
+        for i in range(k):
+            b0, b1 = boxes[i], boxes[(i + 1) % k]
+            pts = [(rx * math.cos(ang[i] + step * j / 240), ry * math.sin(ang[i] + step * j / 240))
+                   for j in range(241)]
+            s = next((j for j, p in enumerate(pts) if not _inside(p, b0, 5)), None)
+            e = next((j for j in range(240, -1, -1) if not _inside(pts[j], b1, 1)), None)
+            arcs.append(pts[s:e + 1] if s is not None and e is not None and e > s else [])
+            am = ang[i] + step / 2
+            mx, my = rx * math.cos(am), ry * math.sin(am)
+            mids.append((mx, my))
+            ux, uy = math.cos(am), math.sin(am)
+            w, hh = lsz[i]
+            # ラベルは輪の外側に置き、矢印の線を隠さない
+            lx = mx + (math.copysign(w / 2 + 6, ux) if abs(ux) > 0.3 else 0.0)
+            ly = my + (math.copysign(hh / 2 + 6, uy) if abs(uy) > 0.3 else 0.0)
+            labs.append((lx - w / 2, ly - hh / 2, w, hh))
+        return boxes, arcs, labs, mids
+
+    def ok(g) -> bool:
+        boxes, arcs, labs, mids = g
+        rects = boxes + labs + ([crect] if crect else [])
+        for i in range(len(rects)):
+            for j in range(i + 1, len(rects)):
+                if _hit(rects[i], rects[j], 10 if i < k and j < k else 4):
+                    return False
+        for a, m in zip(arcs, mids):
+            if len(a) < 2 or any(_inside(m, b, 2) for b in boxes):
+                return False
+            if sum(math.hypot(a[j + 1][0] - a[j][0], a[j + 1][1] - a[j][1])
+                   for j in range(len(a) - 1)) < 56:
+                return False
+        return True
+
+    rx = max(sz[0] for sz in sizes) / 2 + 20
+    g = None
+    for _ in range(400):
+        ry = max(rx * 0.62, max(sz[1] for sz in sizes) / 2 + 20)
+        g = geom(rx, ry)
+        if ok(g):
+            break
+        rx += 4
+    boxes, arcs, labs, _mids = g
+
+    rects = boxes + labs + ([crect] if crect else [])
+    x0 = min(r[0] for r in rects)
+    y0 = min(r[1] for r in rects)
+    x1 = max(r[0] + r[2] for r in rects)
+    y1 = max(r[1] + r[3] for r in rects)
+
+    out = []
+    for a in arcs:
+        if len(a) >= 2:
+            out += polyline(a, INK, 1.2, False, "to")
+    for i, s in enumerate(st):
+        emph = bool(s.get("emphasis"))
+        bx, by, bw, bh = boxes[i]
+        out += shape(bx, by, bw, bh, "box", emph)
+        out += item_content(bx + bw / 2, by + bh / 2, s["label"], emph, s.get("icon"))
+    for i, r in enumerate(labs):
+        out += text_block(r[0] + r[2] / 2, r[1] + r[3] / 2, nls[i], FS_SMALL, INK)
+    if center:
+        out += text_block(0, 0, center, FS_BODY, INK, bold=True)
+    return _shift(out, -x0, -y0), x1 - x0, y1 - y0
+
+
+# ---------------------------------------------------------------- layers
+
+LAYER_GAP = 4.0
+
+
+def draw_layers(spec) -> tuple:
+    ls = spec["layers"]
+    k = len(ls)
+    pyramid = spec.get("shape", "stack") == "pyramid"
+    sizes = [item_size(la["label"], la.get("icon")) for la in ls]
+    h = max(sz[1] for sz in sizes)
+    total_h = k * h + (k - 1) * LAYER_GAP
+    tops = [i * (h + LAYER_GAP) for i in range(k)]
+
+    if pyramid:
+        # 幅は上端からの深さに比例して広がる。各層の上辺（その層で一番狭い所）に文字が収まる幅にする
+        need = [sz[0] + 16 for sz in sizes]
+        w_top = need[0]
+        w_bot = max([w_top + k * 50] + [w_top + (need[i] - w_top) * total_h / tops[i]
+                                       for i in range(1, k)])
+
+        def width_at(y):
+            return w_top + (w_bot - w_top) * y / total_h
+    else:
+        w_bot = max([240.0] + [sz[0] for sz in sizes])
+
+        def width_at(y):
+            return w_bot
+
+    brackets = spec.get("brackets", [])
+    bcol = (max(block_width(b["label"], FS_SMALL) for b in brackets) + 24) if brackets else 0.0
+    notes = [str(la.get("note") or "") for la in ls]
+    has_note = any(notes)
+    note_x = bcol + w_bot + 16
+    mid = bcol + w_bot / 2
+
+    out = []
+    for i, la in enumerate(ls):
+        emph = bool(la.get("emphasis"))
+        fill = FILL_ACCENT if emph else FILL_MUTED
+        stroke = ACCENT if emph else INK
+        sw = 1.8 if emph else 1.0
+        y0, y1 = tops[i], tops[i] + h
+        if pyramid:
+            a, b = width_at(y0) / 2, width_at(y1) / 2
+            d = (f"M {n(mid - a)} {n(y0)} L {n(mid + a)} {n(y0)} "
+                 f"L {n(mid + b)} {n(y1)} L {n(mid - b)} {n(y1)} Z")
+            out.append(path(d, stroke, sw, fill))
+        else:
+            out.append(rect(bcol, y0, w_bot, h, fill, stroke, sw, rx=4))
+        out += item_content(mid, y0 + h / 2, la["label"], emph, la.get("icon"))
+        if notes[i]:
+            cy = y0 + h / 2
+            if pyramid:
+                # 台形の右の斜辺から注記の列までを細い線で結ぶ
+                out.append(line(mid + width_at(cy) / 2 + 4, cy, note_x - 6, cy, MUTED, 0.8))
+            out.append(text(note_x, cy + FS_SMALL * 0.35, notes[i], FS_SMALL, MUTED, anchor="start"))
+
+    for b in brackets:
+        y0 = tops[b["from"]] + 2
+        y1 = tops[b["to"]] + h - 2
+        bx = bcol - 10
+        out.append(path(f"M {n(bx + 6)} {n(y0)} H {n(bx)} V {n(y1)} H {n(bx + 6)}", INK, 1.2))
+        out += text_block(bx - 6, (y0 + y1) / 2, b["label"], FS_SMALL, INK, anchor="end")
+
+    w = bcol + w_bot
+    if has_note:
+        w = note_x + max(text_width(t, FS_SMALL) for t in notes)
+    return out, w, total_h
+
+
+# ---------------------------------------------------------------- parts
+
+PARTS_PAD = 14.0     # 物の箱の内側の余白
+PARTS_TITLE_H = 38.0
+PARTS_GAP = 10.0     # 区画どうしの間
+PARTS_LEAD = 36.0    # 引き出し線の長さ（物の箱の外）
+
+
+def draw_parts(spec) -> tuple:
+    whole = spec["whole"]
+    ps = spec["parts"]
+    k = len(ps)
+    half = (k + 1) // 2      # 前半（切り上げ）は左、残りは右に注記を出す
+    names = [lines_of(p["label"])[0] for p in ps]
+    sec_w = max([160.0] + [text_width(nm, FS_BODY) + 24 + (ICON + ICON_GAP if p.get("icon") else 0)
+                           for nm, p in zip(names, ps)])
+    title_w = (text_width(whole["label"], FS_BODY) + 24
+               + (ICON + ICON_GAP if whole.get("icon") else 0))
+    ann = [(block_width(p["label"], FS_SMALL), len(lines_of(p["label"])) * LINE_H_S) for p in ps]
+    sec_h = max(40.0, max(a[1] for a in ann) + 8)
+    box_w = max(sec_w, title_w) + 2 * PARTS_PAD
+    box_h = PARTS_TITLE_H + k * sec_h + (k - 1) * PARTS_GAP + PARTS_PAD
+    lw_left = max(ann[i][0] for i in range(half))
+    lw_right = max(ann[i][0] for i in range(half, k))
+    bx = lw_left + PARTS_LEAD
+
+    out = [rect(bx, 0, box_w, box_h, CARD, INK, 1.4, rx=10)]
+    out += item_content(bx + box_w / 2, PARTS_TITLE_H / 2 + 2, whole["label"], False,
+                        whole.get("icon"), bold=True)
+    # 区画は書いた順に上から並べる（1 列なので、左の注記は上の区画、右の注記は下の区画と横一直線で結べる）
+    sx, sw = bx + PARTS_PAD, box_w - 2 * PARTS_PAD
+    for j, p in enumerate(ps):
+        emph = bool(p.get("emphasis"))
+        sy = PARTS_TITLE_H + j * (sec_h + PARTS_GAP)
+        cy = sy + sec_h / 2
+        out += shape(sx, sy, sw, sec_h, "box", emph)
+        out += item_content(sx + sw / 2, cy, names[j], emph, p.get("icon"), bold=True)
+        color = ACCENT if emph else INK
+        if j < half:
+            ax, anchor = lw_left, "end"
+            out.append(line(lw_left + 6, cy, sx, cy, INK, 0.9))
+            out.append(f'<circle cx="{n(sx)}" cy="{n(cy)}" r="2.6" fill="{INK}"/>')
+        else:
+            ax, anchor = bx + box_w + PARTS_LEAD, "start"
+            out.append(line(sx + sw, cy, ax - 6, cy, INK, 0.9))
+            out.append(f'<circle cx="{n(sx + sw)}" cy="{n(cy)}" r="2.6" fill="{INK}"/>')
+        ls = lines_of(p["label"])
+        top = cy - LINE_H_S * len(ls) / 2
+        for i, ln in enumerate(ls):
+            out.append(text(ax, top + LINE_H_S * i + LINE_H_S / 2 + FS_SMALL * 0.35, ln, FS_SMALL,
+                            color if i == 0 else INK, anchor=anchor, bold=(i == 0)))
+    return out, bx + box_w + PARTS_LEAD + lw_right, box_h
+
+
+# ---------------------------------------------------------------- timeline
+
+TL_STRIP_H = 14.0    # 期間の帯の太さ
+TL_ROW_GAP = 10.0    # 帯の段どうしの間
+
+
+def draw_timeline(spec) -> tuple:
+    axis = spec["axis"]
+    ticks = [str(t) for t in axis["ticks"]]
+    nt = len(ticks)
+    tick_w = max(text_width(t, FS_SMALL) for t in ticks)
+    unit = max(560.0 / (nt - 1), tick_w + 14)
+    width = unit * (nt - 1)
+
+    def X(v):
+        return float(v) * unit
+
+    events = spec["events"]
+    periods = [e for e in events if "from" in e]
+    points = [e for e in events if "at" in e]
+
+    # 期間は帯と、その上のラベルで描く。同じ段では帯どうし・ラベルどうし・ラベルと他の帯を重ねない
+    # （重ねると、ラベルがどの帯のものか読めない）。重なるものは段を分ける
+    rows: list = []
+    placed = []
+    for e in periods:
+        b0, b1 = X(e["from"]), X(e["to"])
+        lw = block_width(e["label"], FS_SMALL) + 8
+        l0 = min(max((b0 + b1) / 2 - lw / 2, 0.0), max(0.0, width - lw))
+        item = (b0, b1, l0, l0 + lw, e)
+
+        def clash(a, b):
+            return ((a[0] < b[1] - 0.5 and b[0] < a[1] - 0.5)
+                    or (a[2] < b[3] + 8 and b[2] < a[3] + 8)
+                    or (a[2] < b[1] - 0.5 and b[0] < a[3] - 0.5)
+                    or (b[2] < a[1] - 0.5 and a[0] < b[3] - 0.5))
+        r = next((i for i, row in enumerate(rows) if not any(clash(item, o) for o in row)), None)
+        if r is None:
+            rows.append([])
+            r = len(rows) - 1
+        rows[r].append(item)
+        placed.append((r, item))
+
+    lab_h = [max(len(lines_of(it[4]["label"])) * LINE_H_S for it in row) for row in rows]
+    row_top = [0.0] * len(rows)
+    cur = 0.0
+    for r in reversed(range(len(rows))):       # 段 0 が軸に一番近い
+        row_top[r] = cur
+        cur += lab_h[r] + 4 + TL_STRIP_H + TL_ROW_GAP
+    y_axis = cur + 8
+
+    out, guides = [], []
+    for r, (b0, b1, l0, l1, e) in placed:
+        emph = bool(e.get("emphasis"))
+        sy = row_top[r] + lab_h[r] + 4
+        # 帯の端から軸への補助線。下の段のラベルの所は、ラベルの白い下地が線を隠す
+        for gx in (b0, b1):
+            guides.append(line(gx, sy + TL_STRIP_H, gx, y_axis, "#9ca3af", 0.8, dashed=True))
+        out.append(rect(b0, sy, b1 - b0, TL_STRIP_H, FILL_ACCENT if emph else FILL_MUTED,
+                        ACCENT if emph else INK, 1.8 if emph else 1.0, rx=3))
+        lh = len(lines_of(e["label"])) * LINE_H_S
+        out.append(rect(l0, sy - 4 - lh, l1 - l0, lh, CARD, None, rx=3))
+        out += text_block((l0 + l1) / 2, sy - 4 - lh / 2, e["label"], FS_SMALL,
+                          ACCENT if emph else INK, bold=emph)
+    out = guides + out
+
+    out.append(line(0, y_axis, width, y_axis, INK, 1.4))
+    tick_y = y_axis + 5 + FS_SMALL + 2
+    for i, t in enumerate(ticks):
+        out.append(line(X(i), y_axis, X(i), y_axis + 5, INK, 1.2))
+        out.append(text(X(i), tick_y, t, FS_SMALL, MUTED))
+    tick_band = (y_axis + 6, tick_y + 4)
+
+    # 点は軸の上の印と、目盛りの下の注記。注記どうしが重なるときは段を分ける
+    ann_rows: list = []
+    ann_placed = []
+    for e in points:
+        x = X(e["at"])
+        lw = block_width(e["label"], FS_SMALL) + 8
+        l0 = min(max(x - lw / 2, 0.0), max(0.0, width - lw))
+        r = next((i for i, row in enumerate(ann_rows)
+                  if not any(l0 < o[1] + 10 and o[0] < l0 + lw + 10 for o in row)), None)
+        if r is None:
+            ann_rows.append([])
+            r = len(ann_rows) - 1
+        ann_rows[r].append((l0, l0 + lw))
+        ann_placed.append((r, x, l0 + lw / 2, e))
+    ann_h = [0.0] * len(ann_rows)
+    for r, _x, _c, e in ann_placed:
+        ann_h[r] = max(ann_h[r], len(lines_of(e["label"])) * LINE_H_S)
+    ann_top = [0.0] * len(ann_rows)
+    cur = tick_band[1] + 12
+    for r in range(len(ann_rows)):
+        ann_top[r] = cur
+        cur += ann_h[r] + 8
+    # 引き出し線を先に描き、注記は白い下地に載せる（上の段の注記を下の段への線が横切らない）
+    leads, marks = [], []
+    for r, x, cx, e in ann_placed:
+        emph = bool(e.get("emphasis"))
+        on_tick = any(abs(x - X(i)) < text_width(t, FS_SMALL) / 2 + 3 for i, t in enumerate(ticks))
+        if on_tick:
+            leads.append(line(x, y_axis + 5, x, tick_band[0] - 2, MUTED, 0.8))
+            leads.append(line(x, tick_band[1] + 2, x, ann_top[r] - 2, MUTED, 0.8))
+        else:
+            leads.append(line(x, y_axis + 5, x, ann_top[r] - 2, MUTED, 0.8))
+        marks.append(f'<circle cx="{n(x)}" cy="{n(y_axis)}" r="4.5" '
+                     f'fill="{ACCENT if emph else CARD}" stroke="{ACCENT if emph else INK}" '
+                     f'stroke-width="1.6"/>')
+        lh = len(lines_of(e["label"])) * LINE_H_S
+        lw = block_width(e["label"], FS_SMALL) + 8
+        marks.append(rect(cx - lw / 2, ann_top[r], lw, lh, CARD, None, rx=3))
+        marks += text_block(cx, ann_top[r] + lh / 2, e["label"], FS_SMALL,
+                            ACCENT if emph else INK, bold=emph)
+    out += leads + marks
+
+    bottom = cur if ann_rows else tick_band[1]
+    out.append(text(width / 2, bottom + FS_SMALL + 8, axis["label"], FS_SMALL, MUTED, bold=True))
+    bottom += FS_SMALL + 12
+
+    left = tick_w / 2 + 4
+    return _shift(out, left, 0), width + 2 * left, bottom
+
+
+# ---------------------------------------------------------------- venn
+
+VENN_STEP = 5.0      # 領域の中心を探す格子の間隔
+
+
+def draw_venn(spec) -> tuple:
+    sets = spec["sets"]
+    ids = [s["id"] for s in sets]
+    m = len(sets)
+    nested = spec.get("layout") == "nested"
+    universe = spec.get("universe")
+    regions = spec["regions"]
+    inner = [(i, r) for i, r in enumerate(regions) if r.get("in")]
+    outer = [(i, r) for i, r in enumerate(regions) if not r.get("in")]
+    lsz = {i: (block_width(r["label"], FS_SMALL) + 10, len(lines_of(r["label"])) * LINE_H_S + 6)
+           for i, r in enumerate(regions)}
+    max_lw = max(lsz[i][0] for i, _ in inner)
+
+    def circles(g):
+        """範囲の円 (cx, cy, r) と、範囲の名前を置く円周上の点。"""
+        if nested:
+            r_in = max(56.0, lsz[inner[-1][0]][0] / 2 + 14) + 4 * g
+            ring = 36.0 + 6 * g
+            rs = [r_in + ring * (m - 1 - j) for j in range(m)]
+            cs = [(0.0, -r, r) for r in rs]           # 下端をそろえた入れ子
+            names = [(0.0, -2 * r) for r in rs]
+        else:
+            r = max(90.0, max_lw / 2 + 24) + 6 * g
+            cs = [(-r / 2, 0.0, r), (r / 2, 0.0, r)]
+            if m == 3:
+                cs.append((0.0, r * 0.866, r))
+            names = [(c[0], c[1] + c[2]) if j == 2 else (c[0], c[1] - c[2]) for j, c in enumerate(cs)]
+        return cs, names
+
+    def sig(cs, x, y):
+        return frozenset(ids[j] for j, (cx, cy, r) in enumerate(cs)
+                         if (x - cx) ** 2 + (y - cy) ** 2 <= r * r)
+
+    cs = names = name_rects = None
+    spots = {}
+    for g in range(80):
+        cs, names = circles(g)
+        name_rects = [(x - (text_width(s["label"], FS_SMALL) + 10) / 2, y - (FS_SMALL + 6) / 2,
+                       text_width(s["label"], FS_SMALL) + 10, FS_SMALL + 6)
+                      for (x, y), s in zip(names, sets)]
+        bx0 = min(c[0] - c[2] for c in cs)
+        bx1 = max(c[0] + c[2] for c in cs)
+        by0 = min(c[1] - c[2] for c in cs)
+        by1 = max(c[1] + c[2] for c in cs)
+        grid = [(bx0 + VENN_STEP * a, by0 + VENN_STEP * b)
+                for a in range(int((bx1 - bx0) / VENN_STEP) + 1)
+                for b in range(int((by1 - by0) / VENN_STEP) + 1)]
+        spots = {}
+        ok = True
+        for i, reg in inner:
+            target = frozenset(reg["in"])
+            pts = [p for p in grid if sig(cs, *p) == target]
+            if not pts:
+                ok = False
+                break
+            if nested:
+                j = len(reg["in"]) - 1
+                if j == m - 1:
+                    pref = (cs[j][0], cs[j][1])
+                else:
+                    pref = (0.0, (-2 * cs[j][2] - 2 * cs[j + 1][2]) / 2)
+            else:
+                pref = (sum(p[0] for p in pts) / len(pts), sum(p[1] for p in pts) / len(pts))
+            pts.sort(key=lambda p: (p[0] - pref[0]) ** 2 + (p[1] - pref[1]) ** 2)
+            w, h = lsz[i]
+            found = None
+            for (px, py) in pts[:500]:
+                rr = (px - w / 2, py - h / 2, w, h)
+                if any(_hit(rr, o, 3) for o in name_rects + list(spots.values())):
+                    continue
+                samples = [(rr[0] - 4 + (rr[2] + 8) * a / 4, rr[1] - 4 + (rr[3] + 8) * b / 3)
+                           for a in range(5) for b in range(4)]
+                if all(sig(cs, *q) == target for q in samples):
+                    found = rr
+                    break
+            if found is None:
+                ok = False
+                break
+            spots[i] = found
+        if ok:
+            break
+
+    rects = [(c[0] - c[2], c[1] - c[2], 2 * c[2], 2 * c[2]) for c in cs] + name_rects
+    x0 = min(r[0] for r in rects)
+    y0 = min(r[1] for r in rects)
+    x1 = max(r[0] + r[2] for r in rects)
+    y1 = max(r[1] + r[3] for r in rects)
+
+    out = []
+    if universe:
+        out_h = max((lsz[i][1] for i, _ in outer), default=0.0)
+        ux, uy = x0 - 20, y0 - 30
+        uw = x1 - x0 + 40
+        uh = (y1 - y0) + 30 + 16 + (out_h + 10 if outer else 0)
+        out.append(rect(ux, uy, uw, uh, "none", INK, 1.0, rx=8))
+        out.append(text(ux + 12, uy + 18, universe, FS_SMALL, MUTED, anchor="start", bold=True))
+        for i, reg in outer:
+            w, h = lsz[i]
+            spots[i] = (ux + uw - 12 - w, uy + uh - 10 - h, w, h)
+        x0, y0, x1, y1 = ux, uy, ux + uw, uy + uh
+    for cx, cy, r in cs:
+        out.append(f'<circle cx="{n(cx)}" cy="{n(cy)}" r="{n(r)}" fill="none" '
+                   f'stroke="{INK}" stroke-width="1.2"/>')
+    for i, reg in enumerate(regions):
+        if i not in spots:
+            continue
+        rx, ry, w, h = spots[i]
+        emph = bool(reg.get("emphasis"))
+        if emph:
+            out.append(rect(rx, ry, w, h, FILL_ACCENT, ACCENT, 1.4, rx=6))
+        out += text_block(rx + w / 2, ry + h / 2, reg["label"], FS_SMALL,
+                          ACCENT if emph else INK, bold=emph)
+    for (x, y), s in zip(names, sets):
+        w = text_width(s["label"], FS_SMALL) + 10
+        out += [rect(x - w / 2, y - (FS_SMALL + 6) / 2, w, FS_SMALL + 6, CARD, None, rx=3),
+                text(x, y + FS_SMALL * 0.35, s["label"], FS_SMALL, INK, bold=True)]
+    return _shift(out, -x0, -y0), x1 - x0, y1 - y0
+
 DRAWERS = {"blocks": draw_blocks, "sequence": draw_sequence,
-           "matrix": draw_matrix, "chart": draw_chart}
+           "matrix": draw_matrix, "chart": draw_chart,
+           "steps": draw_steps, "cycle": draw_cycle, "layers": draw_layers,
+           "parts": draw_parts, "timeline": draw_timeline, "venn": draw_venn}
 
 
 # ---------------------------------------------------------------- 組み立て
@@ -775,7 +1416,8 @@ def _figure_texts(fig) -> list:
             out.append(v)
         elif isinstance(v, dict):
             for k, x in v.items():
-                if k in ("caption", "after", "type", "id", "kind", "shape", "style", "arrow", "color"):
+                if k in ("caption", "after", "type", "id", "kind", "shape", "style", "arrow", "color",
+                         "direction", "layout", "icon", "in"):
                     continue
                 walk(x)
         elif isinstance(v, list):
@@ -783,6 +1425,239 @@ def _figure_texts(fig) -> list:
                 walk(x)
     walk({k: v for k, v in fig.items() if k not in ("caption", "after")})
     return out
+
+
+ICON_PLACES = "blocks・sequence・steps・cycle・layers・parts"
+
+# 5〜10 の型の項目の配列・項目の呼び名・項目の数の門（数える配列, 下限, 上限, 文言の頭）
+ITEM_ARRAYS = {"steps": ("stages", "段"), "cycle": ("stages", "段"), "layers": ("layers", "層"),
+               "parts": ("parts", "部位"), "timeline": ("events", "出来事"), "venn": ("regions", "領域")}
+ITEM_COUNTS = {"steps": ("stages", 3, 6, "steps の段は 3〜6"),
+               "cycle": ("stages", 3, 6, "cycle の段は 3〜6"),
+               "layers": ("layers", 2, 7, "layers の層は 2〜7"),
+               "parts": ("parts", 3, 8, "parts の部位は 3〜8"),
+               "timeline": ("events", 3, 8, "timeline の出来事は 3〜8"),
+               "venn": ("sets", 2, 3, "venn の範囲は 2〜3")}
+
+
+# 絵記号を置ける 7 か所（型ごとの、図の直下の鍵。配列なら各要素、whole はその辞書）
+ICON_ALLOWED = {"blocks": ("nodes",), "sequence": ("actors",), "steps": ("stages",),
+                "cycle": ("stages",), "layers": ("layers",), "parts": ("parts", "whole")}
+
+
+# @implements REQ-440
+def _check_icons(fig, t, where, problems) -> None:
+    """絵の語彙の門。図の JSON を全部たどり、置ける 7 か所では語彙に無い名前を、
+    それ以外のどこか（図の一番上の階層・入れ子の奥を含む）では icon があること自体を止める。"""
+    allowed_keys = ICON_ALLOWED.get(t, ())
+
+    def place_of(path) -> str:
+        s = ""
+        for p in path:
+            s += f"[{p}]" if isinstance(p, int) else (f".{p}" if s else p)
+        return s or "図の一番上の階層"
+
+    def allowed(path, obj) -> bool:
+        if len(path) == 1 and path[0] == "whole":
+            return "whole" in allowed_keys and obj is fig.get("whole")
+        return (len(path) == 2 and path[0] in allowed_keys and path[0] != "whole"
+                and isinstance(path[1], int))
+
+    def walk(v, path) -> None:
+        if isinstance(v, dict):
+            if "icon" in v:
+                place = place_of(path)
+                if not allowed(path, v):
+                    problems.append(f"{where}: {place} に icon は置けない（置けるのは {ICON_PLACES}）")
+                elif v["icon"] not in ICON_NAMES:
+                    problems.append(f"{where}: {place} の未知の icon {v['icon']!r}"
+                                    f"（絵の語彙 {'/'.join(ICON_NAMES)} のいずれか）")
+            for k, x in v.items():
+                if k != "icon":
+                    walk(x, path + [k])
+        elif isinstance(v, list):
+            for i, x in enumerate(v):
+                walk(x, path + [i])
+
+    walk(fig, [])
+
+
+def _blank(v) -> bool:
+    return v is None or not str(v).strip()
+
+
+def _first_line(item) -> str:
+    lb = item.get("label") if isinstance(item, dict) else None
+    return "" if lb is None else lines_of(str(lb).strip())[0]
+
+
+def _check_items(items, arr, noun, where, problems) -> None:
+    """項目（段・層・部位・出来事・領域）は「名前＋一言」を 2〜3 行で書く。"""
+    labels = []
+    # @implements REQ-440
+    for i, it in enumerate(items):
+        lb = it.get("label") if isinstance(it, dict) else None
+        s = "" if lb is None else str(lb)
+        if not s.strip():
+            problems.append(f"{where}: {arr}[{i}] に label が無い")
+        else:
+            k = len(s.strip().split("\n"))
+            if k >= 4:
+                problems.append(f"{where}: {arr}[{i}] の label が {k} 行（3 行まで）")
+        labels.append(s)
+    # 1 行だけの項目が全項目の半分を超えればエラー（blocks の箱と同じ判定）
+    # @implements REQ-438
+    one_line = [s for s in labels if "\n" not in s.strip()]
+    if labels and len(one_line) * 2 > len(labels):
+        problems.append(f"{where}: 1 行だけ（名前だけ）の{noun}が {len(one_line)}/{len(labels)} 個で半分を超える"
+                        f"（{noun}は「名前＋一言」を \\n で 2 行以上に）")
+
+
+def _check_next_labels(stages, cyclic, where, problems) -> None:
+    """段の間の矢印のラベル。cycle は最後の段の先が最初の段、steps は最後の段に書かない。"""
+    k = len(stages)
+    for i, s in enumerate(stages):
+        nl = s.get("next_label") if isinstance(s, dict) else None
+        # @implements REQ-440
+        if i == k - 1 and not cyclic:
+            if not _blank(nl):
+                problems.append(f"{where}: 最後の段 stages[{i}] に next_label がある（矢印の先の段が無い）")
+            continue
+        # 段の間の矢印は何を渡すか・何が起きるかを運ぶ（blocks の線と同じ判定）
+        # @implements REQ-438
+        if _blank(nl):
+            nxt = stages[(i + 1) % k]
+            problems.append(f"{where}: stages[{i}]（{_first_line(s)}→{_first_line(nxt)}）に next_label が無い"
+                            "（段の間には何を渡すか／何が起きるかを書く）")
+
+
+# @implements REQ-440
+def _validate_item_type(fig, t, where, problems) -> None:
+    """5〜10 の型（steps・cycle・layers・parts・timeline・venn）の中身の門。"""
+    arr, noun = ITEM_ARRAYS[t]
+    if not _need(fig, [arr], where, problems):
+        return
+    items = fig[arr]
+    if not isinstance(items, list):
+        problems.append(f"{where}: {arr} は配列")
+        return
+    c_arr, lo, hi, head = ITEM_COUNTS[t]
+    counted = fig.get(c_arr) if isinstance(fig.get(c_arr), list) else []
+    if not lo <= len(counted) <= hi:
+        problems.append(f"{where}: {head}（今は {len(counted)}）")
+    _check_items(items, arr, noun, where, problems)
+
+    if t in ("steps", "cycle"):
+        _check_next_labels(items, t == "cycle", where, problems)
+        if t == "steps" and fig.get("direction") not in ("up", "down"):
+            problems.append(f"{where}: 未知の direction {fig.get('direction')!r}（up/down）")
+
+    elif t == "layers":
+        if fig.get("shape", "stack") not in ("stack", "pyramid"):
+            problems.append(f"{where}: 未知の shape {fig.get('shape')!r}（stack/pyramid）")
+        taken = []
+        for i, b in enumerate(fig.get("brackets", []) or []):
+            if not isinstance(b, dict):
+                problems.append(f"{where}: brackets[{i}] に label が無い")
+                continue
+            if _blank(b.get("label")):
+                problems.append(f"{where}: brackets[{i}] に label が無い")
+            f, to = b.get("from"), b.get("to")
+            valid = (isinstance(f, int) and isinstance(to, int) and not isinstance(f, bool)
+                     and not isinstance(to, bool) and 0 <= f <= to < len(items))
+            if valid and any(f <= t1 and t0 <= to for t0, t1 in taken):
+                valid = False
+            if not valid:
+                problems.append(f"{where}: brackets[{i}] の範囲 {f}〜{to} が不正"
+                                "（層の位置の内で from ≤ to、括弧どうしは重ねない）")
+            else:
+                taken.append((f, to))
+
+    elif t == "parts":
+        whole = fig.get("whole")
+        if not isinstance(whole, dict) or _blank(whole.get("label")):
+            problems.append(f"{where}: whole の label が無い（分解する物の名前を書く）")
+
+    elif t == "timeline":
+        if not _need(fig, ["axis"], where, problems):
+            return
+        axis = fig["axis"]
+        if not isinstance(axis, dict) or _blank(axis.get("label")):
+            problems.append(f"{where}: axis の label が無い（軸の名前を書く）")
+        if not isinstance(axis, dict):
+            return
+        ticks = axis.get("ticks") if isinstance(axis.get("ticks"), list) else []
+        if not 2 <= len(ticks) <= 12:
+            problems.append(f"{where}: axis.ticks は 2〜12（今は {len(ticks)}）")
+        last = len(ticks) - 1
+        for i, e in enumerate(items):
+            if not isinstance(e, dict):
+                continue
+            has_at = "at" in e
+            has_from, has_to = "from" in e, "to" in e
+            if has_at == (has_from or has_to) or (has_from != has_to):
+                problems.append(f"{where}: events[{i}] は at か from／to のどちらか一方だけを持つ")
+                continue
+            vals = [e["at"]] if has_at else [e["from"], e["to"]]
+            ok = all(is_number(v) and 0 <= v <= last for v in vals)
+            if ok and not has_at and not e["from"] < e["to"]:
+                ok = False
+            if not ok:
+                problems.append(f"{where}: events[{i}] の位置が範囲外（0〜ticks の個数 −1、期間は from < to）")
+
+    elif t == "venn":
+        if not _need(fig, ["sets"], where, problems):
+            return
+        layout = fig.get("layout")
+        if layout not in ("overlap", "nested"):
+            problems.append(f"{where}: 未知の layout {layout!r}（overlap/nested）")
+        ids = []
+        for i, s in enumerate(counted):
+            if not isinstance(s, dict) or not _need(s, ["id", "label"], f"{where} sets[{i}]", problems):
+                continue
+            if s["id"] in ids:
+                problems.append(f"{where}: sets の id {s['id']!r} が重複する（範囲の id は図の中で一意）")
+            ids.append(s["id"])
+        combos = []
+        for i, r in enumerate(items):
+            got = r.get("in") if isinstance(r, dict) else None
+            if not isinstance(got, list):
+                problems.append(f"{where}: regions[{i}] の in の {got!r} が sets にない")
+                continue
+            # in は集合として比べる（書く順は問わない）。同じ id を 2 回書くのはエラー
+            if len(got) != len(set(map(repr, got))):
+                problems.append(f"{where}: regions[{i}].in に同じ id がある（in は範囲の id を 1 回ずつ書く）")
+            bad = [x for x in got if x not in ids]
+            for x in bad:
+                problems.append(f"{where}: regions[{i}] の in の {x!r} が sets にない")
+            if not bad:
+                combos.append(frozenset(got))
+        if layout in ("overlap", "nested") and len(ids) == len(counted) and 2 <= len(ids) <= 3:
+            if layout == "overlap":
+                need = {frozenset(ids[j] for j in range(len(ids)) if mask >> j & 1)
+                        for mask in range(1, 2 ** len(ids))}
+            else:
+                need = {frozenset(ids[:j]) for j in range(1, len(ids) + 1)}
+            allowed = need | ({frozenset()} if fig.get("universe") else set())
+
+            def show(c):
+                return json.dumps([x for x in ids if x in c], ensure_ascii=False)
+            seen, dup = set(), []
+            for c in combos:
+                if c in seen and c not in dup:
+                    dup.append(c)
+                seen.add(c)
+            missing = sorted((c for c in need if c not in seen), key=show)
+            misplaced = [c for c in dict.fromkeys(combos) if c not in allowed]
+            parts = []
+            if missing:
+                parts.append("欠け: " + "、".join(show(c) for c in missing))
+            if dup:
+                parts.append("重複: " + "、".join(show(c) for c in dup))
+            if misplaced:
+                parts.append("置けない並び: " + "、".join(show(c) for c in misplaced))
+            if parts:
+                problems.append(f"{where}: regions が layout に合わない（{'／'.join(parts)}）")
 
 
 def validate_figure(fig, where, problems, warnings=None) -> None:
@@ -806,10 +1681,13 @@ def validate_figure(fig, where, problems, warnings=None) -> None:
     for txt in _figure_texts(fig):
         if FIGURE_BANNED.search(txt):
             problems.append(f"{where}: 図の中身に誤答の否定・正誤の印・問の名指しか禁止記法: {txt[:40]!r}")
+    # 型そのものと、blocks・sequence・matrix・chart の形
+    # @implements REQ-440
     t = fig.get("type")
     if t not in FIGURE_TYPES:
         problems.append(f"{where}: 未知の type {t!r}（{'/'.join(FIGURE_TYPES)} のいずれか）")
         return
+    _check_icons(fig, t, where, problems)
 
     if t == "blocks":
         if not _need(fig, ["nodes"], where, problems):
@@ -819,20 +1697,20 @@ def validate_figure(fig, where, problems, warnings=None) -> None:
             if not _need(nd, ["id", "label", "row", "col"], f"{where} nodes[{i}]", problems):
                 continue
             if nd["id"] in ids:
-                problems.append(f"{where}: nodes の id {nd['id']!r} が重複")
+                problems.append(f"{where}: nodes の id {nd['id']!r} が重複する（箱の id は図の中で一意）")
             ids.append(nd["id"])
             if nd.get("shape", "box") not in ("box", "round", "cylinder", "cloud"):
-                problems.append(f"{where}: 未知の shape {nd.get('shape')!r}")
+                problems.append(f"{where}: nodes[{i}] の未知の shape {nd.get('shape')!r}（box/round/cylinder/cloud）")
         for i, e in enumerate(fig.get("edges", [])):
             if not _need(e, ["from", "to"], f"{where} edges[{i}]", problems):
                 continue
             for side in ("from", "to"):
                 if e[side] not in ids:
-                    problems.append(f"{where}: edges[{i}] の {side} {e[side]!r} が nodes にない")
+                    problems.append(f"{where}: edges[{i}] の {side} の {e[side]!r} が nodes にない")
             if e.get("style", "solid") not in ("solid", "dashed"):
-                problems.append(f"{where}: edges[{i}] の未知の style {e.get('style')!r}")
+                problems.append(f"{where}: edges[{i}] の未知の style {e.get('style')!r}（solid/dashed）")
             if e.get("arrow", "to") not in ("to", "both", "none"):
-                problems.append(f"{where}: edges[{i}] の未知の arrow {e.get('arrow')!r}")
+                problems.append(f"{where}: edges[{i}] の未知の arrow {e.get('arrow')!r}（to/both/none）")
             # 線は何が流れるか・何が起きるか・どの条件で移るかを運ぶ（arrow: none の線と自己ループも同じ）
             # @implements REQ-438
             if not str(e.get("label") or "").strip():
@@ -860,10 +1738,11 @@ def validate_figure(fig, where, problems, warnings=None) -> None:
             if not _need(a, ["id", "label"], f"{where} actors[{i}]", problems):
                 continue
             if a["id"] in ids:
-                problems.append(f"{where}: actors の id {a['id']!r} が重複")
+                problems.append(f"{where}: actors の id {a['id']!r} が重複する（登場人物の id は図の中で一意）")
             ids.append(a["id"])
-        if len(ids) < 2:
-            problems.append(f"{where}: actors は2つ以上必要")
+        n_actors = len(fig["actors"]) if isinstance(fig["actors"], list) else 0
+        if not 2 <= n_actors <= 4:
+            problems.append(f"{where}: sequence の登場人物は 2〜4（今は {n_actors}）")
         for i, s in enumerate(fig["steps"]):
             if not _need(s, ["from", "to", "label"], f"{where} steps[{i}]", problems):
                 continue
@@ -878,7 +1757,7 @@ def validate_figure(fig, where, problems, warnings=None) -> None:
             _need(fig[ax], ["label", "values"], f"{where} {ax}", problems)
         xs, ys = fig["x"].get("values", []), fig["y"].get("values", [])
         if not (2 <= len(xs) <= 3 and 2 <= len(ys) <= 3):
-            problems.append(f"{where}: matrix は 2×2〜3×3（今は {len(ys)}×{len(xs)}）")
+            problems.append(f"{where}: 行 {len(ys)} × 列 {len(xs)}（2〜3 × 2〜3）")
         if len(fig["cells"]) != len(ys):
             problems.append(f"{where}: cells の行数 {len(fig['cells'])} が y.values {len(ys)} と違う")
         for r, row in enumerate(fig["cells"]):
@@ -889,18 +1768,24 @@ def validate_figure(fig, where, problems, warnings=None) -> None:
                 problems.append(f"{where}: emphasis {p} が範囲外")
 
     elif t == "chart":
-        if not _need(fig, ["kind", "x", "y", "series"], where, problems):
+        # kind は必須。欄が無いのも未知の kind として止める
+        if fig.get("kind") not in ("line", "bar", "step"):
+            problems.append(f"{where}: 未知の kind {fig.get('kind')!r}（line/bar/step）")
+        # series の欄が無い・配列でないのは 0 本と同じに止める
+        series = fig.get("series") if isinstance(fig.get("series"), list) else []
+        if len(series) > 3:
+            problems.append(f"{where}: chart の系列は 3 本まで（今は {len(series)}）")
+        elif not series:
+            problems.append(f"{where}: chart の系列が無い（今は 0）")
+        if not _need(fig, ["x", "y"], where, problems):
             return
-        if fig["kind"] not in ("line", "bar", "step"):
-            problems.append(f"{where}: 未知の kind {fig['kind']!r}（line/bar/step）")
         _need(fig["x"], ["label", "values"], f"{where} x", problems)
-        _need(fig["y"], ["label"], f"{where} y", problems)
+        if not isinstance(fig["y"], dict) or _blank(fig["y"].get("label")):
+            problems.append(f"{where}: y の label が無い（縦軸の名前を書く）")
         xs = fig["x"].get("values", [])
         if len(xs) < 2:
-            problems.append(f"{where}: x.values は2つ以上必要")
-        if not fig["series"] or len(fig["series"]) > 3:
-            problems.append(f"{where}: series は1〜3本（今は {len(fig['series'])}）")
-        for i, s in enumerate(fig["series"]):
+            problems.append(f"{where}: x.values は 2 個以上（今は {len(xs)}）")
+        for i, s in enumerate(series):
             if not _need(s, ["label", "values"], f"{where} series[{i}]", problems):
                 continue
             if len(s["values"]) != len(xs):
@@ -921,6 +1806,9 @@ def validate_figure(fig, where, problems, warnings=None) -> None:
                 continue
             if not numeric_x and a["x"] not in xs:
                 problems.append(f"{where}: annotations[{i}] の x {a['x']!r} が x.values にない")
+
+    else:
+        _validate_item_type(fig, t, where, problems)
 
 
 def load(paths, problems, warnings=None) -> list:
@@ -945,7 +1833,7 @@ def load(paths, problems, warnings=None) -> list:
             if not isinstance(fid, int) or fid < 1:
                 problems.append(f"{w}: id は1始まりの整数")
             elif fid in fids:
-                problems.append(f"{w}: 図の id が重複")
+                problems.append(f"{w}: figures の id {fid} が重複する（id はファイル内で一意）")
             else:
                 fids.append(fid)
             validate_figure(fig, w, problems, warnings)
