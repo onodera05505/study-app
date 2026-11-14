@@ -1,0 +1,24 @@
+{
+  "topic_id": 25,
+  "term": "骨格筋のつくりと働き",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "上と下の筋は、同じ二つの骨に反対側からついています。片方が縮むと骨が引き寄せられ、元へ戻すときはもう片方が縮みます。",
+      "nodes": [
+        {"id": "flex", "label": "曲げる側の筋\n縮む力だけを出す\n押す力は出せない", "row": 0, "col": 1, "emphasis": true},
+        {"id": "a", "label": "骨 A\n筋の一方の端がつく", "row": 1, "col": 0},
+        {"id": "b", "label": "骨 B\nもう一方の端がつく", "row": 1, "col": 2},
+        {"id": "ext", "label": "反対側の筋\n縮んで骨を\n元の向きへ戻す", "row": 2, "col": 1}
+      ],
+      "edges": [
+        {"from": "flex", "to": "a", "label": "縮んで引き寄せる"},
+        {"from": "flex", "to": "b", "label": "縮んで引き寄せる"},
+        {"from": "ext", "to": "a", "label": "縮んで逆向きに引く", "style": "dashed"},
+        {"from": "ext", "to": "b", "label": "縮んで逆向きに引く", "style": "dashed"}
+      ]
+    }
+  ]
+}

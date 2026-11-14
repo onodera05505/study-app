@@ -1,30 +1,39 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="320" viewBox="0 0 640 320">
-<rect x="0.5" y="0.5" width="639" height="319" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(49.6 20)">
-<line x1="48" y1="34" x2="48" y2="280" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="492.8" y1="34" x2="492.8" y2="280" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">自分</text>
-<rect x="444.8" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="492.8" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">手元の数字</text>
-<polyline points="48,60 74,60 74,74 50,74" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="50,74 58,70.4 58,77.6" fill="#1f2937"/>
-<text x="82" y="68" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">1. 答えの候補を置く「たぶん平日の昼の利用が減っている」</text>
-<rect x="-28" y="79" width="152" height="16" rx="3" fill="#ffffff"/>
-<text x="48" y="92.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">置いた理由を問い返される</text>
-<polyline points="51,118 489.8,118" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="489.8,118 481.8,121.6 481.8,114.4" fill="#1f2937"/>
-<text x="270.4" y="111" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 確かめる材料を 1 つに絞る（曜日と時間帯ごとの入館者数）</text>
-<polyline points="489.8,158 51,158" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="51,158 59,154.4 59,161.6" fill="#1f2937"/>
-<text x="270.4" y="151" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 当たり: 平日の昼だけが減っていた → 示唆「原因は平日の昼の使われ方」</text>
-<polyline points="489.8,198 51,198" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="51,198 59,194.4 59,201.6" fill="#1f2937"/>
-<text x="270.4" y="191" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 外れ: 平日の昼は減っていなかった</text>
-<polyline points="48,230 74,230 74,244 50,244" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="50,244 58,240.4 58,247.6" fill="#1f2937"/>
-<text x="82" y="238" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. 次の候補に移り、また材料を 1 つ決める</text>
-<rect x="-46" y="249" width="188" height="16" rx="3" fill="#ffffff"/>
-<text x="48" y="262.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">外れること自体は減点にならない</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="297" viewBox="0 0 640 296.96">
+<rect x="0.5" y="0.5" width="639" height="295.96" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(76 20)">
+<g transform="translate(244 133.48)">
+<polyline points="95.34,-74.98 96.13,-74.59 96.92,-74.2 97.7,-73.81 98.47,-73.41 99.25,-73.01 100.01,-72.6 100.78,-72.2 101.54,-71.79 102.29,-71.37 103.05,-70.96 103.79,-70.54 104.54,-70.11 105.27,-69.69 106.01,-69.26 106.74,-68.83 107.46,-68.39 108.18,-67.95 108.89,-67.51 109.6,-67.07 110.31,-66.63 111.01,-66.18 111.71,-65.72 112.4,-65.27 113.09,-64.81 113.77,-64.35 114.44,-63.89 115.12,-63.42 115.78,-62.95 116.45,-62.48 117.1,-62.01 117.75,-61.53 118.4,-61.05 119.04,-60.57 119.68,-60.09 120.31,-59.6 120.94,-59.11 121.56,-58.62 122.18,-58.12 122.79,-57.63 123.39,-57.13 123.99,-56.63 124.59,-56.12 125.18,-55.61 125.76,-55.11 126.34,-54.59 126.92,-54.08 127.48,-53.56 128.05,-53.05 128.6,-52.53 129.16,-52 129.7,-51.48 130.24,-50.95 130.78,-50.42 131.31,-49.89 131.83,-49.35 132.35,-48.82 132.86,-48.28 133.37,-47.74 133.87,-47.2 134.36,-46.65 134.85,-46.11 135.34,-45.56 135.82,-45.01 136.29,-44.46 136.75,-43.9 137.22,-43.35 137.67,-42.79 138.12,-42.23 138.56,-41.67 139,-41.11 139.43,-40.54 139.85,-39.97 140.27,-39.41" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="140.27,-39.41 132.63,-43.71 138.42,-47.98" fill="#1f2937"/>
+<polyline points="137.22,43.35 136.75,43.9 136.29,44.46 135.82,45.01 135.34,45.56 134.85,46.11 134.36,46.65 133.87,47.2 133.37,47.74 132.86,48.28 132.35,48.82 131.83,49.35 131.31,49.89 130.78,50.42 130.24,50.95 129.7,51.48 129.16,52 128.6,52.53 128.05,53.05 127.48,53.56 126.92,54.08 126.34,54.59 125.76,55.11 125.18,55.61 124.59,56.12 123.99,56.63 123.39,57.13 122.79,57.63 122.18,58.12 121.56,58.62 120.94,59.11 120.31,59.6 119.68,60.09 119.04,60.57 118.4,61.05 117.75,61.53 117.1,62.01 116.45,62.48 115.78,62.95 115.12,63.42 114.44,63.89 113.77,64.35 113.09,64.81 112.4,65.27 111.71,65.72 111.01,66.18 110.31,66.63 109.6,67.07 108.89,67.51 108.18,67.95 107.46,68.39 106.74,68.83 106.01,69.26 105.27,69.69 104.54,70.11 103.79,70.54 103.05,70.96 102.29,71.37 101.54,71.79 100.78,72.2 100.01,72.6 99.25,73.01 98.47,73.41 97.7,73.81 96.92,74.2 96.13,74.59 95.34,74.98 94.55,75.37 93.75,75.75 92.95,76.13 92.14,76.5 91.33,76.88" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="91.33,76.88 97.1,70.26 100.1,76.8" fill="#1f2937"/>
+<polyline points="-95.34,74.98 -96.13,74.59 -96.92,74.2 -97.7,73.81 -98.47,73.41 -99.25,73.01 -100.01,72.6 -100.78,72.2 -101.54,71.79 -102.29,71.37 -103.05,70.96 -103.79,70.54 -104.54,70.11 -105.27,69.69 -106.01,69.26 -106.74,68.83 -107.46,68.39 -108.18,67.95 -108.89,67.51 -109.6,67.07 -110.31,66.63 -111.01,66.18 -111.71,65.72 -112.4,65.27 -113.09,64.81 -113.77,64.35 -114.44,63.89 -115.12,63.42 -115.78,62.95 -116.45,62.48 -117.1,62.01 -117.75,61.53 -118.4,61.05 -119.04,60.57 -119.68,60.09 -120.31,59.6 -120.94,59.11 -121.56,58.62 -122.18,58.12 -122.79,57.63 -123.39,57.13 -123.99,56.63 -124.59,56.12 -125.18,55.61 -125.76,55.11 -126.34,54.59 -126.92,54.08 -127.48,53.56 -128.05,53.05 -128.6,52.53 -129.16,52 -129.7,51.48 -130.24,50.95 -130.78,50.42 -131.31,49.89 -131.83,49.35 -132.35,48.82 -132.86,48.28 -133.37,47.74 -133.87,47.2 -134.36,46.65 -134.85,46.11 -135.34,45.56 -135.82,45.01 -136.29,44.46 -136.75,43.9 -137.22,43.35 -137.67,42.79 -138.12,42.23 -138.56,41.67 -139,41.11 -139.43,40.54 -139.85,39.97 -140.27,39.41 -140.69,38.84 -141.09,38.26 -141.49,37.69 -141.89,37.12 -142.28,36.54 -142.66,35.96 -143.04,35.38 -143.41,34.8 -143.77,34.22 -144.13,33.63 -144.48,33.05 -144.83,32.46 -145.17,31.87 -145.5,31.28 -145.83,30.69 -146.15,30.1 -146.46,29.5" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="-146.46,29.5 -139.54,34.89 -145.9,38.26" fill="#1f2937"/>
+<polyline points="-144.48,-33.05 -144.13,-33.63 -143.77,-34.22 -143.41,-34.8 -143.04,-35.38 -142.66,-35.96 -142.28,-36.54 -141.89,-37.12 -141.49,-37.69 -141.09,-38.26 -140.69,-38.84 -140.27,-39.41 -139.85,-39.97 -139.43,-40.54 -139,-41.11 -138.56,-41.67 -138.12,-42.23 -137.67,-42.79 -137.22,-43.35 -136.75,-43.9 -136.29,-44.46 -135.82,-45.01 -135.34,-45.56 -134.85,-46.11 -134.36,-46.65 -133.87,-47.2 -133.37,-47.74 -132.86,-48.28 -132.35,-48.82 -131.83,-49.35 -131.31,-49.89 -130.78,-50.42 -130.24,-50.95 -129.7,-51.48 -129.16,-52 -128.6,-52.53 -128.05,-53.05 -127.48,-53.56 -126.92,-54.08 -126.34,-54.59 -125.76,-55.11 -125.18,-55.61 -124.59,-56.12 -123.99,-56.63 -123.39,-57.13 -122.79,-57.63 -122.18,-58.12 -121.56,-58.62 -120.94,-59.11 -120.31,-59.6 -119.68,-60.09 -119.04,-60.57 -118.4,-61.05 -117.75,-61.53 -117.1,-62.01 -116.45,-62.48 -115.78,-62.95 -115.12,-63.42 -114.44,-63.89 -113.77,-64.35 -113.09,-64.81 -112.4,-65.27 -111.71,-65.72 -111.01,-66.18 -110.31,-66.63 -109.6,-67.07 -108.89,-67.51 -108.18,-67.95 -107.46,-68.39 -106.74,-68.83 -106.01,-69.26 -105.27,-69.69 -104.54,-70.11 -103.79,-70.54 -103.05,-70.96 -102.29,-71.37 -101.54,-71.79 -100.78,-72.2 -100.01,-72.6 -99.25,-73.01 -98.47,-73.41 -97.7,-73.81 -96.92,-74.2 -96.13,-74.59 -95.34,-74.98 -94.55,-75.37 -93.75,-75.75 -92.95,-76.13 -92.14,-76.5 -91.33,-76.88" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="-91.33,-76.88 -97.1,-70.26 -100.1,-76.8" fill="#1f2937"/>
+<rect x="-90" y="-133.48" width="180" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<g transform="translate(-78 -106.48) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7.5" r="3.6"/><path d="M4.5 21 C4.5 14.2 19.5 14.2 19.5 21"/></g>
+<text x="15" y="-110.58" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">候補を置く</text>
+<text x="15" y="-90.58" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">「たぶん平日の昼の</text>
+<text x="15" y="-70.58" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">利用が減った」</text>
+<rect x="64" y="-38" width="180" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<g transform="translate(76 -11) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15 L20.5 20.5" stroke-width="2.6"/></g>
+<text x="169" y="-15.1" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">材料を 1 つに絞る</text>
+<text x="169" y="4.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">曜日と時間帯ごとの</text>
+<text x="169" y="24.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">入館者数</text>
+<rect x="-90" y="67.48" width="180" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<g transform="translate(-78 84.48) scale(0.9167)" fill="none" stroke="#2563eb" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M7.6 12.4 L10.6 15.4 L16.4 9.2"/></g>
+<text x="15" y="90.38" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">確かめる</text>
+<text x="15" y="110.38" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">当たれば示唆が出る</text>
+<rect x="-244" y="-28" width="180" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<g transform="translate(-232 -11) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.2 10 A7 7 0 0 1 18.4 8.6"/><path d="M18.9 4.6 L18.6 9 L14.4 8.2"/><path d="M18.8 14 A7 7 0 0 1 5.6 15.4"/><path d="M5.1 19.4 L5.4 15 L9.6 15.8"/></g>
+<text x="-139" y="-5.1" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">次の候補に移る</text>
+<text x="-139" y="14.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">外れても止まらない</text>
+<text x="158.89" y="-77.31" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">確かめたい一点</text>
+<text x="170.89" y="85.71" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">その数字だけを見る</text>
+<text x="-134.89" y="85.71" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">外れた</text>
+<text x="-146.89" y="-77.31" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">新しい候補</text>
+<text x="0" y="-5.1" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle" font-weight="600">答えに</text>
+<text x="0" y="14.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle" font-weight="600">近づく</text>
+</g>
 </g>
 </svg>

@@ -1,0 +1,58 @@
+{
+  "topic_id": 74,
+  "term": "胸腰筋膜",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "膜を真ん中に置き、左右の筋とのつながりと、そこから手の当て方へ進む矢印をたどります。",
+      "nodes": [
+        {
+          "id": "abd",
+          "label": "お腹の横の筋\nわき腹の奥",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "tlf",
+          "label": "胸腰筋膜\n腰の背中側の丈夫な膜",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "ere",
+          "label": "脊柱起立筋\n背骨の両脇の土手",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "palm",
+          "label": "手のひら全体\n面ごと覆って待つ",
+          "row": 1,
+          "col": 1,
+          "icon": "hand"
+        }
+      ],
+      "edges": [
+        {
+          "from": "abd",
+          "to": "tlf",
+          "label": "縁が続き\n動きが伝わる",
+          "arrow": "both"
+        },
+        {
+          "from": "tlf",
+          "to": "ere",
+          "label": "袋のように包む"
+        },
+        {
+          "from": "tlf",
+          "to": "palm",
+          "label": "張りが一点でなく\n面で広がる"
+        }
+      ]
+    }
+  ]
+}

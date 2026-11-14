@@ -1,0 +1,40 @@
+{
+  "topic_id": 3,
+  "term": "構想策定（グランドデザイン）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### しくみ",
+      "caption": "構想策定は上から順に進み、矢印の文字は次の段へ渡す物です。最後の段で分けた案件が、後の要件定義の範囲になります。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "経営課題を掴む\n会社が解くべき困りごと",
+          "icon": "search",
+          "next_label": "解くべき課題"
+        },
+        {
+          "label": "あるべき姿を描く\n目指す会社全体の姿",
+          "icon": "building",
+          "next_label": "目指す全体像"
+        },
+        {
+          "label": "打ち手を並べる\n今との差を埋める手",
+          "icon": "gear",
+          "next_label": "打ち手の一覧"
+        },
+        {
+          "label": "順番と費用を決める\nどれから・いくらで",
+          "icon": "money",
+          "next_label": "順番と費用"
+        },
+        {
+          "label": "案件に分ける\n1 つずつが\n要件定義の範囲になる",
+          "icon": "document",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

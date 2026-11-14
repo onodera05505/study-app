@@ -4,51 +4,28 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "steps",
       "after": "### しくみ",
+      "direction": "down",
       "caption": "4 段に並べ直すと、打ち手が自分の行動になっているか・結果が測れているかを自分で確かめられます。",
-      "nodes": [
+      "stages": [
         {
-          "id": "issue",
-          "label": "課題\n何が困っていたか\n例: 新入部員が半年で\n3 割辞めていた",
-          "row": 0,
-          "col": 0
+          "label": "課題\n困っていたことを数字か事実で\n例: 新入部員が半年で 3 割辞めていた",
+          "next_label": "自分が動く"
         },
         {
-          "id": "act",
-          "label": "打ち手\n自分の行動で書く\n例: 練習後に 1 対 1 で\n話す時間を作った",
-          "row": 0,
-          "col": 1,
-          "emphasis": true
+          "label": "打ち手\nチームでなく自分の行動で\n例: 練習後に 1 対 1 で話す時間を作った",
+          "icon": "person",
+          "emphasis": true,
+          "next_label": "変わったこと"
         },
         {
-          "id": "res",
-          "label": "結果\nできれば数字で\n例: 翌年の離脱が\n1 割になった",
-          "row": 0,
-          "col": 2
+          "label": "結果\n何がどう変わったかを数字で\n例: 翌年の離脱が 1 割になった",
+          "icon": "chart",
+          "next_label": "次に活かす"
         },
         {
-          "id": "learn",
-          "label": "学び\n次に何を変えるか\n例: 人は辞める前に\n兆しを出す",
-          "row": 0,
-          "col": 3
-        }
-      ],
-      "edges": [
-        {
-          "from": "issue",
-          "to": "act",
-          "label": "自分が動く"
-        },
-        {
-          "from": "act",
-          "to": "res",
-          "label": "変わった"
-        },
-        {
-          "from": "res",
-          "to": "learn",
-          "label": "次に活かす"
+          "label": "学び\n次の同じ場面で何を変えるか\n例: 人は辞める前に兆しを出す"
         }
       ]
     }

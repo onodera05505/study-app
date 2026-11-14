@@ -1,0 +1,147 @@
+{
+  "topic_id": 50,
+  "term": "肩甲骨の動き",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "実線は骨どうしでつながる所、点線は骨でつながらない所です。背骨とは筋で吊られるだけなので、肩甲骨は肋骨のかごの上を滑って動けます。",
+      "nodes": [
+        {
+          "id": "spine",
+          "label": "背骨\n骨ではつながらない",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "scap",
+          "label": "肩甲骨\n背中の上で浮く\n三角の骨",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "clav",
+          "label": "鎖骨\n肩の前で骨がつながる",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "arm",
+          "label": "腕の骨\n肩先で骨がつながる",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "ribs",
+          "label": "肋骨のかご\n肩甲骨が上に乗る",
+          "row": 2,
+          "col": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": "scap",
+          "to": "spine",
+          "label": "筋で吊る\n（肩甲挙筋・菱形筋）",
+          "style": "dashed",
+          "arrow": "none"
+        },
+        {
+          "from": "scap",
+          "to": "clav",
+          "label": "骨でつながる",
+          "arrow": "none"
+        },
+        {
+          "from": "scap",
+          "to": "arm",
+          "label": "骨でつながる",
+          "arrow": "none"
+        },
+        {
+          "from": "scap",
+          "to": "ribs",
+          "label": "上に乗って滑る",
+          "style": "dashed",
+          "arrow": "none"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 施すときに意識すること",
+      "caption": "座った相手の背中を後ろから見て、2 つの様子を見分ける図です。左右の列ごとに、上の動きをしてもらうと中の様子が見え、下の見立てと手につながります。",
+      "nodes": [
+        {
+          "id": "m1",
+          "label": "肘を後ろへ引いてもらう\n痛む・つらいならやめる",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "m2",
+          "label": "腕を前へ伸ばしてもらう\n痛む・つらいならやめる",
+          "row": 0,
+          "col": 1,
+          "icon": "person"
+        },
+        {
+          "id": "s1",
+          "label": "「寄らない」\n片側だけ縁と背骨の\nあいだが広いまま",
+          "row": 1,
+          "col": 0,
+          "emphasis": true,
+          "icon": "search"
+        },
+        {
+          "id": "s2",
+          "label": "「縁が浮く」\n内側の縁が板のように\n皮膚を持ち上げる",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "search"
+        },
+        {
+          "id": "h1",
+          "label": "寄せる筋が疲れている\n背骨との間と肩甲骨の\n面に手のひらを当てる",
+          "row": 2,
+          "col": 0,
+          "icon": "hand"
+        },
+        {
+          "id": "h2",
+          "label": "縁の下へ指を入れない\n裏には肋骨が並ぶ",
+          "row": 2,
+          "col": 1,
+          "icon": "warning"
+        }
+      ],
+      "edges": [
+        {
+          "from": "m1",
+          "to": "s1",
+          "label": "すると見える"
+        },
+        {
+          "from": "m2",
+          "to": "s2",
+          "label": "すると見える"
+        },
+        {
+          "from": "s1",
+          "to": "h1",
+          "label": "見えたら"
+        },
+        {
+          "from": "s2",
+          "to": "h2",
+          "label": "見えたら"
+        }
+      ]
+    }
+  ]
+}

@@ -5,8 +5,8 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 施すときに意識すること",
-      "caption": "上の段は骨の縁からくぼみの奥の通り道まで、下の段はそこで手をどうするかを示します。指はくぼみに入れず、頭の重さを手のひらで受けます。",
+      "after": "### しくみ",
+      "caption": "上の段を左から読むと、くぼみの奥に何が通るかが分かります。くぼみに入らない代わりに、下の段の後頭部の丸みを手のひらで受けます。",
       "nodes": [
         {
           "id": "edge",
@@ -16,43 +16,33 @@
         },
         {
           "id": "hollow",
-          "label": "縁と首の骨の間のくぼみ\n奥に小さな筋の集まり",
+          "label": "骨の下のくぼみ\n奥に小さな筋の集まり\n指も手のひらの縁も入れない",
           "row": 0,
           "col": 1,
-          "emphasis": true
+          "emphasis": true,
+          "icon": "warning"
         },
         {
           "id": "pass",
-          "label": "脳へ向かう動脈\n後頭部へ行く神経",
+          "label": "脳へ向かう動脈\n後頭部へ行く神経\n指を入れると力が届く",
           "row": 0,
           "col": 2
         },
         {
           "id": "instead",
-          "label": "仰向けで後頭部の丸みを手のひらに乗せ\n頭の重さを受けて待つだけ",
+          "label": "後頭部の丸み\n手のひらで受けて待つ",
           "row": 1,
-          "col": 0,
+          "col": 1,
           "shape": "round",
-          "emphasis": true
-        },
-        {
-          "id": "no",
-          "label": "くぼみに指も手のひらの縁も入れない\n押し上げる・引っぱる・急に回すもしない",
-          "row": 1,
-          "col": 1
-        },
-        {
-          "id": "stop",
-          "label": "ふらつき・めまい・吐き気\nが出たら中止して医療へ",
-          "row": 1,
-          "col": 2
+          "emphasis": true,
+          "icon": "hand"
         }
       ],
       "edges": [
         {
           "from": "edge",
           "to": "hollow",
-          "label": "縁のすぐ下"
+          "label": "すぐ下にある"
         },
         {
           "from": "hollow",
@@ -61,19 +51,8 @@
         },
         {
           "from": "hollow",
-          "to": "no",
-          "label": "押すと通り道に力が入る"
-        },
-        {
-          "from": "no",
           "to": "instead",
-          "label": "代わりに"
-        },
-        {
-          "from": "no",
-          "to": "stop",
-          "label": "それでも出たら",
-          "style": "dashed"
+          "label": "入らず、代わりに"
         }
       ]
     }

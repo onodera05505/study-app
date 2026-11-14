@@ -4,67 +4,29 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "cycle",
       "after": "### しくみ",
-      "caption": "硬い所は壊れた組織ではなく縮んだ筋です。痛みがまた筋を縮ませるので、下の段から上へ戻る輪になって張りが続きます。",
-      "nodes": [
+      "caption": "縮んだ筋から時計回りに読みます。痛みがまた筋を縮ませて最初の段へ戻るので、輪が回る間は張りが続きます。",
+      "center": "張りが続く",
+      "stages": [
         {
-          "id": "pose",
-          "label": "同じ姿勢が続く\nきっかけ",
-          "row": 0,
-          "col": 0
+          "label": "筋が縮んだまま\n同じ姿勢が続いて",
+          "icon": "clock",
+          "next_label": "中に硬い部分ができる"
         },
         {
-          "id": "short",
-          "label": "筋が縮んだまま\nゆるまない",
-          "row": 0,
-          "col": 1
-        },
-        {
-          "id": "knot",
           "label": "周りより硬い所\n壊れた組織ではない",
-          "row": 0,
-          "col": 2
+          "next_label": "血のめぐりが細る"
         },
         {
-          "id": "blood",
           "label": "血流と酸素の不足\n筋に届きにくい",
-          "row": 1,
-          "col": 2
+          "next_label": "酸素が足りず痛む"
         },
         {
-          "id": "pain",
           "label": "張り・痛み\n押すと痛みやすい",
-          "row": 1,
-          "col": 1,
-          "emphasis": true
-        }
-      ],
-      "edges": [
-        {
-          "from": "pose",
-          "to": "short",
-          "label": "続くと"
-        },
-        {
-          "from": "short",
-          "to": "knot",
-          "label": "中に硬い部分ができる"
-        },
-        {
-          "from": "knot",
-          "to": "blood",
-          "label": "血のめぐりが細る"
-        },
-        {
-          "from": "blood",
-          "to": "pain",
-          "label": "酸素が足りず痛む"
-        },
-        {
-          "from": "pain",
-          "to": "short",
-          "label": "痛みが筋を縮ませる"
+          "icon": "warning",
+          "emphasis": true,
+          "next_label": "痛みが筋を縮ませる"
         }
       ]
     }
