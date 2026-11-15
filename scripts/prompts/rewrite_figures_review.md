@@ -55,7 +55,7 @@
 | `target`・`unit` | 対象と単元番号（2 桁）。担当の範囲はこの単元 |
 | `items[].no` | 一覧の中の通し番号（報告で指す） |
 | `items[].figure` | 見直す図（論点 ID と図 ID）。戻す図は、戻す先の論点 ID と外す前の図 ID |
-| `items[].source` | 出どころ。`triage`（量産の報告の仕分けで「直す必要がある図」・「軽い直し」）・`not_fixed`（突き合わせの報告の `not_fixed` の図の種類。突き合わせの `figure_spec` は、親が `what` の中身で `heading`（指す見出しの物）・`order`（置く順の物）・`error`（それ以外の図の仕様の誤り）のどれかに振り分ける）・`figure_duplicates`（突き合わせの報告の同じ図の組）・`learner`（学習者役の指摘のうち図に当たる物）・`removed`（外した図のうち外すべきでなかった疑いの物）・`closed_test`（下の「閉じた図のテスト（親が回す）」で、比べる担当の判定が `一部` か `言えない` だった図。`kind` は `small`。`what` は親が、判定・比べる担当の所見・見る担当の 1 文・言えるべき 1 文（`intended_point`）・見る担当が分からなかった所を入れる）・`review`（この段の前の回の報告の `not_fixed` が、一覧に無い図として挙げた図（過去問の値・場面の写しや答えの名指しの疑い）。親が現物の申告を読んで `kind`（`copy`・`answer` など）を付ける） |
+| `items[].source` | 出どころ。`triage`（量産の報告の仕分けで「直す必要がある図」・「軽い直し」）・`not_fixed`（突き合わせの報告の `not_fixed` の図の種類。突き合わせの `figure_spec` は、親が `what` の中身で `heading`（指す見出しの物）・`order`（置く順の物）・`error`（それ以外の図の仕様の誤り）のどれかに振り分ける）・`figure_duplicates`（突き合わせの報告の同じ図の組）・`learner`（学習者役の指摘のうち図に当たる物）・`removed`（外した図のうち外すべきでなかった疑いの物）・`closed_test`（下の「閉じた図のテスト（親が回す）」で、比べる担当の判定が `一部` か `言えない` だった図。`kind` は `small`。`what` は親が、判定・比べる担当の所見・見る担当の 1 文・言えるべき 1 文（`intended_point`）・見る担当が分からなかった所を入れる）・`review`（この段の前の回の報告の `not_fixed` が、一覧に無い図として挙げた図（過去問の値・場面の写しや答えの名指しの疑い）。親が現物の申告を読んで `kind`（`copy`・`answer` など）を付ける）・`open_items`（申告の消化の段の報告の `returned` が `figure_followup` で返した図と、`noticed` が挙げた図。親が申告を読んで `kind` を付け、`what` に申告の文をそのまま入れる）・`acceptance`（受入の判定が「出す前に直すべき物」として挙げた図。親が所見を読んで `kind` を付け、`what` に所見の文をそのまま入れる） |
 | `items[].kind` | 見直す種類。下の「種類と直し方」の表の名前 |
 | `items[].what`・`proposal` | 指摘の要約と直し方の案。**候補として使い、現物で確かめる**（案に縛られない） |
 | `items[].questions` | 指摘が名指した過去問の ID（無ければ空）。答えの判定はこれに限らず、その論点の紐づく過去問の全部で行う |
@@ -266,3 +266,5 @@ python3 scripts/render_material_figures.py --data data/<対象> --only <論点 I
 
 - 2026-11-15: `fate` の数を書き直しの仕様書の 8 つに合わせ、突き合わせの `figure_spec` は親が `what` の中身で `heading`・`order`・`error` に振り分ける、を入力の節と種類の表に書いた（`brain/research/2026-11-15_教材の様式/03_量産の結果と単元の突き合わせ.md` の X54。台帳 `brain/spec_consolidation/rewrite_figures_review.md`）
 - 2026-11-15: 作成（書き直しと単元の突き合わせの後に、図の仕様の JSON を直す段。入力の一覧・1 体 12 枚まで 1 単元・種類と直し方・移し替え・外す・戻す・点の台帳・門・報告の JSON。`brain/research/2026-11-15_教材の様式/03_量産の結果と単元の突き合わせ.md` の X20・X24・X27・X36・X37）
+- 2026-11-16: `source` に `open_items`（申告の消化の段が図の側へ返した図）を足した（申告の消化の後に図の見直しへ戻す一覧を作るため。台帳 `brain/spec_consolidation/rewrite_figures_review.md`）
+- 2026-11-16: `source` に `acceptance`（受入の判定が挙げた図）を足した（受入が挙げた図をこの段へ戻す一覧を作るため。台帳 `brain/spec_consolidation/rewrite_figures_review.md`）
