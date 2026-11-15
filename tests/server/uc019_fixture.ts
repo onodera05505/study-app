@@ -207,15 +207,18 @@ function errorCode(json: Json): string | undefined {
   return e && typeof e.code === 'string' ? e.code : undefined
 }
 
-export const build = (ws: Workspace, req: { data?: string; cycle?: number | string; out?: string } = {}, opts: RunOptions = {}) =>
-  run(BUILD, ws, ['--data', req.data ?? 'data/eng', '--cycle', String(req.cycle ?? 8), '--out', req.out ?? 'packs/c8'], opts)
+/** パックを作る入口を呼ぶ。extra は request の欄のあとに付ける引数。 */
+export const build = (ws: Workspace, req: { data?: string; cycle?: number | string; out?: string } = {}, opts: RunOptions = {}, extra: string[] = []) =>
+  run(BUILD, ws, ['--data', req.data ?? 'data/eng', '--cycle', String(req.cycle ?? 8), '--out', req.out ?? 'packs/c8', ...extra], opts)
 
-export const grade = (ws: Workspace, req: { data?: string; cycle?: number | string; answers?: string; explain?: string } = {}) =>
+/** 採点の入口を呼ぶ。extra は request の欄のあとに付ける引数。 */
+export const grade = (ws: Workspace, req: { data?: string; cycle?: number | string; answers?: string; explain?: string } = {}, extra: string[] = []) =>
   run(GRADE, ws, [
     '--data', req.data ?? 'data/eng',
     '--cycle', String(req.cycle ?? 8),
     '--answers', req.answers ?? 'answers/learner.json',
     ...(req.explain !== undefined ? ['--explain', req.explain] : []),
+    ...extra,
   ])
 
 /** 採点の前提をそろえる: 周の写しと答えのファイルを置く。 */

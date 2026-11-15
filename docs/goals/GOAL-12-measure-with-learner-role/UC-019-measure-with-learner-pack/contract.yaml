@@ -929,7 +929,7 @@ operations:
       required: [out, file, target, renderTimeoutSeconds]
       properties:
         out: { type: string, minLength: 1 }
-        renderTimeoutSeconds: { type: integer, const: 30, description: 1 つの図を描く待ち時間の上限 }
+        renderTimeoutSeconds: { $ref: "../../../_shared/components.yaml#/schemas/FigureRenderTimeoutSeconds" }
         file: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?public/figures/materials/[a-z]+/.+\\.(svg|png)$" }
         target: { type: string, pattern: "^figures/.+\\.png$", description: file の public/figures/materials/ の下の学びの key のディレクトリより下のパスを、サブパスごと figures/ の下に保ち、拡張子だけを .png にする }
     response:

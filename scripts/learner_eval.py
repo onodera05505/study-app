@@ -45,7 +45,9 @@ class _Parser(argparse.ArgumentParser):
         raise Refused("INVALID_INPUT", "引数が契約の形の外", arguments=[])
 
 
-def _shape_ok(kind: str, v: str) -> bool:
+def _shape_ok(kind, v: str) -> bool:
+    if callable(kind):
+        return bool(kind(v))
     if kind == "data":
         return bool(DATA_ARG.match(v))
     if kind == "cycle":
@@ -56,8 +58,10 @@ def _shape_ok(kind: str, v: str) -> bool:
 # @implements REQ-340
 def contract_args(prog: str, shape: dict[str, str], required: tuple[str, ...]) -> argparse.Namespace:
     """引数を契約の request の形で読む。形の外の引数があれば、何も読み書きする前に、その名前をすべて挙げて断る。
-    shape は引数の名前 → data（学びの置き場の形）・cycle（1 以上の整数）・text（空でない文字）。"""
-    ap = _Parser(prog=prog, add_help=False)
+    shape は引数の名前 → data（学びの置き場の形）・cycle（1 以上の整数）・text（空でない文字）、
+    または値を受けて形に合うかを返す関数（入口ごとの契約の形）。"""
+    # 契約の引数名の前の部分だけの名前（--dat など）は契約に無い引数として断るので、略した名前を契約の引数と読まない
+    ap = _Parser(prog=prog, add_help=False, allow_abbrev=False)
     for name in shape:
         ap.add_argument(f"--{name}")
     a, unknown = ap.parse_known_args()

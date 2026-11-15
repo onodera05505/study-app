@@ -19,12 +19,15 @@ from xml.parsers import expat
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from build_seed import MATERIAL_DIRS  # noqa: E402
+from material_generations import generation_dirs  # noqa: E402
+from attach_material_figures import SRC_CHAR  # noqa: E402
 from learner_eval import (Refused, contract_args, current_questions, place_root, read_json,  # noqa: E402
                           remove_created_dirs, result_path, roadmap_learning, run, snapshot_path, write_exclusive)
 
 # 配る本文の図の行の参照先。/figures/materials/<key>/<サブパス>
-FIGURE_REF = re.compile(r"(!\[[^\]]*\]\()/figures/materials/([a-z]+)/([^)\s]+)(\))")
+# 説明文には角かっこ（「A[1]」など）が入ってよい。`](` だけは入らない（表示側 Markdown.tsx と同じ読み方）。
+# サブパスの字は図の差し込み（attach_material_figures.py）の指す先の字と同じ集合で読む。
+FIGURE_REF = re.compile(r"(!\[(?:[^\]\n]|\](?!\())*\]\()/figures/materials/([a-z]+)/(" + SRC_CHAR + r"+)(\))")
 CHOICES = ("ア", "イ", "ウ", "エ")
 # 1 つの図を描く待ち時間の上限（契約の writePackFigure の renderTimeoutSeconds）
 RENDER_TIMEOUT_SECONDS = 30
@@ -84,15 +87,13 @@ def roadmap_units(d: Path) -> tuple[dict, list[dict]]:
 
 # @implements REQ-358
 def read_generations(d: Path) -> dict[int, dict]:
-    """投入（build_seed.load_materials）と同じく教材の世代を materials・materials_v2・materials_v3 の順に、
+    """投入と同じく教材の世代を古い順（material_generations.generation_dirs）に、
     世代の中はファイル名の順に読み、論点ごとに後の物を選ぶ。契約の教材の世代の形（JSON で、どの行も整数の topic_id を持つ）
     として読めないファイルが 1 つでもあれば、選ばれるかに依らず、読めないファイルをすべて挙げて止める。"""
     out: dict[int, dict] = {}
     bad: list[str] = []
-    for sub in MATERIAL_DIRS:
-        if not (d / sub).is_dir():
-            continue
-        for f in sorted((d / sub).glob("*.json")):
+    for g in generation_dirs(d):
+        for f in sorted(g.glob("*.json")):
             try:
                 rows = read_json(f).get("materials", [])
                 assert isinstance(rows, list)

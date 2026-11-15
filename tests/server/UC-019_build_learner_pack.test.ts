@@ -878,5 +878,17 @@ describe('UC-019 学習者役のパックを作る（buildLearnerPack）', { tim
     it('資格型の学びで周の番号も形の外なら、引数の誤りとして cycle を挙げる', () => {
       refusedArgs({ data: 'data/ip', cycle: 0, out: 'packs/ip' }, ['cycle'])
     })
+
+    for (const extra of [['--unit', '01'], ['--dat', 'data/eng'], ['--cyc', '8'], ['--o', 'packs/other']]) {
+      // @covers REQ-340#build-extra-argument
+      it(`契約に無い引数（${extra.join(' ')}。契約の引数名の前の部分だけの名前を含む）があれば、契約の引数がそろっていてもパックを作る入口は断り、何も書かない`, () => {
+        const ws = makeWorkspace()
+        const before = ws.snapshotTree()
+        const r = build(ws, {}, {}, extra)
+        expect(r.status, r.stdout + r.stderr).toBe(1)
+        expect(r.code, r.stdout).toBe('INVALID_INPUT')
+        expect(ws.snapshotTree()).toEqual(before)
+      })
+    }
   })
 })

@@ -689,6 +689,20 @@ describe('UC-019 学習者役の答えを採点する（gradeLearnerAnswers）',
     it('資格型の学びで周の番号も形の外なら、引数の誤りとして cycle を挙げる', () => {
       refusedArgs({ data: 'data/ip', cycle: 0 }, ['cycle'])
     })
+
+    for (const extra of [['--out', 'packs/c8'], ['--dat', 'data/eng'], ['--cyc', '8'], ['--ans', 'answers/learner.json'], ['--exp', 'answers/explain_grade.json']]) {
+      // @covers REQ-340#grade-extra-argument
+      it(`契約に無い引数（${extra.join(' ')}。契約の引数名の前の部分だけの名前を含む）があれば、契約の引数がそろっていても採点の入口は断り、何も書かない`, () => {
+        const ws = makeWorkspace()
+        prepareGrade(ws, BASE)
+        ws.write('answers/explain_grade.json', { grades: { 単位五: 2 } })
+        const before = ws.snapshotTree()
+        const r = grade(ws, {}, extra)
+        expect(r.status, r.stdout + r.stderr).toBe(1)
+        expect(r.code, r.stdout).toBe('INVALID_INPUT')
+        expect(ws.snapshotTree()).toEqual(before)
+      })
+    }
   })
 
   describe('答えのファイル（REQ-329）', () => {
