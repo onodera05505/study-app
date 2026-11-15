@@ -60,23 +60,26 @@ const detail = (over: Over = {}) => ({
   topic: {
     id: 231,
     term: 'LTV',
+    subtitle: null,
     explanation: '短い説明の本文です。',
     detail: '詳しい解説の本文です。',
     questionCount: QUESTIONS.length,
+    frequencyTier: 3,
     isNew: 0,
     status: 3,
+    statusSource: 'override',
     field: 'ストラテジ系',
     major: '企業と法務',
     middle: '事業の指標',
     middleNo: 4,
     itemName: '会計と財務',
-    syllabusItemId: 3,
     tier: null,
   },
   questions: QUESTIONS,
-  siblings: [{ id: 232, term: '同じ小項目の他の論点', questionCount: 3 }],
-  nextTopic: { id: 555, term: '次に学ぶ論点', questionCount: 6, field: 'ストラテジ系' },
-  neighbors: { prev: null, next: null },
+  prerequisites: [],
+  siblings: [{ id: 232, term: '同じまとまりの他の論点', questionCount: 3, frequencyTier: 3 }],
+  nextTopic: { id: 555, term: '次に学ぶ論点', questionCount: 6, frequencyTier: 3 },
+  neighbors: null,
   ...over,
 })
 
@@ -240,9 +243,12 @@ describe('紐づく過去問（UC-002）', () => {
     ).not.toBeNull()
     // 画像がある問題の書き起こしは畳まれていて、押すと出る（併記）
     expect(text()).not.toContain('図の書き起こしです。')
-    await choose('図の説明（読み上げ・検索用）')
+    await choose(/書き起こし/)
     expect(text()).toContain('図の書き起こしです。')
-    expect(text()).toContain('図の説明を閉じる')
+    expect(
+      [...container.querySelectorAll('button, summary, [role="button"]')].some((b) => /書き起こし/.test(b.textContent ?? '')),
+      '開いた図の書き起こしを閉じる手段が無い',
+    ).toBe(true)
     // 画像が無い（表だけの）問題は書き起こしがそのまま出る
     expect(text()).toContain('表だけの書き起こしです。')
     // 図の無い問題には画像を出さない（画像は 1 枚だけ）

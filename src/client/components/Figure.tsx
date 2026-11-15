@@ -225,7 +225,7 @@ export function Figure({
                 onClick={() => setOpenDescription((v) => !v)}
                 aria-expanded={openDescription}
               >
-                {openDescription ? '図の説明を閉じる' : '図の説明（読み上げ・検索用）'}
+                {openDescription ? '図の書き起こしを閉じる' : '図の書き起こし（読み上げ・検索用）'}
               </button>
             </div>
             {openDescription && (

@@ -4,8 +4,8 @@
  *  論点の画面（TopicDetail）も同じ経路に載せる。
  *
  *  サーバの応答は fetch を偽物にして与える（形は contract.yaml の listFields・
- *  listCategories・listTopics・getTopicDetail の response）。
- *  理解度は 1=未理解・2=やや理解・3=理解、記録なしは null（用語集: 未理解として扱う）。 */
+ *  listCategories・listTopics・getTopicDetail の response）。学びの種類は資格対策。
+ *  理解度は 0=未・1=未理解・2=やや理解・3=理解（契約の status）。 */
 
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { act, type ReactNode } from 'react'
@@ -15,11 +15,11 @@ import { Topics } from '../../src/client/pages/Topics'
 import { TopicDetail } from '../../src/client/pages/TopicDetail'
 import { invalidateCached } from '../../src/client/lib/api'
 
-/** 分野の集計。内訳（理解・やや理解・未理解）の和が論点数に等しい。 */
+/** 分野の集計。内訳（理解・やや理解・未理解・未）の和が論点数に等しい。 */
 const FIELDS = {
   fields: [
-    { field: 'ストラテジ系', topics: 40, questions: 243, understood: 21, partly: 12, untouched: 7 },
-    { field: 'テクノロジ系', topics: 53, questions: 377, understood: 15, partly: 9, untouched: 29 },
+    { field: 'ストラテジ系', topics: 40, questions: 243, understood: 15, partly: 9, untouched: 6, unanswered: 10 },
+    { field: 'テクノロジ系', topics: 53, questions: 377, understood: 11, partly: 8, untouched: 5, unanswered: 29 },
   ],
 }
 
@@ -33,11 +33,16 @@ const CATEGORIES = {
 const topic = (over: Record<string, unknown>) => ({
   id: 0,
   term: '',
+  subtitle: null,
   questionCount: 0,
-  status: null as number | null,
+  frequencyTier: null as number | null,
+  status: 0 as number | null,
+  statusSource: 'auto',
   field: 'ストラテジ系',
   middle: '企業活動',
+  itemNo: 1,
   itemName: '企業活動',
+  groupNo: null,
   isNew: 0,
   sortOrder: null,
   round: null,
@@ -46,18 +51,19 @@ const topic = (over: Record<string, unknown>) => ({
   ...over,
 })
 
-/** サーバが単元で絞って返す論点（出題頻度の降順で持つ）。 */
+/** サーバが単元で絞って返す論点（単元の構成を持たない単元。配列の順がサーバの返す並び）。 */
 const BY_MIDDLE: Record<string, ReturnType<typeof topic>[]> = {
   企業活動: [
-    topic({ id: 11, term: '損益分岐点', questionCount: 9, status: 3, itemName: '会計と財務' }),
-    topic({ id: 12, term: 'PDCA', questionCount: 4, status: 2, itemName: '業務分析' }),
-    topic({ id: 13, term: 'SWOT分析', questionCount: 2, status: null, itemName: '経営戦略手法' }),
+    topic({ id: 11, term: '損益分岐点', questionCount: 9, frequencyTier: 3, status: 3, statusSource: 'override', itemNo: 1, itemName: '会計と財務' }),
+    topic({ id: 12, term: 'PDCA', questionCount: 4, frequencyTier: 3, status: 2, itemNo: 2, itemName: '業務分析' }),
+    topic({ id: 13, term: 'SWOT分析', questionCount: 2, frequencyTier: 2, status: 0, itemNo: 3, itemName: '経営戦略手法' }),
   ],
   セキュリティ: [
     topic({
       id: 91,
       term: 'クロスサイトスクリプティング',
       questionCount: 7,
+      frequencyTier: 3,
       status: 2,
       field: 'テクノロジ系',
       middle: 'セキュリティ',
@@ -80,8 +86,10 @@ function detailOf(id: number) {
       explanation: `${t.term} の短い説明です。`,
       detail: null,
       questionCount: 1,
+      frequencyTier: 1,
       isNew: 0,
       status: t.status,
+      statusSource: t.statusSource,
       field: t.field,
       major: '企業と法務',
       middle: t.middle,
@@ -107,6 +115,7 @@ function detailOf(id: number) {
         explanation: null,
       },
     ],
+    prerequisites: [],
     siblings: [],
     nextTopic: null,
     neighbors: null,
@@ -129,11 +138,13 @@ function blockText(el: Element): string {
 }
 
 /** 語（用語集の語）の直後に置かれた数を、出てくる順にすべて返す。語と数の間は空白・区切り記号だけを許し、
- *  数の後ろは問わない（「過去問 243」でも「過去問 243問」でも 243）。「理解」は「やや理解」「未理解」の一部としては数えない。 */
+ *  数の後ろは問わない（「過去問 243」でも「過去問 243問」でも 243）。「理解」は「やや理解」「未理解」の一部としては、
+ *  「未」は「未理解」の一部としては数えない。 */
 function numbersAfter(text: string, label: string): number[] {
   const flat = text.replace(/\s+/g, ' ')
   const guard = label === '理解' ? '(?<![や未])' : ''
-  const re = new RegExp(`${guard}${label}[\\s:：]*(\\d+)(?!\\d)`, 'g')
+  const tail = label === '未' ? '(?!理解)' : ''
+  const re = new RegExp(`${guard}${label}${tail}[\\s:：]*(\\d+)(?!\\d)`, 'g')
   return [...flat.matchAll(re)].map((m) => Number(m[1]))
 }
 
@@ -173,16 +184,13 @@ function stubApi(opts: StubOpts = {}) {
       let rows = middleNo
         ? BY_MIDDLE[MIDDLE_OF_NO[middleNo] ?? ''] ?? []
         : Object.values(BY_MIDDLE).flat().filter((t) => sameField(t.field))
-      // 理解度の絞り込み（記録なしは未理解＝1 として扱う）
+      // 理解度の絞り込み（0=未 を含む番号のカンマ区切り）
       const status = url.searchParams.get('status')
-      if (status) {
-        const allowed = new Set(status.split(',').map((s) => Number(s)))
-        rows = rows.filter((t) => allowed.has(t.status ?? 1))
+      if (status !== null) {
+        const allowed = new Set(status.split(',').filter(Boolean).map((s) => Number(s)))
+        rows = rows.filter((t) => t.status !== null && allowed.has(t.status))
       }
-      // 名前の順を求められたときだけ名前で並べる（既定は出題頻度の降順のまま）
-      if (url.searchParams.get('sort') === 'name')
-        rows = [...rows].sort((a, b) => a.term.localeCompare(b.term, 'ja'))
-      body = { topics: rows }
+      body = { structure: null, topics: rows }
     } else if (/\/topics\/\d+$/.test(url.pathname)) body = detailOf(Number(url.pathname.split('/').pop()))
     else if (url.pathname.endsWith('/glossary')) body = { glossary: [] }
     return { ok: true, status: 200, text: async () => JSON.stringify(body) }
@@ -217,25 +225,40 @@ async function choose(label: string | RegExp) {
   })
 }
 
-/** 理解度の段階の語（用語集）。 */
-const STAGES = ['未理解', 'やや理解', '理解']
+/** 理解度の段階の語（用語集。資格対策は未を含む）。 */
+const STAGES = ['未', '未理解', 'やや理解', '理解']
 
-/** 理解度の絞り込みの操作（段階の語だけを持つ押しボタン）。 */
-const stageChips = () =>
-  [...container.querySelectorAll<HTMLElement>('button')].filter((b) => STAGES.includes((b.textContent ?? '').trim()))
-
-/** 論点の行（その論点の名前を含み、隣の論点の名前を含まない、最も小さい要素）。 */
-function rowOf(term: string, other: string): HTMLElement {
-  const cand = allElements().filter((el) => {
-    const t = blockText(el)
-    return t.includes(term) && !t.includes(other) && /未理解|やや理解|理解/.test(t)
-  })
-  if (!cand.length) throw new Error(`論点「${term}」の行に理解度（未理解・やや理解・理解）が添えられていない`)
-  return cand.sort((a, b) => blockText(a).length - blockText(b).length)[0]
+/** 読み上げに届く名前（aria-label、結び付いたラベル、無ければ見える文字）。 */
+const nameOf = (el: Element) => {
+  const aria = el.getAttribute('aria-label')
+  if (aria) return aria.replace(/\s+/g, ' ').trim()
+  const labels = (el as HTMLInputElement).labels
+  if (labels && labels.length) return [...labels].map((l) => l.textContent ?? '').join(' ').replace(/\s+/g, ' ').trim()
+  return (el.textContent ?? '').replace(/\s+/g, ' ').trim()
 }
 
-/** 画面の文字の中での出現位置（無ければ -1）。 */
-const at = (s: string) => text().indexOf(s)
+/** 名前に現れる理解度の段階の名前（ちょうど 1 つのときだけ返す）。長い名前から先に当てる。 */
+function stageIn(t: string): string | null {
+  let rest = t.replace(/理解度/g, '')
+  const found: string[] = []
+  for (const name of ['やや理解', '未理解', '理解', '未']) {
+    if (rest.includes(name)) found.push(name)
+    rest = rest.split(name).join('')
+  }
+  return found.length === 1 ? found[0] : null
+}
+
+const TERMS = Object.values(BY_MIDDLE)
+  .flat()
+  .map((t) => t.term)
+const FILTER_CONTROLS = 'button, [role="button"], [role="checkbox"], input[type="checkbox"]'
+
+/** 理解度の絞り込みの選択肢（名前が段階の名前だけを指し、論点の名前を含まない押せる物）を段階の名前で引く。 */
+const stageChips = () =>
+  [...container.querySelectorAll<HTMLElement>(FILTER_CONTROLS)].filter(
+    (el) => stageIn(nameOf(el)) !== null && !TERMS.some((t) => nameOf(el).includes(t)),
+  )
+const chipOf = (stage: string) => stageChips().find((el) => stageIn(nameOf(el)) === stage)
 
 beforeAll(() => {
   ;(globalThis as any).IS_REACT_ACT_ENVIRONMENT = true
@@ -259,7 +282,7 @@ afterEach(async () => {
 
 describe('単元の一覧（UC-002）', () => {
   // @covers REQ-014#field-aggregate
-  it('分野ごとに、論点・過去問の数と理解度の内訳（理解・やや理解・未理解）を、語と数の組で一か所にまとめて出す', async () => {
+  it('分野ごとに、論点・過去問の数と理解度の内訳（理解・やや理解・未理解・未）を、語と数の組で一か所にまとめて出す', async () => {
     stubApi()
     await draw()
     // 分野の名前は末尾の「系」を省いて示してもよい
@@ -272,6 +295,7 @@ describe('単元の一覧（UC-002）', () => {
         ['理解', f.understood],
         ['やや理解', f.partly],
         ['未理解', f.untouched],
+        ['未', f.unanswered],
       ]
       const blocks = allElements().filter((el) => {
         const t = blockText(el)
@@ -288,46 +312,6 @@ describe('単元の一覧（UC-002）', () => {
 })
 
 describe('論点の一覧（UC-002）', () => {
-  // @covers REQ-020#frequency-desc
-  it('単元を選ぶと、論点を出題頻度の降順に、頻度の数つきで出す', async () => {
-    stubApi()
-    await draw()
-    await choose('企業活動')
-    // 既定の並びは出題頻度（名前の順を求めていない）
-    const first = calls.find((u) => u.includes('/topics?') && u.includes('middleNo=1'))
-    expect(first, '単元の論点を取りに行っていない').toBeTruthy()
-    const sort = new URL(first!, 'http://localhost').searchParams.get('sort')
-    expect(sort === null || sort === 'frequency', `既定の並べ替えが出題頻度でない（sort=${sort}）`).toBe(true)
-    // 9 → 4 → 2 の順に並ぶ
-    expect(at('損益分岐点')).toBeGreaterThanOrEqual(0)
-    expect(at('損益分岐点')).toBeLessThan(at('PDCA'))
-    expect(at('PDCA')).toBeLessThan(at('SWOT分析'))
-    // 論点ごとの出題頻度の数
-    for (const t of BY_MIDDLE['企業活動']) {
-      const others = BY_MIDDLE['企業活動'].filter((x) => x !== t).map((x) => x.term)
-      const row = allElements().find((el) => {
-        const b = blockText(el)
-        return b.includes(t.term) && b.includes(String(t.questionCount)) && !others.some((o) => b.includes(o))
-      })
-      expect(row, `論点「${t.term}」の行に出題頻度 ${t.questionCount} が添えられていない`).toBeTruthy()
-    }
-  })
-
-  // @covers REQ-020#status-shown
-  it('理解度の記録がある論点にはその段階を、記録が無い論点には未理解を添える', async () => {
-    stubApi()
-    await draw()
-    await choose('企業活動')
-    const done = blockText(rowOf('損益分岐点', 'PDCA'))
-    expect(done).toContain('理解')
-    expect(done).not.toContain('未理解')
-    expect(done).not.toContain('やや理解')
-    const partly = blockText(rowOf('PDCA', '損益分岐点'))
-    expect(partly).toContain('やや理解')
-    const untouched = blockText(rowOf('SWOT分析', 'PDCA'))
-    expect(untouched).toContain('未理解')
-  })
-
   // @covers REQ-021#refilter-status
   it('理解度の絞り込みを別の組み合わせに選び直すと、その絞り込みで一覧を示し直す', async () => {
     stubApi()
@@ -335,9 +319,9 @@ describe('論点の一覧（UC-002）', () => {
     await choose('企業活動')
     expect(text()).toContain('損益分岐点')
     expect(text()).toContain('PDCA')
-    // 「理解」を外す（未理解・やや理解の 2 つが残る）
-    const chip = stageChips().find((b) => (b.textContent ?? '').trim() === '理解')
-    expect(chip, '理解度の絞り込み「理解」の操作が無い').toBeTruthy()
+    // 「理解」を外す（未・未理解・やや理解の 3 つが残る）
+    const chip = chipOf('理解')
+    expect(chip, '理解度の絞り込み「理解」の選択肢が無い').toBeTruthy()
     const before = countOf('/topics?')
     await act(async () => {
       chip!.click()
@@ -346,14 +330,15 @@ describe('論点の一覧（UC-002）', () => {
     expect(requests.length, '絞り込みを選び直しても取りに行っていない').toBeGreaterThan(before)
     const status = new URL(requests[requests.length - 1], 'http://localhost').searchParams.get('status') ?? ''
     const asked = new Set(status.split(',').filter(Boolean).map(Number))
-    expect(asked, `取りに行った理解度が「未理解・やや理解」でない（status=${status}）`).toEqual(new Set([1, 2]))
-    // 理解（3）の論点は消え、やや理解（2）の論点は残る
+    expect(asked, `取りに行った理解度が「未・未理解・やや理解」でない（status=${status}）`).toEqual(new Set([0, 1, 2]))
+    // 理解（3）の論点は消え、やや理解（2）と未（0）の論点は残る
     expect(text()).not.toContain('損益分岐点')
     expect(text()).toContain('PDCA')
+    expect(text()).toContain('SWOT分析')
   })
 
   // @covers REQ-027#topic-list-failed
-  it('一覧が取れなかったら、読み込み中を残さず、単元と並べ替え・絞り込みを保ったまま一覧の場所に失敗を示す', async () => {
+  it('一覧が取れなかったら、読み込み中を残さず、単元と理解度の絞り込みを保ったまま一覧の場所に失敗を示す', async () => {
     stubApi({ fail: new Set(['/topics']) })
     await draw()
     expect(text()).toContain('企業活動')
@@ -363,14 +348,11 @@ describe('論点の一覧（UC-002）', () => {
     expect(text()).not.toContain('読み込み中')
     // 選んでいる単元を保つ
     expect(text()).toContain('企業活動')
-    // 並べ替えと理解度の絞り込みの手段を保つ
+    // 理解度の絞り込みの手段を、資格対策の 4 つの段階すべてで保つ
     expect(
-      controls().some((el) => /名前/.test(el.textContent ?? '')),
-      '並べ替え（名前の順）の手段が消えている',
-    ).toBe(true)
-    expect(stageChips().map((b) => (b.textContent ?? '').trim()), '理解度の絞り込みの手段が消えている').toEqual(
-      STAGES,
-    )
+      new Set(stageChips().map((el) => stageIn(nameOf(el)))),
+      '理解度の絞り込みの手段が消えている',
+    ).toEqual(new Set(STAGES))
     expect(text()).not.toContain('損益分岐点')
   })
 

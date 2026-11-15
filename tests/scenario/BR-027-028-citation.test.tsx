@@ -25,17 +25,20 @@ const TOPIC_DETAIL = {
   topic: {
     id: 12,
     term: '損益分岐点',
+    subtitle: null,
     explanation: '短い説明の本文です。',
     detail: null,
     questionCount: 1,
+    frequencyTier: 1,
     isNew: 0,
-    status: null,
+    status: 0,
+    statusSource: 'auto',
     field: 'ストラテジ系',
     major: '企業と法務',
     middle: '企業活動',
     middleNo: 1,
     itemName: '経営・組織論',
-    syllabusItemId: 1,
+    tier: null,
   },
   questions: [
     {
@@ -57,9 +60,10 @@ const TOPIC_DETAIL = {
       contentKey: 'ck-1',
     },
   ],
+  prerequisites: [],
   siblings: [],
   nextTopic: null,
-  neighbors: { prev: null, next: null },
+  neighbors: null,
 }
 
 /** GET /api/sessions/s1/current（出題画面）。出題時のスナップショットの出典と改変の印。 */

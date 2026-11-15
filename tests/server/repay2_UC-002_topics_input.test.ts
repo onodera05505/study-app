@@ -47,9 +47,9 @@ async function expectAccepted(query: string) {
 
 describe('論点の一覧の受け付けない求め（GET /api/topics。UC-002）', () => {
   // @covers REQ-265#sort-outside-allowed
-  it('決めた並べ替え（frequency・name・recommended）以外の値は、一覧を返さず受け付けない', async () => {
-    for (const sort of ['frequency', 'name', 'recommended']) await expectAccepted(`?middleNo=12&sort=${sort}`)
-    for (const sort of ['nonsense', 'FREQUENCY', 'popular']) await expectRejected(`?middleNo=12&sort=${encodeURIComponent(sort)}`)
+  it('決めた並べ替え（structure・recommended）以外の値は、一覧を返さず受け付けない', async () => {
+    for (const sort of ['structure', 'recommended']) await expectAccepted(`?middleNo=12&sort=${sort}`)
+    for (const sort of ['frequency', 'name', 'STRUCTURE', 'nonsense']) await expectRejected(`?middleNo=12&sort=${encodeURIComponent(sort)}`)
   })
 
   // @covers REQ-265#limit-above-max

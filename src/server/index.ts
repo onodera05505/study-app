@@ -9,6 +9,7 @@ import { NOT_CONFIGURED, readToken } from './lib/auth'
 import type { Bindings, Variables } from './lib/db'
 import { getDb, getSecret } from './lib/db'
 import { nextTopics } from './lib/next-topics'
+import { joinStatus, stageOf } from './lib/understanding'
 import { authRoutes } from './routes/auth'
 import { catalogRoutes } from './routes/catalog'
 import { sessionRoutes } from './routes/sessions'
@@ -99,16 +100,20 @@ api.use('*', async (c, next) => {
   await next()
 })
 
-// @implements REQ-043, REQ-044, REQ-271, REQ-272
+// @implements REQ-043, REQ-044, REQ-271, REQ-272, REQ-480
 api.get('/me', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
+  const roadmap = examOf(c.env.EXAM).roadmap
 
+  // 理解・やや理解の数は論点の一覧と同じ理解度（lib/understanding）で数える
+  const stage = stageOf(roadmap)
   const topics = await db.get<{ total: number; understood: number; partly: number }>(sql`
-    SELECT (SELECT COUNT(*) FROM topics) AS total,
-           SUM(CASE WHEN p.status = 3 THEN 1 ELSE 0 END) AS understood,
-           SUM(CASE WHEN p.status = 2 THEN 1 ELSE 0 END) AS partly
-      FROM progress p WHERE p.user_id = ${userId}
+    SELECT COUNT(*) AS total,
+           COALESCE(SUM(CASE WHEN ${stage} = 3 THEN 1 ELSE 0 END), 0) AS understood,
+           COALESCE(SUM(CASE WHEN ${stage} = 2 THEN 1 ELSE 0 END), 0) AS partly
+      FROM topics t
+      ${joinStatus(userId, roadmap)}
   `)
   const recent = await db.all(sql`
     SELECT id, kind, scope_label AS scopeLabel, question_count AS questionCount,
@@ -117,7 +122,7 @@ api.get('/me', async (c) => {
      WHERE user_id = ${userId} AND status = 'completed'
      ORDER BY finished_at DESC LIMIT 5
   `)
-  const next = await nextTopics(db, userId, { roadmap: examOf(c.env.EXAM).roadmap, limit: 10 })
+  const next = await nextTopics(db, userId, { roadmap, limit: 10 })
   // 記録そのものは認証ミドルウェアで入れている。ここでは集計するだけ。
   const today = jstDay(new Date())
   const visitRows = await db.all<{ day: string }>(sql`

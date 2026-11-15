@@ -1,4 +1,5 @@
 # UC-003 の境界契約。境界の形だけを持つ（振る舞いと規則の正本は ./UC.md と REQ-034〜047）
+# 理解度を示す形（status・statusSource）は、論点の一覧と論点の画面の経路を持つ UC-002 の契約（listTopics / getTopicDetail）にある（ADR-0001 決め 1）
 # 読み方の決まりは ../../../adr/ADR-0001-boundary-reading.md（transport / direction / auth / operation 名の当て方）
 # 共有語彙（authSchemes・errorCodes・共有の形）は ../../../_shared/components.yaml
 # おすすめ順の一覧（GET /api/topics の sort=recommended）と論点の画面の次に学ぶ（GET /api/topics/{id} の nextTopic）は、
@@ -6,7 +7,7 @@
 x-uc: UC-003
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-09
+x-updated: 2026-11-15
 
 operations:
   recordUnderstanding:
@@ -14,7 +15,7 @@ operations:
     direction: inbound
     owned: true
     auth: bearer
-    summary: 論点 1 件の理解度を、要求した本人のその論点の理解度として残す
+    summary: 論点 1 件の理解度の記録を、要求した本人のその論点の記録として残す
     wire:
       method: PUT
       path: /api/topics/{id}/progress
@@ -82,6 +83,7 @@ operations:
         topics:
           type: object
           required: [total, understood, partly]
+          description: "理解・やや理解の論点の数。段階は論点の一覧と同じ決まりで求める"
           properties:
             total: { type: integer, minimum: 0 }
             understood: { type: integer, minimum: 0 }

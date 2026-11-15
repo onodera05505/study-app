@@ -1,5 +1,5 @@
 import { sql } from 'drizzle-orm'
-import { check, index, integer, primaryKey, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core'
+import { check, foreignKey, index, integer, primaryKey, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core'
 
 const now = sql`(unixepoch())`
 
@@ -54,6 +54,90 @@ export const topics = sqliteTable(
     // 同じ論点が別レコードに割れると頻度が分散して重要度が壊れるので一意にする
     uniqueIndex('uq_topic_term').on(t.syllabusItemId, t.term),
     index('idx_topic_freq').on(t.questionCount),
+  ],
+)
+
+/** 資格対策の単元の構成のうち、単元ごとの全体像。構成を持つ単元だけが 1 行を持つ。
+ *  単元はシラバスの middle_no で指す（学びごとに D1 が分かれるので学びの中で一意。
+ *  syllabus_items では middle_no が一意でないため FK は張らない）。
+ *  学びのデータとして投入で入り、利用者の操作では変わらない。ロードマップ型と構成を作っていない単元は行を持たない。
+ *  単元の構成の受け持ち（owners）は書き手のための物で、画面に出さないので持たない。 */
+export const unitPlans = sqliteTable(
+  'unit_plans',
+  {
+    /** 単元の番号（syllabus_items.middle_no）。 */
+    middleNo: integer('middle_no').primaryKey(),
+    /** 全体像。 */
+    overview: text('overview').notNull(),
+  },
+  (t) => [check('ck_unit_plans_overview_not_empty', sql`${t.overview} <> ''`)],
+)
+
+/** 単元の構成のまとまり。group_no の順がまとまりの学ぶ順。 */
+export const unitGroups = sqliteTable(
+  'unit_groups',
+  {
+    middleNo: integer('middle_no')
+      .notNull()
+      .references(() => unitPlans.middleNo, { onDelete: 'cascade' }),
+    /** 単元の中のまとまりの番号（1 始まり）。並びがまとまりの学ぶ順。 */
+    groupNo: integer('group_no').notNull(),
+    name: text('name').notNull(),
+    /** まとまりの 1 行の説明。 */
+    description: text('description').notNull(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.middleNo, t.groupNo] }),
+    check('ck_unit_groups_group_no_positive', sql`${t.groupNo} >= 1`),
+    check('ck_unit_groups_name_not_empty', sql`${t.name} <> ''`),
+    check('ck_unit_groups_description_not_empty', sql`${t.description} <> ''`),
+  ],
+)
+
+/** まとまりに入る論点と、まとまりの中の学ぶ順。
+ *  論点はどれか 1 つのまとまりにだけ入るので topic_id を主キーにする。
+ *  資格対策の学ぶ順はここだけが持ち、topics.sort_order（ロードマップ型の学び全体を通した順）には入れない。 */
+export const unitGroupTopics = sqliteTable(
+  'unit_group_topics',
+  {
+    topicId: integer('topic_id')
+      .primaryKey()
+      .references(() => topics.id, { onDelete: 'cascade' }),
+    middleNo: integer('middle_no').notNull(),
+    groupNo: integer('group_no').notNull(),
+    /** まとまりの中の学ぶ順（1 始まり）。 */
+    position: integer('position').notNull(),
+  },
+  (t) => [
+    foreignKey({
+      columns: [t.middleNo, t.groupNo],
+      foreignColumns: [unitGroups.middleNo, unitGroups.groupNo],
+    }).onDelete('cascade'),
+    // まとまりの論点を学ぶ順に引く問い合わせに使う
+    uniqueIndex('uq_unit_group_topics_position').on(t.middleNo, t.groupNo, t.position),
+    check('ck_unit_group_topics_position_positive', sql`${t.position} >= 1`),
+  ],
+)
+
+/** 単元の構成が論点ごとに決める前提の論点。position の順が示す順。
+ *  前提の論点は同じ学びの論点で、他の単元の論点でもよい。前提を持たない論点は行を持たない。 */
+export const topicPrerequisites = sqliteTable(
+  'topic_prerequisites',
+  {
+    topicId: integer('topic_id')
+      .notNull()
+      .references(() => topics.id, { onDelete: 'cascade' }),
+    prerequisiteTopicId: integer('prerequisite_topic_id')
+      .notNull()
+      .references(() => topics.id, { onDelete: 'cascade' }),
+    /** 前提の論点を示す順（1 始まり）。 */
+    position: integer('position').notNull(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.topicId, t.prerequisiteTopicId] }),
+    uniqueIndex('uq_topic_prerequisites_position').on(t.topicId, t.position),
+    check('ck_topic_prerequisites_position_positive', sql`${t.position} >= 1`),
+    check('ck_topic_prerequisites_not_self', sql`${t.topicId} <> ${t.prerequisiteTopicId}`),
   ],
 )
 

@@ -222,6 +222,47 @@ describe('本文の記法（UC-001）', () => {
     expect(container.querySelector('img')).toBeNull()
     expect(text()).toContain('![外部](https://example.com/zu.png)')
   })
+
+  /** 置き場所を指す画像の記法が図として出て、記法の文字（`![` と `](指す先)`）が本文に残っていないこと。 */
+  const expectFigureOnly = (src: string) => {
+    const imgs = [...container.querySelectorAll('img')]
+    expect(imgs.map((i) => i.getAttribute('src')), '置き場所を指す画像の記法が図になっていない').toEqual([src])
+    expect(text(), '画像の記法が書かれた文字のまま出ている').not.toContain('![')
+    expect(text(), '画像の記法が書かれた文字のまま出ている').not.toContain(`](${src})`)
+  }
+
+  // @covers REQ-004#material-figure-caption-brackets
+  it('図の説明文に対になった角かっこ（A[1]）を含む、置き場所を指す画像の記法も図として出る', async () => {
+    const src = '/figures/materials/ap/509-1.svg'
+    await draw(
+      h(Markdown, {
+        source: `### 配列に置いた木と添字の順\n\n![根を A[1] に置き、子の添字を線の上の式（左が 2i、右が 2i＋1）で決めています。添字の小さい順に読むと、浅い段から、同じ段は左から右へたどる幅優先の順になります。](${src})`,
+      }),
+    )
+    expectFigureOnly(src)
+  })
+
+  // @covers REQ-004#material-figure-caption-brackets
+  it('図の説明文に対にならない角かっこ（区間の [0, 1)）を含む、置き場所を指す画像の記法も図として出る', async () => {
+    const src = '/figures/materials/ap/12-2.svg'
+    await draw(h(Markdown, { source: `![乱数は区間 [0, 1) の値を取り、横軸に並べています。](${src})` }))
+    expectFigureOnly(src)
+  })
+
+  // @covers REQ-004#material-figure-caption-parens
+  it('図の説明文に半角の丸かっこを含む、置き場所を指す画像の記法も図として出る', async () => {
+    const src = '/figures/materials/fe/40-1.svg'
+    await draw(h(Markdown, { source: `![子の添字は左が 2i (i は親の添字)、右が 2i+1 です。](${src})` }))
+    expectFigureOnly(src)
+  })
+
+  // @covers REQ-004#other-path-caption-brackets
+  it('図の説明文に角かっこを含んでも、置き場所の外を指す画像の記法は画像にせず、書かれた文字のまま出す', async () => {
+    const line = '![根を A[1] に置いた木](https://example.com/zu.png)'
+    await draw(h(Markdown, { source: line }))
+    expect(container.querySelector('img')).toBeNull()
+    expect(text()).toContain(line)
+  })
 })
 
 /* ---------- 図の説明文（REQ-427） ---------- */

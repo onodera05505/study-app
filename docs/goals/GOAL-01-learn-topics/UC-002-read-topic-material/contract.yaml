@@ -4,7 +4,7 @@
 x-uc: UC-002
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-09
+x-updated: 2026-11-15
 
 operations:
   listFields:
@@ -25,14 +25,15 @@ operations:
           type: array
           items:
             type: object
-            required: [field, topics, questions, understood, partly, untouched]
+            required: [field, topics, questions, understood, partly, untouched, unanswered]
             properties:
               field: { type: string }
               topics: { type: integer, minimum: 0 }
               questions: { type: integer, minimum: 0 }
               understood: { type: integer, minimum: 0 }
               partly: { type: integer, minimum: 0 }
-              untouched: { type: integer, minimum: 0, description: "未理解の論点の数（理解度の記録が無い論点と、未理解を記録した論点の両方を数える）" }
+              untouched: { type: integer, minimum: 0, description: "未理解の論点の数。ロードマップ型では理解度の記録が無い論点を含む" }
+              unanswered: { type: integer, minimum: 0, description: "未の論点の数。資格対策だけで、ロードマップ型では 0" }
     errors:
       - code: UNAUTHENTICATED
         when: トークンが無い、または読めない
@@ -41,8 +42,8 @@ operations:
       ok:
         response:
           fields:
-            - { field: "テクノロジ系", topics: 312, questions: 1680, understood: 40, partly: 12, untouched: 260 }
-            - { field: "マネジメント系", topics: 96, questions: 440, understood: 8, partly: 4, untouched: 84 }
+            - { field: "テクノロジ系", topics: 312, questions: 1680, understood: 40, partly: 12, untouched: 30, unanswered: 230 }
+            - { field: "マネジメント系", topics: 96, questions: 440, understood: 8, partly: 4, untouched: 6, unanswered: 78 }
       unauthenticated:
         request: { authorization: "" }
         error: UNAUTHENTICATED
@@ -97,7 +98,7 @@ operations:
     direction: inbound
     owned: true
     auth: bearer
-    summary: 単元・分野・理解度で絞った論点の一覧を、指定した並びで返す
+    summary: 単元・分野・理解度で絞った論点の一覧を、指定した並びで、単元を指定したときはその単元の構成とともに返す
     wire:
       method: GET
       path: /api/topics
@@ -107,27 +108,48 @@ operations:
       properties:
         field: { type: string }
         middleNo: { type: integer }
-        status: { type: string, description: "理解度の番号をカンマ区切りで並べる。1〜3 以外の値は無視される" }
-        sort: { type: string, enum: [frequency, name, recommended], default: frequency }
+        status: { type: string, description: "理解度の番号をカンマ区切りで並べる。0 は未（資格対策だけ）。0〜3 以外の値は無視される" }
+        sort: { type: string, enum: [structure, recommended], default: structure, description: "structure は学びの種類で決まる一覧の並び、recommended はおすすめ順" }
         limit: { type: integer, minimum: 1, maximum: 500, default: 200 }
     response:
       type: object
-      required: [topics]
+      required: [topics, structure]
       properties:
+        structure:
+          type: [object, "null"]
+          description: "単元の構成。資格対策で middleNo を指定し sort が structure で、その単元が構成を持つときだけ。それ以外は null"
+          required: [overview, groups]
+          properties:
+            overview: { type: string, minLength: 1 }
+            groups:
+              type: array
+              minItems: 1
+              description: "まとまりの並び。配列の順がまとまりの順"
+              items:
+                type: object
+                required: [no, name, description]
+                properties:
+                  no: { type: integer, minimum: 1 }
+                  name: { type: string, minLength: 1 }
+                  description: { type: string, minLength: 1 }
         topics:
           type: array
           items:
             type: object
-            required: [id, term, subtitle, questionCount, status, field, middle, itemName, isNew, sortOrder, round, roundLabel, tier]
+            required: [id, term, subtitle, questionCount, frequencyTier, status, statusSource, field, middle, itemNo, itemName, groupNo, isNew, sortOrder, round, roundLabel, tier]
             properties:
               id: { type: integer }
               term: { type: string, description: "論点の名前。副題を含まない" }
               subtitle: { type: [string, "null"], minLength: 1, description: "論点の名前に添える副題。投入データに副題が無い論点（資格対策の論点を含む）では null" }
               questionCount: { type: integer, minimum: 0 }
-              status: { type: [integer, "null"], enum: [1, 2, 3, null] }
+              frequencyTier: { type: [integer, "null"], enum: [1, 2, 3, null], description: "出題回数の印の段（数が大きいほど多い）。資格対策で出題頻度が 1 以上の論点だけ。それ以外は null" }
+              status: { type: [integer, "null"], enum: [0, 1, 2, 3, null], description: "0=未（資格対策だけ）/ 1=未理解 / 2=やや理解 / 3=理解。null は理解度の記録が無い（ロードマップ型だけ）" }
+              statusSource: { type: [string, "null"], enum: [auto, override, null], description: "資格対策で status が回答の履歴からの判定（auto。未を含む）か本人の上書き（override）か。ロードマップ型では null" }
               field: { type: string }
               middle: { type: string }
+              itemNo: { type: [integer, "null"], minimum: 1, description: "小項目の番号。資格対策だけで、ロードマップ型では null" }
               itemName: { type: string }
+              groupNo: { type: [integer, "null"], minimum: 1, description: "属するまとまりの no（structure.groups の no）。structure が null のときは null" }
               isNew: { type: integer, enum: [0, 1] }
               sortOrder: { type: [integer, "null"], description: "ロードマップ型の学ぶ順。資格対策では null" }
               round: { type: [string, "null"], minLength: 1, description: "ロードマップ型で論点が属する回。UC-008 の listExams の exam と同じ値で、補足の論点は補足の回（登録簿の extraRoundId）。学ぶ順を持たない非補足の論点と資格対策では null" }
@@ -142,11 +164,23 @@ operations:
         wire: { status: 400 }
     examples:
       ok:
-        request: { middleNo: 12, sort: frequency, status: "1,2" }
+        request: { middleNo: 12, sort: structure, status: "0,1,2" }
         response:
+          structure:
+            overview: "情報を守る考え方と、それを支える暗号・認証の仕組みを学ぶ。"
+            groups:
+              - { no: 1, name: "暗号と証明書", description: "鍵の持ち方で暗号を分け、署名と証明書で相手を確かめる。" }
+              - { no: 2, name: "攻撃と対策", description: "よくある攻撃の手口と、それぞれを防ぐ仕組み。" }
           topics:
-            - { id: 418, term: "公開鍵暗号方式", subtitle: null, questionCount: 9, status: 2, field: "テクノロジ系", middle: "セキュリティ", itemName: "暗号技術", isNew: 0, sortOrder: null, round: null, roundLabel: null, tier: null }
-            - { id: 419, term: "共通鍵暗号方式", subtitle: null, questionCount: 7, status: 1, field: "テクノロジ系", middle: "セキュリティ", itemName: "暗号技術", isNew: 0, sortOrder: null, round: null, roundLabel: null, tier: null }
+            - { id: 419, term: "共通鍵暗号方式", subtitle: null, questionCount: 7, frequencyTier: 3, status: 1, statusSource: auto, field: "テクノロジ系", middle: "セキュリティ", itemNo: 3, itemName: "暗号技術", groupNo: 1, isNew: 0, sortOrder: null, round: null, roundLabel: null, tier: null }
+            - { id: 418, term: "公開鍵暗号方式", subtitle: null, questionCount: 9, frequencyTier: 3, status: 2, statusSource: override, field: "テクノロジ系", middle: "セキュリティ", itemNo: 3, itemName: "暗号技術", groupNo: 1, isNew: 0, sortOrder: null, round: null, roundLabel: null, tier: null }
+            - { id: 433, term: "SQL インジェクション", subtitle: null, questionCount: 1, frequencyTier: 1, status: 0, statusSource: auto, field: "テクノロジ系", middle: "セキュリティ", itemNo: 5, itemName: "情報セキュリティ対策", groupNo: 2, isNew: 0, sortOrder: null, round: null, roundLabel: null, tier: null }
+      okWithoutStructure:
+        request: { middleNo: 7, sort: structure, status: "0,1,2,3" }
+        response:
+          structure: null
+          topics:
+            - { id: 201, term: "コンパイラ", subtitle: null, questionCount: 2, frequencyTier: 2, status: 0, statusSource: auto, field: "テクノロジ系", middle: "ソフトウェア", itemNo: 1, itemName: "オペレーティングシステム", groupNo: null, isNew: 0, sortOrder: null, round: null, roundLabel: null, tier: null }
       invalidLimit:
         request: { middleNo: 12, limit: 0 }
         error: INVALID_INPUT
@@ -162,7 +196,7 @@ operations:
     direction: inbound
     owned: true
     auth: bearer
-    summary: 論点の教材と、紐づく過去問と、同じ小項目の他の論点を返す
+    summary: 論点の教材と、紐づく過去問と、前提の論点と、同じまとまり（構成の無い単元では同じ小項目）の他の論点を返す
     wire:
       method: GET
       path: /api/topics/{id}
@@ -174,11 +208,11 @@ operations:
         id: { type: integer }
     response:
       type: object
-      required: [topic, questions, siblings, nextTopic, neighbors]
+      required: [topic, questions, prerequisites, siblings, nextTopic, neighbors]
       properties:
         topic:
           type: object
-          required: [id, term, subtitle, explanation, detail, questionCount, isNew, status, field, major, middle, middleNo, itemName, tier]
+          required: [id, term, subtitle, explanation, detail, questionCount, frequencyTier, isNew, status, statusSource, field, major, middle, middleNo, itemName, tier]
           properties:
             id: { type: integer }
             term: { type: string, description: "論点の名前。副題を含まない" }
@@ -186,8 +220,10 @@ operations:
             explanation: { type: [string, "null"] }
             detail: { type: [string, "null"] }
             questionCount: { type: integer, minimum: 0 }
+            frequencyTier: { type: [integer, "null"], enum: [1, 2, 3, null], description: "出題回数の印の段。listTopics の frequencyTier と同じ" }
             isNew: { type: integer, enum: [0, 1] }
-            status: { type: [integer, "null"], enum: [1, 2, 3, null] }
+            status: { type: [integer, "null"], enum: [0, 1, 2, 3, null], description: "listTopics の status と同じ" }
+            statusSource: { type: [string, "null"], enum: [auto, override, null], description: "listTopics の statusSource と同じ" }
             field: { type: string }
             major: { type: string }
             middle: { type: string }
@@ -197,22 +233,23 @@ operations:
         questions:
           type: array
           items: { $ref: "#/schemas/TopicQuestion" }
+        prerequisites:
+          type: array
+          maxItems: 2
+          description: "前提の論点。前提を持たない論点とロードマップ型では空の配列"
+          items: { $ref: "#/schemas/TopicLink" }
         siblings:
           type: array
-          items:
-            type: object
-            required: [id, term, questionCount]
-            properties:
-              id: { type: integer }
-              term: { type: string }
-              questionCount: { type: integer, minimum: 0 }
+          description: "同じまとまりの他の論点。単元の構成が無い単元では同じ小項目の他の論点。配列の順が一覧の並び"
+          items: { $ref: "#/schemas/TopicLink" }
         nextTopic:
           type: [object, "null"]
-          required: [id, term, questionCount]
+          required: [id, term, questionCount, frequencyTier]
           properties:
             id: { type: integer }
             term: { type: string }
             questionCount: { type: integer, minimum: 0 }
+            frequencyTier: { type: [integer, "null"], enum: [1, 2, 3, null] }
         neighbors:
           type: [object, "null"]
           description: "ロードマップ型の学ぶ順の前後。資格対策では null"
@@ -234,12 +271,15 @@ operations:
       ok:
         request: { id: 418 }
         response:
-          topic: { id: 418, term: "公開鍵暗号方式", subtitle: null, explanation: "暗号化する鍵と復号する鍵を分け、暗号化する側の鍵を公開してよい方式。", detail: null, questionCount: 9, isNew: 0, status: 2, field: "テクノロジ系", major: "技術要素", middle: "セキュリティ", middleNo: 12, itemName: "暗号技術", tier: null }
+          topic: { id: 418, term: "公開鍵暗号方式", subtitle: null, explanation: "暗号化する鍵と復号する鍵を分け、暗号化する側の鍵を公開してよい方式。", detail: null, questionCount: 9, frequencyTier: 3, isNew: 0, status: 2, statusSource: override, field: "テクノロジ系", major: "技術要素", middle: "セキュリティ", middleNo: 12, itemName: "暗号技術", tier: null }
           questions:
             - { id: "2018h30a-38", number: 38, examLabel: "平成30年度秋期", text: "公開鍵暗号方式を用いて送信者が受信者宛てのメッセージを暗号化するとき、暗号化に使う鍵はどれか。", choices: { "ア": "受信者の公開鍵", "イ": "受信者の秘密鍵", "ウ": "送信者の公開鍵", "エ": "送信者の秘密鍵" }, answer: "ア", hasFigure: 0, figureDescription: null, figureImage: null, citation: "平成30年度秋期 問38", modified: 0, timesAsked: 2, otherCitations: ["平成28年度春期 問40"], explanation: { correctReason: "正解。公開鍵暗号方式では、受信者だけが持つ秘密鍵でしか復号できないようにするため、受信者の公開鍵で暗号化する。", choices: [{ label: "ア", term: null, note: "正解。受信者の公開鍵で暗号化する。" }, { label: "イ", term: "秘密鍵", note: "本人だけが持ち、復号や署名に使う鍵。" }] } }
+          prerequisites:
+            - { id: 419, term: "共通鍵暗号方式", questionCount: 7, frequencyTier: 3 }
           siblings:
-            - { id: 419, term: "共通鍵暗号方式", questionCount: 7 }
-          nextTopic: { id: 421, term: "ディジタル署名", questionCount: 6 }
+            - { id: 419, term: "共通鍵暗号方式", questionCount: 7, frequencyTier: 3 }
+            - { id: 421, term: "ディジタル署名", questionCount: 6, frequencyTier: 3 }
+          nextTopic: { id: 421, term: "ディジタル署名", questionCount: 6, frequencyTier: 3 }
           neighbors: null
       invalidIdBeforeNotFound:
         request: { id: "abc" }
@@ -252,6 +292,14 @@ operations:
         error: UNAUTHENTICATED
 
 schemas:
+  TopicLink:
+    type: object
+    required: [id, term, questionCount, frequencyTier]
+    properties:
+      id: { type: integer }
+      term: { type: string }
+      questionCount: { type: integer, minimum: 0 }
+      frequencyTier: { type: [integer, "null"], enum: [1, 2, 3, null], description: "出題回数の印の段。listTopics の frequencyTier と同じ" }
   TopicQuestion:
     type: object
     required: [id, number, examLabel, text, choices, answer, hasFigure, figureDescription, figureImage, citation, modified, timesAsked, otherCitations, explanation]

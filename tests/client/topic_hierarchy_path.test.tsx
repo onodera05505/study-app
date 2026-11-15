@@ -51,8 +51,10 @@ const detail = (t: (typeof TOPICS)[number], over: Over = {}) => ({
     explanation: `${t.term} の短い説明の本文です。`,
     detail: null,
     questionCount: 0,
+    frequencyTier: null,
     isNew: 0,
     status: 2,
+    statusSource: "override",
     field: t.field,
     major: t.major,
     middle: t.middle,
@@ -61,9 +63,10 @@ const detail = (t: (typeof TOPICS)[number], over: Over = {}) => ({
     tier: null,
   },
   questions: [],
+  prerequisites: [],
   siblings: [],
   nextTopic: null,
-  neighbors: { prev: null, next: null },
+  neighbors: null,
   ...over,
 });
 
@@ -230,6 +233,7 @@ describe("ロードマップ型の論点の画面の階層の道筋（UC-009）"
       localStorage.clear();
       stubApi(
         detail(t, {
+          topic: { ...detail(t).topic, status: null, statusSource: null },
           neighbors: {
             prev: { id: 230, term: "前の単位の名前" },
             next: { id: 232, term: "次の単位の名前" },

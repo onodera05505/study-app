@@ -26,16 +26,19 @@ const me = (over: Over = {}) => ({
   ...over,
 })
 
-/** 論点の画面の応答（記録する論点 231。記録なし）。 */
+/** 論点の画面の応答（記録する論点 231。回答も記録も無い未）。 */
 const detail = () => ({
   topic: {
     id: 231,
     term: '記録する論点',
+    subtitle: null,
     explanation: '短い説明の本文です。',
     detail: null,
     questionCount: 8,
+    frequencyTier: 3,
     isNew: 0,
-    status: null,
+    status: 0,
+    statusSource: 'auto',
     field: 'ストラテジ系',
     major: '企業と法務',
     middle: '事業の指標',
@@ -44,6 +47,7 @@ const detail = () => ({
     tier: null,
   },
   questions: [],
+  prerequisites: [],
   siblings: [],
   nextTopic: null,
   neighbors: null,

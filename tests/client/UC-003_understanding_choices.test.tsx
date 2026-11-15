@@ -4,7 +4,9 @@
  *  学びの種類によらない決まりなので、資格対策（ip）とロードマップ型（itc）の両方で描く。対象は読み込み時に決まる
  *  （VITE_EXAM）ので、描くたびに差し替えて読み込み直す。段階の名前は src/client/lib/api.ts の STATUS_LABEL が正本（BR-045）。
  *  選択肢は押せる・選べる要素（button・input・role="radio" など）のうち、読み上げで得られる名前に段階の名前を持つもの。
- *  選ばれている形は aria-pressed・aria-checked・aria-selected・aria-current・checked のどれか。 */
+ *  選ばれている形は aria-pressed・aria-checked・aria-selected・aria-current・checked のどれか。
+ *  選ばれている選択肢は、ロードマップ型では今記録されている段階（記録が無ければ未理解。BR-029）、
+ *  資格対策では今示している理解度の段階（回答の履歴からの判定か本人の上書き。未のときはどれでもない。BR-050）。 */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { STATUS_LABEL } from '../../src/client/lib/api'
@@ -19,16 +21,20 @@ const stageName = (status: number) => {
   return v
 }
 
-const detail = (target: Target, status: number | null) => ({
+type Source = 'auto' | 'override' | null
+
+const detail = (target: Target, status: number | null, statusSource: Source) => ({
   topic: {
     id: 231,
     term: '論点 231 の名前',
     subtitle: null,
     explanation: '短い説明の本文です。',
     detail: null,
-    questionCount: 0,
+    questionCount: target === 'ip' ? 4 : 0,
+    frequencyTier: target === 'ip' ? 3 : null,
     isNew: 0,
     status,
+    statusSource,
     field: target === 'ip' ? 'ストラテジ系' : '業界と仕事',
     major: '大分類',
     middle: '中分類',
@@ -38,12 +44,13 @@ const detail = (target: Target, status: number | null) => ({
     tier: null,
   },
   questions: [],
+  prerequisites: [],
   siblings: [],
   nextTopic: null,
-  neighbors: target === 'ip' ? { prev: null, next: null } : { prev: { id: 230, term: '前の単位' }, next: null },
+  neighbors: target === 'ip' ? null : { prev: { id: 230, term: '前の単位' }, next: null },
 })
 
-function stubApi(target: Target, status: number | null) {
+function stubApi(target: Target, status: number | null, statusSource: Source = target === 'ip' ? 'auto' : null) {
   vi.stubGlobal('fetch', async (raw: string, init?: RequestInit) => {
     const url = new URL(String(raw), 'http://localhost')
     if ((init?.method ?? 'GET') === 'PUT')
@@ -51,7 +58,7 @@ function stubApi(target: Target, status: number | null) {
     if (url.pathname.endsWith('/glossary'))
       return { ok: true, status: 200, text: async () => JSON.stringify({ glossary: [] }) }
     if (/\/topics\/\d+$/.test(url.pathname))
-      return { ok: true, status: 200, text: async () => JSON.stringify(detail(target, status)) }
+      return { ok: true, status: 200, text: async () => JSON.stringify(detail(target, status, statusSource)) }
     return { ok: true, status: 200, text: async () => JSON.stringify({}) }
   })
 }
@@ -142,16 +149,16 @@ const isSelected = (el: HTMLElement) =>
   (el.hasAttribute('aria-current') && el.getAttribute('aria-current') !== 'false') ||
   (el instanceof HTMLInputElement && el.checked)
 
-/** 記録が status のとき、選ばれている段階が expected だけであることを見る。 */
-async function expectMarked(target: Target, status: number | null, expected: number) {
-  stubApi(target, status)
+/** 理解度が status のとき、選ばれている段階が expected だけ（null ならどれも選ばれていない）であることを見る。 */
+async function expectMarked(target: Target, status: number | null, expected: number | null, statusSource?: Source) {
+  stubApi(target, status, statusSource)
   const v = await drawTopic(target)
   const choices = choicesOf(v.host)
   for (const c of choices) {
-    expect(c.els, `${target} 記録 ${status}: 段階「${stageName(c.status)}」の選択肢がちょうど 1 つない`).toHaveLength(1)
+    expect(c.els, `${target} 理解度 ${status}・${statusSource}: 段階「${stageName(c.status)}」の選択肢がちょうど 1 つない`).toHaveLength(1)
     expect(
       isSelected(c.els[0]),
-      `${target} 記録 ${status}: 段階「${stageName(c.status)}」の選択肢の選ばれている形が違う`,
+      `${target} 理解度 ${status}・${statusSource}: 段階「${stageName(c.status)}」の選択肢の選ばれている形が違う`,
     ).toBe(c.status === expected)
   }
   await v.close()
@@ -180,13 +187,23 @@ describe('理解度の選択肢の名前と選ばれている形（UC-003）', (
     }
   })
 
-  // @covers REQ-421#recorded-stage-marked
-  it('記録が 1・2・3 のとき、その段階の選択肢だけが選ばれている形を持ち、ほかは持たない', async () => {
-    for (const target of TARGETS) for (const s of STAGES) await expectMarked(target, s, s)
+  // @covers REQ-421#roadmap-recorded-stage-marked
+  it('ロードマップ型で記録が 1・2・3 のとき、その段階の選択肢だけが選ばれている形を持ち、ほかは持たない', async () => {
+    for (const s of STAGES) await expectMarked('itc', s, s, null)
   })
 
-  // @covers REQ-421#no-record-marks-unlearned
-  it('記録が無いとき、未理解の選択肢だけが選ばれている形になる', async () => {
-    for (const target of TARGETS) await expectMarked(target, null, 1)
+  // @covers REQ-421#roadmap-no-record-marks-unlearned
+  it('ロードマップ型で記録が無いとき、未理解の選択肢だけが選ばれている形になる', async () => {
+    await expectMarked('itc', null, 1, null)
+  })
+
+  // @covers REQ-421#exam-shown-stage-marked
+  it('資格対策で示している理解度が 1・2・3 のとき、回答の履歴からの判定でも本人の上書きでも、その段階の選択肢だけが選ばれている形を持つ', async () => {
+    for (const source of ['auto', 'override'] as const) for (const s of STAGES) await expectMarked('ip', s, s, source)
+  })
+
+  // @covers REQ-421#exam-unanswered-marks-none
+  it('資格対策で示している理解度が未のとき、どの選択肢も選ばれている形を持たない', async () => {
+    await expectMarked('ip', 0, null, 'auto')
   })
 })

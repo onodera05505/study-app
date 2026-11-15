@@ -1,5 +1,6 @@
 // @vitest-environment jsdom
-/** 理解度のバッジと行の印（StatusBadge.tsx）のうち、記録が無い論点の示し方（UC-003・BR-029）。
+/** 理解度のバッジと行の印（StatusBadge.tsx）のうち、ロードマップ型で記録が無い論点の示し方（UC-003・BR-029）。
+ *  記録が無いこと（null）はロードマップ型の応答だけが持つ値（資格対策では未＝0 が返る）。
  *  本物の React で描き、記録なし（null）の描画を未理解（1）の描画と見比べる。 */
 
 import { afterEach, beforeAll, describe, expect, it } from 'vitest'
@@ -30,8 +31,8 @@ afterEach(async () => {
   })
 })
 
-describe('記録が無い論点の理解度の示し方（UC-003）', () => {
-  // @covers REQ-041#no-record-shown-as-unlearned
+describe('ロードマップ型で記録が無い論点の理解度の示し方（UC-003）', () => {
+  // @covers REQ-041#roadmap-no-record-shown-as-unlearned
   it('記録が無い論点は、論点の画面のバッジも一覧の行の印も未理解と同じ示し方になる', async () => {
     const unlearned = await draw(<StatusBadge status={1} />)
     expect(container.textContent).toContain('未理解')

@@ -3,7 +3,8 @@
  *  内訳は記録の中身に依るので、空の偽の D1 では観測できない。Node 標準の SQLite（node:sqlite）に
  *  `migrations/*.sql` を当てた実体を D1 の口（prepare → bind → run / all / first / raw、batch、exec）で
  *  包んで渡し、観測は HTTP の境界（listFields の応答）で行う。学びの種類は資格対策（EXAM=ip）。
- *  理解度は 1=未理解・2=やや理解・3=理解。記録の無い論点は未理解として数える（用語集「未理解」）。 */
+ *  理解度の記録は 1=未理解・2=やや理解・3=理解。回答も記録も無い論点は、資格対策では未として数える（BR-029）。
+ *  回答は入れないので、記録のある論点の段階は記録した段階（BR-050）。 */
 
 import { readdirSync, readFileSync } from 'node:fs'
 import { DatabaseSync } from 'node:sqlite'
@@ -128,7 +129,15 @@ afterEach(() => {
   db.close()
 })
 
-type FieldRow = { field: string; topics: number; questions: number; understood: number; partly: number; untouched: number }
+type FieldRow = {
+  field: string
+  topics: number
+  questions: number
+  understood: number
+  partly: number
+  untouched: number
+  unanswered: number
+}
 
 async function listFields(): Promise<FieldRow[]> {
   const token = await issueToken(SECRET, ME)
@@ -138,15 +147,18 @@ async function listFields(): Promise<FieldRow[]> {
 }
 
 describe('分野ごとの集計の理解度の内訳（GET /api/fields。UC-002）', () => {
-  // @covers REQ-014#explicit-not-understood-counted
-  it('自分で未理解と記録した論点も、記録の無い論点と同じく未理解に数え、内訳の和が論点の数に等しい', async () => {
+  // @covers REQ-014#unanswered-counted-apart
+  it('回答も記録も無い論点は未に、自分で未理解と記録した論点は未理解に分けて数え、内訳の和が論点の数に等しい', async () => {
     const row = (await listFields()).find((f) => f.field === FIELD)
     expect(row, `分野「${FIELD}」の集計が無い`).toBeDefined()
     expect(row!.topics, '論点の数').toBe(3)
     expect(
-      { understood: row!.understood, partly: row!.partly, untouched: row!.untouched },
-      '理解 1（B）・やや理解 0・未理解 2（A＝未理解と記録、C＝記録なし）',
-    ).toEqual({ understood: 1, partly: 0, untouched: 2 })
-    expect(row!.understood + row!.partly + row!.untouched, '内訳の和が論点の数に等しくない').toBe(row!.topics)
+      { understood: row!.understood, partly: row!.partly, untouched: row!.untouched, unanswered: row!.unanswered },
+      '理解 1（B）・やや理解 0・未理解 1（A＝未理解と記録）・未 1（C＝回答も記録も無い）',
+    ).toEqual({ understood: 1, partly: 0, untouched: 1, unanswered: 1 })
+    expect(
+      row!.understood + row!.partly + row!.untouched + row!.unanswered,
+      '内訳の和が論点の数に等しくない',
+    ).toBe(row!.topics)
   })
 })

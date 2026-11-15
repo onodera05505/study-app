@@ -30,7 +30,7 @@ const BODY = [
   '',
   '売上は [[LTV]] で見る。',
   '',
-  // 正式表記は本文に地の文としては置かない（ポップの見出しだけで確かめるため）
+  // 正式表記は本文に地の文としては置かない（用語の説明の見出しだけで確かめるため）
   `リスクへの備えは [[${PAREN_TERM}]] を読む。`,
   '',
   '| 用語 | 違い |',
@@ -48,22 +48,26 @@ const DETAIL = {
   topic: {
     id: 231,
     term: 'LTV',
+    subtitle: null,
     explanation: BODY,
     detail: null,
     questionCount: 0,
+    frequencyTier: null,
     isNew: 0,
-    status: null,
+    status: 0,
+    statusSource: 'auto',
     field: 'ストラテジ系',
     major: '企業と法務',
     middle: '事業の指標',
     middleNo: 4,
     itemName: '会計と財務',
-    syllabusItemId: 3,
+    tier: null,
   },
   questions: [],
+  prerequisites: [],
   siblings: [],
   nextTopic: null,
-  neighbors: { prev: null, next: null },
+  neighbors: null,
 }
 
 let glossaryCalls = 0
@@ -102,7 +106,7 @@ let host: HTMLElement
 let root: Root | null = null
 
 const text = () => (host.textContent ?? '').replace(/\s+/g, ' ')
-/** ポップはページの外側（body）に出ることがあるので、body の文字も見る。 */
+/** 用語の説明はページの外側（body）に出ることがあるので、body の文字も見る。 */
 const pageText = () => (document.body.textContent ?? '').replace(/\s+/g, ' ')
 const images = () => [...host.querySelectorAll('img')].map((i) => i.getAttribute('src') ?? '')
 const headings = () =>
@@ -148,7 +152,7 @@ afterEach(async () => {
   vi.unstubAllGlobals()
 })
 
-describe('UC-001 本文の用語ポップと図の描画', () => {
+describe('UC-001 本文の用語の説明と図の描画', () => {
   // @scenario UC-001
   it('用語集を 1 度だけ引き、記法どおりに本文を描き、用語を押して 1 行説明を出す', async () => {
     // step 1・2: 利用者が教材を開く。画面は用語集をまとめて取りに行き、何度求められても 1 回しか取りに行かない
@@ -196,10 +200,10 @@ describe('UC-001 本文の用語ポップと図の描画', () => {
     expect(text(), '用語を押したら画面が移ってしまった').toContain('売上は')
 
     // 本文に出す用語の表示名は、末尾に括弧書き（読み・英字表記）があればそれを落として出す
-    //（ポップの見出しは正式表記のまま）
+    //（用語の説明の見出しは正式表記のまま）
     expect(controls('リスク対応').length, '末尾の括弧書きが落ちていない').toBeGreaterThan(0)
     await press('リスク対応')
-    expect(pageText(), 'ポップの見出しが正式表記になっていない').toContain(PAREN_TERM)
+    expect(pageText(), '用語の説明の見出しが正式表記になっていない').toContain(PAREN_TERM)
 
     // step 3: 画面は図の画像行を、教材の図の置き場所のものだけ画像にし、他の画像記法は文字のまま出す
     expect(images(), '教材の図の置き場所の画像行が画像になっていない').toContain(FIGURE_SRC)

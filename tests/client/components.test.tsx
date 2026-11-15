@@ -59,8 +59,9 @@ afterEach(async () => {
 })
 
 describe('理解度の見せ方（UC-003）', () => {
-  /** 段階の番号と段階の名前（用語集の語）。 */
+  /** 段階の番号と段階の名前（用語集の語）。資格対策では、回答も記録も無い論点の「未」（status=0。BR-029）も段階として示す。 */
   const STAGES = [
+    [0, '未'],
     [1, '未理解'],
     [2, 'やや理解'],
     [3, '理解'],
@@ -77,13 +78,14 @@ describe('理解度の見せ方（UC-003）', () => {
     s.split('理解度').join('').split(name).join('').replace(/\s+/g, '')
 
   // @covers REQ-041#badge-text-and-mark-per-stage
-  it('論点の画面の理解度は、3 段階それぞれで段階の名前と、段階ごとに違う記号が並んで出る', async () => {
+  it('論点の画面の理解度は、未と 3 段階のそれぞれで段階の名前と、段階ごとに違う記号が並んで出る', async () => {
     const rest: string[] = []
     for (const [status, name] of STAGES) {
       await draw(<StatusBadge status={status} />)
       const s = observable(container)
       expect(s, `status=${status} で段階の名前「${name}」が出ていない`).toContain(name)
       if (name === '理解') expect(s, '「理解」が「やや理解」と読み違えられる').not.toContain('やや')
+      if (name === '未') expect(s, '「未」が「未理解」と読み違えられる').not.toContain('未理解')
       const mark = withoutName(s, name)
       expect(mark, `status=${status} で段階の名前のほかに記号が出ていない（観測できる文字: ${s}）`).not.toBe('')
       rest.push(mark)
@@ -92,17 +94,21 @@ describe('理解度の見せ方（UC-003）', () => {
   })
 
   // @covers REQ-041#row-mark-per-stage
-  it('論点の一覧の行の理解度は、3 段階それぞれで段階の名前と、段階ごとに違う記号が並んで出る', async () => {
+  it('論点の一覧の行の理解度は、未と 3 段階のそれぞれで段階の名前と、段階ごとに違う記号が並んで出る', async () => {
     // 行どうしは名前と理解度だけが違い、ほかの値（小項目・出題回数）は同じにする
     const rows = STAGES.map(([status], i) => ({
       id: 701 + i,
-      term: ['行の論点あ', '行の論点い', '行の論点う'][i],
+      term: ['行の論点あ', '行の論点い', '行の論点う', '行の論点え'][i],
       subtitle: null,
       questionCount: 5,
+      frequencyTier: 3,
       status,
+      statusSource: 'auto',
       field: 'ストラテジ系',
       middle: '行の単元',
+      itemNo: 1,
       itemName: '行の小項目',
+      groupNo: null,
       isNew: 0,
       sortOrder: null,
       round: null,
@@ -115,14 +121,14 @@ describe('理解度の見せ方（UC-003）', () => {
       let body: unknown = {}
       if (url.pathname.endsWith('/glossary')) body = { glossary: GLOSSARY }
       else if (url.pathname.endsWith('/fields'))
-        body = { fields: [{ field: 'ストラテジ系', topics: 3, questions: 15, understood: 1, partly: 1, untouched: 1 }] }
+        body = { fields: [{ field: 'ストラテジ系', topics: 4, questions: 20, understood: 1, partly: 1, untouched: 1, unanswered: 1 }] }
       else if (url.pathname.endsWith('/categories'))
         body = {
           categories: [
-            { middleNo: 9, middle: '行の単元', major: '行の大項目', field: 'ストラテジ系', topics: 3, questions: 15, understood: 1 },
+            { middleNo: 9, middle: '行の単元', major: '行の大項目', field: 'ストラテジ系', topics: 4, questions: 20, understood: 1 },
           ],
         }
-      else if (url.pathname.endsWith('/topics')) body = { topics: rows }
+      else if (url.pathname.endsWith('/topics')) body = { structure: null, topics: rows }
       return { ok: true, status: 200, text: async () => JSON.stringify(body) }
     })
     try {
@@ -161,6 +167,7 @@ describe('理解度の見せ方（UC-003）', () => {
         const s = observable(rowOf(terms[i]))
         expect(s, `status=${status} の行に段階の名前「${name}」が出ていない`).toContain(name)
         if (name === '理解') expect(s, '「理解」の行が「やや理解」と読み違えられる').not.toContain('やや')
+        if (name === '未') expect(s, '「未」の行が「未理解」と読み違えられる').not.toContain('未理解')
         rest.push(withoutName(s.split(terms[i]).join(''), name))
       })
       // 名前と理解度以外は同じ行なので、残りの違いは段階ごとの記号の違いになる

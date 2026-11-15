@@ -35,9 +35,9 @@ API の形は静かに壊れる。SELECT の別名を1つ変えれば画面の�
 6. **null と [] の区別** — 一覧が空のとき `[]` が返るか（`null` や キー欠落だと、
    画面が「未取得」と区別できず読み込み中に「ありません」と誤って出る。
    CLAUDE.md の落とし穴に入っている実際のバグ）
-7. **並びと絞り込み** — /topics の既定の並び（資格版は出題頻度の降順 / ロードマップ型は
+7. **並びと絞り込み** — /topics の既定の並び（資格版は BR-031 の単元の構成の順 / ロードマップ型は
    学ぶ順）、sortOrder の出し方（資格版は sort_order を参照しないので null）、
-   分野での絞り込み、ホームのおすすめ（/me の nextTopics）の並び
+   分野での絞り込み、ホームのおすすめ（/me の nextTopics）の並び、/exams の回の並び（BR-038）
 8. **模試の設定** — app_settings の問題数・制限時間が登録簿（src/shared/targets.json）と
    一致し、実際に作った模試がその問題数と制限時間で返るか
 9. **セキュリティヘッダ** — 全応答に CSP・HSTS・X-Frame-Options DENY・nosniff・
@@ -731,7 +731,7 @@ def check_get_shapes(c: Client, r: Report) -> dict:
         r.shape(label, data, spec)
         got[path] = data
 
-    # 論点の詳細は「過去問が紐づいている論点」で見る（頻度順の先頭）
+    # 論点の詳細は「過去問が紐づいている論点」で見る（一覧の並びで最初に当たるもの）
     topics = got.get("/topics?limit=500", {}).get("topics") or []
     with_q = next((t for t in topics if t["questionCount"] > 0), None)
     if with_q:
@@ -741,7 +741,102 @@ def check_get_shapes(c: Client, r: Report) -> dict:
             got["topic_detail"] = data
     else:
         r.error("過去問が紐づいた論点が1件も無い（/topics の questionCount が全部 0）")
+    got["drill_detail"] = pick_drill_topic(c, r, topics)
     return got
+
+
+# 演習の流れの検査が 1 本のテストで通す「1 問回答 → 次の問題 → 残りを回答」には、同じ内容を
+# 畳んだあとで 2 問以上出題できる論点が要る（BR-028。論点の詳細の questions は畳んだ代表の並び）。
+# 一覧の並びは学ぶ順で決まり出題数を保証しないので、出題数の多い論点から詳細を見て選ぶ。
+DRILL_SIZE = 3
+DRILL_MIN = 2
+DRILL_LOOKUPS = 20
+
+
+def pick_drill_topic(c: Client, r: Report, topics: list) -> dict | None:
+    """畳んだあとの出題が DRILL_SIZE 問以上ある論点の詳細（無ければ DRILL_MIN 問以上の最多の論点）。"""
+    cands = sorted(
+        (t for t in topics if isinstance(t, dict) and (t.get("questionCount") or 0) >= DRILL_MIN),
+        key=lambda t: -t["questionCount"],
+    )[:DRILL_LOOKUPS]
+    best = None
+    for t in cands:
+        st, data, _ = c.call("GET", f"/topics/{t['id']}")
+        if (
+            st != 200 or not isinstance(data, dict) or not isinstance(data.get("questions"), list)
+            or not isinstance(data.get("topic"), dict) or not data["topic"].get("id")
+        ):
+            r.error(f"演習に使う論点の選択: GET /topics/{t['id']} が論点の詳細の形で返らない（status {st}）")
+            continue
+        n = len(data["questions"])
+        if n >= DRILL_SIZE:
+            return data
+        if n >= DRILL_MIN and (best is None or n > len(best["questions"])):
+            best = data
+    if best is None:
+        r.error(
+            f"演習の流れの検査に使える論点が無い: 出題数の多い {len(cands)} 論点の詳細を見たが、"
+            f"同じ内容を畳んだあとで {DRILL_MIN} 問以上出題できる論点が 1 つも無い"
+            "（1 問回答のあとの『次の問題』『再開』『未完了の結果』を確かめられない）"
+        )
+    return best
+
+
+# 資格対策の回の識別子は「西暦の年度 4 桁・元号の 1 字と年 2 桁・季節の記号（無い回もある）」の形。
+EXAM_ID = re.compile(r"^(\d{4})[a-z]\d{2}([a-z]*)$")
+# BR-038 が同じ年度の中の順として挙げる季節（秋期・10 月・特別・春期）を、回の識別子が持つ記号で同じ順に並べたもの。
+# 記号と季節の対応は data/<対象>/exam_labels.json の識別子とラベルの組に現れている。
+EXAM_SEASONS = ("a", "o", "tokubetsu", "h")
+
+
+# 横断の決まり（BR-038 回の並び）の検査。UC のシナリオではないので @scenario は付けない
+def check_exam_order(r: Report, ids: list[str], exam: str):
+    """/exams の並びが BR-038 のとおりか。先頭だけでなく並び全体を見る。
+
+    期待の並びは、応答の回の識別子と登録簿（学びの種類・補足の回）だけから組む。
+    資格対策の学び: 年度の新しい順。同じ年度の中は、季節の記号の無い回・秋期・10 月・特別・春期の順。
+    ロードマップ型の学び: 回の識別子の昇順。補足の回は末尾。
+    BR-038 が順を決めていない組（年度も季節も同じ回どうし・補足の回どうし）は、応答の順のままを期待にする。"""
+    sys.path.insert(0, str(Path(__file__).parent)); from targets import target as _target
+    L = "/exams の並び（BR-038）"
+    t = _target(exam)
+    if t.get("roadmap"):
+        extras = set(t.get("exemptRounds") or [])
+        extra = (t.get("roadmapSpec") or {}).get("extraRoundId")
+        if extra:
+            extras.add(extra)
+        keys = [(1, "") if x in extras else (0, x) for x in ids]
+        head = "学ぶ順の最初の回は"
+    else:
+        keys = []
+        for x in ids:
+            m = EXAM_ID.match(x)
+            if not m or (m.group(2) and m.group(2) not in EXAM_SEASONS):
+                r.error(f"{L}: 回の識別子 {x} から年度と季節の記号を読めず、並びを確かめられない")
+                return
+            season = m.group(2)
+            keys.append((-int(m.group(1)), 1 + EXAM_SEASONS.index(season) if season else 0))
+        head = "実施が最も新しい回は"
+
+    # 安定な整列なので、順が決まっていない組は応答の順のまま残る
+    want = [x for _, x in sorted(zip(keys, ids), key=lambda p: p[0])]
+    if ids != want:
+        i = next(k for k in range(len(ids)) if ids[k] != want[k])
+        if i == 0:
+            r.error(f"{L}: 先頭が {ids[0]}（{head} {want[0]} のはず）。応答の並び: {' '.join(ids)}")
+        else:
+            r.error(
+                f"{L}: {i + 1} 番目が {ids[i]}（{ids[i - 1]} の次は {want[i]} のはず）。応答の並び: {' '.join(ids)}"
+            )
+        return
+    if t.get("roadmap"):
+        r.notes.append(f"{L}: {len(ids)} 回が回の識別子の順（うち末尾の補足の回 {sum(1 for k in keys if k[0])} 回）")
+    else:
+        years = [k[0] for k in keys]
+        r.notes.append(
+            f"{L}: {len(ids)} 回が実施の新しい順（複数の回がある年度 {sum(1 for y in set(years) if years.count(y) > 1)} 件・"
+            f"季節の記号の無い回 {sum(1 for k in keys if k[1] == 0)} 回）"
+        )
 
 
 def check_counts(c: Client, r: Report, got: dict, exam: str, db_name: str):
@@ -777,12 +872,8 @@ def check_counts(c: Client, r: Report, got: dict, exam: str, db_name: str):
 
     exams = (got.get("/exams") or {}).get("exams") or []
     same("/exams の回数", len(exams), rows["exams"])
-    # 並び: ロードマップ型は 1 日目が先（学ぶ順）、資格版は新しい回が先。
     if exams:
-        sys.path.insert(0, str(Path(__file__).parent)); from targets import target as _target
-        first = exams[0]["exam"]; want_first = min(e["exam"] for e in exams) if _target(exam).get("roadmap") else max(e["exam"] for e in exams)
-        if first != want_first:
-            r.error(f"/exams の並び: 先頭が {first}（{'学ぶ順なら 1 日目' if _target(exam).get('roadmap') else '新しい回'} {want_first} のはず）")
+        check_exam_order(r, [e["exam"] for e in exams], exam)
     same("/exams の問題数の合計", sum(x["questions"] for x in exams), rows["questions"])
     for e in exams:
         same(f"/exams {e['exam']} の問題数", e["questions"], per_exam.get(e["exam"]))
@@ -835,7 +926,7 @@ def check_empty_lists(c: Client, r: Report, other_token: str):
 
 def check_session_flow(c: Client, r: Report, got: dict, other_token: str):
     """作成 → 1問回答 → 中断 → 再開 → 全問回答 → finish → 結果。二重回答と他人のセッションも見る。"""
-    detail = got.get("topic_detail")
+    detail = got.get("drill_detail")
     if not detail:
         r.error("セッションの流れ: 出題できる論点が取れなかったので検査できない")
         return
@@ -851,8 +942,18 @@ def check_session_flow(c: Client, r: Report, got: dict, other_token: str):
     if not r.status("POST /sessions", st, 201, None if st == 201 else text[:200]):
         return
     r.shape("POST /sessions", created, SESSION_CREATED)
-    sid = created["id"]
-    total = created["questionCount"]
+    sid = (created or {}).get("id") if isinstance(created, dict) else None
+    total = (created or {}).get("questionCount") if isinstance(created, dict) else None
+    if not sid or not isinstance(total, int):
+        r.error(f"セッションの流れ: 作成の本文に id か questionCount が無い（{str(created)[:120]}）")
+        return
+    if total < DRILL_MIN:
+        r.error(
+            f"セッションの流れ: 論点 {topic_id} の演習が {total} 問で作られた"
+            f"（論点の詳細では {len(detail['questions'])} 問出題できるはず。{DRILL_MIN} 問以上ないと流れを通せない）"
+        )
+        c.call("DELETE", "/sessions/current")
+        return
 
     # 進行中がもう1つ作れないこと（409 で断り、本文は {error} だけ）
     st, data, _ = c.call("POST", "/sessions", {"kind": "drill", "topicId": topic_id, "size": size})
@@ -864,17 +965,21 @@ def check_session_flow(c: Client, r: Report, got: dict, other_token: str):
     if not r.status("GET /sessions/:id/current", st, 200, None if st == 200 else text[:200]):
         return
     r.shape("GET /sessions/:id/current", cur, SESSION_QUESTION)
-    if cur["question"]["idx"] != 0:
-        r.error(f"GET /sessions/:id/current: 最初の idx が {cur['question']['idx']}（0 のはず）")
-    if cur["answered"] != 0:
-        r.error(f"GET /sessions/:id/current: answered が {cur['answered']}（0 のはず）")
+    cur = cur if isinstance(cur, dict) else {}
+    if not isinstance(cur.get("question"), dict):
+        r.error(f"GET /sessions/:id/current: 未回答があるのに question が {cur.get('question')!r}（1 問目のはず）")
+    elif cur["question"].get("idx") != 0:
+        r.error(f"GET /sessions/:id/current: 最初の idx が {cur['question'].get('idx')}（0 のはず）")
+    if cur.get("answered") != 0:
+        r.error(f"GET /sessions/:id/current: answered が {cur.get('answered')}（0 のはず）")
 
     st, ans, text = c.call("POST", f"/sessions/{sid}/answer", {"idx": 0, "answer": "ア"})
     if not r.status("POST /sessions/:id/answer", st, 200, None if st == 200 else text[:200]):
         return
     r.shape("POST /sessions/:id/answer", ans, ANSWER)
-    if ans["remaining"] != total - 1:
-        r.error(f"1問回答後の remaining が {ans['remaining']}（{total - 1} のはず）")
+    ans = ans if isinstance(ans, dict) else {}
+    if ans.get("remaining") != total - 1:
+        r.error(f"1問回答後の remaining が {ans.get('remaining')}（{total - 1} のはず）")
 
     # 二重回答。同じ idx をもう一度送ると位置がずれているので採点させない。
     st, data, _ = c.call("POST", f"/sessions/{sid}/answer", {"idx": 0, "answer": "イ"})
@@ -890,16 +995,20 @@ def check_session_flow(c: Client, r: Report, got: dict, other_token: str):
     st, data, _ = c.call("GET", "/sessions/current")
     if r.status("GET /sessions/current（中断中）", st, 200):
         r.shape("GET /sessions/current（中断中）", data, SESSION_CURRENT_SOME)
-        if (data.get("session") or {}).get("id") != sid:
+        sess = ((data if isinstance(data, dict) else {}).get("session") or {})
+        if sess.get("id") != sid:
             r.error("GET /sessions/current が別のセッションを返した")
-        elif data["session"]["answered"] != 1:
-            r.error(f"中断中の answered が {data['session']['answered']}（1 のはず）")
+        elif sess.get("answered") != 1:
+            r.error(f"中断中の answered が {sess.get('answered')}（1 のはず）")
 
     st, cur, _ = c.call("GET", f"/sessions/{sid}/current")
     if r.status("GET /sessions/:id/current（再開）", st, 200):
         r.shape("GET /sessions/:id/current（再開）", cur, SESSION_QUESTION)
-        if cur["question"]["idx"] != 1:
-            r.error(f"再開後の idx が {cur['question']['idx']}（1 のはず）")
+        q = (cur if isinstance(cur, dict) else {}).get("question")
+        if not isinstance(q, dict):
+            r.error(f"再開後の question が {q!r}（未回答が {total - 1} 問あるので idx 1 の問題のはず）")
+        elif q.get("idx") != 1:
+            r.error(f"再開後の idx が {q.get('idx')}（1 のはず）")
 
     # 他人のセッションが引けないこと（別アカウントを実際に作って確かめる。契約の errors は本人のものでないテストを 404 で断る）
     for label, path in [
@@ -921,16 +1030,20 @@ def check_session_flow(c: Client, r: Report, got: dict, other_token: str):
     # 残りを回答して終わらせる
     for i in range(1, total):
         st, cur, _ = c.call("GET", f"/sessions/{sid}/current")
-        if st != 200 or not cur.get("question"):
-            r.error(f"{i} 問目が取れない（status {st}）")
+        q = (cur if isinstance(cur, dict) else {}).get("question")
+        if st != 200 or not isinstance(q, dict):
+            r.error(f"{i + 1} 問目が取れない（status {st}・question {q!r}）")
+            c.call("DELETE", "/sessions/current")
             return
         st, ans, text = c.call(
-            "POST", f"/sessions/{sid}/answer", {"idx": cur["question"]["idx"], "answer": "ア"}
+            "POST", f"/sessions/{sid}/answer", {"idx": q.get("idx"), "answer": "ア"}
         )
         if not r.status(f"{i + 1} 問目の回答", st, 200, None if st == 200 else text[:200]):
+            c.call("DELETE", "/sessions/current")
             return
-    if not ans["finished"]:
-        r.error("全問回答したのに finished が false")
+        ans = ans if isinstance(ans, dict) else {}
+    if ans.get("finished") is not True:
+        r.error(f"全問回答したのに finished が {ans.get('finished')!r}（true のはず）")
 
     st, cur, _ = c.call("GET", f"/sessions/{sid}/current")
     if r.status("GET /sessions/:id/current（全問回答後）", st, 200):
@@ -951,27 +1064,34 @@ def check_session_flow(c: Client, r: Report, got: dict, other_token: str):
     st, res, text = c.call("GET", f"/sessions/{sid}")
     if r.status("GET /sessions/:id（結果）", st, 200, None if st == 200 else text[:200]):
         r.shape("GET /sessions/:id（結果）", res, RESULT)
-        if res["overall"]["total"] != total:
-            r.error(f"結果の overall.total が {res['overall']['total']}（{total} のはず）")
-        if len(res["items"]) != total:
-            r.error(f"結果の items が {len(res['items'])} 件（{total} 件のはず）")
+        res = res if isinstance(res, dict) else {}
+        if (res.get("overall") or {}).get("total") != total:
+            r.error(f"結果の overall.total が {(res.get('overall') or {}).get('total')}（{total} のはず）")
+        if len(res.get("items") or []) != total:
+            r.error(f"結果の items が {len(res.get('items') or [])} 件（{total} 件のはず）")
 
     # 履歴に載ること
     st, hist, _ = c.call("GET", "/sessions")
     if r.status("GET /sessions（履歴・終了後）", st, 200):
-        if not any(s["id"] == sid for s in hist.get("sessions") or []):
+        if not any(isinstance(s, dict) and s.get("id") == sid for s in (hist or {}).get("sessions") or []):
             r.error("終了したセッションが履歴 /sessions に出てこない")
 
     r.notes.append(f"セッションの流れ: {total} 問を作成 → 回答 → 中断 → 再開 → finish → 結果 まで通過")
 
 
+# 横断の決まり（BR-031 一覧の並び）と REQ-474・REQ-475 の構成の返し方の検査。UC のシナリオではないので @scenario は付けない
 def check_ordering(c: Client, r: Report, got: dict, exam: str):
-    """並びと絞り込み。/topics の既定の並び（資格版は出題頻度の降順 / ロードマップ型は学ぶ順）、
+    """並びと絞り込み。/topics の既定の並び（資格版は BR-031 の単元の構成の順 / ロードマップ型は学ぶ順）、
     sortOrder の出し方（資格版は sort_order を参照しないので null）、分野での絞り込み、
-    ホームのおすすめ（/me の nextTopics）の並び。理解度で変わる部分は progress を書かないので見ない。"""
+    ホームのおすすめ（/me の nextTopics）の並び。理解度で変わる部分は progress を書かないので見ない。
+
+    資格版の期待の並びは応答の欄（listCategories の middleNo、listTopics の structure.groups の順・
+    groupNo・itemNo・questionCount・id）だけから組む。まとまりの中の学ぶ順は応答に欄が無いので、
+    まとまりの中の並びそのものは見ない（まとまりの順と、並べ替えを省いても同じ並びかは見る）。"""
     sys.path.insert(0, str(Path(__file__).parent)); from targets import target as _target
     roadmap = bool(_target(exam).get("roadmap"))
-    topics = (got.get("/topics?limit=500") or {}).get("topics") or []
+    listing = got.get("/topics?limit=500") or {}
+    topics = listing.get("topics") or []
     if not topics:
         r.error("並びの検査: /topics が空で確かめられない")
         return
@@ -982,6 +1102,7 @@ def check_ordering(c: Client, r: Report, got: dict, exam: str):
     def falls(xs):  # 昇順のはずが戻った位置
         return [i for i in range(1, len(xs)) if xs[i] < xs[i - 1]]
 
+    summary = ""
     if roadmap:
         no_order = [t["id"] for t in topics if t["sortOrder"] is None]
         if no_order:
@@ -989,6 +1110,7 @@ def check_ordering(c: Client, r: Report, got: dict, exam: str):
         bad = falls([t["sortOrder"] for t in topics if t["sortOrder"] is not None])
         if bad:
             r.error(f"/topics の既定の並びが学ぶ順（sort_order の昇順）でない（{bad[:3]} 件目で戻る）")
+        summary = "学ぶ順"
     else:
         stray = [t["id"] for t in topics if t["sortOrder"] is not None]
         if stray:
@@ -996,9 +1118,7 @@ def check_ordering(c: Client, r: Report, got: dict, exam: str):
                 f"資格版の /topics が sortOrder を返している {len(stray)} 件: {stray[:3]}"
                 "（資格版は sort_order 列を参照しない）"
             )
-        bad = rises([t["questionCount"] for t in topics])
-        if bad:
-            r.error(f"/topics の既定の並びが出題頻度の降順でない（{bad[:3]} 件目で増える）")
+        summary = check_structure_order(c, r, got, listing)
 
     # 分野で絞れる（絞った結果に別の分野が混じらない・件数が /fields と合う）
     fields = (got.get("/fields") or {}).get("fields") or []
@@ -1026,9 +1146,108 @@ def check_ordering(c: Client, r: Report, got: dict, exam: str):
             if bad:
                 r.error(f"おすすめの並びが出題頻度の降順でない（{bad[:3]} 件目で増える）")
     r.notes.append(
-        f"並び: /topics {len(topics)} 件が{'学ぶ順' if roadmap else '出題頻度の降順'}"
-        f"・おすすめ {len(nxt)} 件を確認"
+        f"並び: /topics {len(topics)} 件が{summary}・おすすめ {len(nxt)} 件を確認"
     )
+
+
+def check_structure_order(c: Client, r: Report, got: dict, listing: dict) -> str:
+    """資格版の論点の一覧の並び（BR-031）。単元ごとに一覧を求め、構成を持つ単元はまとまりの順、
+    持たない単元は小項目の番号の順・小項目の中は出題頻度の降順・同じ頻度は論点の ID の順か。
+    単元を絞らない一覧は、単元の番号の順に単元ごとの一覧を繋いだものか。返すのは結果の要約。"""
+    L = "並び（BR-031）"
+    topics = listing.get("topics") or []
+    if listing.get("structure") is not None:
+        r.error(f"{L}: 単元を絞らない /topics が structure を返している（単元を指定したときだけ）")
+    lacking = [t["id"] for t in topics if "itemNo" not in t or "groupNo" not in t]
+    if lacking:
+        r.error(f"{L}: /topics の論点に itemNo か groupNo の欄が無い {len(lacking)} 件: {lacking[:3]}")
+        return "BR-031 の並び（欄が欠けて確かめられない）"
+    grouped = [t["id"] for t in topics if t["groupNo"] is not None]
+    if grouped:
+        r.error(f"{L}: 単元を絞らない /topics が groupNo を返している {len(grouped)} 件: {grouped[:3]}")
+
+    cats = (got.get("/categories") or {}).get("categories") or []
+    units = sorted((u for u in cats if u["topics"] > 0), key=lambda u: u["middleNo"])
+    if not units:
+        r.error(f"{L}: /categories に論点を持つ単元が無く確かめられない")
+        return "BR-031 の並び（単元が無く確かめられない）"
+
+    joined: list[int] = []
+    structured = unstructured = 0
+    for u in units:
+        n = u["middleNo"]
+        label = f"GET /topics?middleNo={n}&sort=structure"
+        st, data, text = c.call("GET", f"/topics?middleNo={n}&sort=structure&limit=500")
+        if not r.status(label, st, 200, None if st == 200 else text[:200]):
+            continue
+        rows = data.get("topics") or []
+        ids = [t["id"] for t in rows]
+        joined += ids
+        if len(rows) != min(500, u["topics"]):
+            r.error(f"{label}: {len(rows)} 件（/categories の論点数 {u['topics']} と違う）")
+        other = sorted({t["middle"] for t in rows} - {u["middle"]})
+        if other:
+            r.error(f"{label}: 別の単元の論点が混じる {other[:3]}")
+        if any("itemNo" not in t or "groupNo" not in t for t in rows):
+            r.error(f"{label}: 論点に itemNo か groupNo の欄が無い")
+            continue
+
+        st2, data2, _ = c.call("GET", f"/topics?middleNo={n}&limit=500")
+        if r.status(f"GET /topics?middleNo={n}（並べ替えを省く）", st2, 200):
+            if [t["id"] for t in data2.get("topics") or []] != ids:
+                r.error(f"{label}: 並べ替えを省いた一覧と並びが違う（既定は単元の構成の順）")
+
+        structure = data.get("structure")
+        if structure is not None:
+            structured += 1
+            order = [g.get("no") for g in structure.get("groups") or []]
+            if not order:
+                r.error(f"{label}: structure の groups が空")
+                continue
+            if len(set(order)) != len(order):
+                r.error(f"{label}: structure の groups の no が重複している {order}")
+            rank = {no: i for i, no in enumerate(order)}
+            outside = [t["id"] for t in rows if t["groupNo"] not in rank]
+            if outside:
+                r.error(f"{label}: どのまとまりにも入らない論点 {len(outside)} 件: {outside[:3]}")
+                continue
+            back = [i for i in range(1, len(rows))
+                    if rank[rows[i]["groupNo"]] < rank[rows[i - 1]["groupNo"]]]
+            if back:
+                r.error(f"{label}: まとまりの順（structure.groups の順）に並んでいない（{back[:3]} 件目で戻る）")
+            empty = [no for no in order if not any(t["groupNo"] == no for t in rows)]
+            if empty:
+                r.error(f"{label}: 論点が 1 件も入らないまとまり {empty[:3]}")
+        else:
+            unstructured += 1
+            grouped = [t["id"] for t in rows if t["groupNo"] is not None]
+            if grouped:
+                r.error(f"{label}: 構成を持たない単元なのに groupNo を返す論点 {grouped[:3]}")
+            no_item = [t["id"] for t in rows if t["itemNo"] is None]
+            if no_item:
+                r.error(f"{label}: 小項目の番号が null の論点 {no_item[:3]}")
+                continue
+            want = [t["id"] for t in sorted(rows, key=lambda t: (t["itemNo"], -t["questionCount"], t["id"]))]
+            if ids != want:
+                i = next(k for k in range(len(ids)) if ids[k] != want[k])
+                r.error(
+                    f"{label}: 小項目の番号の順・出題頻度の降順・論点の ID の順になっていない"
+                    f"（{i} 件目が {ids[i]}、期待は {want[i]}）"
+                )
+
+    whole = [t["id"] for t in topics]
+    if whole != joined[:len(whole)]:
+        i = next((k for k in range(min(len(whole), len(joined))) if whole[k] != joined[k]), len(joined))
+        r.error(
+            f"{L}: 単元を絞らない /topics が、単元の番号の順に単元ごとの一覧を繋いだ並びでない"
+            f"（{i} 件目が {whole[i] if i < len(whole) else '無し'}、"
+            f"期待は {joined[i] if i < len(joined) else '無し'}）"
+        )
+    if structured == 0:
+        r.warn(f"{L}: 単元の構成を持つ単元が無く、まとまりの順を確かめられない")
+    if unstructured == 0:
+        r.warn(f"{L}: 単元の構成を持たない単元が無く、小項目の番号の順を確かめられない")
+    return f"BR-031 の並び（構成あり {structured} 単元・なし {unstructured} 単元）"
 
 
 def check_topic_detail_extras(c: Client, r: Report, got: dict, exam: str):
@@ -1196,7 +1415,7 @@ def squeeze(s: str) -> str:
 def check_session_scope(c: Client, r: Report, got: dict):
     """出題の範囲（論点別はその論点に紐づく過去問だけ）と畳み込み（1回の出題に同じ内容を2度出さない）、
     出題できる過去問が無い範囲の 404。作ったセッションはその場で破棄する。"""
-    detail = got.get("topic_detail")
+    detail = got.get("drill_detail")
     if not detail:
         r.error("出題の範囲の検査: 出題できる論点が取れなかったので検査できない")
         return
@@ -1298,7 +1517,7 @@ def check_mock_by_exam(c: Client, r: Report, got: dict, exam: str):
 def check_discard(c: Client, r: Report, got: dict, exam: str, db_name: str):
     """完了していないセッションの結果は 404（未回答の正解と解説が読めてしまう）。
     破棄すると進行中もその回答も残らず履歴にも出ない。進行中が無くても破棄は成功する。"""
-    detail = got.get("topic_detail")
+    detail = got.get("drill_detail")
     if not detail:
         r.error("破棄の検査: 出題できる論点が取れなかったので検査できない")
         return
@@ -1540,7 +1759,7 @@ def first_choice(question: dict) -> str:
 def check_scenario_uc004(c: Client, r: Report, got: dict):
     """練習テストの画面を開く → 範囲を選んで開始 → 出題 → 回答して解説 → 次の問題 → 締め → 結果。"""
     L = "UC-004"
-    detail = got.get("topic_detail")
+    detail = got.get("drill_detail")
     if not detail:
         r.error(f"{L}: 出題できる論点が取れなかったので基本の流れを通せない")
         return
@@ -1820,7 +2039,7 @@ def check_scenario_uc008(c: Client, r: Report, got: dict, exam: str, db_name: st
 def check_scenario_uc006_007(c: Client, r: Report, got: dict, exam: str, db_name: str):
     """中断 → ホームの案内と進行中の知らせ → 再開 → 破棄 → 履歴の一覧と結果。"""
     L = "UC-006/007"
-    detail = got.get("topic_detail")
+    detail = got.get("drill_detail")
     if not detail:
         r.error(f"{L}: 出題できる論点が取れなかったので基本の流れを通せない")
         return
@@ -2123,7 +2342,7 @@ def check_scenario_uc017(c: Client, r: Report, got: dict):
 
     # 4. まなびばの Cookie の経路は scripts/check_portal_api.py の担当
     # 5. POST の本文をスキーマで検証し、通った値だけを使う
-    detail = got.get("topic_detail")
+    detail = got.get("drill_detail")
     if not detail:
         r.error(f"{L} 5: 出題できる論点が取れなかったので本文の検証を通せない")
     else:

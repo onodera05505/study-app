@@ -51,8 +51,10 @@ const detail = (over: Over = {}) => {
       explanation: '短い説明の本文です。',
       detail: '詳しい解説の本文です。',
       questionCount: questions.length,
+      frequencyTier: 3,
       isNew: 0,
       status: 3,
+      statusSource: 'override',
       field: 'ストラテジ系',
       major: '企業と法務',
       middle: '事業の指標',
@@ -62,6 +64,7 @@ const detail = (over: Over = {}) => {
       ...((topicOver as Over | undefined) ?? {}),
     },
     questions,
+    prerequisites: [],
     siblings: [],
     nextTopic: null,
     neighbors: null,
@@ -270,10 +273,12 @@ describe('紐づく過去問（UC-002）', () => {
   })
 
   // @covers REQ-023#siblings-shown
-  it('同じ小項目の他の論点を、名前と行き先つきで示す', async () => {
+  it('同じまとまりの他の論点を、名前と行き先つきで、渡された並びのまま示す', async () => {
+    // 渡された並び（BR-031 の並び）は、ID の順とも出題頻度の順とも違う
     const siblings = [
-      { id: 232, term: 'きょうだい論点その一', questionCount: 3 },
-      { id: 233, term: 'きょうだい論点その二', questionCount: 5 },
+      { id: 238, term: 'きょうだい論点その一', questionCount: 1, frequencyTier: 1 },
+      { id: 232, term: 'きょうだい論点その二', questionCount: 5, frequencyTier: 3 },
+      { id: 235, term: 'きょうだい論点その三', questionCount: 2, frequencyTier: 2 },
     ]
     stubApi({ body: { siblings, questions: manyQuestions(1) } })
     await draw()
@@ -281,6 +286,8 @@ describe('紐づく過去問（UC-002）', () => {
       expect(text(), `他の論点「${s.term}」が出ていない`).toContain(s.term)
       expect(hrefs(), `他の論点「${s.term}」への行き先が無い`).toContain(`/topics/${s.id}`)
     }
+    const shown = hrefs().filter((h) => siblings.some((s) => h === `/topics/${s.id}`))
+    expect([...new Set(shown)], '他の論点が渡された並びで示されていない').toEqual(siblings.map((s) => `/topics/${s.id}`))
   })
 
   // @covers REQ-024#transcript-only
@@ -296,7 +303,7 @@ describe('紐づく過去問（UC-002）', () => {
     await draw()
     expect(text()).toContain('画像の無い図の書き起こしです。')
     expect(container.querySelectorAll('img'), '無いはずの図の画像が出ている').toHaveLength(0)
-    expect(buttons().some((b) => /図の説明/.test(b.textContent ?? '')), '書き起こしを開く手段が出ている（本体にする）').toBe(
+    expect(buttons().some((b) => /書き起こし/.test(b.textContent ?? '')), '図の書き起こしを開く手段が出ている（本体にする）').toBe(
       false,
     )
   })

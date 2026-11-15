@@ -2,6 +2,7 @@ import { sql } from 'drizzle-orm'
 import { roundScopeNameOf, type RoadmapSpec } from '../../shared/exam'
 import type { Db } from './db'
 import { allTopicRounds, orderedRounds } from './rounds'
+import { countedAnswers, joinStatus, latestFirst } from './understanding'
 
 export type QuestionRow = {
   id: string
@@ -200,7 +201,7 @@ async function buildRoundCheck(
 }
 
 /** セッションの出題内容を組み立てる。 */
-// @implements REQ-051, REQ-052, REQ-054, BR-019
+// @implements REQ-051, REQ-052, BR-019
 export async function buildQuestions(
   db: Db,
   userId: string,
@@ -288,11 +289,18 @@ export async function buildQuestions(
     }
   }
 
-  // review: 間違えた問題を先に、直近に間違えた順で。そのあと理解度の低い論点の問題で詰める。
-  // 同一内容は content_key でまとめる。代表は**直近に間違えた回**（最新の回ではない）。
-  // 復習で見たいのは「自分がつまずいた現物」なので、そのときの回のまま出す。
-  // GROUP BY と MAX() を組むと、SQLite は MAX に一致する行の値を返す。
+  // review: 間違えた過去問を先に、最後に間違えた順で。そのあと理解度の低い論点の過去問で詰める。
+  // 回答とその時刻と前後は理解度の判定と同じ数える回答と順序（lib/understanding の countedAnswers・latestFirst）から読む。
+  // 同一内容は content_key でまとめ、代表は最後に間違えた回（復習で見たいのは自分がつまずいた現物）。
+  // @implements REQ-054
   const wrong = await db.all<QuestionRow>(sql`
+    WITH ans AS (${countedAnswers(userId)}),
+    w AS (
+      SELECT a.question_id AS question_id, a.at AS at, a.session_id AS session_id, a.idx AS idx,
+             ROW_NUMBER() OVER (PARTITION BY a.qkey ORDER BY ${latestFirst('a')}) AS rn
+        FROM ans a
+       WHERE a.result = 2
+    )
     SELECT q.id AS id, q.text AS text, q.choices AS choices, q.answer AS answer,
            q.has_figure AS hasFigure, q.figure_description AS figureDescription,
            q.figure_image AS figureImage,
@@ -300,19 +308,19 @@ export async function buildQuestions(
            q.exam_label AS examLabel, q.number AS number,
            q.content_key AS contentKey, q.exam AS exam,
            NULL AS field,
-           MAX(sq.answered_at) AS lastAnsweredAt
-      FROM session_questions sq
-      JOIN sessions s ON s.id = sq.session_id
-      JOIN past_questions q ON q.id = sq.question_id
-     WHERE s.user_id = ${userId} AND sq.result = 2
-     GROUP BY COALESCE(q.content_key, q.id)
-     ORDER BY MAX(sq.answered_at) DESC
+           w.at AS lastAnsweredAt
+      FROM w
+      JOIN past_questions q ON q.id = w.question_id
+     WHERE w.rn = 1
+     ORDER BY ${latestFirst('w')}
      LIMIT ${input.size}
   `)
 
   // 誤答だけでは弱点を覆えない（まだ解いていない論点は誤答に現れない）ので、
-  // 理解度の自己申告が未理解（1）・やや理解（2）の論点に紐づく過去問も足す。
+  // 理解度が未理解・やや理解の論点に紐づく過去問も足す。理解度は lib/understanding が求め、
+  // 資格対策の未とロードマップ型の記録の無い論点は理解度の表に行を持たないので入らない。
   // 出題頻度の高い論点から並べる（頻出論点から潰すのが最短経路）。
+  // @implements REQ-054, BR-049, BR-050
   const weakRows = await db.all<QuestionRow>(sql`
     SELECT q.id AS id, q.text AS text, q.choices AS choices, q.answer AS answer,
            q.has_figure AS hasFigure, q.figure_description AS figureDescription,
@@ -321,12 +329,12 @@ export async function buildQuestions(
            q.exam_label AS examLabel, q.number AS number,
            q.content_key AS contentKey, q.exam AS exam,
            si.field AS field
-      FROM progress p
-      JOIN topics t ON t.id = p.topic_id
+      FROM topics t
+      ${joinStatus(userId, !!input.roadmap)}
       JOIN topic_questions tq ON tq.topic_id = t.id
       JOIN past_questions q ON q.id = tq.question_id
       LEFT JOIN syllabus_items si ON si.id = t.syllabus_item_id
-     WHERE p.user_id = ${userId} AND p.status <= 2
+     WHERE ts.status IN (1, 2)
      ORDER BY t.question_count DESC, t.id
      LIMIT ${input.size * 5}
   `)

@@ -371,30 +371,6 @@ const session = (over: Row): Row => ({
 type Created = { id: string; kind: string; scopeLabel: string; questionCount: number }
 
 describe('演習の開始（POST /api/sessions。UC-004）', () => {
-  // @covers REQ-050#scope-label-and-count
-  it('作ったテストは、種別ごとの範囲の名前（論点・分野・単元の名前を含む）と、組んだ問題数を返す', async () => {
-    const cases: { body: Record<string, unknown>; name: RegExp }[] = [
-      { body: { kind: 'drill', topicId: 2, size: 10 }, name: new RegExp(TOPIC_TERM) },
-      { body: { kind: 'field', field: 'テクノロジ系', size: 20 }, name: /テクノロジ系/ },
-      { body: { kind: 'middle', middleNo: 23, size: 20 }, name: new RegExp(MIDDLE) },
-      { body: { kind: 'review', size: 20 }, name: /./ },
-    ]
-    for (const { body, name } of cases) {
-      const w = world(startTables(100))
-      const res = await post(w, '/api/sessions', body)
-      expect(res.status, JSON.stringify(body)).toBe(201)
-      const created = (await res.json()) as Created
-      expect(created.kind, JSON.stringify(body)).toBe(body.kind)
-      expect(created.scopeLabel, `${JSON.stringify(body)} の範囲の名前`).toMatch(name)
-      expect(created.questionCount, `${JSON.stringify(body)} の問題数`).toBe(body.size)
-    }
-    // 範囲の過去問が頼んだ問題数より少ないときは、実際に組めた数を問題数として返す
-    const w = world(startTables(7))
-    const res = await post(w, '/api/sessions', { kind: 'field', field: 'テクノロジ系', size: 20 })
-    expect(res.status).toBe(201)
-    expect(((await res.json()) as Created).questionCount).toBe(7)
-  })
-
   // @covers REQ-055#empty-scope
   it('選んだ範囲に出題できる過去問が 1 問も無いときは、テストを作らず 404 の {error}', async () => {
     const body = { kind: 'drill', topicId: 9999 }

@@ -18,7 +18,7 @@ type Me = {
     correctCount: number | null
     finishedAt: number | null
   }[]
-  /** 「頻出なのに、まだ理解できていない」論点。最短合格の次の一手（server/index.ts）。 */
+  /** 次に学ぶの候補（BR-030）。候補が無いときは空の配列。 */
   nextTopics: {
     id: number
     term: string
@@ -82,7 +82,7 @@ function useCountUp(target: number, ms = 700): number {
   return n
 }
 
-/** ホーム。連続記録・次の一手・前回の続きへの導線。 */
+/** ホーム。連続記録・次に学ぶ・前回の続きへの導線。 */
 export function Home() {
   const [me, setMe] = useState<Me | null>(null)
   const [error, setError] = useState('')
@@ -154,7 +154,7 @@ export function Home() {
       )}
 
       <div className="streak">
-        <p className="streak-label">連続学習記録</p>
+        <p className="streak-label">連続記録</p>
         <p className="streak-figure">
           <span className="streak-num">{shown}</span>
           <span className="streak-unit">日</span>
@@ -167,8 +167,8 @@ export function Home() {
         </p>
       </div>
 
-      {/* このアプリの設計の中核は「出題頻度＝重要度」。頻出なのに理解できて
-          いない論点こそが最短合格の次の一手なので、ホームの正面に出す。 */}
+      {/* 設計の中核は「出題頻度＝重要度」。頻出でまだ理解していない論点が最短合格の
+          経路なので、ホームの正面に出す。 */}
       {/* @implements REQ-044, REQ-046, BR-015 */}
       {next.length > 0 && (
         <section className="next-up">

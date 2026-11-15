@@ -64,29 +64,32 @@ afterEach(async () => {
 
 // ---------------------------------------------------------------- 応答の偽物
 
-/** GET /api/topics/:id の応答（過去問 1 件）。modified は 0/1。 */
+/** GET /api/topics/:id の応答（契約 getTopicDetail の形。過去問 1 件）。modified は 0/1。
+ *  過去問の ID は回の内部コードを含む（画面に内部コードが漏れないことを見る材料）。 */
 const topicDetail = (modified: 0 | 1) => ({
   topic: {
     id: 12,
     term: '損益分岐点',
+    subtitle: null,
     explanation: null,
     detail: null,
     questionCount: 1,
+    frequencyTier: 1,
     isNew: 0,
-    status: null,
+    status: 0,
+    statusSource: 'auto',
     field: 'ストラテジ系',
     major: '企業と法務',
     middle: '企業活動',
     middleNo: 1,
     itemName: '経営・組織論',
-    syllabusItemId: 1,
+    tier: null,
   },
   questions: [
     {
-      id: 'q-1',
+      id: `${EXAM_CODE}-q8`,
       number: 8,
       examLabel: '令和6年度',
-      exam: EXAM_CODE,
       text: '次のうち正しいものはどれか。',
       choices: { ア: '正しい', イ: '誤り' },
       answer: 'ア',
@@ -98,12 +101,12 @@ const topicDetail = (modified: 0 | 1) => ({
       timesAsked: 1,
       otherCitations: [],
       explanation: null,
-      contentKey: 'ck-1',
     },
   ],
+  prerequisites: [],
   siblings: [],
-  neighbors: [],
   nextTopic: null,
+  neighbors: null,
 })
 
 /** 出題中の 1 問（GET /api/sessions/:id/current 相当）。modified は真偽値。 */

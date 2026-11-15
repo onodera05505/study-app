@@ -10,29 +10,33 @@ import { MemoryRouter } from 'react-router-dom'
 import { App } from '../../src/client/App'
 import { setToken } from '../../src/client/lib/api'
 
-/** 最後に開く論点（単位）。ID・名前・単元名・単元の番号を端末に覚える（BR-012）。 */
+/** 最後に開く論点。ID・名前・単元名・単元の番号を端末に覚える（BR-012）。 */
 const TOPIC = { id: 231, term: '前回開いた論点', middle: '事業の指標', middleNo: 4 }
 
 const DETAIL = {
   topic: {
     id: TOPIC.id,
     term: TOPIC.term,
+    subtitle: null,
     explanation: `${TOPIC.term} の短い説明です。`,
     detail: null,
     questionCount: 0,
+    frequencyTier: null,
     isNew: 0,
-    status: null,
+    status: 0,
+    statusSource: 'auto',
     field: 'ストラテジ系',
     major: '企業と法務',
     middle: TOPIC.middle,
     middleNo: TOPIC.middleNo,
     itemName: '会計と財務',
-    syllabusItemId: 3,
+    tier: null,
   },
   questions: [],
+  prerequisites: [],
   siblings: [],
   nextTopic: null,
-  neighbors: { prev: null, next: null },
+  neighbors: null,
 }
 
 /** おすすめは空にしておく（「次に学ぶ」と「前回の続き」を混ぜないため）。 */

@@ -4,7 +4,7 @@
  *  サーバの応答は fetch を偽物にして与える（形は scripts/check_api.py の
  *  FIELDS・CATEGORIES・TOPICS と同じ）。論点の一覧はサーバが middleNo で絞った物を
  *  そのまま出すので、偽の fetch も middleNo で返す配列を分ける。
- *  理解度は 1=未理解・2=やや理解・3=理解、記録なしは null（未理解として扱う）。 */
+ *  学びの種類は資格対策。理解度は 0=未・1=未理解・2=やや理解・3=理解（契約の status）。 */
 
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { act, type ReactNode } from 'react'
@@ -15,8 +15,8 @@ import { invalidateCached } from '../../src/client/lib/api'
 
 const FIELDS = {
   fields: [
-    { field: 'ストラテジ系', topics: 4, questions: 24, understood: 2, partly: 1, untouched: 1 },
-    { field: 'テクノロジ系', topics: 4, questions: 20, understood: 1, partly: 0, untouched: 3 },
+    { field: 'ストラテジ系', topics: 4, questions: 24, understood: 2, partly: 1, untouched: 0, unanswered: 1 },
+    { field: 'テクノロジ系', topics: 4, questions: 20, understood: 1, partly: 0, untouched: 1, unanswered: 2 },
   ],
 }
 
@@ -30,27 +30,36 @@ const CATEGORIES = {
 const topic = (over: Record<string, unknown>) => ({
   id: 0,
   term: '',
+  subtitle: null,
   questionCount: 0,
-  status: null as number | null,
+  frequencyTier: null as number | null,
+  status: 0 as number | null,
+  statusSource: 'auto',
   field: 'ストラテジ系',
   middle: '企業活動',
+  itemNo: 1,
   itemName: '企業活動',
+  groupNo: null,
   isNew: 0,
   sortOrder: null,
+  round: null,
+  roundLabel: null,
+  tier: null,
   ...over,
 })
 
 /** サーバが単元で絞って返す論点。 */
 const BY_MIDDLE: Record<string, ReturnType<typeof topic>[]> = {
   企業活動: [
-    topic({ id: 11, term: '損益分岐点', questionCount: 9, status: 3, itemName: '会計と財務' }),
-    topic({ id: 12, term: 'PDCA', questionCount: 4, status: null, itemName: '業務分析' }),
+    topic({ id: 11, term: '損益分岐点', questionCount: 9, frequencyTier: 3, status: 3, statusSource: 'override', itemName: '会計と財務' }),
+    topic({ id: 12, term: 'PDCA', questionCount: 4, frequencyTier: 3, status: 0, itemNo: 2, itemName: '業務分析' }),
   ],
   セキュリティ: [
     topic({
       id: 91,
       term: 'クロスサイトスクリプティング',
       questionCount: 7,
+      frequencyTier: 3,
       status: 2,
       field: 'テクノロジ系',
       middle: 'セキュリティ',
@@ -95,7 +104,7 @@ function stubApi(fail: Set<string> = new Set()) {
       const rows = middleNo
         ? BY_MIDDLE[MIDDLE_OF_NO[middleNo] ?? ''] ?? []
         : Object.values(BY_MIDDLE).flat().filter((t) => sameField(t.field))
-      body = { topics: rows }
+      body = { structure: null, topics: rows }
     } else if (url.pathname.endsWith('/glossary')) body = { glossary: [] }
     return { ok: true, status: 200, text: async () => JSON.stringify(body) }
   })
@@ -126,8 +135,44 @@ async function choose(label: string) {
   })
 }
 
-/** 理解度の絞り込みの押しボタン（button.chip-f.check）。 */
-const statusChips = () => [...container.querySelectorAll<HTMLElement>('button.chip-f.check')]
+/** 理解度の段階の名前（用語集。資格対策は未を含む）。 */
+const STAGES = ['未', '未理解', 'やや理解', '理解']
+
+/** 読み上げに届く名前（aria-label、結び付いたラベル、無ければ見える文字）。 */
+const nameOf = (el: Element) => {
+  const aria = el.getAttribute('aria-label')
+  if (aria) return aria.replace(/\s+/g, ' ').trim()
+  const labels = (el as HTMLInputElement).labels
+  if (labels && labels.length) return [...labels].map((l) => l.textContent ?? '').join(' ').replace(/\s+/g, ' ').trim()
+  return (el.textContent ?? '').replace(/\s+/g, ' ').trim()
+}
+
+/** 名前に現れる理解度の段階の名前（ちょうど 1 つのときだけ返す）。長い名前から先に当てる。 */
+function stageIn(t: string): string | null {
+  let rest = t.replace(/理解度/g, '')
+  const found: string[] = []
+  for (const name of ['やや理解', '未理解', '理解', '未']) {
+    if (rest.includes(name)) found.push(name)
+    rest = rest.split(name).join('')
+  }
+  return found.length === 1 ? found[0] : null
+}
+
+const TERMS = Object.values(BY_MIDDLE)
+  .flat()
+  .map((t) => t.term)
+
+/** 理解度の絞り込みの選択肢（名前が段階の名前だけを指し、論点の名前を含まない押せる物）。 */
+const statusChips = () =>
+  [...container.querySelectorAll<HTMLElement>('button, [role="button"], [role="checkbox"], input[type="checkbox"]')].filter(
+    (el) => stageIn(nameOf(el)) !== null && !TERMS.some((t) => nameOf(el).includes(t)),
+  )
+
+/** 選ばれている状態か（押しボタンの aria-pressed・チェックの checked・aria-checked）。 */
+const isOn = (el: HTMLElement) =>
+  el.getAttribute('aria-pressed') === 'true' ||
+  el.getAttribute('aria-checked') === 'true' ||
+  (el instanceof HTMLInputElement && el.checked)
 
 beforeAll(() => {
   ;(globalThis as any).IS_REACT_ACT_ENVIRONMENT = true
@@ -178,49 +223,17 @@ describe('単元の一覧（UC-002）', () => {
 })
 
 describe('論点の一覧（UC-002）', () => {
-  // @covers REQ-020#topics-of-middle
-  it('選んだ単元の論点を、出題回数と小項目名つきで出す', async () => {
-    stubApi()
-    await draw(<Topics />)
-    await choose('企業活動')
-    expect(text()).toContain('損益分岐点')
-    expect(text()).toContain('PDCA')
-    // 出題回数
-    expect(text()).toContain('9')
-    // 小項目名（単元名と違うものは出す）
-    expect(text()).toContain('会計と財務')
-    expect(text()).toContain('業務分析')
-    // 別の単元の論点は混ざらない
-    expect(text()).not.toContain('クロスサイトスクリプティング')
-  })
-
-  // @covers REQ-021#resort
-  it('並べ替えを変えると、その並びで取りに行く', async () => {
-    stubApi()
-    await draw(<Topics />)
-    await choose('企業活動')
-    const before = countOf('/topics?')
-    await choose('名前順')
-    const requests = calls.filter((u) => u.includes('/topics?'))
-    expect(requests.length, '並べ替えを変えても取りに行っていない').toBeGreaterThan(before)
-    expect(requests[requests.length - 1]).toContain('sort=')
-  })
-
   // @covers REQ-022#no-status-selected
   it('理解度を全部外すと取りに行かず、すべて表示に戻す手段を出す', async () => {
     stubApi()
     await draw(<Topics />)
     await choose('企業活動')
     const labels = statusChips()
-      .filter((b) => b.getAttribute('aria-pressed') === 'true')
-      .map((b) => (b.textContent ?? '').trim())
-    expect(labels, '理解度の絞り込み（button.chip-f.check）が 3 つ押された状態で出ていない').toEqual([
-      '未理解',
-      'やや理解',
-      '理解',
-    ])
+      .filter(isOn)
+      .map((el) => stageIn(nameOf(el))!)
+    expect(new Set(labels), '理解度の絞り込みが 4 つの段階すべてを選んだ状態で出ていない').toEqual(new Set(STAGES))
     for (const [i, label] of labels.entries()) {
-      const chip = statusChips().find((b) => (b.textContent ?? '').trim() === label)!
+      const chip = statusChips().find((el) => stageIn(nameOf(el)) === label)!
       const before = countOf('/topics?')
       await act(async () => {
         chip.click()

@@ -38,20 +38,19 @@
  * error は終了コード1（デプロイを止める）、warning は0。
  */
 
+import { spawnSync } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
 import { JSDOM } from 'jsdom'
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..')
 
-/** 教材の世代。後ろが勝つ（build_seed.py の MATERIAL_DIRS と同じ）。 */
-const MATERIAL_DIRS = ['materials', 'materials_v2', 'materials_v3']
 /** ポップの中身。用語集の実際の文言は見ないので固定でよい。 */
 const BRIEF = '検査用の1行説明です。'
 
 /** Markdown.tsx と同じ記法。ここがずれると検査が意味を失うので、写したことを明示しておく。 */
 const TERM_RE = /\[\[([^\[\]\n]+)\]\]/g
-const IMAGE_RE = /^!\[([^\]]*)\]\(([^)\s]+)\)$/
+const IMAGE_RE = /^!\[((?:[^\]]|\](?!\())*)\]\(([^)\s]+)\)$/
 const FIGURE_PREFIX = '/figures/materials/'
 
 type Material = { topic_id: number; term?: string; explanation?: string; detail?: string }
@@ -72,17 +71,15 @@ function readJson(p: string): any {
   return JSON.parse(fs.readFileSync(p, 'utf-8'))
 }
 
-/** 教材を v1 → v2 → v3 の後勝ちで合成する（build_seed.py の load_materials と同じ）。 */
-function loadMaterials(dataDir: string): Map<number, Material> {
-  const out = new Map<number, Material>()
-  for (const sub of MATERIAL_DIRS) {
-    const dir = path.join(dataDir, sub)
-    if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) continue
-    for (const name of fs.readdirSync(dir).filter((n) => n.endsWith('.json')).sort()) {
-      for (const m of readJson(path.join(dir, name)).materials ?? []) out.set(m.topic_id, m)
-    }
-  }
-  return out
+/** 論点ごとに配る本文と同じ選び方で選んだ教材と、世代ごとの論点の数。選び方の 1 か所は scripts/material_generations.py。 */
+function loadMaterials(dataDir: string): { materials: Map<number, Material>; topicsByGeneration: Record<string, number> } {
+  const r = spawnSync('python3', [path.join(ROOT, 'scripts', 'material_generations.py'), '--data', dataDir], {
+    encoding: 'utf-8',
+    maxBuffer: 1 << 30,
+  })
+  if (r.status !== 0) throw new Error(`教材の世代を選べない: ${r.stderr || r.error}`)
+  const got = JSON.parse(r.stdout) as { topicsByGeneration: Record<string, number>; materials: Material[] }
+  return { materials: new Map(got.materials.map((m) => [m.topic_id, m])), topicsByGeneration: got.topicsByGeneration }
 }
 
 /** 問題解説を読む（build_seed.py の read_explanations と同じ。後勝ち）。 */
@@ -184,11 +181,12 @@ async function main(): Promise<number> {
   const started = Date.now()
   const argv = process.argv.slice(2)
   const di = argv.indexOf('--data')
-  const dataDir = path.resolve(ROOT, di >= 0 ? argv[di + 1] : 'data/ip')
+  const dataDir = path.resolve(di >= 0 ? argv[di + 1] : 'data/ip')
   const pi = argv.indexOf('--public')
-  const publicDir = path.resolve(ROOT, pi >= 0 ? argv[pi + 1] : 'public')
+  // 図の置き場は学びの置き場（<根>/data/<key>）の根の public/
+  const publicDir = pi >= 0 ? path.resolve(argv[pi + 1]) : path.resolve(dataDir, '..', '..', 'public')
 
-  const materials = loadMaterials(dataDir)
+  const { materials, topicsByGeneration } = loadMaterials(dataDir)
   const explanations = loadExplanations(dataDir)
   const answerOf = loadAnswers(dataDir)
   const topics: { id: number; term: string }[] =
@@ -464,30 +462,35 @@ async function main(): Promise<number> {
   warnings.push(...stamp.warnings)
 
   // --- 出力 -------------------------------------------------------------
+  // 人が読む報告は標準エラー、標準出力は契約の checkRender の結果の JSON 1 つ
+  const say = (line: string) => process.stderr.write(`${line}\n`)
   const secs = ((Date.now() - started) / 1000).toFixed(1)
-  console.log(`描画検査 ${path.relative(ROOT, dataDir)}（${secs} 秒）`)
-  console.log(`  論点 ${materials.size} 件 / 問題解説 ${explanations.size} 本`)
-  console.log(`  用語 [[…]] ${termTotal} 件 → 用語ボタン ${buttonTotal} 個（用語集 ${glossary.length} 語）`)
-  console.log(`  教材の図 ${figureTotal} 枚（画像が無いもの ${missingFigures.size} 種）`)
+  say(`描画検査 ${path.relative(process.cwd(), dataDir) || dataDir}（${secs} 秒）`)
+  say(`  論点 ${materials.size} 件 / 問題解説 ${explanations.size} 本`)
+  say(`  選んだ世代 ${JSON.stringify(topicsByGeneration)}`)
+  say(`  用語 [[…]] ${termTotal} 件 → 用語ボタン ${buttonTotal} 個（用語集 ${glossary.length} 語）`)
+  say(`  教材の図 ${figureTotal} 枚（画像が無いもの ${missingFigures.size} 種）`)
 
-  for (const w of consoleWarnings.slice(0, 5)) console.log(`  [React の警告] ${w}`)
-  if (consoleWarnings.length) console.log(`  React の警告 ${consoleWarnings.length} 件`)
+  for (const w of consoleWarnings.slice(0, 5)) say(`  [React の警告] ${w}`)
+  if (consoleWarnings.length) say(`  React の警告 ${consoleWarnings.length} 件`)
 
   if (warnings.length) {
-    console.log(`\n警告 ${warnings.length} 件:`)
-    for (const w of warnings.slice(0, 30)) console.log(`  - ${w.where}: ${w.what}\n      ${w.excerpt}`)
-    if (warnings.length > 30) console.log(`  …ほか ${warnings.length - 30} 件`)
+    say(`\n警告 ${warnings.length} 件:`)
+    for (const w of warnings.slice(0, 30)) say(`  - ${w.where}: ${w.what}\n      ${w.excerpt}`)
+    if (warnings.length > 30) say(`  …ほか ${warnings.length - 30} 件`)
   }
 
+  const exitCode = errors.length ? 1 : 0
   if (errors.length) {
-    console.error(`\nエラー ${errors.length} 件:`)
-    for (const e of errors.slice(0, 50)) console.error(`  - ${e.where}: ${e.what}\n      ${e.excerpt}`)
-    if (errors.length > 50) console.error(`  …ほか ${errors.length - 50} 件`)
-    console.error(`\n描画検査: エラー ${errors.length} 件`)
-    return 1
+    say(`\nエラー ${errors.length} 件:`)
+    for (const e of errors.slice(0, 50)) say(`  - ${e.where}: ${e.what}\n      ${e.excerpt}`)
+    if (errors.length > 50) say(`  …ほか ${errors.length - 50} 件`)
+    say(`\n描画検査: エラー ${errors.length} 件`)
+  } else {
+    say('\n描画検査: 問題なし')
   }
-  console.log('\n描画検査: 問題なし')
-  return 0
+  process.stdout.write(`${JSON.stringify({ exitCode, topics: materials.size, topicsByGeneration })}\n`)
+  return exitCode
 }
 
 /** 配信物に版の印（version.json）が入っているか。ビルドの出力がある環境で見る。
@@ -538,7 +541,8 @@ function checkVersionStamp(): { errors: Issue[]; warnings: Issue[] } {
 main().then(
   (code) => process.exit(code),
   (e) => {
-    console.error(e)
+    // 描画の途中で落ちると console.error が差し替えられたままのことがあるので、標準エラーへ直に書く
+    process.stderr.write(`${e instanceof Error ? e.stack : String(e)}\n`)
     process.exit(1)
   },
 )

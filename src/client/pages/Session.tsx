@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { DupBadge } from '../components/DupBadge'
 import { Explanation, type ExplanationData } from '../components/Explanation'
 import { Figure } from '../components/Figure'
-import { api } from '../lib/api'
+import { api, invalidateCached } from '../lib/api'
 import { formatChoice } from '../lib/choice'
 import { annotateLastPage } from '../lib/lastPage'
 
@@ -70,13 +70,15 @@ export function Session() {
   // 再試行のとき、失敗した呼び出しと同じ履歴の残し方をする
   const finishReplace = useRef(true)
 
-  // @implements REQ-069, REQ-074, REQ-251, BR-014
+  // @implements REQ-069, REQ-074, REQ-251, REQ-484, BR-014
   const finish = useCallback(
     async (replace: boolean) => {
       finishReplace.current = replace
       setFinishError('')
       try {
         await api(`/sessions/${id}/finish`, { method: 'POST' })
+        // 締めた模試の回答はここから数える回答に加わるので、覚えていた分野・単元の集計を捨てる
+        invalidateCached()
         navigate(`/sessions/${id}/result`, { replace })
       } catch (e: any) {
         setFinishError(e.message)
@@ -128,7 +130,7 @@ export function Session() {
   // 過去問実践（通し受験）かどうか。判定と解説を出すかの分かれ目になる。
   const isMock = data?.session.kind === 'mock'
 
-  // @implements REQ-061, REQ-068, REQ-113, REQ-277
+  // @implements REQ-061, REQ-068, REQ-113, REQ-277, REQ-484
   async function answer(choice: string) {
     if (!data?.question || judged || sending) return
     const idx = data.question.idx
@@ -143,6 +145,9 @@ export function Session() {
         method: 'POST',
         body: { idx, answer: choice },
       })
+      // 演習の回答は送った時点で数える回答に加わるので、覚えていた分野・単元の集計を捨てる。
+      // 模試の回答は締めるまで数えないので、ここでは捨てない
+      if (!isMock && 'correct' in res) invalidateCached()
       // 過去問実践（模試）は本番と同じ通し受験なので、1問ごとの正誤も解説も出さずに次へ送る。
       // 振り返りは結果画面でまとめて行う（解説はそちらに出る）。
       if (isMock || !('correct' in res)) {

@@ -4,7 +4,8 @@
  *  Node 標準の SQLite（node:sqlite）に `migrations/*.sql` を当てた実体を D1 の口（prepare → bind →
  *  run / all / first / raw、batch、exec）で包んで渡す。観測はすべて HTTP の境界で行う:
  *  記録は PUT /api/topics/:id/progress、読み返しは GET /api/topics/:id・GET /api/topics・GET /api/me。
- *  学びの種類は資格対策（EXAM=ip。論点の並びは出題頻度の降順。BR-031）。
+ *  学びの種類は資格対策（EXAM=ip）。回答の履歴は置かないので、記録した段階がそのまま理解度になり（BR-050）、
+ *  記録の無い論点は未になる（BR-029）。
  *
  *  論点は ID の順・名前の順・出題頻度の順が互いに一致しないように置く（並びの観測が
  *  どれか 1 つの順でたまたま緑にならないため）。 */
@@ -85,6 +86,8 @@ const TOPICS = [
 const [A, B, C, D, E, Z] = TOPICS.map((t) => t.id)
 const WITH_QUESTIONS = TOPICS.filter((t) => t.questions > 0).map((t) => t.id)
 const UNKNOWN_TOPIC = 999999
+/** 資格対策の未（回答も理解度の記録も無い。契約の listTopics の status=0）。 */
+const UNANSWERED = 0
 
 function seed(db: DatabaseSync) {
   for (const u of [ME, OTHER]) {
@@ -195,8 +198,8 @@ describe('理解度の記録が残ること（UC-003）', () => {
       expect(await detailStatus(topicId), `論点の画面の理解度が status=${status} でない`).toBe(status)
       expect(await listedStatus(topicId), `一覧の行の理解度が status=${status} でない`).toBe(status)
     }
-    // 記録していない論点は記録なしのまま
-    expect(await detailStatus(B)).toBeNull()
+    // 記録も回答も無い論点は未のまま（BR-029）
+    expect(await detailStatus(B)).toBe(UNANSWERED)
   })
 
   // @covers REQ-034#overwrite-keeps-last
@@ -218,8 +221,8 @@ describe('理解度の記録が残ること（UC-003）', () => {
   // @covers REQ-035#owner-only
   it('記録は求めた本人の理解度としてだけ残り、別の利用者の同じ論点の理解度は変わらない', async () => {
     expect((await record(B, { status: 3 }, ME)).status).toBe(200)
-    expect(await detailStatus(B, OTHER), '本人でない利用者の論点の画面に本人の記録が見える').toBeNull()
-    expect(await listedStatus(B, OTHER)).toBeNull()
+    expect(await detailStatus(B, OTHER), '本人でない利用者の論点の画面に本人の記録が見える').toBe(UNANSWERED)
+    expect(await listedStatus(B, OTHER)).toBe(UNANSWERED)
     expect(await counts(OTHER)).toMatchObject({ understood: 0, partly: 0 })
     expect(storedRows(OTHER.id, B)).toBe(0)
 
@@ -240,9 +243,9 @@ describe('理解度の記録が残ること（UC-003）', () => {
     }
     expect(await counts()).toMatchObject({ understood: 0, partly: 1 })
 
-    // 記録の無い論点は、断られたあとも記録なしのまま
+    // 記録も回答も無い論点は、断られたあとも未のまま
     expect((await record(A, { status: 4 })).status).toBe(400)
-    expect(await detailStatus(A)).toBeNull()
+    expect(await detailStatus(A)).toBe(UNANSWERED)
     expect(storedRows(ME.id, A)).toBe(0)
   })
 
@@ -262,12 +265,12 @@ describe('理解度の記録が残ること（UC-003）', () => {
     expect(storedRows(ME.id, UNKNOWN_TOPIC), '存在しない論点に理解度の行が残っている').toBe(0)
     expect(await counts()).toEqual(before)
     // 在る論点の理解度にも影響しない
-    for (const id of WITH_QUESTIONS) expect(await detailStatus(id)).toBeNull()
+    for (const id of WITH_QUESTIONS) expect(await detailStatus(id)).toBe(UNANSWERED)
   })
 })
 
 describe('おすすめ順の一覧（UC-003）', () => {
-  /** B=理解・D=やや理解・A=未理解、C と E は記録なし（未理解として扱う。BR-029）。 */
+  /** B=理解・D=やや理解・A=未理解、C と E は回答も記録も無い未（BR-029）。回答が無いので記録した段階がそのまま理解度になる（BR-050）。 */
   async function recordMixed() {
     expect((await record(B, { status: 3 })).status).toBe(200)
     expect((await record(D, { status: 2 })).status).toBe(200)
@@ -286,7 +289,7 @@ describe('おすすめ順の一覧（UC-003）', () => {
     expect(new Set(ids)).toEqual(new Set(WITH_QUESTIONS))
   })
 
-  /** 理解にした論点（status=3）か。記録なし・未理解・やや理解はまだ理解していない論点（BR-029・BR-030）。 */
+  /** 理解にした論点（status=3）か。未・未理解・やや理解はまだ理解していない論点（BR-029・BR-030）。 */
   const isUnderstood = (t: Listed) => t.status === 3
 
   // @covers REQ-042#not-understood-first
@@ -306,10 +309,10 @@ describe('おすすめ順の一覧（UC-003）', () => {
 
   // @covers REQ-042#not-understood-one-order
   it('まだ理解していない論点は、未理解とやや理解を分けず、資格対策の並び（出題頻度の降順）の 1 つの並びになる', async () => {
-    // 記録が 1 つも無い: 全件がまだ理解していない論点で、出題頻度の降順 B(9)→D(7)→C(5)→A(3)→E(1)
+    // 記録も回答も無い: 全件が未で、出題頻度の降順 B(9)→D(7)→C(5)→A(3)→E(1)
     expect((await recommended()).map((t) => t.id)).toEqual([B, D, C, A, E])
 
-    // 未理解の B(9)・やや理解の D(7)・記録なしの C(5) と A(3)・やや理解の E(1) が、出題頻度の降順の 1 つの並びになる
+    // 未理解の B(9)・やや理解の D(7)・未の C(5) と A(3)・やや理解の E(1) が、出題頻度の降順の 1 つの並びになる
     // （未理解とやや理解を分けると B,C,A,D,E になる）
     expect((await record(B, { status: 1 })).status).toBe(200)
     expect((await record(D, { status: 2 })).status).toBe(200)
@@ -347,7 +350,7 @@ describe('次に学ぶの候補（UC-003）', () => {
     expect((await record(B, { status: 3 })).status).toBe(200)
     expect((await record(D, { status: 2 })).status).toBe(200)
     const { nextTopics } = await getJson<Me>('/api/me')
-    // D(7 問・やや理解) → C(5 問) → A(3 問) → E(1 問)。B は理解にしたので入らない
+    // D(7 問・やや理解) → C(5 問・未) → A(3 問・未) → E(1 問・未)。B は理解にしたので入らない
     expect(nextTopics.map((t) => t.id)).toEqual([D, C, A, E])
   })
 
@@ -374,7 +377,7 @@ describe('整数として読めない論点の ID（UC-003）', () => {
       expect(typeof data.error, `ID「${id}」の断りに理由が無い`).toBe('string')
       expect(data.ok).toBeUndefined()
     }
-    expect(await detailStatus(B), '整数として読めない ID の求めで、先頭の数字の論点に理解度が残った').toBeNull()
+    expect(await detailStatus(B), '整数として読めない ID の求めで、先頭の数字の論点に理解度が残った').toBe(UNANSWERED)
     expect(storedRows(ME.id, B)).toBe(0)
     expect(await counts()).toMatchObject({ understood: 0, partly: 0 })
   })

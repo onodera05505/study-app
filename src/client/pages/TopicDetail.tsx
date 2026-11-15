@@ -9,10 +9,11 @@ import { Explanation, type ExplanationData } from '../components/Explanation'
 import { Figure } from '../components/Figure'
 import { Markdown } from '../components/Markdown'
 import { api, clearLastTopic, getLastTopic, setLastTopic, invalidateCached } from '../lib/api'
+import type { FrequencyTier, StatusSource, StatusValue, TopicLink } from '../lib/api'
 import { isFromResumeLink, type ResumeGoneState } from '../lib/resume'
 import { formatChoice } from '../lib/choice'
 import { TierBadge } from '../components/TierBadge'
-import { StatusChoice } from '../components/StatusBadge'
+import { FrequencyMark, StatusChoice, TopicUnderstanding } from '../components/StatusBadge'
 
 type Detail = {
   topic: {
@@ -24,7 +25,9 @@ type Detail = {
     explanation: string | null
     detail: string | null
     questionCount: number
-    status: number | null
+    frequencyTier: FrequencyTier | null
+    status: StatusValue | null
+    statusSource: StatusSource | null
     field: string
     major: string
     middle: string
@@ -50,11 +53,28 @@ type Detail = {
     /** 問題ごとの解説。まだ書かれていない問題は null。 */
     explanation: ExplanationData | null
   }[]
-  siblings: { id: number; term: string; questionCount: number }[]
-  /** 頻出なのに未理解の論点の先頭（＝ホームの「次の一手」と同じ定義）。
+  /** 前提の論点。単元の構成に書かれた順 */
+  prerequisites: TopicLink[]
+  /** 同じまとまり（構成の無い単元では同じ小項目）の他の論点。配列の順が一覧の並び */
+  siblings: TopicLink[]
+  /** いま開いている論点を除いた次に学ぶの先頭（ホームの次に学ぶと同じ定義）。
    *  尽きたら null で、画面はグレーアウトの完了表示にする。 */
-  nextTopic: { id: number; term: string; questionCount: number } | null
+  nextTopic: TopicLink | null
   neighbors: { prev: { id: number; term: string } | null; next: { id: number; term: string } | null } | null
+}
+
+/** 論点の画面から他の論点へ移る 1 行。出題頻度と出題回数の印を添える。 */
+function TopicLinkRow({ link }: { link: TopicLink }) {
+  return (
+    <Link to={`/topics/${link.id}`} className="row">
+      <span className="freq">
+        <b>{link.questionCount}</b>
+        <small>回</small>
+        <FrequencyMark tier={link.frequencyTier} />
+      </span>
+      <span className="grow term">{link.term}</span>
+    </Link>
+  )
 }
 
 // @implements REQ-023
@@ -69,6 +89,8 @@ export function TopicDetail() {
   const [attempt, setAttempt] = useState(0)
   const [data, setData] = useState<Detail | null>(null)
   const [status, setStatus] = useState<number>(1)
+  // 資格対策で、示している理解度が回答の履歴からの判定か本人の上書きか。ロードマップ型では null
+  const [source, setSource] = useState<StatusSource | null>(null)
   const [openDetail, setOpenDetail] = useState(false)
   const [openQuestions, setOpenQuestions] = useState<Record<string, boolean>>({})
   // 解説は問題ごとに畳んでおく。一覧に全問の解説が開いていると、
@@ -93,7 +115,9 @@ export function TopicDetail() {
     api<Detail>(`/topics/${id}`)
       .then((d) => {
         setData(d)
+        // ロードマップ型で記録が無い論点は未理解（BR-029）。資格対策は未（0）を含めてそのまま示す
         setStatus(d.topic.status ?? 1)
+        setSource(d.topic.statusSource ?? null)
         // フィードバックに添える（どの単位を読んでいたか）
         annotateLastPage({ topicId: d.topic.id, label: `学習の単位「${d.topic.term}」` })
         // ホームに「前回の続き」を出すために控えておく
@@ -119,15 +143,19 @@ export function TopicDetail() {
   // @implements REQ-038, REQ-039, REQ-040, BR-014
   async function mark(next: number) {
     const prev = status
+    const prevSource = source
     setStatus(next)
+    // 資格対策では、記録した段階はその後に回答するまで本人の上書きとして効く（BR-050）
+    if (prevSource !== null) setSource('override')
     setMarkError('')
     try {
       await api(`/topics/${id}/progress`, { method: 'PUT', body: { status: next } })
-      invalidateCached() // 単元一覧の「理解した数」は覚えたものを出しているので捨てる
+      invalidateCached() // 単元一覧の集計は覚えたものを出しているので捨てる
     } catch (e: any) {
       // 保存できていないのに押したままの見た目にすると、記録されたと誤解する。
       // 表示を元の値に戻したうえで、その場で失敗したことを言う。
       setStatus(prev)
+      setSource(prevSource)
       setMarkError(e.message)
     }
   }
@@ -192,7 +220,29 @@ export function TopicDetail() {
       {!exam.roadmap && (
         <p className="lead">
           過去問で <b>{t.questionCount} 回</b> 出題されています。
+          {/* @implements REQ-478 */}
+          {t.frequencyTier && (
+            <>
+              {' '}
+              <FrequencyMark tier={t.frequencyTier} />
+            </>
+          )}
         </p>
+      )}
+      {!exam.roadmap && source && <TopicUnderstanding status={status} source={source} />}
+
+      {/* @implements REQ-479 */}
+      {!exam.roadmap && data.prerequisites.length > 0 && (
+        <section className="prereq">
+          <h2>前提の論点</h2>
+          <ul className="list">
+            {data.prerequisites.map((p) => (
+              <li key={p.id}>
+                <TopicLinkRow link={p} />
+              </li>
+            ))}
+          </ul>
+        </section>
       )}
 
       {/* @implements REQ-026 */}
@@ -219,13 +269,13 @@ export function TopicDetail() {
         </div>
       )}
 
-      {/* ロードマップ型はドリルを出さない（要件 §13.6）。1 単位 2 問で、同じ問題がすぐ下に並んでいるため。
+      {/* ロードマップ型は論点ドリルを出さない。1 単位 2 問で、同じ問題がすぐ下に並んでいるため。
           資格版は 1 論点に過去問が多数あり、時間を測って記録に残る演習として働くので残す */}
       {!exam.roadmap && (
         <>
           <div className="btn-row" style={{ marginTop: '1rem' }}>
             <button className="btn" onClick={drill} disabled={t.questionCount === 0}>
-              この論点でドリル（{t.questionCount}問）
+              論点ドリルを始める（{t.questionCount}問）
             </button>
           </div>
           {drillError && <p className="error">{drillError}</p>}
@@ -276,7 +326,7 @@ export function TopicDetail() {
                     className="btn"
                     onClick={() => setOpenExpl((s) => ({ ...s, [q.id]: !s[q.id] }))}
                   >
-                    {openExpl[q.id] ? '解説を閉じる' : '解説'}
+                    {openExpl[q.id] ? '問題解説を閉じる' : '問題解説'}
                   </button>
                 )}
               </div>
@@ -308,30 +358,22 @@ export function TopicDetail() {
       {/* @implements REQ-023, REQ-138 */}
       {!exam.roadmap && data.siblings.length > 0 && (
         <>
-          <h2>{t.itemName} の他の論点</h2>
+          <h2>他の論点</h2>
           <p className="muted" style={{ fontSize: '0.82rem', marginTop: '-0.4rem' }}>
-            残り {data.siblings.length} 論点。単元{' '}
-            <Link to={`/topics?middleNo=${t.middleNo}`}>{t.middle}</Link> の全体はこちら。
+            単元 <Link to={`/topics?middleNo=${t.middleNo}`}>{t.middle}</Link> の全体はこちら。
           </p>
           <ul className="list">
             {data.siblings.map((s) => (
               <li key={s.id}>
-                <Link to={`/topics/${s.id}`} className="row">
-                  <span className="freq">
-                    <b>{s.questionCount}</b>
-                    <small>回</small>
-                  </span>
-                  <span className="grow term">{s.term}</span>
-                </Link>
+                <TopicLinkRow link={s} />
               </li>
             ))}
           </ul>
         </>
       )}
 
-      {/* 次の一手。順序はホームの nextTopics と同じ（頻出×未理解）。ここで別の並びを
-          作らない——"次" の意味をアプリ全体で1つに保つため。この論点を「理解」にすると
-          候補から外れて次が繰り上がる。尽きたらグレーアウトの完了表示。 */}
+      {/* 次に学ぶ。並びはホームの次に学ぶと同じ定義（BR-030）で、ここで別の並びを作らない。
+          尽きたらグレーアウトの完了表示。 */}
       {/* @implements REQ-045, REQ-138, REQ-269 */}
       {!exam.roadmap && (
       <div className="next-move">
@@ -342,6 +384,7 @@ export function TopicDetail() {
             <span className="freq">
               <b>{data.nextTopic.questionCount}</b>
               <small>回</small>
+              <FrequencyMark tier={data.nextTopic.frequencyTier} />
             </span>
             <span className="next-move-arrow">→</span>
           </Link>

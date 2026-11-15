@@ -139,9 +139,10 @@ export async function api<T = any>(
  *  内容が変わりうるもの（論点一覧・進捗・受験履歴）には使わないこと。 */
 const memo = new Map<string, Promise<unknown>>()
 
-/** 覚えたものを捨てる。進捗を変えた直後に呼ぶ。
+/** 覚えたものを捨てる。理解度を記録した直後と、回答が数える回答に加わった直後
+ *  （演習の回答を送ったとき・模試を締めたとき）に呼ぶ。
  *  /fields と /categories は分野・単元の構造だけでなく「理解した数」も返す（進捗の集計を含む）ので、
- *  捨てずにいると理解度を付けて一覧へ戻ったときに古い数が出る。 */
+ *  捨てずにいると記録や回答のあとに一覧へ戻ったときに古い数が出る。 */
 export function invalidateCached() {
   memo.clear()
 }
@@ -217,7 +218,18 @@ export type Field = {
   understood: number
   partly: number
   untouched: number
+  /** 未の論点の数。ロードマップ型では 0 */
+  unanswered: number
 }
+
+/** 理解度の段階。0=未（資格対策だけ）/ 1=未理解 / 2=やや理解 / 3=理解。 */
+export type StatusValue = 0 | 1 | 2 | 3
+
+/** 理解度が回答の履歴からの判定（auto）か本人の上書き（override）か。ロードマップ型では null。 */
+export type StatusSource = 'auto' | 'override'
+
+/** 出題回数の印の段（数が大きいほど出題頻度が高い）。印を付けない論点では null。 */
+export type FrequencyTier = 1 | 2 | 3
 
 export type TopicRow = {
   id: number
@@ -226,17 +238,44 @@ export type TopicRow = {
   /** 名前に添える副題。副題を持たない論点では null */
   subtitle: string | null
   questionCount: number
-  status: number | null
+  frequencyTier: FrequencyTier | null
+  status: StatusValue | null
+  statusSource: StatusSource | null
   field: string
   middle: string
+  /** 小項目の番号。ロードマップ型では null */
+  itemNo: number | null
   itemName: string
+  /** 属するまとまりの no。単元の構成が無いときは null */
+  groupNo: number | null
   isNew: number
 }
 
+/** 単元の構成。groups の配列の順がまとまりの順。 */
+export type UnitStructure = {
+  overview: string
+  groups: { no: number; name: string; description: string }[]
+}
+
+/** 論点の画面から他の論点へ移る導線の 1 件。 */
+export type TopicLink = {
+  id: number
+  term: string
+  questionCount: number
+  frequencyTier: FrequencyTier | null
+}
+
+// @implements BR-045
 export const STATUS_LABEL: Record<number, string> = {
+  0: '未',
   1: '未理解',
   2: 'やや理解',
   3: '理解',
+}
+
+export const STATUS_SOURCE_LABEL: Record<StatusSource, string> = {
+  auto: '回答の履歴からの判定',
+  override: '本人の上書き',
 }
 
 export const STATUS_CLASS: Record<number, string> = {
