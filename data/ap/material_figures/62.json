@@ -10,25 +10,25 @@
       "nodes": [
         {
           "id": "c0",
-          "label": "検査式 1\n崩れたら 1",
+          "label": "検査式 c0\n崩れたら 1",
           "row": 0,
           "col": 0
         },
         {
           "id": "c1",
-          "label": "検査式 2\n崩れたら 1",
+          "label": "検査式 c1\n崩れたら 1",
           "row": 0,
           "col": 1
         },
         {
           "id": "c2",
-          "label": "検査式 3\n崩れたら 1",
+          "label": "検査式 c2\n崩れたら 1",
           "row": 0,
           "col": 2
         },
         {
           "id": "pos",
-          "label": "誤り位置\n＝ 1 になった式の重みの和",
+          "label": "誤り位置 i\n＝ 1 になった式の重みの和",
           "row": 1,
           "col": 1
         },
@@ -50,27 +50,27 @@
         {
           "from": "c0",
           "to": "pos",
-          "label": "1 の位"
+          "label": "重み 1"
         },
         {
           "from": "c1",
           "to": "pos",
-          "label": "2 の位"
+          "label": "重み 2"
         },
         {
           "from": "c2",
           "to": "pos",
-          "label": "4 の位"
+          "label": "重み 4"
         },
         {
           "from": "pos",
           "to": "fix",
-          "label": "和が 0 でない"
+          "label": "i が 0 でない"
         },
         {
           "from": "pos",
           "to": "ok",
-          "label": "和が 0（全部 0）"
+          "label": "i が 0（全部 0）"
         }
       ]
     },

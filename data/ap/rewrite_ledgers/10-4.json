@@ -255,8 +255,8 @@
         },
         {
           "point": "IP アドレスから MAC アドレスを求めるのが ARP、逆向きに MAC から IP を求めるのが RARP",
-          "fate": "kept",
-          "where": "explanation（定義の 1 文と箇条 1）"
+          "fate": "later",
+          "where": "656 の ### 名前の Reverse と向き（Reverse の文と図 1 の ARP・RARP の列。比較は学ぶ順で後の 656 が持ち、505 の explanation の箇条 1 は 656 を指す）"
         },
         {
           "point": "解決できるのは同じセグメント内の相手だけ",
@@ -350,8 +350,8 @@
         },
         {
           "point": "ARP は既に決まっているアドレスの対応を調べる役で、アドレスを配る働きは持たない",
-          "fate": "kept",
-          "where": "### 混同しやすい用語"
+          "fate": "later",
+          "where": "656 の ### 名前の Reverse と向き（図 1 の働きの行: ARP「決まった対応を調べる」・DHCP「アドレスを配る」。3 つを並べる比較は学ぶ順で最後の 656 が持つ）"
         }
       ]
     },
@@ -555,8 +555,8 @@
         },
         {
           "point": "IP アドレスから MAC アドレスを求める ARP と向きがちょうど逆（定義の 2 文目）",
-          "fate": "owner",
-          "where": "505"
+          "fate": "kept",
+          "where": "### 名前の Reverse と向き（Reverse の文と図 1 の ARP・RARP の列）"
         },
         {
           "point": "名前の Reverse が「ARP の逆向き」を表す",
@@ -630,8 +630,8 @@
         },
         {
           "point": "混同しやすいプロトコル: ARP は IP から MAC を求め、RARP とは入力と出力がちょうど逆で名前も 1 文字しか違わない",
-          "fate": "owner",
-          "where": "505（向きの比較は 505 の explanation の箇条 1 と 505 の図 3）"
+          "fate": "kept",
+          "where": "### 名前の Reverse と向き（名前の Reverse が ARP の逆向きを表す文と、図 1 の ARP・RARP の列の分かっているもの・得るもの）"
         },
         {
           "point": "混同しやすいプロトコル: DHCP は IP アドレスに加えてサブネットマスクやゲートウェイなどの設定情報も配布し、アドレスを割り当てる役割で RARP を引き継いだ",

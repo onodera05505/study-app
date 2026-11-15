@@ -61,8 +61,8 @@
         },
         {
           "point": "アクセス制御・通信の暗号化は機密性（表）",
-          "fate": "kept",
-          "where": "### 対策がどの要素に効くか"
+          "fate": "explanation",
+          "where": "question_explanations 2024r06-q75 の correct_reason（アクセス制御の側。通信の暗号化は ### 対策がどの要素に効くか に残る）"
         },
         {
           "point": "入退室での本人確認は機密性（表）",
@@ -72,7 +72,7 @@
         {
           "point": "デジタル署名は完全性（表）",
           "fate": "kept",
-          "where": "### 対策がどの要素に効くか（図 1 にもある。理由つきの文として残した）"
+          "where": "### 残りの4つの要素"
         },
         {
           "point": "改ざん防止は完全性（表）",
@@ -81,13 +81,13 @@
         },
         {
           "point": "入力チェックは完全性（表）",
-          "fate": "explanation",
-          "where": "question_explanations 2019r01a-q97 の note エ"
+          "fate": "kept",
+          "where": "### 対策がどの要素に効くか"
         },
         {
           "point": "ディスクや通信回線の二重化は可用性（表）",
           "fate": "kept",
-          "where": "### 対策がどの要素に効くか"
+          "where": "### 対策がどの要素に効くか（通信回線の二重化。ディスクの二重化は question_explanations 2024r06-q75 の correct_reason）"
         },
         {
           "point": "予備の設備は可用性（表）",
@@ -111,8 +111,8 @@
         },
         {
           "point": "デジタル署名は改ざんされていないと確かめる手段なので基本の 3 つでは完全性",
-          "fate": "kept",
-          "where": "### 対策がどの要素に効くか"
+          "fate": "explanation",
+          "where": "question_explanations 2024r06-q75 の correct_reason（完全性に関わることは ### 残りの4つの要素 に残る）"
         },
         {
           "point": "デジタル署名は真正性・否認防止にも関わる",

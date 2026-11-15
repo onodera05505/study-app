@@ -3,52 +3,6 @@
   "term": "選択・結合",
   "figures": [
     {
-      "id": 1,
-      "type": "blocks",
-      "after": "explanation",
-      "caption": "2 つの関係演算が表をどう変えるかを並べた図です。選択は条件に合う行を取り出し、結合は共通の列の値で 2 つの表をつなぎます。",
-      "nodes": [
-        {
-          "id": "s1",
-          "label": "元の表",
-          "row": 0,
-          "col": 0
-        },
-        {
-          "id": "s2",
-          "label": "条件に合う\n行だけの表",
-          "row": 0,
-          "col": 1,
-          "emphasis": true
-        },
-        {
-          "id": "j1",
-          "label": "表A と 表B",
-          "row": 1,
-          "col": 0
-        },
-        {
-          "id": "j2",
-          "label": "両方の列が\n並んだ 1 つの表",
-          "row": 1,
-          "col": 1,
-          "emphasis": true
-        }
-      ],
-      "edges": [
-        {
-          "from": "s1",
-          "to": "s2",
-          "label": "選択（行を取り出す）"
-        },
-        {
-          "from": "j1",
-          "to": "j2",
-          "label": "結合（共通の列でつなぐ）"
-        }
-      ]
-    },
-    {
       "id": 2,
       "type": "venn",
       "after": "### 条件で行を拾って表を読む手順",
