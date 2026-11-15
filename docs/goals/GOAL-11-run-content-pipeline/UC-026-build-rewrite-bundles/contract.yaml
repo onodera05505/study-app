@@ -1,0 +1,339 @@
+# UC-026 の境界: 作り手が手元で呼ぶ束を作る道具の入口 2 つと、道具が書き出す束のファイルの形。
+# 読み方は docs/adr/ADR-0008（手元の道具の境界を local-store で読む）。パスは相対ならコマンドを呼んだ作業ディレクトリが起点。
+# 入口は scripts/build_rewrite_bundles.py（単元の入力の束は --unit-inputs）。単元の構成の形と判定は UC-024 の契約が持つ。
+x-uc: UC-026
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-15
+
+schemas:
+  ToolError:
+    type: object
+    description: 入口が断ったときに標準出力へ 1 つだけ出す形。終了コードは 2
+    required: [error]
+    properties:
+      error:
+        type: object
+        required: [code, reason]
+        properties:
+          code: { type: string, enum: [INVALID_INPUT, NOT_FOUND, CONFLICT] }
+          reason: { type: string, minLength: 1 }
+  BuildRequest:
+    type: object
+    required: [data, out]
+    additionalProperties: false
+    properties:
+      data: { type: string, pattern: "^data/[a-z]+$", description: 学びの置き場。末尾が登録簿の学びの key }
+      out: { type: string, minLength: 1, description: 束を書き出す置き場 }
+      units:
+        type: array
+        minItems: 1
+        description: 束を作る単元の番号。省略すると論点のあるすべての単元を求めたのと同じ
+        items: { type: integer, minimum: 1 }
+  BuildResult:
+    type: object
+    required: [exitCode, written]
+    properties:
+      exitCode: { type: integer, const: 0, description: プロセスの終了コードと同じ。断ったときは終了コード 2 で ToolError を返し、束を 1 つも書き出さない }
+      written:
+        type: array
+        description: 書き出した束のファイルのパス
+        items: { type: string, minLength: 1 }
+  TopicRef:
+    type: object
+    required: [topic_id, term]
+    properties:
+      topic_id: { type: integer, minimum: 1 }
+      term: { type: string, minLength: 1 }
+
+operations:
+  buildUnitInputs:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 資格対策の学びの単元ごとに、単元の構成を書く書き手へ配る単元の入力の束を作る
+    request: { $ref: "#/schemas/BuildRequest" }
+    response: { $ref: "#/schemas/BuildResult" }
+    errors:
+      - code: INVALID_INPUT
+        when: 登録簿に無い学び
+      - code: INVALID_INPUT
+        when: 資格対策でない学び
+      - code: NOT_FOUND
+        when: シラバスか論点の一覧が無い
+      - code: INVALID_INPUT
+        when: シラバスか論点の一覧が読めない
+      - code: INVALID_INPUT
+        when: 指定した単元がシラバスに無い
+      - code: CONFLICT
+        when: 出力先にその種類の束の名前の形のファイルが 1 つでもある
+    examples:
+      ok:
+        request: { data: data/ip, out: data/ip/unit_inputs, units: [21, 23] }
+        response: { exitCode: 0, written: [data/ip/unit_inputs/21.json, data/ip/unit_inputs/23.json] }
+      unknownLearning:
+        request: { data: data/zzz, out: data/zzz/unit_inputs }
+        error: INVALID_INPUT
+      notQualification:
+        request: { data: data/itc, out: data/itc/unit_inputs }
+        error: INVALID_INPUT
+      syllabusMissing:
+        request: { data: data/fe, out: data/fe/unit_inputs }
+        error: NOT_FOUND
+      syllabusUnreadable:
+        request: { data: data/ap, out: data/ap/unit_inputs }
+        error: INVALID_INPUT
+      unknownUnit:
+        request: { data: data/ip, out: data/ip/unit_inputs, units: [99] }
+        error: INVALID_INPUT
+      outputExists:
+        request: { data: data/ip, out: data/ip/unit_inputs, units: [21] }
+        error: CONFLICT
+      unknownUnitBeforeOutputExists:
+        request: { data: data/ip, out: data/ip/unit_inputs, units: [99] }
+        error: INVALID_INPUT
+
+  buildRewriteBundles:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 資格対策の学びの単元の構成のまとまりごとに、教材を書き直す書き手へ配る書き直しの束を作る
+    request: { $ref: "#/schemas/BuildRequest" }
+    response: { $ref: "#/schemas/BuildResult" }
+    errors:
+      - code: INVALID_INPUT
+        when: 登録簿に無い学び
+      - code: INVALID_INPUT
+        when: 資格対策でない学び
+      - code: NOT_FOUND
+        when: シラバスか論点の一覧が無い
+      - code: INVALID_INPUT
+        when: シラバスか論点の一覧が読めない
+      - code: INVALID_INPUT
+        when: 指定した単元がシラバスに無い
+      - code: CONFLICT
+        when: 出力先にその種類の束の名前の形のファイルが 1 つでもある
+      - code: NOT_FOUND
+        when: 求めた単元の単元の構成が無い
+      - code: CONFLICT
+        when: 求めた単元に関する単元の構成の門の止める理由がある
+      - code: NOT_FOUND
+        when: 束に入る過去問の正解が正解表に無い
+    examples:
+      ok:
+        request: { data: data/ip, out: data/ip/rewrite_bundles, units: [21] }
+        response: { exitCode: 0, written: [data/ip/rewrite_bundles/21-1.json, data/ip/rewrite_bundles/21-2.json, data/ip/rewrite_bundles/21-3.json] }
+      unknownLearning:
+        request: { data: data/zzz, out: data/zzz/rewrite_bundles }
+        error: INVALID_INPUT
+      notQualification:
+        request: { data: data/itc, out: data/itc/rewrite_bundles }
+        error: INVALID_INPUT
+      syllabusMissing:
+        request: { data: data/fe, out: data/fe/rewrite_bundles }
+        error: NOT_FOUND
+      syllabusUnreadable:
+        request: { data: data/ap, out: data/ap/rewrite_bundles }
+        error: INVALID_INPUT
+      unknownUnit:
+        request: { data: data/ip, out: data/ip/rewrite_bundles, units: [99] }
+        error: INVALID_INPUT
+      outputExists:
+        request: { data: data/ip, out: data/ip/rewrite_bundles, units: [21] }
+        error: CONFLICT
+      planMissing:
+        request: { data: data/ip, out: data/ip/rewrite_bundles_a, units: [1] }
+        error: NOT_FOUND
+      planStops:
+        request: { data: data/ip, out: data/ip/rewrite_bundles_b, units: [23] }
+        error: CONFLICT
+      answerMissing:
+        request: { data: data/ip, out: data/ip/rewrite_bundles_c, units: [21] }
+        error: NOT_FOUND
+      planMissingWhenUnitsOmitted:
+        request: { data: data/ip, out: data/ip/rewrite_bundles_d }
+        error: NOT_FOUND
+      outputExistsBeforePlanMissing:
+        request: { data: data/ip, out: data/ip/rewrite_bundles, units: [1] }
+        error: CONFLICT
+
+  writeUnitInput:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 1 単元の単元の入力の束を書き出す
+    request:
+      type: object
+      required: [path, unit_no, unit, field, major, topics]
+      additionalProperties: false
+      properties:
+        path: { type: string, pattern: "/[0-9]{2}\\.json$" }
+        unit_no: { type: integer, minimum: 1 }
+        unit: { type: string, minLength: 1 }
+        field: { type: string, minLength: 1 }
+        major: { type: string, minLength: 1 }
+        topics:
+          type: array
+          minItems: 1
+          description: 並びは小項目の番号の順、同じ小項目の中は論点の番号の順
+          items:
+            type: object
+            required: [topic_id, term, syllabus_item, syllabus_item_name, question_count, related_terms, explanation, detail]
+            properties:
+              topic_id: { type: integer, minimum: 1 }
+              term: { type: string, minLength: 1 }
+              syllabus_item: { type: integer, minimum: 1 }
+              syllabus_item_name: { type: string, minLength: 1 }
+              question_count: { type: integer, minimum: 0 }
+              related_terms: { type: array, items: { type: string } }
+              explanation: { type: string, minLength: 1, description: 配る本文と同じ選び方の最も新しい世代 }
+              detail: { type: string }
+    response: { type: object, required: [path], properties: { path: { type: string } } }
+    errors:
+      - code: STORAGE_UNAVAILABLE
+        when: 書き出せない
+    examples:
+      ok:
+        request:
+          path: data/ip/unit_inputs/21.json
+          unit_no: 21
+          unit: データベース
+          field: テクノロジ系
+          major: 技術要素
+          topics:
+            - { topic_id: 214, term: 関係データベース, syllabus_item: 54, syllabus_item_name: データベース方式, question_count: 3, related_terms: [], explanation: "**関係データベース**とは、…です。", detail: "### 表と行と列\n…" }
+        response: { path: data/ip/unit_inputs/21.json }
+      unwritable:
+        request: { path: /unwritable/21.json, unit_no: 21, unit: データベース, field: テクノロジ系, major: 技術要素, topics: [] }
+        error: STORAGE_UNAVAILABLE
+
+  writeRewriteBundle:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 1 つのまとまりの書き直しの束を書き出す
+    request:
+      type: object
+      required: [path, bundle, unit_no, unit, overview, group, groups_in_unit, owners, topics]
+      additionalProperties: false
+      properties:
+        path: { type: string, pattern: "/[0-9]{2}-[1-9][0-9]*\\.json$" }
+        bundle: { type: string, pattern: "^[0-9]{2}-[1-9][0-9]*$", description: 単元の番号 2 桁とまとまりの順（1 始まり） }
+        unit_no: { type: integer, minimum: 1 }
+        unit: { type: string, minLength: 1 }
+        overview: { type: string, minLength: 1 }
+        group:
+          type: object
+          required: [index, name, description]
+          properties:
+            index: { type: integer, minimum: 1 }
+            name: { type: string, minLength: 1 }
+            description: { type: string, minLength: 1 }
+        groups_in_unit:
+          type: array
+          items:
+            type: object
+            required: [index, name, topics]
+            properties:
+              index: { type: integer, minimum: 1 }
+              name: { type: string, minLength: 1 }
+              topics: { type: array, items: { $ref: "#/schemas/TopicRef" } }
+        owners:
+          type: array
+          description: このまとまりの論点が触れる受け持ちだけ
+          items:
+            type: object
+            required: [subject, owner, topics]
+            properties:
+              subject: { type: string, minLength: 1 }
+              owner: { $ref: "#/schemas/TopicRef" }
+              topics: { type: array, items: { type: integer, minimum: 1 } }
+        topics:
+          type: array
+          minItems: 1
+          description: 並びが学ぶ順
+          items:
+            type: object
+            required: [topic_id, term, field, major, middle, syllabus_item_name, question_count, related_terms, prerequisites, current, questions, question_explanations, figure_file, figures]
+            properties:
+              topic_id: { type: integer, minimum: 1 }
+              term: { type: string, minLength: 1 }
+              field: { type: string }
+              major: { type: string }
+              middle: { type: string }
+              syllabus_item_name: { type: string }
+              question_count: { type: integer, minimum: 0 }
+              related_terms: { type: array, items: { type: string } }
+              prerequisites: { type: array, items: { $ref: "#/schemas/TopicRef" } }
+              current:
+                type: object
+                required: [generation, explanation, detail]
+                properties:
+                  generation: { type: string, pattern: "^materials(_v[0-9]+)?$" }
+                  explanation: { type: string }
+                  detail: { type: string }
+              questions:
+                type: array
+                description: 同一内容の問題は 1 件に畳む
+                items:
+                  type: object
+                  required: [question_id, content_key, stem, choices, answer]
+                  properties:
+                    question_id: { type: string, pattern: "^[0-9]{4}[a-z0-9]+-q[1-9][0-9]*$", description: 回の ID と問番号。同一内容の組の代表（回の新しいもの） }
+                    content_key: { type: string, pattern: "^[0-9a-f]{16}$", description: "本文（過去問の text）に選択肢をア・イ・ウ・エの順に連結した文字列から、空白文字（Python の正規表現 \\s が当たる文字。全角空白・改行・タブを含む）をすべて除き、UTF-8 の sha1 の 16 進（小文字）の先頭 16 桁。値の正本は scripts/build_seed.py の content_key_of（BR-052）" }
+                    exam_label: { type: string }
+                    stem: { type: string }
+                    choices: { type: object }
+                    answer: { type: string, enum: ["ア", "イ", "ウ", "エ"] }
+                    has_figure: { type: boolean }
+                    figure_description: { type: [string, "null"] }
+              question_explanations:
+                type: array
+                items:
+                  type: object
+                  required: [question_id, content_key, correct_reason, choices]
+                  properties:
+                    question_id: { type: string, pattern: "^[0-9]{4}[a-z0-9]+-q[1-9][0-9]*$", description: 問題解説を書いた代表の過去問 }
+                    content_key: { type: string, pattern: "^[0-9a-f]{16}$", description: "畳んだ questions[] と結ぶ鍵。作り方は questions[].content_key と同じ" }
+                    correct_reason: { type: string }
+                    choices: { type: array, items: { type: object } }
+              figure_file: { type: [string, "null"], description: 図の仕様のパス。図が無い論点は null }
+              figures: { type: array, description: 図の仕様の figures の写し, items: { type: object } }
+    response: { type: object, required: [path], properties: { path: { type: string } } }
+    errors:
+      - code: STORAGE_UNAVAILABLE
+        when: 書き出せない
+    examples:
+      ok:
+        request:
+          path: data/ip/rewrite_bundles/21-2.json
+          bundle: "21-2"
+          unit_no: 21
+          unit: データベース
+          overview: 表の形でデータを持ち、キーで表どうしをつなぐ仕組みを学びます。
+          group: { index: 2, name: 表を操作する, description: 表から行や列を取り出す操作です。 }
+          groups_in_unit: [{ index: 1, name: 表とキー, topics: [{ topic_id: 214, term: 関係データベース }] }]
+          owners: [{ subject: 関係演算の 3 つ, owner: { topic_id: 201, term: 選択・結合 }, topics: [201, 230] }]
+          topics:
+            - topic_id: 201
+              term: 選択・結合
+              field: テクノロジ系
+              major: 技術要素
+              middle: データベース
+              syllabus_item_name: データ操作
+              question_count: 5
+              related_terms: []
+              prerequisites: [{ topic_id: 214, term: 関係データベース }]
+              current: { generation: materials_v3, explanation: "**選択・結合**とは、…です。", detail: "### しくみ\n…" }
+              questions: [{ question_id: 2026r08-q97, content_key: 50bfe9f96eabc25f, stem: "…", choices: { "ア": "…" }, answer: "イ" }]
+              question_explanations: [{ question_id: 2026r08-q97, content_key: 50bfe9f96eabc25f, correct_reason: "…", choices: [] }]
+              figure_file: data/ip/material_figures/201.json
+              figures: []
+        response: { path: data/ip/rewrite_bundles/21-2.json }
+      unwritable:
+        request: { path: /unwritable/21-2.json, bundle: "21-2", unit_no: 21, unit: データベース, overview: "…", group: { index: 2, name: 表を操作する, description: "…" }, groups_in_unit: [], owners: [], topics: [] }
+        error: STORAGE_UNAVAILABLE

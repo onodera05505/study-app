@@ -74,7 +74,8 @@ QUESTION_ROW = re.compile(
 CITATION = re.compile(r"'出典：((?:[^']|'')*)'")
 # 教材（topics.explanation / detail）に差し込まれた図の画像行。
 # 書き手は書かない。scripts が論点ごとの SVG を差し込む。
-MATERIAL_IMAGE = re.compile(r"!\[[^\]\n]*\]\(([^)\s]+)\)")
+# 説明文には角かっこ（「A[1]」など）が入ってよい。`](` だけは入らない（表示側 Markdown.tsx と同じ読み方）。
+MATERIAL_IMAGE = re.compile(r"!\[(?:[^\]\n]|\](?!\())*\]\(([^)\s]+)\)")
 
 
 def unquote(s: str) -> str:

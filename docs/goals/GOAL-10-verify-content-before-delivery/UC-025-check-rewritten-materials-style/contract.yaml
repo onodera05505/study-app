@@ -1,0 +1,239 @@
+# UC-025 の境界: 作り手が手元で呼ぶ様式の門の入口 1 つと、門が読むファイル（書き直した世代の教材・図の仕様）の形。
+# 読み方は docs/adr/ADR-0008（手元の道具の境界を local-store で読む）。パスは相対ならコマンドを呼んだ作業ディレクトリが起点。
+# 入口は scripts/check_material_style.py（--data・--dir）。単元の構成の形と判定は UC-024 の契約が持つ。
+x-uc: UC-025
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-15
+
+schemas:
+  Finding:
+    type: object
+    required: [kind, where, reason]
+    properties:
+      kind: { type: string, minLength: 1 }
+      where: { type: string, minLength: 1, description: ファイル・単元・論点・図・箇所のどれか。まとまりを挙げるときは「まとまり n」で、n は学ぶ順の 1 始まり（束の名前と同じ数え方） }
+      reason: { type: string, minLength: 1 }
+  ToolError:
+    type: object
+    description: 入口が断ったときに標準出力へ 1 つだけ出す形。終了コードは 2（止める理由ありの 1 と分ける）
+    required: [error]
+    properties:
+      error:
+        type: object
+        required: [code, reason]
+        properties:
+          code: { type: string, enum: [INVALID_INPUT, NOT_FOUND] }
+          reason: { type: string, minLength: 1 }
+  Limits:
+    type: object
+    description: 門が使った値
+    required: [explanationFiguresMax, sameTopicMatchLength, sameUnitMatchLength, examPhrases, numberPattern, numberMinDigits]
+    properties:
+      explanationFiguresMax: { type: integer, const: 1, description: 1 論点で短い説明の直後に置く図がこれを超えたら止める }
+      sameTopicMatchLength: { type: integer, const: 20, description: 同じ論点の 2 か所がこの字数以上連続して一致したら警告。記法と空白を除いて数える }
+      sameUnitMatchLength: { type: integer, const: 30, description: "同じ単元の 2 論点の本文がこの字数以上連続して一致したら警告。記法と空白と、[[ ]] で囲んだ用語の中の字を除いて数える" }
+      examPhrases:
+        type: array
+        description: 混同しやすい用語の見出しの外にあれば警告する言い回し
+        const: ["試験では", "問われ", "出題され", "と覚え", "覚えると", "覚えておき", "定番の", "決め手です", "つまずきやすい", "差がつく"]
+      numberPattern: { type: string, const: "[0-9０-９]+(?:[.．][0-9０-９]+)?", description: 数値の取り出し方。全角は半角に寄せて比べ、図の行の中は数えない }
+      numberMinDigits: { type: integer, const: 2, description: 小数点を含まない数値は、この桁数以上だけを比べる }
+
+operations:
+  checkMaterialStyle:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 資格対策の学びの書き直した世代の教材を様式の門にかけ、通すか止めるかと理由を返す
+    request:
+      type: object
+      required: [data]
+      additionalProperties: false
+      properties:
+        data: { type: string, pattern: "^data/[a-z]+$", description: 学びの置き場。末尾が登録簿の学びの key }
+        dir: { type: string, pattern: "^materials_v[0-9]+$", description: 書き直した世代の名前（学びの置き場の下のディレクトリ名）。書き直した世代は、世代の並び（materials を 1 番目に、番号の小さい順）で scripts/material_generations.py の REWRITTEN_FROM が指す世代とそれより後の世代。前の世代はこれより前。省略すると REWRITTEN_FROM の世代。置き場が無ければ見る論点は 0 }
+    response:
+      type: object
+      required: [exitCode, topics, stops, warnings, limits]
+      properties:
+        exitCode: { type: integer, enum: [0, 1], description: プロセスの終了コードと同じ。0 は通した、1 は stops が 1 件以上。断ったときは終了コード 2 で ToolError を返す }
+        topics: { type: integer, minimum: 0, description: 門が見た書き直した世代の論点の数。置き場が無ければ 0 }
+        stops:
+          type: array
+          description: 当たった物を件数で打ち切らずにすべて持つ
+          items:
+            allOf:
+              - { $ref: "#/schemas/Finding" }
+              - properties:
+                  kind: { enum: [unreadableOutput, unitPlanStops, topicNotInPlan, unreadableFigureSpec, explanationFigures], description: unreadableOutput は束の名前の形でない JSON を含む。unitPlanStops は単元の構成が無い・読めない・構成の門が止める単元で、その単元の論点に topicNotInPlan を重ねない }
+        warnings:
+          type: array
+          description: exitCode を変えない。情報の量の種類は無い
+          items:
+            allOf:
+              - { $ref: "#/schemas/Finding" }
+              - properties:
+                  kind: { enum: [examPhrase, sameTopicRepeat, sameUnitRepeat, lostNumber] }
+        limits: { $ref: "#/schemas/Limits" }
+    errors:
+      - code: INVALID_INPUT
+        when: 登録簿に無い学び
+      - code: INVALID_INPUT
+        when: 資格対策でない学び
+      - code: INVALID_INPUT
+        when: 書き直した世代の名前でない（REWRITTEN_FROM より前の世代か、世代の名前の形でない）
+      - code: NOT_FOUND
+        when: シラバスか論点の一覧が無い
+      - code: INVALID_INPUT
+        when: シラバスか論点の一覧が読めない
+    examples:
+      pass:
+        request: { data: data/ip, dir: materials_v4 }
+        response:
+          exitCode: 0
+          topics: 32
+          stops: []
+          warnings:
+            - { kind: lostNumber, where: "materials_v4/21-2.json topic 201", reason: "前の世代にある 80 が無い" }
+          limits:
+            explanationFiguresMax: 1
+            sameTopicMatchLength: 20
+            sameUnitMatchLength: 30
+            examPhrases: ["試験では", "問われ", "出題され", "と覚え", "覚えると", "覚えておき", "定番の", "決め手です", "つまずきやすい", "差がつく"]
+            numberPattern: "[0-9０-９]+(?:[.．][0-9０-９]+)?"
+            numberMinDigits: 2
+      passWithoutRewrittenGeneration:
+        request: { data: data/fe }
+        response:
+          exitCode: 0
+          topics: 0
+          stops: []
+          warnings: []
+          limits:
+            explanationFiguresMax: 1
+            sameTopicMatchLength: 20
+            sameUnitMatchLength: 30
+            examPhrases: ["試験では", "問われ", "出題され", "と覚え", "覚えると", "覚えておき", "定番の", "決め手です", "つまずきやすい", "差がつく"]
+            numberPattern: "[0-9０-９]+(?:[.．][0-9０-９]+)?"
+            numberMinDigits: 2
+      stopped:
+        request: { data: data/ap, dir: materials_v4 }
+        response:
+          exitCode: 1
+          topics: 8
+          stops:
+            - { kind: explanationFigures, where: "material_figures/105.json", reason: "短い説明の直後に置く図が 2 枚で上限 1 を超える" }
+          warnings:
+            - { kind: examPhrase, where: "materials_v4/05-1.json topic 105 explanation", reason: "「試験では」が混同しやすい用語の見出しの外にある" }
+          limits:
+            explanationFiguresMax: 1
+            sameTopicMatchLength: 20
+            sameUnitMatchLength: 30
+            examPhrases: ["試験では", "問われ", "出題され", "と覚え", "覚えると", "覚えておき", "定番の", "決め手です", "つまずきやすい", "差がつく"]
+            numberPattern: "[0-9０-９]+(?:[.．][0-9０-９]+)?"
+            numberMinDigits: 2
+      unknownLearning:
+        request: { data: data/zzz }
+        error: INVALID_INPUT
+      notQualification:
+        request: { data: data/itc }
+        error: INVALID_INPUT
+      notRewrittenGeneration:
+        request: { data: data/ip, dir: materials_v3 }
+        error: INVALID_INPUT
+      notQualificationBeforeNotRewrittenGeneration:
+        request: { data: data/itc, dir: materials_v3 }
+        error: INVALID_INPUT
+      syllabusMissing:
+        request: { data: data/fe }
+        error: NOT_FOUND
+      syllabusUnreadable:
+        request: { data: data/ap }
+        error: INVALID_INPUT
+
+  readFigureSpec:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 1 論点の図の仕様から、図の番号と差し込み位置と説明文を読む
+    request:
+      type: object
+      required: [path]
+      additionalProperties: false
+      properties:
+        path: { type: string, pattern: "^data/[a-z]+/material_figures/[1-9][0-9]*\\.json$" }
+    response:
+      type: object
+      required: [topic_id, figures]
+      properties:
+        topic_id: { type: integer, minimum: 1 }
+        figures:
+          type: array
+          items:
+            type: object
+            required: [id, after, caption]
+            properties:
+              id: { type: integer, minimum: 1 }
+              after: { type: string, minLength: 1, description: explanation か詳しい解説の見出し }
+              caption: { type: string, minLength: 1 }
+    errors:
+      - code: NOT_FOUND
+        when: ファイルが無い
+      - code: INVALID_INPUT
+        when: 形として読めない
+    examples:
+      ok:
+        request: { path: data/ip/material_figures/1.json }
+        response: { topic_id: 1, figures: [{ id: 1, after: "### 窓口を一つにする理由", caption: 問合せの窓口を一つにまとめる流れを表します。 }] }
+      missing:
+        request: { path: data/ip/material_figures/99999.json }
+        error: NOT_FOUND
+      unreadable:
+        request: { path: data/ip/material_figures/2.json }
+        error: INVALID_INPUT
+
+  readRewrittenMaterialFile:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 書き直した世代の置き場にある 1 つの束の教材を読む
+    request:
+      type: object
+      required: [path]
+      additionalProperties: false
+      properties:
+        path: { type: string, pattern: "^data/[a-z]+/materials_v[0-9]+/[0-9]{2}-[1-9][0-9]*\\.json$" }
+    response:
+      type: object
+      required: [bundle, materials]
+      properties:
+        bundle: { type: string, pattern: "^[0-9]{2}-[1-9][0-9]*$" }
+        materials:
+          type: array
+          items:
+            type: object
+            required: [topic_id, term, explanation, detail]
+            properties:
+              topic_id: { type: integer, minimum: 1 }
+              term: { type: string, minLength: 1 }
+              explanation: { type: string, minLength: 1 }
+              detail: { type: string, minLength: 1 }
+    errors:
+      - code: NOT_FOUND
+        when: ファイルが無い
+      - code: INVALID_INPUT
+        when: 形として読めない
+    examples:
+      ok:
+        request: { path: data/ip/materials_v4/21-2.json }
+        response: { bundle: "21-2", materials: [{ topic_id: 201, term: 選択・結合, explanation: "**選択・結合**とは、…です。", detail: "### 3 つの関係演算の違い\n…" }] }
+      missing:
+        request: { path: data/ip/materials_v4/21-9.json }
+        error: NOT_FOUND
+      unreadable:
+        request: { path: data/ip/materials_v4/21-1.json }
+        error: INVALID_INPUT

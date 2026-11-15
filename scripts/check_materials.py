@@ -33,6 +33,18 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from material_generations import GENERATION_DIR, generation_dirs  # noqa: E402
+
+# 誤答のケアを問題解説に移した（役割分担した）世代の最初の番号。これ以降の世代（書き直した世代を含む）に役割分担後の決まりを当てる
+ROLE_SPLIT_FROM = 3
+
+
+def role_split(where: str) -> bool:
+    """`<世代のディレクトリ名>/<ファイル名> id=…` の教材が役割分担後の世代か。"""
+    mo = GENERATION_DIR.match(where.split("/", 1)[0])
+    return bool(mo and mo.group(1)) and int(mo.group(1)) >= ROLE_SPLIT_FROM
+
 # v1（プレーンテキスト）と v2（決まった記法で構造を付けた版）で基準が違う。
 # 書き直しは頻度順に進めるので、途中は必ず混在する。v2 かどうかは detail の
 # 見出しの有無で見分ける（v2 では detail を必ず ### で区切る）。
@@ -56,7 +68,7 @@ FORBIDDEN_V2 = [
     (re.compile(r"\^"), "べき乗の ^（画面で記号のまま出る。「M の n 乗」と書く）"),
     (re.compile(r"~~"), "取り消し線 ~~"),
 ]
-# v3 の読み直し（2026-09-25）で最多だった「役割分担の戻り」。誤答のケアは解説 note の持ち場
+# 役割分担の戻り。誤答のケアは解説 note の持ち場
 SOLVING_HINT = re.compile(r"ではありません|限定もありません|絞れません|絞れます|落とせます|見分けられます|仕分けてください|判断材料になりません|決め手になりません|引っかけは|選択肢")
 POLITE_END = re.compile(r"(です|ます|ません|でしょう|ました|ください|でした)[。）)]*$")
 TERM_BOLD = re.compile(r"\*\*([^*\[\]]{2,30})\*\*")
@@ -136,7 +148,8 @@ def check_tables(where: str, text: str) -> list[str]:
 # --- 図の画像行 -------------------------------------------------------
 # 画像は書き手が入れるものではない。論点ごとの図をスクリプトが差し込む。
 def image_pattern(exam: str) -> re.Pattern:
-    return re.compile(rf"^!\[([^\]]*)\]\((/figures/materials/{re.escape(exam)}/[^)\s]+\.svg)\)$")
+    # 説明文には角かっこ（「A[1]」など）が入ってよい。`](` だけは入らない（表示側 Markdown.tsx と同じ読み方）。
+    return re.compile(rf"^!\[((?:[^\]]|\](?!\())*)\]\((/figures/materials/{re.escape(exam)}/[^)\s]+\.svg)\)$")
 
 
 def take_images(text: str, pat: re.Pattern) -> tuple[str, list[tuple[str, str]]]:
@@ -205,7 +218,7 @@ def check_notation_v2(
         out.append(f"{where}: explanation が計算に言及しているのに式が無い（detail にはある）")
 
     headings = HEADING.findall(det)
-    if "materials_v3" in where:
+    if role_split(where):
         # 出題パターンの見出しは置かず、explanation にキーワードの行を置く
         if len(headings) > HEADING_RANGE_V2[1]:
             out.append(f"{where}: detail の見出しが {len(headings)} 個（目安 IP 1〜3・AP 3〜4。5 個まで）")
@@ -213,7 +226,7 @@ def check_notation_v2(
             out.append(f"{where}: v3 なのに出題パターンの見出しが残っている（問題解説側へ）")
         if "**キーワード**" not in ex:
             out.append(f"{where}: explanation にキーワードの行が無い")
-        # 2026-09-25 の読み直しで出た型（資格版 1,806 件のうち役割分担 438・文体 168・記法）
+        # 役割分担・文体・記法の型
         for mo in SOLVING_HINT.finditer(ex + "\n" + det):
             out.append(f"{where}: 選択肢の消し方が教材に残っている『…{(ex + chr(10) + det)[max(0, mo.start() - 12): mo.end()]}』（解説 note の持ち場）")
             break
@@ -265,13 +278,13 @@ def check_notation_v2(
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", default="data/ip", type=Path)
-    ap.add_argument("--dir", action="append", help="検査するディレクトリ（既定は materials・materials_v2・materials_v3。後勝ち）")
+    ap.add_argument("--dir", action="append", help="検査するディレクトリ（既定は配る本文と同じ教材の世代の全部を古い順に。後勝ち）")
     # 教材に差し込んだ図の実体を確かめる先。/figures/… はこの下からの絶対パス。
     ap.add_argument("--public", default="public", type=Path)
     ap.add_argument("--all", action="store_true", help="警告・問題を上位 20 件で打ち切らず全件出す（並行担当が自分のバンドル分を grep するとき）")
     args = ap.parse_args()
     d = args.data
-    dirs = [Path(x) for x in args.dir] if args.dir else [d / "materials", d / "materials_v2", d / "materials_v3"]
+    dirs = [Path(x) for x in args.dir] if args.dir else generation_dirs(d)
     dirs = [x for x in dirs if x.exists()]
 
     # `--dir data/ap/materials_v2` だけ渡して `--data` を忘れると、応用情報の教材を
@@ -328,13 +341,12 @@ def main() -> int:
             problems.append(f"{where}: explanation か detail が空")
             continue
         is_v2 = bool(HEADING.search(det))
-        is_v3 = "materials_v3" in str(m["_file"])
+        is_v3 = role_split(str(m["_file"]))
         ex_range = EXPLANATION_RANGE_V2 if is_v2 else EXPLANATION_RANGE
         det_range = DETAIL_RANGE_V2 if is_v2 else DETAIL_RANGE
         if is_v3:
-            # 2026-09-01 の再構成版。誤答のケアを問題解説に移したので短くてよい。
-            # 字数は目安であって上限ではない（わかりやすさと必要な情報を優先する方針）ので、
-            # 極端に短い／長いときだけ警告する
+            # 役割分担後の世代は誤答のケアを問題解説が持つので短くてよい。
+            # 字数は目安であって上限ではないので、極端に短い／長いときだけ警告する
             ex_range, det_range = (60, 450), (40, 1600)
         if not ex_range[0] <= len(ex) <= ex_range[1]:
             warnings.append(f"{where}: explanation が {len(ex)}字（目安 {ex_range[0]}〜{ex_range[1]}）")

@@ -144,7 +144,7 @@ operations:
     examples:
       ok:
         request: { path: data/ip/explanation_bundles/expl_01.json }
-        response: { questions: [{ question_id: 2018h30h-1 }] }
+        response: { questions: [{ question_id: 2026r08-q97 }] }
       unreadable:
         request: { path: data/ip/explanation_bundles/expl_02.json }
         error: INVALID_INPUT
@@ -171,7 +171,7 @@ operations:
             required: [question_id, content_key, correct, correct_reason, choices]
             properties:
               question_id: { type: string, minLength: 1 }
-              content_key: { type: string, minLength: 1 }
+              content_key: { type: string, pattern: "^[0-9a-f]{16}$", description: 同一内容の判定の値。作り方は BR-052 }
               correct: { type: string, enum: ["ア", "イ", "ウ", "エ"] }
               correct_reason: { type: string, minLength: 1 }
               choices:
@@ -194,7 +194,7 @@ operations:
       ok:
         request: { path: data/ip/question_explanations/expl_01.json }
         response:
-          explanations: [{ question_id: 2018h30h-1, content_key: k1, correct: イ, correct_reason: "…", choices: [{ label: ア, term: null, note: "…" }, { label: イ, term: null, note: "正解。…" }, { label: ウ, term: null, note: "…" }, { label: エ, term: null, note: "…" }] }]
+          explanations: [{ question_id: 2026r08-q97, content_key: 50bfe9f96eabc25f, correct: イ, correct_reason: "…", choices: [{ label: ア, term: null, note: "…" }, { label: イ, term: null, note: "正解。…" }, { label: ウ, term: null, note: "…" }, { label: エ, term: null, note: "…" }] }]
       missing:
         request: { path: data/ip/question_explanations/expl_99.json }
         error: NOT_FOUND
@@ -225,7 +225,7 @@ operations:
     examples:
       ok:
         request: { path: data/ip/answer_keys.json }
-        response: { 2018h30h-1: イ }
+        response: { 2026r08-q97: イ }
       missing:
         request: { path: data/zzz/answer_keys.json }
         error: NOT_FOUND

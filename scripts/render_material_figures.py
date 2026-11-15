@@ -56,6 +56,9 @@ import stat
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from material_generations import emit_refusal, learning_refusal, select_materials  # noqa: E402
+
 # ---------------------------------------------------------------- 様式（定数）
 
 WIDTH = 640                      # 出力 SVG の幅（固定）
@@ -2045,6 +2048,16 @@ def _topic_id_of(path):
     return (tid if _is_int(tid) else None), why
 
 
+def after_headings(data: Path) -> dict:
+    """論点 ID → 配る本文と同じ選び方で選んだ教材の detail にある `### ` の見出しの集合。教材の世代が読めなければ空。"""
+    try:
+        chosen = select_materials(data)
+        return {tid: {l.strip() for l in (c.material.get("detail") or "").split("\n") if l.strip().startswith("### ")}
+                for tid, c in chosen.items()}
+    except (OSError, ValueError, KeyError, TypeError, AttributeError, RecursionError):
+        return {}
+
+
 # ---------------------------------------------------------------- 実行
 
 def main() -> int:
@@ -2062,6 +2075,9 @@ def main() -> int:
     args = ap.parse_args()
 
     exam = args.data.name
+    refusal = learning_refusal(args.data, registered=False)
+    if refusal:
+        return emit_refusal(refusal)
     src = args.data / "material_figures"
     if args.samples:
         src = src / "_samples"
@@ -2089,22 +2105,15 @@ def main() -> int:
     problems: list = []
     warnings: list = []
     docs = load(paths, problems, warnings)
-    # after の見出しが教材（materials_v3）に実在するか。無いと attach が explanation 末尾へ黙って逃がす
-    heads = {}
-    for mp in sorted((args.data / "materials_v3").glob("*.json")) if (args.data / "materials_v3").exists() else []:
-        try:
-            for m in json.loads(mp.read_text(encoding="utf-8")).get("materials", []):
-                heads[m["topic_id"]] = {l.strip() for l in (m.get("detail") or "").split("\n") if l.strip().startswith("### ")}
-        except (ValueError, KeyError, TypeError, AttributeError, RecursionError):
-            pass
-    if heads:
-        for p, d in docs:
-            for fig in d["figures"]:
-                if not isinstance(fig, dict):
-                    continue
-                a = str(fig.get("after", "")).strip()
-                if a and a != "explanation" and d.get("topic_id") in heads and a not in heads[d["topic_id"]]:
-                    problems.append(f"[{p.name}] 論点 {d['topic_id']} 図 {fig.get('id')}: after {a!r} が教材の見出しに無い（explanation 末尾へ逃げる）")
+    # after の見出しが、配る本文と同じ選び方で選んだ教材に実在するか。無いと attach は差し込み位置どおりに置けない
+    heads = after_headings(args.data)
+    for p, d in docs:
+        for fig in d["figures"]:
+            if not isinstance(fig, dict):
+                continue
+            a = str(fig.get("after", "")).strip()
+            if a and a != "explanation" and d.get("topic_id") in heads and a not in heads[d["topic_id"]]:
+                problems.append(f"[{p.name}] 論点 {d['topic_id']} 図 {fig.get('id')}: after {a!r} が教材に無い")
 
     for w in warnings:
         print(f"  - 警告: {w}", file=sys.stderr)
@@ -2113,12 +2122,13 @@ def main() -> int:
         for p in problems:
             print(f"  - {p}", file=sys.stderr)
         print(f"\n{len(paths)} ファイル / "
-              f"{sum(len(d.get('figures', [])) for _, d in docs)} 図を検証しました（警告 {len(warnings)} 件）")
+              f"{sum(len(d.get('figures', [])) for _, d in docs)} 図を検証しました（警告 {len(warnings)} 件）", file=sys.stderr)
         if problems:
             print(f"問題 {len(problems)} 件", file=sys.stderr)
-            return 1
-        print("問題なし")
-        return 0
+        else:
+            print("問題なし", file=sys.stderr)
+        print(json.dumps({"exitCode": 1 if problems else 0, "findings": problems}, ensure_ascii=False))
+        return 1 if problems else 0
 
     if problems:
         for p in problems:
