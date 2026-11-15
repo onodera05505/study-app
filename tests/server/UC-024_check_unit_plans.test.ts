@@ -454,6 +454,69 @@ describe('UC-024 資格対策の単元の構成を教材の門で確かめる（
       expectStop(r, 'missingElement', planName(21))
       expectStop(r, 'prerequisiteSelf', planName(21), 112)
     })
+
+    /** @covers REQ-447#key-unknown-with-missing-unit-no */
+    it('単元の番号が欠けたファイルでも、学びに無い論点が前提を持てば、その論点を挙げて prerequisiteKeyUnknown で止める', () => {
+      const r = check21((p) => {
+        delete p.unit_no
+        p.prerequisites[String(UNKNOWN_TOPIC)] = [103]
+      })
+      expectStop(r, 'missingElement', planName(21))
+      expectStop(r, 'prerequisiteKeyUnknown', planName(21), UNKNOWN_TOPIC)
+    })
+
+    /** @covers REQ-447#unknown-with-missing-unit-no */
+    it('単元の番号が欠けたファイルでも、学びに無い論点を前提にすれば、その論点と前提を挙げて prerequisiteUnknown で止める', () => {
+      const r = check21((p) => {
+        delete p.unit_no
+        p.prerequisites['107'] = [UNKNOWN_TOPIC]
+      })
+      expectStop(r, 'missingElement', planName(21))
+      expectStop(r, 'prerequisiteUnknown', planName(21), 107, UNKNOWN_TOPIC)
+    })
+
+    /** @covers REQ-447#self-with-missing-unit-no */
+    it('単元の番号が欠けたファイルでも、自分自身を前提にする論点を挙げて prerequisiteSelf で止める', () => {
+      const r = check21((p) => {
+        delete p.unit_no
+        p.prerequisites['112'] = [112]
+      })
+      expectStop(r, 'missingElement', planName(21))
+      expectStop(r, 'prerequisiteSelf', planName(21), 112)
+    })
+
+    /** @covers REQ-447#duplicate-with-missing-unit-no */
+    it('単元の番号が欠けたファイルでも、前提に同じ論点が 2 回並べば、その論点と前提を挙げて prerequisiteDuplicate で止め、読めないファイルとはしない', () => {
+      const r = check21((p) => {
+        delete p.unit_no
+        p.prerequisites['105'] = [112, 112]
+      })
+      expectStop(r, 'missingElement', planName(21))
+      expectStop(r, 'prerequisiteDuplicate', planName(21), 105, 112)
+      noneOf(r, 'unreadablePlan')
+    })
+
+    /** @covers REQ-447#too-many-with-missing-unit-no */
+    it('単元の番号が欠けたファイルでも、前提が 3 本あれば、その論点を挙げて prerequisiteTooMany で止める', () => {
+      const r = check21((p) => {
+        delete p.unit_no
+        p.prerequisites['107'] = [112, 103, 109]
+      })
+      expectStop(r, 'missingElement', planName(21))
+      expectStop(r, 'prerequisiteTooMany', planName(21), 107)
+    })
+
+    /** @covers REQ-447#cycle-with-missing-unit-no */
+    it('循環に加わる単元の構成の 1 つが単元の番号の欠けで止まるときも、その論点と前提を挙げて prerequisiteCycle で止める', () => {
+      const r = check21((p) => {
+        delete p.unit_no
+        p.prerequisites['103'] = [221]
+      })
+      expectStop(r, 'missingElement', planName(21))
+      const hits = findingsOf(r.json?.stops, 'prerequisiteCycle')
+      expect(hits.length, r.stdout).toBeGreaterThan(0)
+      expect(hits.some((f) => findingText(f).includes('103') && findingText(f).includes('221')), JSON.stringify(hits)).toBe(true)
+    })
   })
 
   describe('受け持ちが学ぶ順で最初でない・触れる論点の外・単元の外なら止める（REQ-448）', () => {

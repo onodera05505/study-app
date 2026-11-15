@@ -4,7 +4,7 @@ title: 資格対策の単元の構成を教材の門で確かめる
 actor: ACT-07
 goal: GOAL-10
 status: active
-phase: 実装
+phase: 完了
 ---
 
 # UC-024 資格対策の単元の構成を教材の門で確かめる

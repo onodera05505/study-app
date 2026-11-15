@@ -346,8 +346,9 @@ def check_group_min(name: str, plan: dict) -> list[dict]:
 
 def _prerequisites_in_plan(name: str, plan: dict, unit_of: dict[int, int]) -> list[dict]:
     """1 つの単元の構成の前提の、持つ側と先に読む側の実在・自分自身・同じ論点の重なり・本数・同じ単元の学ぶ順との食い違いを見る。
-    同じ論点が 2 回以上並ぶ前提は、重なりの止める理由を 1 件にし、他の判定は 1 回だけ数える。"""
-    unit = plan["unit_no"]
+    同じ論点が 2 回以上並ぶ前提は、重なりの止める理由を 1 件にし、他の判定は 1 回だけ数える。
+    単元の番号が欠けた単元の構成は、単元に依る判定（持つ側が単元の外・学ぶ順で後ろ）をせず、単元に依らない判定だけをする。"""
+    unit = plan.get("unit_no")
     pos = {t: i for i, t in enumerate(learning_order(plan))}
     mx = LIMITS["prerequisitesMax"]
     stops: list[dict] = []
@@ -356,7 +357,7 @@ def _prerequisites_in_plan(name: str, plan: dict, unit_of: dict[int, int]) -> li
         pw = f"{_where(name)} 論点 {t} の前提"
         if t not in unit_of:
             stops.append(_f("prerequisiteKeyUnknown", pw, f"前提を持つ論点 {t} が学びに無い"))
-        elif unit_of[t] != unit:
+        elif unit is not None and unit_of[t] != unit:
             stops.append(_f("prerequisiteKeyForeign", pw, f"前提を持つ論点 {t} は単元 {unit_of[t]} の論点"))
         for p in sorted({p for p in pres if pres.count(p) > 1}, key=pres.index):
             stops.append(_f("prerequisiteDuplicate", f"{_where(name)} 論点 {t}", f"前提に論点 {p} が {pres.count(p)} 回並ぶ"))
@@ -367,7 +368,7 @@ def _prerequisites_in_plan(name: str, plan: dict, unit_of: dict[int, int]) -> li
                 stops.append(_f("prerequisiteSelf", pw, f"論点 {t} が自分自身を前提にしている"))
             elif p not in unit_of:
                 stops.append(_f("prerequisiteUnknown", pw, f"論点 {t} の前提の論点 {p} が学びに無い"))
-            elif unit_of[p] == unit and p in pos and t in pos and pos[p] > pos[t]:
+            elif unit is not None and unit_of[p] == unit and p in pos and t in pos and pos[p] > pos[t]:
                 stops.append(_f("prerequisiteAfter", pw, f"論点 {t} の前提の論点 {p} が学ぶ順で後ろにある"))
     return stops
 
@@ -480,9 +481,12 @@ def gate_findings(d: Path) -> tuple[dict, dict[int, dict], list[dict]]:
         view = readable_view(plan)
         stops.extend(mark(check_group_max(p.name, view)))
         warnings.extend(check_group_min(p.name, view))
-        if unplaced(shape) or plan.get("unit_no") is None:
+        if unplaced(shape):
             continue
         placed[p.name] = view
+        if plan.get("unit_no") is None:
+            # 単元の番号が欠けたファイルは読める側なので、前提の単元に依らない判定と循環にだけ渡す
+            continue
         if not incomplete(shape):
             readable[p.name] = plan
             for g in plan["groups"]:
