@@ -91,3 +91,7 @@ schemas:
             label: { type: string, enum: ["ア", "イ", "ウ", "エ"] }
             term: { type: [string, "null"] }
             note: { type: string }
+  FigureRenderTimeoutSeconds:
+    type: integer
+    const: 30
+    description: 1 つの図を描く待ち時間の上限（学習者役のパックと単元の読み物が使う同じ描き手）

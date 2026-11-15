@@ -12,7 +12,7 @@ status: draft          # draft | living
 
 | 範囲 | 理由 |
 | --- | --- |
-| 本番相当の配備でだけ観測できる振る舞い（本番の検査 UC-015、受験履歴の本人の資源だけ REQ-097、理解度の記録の永続と本人のみ REQ-034/035/037、フィードバックの保存と上限 REQ-159/161） | 検査本体は `scripts/check_sso_prod.sh`・`scripts/check_api.py`・`scripts/check_portal_api.py`（system suite）で、`@covers` を持てない。単体は実体のある D1 を要する。ローカルの D1 で回すサーバ経路の検査（`check_api.py` を ip と ap の両方、`check_portal_api.py`）は `commands.system` と CI が回し、本番に対してだけ回す `check_sso_prod.sh` は配信のあとに運用者が回す |
+| 本番相当の配備でだけ観測できる振る舞い（本番の検査 UC-015、受験履歴の本人の資源だけ REQ-097、フィードバックの保存と上限 REQ-159/161） | 検査本体は `scripts/check_sso_prod.sh`・`scripts/check_api.py`・`scripts/check_portal_api.py`（system suite）で、`@covers` を持てない。単体は実体のある D1 を要する。ローカルの D1 で回すサーバ経路の検査（`check_api.py` を ip と ap の両方、`check_portal_api.py`）は `commands.system` と CI が回し、本番に対してだけ回す `check_sso_prod.sh` は配信のあとに運用者が回す |
 | seed の投入の手続き側の決まり（BR-029〜033） | 本番の D1 に流すシェルの手続きで、`tests.dirs` も `tests.system` も届かない。保証点は `scripts/seed_remote.sh`。配備の手続き（版の印 REQ-224〜226、配備の道具の版 REQ-351・352）は偽の道具に差し替えて回す単体テストが見るので、この行に入れない |
 | 2 つの配備をまたぐ観測（アカウントを削除したあとも学び側の本人の記録が実際に残っていること。REQ-171 は、まなびばが学び側の本人の記録に触る操作を持たないことまでを担保する） | まなびばと学び側は別配備で、片方の単体からは観測できない |
 | 端末をまたぐ観測（端末の記憶は端末をまたがない BR-012） | 単体テストは 1 つの端末の記憶しか持たない |
