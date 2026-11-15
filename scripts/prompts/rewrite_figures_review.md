@@ -194,6 +194,7 @@ python3 scripts/render_material_figures.py --data data/<対象> --only <論点 I
 
 - `一部`・`言えない` の図は、`source` を `closed_test` にして追加の一覧に入れ、もう一度この段に掛ける
 - 外した図の組で `言えない` なら、その外した図を `kind` が `restore` の項目として追加の一覧に入れる
+- `restore` で戻した図は、同じ単元の図との「同じ内容の図の判定」（`material_figures_spec.md`）にも掛ける。戻した図だけで別の図の要点が言える、または別の図だけで戻した図の要点が言えるなら、その組を `kind` が `same_content` の項目として追加の一覧に入れる
 - 追加の一覧で直した図にも、同じテストを掛ける
 
 ## 報告（親へ）
@@ -268,3 +269,4 @@ python3 scripts/render_material_figures.py --data data/<対象> --only <論点 I
 - 2026-11-15: 作成（書き直しと単元の突き合わせの後に、図の仕様の JSON を直す段。入力の一覧・1 体 12 枚まで 1 単元・種類と直し方・移し替え・外す・戻す・点の台帳・門・報告の JSON。`brain/research/2026-11-15_教材の様式/03_量産の結果と単元の突き合わせ.md` の X20・X24・X27・X36・X37）
 - 2026-11-16: `source` に `open_items`（申告の消化の段が図の側へ返した図）を足した（申告の消化の後に図の見直しへ戻す一覧を作るため。台帳 `brain/spec_consolidation/rewrite_figures_review.md`）
 - 2026-11-16: `source` に `acceptance`（受入の判定が挙げた図）を足した（受入が挙げた図をこの段へ戻す一覧を作るため。台帳 `brain/spec_consolidation/rewrite_figures_review.md`）
+- 2026-11-16: 閉じた図のテストの「判定の後」に、戻した図を同じ単元の図との同じ内容の図の判定に掛ける線を足した（戻した図が残っていた図と同じ内容になり、受入が拾ったため。手戻り台帳 `brain/rework/2026-08_ip-ap.md` 行 32）
