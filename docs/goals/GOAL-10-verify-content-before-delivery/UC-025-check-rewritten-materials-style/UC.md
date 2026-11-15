@@ -4,7 +4,7 @@ title: 書き直した世代の資格対策の教材を様式の門で確かめ�
 actor: ACT-07
 goal: GOAL-10
 status: active
-phase: 実装
+phase: 完了
 ---
 
 # UC-025 書き直した世代の資格対策の教材を様式の門で確かめる

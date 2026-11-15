@@ -4,7 +4,7 @@ title: 書き直した世代の教材と単元の構成を配る本文に組み�
 actor: ACT-07
 goal: GOAL-11
 status: active
-phase: 実装
+phase: 完了
 ---
 
 # UC-027 書き直した世代の教材と単元の構成を配る本文に組み立てる

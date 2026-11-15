@@ -4,7 +4,7 @@ title: 資格対策の教材の書き直しに配る束を単元とまとまり�
 actor: ACT-07
 goal: GOAL-11
 status: active
-phase: 実装
+phase: 完了
 ---
 
 # UC-026 資格対策の教材の書き直しに配る束を単元とまとまりの単位で作る
