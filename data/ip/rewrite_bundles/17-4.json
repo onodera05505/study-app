@@ -1,0 +1,858 @@
+{
+  "bundle": "17-4",
+  "unit_no": 17,
+  "unit": "ソフトウェア",
+  "overview": "コンピュータを動かす土台の OS から、利用者が毎日触るファイルと事務用のソフト、ソフトウェアの配り方の決まりまでを学びます。OS が装置とメモリと処理を受け持つ仕組み、ファイルの置き場所と探し方、オフィスツールの機能と表計算の式、オープンソースソフトウェアのライセンスの順に進みます。マルチスレッドとマルチコアは別物で、前者はソフトウェア、後者はハードウェアの話です。",
+  "group": {
+    "index": 4,
+    "name": "オープンソースのライセンス",
+    "description": "ソースコードを公開して自由に使わせるソフトウェアの条件と、その自由を派生ソフトに引き継がせる考え方を扱います。"
+  },
+  "groups_in_unit": [
+    {
+      "index": 1,
+      "name": "OS が受け持つ仕組み",
+      "topics": [
+        {
+          "topic_id": 436,
+          "term": "デバイスドライバ"
+        },
+        {
+          "topic_id": 176,
+          "term": "仮想記憶"
+        },
+        {
+          "topic_id": 512,
+          "term": "マルチスレッド"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "name": "ファイルの置き場所と扱い方",
+      "topics": [
+        {
+          "topic_id": 362,
+          "term": "ディレクトリ構造"
+        },
+        {
+          "topic_id": 513,
+          "term": "ワイルドカード"
+        },
+        {
+          "topic_id": 361,
+          "term": "アーカイブ"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "name": "オフィスツールと表計算の式",
+      "topics": [
+        {
+          "topic_id": 178,
+          "term": "オフィスツール"
+        },
+        {
+          "topic_id": 363,
+          "term": "禁則処理"
+        },
+        {
+          "topic_id": 177,
+          "term": "IF 関数"
+        },
+        {
+          "topic_id": 180,
+          "term": "絶対参照・相対参照"
+        },
+        {
+          "topic_id": 437,
+          "term": "条件付個数"
+        },
+        {
+          "topic_id": 179,
+          "term": "マクロ"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "name": "オープンソースのライセンス",
+      "topics": [
+        {
+          "topic_id": 2,
+          "term": "オープンソースソフトウェア"
+        },
+        {
+          "topic_id": 181,
+          "term": "コピーレフト"
+        }
+      ]
+    }
+  ],
+  "owners": [
+    {
+      "subject": "著作権を開発者が持ったまま、ライセンスで利用の条件を決めること",
+      "owner": {
+        "topic_id": 2,
+        "term": "オープンソースソフトウェア"
+      },
+      "topics": [
+        2,
+        181
+      ]
+    }
+  ],
+  "topics": [
+    {
+      "topic_id": 2,
+      "term": "オープンソースソフトウェア",
+      "field": "テクノロジ系",
+      "major": "コンピュータシステム",
+      "middle": "ソフトウェア",
+      "syllabus_item_name": "オープンソースソフトウェア",
+      "question_count": 12,
+      "related_terms": [
+        "GPL（GNU General Public License）",
+        "コピーレフト",
+        "Android",
+        "Linux",
+        "携帯端末（スマートフォン，タブレット端末，ウェアラブル端末，スマートデバイスほか）",
+        "著作権"
+      ],
+      "prerequisites": [
+        {
+          "topic_id": 14,
+          "term": "著作権法"
+        }
+      ],
+      "current": {
+        "generation": "materials_v3",
+        "explanation": "**OSS（オープンソースソフトウェア）**とは、ソースコードが公開されていて、誰でも自由に使い、改変し、再配布できるソフトウェアです。\n\n- **キーワード**: ソースコード公開・改変自由・再配布自由\n- 著作権は**開発者が持ったまま**で、ライセンスで利用の条件が決められています\n- 無償とは限りません。有償で配ってもよく、有償サポート付きの製品もあります\n- 使う人や利用分野を選り好みして、提供を制限することはできません\n\n![似た 3 つの呼び名を、著作権の持ち主・改変と再配布・値段の 3 つの観点で比べた表です。強調した OSS の欄は、著作権を残したまま自由を与える点が他と違います。](/figures/materials/ip/2-1.svg)",
+        "detail": "### OSS が満たすべき条件\nソースコードが見られるだけでは OSS とは言いません。目的を問わず自由に使えること、改変できること、改変したものを再配布できること、特定の分野や人を差別しないこと。こうした条件がそろって初めて OSS になります。著作権は開発者が持ち続け、その著作権をもとに利用条件を**ライセンス**として定めます。ライセンスは製品ごとに違い、改変して配るなら同じ条件で公開することを求める[[コピーレフト]]型のものもあります。\n### 代表的な OSS\n名前と種類の組合せで問われるので、セットで覚えます。\n| 種類 | 代表的な OSS |\n| --- | --- |\n| OS | Linux、Android、FreeBSD |\n| Web サーバ | Apache HTTP Server |\n| Web ブラウザ | Firefox |\n| メールソフト | Thunderbird |\n| DBMS | MySQL、PostgreSQL |\nワープロや表計算などを含むオフィスソフト一式も、OSS として開発されています。\n### 混同しやすい用語\n- **[[パブリックドメインソフトウェア]]** — 作者が著作権そのものを手放したソフトウェアです。OSS の自由はライセンスが与える自由で、著作権は開発者に残ります\n- **フリーソフトウェア** — 無償で使えるソフトという意味と、自由に使えるソフトという意味の両方で使われる言葉です。OSS の「自由」は値段ではなく、使い方や改変・再配布の自由を指します"
+      },
+      "questions": [
+        {
+          "question_id": "2026r08-q97",
+          "content_key": "50bfe9f96eabc25f",
+          "exam_label": "令和8年度",
+          "stem": "OSS（Open Source Software）の取扱いに関する記述のうち，適切なものだけを全て挙げたものはどれか。\na OSS を集めた記録媒体を，顧客に有償で提供する。\nb 改変した OSS を，特定の利用分野に制限して OSS として提供する。\nc 不具合を発見して修正した OSS のソースコードを，自分の Web サイトで提供する。",
+          "choices": {
+            "ア": "a",
+            "イ": "a，c",
+            "ウ": "b，c",
+            "エ": "c"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2025r07-q96",
+          "content_key": "ce1a903fbef3595a",
+          "exam_label": "令和7年度",
+          "stem": "OSS（Open Source Software）に関する次の記述のうち，適切なものだけを全て挙げたものはどれか。\na 個人だけではなく，企業や団体が開発したソフトウェアもある。\nb 著作権が放棄されている。\nc 入手したソフトウェアは，自由に再配布してもよい。",
+          "choices": {
+            "ア": "a，b",
+            "イ": "a，b，c",
+            "ウ": "a，c",
+            "エ": "b，c"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2024r06-q97",
+          "content_key": "98fad15fd0b4e37b",
+          "exam_label": "令和6年度",
+          "stem": "次のOSのうち，OSS（Open Source Software）として提供されるものだけを全て挙げたものはどれか。\na Android　b FreeBSD　c iOS　d Linux",
+          "choices": {
+            "ア": "a，b",
+            "イ": "a，b，d",
+            "ウ": "b，d",
+            "エ": "c，d"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2024r06-q80",
+          "content_key": "57cda3e1539cc9f0",
+          "exam_label": "令和6年度",
+          "stem": "OSS（Open Source Software）に関する記述として，適切なものだけを全て挙げたものはどれか。\n\na OSS を利用して作成したソフトウェアを販売することができる。\nb ソースコードが公開されたソフトウェアは全て OSS である。\nc 著作権が放棄されているソフトウェアである。",
+          "choices": {
+            "ア": "a",
+            "イ": "a, b",
+            "ウ": "b, c",
+            "エ": "c"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2023r05-q82",
+          "content_key": "ec9a088ae2d53427",
+          "exam_label": "令和5年度",
+          "stem": "OSS（Open Source Software）に関する記述 a ～ c のうち，適切なものだけを全て挙げたものはどれか。\na ソースコードに手を加えて再配布することができる。\nb ソースコードの入手は無償だが，有償の保守サポートを受けなければならない。\nc 著作権が放棄されており，無断で利用することができる。",
+          "choices": {
+            "ア": "a",
+            "イ": "a, c",
+            "ウ": "b",
+            "エ": "c"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2022r04-q63",
+          "content_key": "be37b2caac9b1329",
+          "exam_label": "令和4年度",
+          "stem": "スマートフォンやタブレットなどの携帯端末に用いられている，OSS (Open Source Software) である OS はどれか。",
+          "choices": {
+            "ア": "Android",
+            "イ": "iOS",
+            "ウ": "Safari",
+            "エ": "Windows"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2021r03-q78",
+          "content_key": "a2b562aba2c95dfa",
+          "exam_label": "令和3年度",
+          "stem": "OSS（Open Source Software）に関する記述として，適切なものはどれか。",
+          "choices": {
+            "ア": "ソースコードを公開しているソフトウェアは，全て OSS である。",
+            "イ": "著作権が放棄されており，誰でも自由に利用可能である。",
+            "ウ": "どのソフトウェアも，個人が無償で開発している。",
+            "エ": "利用に当たり，有償サポートが提供される製品がある。"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2020r02o-q96",
+          "content_key": "3853171cfab852f2",
+          "exam_label": "令和2年度 10月",
+          "stem": "OSS（Open Source Software）に関する記述として，適切なものはどれか。",
+          "choices": {
+            "ア": "製品によっては，企業の社員が業務として開発に参加している。",
+            "イ": "ソースコードだけが公開されており，実行形式での配布は禁じられている。",
+            "ウ": "どの製品も，ISO で定められたオープンソースライセンスによって同じ条件で提供されている。",
+            "エ": "ビジネス用途での利用は禁じられている。"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2019r01a-q89",
+          "content_key": "bbcdbb20c93d6d1f",
+          "exam_label": "令和元年度 秋期",
+          "stem": "OSS（Open Source Software）に関する記述のうち，適切なものだけを全て挙げたものはどれか。\n① Web サーバとして広く用いられている Apache HTTP Server は OSS である。\n② Web ブラウザである Internet Explorer は OSS である。\n③ ワープロソフトや表計算ソフト，プレゼンテーションソフトなどを含むビジネス統合パッケージは開発されていない。",
+          "choices": {
+            "ア": "①",
+            "イ": "①，②",
+            "ウ": "②，③",
+            "エ": "③"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2019h31h-q67",
+          "content_key": "08581241d7ad4e0b",
+          "exam_label": "平成31年度 春期",
+          "stem": "OSS（Open Source Software）である DBMS はどれか。",
+          "choices": {
+            "ア": "Android",
+            "イ": "Firefox",
+            "ウ": "MySQL",
+            "エ": "Thunderbird"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2018h30a-q81",
+          "content_key": "d8988484a6a17e14",
+          "exam_label": "平成30年度 秋期",
+          "stem": "ソフトウェア ① 〜 ④ のうち，スマートフォンやタブレットなどの携帯端末に使用される OSS（Open Source Software）の OS だけを全て挙げたものはどれか。\n①　Android\n②　iOS\n③　Thunderbird\n④　Windows Phone",
+          "choices": {
+            "ア": "①",
+            "イ": "①，②，③",
+            "ウ": "②，④",
+            "エ": "③，④"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2018h30h-q78",
+          "content_key": "9eb146813dd72582",
+          "exam_label": "平成30年度 春期",
+          "stem": "OSS（Open Source Software）である Web ブラウザはどれか。",
+          "choices": {
+            "ア": "Apache",
+            "イ": "Firefox",
+            "ウ": "Linux",
+            "エ": "Thunderbird"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null
+        }
+      ],
+      "question_explanations": [
+        {
+          "question_id": "2026r08-q97",
+          "content_key": "50bfe9f96eabc25f",
+          "correct_reason": "OSS は有償で配ってもよく、不具合を直したソースコードを自分で公開することも再配布の自由の範囲です。一方、使える分野を限る提供は「分野や人を差別しない」という条件に反するので、これを含まない組合せが答えになります。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "修正したソースコードの公開を落としています。これは再配布の自由に沿った行為です"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "利用分野を限る提供を含みます。分野を差別しないという OSS の条件に反します"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "有償での提供を落としています。OSS を有償で配ることは禁じられていません"
+            }
+          ]
+        },
+        {
+          "question_id": "2025r07-q96",
+          "content_key": "ce1a903fbef3595a",
+          "correct_reason": "OSS を開発しているのは個人だけでなく企業や団体もあり、入手したものを再配布する自由も保証されています。著作権は放棄されず開発者が持ち続けるので、著作権放棄を含む組合せは誤りです。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "著作権が放棄されているという記述を含みます。OSS の著作権は開発者が持ったままです"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "著作権が放棄されているという記述を含みます。再配布が自由なことと著作権が無いことは別です"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "著作権放棄の記述を含み、開発者に企業や団体もいるという正しい記述を落としています"
+            }
+          ]
+        },
+        {
+          "question_id": "2024r06-q97",
+          "content_key": "98fad15fd0b4e37b",
+          "correct_reason": "Android、FreeBSD、Linux はいずれも OSS の OS です。iOS だけは Apple が権利を持ちソースコードを公開していないので、これを含まない組合せが答えになります。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "Linux を落としています。Linux は OSS の OS の代表例です"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "Android を落としています。Android は Linux をもとにした OSS の OS です"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "iOS を含みます。iOS はソースコードが公開されていない Apple 独自の OS です"
+            }
+          ]
+        },
+        {
+          "question_id": "2024r06-q80",
+          "content_key": "57cda3e1539cc9f0",
+          "correct_reason": "OSS を使って作ったソフトウェアを販売することは認められています。一方、ソースコードが公開されていれば全て OSS というわけではなく、著作権も放棄されていないため、正しいのは販売できるという記述だけです。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "公開されていれば全て OSS という記述を含みます。公開は条件の一つにすぎません"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "公開＝OSS という記述と著作権放棄の記述を含み、どちらも誤りです"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "著作権が放棄されているという記述だけを挙げています。著作権は開発者が持ち続けます"
+            }
+          ]
+        },
+        {
+          "question_id": "2023r05-q82",
+          "content_key": "ec9a088ae2d53427",
+          "correct_reason": "改変したうえで再配布できることは OSS の基本的な自由なので、この記述だけが適切です。有償サポートは付いている製品があるだけで義務ではなく、著作権も放棄されていません。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "著作権が放棄されているという記述を含みます。著作権は開発者が保持しています"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "有償サポートが必須という記述です。サポート契約は義務ではありません"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "著作権放棄の記述です。著作権を放棄したものは[[パブリックドメインソフトウェア]]です"
+            }
+          ]
+        },
+        {
+          "question_id": "2022r04-q63",
+          "content_key": "be37b2caac9b1329",
+          "correct_reason": "スマートフォンやタブレットで広く使われ、ソースコードが公開されている OS は Android です。Linux をもとに作られており、誰でも入手して改変できます。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "イ",
+              "term": "iOS",
+              "note": "Apple の携帯端末向け OS です。ソースコードは公開されておらず OSS ではありません"
+            },
+            {
+              "label": "ウ",
+              "term": "Safari",
+              "note": "Apple が提供する Web ブラウザです。OS ではありません"
+            },
+            {
+              "label": "エ",
+              "term": "Windows",
+              "note": "マイクロソフトの PC 向け OS です。ソースコードは公開されておらず OSS ではありません"
+            }
+          ]
+        },
+        {
+          "question_id": "2021r03-q78",
+          "content_key": "a2b562aba2c95dfa",
+          "correct_reason": "OSS の条件はソースコードの公開と、改変・再配布の自由です。値段は条件に入らないので、無償で配られることが多くても、有償で売ることは禁じられていません。有償のサポートを付けて提供される製品があるという記述が適切になります。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "ソースコードの公開は条件の一つで、改変と再配布の自由も満たして初めて OSS です"
+            },
+            {
+              "label": "イ",
+              "term": "パブリックドメインソフトウェア",
+              "note": "著作権が放棄され、誰でも自由に使えるソフトウェアです。OSS は著作権を放棄しません"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "企業や団体が業務として開発に参加している OSS も多くあります"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "正解。"
+            }
+          ]
+        },
+        {
+          "question_id": "2020r02o-q96",
+          "content_key": "3853171cfab852f2",
+          "correct_reason": "OSS の開発は個人の趣味に限りません。企業が社員を業務として開発に参加させている製品も多く、誰が開発するかに制限が無いことがポイントです。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "OSS は実行形式でも配布できます。ソースコードだけという制限はありません"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "ライセンスは製品ごとに異なります。ISO が定めた共通のライセンスはありません"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "用途による制限は OSS の条件に反します。業務や商用でも利用できます"
+            }
+          ]
+        },
+        {
+          "question_id": "2019r01a-q89",
+          "content_key": "bbcdbb20c93d6d1f",
+          "correct_reason": "Web サーバとして広く使われている Apache HTTP Server は OSS なので、この記述だけが適切です。Internet Explorer はマイクロソフトの製品で OSS ではありません。ワープロや表計算を含むオフィスソフト一式も、OSS として開発されています。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "Internet Explorer が OSS という記述を含みます。これはマイクロソフトの製品です"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "誤った記述だけを挙げています。オフィスソフト一式の OSS も開発されています"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "オフィスソフトの OSS が無いという記述です。ワープロや表計算を含む OSS があります"
+            }
+          ]
+        },
+        {
+          "question_id": "2019h31h-q67",
+          "content_key": "08581241d7ad4e0b",
+          "correct_reason": "データベースを管理するソフトウェア（[[DBMS]]）で OSS なのは MySQL です。名前を選ぶ問題は、OSS かどうかと、ソフトの種類が合っているかを二段階で確かめます。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "Android",
+              "note": "携帯端末向けの OSS の OS です。Linux をもとに作られています"
+            },
+            {
+              "label": "イ",
+              "term": "Firefox",
+              "note": "OSS として開発されている Web ブラウザです"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "エ",
+              "term": "Thunderbird",
+              "note": "OSS として開発されているメールソフトです"
+            }
+          ]
+        },
+        {
+          "question_id": "2018h30a-q81",
+          "content_key": "d8988484a6a17e14",
+          "correct_reason": "携帯端末向けの OSS の OS は Android だけです。iOS と Windows Phone は OSS ではなく、Thunderbird は OSS ですが OS ではなくメールソフトなので外れます。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "iOS と Thunderbird を含みます。iOS は OSS ではなく、Thunderbird は OS ではありません"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "iOS と Windows Phone を挙げています。どちらも OSS ではありません"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "Thunderbird は OSS ですが OS ではなく、Windows Phone は OSS ではありません"
+            }
+          ]
+        },
+        {
+          "question_id": "2018h30h-q78",
+          "content_key": "9eb146813dd72582",
+          "correct_reason": "OSS の Web ブラウザは Firefox です。同じ OSS でも Web サーバ用や OS、メールソフトが並ぶので、種類が問われているものと合うかどうかで絞ります。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "Apache HTTP Server",
+              "note": "OSS として広く使われている Web サーバ用のソフトウェアです"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "ウ",
+              "term": "Linux",
+              "note": "OSS の代表的な OS です。サーバから組込み機器まで幅広く使われています"
+            },
+            {
+              "label": "エ",
+              "term": "Thunderbird",
+              "note": "OSS として開発されているメールソフトです"
+            }
+          ]
+        }
+      ],
+      "figure_file": "data/ip/material_figures/2.json",
+      "figures": [
+        {
+          "id": 1,
+          "type": "matrix",
+          "after": "### 混同しやすい用語",
+          "caption": "似た 3 つの呼び名を、著作権の持ち主・改変と再配布・値段の 3 つの観点で比べた表です。強調した OSS の欄は、著作権を残したまま自由を与える点が他と違います。",
+          "x": {
+            "label": "呼び名",
+            "values": [
+              "OSS",
+              "パブリックドメイン\nソフトウェア",
+              "フリーソフト\n（無償の意味）"
+            ]
+          },
+          "y": {
+            "label": "観点",
+            "values": [
+              "著作権",
+              "改変・再配布",
+              "値段"
+            ]
+          },
+          "cells": [
+            [
+              "開発者に残る\nライセンスで\n条件を決める",
+              "手放されている\n誰のものでもない",
+              "作者に残る\n条件は作者しだい"
+            ],
+            [
+              "自由\nライセンスが\n認める",
+              "自由\n縛る権利が無い",
+              "作者が決める\n自由とは限らない"
+            ],
+            [
+              "有償でもよい\nサポートの販売も",
+              "決まりは無い\n値段とは別の話",
+              "無償\n「フリー」は値段"
+            ]
+          ],
+          "emphasis": [
+            [
+              0,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "topic_id": 181,
+      "term": "コピーレフト",
+      "field": "テクノロジ系",
+      "major": "コンピュータシステム",
+      "middle": "ソフトウェア",
+      "syllabus_item_name": "オープンソースソフトウェア",
+      "question_count": 1,
+      "related_terms": [
+        "GPL（GNU General Public License）",
+        "オープンソースソフトウェア",
+        "使用許諾契約"
+      ],
+      "prerequisites": [
+        {
+          "topic_id": 2,
+          "term": "オープンソースソフトウェア"
+        }
+      ],
+      "current": {
+        "generation": "materials_v3",
+        "explanation": "**コピーレフト**とは、改変して作った派生ソフトウェアを配るときに、元と同じライセンスを引き継がせるという条件です。[[オープンソースソフトウェア]]（OSS）のライセンスで広く採られている考え方です。\n\n- **キーワード**: 派生ソフトウェア・同じライセンス\n- ねらいは、誰でも自由に使える状態を後から手にする人にも残すことです\n- 著作権を持ったまま、その権利を使ってライセンスで条件を課すのが特徴です\n\n![左から右へ、改変して配るたびに同じ条件が受け継がれる様子を表しています。線の条件が途切れないので、最後に受け取る人も自由に使えます。](/figures/materials/ip/181-1.svg)\n\n![列が 2 つの型、行が派生ソフトを配るときの条件です。下の行を横に比べると、改変部分を隠せるかどうかの違いが分かります。](/figures/materials/ip/181-2.svg)",
+        "detail": "### 著作権を手放さないのがポイント\n著作権者は本来、複製や改変を許すかどうかを自分で決められます。その権限を使って「自由に使ってよい。ただし改変版を配るならソースコードを公開し、同じ条件を引き継ぐこと」と定めるのがコピーレフトです。もし著作権を放棄してしまうと、誰かが改変版を非公開にして配るのを止められず、かえって自由が失われます。自由を守るために著作権を使う、という発想です。\n### コピーレフト型と非コピーレフト型\n- **コピーレフト型（GPL）** — GPL は GNU General Public License の略で、派生ソフトも同じライセンスにし、ソースコードの公開を求めます\n- **非コピーレフト型（BSD、MIT）** — 改変した部分を非公開のまま配ってもかまいません\n[[オープンソースソフトウェア]]のライセンスは型によって条件が違うので、使う前に中身を確かめる必要があります。"
+      },
+      "questions": [
+        {
+          "question_id": "2026r08-q73",
+          "content_key": "679d06b572957c15",
+          "exam_label": "令和8年度",
+          "stem": "OSS (Open Source Software) のライセンスにおけるコピーレフトに関する記述として，適切なものはどれか。",
+          "choices": {
+            "ア": "OSS の作成者が，ソフトウェアの著作権を放棄している。",
+            "イ": "OSS の著作権者は，利用者がソフトウェアを利用することに対して金銭的な対価を要求しなければならない。",
+            "ウ": "OSS の利用者が改変して作成した派生ソフトウェアは，改変部分のソースコードを非公開としたまま，配布することができる。",
+            "エ": "OSS の利用者が改変して作成した派生ソフトウェアを配布する場合には，元の OSS のライセンスと同じライセンスを適用しなければならない。"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null
+        }
+      ],
+      "question_explanations": [
+        {
+          "question_id": "2026r08-q73",
+          "content_key": "679d06b572957c15",
+          "correct_reason": "コピーレフトは、改変して作った派生ソフトウェアを配るときに、元と**同じライセンスを引き継がせる**という条件です。誰でも自由に使える状態を、後から手にする人にも残すための決まりです。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "著作権を放棄しているという記述です。コピーレフトは著作権を持ったままライセンスで条件を課します"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "対価を必ず要求するという記述です。OSS は有償で配っても無償で配ってもよく、対価は義務ではありません"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "改変部分を非公開のまま配れるという記述です。これは MIT ライセンスなど非コピーレフト型の扱いです"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "正解。"
+            }
+          ]
+        }
+      ],
+      "figure_file": "data/ip/material_figures/181.json",
+      "figures": [
+        {
+          "id": 1,
+          "type": "blocks",
+          "after": "explanation",
+          "caption": "左から右へ、改変して配るたびに同じ条件が受け継がれる様子を表しています。線の条件が途切れないので、最後に受け取る人も自由に使えます。",
+          "nodes": [
+            {
+              "id": "o",
+              "label": "元のソフト\nGPL・ソース公開",
+              "row": 0,
+              "col": 0,
+              "icon": "document"
+            },
+            {
+              "id": "d1",
+              "label": "派生ソフト 1\n同じ GPL・ソース公開",
+              "row": 0,
+              "col": 1
+            },
+            {
+              "id": "d2",
+              "label": "派生ソフト 2\n同じ GPL・ソース公開",
+              "row": 0,
+              "col": 2,
+              "emphasis": true
+            },
+            {
+              "id": "u",
+              "label": "次に受け取る人\n自由に使い改変できる",
+              "row": 0,
+              "col": 3,
+              "icon": "people"
+            }
+          ],
+          "edges": [
+            {
+              "from": "o",
+              "to": "d1",
+              "label": "改変して配り、\n条件を引き継ぐ"
+            },
+            {
+              "from": "d1",
+              "to": "d2",
+              "label": "さらに改変して配り、\n条件を引き継ぐ"
+            },
+            {
+              "from": "d2",
+              "to": "u",
+              "label": "ソースごと渡す"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "type": "matrix",
+          "after": "### コピーレフト型と非コピーレフト型",
+          "caption": "列が 2 つの型、行が派生ソフトを配るときの条件です。下の行を横に比べると、改変部分を隠せるかどうかの違いが分かります。",
+          "x": {
+            "label": "ライセンスの型",
+            "values": [
+              "コピーレフト型\n（GPL）",
+              "非コピーレフト型\n（BSD・MIT）"
+            ]
+          },
+          "y": {
+            "label": "配るときの条件",
+            "values": [
+              "派生ソフトの\nライセンス",
+              "改変部分の\nソースコード"
+            ]
+          },
+          "cells": [
+            [
+              "同じ GPL\nにする",
+              "別の条件に\nしてもよい"
+            ],
+            [
+              "公開する\n義務がある",
+              "非公開のまま\n配ってよい"
+            ]
+          ],
+          "emphasis": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

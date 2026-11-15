@@ -5,24 +5,24 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### ケーブルに電力を乗せる",
+      "after": "explanation",
       "caption": "PoE 対応のスイッチから、1本の LAN ケーブルで通信と電力を同時に送ります。受ける機器はコンセントの無い場所でも動きます。",
       "nodes": [
         {"id": "sw", "label": "PoE 対応スイッチ\n給電する側", "row": 1, "col": 0, "icon": "network", "emphasis": true},
-        {"id": "ap", "label": "無線 LAN の AP\n天井・コンセント無し\nPoE 対応で受電", "row": 0, "col": 1},
+        {"id": "rd", "label": "入退室の読み取り機\n扉の横・コンセント無し\nPoE 対応で受電", "row": 0, "col": 1},
         {"id": "cam", "label": "監視カメラ\n屋外・コンセント無し\nPoE 対応で受電", "row": 1, "col": 1},
-        {"id": "tel", "label": "IP 電話\n机・電源を増やさない\nPoE 対応で受電", "row": 2, "col": 1}
+        {"id": "sign", "label": "案内の表示板\n通路の壁・電源を増やさない\nPoE 対応で受電", "row": 2, "col": 1}
       ],
       "edges": [
-        {"from": "sw", "to": "ap", "label": "LAN ケーブル1本で通信＋電力"},
+        {"from": "sw", "to": "rd", "label": "LAN ケーブル1本で通信＋電力"},
         {"from": "sw", "to": "cam", "label": "LAN ケーブル1本で通信＋電力"},
-        {"from": "sw", "to": "tel", "label": "LAN ケーブル1本で通信＋電力"}
+        {"from": "sw", "to": "sign", "label": "LAN ケーブル1本で通信＋電力"}
       ]
     },
     {
       "id": 2,
       "type": "matrix",
-      "after": "### 混同しやすい用語",
+      "after": "### PLC との違い",
       "caption": "PoE と PLC を、通す道と乗せるもので比べています。行をたどると、通信の線と電気の線の使い方が入れ替わっています。",
       "x": {"label": "観点", "values": ["通す道", "その道に乗せるもの"]},
       "y": {"label": "技術", "values": ["PoE", "PLC（電力線通信）"]},

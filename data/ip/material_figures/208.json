@@ -3,78 +3,14 @@
   "term": "ドメイン名",
   "figures": [
     {
-      "id": 1,
-      "type": "blocks",
-      "after": "### IP アドレスとの関係",
-      "caption": "人が使う名前であるドメイン名を、DNS が通信に使う IP アドレスに変えて相手を特定する流れを表した図です。",
-      "nodes": [
-        {
-          "id": "user",
-          "label": "利用者\n名前で相手を指定",
-          "row": 0,
-          "col": 0
-        },
-        {
-          "id": "dom",
-          "label": "ドメイン名\nexample.co.jp\n人が見分けやすい文字列",
-          "row": 0,
-          "col": 1,
-          "emphasis": true
-        },
-        {
-          "id": "dns",
-          "label": "DNS\n名前を IP アドレスに変換",
-          "row": 0,
-          "col": 2
-        },
-        {
-          "id": "ip",
-          "label": "IP アドレス\n192.0.2.10\n通信で使う数字",
-          "row": 1,
-          "col": 2
-        },
-        {
-          "id": "sv",
-          "label": "相手のサーバ\n世界で 1 つに決まる",
-          "row": 1,
-          "col": 1
-        }
-      ],
-      "edges": [
-        {
-          "from": "user",
-          "to": "dom",
-          "label": "URL・メールに書く"
-        },
-        {
-          "from": "dom",
-          "to": "dns",
-          "label": "名前解決"
-        },
-        {
-          "from": "dns",
-          "to": "ip",
-          "label": "変換の結果"
-        },
-        {
-          "from": "ip",
-          "to": "sv",
-          "label": "この数字で通信"
-        }
-      ]
-    },
-    {
       "id": 2,
       "type": "parts",
-      "after": "### IP アドレスとの関係",
+      "after": "### 点で区切った部分の意味",
       "caption": "1 つのドメイン名を点で区切った部分ごとに、何を表すかを示した図です。右の部分ほど大きな区分を表します。",
       "whole": {
-        "label": "www.example.co.jp（右ほど大きな区分）"
+        "label": "example.co.jp（右ほど大きな区分）"
       },
       "parts": [
-        {
-          "label": "www\n機器のホスト名（一番小さい）"
-        },
         {
           "label": "example\n組織そのものの名前"
         },

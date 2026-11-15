@@ -1,29 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="286" viewBox="0 0 640 286">
-<rect x="0.5" y="0.5" width="639" height="285" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(179.5 20)">
-<g transform="translate(37 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7.5" r="3.6"/><path d="M4.5 21 C4.5 14.2 19.5 14.2 19.5 21"/></g>
-<g transform="translate(222 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7.5" r="3.6"/><path d="M4.5 21 C4.5 14.2 19.5 14.2 19.5 21"/></g>
-<g transform="translate(0 28)">
-<line x1="48" y1="34" x2="48" y2="218" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="233" y1="34" x2="233" y2="218" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">送信者</text>
-<rect x="185" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="233" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">受信者</text>
-<polyline points="48,60 74,60 74,74 50,74" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="50,74 58,70.4 58,77.6" fill="#1f2937"/>
-<text x="82" y="68" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">1. 文書のハッシュ値を作る</text>
-<polyline points="51,102 230,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="230,102 222,105.6 222,98.4" fill="#1f2937"/>
-<text x="140.5" y="95" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 文書 ＋ ハッシュ値を送る</text>
-<polyline points="233,134 259,134 259,148 235,148" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="235,148 243,144.4 243,151.6" fill="#1f2937"/>
-<text x="267" y="142" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">3. 届いた文書で計算し直す</text>
-<polyline points="233,168 259,168 259,182 235,182" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="235,182 243,178.4 243,185.6" fill="#1f2937"/>
-<text x="267" y="176" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. 2 つの値を照合する</text>
-<rect x="96.4" y="187" width="273.2" height="16" rx="3" fill="#ffffff"/>
-<text x="233" y="200.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">一致なら改ざんなし。1 文字でも違えば合わない</text>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="328" viewBox="0 0 640 328">
+<rect x="0.5" y="0.5" width="639" height="327" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(76.65 20)">
+<polyline points="222,38 250,38 250,106" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="250,106 246.4,98 253.6,98" fill="#1f2937"/>
+<polyline points="354,144 382,144 382,212" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="382,212 378.4,204 385.6,204" fill="#1f2937"/>
+<rect x="0" y="0" width="222" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<g transform="translate(12 27) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3 H14 L19 8 V21 H6 Z"/><path d="M14 3 V8 H19"/><path d="M9 12 H16 M9 15 H16 M9 18 H13.5"/></g>
+<text x="126" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ファイルを保存する</text>
+<text x="126" y="52.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">その時のハッシュ値を記録</text>
+<rect x="146" y="106" width="208" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<g transform="translate(158 133) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6.6"/><circle cx="12" cy="12" r="2.4"/><path d="M 18.6 12 L 21.6 12 M 16.67 16.67 L 18.79 18.79 M 12 18.6 L 12 21.6 M 7.33 16.67 L 5.21 18.79 M 5.4 12 L 2.4 12 M 7.33 7.33 L 5.21 5.21 M 12 5.4 L 12 2.4 M 16.67 7.33 L 18.79 5.21" stroke-width="3" stroke-linecap="butt"/></g>
+<text x="265" y="138.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">後で計算し直す</text>
+<text x="265" y="158.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">今のファイルの値を出す</text>
+<rect x="277.3" y="212" width="209.4" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<g transform="translate(289.3 239) scale(0.9167)" fill="none" stroke="#2563eb" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15 L20.5 20.5" stroke-width="2.6"/></g>
+<text x="397" y="234.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">2 つの値を比べる</text>
+<text x="397" y="254.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">一致なら書き換えは無い</text>
+<text x="397" y="274.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">1 文字違っても合わない</text>
+<text x="258" y="42.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">記録した値</text>
+<text x="390" y="148.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">今の値</text>
 </g>
 </svg>

@@ -7,7 +7,7 @@
 <polygon points="594,30 586,33.6 586,26.4" fill="#1f2937"/>
 <polyline points="375,58 375,82 700.8,82 700.8,106" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
 <polygon points="700.8,106 697.2,98 704.4,98" fill="#1f2937"/>
-<polyline points="700.8,58 700.8,106" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polyline points="700.8,58 700.8,106" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="700.8,106 697.2,98 704.4,98" fill="#1f2937"/>
 <path d="M 24.96 60 C -9.36 60 -6.24 24 28.08 25.2 C 28.08 -3.6 87.36 -7.2 93.6 18 C 124.8 6 165.36 18 148.2 37.2 C 165.36 56.4 146.64 60 127.92 60 Z" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
 <text x="78" y="24.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">インターネット</text>
@@ -28,9 +28,9 @@
 <text x="224" y="26.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">外部からの接続</text>
 <rect x="462" y="13" width="128" height="16" rx="3" fill="#ffffff"/>
 <text x="526" y="26.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">公開サービスへは通す</text>
-<rect x="491.9" y="68" width="92" height="16" rx="3" fill="#ffffff"/>
-<text x="537.9" y="81.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">内部へは止める</text>
-<rect x="629.6" y="73" width="142.4" height="16" rx="3" fill="#ffffff"/>
-<text x="700.8" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">DMZ から内部へも止める</text>
+<rect x="467.9" y="68" width="140" height="16" rx="3" fill="#ffffff"/>
+<text x="537.9" y="81.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">外部から内部へは止める</text>
+<rect x="642.8" y="73" width="116" height="16" rx="3" fill="#ffffff"/>
+<text x="700.8" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">決めた通信だけ通す</text>
 </g>
 </svg>

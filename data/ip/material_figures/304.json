@@ -5,68 +5,101 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### しくみ",
-      "caption": "右端の特性（結果）へ、大きな分類の大骨が集まります。各大骨から具体的な要因へ枝を伸ばし、原因を抜けなく洗い出します。",
+      "after": "### 骨の組み立てと洗い出し方",
+      "caption": "右端の特性（結果）へ背骨の太い矢印が伸び、大きな分類の大骨がそこへ集まります。大骨から中骨・小骨へ枝を伸ばして、原因を具体的に掘り下げます。",
       "nodes": [
         {
-          "id": "hito",
-          "label": "人（大骨）\n経験不足・疲れ",
+          "id": "ko",
+          "label": "小骨\n例 研修が短い",
           "row": 0,
           "col": 0
         },
         {
-          "id": "setsubi",
-          "label": "設備（大骨）\n機械の劣化・故障",
+          "id": "naka",
+          "label": "中骨\n例 経験不足",
           "row": 0,
           "col": 1
+        },
+        {
+          "id": "hito",
+          "label": "人（大骨）\n大きな分類",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "setsubi",
+          "label": "設備（大骨）\n大きな分類",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "sebone",
+          "label": "背骨\n大骨を束ねる太い矢印",
+          "row": 1,
+          "col": 3
         },
         {
           "id": "tokusei",
           "label": "特性（結果）\n例 不良の発生",
           "row": 1,
-          "col": 2,
+          "col": 4,
           "emphasis": true
         },
         {
           "id": "houhou",
-          "label": "方法（大骨）\n手順の抜け・古さ",
+          "label": "方法（大骨）\n大きな分類",
           "row": 2,
-          "col": 0
+          "col": 2
         },
         {
           "id": "zairyo",
-          "label": "材料（大骨）\n品質のばらつき",
+          "label": "材料（大骨）\n大きな分類",
           "row": 2,
-          "col": 1
+          "col": 3
         }
       ],
       "edges": [
         {
+          "from": "ko",
+          "to": "naka",
+          "label": "さらに具体的な要因"
+        },
+        {
+          "from": "naka",
+          "to": "hito",
+          "label": "具体的な要因"
+        },
+        {
           "from": "hito",
-          "to": "tokusei",
-          "label": "影響する"
+          "to": "sebone",
+          "label": "大骨がつながる"
         },
         {
           "from": "setsubi",
-          "to": "tokusei",
-          "label": "影響する"
+          "to": "sebone",
+          "label": "大骨がつながる"
         },
         {
           "from": "houhou",
-          "to": "tokusei",
-          "label": "影響する"
+          "to": "sebone",
+          "label": "大骨がつながる"
         },
         {
           "from": "zairyo",
+          "to": "sebone",
+          "label": "大骨がつながる"
+        },
+        {
+          "from": "sebone",
           "to": "tokusei",
-          "label": "影響する"
+          "label": "影響が集まる"
         }
       ]
     },
     {
       "id": 2,
       "type": "matrix",
-      "after": "### 混同しやすい用語",
+      "after": "### QC 七つ道具の使い分け",
       "caption": "QC 七つ道具の 3 つを、何のために使うかと図の上で見る物で比べます。上の行の目的で使い分けます。",
       "x": {
         "label": "QC 七つ道具",

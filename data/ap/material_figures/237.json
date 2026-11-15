@@ -1,35 +1,5 @@
 {
   "topic_id": 237,
   "term": "ワークパッケージ",
-  "figures": [
-    {
-      "id": 1,
-      "type": "steps",
-      "after": "### WBS の階層とワークパッケージの位置",
-      "direction": "down",
-      "caption": "上から下へ分解が進み、強調したワークパッケージが WBS の最下段です。その下のアクティビティはスケジュールを組む側で扱います。",
-      "stages": [
-        {
-          "label": "プロジェクトスコープ\nやるべき範囲の全体",
-          "icon": "document",
-          "next_label": "要素分解する"
-        },
-        {
-          "label": "WBS の上位\n成果物と大きな作業",
-          "icon": "box",
-          "next_label": "管理できる大きさで止める"
-        },
-        {
-          "label": "ワークパッケージ\n見積り・割当て・監視の単位",
-          "icon": "check",
-          "emphasis": true,
-          "next_label": "スケジュール側で展開する"
-        },
-        {
-          "label": "アクティビティ\n実行できる大きさの活動",
-          "icon": "clock"
-        }
-      ]
-    }
-  ]
+  "figures": []
 }

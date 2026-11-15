@@ -5,31 +5,19 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### OSS を取り巻く登場人物",
-      "caption": "左の OSS の部品をディストリビュータが集め、動く組合せにまとめて右の利用者へ配ります。配った後も更新を届け続けます。",
+      "after": "explanation",
+      "caption": "左上の OSS の部品をディストリビュータが集め、動く組合せにまとめて左下の利用者へ配ります。配った後も更新を届け続けます。",
       "nodes": [
         {
           "id": "k",
-          "label": "カーネル\nOS の中核",
+          "label": "OSS の部品\nカーネル・コマンド群・\nライブラリ",
           "row": 0,
-          "col": 0
-        },
-        {
-          "id": "t",
-          "label": "コマンド群\n操作の道具",
-          "row": 1,
-          "col": 0
-        },
-        {
-          "id": "l",
-          "label": "ライブラリ\n共通の部品",
-          "row": 2,
           "col": 0
         },
         {
           "id": "d",
           "label": "ディストリビュータ\n版を決め依存を解く",
-          "row": 1,
+          "row": 0,
           "col": 1,
           "icon": "people",
           "emphasis": true
@@ -38,30 +26,20 @@
           "id": "p",
           "label": "ディストリビューション\n導入しやすい配布物",
           "row": 1,
-          "col": 2,
+          "col": 1,
           "icon": "box"
         },
         {
           "id": "u",
           "label": "多くの利用者\n導入して使う",
           "row": 1,
-          "col": 3,
+          "col": 0,
           "icon": "people"
         }
       ],
       "edges": [
         {
           "from": "k",
-          "to": "d",
-          "label": "集める"
-        },
-        {
-          "from": "t",
-          "to": "d",
-          "label": "集める"
-        },
-        {
-          "from": "l",
           "to": "d",
           "label": "集める"
         },

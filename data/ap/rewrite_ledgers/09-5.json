@@ -1,0 +1,318 @@
+{
+  "bundle": "09-5",
+  "shared": [
+    {
+      "item": "ビューの定義（必要な行と列だけを取り出した仮想の表で、データは実表にある）",
+      "count": 2,
+      "holder": 26,
+      "topics": [
+        26,
+        568
+      ]
+    }
+  ],
+  "topics": [
+    {
+      "topic_id": 26,
+      "points": [
+        {
+          "point": "ビュー表の定義（SELECT 文による定義だけを持つ仮想の表）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "実体のデータは基となる表（実表）側にある（定義の 2 文目）",
+          "fate": "kept",
+          "where": "explanation の定義の 1 文に入れた"
+        },
+        {
+          "point": "キーワード（更新可能なビュー・導出表・CREATE VIEW）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "ビューの列名は基の表と違う名前を付けられ、定義時に並べた名前が列名になる",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "列の抜き出し・WHERE による行の絞り込み・和両立な表どうしの和集合で定義できる",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "和両立の意味（列の数と型がそろった）",
+          "fate": "owner",
+          "where": "154"
+        },
+        {
+          "point": "更新できるのは更新可能な 1 つの表から列と行を抜き出しただけのもの",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "集約関数・GROUP BY・DISTINCT を使うと更新できない（explanation の箇条）",
+          "fate": "duplicate",
+          "where": "### 更新できるビュー・できないビュー の表"
+        },
+        {
+          "point": "実表は実際にデータを格納している表",
+          "fate": "kept",
+          "where": "### 実表と導出表"
+        },
+        {
+          "point": "導出表は実表に射影・選択・結合などの演算を施した結果の表",
+          "fate": "kept",
+          "where": "### 実表と導出表"
+        },
+        {
+          "point": "射影（列の抜き出し）・選択（行の絞り込み）の言い換え",
+          "fate": "owner",
+          "where": "154"
+        },
+        {
+          "point": "ビューは導出表に名前を付けて定義したもの",
+          "fate": "kept",
+          "where": "### 実表と導出表"
+        },
+        {
+          "point": "導出表は 1 つの実表からでも作れる",
+          "fate": "kept",
+          "where": "### 実表と導出表"
+        },
+        {
+          "point": "導出表は集約関数や式で計算した列を持てるので、基の実表の列がそのまま並ぶとは限らない",
+          "fate": "kept",
+          "where": "### 実表と導出表"
+        },
+        {
+          "point": "条件を満たす導出表は参照だけでなく更新にも使える",
+          "fate": "kept",
+          "where": "### 実表と導出表"
+        },
+        {
+          "point": "ビューの行を更新するには基の表のどの行に対応するかが一意に決まる必要がある（detail の言い直し）",
+          "fate": "duplicate",
+          "where": "explanation の 3 つ目の箇条（detail には理由の『書き換わるのは基の表の行』だけを残した）"
+        },
+        {
+          "point": "更新の可否の表（列の抜き出し 可・WHERE 可・集約関数 不可・GROUP BY 不可・DISTINCT 不可・結合 場合による）と各理由",
+          "fate": "kept",
+          "where": "### 更新できるビュー・できないビュー"
+        },
+        {
+          "point": "集約関数が複数行を 1 行にまとめるしくみそのもの",
+          "fate": "owner",
+          "where": "155"
+        },
+        {
+          "point": "2 つ以上の表を結合したビューの更新可否は結合の仕方で変わる（表の後の文）",
+          "fate": "duplicate",
+          "where": "### 更新できるビュー・できないビュー の表の『表の結合』の行"
+        },
+        {
+          "point": "定義に使える演算の広さと更新できる範囲の狭さは別",
+          "fate": "kept",
+          "where": "### 更新できるビュー・できないビュー"
+        },
+        {
+          "point": "データは実表だけにありビューは定義だけを持つ・1 行が 1 行に届くビューは更新でき集約のビューは行が決まらない",
+          "fate": "figure",
+          "where": "26 の図 1"
+        }
+      ]
+    },
+    {
+      "topic_id": 568,
+      "points": [
+        {
+          "point": "アクセス権の定義（利用者ごとに表への操作を許す範囲を決める）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "SQL では GRANT 文で与え REVOKE 文で取り消す（定義の 2 文目）",
+          "fate": "kept",
+          "where": "explanation の箇条"
+        },
+        {
+          "point": "キーワード（GRANT・REVOKE・操作権限の付与）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "GRANT が与えるのは検索・更新・追加・削除といった操作単位の権限",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "行や列の単位で見せる範囲を絞りたいときはビューを作りそのビューに権限を与える",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "GRANT は誰に・どの表に・どの操作を許すかを指定する",
+          "fate": "kept",
+          "where": "### GRANT と REVOKE の書き方"
+        },
+        {
+          "point": "書式 GRANT 権限 ON 表名 TO 利用者名",
+          "fate": "kept",
+          "where": "### GRANT と REVOKE の書き方 の表"
+        },
+        {
+          "point": "権限には SELECT・INSERT・UPDATE・DELETE などを並べられ、ALL PRIVILEGES ですべてを与えられる",
+          "fate": "kept",
+          "where": "### GRANT と REVOKE の書き方"
+        },
+        {
+          "point": "書式 REVOKE 権限 ON 表名 FROM 利用者名",
+          "fate": "kept",
+          "where": "### GRANT と REVOKE の書き方 の表"
+        },
+        {
+          "point": "WITH GRANT OPTION で受け取った利用者が他人へ同じ権限を与えられる",
+          "fate": "kept",
+          "where": "### GRANT と REVOKE の書き方"
+        },
+        {
+          "point": "GRANT だけでは部署の行だけ見せるといった範囲の制御ができない（理由）",
+          "fate": "kept",
+          "where": "### 行や列を絞るにはビューに権限を与える"
+        },
+        {
+          "point": "必要な行と列だけを取り出したビューを定義し、元の表ではなくビューに権限を与える（detail の言い直し）",
+          "fate": "figure",
+          "where": "568 の図 1"
+        },
+        {
+          "point": "ビュー（必要な行と列だけを取り出した表）の説明",
+          "fate": "prior",
+          "where": "26"
+        },
+        {
+          "point": "ビュー自体はアクセス権を与える仕組みではなく、権限を与える対象を絞り込む道具",
+          "fate": "kept",
+          "where": "### 行や列を絞るにはビューに権限を与える"
+        },
+        {
+          "point": "機密保護の層（認証は接続の可否・アクセス権は表への操作・ビューは見せる範囲・暗号化は保存データを読めなくする）",
+          "fate": "explanation",
+          "where": "question_explanations の note（2020r02o-q26 ア・イ・ウ、2019h31h-q27 ア）。アクセス権の受け持ちは ### 機密保護の層とアクセス権の受け持ち"
+        },
+        {
+          "point": "アクセス権は接続を許された後にどの表へどの操作をしてよいかを決める",
+          "fate": "kept",
+          "where": "### 機密保護の層とアクセス権の受け持ち"
+        },
+        {
+          "point": "どの層の話かを切り分けると迷わない（覚え方の文）",
+          "fate": "duplicate",
+          "where": "568 の図 2 の caption"
+        }
+      ],
+      "removed_figures": [
+        {
+          "figure_id": 2,
+          "caption": "上が利用者に近い入口、下が保存されたデータの側です。どの層で守る話かを切り分けると、アクセス権が受け持つのは表への操作だけと分かります。",
+          "kept": null
+        }
+      ]
+    },
+    {
+      "topic_id": 151,
+      "points": [
+        {
+          "point": "ストアドプロシージャの定義（一連の SQL 文と手続きを DBMS 側に登録し名前を呼ぶだけで実行）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "キーワード（DBMS 側に登録・CALL 文・通信量の削減）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "最大の利点は SQL 文を 1 つずつ送らずに済むことによる通信量の削減",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "事前に構文解析と実行計画の作成が済み、繰り返し実行するときの負荷が下がる（explanation と detail の 2 か所）",
+          "fate": "duplicate",
+          "where": "### そのほかの利点と注意点 の 1 つ目の箇条"
+        },
+        {
+          "point": "前もって作った実行計画を繰り返し使うことのしくみ",
+          "fate": "owner",
+          "where": "522"
+        },
+        {
+          "point": "通常は SQL 文を送り結果を見て次の SQL 文を送る往復を繰り返す",
+          "fate": "figure",
+          "where": "151 の図 1"
+        },
+        {
+          "point": "往復のたびに SQL 文と結果がネットワークを流れる・プロシージャなら名前と引数を送るだけで済む",
+          "fate": "figure",
+          "where": "151 の図 1"
+        },
+        {
+          "point": "途中の中間結果がサーバの中で完結する",
+          "fate": "kept",
+          "where": "### なぜ通信量が減るのか"
+        },
+        {
+          "point": "往復の回数と流れるデータ量の両方が減る",
+          "fate": "kept",
+          "where": "### なぜ通信量が減るのか"
+        },
+        {
+          "point": "減るのはアプリケーションと DBMS の間を流れる量で、読み書きするデータそのものは変わらない",
+          "fate": "kept",
+          "where": "### なぜ通信量が減るのか"
+        },
+        {
+          "point": "DBMS のバッファの数・ディスク装置への入出力回数・保持する実行計画の数は変わらない",
+          "fate": "explanation",
+          "where": "2024r06h-q25 の note（イ・ウ・エ）"
+        },
+        {
+          "point": "クライアント側から CALL 文でプロシージャ名と引数を渡して呼び出す（detail の 2 回目）",
+          "fate": "duplicate",
+          "where": "explanation の 2 つ目の箇条"
+        },
+        {
+          "point": "業務のルールをサーバ側に集約でき、複数のアプリケーションで同じ処理を共有できる",
+          "fate": "kept",
+          "where": "### そのほかの利点と注意点"
+        },
+        {
+          "point": "表への直接アクセスを禁じてプロシージャ経由に限る運用が取れる",
+          "fate": "kept",
+          "where": "### そのほかの利点と注意点"
+        },
+        {
+          "point": "記述の文法が DBMS 製品ごとに異なり、別の製品へ移す負担は増える",
+          "fate": "kept",
+          "where": "### そのほかの利点と注意点"
+        },
+        {
+          "point": "トリガは表への挿入や更新を契機に DBMS が自動的に起動する・プロシージャは呼ばれて初めて動く",
+          "fate": "figure",
+          "where": "151 の図 2（動き出すきっかけの行）"
+        },
+        {
+          "point": "埋込み SQL はアプリケーションのプログラムに SQL を書き込み、SQL 文はクライアントから送られる",
+          "fate": "figure",
+          "where": "151 の図 2（埋込み SQL の列）"
+        },
+        {
+          "point": "プロシージャは呼び出されて初めて実行される",
+          "fate": "kept",
+          "where": "explanation の 2 つ目の箇条"
+        }
+      ]
+    }
+  ]
+}

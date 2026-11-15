@@ -15,10 +15,10 @@
       "steps": [
         {"from": "u", "to": "s", "label": "ログイン（ID とパスワード）"},
         {"from": "s", "to": "u", "label": "セッション ID を発行し cookie に入れる"},
-        {"from": "u", "to": "a", "label": "XSS や盗聴で ID が漏れる", "note": "cookie に HttpOnly と Secure を付けて漏れを防ぐ"},
+        {"from": "u", "to": "a", "label": "スクリプトや盗聴で ID が漏れる", "note": "cookie に HttpOnly と Secure を付けて漏れを防ぐ"},
         {"from": "a", "to": "s", "label": "盗んだ ID を付けて要求すると本人として通る"},
         {"from": "u", "to": "s", "label": "ログアウト"},
-        {"from": "s", "to": "s", "label": "この ID を無効にする", "note": "ブラウザの cookie 削除やキャッシュ消去では、サーバに残った ID は有効なまま"}
+        {"from": "s", "to": "s", "label": "この ID を無効にする", "note": "サーバの対応表から消えた ID は、送られても通らない"}
       ]
     }
   ]

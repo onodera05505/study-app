@@ -5,28 +5,115 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 3つの走査順",
+      "after": "explanation",
       "caption": "左の子、右の子、自分の順にたどったときの出力の順を番号で示します。葉から先に出て根が最後になり、演算子は 2 つの項の後ろに来ます。",
       "nodes": [
-        {"id": "plus", "label": "＋\n9 番目（最後）", "row": 0, "col": 2, "emphasis": true},
-        {"id": "a", "label": "A\n1 番目", "row": 1, "col": 0, "emphasis": true},
-        {"id": "div", "label": "÷\n8 番目", "row": 1, "col": 3},
-        {"id": "mul", "label": "×\n4 番目", "row": 2, "col": 2},
-        {"id": "minus", "label": "－\n7 番目", "row": 2, "col": 4},
-        {"id": "b", "label": "B\n2 番目", "row": 3, "col": 1},
-        {"id": "c", "label": "C\n3 番目", "row": 3, "col": 2},
-        {"id": "d", "label": "D\n5 番目", "row": 3, "col": 3},
-        {"id": "e", "label": "E\n6 番目", "row": 3, "col": 4}
+        {
+          "id": "mul",
+          "label": "×\n9 番目（最後）",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "minus",
+          "label": "－\n3 番目",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "plus",
+          "label": "＋\n8 番目",
+          "row": 1,
+          "col": 3
+        },
+        {
+          "id": "p",
+          "label": "P\n1 番目",
+          "row": 2,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "q",
+          "label": "Q\n2 番目",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "r",
+          "label": "R\n4 番目",
+          "row": 2,
+          "col": 2
+        },
+        {
+          "id": "div",
+          "label": "÷\n7 番目",
+          "row": 2,
+          "col": 4
+        },
+        {
+          "id": "s",
+          "label": "S\n5 番目",
+          "row": 3,
+          "col": 3
+        },
+        {
+          "id": "t",
+          "label": "T\n6 番目",
+          "row": 3,
+          "col": 4
+        }
       ],
       "edges": [
-        {"from": "plus", "to": "a", "label": "左の子", "arrow": "none"},
-        {"from": "plus", "to": "div", "label": "右の子", "arrow": "none"},
-        {"from": "div", "to": "mul", "label": "左の子", "arrow": "none"},
-        {"from": "div", "to": "minus", "label": "右の子", "arrow": "none"},
-        {"from": "mul", "to": "b", "label": "左の子", "arrow": "none"},
-        {"from": "mul", "to": "c", "label": "右の子", "arrow": "none"},
-        {"from": "minus", "to": "d", "label": "左の子", "arrow": "none"},
-        {"from": "minus", "to": "e", "label": "右の子", "arrow": "none"}
+        {
+          "from": "mul",
+          "to": "minus",
+          "label": "左の子",
+          "arrow": "none"
+        },
+        {
+          "from": "mul",
+          "to": "plus",
+          "label": "右の子",
+          "arrow": "none"
+        },
+        {
+          "from": "minus",
+          "to": "p",
+          "label": "左の子",
+          "arrow": "none"
+        },
+        {
+          "from": "minus",
+          "to": "q",
+          "label": "右の子",
+          "arrow": "none"
+        },
+        {
+          "from": "plus",
+          "to": "r",
+          "label": "左の子",
+          "arrow": "none"
+        },
+        {
+          "from": "plus",
+          "to": "div",
+          "label": "右の子",
+          "arrow": "none"
+        },
+        {
+          "from": "div",
+          "to": "s",
+          "label": "左の子",
+          "arrow": "none"
+        },
+        {
+          "from": "div",
+          "to": "t",
+          "label": "右の子",
+          "arrow": "none"
+        }
       ]
     }
   ]

@@ -1,0 +1,771 @@
+{
+  "bundle": "09-3",
+  "shared": [
+    {
+      "item": "関係代数の演算（和・差・共通・結合・直積）の説明と、行と列の変わり方の比較表",
+      "count": 3,
+      "holder": 154,
+      "topics": [
+        154,
+        477,
+        153
+      ]
+    },
+    {
+      "item": "SELECT は既定で重複行を返し、DISTINCT で重複を除く（射影の結果は重複を持たない）",
+      "count": 3,
+      "holder": 154,
+      "topics": [
+        154,
+        401,
+        153
+      ]
+    },
+    {
+      "item": "UNION（縦に積む）と JOIN（横に並べる）の向きと行数の比較表（477 の図 2）",
+      "count": 4,
+      "holder": 477,
+      "topics": [
+        477
+      ]
+    },
+    {
+      "item": "集合関数と GROUP BY（複数の行を 1 つの値にまとめる）",
+      "count": 3,
+      "holder": 155,
+      "topics": [
+        155,
+        401,
+        150
+      ]
+    },
+    {
+      "item": "副問合せの 3 つの形（集合関数だけ・GROUP BY 付き・相関）と評価の回数の比較（401 の図 2）",
+      "count": 3,
+      "holder": 401,
+      "topics": [
+        401,
+        153
+      ]
+    },
+    {
+      "item": "相関副問合せと相関の無い副問合せの違い（外側の行ごとに評価するか、全体で 1 回か）",
+      "count": 4,
+      "holder": 153,
+      "topics": [
+        401,
+        153
+      ]
+    },
+    {
+      "item": "GROUP BY とウィンドウ関数の違い（行がまとまるか、残るか）の比較表（150 の図 2）",
+      "count": 3,
+      "holder": 150,
+      "topics": [
+        150
+      ]
+    }
+  ],
+  "topics": [
+    {
+      "topic_id": 154,
+      "points": [
+        {
+          "point": "関係代数の定義（関係どうしを操作する演算の体系）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "演算は集合演算の和・差・共通（積集合）・直積と、関係特有の選択・射影・結合に分かれる",
+          "fate": "kept",
+          "where": "### 演算ごとの行と列の変わり方"
+        },
+        {
+          "point": "和両立の定義（列の数と各列の定義域が対応し集合演算ができる状態）",
+          "fate": "kept",
+          "where": "### 差と共通の関係"
+        },
+        {
+          "point": "和両立の関係 R と S には和・差・共通が使える",
+          "fate": "kept",
+          "where": "### 差と共通の関係"
+        },
+        {
+          "point": "中心の式 R∩S＝R−(R−S)",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "R から S に無い部分を取り除くと S にもある部分だけが残る（式の理由。explanation の箇条の 2 文目）",
+          "fate": "kept",
+          "where": "### 差と共通の関係"
+        },
+        {
+          "point": "差は引く順序で結果が変わり、R−S と S−R には共通の行が無い",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "選択は行の取り出し、射影は列の取り出し（explanation の箇条）",
+          "fate": "duplicate",
+          "where": "### 演算ごとの行と列の変わり方"
+        },
+        {
+          "point": "結果は集合なので重複行は現れない（explanation の箇条）",
+          "fate": "duplicate",
+          "where": "### 射影と DISTINCT"
+        },
+        {
+          "point": "差 R−S は R にあって S に無い行の集まり",
+          "fate": "kept",
+          "where": "### 差と共通の関係"
+        },
+        {
+          "point": "R の行は S にもある行（R∩S）か S に無い行（R−S）のどちらか",
+          "fate": "kept",
+          "where": "### 差と共通の関係（手順 1）"
+        },
+        {
+          "point": "したがって R から R−S を取り除いた残りが R∩S（集合演算の性質の箇条）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "R−S と S−R は重ならない。片方は R だけ、もう片方は S だけにある行だから",
+          "fate": "kept",
+          "where": "### 差と共通の関係"
+        },
+        {
+          "point": "和は行が増え、差は行が減る",
+          "fate": "kept",
+          "where": "### 演算ごとの行と列の変わり方"
+        },
+        {
+          "point": "和・差は列の構成を変えない",
+          "fate": "figure",
+          "where": "154 の図 2（和・差・共通の行の『変わらない』）"
+        },
+        {
+          "point": "式の確かめ方の手順 1〜3（2 種類の行に分け、式に当てはめ、S にもある行だけが残る式が R∩S）",
+          "fate": "kept",
+          "where": "### 差と共通の関係"
+        },
+        {
+          "point": "R−(R−S) は S に無い行だけを除くので R∩S と一致する（式の確かめ方の末尾の文）",
+          "fate": "duplicate",
+          "where": "explanation の式と 154 の図 1"
+        },
+        {
+          "point": "選択は条件に合う行、射影は指定した列を取り出す",
+          "fate": "kept",
+          "where": "### 演算ごとの行と列の変わり方"
+        },
+        {
+          "point": "結合は共通する列の値が一致する行どうしで横につなぐ、直積は一方の各行に他方の全行を組み合わせる",
+          "fate": "kept",
+          "where": "### 演算ごとの行と列の変わり方"
+        },
+        {
+          "point": "結合・直積は列が増える",
+          "fate": "figure",
+          "where": "154 の図 2（結合・直積の行の『増える』）"
+        },
+        {
+          "point": "和・差・共通が列を変えずに行を増減させるのと対になる",
+          "fate": "figure",
+          "where": "154 の図 2"
+        },
+        {
+          "point": "関係は集合なので射影の結果に同じ行が 2 つ並ばない",
+          "fate": "kept",
+          "where": "### 射影と DISTINCT"
+        },
+        {
+          "point": "SQL の SELECT は既定で重複行を返すので、射影と同じ結果には DISTINCT が要る",
+          "fate": "kept",
+          "where": "explanation と ### 射影と DISTINCT"
+        },
+        {
+          "point": "列を絞ると違っていた行が同じ内容になり得る（重複の生まれる理由）",
+          "fate": "kept",
+          "where": "### 射影と DISTINCT"
+        }
+      ]
+    },
+    {
+      "topic_id": 477,
+      "points": [
+        {
+          "point": "UNION の定義（複数の SELECT の結果を縦につなげて 1 つの表にする集合演算子）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "列の数と対応する列のデータ型が揃っていることが条件（定義の 2 文目）",
+          "fate": "duplicate",
+          "where": "### つなげるための条件"
+        },
+        {
+          "point": "既定では重複行が取り除かれる（定義の 3 文目）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "UNION は行を積み重ね、結合（JOIN）は列を横に足す",
+          "fate": "figure",
+          "where": "477 の図 2"
+        },
+        {
+          "point": "1 行の中で列に分かれている値を 1 件ずつの行へ並べ直すときに使う",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "重複行も残すなら UNION ALL",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "UNION ALL の結果の行数は両方の行数の合計（explanation の箇条）",
+          "fate": "figure",
+          "where": "477 の図 2（UNION ALL の『両方の行数の合計そのまま』）"
+        },
+        {
+          "point": "ORDER BY は文全体に 1 つだけ最後に書く（explanation の箇条）",
+          "fate": "duplicate",
+          "where": "### つなげるための条件"
+        },
+        {
+          "point": "UNION は行を積み重ねるので積み重ねられる形が前提（条件の前置き）",
+          "fate": "duplicate",
+          "where": "### つなげるための条件（条件の文）"
+        },
+        {
+          "point": "和両立（集合演算ができる条件）",
+          "fate": "owner",
+          "where": "154"
+        },
+        {
+          "point": "各 SELECT の列数が同じで、対応する位置の列のデータ型が適合している",
+          "fate": "kept",
+          "where": "### つなげるための条件"
+        },
+        {
+          "point": "列名は違ってよく、結果の列名は最初の SELECT のもの",
+          "fate": "kept",
+          "where": "### つなげるための条件"
+        },
+        {
+          "point": "既定では重複行が 1 行にまとめられ、全行残すなら UNION ALL（detail の言い直し）",
+          "fate": "duplicate",
+          "where": "explanation"
+        },
+        {
+          "point": "並べ替えは結合後の表に対して行うので ORDER BY は文全体の末尾に 1 つ",
+          "fate": "kept",
+          "where": "### つなげるための条件"
+        },
+        {
+          "point": "UNION では重複が 1 行にまとめられて行数が減ることがあり、UNION ALL では両方の行数の合計",
+          "fate": "figure",
+          "where": "477 の図 2"
+        },
+        {
+          "point": "第 1 期と第 2 期の売上が別々の列の表を、期ごとに 1 行ずつの形へ変える場面",
+          "fate": "kept",
+          "where": "### 横に並んだ列を縦に並べ直す"
+        },
+        {
+          "point": "定数を列として持たせた SELECT を UNION でつなぐ書き方",
+          "fate": "kept",
+          "where": "### 横に並んだ列を縦に並べ直す"
+        },
+        {
+          "point": "第 1 期側で文字列の定数を期の列として付け、第 2 期側も同じ列構成で書き、UNION でつなぐ",
+          "fate": "kept",
+          "where": "### 横に並んだ列を縦に並べ直す"
+        },
+        {
+          "point": "元の表が 3 行なら結果は 6 行",
+          "fate": "figure",
+          "where": "477 の図 1（UNION の矢印『4 ＋ 4 ＝ 8 行』。図は別の値の例）"
+        },
+        {
+          "point": "結合でも行数は増えるが、増え方は組合せの数（積）",
+          "fate": "kept",
+          "where": "### 横に並んだ列を縦に並べ直す"
+        },
+        {
+          "point": "元の 1 行を別の列の値で縦に並べ直せるのは集合演算子だけ",
+          "fate": "kept",
+          "where": "### 横に並んだ列を縦に並べ直す"
+        },
+        {
+          "point": "JOIN は表を横につなぐ演算で、行数は結合条件に合う組合せの数",
+          "fate": "figure",
+          "where": "477 の図 2"
+        },
+        {
+          "point": "JOIN には 1 行の値を別の列ごとに縦へ並べ直す働きは無い",
+          "fate": "duplicate",
+          "where": "### 横に並んだ列を縦に並べ直す（並べ直せるのは集合演算子だけ）"
+        },
+        {
+          "point": "INTERSECT は積集合（両方に現れる行だけ）、EXCEPT は差集合（一方にしかない行だけ）の意味",
+          "fate": "owner",
+          "where": "154"
+        },
+        {
+          "point": "INTERSECT と EXCEPT は積み重ねではなく絞り込みで、共通する行が無ければ 0 行",
+          "fate": "kept",
+          "where": "### 混同しやすい用語"
+        }
+      ]
+    },
+    {
+      "topic_id": 155,
+      "points": [
+        {
+          "point": "集合関数の定義（SUM・AVG・MAX・MIN・COUNT のように複数行から 1 つの値を求める関数）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "別名は集約関数",
+          "fate": "kept",
+          "where": "### NULL と集合関数"
+        },
+        {
+          "point": "NULL の行は無視して計算する",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "対象の値がすべて NULL だと COUNT 以外の結果は NULL で、0 とは別の扱い",
+          "fate": "kept",
+          "where": "explanation（0 ではなく NULL）と ### NULL と集合関数の表（COUNT は 0）"
+        },
+        {
+          "point": "対象がすべて NULL になる例は外部結合で相手が見つからない行（explanation の括弧）",
+          "fate": "duplicate",
+          "where": "### NULL と集合関数"
+        },
+        {
+          "point": "NULL のままでは比較が成立しないので COALESCE(式, 0) で既定値へ置き換えてから比較する",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "個々の行を絞る条件は WHERE、集約した値で絞る条件は HAVING",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "集合関数は NULL の行を取り除いてから計算するので、NULL を含む列の平均は NULL を 0 とみなした平均と違う",
+          "fate": "kept",
+          "where": "### NULL と集合関数"
+        },
+        {
+          "point": "関数ごとの NULL の扱いと対象が 0 行のときの結果（表。AVG は分母も減る、COUNT は 0）",
+          "fate": "kept",
+          "where": "### NULL と集合関数"
+        },
+        {
+          "point": "外部結合で左の表にあって右に相手が無い行は右側の列がすべて NULL で残り、その部品だけのグループの合計は NULL",
+          "fate": "kept",
+          "where": "### NULL と集合関数"
+        },
+        {
+          "point": "COALESCE(式1, 式2) の働き（式1 が NULL でなければ式1、NULL なら式2）",
+          "fate": "kept",
+          "where": "### NULL を既定値に変える"
+        },
+        {
+          "point": "置き換え先には 0 のような実際の値を書く",
+          "fate": "kept",
+          "where": "### NULL を既定値に変える"
+        },
+        {
+          "point": "NULL との比較は不定になり CASE の WHEN は成立せず ELSE 側が選ばれる",
+          "fate": "kept",
+          "where": "### NULL を既定値に変える"
+        },
+        {
+          "point": "在庫が 1 件も無い部品を発注必要と判定するには NULL を 0 に置き換える",
+          "fate": "kept",
+          "where": "### NULL を既定値に変える"
+        },
+        {
+          "point": "どの集合関数を使うか。在庫が倉庫ごとの行に分かれているなら合計（SUM）で発注点と比べる",
+          "fate": "kept",
+          "where": "### NULL を既定値に変える"
+        },
+        {
+          "point": "数量が複数行に分かれて記録されているかを表の作りから確かめる",
+          "fate": "kept",
+          "where": "### NULL を既定値に変える"
+        },
+        {
+          "point": "SQL の評価順（FROM→WHERE→GROUP BY→HAVING→SELECT）",
+          "fate": "figure",
+          "where": "155 の図 1"
+        },
+        {
+          "point": "この順序が条件の置き場所を決める",
+          "fate": "kept",
+          "where": "### WHERE と HAVING の使い分け"
+        },
+        {
+          "point": "WHERE は個々の行の値で絞る条件で、集約より前に効く",
+          "fate": "figure",
+          "where": "155 の図 1（WHERE の段の『個々の行の値で絞る・集約の前』）"
+        },
+        {
+          "point": "日付の範囲や区分の指定は WHERE に書く",
+          "fate": "kept",
+          "where": "### WHERE と HAVING の使い分け"
+        },
+        {
+          "point": "HAVING は集合関数の値で絞る条件",
+          "fate": "figure",
+          "where": "155 の図 1（HAVING の段）"
+        },
+        {
+          "point": "平均が基準以上・件数が何件以上の判定は HAVING でしか書けない",
+          "fate": "kept",
+          "where": "### WHERE と HAVING の使い分け"
+        },
+        {
+          "point": "HAVING に集約していない列を書くとグループを代表しない値で判定し、多くの DBMS でエラー",
+          "fate": "kept",
+          "where": "### WHERE と HAVING の使い分け"
+        },
+        {
+          "point": "順序を取り違えると、絞ってから平均か平均してから絞るかが変わり結果が別物",
+          "fate": "kept",
+          "where": "### WHERE と HAVING の使い分け"
+        },
+        {
+          "point": "特定の年度だけのクラス平均なら、年度は WHERE、平均の基準は HAVING",
+          "fate": "kept",
+          "where": "### WHERE と HAVING の使い分け"
+        }
+      ]
+    },
+    {
+      "topic_id": 401,
+      "points": [
+        {
+          "point": "副問合せの定義（SELECT 文の中に入れ子で書かれた別の SELECT 文で、結果を外側の条件などに使う）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "実際の表データに SQL を当てはめて結果の行数や値を求める問題が出る（問われ方の文）",
+          "fate": "duplicate",
+          "where": "### 計算の解き方（同じ求め方を解いてみせる）"
+        },
+        {
+          "point": "AVG などの集合関数を含む副問合せを先に計算し、その値で外側の WHERE を絞る",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "DISTINCT が付いていれば最後に重複を除いて数える",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "副問合せを含む SQL は内側から外側へ読む",
+          "fate": "kept",
+          "where": "### 評価の順序"
+        },
+        {
+          "point": "内側の SELECT が値か集合を返し、外側の WHERE がそれで行を絞る",
+          "fate": "kept",
+          "where": "### 評価の順序"
+        },
+        {
+          "point": "GROUP BY を伴わない集合関数だけなら返るのは 1 つの値",
+          "fate": "figure",
+          "where": "401 の図 2（集合関数だけの行）"
+        },
+        {
+          "point": "その場合は「WHERE 列の式 > 定数」と同じ構造に置き換えて考えられる",
+          "fate": "kept",
+          "where": "### 評価の順序"
+        },
+        {
+          "point": "GROUP BY を伴う副問合せは行がグループごとに返るので IN や ANY で受ける",
+          "fate": "figure",
+          "where": "401 の図 2（GROUP BY 付きの行）"
+        },
+        {
+          "point": "集合関数と GROUP BY が複数の行をまとめること",
+          "fate": "owner",
+          "where": "155"
+        },
+        {
+          "point": "内側が外側の行の値を参照する形は相関副問合せで、外側の 1 行ごとに内側を評価する（「なお、」の文）",
+          "fate": "kept",
+          "where": "### 評価の順序（相関副問合せを文で指す。評価の回数は 401 の図 2）"
+        },
+        {
+          "point": "商品表 10 行で、差が平均より大きい行の仕入先コードを DISTINCT で数える例",
+          "fate": "kept",
+          "where": "### 計算の解き方"
+        },
+        {
+          "point": "各行の差 200、200、100、900、400、200、300、500、500、300",
+          "fate": "kept",
+          "where": "### 計算の解き方"
+        },
+        {
+          "point": "AVG ＝ 3,600 ÷ 10 行 ＝ 360",
+          "fate": "kept",
+          "where": "### 計算の解き方"
+        },
+        {
+          "point": "差が 360 より大きい行は 900（D004・S1）、400（E005・S1）、500（H008・S4）、500（I009・S5）の 4 行",
+          "fate": "kept",
+          "where": "### 計算の解き方"
+        },
+        {
+          "point": "ちょうど 360 の行があっても「>」なので含めない",
+          "fate": "figure",
+          "where": "401 の図 1（手順 4 の note『「>」は 300 ちょうどを含まない』。図は別の値の例）"
+        },
+        {
+          "point": "DISTINCT 仕入先コードで S1、S4、S5 の 3 つ",
+          "fate": "kept",
+          "where": "### 計算の解き方"
+        },
+        {
+          "point": "計算そのものより数え間違いが起きやすい（問われ方の文）",
+          "fate": "duplicate",
+          "where": "### 計算の解き方"
+        },
+        {
+          "point": "10 行程度なら全行の差を書き出してから平均を出すのが最速で確実",
+          "fate": "duplicate",
+          "where": "### 計算の解き方（手順 1・2）"
+        },
+        {
+          "point": "DISTINCT を見落とすと条件を満たす行数を答えてしまう",
+          "fate": "explanation",
+          "where": "2022r04a-q28 のエの note"
+        },
+        {
+          "point": "何を数えさせられているか（行数か重複を除いた値の数か）を最初に確認する",
+          "fate": "duplicate",
+          "where": "explanation の DISTINCT の箇条"
+        }
+      ]
+    },
+    {
+      "topic_id": 153,
+      "points": [
+        {
+          "point": "相関副問合せの定義（副問合せの中で外側の問合せの列を参照する形）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "外側の 1 行ごとに副問合せを評価し直す（定義の文の後半）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "EXISTS は 1 行でも返せば真、NOT EXISTS は 1 行も返さなければ真。値の大小ではなく行の有無を見る",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "比較の境界（「30 より大きい」に 30 は含まれない）で行数が変わる",
+          "fate": "kept",
+          "where": "### 計算の解き方"
+        },
+        {
+          "point": "副問合せ側に関連する行が 1 行も無い場合の扱いで行数が変わる",
+          "fate": "figure",
+          "where": "153 の図 1（K03 の note）"
+        },
+        {
+          "point": "外側の列を参照する副問合せは単独では実行できず、外側の 1 行ごとに値を当てはめて実行し直す",
+          "fate": "kept",
+          "where": "### 外側の行ごとに評価し直す"
+        },
+        {
+          "point": "相関の無い副問合せは全体で 1 回しか評価されない（しくみの文）",
+          "fate": "kept",
+          "where": "### 外側の行ごとに評価し直す"
+        },
+        {
+          "point": "EXISTS / NOT EXISTS は行の有無だけを判定する（detail の言い直し）",
+          "fate": "duplicate",
+          "where": "explanation"
+        },
+        {
+          "point": "副問合せの SELECT に何の列を並べても結果は変わらない",
+          "fate": "kept",
+          "where": "### 外側の行ごとに評価し直す"
+        },
+        {
+          "point": "NOT EXISTS は条件に合う行が 1 行も無いときに真で、関連する行が存在しない行も真",
+          "fate": "kept",
+          "where": "### 外側の行ごとに評価し直す"
+        },
+        {
+          "point": "行数を数える手順 1〜4（相関条件に当てはめる・条件を満たす行を探す・NOT EXISTS の真偽・DISTINCT）",
+          "fate": "kept",
+          "where": "### 計算の解き方"
+        },
+        {
+          "point": "在庫数 30 を超える在庫を持つ製品を除く条件では、ちょうど 30 の製品は除かれない",
+          "fate": "kept",
+          "where": "### 計算の解き方"
+        },
+        {
+          "point": "倉庫ごとに行が分かれているときはどれか 1 行でも条件を満たせば除かれる",
+          "fate": "kept",
+          "where": "### 計算の解き方"
+        },
+        {
+          "point": "在庫表に 1 行も現れない製品は残る",
+          "fate": "figure",
+          "where": "153 の図 1（K03 の段『注文 表に行が無い ＝ 0 行』）"
+        },
+        {
+          "point": "この 2 つを取りこぼすと行数が合わない",
+          "fate": "explanation",
+          "where": "2023r05a-q29 のアの note"
+        },
+        {
+          "point": "相関かどうかは副問合せの中に外側の表の別名で修飾した列があるかで分かる",
+          "fate": "kept",
+          "where": "### 外側の行ごとに評価し直す"
+        },
+        {
+          "point": "単独で実行できる副問合せは非相関で全体で 1 回だけ評価（相関のある条件と無い条件の言い直し）",
+          "fate": "duplicate",
+          "where": "### 外側の行ごとに評価し直す"
+        },
+        {
+          "point": "同じ表を別名でもう一度参照すると、外側で扱っている行とは別の行を見る",
+          "fate": "kept",
+          "where": "### 相関が要る条件と要らない条件"
+        },
+        {
+          "point": "いま処理している行の値を条件にしたいのか、表のどこかに条件を満たす行があるかを問いたいのかで書き方が変わる",
+          "fate": "kept",
+          "where": "### 相関が要る条件と要らない条件"
+        },
+        {
+          "point": "外側の FROM の別名どうしを比べるだけで済む条件なら副問合せは要らない",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "ある列が複数の値のどれとも一致しないことは NOT IN に値を並べて書ける",
+          "fate": "kept",
+          "where": "### 相関が要る条件と要らない条件"
+        },
+        {
+          "point": "相関副問合せが要るのは外側の行ごとに相手の表を見に行かないと判定できないとき",
+          "fate": "kept",
+          "where": "### 相関が要る条件と要らない条件"
+        }
+      ]
+    },
+    {
+      "topic_id": 150,
+      "points": [
+        {
+          "point": "ウィンドウ関数の定義（OVER 句で指定した範囲ごとに順位や集計を求める関数）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "GROUP BY と違って行をまとめずに残す（定義の文の後半）",
+          "fate": "figure",
+          "where": "150 の図 2（explanation の直後）"
+        },
+        {
+          "point": "基本の形 OVER (PARTITION BY 区切る列 ORDER BY 並べる列)",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "PARTITION BY はグループ分けの軸、ORDER BY はその中の並び順、ROW_NUMBER は 1 から連番（explanation の箇条）",
+          "fate": "duplicate",
+          "where": "### OVER句の読み方"
+        },
+        {
+          "point": "グループごとの最初の 1 件は、その列の昇順で番号を振り番号 1 の行に絞る",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "OVER 句の中身は区切りと並び順の 2 つで決まる",
+          "fate": "kept",
+          "where": "### OVER句の読み方"
+        },
+        {
+          "point": "PARTITION BY は行をグループに区切る指定",
+          "fate": "kept",
+          "where": "### OVER句の読み方"
+        },
+        {
+          "point": "PARTITION BY は GROUP BY と似ているが行数は減らない",
+          "fate": "figure",
+          "where": "150 の図 2"
+        },
+        {
+          "point": "ORDER BY は区切りの中の並び順で、ROW_NUMBER や RANK はこの順に番号を振る",
+          "fate": "kept",
+          "where": "### OVER句の読み方"
+        },
+        {
+          "point": "PARTITION BY を書かなければ表全体が 1 つの区切りで、番号 1 に絞ると全体で 1 行しか残らない",
+          "fate": "kept",
+          "where": "### OVER句の読み方"
+        },
+        {
+          "point": "ROW_NUMBER・RANK・DENSE_RANK の同じ値のときの番号の違い（表）",
+          "fate": "kept",
+          "where": "### 順位を付ける関数の違い"
+        },
+        {
+          "point": "学生ごとに実施回が最小の行は、GROUP BY の MIN(実施回) と結合でも、ウィンドウ関数でも書ける",
+          "fate": "kept",
+          "where": "### GROUP BY と結合からの書き換え"
+        },
+        {
+          "point": "ウィンドウ関数なら学生番号で区切り実施回の昇順に番号を振り、番号 1 の行を残す",
+          "fate": "kept",
+          "where": "### GROUP BY と結合からの書き換え"
+        },
+        {
+          "point": "GROUP BY が複数の行をまとめること",
+          "fate": "owner",
+          "where": "155"
+        },
+        {
+          "point": "書き換えの手順 1〜3（グループ化の列を PARTITION BY に・対象の列を ORDER BY に・番号 1 に絞る）",
+          "fate": "kept",
+          "where": "### GROUP BY と結合からの書き換え"
+        },
+        {
+          "point": "MIN に対応するのは昇順、MAX に対応するのは降順",
+          "fate": "kept",
+          "where": "### GROUP BY と結合からの書き換え"
+        },
+        {
+          "point": "ORDER BY に置く列は元の SQL で MIN や MAX を取っている列にそろえる（末尾の文）",
+          "fate": "duplicate",
+          "where": "### GROUP BY と結合からの書き換え（手順 2）"
+        }
+      ]
+    }
+  ]
+}

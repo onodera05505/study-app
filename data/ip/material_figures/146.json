@@ -5,31 +5,29 @@
     {
       "id": 1,
       "type": "cycle",
-      "after": "### PDCA のどこで何をするか",
-      "caption": "サービスレベル管理の 4 段階を輪で表した図です。矢印のラベルで各段階が次へ渡す物をたどり、確認と改善の切れ目を読みます。",
+      "after": "explanation",
+      "caption": "サービスレベル管理を、合意した SLA から始まる輪で表した図です。矢印のラベルで、各段階が次の段階へ渡す物をたどります。",
       "center": "サービス\nレベル管理",
       "stages": [
         {
-          "label": "P 計画\n目標を合意し SLA を作る",
+          "label": "P 計画\n顧客と目標の水準を決める",
           "icon": "document",
-          "next_label": "合意した SLA"
+          "next_label": "取り決めた SLA"
         },
         {
-          "label": "D 実行\nSLA に沿って提供する",
+          "label": "D 実行\n決めた水準でサービスを出す",
           "icon": "server",
-          "next_label": "提供の実績"
+          "next_label": "日々の実績"
         },
         {
-          "label": "C 確認\n監視・測定して報告書",
+          "label": "C 確認\n実績を目標と比べる",
           "icon": "search",
-          "next_label": "サービス報告書",
-          "emphasis": true
+          "next_label": "目標との差"
         },
         {
-          "label": "A 改善\nサービスの改善計画を作る",
+          "label": "A 改善\n差を埋める直し方を決める",
           "icon": "gear",
-          "next_label": "改善計画・合意の見直し",
-          "emphasis": true
+          "next_label": "直し方・合意の見直し"
         }
       ]
     }

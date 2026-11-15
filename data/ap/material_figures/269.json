@@ -5,38 +5,32 @@
     {
       "id": 1,
       "type": "layers",
-      "after": "### EA の 4 つの階層と参照モデル",
-      "caption": "EA の 4 つの階層を、業務に近い側を上にして積んでいます。上の層で決めたことを下の層が具体化し、右の注記が各層の手本となる参照モデルです。",
+      "after": "explanation",
+      "caption": "EA の 4 つの階層ごとに、何をどう分類して書くかの手本となる参照モデルがあります。右の注記が参照モデルの名前、層の 2 行目がその手本の中身です。",
       "shape": "stack",
       "layers": [
         {
-          "label": "ビジネス\n業務体系とシステム体系",
-          "note": "BRM",
-          "emphasis": true
+          "label": "ビジネス層\n業務の分け方の手本",
+          "note": "参照モデル BRM（Business）"
         },
         {
-          "label": "データ\n共有する情報の名称・定義・属性",
-          "note": "DRM"
+          "label": "データ層\n共有する情報の書き方の手本",
+          "note": "参照モデル DRM（Data）"
         },
         {
-          "label": "アプリケーション\n機能で分けたサービス部品",
-          "note": "SRM"
+          "label": "アプリケーション層\n機能部品の分け方の手本",
+          "note": "参照モデル SRM（Service）"
         },
         {
-          "label": "テクノロジ\n部品を動かす基盤の標準",
-          "note": "TRM"
+          "label": "テクノロジ層\n技術基盤の標準の手本",
+          "note": "参照モデル TRM（Technical）"
         }
       ],
       "brackets": [
         {
           "from": 0,
-          "to": 0,
-          "label": "最も業務に\n近い"
-        },
-        {
-          "from": 3,
           "to": 3,
-          "label": "最も実装に\n近い"
+          "label": "EA の 4 階層\n上ほど業務寄り"
         }
       ]
     }

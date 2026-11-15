@@ -1,0 +1,597 @@
+{
+  "bundle": "15-2",
+  "shared": [
+    {
+      "item": "記憶媒体の 3 つの記録方式（半導体・磁気・光）の比較",
+      "count": 3,
+      "holder": 169,
+      "topics": [
+        169,
+        356,
+        275
+      ]
+    },
+    {
+      "item": "電源を切ると消えるメモリと残るメモリの一覧（DRAM・SRAM／ROM・フラッシュメモリ）",
+      "count": 4,
+      "holder": 169,
+      "topics": [
+        169,
+        170,
+        432,
+        356
+      ]
+    },
+    {
+      "item": "DRAM と SRAM の違い（リフレッシュ・速さ・値段と容量・主記憶とキャッシュメモリへの使い分け）",
+      "count": 3,
+      "holder": 169,
+      "topics": [
+        169,
+        170,
+        432
+      ]
+    },
+    {
+      "item": "記憶階層（速いほど高価で小容量、CPU に近い側から順に遅く大きくなる並び）",
+      "count": 3,
+      "holder": 432,
+      "topics": [
+        432,
+        355,
+        356
+      ]
+    },
+    {
+      "item": "DVD-RAM は名前に RAM と付くが光ディスクで内容が残る",
+      "count": 2,
+      "holder": 275,
+      "topics": [
+        170,
+        275
+      ]
+    }
+  ],
+  "topics": [
+    {
+      "topic_id": 169,
+      "points": [
+        {
+          "point": "半導体メモリは IC チップの中に電気の形でデータを記憶する装置（定義）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "RAM・SSD・USB メモリ・SD カードが当てはまる",
+          "fate": "kept",
+          "where": "### 半導体メモリの種類と使われる所（表の DRAM・SRAM と、フラッシュメモリの用途の SSD・USB メモリ・SD カード）"
+        },
+        {
+          "point": "キーワード: IC チップ・動く部品がない・RAM や SSD",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "記憶媒体は半導体・磁気・光の 3 方式（要点の箇条と detail の文章）",
+          "fate": "figure",
+          "where": "169 の図 1（列と caption）"
+        },
+        {
+          "point": "HDD は磁気、CD や DVD は光なので半導体メモリに含まない",
+          "fate": "later",
+          "where": "275 の explanation（DVD はレーザー光で読み書きする光ディスクで、DVD-RAM も名前に RAM と付くが光ディスク）と ### 混同しやすい用語（CD は DVD と名前の付け方が共通の、同じ並びのディスク）。HDD が磁気であることは 169 の図 1（磁気の列）"
+        },
+        {
+          "point": "RAM は電源を切ると消え、ROM とフラッシュメモリは残る（要点の箇条）",
+          "fate": "duplicate",
+          "where": "### 半導体メモリの種類と使われる所 の表（explanation には消える種類と残る種類があることだけを残した）"
+        },
+        {
+          "point": "半導体メモリは電気をため、動く部品がないので読み書きが速く衝撃に強い",
+          "fate": "figure",
+          "where": "169 の図 1（記録のしかたと動く部品の行）"
+        },
+        {
+          "point": "HDD は円盤の表面を磁化し、円盤を回してヘッドを動かす機械的な動作を伴う",
+          "fate": "figure",
+          "where": "169 の図 1（磁気の列）"
+        },
+        {
+          "point": "光ディスク（CD・DVD・Blu-ray）はレーザー光の反射の違いで読む",
+          "fate": "figure",
+          "where": "169 の図 1（光の列のレーザー光の反射と Blu-ray）。CD と DVD がレーザー光で読む光ディスクであることは 2025r07-q75 の correct_reason"
+        },
+        {
+          "point": "3 つの記録方式が記憶媒体を整理する軸になる",
+          "fate": "figure",
+          "where": "169 の図 1（caption）"
+        },
+        {
+          "point": "DRAM・SRAM・ROM・フラッシュメモリの電源を切ったときと主な用途の表",
+          "fate": "kept",
+          "where": "### 半導体メモリの種類と使われる所"
+        },
+        {
+          "point": "DRAM は電気が自然に抜けるのでリフレッシュが要り、安く大容量にしやすいので主記憶に向く",
+          "fate": "kept",
+          "where": "### 半導体メモリの種類と使われる所"
+        },
+        {
+          "point": "SRAM は速さを買われてキャッシュメモリに使われる",
+          "fate": "kept",
+          "where": "### 半導体メモリの種類と使われる所"
+        },
+        {
+          "point": "SSD・USB メモリ・SD カードの中身はフラッシュメモリで、利用者が内容を書き換えられる",
+          "fate": "kept",
+          "where": "### 半導体メモリの種類と使われる所（表の用途の列と文）"
+        }
+      ]
+    },
+    {
+      "topic_id": 170,
+      "points": [
+        {
+          "point": "揮発性メモリは電源の供給が止まると記憶内容が消えるメモリ（定義）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "代表例は PC の主記憶に使う DRAM",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "キーワード: 電源を切ると消える・RAM の仲間",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "揮発性なのは DRAM と SRAM だけ",
+          "fate": "figure",
+          "where": "170 の図 1（内側の円の領域）"
+        },
+        {
+          "point": "ROM とフラッシュメモリは不揮発性",
+          "fate": "figure",
+          "where": "170 の図 1（半導体メモリだけの領域）。不揮発性という呼び名は explanation に残した"
+        },
+        {
+          "point": "SSD は不揮発性",
+          "fate": "owner",
+          "where": "169"
+        },
+        {
+          "point": "揮発性は名前でなく実体で決まり、DVD-RAM は光ディスクなので内容が残る",
+          "fate": "later",
+          "where": "275 の explanation の箇条（DVD-RAM は名前に RAM と付くが光ディスクで、電源を切っても内容が残る）。2024r06-q56 の choices ア の note にもある"
+        },
+        {
+          "point": "DRAM は小さなコンデンサに電気をためて 1 と 0 を表す",
+          "fate": "kept",
+          "where": "### 電源を切ると内容が消える理由"
+        },
+        {
+          "point": "電気は自然に抜けるので、通電中もリフレッシュで書き戻している",
+          "fate": "kept",
+          "where": "### 電源を切ると内容が消える理由（リフレッシュは 169 を指して 1 文で触れる）"
+        },
+        {
+          "point": "電源を切ればリフレッシュも止まり、記憶内容は失われる",
+          "fate": "kept",
+          "where": "### 電源を切ると内容が消える理由"
+        },
+        {
+          "point": "SRAM は別の回路で保持するためリフレッシュが要らない",
+          "fate": "owner",
+          "where": "169"
+        },
+        {
+          "point": "SRAM も電源を切れば消える点は DRAM と同じ",
+          "fate": "kept",
+          "where": "### 電源を切ると内容が消える理由"
+        },
+        {
+          "point": "作業中のデータは電源を切っても残る SSD やハードディスクへ保存する",
+          "fate": "kept",
+          "where": "### 電源を切ると内容が消える理由"
+        },
+        {
+          "point": "DRAM・SRAM・ROM・フラッシュメモリの電源を切ったときと実体の表",
+          "fate": "owner",
+          "where": "169"
+        },
+        {
+          "point": "表の DVD-RAM の行（残る・光ディスク）",
+          "fate": "later",
+          "where": "275 の explanation の箇条（DVD-RAM は光ディスクで内容が残る）"
+        },
+        {
+          "point": "「RAM の仲間だけが揮発性」という整理（覚え方の文）",
+          "fate": "figure",
+          "where": "170 の図 1（内側の円の名前「RAM の仲間」）。キーワードにも残した"
+        },
+        {
+          "point": "DVD-RAM のように名前に RAM と付くだけの物に注意（detail の言い直し）",
+          "fate": "later",
+          "where": "275 の explanation の箇条（上の DVD-RAM の点と同じ）"
+        }
+      ]
+    },
+    {
+      "topic_id": 432,
+      "points": [
+        {
+          "point": "キャッシュメモリは CPU と主記憶の間に置く小容量でとても高速なメモリ（定義）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "よく使うデータを手元に置いて主記憶へ取りに行く回数を減らす",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "キーワード: CPU と主記憶の間・高速・小容量",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "階層と部品の対応はキャッシュ＝SRAM、主記憶＝DRAM、補助記憶＝SSD や HDD",
+          "fate": "figure",
+          "where": "432 の図 2（最下行の使われる所。キャッシュ＝SRAM・主記憶＝DRAM とその理由）。補助記憶の SSD・HDD は explanation の箇条"
+        },
+        {
+          "point": "SRAM は高速で高価、DRAM は安く大容量にできる（要点の箇条）",
+          "fate": "owner",
+          "where": "169"
+        },
+        {
+          "point": "アクセスが速い順にキャッシュメモリ、主記憶、SSD、HDD",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "記憶装置は速いものほど高価で容量が小さい",
+          "fate": "kept",
+          "where": "### 記憶階層で速さと容量を両立させる"
+        },
+        {
+          "point": "CPU に近いほど速く小さく、遠いほど遅く大きい階層で速さと容量を両立する",
+          "fate": "kept",
+          "where": "### 記憶階層で速さと容量を両立させる"
+        },
+        {
+          "point": "CPU に最も近いのがキャッシュ、次が主記憶、最も遠いのが補助記憶",
+          "fate": "figure",
+          "where": "432 の図 1（層の並び）"
+        },
+        {
+          "point": "同じデータを繰り返し使うので、キャッシュに読み込めば次から主記憶へ取りに行かずに済む",
+          "fate": "kept",
+          "where": "### 記憶階層で速さと容量を両立させる"
+        },
+        {
+          "point": "キャッシュ自体も階層で、1 次は CPU に最も近く 2 次より小さいが高速",
+          "fate": "figure",
+          "where": "432 の図 1（1 次と 2 次の層のラベル）。1 次と 2 次に分かれることは ### 1次キャッシュと2次キャッシュ"
+        },
+        {
+          "point": "2 次キャッシュは 1 次より容量が大きく、主記憶よりは速い",
+          "fate": "kept",
+          "where": "### 1次キャッシュと2次キャッシュ（容量は 432 の図 1）"
+        },
+        {
+          "point": "CPU は 1 次、2 次、主記憶の順に探す",
+          "fate": "kept",
+          "where": "### 1次キャッシュと2次キャッシュ"
+        },
+        {
+          "point": "必要なデータが最初から全部キャッシュにある必要はなく、無ければ主記憶から読む",
+          "fate": "kept",
+          "where": "### 1次キャッシュと2次キャッシュ"
+        },
+        {
+          "point": "SRAM は高速でリフレッシュ不要だが、回路が複雑で高価なので大容量にできずキャッシュに使う",
+          "fate": "owner",
+          "where": "169（対比は 432 の図 2 にも残る）"
+        },
+        {
+          "point": "DRAM はリフレッシュが要り SRAM より遅いが、安く大容量にできるので主記憶に使う",
+          "fate": "owner",
+          "where": "169（対比は 432 の図 2 にも残る）"
+        },
+        {
+          "point": "SRAM も DRAM も電源を切ると消える揮発性",
+          "fate": "owner",
+          "where": "169"
+        },
+        {
+          "point": "「並べて覚えると取り違えません」（覚え方の文）",
+          "fate": "aside",
+          "where": "事実を持たない覚え方の助言。対比そのものは 432 の図 2 と 169 にある"
+        }
+      ]
+    },
+    {
+      "topic_id": 355,
+      "points": [
+        {
+          "point": "レジスタは CPU の内部にある高速で小容量の記憶回路（定義）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "計算や制御に使う値を一時的に置く場所",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "キーワード: CPU 内部・高速小容量・一時的",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "記憶装置の中で最も高速で最も小容量",
+          "fate": "figure",
+          "where": "355 の図 1（レジスタの箱「最も速く最も小さい」）"
+        },
+        {
+          "point": "速い順にレジスタ、キャッシュメモリ、主記憶、補助記憶",
+          "fate": "explanation",
+          "where": "question_explanations の 2021r03-q64 の correct_reason（速い順にレジスタ、キャッシュメモリ、主記憶、補助記憶）。キャッシュから補助記憶までの並びは 432 の図 1"
+        },
+        {
+          "point": "「この並びを覚えると多くの問題が解けます」",
+          "fate": "aside",
+          "where": "問われ方・覚え方の文で事実を持たない"
+        },
+        {
+          "point": "主記憶は CPU に比べてかなり遅く、そのまま読み書きすると待ち時間ばかりになる",
+          "fate": "kept",
+          "where": "### CPU の中に置く理由"
+        },
+        {
+          "point": "CPU の中にごく小さく極めて速い入れ物を用意する",
+          "fate": "kept",
+          "where": "### CPU の中に置く理由"
+        },
+        {
+          "point": "計算に使う値をいったんレジスタへ移してから処理する",
+          "fate": "figure",
+          "where": "355 の図 1（主記憶→キャッシュメモリ→レジスタ→演算の矢印と caption）"
+        },
+        {
+          "point": "速いほど高価で容量が小さいので、速さと容量の違う装置を段階に重ねる",
+          "fate": "owner",
+          "where": "432"
+        },
+        {
+          "point": "キャッシュメモリは CPU と主記憶の速度差を埋めるメモリで、レジスタより大容量で低速",
+          "fate": "kept",
+          "where": "### 混同しやすい用語"
+        }
+      ]
+    },
+    {
+      "topic_id": 168,
+      "points": [
+        {
+          "point": "VRAM は画面に表示する内容を保持する画面表示専用のメモリ（定義）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "キーワード: 画面表示・専用メモリ",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "GPU が計算した結果を書き込み、その内容が画面へ送られる",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "解像度や色数が上がるほど必要な容量が大きくなる",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "画面の映像は点ごとの色の情報の集まり",
+          "fate": "kept",
+          "where": "### 専用のメモリを置く理由"
+        },
+        {
+          "point": "表示は絶えず更新されるので、主記憶とは別に高速な専用の領域を用意する",
+          "fate": "kept",
+          "where": "### 専用のメモリを置く理由"
+        },
+        {
+          "point": "電源を切れば内容が消える",
+          "fate": "prior",
+          "where": "170"
+        },
+        {
+          "point": "メモリは名前でなく何のために置かれているかで整理する",
+          "fate": "kept",
+          "where": "### 混同しやすい用語"
+        },
+        {
+          "point": "キャッシュメモリは処理を速くするために置き、CPU が主記憶を待つ時間を減らす",
+          "fate": "figure",
+          "where": "168 の図 1（キャッシュメモリの行）"
+        },
+        {
+          "point": "主記憶は実行中のプログラムやデータを置く処理全般の作業台",
+          "fate": "figure",
+          "where": "168 の図 1（主記憶の行）"
+        }
+      ]
+    },
+    {
+      "topic_id": 356,
+      "points": [
+        {
+          "point": "SSD はフラッシュメモリという半導体を記録媒体に使う補助記憶装置（定義）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "HDD の代わりに使われる",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "キーワード: 半導体・駆動機構がない・低消費電力",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "低消費電力・耐衝撃・静かさ・高速はすべて動く部品がないことから導ける",
+          "fate": "figure",
+          "where": "356 の図 1（SSD の列と caption）"
+        },
+        {
+          "point": "電源を切っても内容が残るので補助記憶として使える",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "IoT 機器の記録装置にも使われる",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "HDD は磁気を塗った円盤を回し、ヘッドが動いて読み書きする",
+          "fate": "kept",
+          "where": "### 動く部品が特徴を決める理由"
+        },
+        {
+          "point": "機械が動く分だけ電力を使い、振動や落下に弱い",
+          "fate": "kept",
+          "where": "### 動く部品が特徴を決める理由"
+        },
+        {
+          "point": "HDD は動作音がする",
+          "fate": "figure",
+          "where": "356 の図 1（速さと音の行）"
+        },
+        {
+          "point": "SSD は半導体に電気で記録し、動く部品がない",
+          "fate": "kept",
+          "where": "explanation（定義）と ### 動く部品が特徴を決める理由"
+        },
+        {
+          "point": "モーターやヘッドを動かさないので消費電力が小さく、ヘッドが円盤を傷つける壊れ方もしない",
+          "fate": "kept",
+          "where": "### 動く部品が特徴を決める理由"
+        },
+        {
+          "point": "ヘッドを動かす待ち時間が無いので速く、動作音もしない",
+          "fate": "figure",
+          "where": "356 の図 1（速さと音の行）"
+        },
+        {
+          "point": "丸暗記せず理由から導けば初めての言い回しでも判断できる",
+          "fate": "aside",
+          "where": "学び方の助言で事実を持たない"
+        },
+        {
+          "point": "フラッシュメモリは SSD が記録に使う半導体そのもの（混同しやすい用語）",
+          "fate": "duplicate",
+          "where": "explanation（定義）"
+        },
+        {
+          "point": "フラッシュメモリは電源を切っても消えないので補助記憶に使える（混同しやすい用語）",
+          "fate": "duplicate",
+          "where": "explanation の箇条"
+        },
+        {
+          "point": "主記憶は実行中のプログラムを置き、電源を切ると消え、SSD より高速で役割が違う",
+          "fate": "kept",
+          "where": "### 混同しやすい用語"
+        }
+      ]
+    },
+    {
+      "topic_id": 275,
+      "points": [
+        {
+          "point": "DVD はレーザー光で記録面を読み書きする光ディスク（定義）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "名前の末尾の記号で書込みができるかどうかが決まる",
+          "fate": "kept",
+          "where": "explanation の箇条"
+        },
+        {
+          "point": "キーワード: 末尾の記号・読出し専用・書換え可",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "ROM は読出し専用で、製造時に内容を刻むのであとから変えられない",
+          "fate": "figure",
+          "where": "275 の図 1（DVD-ROM の列）。ROM が読出し専用を表すことは ### 記号の由来 にも"
+        },
+        {
+          "point": "R は Recordable の頭文字",
+          "fate": "kept",
+          "where": "### 記号の由来"
+        },
+        {
+          "point": "R は 1 回だけ書き込め、消して書き直せない",
+          "fate": "figure",
+          "where": "275 の図 1（DVD-R の列）"
+        },
+        {
+          "point": "RW と RAM は繰り返し書き換えられる",
+          "fate": "figure",
+          "where": "275 の図 1（DVD-RW／RAM の列）"
+        },
+        {
+          "point": "DVD は補助記憶装置の一つ",
+          "fate": "kept",
+          "where": "explanation（定義）"
+        },
+        {
+          "point": "DVD-ROM は市販の映像ソフトやソフトウェアの配布に使われる",
+          "fate": "figure",
+          "where": "275 の図 1（使い道の行）"
+        },
+        {
+          "point": "DVD-R は記録層の色素をレーザーで変化させ、元へ戻せないので 1 回限り",
+          "fate": "figure",
+          "where": "275 の図 1（記録のしかたの行）"
+        },
+        {
+          "point": "DVD-RW と DVD-RAM は状態を何度も変えられる素材を使う",
+          "fate": "figure",
+          "where": "275 の図 1（記録のしかたの行）"
+        },
+        {
+          "point": "名前の付け方は CD も共通で、CD-ROM は読出し専用、CD-R は 1 回だけ書き込める",
+          "fate": "kept",
+          "where": "### 混同しやすい用語"
+        },
+        {
+          "point": "同じ大きさのディスクでも CD より DVD のほうが容量が大きい",
+          "fate": "kept",
+          "where": "### 混同しやすい用語"
+        },
+        {
+          "point": "ブルーレイディスクは波長の短い青紫色レーザーで記録の密度を上げている",
+          "fate": "kept",
+          "where": "### 混同しやすい用語"
+        },
+        {
+          "point": "容量は CD、DVD、ブルーレイディスクの順に大きい",
+          "fate": "kept",
+          "where": "### 混同しやすい用語"
+        }
+      ]
+    }
+  ]
+}

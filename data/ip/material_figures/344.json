@@ -5,18 +5,18 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 範囲の広さ",
+      "after": "explanation",
       "caption": "矢印がプロジェクトへ向かう人は影響を与え、プロジェクトから矢印を受ける人は影響を受けます。どちらも利害関係者です。",
       "nodes": [
         {
-          "id": "ceo",
-          "label": "発注側の経営者\n費用と目的を決める",
+          "id": "inv",
+          "label": "出資者\n費用を出し成果を求める",
           "row": 0,
           "col": 0
         },
         {
-          "id": "usr",
-          "label": "発注側の利用部門\n完成後に使う",
+          "id": "cus",
+          "label": "顧客\n完成した物を使う",
           "row": 0,
           "col": 2
         },
@@ -34,28 +34,28 @@
           "col": 2
         },
         {
-          "id": "pm",
-          "label": "受注側の PM\nメンバー（作る人）",
+          "id": "team",
+          "label": "プロジェクトチーム\n計画して作る",
           "row": 2,
           "col": 0
         },
         {
-          "id": "sub",
-          "label": "協力会社\n発注元と直接の\n契約なし",
+          "id": "mnt",
+          "label": "保守会社\n完成後の手入れを担う",
           "row": 2,
           "col": 2
         }
       ],
       "edges": [
         {
-          "from": "ceo",
+          "from": "inv",
           "to": "prj",
-          "label": "費用を出す（与える）"
+          "label": "資金を出す（与える）"
         },
         {
           "from": "prj",
-          "to": "usr",
-          "label": "結果を使う（受ける）"
+          "to": "cus",
+          "label": "成果物を使う（受ける）"
         },
         {
           "from": "prj",
@@ -63,14 +63,14 @@
           "label": "工事などの影響（受ける）"
         },
         {
-          "from": "pm",
+          "from": "team",
           "to": "prj",
           "label": "作る（与える）"
         },
         {
-          "from": "sub",
-          "to": "prj",
-          "label": "作業を手伝う（与える）"
+          "from": "prj",
+          "to": "mnt",
+          "label": "完成後に引き継ぐ（受ける）"
         }
       ]
     }

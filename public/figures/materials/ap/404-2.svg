@@ -16,20 +16,20 @@
 <text x="790.2" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">Web サーバ</text>
 <polyline points="51,68 415.4,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="415.4,68 407.4,71.6 407.4,64.4" fill="#1f2937"/>
-<text x="233.2" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. ホスト名 www.example.com の IP アドレスを問い合わせる</text>
+<text x="233.2" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. ホスト名 shop.example.jp の IP アドレスを問い合わせる</text>
 <polyline points="415.4,108 51,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="51,108 59,104.4 59,111.6" fill="#1f2937"/>
 <text x="233.2" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. IP アドレスを返す</text>
 <polyline points="51,148 787.2,148" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="787.2,148 779.2,151.6 779.2,144.4" fill="#1f2937"/>
-<text x="419.1" y="141" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. IP アドレスとポート番号 8080 へ TCP 接続を張る</text>
+<text x="419.1" y="141" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. IP アドレスとポート番号 8443 へ TCP 接続を張る</text>
 <rect x="331.1" y="153" width="176" height="16" rx="3" fill="#ffffff"/>
 <text x="419.1" y="166.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ここまでが接続の前に要る情報</text>
 <polyline points="51,204 787.2,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="787.2,204 779.2,207.6 779.2,200.4" fill="#1f2937"/>
 <text x="419.1" y="197" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. HTTP リクエストでパスとクエリ文字列を送る</text>
-<rect x="294.5" y="209" width="249.2" height="16" rx="3" fill="#ffffff"/>
-<text x="419.1" y="222.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">/member/login?id=user は接続の後に渡す</text>
+<rect x="324.2" y="209" width="189.8" height="16" rx="3" fill="#ffffff"/>
+<text x="419.1" y="222.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">/cart?item=3 は接続の後に渡す</text>
 <polyline points="787.2,260 51,260" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="51,260 59,256.4 59,263.6" fill="#1f2937"/>
 <text x="419.1" y="253" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. 指定された資源を応答で返す</text>

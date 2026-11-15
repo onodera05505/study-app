@@ -3,63 +3,6 @@
   "term": "バックワードリカバリ（ロールバック）",
   "figures": [
     {
-      "id": 1,
-      "type": "blocks",
-      "after": "### なぜ戻す必要があるのか",
-      "caption": "処理の途中からは、全部成功して確定するか、異常終了して開始前へ戻るかの 2 通りしかありません。強調した開始前へ戻すのがロールバックです。",
-      "nodes": [
-        {
-          "id": "done",
-          "label": "全部成功\n更新を確定した",
-          "row": 0,
-          "col": 1
-        },
-        {
-          "id": "before",
-          "label": "開始前\n両方の口座が元のまま",
-          "row": 1,
-          "col": 0,
-          "emphasis": true
-        },
-        {
-          "id": "mid",
-          "label": "処理の途中\nA から引き出し済み",
-          "row": 1,
-          "col": 1,
-          "shape": "round"
-        },
-        {
-          "id": "fail",
-          "label": "異常終了\n途中で処理が止まった",
-          "row": 1,
-          "col": 2,
-          "icon": "warning"
-        }
-      ],
-      "edges": [
-        {
-          "from": "before",
-          "to": "mid",
-          "label": "更新を始める"
-        },
-        {
-          "from": "mid",
-          "to": "done",
-          "label": "全部終わればコミット"
-        },
-        {
-          "from": "mid",
-          "to": "fail",
-          "label": "障害が起きる"
-        },
-        {
-          "from": "fail",
-          "to": "before",
-          "label": "ログの更新前の値を書き戻す（ロールバック）"
-        }
-      ]
-    },
-    {
       "id": 2,
       "type": "matrix",
       "after": "### ロールフォワードとの使い分け",

@@ -5,18 +5,54 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### しくみ",
+      "after": "explanation",
       "caption": "自社の機能を API として公開すると、他社のサービスから呼び出され、企業をまたいだ価値が生まれます。",
       "nodes": [
-        {"id": "s", "label": "自社のシステム\n例：銀行の口座", "row": 0, "col": 0},
-        {"id": "a", "label": "オープン API\n接続仕様を外部に公開", "row": 0, "col": 1, "emphasis": true},
-        {"id": "c1", "label": "家計簿アプリ\n（他社）", "row": 0, "col": 2},
-        {"id": "c2", "label": "決済サービス\n（他社）", "row": 1, "col": 2}
+        {
+          "id": "s",
+          "label": "自社のシステム\n例：地図サービス",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "a",
+          "label": "オープン API\n社外に開いた接続の窓口",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "c1",
+          "label": "飲食店の検索アプリ\n（他社）\n店の場所を地図で示す",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "c2",
+          "label": "配車アプリ\n（他社）\n迎えの道順を示す",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "s", "to": "a", "label": "機能を公開"},
-        {"from": "a", "to": "c1", "label": "残高を取得", "arrow": "both"},
-        {"from": "a", "to": "c2", "label": "支払を依頼", "arrow": "both"}
+        {
+          "from": "s",
+          "to": "a",
+          "label": "機能を公開"
+        },
+        {
+          "from": "a",
+          "to": "c1",
+          "label": "地図を表示",
+          "arrow": "both"
+        },
+        {
+          "from": "a",
+          "to": "c2",
+          "label": "経路を取得",
+          "arrow": "both"
+        }
       ]
     }
   ]

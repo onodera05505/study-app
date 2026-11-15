@@ -36,7 +36,7 @@
         },
         {
           "id": "ab",
-          "label": "蓄電池\nもともと直流",
+          "label": "UPS の蓄電池\n直流で貯める",
           "row": 1,
           "col": 1,
           "shape": "round"
@@ -58,9 +58,16 @@
           "id": "b3",
           "label": "機器\n直流のまま受け取る",
           "row": 2,
-          "col": 3,
+          "col": 2,
           "icon": "server",
           "emphasis": true
+        },
+        {
+          "id": "bb",
+          "label": "蓄電池\n直流のまま配電につなぐ",
+          "row": 3,
+          "col": 1,
+          "shape": "round"
         }
       ],
       "edges": [
@@ -82,13 +89,13 @@
         {
           "from": "a1",
           "to": "ab",
-          "label": "直流で充電",
+          "label": "直流で充電・放電",
           "arrow": "both"
         },
         {
           "from": "b1",
-          "to": "ab",
-          "label": "直流のままつなぐ",
+          "to": "bb",
+          "label": "変換なしで充電・放電",
           "arrow": "both"
         },
         {

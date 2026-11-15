@@ -5,22 +5,65 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 基幹システムのデータを分析に使う",
-      "caption": "左の基幹システムがデータを集め、右の BI ツールがそれを使って経営者に見せます。BI は流れの使う側にあたります。",
+      "after": "explanation",
+      "caption": "左の基幹システムのデータを、BI ツールがまとめて集計して経営者に見せます。BI は流れの使う側にあたります。",
       "nodes": [
-        {"id": "sales", "label": "販売管理\n日々の売上を記録", "row": 0, "col": 0},
-        {"id": "acct", "label": "会計\n日々の仕訳を記録", "row": 1, "col": 0},
-        {"id": "buy", "label": "購買\n日々の仕入を記録", "row": 2, "col": 0},
-        {"id": "dwh", "label": "データウェアハウス\n分析用に集めた保管庫", "row": 1, "col": 1, "shape": "cylinder"},
-        {"id": "bi", "label": "BI ツール\n横断で集計し\n画面に表示", "row": 1, "col": 2, "emphasis": true, "icon": "chart"},
-        {"id": "mgr", "label": "経営者\n数字で判断する", "row": 1, "col": 3, "icon": "person"}
+        {
+          "id": "inv",
+          "label": "在庫管理\n日々の入出庫を記録",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "prod",
+          "label": "生産管理\n日々の生産量を記録",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "ship",
+          "label": "物流\n日々の配送を記録",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "bi",
+          "label": "BI ツール\nシステムをまたいで\n集計し画面に表示",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "chart"
+        },
+        {
+          "id": "mgr",
+          "label": "経営者\n数字で判断する",
+          "row": 1,
+          "col": 2,
+          "icon": "person"
+        }
       ],
       "edges": [
-        {"from": "sales", "to": "dwh", "label": "売上データ"},
-        {"from": "acct", "to": "dwh", "label": "会計データ"},
-        {"from": "buy", "to": "dwh", "label": "仕入データ"},
-        {"from": "dwh", "to": "bi", "label": "システムを\nまたいだデータ"},
-        {"from": "bi", "to": "mgr", "label": "ダッシュボード\n切り口を変えて見る", "arrow": "both"}
+        {
+          "from": "inv",
+          "to": "bi",
+          "label": "在庫データ"
+        },
+        {
+          "from": "prod",
+          "to": "bi",
+          "label": "生産データ"
+        },
+        {
+          "from": "ship",
+          "to": "bi",
+          "label": "配送データ"
+        },
+        {
+          "from": "bi",
+          "to": "mgr",
+          "label": "ダッシュボード\n切り口を変えて見る",
+          "arrow": "both"
+        }
       ]
     }
   ]

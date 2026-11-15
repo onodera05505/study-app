@@ -10,19 +10,19 @@
       "nodes": [
         {
           "id": "src",
-          "label": "部門別売上\n1 行に第 1 期と第 2 期の列",
+          "label": "店舗別来客数\n1 行に上期と下期の列",
           "row": 1,
           "col": 0
         },
         {
           "id": "s1",
-          "label": "SELECT ①\n期の列に定数「第 1 期」",
+          "label": "SELECT ①\n期の列に定数「上期」",
           "row": 0,
           "col": 1
         },
         {
           "id": "s2",
-          "label": "SELECT ②\n期の列に定数「第 2 期」",
+          "label": "SELECT ②\n期の列に定数「下期」",
           "row": 2,
           "col": 1
         },
@@ -35,7 +35,7 @@
         },
         {
           "id": "res",
-          "label": "問合せ結果\n期ごとに 1 行",
+          "label": "問合せ結果\n店舗と期ごとに 1 行",
           "row": 1,
           "col": 3
         }
@@ -44,41 +44,41 @@
         {
           "from": "src",
           "to": "s1",
-          "label": "3 行を読む"
+          "label": "4 行を読む"
         },
         {
           "from": "src",
           "to": "s2",
-          "label": "3 行を読む"
+          "label": "4 行を読む"
         },
         {
           "from": "s1",
           "to": "u",
-          "label": "3 行（部門・期・売上）"
+          "label": "4 行（店舗・期・来客数）"
         },
         {
           "from": "s2",
           "to": "u",
-          "label": "3 行（同じ列構成）"
+          "label": "4 行（同じ列構成）"
         },
         {
           "from": "u",
           "to": "res",
-          "label": "3 ＋ 3 ＝ 6 行"
+          "label": "4 ＋ 4 ＝ 8 行"
         }
       ]
     },
     {
       "id": 2,
       "type": "matrix",
-      "after": "### 混同しやすい用語",
-      "caption": "UNION・UNION ALL・JOIN を、表をつなぐ向きと結果の行数で並べています。列をたどると、行を足すか列を足すかと行数の決まり方が比べられます。",
+      "after": "explanation",
+      "caption": "UNION・UNION ALL・結合を、表をつなぐ向きと結果の行数で並べています。列をたどると、行を足すか列を足すかと行数の決まり方が比べられます。",
       "x": {
         "label": "演算",
         "values": [
           "UNION",
           "UNION ALL",
-          "JOIN"
+          "結合"
         ]
       },
       "y": {
@@ -103,7 +103,7 @@
       "emphasis": [
         [
           0,
-          2
+          0
         ]
       ]
     }

@@ -1,0 +1,1478 @@
+{
+  "bundle": "22-8",
+  "unit_no": 22,
+  "unit": "ネットワーク",
+  "overview": "機器どうしが住所と番号で相手を決めてデータを届ける仕組みと、その上で動くサービスを学びます。ネットワークの形と範囲から始め、IP アドレスと中継の機器、名前と Web、用途ごとのプロトコルとメール、無線 LAN、IoT の省電力の通信、携帯電話の通信へと進みます。NAT は IP アドレスどうしを、DNS は名前と IP アドレスを対応づけるもので、別の仕組みです。",
+  "group": {
+    "index": 8,
+    "name": "IoT をつなぐ省電力の通信",
+    "description": "IoT の機器とゲートウェイの間をつなぐ近距離の通信、電力線や LAN ケーブルの使い方、広い範囲に届く省電力の方式、手元で処理する方式を扱います。"
+  },
+  "groups_in_unit": [
+    {
+      "index": 1,
+      "name": "ネットワークの形と範囲",
+      "topics": [
+        {
+          "topic_id": 520,
+          "term": "ネットワークトポロジ"
+        },
+        {
+          "topic_id": 519,
+          "term": "WAN"
+        },
+        {
+          "topic_id": 442,
+          "term": "伝送速度（bps：bits per second（ビット／秒））"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "name": "IP アドレスと TCP/IP、接続の事業者",
+      "topics": [
+        {
+          "topic_id": 374,
+          "term": "IP アドレス（IPv6，IPv4，グローバル，プライベート）"
+        },
+        {
+          "topic_id": 281,
+          "term": "TCP/IP"
+        },
+        {
+          "topic_id": 525,
+          "term": "インターネット接続サービス事業者（ISP：Internet Service Provider）"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "name": "LAN の外へ出る中継",
+      "topics": [
+        {
+          "topic_id": 521,
+          "term": "ルーター"
+        },
+        {
+          "topic_id": 283,
+          "term": "サブネットマスク"
+        },
+        {
+          "topic_id": 480,
+          "term": "デフォルトゲートウェイ"
+        },
+        {
+          "topic_id": 444,
+          "term": "NAT"
+        },
+        {
+          "topic_id": 36,
+          "term": "プロキシ"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "name": "名前と Web のしくみ",
+      "topics": [
+        {
+          "topic_id": 208,
+          "term": "ドメイン名"
+        },
+        {
+          "topic_id": 37,
+          "term": "DNS"
+        },
+        {
+          "topic_id": 523,
+          "term": "URL"
+        },
+        {
+          "topic_id": 206,
+          "term": "cookie"
+        },
+        {
+          "topic_id": 205,
+          "term": "RSS"
+        },
+        {
+          "topic_id": 482,
+          "term": "オンラインストレージ"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "name": "用途ごとのプロトコル",
+      "topics": [
+        {
+          "topic_id": 203,
+          "term": "ポート番号"
+        },
+        {
+          "topic_id": 202,
+          "term": "FTP"
+        },
+        {
+          "topic_id": 443,
+          "term": "NTP（Network Time Protocol）"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "name": "電子メールの送受信",
+      "topics": [
+        {
+          "topic_id": 204,
+          "term": "電子メールのプロトコル"
+        },
+        {
+          "topic_id": 524,
+          "term": "Web メール"
+        },
+        {
+          "topic_id": 38,
+          "term": "Bcc"
+        },
+        {
+          "topic_id": 377,
+          "term": "電子メールの形式（テキスト形式，HTML 形式）"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "name": "無線 LAN と端末どうしの通信",
+      "topics": [
+        {
+          "topic_id": 394,
+          "term": "無線LAN"
+        },
+        {
+          "topic_id": 199,
+          "term": "ESSID（Extended Service Set Identifier）"
+        },
+        {
+          "topic_id": 201,
+          "term": "マルチホップ"
+        },
+        {
+          "topic_id": 373,
+          "term": "アドホックネットワーク"
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "name": "IoT をつなぐ省電力の通信",
+      "topics": [
+        {
+          "topic_id": 441,
+          "term": "IoT エリアネットワーク"
+        },
+        {
+          "topic_id": 35,
+          "term": "BLE（Bluetooth Low Energy）"
+        },
+        {
+          "topic_id": 279,
+          "term": "PLC（電力線通信）"
+        },
+        {
+          "topic_id": 479,
+          "term": "PoE（Power over Ethernet）"
+        },
+        {
+          "topic_id": 200,
+          "term": "LPWA（Low Power Wide Area）"
+        },
+        {
+          "topic_id": 280,
+          "term": "エッジコンピューティング"
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "name": "携帯電話の通信と事業者",
+      "topics": [
+        {
+          "topic_id": 481,
+          "term": "移動体通信規格（LTE，5G など）"
+        },
+        {
+          "topic_id": 209,
+          "term": "プラチナバンド"
+        },
+        {
+          "topic_id": 207,
+          "term": "キャリアアグリゲーション"
+        },
+        {
+          "topic_id": 522,
+          "term": "SIMカード"
+        },
+        {
+          "topic_id": 376,
+          "term": "仮想移動体通信事業者（MVNO：Mobile Virtual Network Operator）"
+        },
+        {
+          "topic_id": 282,
+          "term": "IP電話"
+        },
+        {
+          "topic_id": 375,
+          "term": "テレマティクス"
+        }
+      ]
+    }
+  ],
+  "owners": [
+    {
+      "subject": "IoT エリアネットワークで使う規格と、PLC が有線であること",
+      "owner": {
+        "topic_id": 441,
+        "term": "IoT エリアネットワーク"
+      },
+      "topics": [
+        441,
+        35,
+        279
+      ]
+    }
+  ],
+  "topics": [
+    {
+      "topic_id": 441,
+      "term": "IoT エリアネットワーク",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "ネットワーク方式",
+      "question_count": 1,
+      "related_terms": [
+        "BLE（Bluetooth Low Energy）",
+        "PLC（電力線通信）",
+        "ZigBee",
+        "無線LAN"
+      ],
+      "prerequisites": [],
+      "current": {
+        "generation": "materials_v3",
+        "explanation": "**IoT エリアネットワーク**は、センサーや機器などの IoT デバイスと、それらを取りまとめるゲートウェイの間をつなぐ近距離のネットワークです。\n\n- **キーワード**: IoT デバイスとゲートウェイの間・近距離\n- 電池で長く動かせるよう、**消費電力が小さい**通信規格が使われます\n- 使われる通信規格は無線と有線に分かれます。**PLC** は電力線を通信路に使うので有線です\n\n![現場の機器からインターネット側のサーバまでの経路のうち、機器とゲートウェイの間の近距離の区間が IoT エリアネットワークです。](/figures/materials/ip/441-1.svg)",
+        "detail": "### しくみ\nIoT では、多数のセンサーや機器が現場に置かれ、それらがいったん近くのゲートウェイに集まり、そこからインターネット側のサーバへデータが送られます。この**現場側の狭い範囲**をつなぐ部分が IoT エリアネットワークです。デバイスは電池で長期間動くものが多いため、消費電力が小さく近距離向けの規格が選ばれます。\n### 代表的な通信規格\n\n| 規格 | 区分 | 特徴 |\n| --- | --- | --- |\n| BLE（Bluetooth Low Energy） | 無線 | Bluetooth の省電力版 |\n| ZigBee | 無線 | 近距離向けで多数の機器を中継 |\n| PLC（電力線通信） | 有線 | 既設の電力線を通信路に使う |\n| 無線 LAN | 無線 | 消費電力が大きめ |\n\nBLE の Low Energy と紛らわしいので、PLC の L は Low ではなく Line、つまり線だと覚えておくと迷いません。電池で長く動かす小型のセンサーには、消費電力の小さい BLE や ZigBee が向いています。"
+      },
+      "questions": [
+        {
+          "question_id": "2020r02o-q98",
+          "content_key": "92a239cd3048f8ee",
+          "exam_label": "令和2年度 10月",
+          "stem": "IoT エリアネットワークの構築に当たり，① ～ ③ の通信規格の使用を検討している。これらの通信規格を有線と無線に分類したとき，無線ネットワークに分類されるものだけを全て挙げたものはどれか。\n① BLE\n② PLC\n③ ZigBee",
+          "choices": {
+            "ア": "①，②",
+            "イ": "①，②，③",
+            "ウ": "①，③",
+            "エ": "②，③"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null
+        }
+      ],
+      "question_explanations": [
+        {
+          "question_id": "2020r02o-q98",
+          "content_key": "92a239cd3048f8ee",
+          "correct_reason": "BLE は Bluetooth の省電力版、ZigBee は近距離の無線規格でどちらも無線です。PLC は電力線を通信路に使う**有線**なので、①と③だけを挙げた組合せが答えになります。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "有線の PLC を含み、無線の ZigBee を落としています"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "3 つすべてを挙げていますが、PLC は有線に分類されます"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "有線の PLC を含み、無線の BLE を落としています"
+            }
+          ]
+        }
+      ],
+      "figure_file": "data/ip/material_figures/441.json",
+      "figures": [
+        {
+          "id": 1,
+          "type": "blocks",
+          "after": "### しくみ",
+          "caption": "現場の機器からインターネット側のサーバまでの経路のうち、機器とゲートウェイの間の近距離の区間が IoT エリアネットワークです。",
+          "nodes": [
+            {
+              "id": "s1",
+              "label": "センサー\n電池で長く動く",
+              "row": 0,
+              "col": 0
+            },
+            {
+              "id": "s2",
+              "label": "現場の機器\n多数が置かれる",
+              "row": 2,
+              "col": 0
+            },
+            {
+              "id": "gw",
+              "label": "ゲートウェイ\n現場のデータを取りまとめる",
+              "row": 1,
+              "col": 1,
+              "icon": "network",
+              "emphasis": true
+            },
+            {
+              "id": "sv",
+              "label": "サーバ\nインターネットの向こう側",
+              "row": 1,
+              "col": 2,
+              "icon": "server"
+            }
+          ],
+          "edges": [
+            {
+              "from": "s1",
+              "to": "gw",
+              "label": "IoT エリアネットワーク（省電力の近距離通信）"
+            },
+            {
+              "from": "s2",
+              "to": "gw",
+              "label": "IoT エリアネットワーク（省電力の近距離通信）"
+            },
+            {
+              "from": "gw",
+              "to": "sv",
+              "label": "インターネット経由でデータを送る"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "topic_id": 35,
+      "term": "BLE（Bluetooth Low Energy）",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "ネットワーク方式",
+      "question_count": 4,
+      "related_terms": [
+        "LPWA（Low Power Wide Area）",
+        "IoT エリアネットワーク",
+        "Bluetooth",
+        "PLC（電力線通信）",
+        "HEMS（Home Energy Management System）",
+        "ビーコン"
+      ],
+      "prerequisites": [],
+      "current": {
+        "generation": "materials_v3",
+        "explanation": "**BLE** とは、Bluetooth 4.0 で追加された省電力向けの仕様で、近くの機器どうしをごくわずかな電力で通信させるものです。\n\n- **キーワード**: Bluetooth・省電力・近距離\n- ボタン電池1つで半年から数年動くので、IoT 機器を電池のまま長く使えます\n- 電波の強さから相手までのおおよその距離を推定でき、位置や近さの検知にも使われます\n- Bluetooth 3.0 以前とは互換性がありません\n\n![従来の Bluetooth と BLE を 3 つの観点で並べた表です。上の行の電波の出し方の違いが、強調した使う電力の差を生みます。](/figures/materials/ip/35-1.svg)",
+        "detail": "### 省電力になるしくみ\nBLE がわずかな電力で済むのは、つなぎっぱなしにせず、必要なときだけ短い時間だけ電波を出して、あとは休んでいるからです。音声や大きなデータを流し続ける従来の Bluetooth とは用途が分かれていて、BLE はセンサーの値や識別情報のような小さなデータを、たまに送るのに向いています。この性質のおかげで、IoT 機器と、すぐそばに置いた IoT ゲートウェイ（センサーの値をまとめてインターネットへ送る中継の機器）をつなぐ通信手段としてよく使われます。省電力のために作り直された仕様なので、3.0 以前の規格とはつながりません。\n### よく並ぶ通信の方式\n何を使って通信するのか、どこまで届くのかで整理すると取り違えません。\n| 方式 | 使うもの | 届く範囲・特徴 |\n| --- | --- | --- |\n| **BLE** | 電波 | 近距離。省電力が持ち味 |\n| IrDA | 赤外線 | 近距離。遮るものがあると切れる |\n| NFC | 電波 | 数センチ。かざして使う |\n| LPWA | 電波 | 数キロメートル。こちらも省電力 |\n| PLC | 電力線 | 配線のある範囲。無線ではない |"
+      },
+      "questions": [
+        {
+          "question_id": "2026r08-q81",
+          "content_key": "36f389893e8a9cb5",
+          "exam_label": "令和8年度",
+          "stem": "Bluetooth の規格に含まれ，デバイス間の省電力通信を実現させるものはどれか。",
+          "choices": {
+            "ア": "BLE",
+            "イ": "LPWA",
+            "ウ": "LTE",
+            "エ": "PLC"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2025r07-q56",
+          "content_key": "b4959267ec655001",
+          "exam_label": "令和7年度",
+          "stem": "Bluetoothに追加された仕様の一つであり，省電力性に優れているので，IoTシステムを長期間運用でき，送受信デバイス間の距離を知ることにも使われているものはどれか。",
+          "choices": {
+            "ア": "BLE",
+            "イ": "IrDA",
+            "ウ": "NFC",
+            "エ": "PLC"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2022r04-q92",
+          "content_key": "c2546e51bd807577",
+          "exam_label": "令和4年度",
+          "stem": "IoT エリアネットワークの通信などに利用される BLE は，Bluetooth4.0で追加された仕様である。BLE に関する記述のうち，適切なものはどれか。",
+          "choices": {
+            "ア": "Wi-Fi のアクセスポイントとも通信ができるようになった。",
+            "イ": "一般的なボタン電池で，半年から数年間の連続動作が可能なほどに低消費電力である。",
+            "ウ": "従来の規格である Bluetooth 3.0以前と互換性がある。",
+            "エ": "デバイスとの通信には，赤外線も使用できる。"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2021r03-q80",
+          "content_key": "1cab8a25809e36db",
+          "exam_label": "令和3年度",
+          "stem": "IoT デバイス，IoT ゲートウェイ及び IoT サーバで構成された，温度・湿度管理システムがある。IoT デバイスとその近傍に設置された IoT ゲートウェイとの間を接続するのに使用する，低消費電力の無線通信の仕様として，適切なものはどれか。",
+          "choices": {
+            "ア": "BLE",
+            "イ": "HEMS",
+            "ウ": "NUI",
+            "エ": "PLC"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null
+        }
+      ],
+      "question_explanations": [
+        {
+          "question_id": "2026r08-q81",
+          "content_key": "36f389893e8a9cb5",
+          "correct_reason": "Bluetooth の規格に追加された省電力向けの仕様が **BLE** です。「Bluetooth」と「省電力」の2語がそろったら BLE と判断できます。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "イ",
+              "term": "LPWA（Low Power Wide Area）",
+              "note": "省電力で数キロメートル先まで届く無線通信の総称です。Bluetooth の規格ではありません"
+            },
+            {
+              "label": "ウ",
+              "term": "移動体通信規格（LTE，5G など）",
+              "note": "携帯電話で使う広域の通信規格です。通信事業者の回線を使います"
+            },
+            {
+              "label": "エ",
+              "term": "PLC（電力線通信）",
+              "note": "電力線を通信路として使う技術です。そもそも無線ではありません"
+            }
+          ]
+        },
+        {
+          "question_id": "2025r07-q56",
+          "content_key": "b4959267ec655001",
+          "correct_reason": "Bluetooth 4.0 で追加された省電力の仕様が **BLE** です。受け取った電波の強さから相手までのおおよその距離を推定できるため、位置や近さの検知にも使われます。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "イ",
+              "term": "IrDA",
+              "note": "赤外線で近距離の通信を行う規格です。間に遮るものがあるとつながりません"
+            },
+            {
+              "label": "ウ",
+              "term": "NFC",
+              "note": "数センチの距離でかざして通信する規格です。交通系 IC カードや電子マネーで使います"
+            },
+            {
+              "label": "エ",
+              "term": "PLC（電力線通信）",
+              "note": "電力線を通信路として使う技術です。そもそも無線ではありません"
+            }
+          ]
+        },
+        {
+          "question_id": "2022r04-q92",
+          "content_key": "c2546e51bd807577",
+          "correct_reason": "BLE は必要なときだけ短時間だけ電波を出して、あとは休む動き方をします。そのためボタン電池1つで**半年から数年**の連続動作ができ、IoT 機器を電池のまま長く使えます。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "Wi-Fi のアクセスポイントと通信できるとしています。BLE は Bluetooth 機器どうしの仕様です"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "互換性があるとしています。BLE は省電力のために作り直された仕様で互換性はありません"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "赤外線も使えるとしています。BLE が使うのは電波だけです"
+            }
+          ]
+        },
+        {
+          "question_id": "2021r03-q80",
+          "content_key": "1cab8a25809e36db",
+          "correct_reason": "IoT デバイスと、すぐそばに置いた IoT ゲートウェイの間を結ぶ低消費電力の近距離無線が **BLE** です。デバイスを電池で長く動かす必要があるため、省電力の仕様が選ばれます。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "イ",
+              "term": "HEMS",
+              "note": "家庭の電力の使用状況を見える化して制御するしくみです。通信の仕様ではありません"
+            },
+            {
+              "label": "ウ",
+              "term": "NUI",
+              "note": "声や身ぶりなど自然な動作で操作できる利用者インタフェースです。通信の仕様ではありません"
+            },
+            {
+              "label": "エ",
+              "term": "PLC（電力線通信）",
+              "note": "電力線を通信路として使う技術です。そもそも無線ではありません"
+            }
+          ]
+        }
+      ],
+      "figure_file": "data/ip/material_figures/35.json",
+      "figures": [
+        {
+          "id": 1,
+          "type": "matrix",
+          "after": "### 省電力になるしくみ",
+          "caption": "従来の Bluetooth と BLE を 3 つの観点で並べた表です。上の行の電波の出し方の違いが、強調した使う電力の差を生みます。",
+          "x": {
+            "label": "方式",
+            "values": [
+              "従来の Bluetooth",
+              "BLE"
+            ]
+          },
+          "y": {
+            "label": "観点",
+            "values": [
+              "電波の出し方",
+              "送るデータ",
+              "使う電力"
+            ]
+          },
+          "cells": [
+            [
+              "つなぎっぱなし\n電波を出し続ける",
+              "必要なときだけ\n短く出して休む"
+            ],
+            [
+              "音声など\n途切れず流し続ける",
+              "センサーの値など\nたまに少しだけ"
+            ],
+            [
+              "多い\n出し続けるぶん電池が減る",
+              "ごくわずか\nボタン電池で半年から数年"
+            ]
+          ],
+          "emphasis": [
+            [
+              2,
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "topic_id": 279,
+      "term": "PLC（電力線通信）",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "ネットワーク方式",
+      "question_count": 1,
+      "related_terms": [
+        "IoT エリアネットワーク",
+        "PoE",
+        "テザリング",
+        "エネルギーハーベスティング"
+      ],
+      "prerequisites": [],
+      "current": {
+        "generation": "materials_v3",
+        "explanation": "**PLC**（電力線通信）とは、電気を送るための電力線に通信用の信号も一緒に流し、電力線を通信の道としても使う技術です。\n\n- **キーワード**: 電力線・信号を乗せる・伝送路\n- 屋内にすでにある配線をそのまま使えるので、新しく通信線を引かずに済みます\n- コンセントのある場所ならつながるので、センサーなどの IoT 機器を近くでつなぐネットワーク（IoT エリアネットワーク）でも使われます\n\n![PLC で電気とデータが流れる経路です。1 本の電力線に周波数の違う 2 つを重ね、受け取る側のフィルタで分けます。](/figures/materials/ip/279-1.svg)\n\n![PLC と PoE を同じ観点で並べた表です。上の 2 行をたどると、もとの線と追加で乗せる物が互いに逆だと分かります。](/figures/materials/ip/279-2.svg)",
+        "detail": "### 電力線に信号を重ねるしくみ\n家庭やオフィスの電力は 50Hz または 60Hz という低い周波数で送られています。そこに、それとは大きく離れた**高い周波数**の信号を重ねて流し、受け取る側でフィルタによって周波数ごとに分ければ、電気を供給し続けたまま同じ線でデータをやり取りできます。これが電力線通信の基本的な考え方です。電波が届きにくい建物の奥や、配線を増やしたくない場所、電力メーターのように電源のそばにある機器で活用されています。一方で、電力線はもともと通信のために作られた線ではないため、家電が出すノイズの影響を受けやすいという弱点もあります。\n### PoE と間違えない\n名前も場面も似ていますが、線に乗せるものが逆です。PLC は**電力線にデータを乗せる**技術で、[[PoE（Power over Ethernet）]] は **LAN ケーブルに電力を乗せる**技術です。PoE は、無線 LAN のアクセスポイントやネットワークカメラのように、天井など電源を取りにくい場所へ置く機器に使われます。「もともと何を運ぶ線か」「そこに何を追加で乗せるか」の2点で整理すると取り違えません。"
+      },
+      "questions": [
+        {
+          "question_id": "2023r05-q87",
+          "content_key": "78f1badc99e79b9e",
+          "exam_label": "令和5年度",
+          "stem": "IoT エリアネットワークでも用いられ，電気を供給する電力線に高周波の通信用信号を乗せて伝送させることによって，電力線を伝送路としても使用する技術はどれか。",
+          "choices": {
+            "ア": "PLC",
+            "イ": "PoE",
+            "ウ": "エネルギーハーベスティング",
+            "エ": "テザリング"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null
+        }
+      ],
+      "question_explanations": [
+        {
+          "question_id": "2023r05-q87",
+          "content_key": "78f1badc99e79b9e",
+          "correct_reason": "電力を運んでいる線に、それとは大きく離れた高い周波数の信号を重ねて流し、受け取る側で周波数ごとに分ける技術が PLC です。電気を送りながら、同じ線でデータもやり取りできます。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "イ",
+              "term": "PoE（Power over Ethernet）",
+              "note": "LAN ケーブルを使って機器へ電力を送る技術です。電力線でデータを送る PLC とは、線に乗せるものが逆になります"
+            },
+            {
+              "label": "ウ",
+              "term": "エネルギーハーベスティング",
+              "note": "光や振動、熱など身の回りのわずかなエネルギーを電力に変え、機器を動かす技術です"
+            },
+            {
+              "label": "エ",
+              "term": "テザリング",
+              "note": "スマートフォンの携帯電話回線を経由して、他の機器をインターネットに接続させることです"
+            }
+          ]
+        }
+      ],
+      "figure_file": "data/ip/material_figures/279.json",
+      "figures": [
+        {
+          "id": 1,
+          "type": "blocks",
+          "after": "### 電力線に信号を重ねるしくみ",
+          "caption": "PLC で電気とデータが流れる経路です。1 本の電力線に周波数の違う 2 つを重ね、受け取る側のフィルタで分けます。",
+          "nodes": [
+            {
+              "id": "pw",
+              "label": "電源\n50・60Hz の電気",
+              "row": 0,
+              "col": 0
+            },
+            {
+              "id": "tx",
+              "label": "通信機器\n高い周波数の信号",
+              "row": 1,
+              "col": 0,
+              "icon": "device"
+            },
+            {
+              "id": "line",
+              "label": "電力線\n電気と信号が同じ線に",
+              "row": 0,
+              "col": 1,
+              "emphasis": true
+            },
+            {
+              "id": "flt",
+              "label": "フィルタ\n周波数で分ける",
+              "row": 0,
+              "col": 2,
+              "icon": "gear"
+            },
+            {
+              "id": "app",
+              "label": "家電\n電気で動く",
+              "row": 0,
+              "col": 3
+            },
+            {
+              "id": "rx",
+              "label": "通信機器\nデータを受け取る",
+              "row": 1,
+              "col": 3,
+              "icon": "device"
+            }
+          ],
+          "edges": [
+            {
+              "from": "pw",
+              "to": "line",
+              "label": "電気"
+            },
+            {
+              "from": "tx",
+              "to": "line",
+              "label": "データ"
+            },
+            {
+              "from": "line",
+              "to": "flt",
+              "label": "電気＋データ"
+            },
+            {
+              "from": "flt",
+              "to": "app",
+              "label": "電気"
+            },
+            {
+              "from": "flt",
+              "to": "rx",
+              "label": "データ"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "type": "matrix",
+          "after": "### PoE と間違えない",
+          "caption": "PLC と PoE を同じ観点で並べた表です。上の 2 行をたどると、もとの線と追加で乗せる物が互いに逆だと分かります。",
+          "x": {
+            "label": "技術",
+            "values": [
+              "PLC",
+              "PoE"
+            ]
+          },
+          "y": {
+            "label": "観点",
+            "values": [
+              "もともと運ぶ線",
+              "追加で乗せる物",
+              "使う場面"
+            ]
+          },
+          "cells": [
+            [
+              "電力線\n電気を送る線",
+              "LAN ケーブル\nデータを送る線"
+            ],
+            [
+              "データ\n通信の信号を重ねる",
+              "電力\n機器を動かす電気"
+            ],
+            [
+              "配線を増やさず\nコンセントからつなぐ",
+              "電源を取りにくい\n天井のカメラなど"
+            ]
+          ],
+          "emphasis": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "topic_id": 479,
+      "term": "PoE（Power over Ethernet）",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "ネットワーク方式",
+      "question_count": 1,
+      "related_terms": [
+        "PLC（電力線通信）",
+        "NAT",
+        "AP（アクセスポイント）",
+        "ケーブル"
+      ],
+      "prerequisites": [],
+      "current": {
+        "generation": "materials_v3",
+        "explanation": "**PoE** とは、LAN ケーブル1本で通信と電力供給の両方を行う技術です。\n\n- **キーワード**: LAN ケーブルで給電・コンセントがない場所\n- 電源コンセントのない天井や屋外にも、無線 LAN のアクセスポイントや監視カメラを置けます\n- 給電する側のスイッチと受ける側の機器が、**どちらも PoE 対応**である必要があります\n\n![PoE 対応のスイッチから、1本の LAN ケーブルで通信と電力を同時に送ります。受ける機器はコンセントの無い場所でも動きます。](/figures/materials/ip/479-1.svg)\n\n![PoE と PLC を、通す道と乗せるもので比べています。行をたどると、通信の線と電気の線の使い方が入れ替わっています。](/figures/materials/ip/479-2.svg)",
+        "detail": "### ケーブルに電力を乗せる\nふつう、ネットワーク機器には LAN ケーブルと電源コンセントの両方が必要です。PoE に対応した機器と、給電できるスイッチを組み合わせると、LAN ケーブルをつなぐだけで機器が動きます。天井に付ける無線 LAN のアクセスポイント、屋外の監視カメラ、IP 電話のように、コンセントを増やしにくい場所の機器で役に立ちます。配線が1本で済むため設置工事が簡単になり、置き場所の自由度も上がります。\n### 混同しやすい用語\n- **[[PLC（電力線通信）]]** — 建物にもとからある電気の配線を通信路として使う技術。LAN ケーブルで電気を送る PoE とは、送るものと通す道がちょうど逆です"
+      },
+      "questions": [
+        {
+          "question_id": "2019h31h-q83",
+          "content_key": "708d11a70f07a1de",
+          "exam_label": "平成31年度 春期",
+          "stem": "PoE の説明として，適切なものはどれか。",
+          "choices": {
+            "ア": "LAN ケーブルを使って電力供給する技術であり，電源コンセントがない場所に無線 LAN のアクセスポイントを設置する場合などで利用される。",
+            "イ": "既設の電気配線を利用して LAN を構築できる技術であり，新たに LAN ケーブルを敷設しなくてもよい。",
+            "ウ": "グローバルアドレスとプライベートアドレスを自動的に変換して転送する技術であり，社内 LAN とインターネットとの境界部で使われる。",
+            "エ": "通信速度や通信モードを自動判別する技術であり，異なるイーサネット規格が混在している LAN 環境で，ネットワーク機器の最適な通信設定を自動的に行える。"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null
+        }
+      ],
+      "question_explanations": [
+        {
+          "question_id": "2019h31h-q83",
+          "content_key": "708d11a70f07a1de",
+          "correct_reason": "PoE は LAN ケーブル1本で通信と**電力供給**の両方を行う技術です。コンセントを増設しにくい天井や屋外にも、無線 LAN のアクセスポイントや監視カメラを置けるようになります。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "イ",
+              "term": "PLC（電力線通信）",
+              "note": "建物にある電気の配線を通信路として使う技術です。LAN ケーブルを敷かずにネットワークをつなげます"
+            },
+            {
+              "label": "ウ",
+              "term": "NAT",
+              "note": "グローバル IP アドレスとプライベート IP アドレスを相互に変換する技術です。LAN とインターネットの境界で使います"
+            },
+            {
+              "label": "エ",
+              "term": "オートネゴシエーション",
+              "note": "通信速度や全二重・半二重といった通信モードを、つないだ機器どうしで自動的に合わせる機能です"
+            }
+          ]
+        }
+      ],
+      "figure_file": "data/ip/material_figures/479.json",
+      "figures": [
+        {
+          "id": 1,
+          "type": "blocks",
+          "after": "### ケーブルに電力を乗せる",
+          "caption": "PoE 対応のスイッチから、1本の LAN ケーブルで通信と電力を同時に送ります。受ける機器はコンセントの無い場所でも動きます。",
+          "nodes": [
+            {
+              "id": "sw",
+              "label": "PoE 対応スイッチ\n給電する側",
+              "row": 1,
+              "col": 0,
+              "icon": "network",
+              "emphasis": true
+            },
+            {
+              "id": "ap",
+              "label": "無線 LAN の AP\n天井・コンセント無し\nPoE 対応で受電",
+              "row": 0,
+              "col": 1
+            },
+            {
+              "id": "cam",
+              "label": "監視カメラ\n屋外・コンセント無し\nPoE 対応で受電",
+              "row": 1,
+              "col": 1
+            },
+            {
+              "id": "tel",
+              "label": "IP 電話\n机・電源を増やさない\nPoE 対応で受電",
+              "row": 2,
+              "col": 1
+            }
+          ],
+          "edges": [
+            {
+              "from": "sw",
+              "to": "ap",
+              "label": "LAN ケーブル1本で通信＋電力"
+            },
+            {
+              "from": "sw",
+              "to": "cam",
+              "label": "LAN ケーブル1本で通信＋電力"
+            },
+            {
+              "from": "sw",
+              "to": "tel",
+              "label": "LAN ケーブル1本で通信＋電力"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "type": "matrix",
+          "after": "### 混同しやすい用語",
+          "caption": "PoE と PLC を、通す道と乗せるもので比べています。行をたどると、通信の線と電気の線の使い方が入れ替わっています。",
+          "x": {
+            "label": "観点",
+            "values": [
+              "通す道",
+              "その道に乗せるもの"
+            ]
+          },
+          "y": {
+            "label": "技術",
+            "values": [
+              "PoE",
+              "PLC（電力線通信）"
+            ]
+          },
+          "cells": [
+            [
+              "LAN ケーブル\n本来は\n通信の線",
+              "電力\n機器を動かす\n電気"
+            ],
+            [
+              "電力線\n本来は\n電気の配線",
+              "通信\nネットワークの\nデータ"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "topic_id": 200,
+      "term": "LPWA（Low Power Wide Area）",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "ネットワーク方式",
+      "question_count": 5,
+      "related_terms": [
+        "IoT エリアネットワーク",
+        "BLE（Bluetooth Low Energy）",
+        "無線LAN",
+        "MDM（Mobile Device Management）",
+        "WPA2",
+        "SDN（Software-Defined Networking）"
+      ],
+      "prerequisites": [],
+      "current": {
+        "generation": "materials_v3",
+        "explanation": "**LPWA** とは、IoT 機器向けの無線通信方式の総称で、消費電力がとても少なく、数キロメートル以上の広い範囲まで電波が届くのが特徴です。\n\n- **キーワード**: 省電力・広域・IoT\n- 通信できる範囲は無線 LAN より**広く**、消費電力は無線 LAN や 4G より**少ない**です\n- そのかわり通信速度は遅く、大量のデータを速く送る用途には向きません\n- 一般的な電池で数年以上運用でき、最大で数十 km 届く、という言い回しで問われます\n\n![通信速度と届く範囲の2軸で無線通信方式を並べた図です。LPWA は広い範囲まで届き、速度は遅く、消費電力が少ない位置にあります。](/figures/materials/ip/200-1.svg)",
+        "detail": "### 名前がそのまま特徴\nLPWA は Low Power Wide Area の略で、Low Power は消費電力が少ないこと、Wide Area は通信できる範囲が広いことを表します。こういう方式が必要になったのは、[[IoT（Internet of Things）]]で使うセンサーが電池だけで何年も動き続けなければならず、しかも送るデータが温度や位置といったごく小さな値だからです。大量のデータを速く送る力よりも、電池が長持ちすることと、山間部や広い工場のすみずみまで電波が届くことのほうが役に立ちます。そこで通信速度を思い切って犠牲にして、低消費電力と長距離通信を実現したのが LPWA です。\n### 近い無線方式との位置関係\n\n| 方式 | 届く範囲 | 速度と消費電力 |\n| --- | --- | --- |\n| LPWA | 数 km〜数十 km | 低速・省電力 |\n| [[無線LAN]] | 数十 m | LPWA より高速・電力は多い |\n| 4G・5G | 広域 | 高速大容量・電力は多い |\n| [[BLE（Bluetooth Low Energy）]] | 数 m〜数十 m | 低速・省電力 |\n\nLPWA は IoT 機器とゲートウェイ（インターネットへの出入口になる機器）をつなぐネットワークで使われ、この範囲を [[IoT エリアネットワーク]]と呼びます。"
+      },
+      "questions": [
+        {
+          "question_id": "2026r08-q76",
+          "content_key": "ed3480fe99f307a2",
+          "exam_label": "令和8年度",
+          "stem": "IoT デバイスで用いられる LPWA に関する次の記述中の a，b に入れる字句の適切な組合せはどれか。\n\nLPWA に分類される無線通信方式の特徴は，通信可能な範囲が無線 LAN に比べて ［ a ］ ，消費する電力が第4世代移動通信規格（4G）に比べて ［ b ］ 。",
+          "choices": {
+            "ア": "a：狭く ，b：多い",
+            "イ": "a：狭く ，b：少ない",
+            "ウ": "a：広く ，b：多い",
+            "エ": "a：広く ，b：少ない"
+          },
+          "answer": "エ",
+          "has_figure": true,
+          "figure_description": "選択肢は a，b の組合せ表。\n\n|  | a | b |\n| --- | --- | --- |\n| ア | 狭く | 多い |\n| イ | 狭く | 少ない |\n| ウ | 広く | 多い |\n| エ | 広く | 少ない |"
+        },
+        {
+          "question_id": "2021r03-q92",
+          "content_key": "a3dc3fe31e2717e2",
+          "exam_label": "令和3年度",
+          "stem": "IoT 機器からのデータ収集などを行う際の通信に用いられる，数十 km までの範囲で無線通信が可能な広域性と省電力性を備えるものはどれか。",
+          "choices": {
+            "ア": "BLE",
+            "イ": "LPWA",
+            "ウ": "MDM",
+            "エ": "MVNO"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2020r02o-q70",
+          "content_key": "07b0347a10b51f70",
+          "exam_label": "令和2年度 10月",
+          "stem": "LPWA の特徴として，適切なものはどれか。",
+          "choices": {
+            "ア": "AI に関する技術であり，ルールなどを明示的にプログラミングすることなく，入力されたデータからコンピュータが新たな知識やルールなどを獲得できる。",
+            "イ": "低消費電力型の広域無線ネットワークであり，通信速度は携帯電話システムと比較して低速なものの，一般的な電池で数年以上の運用が可能な省電力性と，最大で数十 km の通信が可能な広域性を有している。",
+            "ウ": "分散型台帳技術の一つであり，複数の取引記録をまとめたデータを順次作成し，直前のデータのハッシュ値を埋め込むことによって，データを相互に関連付け，矛盾なく改ざんすることを困難にして，データの信頼性を高めている。",
+            "エ": "無線 LAN の暗号化方式であり，脆弱性が指摘されている WEP に代わって利用が推奨されている。"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2019r01a-q81",
+          "content_key": "afe530481698de37",
+          "exam_label": "令和元年度 秋期",
+          "stem": "IoT システム向けに使われる無線ネットワークであり，一般的な電池で数年以上の運用が可能な省電力性と，最大で数十 km の通信が可能な広域性を有するものはどれか。",
+          "choices": {
+            "ア": "LPWA",
+            "イ": "MDM",
+            "ウ": "SDN",
+            "エ": "WPA2"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2019h31h-q86",
+          "content_key": "bc433964f3dd7647",
+          "exam_label": "平成31年度 春期",
+          "stem": "IoT 端末で用いられている LPWA（Low Power Wide Area）の特徴に関する次の記述中の a，b に入れる字句の適切な組合せはどれか。\n\nLPWA の技術を使った無線通信は，無線 LAN と比べると，通信速度は ［ a ］ ，消費電力は ［ b ］ 。",
+          "choices": {
+            "ア": "a：速く ，b：少ない",
+            "イ": "a：速く ，b：多い",
+            "ウ": "a：遅く ，b：少ない",
+            "エ": "a：遅く ，b：多い"
+          },
+          "answer": "ウ",
+          "has_figure": true,
+          "figure_description": "選択肢の組合せ表:\n\n|  | a | b |\n| --- | --- | --- |\n| ア | 速く | 少ない |\n| イ | 速く | 多い |\n| ウ | 遅く | 少ない |\n| エ | 遅く | 多い |"
+        }
+      ],
+      "question_explanations": [
+        {
+          "question_id": "2026r08-q76",
+          "content_key": "ed3480fe99f307a2",
+          "correct_reason": "LPWA は Wide Area の名のとおり、数 km から数十 km と無線 LAN より**広い**範囲に電波が届きます。Low Power のとおり、消費する電力も 4G より少なくて済みます。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "通信できる範囲を狭いとしています。広域性が LPWA の特徴です"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "通信できる範囲を狭いとしています。LPWA は無線 LAN より広い範囲に届きます"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "消費電力を多いとしています。低消費電力が LPWA の特徴です"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "正解。"
+            }
+          ]
+        },
+        {
+          "question_id": "2021r03-q92",
+          "content_key": "a3dc3fe31e2717e2",
+          "correct_reason": "数十 km まで届く広域性と、電池で長く動く省電力性を兼ね備えた IoT 向けの無線通信方式が **LPWA** です。そのかわり通信速度は遅くなっています。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "BLE（Bluetooth Low Energy）",
+              "note": "低消費電力の近距離無線通信の規格です。届く範囲は数メートルから数十メートルです"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "ウ",
+              "term": "MDM（Mobile Device Management）",
+              "note": "会社が配ったスマートフォンなどの設定や利用状況を、まとめて管理するしくみです"
+            },
+            {
+              "label": "エ",
+              "term": "仮想移動体通信事業者（MVNO：Mobile Virtual Network Operator）",
+              "note": "自前の通信設備を持たず、他社の回線を借りて携帯電話サービスを提供する事業者です"
+            }
+          ]
+        },
+        {
+          "question_id": "2020r02o-q70",
+          "content_key": "07b0347a10b51f70",
+          "correct_reason": "低消費電力で広い範囲をカバーする無線ネットワーク、という説明が **LPWA** にあたります。電池で数年動くこと、最大で数十 km 届くこと、そのかわり携帯電話より低速なことがそろっています。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "機械学習（教師あり学習，教師なし学習，強化学習）",
+              "note": "規則を人が書かずに、与えたデータからコンピュータが規則や知識を見つけ出す技術です"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "ウ",
+              "term": "ブロックチェーン",
+              "note": "取引記録をハッシュ値で数珠つなぎにし、多数で分散して保持して改ざんを難しくするしくみです"
+            },
+            {
+              "label": "エ",
+              "term": "WPA2",
+              "note": "無線 LAN の暗号化方式です。脆弱性が指摘された WEP に代わって使われています"
+            }
+          ]
+        },
+        {
+          "question_id": "2019r01a-q81",
+          "content_key": "afe530481698de37",
+          "correct_reason": "一般的な電池で数年運用でき、最大で数十 km 届く IoT 向けの無線ネットワークは **LPWA** です。省電力性と広域性がそろって出てきたら LPWA と判断できます。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "イ",
+              "term": "MDM（Mobile Device Management）",
+              "note": "会社が配ったスマートフォンなどの設定や利用状況を、まとめて管理するしくみです"
+            },
+            {
+              "label": "ウ",
+              "term": "SDN（Software-Defined Networking）",
+              "note": "ネットワークの構成をソフトウェアで定義し、機器の設定を柔軟に変えられるようにする技術です"
+            },
+            {
+              "label": "エ",
+              "term": "WPA2",
+              "note": "無線 LAN の暗号化方式です。脆弱性が指摘された WEP に代わって使われています"
+            }
+          ]
+        },
+        {
+          "question_id": "2019h31h-q86",
+          "content_key": "bc433964f3dd7647",
+          "correct_reason": "LPWA は通信速度を思い切って犠牲にして、低消費電力と長距離通信を実現した方式です。無線 LAN と比べると、速度は**遅く**、消費電力は少なくなります。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "通信速度を速いとしています。LPWA は無線 LAN より低速です"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "速度が速く消費電力も多いとしており、LPWA の特徴と正反対です"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "消費電力を多いとしています。低消費電力が LPWA の特徴です"
+            }
+          ]
+        }
+      ],
+      "figure_file": "data/ip/material_figures/200.json",
+      "figures": [
+        {
+          "id": 1,
+          "type": "matrix",
+          "after": "explanation",
+          "caption": "通信速度と届く範囲の2軸で無線通信方式を並べた図です。LPWA は広い範囲まで届き、速度は遅く、消費電力が少ない位置にあります。",
+          "x": {
+            "label": "通信速度",
+            "values": [
+              "遅い",
+              "速い"
+            ]
+          },
+          "y": {
+            "label": "届く範囲",
+            "values": [
+              "近距離\n数 m〜数十 m",
+              "広域\n数 km〜数十 km"
+            ]
+          },
+          "cells": [
+            [
+              "BLE\n消費電力は少ない",
+              "無線 LAN\n消費電力は多い"
+            ],
+            [
+              "LPWA\n消費電力は少ない\n電池で数年",
+              "4G・5G\n消費電力は多い"
+            ]
+          ],
+          "emphasis": [
+            [
+              1,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "topic_id": 280,
+      "term": "エッジコンピューティング",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "ネットワーク方式",
+      "question_count": 3,
+      "related_terms": [
+        "IoT（Internet of Things）",
+        "SDN（Software-Defined Networking）",
+        "LPWA（Low Power Wide Area）",
+        "レプリケーション",
+        "MDM（Mobile Device Management）",
+        "デュプレックスシステム"
+      ],
+      "prerequisites": [],
+      "current": {
+        "generation": "materials_v3",
+        "explanation": "**エッジコンピューティング**とは、IoT デバイスに近い場所（ネットワークの末端＝エッジ）に処理装置を置き、そこでできる限りデータ処理を済ませてしまう方式です。\n\n- **キーワード**: デバイスの近く・負荷軽減・データ量を減らす\n- 狙いはサーバの負荷軽減と通信量の削減、そして応答時間の短縮（リアルタイム性）\n- 処理する場所が正反対の[[クラウドコンピューティング]]と対にして覚えます\n\n![デバイスとクラウドの間にエッジを置いた図です。線の上の量を左右で見比べると、手元で減らしてから送る効果が読めます。](/figures/materials/ip/280-1.svg)\n\n![エッジとクラウドを同じ観点で並べた表です。強調した得意な処理の行を左右で見比べると、どちらに何を任せて併用するかが読めます。](/figures/materials/ip/280-2.svg)",
+        "detail": "### なぜ手元で処理するのか\n\nIoT では大量のデバイスが絶えずデータを送り出します。それを全てクラウド上のサーバへ送ると、通信量が膨らみ、サーバの処理も追いつかなくなり、往復にかかる時間の分だけ応答も遅れます。そこでデバイスの近くに処理装置や IoT ゲートウェイを置き、その場で不要なデータを捨てたり集計したり、急ぎの判断を即座に行ったりして、必要な結果だけをクラウドへ送ります。工場の設備制御のように即座の反応が求められる場面や、監視カメラの映像のように送る量が大きい場面で効果が出ます。クラウドと対立する技術ではなく、**手元で済ませる処理と集約して行う処理を分担**させて併用するのがふつうです。\n### 混同しやすい用語\n- **[[クラウドコンピューティング]]** — ネットワークの先のデータセンターに集約された資源を遠隔から使う形態です。処理する場所がちょうど逆になります\n- **IoT ゲートウェイ** — デバイスとネットワークの間に立つ中継装置です。エッジでの処理を担わせる置き場所としてよく使われます"
+      },
+      "questions": [
+        {
+          "question_id": "2023r05-q71",
+          "content_key": "51fc61ce75e86d09",
+          "exam_label": "令和5年度",
+          "stem": "IoTシステムにおけるエッジコンピューティングに関する記述として，最も適切なものはどれか。",
+          "choices": {
+            "ア": "IoTデバイスの増加によるIoTサーバの負荷を軽減するために，IoTデバイスに近いところで可能な限りのデータ処理を行う。",
+            "イ": "一定時間ごとに複数の取引をまとめたデータを作成し，そのデータに直前のデータのハッシュ値を埋め込むことによって，データを相互に関連付け，改ざんすることを困難にすることによって，データの信頼性を高める。",
+            "ウ": "ネットワークの先にあるデータセンター上に集約されたコンピュータ資源を，ネットワークを介して遠隔地から利用する。",
+            "エ": "明示的にプログラミングすることなく，入力されたデータからコンピュータが新たな知識やルールを獲得できるようにする。"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2021r03-q86",
+          "content_key": "44e3d3183798ad57",
+          "exam_label": "令和3年度",
+          "stem": "店内に設置した多数のネットワークカメラから得たデータを，インターネットを介して IoT サーバに送信し，顧客の行動を分析するシステムを構築する。このとき，IoT ゲートウェイを店舗内に配置し，映像解析処理を実行して映像から人物の座標データだけを抽出することによって，データ量を減らしてから送信するシステム形態をとった。このようなシステム形態を何と呼ぶか。",
+          "choices": {
+            "ア": "MDM",
+            "イ": "SDN",
+            "ウ": "エッジコンピューティング",
+            "エ": "デュプレックスシステム"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2019r01a-q71",
+          "content_key": "dc4d2a3d7aa4963b",
+          "exam_label": "令和元年度 秋期",
+          "stem": "複数の IoT デバイスとそれらを管理する IoT サーバで構成される IoT システムにおける，エッジコンピューティングに関する記述として，適切なものはどれか。",
+          "choices": {
+            "ア": "IoT サーバ上のデータベースの複製を別のサーバにも置き，両者を常に同期させて運用する。",
+            "イ": "IoT デバイス群の近くにコンピュータを配置して，IoT サーバの負荷低減と IoT システムのリアルタイム性向上に有効な処理を行わせる。",
+            "ウ": "IoT デバイスと IoT サーバ間の通信負荷の状況に応じて，ネットワークの構成を自動的に最適化する。",
+            "エ": "IoT デバイスを少ない電力で稼働させて，一般的な電池で長期間の連続運用を行う。"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null
+        }
+      ],
+      "question_explanations": [
+        {
+          "question_id": "2023r05-q71",
+          "content_key": "51fc61ce75e86d09",
+          "correct_reason": "エッジコンピューティングは、IoT デバイスに**近い場所**で処理を済ませてしまう方式です。サーバへ送るデータを減らして負荷を下げる、という説明が決め手になります。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "イ",
+              "term": "ブロックチェーン",
+              "note": "取引をまとめたデータに直前のデータのハッシュ値を埋め込んでつなぎ、改ざんを難しくする技術です"
+            },
+            {
+              "label": "ウ",
+              "term": "クラウドコンピューティング",
+              "note": "ネットワークの先のデータセンターに集約された資源を、遠隔から必要な分だけ使う形態のことです"
+            },
+            {
+              "label": "エ",
+              "term": "機械学習（教師あり学習，教師なし学習，強化学習）",
+              "note": "人が手順を書かなくても、与えられたデータからコンピュータが規則や知識を見つけ出す技術です"
+            }
+          ]
+        },
+        {
+          "question_id": "2021r03-q86",
+          "content_key": "44e3d3183798ad57",
+          "correct_reason": "カメラの映像を店舗内の装置で解析し、必要な座標データだけにしてから送っています。デバイスの近くで処理してデータ量を減らす形なので**エッジコンピューティング**です。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "MDM（Mobile Device Management）",
+              "note": "業務で使うスマートフォンなどの携帯端末を、一元的に管理する仕組みのことです"
+            },
+            {
+              "label": "イ",
+              "term": "SDN",
+              "note": "ネットワークの構成をソフトウェアで制御し、状況に応じて自動的に最適化する技術のことです"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "エ",
+              "term": "デュプレックスシステム",
+              "note": "主系と待機系を用意し、障害時に待機系へ切り替えて処理を続けるシステム構成のことです"
+            }
+          ]
+        },
+        {
+          "question_id": "2019r01a-q71",
+          "content_key": "dc4d2a3d7aa4963b",
+          "correct_reason": "IoT デバイス群の近くにコンピュータを置いて処理を分担させると、サーバの負荷が減り、往復にかかる時間の分だけ応答も速くなります。この**負荷軽減とリアルタイム性の向上**がエッジコンピューティングの狙いです。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "レプリケーション",
+              "note": "データベースの複製を別のサーバにも置き、両者を常に同期させて運用することです"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "ウ",
+              "term": "SDN",
+              "note": "ネットワークの構成をソフトウェアで制御し、状況に応じて自動的に最適化する技術のことです"
+            },
+            {
+              "label": "エ",
+              "term": "LPWA（Low Power Wide Area）",
+              "note": "少ない電力で遠くまで届く無線通信方式。電池で長期間動く IoT 機器に使われます"
+            }
+          ]
+        }
+      ],
+      "figure_file": "data/ip/material_figures/280.json",
+      "figures": [
+        {
+          "id": 1,
+          "type": "blocks",
+          "after": "### なぜ手元で処理するのか",
+          "caption": "デバイスとクラウドの間にエッジを置いた図です。線の上の量を左右で見比べると、手元で減らしてから送る効果が読めます。",
+          "nodes": [
+            {
+              "id": "dev",
+              "label": "IoT デバイス\nカメラ・センサ",
+              "row": 0,
+              "col": 0
+            },
+            {
+              "id": "edge",
+              "label": "エッジ\nデバイスの近くで\nその場で処理",
+              "row": 0,
+              "col": 1,
+              "emphasis": true
+            },
+            {
+              "id": "cloud",
+              "label": "クラウド\n負荷が軽く済む",
+              "row": 0,
+              "col": 2,
+              "shape": "cloud"
+            },
+            {
+              "id": "cut",
+              "label": "捨てる分\nクラウドへ送らない",
+              "row": 1,
+              "col": 1
+            }
+          ],
+          "edges": [
+            {
+              "from": "dev",
+              "to": "edge",
+              "label": "生データ（大量）"
+            },
+            {
+              "from": "edge",
+              "to": "cloud",
+              "label": "必要な結果だけ（少量）"
+            },
+            {
+              "from": "edge",
+              "to": "cut",
+              "label": "不要なデータ",
+              "style": "dashed"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "type": "matrix",
+          "after": "### 混同しやすい用語",
+          "caption": "エッジとクラウドを同じ観点で並べた表です。強調した得意な処理の行を左右で見比べると、どちらに何を任せて併用するかが読めます。",
+          "x": {
+            "label": "処理の置き場",
+            "values": [
+              "エッジ",
+              "クラウド"
+            ]
+          },
+          "y": {
+            "label": "観点",
+            "values": [
+              "処理する場所",
+              "得意な処理",
+              "向く場面"
+            ]
+          },
+          "cells": [
+            [
+              "デバイスの近く\nネットワークの末端",
+              "遠くのデータセンター\n資源を集約"
+            ],
+            [
+              "即座の判断\n不要なデータを捨てる",
+              "集めた結果の処理\n多くの拠点をまとめる"
+            ],
+            [
+              "設備の制御\n映像など送る量が大きい",
+              "全体の傾向をつかむ\n結果を長く蓄える"
+            ]
+          ],
+          "emphasis": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

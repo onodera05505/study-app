@@ -5,7 +5,7 @@
     {
       "id": 1,
       "type": "matrix",
-      "after": "### しくみ",
+      "after": "### 回線交換とパケット交換",
       "caption": "従来の電話と IP 電話を同じ観点で比べた表です。1 行目の回線の使い方の違いから、2 行目の安さと 3 行目の途切れやすさが出ています。",
       "x": {
         "label": "方式",
@@ -47,80 +47,74 @@
       "id": 2,
       "type": "blocks",
       "after": "### つながる相手",
-      "caption": "IP 電話から従来の電話までの経路です。線の名前が変わる所がゲートウェイで、ここで変換するので網の違う相手とも話せます。",
+      "caption": "性格の違う 2 つの網を上下に並べた図です。どちらの網の上でも、電話機どうしが同じ音声のパケットをやり取りします。",
       "nodes": [
         {
-          "id": "ip",
-          "label": "IP 電話\n音声をパケットにする",
+          "id": "a1",
+          "label": "IP 電話機\n音声をパケットにする",
           "row": 0,
           "col": 0,
           "icon": "phone"
         },
         {
-          "id": "net",
-          "label": "IP ネットワーク\nインターネットや社内 LAN",
+          "id": "open",
+          "label": "インターネット\n誰もが共用する網",
           "row": 0,
           "col": 1,
           "shape": "cloud"
         },
         {
-          "id": "gw",
-          "label": "ゲートウェイ\nパケットと信号を\n相互に変換",
+          "id": "a2",
+          "label": "IP 電話機\n遠くの相手",
           "row": 0,
           "col": 2,
-          "emphasis": true
-        },
-        {
-          "id": "tel",
-          "label": "電話網\n従来の電話回線",
-          "row": 0,
-          "col": 3,
-          "shape": "cloud"
-        },
-        {
-          "id": "fix",
-          "label": "固定電話・携帯電話\n従来の電話機",
-          "row": 1,
-          "col": 3,
           "icon": "phone"
         },
         {
-          "id": "ext",
-          "label": "社内の IP 電話\nLAN の内線になる",
+          "id": "b1",
+          "label": "IP 電話機\n建物の中の内線",
+          "row": 1,
+          "col": 0,
+          "icon": "phone"
+        },
+        {
+          "id": "closed",
+          "label": "組織の中だけの網\n外の網とはつながない",
           "row": 1,
           "col": 1,
+          "shape": "cloud"
+        },
+        {
+          "id": "b2",
+          "label": "IP 電話機\n別の階の内線",
+          "row": 1,
+          "col": 2,
           "icon": "phone"
         }
       ],
       "edges": [
         {
-          "from": "ip",
-          "to": "net",
+          "from": "a1",
+          "to": "open",
           "label": "音声のパケット",
           "arrow": "both"
         },
         {
-          "from": "net",
-          "to": "gw",
+          "from": "open",
+          "to": "a2",
           "label": "音声のパケット",
           "arrow": "both"
         },
         {
-          "from": "gw",
-          "to": "tel",
-          "label": "電話回線の信号",
+          "from": "b1",
+          "to": "closed",
+          "label": "音声のパケット",
           "arrow": "both"
         },
         {
-          "from": "tel",
-          "to": "fix",
-          "label": "電話回線の信号",
-          "arrow": "both"
-        },
-        {
-          "from": "net",
-          "to": "ext",
-          "label": "パケットのまま",
+          "from": "closed",
+          "to": "b2",
+          "label": "音声のパケット",
           "arrow": "both"
         }
       ]

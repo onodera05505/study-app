@@ -1,0 +1,83 @@
+{
+  "bundle": "10-8",
+  "shared": [
+    {"item": "PPP の認証（PAP・CHAP）と IP アドレスの払い出しの手順", "count": 2, "holder": 720, "topics": [720, 448]},
+    {"item": "PPP のフレームを Ethernet に載せる PPPoE の説明（ADSL・光回線で ISP に接続する用途を含む）", "count": 2, "holder": 448, "topics": [720, 448]},
+    {"item": "1 対 1 のシリアル回線を前提にする PPP と、共有の Ethernet の違い", "count": 2, "holder": 448, "topics": [720, 448]}
+  ],
+  "topics": [
+    {
+      "topic_id": 720,
+      "points": [
+        {"point": "PPP の定義（2 つのノードを 1 対 1 で結ぶデータリンク層のプロトコルで、リンク制御と誤り検出を持つ）", "fate": "kept", "where": "explanation"},
+        {"point": "キーワード（1 対 1・ダイヤルアップ・リンク制御とエラー処理）", "fate": "kept", "where": "explanation"},
+        {"point": "LCP がリンクを張り、NCP が上位プロトコルごとの設定を行う 2 段構え", "fate": "kept", "where": "### 接続の手順（LCP・認証・NCP）"},
+        {"point": "LCP・NCP の正式名（Link Control Protocol・Network Control Protocol）", "fate": "kept", "where": "### 接続の手順（LCP・認証・NCP）"},
+        {"point": "LCP が最大受信サイズや認証方式を相手とすり合わせてリンクを確立する", "fate": "figure", "where": "720 の図 1"},
+        {"point": "NCP が IP アドレスの割当てなど上位の設定を行う", "fate": "figure", "where": "720 の図 1"},
+        {"point": "認証は LCP と NCP の間に入る PPP の中の手順", "fate": "kept", "where": "### 認証の 2 方式（PAP と CHAP）"},
+        {"point": "PAP は利用者 ID とパスワードをそのまま送る。手順は簡単だが盗聴に弱い", "fate": "kept", "where": "### 認証の 2 方式（PAP と CHAP）"},
+        {"point": "CHAP はサーバの乱数（チャレンジ）に対しパスワードのハッシュ値を返すチャレンジレスポンス方式で、パスワードそのものは回線を流れない", "fate": "kept", "where": "### 認証の 2 方式（PAP と CHAP）"},
+        {"point": "認証方式の言い直し（explanation の箇条と detail の文章の 2 か所）", "fate": "duplicate", "where": "### 認証の 2 方式（PAP と CHAP）"},
+        {"point": "相手が 1 台に決まっている回線では宛先のアドレスの仕組みは要らない", "fate": "kept", "where": "### 1 対 1 の回線に要る機能"},
+        {"point": "それでも回線が使えるかの確認・相手の認証・化けたデータの検出は要り、PPP がまとめて提供する", "fate": "kept", "where": "explanation（箇条 1）と ### 1 対 1 の回線に要る機能"},
+        {"point": "フレームに FCS（誤り検出符号）が付く", "fate": "kept", "where": "### 接続の手順（LCP・認証・NCP）"},
+        {"point": "壊れたフレームは受信側で捨てる", "fate": "figure", "where": "720 の図 1（データの段の注記）"},
+        {"point": "1 本の回線に IP 以外の複数のプロトコルを載せられる", "fate": "kept", "where": "explanation（箇条 2）と ### 接続の手順（LCP・認証・NCP） の理由の文"},
+        {"point": "イーサネット上で PPP を使う方式が PPPoE（explanation の箇条と detail の言い直し）", "fate": "duplicate", "where": "### 元になった手順と派生した方式"},
+        {"point": "PPPoE は ADSL や光回線で ISP への接続認証に PPP の仕組みを使うために生まれた", "fate": "kept", "where": "### 元になった手順と派生した方式"},
+        {"point": "PPP を IP ネットワーク上のトンネルに通す PPTP・L2TP があり VPN で使われる", "fate": "kept", "where": "### 元になった手順と派生した方式"},
+        {"point": "HDLC は PPP の元になったデータリンク層の伝送制御手順で、PPP はそのフレーム形式を借りている", "fate": "kept", "where": "### 元になった手順と派生した方式"},
+        {"point": "SLIP はシリアル回線で IP を運ぶが認証も誤り検出も無く、載せられるのは IP だけで、PPP に置き換えられた（混同しやすい用語）", "fate": "explanation", "where": "2017h29h-q33 のウ（SLIP）の note"}
+      ]
+    },
+    {
+      "topic_id": 448,
+      "points": [
+        {"point": "PPPoE の定義（PPP のフレームを Ethernet のフレームに載せて運び、PPP と同じ接続手順を LAN 上で使えるようにする）", "fate": "kept", "where": "explanation"},
+        {"point": "PPP はシリアル回線用に作られた", "fate": "kept", "where": "explanation（箇条 1）"},
+        {"point": "キーワード（LAN 上で・Ethernet 上で・PPP の手順）", "fate": "kept", "where": "explanation"},
+        {"point": "PPP との違いは土台で、1 対 1 の回線前提の手順を共有の Ethernet に持ち込む", "fate": "kept", "where": "### Ethernet の上で PPP をそのまま使えない理由"},
+        {"point": "ねらいは PPP の認証と IP アドレスの払い出しをそのまま流用すること", "fate": "kept", "where": "explanation（箇条 1）"},
+        {"point": "ADSL や光回線で ISP に接続する方式として使われる", "fate": "kept", "where": "explanation（箇条 2）"},
+        {"point": "PPP が行う相手の認証（PAP・CHAP）と IP アドレスの払い出しの中身", "fate": "owner", "where": "720"},
+        {"point": "PPP は接続と切断の管理までを 1 本の回線上で行う", "fate": "kept", "where": "### Ethernet の上で PPP をそのまま使えない理由"},
+        {"point": "Ethernet は複数の機器が同じ回線を共有する 1 対多の方式なので、そのままでは PPP の手順が成り立たない", "fate": "kept", "where": "### Ethernet の上で PPP をそのまま使えない理由"},
+        {"point": "PPP のフレームを Ethernet フレームのデータ部に入れて運ぶ", "fate": "figure", "where": "448 の図 1（層の積み上げと「下の層の中に上の層のフレームを包んで運ぶ」の caption）"},
+        {"point": "発見段階: 利用者側の機器がブロードキャストで接続先を探し、応答した相手とセッション ID を決める", "fate": "figure", "where": "448 の図 2"},
+        {"point": "セッション段階: セッション ID 付きのフレームで PPP の手順を流し、認証と IP アドレスの払い出しを行う", "fate": "figure", "where": "448 の図 2"},
+        {"point": "共有の LAN の上に 1 対 1 の論理的な回線を作る", "fate": "kept", "where": "### Ethernet の上で PPP をそのまま使えない理由"},
+        {"point": "利用者 ID とパスワードで ISP に認証してもらえるのは、PPP の認証機能を持ち込んでいるから", "fate": "kept", "where": "### 接続の 2 段階"},
+        {"point": "PPPoE は PPP の機能を Ethernet の上で使うための包み（定義の言い直し）", "fate": "duplicate", "where": "explanation"},
+        {"point": "PPP はシリアル回線そのもので使い、共有の Ethernet の上では単独で成り立たない（混同しやすい用語）", "fate": "kept", "where": "### 混同しやすい用語 と ### Ethernet の上で PPP をそのまま使えない理由"},
+        {"point": "IPoE は PPPoE を介さずに Ethernet 上で直接 IP 通信する", "fate": "kept", "where": "### 混同しやすい用語"},
+        {"point": "IPoE は認証を回線側で済ませるので PPP の手順が要らない", "fate": "figure", "where": "448 の図 3"}
+      ]
+    },
+    {
+      "topic_id": 595,
+      "points": [
+        {"point": "マルチホーミングの定義（複数の ISP の回線を同時に契約して接続する冗長化構成）", "fate": "kept", "where": "explanation"},
+        {"point": "キーワード（複数の ISP・冗長化・出口の二重化）", "fate": "kept", "where": "explanation"},
+        {"point": "目的は可用性の確保と負荷分散", "fate": "kept", "where": "explanation（箇条 1）"},
+        {"point": "片方の ISP に障害が起きてももう片方の経路で接続を続けられる", "fate": "figure", "where": "595 の図 1"},
+        {"point": "平常時は両方に通信を振り分けて帯域を有効に使える", "fate": "kept", "where": "explanation（箇条 1）"},
+        {"point": "二重にするのはインターネットへの出口で、拠点どうしを結ぶ接続サービスとは目的が違う", "fate": "kept", "where": "explanation（箇条 2）"},
+        {"point": "自動で切り替える方式は 2 通り（BGP と回線を監視する装置）の言い直し（explanation の箇条と detail）", "fate": "duplicate", "where": "### 自動で切り替える 2 つの方式"},
+        {"point": "BGP は経路情報を交換する取決め", "fate": "kept", "where": "### 自動で切り替える 2 つの方式"},
+        {"point": "単一の ISP だけだと、その ISP の障害や回線断が組織全体のインターネット断になる", "fate": "kept", "where": "### 単一の ISP だけでつなぐ弱さ"},
+        {"point": "出口を 2 つ以上持って単一障害点をなくす", "fate": "kept", "where": "### 単一の ISP だけでつなぐ弱さ"},
+        {"point": "同じ ISP で回線を 2 本引く二重化と違い、ISP そのものの障害まで救える", "fate": "kept", "where": "explanation（箇条 3）"},
+        {"point": "方式は規模で選び分ける", "fate": "kept", "where": "### 自動で切り替える 2 つの方式"},
+        {"point": "本格的な構成では AS 番号（経路情報を交換する単位に振られる番号）とプロバイダに依存しない IP アドレスを持つ", "fate": "kept", "where": "### 自動で切り替える 2 つの方式"},
+        {"point": "BGP で両方の ISP へ自分の経路を広告し、片方の経路が消えるとインターネット側の経路情報が自動で更新され生きている側へ流れる", "fate": "kept", "where": "### 自動で切り替える 2 つの方式"},
+        {"point": "小規模ではルータや UTM（防御の機能を 1 台にまとめた機器）が回線の死活を監視し NAT の宛先を切り替える", "fate": "kept", "where": "### 自動で切り替える 2 つの方式"},
+        {"point": "小規模の方式では切替え時に通信が張り直しになり、ISP ごとに送信元アドレスが変わる", "fate": "figure", "where": "595 の図 2（注意の行）"},
+        {"point": "行きと帰りで別の ISP を通る経路の非対称で、状態を覚えている機器で通信が落ちることがある", "fate": "kept", "where": "### 設計上の注意"},
+        {"point": "BGP の収束や監視の間隔ぶんは通信が途切れる", "fate": "figure", "where": "595 の図 2（注意の行）"},
+        {"point": "可用性の目標は切替えの時間を含めて決める", "fate": "kept", "where": "### 設計上の注意"},
+        {"point": "回線と契約が二重になるので費用と可用性の要件を見比べる", "fate": "kept", "where": "### 設計上の注意"}
+      ]
+    }
+  ]
+}

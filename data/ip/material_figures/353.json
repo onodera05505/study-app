@@ -10,28 +10,28 @@
       "nodes": [
         {
           "id": "list",
-          "label": "店舗一覧のページ\n自社に既にある",
+          "label": "イベント一覧のページ\n自社に既にある",
           "row": 0,
           "col": 0,
           "icon": "document"
         },
         {
-          "id": "map",
-          "label": "地図の Web API\n他社が公開",
+          "id": "wx",
+          "label": "天気の Web API\n他社が公開",
           "row": 1,
           "col": 0,
           "icon": "cloud"
         },
         {
-          "id": "wx",
-          "label": "天気の Web API\n他社が公開",
+          "id": "tr",
+          "label": "翻訳の Web API\n他社が公開",
           "row": 2,
           "col": 0,
           "icon": "cloud"
         },
         {
           "id": "new",
-          "label": "店舗マップ\n作るのは組み合わせだけ",
+          "label": "海外向けイベント案内\n作るのは組み合わせだけ",
           "row": 1,
           "col": 1,
           "emphasis": true,
@@ -42,17 +42,17 @@
         {
           "from": "list",
           "to": "new",
-          "label": "住所の一覧"
-        },
-        {
-          "from": "map",
-          "to": "new",
-          "label": "地図の表示"
+          "label": "日時と会場"
         },
         {
           "from": "wx",
           "to": "new",
-          "label": "店舗周辺の天気"
+          "label": "会場の当日の天気"
+        },
+        {
+          "from": "tr",
+          "to": "new",
+          "label": "英語の案内文"
         }
       ]
     }

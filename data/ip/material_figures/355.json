@@ -4,32 +4,52 @@
   "figures": [
     {
       "id": 1,
-      "type": "layers",
-      "after": "### 速さと容量の階層",
-      "caption": "上の層ほど速く高価で、幅が狭いほど容量が小さいことを表します。計算に使う値は下の層から上の層へ移してから処理します。",
-      "shape": "pyramid",
-      "layers": [
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "主記憶から CPU の中へ値が移る道筋を表した図です。矢印をたどると、計算に使う値は強調したレジスタに置いてから処理されると分かります。",
+      "nodes": [
         {
-          "label": "レジスタ\n最も速く、最も小さい",
-          "note": "速い・高価・小容量",
+          "id": "mm",
+          "label": "主記憶\nCPU の外で大きく遅い",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "ca",
+          "label": "キャッシュメモリ\n主記憶との速さの差を埋める",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "rg",
+          "label": "レジスタ（CPU の内部）\n最も速く最も小さい",
+          "row": 0,
+          "col": 2,
           "emphasis": true
         },
         {
-          "label": "キャッシュメモリ\nCPU と主記憶の差を埋める"
-        },
-        {
-          "label": "主記憶\n実行中のプログラムを置く"
-        },
-        {
-          "label": "補助記憶\n最も遅いが大容量で残る",
-          "note": "遅い・安価・大容量"
+          "id": "al",
+          "label": "演算\nレジスタの値で計算する",
+          "row": 1,
+          "col": 2
         }
       ],
-      "brackets": [
+      "edges": [
         {
-          "from": 0,
-          "to": 0,
-          "label": "CPU の\n内部"
+          "from": "mm",
+          "to": "ca",
+          "label": "使う値を写す"
+        },
+        {
+          "from": "ca",
+          "to": "rg",
+          "label": "計算に使う値を移す"
+        },
+        {
+          "from": "rg",
+          "to": "al",
+          "label": "値と計算の結果",
+          "arrow": "both"
         }
       ]
     }

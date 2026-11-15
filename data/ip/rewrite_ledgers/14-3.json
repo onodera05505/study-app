@@ -1,0 +1,206 @@
+{
+  "bundle": "14-3",
+  "shared": [],
+  "topics": [
+    {
+      "topic_id": 166,
+      "points": [
+        {
+          "point": "JavaScript の定義（ブラウザ上で動き、ページに動きや対話的な振る舞いを付けるスクリプト言語）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "キーワード（ブラウザ上・動的な振る舞い）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "事前のコンパイルは不要で、ブラウザがその場で解釈しながら実行する",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "名前が似ているだけで Java とは別の言語",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "見た目は HTML と CSS で作るが、それだけでは表示が固定される",
+          "fate": "kept",
+          "where": "### ブラウザ上で動く言語"
+        },
+        {
+          "point": "入力内容のその場のチェック・画面の一部の書き換えといった動きを付ける",
+          "fate": "kept",
+          "where": "### ブラウザ上で動く言語"
+        },
+        {
+          "point": "プログラムは HTML に埋め込むか外部ファイルとして読み込む",
+          "fate": "kept",
+          "where": "### ブラウザ上で動く言語"
+        },
+        {
+          "point": "ブラウザ内蔵の実行環境が解釈しながら実行するので事前のコンパイルは不要（detail の言い直し）",
+          "fate": "duplicate",
+          "where": "explanation の箇条"
+        },
+        {
+          "point": "サーバから必要なデータだけ受け取って画面を更新する使い方が一般的",
+          "fate": "aside",
+          "where": "紐づく過去問にも定義・違いにも要らない使い方の付け足し"
+        },
+        {
+          "point": "名前が似ているのは登場した当時の事情による",
+          "fate": "aside",
+          "where": "名前の経緯の豆知識で、過去問にも違いにも要らない"
+        },
+        {
+          "point": "Java とは文法も用途も別の言語",
+          "fate": "kept",
+          "where": "### Java とは別の言語"
+        },
+        {
+          "point": "Java は事前にコンパイルしてから実行し、業務システムや Android のアプリで使われる",
+          "fate": "figure",
+          "where": "166 の図 1"
+        },
+        {
+          "point": "JavaScript は Java とは別の言語（detail での言い直し）",
+          "fate": "duplicate",
+          "where": "explanation の箇条"
+        },
+        {
+          "point": "どちらかがもう一方の簡易版という関係でもない",
+          "fate": "explanation",
+          "where": "2024r06-q88 のエの note（名前は似ていても JavaScript とは別の言語）"
+        }
+      ]
+    },
+    {
+      "topic_id": 353,
+      "points": [
+        {
+          "point": "マッシュアップの定義（公開された複数の Web サービス・Web ページの機能や情報を組み合わせて新しいコンテンツを作る手法）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "キーワード（組み合わせて新しいコンテンツ・地図情報の組込み）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "ゼロから作らず既存の部品を借りて組み合わせるのが特徴",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "自分のページに他社の地図サービスを埋め込む事例（問われ方の文を例の文に言い換え）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "Web API は外部のプログラムから機能やデータを呼び出せる窓口",
+          "fate": "kept",
+          "where": "### Web API を組み合わせて作る"
+        },
+        {
+          "point": "地図・天気・翻訳・決済などが公開され、呼び出すだけで自分のサイトに組み込める",
+          "fate": "kept",
+          "where": "### Web API を組み合わせて作る"
+        },
+        {
+          "point": "複数組み合わせて新しい価値を生むのがマッシュアップ",
+          "fate": "kept",
+          "where": "### Web API を組み合わせて作る"
+        },
+        {
+          "point": "店舗一覧のページに地図の API を組み込むと店舗マップになる例",
+          "fate": "figure",
+          "where": "353 の図 1（イベント一覧のページに天気と翻訳の Web API を組み込むと海外向けイベント案内になる例。地図の例は explanation）"
+        },
+        {
+          "point": "開発の手間と時間を大きく減らせるのが利点",
+          "fate": "kept",
+          "where": "### Web API を組み合わせて作る"
+        },
+        {
+          "point": "API を軸に企業同士が価値を交換する動きは API エコノミーと呼ぶ",
+          "fate": "aside",
+          "where": "別の論点の語の紹介で、紐づく過去問にも定義にも要らない"
+        }
+      ]
+    },
+    {
+      "topic_id": 354,
+      "points": [
+        {
+          "point": "XML の定義（データの意味や構造をタグで囲んで表すマークアップ言語）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "キーワード（タグ・マークアップ言語・論理構造）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "タグの名前を自由に決められるので、階層のある論理構造をそのまま書ける（定義の 2 文目を箇条へ）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "「コンマなどの区切り文字」なら XML ではなく CSV（選択肢の振り分けの文）",
+          "fate": "duplicate",
+          "where": "### CSV・XML・JSON の比べ方 の比較表と見分けの一言"
+        },
+        {
+          "point": "開始タグと終了タグで囲むぶん、データ量は大きくなる",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "システム同士のやり取りには双方が解釈できる共通の形式が要る",
+          "fate": "kept",
+          "where": "### タグで論理構造を表す"
+        },
+        {
+          "point": "CSV は最も単純で、値をコンマなどの区切り文字で並べる",
+          "fate": "kept",
+          "where": "### CSV・XML・JSON の比べ方"
+        },
+        {
+          "point": "CSV は改行で 1 件ずつ区切る",
+          "fate": "kept",
+          "where": "### CSV・XML・JSON の比べ方"
+        },
+        {
+          "point": "CSV は作るのも読むのも簡単だが平たいデータしか表せず、値の意味は列の順番で暗黙に決まる",
+          "fate": "kept",
+          "where": "### CSV・XML・JSON の比べ方"
+        },
+        {
+          "point": "XML は値を開始タグと終了タグで囲む",
+          "fate": "kept",
+          "where": "### タグで論理構造を表す"
+        },
+        {
+          "point": "入れ子で親子関係を表す",
+          "fate": "figure",
+          "where": "354 の図 1"
+        },
+        {
+          "point": "タグ名を意味の分かる名前にでき、複雑な階層構造もそのまま表せる（detail の言い直し）",
+          "fate": "duplicate",
+          "where": "explanation の箇条"
+        },
+        {
+          "point": "CSV・XML・JSON の構造の表し方と向いているデータの比較表",
+          "fate": "kept",
+          "where": "### CSV・XML・JSON の比べ方"
+        }
+      ]
+    }
+  ]
+}

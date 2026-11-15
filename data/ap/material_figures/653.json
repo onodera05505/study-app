@@ -6,21 +6,72 @@
       "id": 1,
       "type": "blocks",
       "after": "### 計算の解き方",
-      "caption": "分周器に入るのは逓倍の途中で分岐した周波数です。分岐点の値から割り算を始めます。",
+      "caption": "分周器に入るのは逓倍の途中で分岐した周波数です。分岐点の値から割り算を始めます（値は例です）。",
       "nodes": [
-        {"id": "osc", "label": "発振器", "row": 0, "col": 0},
-        {"id": "pll1", "label": "PLL1\n8 逓倍", "row": 0, "col": 1},
-        {"id": "pll2", "label": "PLL2\n2 逓倍", "row": 0, "col": 2},
-        {"id": "cpu", "label": "CPU", "row": 0, "col": 3},
-        {"id": "div", "label": "分周器\n1／2 の 10 乗", "row": 1, "col": 2, "emphasis": true},
-        {"id": "sio", "label": "SIO", "row": 1, "col": 3}
+        {
+          "id": "osc",
+          "label": "発振器\n基準のクロック",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "pll1",
+          "label": "前段の PLL\n3 逓倍",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "pll2",
+          "label": "後段の PLL\n4 逓倍",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "cpu",
+          "label": "CPU\n高い周波数で動く",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "div",
+          "label": "分周器\n1／2 の 3 乗",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "sio",
+          "label": "周辺回路\n遅いクロックで足りる",
+          "row": 1,
+          "col": 3
+        }
       ],
       "edges": [
-        {"from": "osc", "to": "pll1", "label": "15 MHz"},
-        {"from": "pll1", "to": "pll2", "label": "120 MHz"},
-        {"from": "pll2", "to": "cpu", "label": "240 MHz"},
-        {"from": "pll1", "to": "div", "label": "120 MHz（分岐）"},
-        {"from": "div", "to": "sio", "label": "117.2 kHz"}
+        {
+          "from": "osc",
+          "to": "pll1",
+          "label": "16 MHz"
+        },
+        {
+          "from": "pll1",
+          "to": "pll2",
+          "label": "48 MHz"
+        },
+        {
+          "from": "pll2",
+          "to": "cpu",
+          "label": "192 MHz"
+        },
+        {
+          "from": "pll1",
+          "to": "div",
+          "label": "48 MHz（分岐）"
+        },
+        {
+          "from": "div",
+          "to": "sio",
+          "label": "6 MHz"
+        }
       ]
     }
   ]

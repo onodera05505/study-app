@@ -18,7 +18,7 @@
 <text x="195.1" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. セッション ID を発行し cookie に入れる</text>
 <polyline points="51,148 633.4,148" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="633.4,148 625.4,151.6 625.4,144.4" fill="#1f2937"/>
-<text x="342.2" y="141" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. XSS や盗聴で ID が漏れる</text>
+<text x="342.2" y="141" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. スクリプトや盗聴で ID が漏れる</text>
 <rect x="189.7" y="153" width="305" height="16" rx="3" fill="#ffffff"/>
 <text x="342.2" y="166.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">cookie に HttpOnly と Secure を付けて漏れを防ぐ</text>
 <polyline points="633.4,204 345.2,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
@@ -30,7 +30,7 @@
 <polyline points="342.2,276 368.2,276 368.2,290 344.2,290" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="344.2,290 352.2,286.4 352.2,293.6" fill="#1f2937"/>
 <text x="376.2" y="284" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">6. この ID を無効にする</text>
-<rect x="112.6" y="295" width="459.2" height="16" rx="3" fill="#ffffff"/>
-<text x="342.2" y="308.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ブラウザの cookie 削除やキャッシュ消去では、サーバに残った ID は有効なまま</text>
+<rect x="187" y="295" width="310.4" height="16" rx="3" fill="#ffffff"/>
+<text x="342.2" y="308.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">サーバの対応表から消えた ID は、送られても通らない</text>
 </g>
 </svg>

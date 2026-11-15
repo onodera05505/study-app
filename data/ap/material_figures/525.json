@@ -256,60 +256,56 @@
       "id": 2,
       "type": "blocks",
       "after": "### 複数台を並べるときの設計",
-      "caption": "3 台は SSID をそろえ、チャネルは 1・6・11 に分けています。端末は設定を変えずに近い台へ接続を引き継げます。",
+      "caption": "横に並べた 4 台のアクセスポイントのチャネル番号です。隣どうしは番号を 5 つ以上離し、離れた両端の台は同じ番号を繰り返して使います。",
       "nodes": [
         {
           "id": "a",
-          "label": "アクセスポイント 1\n1ch\nSSID は共通",
+          "label": "アクセスポイント 1\n2ch を使う",
           "row": 0,
           "col": 0,
           "icon": "network"
         },
         {
           "id": "b",
-          "label": "アクセスポイント 2\n6ch\nSSID は共通",
+          "label": "アクセスポイント 2\n7ch を使う",
           "row": 0,
           "col": 1,
           "icon": "network"
         },
         {
           "id": "c",
-          "label": "アクセスポイント 3\n11ch\nSSID は共通",
+          "label": "アクセスポイント 3\n12ch を使う",
           "row": 0,
           "col": 2,
           "icon": "network"
         },
         {
-          "id": "t",
-          "label": "端末\n設定を変えずに移動",
-          "row": 1,
-          "col": 1,
-          "icon": "phone"
+          "id": "d",
+          "label": "アクセスポイント 4\n2ch をもう一度使う",
+          "row": 0,
+          "col": 3,
+          "icon": "network",
+          "emphasis": true
         }
       ],
       "edges": [
         {
           "from": "a",
           "to": "b",
-          "label": "隣は別のチャネル",
+          "label": "隣は 5 つ離して重ならない",
           "arrow": "none"
         },
         {
           "from": "b",
           "to": "c",
-          "label": "隣は別のチャネル",
+          "label": "隣は 5 つ離して重ならない",
           "arrow": "none"
         },
         {
-          "from": "t",
-          "to": "a",
-          "label": "移動前の接続",
-          "style": "dashed"
-        },
-        {
-          "from": "t",
-          "to": "b",
-          "label": "同じ SSID で引き継ぐ"
+          "from": "c",
+          "to": "d",
+          "label": "隣は 10 離れて重ならない",
+          "arrow": "none"
         }
       ]
     },

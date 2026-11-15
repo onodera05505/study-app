@@ -1,0 +1,550 @@
+{
+  "bundle": "02-8",
+  "shared": [
+    {
+      "item": "SVG・SMIL が XML の文法で書かれること（XML の文法で記述する形式。単元の構成の受け持ち）",
+      "count": 2,
+      "holder": 393,
+      "topics": [
+        79,
+        702
+      ]
+    },
+    {
+      "item": "XML の説明（タグで要素を囲んで構造を表すマークアップ言語）",
+      "count": 2,
+      "holder": 393,
+      "topics": [
+        393,
+        78
+      ]
+    },
+    {
+      "item": "SVG の説明（図形を座標で表す XML 系の W3C 仕様）",
+      "count": 2,
+      "holder": 79,
+      "topics": [
+        79,
+        702
+      ]
+    },
+    {
+      "item": "JSON・XML・YAML の比較表（JSON の図 2）",
+      "count": 1,
+      "holder": 78,
+      "topics": [
+        78
+      ]
+    },
+    {
+      "item": "SMIL・HTML・SVG の比較表（SMIL の図 2。学ぶ順で後の SMIL が SVG との比較を持つ）",
+      "count": 1,
+      "holder": 702,
+      "topics": [
+        702
+      ]
+    }
+  ],
+  "topics": [
+    {
+      "topic_id": 393,
+      "points": [
+        {
+          "point": "XML の定義（タグでデータに構造を与えるマークアップ言語）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "文書の先頭の XML 宣言でバージョンと文字コード（符号化宣言）を示す（定義の 2 文目）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "符号化宣言を省略できるのは UTF-8 と UTF-16 だけ",
+          "fate": "figure",
+          "where": "393 の図 1"
+        },
+        {
+          "point": "省略時は UTF-8 か UTF-16 として解釈する（XML の仕様の決まり）",
+          "fate": "kept",
+          "where": "### 宣言なしで読める UTF-8 と UTF-16"
+        },
+        {
+          "point": "UTF-16 は先頭の BOM で判別できるので省略が許される（要点の箇条と detail の言い直し）",
+          "fate": "duplicate",
+          "where": "### 宣言なしで読める UTF-8 と UTF-16"
+        },
+        {
+          "point": "Shift-JIS・EUC-JP など日本語の従来コードは encoding の明示が要る",
+          "fate": "kept",
+          "where": "### 日本語の従来コードに明示が要る理由"
+        },
+        {
+          "point": "XML 宣言の例 <?xml version=\"1.0\" encoding=\"Shift_JIS\"?> と encoding= に続く部分",
+          "fate": "kept",
+          "where": "### 宣言なしで読める UTF-8 と UTF-16"
+        },
+        {
+          "point": "UTF-8 と UTF-16 はどちらも Unicode を符号化した方式",
+          "fate": "kept",
+          "where": "### 宣言なしで読める UTF-8 と UTF-16"
+        },
+        {
+          "point": "UTF-8 は ASCII と互換のある可変長、UTF-16 は原則 16 ビット単位",
+          "fate": "kept",
+          "where": "### 宣言なしで読める UTF-8 と UTF-16"
+        },
+        {
+          "point": "UTF-16 の文書は先頭に BOM を付けるので、パーサは先頭の数バイトで UTF-8 と区別できる",
+          "fate": "kept",
+          "where": "### 宣言なしで読める UTF-8 と UTF-16"
+        },
+        {
+          "point": "宣言が無くても読み始められるのは 2 つだけなので省略が許される（理由）",
+          "fate": "kept",
+          "where": "### 宣言なしで読める UTF-8 と UTF-16"
+        },
+        {
+          "point": "従来コードには先頭に符号化を知らせる決まった目印が無い",
+          "fate": "figure",
+          "where": "393 の図 1"
+        },
+        {
+          "point": "従来コードは同じバイト値を別の文字に割り当てているので先頭から言い当てられない（理由）",
+          "fate": "kept",
+          "where": "### 日本語の従来コードに明示が要る理由"
+        },
+        {
+          "point": "従来コードの例に ISO-2022-JP も入る",
+          "fate": "kept",
+          "where": "### 日本語の従来コードに明示が要る理由"
+        },
+        {
+          "point": "「従来コードは明示が必要、省略できるのは Unicode 系の 2 つだけと覚えておけば確実」のまとめ",
+          "fate": "duplicate",
+          "where": "393 の図 1 とその説明文"
+        }
+      ]
+    },
+    {
+      "topic_id": 78,
+      "points": [
+        {
+          "point": "JSON の定義（JavaScript のオブジェクトの表記法を基に規定した、データを文字列で表す記述形式）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "構造は名前と値の組の集まり（オブジェクト）と値の順序付きリスト（配列）の 2 つだけ",
+          "fate": "figure",
+          "where": "78 の図 1（キーワードの行にも語）"
+        },
+        {
+          "point": "オブジェクトは波括弧に名前と値の組、配列は角括弧に値を順に並べる（detail の文章）",
+          "fate": "figure",
+          "where": "78 の図 1"
+        },
+        {
+          "point": "2 つの構造を入れ子にしてあらゆるデータを表す",
+          "fate": "kept",
+          "where": "### 値に置ける物と言語への依存"
+        },
+        {
+          "point": "値には文字列・数値・真偽値・空値・入れ子のオブジェクトや配列を置ける",
+          "fate": "kept",
+          "where": "### 値に置ける物と言語への依存"
+        },
+        {
+          "point": "決まりがこれだけなので解析するプログラムが小さく済む",
+          "fate": "kept",
+          "where": "### 値に置ける物と言語への依存"
+        },
+        {
+          "point": "JavaScript の記法が出発点だが仕様は特定の言語に依存しない",
+          "fate": "kept",
+          "where": "### 値に置ける物と言語への依存"
+        },
+        {
+          "point": "軽量で解析しやすいので Web API のデータ交換に広く使われる",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "文字列なので言語を問わず読み書きできる（要点の箇条と detail の言い直し）",
+          "fate": "duplicate",
+          "where": "### データ交換に向く理由"
+        },
+        {
+          "point": "テキストなので人が開いて中身を確かめられる",
+          "fate": "kept",
+          "where": "### データ交換に向く理由"
+        },
+        {
+          "point": "文法が単純なぶん解析が速く転送量が小さい",
+          "fate": "kept",
+          "where": "### データ交換に向く理由"
+        },
+        {
+          "point": "Web API の応答や設定情報の受渡しなど機械どうしのやり取りに使う",
+          "fate": "kept",
+          "where": "### データ交換に向く理由"
+        },
+        {
+          "point": "XML はタグで要素を囲んで木構造を表し、文書の構造化に向き、JSON より冗長",
+          "fate": "figure",
+          "where": "78 の図 2"
+        },
+        {
+          "point": "YAML は字下げで階層を表し、設定ファイルで使われ、読みやすく書ける",
+          "fate": "figure",
+          "where": "78 の図 2"
+        }
+      ]
+    },
+    {
+      "topic_id": 79,
+      "points": [
+        {
+          "point": "SVG の定義（W3C が仕様を定める、図形を XML 形式で記述するベクター画像フォーマット）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "矩形・円・直線・文字列などを座標や大きさで表す（定義の 2 文目）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "ベクター形式なので拡大しても輪郭が滑らか",
+          "fate": "figure",
+          "where": "79 の図 1"
+        },
+        {
+          "point": "ラスター形式は画素の集まりで、拡大すると粗くなる（1 画素が大きな四角に）",
+          "fate": "figure",
+          "where": "79 の図 1"
+        },
+        {
+          "point": "中身がテキストなので HTML に埋め込んで Web ページの図形描画に使える",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "PNG・JPEG・TIFF はラスター形式の仲間",
+          "fate": "explanation",
+          "where": "question_explanations 2025r07h-q23 のイ（PNG）・エ（TIFF）の note（どちらもラスター形式）"
+        },
+        {
+          "point": "SVG は図形の定義（円の中心と半径など）を持ち、表示のたびに描き直すので劣化しない",
+          "fate": "figure",
+          "where": "79 の図 1"
+        },
+        {
+          "point": "地図・ロゴ・図表のように線がはっきりした物に向く",
+          "fate": "figure",
+          "where": "79 の図 1"
+        },
+        {
+          "point": "写真は画素ごとに色が異なり図形の集まりでは表せないのでラスター形式の領分",
+          "fate": "kept",
+          "where": "### 写真がラスター形式で残る理由"
+        },
+        {
+          "point": "書き方は XML のテキスト（XML の文法で記述する形式）",
+          "fate": "owner",
+          "where": "393"
+        },
+        {
+          "point": "プログラムから座標や色を書き換え、HTML に埋め込んでスクリプトで操作できる",
+          "fate": "kept",
+          "where": "### XML のテキストで書ける利点"
+        },
+        {
+          "point": "画像編集ソフトを通さずに生成・加工でき、数値からグラフや地図を描き起こす用途に向く",
+          "fate": "kept",
+          "where": "### XML のテキストで書ける利点"
+        },
+        {
+          "point": "XML で図形を記述すること・W3C の Web 標準であることが名前の手がかり（定義の言い直し）",
+          "fate": "duplicate",
+          "where": "explanation"
+        }
+      ]
+    },
+    {
+      "topic_id": 432,
+      "points": [
+        {
+          "point": "レイトレーシング法の定義（視点から画素の向きへ光線を追跡し、交点を反射・透過の属性も含めて計算して画素の色を決める）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "画面の全画素それぞれについて光線を飛ばす",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "交点のうち視点に最も近いものを採用する（要点の箇条と detail の言い直し）",
+          "fate": "figure",
+          "where": "432 の図 1"
+        },
+        {
+          "point": "反射・屈折・影を光線の追跡で表せる代わりに計算量が大きい（要点の箇条と detail 末尾の言い直し）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "現実は光源から目に届くが全部追うのは無駄なので視点から逆にたどる",
+          "fate": "kept",
+          "where": "### 視点から逆にたどる理由"
+        },
+        {
+          "point": "ぶつかった物体の色を画素の色とする",
+          "fate": "kept",
+          "where": "### 視点から逆にたどる理由"
+        },
+        {
+          "point": "鏡なら反射方向へ追跡を続ける",
+          "fate": "figure",
+          "where": "432 の図 1"
+        },
+        {
+          "point": "透明なら屈折方向へ追跡を続ける",
+          "fate": "kept",
+          "where": "### 透過と表面の模様の扱い"
+        },
+        {
+          "point": "影は交点から光源へ光線を飛ばし途中の物体の有無で判定する",
+          "fate": "figure",
+          "where": "432 の図 1"
+        },
+        {
+          "point": "反射・透過・影を同じ考え方（光線をもう 1 本飛ばす）で扱える",
+          "fate": "kept",
+          "where": "### 透過と表面の模様の扱い"
+        },
+        {
+          "point": "物体表面の模様や質感はテクスチャマッピングで画像を貼り付けて与える",
+          "fate": "kept",
+          "where": "### 透過と表面の模様の扱い"
+        },
+        {
+          "point": "Z バッファ法は面をピクセルに分割し、視点までの距離を作業領域に保持して最小の面を残す",
+          "fate": "explanation",
+          "where": "question_explanations 2022r04h-q25 のエの note"
+        },
+        {
+          "point": "Z バッファ法も視点に最も近いものを残す考え方は同じ",
+          "fate": "kept",
+          "where": "### 混同しやすい用語"
+        },
+        {
+          "point": "Z バッファ法は光線を追跡しないので反射や透過を表現できない",
+          "fate": "figure",
+          "where": "432 の図 2"
+        },
+        {
+          "point": "スキャンライン法は走査線ごとに走査面を作り、交差線分を求めて奥行きを判定する",
+          "fate": "explanation",
+          "where": "question_explanations 2022r04h-q25 のイの note"
+        },
+        {
+          "point": "スキャンライン法は処理の単位が画素ではなく走査線",
+          "fate": "figure",
+          "where": "432 の図 2（処理の単位の列。スキャンライン法は横 1 行ずつ）"
+        },
+        {
+          "point": "どちらも隠面消去の手法で、陰影や反射まで作るレイトレーシング法とは役割が違う",
+          "fate": "figure",
+          "where": "432 の図 2 とその説明文"
+        }
+      ]
+    },
+    {
+      "topic_id": 702,
+      "points": [
+        {
+          "point": "SMIL の定義（マルチメディア作品の配置と再生のタイミングを XML の文法で記述する W3C 勧告）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "素材は動画・音声・画像・テキスト",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "名称は Synchronized Multimedia Integration Language の略",
+          "fate": "kept",
+          "where": "explanation（定義の 1 文）"
+        },
+        {
+          "point": "読み方はスマイル",
+          "fate": "kept",
+          "where": "### 記述できること"
+        },
+        {
+          "point": "どの素材をいつ再生し、いつ止め、何と同時に流すかという時間の制御を書ける。名称の Synchronized が根拠",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "扱う軸は空間（どこに置くか）と時間（いつ流すか）の 2 つ",
+          "fate": "figure",
+          "where": "702 の図 2"
+        },
+        {
+          "point": "HTML は何がどこにあるかは書けるが、何秒後に何を始めるかは書けない（SMIL が作られた理由）",
+          "fate": "kept",
+          "where": "### 順次の箱と並列の箱"
+        },
+        {
+          "point": "SMIL は XML 系の言語",
+          "fate": "owner",
+          "where": "393"
+        },
+        {
+          "point": "順次再生の箱と並列再生の箱、順次は順に流れ並列は一斉に始まる",
+          "fate": "figure",
+          "where": "702 の図 1 とその説明文"
+        },
+        {
+          "point": "2 種類の箱を入れ子にして筋書きを書く",
+          "fate": "figure",
+          "where": "702 の図 1 の説明文"
+        },
+        {
+          "point": "ナレーションを流しながらスライドを 3 秒ずつ送り、終わったら動画を再生する例",
+          "fate": "figure",
+          "where": "702 の図 1"
+        },
+        {
+          "point": "筋書きをプログラムを書かずに記述できる",
+          "fate": "kept",
+          "where": "### 順次の箱と並列の箱"
+        },
+        {
+          "point": "書けることは 3 種類（レイアウト・開始と長さ・切替と遷移）",
+          "fate": "kept",
+          "where": "### 記述できること"
+        },
+        {
+          "point": "レイアウトは画面を領域に分け、どの素材をどの領域に表示するかを決める",
+          "fate": "kept",
+          "where": "### 記述できること"
+        },
+        {
+          "point": "開始と長さは開始時刻・再生時間・繰り返し回数、他の素材の終了を基準に開始できる",
+          "fate": "kept",
+          "where": "### 記述できること"
+        },
+        {
+          "point": "切替と遷移はフェードなどの効果",
+          "fate": "kept",
+          "where": "### 記述できること"
+        },
+        {
+          "point": "素材と SMIL 文書は別々に存在し、再生側が SMIL 文書を読んで再生する",
+          "fate": "kept",
+          "where": "### 素材と筋書きを分けて持つ"
+        },
+        {
+          "point": "素材を差し替えても SMIL 文書だけ直せばよく、同じ素材から別の筋書きも作れる",
+          "fate": "kept",
+          "where": "### 素材と筋書きを分けて持つ"
+        },
+        {
+          "point": "SVG も同じ W3C 勧告の XML 系仕様",
+          "fate": "kept",
+          "where": "### 混同しやすい用語"
+        },
+        {
+          "point": "SVG が記述するのは図形そのもので、座標と数式で 1 枚の絵を表し、素材を時間で組み立てない",
+          "fate": "figure",
+          "where": "702 の図 2"
+        },
+        {
+          "point": "HTML は素材の配置と文書構造は書けるが、再生の順序やタイミングは持たない",
+          "fate": "figure",
+          "where": "702 の図 2"
+        }
+      ]
+    },
+    {
+      "topic_id": 700,
+      "points": [
+        {
+          "point": "WebSocket の定義（ブラウザとサーバの間に接続を張ったまま保ち、双方向にデータをやり取りできる通信規約）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "HTTP は要求と応答の 1 往復ごとの一方向で、サーバから自発的に送れない（要点の箇条と detail の言い直し）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "最初は HTTP で切替えを要求し、合意したら WebSocket へ切り替える（ハンドシェイク）",
+          "fate": "figure",
+          "where": "700 の図 1"
+        },
+        {
+          "point": "以降は同じ接続を使い続ける（要点の箇条と detail の言い直し）",
+          "fate": "figure",
+          "where": "700 の図 1 とその説明文"
+        },
+        {
+          "point": "往復ごとの手間がかからない",
+          "fate": "kept",
+          "where": "### ポーリングより軽い理由"
+        },
+        {
+          "point": "チャットの新着や株価の変動のようなサーバ側の都合で起きる出来事には HTTP の形は不利",
+          "fate": "kept",
+          "where": "### ポーリングより軽い理由"
+        },
+        {
+          "point": "従来はポーリングで代用し、変化が無い間も問い合わせが続いて通信量とサーバの負荷が増える",
+          "fate": "kept",
+          "where": "### ポーリングより軽い理由"
+        },
+        {
+          "point": "接続を維持したまま双方が好きなタイミングで送信できる（detail の言い直し）",
+          "fate": "figure",
+          "where": "700 の図 1"
+        },
+        {
+          "point": "要求のたびにヘッダを付け直す必要がなく 1 件あたりの通信量が小さい",
+          "fate": "kept",
+          "where": "### ポーリングより軽い理由"
+        },
+        {
+          "point": "チャット・通知・オンラインゲーム・リアルタイムの共同編集に使われる",
+          "fate": "kept",
+          "where": "### 使われる場面と URL"
+        },
+        {
+          "point": "URL の書き出しは ws://、暗号化は wss://",
+          "fate": "kept",
+          "where": "### 使われる場面と URL"
+        },
+        {
+          "point": "Ajax は JavaScript と非同期通信でページの一部だけを更新する手法",
+          "fate": "kept",
+          "where": "### 混同しやすい用語"
+        },
+        {
+          "point": "Ajax は通信を始めるのが常にクライアント側で、サーバから送り出せない",
+          "fate": "figure",
+          "where": "700 の図 2"
+        },
+        {
+          "point": "ポーリングはクライアントが一定間隔で問い合わせ、変化が無くても通信が発生する",
+          "fate": "figure",
+          "where": "700 の図 2"
+        }
+      ]
+    }
+  ]
+}

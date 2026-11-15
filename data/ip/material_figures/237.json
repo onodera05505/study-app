@@ -5,20 +5,51 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 区画ごとにアクセス権を決める",
+      "after": "### 区画ごとに通す人を決めるしくみ",
       "caption": "区画ごとに立ち入れる人と扉の認証を並べた図です。奥の区画へ進むほど認証の条件が厳しくなります。",
       "nodes": [
-        {"id": "out", "label": "社外の人", "row": 0, "col": 0},
-        {"id": "rec", "label": "受付\n誰でも入れる", "row": 0, "col": 1},
-        {"id": "off", "label": "執務室\n社員だけ", "row": 0, "col": 2},
-        {"id": "svr", "label": "サーバ室\n担当者だけ", "row": 0, "col": 3, "emphasis": true},
-        {"id": "anti", "label": "共連れ対策\nサークル型ゲート\nアンチパスバック", "row": 1, "col": 3}
+        {
+          "id": "out",
+          "label": "社外の人\n来客や業者",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "rec",
+          "label": "受付\n誰でも入れる",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "off",
+          "label": "事務フロア\n社員だけ",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "svr",
+          "label": "設計室\n担当者だけ",
+          "row": 0,
+          "col": 3,
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "out", "to": "rec", "label": "有人受付"},
-        {"from": "rec", "to": "off", "label": "IC カード"},
-        {"from": "off", "to": "svr", "label": "IC カード＋生体認証"},
-        {"from": "anti", "to": "svr", "label": "扉に付ける", "style": "dashed"}
+        {
+          "from": "out",
+          "to": "rec",
+          "label": "用件を告げて入る"
+        },
+        {
+          "from": "rec",
+          "to": "off",
+          "label": "IC カード"
+        },
+        {
+          "from": "off",
+          "to": "svr",
+          "label": "IC カード＋生体認証"
+        }
       ]
     }
   ]

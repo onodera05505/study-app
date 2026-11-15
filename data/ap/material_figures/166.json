@@ -5,8 +5,8 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### しくみと使いどころ",
-      "caption": "PoE スイッチから先の機器へは LAN ケーブル 1 本ずつで、データと電力が一緒に届きます。給電元を UPS につなぐと、先の機器がまとめて停電から守られます。",
+      "after": "### LAN ケーブルに電力を重ねるしくみ",
+      "caption": "PoE スイッチから先の機器へは LAN ケーブル 1 本ずつで、データと電力が一緒に届くことを表しています。",
       "nodes": [
         {
           "id": "ac",
@@ -15,58 +15,47 @@
           "col": 0
         },
         {
-          "id": "ups",
-          "label": "UPS\n停電中は電池で給電",
-          "row": 1,
-          "col": 1
-        },
-        {
           "id": "sw",
           "label": "PoE スイッチ\n通信をつなぎ\n電力も送り出す",
           "row": 1,
-          "col": 2,
+          "col": 1,
           "emphasis": true,
           "icon": "network"
         },
         {
-          "id": "ap",
-          "label": "無線 LAN AP\n天井に置ける",
+          "id": "spk",
+          "label": "天井スピーカ\n天井に埋め込める",
           "row": 0,
-          "col": 3
+          "col": 2
         },
         {
-          "id": "tel",
-          "label": "IP 電話機\n机にコンセント不要",
+          "id": "rdr",
+          "label": "入退室のカードリーダ\n扉の横に置ける",
           "row": 1,
-          "col": 3
+          "col": 2
         },
         {
           "id": "cam",
           "label": "ネットワークカメラ\n壁や軒下に置ける",
           "row": 2,
-          "col": 3
+          "col": 2
         }
       ],
       "edges": [
         {
           "from": "ac",
-          "to": "ups",
+          "to": "sw",
           "label": "電力"
         },
         {
-          "from": "ups",
-          "to": "sw",
-          "label": "電力（停電中も）"
-        },
-        {
           "from": "sw",
-          "to": "ap",
+          "to": "spk",
           "label": "データ＋電力（1 本で）",
           "arrow": "both"
         },
         {
           "from": "sw",
-          "to": "tel",
+          "to": "rdr",
           "label": "データ＋電力（1 本で）",
           "arrow": "both"
         },

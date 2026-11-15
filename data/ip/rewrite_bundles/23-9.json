@@ -1,0 +1,1297 @@
+{
+  "bundle": "23-9",
+  "unit_no": 23,
+  "unit": "セキュリティ",
+  "overview": "情報の機密性・完全性・可用性を、どんな脅威からどう守るかを学びます。攻撃の手口（マルウェア・弱点を突く攻撃・長く居座る攻撃・内部不正）を知ったうえで、本人確認とパスワードの守り方、暗号、無線 LAN と証明書を使う通信、ネットワークや機器や場所の守り方へ進み、最後に組織として管理する ISMS と事故対応、制度を扱います。不正のトライアングルの 3 要素は情報セキュリティの 3 要素とは別のものです。",
+  "group": {
+    "index": 9,
+    "name": "無線 LAN を守る",
+    "description": "無線 LAN の通信の暗号化と、つなぐ機器を絞る仕組みの役割の違いを押さえます。"
+  },
+  "groups_in_unit": [
+    {
+      "index": 1,
+      "name": "守る性質と脅威の見方",
+      "topics": [
+        {
+          "topic_id": 10,
+          "term": "情報セキュリティの要素（機密性，完全性，可用性，真正性，責任追跡性，否認防止，信頼性）"
+        },
+        {
+          "topic_id": 41,
+          "term": "脅威と脆弱性"
+        },
+        {
+          "topic_id": 528,
+          "term": "サイバー攻撃"
+        },
+        {
+          "topic_id": 213,
+          "term": "ソーシャルエンジニアリング"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "name": "マルウェアと感染の入口",
+      "topics": [
+        {
+          "topic_id": 39,
+          "term": "マルウェア"
+        },
+        {
+          "topic_id": 284,
+          "term": "オートラン"
+        },
+        {
+          "topic_id": 447,
+          "term": "マクロウイルス"
+        },
+        {
+          "topic_id": 40,
+          "term": "ランサムウェア"
+        },
+        {
+          "topic_id": 446,
+          "term": "クリプトジャッキング"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "name": "弱点を突く攻撃",
+      "topics": [
+        {
+          "topic_id": 212,
+          "term": "ゼロデイ攻撃"
+        },
+        {
+          "topic_id": 215,
+          "term": "バッファオーバーフロー"
+        },
+        {
+          "topic_id": 285,
+          "term": "ドライブバイダウンロード"
+        },
+        {
+          "topic_id": 527,
+          "term": "クロスサイトスクリプティング"
+        },
+        {
+          "topic_id": 211,
+          "term": "DNS キャッシュポイズニング"
+        },
+        {
+          "topic_id": 526,
+          "term": "MITB（Man In The Browser）攻撃"
+        },
+        {
+          "topic_id": 445,
+          "term": "DDoS 攻撃"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "name": "長く居座る攻撃",
+      "topics": [
+        {
+          "topic_id": 379,
+          "term": "サイバーキルチェーン"
+        },
+        {
+          "topic_id": 210,
+          "term": "APT 攻撃"
+        },
+        {
+          "topic_id": 286,
+          "term": "バックドア"
+        },
+        {
+          "topic_id": 378,
+          "term": "RAT"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "name": "内部の人が起こす不正",
+      "topics": [
+        {
+          "topic_id": 483,
+          "term": "不正のトライアングル（機会，動機，正当化）"
+        },
+        {
+          "topic_id": 458,
+          "term": "組織における内部不正防止ガイドライン"
+        },
+        {
+          "topic_id": 449,
+          "term": "人的セキュリティ管理策"
+        },
+        {
+          "topic_id": 380,
+          "term": "シャドーIT"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "name": "本人確認と権限",
+      "topics": [
+        {
+          "topic_id": 454,
+          "term": "アクセス制御"
+        },
+        {
+          "topic_id": 455,
+          "term": "アクセス権"
+        },
+        {
+          "topic_id": 238,
+          "term": "多要素認証"
+        },
+        {
+          "topic_id": 225,
+          "term": "PIN"
+        },
+        {
+          "topic_id": 234,
+          "term": "バイオメトリクス認証"
+        },
+        {
+          "topic_id": 46,
+          "term": "他人受入率（FAR）"
+        },
+        {
+          "topic_id": 236,
+          "term": "リスクベース認証"
+        },
+        {
+          "topic_id": 531,
+          "term": "シングルサインオン"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "name": "パスワードを狙う攻撃と守り方",
+      "topics": [
+        {
+          "topic_id": 448,
+          "term": "総当たり（ブルートフォース）攻撃"
+        },
+        {
+          "topic_id": 381,
+          "term": "パスワードリスト攻撃（クレデンシャルスタッフィング）"
+        },
+        {
+          "topic_id": 214,
+          "term": "ダークウェブ"
+        },
+        {
+          "topic_id": 532,
+          "term": "パスワード管理"
+        },
+        {
+          "topic_id": 533,
+          "term": "マトリクス認証"
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "name": "暗号とハッシュ",
+      "topics": [
+        {
+          "topic_id": 534,
+          "term": "暗号化"
+        },
+        {
+          "topic_id": 47,
+          "term": "公開鍵暗号方式"
+        },
+        {
+          "topic_id": 290,
+          "term": "ハイブリッド暗号方式"
+        },
+        {
+          "topic_id": 233,
+          "term": "ハッシュ関数"
+        },
+        {
+          "topic_id": 232,
+          "term": "デジタル署名（署名鍵，検証鍵）"
+        },
+        {
+          "topic_id": 235,
+          "term": "ブロックチェーン"
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "name": "無線 LAN を守る",
+      "topics": [
+        {
+          "topic_id": 239,
+          "term": "無線LANのセキュリティ"
+        },
+        {
+          "topic_id": 228,
+          "term": "WPA2"
+        },
+        {
+          "topic_id": 384,
+          "term": "MAC アドレスフィルタリング"
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "name": "証明書と暗号化通信",
+      "topics": [
+        {
+          "topic_id": 457,
+          "term": "デジタル証明書"
+        },
+        {
+          "topic_id": 221,
+          "term": "CA（Certification Authority：認証局）"
+        },
+        {
+          "topic_id": 222,
+          "term": "CRL（Certificate Revocation List：証明書失効リスト）"
+        },
+        {
+          "topic_id": 226,
+          "term": "PKI（Public Key Infrastructure：公開鍵基盤）"
+        },
+        {
+          "topic_id": 386,
+          "term": "SSL/TLS（Secure Sockets Layer/Transport Layer Security）"
+        },
+        {
+          "topic_id": 385,
+          "term": "S/MIME"
+        }
+      ]
+    },
+    {
+      "index": 11,
+      "name": "ネットワークの境界と通信の守り",
+      "topics": [
+        {
+          "topic_id": 387,
+          "term": "ファイアウォール"
+        },
+        {
+          "topic_id": 450,
+          "term": "DMZ（非武装地帯）"
+        },
+        {
+          "topic_id": 223,
+          "term": "IDS（Intrusion Detection System：侵入検知システム）"
+        },
+        {
+          "topic_id": 227,
+          "term": "WAF（Web Application Firewall）"
+        },
+        {
+          "topic_id": 229,
+          "term": "サニタイジング"
+        },
+        {
+          "topic_id": 453,
+          "term": "VPN（Virtual Private Network）"
+        },
+        {
+          "topic_id": 230,
+          "term": "ゼロトラスト"
+        }
+      ]
+    },
+    {
+      "index": 12,
+      "name": "機器と端末を守る",
+      "topics": [
+        {
+          "topic_id": 451,
+          "term": "MDM（Mobile Device Management）"
+        },
+        {
+          "topic_id": 224,
+          "term": "IoT機器のセキュリティ対策"
+        },
+        {
+          "topic_id": 291,
+          "term": "耐タンパ性"
+        },
+        {
+          "topic_id": 452,
+          "term": "TPM（Trusted Platform Module：セキュリティチップ）"
+        },
+        {
+          "topic_id": 288,
+          "term": "セキュアブート"
+        },
+        {
+          "topic_id": 289,
+          "term": "セキュリティバイデザイン"
+        }
+      ]
+    },
+    {
+      "index": 13,
+      "name": "場所と物を守る",
+      "topics": [
+        {
+          "topic_id": 240,
+          "term": "物理的セキュリティ対策"
+        },
+        {
+          "topic_id": 456,
+          "term": "ゾーニング"
+        },
+        {
+          "topic_id": 237,
+          "term": "入退室管理"
+        },
+        {
+          "topic_id": 287,
+          "term": "クリアデスク・クリアスクリーン"
+        },
+        {
+          "topic_id": 45,
+          "term": "データ消去"
+        }
+      ]
+    },
+    {
+      "index": 14,
+      "name": "ISMS とリスクの管理",
+      "topics": [
+        {
+          "topic_id": 11,
+          "term": "継続的改善（PDCA など）"
+        },
+        {
+          "topic_id": 44,
+          "term": "情報セキュリティポリシー（情報セキュリティ方針）"
+        },
+        {
+          "topic_id": 530,
+          "term": "情報資産の管理"
+        },
+        {
+          "topic_id": 292,
+          "term": "リスクアセスメント（リスク特定，リスク分析，リスク評価）"
+        },
+        {
+          "topic_id": 43,
+          "term": "リスク対応（リスク回避，リスク共有（リスク移転，リスク分散），リスク保有）"
+        },
+        {
+          "topic_id": 42,
+          "term": "ISMS"
+        },
+        {
+          "topic_id": 218,
+          "term": "ISMS内部監査"
+        }
+      ]
+    },
+    {
+      "index": 15,
+      "name": "事故が起きたときの対応",
+      "topics": [
+        {
+          "topic_id": 220,
+          "term": "情報セキュリティインシデント"
+        },
+        {
+          "topic_id": 216,
+          "term": "CSIRT"
+        },
+        {
+          "topic_id": 383,
+          "term": "サイバーレスキュー隊（J-CRAT）"
+        },
+        {
+          "topic_id": 231,
+          "term": "デジタルフォレンジックス"
+        },
+        {
+          "topic_id": 529,
+          "term": "ソフトウェア等の脆弱性関連情報に関する届出制度"
+        }
+      ]
+    },
+    {
+      "index": 16,
+      "name": "経営の指針と認証制度",
+      "topics": [
+        {
+          "topic_id": 219,
+          "term": "サイバーセキュリティ経営ガイドライン"
+        },
+        {
+          "topic_id": 382,
+          "term": "SECURITY ACTION"
+        },
+        {
+          "topic_id": 217,
+          "term": "ISMS クラウドセキュリティ認証"
+        },
+        {
+          "topic_id": 297,
+          "term": "PCI DSS"
+        }
+      ]
+    }
+  ],
+  "owners": [
+    {
+      "subject": "無線 LAN の暗号化と、接続を絞る仕組みの役割分担",
+      "owner": {
+        "topic_id": 239,
+        "term": "無線LANのセキュリティ"
+      },
+      "topics": [
+        239,
+        228,
+        384
+      ]
+    }
+  ],
+  "topics": [
+    {
+      "topic_id": 239,
+      "term": "無線LANのセキュリティ",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ対策・情報セキュリティ実装技術",
+      "question_count": 3,
+      "related_terms": [
+        "ESSID（Extended Service Set Identifier）",
+        "無線LAN",
+        "WEP",
+        "WPA2",
+        "暗号化キー",
+        "VLAN"
+      ],
+      "prerequisites": [],
+      "current": {
+        "generation": "materials_v3",
+        "explanation": "**無線LANのセキュリティ**とは、電波が届く範囲なら誰でも受信できてしまう無線 LAN を守るための対策で、中心になるのは**通信の暗号化**です。\n\n- **キーワード**: 暗号化・接続する機器の制限・名前の隠蔽\n- 今の標準は **WPA2 や WPA3**。古い WEP は暗号鍵を短時間で割り出せるため、今は使いません\n- 無線 LAN に付ける名前を [[ESSID（Extended Service Set Identifier）]] といいます。SSID とも呼びますが、同じものです\n- 外部の端末に使わせる ESSID を別に用意し、内部ネットワークに通さずインターネットだけにつなぐこともできます\n\n![アクセスポイントで接続を絞っても、電波そのものは第三者に届きます。強調した暗号化の端末から出る 2 本の線を見比べると、中身を守るのが暗号化だけだと読めます。](/figures/materials/ip/239-1.svg)\n\n![1 台のアクセスポイントに ESSID を 2 つ持たせ、つないだ ESSID で行き先を分けた図です。強調したゲスト用からは、社内ネットワークへの線が通じていません。](/figures/materials/ip/239-2.svg)",
+        "detail": "### 三つの対策を役割で分ける\n| 対策 | 手段 | 効果 |\n| --- | --- | --- |\n| 通信の暗号化 | WEP から **WPA2**・WPA3 へ | 盗聴に強い（WEP は弱い） |\n| 機器の制限 | [[MAC アドレスフィルタリング]] | 登録した機器だけ接続できる |\n| 名前の隠蔽 | [[ESSID のステルス化]] | 一覧に名前が出ない |\n\n暗号化は通信の中身を守り、機器の制限と名前の隠蔽は接続そのものを絞ります。後の二つだけでは中身が守られないので、暗号化と組み合わせて使います。1台のアクセスポイントに仮想的な ESSID を複数もたせ、暗号化方式や通信の制限を ESSID ごとに別々に設定することもできます。\n### ゲスト用の ESSID\n外部から持ち込まれた端末のために設ける ESSID（ゲストポート、ゲスト SSID とも呼びます）は、接続した端末を内部ネットワークにはつながせず、インターネットへの接続だけを許す機能です。社内の機器を守りながら、来客に通信手段を提供できます。"
+      },
+      "questions": [
+        {
+          "question_id": "2025r07-q90",
+          "content_key": "038f35a866da6d6c",
+          "exam_label": "令和7年度",
+          "stem": "無線LANのセキュリティ対策に関する記述として，適切なものはどれか。",
+          "choices": {
+            "ア": "APIは，複数のアクセスポイントをグループ化して管理するIDである。",
+            "イ": "SSHは，アクセスポイントをステルス化することで無線LANネットワークを隠蔽する機能である。",
+            "ウ": "VPNは，アクセスポイントに登録したMACアドレスをもつ機器以外からの接続を拒否する機能である。",
+            "エ": "WPA2は，WEPよりも高い信頼性をもつ，無線通信の暗号化技術である。"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2022r04-q68",
+          "content_key": "5716086f37bd78c7",
+          "exam_label": "令和4年度",
+          "stem": "無線 LAN ルータにおいて，外部から持ち込まれた端末用に設けられた，“ゲストポート”や“ゲスト SSID”などと呼ばれる機能によって実現できることの説明として，適切なものはどれか。",
+          "choices": {
+            "ア": "端末から内部ネットワークには接続をさせず，インターネットにだけ接続する。",
+            "イ": "端末がマルウェアに感染していないかどうかを検査し，安全が確認された端末だけを接続する。",
+            "ウ": "端末と無線 LAN ルータのボタン操作だけで，端末から無線 LAN ルータへの接続設定ができる。",
+            "エ": "端末の SSID の設定欄を空欄にしておけば，SSID が分からなくても無線 LAN ルータに接続できる。"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2018h30h-q100",
+          "content_key": "41fd47f8486312cc",
+          "exam_label": "平成30年度 春期",
+          "stem": "仮想的に二つの ESSID をもつ無線 LAN アクセスポイントを使用して，PC，タブレット，ゲーム機などの機器をインターネットに接続している。それぞれの ESSID を次の設定で使用する場合，WEP の暗号化方式の脆弱性によって，外部から無線 LAN に不正アクセスされたときに発生しやすい被害はどれか。",
+          "choices": {
+            "ア": "ESSID1に設定した暗号化キーが漏えいする。",
+            "イ": "PC からインターネットへの通信内容が漏えいする。",
+            "ウ": "インターネット接続回線を不正利用される。",
+            "エ": "タブレットに不正アクセスされる。"
+          },
+          "answer": "ウ",
+          "has_figure": true,
+          "figure_description": "ESSID1 と ESSID2 の設定・使用方法を示す表。左端の「設定」は暗号化方式・暗号化キー・通信制限の3行をまとめる見出し。\n\n| | | ESSID1 | ESSID2 |\n| --- | --- | --- | --- |\n| 設定 | 暗号化方式 | WPA2 | WEP |\n| 設定 | 暗号化キー | ESSID2のものとは異なるキー | ESSID1のものとは異なるキー |\n| 設定 | 通信制限 | なし | 接続した機器から管理画面と LAN 内の他の機器への通信は拒否 |\n| 使用方法 | | PC，タブレットを接続 | ゲーム機だけを接続 |"
+        }
+      ],
+      "question_explanations": [
+        {
+          "question_id": "2025r07-q90",
+          "content_key": "038f35a866da6d6c",
+          "correct_reason": "無線 LAN の暗号化方式は WEP から WPA、WPA2、WPA3 へと改良されてきました。WEP は暗号鍵を短時間で割り出せる弱点が知られているため、**WPA2 の方が信頼性が高い**という記述が答えです。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "API",
+              "note": "ソフトウェアの機能を外部から呼び出すための決まりのこと。無線 LAN の ID ではありません"
+            },
+            {
+              "label": "イ",
+              "term": "SSH",
+              "note": "通信を暗号化してサーバへ安全に遠隔ログインするための手順のことです"
+            },
+            {
+              "label": "ウ",
+              "term": "VPN（Virtual Private Network）",
+              "note": "通信経路を暗号化し、公衆回線をあたかも専用回線のように使う技術のことです"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "正解。"
+            }
+          ]
+        },
+        {
+          "question_id": "2022r04-q68",
+          "content_key": "5716086f37bd78c7",
+          "correct_reason": "ゲスト SSID は、外部から持ち込まれた端末を**内部ネットワークにはつながせず**、インターネットへの接続だけを許す機能です。社内の機器を守りながら来客に通信手段を提供できます。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "イ",
+              "term": "検疫ネットワーク",
+              "note": "接続前に端末の安全性を検査し、問題がない端末だけ社内網へ通す仕組みのことです"
+            },
+            {
+              "label": "ウ",
+              "term": "WPS",
+              "note": "ボタン操作などで無線 LAN の接続設定を簡単に済ませる仕組みのことです"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "SSID を空欄のままつなぐ設定の話で、内部ネットワークとの切り離しとは関係がありません"
+            }
+          ]
+        },
+        {
+          "question_id": "2018h30h-q100",
+          "content_key": "41fd47f8486312cc",
+          "correct_reason": "WEP 側の ESSID はゲーム機だけが使い、暗号化キーはもう一方と別で、管理画面や LAN 内の他の機器への通信も拒否されています。侵入者が届くのはインターネットだけなので、**接続回線を勝手に使われる**被害が起きやすくなります。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "二つの ESSID には別々の暗号化キーが設定されており、一方が破られても他方は漏れません"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "PC はより強い暗号化方式の側に接続しているので、その通信内容は解読されません"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "LAN 内の他の機器への通信は拒否されているので、そこから端末へは届きません"
+            }
+          ]
+        }
+      ],
+      "figure_file": "data/ip/material_figures/239.json",
+      "figures": [
+        {
+          "id": 1,
+          "type": "blocks",
+          "after": "### 三つの対策を役割で分ける",
+          "caption": "アクセスポイントで接続を絞っても、電波そのものは第三者に届きます。強調した暗号化の端末から出る 2 本の線を見比べると、中身を守るのが暗号化だけだと読めます。",
+          "nodes": [
+            {
+              "id": "ok",
+              "label": "登録した端末\nWPA2・WPA3 で\n暗号化して送る",
+              "row": 0,
+              "col": 0,
+              "icon": "device",
+              "emphasis": true
+            },
+            {
+              "id": "ng",
+              "label": "未登録の端末\nMAC アドレスが\n一覧に無い",
+              "row": 1,
+              "col": 1,
+              "icon": "device"
+            },
+            {
+              "id": "ap",
+              "label": "アクセスポイント\nMAC アドレスで絞る\n名前を隠す",
+              "row": 0,
+              "col": 1,
+              "icon": "lock"
+            },
+            {
+              "id": "lan",
+              "label": "社内ネットワーク\n接続を許した\n端末だけ入れる",
+              "row": 0,
+              "col": 2,
+              "icon": "network"
+            },
+            {
+              "id": "spy",
+              "label": "電波を拾う第三者\n接続はしないで\n受信だけする",
+              "row": 1,
+              "col": 0,
+              "icon": "warning"
+            }
+          ],
+          "edges": [
+            {
+              "from": "ok",
+              "to": "ap",
+              "label": "暗号化した通信"
+            },
+            {
+              "from": "ng",
+              "to": "ap",
+              "label": "接続を断られる",
+              "style": "dashed"
+            },
+            {
+              "from": "ap",
+              "to": "lan",
+              "label": "通す"
+            },
+            {
+              "from": "ok",
+              "to": "spy",
+              "label": "電波は拾えても\n中身は読めない",
+              "style": "dashed"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "type": "blocks",
+          "after": "### ゲスト用の ESSID",
+          "caption": "1 台のアクセスポイントに ESSID を 2 つ持たせ、つないだ ESSID で行き先を分けた図です。強調したゲスト用からは、社内ネットワークへの線が通じていません。",
+          "nodes": [
+            {
+              "id": "emp",
+              "label": "社員の端末\n社内の業務に使う",
+              "row": 0,
+              "col": 0,
+              "icon": "device"
+            },
+            {
+              "id": "gst",
+              "label": "来客の端末\n外から持ち込まれた",
+              "row": 1,
+              "col": 0,
+              "icon": "phone"
+            },
+            {
+              "id": "inner",
+              "label": "社内用 ESSID\n社内へも外へも\n出られる",
+              "row": 0,
+              "col": 1
+            },
+            {
+              "id": "guest",
+              "label": "ゲスト用 ESSID\n外にだけ出られる",
+              "row": 1,
+              "col": 1,
+              "emphasis": true
+            },
+            {
+              "id": "lan",
+              "label": "社内ネットワーク\n社内の機器とデータ",
+              "row": 0,
+              "col": 2,
+              "icon": "building"
+            },
+            {
+              "id": "net",
+              "label": "インターネット\n外のサービス",
+              "row": 1,
+              "col": 2,
+              "shape": "cloud"
+            }
+          ],
+          "edges": [
+            {
+              "from": "emp",
+              "to": "inner",
+              "label": "接続する"
+            },
+            {
+              "from": "gst",
+              "to": "guest",
+              "label": "接続する"
+            },
+            {
+              "from": "inner",
+              "to": "lan",
+              "label": "通す"
+            },
+            {
+              "from": "guest",
+              "to": "net",
+              "label": "通す"
+            },
+            {
+              "from": "guest",
+              "to": "lan",
+              "label": "通さない",
+              "style": "dashed",
+              "arrow": "none"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "topic_id": 228,
+      "term": "WPA2",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ対策・情報セキュリティ実装技術",
+      "question_count": 5,
+      "related_terms": [
+        "無線LANのセキュリティ",
+        "ESSID（Extended Service Set Identifier）",
+        "暗号化",
+        "cookie",
+        "MIME",
+        "S/MIME"
+      ],
+      "prerequisites": [
+        {
+          "topic_id": 239,
+          "term": "無線LANのセキュリティ"
+        }
+      ],
+      "current": {
+        "generation": "materials_v3",
+        "explanation": "**WPA2** とは、無線 LAN の通信を暗号化するための規格です。\n\n- **キーワード**: 無線 LAN・暗号化・WEP の後継\n- 電波は届く範囲の誰にでも拾われるので、盗聴を防ぐには暗号化が欠かせません\n- 短時間で解読される弱点が報告された **WEP** に代わって、利用が推奨されています\n- 機器に設定するのは **PSK（事前共有鍵）**と呼ばれるパスフレーズで、これをもとに暗号鍵が作られます\n\n![アクセスポイントと各 PC に同じ PSK を設定し、そこから PC ごとの鍵を作って通信を暗号化する図です。破線は、電波を拾っても読めないことを表します。](/figures/materials/ip/228-1.svg)\n\n![無線 LAN の 3 つの対策を、何をするかと流れる中身が暗号化されるかで並べた表です。下の段を横に見比べて読みます。](/figures/materials/ip/228-2.svg)",
+        "detail": "### しくみ\n無線 LAN はケーブルにつながなくても、電波が届く範囲なら誰でも受信できてしまいます。そのまま流すと中身を読まれるので、WPA2 で通信内容を暗号化します。使い方は、アクセスポイントと端末に同じ **PSK**（事前共有鍵、パスフレーズ）を設定するだけです。そのパスフレーズをもとに、接続する PC ごとに暗号化用の鍵が作られます。\n### 混同しやすい用語\n- **ESSID** — アクセスポイントに付ける名前です。接続先を見分けるための名前なので、隠しても電波に流れる中身は暗号化されないままです\n- **[[MAC アドレスフィルタリング]]** — つないでよい機器を登録し、それ以外を拒否する仕組みです。相手を絞るだけなので、流れる中身は暗号化されないままです"
+      },
+      "questions": [
+        {
+          "question_id": "2026r08-q59",
+          "content_key": "d781af3d5f91bd9d",
+          "exam_label": "令和8年度",
+          "stem": "無線 LAN で使用するWPA2の機能として，適切なものはどれか。",
+          "choices": {
+            "ア": "2本のアンテナを用いることによってデータの送受信を高速化する。",
+            "イ": "アクセスポイントをステルス化する。",
+            "ウ": "通信データを暗号化する。",
+            "エ": "登録された MAC アドレスをもつ機器以外からのアクセスを拒否する。"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2023r05-q65",
+          "content_key": "b77c75e865288fb4",
+          "exam_label": "令和5年度",
+          "stem": "Wi-Fiのセキュリティ規格であるWPA2を用いて，PCを無線LANルータと接続するときに設定するPSKの説明として，適切なものはどれか。",
+          "choices": {
+            "ア": "アクセスポイントへの接続を認証するときに用いる符号（パスフレーズ）であり，この符号に基づいて，接続するPCごとに通信の暗号化に用いる鍵が生成される。",
+            "イ": "アクセスポイントへの接続を認証するときに用いる符号（パスフレーズ）であり，この符号に基づいて，接続するPCごとにプライベートIPアドレスが割り当てられる。",
+            "ウ": "接続するアクセスポイントを識別するために用いる名前であり，この名前に基づいて，接続するPCごとに通信の暗号化に用いる鍵が生成される。",
+            "エ": "接続するアクセスポイントを識別するために用いる名前であり，この名前に基づいて，接続するPCごとにプライベートIPアドレスが割り当てられる。"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2020r02o-q93",
+          "content_key": "e279242e361e6348",
+          "exam_label": "令和2年度 10月",
+          "stem": "無線 LAN において，PC とアクセスポイント間の電波傍受による盗聴の対策として，適切なものはどれか。",
+          "choices": {
+            "ア": "MAC アドレスフィルタリングを設定する。",
+            "イ": "アクセスポイントからの ESSID 通知を停止する。",
+            "ウ": "アクセスポイントの ESSID を推定しにくい値に設定する。",
+            "エ": "セキュリティの設定で，WPA2を選択する。"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2019h31h-q74",
+          "content_key": "3d3eb962046a3388",
+          "exam_label": "平成31年度 春期",
+          "stem": "無線 LAN の暗号化方式であり，WEP では短い時間で暗号が解読されてしまう問題が報告されたことから，より暗号強度を高めるために利用が推奨されているものはどれか。",
+          "choices": {
+            "ア": "ESSID",
+            "イ": "HTTPS",
+            "ウ": "S/MIME",
+            "エ": "WPA2"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2018h30a-q89",
+          "content_key": "0792ab03af3c5804",
+          "exam_label": "平成30年度 秋期",
+          "stem": "次のうち，無線 LAN で使用される暗号化規格はどれか。",
+          "choices": {
+            "ア": "cookie",
+            "イ": "ESSID",
+            "ウ": "MIME",
+            "エ": "WPA2"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null
+        }
+      ],
+      "question_explanations": [
+        {
+          "question_id": "2026r08-q59",
+          "content_key": "d781af3d5f91bd9d",
+          "correct_reason": "WPA2 は無線 LAN の**暗号化**の規格です。電波は届く範囲の誰にでも受信されてしまうので、内容を読まれないよう通信データを暗号化します。無線 LAN の用語は「暗号化する・相手を制限する・存在を隠す・速くする」の4つに仕分けると迷いません。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "MIMO",
+              "note": "複数のアンテナで同時に送受信して通信を高速化する技術。セキュリティの機能ではありません"
+            },
+            {
+              "label": "イ",
+              "term": "ESSID のステルス化",
+              "note": "アクセスポイントが自分の名前を知らせないようにして見つかりにくくする設定。通信の暗号化はしません"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "エ",
+              "term": "MAC アドレスフィルタリング",
+              "note": "登録した機器以外の接続を拒否する仕組み。つなぐ相手を絞るだけで、内容は暗号化されません"
+            }
+          ]
+        },
+        {
+          "question_id": "2023r05-q65",
+          "content_key": "b77c75e865288fb4",
+          "correct_reason": "PSK は事前共有鍵と呼ばれるパスフレーズで、アクセスポイントと端末の両方に同じものを設定します。接続を認証するときに使われ、このパスフレーズをもとに**接続する PC ごとの暗号鍵**が作られます。アクセスポイントの名前でもなければ、IP アドレスを配るためのものでもありません。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "パスフレーズから作られるのは通信を暗号化する鍵で、IP アドレスの割当てには使いません"
+            },
+            {
+              "label": "ウ",
+              "term": "ESSID（Extended Service Set Identifier）",
+              "note": "無線 LAN のアクセスポイントに付ける識別名です。接続先を見分けるための名前で、暗号化や鍵の生成はしません"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "アクセスポイントの名前は識別のためのもので、IP アドレスの割当てにも暗号化にも関わりません"
+            }
+          ]
+        },
+        {
+          "question_id": "2020r02o-q93",
+          "content_key": "e279242e361e6348",
+          "correct_reason": "盗聴とは、飛んでいる電波を拾って中身を読まれることです。これを防げるのは中身を読めなくする**暗号化**だけなので、WPA2 を選びます。接続する相手を絞ったり名前を隠したりしても、流れている電波そのものは読める状態のままです。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "MAC アドレスフィルタリング",
+              "note": "登録した機器以外の接続を拒否する仕組み。つなぐ相手を絞るだけで、内容は暗号化されません"
+            },
+            {
+              "label": "イ",
+              "term": "ESSID のステルス化",
+              "note": "アクセスポイントが自分の名前を知らせないようにして見つかりにくくする設定。通信の暗号化はしません"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "名前を推測されにくくする設定です。名前を工夫しても電波に流れる中身は暗号化されないままです"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "正解。"
+            }
+          ]
+        },
+        {
+          "question_id": "2019h31h-q74",
+          "content_key": "3d3eb962046a3388",
+          "correct_reason": "以前使われていた WEP は短時間で解読される弱点が見つかったため、より強い暗号方式を採る **WPA2** への切替えが推奨されました。無線 LAN の暗号化規格を選ぶ問題なので、Web やメールを守る仕組みは対象外です。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "ESSID（Extended Service Set Identifier）",
+              "note": "無線 LAN のアクセスポイントに付ける識別名です。接続先を見分けるための名前で、暗号化や鍵の生成はしません"
+            },
+            {
+              "label": "イ",
+              "term": "HTTPS",
+              "note": "Web ブラウザとサーバの間の通信を暗号化する仕組み。無線 LAN 区間の規格ではありません"
+            },
+            {
+              "label": "ウ",
+              "term": "S/MIME",
+              "note": "電子メールの暗号化とデジタル署名を行う規格。無線 LAN とは関係ありません"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "正解。"
+            }
+          ]
+        },
+        {
+          "question_id": "2018h30a-q89",
+          "content_key": "0792ab03af3c5804",
+          "correct_reason": "無線 LAN で通信を暗号化する規格は **WPA2** です。並んでいる他の3つは Web やメールで使われる仕組みで、無線 LAN の暗号化とは無関係です。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "cookie",
+              "note": "Web サイトが訪問者を見分けるためにブラウザへ保存させる小さなデータです。通信を暗号化する仕組みではありません"
+            },
+            {
+              "label": "イ",
+              "term": "ESSID（Extended Service Set Identifier）",
+              "note": "無線 LAN のアクセスポイントに付ける識別名です。接続先を見分けるための名前で、暗号化や鍵の生成はしません"
+            },
+            {
+              "label": "ウ",
+              "term": "MIME",
+              "note": "電子メールで画像や日本語などを扱えるようにする規格。暗号化の仕組みではありません"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "正解。"
+            }
+          ]
+        }
+      ],
+      "figure_file": "data/ip/material_figures/228.json",
+      "figures": [
+        {
+          "id": 1,
+          "type": "blocks",
+          "after": "### しくみ",
+          "caption": "アクセスポイントと各 PC に同じ PSK を設定し、そこから PC ごとの鍵を作って通信を暗号化する図です。破線は、電波を拾っても読めないことを表します。",
+          "nodes": [
+            {
+              "id": "ap",
+              "label": "アクセスポイント\nPSK を設定",
+              "row": 0,
+              "col": 1,
+              "icon": "network",
+              "emphasis": true
+            },
+            {
+              "id": "p1",
+              "label": "PC 1\n同じ PSK から\nPC 1 用の鍵を作る",
+              "row": 0,
+              "col": 0,
+              "icon": "device"
+            },
+            {
+              "id": "p2",
+              "label": "PC 2\n同じ PSK から\nPC 2 用の鍵を作る",
+              "row": 0,
+              "col": 2,
+              "icon": "device"
+            },
+            {
+              "id": "ev",
+              "label": "電波を拾う第三者\n暗号文しか見えない",
+              "row": 1,
+              "col": 1,
+              "icon": "warning"
+            }
+          ],
+          "edges": [
+            {
+              "from": "ap",
+              "to": "p1",
+              "label": "PC 1 用の鍵で\n暗号化した通信",
+              "arrow": "both"
+            },
+            {
+              "from": "ap",
+              "to": "p2",
+              "label": "PC 2 用の鍵で\n暗号化した通信",
+              "arrow": "both"
+            },
+            {
+              "from": "ap",
+              "to": "ev",
+              "label": "電波を拾われても読めない",
+              "style": "dashed"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "type": "matrix",
+          "after": "### 混同しやすい用語",
+          "caption": "無線 LAN の 3 つの対策を、何をするかと流れる中身が暗号化されるかで並べた表です。下の段を横に見比べて読みます。",
+          "x": {
+            "label": "対策",
+            "values": [
+              "WPA2",
+              "ESSID を隠す",
+              "MAC アドレス\nフィルタリング"
+            ]
+          },
+          "y": {
+            "label": "観点",
+            "values": [
+              "何をするか",
+              "中身は\n暗号化されるか"
+            ]
+          },
+          "cells": [
+            [
+              "通信を暗号化する\nPSK から鍵を作る",
+              "アクセスポイントの\n名前を見せない",
+              "登録した機器だけ\nつながせる"
+            ],
+            [
+              "される\n拾われても読めない",
+              "されない\n拾われると読める",
+              "されない\n拾われると読める"
+            ]
+          ],
+          "emphasis": [
+            [
+              1,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "topic_id": 384,
+      "term": "MAC アドレスフィルタリング",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ対策・情報セキュリティ実装技術",
+      "question_count": 2,
+      "related_terms": [
+        "MAC アドレス",
+        "ESSID（Extended Service Set Identifier）",
+        "無線LANのセキュリティ",
+        "アクセス制御",
+        "WPA2"
+      ],
+      "prerequisites": [
+        {
+          "topic_id": 239,
+          "term": "無線LANのセキュリティ"
+        }
+      ],
+      "current": {
+        "generation": "materials_v3",
+        "explanation": "**MAC アドレスフィルタリング**とは、無線 LAN のアクセスポイントに接続を許す端末の MAC アドレスを登録しておき、それ以外の端末の接続を拒む仕組みです。\n\n- **キーワード**: 端末固有の情報・接続を制限\n- 端末を見分けるのに使うのは**MAC アドレス**。機器ごとに割り当てられた固有の番号です\n- 暗号化ではなく、つないでよいかどうかを決める仕組みです\n\n![アクセスポイントが接続要求の MAC アドレスを許可リストと照らし合わせ、載っている端末だけをつなぎます。](/figures/materials/ip/384-1.svg)",
+        "detail": "### しくみ\nMAC アドレスは、ネットワーク機器の差込口ごとに割り当てられた識別番号で、原則として世界に一つしかありません。アクセスポイントは接続要求を受け取ったときに相手の MAC アドレスを見られるので、許可リストに載っている番号かどうかで通す・通さないを判断できます。家庭用のルータにもたいてい付いている機能です。PC、プリンタ、ゲーム機のように種類の違う端末が混ざっていても、同じ仕組みで接続先を限定できます。\n### 弱点\nMAC アドレスは通信を観測すれば分かってしまい、機器側で別の値に偽装することもできます。ですから、これだけで無線 LAN を守ることはできません。通信の中身を暗号化する[[WPA2]]などと組み合わせて使うのが前提です。接続させるかどうかを決めるのがフィルタリング、中身を守るのが暗号化、と役割を分けて覚えます。"
+      },
+      "questions": [
+        {
+          "question_id": "2021r03-q85",
+          "content_key": "037807c5d2af209e",
+          "exam_label": "令和3年度",
+          "stem": "無線 LAN のセキュリティにおいて，アクセスポイントが PC などの端末からの接続要求を受け取ったときに，接続を要求してきた端末固有の情報を基に接続制限を行う仕組みはどれか。",
+          "choices": {
+            "ア": "ESSID",
+            "イ": "MAC アドレスフィルタリング",
+            "ウ": "VPN",
+            "エ": "WPA2"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2018h30a-q87",
+          "content_key": "3970badcf71c113b",
+          "exam_label": "平成30年度 秋期",
+          "stem": "無線 LAN のアクセス制御機能を使用して，ネットワークに接続できる端末を特定の PC，プリンタ，ゲーム機などに限定したい。このとき，端末の識別に使用する情報として，最も適切なものはどれか。",
+          "choices": {
+            "ア": "ESSID",
+            "イ": "IP アドレスとポート番号",
+            "ウ": "MAC アドレス",
+            "エ": "電波の周波数"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null
+        }
+      ],
+      "question_explanations": [
+        {
+          "question_id": "2021r03-q85",
+          "content_key": "037807c5d2af209e",
+          "correct_reason": "「端末固有の情報を基に接続制限を行う」が決め手です。機器ごとに割り当てられた**MAC アドレス**をアクセスポイントに登録しておき、登録済みの端末だけ接続を許す仕組みが MAC アドレスフィルタリングです。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "ESSID（Extended Service Set Identifier）",
+              "note": "無線 LAN のネットワークに付けた名前のこと。接続先を選ぶためのもので、端末の識別には使いません"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "ウ",
+              "term": "VPN（Virtual Private Network）",
+              "note": "インターネット上に暗号化した仮想の専用線を作る技術のこと。通信の中身を守る仕組みです"
+            },
+            {
+              "label": "エ",
+              "term": "WPA2",
+              "note": "無線 LAN の端末とアクセスポイントの間の通信を暗号化する規格のことです。守るのはその区間だけで、接続の可否は決めません"
+            }
+          ]
+        },
+        {
+          "question_id": "2018h30a-q87",
+          "content_key": "3970badcf71c113b",
+          "correct_reason": "接続させる端末を決め打ちで限定したいので、機器に固有で変わらない番号を使います。それが**MAC アドレス**です。PC もプリンタもゲーム機も同じように番号を持つため、種類が違っても一つの仕組みで判定できます。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "ESSID（Extended Service Set Identifier）",
+              "note": "無線 LAN のネットワークに付けた名前のこと。接続先を選ぶためのもので、端末の識別には使いません"
+            },
+            {
+              "label": "イ",
+              "term": "IP アドレス（IPv6，IPv4，グローバル，プライベート）",
+              "note": "ネットワーク上の住所を表す番号のこと。割り当てが変わることがあり、機器そのものの識別には向きません"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "電波の周波数はどの端末も同じものを使うので、端末の区別には使えません"
+            }
+          ]
+        }
+      ],
+      "figure_file": "data/ip/material_figures/384.json",
+      "figures": [
+        {
+          "id": 1,
+          "type": "blocks",
+          "after": "### しくみ",
+          "caption": "アクセスポイントが接続要求の MAC アドレスを許可リストと照らし合わせ、載っている端末だけをつなぎます。",
+          "nodes": [
+            {
+              "id": "ok",
+              "label": "登録済みの端末\nMAC アドレス A",
+              "row": 0,
+              "col": 0,
+              "icon": "device"
+            },
+            {
+              "id": "ng",
+              "label": "未登録の端末\nMAC アドレス X",
+              "row": 1,
+              "col": 0,
+              "icon": "device"
+            },
+            {
+              "id": "ap",
+              "label": "アクセスポイント\n許可リストと照合\n（登録: A だけ）",
+              "row": 0,
+              "col": 1,
+              "emphasis": true,
+              "icon": "network"
+            },
+            {
+              "id": "lan",
+              "label": "無線 LAN\nつながった先",
+              "row": 0,
+              "col": 2,
+              "shape": "cloud"
+            },
+            {
+              "id": "deny",
+              "label": "接続できない\n要求を拒まれる",
+              "row": 1,
+              "col": 2,
+              "icon": "warning"
+            }
+          ],
+          "edges": [
+            {
+              "from": "ok",
+              "to": "ap",
+              "label": "A で接続要求"
+            },
+            {
+              "from": "ng",
+              "to": "ap",
+              "label": "X で接続要求"
+            },
+            {
+              "from": "ap",
+              "to": "lan",
+              "label": "載っている：通す"
+            },
+            {
+              "from": "ap",
+              "to": "deny",
+              "label": "載っていない：拒む",
+              "style": "dashed"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

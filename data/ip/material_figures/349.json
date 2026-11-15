@@ -4,30 +4,60 @@
   "figures": [
     {
       "id": 1,
-      "type": "steps",
+      "type": "blocks",
       "after": "### 証拠がなければ結論は書けない",
-      "caption": "監査は上の段から順に進みます。強調した本調査で監査技法を使って証拠を集め、その証拠が結論を裏付けます。",
-      "direction": "down",
-      "stages": [
+      "caption": "予備調査からも本調査からも、監査技法で集めた監査証拠へ矢印が入ります。強調した監査証拠が結論を裏付けます。",
+      "nodes": [
         {
+          "id": "pre",
           "label": "予備調査\n全体像とリスクの所在をつかむ",
-          "icon": "search",
-          "next_label": "リスクの高い所"
+          "row": 0,
+          "col": 0,
+          "icon": "search"
         },
         {
-          "label": "本調査\nここで監査技法を使う",
+          "id": "main",
+          "label": "本調査\nリスクの高い所を重点的に調べる",
+          "row": 0,
+          "col": 1,
+          "icon": "search"
+        },
+        {
+          "id": "ev",
+          "label": "監査証拠\n技法で確かめた事実",
+          "row": 1,
+          "col": 1,
           "icon": "document",
-          "next_label": "集めた監査証拠",
           "emphasis": true
         },
         {
-          "label": "証拠の評価\n事実で裏付けられるか見る",
-          "icon": "check",
-          "next_label": "裏付けの取れた事実"
+          "id": "con",
+          "label": "結論\n主観でなく証拠で書く",
+          "row": 1,
+          "col": 2,
+          "icon": "check"
+        }
+      ],
+      "edges": [
+        {
+          "from": "pre",
+          "to": "main",
+          "label": "リスクの高い所"
         },
         {
-          "label": "結論\n主観でなく証拠で書く",
-          "icon": "person"
+          "from": "pre",
+          "to": "ev",
+          "label": "監査技法で集める"
+        },
+        {
+          "from": "main",
+          "to": "ev",
+          "label": "監査技法で集める"
+        },
+        {
+          "from": "ev",
+          "to": "con",
+          "label": "結論を裏付ける"
         }
       ]
     }

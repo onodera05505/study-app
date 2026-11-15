@@ -14,16 +14,16 @@
 <polyline points="323.4,108 58,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="58,108 66,104.4 66,111.6" fill="#1f2937"/>
 <text x="190.7" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. ② SYN/ACK が返る → 開いている</text>
-<rect x="114.7" y="113" width="152" height="16" rx="3" fill="#ffffff"/>
-<text x="190.7" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">接続要求が許可された状態</text>
+<rect x="78.7" y="113" width="224" height="16" rx="3" fill="#ffffff"/>
+<text x="190.7" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">そのポートでサービスが待ち受けている</text>
 <polyline points="58,164 323.4,164" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="323.4,164 315.4,167.6 315.4,160.4" fill="#1f2937"/>
 <text x="190.7" y="157" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. ③ ポート B へ TCP SYN</text>
 <polyline points="323.4,204 58,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="58,204 66,200.4 66,207.6" fill="#1f2937"/>
 <text x="190.7" y="197" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. ④ RST/ACK が返る → 閉じている</text>
-<rect x="84.7" y="209" width="212" height="16" rx="3" fill="#ffffff"/>
-<text x="190.7" y="222.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">接続要求が中断または拒否された状態</text>
+<rect x="78.7" y="209" width="224" height="16" rx="3" fill="#ffffff"/>
+<text x="190.7" y="222.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">そのポートで待ち受けるサービスが無い</text>
 <polyline points="58,260 323.4,260" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="323.4,260 315.4,263.6 315.4,256.4" fill="#1f2937"/>
 <text x="190.7" y="253" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. ⑤ ポート C へ UDP パケット</text>

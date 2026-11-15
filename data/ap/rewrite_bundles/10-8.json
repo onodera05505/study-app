@@ -1,0 +1,758 @@
+{
+  "bundle": "10-8",
+  "unit_no": 10,
+  "unit": "ネットワーク",
+  "overview": "データを小分けにして包み、層ごとのアドレスを頼りに相手まで届ける仕組みを学びます。LAN の中でフレームを中継する仕組みと、無線や電力線などのつなぎ方から入り、IP アドレスの区切り方、名前とアドレスの対応づけと配布、TCP と UDP、データ量の計算、経路の制御、ISP への接続、Web やメールの通信の順に進みます。IP から MAC を求める ARP と、その逆の RARP、結果を見る arp コマンドは別物です。",
+  "group": {
+    "index": 8,
+    "name": "ISP へつなぐ",
+    "description": "1 対 1 の回線の手順を LAN の上で使ってインターネットに接続し、複数の ISP で出口を二重にする方法を扱います。"
+  },
+  "groups_in_unit": [
+    {
+      "index": 1,
+      "name": "LAN でフレームを中継する",
+      "topics": [
+        {
+          "topic_id": 358,
+          "term": "イーサネットフレーム"
+        },
+        {
+          "topic_id": 165,
+          "term": "CSMA/CD"
+        },
+        {
+          "topic_id": 569,
+          "term": "スイッチングハブ"
+        },
+        {
+          "topic_id": 719,
+          "term": "ルータ"
+        },
+        {
+          "topic_id": 479,
+          "term": "ブロードキャスト"
+        },
+        {
+          "topic_id": 167,
+          "term": "スパニングツリー"
+        },
+        {
+          "topic_id": 718,
+          "term": "ブロードキャストストーム"
+        },
+        {
+          "topic_id": 172,
+          "term": "VLAN"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "name": "無線と電力線でつなぐ",
+      "topics": [
+        {
+          "topic_id": 525,
+          "term": "無線 LAN アクセスポイント"
+        },
+        {
+          "topic_id": 676,
+          "term": "SSID"
+        },
+        {
+          "topic_id": 526,
+          "term": "IEEE 802.11a/b/g/n/ac/ax"
+        },
+        {
+          "topic_id": 359,
+          "term": "ハンドオーバー"
+        },
+        {
+          "topic_id": 677,
+          "term": "LPWA（LTE-M，NB-IoT，Wi-SUN，LoRaWAN）"
+        },
+        {
+          "topic_id": 356,
+          "term": "電力線通信（PLC）"
+        },
+        {
+          "topic_id": 166,
+          "term": "PoE（Power over Ethernet）"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "name": "IP アドレスの区切り方",
+      "topics": [
+        {
+          "topic_id": 31,
+          "term": "サブネットマスク"
+        },
+        {
+          "topic_id": 163,
+          "term": "アドレスクラス"
+        },
+        {
+          "topic_id": 169,
+          "term": "CIDR（Classless Inter Domain Routing）"
+        },
+        {
+          "topic_id": 164,
+          "term": "グローバル IP アドレス"
+        },
+        {
+          "topic_id": 175,
+          "term": "マルチキャスト"
+        },
+        {
+          "topic_id": 446,
+          "term": "IPv6"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "name": "アドレスを対応づけて配る",
+      "topics": [
+        {
+          "topic_id": 161,
+          "term": "DNS"
+        },
+        {
+          "topic_id": 505,
+          "term": "ARP（アドレス解決プロトコル）"
+        },
+        {
+          "topic_id": 178,
+          "term": "arp"
+        },
+        {
+          "topic_id": 402,
+          "term": "DHCP"
+        },
+        {
+          "topic_id": 656,
+          "term": "RARP（Reverse Address Resolution Protocol：逆アドレス解決プロトコル）"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "name": "端末どうしで届け合う",
+      "topics": [
+        {
+          "topic_id": 171,
+          "term": "TCP"
+        },
+        {
+          "topic_id": 357,
+          "term": "UDP"
+        },
+        {
+          "topic_id": 174,
+          "term": "ポート番号"
+        },
+        {
+          "topic_id": 447,
+          "term": "NTP"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "name": "送る時間と量を計算する",
+      "topics": [
+        {
+          "topic_id": 5,
+          "term": "転送速度（伝送速度）"
+        },
+        {
+          "topic_id": 29,
+          "term": "ビット誤り率"
+        },
+        {
+          "topic_id": 170,
+          "term": "MTU（Maximum Transmission Unit）"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "name": "経路を決めて守る",
+      "topics": [
+        {
+          "topic_id": 176,
+          "term": "ルーティング"
+        },
+        {
+          "topic_id": 30,
+          "term": "ICMP（Internet Control Message Protocol）"
+        },
+        {
+          "topic_id": 173,
+          "term": "VRRP"
+        },
+        {
+          "topic_id": 177,
+          "term": "SDN（Software-Defined Networking）"
+        },
+        {
+          "topic_id": 657,
+          "term": "NFV（Network Functions Virtualization）"
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "name": "ISP へつなぐ",
+      "topics": [
+        {
+          "topic_id": 720,
+          "term": "PPP"
+        },
+        {
+          "topic_id": 448,
+          "term": "PPPoE（Point to Point Protocol over Ethernet）"
+        },
+        {
+          "topic_id": 595,
+          "term": "マルチホーミング"
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "name": "Web とメールの通信",
+      "topics": [
+        {
+          "topic_id": 404,
+          "term": "URL"
+        },
+        {
+          "topic_id": 168,
+          "term": "リバースプロキシサーバ"
+        },
+        {
+          "topic_id": 179,
+          "term": "base64"
+        },
+        {
+          "topic_id": 721,
+          "term": "SOAP"
+        }
+      ]
+    }
+  ],
+  "owners": [
+    {
+      "subject": "PPP の認証と IP アドレスの払い出しの手順と、それを Ethernet に載せる PPPoE",
+      "owner": {
+        "topic_id": 720,
+        "term": "PPP"
+      },
+      "topics": [
+        720,
+        448
+      ]
+    }
+  ],
+  "topics": [
+    {
+      "topic_id": 720,
+      "term": "PPP",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "通信プロトコル",
+      "question_count": 1,
+      "related_terms": [
+        "PPPoE（Point to Point Protocol over Ethernet）",
+        "UDP",
+        "データリンク層",
+        "コネクション方式"
+      ],
+      "prerequisites": [],
+      "current": {
+        "generation": "materials_v3",
+        "explanation": "**PPP**（Point to Point Protocol）とは、2 つのノードを 1 対 1 で接続するときに使う**データリンク層**のプロトコルで、リンク制御と誤り検出の機能を持ちます。\n\n- **キーワード**: 1 対 1・ダイヤルアップ・リンク制御とエラー処理\n- リンクを張る **LCP**、上位プロトコルごとの設定を行う **NCP** の 2 段構えで接続を確立します\n- 認証は PPP の中で行う手順で、パスワードをそのまま送る **PAP** と、乱数を使うチャレンジレスポンス方式の **CHAP** から選べます\n- イーサネット上で PPP を使う方式が[[PPPoE（Point to Point Protocol over Ethernet）]]です",
+        "detail": "### 1 対 1 の回線に足りないものを補う\n![上から時間の順です。LCP でリンクを確立し、認証を挟んで、NCP で上位の設定を済ませてからデータを送ります。](/figures/materials/ap/720-1.svg)\n電話回線や専用線のように、相手が 1 台に決まっている回線では、宛先を指定するアドレスの仕組みは要りません。しかしそれ以外の機能、すなわち**回線が使える状態になったかの確認、相手が正当かどうかの認証、伝送中に化けたデータの検出**は必要です。PPP はこれらをまとめて提供します。まず LCP（Link Control Protocol）が最大受信サイズや認証方式などを相手とすり合わせてリンクを確立し、続いて NCP（Network Control Protocol）が IP アドレスの割当てなど上位プロトコルごとの設定を行います。認証はこの 2 つの間に入る PPP の中の手順で、利用者 ID とパスワードをそのまま送る PAP と、サーバが送った乱数（チャレンジ）とパスワードのハッシュ値を返す CHAP のどちらかを使います。PAP は手順が簡単な代わりに盗聴に弱く、CHAP ではパスワードそのものが回線を流れません。フレームには FCS（誤り検出符号）が付くので、壊れたフレームは受信側で捨てられます。**1 本の回線に IP 以外の複数のプロトコルを載せられる**のも PPP の特徴です。\n### PPP から派生したもの\nPPP のフレームをイーサネットフレームに載せる方式が[[PPPoE（Point to Point Protocol over Ethernet）]]です。ADSL や光回線で、ISP への接続認証に PPP の仕組みをそのまま使うために生まれました。PPP の通信を IP ネットワーク上のトンネルに通す PPTP や L2TP もあり、こちらは VPN で使われます。\n### 混同しやすい用語\n- **[[SLIP]]** — 同じくシリアル回線で IP を運びますが、認証も誤り検出も無く、載せられるのは IP だけです。PPP に置き換えられました。\n- **HDLC** — PPP の元になったデータリンク層の伝送制御手順です。PPP はこのフレーム形式を借りています。"
+      },
+      "questions": [
+        {
+          "question_id": "2017h29h-q33",
+          "content_key": "09598ac49caf9c98",
+          "exam_label": "平成29年度 春期",
+          "stem": "WAN を介して二つのノードをダイヤルアップ接続するときに使用されるプロトコルであり，リンク制御やエラー処理機能をもつものはどれか。",
+          "choices": {
+            "ア": "FTP",
+            "イ": "PPP",
+            "ウ": "SLIP",
+            "エ": "UDP"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null
+        }
+      ],
+      "question_explanations": [
+        {
+          "question_id": "2017h29h-q33",
+          "content_key": "09598ac49caf9c98",
+          "correct_reason": "[[PPP]]は 2 つのノードを 1 対 1 で結ぶデータリンク層のプロトコルです。LCP がリンクの確立と条件のすり合わせを行い、フレームに付く FCS で壊れたフレームを検出します。**リンク制御と誤り処理を併せ持つ**という条件が決め手で、PAP・CHAP による認証や複数プロトコルの多重化も行えます。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "FTP",
+              "note": "TCP 上でファイルを転送するアプリケーション層のプロトコルです。回線やリンクを確立する役割は持ちません。"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "ウ",
+              "term": "SLIP",
+              "note": "シリアル回線で IP パケットだけを運ぶ簡素なプロトコルです。認証も誤り検出も無く、PPP に置き換わりました。"
+            },
+            {
+              "label": "エ",
+              "term": "UDP",
+              "note": "コネクションを確立せず到達確認も再送もしないトランスポート層のプロトコルです。軽さを優先する通信に使います。"
+            }
+          ]
+        }
+      ],
+      "figure_file": "data/ap/material_figures/720.json",
+      "figures": [
+        {
+          "id": 1,
+          "type": "sequence",
+          "after": "### 1 対 1 の回線に足りないものを補う",
+          "caption": "上から時間の順です。LCP でリンクを確立し、認証を挟んで、NCP で上位の設定を済ませてからデータを送ります。",
+          "actors": [
+            {
+              "id": "a",
+              "label": "端末",
+              "icon": "device"
+            },
+            {
+              "id": "b",
+              "label": "接続先（ISP など）",
+              "icon": "server"
+            }
+          ],
+          "steps": [
+            {
+              "from": "a",
+              "to": "b",
+              "label": "LCP：最大受信サイズと認証方式を提案"
+            },
+            {
+              "from": "b",
+              "to": "a",
+              "label": "LCP：合意してリンクを確立"
+            },
+            {
+              "from": "a",
+              "to": "b",
+              "label": "認証：PAP か CHAP で利用者を示す",
+              "note": "相手が正当かをここで確かめる"
+            },
+            {
+              "from": "b",
+              "to": "a",
+              "label": "認証の成功を返す"
+            },
+            {
+              "from": "b",
+              "to": "a",
+              "label": "NCP：IP アドレスなど上位の設定"
+            },
+            {
+              "from": "a",
+              "to": "b",
+              "label": "データ（FCS 付きのフレーム）",
+              "note": "壊れたフレームは受信側で捨てる"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "topic_id": 448,
+      "term": "PPPoE（Point to Point Protocol over Ethernet）",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "通信プロトコル",
+      "question_count": 1,
+      "related_terms": [
+        "PPP",
+        "IPoE（IP over Ethernet）",
+        "MPLS",
+        "PPTP"
+      ],
+      "prerequisites": [
+        {
+          "topic_id": 720,
+          "term": "PPP"
+        }
+      ],
+      "current": {
+        "generation": "materials_v3",
+        "explanation": "**PPPoE** は、シリアル回線用に作られた PPP のフレームを Ethernet のフレームに載せて運び、PPP と同じ接続手順を LAN 上で使えるようにするプロトコルです。\n\n- **キーワード**: LAN 上で・Ethernet 上で・PPP の手順\n- [[PPP]] 本体との違いは土台です。1 対 1 の回線を前提にした PPP の手順を、複数の機器が共有する Ethernet の上に持ち込むのが PPPoE です\n- ねらいは PPP が持つ**認証と IP アドレスの払い出し**をそのまま流用すること。ADSL や光回線で ISP に接続する方式として使われます",
+        "detail": "### しくみ\n![PPP の手順を、共有の LAN である Ethernet の上に載せるのが PPPoE の層です。下の層の中に上の層のフレームを包んで運びます。](/figures/materials/ap/448-1.svg)\nPPP は電話回線などの 1 対 1 のシリアル回線で使うデータリンク層のプロトコルで、相手の**認証**（PAP・CHAP）、IP アドレスの払い出し、接続と切断の管理までを 1 本の回線上で行います。一方 Ethernet は複数の機器が同じ回線を共有する 1 対多の方式なので、そのままでは 1 対 1 を前提にした PPP の手順が成り立ちません。そこで PPP のフレームを Ethernet フレームのデータ部に入れて運ぶことにしたのが PPPoE です。\n### 接続の 2 段階\n![前半の発見段階でセッション ID を決め、後半のセッション段階でその ID を付けて PPP の認証と払い出しを行います。](/figures/materials/ap/448-2.svg)\n1. **発見段階** — 利用者側の機器がブロードキャストで接続先の装置を探し、応答した相手との間でセッション ID を決めます\n2. **セッション段階** — そのセッション ID を付けたフレームで PPP の手順をそのまま流し、認証と IP アドレスの払い出しを行います\n\nこうして、共有された LAN の上に**1 対 1 の論理的な回線**を作り出します。利用者 ID とパスワードで ISP に認証してもらえるのは、この仕組みで PPP の認証機能を持ち込んでいるからです。つまり PPPoE は、PPP の機能を Ethernet の上で使うための包みです。\n### 混同しやすい用語\n![行が 3 つの方式、列が土台の回線と PPP の手順を使うかです。PPPoE は土台が IPoE と同じで、認証は PPP と同じです。](/figures/materials/ap/448-3.svg)\n- **[[PPP]]** — シリアル回線そのもので使うプロトコルです。1 対 1 の回線が前提で、共有された Ethernet の上では単独で成り立ちません\n- **[[IPoE]]** — PPPoE を介さずに Ethernet 上で直接 IP 通信する方式。認証は回線側で済ませるので PPP の手順が要りません"
+      },
+      "questions": [
+        {
+          "question_id": "2022r04h-q32",
+          "content_key": "4b438ea00962c046",
+          "exam_label": "令和4年度 春期",
+          "stem": "シリアル回線で使用するものと同じデータリンクのコネクション確立やデータ転送を，LAN 上で実現するプロトコルはどれか。",
+          "choices": {
+            "ア": "MPLS",
+            "イ": "PPP",
+            "ウ": "PPPoE",
+            "エ": "PPTP"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null
+        }
+      ],
+      "question_explanations": [
+        {
+          "question_id": "2022r04h-q32",
+          "content_key": "4b438ea00962c046",
+          "correct_reason": "[[PPP]] はシリアル回線用のデータリンク層プロトコルで、その接続の確立手順やデータ転送を Ethernet フレームに載せ、LAN 上でそのまま使えるようにしたものが PPPoE です。問題文の「LAN 上で実現する」が決め手で、**PPP の手順を Ethernet に載せる**という一点で選べます。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "MPLS",
+              "note": "IP パケットの前にラベルを付け、その値だけで転送先を決める技術です。認証やコネクションの確立は行いません"
+            },
+            {
+              "label": "イ",
+              "term": "PPP",
+              "note": "電話回線などの1対1のシリアル回線で使うデータリンク層のプロトコルです。認証と IP アドレスの払出しを行います"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "エ",
+              "term": "PPTP",
+              "note": "PPP のフレームを IP でトンネリングする VPN 用のプロトコルです。載せる土台が Ethernet ではなく IP になります"
+            }
+          ]
+        }
+      ],
+      "figure_file": "data/ap/material_figures/448.json",
+      "figures": [
+        {
+          "id": 1,
+          "type": "layers",
+          "after": "### しくみ",
+          "caption": "PPP の手順を、共有の LAN である Ethernet の上に載せるのが PPPoE の層です。下の層の中に上の層のフレームを包んで運びます。",
+          "shape": "stack",
+          "layers": [
+            {
+              "label": "PPP\n認証と IP アドレスの払い出し",
+              "note": "PAP・CHAP"
+            },
+            {
+              "label": "PPPoE\nセッション ID で 1 対 1 の\n論理的な回線を作る",
+              "note": "PPP のフレームを包む",
+              "emphasis": true
+            },
+            {
+              "label": "Ethernet\n複数の機器が共有する LAN",
+              "note": "1 対多"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "type": "sequence",
+          "after": "### 接続の 2 段階",
+          "caption": "前半の発見段階でセッション ID を決め、後半のセッション段階でその ID を付けて PPP の認証と払い出しを行います。",
+          "actors": [
+            {
+              "id": "u",
+              "label": "利用者側の機器",
+              "icon": "device"
+            },
+            {
+              "id": "i",
+              "label": "ISP 側の装置",
+              "icon": "server"
+            }
+          ],
+          "steps": [
+            {
+              "from": "u",
+              "to": "i",
+              "label": "ブロードキャストで接続先を探す",
+              "note": "ここから発見段階"
+            },
+            {
+              "from": "i",
+              "to": "u",
+              "label": "接続先の装置が応答する"
+            },
+            {
+              "from": "u",
+              "to": "i",
+              "label": "応答した相手に接続を申し込む"
+            },
+            {
+              "from": "i",
+              "to": "u",
+              "label": "セッション ID を決めて通知する"
+            },
+            {
+              "from": "u",
+              "to": "i",
+              "label": "ID 付きで利用者 ID とパスワードを送る",
+              "note": "ここからセッション段階（PPP の認証）"
+            },
+            {
+              "from": "i",
+              "to": "u",
+              "label": "IP アドレスを払い出す"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "type": "matrix",
+          "after": "### 混同しやすい用語",
+          "caption": "行が 3 つの方式、列が土台の回線と PPP の手順を使うかです。PPPoE は土台が IPoE と同じで、認証は PPP と同じです。",
+          "x": {
+            "label": "観点",
+            "values": [
+              "土台の回線",
+              "PPP の手順（認証）"
+            ]
+          },
+          "y": {
+            "label": "方式",
+            "values": [
+              "PPP",
+              "PPPoE",
+              "IPoE"
+            ]
+          },
+          "cells": [
+            [
+              "シリアル回線\n1 対 1 の回線",
+              "使う\nPAP・CHAP で認証"
+            ],
+            [
+              "Ethernet\n共有の LAN",
+              "使う\nEthernet に包んで流す"
+            ],
+            [
+              "Ethernet\n共有の LAN",
+              "使わない\n認証は回線側で済ませる"
+            ]
+          ],
+          "emphasis": [
+            [
+              1,
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "topic_id": 595,
+      "term": "マルチホーミング",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "ネットワーク応用",
+      "question_count": 1,
+      "related_terms": [
+        "IP-VPN",
+        "VPN",
+        "広域 Ethernet",
+        "インターネットサービスプロバイダ（ISP）"
+      ],
+      "prerequisites": [
+        {
+          "topic_id": 176,
+          "term": "ルーティング"
+        }
+      ],
+      "current": {
+        "generation": "materials_v3",
+        "explanation": "**マルチホーミング**とは、複数の ISP（インターネットサービスプロバイダ）の回線を同時に契約して接続する冗長化構成です。\n\n- **キーワード**: 複数の ISP・冗長化・出口の二重化\n- 目的は**可用性の確保と負荷分散**。片方の ISP に障害が起きても、もう片方の経路で接続を継続できます\n- 二重にするのは**インターネットへの出口**です。拠点どうしを結ぶ接続サービスとは目的が違います\n- 自動で切り替える方式は二通りです。代表は**BGP**（経路情報を交換する取決め）による経路制御で、小規模では回線を監視して出口を切り替える装置でも実現できます",
+        "detail": "### 複数の ISP を持つということ\n![ISP A に障害が起きた場面です。点線の経路が使えなくても、ルータが ISP B の出口へ切り替えるので、インターネットにつながり続けます。](/figures/materials/ap/595-1.svg)\n単一の ISP だけで接続していると、その ISP の設備障害や回線断がそのまま組織全体のインターネット断になります。マルチホーミングは、**接続の出口を二つ以上持つ**ことでこの単一障害点をなくす構成です。片方が使えなくなればもう片方へ切り替わり、平常時は両方に通信を振り分けて帯域を有効に使えます。同じ ISP で回線を2本引く二重化とは違い、ISP そのものの障害まで救えるのが特徴です。\n### 実現の方式\n![列が切替えの 2 方式、行が比べる観点です。列を縦に読むと、何を持てば何で切り替わり、何に注意するかが分かります。](/figures/materials/ap/595-2.svg)\n自動で切り替える方式は二通りあり、規模で選び分けます。本格的な構成では、組織自身が AS 番号（経路情報を交換する単位に振られる番号）とプロバイダに依存しない IP アドレスを持ち、BGP で両方の ISP へ自分の経路を広告します。片方の経路が消えれば、インターネット側の経路情報が自動で更新され、生きている側へ通信が流れます。小規模な構成では、回線冗長化の機能を持つルータや UTM（防御の機能を1台にまとめた機器）が回線の死活を監視し、NAT の宛先を切り替えます。この場合は切替え時に通信が張り直しになる点、ISP ごとに送信元アドレスが変わる点に注意が必要です。\n### 設計上の注意\n- 行きと帰りで別の ISP を通る**経路の非対称**が起きると、通信の状態を覚えている機器で通信が落ちることがあります\n- BGP の収束や監視の間隔ぶんは通信が途切れます。可用性の目標は、この切替えの時間を含めて決めます\n- 回線と契約が二重になるため、**費用**と可用性の要件を見比べて決めます"
+      },
+      "questions": [
+        {
+          "question_id": "2019h31h-q32",
+          "content_key": "d523bd9eab070d0d",
+          "exam_label": "平成31年度 春期",
+          "stem": "インターネット接続において，複数の ISP の回線を使用した冗長化構成を表す用語はどれか。",
+          "choices": {
+            "ア": "IP-VPN",
+            "イ": "インターネット VPN",
+            "ウ": "広域イーサネット",
+            "エ": "マルチホーミング"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null
+        }
+      ],
+      "question_explanations": [
+        {
+          "question_id": "2019h31h-q32",
+          "content_key": "d523bd9eab070d0d",
+          "correct_reason": "複数の ISP と同時に契約して接続の出口を二重化し、片方が障害でも通信を続けられるようにする構成が[[マルチホーミング]]です。設問の「複数の ISP」「冗長化」が決め手で、他の3つは拠点間を結ぶ接続サービスの名前です。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "IP-VPN",
+              "note": "通信事業者の閉じた IP 網の中に利用者ごとの仮想専用網を作るサービス。インターネットは通りません"
+            },
+            {
+              "label": "イ",
+              "term": "インターネット VPN",
+              "note": "公衆のインターネット上に暗号化トンネルを張って拠点間を結ぶ方式。品質は保証されません"
+            },
+            {
+              "label": "ウ",
+              "term": "広域イーサネット",
+              "note": "事業者網を介して離れた拠点を同一の Ethernet として扱うサービス。IP 以外も流せます"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "正解。"
+            }
+          ]
+        }
+      ],
+      "figure_file": "data/ap/material_figures/595.json",
+      "figures": [
+        {
+          "id": 1,
+          "type": "blocks",
+          "after": "### 複数の ISP を持つということ",
+          "caption": "ISP A に障害が起きた場面です。点線の経路が使えなくても、ルータが ISP B の出口へ切り替えるので、インターネットにつながり続けます。",
+          "nodes": [
+            {
+              "id": "lan",
+              "label": "社内ネットワーク\n利用者と社内の機器",
+              "row": 1,
+              "col": 0,
+              "icon": "building"
+            },
+            {
+              "id": "rt",
+              "label": "ルータ\n使う出口を選ぶ",
+              "row": 1,
+              "col": 1,
+              "emphasis": true
+            },
+            {
+              "id": "a",
+              "label": "ISP A\n障害で止まった",
+              "row": 0,
+              "col": 2,
+              "icon": "warning"
+            },
+            {
+              "id": "b",
+              "label": "ISP B\nもう一つの出口",
+              "row": 2,
+              "col": 2
+            },
+            {
+              "id": "net",
+              "label": "インターネット\n社外のサービス",
+              "row": 1,
+              "col": 3,
+              "shape": "cloud"
+            }
+          ],
+          "edges": [
+            {
+              "from": "lan",
+              "to": "rt",
+              "label": "社外への通信",
+              "arrow": "both"
+            },
+            {
+              "from": "rt",
+              "to": "a",
+              "label": "障害で通らない",
+              "style": "dashed"
+            },
+            {
+              "from": "a",
+              "to": "net",
+              "label": "障害で通らない",
+              "style": "dashed"
+            },
+            {
+              "from": "rt",
+              "to": "b",
+              "label": "こちらへ切り替える",
+              "arrow": "both"
+            },
+            {
+              "from": "b",
+              "to": "net",
+              "label": "つながり続ける",
+              "arrow": "both"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "type": "matrix",
+          "after": "### 実現の方式",
+          "caption": "列が切替えの 2 方式、行が比べる観点です。列を縦に読むと、何を持てば何で切り替わり、何に注意するかが分かります。",
+          "x": {
+            "label": "方式",
+            "values": [
+              "BGP（本格的）",
+              "回線の監視（小規模）"
+            ]
+          },
+          "y": {
+            "label": "観点",
+            "values": [
+              "切り替える仕組み",
+              "組織が持つ物",
+              "注意"
+            ]
+          },
+          "cells": [
+            [
+              "経路の広告\n経路が消えると\n自動で更新される",
+              "死活の監視\n切れたら NAT の\n宛先を変える"
+            ],
+            [
+              "AS 番号と\nプロバイダに依存\nしないアドレス",
+              "回線冗長化の\n機能を持つ\nルータや UTM"
+            ],
+            [
+              "収束の間は\n通信が途切れる",
+              "通信の張り直しと\n送信元アドレスの\n変化"
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

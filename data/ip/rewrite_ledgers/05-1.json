@@ -1,0 +1,106 @@
+{
+  "bundle": "05-1",
+  "shared": [
+    {"item": "RFID（電波）と光で読むコード（バーコード・QR コード）の読み取り方の違い", "count": 4, "holder": 256, "topics": [327, 256]},
+    {"item": "JAN コードと QR コードの比較（1 次元か 2 次元か・番号だけか・量）", "count": 3, "holder": 327, "topics": [327]},
+    {"item": "QR コードの誤り訂正と向きを問わない読み取り（327 の図 1 の部位）", "count": 3, "holder": 327, "topics": [327]},
+    {"item": "集めた販売データを判断に使うところまでが POS（497 の図 1）", "count": 3, "holder": 497, "topics": [497]},
+    {"item": "SFA は CRM の中で営業部門の活動を受け持つ部分（100 の図 1）", "count": 3, "holder": 100, "topics": [100]},
+    {"item": "CMS が中身をデータベースに、見た目をテンプレートに分けて持つ流れ（466 の図 1）", "count": 2, "holder": 466, "topics": [466]}
+  ],
+  "topics": [
+    {
+      "topic_id": 497,
+      "points": [
+        {"point": "POS は売れた時点でレジからデータを取り込み、販売管理や在庫管理に生かす仕組み", "fate": "kept", "where": "explanation"},
+        {"point": "キーワード: 販売時点・レジ・在庫管理", "fate": "kept", "where": "explanation（キーワードの行。在庫管理は一般の語なので定義の 1 文に任せ、問題文に出る客層に替えた）"},
+        {"point": "読み取るのは商品コードや客層など", "fate": "kept", "where": "explanation"},
+        {"point": "棚卸しを待たずに何がどれだけ売れたかが分かる", "fate": "kept", "where": "explanation"},
+        {"point": "棚卸しを待たずに売れ方が分かる（要点の箇条と ### 集めたデータを何に使うか の文章で 2 回）", "fate": "duplicate", "where": "explanation の箇条"},
+        {"point": "レジの電子化だけでなく、集めた情報を発注や品ぞろえの判断に使うところまでが POS", "fate": "figure", "where": "497 の図 1（caption と、販売データから 3 つの判断へ流れる線）"},
+        {"point": "バーコードを読み取り、店員が客層を入力する（detail の言い直し）", "fate": "duplicate", "where": "explanation の 1 つ目の箇条"},
+        {"point": "何がいつどれだけ売れたかがその場で記録される（detail の言い直し）", "fate": "duplicate", "where": "explanation の 2 つ目の箇条"},
+        {"point": "用途: 売れ筋と売れない商品の見極め・発注量の決定・在庫の補充・時間帯ごとの品ぞろえ", "fate": "figure", "where": "497 の図 1（箱「売れ筋の見極め」「発注と在庫の補充」「品ぞろえの調整」）"},
+        {"point": "在庫管理の精度と鮮度が上がるのが最大の利点", "fate": "kept", "where": "### 集めたデータを何に使うか"},
+        {"point": "売れた事実は仕入先を含めた発注や生産の計画の材料になる", "fate": "figure", "where": "497 の図 1（箱「仕入先 発注や生産の計画を立てる」と線「発注と販売実績」）"}
+      ]
+    },
+    {
+      "topic_id": 327,
+      "points": [
+        {"point": "QR コードは縦と横の二方向に情報を持たせた 2 次元コード", "fate": "kept", "where": "explanation"},
+        {"point": "キーワード: 縦横2次元・図形パターン・大容量", "fate": "kept", "where": "explanation"},
+        {"point": "汚れや欠けがあっても読み取れる誤り訂正の仕組みを持つ", "fate": "figure", "where": "327 の図 1（部位「誤り訂正の符号」。after を explanation に移した）"},
+        {"point": "読み取る向きを問わない／三隅の大きな四角は位置合わせの目印", "fate": "figure", "where": "327 の図 1（部位「位置検出の目印」）"},
+        {"point": "数字だけでなく英字・漢字・URL も入れられる", "fate": "kept", "where": "### JAN コードとの違い（表の行「扱える情報」）"},
+        {"point": "扱えるデータ量は横並びのバーコードより桁違いに大きい", "fate": "kept", "where": "explanation"},
+        {"point": "白と黒の小さな四角を縦横の面に並べて情報を表し、面を使える分だけ多く入る", "fate": "figure", "where": "327 の図 1（部位「データの領域」）"},
+        {"point": "数字なら数千桁の規模（detail の文章と表の 2 か所）", "fate": "duplicate", "where": "### JAN コードとの違い（表の行「表せる量」）"},
+        {"point": "JAN コードとの比較表（次元・表せる量・扱える情報・主な用途）", "fate": "kept", "where": "### JAN コードとの違い"},
+        {"point": "JAN コードは商品を識別する番号を表し、POS がこの番号で店側のデータベースの商品名や価格と突き合わせる", "fate": "kept", "where": "### JAN コードとの違い（表の後の文）"},
+        {"point": "番号以外の情報を持たせたい用途では QR コードが使われる", "fate": "duplicate", "where": "### JAN コードとの違い（表の行「主な用途」「扱える情報」）"},
+        {"point": "混同しやすい用語の JAN コード（1 次元・決まった桁数の番号だけ・容量が大きく違う）", "fate": "duplicate", "where": "### JAN コードとの違い（比較表。比較が主の型なので混同しやすい用語の節を別に置かない）"},
+        {"point": "混同しやすい用語の RFID（電波でタグを読む。光で読む 2 次元コードと読み取り方が違う）", "fate": "aside", "where": "学ぶ順で後の同じ束の 256 が比較を持つ（256 の図 1 の行「読み取りの手段」）。327 の過去問（2 次元コードの名前・JAN との容量）に要らない"}
+      ]
+    },
+    {
+      "topic_id": 256,
+      "points": [
+        {"point": "RFID は電波を使って IC タグの情報を非接触で読み書きする技術", "fate": "kept", "where": "explanation"},
+        {"point": "キーワード: 電波・非接触・一度にまとめて", "fate": "kept", "where": "explanation"},
+        {"point": "箱を開けずに複数のタグをまとめて読める。本の貸出・返却の一括処理が代表例", "fate": "kept", "where": "explanation"},
+        {"point": "交通系 IC カードやスマートフォンをかざして改札を通るのも RFID の応用", "fate": "kept", "where": "explanation"},
+        {"point": "QR コードはカメラで読む光学式で、電波を使う RFID とは別の技術（explanation の箇条）", "fate": "figure", "where": "256 の図 1（行「読み取りの手段」の セル「電波」と「光（カメラ）」）"},
+        {"point": "RFID は電波で IC タグとやり取りする（detail の言い直し）", "fate": "duplicate", "where": "explanation（定義の 1 文）"},
+        {"point": "タグは電池を持たない方式が多く、リーダーの電波からエネルギーを受け取って応答する", "fate": "kept", "where": "### 電波で読むからできること"},
+        {"point": "箱を開けなくても中の商品をまとめて読める（detail の言い直し）", "fate": "duplicate", "where": "explanation の 1 つ目の箇条"},
+        {"point": "汚れや向きに強い", "fate": "figure", "where": "256 の図 1（行「箱越し・汚れ」のセル「強い 箱を開けずに 汚れや向きに強い」）"},
+        {"point": "情報を書き換えられる", "fate": "kept", "where": "### 電波で読むからできること"},
+        {"point": "用途: 在庫管理・物流の追跡・店舗でのまとめ精算・図書館の貸出返却", "fate": "kept", "where": "### 電波で読むからできること"},
+        {"point": "バーコードのように 1 つずつかざす必要がなく、複数を一度に処理できるのが最大の特徴", "fate": "figure", "where": "256 の図 1（強調した行「一度に読める数」）"},
+        {"point": "NFC は RFID のうち数センチから十センチ程度のごく近距離で通信する規格", "fate": "kept", "where": "### 混同しやすい用語"},
+        {"point": "NFC の例: 交通系 IC カード", "fate": "duplicate", "where": "explanation の 2 つ目の箇条"},
+        {"point": "NFC の例: 店舗での非接触決済", "fate": "kept", "where": "### 混同しやすい用語"},
+        {"point": "混同しやすい用語の QR コード（カメラで光学的に読む。電波の RFID とは別物で、キャッシュレス決済の話題で混同しやすい）", "fate": "figure", "where": "256 の図 1（行「読み取りの手段」）。QR コードを決済で読むのが RFID でないことは 2023r05-q12 の correct_reason にもある"}
+      ]
+    },
+    {
+      "topic_id": 100,
+      "points": [
+        {"point": "SFA は営業の情報を蓄えて社内で共有し、営業活動を効率化するシステム", "fate": "kept", "where": "explanation（定義の 1 文）"},
+        {"point": "蓄える情報: 商談の進み具合・顧客の属性・訪問や交渉の履歴", "fate": "kept", "where": "explanation（1 つ目の箇条。定義の 1 文から移した）"},
+        {"point": "キーワード: 営業・商談の進捗・交渉履歴", "fate": "kept", "where": "explanation（キーワードの行。営業は営業部門に）"},
+        {"point": "使うのは営業部門", "fate": "kept", "where": "explanation（2 つ目の箇条）"},
+        {"point": "名前のとおり Sales（営業）の支援だと覚える", "fate": "duplicate", "where": "explanation（定義の 1 文の正式名 Sales Force Automation。覚え方の文は書かない）"},
+        {"point": "目的として長期的な関係づくりが語られていても、営業情報の蓄積と共有を問われていれば SFA", "fate": "kept", "where": "### CRM との違い"},
+        {"point": "営業の情報は放っておくと担当者の頭の中や手帳にしか残らない", "fate": "kept", "where": "### 営業の情報を会社で共有する理由"},
+        {"point": "担当が代わると経緯が分からなくなり、同じことを顧客に聞き直す", "fate": "kept", "where": "### 営業の情報を会社で共有する理由"},
+        {"point": "SFA は情報を会社の資産として残す仕組み", "fate": "kept", "where": "### 営業の情報を会社で共有する理由"},
+        {"point": "登録する物: 顧客の属性・これまでのやり取り・商談の段階（detail の言い直し）", "fate": "duplicate", "where": "explanation の 1 つ目の箇条"},
+        {"point": "登録する物: 次に何をするか。全員が見られるようにする", "fate": "kept", "where": "### 営業の情報を会社で共有する理由"},
+        {"point": "上司が進み具合をつかんで助言でき、担当が交代しても対応の質が落ちない", "fate": "kept", "where": "### 営業の情報を会社で共有する理由"},
+        {"point": "営業部門の組織力を強め、活動を効率化するのが狙い", "fate": "kept", "where": "explanation（2 つ目の箇条と定義の 1 文）"},
+        {"point": "CRM は顧客と長く良い関係を築く取組全体を指す広い言葉", "fate": "figure", "where": "100 の図 1（外の円の名前「CRM（顧客と長く良い関係を築く取組全体）」）"},
+        {"point": "SFA は CRM の中で営業部門の活動に焦点を当てた部分", "fate": "figure", "where": "100 の図 1（caption と内の円）"},
+        {"point": "問題文が関係づくりを語っていても、答えさせているのが営業情報を扱うシステムなら SFA", "fate": "kept", "where": "### CRM との違い"}
+      ]
+    },
+    {
+      "topic_id": 466,
+      "points": [
+        {"point": "CMS は Web サイトの文章や画像などのコンテンツをまとめて管理し、更新・版の管理・公開を効率よく行うシステム", "fate": "kept", "where": "explanation"},
+        {"point": "コンテンツマネジメントシステムの略（定義の 2 文目）", "fate": "duplicate", "where": "explanation（定義の 1 文の括弧）"},
+        {"point": "キーワード: Web サイトの更新・版の管理・公開", "fate": "kept", "where": "explanation"},
+        {"point": "HTML を書けない担当者でも入力画面から記事を作れる", "fate": "figure", "where": "466 の図 1（箱「書き手 HTML を書けなくてよい」「入力画面」）"},
+        {"point": "過去の版を残しておけるので以前の状態に戻せる", "fate": "kept", "where": "explanation"},
+        {"point": "公開前の承認や公開日時の予約も仕組みとして持てる", "fate": "kept", "where": "explanation"},
+        {"point": "手作業の更新では HTML の書き換え・画像の差し替え・リンクの確認・サーバへの転送が毎回要る", "fate": "kept", "where": "### 中身と見た目を分けて持つしくみ"},
+        {"point": "ページが増えるほど手間と間違いが増え、誰がいつ何を変えたか分からなくなる", "fate": "kept", "where": "### 中身と見た目を分けて持つしくみ"},
+        {"point": "コンテンツをデータベースに登録し、デザインはテンプレートとして切り離す", "fate": "figure", "where": "466 の図 1（caption と箱「コンテンツの DB」「テンプレート」）"},
+        {"point": "書き手は中身を入力するだけでよく、デザインは自動で適用される", "fate": "figure", "where": "466 の図 1（caption と線「見た目を当てる」）"},
+        {"point": "公開のタイミングや承認の流れを仕組みとして持つので、更新を担当者に任せても品質を保てる", "fate": "kept", "where": "### 中身と見た目を分けて持つしくみ（公開日時と承認を持つことは explanation の箇条、任せても品質を保てる理由はここ）"},
+        {"point": "位置付け: 会計や販売管理の業務別パッケージと同じく、Web コンテンツの管理という業務のための仕組み", "fate": "aside", "where": "2019h31h-q8（版の管理と公開の改善）は定義と explanation の箇条で解け、業務別パッケージとの並びは要らない"}
+      ]
+    }
+  ]
+}

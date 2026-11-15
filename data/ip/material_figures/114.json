@@ -5,14 +5,25 @@
     {
       "id": 1,
       "type": "steps",
-      "after": "### 決めるのは方針まで",
-      "caption": "上の段から順に、決める中身が全体の方針から個別の機能、日々の運用へと細かくなります。強調した IT 基本計画が決めるのは方針までです。",
+      "after": "explanation",
+      "caption": "上の段ほど組織全体の話です。強調した IT 基本計画は、組織として IT をどの方向へ進めるかを決め、個々のシステムの作り方は下の段が決めます。",
       "direction": "down",
       "stages": [
-        {"label": "経営方針・情報システム戦略\n経営として目指す方向", "icon": "building", "next_label": "方針を受ける"},
-        {"label": "IT 基本計画\n組織として IT をどう使うか\nの方針と方向づけ", "icon": "document", "next_label": "方向づけを渡す", "emphasis": true},
-        {"label": "要件定義\n個別システムの\n機能と優先順位", "icon": "gear", "next_label": "作ったシステムを渡す"},
-        {"label": "運用\n障害への対応や\n日々の決めごと", "icon": "person"}
+        {
+          "label": "情報システム戦略\n全社の IT の方針",
+          "icon": "building",
+          "next_label": "方針を受ける"
+        },
+        {
+          "label": "IT 基本計画\n組織として IT をどう使うか\nの方針と方向づけ",
+          "icon": "document",
+          "next_label": "方向づけを渡す",
+          "emphasis": true
+        },
+        {
+          "label": "個々のシステムの計画\nシステムごとに\n作り方を決める",
+          "icon": "gear"
+        }
       ]
     }
   ]

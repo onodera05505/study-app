@@ -6,12 +6,12 @@
       "id": 1,
       "type": "layers",
       "after": "### 主要プロトコルの層の対応",
-      "caption": "トランスポート層の代表が TCP と UDP です。HTTP や SMTP は上の層、ICMP は IP と同じ層に属します。",
+      "caption": "上ほどアプリケーションに近い層で、右の注記が各層の代表のプロトコルです。強調したトランスポート層に TCP と UDP が属し、ポート番号でアプリを識別します。",
       "shape": "stack",
       "layers": [
         {
           "label": "アプリケーション層\n用途ごとの通信規約",
-          "note": "HTTP・SMTP・FTP・DNS"
+          "note": "DNS・DHCP・FTP"
         },
         {
           "label": "トランスポート層\nポート番号でアプリを識別",
@@ -24,7 +24,7 @@
         },
         {
           "label": "データリンク層\n隣の機器との間を伝送",
-          "note": "イーサネット・PPP"
+          "note": "イーサネット・無線 LAN"
         }
       ]
     }

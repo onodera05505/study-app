@@ -5,27 +5,27 @@
     {
       "id": 1,
       "type": "cycle",
-      "after": "### 四つの段階が何をする段階か",
-      "caption": "JIS Q 20000-1 のサービスマネジメントシステム（SMS）を回す PDCA の輪です。各段の 2 行目からの動詞で、どの段階かを見分けます。",
-      "center": "JIS Q 20000-1\nSMS の継続的改善",
+      "after": "explanation",
+      "caption": "SMS とサービスの両方に回す PDCA の輪です。真上の計画から時計回りに進み、処置の結果を次の計画へ渡して一周を繰り返します。",
+      "center": "SMS とサービスの\n継続的改善",
       "stages": [
         {
-          "label": "計画 Plan\nSMS を確立、文書化し\n関係者と合意する",
+          "label": "計画 Plan\n目的と進め方を決める",
           "icon": "document",
-          "next_label": "合意した計画"
+          "next_label": "取り決めた計画"
         },
         {
-          "label": "実行 Do\nSMS を導入し\n運用する",
+          "label": "実行 Do\n決めたとおりに動かす",
           "icon": "gear",
-          "next_label": "運用の実績"
+          "next_label": "動かした実績"
         },
         {
-          "label": "点検 Check\n監視、測定、レビューし\n結果を報告する",
+          "label": "点検 Check\n目的と比べて確かめる",
           "icon": "search",
-          "next_label": "測定と報告の結果"
+          "next_label": "測った結果"
         },
         {
-          "label": "処置 Act\nパフォーマンス改善の\n処置を実施する",
+          "label": "処置 Act\n見つけた差を埋める",
           "icon": "arrow-cycle",
           "next_label": "改善を次の計画へ"
         }

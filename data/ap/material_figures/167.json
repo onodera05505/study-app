@@ -9,25 +9,70 @@
       "caption": "環状につながったスイッチの間を、同じフレームが矢印の向きに回り続けます。中央のとおり生存期間が無いので、一周しても消えずに増えます。",
       "center": "TTL が無く\n消えずに増える",
       "stages": [
-        {"label": "スイッチ 1\n受信ポート以外へ全部送る", "icon": "network", "next_label": "ブロードキャストのフレーム", "emphasis": true},
-        {"label": "スイッチ 2\n受信ポート以外へ全部送る", "icon": "network", "next_label": "同じフレームの写し"},
-        {"label": "スイッチ 3\n受信ポート以外へ全部送る", "icon": "network", "next_label": "一周して戻ったフレーム"}
+        {
+          "label": "スイッチ 1\n受信ポート以外へ全部送る",
+          "icon": "network",
+          "next_label": "ブロードキャストのフレーム",
+          "emphasis": true
+        },
+        {
+          "label": "スイッチ 2\n受信ポート以外へ全部送る",
+          "icon": "network",
+          "next_label": "同じフレームの写し"
+        },
+        {
+          "label": "スイッチ 3\n受信ポート以外へ全部送る",
+          "icon": "network",
+          "next_label": "一周して戻ったフレーム"
+        }
       ]
     },
     {
       "id": 2,
       "type": "blocks",
-      "after": "### 動き方",
+      "after": "### ポートを塞いで木の形にする動き",
       "caption": "配線は三角の輪のまま、点線の 1 本だけを転送に使わずに木の形にします。点線は障害のときに開いて迂回路になります。",
       "nodes": [
-        {"id": "root", "label": "ルートブリッジ\n基準になる 1 台", "row": 0, "col": 1, "emphasis": true},
-        {"id": "b", "label": "スイッチ B\nルートへ直接つなぐ", "row": 1, "col": 0},
-        {"id": "c", "label": "スイッチ C\nルートへ直接つなぐ", "row": 1, "col": 2}
+        {
+          "id": "root",
+          "label": "ルートブリッジ\n基準になる 1 台",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "b",
+          "label": "スイッチ B\nルートへ直接つなぐ",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "c",
+          "label": "スイッチ C\nルートへ直接つなぐ",
+          "row": 1,
+          "col": 2
+        }
       ],
       "edges": [
-        {"from": "b", "to": "root", "label": "転送に使う", "arrow": "both"},
-        {"from": "c", "to": "root", "label": "転送に使う", "arrow": "both"},
-        {"from": "b", "to": "c", "label": "塞いだポート（BPDU だけ受け、障害時に開く）", "style": "dashed", "arrow": "none"}
+        {
+          "from": "b",
+          "to": "root",
+          "label": "転送に使う",
+          "arrow": "both"
+        },
+        {
+          "from": "c",
+          "to": "root",
+          "label": "転送に使う",
+          "arrow": "both"
+        },
+        {
+          "from": "b",
+          "to": "c",
+          "label": "塞いだポート（BPDU だけ受け、障害時に開く）",
+          "style": "dashed",
+          "arrow": "none"
+        }
       ]
     }
   ]

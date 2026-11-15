@@ -5,12 +5,12 @@
     {
       "id": 1,
       "type": "parts",
-      "after": "### 3 つの部分に分けて読む",
-      "caption": "例の URL を左から部位に分けました。どの部分が何かは並んだ位置で決まり、強調したホスト名はドメイン名の左端に付きます。",
+      "after": "explanation",
+      "caption": "例の URL を左から順に部位に分け、上から並べました。区切りの記号で部位が分かれ、方式・接続先・接続先の中の場所の順に並びます。",
       "whole": {"label": "https://www.example.co.jp/dir/index.html"},
       "parts": [
         {"label": "スキーム（https）\nやり取りの方式"},
-        {"label": "ホスト名（www）\n1 台に付けた名前", "emphasis": true},
+        {"label": "ホスト名（www）\n1 台に付けた名前"},
         {"label": "ドメイン名（example.co.jp）\n組織や国のまとまり"},
         {"label": "パス（dir）\nコンピュータの中の場所"},
         {"label": "ファイル名（index.html）\n最後のスラッシュの後ろ"}

@@ -5,14 +5,15 @@
     {
       "id": 1,
       "type": "steps",
-      "after": "### 考え方",
+      "after": "### 目標の ROI から単価を逆算する流れ",
       "caption": "目標の収益率を最初に置き、上の段から順に下りて単価を逆算する流れです。例の値で追うと、価格が最後の段で決まることが分かります。",
       "direction": "down",
       "stages": [
         {"label": "目標の投資収益率を決める\n例: 投下資本の 20%", "icon": "chart", "next_label": "投下資本 1000 万円 × 20%"},
-        {"label": "目標の利益を出す\n例: 200 万円", "icon": "money", "next_label": "コストに目標の利益を足す"},
-        {"label": "回収すべき総額を置く\nコスト 800 万円 ＋ 利益 200 万円", "icon": "document", "next_label": "想定販売量 1 万個で割る"},
-        {"label": "単価を逆算する\n1000 万円 ÷ 1 万個 ＝ 1000 円", "icon": "gear", "emphasis": true}
+        {"label": "目標の利益を出す\n例: 200 万円", "icon": "money", "next_label": "想定販売量を置く"},
+        {"label": "想定販売量でのコストを見積もる\n例: 1 万個で 700 万円", "icon": "box", "next_label": "コストに目標の利益を足す"},
+        {"label": "回収すべき総額を置く\nコスト 700 万円 ＋ 利益 200 万円 ＝ 900 万円", "icon": "document", "next_label": "想定販売量 1 万個で割る"},
+        {"label": "単価を逆算する\n900 万円 ÷ 1 万個 ＝ 900 円", "icon": "gear", "emphasis": true}
       ]
     },
     {

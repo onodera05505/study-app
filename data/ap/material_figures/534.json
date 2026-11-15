@@ -55,12 +55,12 @@
     {
       "id": 2,
       "type": "blocks",
-      "after": "### 押さえどころ",
-      "caption": "左から右へ通信がつながります。実線が TLS で暗号化される区間で、点線の Web サーバから DB サーバまでは TLS の外なので別に守ります。",
+      "after": "### 暗号化される区間",
+      "caption": "左から右へ通信がつながります。実線が TLS で暗号化される区間で、点線の送信サーバから先は TLS の外なので別に守ります。",
       "nodes": [
         {
           "id": "cl",
-          "label": "クライアント\nTLS を張る一方の端",
+          "label": "メールソフト\nTLS を張る一方の端",
           "row": 0,
           "col": 0,
           "icon": "device"
@@ -73,19 +73,19 @@
           "shape": "cloud"
         },
         {
-          "id": "web",
-          "label": "公開 Web サーバ\nTLS の終点・ここで復号",
+          "id": "sv",
+          "label": "送信メールサーバ\nTLS の終点・ここで復号",
           "row": 0,
           "col": 2,
           "icon": "server",
           "emphasis": true
         },
         {
-          "id": "db",
-          "label": "DB サーバ\nWeb サーバの奥",
+          "id": "dst",
+          "label": "宛先のメールサーバ\n次の区間の相手",
           "row": 1,
           "col": 2,
-          "shape": "cylinder"
+          "icon": "mail"
         }
       ],
       "edges": [
@@ -97,13 +97,13 @@
         },
         {
           "from": "net",
-          "to": "web",
+          "to": "sv",
           "label": "TLS で暗号化",
           "arrow": "both"
         },
         {
-          "from": "web",
-          "to": "db",
+          "from": "sv",
+          "to": "dst",
           "label": "TLS の外・別に守る",
           "style": "dashed",
           "arrow": "both"

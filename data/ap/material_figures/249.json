@@ -3,28 +3,39 @@
   "term": "サービスレベル管理",
   "figures": [
     {
-      "id": 1, "type": "cycle", "after": "### SLA を軸に回す活動",
+      "id": 1,
+      "type": "cycle",
+      "after": "explanation",
       "caption": "サービスレベル管理の活動を、SLA を中心に回る輪で示します。報告と改善のあとも次の目標の見直しへ戻り、合意で終わらない点を見ます。",
       "center": "SLA",
       "stages": [
-        {"label": "目標を決める\nサービスと測れる目標", "icon": "document", "next_label": "サービスレベル目標"},
-        {"label": "顧客と合意\nSLA を交わす", "icon": "person", "next_label": "合意した SLA"},
-        {"label": "実績を監視\n目標に照らして測る", "icon": "chart", "next_label": "測った実績"},
-        {"label": "レビューと報告\n定めた間隔で顧客へ", "icon": "clock", "next_label": "未達の傾向", "emphasis": true},
-        {"label": "改善\n未達の原因を直す", "icon": "gear", "next_label": "見直した目標と手順"}
+        {
+          "label": "目標を決める\nサービスと測れる目標",
+          "icon": "document",
+          "next_label": "サービスレベル目標"
+        },
+        {
+          "label": "顧客と合意\nSLA を交わす",
+          "icon": "person",
+          "next_label": "合意した SLA"
+        },
+        {
+          "label": "実績を監視\n目標に照らして測る",
+          "icon": "chart",
+          "next_label": "測った実績"
+        },
+        {
+          "label": "レビューと報告\n定めた間隔で顧客へ",
+          "icon": "clock",
+          "next_label": "未達の傾向",
+          "emphasis": true
+        },
+        {
+          "label": "改善\n未達の原因を直す",
+          "icon": "gear",
+          "next_label": "見直した目標と手順"
+        }
       ]
-    },
-    {
-      "id": 2, "type": "matrix", "after": "### 混同しやすい用語",
-      "caption": "3 つの管理を、管理するものと働く場面の 2 観点で比べた表です。管理するものの列で違いを読みます。",
-      "x": {"label": "観点", "values": ["管理するもの", "働く場面"]},
-      "y": {"label": "管理", "values": ["サービスレベル管理", "容量・能力管理", "サービス継続管理"]},
-      "cells": [
-        ["顧客と約束した水準\n応答時間・稼働率など", "平常時\n実績を定期にレビュー"],
-        ["水準を支える資源\n量が足りるか", "平常時\n資源の量を見積もる"],
-        ["中断時の復旧\n合意期間内に戻せるか", "事業の中断時\n復旧の優先順位を決める"]
-      ],
-      "emphasis": [[0, 0]]
     }
   ]
 }

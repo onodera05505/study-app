@@ -5,9 +5,9 @@
     {
       "id": 1,
       "type": "cycle",
-      "after": "### 四つの段階の役割",
+      "after": "explanation",
       "center": "継続的改善",
-      "caption": "Check で実績を KPI で測って計画との差を出し、Act でその原因を取り除いて次の計画へ戻します。輪を回すたびに業務が良くなります。",
+      "caption": "輪は Plan から時計回りに進み、矢印のラベルは次の段へ渡す物です。Act の後は次の Plan へ戻り、回すたびに業務が良くなります。",
       "stages": [
         {
           "label": "Plan 計画\n目標と KPI・手順を決める",
@@ -20,10 +20,9 @@
           "next_label": "実績の記録"
         },
         {
-          "label": "Check 評価\n実績を KPI で測り差を出す",
+          "label": "Check 評価\n実績を測り計画との差を出す",
           "icon": "chart",
-          "next_label": "計画との差",
-          "emphasis": true
+          "next_label": "計画との差"
         },
         {
           "label": "Act 改善\n差の原因を取り除く",

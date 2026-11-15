@@ -5,39 +5,140 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 何と何を突き合わせるか",
-      "caption": "入口の伝票と出口のプルーフリストを 1 件ずつ照合します。下の段は、照合で見つかる結果の分かれ方です。",
+      "after": "### 入口と出口の 2 つの記録を突き合わせる",
+      "caption": "入口の伝票と出口の入力結果の一覧を 1 件ずつ照合します。下の段は、照合で見つかる結果の分かれ方です。",
       "nodes": [
-        {"id": "slip", "label": "受注伝票\n入力の元の記録", "row": 0, "col": 0, "icon": "document"},
-        {"id": "sys", "label": "販売管理システム\n伝票の内容を入力", "row": 0, "col": 1, "icon": "server"},
-        {"id": "list", "label": "プルーフリスト\n入力された結果の一覧", "row": 0, "col": 2, "icon": "document"},
-        {"id": "match", "label": "照合\n2 つの記録を\n1 件ずつ突き合わせる", "row": 1, "col": 1, "icon": "search", "emphasis": true},
-        {"id": "miss", "label": "入力漏れ\n伝票にあって\nリストに無い", "row": 2, "col": 0, "icon": "warning"},
-        {"id": "ok", "label": "一致\n1 件に 1 行ずつ対応", "row": 2, "col": 1, "icon": "check"},
-        {"id": "dup", "label": "重複入力\nリストに\n同じ取引が二度", "row": 2, "col": 2, "icon": "warning"}
+        {
+          "id": "slip",
+          "label": "入庫伝票\n入荷の元の記録",
+          "row": 0,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "sys",
+          "label": "在庫管理システム\n伝票の内容を入力",
+          "row": 0,
+          "col": 1,
+          "icon": "server"
+        },
+        {
+          "id": "list",
+          "label": "入力結果の一覧\nシステムが出した控え",
+          "row": 0,
+          "col": 2,
+          "icon": "document"
+        },
+        {
+          "id": "match",
+          "label": "照合\n2 つの記録を\n1 件ずつ突き合わせる",
+          "row": 1,
+          "col": 1,
+          "icon": "search",
+          "emphasis": true
+        },
+        {
+          "id": "miss",
+          "label": "入力漏れ\n伝票にあって\n一覧に無い",
+          "row": 2,
+          "col": 0,
+          "icon": "warning"
+        },
+        {
+          "id": "ok",
+          "label": "一致\n1 件に 1 行ずつ対応",
+          "row": 2,
+          "col": 1,
+          "icon": "check"
+        },
+        {
+          "id": "dup",
+          "label": "重複入力\n一覧に\n同じ取引が二度",
+          "row": 2,
+          "col": 2,
+          "icon": "warning"
+        }
       ],
       "edges": [
-        {"from": "slip", "to": "sys", "label": "入力"},
-        {"from": "sys", "to": "list", "label": "出力"},
-        {"from": "slip", "to": "match", "label": "伝票の取引"},
-        {"from": "list", "to": "match", "label": "リストの行"},
-        {"from": "match", "to": "miss", "label": "伝票にだけある"},
-        {"from": "match", "to": "ok", "label": "対応が取れた"},
-        {"from": "match", "to": "dup", "label": "リストに二度ある"}
+        {
+          "from": "slip",
+          "to": "sys",
+          "label": "入力"
+        },
+        {
+          "from": "sys",
+          "to": "list",
+          "label": "出力"
+        },
+        {
+          "from": "slip",
+          "to": "match",
+          "label": "伝票の取引"
+        },
+        {
+          "from": "list",
+          "to": "match",
+          "label": "一覧の行"
+        },
+        {
+          "from": "match",
+          "to": "miss",
+          "label": "伝票にだけある"
+        },
+        {
+          "from": "match",
+          "to": "ok",
+          "label": "対応が取れた"
+        },
+        {
+          "from": "match",
+          "to": "dup",
+          "label": "一覧に二度ある"
+        }
       ]
     },
     {
       "id": 2,
       "type": "matrix",
       "after": "### 混同しやすい用語",
-      "caption": "3 つの監査技法を、突き合わせる物と確かめる先で並べます。列ごとに縦に読むと狙いの違いが分かります。",
-      "x": {"label": "監査技法", "values": ["突合・照合法", "テストデータ法", "並行シミュレーション法"]},
-      "y": {"label": "観点", "values": ["使う物", "確かめる先"]},
+      "caption": "3 つの監査技法を、使う物と確かめる先で並べます。強調した左の列が突合・照合法で、列ごとに縦に読むと狙いの違いが分かります。",
+      "x": {
+        "label": "監査技法",
+        "values": [
+          "突合・照合法",
+          "テストデータ法",
+          "並行シミュレーション法"
+        ]
+      },
+      "y": {
+        "label": "観点",
+        "values": [
+          "使う物",
+          "確かめる先"
+        ]
+      },
       "cells": [
-        ["記録どうし\n伝票とリストなど", "監査人が\n用意したデータ", "検証用プログラムと\n本番の処理結果"],
-        ["入力の網羅性\n漏れと重複が無いか", "入力チェック機能\n誤りを弾くか", "プログラムの論理\n結果が正しいか"]
+        [
+          "記録どうし\n証憑と帳簿など",
+          "監査人が\n用意したデータ",
+          "検証用プログラムと\n本番の処理結果"
+        ],
+        [
+          "入力の網羅性\n漏れと重複が無いか",
+          "入力チェック機能\n誤りを弾くか",
+          "処理の正しさ\n本番と同じ結果が\n出るか"
+        ]
       ],
-      "emphasis": [[1, 0]]
+      "emphasis": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
     }
   ]
 }

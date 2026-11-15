@@ -1,0 +1,280 @@
+{
+  "bundle": "22-2",
+  "shared": [
+    {
+      "item": "IPv4 と IPv6 の長さ・作れる個数・足りなくなった理由の比較（374 の図 1）",
+      "count": 3,
+      "holder": 374,
+      "topics": [
+        374
+      ]
+    },
+    {
+      "item": "プライベート IP アドレスを外へ出るときにグローバル IP アドレスへ付け替える流れ（受け持ち。374 の図 2）",
+      "count": 2,
+      "holder": 374,
+      "topics": [
+        374
+      ]
+    },
+    {
+      "item": "TCP（確認と再送）と IP（相手の指定と経路）の役割（281 の図 1 の層）",
+      "count": 3,
+      "holder": 281,
+      "topics": [
+        281
+      ]
+    },
+    {
+      "item": "用途ごとのプロトコル（HTTP・SMTP・POP・FTP・DNS）が TCP/IP の上に並ぶ（281 の図 1 の最上層）",
+      "count": 3,
+      "holder": 281,
+      "topics": [
+        281
+      ]
+    },
+    {
+      "item": "回線事業者と ISP の役割の分かれ（525 の図 1）",
+      "count": 2,
+      "holder": 525,
+      "topics": [
+        525
+      ]
+    },
+    {
+      "item": "IP アドレスの割り当て（ISP が行う）",
+      "count": 3,
+      "holder": 525,
+      "topics": [
+        525
+      ]
+    }
+  ],
+  "topics": [
+    {
+      "topic_id": 374,
+      "points": [
+        {
+          "point": "IP アドレスはネットワークにつながる機器を識別する住所",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "キーワード: 機器の住所・32ビットと128ビット",
+          "fate": "kept",
+          "where": "explanation（キーワードの行。32ビット・128ビットに分けた）"
+        },
+        {
+          "point": "IPv4 は32ビット、IPv6 は128ビット",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "IPv4 は約43億個しか作れない（explanation の箇条と detail の文章と図 1）",
+          "fate": "figure",
+          "where": "374 の図 1（「約 43 億個 理論上の上限」のセル）"
+        },
+        {
+          "point": "IPv4 は 0〜255 の 10 進数 4 つをピリオドで区切って書く（例 10.123.45.67）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "グローバルはインターネットで一意、プライベートは組織内で自由に使える",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "PC やサーバだけの時代は IPv4 で足りた",
+          "fate": "aside",
+          "where": "経緯の付け足し。足りなくなった理由（機器の増加）は残したので、紐づく過去問の解き直しに要らない"
+        },
+        {
+          "point": "スマホ・家電・センサがつながりアドレスが足りなくなった",
+          "fate": "kept",
+          "where": "### IPv4 と IPv6"
+        },
+        {
+          "point": "長さを128ビットに広げた IPv6 が用意された",
+          "fate": "kept",
+          "where": "### IPv4 と IPv6"
+        },
+        {
+          "point": "ビット数が4倍になると表せる個数は桁違いに増え、あらゆる機器に直接配れる",
+          "fate": "figure",
+          "where": "374 の図 1（「128 ビット IPv4 の 4 倍の長さ」「桁違いに多い」「あらゆる機器に直接配れる」のセルと caption）"
+        },
+        {
+          "point": "グローバル IP アドレスはインターネット上で重複しないよう管理された住所",
+          "fate": "kept",
+          "where": "### グローバルとプライベート"
+        },
+        {
+          "point": "プライベート IP アドレスは LAN（建物内など狭い範囲のネットワーク）の中だけで通用する",
+          "fate": "kept",
+          "where": "### グローバルとプライベート"
+        },
+        {
+          "point": "プライベートは各組織が自由に使える（detail の言い直し）",
+          "fate": "duplicate",
+          "where": "explanation の 3 つ目の箇条"
+        },
+        {
+          "point": "IPv4 の不足をしのぐため、組織内はプライベートを使い、外に出るときだけルータが少数のグローバルに付け替える（受け持ち）",
+          "fate": "kept",
+          "where": "### グローバルとプライベート（図 2 が流れを、文章が理由を言う）"
+        },
+        {
+          "point": "この節約策が要らなくなる点も IPv6 の利点",
+          "fate": "kept",
+          "where": "### グローバルとプライベート"
+        },
+        {
+          "point": "混同しやすい用語: サブネットマスクは IP アドレスのどこまでがネットワーク部分かを示す値",
+          "fate": "aside",
+          "where": "学ぶ順で後の論点 283 の丸ごとの説明。紐づく過去問の選択肢に出ず、解き直しに要らない（後の論点の語を混同の節に入れない）"
+        },
+        {
+          "point": "混同しやすい用語: ドメイン名は機器を人が読みやすい名前で指し、DNS で IP アドレスと対応づけられる",
+          "fate": "aside",
+          "where": "学ぶ順で後の論点 208・37 の丸ごとの説明。紐づく過去問の選択肢に出ず、解き直しに要らない"
+        },
+        {
+          "point": "LAN の言い換え（建物内など狭い範囲のネットワーク）",
+          "fate": "owner",
+          "where": "520"
+        }
+      ]
+    },
+    {
+      "topic_id": 281,
+      "points": [
+        {
+          "point": "TCP/IP はインターネットで使われる通信プロトコルの集まり",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "個々のアプリケーションの下位で基本的な通信機能を担う土台",
+          "fate": "kept",
+          "where": "explanation（定義の 1 文の「どの用途にも共通の通信の土台」と、1 つ目の箇条の「TCP/IP の上で動きます」）"
+        },
+        {
+          "point": "キーワード: インターネットの土台・下位で共通",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "TCP が届いたかの確認と再送を、IP が相手の指定と経路の決定を担当",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "用途ごとのプロトコルか、全部を支える土台かという階層の違いが問われる（問われ方の文）",
+          "fate": "duplicate",
+          "where": "explanation の 1 つ目の箇条（中身の文に書き直した）"
+        },
+        {
+          "point": "4 階層（アプリケーション層・トランスポート層・インターネット層・ネットワークインタフェース層）の名前と上下",
+          "fate": "figure",
+          "where": "281 の図 1（4 つの層と caption）"
+        },
+        {
+          "point": "TCP はデータを分割して送り、足りなければ送り直し、通信の信頼性を担当",
+          "fate": "kept",
+          "where": "### 4階層と TCP・IP の役割"
+        },
+        {
+          "point": "TCP は届いたかどうかを確認する（detail の言い直し）",
+          "fate": "duplicate",
+          "where": "explanation の 2 つ目の箇条"
+        },
+        {
+          "point": "IP は相手のコンピュータを IP アドレスで指し示す",
+          "fate": "kept",
+          "where": "### 4階層と TCP・IP の役割"
+        },
+        {
+          "point": "IP はどの経路で届けるかを決める（detail の言い直し）",
+          "fate": "duplicate",
+          "where": "explanation の 2 つ目の箇条"
+        },
+        {
+          "point": "2 つが組み合わさり、どんなアプリケーションでも確実に届けられる共通の土台になる",
+          "fate": "kept",
+          "where": "### 4階層と TCP・IP の役割"
+        },
+        {
+          "point": "アプリケーション層に HTTP（Web）・SMTP と POP（メール）・FTP（ファイル転送）が並ぶ",
+          "fate": "kept",
+          "where": "explanation の 1 つ目の箇条"
+        },
+        {
+          "point": "DNS はドメイン名と IP アドレスを対応づけるアプリケーション層のプロトコル",
+          "fate": "figure",
+          "where": "281 の図 1（アプリケーション層の注記に DNS）。対応づけの説明は学ぶ順で後の論点 37 の丸ごとの説明で、解き直しに要らない"
+        },
+        {
+          "point": "どれも TCP/IP の土台の上で動き、階層の上下で役割が分かれる（detail の言い直し）",
+          "fate": "duplicate",
+          "where": "explanation の 1 つ目の箇条"
+        },
+        {
+          "point": "どの用途のプロトコルでも下位の TCP/IP が通信そのものを支える（detail の言い直し）",
+          "fate": "duplicate",
+          "where": "explanation の定義の 1 文"
+        },
+        {
+          "point": "FTP・POP・SMTP がそれぞれ何をするプロトコルで、土台ではないこと（誤答の選択肢）",
+          "fate": "explanation",
+          "where": "question_explanations 2023r05-q68 の ア・イ・ウ の note"
+        }
+      ]
+    },
+    {
+      "topic_id": 525,
+      "points": [
+        {
+          "point": "ISP は利用者をインターネットにつなぐ通信ネットワークを提供する事業者",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "キーワード: インターネットにつなぐ・接続を提供",
+          "fate": "kept",
+          "where": "explanation（キーワードの行。問題文の語に寄せた）"
+        },
+        {
+          "point": "提供するのは接続そのもの",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "契約すると IP アドレスの割り当てやメールアドレスの提供を受けられる",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "インターネットにつなぐには回線を敷く回線事業者と、回線をインターネット本体につなぐ ISP の 2 つの役割が要る",
+          "fate": "figure",
+          "where": "525 の図 1（回線事業者と ISP の箱と caption）"
+        },
+        {
+          "point": "ISP は接続の入口を用意し、IP アドレスの割り当てを行う（detail の言い直し）",
+          "fate": "duplicate",
+          "where": "explanation の 2 つ目の箇条（入口は 525 の図 1 の ISP の箱）"
+        },
+        {
+          "point": "両方をまとめて契約できるサービスも多いが、役割としては別物",
+          "fate": "kept",
+          "where": "### 回線事業者との役割の違い"
+        },
+        {
+          "point": "ISP の仕事は「つなぐこと」と押さえると違いが見える（覚え方の文）",
+          "fate": "duplicate",
+          "where": "explanation の 1 つ目の箇条"
+        }
+      ]
+    }
+  ]
+}

@@ -3,60 +3,6 @@
   "term": "個人情報取扱事業者",
   "figures": [
     {
-      "id": 1,
-      "type": "blocks",
-      "after": "### 委託と第三者提供の違い",
-      "caption": "事業者から出る 2 本の線を比べます。同じくデータを渡しても、渡す相手が委託先か他社かで本人の同意の要否が変わります。",
-      "nodes": [
-        {
-          "id": "p",
-          "label": "本人\n情報の持ち主",
-          "row": 0,
-          "col": 1,
-          "icon": "person"
-        },
-        {
-          "id": "biz",
-          "label": "個人情報取扱事業者\n情報を事業に使う",
-          "row": 1,
-          "col": 1,
-          "icon": "building"
-        },
-        {
-          "id": "sub",
-          "label": "委託先\n入力業務などを請け負う",
-          "row": 2,
-          "col": 0,
-          "icon": "people"
-        },
-        {
-          "id": "third",
-          "label": "第三者\n名簿を受け取る他社",
-          "row": 2,
-          "col": 2,
-          "icon": "building",
-          "emphasis": true
-        }
-      ],
-      "edges": [
-        {
-          "from": "biz",
-          "to": "p",
-          "label": "取得時に利用目的を知らせるか公表"
-        },
-        {
-          "from": "biz",
-          "to": "sub",
-          "label": "預けて監督する（同意は要らない）"
-        },
-        {
-          "from": "biz",
-          "to": "third",
-          "label": "他社に渡す（原則として本人の同意）"
-        }
-      ]
-    },
-    {
       "id": 2,
       "type": "venn",
       "after": "### 利用目的は本人に知らせる",

@@ -5,8 +5,8 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### どのサーバをどちらに置くか",
-      "caption": "外から接続を受けるサーバだけを DMZ に置きます。DMZ から企業内 LAN へは通さないので、公開サーバが乗っ取られても社内に届きません。",
+      "after": "explanation",
+      "caption": "ファイアウォールで 3 つの区域に分け、外から接続を受けるサーバだけを DMZ に置きます。破線の通信は通さないので、公開サーバが乗っ取られても企業内 LAN には届きません。",
       "nodes": [
         {
           "id": "net",
@@ -23,14 +23,14 @@
         },
         {
           "id": "dmz",
-          "label": "DMZ\nWeb・メール・外部向け DNS",
+          "label": "DMZ\n外から接続を受ける\n公開サーバを置く",
           "row": 0,
           "col": 2,
           "emphasis": true
         },
         {
           "id": "lan",
-          "label": "企業内 LAN\n社外秘のファイルサーバ",
+          "label": "企業内 LAN\n社内の人だけが使う\nサーバと PC",
           "row": 1,
           "col": 2
         }
@@ -47,9 +47,15 @@
           "label": "公開サーバ宛てだけ許可"
         },
         {
+          "from": "fw",
+          "to": "lan",
+          "label": "社内へ直接は通さない",
+          "style": "dashed"
+        },
+        {
           "from": "dmz",
           "to": "lan",
-          "label": "侵入されても通さない",
+          "label": "乗っ取られても通さない",
           "style": "dashed"
         }
       ]

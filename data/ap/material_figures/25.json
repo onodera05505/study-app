@@ -5,7 +5,7 @@
     {
       "id": 1,
       "type": "matrix",
-      "after": "### タイミングチャートの読み方",
+      "after": "explanation",
       "caption": "入力 2 つの組合せごとに NAND の出力を並べた表です。両方が 1 のマスだけ 0 になり、AND の出力を反転した形だと読めます。",
       "x": {
         "label": "NAND 回路の入力 B",
@@ -39,85 +39,38 @@
       ]
     },
     {
-      "id": 2,
-      "type": "matrix",
-      "after": "### 記号の読み方",
-      "caption": "行で本体の形、列で出力の付け根の小丸を読みます。形で演算の種類が、小丸で否定の有無が決まります。",
-      "x": {
-        "label": "出力の付け根",
-        "values": [
-          "小丸なし",
-          "小丸あり"
-        ]
-      },
-      "y": {
-        "label": "本体の形",
-        "values": [
-          "入力側が直線\n先端が半円",
-          "入力側が曲線\n先端がとがる",
-          "入力側の線が\n二重"
-        ]
-      },
-      "cells": [
-        [
-          "AND\n論理積",
-          "NAND\nAND を反転"
-        ],
-        [
-          "OR\n論理和",
-          "NOR\nOR を反転"
-        ],
-        [
-          "XOR\n排他的論理和",
-          "XNOR\nXOR を反転"
-        ]
-      ],
-      "emphasis": [
-        [
-          0,
-          1
-        ]
-      ]
-    },
-    {
       "id": 3,
       "type": "blocks",
-      "after": "### NAND だけで組む回路",
-      "caption": "線の名前はその線を流れる信号です。上から順に置き換えると、4 つの NAND で排他的論理和が組めることを読めます。",
+      "after": "### NAND だけで論理を組む",
+      "caption": "線の名前はその線を流れる信号です。上から順に置き換えると、NAND だけの回路の出力の式が出ることを読めます。",
       "nodes": [
         {
-          "id": "a",
-          "label": "入力 A\n0 か 1",
+          "id": "x",
+          "label": "入力 X\n0 か 1",
           "row": 0,
           "col": 0
         },
         {
-          "id": "b",
-          "label": "入力 B\n0 か 1",
+          "id": "y",
+          "label": "入力 Y\n0 か 1",
           "row": 0,
           "col": 2
         },
         {
           "id": "n1",
-          "label": "NAND 1\nN＝¬(A・B)",
+          "label": "NAND 1\n同じ線を 2 本入れる\n¬(X・X)＝¬X",
           "row": 1,
-          "col": 1
-        },
-        {
-          "id": "n2",
-          "label": "NAND 2\nA と N から",
-          "row": 2,
           "col": 0
         },
         {
-          "id": "n3",
-          "label": "NAND 3\nN と B から",
+          "id": "n2",
+          "label": "NAND 2\n¬X と Y を入れる\n¬(¬X・Y)",
           "row": 2,
-          "col": 2
+          "col": 1
         },
         {
-          "id": "n4",
-          "label": "NAND 4（出力）\nA と B が異なる\nときだけ 1",
+          "id": "n3",
+          "label": "NAND 3（出力）\n同じ線を 2 本入れて否定\n¬X・Y（X が 0、Y が 1 で 1）",
           "row": 3,
           "col": 1,
           "emphasis": true
@@ -125,44 +78,24 @@
       ],
       "edges": [
         {
-          "from": "a",
+          "from": "x",
           "to": "n1",
-          "label": "A"
-        },
-        {
-          "from": "b",
-          "to": "n1",
-          "label": "B"
-        },
-        {
-          "from": "a",
-          "to": "n2",
-          "label": "A"
+          "label": "X（2 本とも）"
         },
         {
           "from": "n1",
           "to": "n2",
-          "label": "N"
+          "label": "¬X"
         },
         {
-          "from": "n1",
-          "to": "n3",
-          "label": "N"
-        },
-        {
-          "from": "b",
-          "to": "n3",
-          "label": "B"
+          "from": "y",
+          "to": "n2",
+          "label": "Y"
         },
         {
           "from": "n2",
-          "to": "n4",
-          "label": "¬(A・N)"
-        },
-        {
-          "from": "n3",
-          "to": "n4",
-          "label": "¬(N・B)"
+          "to": "n3",
+          "label": "¬(¬X・Y)（2 本とも）"
         }
       ]
     }

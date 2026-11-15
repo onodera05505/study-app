@@ -1,13 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="310" viewBox="0 0 640 310">
-<rect x="0.5" y="0.5" width="639" height="309" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="326" viewBox="0 0 640 326">
+<rect x="0.5" y="0.5" width="639" height="325" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(28.2 20)">
 <g transform="translate(41.55 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.2"/><path d="M12 16 V20 M8.5 20 H15.5"/></g>
 <g transform="translate(285.35 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7.5" r="3.6"/><path d="M4.5 21 C4.5 14.2 19.5 14.2 19.5 21"/></g>
 <g transform="translate(524.6 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 21 V3.5 H18.5 V21"/><path d="M3 21 H21"/><path d="M8.5 7 H10.5 M13.5 7 H15.5 M8.5 10.5 H10.5 M13.5 10.5 H15.5 M8.5 14 H10.5 M13.5 14 H15.5"/><path d="M10.5 21 V17.5 H13.5 V21"/></g>
 <g transform="translate(0 28)">
-<line x1="52.55" y1="34" x2="52.55" y2="242" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="296.35" y1="34" x2="296.35" y2="242" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="535.6" y1="34" x2="535.6" y2="242" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="52.55" y1="34" x2="52.55" y2="258" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="296.35" y1="34" x2="296.35" y2="258" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="535.6" y1="34" x2="535.6" y2="258" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
 <rect x="0" y="0" width="105.1" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
 <text x="52.55" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">利用者の OS</text>
 <rect x="248.35" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
@@ -17,18 +17,20 @@
 <polyline points="532.6,68 299.35,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="299.35,68 307.35,64.4 307.35,71.6" fill="#1f2937"/>
 <text x="415.98" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. コードサイニング証明書を発行する</text>
-<polyline points="296.35,100 322.35,100 322.35,114 298.35,114" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="298.35,114 306.35,110.4 306.35,117.6" fill="#1f2937"/>
-<text x="330.35" y="108" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2. ハッシュ値を秘密鍵で暗号化（署名）</text>
-<polyline points="293.35,142 55.55,142" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="55.55,142 63.55,138.4 63.55,145.6" fill="#1f2937"/>
-<text x="174.45" y="135" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. プログラム＋署名＋証明書を配布する</text>
-<polyline points="52.55,174 78.55,174 78.55,188 54.55,188" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="54.55,188 62.55,184.4 62.55,191.6" fill="#1f2937"/>
-<text x="86.55" y="182" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. 証明書の公開鍵で署名を復号し、計算したハッシュ値と比べる</text>
-<polyline points="52.55,208 78.55,208 78.55,222 54.55,222" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="54.55,222 62.55,218.4 62.55,225.6" fill="#1f2937"/>
-<text x="86.55" y="216" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. 一致すれば発行元が本物で、改ざんも無い</text>
+<rect x="291.98" y="73" width="248" height="16" rx="3" fill="#ffffff"/>
+<text x="415.98" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">証明書が開発者の身元と公開鍵を結び付ける</text>
+<polyline points="296.35,116 322.35,116 322.35,130 298.35,130" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="298.35,130 306.35,126.4 306.35,133.6" fill="#1f2937"/>
+<text x="330.35" y="124" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2. 証明書と対の秘密鍵でプログラムに署名</text>
+<polyline points="293.35,158 55.55,158" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="55.55,158 63.55,154.4 63.55,161.6" fill="#1f2937"/>
+<text x="174.45" y="151" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. プログラム＋署名＋証明書を配布する</text>
+<polyline points="52.55,190 78.55,190 78.55,204 54.55,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="54.55,204 62.55,200.4 62.55,207.6" fill="#1f2937"/>
+<text x="86.55" y="198" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. 証明書の中の公開鍵で署名を検証する</text>
+<polyline points="52.55,224 78.55,224 78.55,238 54.55,238" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="54.55,238 62.55,234.4 62.55,241.6" fill="#1f2937"/>
+<text x="86.55" y="232" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. 発行元が名義人で、配布後の書き換えも無いと分かる</text>
 </g>
 </g>
 </svg>

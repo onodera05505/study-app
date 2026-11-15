@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="314" viewBox="0 0 640 314">
-<rect x="0.5" y="0.5" width="639" height="313" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="330" viewBox="0 0 640 330">
+<rect x="0.5" y="0.5" width="639" height="329" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(153.52 20)">
-<line x1="55" y1="34" x2="55" y2="274" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="266.4" y1="34" x2="266.4" y2="274" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="55" y1="34" x2="55" y2="290" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="266.4" y1="34" x2="266.4" y2="290" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
 <rect x="0" y="0" width="110" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
 <text x="55" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">外側の問合せ</text>
 <rect x="199.85" y="0" width="133.1" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
@@ -12,19 +12,21 @@
 <text x="160.7" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. WHERE の右辺として評価を依頼</text>
 <polyline points="266.4,100 292.4,100 292.4,114 268.4,114" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="268.4,114 276.4,110.4 276.4,117.6" fill="#1f2937"/>
-<text x="300.4" y="108" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2. 各行の差を平均する</text>
-<rect x="106.4" y="119" width="320" height="16" rx="3" fill="#ffffff"/>
-<text x="266.4" y="132.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">（販売単価 − 仕入単価）の合計 3,600 ÷ 10 行 ＝ 360</text>
+<text x="300.4" y="108" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2. 8 行の金額を平均する</text>
+<rect x="61.7" y="119" width="409.4" height="16" rx="3" fill="#ffffff"/>
+<text x="266.4" y="132.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">100・400・300・500・200・300・600・0 の合計 2,400 ÷ 8 行 ＝ 300</text>
 <polyline points="263.4,158 58,158" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="58,158 66,154.4 66,161.6" fill="#1f2937"/>
-<text x="160.7" y="151" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 単一の値 360 を返す</text>
+<text x="160.7" y="151" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 単一の値 300 を返す</text>
 <polyline points="55,190 81,190 81,204 57,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="57,204 65,200.4 65,207.6" fill="#1f2937"/>
-<text x="89" y="198" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. 差 &gt; 360 の行だけ残す（4 行）</text>
+<text x="89" y="198" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. 金額 &gt; 300 の行だけ残す（400・500・600 の 3 行）</text>
 <rect x="-40.8" y="209" width="191.6" height="16" rx="3" fill="#ffffff"/>
-<text x="55" y="222.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">「&gt;」は 360 ちょうどを含まない</text>
+<text x="55" y="222.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">「&gt;」は 300 ちょうどを含まない</text>
 <polyline points="55,240 81,240 81,254 57,254" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="57,254 65,250.4 65,257.6" fill="#1f2937"/>
-<text x="89" y="248" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. DISTINCT 仕入先コードで重複を除く（3）</text>
+<text x="89" y="248" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. DISTINCT 担当者コードで重複を除く</text>
+<rect x="-69.9" y="259" width="249.8" height="16" rx="3" fill="#ffffff"/>
+<text x="55" y="272.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">3 行の担当者は T1・T2・T1 なので 2 種類</text>
 </g>
 </svg>

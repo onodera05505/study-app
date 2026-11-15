@@ -10,31 +10,31 @@
       "nodes": [
         {
           "id": "c0",
-          "label": "c0 ＝ x1+x3+x5+x7\n（mod 2）",
+          "label": "検査式 1\n崩れたら 1",
           "row": 0,
           "col": 0
         },
         {
           "id": "c1",
-          "label": "c1 ＝ x2+x3+x6+x7\n（mod 2）",
+          "label": "検査式 2\n崩れたら 1",
           "row": 0,
           "col": 1
         },
         {
           "id": "c2",
-          "label": "c2 ＝ x4+x5+x6+x7\n（mod 2）",
+          "label": "検査式 3\n崩れたら 1",
           "row": 0,
           "col": 2
         },
         {
           "id": "pos",
-          "label": "誤り位置 i\n＝ c0＋2c1＋4c2",
+          "label": "誤り位置\n＝ 1 になった式の重みの和",
           "row": 1,
           "col": 1
         },
         {
           "id": "fix",
-          "label": "左から i 番目のビットを反転\n＝ 訂正完了",
+          "label": "その位置のビットを反転\n＝ 訂正完了",
           "row": 2,
           "col": 1,
           "emphasis": true
@@ -65,12 +65,12 @@
         {
           "from": "pos",
           "to": "fix",
-          "label": "i が 0 でない"
+          "label": "和が 0 でない"
         },
         {
           "from": "pos",
           "to": "ok",
-          "label": "i＝0（全部 0）"
+          "label": "和が 0（全部 0）"
         }
       ]
     },
@@ -82,66 +82,66 @@
       "caption": "円は各検査式に現れるビットの範囲です。崩れた式の円すべての内側で、崩れていない式の円の外にある領域のビットが誤りです。",
       "sets": [
         {
-          "id": "c0",
-          "label": "c0 に現れる"
+          "id": "A",
+          "label": "検査式 A に現れる"
         },
         {
-          "id": "c1",
-          "label": "c1 に現れる"
+          "id": "B",
+          "label": "検査式 B に現れる"
         },
         {
-          "id": "c2",
-          "label": "c2 に現れる"
+          "id": "C",
+          "label": "検査式 C に現れる"
         }
       ],
       "regions": [
         {
           "in": [
-            "c0"
+            "A"
           ],
-          "label": "x1\nc0 だけ崩れる"
+          "label": "p1\nA だけ崩れる"
         },
         {
           "in": [
-            "c1"
+            "B"
           ],
-          "label": "x2\nc1 だけ崩れる"
+          "label": "p2\nB だけ崩れる"
         },
         {
           "in": [
-            "c2"
+            "C"
           ],
-          "label": "x4\nc2 だけ崩れる"
+          "label": "p3\nC だけ崩れる"
         },
         {
           "in": [
-            "c0",
-            "c1"
+            "A",
+            "B"
           ],
-          "label": "x3\nc0 と c1 が崩れる"
+          "label": "d1\nA と B が崩れる"
         },
         {
           "in": [
-            "c0",
-            "c2"
+            "A",
+            "C"
           ],
-          "label": "x5\nc0 と c2 が崩れる"
+          "label": "d2\nA と C が崩れる"
         },
         {
           "in": [
-            "c1",
-            "c2"
+            "B",
+            "C"
           ],
-          "label": "x6\nc1 と c2 が崩れる"
-        },
-        {
-          "in": [
-            "c0",
-            "c1",
-            "c2"
-          ],
-          "label": "x7\n3 式とも崩れる",
+          "label": "d3\nB と C が崩れる",
           "emphasis": true
+        },
+        {
+          "in": [
+            "A",
+            "B",
+            "C"
+          ],
+          "label": "d4\n3 式とも崩れる"
         }
       ]
     }

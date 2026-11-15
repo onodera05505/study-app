@@ -5,7 +5,7 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### しくみ",
+      "after": "explanation",
       "caption": "1台のサーバに届いた通信が、ポート番号ごとに別のアプリケーションへ振り分けられることを表した図です。左の線が機械を、右の線が機械の中の機能を決めます。",
       "nodes": [
         {
@@ -28,14 +28,14 @@
           "col": 2
         },
         {
-          "id": "smtp",
-          "label": "メール送信の機能\nSMTP で受け取る",
+          "id": "https",
+          "label": "暗号化した Web の機能\nHTTPS で応える",
           "row": 1,
           "col": 2
         },
         {
-          "id": "pop",
-          "label": "メール受信の機能\nPOP3 で渡す",
+          "id": "dns",
+          "label": "名前を調べる機能\nDNS で IP アドレスを返す",
           "row": 2,
           "col": 2
         }
@@ -53,13 +53,13 @@
         },
         {
           "from": "sv",
-          "to": "smtp",
-          "label": "ポート 25"
+          "to": "https",
+          "label": "ポート 443"
         },
         {
           "from": "sv",
-          "to": "pop",
-          "label": "ポート 110"
+          "to": "dns",
+          "label": "ポート 53"
         }
       ]
     }

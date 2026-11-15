@@ -1,0 +1,401 @@
+{
+  "bundle": "10-9",
+  "shared": [],
+  "topics": [
+    {
+      "topic_id": 404,
+      "points": [
+        {
+          "point": "URL は Web 上の資源の場所を示す表記（定義）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "構造 スキーム://ホスト名:ポート番号/パス?クエリ文字列（定義の文に詰めてあった）",
+          "fate": "figure",
+          "where": "404 の図 1（whole の URL と部位の並び）"
+        },
+        {
+          "point": "キーワード: スキーム・ホスト名・クエリ文字列",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "ポート番号を書けるのはホスト名の直後にコロンで区切った位置だけ（explanation の箇条と detail の番号 3 の 2 か所）",
+          "fate": "kept",
+          "where": "explanation の箇条 1"
+        },
+        {
+          "point": "ポート番号を省略するとスキームの既定値が使われる",
+          "fate": "kept",
+          "where": "explanation の箇条 2"
+        },
+        {
+          "point": "既定値は http が 80、https が 443",
+          "fate": "owner",
+          "where": "174"
+        },
+        {
+          "point": "ホスト名までが接続先、パスとクエリ文字列は接続後に渡す情報で、役割の違いで位置が決まる",
+          "fate": "kept",
+          "where": "### なぜホスト名の直後なのか"
+        },
+        {
+          "point": "例の URL（https・www.example.com・:8080・/member/login・?id=user）の 5 部品への分解",
+          "fate": "figure",
+          "where": "404 の図 1（別の URL で同じ 5 部品への分解をたどる）"
+        },
+        {
+          "point": "スキームは使うプロトコルで「://」でホスト名と区切る",
+          "fate": "figure",
+          "where": "404 の図 1（スキームの部位）"
+        },
+        {
+          "point": "ホスト名は接続先のサーバ",
+          "fate": "figure",
+          "where": "404 の図 1（ホスト名の部位）"
+        },
+        {
+          "point": "ホスト名は IP アドレスで書くこともできる",
+          "fate": "kept",
+          "where": "### 部品が使われる順と名前解決"
+        },
+        {
+          "point": "パスはサーバ内のどの資源かを示す",
+          "fate": "figure",
+          "where": "404 の図 1（パスの部位）"
+        },
+        {
+          "point": "クエリ文字列は「?」以降の「名前=値」のパラメタでサーバへ追加情報を渡す",
+          "fate": "figure",
+          "where": "404 の図 1（クエリ文字列の部位）"
+        },
+        {
+          "point": "ポート番号はどのサーバのどの窓口かを決め、ホスト名と一体で解釈されるのでホスト名に連結する",
+          "fate": "kept",
+          "where": "### なぜホスト名の直後なのか"
+        },
+        {
+          "point": "パスやクエリ文字列の後ろにポート番号を置いても接続時には使えない（誤答の否定）",
+          "fate": "explanation",
+          "where": "2022r04a-q35 の correct_reason・note ア／ウ"
+        },
+        {
+          "point": "スキームの直後は「://」でホスト名につながる位置で数値を挟む余地がない（誤答の否定）",
+          "fate": "explanation",
+          "where": "2022r04a-q35 の note イ"
+        },
+        {
+          "point": "この理屈を知っていれば位置を暗記しなくても導ける（覚え方の文）",
+          "fate": "duplicate",
+          "where": "### なぜホスト名の直後なのか（理屈そのものを残した）"
+        },
+        {
+          "point": "ブラウザはまずホスト名を DNS で IP アドレスに変換する",
+          "fate": "kept",
+          "where": "### 部品が使われる順と名前解決（404 の図 2 の手順 1〜2 も同じ）"
+        },
+        {
+          "point": "IP アドレスとポート番号の組に TCP 接続を張る",
+          "fate": "figure",
+          "where": "404 の図 2（手順 3）"
+        },
+        {
+          "point": "パス以降は接続ができた後に HTTP リクエストとして送られる",
+          "fate": "figure",
+          "where": "404 の図 2（手順 4 と note）"
+        },
+        {
+          "point": "URL の部品の並び順が処理の順序に対応している",
+          "fate": "kept",
+          "where": "### 部品が使われる順と名前解決"
+        }
+      ]
+    },
+    {
+      "topic_id": 168,
+      "points": [
+        {
+          "point": "リバースプロキシは公開 Web サーバの手前に置き、インターネットから内部のサーバへの通信を中継する（定義）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "キーワード: 中継・外から内・公開 Web サーバ",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "通常のプロキシは内→外、リバースプロキシは外→内で向きが逆（explanation の箇条と detail の末尾の 2 か所）",
+          "fate": "figure",
+          "where": "168 の図 1（上の段と下の段、caption）"
+        },
+        {
+          "point": "利用者から見える相手はリバースプロキシなので本体のアドレスや構成を隠せる（explanation の箇条と detail の段落の 2 か所）",
+          "fate": "kept",
+          "where": "explanation の箇条 1"
+        },
+        {
+          "point": "サーバの隠蔽: 内部の IP アドレスや台数、構成を外部に見せない（detail の箇条）",
+          "fate": "duplicate",
+          "where": "explanation の箇条 1（台数を足して 1 か所に寄せた）"
+        },
+        {
+          "point": "1 台挟むことで負荷分散・TLS 処理の集約・検査の一元化もまとめて引き受ける",
+          "fate": "kept",
+          "where": "explanation の箇条 2"
+        },
+        {
+          "point": "負荷分散: 同じ内容をもつ複数のサーバへ要求を振り分ける",
+          "fate": "kept",
+          "where": "### 手前の 1 台が引き受けること（表）"
+        },
+        {
+          "point": "暗号化処理の集約: TLS の処理をここで終わらせ内部のサーバの負荷を減らす",
+          "fate": "kept",
+          "where": "### 手前の 1 台が引き受けること（表）"
+        },
+        {
+          "point": "検査の一元化: 不正な要求の遮断やアクセスログの取得を 1 か所で",
+          "fate": "kept",
+          "where": "### 手前の 1 台が引き受けること（表）"
+        },
+        {
+          "point": "通常のプロキシは組織の内側に置き、社内 PC が外部サイトを見るときの出口",
+          "fate": "kept",
+          "where": "### 混同しやすい用語（フォワードプロキシ）"
+        },
+        {
+          "point": "リバースプロキシは公開サーバの前に置き、外部の要求をいったん受けて内部へ渡す（detail の段落）",
+          "fate": "duplicate",
+          "where": "explanation（定義）"
+        },
+        {
+          "point": "どちらのプロキシも「代理して中継する」点は同じで、違いは向きだけ",
+          "fate": "figure",
+          "where": "168 の図 1（caption の「同じ中継でも向きが逆」）"
+        },
+        {
+          "point": "外から内への中継だからこそ、公開サーバを奥に隠したまま手前で検査や振り分けを行える",
+          "fate": "kept",
+          "where": "### 手前の 1 台が引き受けること"
+        },
+        {
+          "point": "フォワードプロキシとは名前だけが対",
+          "fate": "kept",
+          "where": "### 混同しやすい用語"
+        },
+        {
+          "point": "DMZ は公開サーバを置く区画で、中継を担うのは機器",
+          "fate": "kept",
+          "where": "### 混同しやすい用語"
+        }
+      ]
+    },
+    {
+      "topic_id": 179,
+      "points": [
+        {
+          "point": "base64 は任意のバイナリデータを英数字など 64 種類の文字だけで表す符号化方式（定義）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "電子メールに添付ファイルを載せる MIME で使われる（定義の 2 文目）",
+          "fate": "kept",
+          "where": "### 混同しやすい用語（MIME）と ### なぜ文字に置き換えるのか"
+        },
+        {
+          "point": "キーワード: MIME・添付ファイル・転送データ量",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "符号化後のサイズ＝元のサイズ×4/3（約 1.33 倍）",
+          "fate": "kept",
+          "where": "explanation の箇条 1"
+        },
+        {
+          "point": "3 バイトを 4 文字に置き換えるので 4/3 倍になる",
+          "fate": "figure",
+          "where": "179 の図 1（段 1〜4）"
+        },
+        {
+          "point": "目的は文字しか運べない SMTP でバイナリを運ぶこと、圧縮や暗号化とは別のはたらき",
+          "fate": "kept",
+          "where": "explanation の箇条 2"
+        },
+        {
+          "point": "SMTP はもともと 7 ビットの文字だけを扱う前提",
+          "fate": "kept",
+          "where": "### なぜ文字に置き換えるのか"
+        },
+        {
+          "point": "バイナリをそのまま流すと途中で壊れたり拒否されたりする",
+          "fate": "kept",
+          "where": "### なぜ文字に置き換えるのか"
+        },
+        {
+          "point": "MIME の枠組みでバイナリを文字列に置き換え、その代表が base64",
+          "fate": "kept",
+          "where": "### なぜ文字に置き換えるのか"
+        },
+        {
+          "point": "受信側は同じ規則で元のバイト列に戻すので内容は失われない",
+          "fate": "kept",
+          "where": "### なぜ文字に置き換えるのか"
+        },
+        {
+          "point": "文字に置き換えた分だけデータ量は増える",
+          "fate": "kept",
+          "where": "### なぜ文字に置き換えるのか"
+        },
+        {
+          "point": "データ量を減らす圧縮とは目的が正反対、注意してください（2 回目）",
+          "fate": "duplicate",
+          "where": "explanation の箇条 2"
+        },
+        {
+          "point": "元のデータを 6 ビットずつに区切り 1 区切りを 1 文字に対応させる",
+          "fate": "figure",
+          "where": "179 の図 1（段 2→3、段 3→4 の矢印）"
+        },
+        {
+          "point": "3 バイト＝24 ビット＝6 ビット × 4 個＝4 文字（4 バイト）",
+          "fate": "figure",
+          "where": "179 の図 1（段 1〜4 のラベル）"
+        },
+        {
+          "point": "増加率 4/3 倍、符号化後のサイズ＝元のサイズ×4÷3（式の 2 か所目）",
+          "fate": "duplicate",
+          "where": "explanation の箇条 1"
+        },
+        {
+          "point": "30k バイトなら 30×4÷3＝40k バイト",
+          "fate": "kept",
+          "where": "### 計算の解き方"
+        },
+        {
+          "point": "3 バイトに満たない端数は「=」で埋めるが数バイトなので、およその値では無視してよい",
+          "fate": "kept",
+          "where": "### 計算の解き方"
+        },
+        {
+          "point": "MIME はメールで文字以外のデータや複数パートを扱う拡張仕様で、base64 はその中の符号化方式の一つ",
+          "fate": "kept",
+          "where": "### 混同しやすい用語"
+        },
+        {
+          "point": "quoted-printable は元がほぼテキストのときの符号化で、ASCII はそのまま残し増加分は base64 より小さい",
+          "fate": "kept",
+          "where": "### 混同しやすい用語"
+        }
+      ]
+    },
+    {
+      "topic_id": 721,
+      "points": [
+        {
+          "point": "SOAP は他のコンピュータ上のデータやサービスを呼び出すプロトコルで、メッセージを XML で記述したヘッダとボディで構成する（定義）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "キーワード: XML・ヘッダとボディ・サービスの呼出し",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "エンベロープの外枠に、認証やトランザクション制御のヘッダと、メソッド名・引数・戻り値のボディを収める（explanation の箇条と detail の段落の 2 か所）",
+          "fate": "figure",
+          "where": "721 の図 1（層 2 つと括弧のエンベロープ）"
+        },
+        {
+          "point": "呼出しの仕様は WSDL で記述する",
+          "fate": "kept",
+          "where": "### Web サービスの中での受け持ち（721 の図 2 の WSDL も）"
+        },
+        {
+          "point": "通信路には HTTP などを使う",
+          "fate": "figure",
+          "where": "721 の図 2（線「HTTP などで届ける」）"
+        },
+        {
+          "point": "Web サービスを組み立てる部品の一つ",
+          "fate": "kept",
+          "where": "### Web サービスの中での受け持ち"
+        },
+        {
+          "point": "遠隔の処理を手元の関数のように呼ぶ RPC の一形式で、RPC のやり取りを XML の文書として表す（explanation と detail の 2 か所）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "XML はテキストなので OS や言語が違っても解釈できる（explanation と detail の 2 か所）",
+          "fate": "kept",
+          "where": "### XML で書く狙いと代償"
+        },
+        {
+          "point": "HTTP に載せればファイアウォールも通しやすい",
+          "fate": "kept",
+          "where": "### XML で書く狙いと代償"
+        },
+        {
+          "point": "特定のベンダや言語に縛られないことが狙い",
+          "fate": "kept",
+          "where": "### XML で書く狙いと代償"
+        },
+        {
+          "point": "XML は冗長なため通信量と解析の負荷が大きい",
+          "fate": "kept",
+          "where": "### XML で書く狙いと代償"
+        },
+        {
+          "point": "近年は JSON の REST 形式の Web API が主流だが、厳密な仕様記述とヘッダによる拡張が必要な場面では SOAP が使われる",
+          "fate": "kept",
+          "where": "### REST・CORBA との違い"
+        },
+        {
+          "point": "SOAP が定めるのはメッセージの形式と運ぶ手順だけ",
+          "fate": "kept",
+          "where": "### Web サービスの中での受け持ち"
+        },
+        {
+          "point": "WSDL はメソッド・引数・戻り値を記述したインタフェース定義",
+          "fate": "figure",
+          "where": "721 の図 2（WSDL の箱）"
+        },
+        {
+          "point": "UDDI は公開されている Web サービスを登録・検索するディレクトリ",
+          "fate": "kept",
+          "where": "### Web サービスの中での受け持ち（721 の図 2 の UDDI も）"
+        },
+        {
+          "point": "WSDL・UDDI はいずれも XML が土台",
+          "fate": "kept",
+          "where": "### Web サービスの中での受け持ち"
+        },
+        {
+          "point": "REST は HTTP のメソッドと URI で資源を操作する設計様式",
+          "fate": "kept",
+          "where": "### REST・CORBA との違い"
+        },
+        {
+          "point": "REST は多くが JSON で、封筒構造も厳密な仕様記述も持たない",
+          "fate": "figure",
+          "where": "721 の図 3（REST の行）"
+        },
+        {
+          "point": "CORBA も遠隔のオブジェクトを呼び出す",
+          "fate": "kept",
+          "where": "### REST・CORBA との違い"
+        },
+        {
+          "point": "CORBA はインタフェースを IDL で記述し ORB を介して通信し、XML は使わない",
+          "fate": "figure",
+          "where": "721 の図 3（CORBA の行。XML を使わない点は 2016h28a-q35 のアの note）"
+        }
+      ]
+    }
+  ]
+}

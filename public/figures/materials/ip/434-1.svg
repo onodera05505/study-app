@@ -1,31 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="314" viewBox="0 0 640 314">
 <rect x="0.5" y="0.5" width="639" height="313" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(81.6 20)">
+<g transform="translate(75.6 20)">
 <g transform="translate(65 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3.5" width="16" height="7" rx="1.2"/><rect x="4" y="13.5" width="16" height="7" rx="1.2"/><circle cx="7.5" cy="7" r="0.9" fill="#1f2937" stroke="none"/><circle cx="7.5" cy="17" r="0.9" fill="#1f2937" stroke="none"/><path d="M11 7 H17 M11 17 H17"/></g>
-<g transform="translate(389.8 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3.5" width="16" height="7" rx="1.2"/><rect x="4" y="13.5" width="16" height="7" rx="1.2"/><circle cx="7.5" cy="7" r="0.9" fill="#1f2937" stroke="none"/><circle cx="7.5" cy="17" r="0.9" fill="#1f2937" stroke="none"/><path d="M11 7 H17 M11 17 H17"/></g>
+<g transform="translate(401.8 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3.5" width="16" height="7" rx="1.2"/><rect x="4" y="13.5" width="16" height="7" rx="1.2"/><circle cx="7.5" cy="7" r="0.9" fill="#1f2937" stroke="none"/><circle cx="7.5" cy="17" r="0.9" fill="#1f2937" stroke="none"/><path d="M11 7 H17 M11 17 H17"/></g>
 <g transform="translate(0 28)">
 <line x1="76" y1="34" x2="76" y2="246" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="400.8" y1="34" x2="400.8" y2="246" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="412.8" y1="34" x2="412.8" y2="246" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
 <rect x="0" y="0" width="152" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
 <text x="76" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">移動元の物理サーバ</text>
-<rect x="324.8" y="0" width="152" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="400.8" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">移動先の物理サーバ</text>
-<polyline points="79,68 397.8,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="397.8,68 389.8,71.6 389.8,64.4" fill="#1f2937"/>
-<text x="238.4" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. メモリの内容を送る（仮想マシンは動いたまま）</text>
-<polyline points="79,108 397.8,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="397.8,108 389.8,111.6 389.8,104.4" fill="#1f2937"/>
-<text x="238.4" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 送る間に変わった部分を追いかけて送る</text>
-<rect x="150.4" y="113" width="176" height="16" rx="3" fill="#ffffff"/>
-<text x="238.4" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">差分が小さくなるまで繰り返す</text>
-<polyline points="79,164 397.8,164" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="397.8,164 389.8,167.6 389.8,160.4" fill="#1f2937"/>
-<text x="238.4" y="157" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 最後の差分と CPU の状態を送る（一瞬だけ止める）</text>
-<polyline points="400.8,196 426.8,196 426.8,210 402.8,210" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="402.8,210 410.8,206.4 410.8,213.6" fill="#1f2937"/>
-<text x="434.8" y="204" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. 処理を続ける</text>
-<rect x="252.8" y="215" width="296" height="16" rx="3" fill="#ffffff"/>
-<text x="400.8" y="228.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">移動前の状態のまま。利用者からは止まって見えない</text>
+<rect x="336.8" y="0" width="152" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="412.8" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">移動先の物理サーバ</text>
+<polyline points="79,68 409.8,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="409.8,68 401.8,71.6 401.8,64.4" fill="#1f2937"/>
+<text x="244.4" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. メモリの内容を送る（仮想サーバは動いたまま）</text>
+<polyline points="79,108 409.8,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="409.8,108 401.8,111.6 401.8,104.4" fill="#1f2937"/>
+<text x="244.4" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 送る間に変わった部分を追いかけて送る</text>
+<rect x="156.4" y="113" width="176" height="16" rx="3" fill="#ffffff"/>
+<text x="244.4" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">差分が小さくなるまで繰り返す</text>
+<polyline points="79,164 409.8,164" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="409.8,164 401.8,167.6 401.8,160.4" fill="#1f2937"/>
+<text x="244.4" y="157" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 最後の差分と CPU の状態を送り、移動先へ切り替える</text>
+<polyline points="412.8,196 438.8,196 438.8,210 414.8,210" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="414.8,210 422.8,206.4 422.8,213.6" fill="#1f2937"/>
+<text x="446.8" y="204" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. 処理を続ける</text>
+<rect x="264.8" y="215" width="296" height="16" rx="3" fill="#ffffff"/>
+<text x="412.8" y="228.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">移動前の状態のまま。利用者からは止まって見えない</text>
 </g>
 </g>
 </svg>

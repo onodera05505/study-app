@@ -5,32 +5,38 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### パスの組み立て方",
-      "caption": "今いる d1 から .. で共通の親へ上がり、d2 へ下る道順を順につないだものが相対パスです。",
+      "after": "### 相対パスの組み立て方",
+      "caption": "今いる memo から .. で 2 階層上がって共通の親に着き、img へ下ってファイルを指す道順です。番号の順につないだものが相対パスになります。",
       "nodes": [
         {
           "id": "rt",
-          "label": "ルートディレクトリ\n絶対パスの起点",
+          "label": "ルートディレクトリ\ndocs と img の共通の親",
           "row": 0,
           "col": 1,
           "shape": "round"
         },
         {
-          "id": "d1",
-          "label": "d1\nカレント（今いる位置）",
+          "id": "docs",
+          "label": "docs\nmemo の 1 つ上",
           "row": 1,
-          "col": 0,
-          "emphasis": true
+          "col": 0
         },
         {
-          "id": "d2",
-          "label": "d2\nディレクトリ",
+          "id": "img",
+          "label": "img\n目的のファイルの親",
           "row": 1,
           "col": 2
         },
         {
-          "id": "f2",
-          "label": "f2.html（目的のファイル）\n相対パスは ../d2/f2.html",
+          "id": "memo",
+          "label": "memo\nカレント（今いる位置）",
+          "row": 2,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "logo",
+          "label": "logo.png（目的のファイル）\n相対パスは ../../img/logo.png",
           "row": 2,
           "col": 2,
           "emphasis": true
@@ -38,19 +44,24 @@
       ],
       "edges": [
         {
-          "from": "d1",
-          "to": "rt",
+          "from": "memo",
+          "to": "docs",
           "label": "① .. で 1 階層上へ"
         },
         {
-          "from": "rt",
-          "to": "d2",
-          "label": "② d2 へ下る"
+          "from": "docs",
+          "to": "rt",
+          "label": "② .. でもう 1 階層上へ"
         },
         {
-          "from": "d2",
-          "to": "f2",
-          "label": "③ f2.html を指す"
+          "from": "rt",
+          "to": "img",
+          "label": "③ img へ下る"
+        },
+        {
+          "from": "img",
+          "to": "logo",
+          "label": "④ logo.png を指す"
         }
       ]
     }

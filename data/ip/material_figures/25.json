@@ -4,19 +4,37 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "layers",
       "after": "### 誰が求め、どの部門が関わるか",
-      "caption": "決算の数字ができるまでの流れを左から右へたどります。途中のどの部門で誤っても数字が狂うので、3 つの部門がすべて対象になります。",
-      "nodes": [
-        {"id": "biz", "label": "業務部門\n受注・出荷・仕入れ", "row": 0, "col": 0, "icon": "people"},
-        {"id": "sys", "label": "情報システム部門\n取引を処理する\nシステムを動かす", "row": 0, "col": 1, "icon": "server"},
-        {"id": "acc", "label": "経理部門\n仕訳と集計", "row": 0, "col": 2, "icon": "money"},
-        {"id": "rep", "label": "財務報告\n決算の数字", "row": 0, "col": 3, "icon": "document", "emphasis": true}
+      "caption": "下の業務の記録が積み上がって、上の決算の数字になります。左の括弧が、財務報告に係る内部統制の対象の範囲を示します。",
+      "shape": "stack",
+      "layers": [
+        {
+          "label": "財務報告\n外部に示す決算の数字",
+          "icon": "document"
+        },
+        {
+          "label": "経理の担当\n記録を帳簿にまとめて集計する",
+          "icon": "money",
+          "note": "集計した数字を上へ"
+        },
+        {
+          "label": "在庫のシステム\n入庫と出庫を記録する",
+          "icon": "server",
+          "note": "在庫と仕入れの記録を上へ"
+        },
+        {
+          "label": "購買の担当\n材料を仕入れる",
+          "icon": "people",
+          "note": "仕入れた数と金額を上へ"
+        }
       ],
-      "edges": [
-        {"from": "biz", "to": "sys", "label": "取引の記録"},
-        {"from": "sys", "to": "acc", "label": "処理したデータ"},
-        {"from": "acc", "to": "rep", "label": "集計した数字"}
+      "brackets": [
+        {
+          "from": 0,
+          "to": 3,
+          "label": "財務報告に係る\n内部統制の対象"
+        }
       ]
     }
   ]

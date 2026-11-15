@@ -5,7 +5,7 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### しくみ",
+      "after": "### LAN につないで共有するしくみ",
       "caption": "上は PC にケーブルで直結する外付けハードディスク、下は LAN につなぐ NAS です。NAS は LAN の先の機器すべてから同じ保存領域を使えます。",
       "nodes": [
         {
@@ -39,24 +39,24 @@
         },
         {
           "id": "pc1",
-          "label": "PC\n同じ領域を使う",
+          "label": "タブレット\n同じ領域の写真を見る",
           "row": 1,
           "col": 2,
           "icon": "device"
         },
         {
           "id": "ph",
-          "label": "スマートフォン\n同じ領域を使う",
+          "label": "テレビ\n同じ領域の録画を見る",
           "row": 2,
           "col": 2,
-          "icon": "phone"
+          "icon": "device"
         },
         {
           "id": "tb",
-          "label": "タブレット\n同じ領域を使う",
+          "label": "複合機\n同じ領域へスキャンを保存",
           "row": 3,
           "col": 2,
-          "icon": "device"
+          "icon": "document"
         }
       ],
       "edges": [
@@ -69,25 +69,25 @@
         {
           "from": "nas",
           "to": "lan",
-          "label": "LAN に直接つなぐ",
+          "label": "LAN のケーブル 1 本",
           "arrow": "both"
         },
         {
           "from": "lan",
           "to": "pc1",
-          "label": "ネットワーク経由で共有",
+          "label": "共有フォルダを開く",
           "arrow": "both"
         },
         {
           "from": "lan",
           "to": "ph",
-          "label": "ネットワーク経由で共有",
+          "label": "共有フォルダを開く",
           "arrow": "both"
         },
         {
           "from": "lan",
           "to": "tb",
-          "label": "ネットワーク経由で共有",
+          "label": "共有フォルダを開く",
           "arrow": "both"
         }
       ]

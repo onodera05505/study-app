@@ -5,79 +5,54 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 使う4つの記号",
-      "caption": "人の絵は業務の外の相手（源泉と吸収）、丸は処理、筒の絵はデータを溜める場所です。矢印（データフロー）の上の語が、流れるデータを表します。",
+      "after": "### 矢印の向きの決め方",
+      "caption": "丸は処理、筒の形はデータストア（本文の表の記法では 2 本の平行線）です。強調した貸出記録を見ると、書き込む矢印は入り、参照する矢印は出ています。",
       "nodes": [
         {
-          "id": "src",
-          "label": "来店客\n源泉：業務の外の相手\nデータがここから入る",
+          "id": "zosho",
+          "label": "\n蔵書台帳\nデータストア\n参照だけなので矢印は出るだけ",
           "row": 0,
           "col": 0,
-          "icon": "person",
-          "emphasis": true
+          "shape": "cylinder"
         },
         {
-          "id": "uke",
-          "label": "受付\n処理：データに手を加える",
-          "row": 0,
-          "col": 1,
+          "id": "kashi",
+          "label": "貸出受付\n処理：台帳を参照して\n記録に書き込む",
+          "row": 1,
+          "col": 0,
           "shape": "round"
         },
         {
-          "id": "list",
-          "label": "来店客リスト\nデータストア：\nデータを溜めておく",
+          "id": "kiroku",
+          "label": "\n貸出記録\nデータストア\n書き込みは入り、参照は出る",
           "row": 1,
           "col": 1,
-          "icon": "database"
-        },
-        {
-          "id": "sink",
-          "label": "来店客\n吸収：業務の外の相手\nデータがここへ出ていく",
-          "row": 2,
-          "col": 0,
-          "icon": "person",
+          "shape": "cylinder",
           "emphasis": true
         },
         {
-          "id": "annai",
-          "label": "座席案内\n処理：データに手を加える",
-          "row": 2,
-          "col": 1,
-          "shape": "round"
-        },
-        {
-          "id": "seki",
-          "label": "空席状況\nデータストア：\nデータを溜めておく",
-          "row": 2,
+          "id": "toku",
+          "label": "返却の督促\n処理：記録を参照する",
+          "row": 1,
           "col": 2,
-          "icon": "database"
+          "shape": "round"
         }
       ],
       "edges": [
         {
-          "from": "src",
-          "to": "uke",
-          "label": "名前と人数"
+          "from": "zosho",
+          "to": "kashi",
+          "label": "参照する：本の題名と置き場所"
         },
         {
-          "from": "uke",
-          "to": "list",
-          "label": "書き込む（矢印が入る）"
+          "from": "kashi",
+          "to": "kiroku",
+          "label": "書き込む：誰がどの本を借りたか"
         },
         {
-          "from": "list",
-          "to": "annai",
-          "label": "参照する（矢印が出る）"
-        },
-        {
-          "from": "seki",
-          "to": "annai",
-          "label": "空いている席"
-        },
-        {
-          "from": "annai",
-          "to": "sink",
-          "label": "案内する席"
+          "from": "kiroku",
+          "to": "toku",
+          "label": "参照する：返却期限を過ぎた貸出"
         }
       ]
     },

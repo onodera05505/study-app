@@ -5,28 +5,31 @@
     {
       "id": 1,
       "type": "steps",
-      "after": "### 何を指す力か",
+      "after": "explanation",
       "caption": "情報リテラシーが含む力を段に並べた図です。集めるだけでなく、強調した評価から活用・発信までが範囲です。",
       "direction": "up",
       "stages": [
-        {"label": "集める\n情報やツールを探す", "icon": "search", "next_label": "見つけた情報"},
-        {"label": "評価する\n真偽と目的に合うかを見る", "icon": "check", "next_label": "信頼できる情報", "emphasis": true},
-        {"label": "活用する\n加工して課題を解く", "icon": "gear", "next_label": "課題の答え"},
-        {"label": "発信する\n結果を人に伝える", "icon": "mail"}
+        {
+          "label": "集める\n情報やツールを探す",
+          "icon": "search",
+          "next_label": "見つけた情報"
+        },
+        {
+          "label": "評価する\n真偽と目的に合うかを見る",
+          "icon": "check",
+          "next_label": "信頼できる情報",
+          "emphasis": true
+        },
+        {
+          "label": "活用する\n加工して課題を解く",
+          "icon": "gear",
+          "next_label": "課題の答え"
+        },
+        {
+          "label": "発信する\n結果を人に伝える",
+          "icon": "mail"
+        }
       ]
-    },
-    {
-      "id": 2,
-      "type": "matrix",
-      "after": "### 混同しやすい用語",
-      "caption": "似た 3 つの用語を同じ観点で並べた表です。下の行で、誰の側の話かを列ごとに比べて読みます。",
-      "x": {"label": "用語", "values": ["情報リテラシー", "デジタルディバイド", "アクセシビリティ"]},
-      "y": {"label": "観点", "values": ["何を指すか", "誰の側の話か"]},
-      "cells": [
-        ["能力\n情報を評価して\n課題に活かす力", "格差\nIT を使える人と\n使えない人の差", "度合い\n誰もが同じように\n使える程度"],
-        ["個人\n使う人自身", "社会\n人々の間", "提供する側\nサービスの作り込み"]
-      ],
-      "emphasis": [[1, 0]]
     }
   ]
 }

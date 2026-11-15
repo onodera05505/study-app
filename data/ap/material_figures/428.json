@@ -5,17 +5,48 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### しくみ",
-      "caption": "作業場所が発注者の事業所でも、指揮命令は受注者に残り、発注者と作業者の間に雇用契約は生じません。",
+      "after": "### 指揮命令が受注者に残る理由",
+      "caption": "実線は契約と指示の流れ、破線は発注者が作業者へ直接の指示を出さない関係です。作業者への指示がどの箱から出ているかをたどって読みます。",
       "nodes": [
-        {"id": "buyer", "label": "発注者\n（自社の事業所を提供）", "row": 0, "col": 0},
-        {"id": "vendor", "label": "受注者（請負側）", "row": 0, "col": 1, "emphasis": true},
-        {"id": "worker", "label": "作業者\n発注者の事業所で作業", "row": 1, "col": 1}
+        {
+          "id": "buyer",
+          "label": "発注者\n成果物を受け取り\n報酬を払う",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "vendor",
+          "label": "受注者\n完成に責任を負い\n進め方を決める",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "worker",
+          "label": "作業者\n受注者が雇い\n受注者の指示で作業",
+          "row": 1,
+          "col": 1
+        }
       ],
       "edges": [
-        {"from": "buyer", "to": "vendor", "label": "請負契約（仕事の完成に報酬）", "arrow": "both"},
-        {"from": "vendor", "to": "worker", "label": "雇用契約と指揮命令"},
-        {"from": "buyer", "to": "worker", "label": "直接の指揮命令はできない", "style": "dashed", "arrow": "none"}
+        {
+          "from": "buyer",
+          "to": "vendor",
+          "label": "請負契約（完成に報酬）",
+          "arrow": "both"
+        },
+        {
+          "from": "vendor",
+          "to": "worker",
+          "label": "雇用契約と作業の指示"
+        },
+        {
+          "from": "buyer",
+          "to": "worker",
+          "label": "直接の指示は出さない",
+          "style": "dashed",
+          "arrow": "none"
+        }
       ]
     }
   ]

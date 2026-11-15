@@ -5,8 +5,8 @@
     {
       "id": 1,
       "type": "sequence",
-      "after": "### LIFO のしくみ",
-      "caption": "上から順に読みます。最後に積んだ c が最初に出て、先に積んだものほど後から出ます。",
+      "after": "explanation",
+      "caption": "上から順に読みます。POP で出るのは、いつもその時点で一番上にある、最後に積んだ物です。",
       "actors": [
         {
           "id": "p",
@@ -21,28 +21,32 @@
         {
           "from": "p",
           "to": "s",
-          "label": "PUSH a（a を積む）"
+          "label": "PUSH X（X を積む）"
         },
         {
           "from": "p",
           "to": "s",
-          "label": "PUSH b（a の上に積む）"
+          "label": "PUSH Y（X の上に積む）"
+        },
+        {
+          "from": "s",
+          "to": "p",
+          "label": "POP で Y が出る（一番上の物）"
         },
         {
           "from": "p",
           "to": "s",
-          "label": "PUSH c（一番上は c）"
+          "label": "PUSH Z（X の上に積む）"
         },
         {
           "from": "s",
           "to": "p",
-          "label": "POP で c が出る（最後に入れた物）"
+          "label": "POP で Z が出る（最後に積んだ物）"
         },
         {
           "from": "s",
           "to": "p",
-          "label": "POP で b が出る",
-          "note": "a は上の物を全部出すまで取り出せない"
+          "label": "POP で X が出る（残った物）"
         }
       ]
     }

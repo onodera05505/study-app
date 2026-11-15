@@ -7,62 +7,31 @@
       "type": "steps",
       "after": "### 実施項目の順序",
       "direction": "down",
-      "caption": "ISMS を始めるときの順序を上から下へ並べた階段です。矢印に書いた物が決まると、次の段へ進めます。",
+      "caption": "ISMS を始めるときの順序を上から下へ並べた階段です。矢印の横の「次へ渡す」が、前の段で決まって次の段の土台になる物です。",
       "stages": [
         {
-          "label": "組織の状況を理解する\n利害関係者の要求をつかむ",
+          "label": "組織の状況を理解する\n顧客や取引先など利害関係者が\n何を求めるかをつかむ",
           "icon": "people",
-          "next_label": "誰の何を守るか",
-          "emphasis": true
+          "next_label": "次へ渡す: 誰の何を守るか"
         },
         {
-          "label": "適用範囲を決める\n部署・業務・資産の範囲",
+          "label": "適用範囲を決める\nどの部署・業務・資産まで守るか",
           "icon": "building",
-          "next_label": "守る範囲"
+          "next_label": "次へ渡す: 守る範囲"
         },
         {
-          "label": "方針を定める\n情報セキュリティ方針",
+          "label": "方針を定める\n情報セキュリティ方針を文書にする",
           "icon": "document",
-          "next_label": "守り方の方針"
+          "next_label": "次へ渡す: 守り方の方針"
         },
         {
-          "label": "リスクアセスメント\n特定・分析・評価",
+          "label": "リスクアセスメント\nリスクを洗い出して大きさを見積もり\n手を打つリスクを決める",
           "icon": "search",
-          "next_label": "選んだ対応"
+          "next_label": "次へ渡す: 手を打つリスク"
         },
         {
-          "label": "対応と点検\n運用し内部監査で直す",
+          "label": "対応と点検\n対策を運用し、組織の中で\n点検する",
           "icon": "check"
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "type": "cycle",
-      "after": "### リスクを管理する仕組みとして回す",
-      "caption": "ISMS は 4 つの段を輪で回し続けます。評価で見つけた不適合を直し、次の計画へ戻るところを読みます。",
-      "center": "情報資産の\nリスク管理",
-      "stages": [
-        {
-          "label": "計画\nリスクと対策を決める",
-          "icon": "document",
-          "next_label": "対策の計画"
-        },
-        {
-          "label": "運用\n対策を回す",
-          "icon": "gear",
-          "next_label": "運用の記録"
-        },
-        {
-          "label": "パフォーマンス評価\n決めたとおりか測る",
-          "icon": "search",
-          "next_label": "見つかった不適合",
-          "emphasis": true
-        },
-        {
-          "label": "改善\n不適合を直す",
-          "icon": "arrow-cycle",
-          "next_label": "直した手順"
         }
       ]
     }

@@ -1,30 +1,5 @@
 {
   "topic_id": 718,
   "term": "ブロードキャストストーム",
-  "figures": [
-    {
-      "id": 1, "type": "cycle", "after": "### なぜ止まらなくなるのか",
-      "caption": "輪につながったスイッチの間を、ブロードキャストのフレームが複製されながら回り続けます。中央のとおり寿命の欄が無いので、誰も破棄しません。",
-      "center": "TTL が無く\n止まらない",
-      "stages": [
-        {"label": "スイッチ A\n受信ポート以外へ複製", "next_label": "複製したフレーム"},
-        {"label": "スイッチ B\nさらに複製して送る", "next_label": "増えたフレーム", "emphasis": true},
-        {"label": "スイッチ C\nまた複製して送る", "next_label": "元のスイッチへ戻る"}
-      ]
-    },
-    {
-      "id": 2, "type": "blocks", "after": "### スパニングツリーで輪を切る",
-      "caption": "輪になった 3 台のうち、破線の 1 本だけを論理的に止めて木の形にします。配線は残るので、使う経路が切れたら開いて復旧します。",
-      "nodes": [
-        {"id": "root", "label": "ルートブリッジ\n木の基準点", "row": 0, "col": 1, "emphasis": true},
-        {"id": "b", "label": "スイッチ B\nルートへの経路を使う", "row": 1, "col": 0},
-        {"id": "c", "label": "スイッチ C\nルートへの経路を使う", "row": 1, "col": 2}
-      ],
-      "edges": [
-        {"from": "root", "to": "b", "label": "使う経路", "arrow": "both"},
-        {"from": "root", "to": "c", "label": "使う経路", "arrow": "both"},
-        {"from": "b", "to": "c", "label": "ブロッキング\n（配線は残す）", "style": "dashed", "arrow": "none"}
-      ]
-    }
-  ]
+  "figures": []
 }

@@ -3,66 +3,6 @@
   "term": "サブミッションポート",
   "figures": [
     {
-      "id": 1,
-      "type": "blocks",
-      "after": "### しくみ（OP25B とセットで理解する）",
-      "caption": "上の経路は 25 番で直接外へ出ようとして ISP の出口で止まり、下の経路は 587 番で認証を通った投稿だけがメールサーバから外へ届きます。",
-      "nodes": [
-        {
-          "id": "pc",
-          "label": "感染 PC\nスパムを直接送る",
-          "row": 0,
-          "col": 0,
-          "icon": "warning"
-        },
-        {
-          "id": "isp",
-          "label": "ISP の出口\n外向きの 25 番を遮断\nここで止まる",
-          "row": 0,
-          "col": 1,
-          "emphasis": true
-        },
-        {
-          "id": "user",
-          "label": "利用者のメールソフト\n正規の利用者",
-          "row": 1,
-          "col": 0,
-          "icon": "person"
-        },
-        {
-          "id": "ms",
-          "label": "メールサーバ\n587 番で認証して受付",
-          "row": 1,
-          "col": 1,
-          "icon": "server"
-        },
-        {
-          "id": "ext",
-          "label": "外部の宛先\n受信側のメールサーバ",
-          "row": 1,
-          "col": 2,
-          "icon": "mail"
-        }
-      ],
-      "edges": [
-        {
-          "from": "pc",
-          "to": "isp",
-          "label": "25 番で外へ直接送信"
-        },
-        {
-          "from": "user",
-          "to": "ms",
-          "label": "587 番＋SMTP-AUTH"
-        },
-        {
-          "from": "ms",
-          "to": "ext",
-          "label": "宛先へ配送"
-        }
-      ]
-    },
-    {
       "id": 2,
       "type": "matrix",
       "after": "### 送信者認証と送信ドメイン認証",

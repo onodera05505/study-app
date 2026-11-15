@@ -5,51 +5,52 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 既定の出口という意味",
-      "caption": "PC は宛先が同じ LAN なら直接届け、LAN の外ならデフォルトゲートウェイに渡します。設定するのはルーターの LAN 側の IP アドレスです。",
+      "after": "### なぜルーターの LAN 側の口なのか",
+      "caption": "PC と同じ LAN の側の口と、外のネットワークの側の口を左から並べました。強調した口が、PC から見た LAN の外への出口です。",
       "nodes": [
         {
           "id": "pc",
-          "label": "PC1\n宛先を見て振り分け",
+          "label": "PC\nLAN の外宛てを渡す",
           "row": 0,
-          "col": 0
+          "col": 0,
+          "icon": "device"
         },
         {
-          "id": "rt",
-          "label": "ルーター（LAN 側の口）\nデフォルトゲートウェイ",
+          "id": "in",
+          "label": "ルーターの LAN 側の口\nデフォルトゲートウェイ",
           "row": 0,
           "col": 1,
           "emphasis": true
         },
         {
-          "id": "net",
-          "label": "インターネット\nLAN の外の相手",
+          "id": "out",
+          "label": "ルーターの外側の口\n別のネットワークのアドレス",
           "row": 0,
-          "col": 2,
-          "shape": "round"
+          "col": 2
         },
         {
-          "id": "pc2",
-          "label": "PC2\n同じ LAN の相手",
-          "row": 1,
-          "col": 0
+          "id": "net",
+          "label": "LAN の外\n宛先の相手がいる",
+          "row": 0,
+          "col": 3,
+          "shape": "cloud"
         }
       ],
       "edges": [
         {
           "from": "pc",
-          "to": "rt",
-          "label": "宛先が LAN の外"
+          "to": "in",
+          "label": "宛先が LAN の外の通信"
         },
         {
-          "from": "rt",
+          "from": "in",
+          "to": "out",
+          "label": "ルーターの中で中継"
+        },
+        {
+          "from": "out",
           "to": "net",
-          "label": "外のネットワークへ中継"
-        },
-        {
-          "from": "pc",
-          "to": "pc2",
-          "label": "宛先が LAN の中なら直接"
+          "label": "外のネットワークへ送る"
         }
       ]
     }

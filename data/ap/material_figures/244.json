@@ -10,22 +10,22 @@
       "direction": "down",
       "stages": [
         {
-          "label": "リスクの特定\n潜在的な事象を洗い出す",
+          "label": "リスクの特定\n起こり得ることを一覧にする",
           "icon": "search",
-          "next_label": "洗い出したリスク"
+          "next_label": "リスクの一覧"
         },
         {
-          "label": "リスクの評価\n測って優先順位を付ける",
+          "label": "リスクの評価\n影響と起こりやすさを見積もる",
           "icon": "chart",
-          "next_label": "優先順位"
+          "next_label": "見積もった大きさ"
         },
         {
-          "label": "リスクへの対応\n実施する対策を決める",
+          "label": "リスクへの対応\n打つ手の計画を立てる",
           "icon": "document",
-          "next_label": "決めた対策"
+          "next_label": "対応の計画"
         },
         {
-          "label": "リスクの管理\n実行と効果を見張る",
+          "label": "リスクの管理\n打った手の実施と効き目を追う",
           "icon": "check",
           "emphasis": true
         }
@@ -34,7 +34,7 @@
     {
       "id": 2,
       "type": "venn",
-      "after": "### 見分けるコツ",
+      "after": "### 日常語の「リスク管理」との広さの違い",
       "caption": "外の円が日常語の「リスク管理」の広さ、内の円が規格のプロセス名「リスクの管理」の広さです。",
       "layout": "nested",
       "sets": [

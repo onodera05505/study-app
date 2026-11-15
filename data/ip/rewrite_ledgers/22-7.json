@@ -1,0 +1,86 @@
+{
+  "bundle": "22-7",
+  "shared": [
+    {"item": "端末から相手まで、途中の機器が受け取って次へ渡す中継（マルチホップ。受け持ち。201 の図 1 と 373 の図 2）", "count": 6, "holder": 201, "topics": [201, 373]},
+    {"item": "アクセスポイントを経由するインフラストラクチャモードと、AP を置かないつなぎ方の比べ（373 の図 1）", "count": 3, "holder": 373, "topics": [394, 373]},
+    {"item": "電波は離れるほど弱まり、届く範囲に限りがある", "count": 5, "holder": 394, "topics": [394, 201, 373]},
+    {"item": "ESSID はアクセスポイントに付ける名前", "count": 2, "holder": 199, "topics": [394, 199]},
+    {"item": "無線 LAN の対策（ステルス化・WPA2・MAC アドレスフィルタリング）が守るものの違い（199 の図 2）", "count": 3, "holder": 199, "topics": [394, 199]}
+  ],
+  "topics": [
+    {
+      "topic_id": 394,
+      "points": [
+        {"point": "無線 LAN はケーブルの代わりに電波を使い、アクセスポイントを通して端末をつなぐ LAN", "fate": "kept", "where": "explanation"},
+        {"point": "キーワード: 電波・アクセスポイント・Wi-Fi", "fate": "kept", "where": "explanation"},
+        {"point": "電波の届く距離には限りがある", "fate": "kept", "where": "explanation"},
+        {"point": "同じ周波数帯の機器との干渉で速度が落ちる（explanation の箇条）", "fate": "kept", "where": "explanation"},
+        {"point": "電波は周りの誰にでも届くので、勝手に使われない対策が要る（explanation の箇条）", "fate": "kept", "where": "explanation"},
+        {"point": "離れたり壁を隔てたりすると弱まり、通信できる範囲が限られる", "fate": "duplicate", "where": "explanation の 1 つ目の箇条（弱まる理由の文は ### 電波を使うと何が起きるか に残した）"},
+        {"point": "近くの別の無線 LAN や電子レンジが同じ周波数帯だと干渉し、速度が落ちたり接続が不安定になったりする", "fate": "kept", "where": "### 電波を使うと何が起きるか"},
+        {"point": "電波は周りの誰にでも届く（detail の言い直し）", "fate": "duplicate", "where": "explanation の 3 つ目の箇条"},
+        {"point": "アクセスポイントを勝手に使われる・通信を盗み見られる危険", "fate": "kept", "where": "### 電波を使うと何が起きるか"},
+        {"point": "WPA2 などの暗号化と MAC アドレスフィルタリングの対策が欠かせない", "fate": "kept", "where": "### 電波を使うと何が起きるか"},
+        {"point": "2.4GHz 帯は障害物に強く届きやすく、家電の干渉を受けやすい。5GHz 帯は障害物に弱く、干渉を受けにくい（表）", "fate": "kept", "where": "### 2.4GHz 帯と 5GHz 帯"},
+        {"point": "5GHz 帯は電子レンジなどと帯が重ならず、混雑が少なく速度も出やすい", "fate": "kept", "where": "### 2.4GHz 帯と 5GHz 帯"},
+        {"point": "多くのアクセスポイントは両方の帯に対応し、端末ごとに使い分けられる", "fate": "kept", "where": "### 2.4GHz 帯と 5GHz 帯"},
+        {"point": "Wi-Fi はメーカをまたいでつながることを業界団体が確かめて与えるブランド名", "fate": "kept", "where": "### Wi-Fi というブランド名"},
+        {"point": "ESSID はアクセスポイントに付ける名前で、端末はこの名前で接続先を選ぶ（「名前の使い分け」の箇条）", "fate": "later", "where": "199 の explanation（定義の文）"}
+      ]
+    },
+    {
+      "topic_id": 199,
+      "points": [
+        {"point": "ESSID は無線 LAN のアクセスポイントに付ける名前", "fate": "kept", "where": "explanation"},
+        {"point": "Extended Service Set Identifier の略", "fate": "kept", "where": "explanation（定義の 1 文に移した）"},
+        {"point": "ステルス化は名前を電波に載せて知らせるのをやめ、接続先一覧に表示させないこと", "fate": "kept", "where": "explanation の 1 つ目の箇条（定義の 2 文目から移した）"},
+        {"point": "キーワード: 無線 LAN・名前を隠す", "fate": "kept", "where": "explanation（キーワードの行。別の論点名の「無線 LAN」を外し、アクセスポイントの名前・ステルス化にした）"},
+        {"point": "SSID とほぼ同じ意味で使われる", "fate": "kept", "where": "explanation"},
+        {"point": "名前を手で入力すればつながるので、効果は不正接続のリスク低減", "fate": "kept", "where": "explanation"},
+        {"point": "アクセスポイントは普段 ESSID を含んだ信号を定期的に発信し、端末の一覧に名前が並ぶのはそれを受け取っているから", "fate": "kept", "where": "### ステルス化のしくみ"},
+        {"point": "ステルス化すると信号に名前を載せず一覧に出ない。接続したい人は名前を手で入力する（detail の言い直し）", "fate": "figure", "where": "199 の図 1（手順 1 と 2、手順 1 の注記「接続先の一覧に名前が出ない」）"},
+        {"point": "たまたま近くにいた第三者が名前を見つけて接続を試す機会が減る", "fate": "kept", "where": "### ステルス化のしくみ"},
+        {"point": "正規の端末が接続するやり取りを盗み見られれば名前が分かり、完全には防げない", "fate": "kept", "where": "### ステルス化のしくみ（図 1 の手順 4 も同じ点を描くが、理由の文として残した）"},
+        {"point": "効果が「低減」どまりなのはこのため（detail の言い直し）", "fate": "duplicate", "where": "explanation の 2 つ目の箇条"},
+        {"point": "混同しやすい用語: WPA2 は通信そのものを暗号化し、名前を隠しても中身は守れない", "fate": "explanation", "where": "2024r06-q70 の ア の note（WPA2 が守るのは通信の中身）と correct_reason（暗号化する機能ではない）"},
+        {"point": "混同しやすい用語: MAC アドレスフィルタリングは登録した機器以外の接続を拒み、接続してくる端末を選り分ける", "fate": "figure", "where": "199 の図 2（MAC アドレスフィルタリングの列）"}
+      ]
+    },
+    {
+      "topic_id": 201,
+      "points": [
+        {"point": "マルチホップは IoT デバイス同士が無線通信を中継し合い、バケツリレーのように広い範囲の通信を実現する技術", "fate": "kept", "where": "explanation"},
+        {"point": "キーワード: 中継・リレー・広範囲", "fate": "kept", "where": "explanation"},
+        {"point": "目的は電波を遠くまで届かせること", "fate": "kept", "where": "explanation"},
+        {"point": "広い農地や工場にセンサーを多数置く場面で使われる（explanation と detail の 2 か所）", "fate": "kept", "where": "explanation の 2 つ目の箇条（IoT エリアネットワークと合わせて 1 か所に）"},
+        {"point": "IoT 機器どうしをつなぐ近距離のネットワーク（IoT エリアネットワーク）で使われる（detail の言い直し）", "fate": "duplicate", "where": "explanation の 2 つ目の箇条"},
+        {"point": "電波は離れるほど弱くなり、ある所から先には届かない", "fate": "prior", "where": "394（### 電波を使うと何が起きるか）。201 は [[無線LAN]] を文で指す。図 1 の箱「電波は隣までしか届かない」も同じ点"},
+        {"point": "届く範囲の別のデバイスに受け取ってもらい、次へ渡す中継を繰り返す", "fate": "kept", "where": "### バケツリレーで届かせるしくみ（図 1 が流れを描く）"},
+        {"point": "一区間ずつの受け渡しをホップと呼び、重ねるのでマルチホップ", "fate": "kept", "where": "### バケツリレーで届かせるしくみ"},
+        {"point": "網目状につなげば、途中の 1 台が止まっても別の経路で迂回できる", "fate": "kept", "where": "### バケツリレーで届かせるしくみ"},
+        {"point": "混同しやすい用語: キャリアアグリゲーションは複数の周波数帯を束ねて速度を上げる技術で、目的が高速化", "fate": "explanation", "where": "2024r06-q84 の ウ の note「目的は高速化で、届く範囲を広げることではありません」と correct_reason「速度を上げる技術ではなく」"},
+        {"point": "混同しやすい用語: LPWA は消費電力を抑えて遠くまで届かせる無線通信の規格。マルチホップは中継のやり方を指す", "fate": "aside", "where": "紐づく過去問の選択肢に無く解き直しに要らない。LPWA は学ぶ順で後のまとまり 8 の論点 200 で、前の論点の混同の節に後の論点の語を入れない"}
+      ]
+    },
+    {
+      "topic_id": 373,
+      "points": [
+        {"point": "アドホックネットワークは、アクセスポイントなどの中継設備を使わず端末同士が直接つながる無線ネットワーク", "fate": "kept", "where": "explanation"},
+        {"point": "キーワード: アクセスポイント不要・端末同士", "fate": "kept", "where": "explanation"},
+        {"point": "AP を中心に置き、すべての端末が AP を経由する一般的な形はインフラストラクチャモード（explanation の箇条と detail の文章）", "fate": "explanation", "where": "2022r04-q62 の correct_reason（インフラストラクチャモードの名前。AP を経由する形は 373 の図 1 の上の段）"},
+        {"point": "AP を置かず、端末同士が直接電波を飛ばし合う（detail の言い直し）", "fate": "figure", "where": "373 の図 1（下の段の「相手と直接つながる」と線「AP を置かず直接の電波」）"},
+        {"point": "端末同士が対等につながる", "fate": "kept", "where": "### アクセスポイントを置かないつなぎ方"},
+        {"point": "機器を設置しておく必要がないので、災害現場など臨時のネットワークに向く", "fate": "kept", "where": "explanation"},
+        {"point": "災害で設備が壊れた現場、屋外での一時的な機器同士の通信という例", "fate": "kept", "where": "### アクセスポイントを置かないつなぎ方"},
+        {"point": "「アドホック」はもともと「その場かぎりの」という意味", "fate": "kept", "where": "### アクセスポイントを置かないつなぎ方"},
+        {"point": "電波が届かない相手へは、間の端末が中継役になるマルチホップで運ぶ", "fate": "kept", "where": "explanation（受け持ちの 201 を [[マルチホップ]] で指す 1 文）"},
+        {"point": "中継のしくみ（バケツリレー式にデータを運ぶ。detail の文章と図 2）", "fate": "owner", "where": "201"},
+        {"point": "マルチホップは多数の小型センサ機器をつなぐ IoT エリアネットワークでも使われる", "fate": "owner", "where": "201"},
+        {"point": "中継役は専用の機器でなく端末（図 2 の caption）", "fate": "kept", "where": "explanation の 2 つ目の箇条（「間の端末が受け取って次へ渡す」）"}
+      ],
+      "removed_figures": [
+        {"figure_id": 2, "caption": "A から D へは電波が届かないので、間にいる端末 B と C がデータを受け取って次へ渡します。中継役は専用の機器でなく端末です。", "kept": {"topic_id": 201, "figure_id": 1}}
+      ]
+    }
+  ]
+}

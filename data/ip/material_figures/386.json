@@ -5,19 +5,19 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 守る区間の違い",
-      "caption": "暗号化には守る範囲があります。SSL/TLS が守るのは、ブラウザと Web サーバの間の全経路です。",
+      "after": "explanation",
+      "caption": "SSL/TLS が暗号化で守る範囲を表した図です。両端のブラウザと Web サーバの間で暗号化するので、途中の機器と回線では中身を読めません。",
       "nodes": [
         {
-          "id": "pc",
-          "label": "端末のブラウザ\nPC・スマホ",
+          "id": "b",
+          "label": "ブラウザ\n通信の片方の端",
           "row": 0,
           "col": 0,
           "emphasis": true
         },
         {
-          "id": "ap",
-          "label": "無線 LAN\nアクセスポイント",
+          "id": "mid",
+          "label": "途中の機器と回線\n無線・ルータ・プロバイダ",
           "row": 0,
           "col": 1
         },
@@ -31,22 +31,21 @@
       ],
       "edges": [
         {
-          "from": "pc",
-          "to": "ap",
-          "label": "WPA2 が守るのはここだけ",
+          "from": "b",
+          "to": "mid",
+          "label": "暗号文のまま通る",
           "arrow": "both"
         },
         {
-          "from": "ap",
+          "from": "mid",
           "to": "web",
-          "label": "インターネット（WPA2 の対象外）",
-          "arrow": "both",
-          "style": "dashed"
+          "label": "暗号文のまま通る",
+          "arrow": "both"
         },
         {
-          "from": "pc",
+          "from": "b",
           "to": "web",
-          "label": "SSL/TLS が守る区間",
+          "label": "SSL/TLS が守る区間（両端の間）",
           "arrow": "both"
         }
       ]
@@ -54,7 +53,7 @@
     {
       "id": 2,
       "type": "sequence",
-      "after": "### しくみとサーバ証明書",
+      "after": "### サーバ証明書で接続先を確かめる",
       "caption": "上から順に進みます。暗号化の鍵を共有する前に、サーバ証明書で接続先が本物かを確かめます。",
       "actors": [
         {

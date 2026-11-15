@@ -1,0 +1,90 @@
+{
+  "bundle": "09-9",
+  "shared": [
+    {"item": "NoSQL の 4 つの型（キーバリュー・ドキュメント指向・列指向・グラフ）の比較表", "count": 3, "holder": 143, "topics": [143, 353, 521]},
+    {"item": "表の構造を先に決める関係データベースと、構造を固定しない NoSQL の違い", "count": 4, "holder": 143, "topics": [143, 353, 144, 521]},
+    {"item": "各型の代表製品（Redis・MongoDB・CouchDB・Cassandra・HBase・Neo4j）", "count": 3, "holder": 143, "topics": [143, 353, 144]}
+  ],
+  "topics": [
+    {
+      "topic_id": 143,
+      "points": [
+        {"point": "NoSQL は関係データベースの固定された表形式にとらわれない設計のデータベースの総称", "fate": "kept", "where": "explanation"},
+        {"point": "ビッグデータの基盤技術として使われる", "fate": "kept", "where": "explanation"},
+        {"point": "代表的な型はキーバリュー型・ドキュメント指向型・列指向（ワイドカラム）型・グラフ型の 4 つ", "fate": "kept", "where": "explanation"},
+        {"point": "キーバリュー型は形式を問わない値を 1 つのキーに対応付けて管理する最も単純な型", "fate": "kept", "where": "explanation"},
+        {"point": "列の構成を先に決めなくてよいので、形式のそろわないデータを大量に扱うのに向く", "fate": "kept", "where": "explanation"},
+        {"point": "4 つの型の格納の形・向く用途・代表例（Redis・MongoDB・Cassandra・Neo4j）の表", "fate": "kept", "where": "### 4つの型"},
+        {"point": "キーバリュー型は値の中身を問わず形式のそろわないデータを入れられる最も単純な構造（detail の言い直し）", "fate": "duplicate", "where": "explanation の箇条"},
+        {"point": "ドキュメント指向型は構造を持つ文書を 1 件として格納し、文書ごとに項目が違ってよい（表の言い直し）", "fate": "duplicate", "where": "### 4つの型 の表"},
+        {"point": "CouchDB もドキュメント指向型の代表", "fate": "kept", "where": "### 4つの型"},
+        {"point": "関係データベースは表の構造を先に決め、結合と厳密な整合性を重視する", "fate": "figure", "where": "143 の図 1"},
+        {"point": "NoSQL は制約を緩める代わりに、サーバを増やして負荷を分ける水平分散のしやすさを取る", "fate": "figure", "where": "143 の図 1"},
+        {"point": "更新のたびに全体を厳密に一致させず、いずれ整合すればよい考え方を採るものが多い", "fate": "kept", "where": "### 関係データベースとの違い（結果整合性の説明は CAP定理 444 を指す 1 文）"},
+        {"point": "量が多く形式の定まらないログやセンサーデータの蓄積に向く", "fate": "kept", "where": "### 関係データベースとの違い"},
+        {"point": "キーに値を対応付ける・文書をそのまま入れる記述が NoSQL の目印（問われ方の文）", "fate": "duplicate", "where": "explanation の箇条と ### 4つの型 の表"},
+        {"point": "列指向型は HBase も代表、ドキュメント型の格納は階層をもつ文書（JSON・XML）、列指向は 1 つのキーに複数の列、キーバリューは 1 つのキーに 1 つの値（353・144・521 から受け持ちとして寄せた点）", "fate": "kept", "where": "### 4つの型"}
+      ]
+    },
+    {
+      "topic_id": 353,
+      "points": [
+        {"point": "ドキュメント指向データベースは JSON や XML のような階層をもつドキュメントを事前のスキーマ定義なしにそのままの単位で格納できる NoSQL", "fate": "kept", "where": "explanation"},
+        {"point": "別名ドキュメントデータベース", "fate": "kept", "where": "explanation"},
+        {"point": "レコードごとに項目数や項目名が違ってよく、後から現れる項目にもそのまま対応できる", "fate": "kept", "where": "explanation"},
+        {"point": "項目を列として定義しないので、検索に使うキーをあらかじめ固定しなくても格納できる", "fate": "kept", "where": "explanation"},
+        {"point": "代表的な製品は MongoDB や Apache CouchDB", "fate": "owner", "where": "143"},
+        {"point": "関係データベース以外のデータベースの総称が NoSQL で、データの持ち方で分類される", "fate": "owner", "where": "143"},
+        {"point": "NoSQL の主な種類の表（ドキュメント型・キーバリュー型・グラフ型・列指向型の格納の単位と代表製品）", "fate": "owner", "where": "143"},
+        {"point": "取得元ごとに項目名や項目数が異なり今後の項目も予測できないなら、ドキュメント型を選ぶ", "fate": "kept", "where": "### スキーマレスが効く場面"},
+        {"point": "複数の外部サービスから取得したデータを蓄積する場面（例）", "fate": "kept", "where": "### スキーマレスが効く場面"},
+        {"point": "関係データベースでは項目名を列として先に定義し、新しい項目が現れるたびに表の定義変更が要る", "fate": "figure", "where": "353 の図 1（列を先に定義する所は 143 の図 1）"},
+        {"point": "ドキュメント型なら項目構成の違いを区別せずデータ 1 件をそのまま格納できる", "fate": "kept", "where": "### スキーマレスが効く場面"},
+        {"point": "検索に使うキーをあらかじめ絞る必要もない（detail の言い直し）", "fate": "duplicate", "where": "explanation の箇条"},
+        {"point": "スキーマを固定しない性質が選択の決め手（原則の言い直し）", "fate": "duplicate", "where": "### スキーマレスが効く場面"},
+        {"point": "項目が安定していて結合や整合性の制約が要る業務データでは関係データベースが適する", "fate": "figure", "where": "353 の図 1"}
+      ]
+    },
+    {
+      "topic_id": 144,
+      "points": [
+        {"point": "列指向データベースは行ごとに任意の数の列を持て、1 つの列に複数の値も持てる NoSQL のデータモデル", "fate": "kept", "where": "explanation"},
+        {"point": "別名ワイドカラム型", "fate": "kept", "where": "explanation"},
+        {"point": "列の構成を先に固定しないので、形式のそろわないデータをそのまま追加できる", "fate": "kept", "where": "explanation"},
+        {"point": "大量の IoT 機器やログのように、行ごとに項目が変わるデータの受け皿", "fate": "kept", "where": "explanation"},
+        {"point": "関連する列は列ファミリというまとまりで束ね、その単位で読み書きする", "fate": "kept", "where": "explanation"},
+        {"point": "関係データベースはすべての行が同じ列を持つ", "fate": "kept", "where": "### 行ごとに列が違ってよい"},
+        {"point": "関係データベースは表を作る時点で列の名前と型を決める", "fate": "owner", "where": "143"},
+        {"point": "ワイドカラム型は列の集合を行ごとに変えられ、1 つの列に複数の値を持てる（detail の言い直し）", "fate": "duplicate", "where": "explanation"},
+        {"point": "項目が機器や時期で変わっても、表の定義を作り直さずに格納できる", "fate": "kept", "where": "### 行ごとに列が違ってよい"},
+        {"point": "行キーと列ファミリの組で目的の値に辿り着く", "fate": "figure", "where": "144 の図 1"},
+        {"point": "読み書きは必要な列ファミリの範囲だけで済むので、行ごとに列の顔ぶれが違っても、列数が非常に多くても扱える", "fate": "kept", "where": "### 列ファミリという単位"},
+        {"point": "代表的な製品は Apache Cassandra や HBase", "fate": "owner", "where": "143"},
+        {"point": "「列指向」は集計を速くするために値を列ごとに並べて保存する方式（列指向ストア）を指すこともある", "fate": "kept", "where": "### 混同しやすい用語"},
+        {"point": "問われているのはワイドカラム型の側（問われ方の文）", "fate": "duplicate", "where": "### 混同しやすい用語（ワイドカラム型とは別の物）"},
+        {"point": "ドキュメント指向は 1 件を文書として丸ごと格納し入れ子が得意、ワイドカラムは列の単位を保ち列を名指しした読み書きに向く", "fate": "kept", "where": "### 混同しやすい用語"}
+      ]
+    },
+    {
+      "topic_id": 521,
+      "points": [
+        {"point": "グラフデータベースはデータを点と線の関係として表す NoSQL", "fate": "kept", "where": "explanation"},
+        {"point": "ノード・リレーション・プロパティの 3 つで構成される", "fate": "kept", "where": "explanation"},
+        {"point": "別名グラフ指向データベース", "fate": "kept", "where": "explanation"},
+        {"point": "ノードをリレーションでつないで構造化し、ノードにもリレーションにもプロパティを持たせられる", "fate": "kept", "where": "explanation"},
+        {"point": "強みはつながりをたどる検索で、SNS の交友関係・経路探索・推薦に向く", "fate": "kept", "where": "explanation"},
+        {"point": "表を結合して関係をたどる関係データベースとはデータの持ち方が違う", "fate": "kept", "where": "explanation"},
+        {"point": "ノードは実体、リレーションはノードどうしの関係、プロパティは両者に付ける属性", "fate": "figure", "where": "521 の図 1"},
+        {"point": "関係データベースは人と人のつながりを中間の表で表し、たどるたびに結合が要る", "fate": "kept", "where": "### 向いている処理"},
+        {"point": "グラフ指向は関係そのものを 1 本の線として保持し、何段たどっても結合を繰り返さない", "fate": "kept", "where": "### 向いている処理"},
+        {"point": "リレーションには向きと種類があり、強さや日付のプロパティも付けられる", "fate": "kept", "where": "### 3つの構成要素"},
+        {"point": "NoSQL の 4 つの型の表（データの持ち方・向く処理）", "fate": "owner", "where": "143"},
+        {"point": "4 種類とも表の結合を前提としない点は共通", "fate": "kept", "where": "### 3つの構成要素"},
+        {"point": "グラフ指向型だけはつながりそのものを 1 件のデータとして持つ", "fate": "kept", "where": "### 3つの構成要素"},
+        {"point": "友人の友人・最短経路・つながりの近い商品の推薦は、いずれも関係を何段もたどる", "fate": "kept", "where": "### 向いている処理"},
+        {"point": "関係データベースは段数だけ結合が増えて急に遅くなり、グラフ指向は段数が増えても負荷が跳ね上がらない（つながりの深い問合せが速い）", "fate": "figure", "where": "521 の図 2"},
+        {"point": "全件の合計を取るような集計は苦手で、列指向型や関係データベースの役目", "fate": "kept", "where": "### 向いている処理"}
+      ]
+    }
+  ]
+}

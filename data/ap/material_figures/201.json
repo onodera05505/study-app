@@ -5,7 +5,7 @@
     {
       "id": 1,
       "type": "matrix",
-      "after": "### しくみ",
+      "after": "### ファイアウォール・IPS との違い",
       "caption": "3 つの守りを、見るものと止められる攻撃で並べます。WAF の行だけが HTTP の中身を見て Web アプリへの攻撃を止めます。",
       "x": {
         "label": "観点",
@@ -50,32 +50,32 @@
     {
       "id": 2,
       "type": "blocks",
-      "after": "### 設置場所",
-      "caption": "線の名前で暗号の区間と平文の区間を見分けます。WAF は復号された後、Web サーバの手前の平文の区間に置きます。",
+      "after": "### 置き場所の決め方",
+      "caption": "線の名前で、暗号文が流れる区間と平文が流れる区間を見分けます。強調した WAF の前後の線が、どちらの区間かを読みます。",
       "nodes": [
         {
           "id": "u",
-          "label": "利用者\nブラウザから送る",
+          "label": "利用者\nブラウザで注文する",
           "row": 0,
           "col": 0,
           "icon": "person"
         },
         {
-          "id": "ssl",
-          "label": "SSL アクセラレータ\nTLS の暗号を復号する",
+          "id": "lb",
+          "label": "ロードバランサ\nTLS の暗号を復号する",
           "row": 0,
           "col": 1
         },
         {
           "id": "waf",
-          "label": "WAF\n平文なので中身を検査できる",
+          "label": "WAF\n平文の中身を検査する",
           "row": 0,
           "col": 2,
           "emphasis": true
         },
         {
-          "id": "web",
-          "label": "Web サーバ\nアプリが処理する",
+          "id": "ap",
+          "label": "EC サイトの AP サーバ\n注文を処理する",
           "row": 0,
           "col": 3,
           "icon": "server"
@@ -84,18 +84,18 @@
       "edges": [
         {
           "from": "u",
-          "to": "ssl",
-          "label": "HTTPS\n（暗号化）"
+          "to": "lb",
+          "label": "HTTPS\n（暗号文）"
         },
         {
-          "from": "ssl",
+          "from": "lb",
           "to": "waf",
           "label": "HTTP\n（平文）"
         },
         {
           "from": "waf",
-          "to": "web",
-          "label": "検査済みの\nリクエスト"
+          "to": "ap",
+          "label": "検査を通った\nリクエスト"
         }
       ]
     }

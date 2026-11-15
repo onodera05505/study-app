@@ -1,26 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="250" viewBox="0 0 706.8 276">
-<rect x="0.5" y="0.5" width="705.8" height="275" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(20 20)">
-<path d="M 184 0 L 394.8 0 L 418.53 56 L 160.27 56 Z" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="289.4" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">1 次キャッシュ</text>
-<text x="289.4" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">SRAM・最も速く最も小さい</text>
-<line x1="410.66" y1="28" x2="504.8" y2="28" stroke="#6b7280" stroke-width="0.8"/>
-<text x="510.8" y="32.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="start">CPU が最初に探す</text>
-<path d="M 158.58 60 L 420.22 60 L 443.95 116 L 134.85 116 Z" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="289.4" y="82.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">2 次キャッシュ</text>
-<text x="289.4" y="102.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">SRAM・1 次より大きい</text>
-<line x1="436.09" y1="88" x2="504.8" y2="88" stroke="#6b7280" stroke-width="0.8"/>
-<text x="510.8" y="92.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="start">1 次に無ければ探す</text>
-<path d="M 133.15 120 L 445.65 120 L 469.38 176 L 109.42 176 Z" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="289.4" y="142.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">主記憶</text>
-<text x="289.4" y="162.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">DRAM</text>
-<line x1="461.51" y1="148" x2="504.8" y2="148" stroke="#6b7280" stroke-width="0.8"/>
-<text x="510.8" y="152.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="start">キャッシュに無ければ探す</text>
-<path d="M 107.73 180 L 471.07 180 L 494.8 236 L 84 236 Z" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="289.4" y="202.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">補助記憶</text>
-<text x="289.4" y="222.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">SSD・HDD・最も遅く大容量</text>
-<line x1="486.94" y1="208" x2="504.8" y2="208" stroke="#6b7280" stroke-width="0.8"/>
-<text x="510.8" y="212.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="start">主記憶に無ければ読み込む元</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="276" viewBox="0 0 640 276">
+<rect x="0.5" y="0.5" width="639" height="275" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(37.8 20)">
+<path d="M 184 0 L 350 0 L 373.73 56 L 160.27 56 Z" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="267" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">1 次キャッシュ</text>
+<text x="267" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">最も速く最も小さい</text>
+<line x1="365.86" y1="28" x2="460" y2="28" stroke="#6b7280" stroke-width="0.8"/>
+<text x="466" y="32.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="start">CPU に最も近い</text>
+<path d="M 158.58 60 L 375.42 60 L 399.15 116 L 134.85 116 Z" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="267" y="82.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">2 次キャッシュ</text>
+<text x="267" y="102.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">1 次より大きく少し遅い</text>
+<line x1="391.29" y1="88" x2="460" y2="88" stroke="#6b7280" stroke-width="0.8"/>
+<text x="466" y="92.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="start">1 次の外側</text>
+<path d="M 133.15 120 L 400.85 120 L 424.58 176 L 109.42 176 Z" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="267" y="142.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">主記憶</text>
+<text x="267" y="162.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">キャッシュより大きく遅い</text>
+<line x1="416.71" y1="148" x2="460" y2="148" stroke="#6b7280" stroke-width="0.8"/>
+<text x="466" y="152.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="start">キャッシュの外側</text>
+<path d="M 107.73 180 L 426.27 180 L 450 236 L 84 236 Z" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="267" y="202.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">補助記憶</text>
+<text x="267" y="222.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">最も遅く最も大きい</text>
+<line x1="442.14" y1="208" x2="460" y2="208" stroke="#6b7280" stroke-width="0.8"/>
+<text x="466" y="212.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="start">CPU から最も遠い</text>
 <path d="M 80 2 H 74 V 114 H 80" fill="none" stroke="#1f2937" stroke-width="1.2"/>
 <text x="68" y="54.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="end">キャッシュ</text>
 <text x="68" y="70.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="end">メモリ</text>
