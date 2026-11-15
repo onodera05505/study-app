@@ -194,7 +194,7 @@ Agent ツールの `subagent_type` に型の名前を渡す。型に無い臨時
 - `scripts/prompts/write_question_explanations.md` — 問題解説（誤答の note は用語ポップに流用される）
 - `scripts/prompts/material_figures_spec.md` — 教材の図の仕様 JSON（caption・after・4 つの型）
 - `scripts/prompts/unit_plan.md` — 単元の構成（全体像・まとまり・学ぶ順・受け持ち・前提）
-- `scripts/prompts/rewrite_materials_by_group.md` — 教材をまとまりごとに書き直す（教材 1 本の基準と中身の型ごとの書き分け。続く段は `rewrite_unit_crosscheck.md` 単元の突き合わせ → `rewrite_figures_review.md` 図の見直し → `rewrite_text_followup.md` 図を指す文の後追い。学習者役は `rewrite_unit_learner.md`）
+- `scripts/prompts/rewrite_materials_by_group.md` — 教材をまとまりごとに書き直す（教材 1 本の基準と中身の型ごとの書き分け。続く段は `rewrite_unit_crosscheck.md` 単元の突き合わせ → `rewrite_figures_review.md` 図の見直し → `rewrite_text_followup.md` 図を指す文の後追い → `rewrite_open_items.md` 前の段が直さずに返した申告の消化。学習者役は `rewrite_unit_learner.md`）
 - `scripts/prompts/self_review.md` / `self_fix.md` / `self_fix_shikaku.md` / `self_crosscheck.md` — 読み直し（セルフフィードバック）の 4 段
 - ロードマップ型は `scripts/prompts/roadmap_*.md` をテンプレートに `render_prompts.py` が `data/<対象>/prompts/` へ描出する
 
