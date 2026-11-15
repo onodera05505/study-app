@@ -99,6 +99,7 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 | **残作業の台帳の一括消化**（OQ・DEFERRED・baseline を 5 分類 19 束に仕分け、仕様 31 本を承認 → テスト∥実装 → 審査 2 巡。baseline 19→0。教材の門 GOAL-10 は収束せず草案で止めた。本番の移行 0008 と配備は本人待ち） | [`docs/作業ログ_2026-11-06_台帳の一括消化.md`](docs/作業ログ_2026-11-06_台帳の一括消化.md) |
 | **利用者のフィードバックから画面・名前・教材を整え、全部の学びを本番に出した記録**（副題・階層の道筋・理解度の記号・ヘッダー、「キーワード」、203 単位の名前の分割、eng の面接の枠組みの撤去、配備の手順の欠陥と不安定なテスト 2 本。指示に決まりを直書きして単調になった再発） | [`docs/作業ログ_2026-11-09_フィードバックと画面の整理.md`](docs/作業ログ_2026-11-09_フィードバックと画面の整理.md) |
 | **図を付ける判断基準を「理解しやすいか」に置き、型を 4 → 10 に広げ、7 学びを再選定して ecl に図 42 枚を描いた記録**（Clark & Lyons × Mayer の基準、REQ-438・440、門の文言は表に・必須は全部エラーの行に、段で分けた費用の計画 A〜E と残り） | [`docs/作業ログ_2026-11-14_図の判断基準と10型.md`](docs/作業ログ_2026-11-14_図の判断基準と10型.md) |
+| **教材をまとまりごとに書き直し、一覧をシラバスの階層に、理解度を回答からの判定にして ip・ap を本番に出した記録**（様式の調査 → 基準 → 単元の構成 → 書き直し ip 122 束・ap 179 束 → 単元の突き合わせ → 図の見直し → 図を指す文の後追い → 受入 5 回。束の継ぎ目が最後まで残った・本文と図は段を決めて順に直す・測る物の世代を先に確かめる。画面は本人の確認待ち） | [`docs/作業ログ_2026-11-15_テキスト最適化.md`](docs/作業ログ_2026-11-15_テキスト最適化.md) |
 | **原本 harness への移行の棚卸し**（docs-migrate Phase 0。文書ごとの分類と処遇、実体と状態値、矛盾。本人の答えは `OPEN-QUESTIONS.md`） | [`docs/INVENTORY.md`](docs/INVENTORY.md) |
 | attic: 旧の要件の正本 `spec.yaml`（REQ は `docs/goals/**/REQ-nnn.md` に移った。旧パスは退役の印だけ） | [`docs/attic/spec.yaml`](docs/attic/spec.yaml) / [`docs/spec.yaml`](docs/spec.yaml) |
 | attic: 旧のユースケースの書類 UC-001〜019（UC は `docs/goals/<GOAL>/<UC>/UC.md` に移った。旧パスは退役の印だけ） | [`docs/attic/usecases/`](docs/attic/usecases/) / [`docs/usecases/`](docs/usecases/) |
@@ -107,7 +108,7 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 ## 現在地（2026-11-02 に数値を現物と照合済み）
 
 - 公開されている **29回のうち11回・1,100問**を取り込み済み（38%）
-- 論点 532件、うち全件に教材（解説・周辺知識）あり。**全件が v2（2026-08-24 に書き直し済み）**
+- 論点 532件、うち全件に教材（解説・周辺知識）あり。**教材は単元のまとまりごとに書き直した世代（`data/ip/materials_v4`。2026-11-15。応用情報も同じ）**。一覧はシラバスの階層 → まとまり → 学ぶ順（`data/<対象>/unit_plans/`）で、出題頻度は ★ の 3 段の印、理解度は過去問への回答の履歴から判定する（`docs/作業ログ_2026-11-15_テキスト最適化.md`。fe は書き直していない）
 - **Cloudflare は個人アカウント**（2026-09-15 に社用から移した。account_id・Pages 名・URL・合言葉は `scripts/pages_projects.json`。別アカウントでログインしていると wrangler と各スクリプトが止まる）
 - 入口「まなびば」（**認証と権限の正本**。学びの一覧・ログイン・管理。`portal/`、`scripts/deploy_portal.sh`。要件 §15）: **https://manabiba-5oz.pages.dev**。学び側はここからのログインだけ受ける（v0.8、2026-09-17）
 - 本番稼働中: **https://itpass-study-d02.pages.dev**
@@ -192,6 +193,8 @@ Agent ツールの `subagent_type` に型の名前を渡す。型に無い臨時
 - `scripts/prompts/write_materials.md` — 教材を書く
 - `scripts/prompts/write_question_explanations.md` — 問題解説（誤答の note は用語ポップに流用される）
 - `scripts/prompts/material_figures_spec.md` — 教材の図の仕様 JSON（caption・after・4 つの型）
+- `scripts/prompts/unit_plan.md` — 単元の構成（全体像・まとまり・学ぶ順・受け持ち・前提）
+- `scripts/prompts/rewrite_materials_by_group.md` — 教材をまとまりごとに書き直す（教材 1 本の基準と中身の型ごとの書き分け。続く段は `rewrite_unit_crosscheck.md` 単元の突き合わせ → `rewrite_figures_review.md` 図の見直し → `rewrite_text_followup.md` 図を指す文の後追い。学習者役は `rewrite_unit_learner.md`）
 - `scripts/prompts/self_review.md` / `self_fix.md` / `self_fix_shikaku.md` / `self_crosscheck.md` — 読み直し（セルフフィードバック）の 4 段
 - ロードマップ型は `scripts/prompts/roadmap_*.md` をテンプレートに `render_prompts.py` が `data/<対象>/prompts/` へ描出する
 
