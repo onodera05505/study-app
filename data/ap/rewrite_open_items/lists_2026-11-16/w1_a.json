@@ -1,0 +1,108 @@
+{
+ "target": "ap",
+ "units": [
+  "01"
+ ],
+ "items": [
+  {
+   "no": 135,
+   "unit": "01",
+   "topic_id": 59,
+   "figure": null,
+   "source": "acceptance",
+   "kind": "ledger_where",
+   "what": "点の台帳の where が、今は点の無い所を指す行がある",
+   "related": []
+  },
+  {
+   "no": 0,
+   "unit": "01",
+   "topic_id": 62,
+   "figure": 1,
+   "source": "figures_review",
+   "kind": "text_followup",
+   "what": "図は直した。本文の explanation の要点「検査式 c0・c1・c2 から誤り位置を求める i＝c0＋c1×2＋c2×4」と次の箇条「i の位置のビットを反転」は 2024r06h-q4 の記号のままで、図の語（検査式 1〜3・重みの和）とずれる。本文の側で記号を揃えるか、図の検査式 1〜3 との対応を言うかを本文の後追いで決める",
+   "related": []
+  },
+  {
+   "no": 5,
+   "unit": "01",
+   "topic_id": 62,
+   "figure": 1,
+   "source": "text_followup",
+   "kind": "term",
+   "what": "本文（explanation の要点 2 項目と ### 計算の解き方）は検査式を c0・c1・c2、誤り位置を i と呼び、図 1 は 検査式 1〜3・1 になった式の重みの和 と呼ぶ。本文の記号に揃えるか、図に本文の記号との対応を添えるか（図の側なら figure）を本人に諮る",
+   "related": []
+  },
+  {
+   "no": 1,
+   "unit": "01",
+   "topic_id": 63,
+   "figure": 3,
+   "source": "figures_review",
+   "kind": "text_followup",
+   "what": "比較の図を 61 の図 2 へ移した。本文の側の直しが要る: 63 の「### 誤り検出・訂正の 3 方式の比較」の節（図が無くなり、学ぶ順で後の [[ハミング符号]]・[[CRC]] を比べる文が残る）、62 の「### 誤り位置が分かるしくみ」の「比べた表は、[[パリティチェック]]にあります」、61 の「### 割り算の向きと検出の範囲」の「比較は、[[パリティチェック]]にあります」（比較は 61 自身が持つようになった）。台帳 01-7 の 62・61 の fate owner（where 63）の比較の行と shared の holder 63 も、本文を直すときに合わせる",
+   "related": [
+    61,
+    62
+   ]
+  },
+  {
+   "no": 3,
+   "unit": "01",
+   "topic_id": 63,
+   "figure": 3,
+   "source": "figures_review",
+   "kind": "unit_plan",
+   "what": "単元の構成 data/ap/unit_plans/01.json の owners「誤り検出・訂正の方式の比較（パリティ・ハミング符号・CRC の検出と訂正）」owner 63 は比較で、受け持ちに置かない決まり（write_materials.md「他の論点との分担」）と合わない。比較は学ぶ順で最後の CRC（61）が持つ",
+   "related": [
+    61
+   ]
+  },
+  {
+   "no": 6,
+   "unit": "01",
+   "topic_id": 63,
+   "figure": 3,
+   "source": "text_followup",
+   "kind": "unit_plan",
+   "what": "比較の図が 63 から 61 の図 2 へ移った（3 つ以上を並べる比較は学ぶ順で最後の 61 が持つ）が、単元の構成の owners の『誤り検出・訂正の方式の比較』は owner 63 のまま。63 の ### 誤り検出・訂正の 3 方式の比較 は図が無くなり、学ぶ順で後の [[ハミング符号]]・[[CRC]] を比べる文だけが残る（見出しの名前・節の構成は変えられない）。台帳 data/ap/rewrite_ledgers/01-7.json の 62『検査ビット 1 つのパリティは…（方式の比較）』・61『パリティチェックが…CRC は複数ビットの誤りを検出できる』の fate owner（where 63）と、shared の比較の行の holder 63 も、比較の置き場（61）と合わない",
+   "related": [
+    61,
+    62
+   ]
+  },
+  {
+   "no": 2,
+   "unit": "01",
+   "topic_id": 66,
+   "figure": 1,
+   "source": "figures_review",
+   "kind": "text_followup",
+   "what": "移した図（66 の図 1）と 66 の本文「### 4つのセンサーの守備範囲」の表が、LiDAR の霧での減衰・超音波の届く距離の点で重なる（1 つの点は 1 か所で言う）。図に寄せるか表の行を整理するかを本文の後追いで決める。340 の「### 飛ばすものによる違い」は図が無くなったが文だけで LiDAR の側を言えている",
+   "related": [
+    340
+   ]
+  },
+  {
+   "no": 4,
+   "unit": "01",
+   "topic_id": 66,
+   "figure": 1,
+   "source": "text_followup",
+   "kind": "duplicate",
+   "what": "66 の ### 4つのセンサーの守備範囲 の表（LiDAR の苦手＝霧や雪での減衰、超音波の苦手＝数十メートル以上）と、### 天候に強い・弱いの理由 の図 1（LiDAR の弱み＝雨や霧で散乱、超音波の弱み＝数メートル程度）が同じ点をなぞる。図に寄せるか表の行を整理するかを本人に諮る",
+   "related": []
+  },
+  {
+   "no": 136,
+   "unit": "01",
+   "topic_id": 508,
+   "figure": null,
+   "source": "acceptance",
+   "kind": "ledger_where",
+   "what": "点の台帳の where が、今は点の無い所を指す行がある",
+   "related": []
+  }
+ ]
+}

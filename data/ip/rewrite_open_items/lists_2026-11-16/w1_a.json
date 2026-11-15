@@ -1,0 +1,60 @@
+{
+ "target": "ip",
+ "units": [
+  "04"
+ ],
+ "items": [
+  {
+   "no": 84,
+   "unit": "04",
+   "topic_id": 16,
+   "figure": 1,
+   "source": "figures_review",
+   "kind": "text_followup",
+   "what": "本文へ戻す申告。台帳 data/ip/rewrite_ledgers/04-3.json の論点 16 の point「計画策定の段階で、適用できそうかを見極める概念検証を行う（ここが PoC）」「先行導入の段階で部門や業務を絞って導入し、効果を実測する」（と、本格導入で全社へ広げ定着させる準備をすること）は 2024r06-q23 の正解の根拠で、本文の「### 導入の段階の中での位置」は「計画策定・先行導入・本格導入の 3 段階で入れるとき、各段階で行う作業は図のとおりです」と図だけに任せている。本文にこの段ごとの作業を戻したうえで、止めた図の直し（段を過去問の 3 段と a〜c の言い換えから、構想→PoC（強調）→本開発・導入 の定義の段に替え、caption を図の読み方に）を次の回で行う",
+   "related": [
+    23
+   ]
+  },
+  {
+   "no": 85,
+   "unit": "04",
+   "topic_id": 16,
+   "figure": 1,
+   "source": "figures_review",
+   "kind": "text_followup",
+   "what": "data/ip/materials_v4/04-3.json の論点 16 の detail『### 導入の段階の中での位置』の導入文「新しいソフトウェアを計画策定・先行導入・本格導入の 3 段階で入れるとき、各段階で行う作業は図のとおりです。」が、直した図（着想→PoC→本格的な開発）と食い違う。図を指す文を外すか、図が表す PoC の位置（本格的な開発の前の段）を導く 1 文に替える本文の直しが要る（3 段の箇条は本文の点として残してよい）",
+   "related": []
+  },
+  {
+   "no": 86,
+   "unit": "04",
+   "topic_id": 16,
+   "figure": 1,
+   "source": "text_followup",
+   "kind": "figure",
+   "what": "materials_v4/04-3.json の論点 16 の detail 末尾の図の行（![…](/figures/materials/ip/16-1.svg)）の代替文が、図の見直し前の caption（「段は上から下へ進み、まだ入れる前の段と…」）のまま。今の図の仕様の caption と違う。図の差し込みの側（attach_material_figures.py）で合わせる物で、この段では触れていない",
+   "related": []
+  },
+  {
+   "no": 121,
+   "unit": "04",
+   "topic_id": 16,
+   "figure": 1,
+   "source": "acceptance",
+   "kind": "figure",
+   "what": "本文の 3 段階（計画策定・先行導入・本格導入）と図 16-1 の 3 つの段（着想・PoC・本格的な開発）の区切りが違う",
+   "related": []
+  },
+  {
+   "no": 83,
+   "unit": "04",
+   "topic_id": 326,
+   "figure": 1,
+   "source": "figures_review",
+   "kind": "other",
+   "what": "data/ip/rewrite_ledgers/04-5.json の論点 326 の kept の行「開発費を回収する — 他社に実施権を与えれば使用料が入る」の where の括弧書き「326 の図 1 の箱「ライセンス収入」にもある」は、図 1 から箱を外したため古い。fate は kept で行き先の本文は正しいので、この段の書いてよい範囲（fate が figure の行）の外として変えていない",
+   "related": []
+  }
+ ]
+}

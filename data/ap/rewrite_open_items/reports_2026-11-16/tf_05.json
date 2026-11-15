@@ -1,0 +1,25 @@
+{
+  "target": "ap",
+  "unit": "05",
+  "status": "none",
+  "blocked": [],
+  "items": [
+    {"no": 1, "source": "figures_review", "topic_id": 101, "figure": {"topic_id": 440, "figure_id": 3}, "verdict": "out_of_scope", "action": ["none"], "what": "101 の ### リエントラントとの違い に残る「[[リエントラント]]が成り立つ作りと、スレッドセーフとの違いは、次の論点で説明します。」は教材の図を指す文ではなく、次の論点 440 を文で指す文。比較の図は 440 の図 3（after ### 混同しやすい用語）に移っており、指す先は今も合う。申告の直し（見出しを消して 1 文を ### スレッドセーフにする手段 の後ろへ移す）は見出し・節の構成の直しで、この段の範囲の外。紐づく過去問 2025r07a-q17 は 101 の定義の文と問題解説で今も解け、図に任せていた解く値・段も無い", "questions_checked": ["2025r07a-q17"]}
+  ],
+  "edits": [],
+  "ledgers": [],
+  "not_fixed": [
+    {"kind": "heading", "no": 1, "topic_id": 101, "figure_id": 3, "what": "101 の ### リエントラントとの違い は、図 2 が 440 の図 3 へ移ったため、次の論点を指す 1 文だけの節になった。write_materials.md の「見出しの下が図だけになるとき」に近い形（導入も要らないなら見出しを立てない）だが、見出しを消して文をどこへ置くか（### スレッドセーフにする手段 の末尾か、節ごと残すか）は見出しと節の構成の直しで、この段の正本の決まりでは決まらない。101 の図で after にこの見出しを指す物は今は無い。なお 101 の detail にはまだ図 101-2 の画像の行が残っており、図の差し込み（attach_material_figures.py）の回し直しで消える見込み（親の作業）"}
+  ],
+  "not_fixed_counts": {"heading": 1},
+  "counts": {"applies": 0, "not_applies": 0, "out_of_scope": 1, "data_suspect": 0},
+  "gates": {
+    "check_materials": {"stops": 0, "warnings_before": 0, "warnings_after": 0},
+    "check_material_style": {"stops": 0, "warnings_before": 0, "warnings_after": 0},
+    "render_material_figures": {"stops": 0},
+    "check_explanations": {"unresolved_terms_added": 0, "removed_pops": []},
+    "unfixed_warnings": []
+  },
+  "chars": {"before": 0, "after": 0},
+  "written": []
+}

@@ -1,0 +1,26 @@
+{
+  "target": "ip",
+  "unit": "15",
+  "status": "none",
+  "blocked": [],
+  "items": [
+    {"no": 1, "source": "figures_review", "topic_id": 169, "figure": {"topic_id": 169, "figure_id": 2}, "verdict": "out_of_scope", "action": ["none"], "what": "169 の ### 半導体メモリの種類と使われる所 の段落（DRAM はリフレッシュが要り安く大容量で主記憶に、SRAM はリフレッシュ不要で高速だが高価で大容量にできずキャッシュメモリに）は図を指す文ではなく、移した図 169-2 と同じ点をなぞる文。縮める直しは範囲の外の duplicate。169・432 の本文に、移した図を指す文（「図」「下の図」など）は無く、範囲の 1・2 に当たる所も無い。紐づく過去問の計算の手順も無い", "questions_checked": []}
+  ],
+  "edits": [],
+  "ledgers": [],
+  "not_fixed": [
+    {"kind": "duplicate", "no": 1, "topic_id": 169, "figure_id": 2, "what": "169 の ### 半導体メモリの種類と使われる所 の段落「DRAM は電気が自然に抜けるので…主記憶に向きます。SRAM はリフレッシュが要らず高速ですが、回路が複雑で高価なため大容量にできず、[[キャッシュメモリ]]に使われます。」が、移した図 169-2（速さとリフレッシュ・値段と容量・使われる所）と同じ点を言う。図を残し、文を図に無い理由（電気が自然に抜けるから・回路が複雑だから）と [[キャッシュメモリ]] の名前だけに縮める直し（リフレッシュの語の定義の句「定期的な再書込み」も残す）。表の DRAM・SRAM の行は揮発性を持つので残してよい"},
+    {"kind": "other", "no": 1, "topic_id": 432, "figure_id": 2, "what": "materials_v4/15-2.json の本文に図の行が入っており、432 の detail の末尾に、169 へ移した図の行 ![…](/figures/materials/ip/432-2.svg) が残り、169 の detail に 169-2 の図の行が無い。図の差し込み（attach_material_figures.py）は担当が実行しない決まりなので触れていない。親が差し込み直すときに合わせる"}
+  ],
+  "not_fixed_counts": {"duplicate": 1, "other": 1},
+  "counts": {"applies": 0, "not_applies": 0, "out_of_scope": 1, "data_suspect": 0},
+  "gates": {
+    "check_materials": {"stops": 0, "warnings_before": 7, "warnings_after": 7},
+    "check_material_style": {"stops": 0, "warnings_before": 0, "warnings_after": 0},
+    "render_material_figures": {"stops": 0},
+    "check_explanations": {"unresolved_terms_added": 0, "removed_pops": []},
+    "unfixed_warnings": []
+  },
+  "chars": {"before": 621, "after": 621},
+  "written": []
+}

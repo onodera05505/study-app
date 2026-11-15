@@ -1,0 +1,39 @@
+{
+  "target": "ip",
+  "unit": "15",
+  "status": "fixed",
+  "blocked": [],
+  "items": [
+    {"no": 1, "figure": {"topic_id": 432, "figure_id": 2}, "kind": "order", "verdict": "applies", "action": ["move", "edit"], "what": "図 432-2（SRAM と DRAM を速さとリフレッシュ・値段と容量・使われる所で比べる表）は、受け持ち（DRAM と SRAM のしくみ＝169）の ### 半導体メモリの種類と使われる所 の表と文と同じ点だったので、受け持ちの 169 へ図 2 として移し、after をその見出しにした。学ぶ順で後の論点名「キャッシュメモリ」をセルから外し、使われる所の行を「CPU のそばに置く／小さく速い記憶」「主記憶／実行中のデータを置く」にした", "questions_checked": ["2025r07-q75", "2018h30h-q76", "2019r01a-q60", "2019h31h-q70", "2018h30a-q65"]}
+  ],
+  "changed_figures": [
+    {"topic_id": 169, "figure_id": 2, "png": "data/ip/rewrite_open_items/reports_2026-11-16/figures_png/ip-15/169-2.png", "intended_point": "SRAM は速いが高価で大容量にできないので CPU のそばの小さな記憶に、DRAM はリフレッシュが要り遅いが安く大容量にできるので主記憶に使われる"}
+  ],
+  "moved": [
+    {"from": {"topic_id": 432, "figure_id": 2}, "to": {"topic_id": 169, "figure_id": 2}, "after": "### 半導体メモリの種類と使われる所"}
+  ],
+  "removed": [],
+  "restored": [],
+  "ledgers": [
+    {"file": "data/ip/rewrite_ledgers/15-2.json", "changed_points": 1, "removed_figures_added": 0, "removed_figures_dropped": 0}
+  ],
+  "not_fixed": [
+    {"kind": "text_followup", "no": 1, "topic_id": 169, "figure_id": 2, "what": "169 の ### 半導体メモリの種類と使われる所 の段落「DRAM は…リフレッシュが要ります。その代わり安く、大容量にしやすいので主記憶に向きます。SRAM はリフレッシュが要らず高速ですが、…高価なため大容量にできず、キャッシュメモリに使われます」が、移した図 169-2 と同じ点を言う（1 つの点は 1 か所）。図を残し、文は図に無い理由（電気が自然に抜けるから・回路が複雑だから）と SRAM の用途の名前（[[キャッシュメモリ]]）だけに縮める直しが要る。表の DRAM・SRAM の行は揮発性も持つので残してよい"},
+    {"kind": "other", "no": 1, "topic_id": 432, "figure_id": 2, "what": "data/ip/rewrite_ledgers/15-2.json の 432 の owner の 2 行（SRAM…キャッシュに使う／DRAM…主記憶に使う）の where の括弧「対比は 432 の図 2 にも残る」と、aside の行の「対比そのものは 432 の図 2 と 169 にある」が、移した後は「169 の図 2」を指すべき古い記述になった。この段の決まり（fate が figure の行だけを直し、他の行は変えない）に従い直していない"}
+  ],
+  "not_fixed_counts": {"text_followup": 1, "other": 1},
+  "counts": {"applies": 1, "not_applies": 0, "data_suspect": 0},
+  "gates": {
+    "render_check": {"stops": 0, "warnings_before": 0, "warnings_after": 0},
+    "unfixed_warnings": []
+  },
+  "written": [
+    "data/ip/material_figures/169.json",
+    "data/ip/material_figures/432.json",
+    "data/ip/rewrite_ledgers/15-2.json",
+    "public/figures/materials/ip/169-1.svg",
+    "public/figures/materials/ip/169-2.svg",
+    "public/figures/materials/ip/432-1.svg",
+    "data/ip/rewrite_open_items/reports_2026-11-16/figures_png/ip-15/"
+  ]
+}

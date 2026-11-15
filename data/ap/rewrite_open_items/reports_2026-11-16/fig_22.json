@@ -1,0 +1,27 @@
+{
+  "target": "ap",
+  "unit": "22",
+  "status": "fixed",
+  "blocked": [],
+  "items": [
+    {"no": 1, "figure": {"topic_id": 318, "figure_id": 1}, "kind": "drawing", "verdict": "applies", "action": ["edit", "caption"], "what": "図 1 の仕事 s の箱に FROM s の行（→p 40・→q 30・→r 40。最後なので使わない）を描き、表の 4 行を図 1 だけで揃えた。図 1 の caption に「最後の仕事の行は使いません」を足し、図 2 の caption から s の行の値を外して「上の図の表で」に直した（図 2 の中身は変えない。24 通りの度数 1・6・4・6・7 と最小 p→r→q→s の 60 分は表と合うことを総当たりで確かめた）", "questions_checked": ["2024r06a-q72", "2022r04h-q73"]}
+  ],
+  "changed_figures": [
+    {"topic_id": 318, "figure_id": 1, "png": "data/ap/rewrite_open_items/reports_2026-11-16/figures_png/ap-22/318-1.png", "intended_point": "段取り時間は各仕事の FROM の行から次の仕事への値を読み、合計に入るのは順に並べたときの移り変わり 3 回分だけ（最後の仕事の行は使わない）"},
+    {"topic_id": 318, "figure_id": 2, "png": "data/ap/rewrite_open_items/reports_2026-11-16/figures_png/ap-22/318-2.png", "intended_point": "4 つの仕事の並べ方 24 通りは順序によって合計段取り時間が大きく違い、最小になる順序は 1 通りしかない"}
+  ],
+  "moved": [],
+  "removed": [],
+  "restored": [],
+  "ledgers": [
+    {"file": "data/ap/rewrite_ledgers/22-8.json", "changed_points": 0, "removed_figures_added": 0, "removed_figures_dropped": 0}
+  ],
+  "not_fixed": [],
+  "not_fixed_counts": {},
+  "counts": {"applies": 1, "not_applies": 0, "data_suspect": 0},
+  "gates": {
+    "render_check": {"stops": 0, "warnings_before": 0, "warnings_after": 0},
+    "unfixed_warnings": []
+  },
+  "written": ["data/ap/material_figures/318.json"]
+}

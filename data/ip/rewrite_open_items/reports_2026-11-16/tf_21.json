@@ -1,0 +1,26 @@
+{
+  "target": "ip",
+  "unit": "21",
+  "status": "none",
+  "blocked": [],
+  "items": [
+    {"no": 1, "source": "figures_review", "topic_id": 371, "figure": {"topic_id": 371, "figure_id": 1}, "verdict": "out_of_scope", "action": ["none"], "what": "371 の ### 表を縦に切る操作 の 2 文目「行を条件で横に切るのが[[選択]]、2 つの表を共通の列で横につなぐのが[[結合]]です。」は今の本文にある。図を指す句を持たず（範囲の 1 に当たらない）、過去問 1 件の解く手順・値でもなく（範囲の 2 に当たらない）、ledger_row も無い（範囲の 3 に当たらない）。申告の直しは戻した図 1 と同じ点（3 つの関係演算の違い）のなぞりを縮める直しで、表の duplicate に当たるので直さず not_fixed に挙げた。2022r04-q98 は本文を変えていないので今も定義の文と問題解説で解ける", "questions_checked": ["2022r04-q98"]}
+  ],
+  "edits": [],
+  "ledgers": [],
+  "not_fixed": [
+    {"kind": "duplicate", "no": 1, "topic_id": 371, "figure_id": 1, "what": "371 の ### 表を縦に切る操作 の 2 文目「行を条件で横に切るのが[[選択]]、2 つの表を共通の列で横につなぐのが[[結合]]です。」が、戻した図 1（射影・選択・結合が表をどう変えるか）と同じ点をなぞる。図を残し、文を図を読む前の導入 1 文と選択・結合を [[ ]] で指す程度に縮める直し（write_materials.md の「1 つの点は 1 か所で言う」）。台帳 21-3.json の 371 の該当 2 行は既に fate figure・where「371 の図 1」で、縮めても台帳の書き換えは要らない"},
+    {"kind": "example", "no": 1, "topic_id": 371, "figure_id": null, "what": "同じ節の 1 文目の例「従業員の表から氏名の列だけを取り出すと、氏名だけが並んだ表になります。」は、2022r04-q98 の問題文の句（“従業員”表から、氏名の列だけを取り出す）とほぼ同じ言い回し。write_materials.md の「書き方の約束」の、問題文の句をほぼそのままの言い回しで置かない、に当たる疑い。例を言い直すか替える直し（図の見直しで図 1 は書籍表に替え済み）"}
+  ],
+  "not_fixed_counts": {"duplicate": 1, "example": 1},
+  "counts": {"applies": 0, "not_applies": 0, "out_of_scope": 1, "data_suspect": 0},
+  "gates": {
+    "check_materials": {"stops": 0, "warnings_before": 0, "warnings_after": 0},
+    "check_material_style": {"stops": 0, "warnings_before": 0, "warnings_after": 0},
+    "render_material_figures": {"stops": 0},
+    "check_explanations": {"unresolved_terms_added": 0, "removed_pops": []},
+    "unfixed_warnings": []
+  },
+  "chars": {"before": 0, "after": 0},
+  "written": []
+}

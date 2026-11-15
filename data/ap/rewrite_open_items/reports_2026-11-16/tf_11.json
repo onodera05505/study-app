@@ -1,0 +1,37 @@
+{
+  "target": "ap",
+  "unit": "11",
+  "status": "none",
+  "blocked": [],
+  "items": [
+    {
+      "no": 1,
+      "source": "figures_review",
+      "topic_id": 406,
+      "figure": {"topic_id": 626, "figure_id": 2},
+      "verdict": "out_of_scope",
+      "action": ["none"],
+      "what": "406 の ### 設置母体と役割の見分け（「JPCERT/CC は一般社団法人で、民間の法人です。」と [[内閣サイバーセキュリティセンター（NISC）]] を指す 1 文）と、624 の ### 総当たりの周りにある攻撃（「何を固定して何を変えて試すかで分かれます。」と [[レインボーテーブル攻撃]] を指す 1 文）には、教材の図を指す句が無い（どちらも論点を文で指す形で、指す先の 626 の節と図 2・191 の節と図 3 に見分けが今ある）。figure_before は過去問の値を解く図でなく、範囲の 1・2 に当たらない。申告の中身は節の形（見出しを残すか・節を畳むか）で、節の構成の直しなので範囲の外",
+      "questions_checked": ["2021r03h-q42", "2022r04a-q39", "2018h30a-q36", "2018h30a-q42"]
+    }
+  ],
+  "edits": [],
+  "ledgers": [],
+  "not_fixed": [
+    {"kind": "other", "no": 1, "topic_id": 406, "figure_id": 2, "what": "図 406-2 が 626-2 へ移り、406 の ### 設置母体と役割の見分け と 624 の ### 総当たりの周りにある攻撃（図 624-3 が 191-3 へ移った）が、自分の側の 1 文と他の論点を指す 1 文だけの節になった。見出しを残すか、節を別の節へ畳むかは節の構成の直し（作り直しの段の仕事）で、この段の直してよい文の外。過去問 2021r03h-q42・2022r04a-q39・2018h30a-q42 は今の本文と問題解説で解ける"}
+  ],
+  "not_fixed_counts": {"other": 1},
+  "counts": {"applies": 0, "not_applies": 0, "out_of_scope": 1, "data_suspect": 0},
+  "gates": {
+    "check_materials": {"stops": 0, "warnings_before": 1, "warnings_after": 1},
+    "check_material_style": {"stops": 0, "warnings_before": 0, "warnings_after": 0},
+    "render_material_figures": {"stops": 0},
+    "check_explanations": {"unresolved_terms_added": 0, "removed_pops": []},
+    "unfixed_warnings": [
+      {"topic_id": 624, "reason": "IPA 原文の句読点（，）の知らせは論点名 [[パスワードクラック対策（ソルト，ストレッチングほか）]] の中の読点で、直す前からある。この段では本文を変えていない"},
+      {"topic_id": 406, "reason": "materials_v4/11-19.json の 406 の本文に、移した後の図 406-2 の図の行（![…](/figures/materials/ap/406-2.svg)）が残っている。624 の本文（11-5.json）にも図 624-3 の図の行が残っている。図の行は図の差し込みの道具の持ち場なので担当は触っていない。親が差し込み直すまで、画面に今は無い図が出る"}
+    ]
+  },
+  "chars": {"before": 1737, "after": 1737},
+  "written": ["data/ap/rewrite_open_items/reports_2026-11-16/tf_11.json"]
+}

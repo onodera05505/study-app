@@ -1,0 +1,130 @@
+{
+  "target": "ip",
+  "units": [
+    "05",
+    "15"
+  ],
+  "status": "done",
+  "items": [
+    {
+      "no": 205,
+      "topic_id": 169,
+      "type": "A",
+      "verdict": "fixed",
+      "rule": "rewrite_open_items.md A の直し方 5（共通の前提の説明と比較が混ざる行は subject を共通の前提の説明だけに書き換える）、unit_plan.md「4. 受け持ち」",
+      "what": "単元 15 の owners の行の subject は「違い・使い分け」と書かれていたが、170 は 169 のリフレッシュの説明を、432 は 169 の SRAM の作り（高速だが高価）を指して前提として使っている（共通の前提と比較の混ざる行）。DRAM・SRAM は論点でなく 169 の種類の表が並べる物なので、本文の比較の置き場は動かさず、subject だけを前提の説明「DRAM と SRAM のしくみ（DRAM は定期的なリフレッシュが要り、SRAM は高速だが高価）」に書き換えた。owner 169・topics [169,170,432] は変えていない。",
+      "questions_checked": [
+        "2018h30h-q76",
+        "2025r07-q75",
+        "2024r06-q56",
+        "2020r02o-q79",
+        "2019r01a-q60",
+        "2019h31h-q70",
+        "2018h30a-q65"
+      ]
+    },
+    {
+      "no": 206,
+      "topic_id": 256,
+      "type": "B",
+      "verdict": "fixed",
+      "rule": "rewrite_open_items.md B の直し方 1・2、write_materials.md「他の論点との分担」の単元をまたぐ行、「見出し」（項目も図も残らなければ節ごと消す）",
+      "what": "前の単元 05 の 256 の ### 混同しやすい用語 が、後の単元 15 の論点 NFC（475）との比較を 1 項目だけ持っていた。475 の本文が既に比較（RFID は広い言葉で NFC はその中の近距離の規格。10cm 程度・非接触の決済）を持つことを確かめ、256 からその項目を外した。項目も図も残らない（図 256-1 の after は ### 電波で読むからできること）ので節を消し、### 電波で読むからできること に 475 を指す 1 文を置いた。",
+      "questions_checked": [
+        "2023r05-q12",
+        "2019r01a-q31"
+      ]
+    }
+  ],
+  "edits": [
+    {
+      "file": "data/ip/materials_v4/05-1.json",
+      "topic_id": 256,
+      "field": "detail",
+      "op": "delete",
+      "heading": "### 混同しやすい用語",
+      "before": "### 混同しやすい用語\n- **[[NFC]]** — RFID のうち、数センチから十センチ程度のごく近い距離で通信する規格です。店での非接触決済にも使われます",
+      "after": ""
+    },
+    {
+      "file": "data/ip/materials_v4/05-1.json",
+      "topic_id": 256,
+      "field": "detail",
+      "op": "insert",
+      "heading": "### 電波で読むからできること",
+      "before": "",
+      "after": "ごく近い距離で通信する規格と RFID の関係は、[[NFC]] で説明しています。"
+    }
+  ],
+  "owners": [
+    {
+      "unit": "15",
+      "op": "replace",
+      "before": {
+        "subject": "DRAM と SRAM の違い（リフレッシュの要否と、主記憶・キャッシュメモリへの使い分け）",
+        "owner": 169,
+        "topics": [
+          169,
+          170,
+          432
+        ]
+      },
+      "after": {
+        "subject": "DRAM と SRAM のしくみ（DRAM は定期的なリフレッシュが要り、SRAM は高速だが高価）",
+        "owner": 169,
+        "topics": [
+          169,
+          170,
+          432
+        ]
+      }
+    }
+  ],
+  "figure_after": [],
+  "ledgers": [
+    {
+      "file": "data/ip/rewrite_ledgers/05-1.json",
+      "topic_id": 256,
+      "point": "NFC は RFID のうち数センチから十センチ程度のごく近距離で通信する規格",
+      "before": {
+        "fate": "kept",
+        "where": "### 混同しやすい用語"
+      },
+      "after": {
+        "fate": "owner",
+        "where": "475"
+      }
+    },
+    {
+      "file": "data/ip/rewrite_ledgers/05-1.json",
+      "topic_id": 256,
+      "point": "NFC の例: 店舗での非接触決済",
+      "before": {
+        "fate": "kept",
+        "where": "### 混同しやすい用語"
+      },
+      "after": {
+        "fate": "owner",
+        "where": "475"
+      }
+    }
+  ],
+  "returned": [],
+  "noticed": [
+    {
+      "topic_id": 432,
+      "what": "図 432-2（SRAM と DRAM の速さ・リフレッシュ・値段・容量・使われる所の表）は、169 の ### 半導体メモリの種類と使われる所 の表と文が言う DRAM・SRAM の性質と同じ点を言っている（論点をまたぐ 1 点 2 か所の候補）。図の置き場は受け持ちの 169 が先（write_materials.md「図の置き場」①）。図の直しなので触れていない"
+    }
+  ],
+  "gates": {
+    "check_materials": 0,
+    "check_material_style": 0,
+    "render_check": 0,
+    "check_explanations": 0,
+    "check_unit_plans": 0
+  },
+  "chars": {
+    "before": 30488,
+    "after": 30447
+  }
+}

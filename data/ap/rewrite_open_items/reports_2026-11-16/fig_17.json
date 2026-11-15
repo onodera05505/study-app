@@ -1,0 +1,26 @@
+{
+  "target": "ap",
+  "unit": "17",
+  "status": "fixed",
+  "blocked": [],
+  "items": [
+    {"no": 1, "figure": {"topic_id": 375, "figure_id": 1}, "kind": "order", "verdict": "applies", "action": "remove", "what": "図 1 は単元 18 の論点（419 NPV・IRR・10 PBP）の語を並べた 4 指標の比較で、学ぶ順で前の論点が後の論点の語を持っていた。比較は 419 の ### 投資評価の 4 つの手法の比較 の表が持ち、単元をまたぐ移し替えはできず、後の語を外すと ROI の 1 セルしか残らない。ROI の側（割り引かずに率で測る）は 375 の ### 似た投資評価の指標 の本文が 1 文で言い、図にしか無い点も無い（NPV・IRR・回収期間の定義と時間的価値の扱いは 419 の表と式・10 の定義文にある）ため、外すの 2 で図を外した", "questions_checked": ["2023r05h-q61", "2020r02o-q61"]}
+  ],
+  "changed_figures": [],
+  "moved": [],
+  "removed": [
+    {"topic_id": 375, "figure_id": 1, "caption": "投資評価の 4 指標を、現在価値に割り引くか（行）と何で測るか（列）で並べた表です。ROI は左上の、割り引かずに率で測る指標です。", "kept": null, "reason": "text_suffices"}
+  ],
+  "restored": [],
+  "ledgers": [
+    {"file": "data/ap/rewrite_ledgers/17-2.json", "changed_points": 4, "removed_figures_added": 1, "removed_figures_dropped": 0}
+  ],
+  "not_fixed": [],
+  "not_fixed_counts": {},
+  "counts": {"applies": 1, "not_applies": 0, "data_suspect": 0},
+  "gates": {
+    "render_check": {"stops": 0, "warnings_before": 0, "warnings_after": 0},
+    "unfixed_warnings": []
+  },
+  "written": ["data/ap/material_figures/375.json", "data/ap/rewrite_ledgers/17-2.json", "data/ap/rewrite_open_items/reports_2026-11-16/fig_17.json"]
+}

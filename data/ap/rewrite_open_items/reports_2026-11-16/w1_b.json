@@ -1,0 +1,251 @@
+{
+  "target": "ap",
+  "units": [
+    "03",
+    "05"
+  ],
+  "status": "done",
+  "items": [
+    {
+      "no": 8,
+      "topic_id": 395,
+      "type": "E",
+      "verdict": "by_rule",
+      "rule": "write_materials.md「1 つの点は 1 か所で言う」（図が言う点を本文で言い直さない。文章には図に無いことだけを書く）と「教材と問題解説の役割分担」",
+      "what": "EPROM の消し方（紫外線で消す・電気では消せない）は図 3 の EPROM の列が持ち、台帳 03-5 の行も fate figure。基板から外して ROM ライターで書く点は誤答のケアで、2022r04a-q22・2016h28a-q21 のイの note にある。本文の ### 混同しやすい用語 は図を読む前の導入 1 文のままでよく、本文に 1 文を足さない",
+      "questions_checked": [
+        "2022r04a-q22",
+        "2018h30h-q10",
+        "2016h28a-q21"
+      ]
+    },
+    {
+      "no": 10,
+      "topic_id": 395,
+      "type": "E（図が受け持つ点）",
+      "verdict": "by_rule",
+      "rule": "write_materials.md「1 つの点は 1 か所で言う」（図・表と文章が同じ点を言うときは図を残す）",
+      "what": "no 8 と同じ申告。今の図 3 の EPROM の列に紫外線が残り、点の行き先は図。本文に EPROM の消し方を足すのはなぞりになるので足さない。紐づく 3 問は定義の文（基板に載せたまま電気的に消去・書込み）・要点の箇条・図 3 と問題解説で解ける",
+      "questions_checked": [
+        "2022r04a-q22",
+        "2018h30h-q10",
+        "2016h28a-q21"
+      ]
+    },
+    {
+      "no": 7,
+      "topic_id": 470,
+      "type": "B",
+      "verdict": "fixed",
+      "rule": "write_materials.md「他の論点との分担」の単元をまたぐ行と、rewrite_open_items.md「B の直し方」2",
+      "what": "350 の本文と図に、仮想記憶とメモリインタリーブ・キャッシュメモリの比較が無かった。470 から外した仮想記憶の側（主記憶と外部記憶を一元的にアドレス付け・狙いは容量）を、350 の detail 末尾に ### 混同しやすい用語 を立てて移した（3 つを並べる比較なので学ぶ順で最後の 350 が持つ）",
+      "questions_checked": [
+        "2023r05h-q18",
+        "2021r03a-q19",
+        "2021r03a-q9"
+      ]
+    },
+    {
+      "no": 9,
+      "topic_id": 470,
+      "type": "B",
+      "verdict": "fixed",
+      "rule": "write_materials.md「他の論点との分担」の単元をまたぐ行と、rewrite_open_items.md「B の直し方」1",
+      "what": "470 の ### 混同しやすい用語 から [[仮想記憶]] の箇条を外し、導入の「次の 2 つの仕組み」を「次の仕組み」に直し、比較を持つ 350 を指す 1 文（仮想記憶との違いは [[仮想記憶管理]] で説明しています）を置いた。2021r03a-q9 の誤答の仮想記憶の側は問題解説のアの note にある",
+      "questions_checked": [
+        "2021r03a-q9",
+        "2020r02o-q9",
+        "2016h28a-q10"
+      ]
+    },
+    {
+      "no": 11,
+      "topic_id": 470,
+      "type": "B・H",
+      "verdict": "fixed",
+      "rule": "rewrite_open_items.md「点の台帳の直し方」の A・B の行（単元をまたぐ先は owner）",
+      "what": "台帳 03-6 の論点 470 の点 13（仮想記憶は主記憶と外部記憶を一元的にアドレス付け…）と点 14（仮想記憶の狙いは容量…）を kept・### 混同しやすい用語 から owner・350 に書き換えた。owners は単元 03・05 とも比較の行が無く変えていない",
+      "questions_checked": [
+        "2021r03a-q9"
+      ]
+    },
+    {
+      "no": 13,
+      "topic_id": 101,
+      "type": "A",
+      "verdict": "fixed",
+      "rule": "write_materials.md「他の論点との分担」（比べる 2 つは学ぶ順で後の論点）と rewrite_open_items.md「A の直し方」2・3・6",
+      "what": "101 の ### リエントラントとの違い の比較の文（どちらも同時の実行や途中からの入り直しを許す側の性質）を 440 の新しい ### 混同しやすい用語 へ移し、101 の節は見出しと、440 を指す導入 1 文だけにした。図 2 の移し替えは図の側の直しなので returned に挙げた（見出しは図の after が指すので変えていない）",
+      "questions_checked": [
+        "2025r07a-q17"
+      ]
+    },
+    {
+      "no": 15,
+      "topic_id": 101,
+      "type": "A",
+      "verdict": "fixed",
+      "rule": "rewrite_open_items.md「A の直し方」1〜6",
+      "what": "比較を持つ論点を学ぶ順で後の 440 に決め、文を移した（no 13 と同じ直し）。台帳 05-2 の 101 の行「どちらも並列や再入を可能にする側の性質」を later・440 の ### 混同しやすい用語 に書き換えた。図 2 を where に持つ 3 行は図がまだ 101 にあるので変えず、図の移し替えと合わせて図の見直しの段で動かす（returned の no 13）",
+      "questions_checked": [
+        "2025r07a-q17",
+        "2022r04h-q6",
+        "2021r03a-q6",
+        "2017h29h-q7",
+        "2016h28h-q7"
+      ]
+    },
+    {
+      "no": 137,
+      "topic_id": 111,
+      "type": "H",
+      "verdict": "fixed",
+      "rule": "rewrite_open_items.md「点の台帳の直し方」の H の行",
+      "what": "台帳 05-5 の論点 111 の 9 行が、今は無い見出し ### 各工程の中身と見つかる誤り を指していた。点は今の ### コード生成までの工程の中身と見つかる誤り の表と文にあることを確かめ、where の見出しの名前だけを書き換えた",
+      "questions_checked": []
+    },
+    {
+      "no": 14,
+      "topic_id": 440,
+      "type": "A",
+      "verdict": "fixed",
+      "rule": "rewrite_open_items.md「A の直し方」2（持つ論点に比較が無ければ前の論点の文を移す。置く節は write_materials.md「見出し」の ### 混同しやすい用語）",
+      "what": "440 の detail 末尾に ### 混同しやすい用語 を立て、- **[[スレッドセーフ]]** — の 1 項目で 101 から移した比較の文を置いた。排他制御で守ったコードは再入に弱い点は旧版でも本文には無く 101 の図 2 だけが持つので、文は足さず、図の移し替えでこの節に入る（returned の no 13）",
+      "questions_checked": [
+        "2022r04h-q6",
+        "2021r03a-q6",
+        "2017h29h-q7",
+        "2016h28h-q7"
+      ]
+    }
+  ],
+  "edits": [
+    {
+      "file": "data/ap/materials_v4/03-6.json",
+      "topic_id": 470,
+      "field": "detail",
+      "op": "replace",
+      "heading": "### 混同しやすい用語",
+      "before": "メモリインタリーブと次の 2 つの仕組みは、何と何の間で働くかが違います。",
+      "after": "メモリインタリーブと次の仕組みは、何と何の間で働くかが違います。"
+    },
+    {
+      "file": "data/ap/materials_v4/03-6.json",
+      "topic_id": 470,
+      "field": "detail",
+      "op": "move",
+      "heading": "### 混同しやすい用語",
+      "before": "470 ### 混同しやすい用語: - **[[仮想記憶]]** — 主記憶と外部記憶を一元的にアドレス付けし、物理容量を超えるメモリ空間を見せます",
+      "after": "350 ### 混同しやすい用語（下の insert）。470 には「仮想記憶との違いは、[[仮想記憶管理]] で説明しています。」を置いた"
+    },
+    {
+      "file": "data/ap/materials_v4/05-4.json",
+      "topic_id": 350,
+      "field": "detail",
+      "op": "insert",
+      "heading": "### 混同しやすい用語",
+      "before": null,
+      "after": "### 混同しやすい用語\n仮想記憶は主記憶と外部記憶を一元的にアドレス付けする仕組みで、狙いは容量です。次の 2 つとは、何と何の間で働くかが違います。\n- **[[メモリインタリーブ]]** — 主記憶の内部で働き、アクセスを並列にして速くします\n- **[[キャッシュメモリ]]** — CPU と主記憶の間で働き、速度差を埋めます"
+    },
+    {
+      "file": "data/ap/materials_v4/05-2.json",
+      "topic_id": 101,
+      "field": "detail",
+      "op": "move",
+      "heading": "### リエントラントとの違い",
+      "before": "101 ### リエントラントとの違い: どちらも、同時の実行や途中からの入り直しを**許す側**の性質です。",
+      "after": "440 ### 混同しやすい用語: - **[[スレッドセーフ]]** — リエントラントと同じく、同時の実行や途中からの入り直しを**許す側**の性質です"
+    },
+    {
+      "file": "data/ap/materials_v4/05-2.json",
+      "topic_id": 101,
+      "field": "detail",
+      "op": "replace",
+      "heading": "### リエントラントとの違い",
+      "before": "[[リエントラント]]が成り立つ作りは、次の論点で説明します。",
+      "after": "[[リエントラント]]が成り立つ作りと、スレッドセーフとの違いは、次の論点で説明します。"
+    },
+    {
+      "file": "data/ap/materials_v4/05-2.json",
+      "topic_id": 440,
+      "field": "detail",
+      "op": "insert",
+      "heading": "### 混同しやすい用語",
+      "before": null,
+      "after": "### 混同しやすい用語\n- **[[スレッドセーフ]]** — リエントラントと同じく、同時の実行や途中からの入り直しを**許す側**の性質です"
+    }
+  ],
+  "owners": [],
+  "figure_after": [],
+  "ledgers": [
+    {
+      "file": "data/ap/rewrite_ledgers/03-6.json",
+      "topic_id": 470,
+      "point": "仮想記憶は主記憶と外部記憶を一元的にアドレス付けし、物理容量を超えるメモリ空間を見せる",
+      "before": {
+        "fate": "kept",
+        "where": "### 混同しやすい用語"
+      },
+      "after": {
+        "fate": "owner",
+        "where": "350"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/03-6.json",
+      "topic_id": 470,
+      "point": "仮想記憶の狙いは容量でアクセスの並列化とは別",
+      "before": {
+        "fate": "kept",
+        "where": "### 混同しやすい用語"
+      },
+      "after": {
+        "fate": "owner",
+        "where": "350"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/05-2.json",
+      "topic_id": 101,
+      "point": "どちらも並列や再入を可能にする側の性質",
+      "before": {
+        "fate": "kept",
+        "where": "### リエントラントとの違い"
+      },
+      "after": {
+        "fate": "later",
+        "where": "440 の ### 混同しやすい用語"
+      }
+    }
+  ],
+  "returned": [
+    {
+      "no": 13,
+      "topic_id": 101,
+      "figure": 2,
+      "kind": "figure_followup",
+      "what": "101 の図 2（スレッドセーフとリエントラントの比較の matrix）を、比較を持つ 440 へ移し、after を 440 の \"### 混同しやすい用語\" にする（no 14・15 も同じ図）。移したら台帳 05-2 の 101 の図 2 を where に持つ 3 行を 440 の図へ書き換え、101 の ### リエントラントとの違い は図が無くなり 440 を指す 1 文だけになるので、見出しを消して 1 文を ### スレッドセーフにする手段 の後ろに残すかを本文の段で合わせる"
+    }
+  ],
+  "noticed": [
+    {
+      "topic_id": 395,
+      "what": "台帳 03-5 の EPROM の行は fate figure だが、where の括弧に「基板から外して ROM ライターで書く点は question_explanations の note」と問題解説の行き先も書いてあり、1 行に 2 つの行き先が混ざる（点は図 3 と note にあり、消えてはいない）"
+    },
+    {
+      "topic_id": 440,
+      "what": "440 の ### 混同しやすい用語 は、101 の図 2 が移るまで、共通の側の 1 項目だけで違いを言わない"
+    }
+  ],
+  "gates": {
+    "check_materials": 0,
+    "check_material_style": 0,
+    "render_check": 0,
+    "check_explanations": 0,
+    "check_unit_plans": 0
+  },
+  "chars": {
+    "before": 5400,
+    "after": 5591
+  }
+}

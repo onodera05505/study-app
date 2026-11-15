@@ -1,0 +1,28 @@
+{
+  "target": "ap",
+  "unit": "22",
+  "status": "fixed",
+  "blocked": [],
+  "items": [
+    {"no": 1, "figure": {"topic_id": 318, "figure_id": 2}, "kind": "small", "verdict": "applies", "action": ["edit", "caption"], "what": "右端の 100 分の棒に「最大 100 分は 7 通り（最小より 40 分長い）」の注記を足して散らばりの幅に目を向けさせ、左端の注記を「最小 60 分は p → r → q → s の 1 通りだけ」にした。縦軸を max 8 にして 7 の棒の頭と注記の置き場を空け、凡例の文を「棒の高さ＝その合計になる順序の数（全 24 通り）」にして別の系列を探させないようにした。caption は 2 文目を「左端の最小と右端の最大の差から、順序しだいで合計が大きく開くと読めます」に替えた。度数 1・6・4・6・7 と最小の順序は図 1 の表から総当たりで確かめ直した", "questions_checked": ["2024r06a-q72", "2022r04h-q73"]}
+  ],
+  "changed_figures": [
+    {"topic_id": 318, "figure_id": 2, "png": "data/ap/rewrite_open_items/reports_2026-11-16/figures_png/ap-22/318-2.png", "intended_point": "4 つの仕事の並べ方 24 通りは順序によって合計段取り時間が大きく違い、最小になる順序は 1 通りしかない"}
+  ],
+  "moved": [],
+  "removed": [],
+  "restored": [],
+  "ledgers": [
+    {"file": "data/ap/rewrite_ledgers/22-8.json", "changed_points": 0, "removed_figures_added": 0, "removed_figures_dropped": 0}
+  ],
+  "not_fixed": [
+    {"kind": "other", "no": 1, "topic_id": 318, "figure_id": 2, "what": "chart の bar でも凡例の印が線の形で描かれる（render_material_figures.py の凡例は種類を問わず線を描く）。道具は書けないので凡例の文で棒を指すようにして避けた。棒の凡例を棒の形にするかは親の判断"}
+  ],
+  "not_fixed_counts": {"other": 1},
+  "counts": {"applies": 1, "not_applies": 0, "data_suspect": 0},
+  "gates": {
+    "render_check": {"stops": 0, "warnings_before": 0, "warnings_after": 0},
+    "unfixed_warnings": []
+  },
+  "written": ["data/ap/material_figures/318.json"]
+}

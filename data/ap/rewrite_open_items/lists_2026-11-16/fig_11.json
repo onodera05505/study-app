@@ -1,0 +1,67 @@
+{
+  "target": "ap",
+  "unit": "11",
+  "items": [
+    {
+      "no": 1,
+      "figure": {
+        "topic_id": 406,
+        "figure_id": 2
+      },
+      "source": "open_items",
+      "kind": "order",
+      "what": "406 の図 2（JPCERT/CC と IPA を立場と主な役割で並べる matrix。after は 406 の ### 設置母体と役割の見分け）は、比較を持つ論点になった 626 の新しい節 ### 設置母体と役割の見分け へ移す（rewrite_open_items.md「A の直し方」6）。406 の節は図の導入 1 文と 626 を指す 1 文だけ残している。移すなら NISC の列を戻すかは図の見直しの段の判断",
+      "proposal": "図ごと 626 へ移し、after を 626 の「### 設置母体と役割の見分け」にする",
+      "questions": [],
+      "related": [
+        {
+          "topic_id": 626,
+          "figure_id": 1
+        }
+      ],
+      "restore_from": null
+    },
+    {
+      "no": 2,
+      "figure": {
+        "topic_id": 624,
+        "figure_id": 3
+      },
+      "source": "open_items",
+      "kind": "order",
+      "what": "624 の図 3（総当たりとリバースブルートフォースを固定する物と変える物で比べる matrix。after は 624 の ### 総当たりの周りにある攻撃）は、比較を持つ論点になった 191 の新しい節 ### 総当たりの仲間の攻撃との違い へ移す（rewrite_open_items.md「A の直し方」6）。624 の節は図の導入 1 文と 191 を指す 1 文だけ残している",
+      "proposal": "図ごと 191 へ移し、after を 191 の「### 総当たりの仲間の攻撃との違い」にする",
+      "questions": [],
+      "related": [
+        {
+          "topic_id": 191,
+          "figure_id": 1
+        },
+        {
+          "topic_id": 191,
+          "figure_id": 2
+        }
+      ],
+      "restore_from": null
+    },
+    {
+      "no": 3,
+      "figure": {
+        "topic_id": 407,
+        "figure_id": 2
+      },
+      "source": "open_items",
+      "kind": "error",
+      "what": "407 の図 2 の caption が、図の中にある「CWE の分類」の欄を持たない（申告の消化の 2 波の noticed）。caption と図の中身を合わせる",
+      "proposal": "caption を図の欄に合わせる",
+      "questions": [],
+      "related": [
+        {
+          "topic_id": 407,
+          "figure_id": 1
+        }
+      ],
+      "restore_from": null
+    }
+  ]
+}

@@ -1,0 +1,855 @@
+{
+  "target": "ap",
+  "units": [
+    "03",
+    "10",
+    "11",
+    "16",
+    "23"
+  ],
+  "status": "done",
+  "items": [
+    {
+      "no": 201,
+      "topic_id": 395,
+      "type": "H",
+      "verdict": "by_rule",
+      "rule": "rewrite_open_items.md の H（where が今は点の無い所を指すときに書き換える）と rewrite_materials_by_group.md の fate の定義（point は分けない・新しいキーを足さない）",
+      "what": "台帳 03-5 の EPROM の行の where は、395 の図 3（EPROM の列に「残る／不揮発」「紫外線で消す」）と 2022r04a-q22 イの note（基板から外して ROM ライターで書く）を指し、どちらにも点が今ある。指す先に点が無い行ではないので H に当たらず、point を 2 行に割る直しも決まりに無い。ROM ライターの点はどの過去問の正解にも要らない誤答のケア",
+      "questions_checked": [
+        "2022r04a-q22",
+        "2018h30h-q10",
+        "2016h28a-q21"
+      ]
+    },
+    {
+      "no": 202,
+      "topic_id": 357,
+      "type": "A",
+      "verdict": "fixed",
+      "rule": "write_materials.md「他の論点との分担」（比べる 2 つは学ぶ順で後の論点）、rewrite_open_items.md A の 1〜5、unit_plan.md の owners",
+      "what": "171 の ### TCP と UDP の比較（表と UDP の用途の段落）と、171 の本文にあった UDP の側の文を 357 の新しい節 ### TCP と UDP の比較へ移し、171 には自分の側と 357 を指す 1 文だけを残した。357 の要点の箇条を「行わない点が TCP との違い」に、447 の指す先を [[UDP]] に直し、単元 10 の owners の比較だけの行を消した",
+      "questions_checked": [
+        "2025r07a-q33",
+        "2021r03a-q34",
+        "2023r05h-q34",
+        "2022r04a-q34",
+        "2022r04h-q33"
+      ]
+    },
+    {
+      "no": 203,
+      "topic_id": 163,
+      "type": "A",
+      "verdict": "by_rule",
+      "rule": "write_materials.md「他の論点との分担」は比較・使い分けの置き場の決まり。rewrite_unit_crosscheck.md ①② で、後の論点の語はポップがあれば説明に数える",
+      "what": "163 の ### 通信の種類との対応 の文は、クラス D をマルチキャストに使うという 163 自身の性質を言う文で、175 との比較ではない。2024r06a-q35 の正解を選ぶのに要る判断材料で、[[マルチキャスト]] のポップもある。175 の台帳の行（クラス D の範囲は prior 163）とも合う",
+      "questions_checked": [
+        "2024r06a-q35",
+        "2023r05a-q35"
+      ]
+    },
+    {
+      "no": 204,
+      "topic_id": 428,
+      "type": "A",
+      "verdict": "fixed",
+      "rule": "write_materials.md「他の論点との分担」（3 つ以上の比較は並べる物のうち学ぶ順で最後の論点。準委任は論点に無いので 50）、rewrite_open_items.md A の 2〜4",
+      "what": "428 の ### 3つの契約形態の違い（3 点の文・請負・準委任・派遣の表・雇用主の文）を 50 の ### 派遣・請負・出向の違い の先頭へ移し、428 には 50 を指す 1 文を置いた。比較を指していた 741（単元 16）と 1 の文の指す先を [[労働者派遣契約]] に直した",
+      "questions_checked": [
+        "2022r04a-q79",
+        "2017h29h-q80",
+        "2024r06a-q79",
+        "2023r05a-q80",
+        "2023r05h-q79",
+        "2016h28h-q60"
+      ]
+    },
+    {
+      "no": 205,
+      "topic_id": 428,
+      "type": "A",
+      "verdict": "fixed",
+      "rule": "unit_plan.md の owners（受け持ちは共通の前提の説明だけ）、rewrite_open_items.md A の 5（混ざる行は subject を共通の前提だけに）",
+      "what": "行は請負と派遣の比較と、50・465・1 が [[請負契約]] を指して使う「請負では受注者が指揮命令する」前提が混ざっていた。subject を「請負では受注者が作業者に指揮命令し、発注者は作業者へ直接指示しないこと」に書き換えた（owner 428・topics はそのまま）",
+      "questions_checked": [
+        "2022r04a-q79",
+        "2022r04h-q79",
+        "2020r02o-q80"
+      ]
+    },
+    {
+      "no": 206,
+      "topic_id": 741,
+      "type": "H",
+      "verdict": "already",
+      "rule": "rewrite_open_items.md の H",
+      "what": "今の台帳 16-3 の 741 の 2 行は ### 契約の種類を先に確かめる理由 を指し、その見出しは本文に実在する。旧い見出し ### 請負契約と派遣契約の違い を指す行・図の after は無い。前の回の直しが済んでいる",
+      "questions_checked": [
+        "2016h28h-q60"
+      ]
+    },
+    {
+      "no": 207,
+      "topic_id": 513,
+      "type": "B",
+      "verdict": "fixed",
+      "rule": "write_materials.md「他の論点との分担」の単元をまたぐ行、rewrite_open_items.md B の 1・2",
+      "what": "513（単元 03）の ### 混同しやすい用語 から LPWA の項目を外し、[[LPWA]] を指す 1 文にした。後の単元の 677 は ### 混同しやすい用語の BLE の項目と図 1 で比較を既に持つので移さなかった",
+      "questions_checked": [
+        "2021r03h-q32",
+        "2017h29a-q10"
+      ]
+    },
+    {
+      "no": 208,
+      "topic_id": 172,
+      "type": "B",
+      "verdict": "fixed",
+      "rule": "write_materials.md「他の論点との分担」の単元をまたぐ行、rewrite_open_items.md B の 1・2",
+      "what": "172（単元 10）の ### 混同しやすい用語 からパケットフィルタリングの項目を外した。598（単元 11）に比較が無いので、598 に ### 混同しやすい用語 を立てて [[VLAN]] との見分けを移した。172 には 598・367 を指す 1 文を置き、項目が残らない混同の節は消した",
+      "questions_checked": [
+        "2024r06a-q45"
+      ]
+    },
+    {
+      "no": 209,
+      "topic_id": 172,
+      "type": "B",
+      "verdict": "fixed",
+      "rule": "write_materials.md「他の論点との分担」の単元をまたぐ行、rewrite_open_items.md B の 1・2",
+      "what": "172 の ### 混同しやすい用語 から認証 VLAN の項目を外した。項目の中身（認証結果で所属 VLAN を動的に割り当てる）は 367 の定義の文にあるので移さず、指す 1 文（208 と同じ文）だけにした",
+      "questions_checked": [
+        "2024r06a-q45"
+      ]
+    },
+    {
+      "no": 210,
+      "topic_id": 168,
+      "type": "B",
+      "verdict": "fixed",
+      "rule": "write_materials.md「他の論点との分担」の単元をまたぐ行、rewrite_open_items.md B の 1・2",
+      "what": "168（単元 10）の ### 混同しやすい用語 から DMZ の項目を外し、[[DMZ（非武装地帯）]] を指す 1 文にした。485（単元 11）は DMZ に置く機器としてリバースプロキシを挙げるだけで見分けが無いので、485 に ### 混同しやすい用語 を立てて移した",
+      "questions_checked": [
+        "2025r07a-q31",
+        "2019h31h-q35"
+      ]
+    },
+    {
+      "no": 211,
+      "topic_id": 186,
+      "type": "B",
+      "verdict": "fixed",
+      "rule": "write_materials.md「他の論点との分担」の単元をまたぐ行、rewrite_open_items.md B の 1・2",
+      "what": "186（単元 11）の ### 混同しやすい用語 を外し（項目が 1 つだけで残らないため節ごと）、### 攻撃にも検証にも使える の末尾に [[ペネトレーションテスト法]] を指す 1 文を置いた。637（単元 16）に比較が無いので、637 の ### 混同しやすい用語 の末尾に 1 文で移した（箇条を 3 つにしないため文）",
+      "questions_checked": [
+        "2024r06a-q46",
+        "2019h31h-q36",
+        "2018h30a-q59"
+      ]
+    },
+    {
+      "no": 212,
+      "topic_id": 570,
+      "type": "A",
+      "verdict": "fixed",
+      "rule": "write_materials.md「他の論点との分担」（比べる 2 つは学ぶ順で後の論点）、rewrite_open_items.md A の 2・3",
+      "what": "570 の ### 混同しやすい用語 からクロスサイトスクリプティングの項目を外して指す 1 文にし、658 の ### 混同しやすい用語 の段落の末尾（図の前）に SEO ポイズニングとの違いを 1 文で移した",
+      "questions_checked": [
+        "2020r02o-q39",
+        "2017h29a-q37"
+      ]
+    },
+    {
+      "no": 213,
+      "topic_id": 480,
+      "type": "A",
+      "verdict": "fixed",
+      "rule": "write_materials.md「他の論点との分担」（比べる 2 つは学ぶ順で後の論点）、rewrite_open_items.md A の 2・3",
+      "what": "480 の ### 混同しやすい用語 から第三者中継の項目を外して指す 1 文にし、196 に ### 混同しやすい用語 を立ててオープンリダイレクトの悪用との違いを移した",
+      "questions_checked": [
+        "2021r03a-q44"
+      ]
+    },
+    {
+      "no": 214,
+      "topic_id": 529,
+      "type": "A",
+      "verdict": "by_rule",
+      "rule": "write_materials.md「他の論点との分担」は比較・使い分けの置き場の決まり。rewrite_unit_crosscheck.md ①② で、後の論点の語はポップがあれば説明に数える",
+      "what": "529 の ### 盗まれ方と効く対策 の表のクロスサイトスクリプティングの行は、セッション ID が盗まれる経路の 1 つ（と効く対策 HttpOnly）を並べた物で、セッションハイジャックとクロスサイトスクリプティングの比較ではない。[[クロスサイトスクリプティング]] のポップがあり、学ぶ順で前の 210 も同じ語をポップ付きで使っている",
+      "questions_checked": [
+        "2021r03h-q44",
+        "2018h30h-q43",
+        "2016h28h-q41"
+      ]
+    }
+  ],
+  "edits": [
+    {
+      "file": "data/ap/materials_v4/10-5.json",
+      "topic_id": 171,
+      "field": "explanation",
+      "op": "replace",
+      "heading": null,
+      "before": "どちらも [[UDP]] のヘッダーには無い欄です。",
+      "after": "[[UDP]] との違いは、[[UDP]] の比較表で説明します。"
+    },
+    {
+      "file": "data/ap/materials_v4/10-5.json",
+      "topic_id": 171,
+      "field": "detail",
+      "op": "move",
+      "heading": "### シーケンス番号で順序と到達を守る → 357 の ### TCP と UDP の比較",
+      "before": "送り直させられます。[[UDP]] はこれらの欄を持たないため、順序の入れ替わりも欠落もそのまま上位へ渡します。",
+      "after": "送り直させられます。"
+    },
+    {
+      "file": "data/ap/materials_v4/10-5.json",
+      "topic_id": 171,
+      "field": "detail",
+      "op": "move",
+      "heading": "### TCP と UDP の比較 → 357 の ### TCP と UDP の比較",
+      "before": "### TCP と UDP の比較\n| 項目 | TCP | UDP |\n| --- | --- | --- |\n| コネクション | 送る前に確立 | 確立しない |\n| 確認応答・順序制御・再送 | あり | 無し |\n| 送信元・宛先ポート番号、チェックサム | あり | **あり** |\n| シーケンス番号、確認応答番号 | **あり** | 無し |\n| ウィンドウサイズ、コントロールフラグ（SYN や ACK） | あり | 無し |\n| ヘッダーの大きさ | 20 バイト（オプションなし） | 8 バイト固定 |\n| 向く用途 | 確実に届ける通信 | 音声・映像の配信 |\n\nUDP は信頼性のための欄と手続きを持たない分、ヘッダーが小さく処理も軽くなります。そのため、[[DNS]] の問合せのように速さを優先する用途に向きます。",
+      "after": ""
+    },
+    {
+      "file": "data/ap/materials_v4/10-5.json",
+      "topic_id": 171,
+      "field": "detail",
+      "op": "replace",
+      "heading": "### コネクションと流量の制御",
+      "before": "いずれもシーケンス番号と確認応答があって初めて成り立つ機能で、UDP にはありません。",
+      "after": "いずれもシーケンス番号と確認応答があって初めて成り立つ機能です。"
+    },
+    {
+      "file": "data/ap/materials_v4/10-5.json",
+      "topic_id": 357,
+      "field": "explanation",
+      "op": "replace",
+      "heading": null,
+      "before": "- 確認応答・順序制御・再送を行わない点での [[TCP]] との違いは、[[TCP]] の比較表で説明しました",
+      "after": "- 確認応答・順序制御・再送を**行わない**点が、[[TCP]] との違いです"
+    },
+    {
+      "file": "data/ap/materials_v4/10-5.json",
+      "topic_id": 357,
+      "field": "detail",
+      "op": "move",
+      "heading": "171 の ### TCP と UDP の比較・### シーケンス番号で順序と到達を守る → 357 の ### TCP と UDP の比較（新設の節、detail の末尾）",
+      "before": "ポート番号でアプリを識別します。](/figures/materials/ap/357-1.svg)",
+      "after": "ポート番号でアプリを識別します。](/figures/materials/ap/357-1.svg)\n### TCP と UDP の比較\n| 項目 | TCP | UDP |\n| --- | --- | --- |\n| コネクション | 送る前に確立 | 確立しない |\n| 確認応答・順序制御・再送 | あり | 無し |\n| 送信元・宛先ポート番号、チェックサム | あり | **あり** |\n| シーケンス番号、確認応答番号 | **あり** | 無し |\n| ウィンドウサイズ、コントロールフラグ（SYN や ACK） | あり | 無し |\n| ヘッダーの大きさ | 20 バイト（オプションなし） | 8 バイト固定 |\n| 向く用途 | 確実に届ける通信 | 音声・映像の配信 |\n\nUDP はシーケンス番号と確認応答番号を持たないため、順序の入れ替わりも欠落もそのまま上位へ渡します。信頼性のための欄と手続きを持たない分、ヘッダーが小さく処理も軽くなります。そのため、[[DNS]] の問合せのように速さを優先する用途に向きます。"
+    },
+    {
+      "file": "data/ap/materials_v4/10-5.json",
+      "topic_id": 447,
+      "field": "detail",
+      "op": "replace",
+      "heading": "### UDP を使う主なプロトコル",
+      "before": "TCP と UDP の向く用途の違いは [[TCP]] で説明しました。",
+      "after": "TCP と UDP の向く用途の違いは [[UDP]] で説明しました。"
+    },
+    {
+      "file": "data/ap/materials_v4/23-1.json",
+      "topic_id": 428,
+      "field": "detail",
+      "op": "move",
+      "heading": "### 3つの契約形態の違い → 50 の ### 派遣・請負・出向の違い",
+      "before": "### 3つの契約形態の違い\n「誰が指揮命令するか」「誰と雇用関係があるか」「何に対して報酬を払うか」の3点で形態が決まります。雇用関係は表の後で比べます。\n\n| 契約 | 指揮命令 | 報酬の対象 |\n| --- | --- | --- |\n| **請負契約** | **受注者** | 仕事の**完成** |\n| **準委任契約** | 受注者 | 一定の**業務の遂行** |\n| **労働者派遣契約** | **派遣先** | 労働時間 |\n\n[[労働者派遣契約]]では、指揮命令権だけが派遣先へ移ります。雇用主はどの形態でも作業者を雇っている側（請負・準委任なら受注者、派遣なら派遣元）のままです。",
+      "after": ""
+    },
+    {
+      "file": "data/ap/materials_v4/23-1.json",
+      "topic_id": 428,
+      "field": "detail",
+      "op": "insert",
+      "heading": "### 指揮命令が受注者に残る理由",
+      "before": "発注者の事業所に常駐して開発するのは、場所を借りているだけです。",
+      "after": "発注者の事業所に常駐して開発するのは、場所を借りているだけです。準委任や派遣と並べた契約形態の違いは、[[労働者派遣契約]]で比べます。"
+    },
+    {
+      "file": "data/ap/materials_v4/23-1.json",
+      "topic_id": 50,
+      "field": "detail",
+      "op": "move",
+      "heading": "428 の ### 3つの契約形態の違い → 50 の ### 派遣・請負・出向の違い（節の先頭）",
+      "before": "### 派遣・請負・出向の違い\n請負で発注者が",
+      "after": "### 派遣・請負・出向の違い\n「誰が指揮命令するか」「誰と雇用関係があるか」「何に対して報酬を払うか」の3点で形態が決まります。雇用関係は表の後で比べます。\n\n| 契約 | 指揮命令 | 報酬の対象 |\n| --- | --- | --- |\n| **請負契約** | **受注者** | 仕事の**完成** |\n| **準委任契約** | 受注者 | 一定の**業務の遂行** |\n| **労働者派遣契約** | **派遣先** | 労働時間 |\n\n労働者派遣契約では、指揮命令権だけが派遣先へ移ります。雇用主はどの形態でも作業者を雇っている側（請負・準委任なら受注者、派遣なら派遣元）のままです。\n請負で発注者が"
+    },
+    {
+      "file": "data/ap/materials_v4/23-2.json",
+      "topic_id": 1,
+      "field": "detail",
+      "op": "replace",
+      "heading": "### 著作権が最初に生じる先（原始的帰属）",
+      "before": "誰が作業者に指揮命令するかは、[[請負契約]]で説明しています。",
+      "after": "誰が作業者に指揮命令するかは、[[労働者派遣契約]]で説明しています。"
+    },
+    {
+      "file": "data/ap/materials_v4/16-3.json",
+      "topic_id": 741,
+      "field": "detail",
+      "op": "replace",
+      "heading": "### 契約の種類を先に確かめる理由",
+      "before": "何に対して報酬を払うかの違いは、[[請負契約]]で比べています。",
+      "after": "何に対して報酬を払うかの違いは、[[労働者派遣契約]]で比べています。"
+    },
+    {
+      "file": "data/ap/materials_v4/03-9.json",
+      "topic_id": 513,
+      "field": "detail",
+      "op": "replace",
+      "heading": "### 混同しやすい用語",
+      "before": "- **[[LPWA]]** — 低消費電力のまま数キロメートル届く広域向けの規格です。低消費電力は同じでも、距離が PAN とは大きく違います",
+      "after": "[[LPWA]]との違いは、その論点で説明します。"
+    },
+    {
+      "file": "data/ap/materials_v4/10-1.json",
+      "topic_id": 172,
+      "field": "detail",
+      "op": "delete",
+      "heading": "### 混同しやすい用語",
+      "before": "### 混同しやすい用語\n- **[[パケットフィルタリング]]** — IP アドレスやポート番号を条件に、通信を通すか捨てるかを決めます。VLAN は条件を判定せず、届く範囲を区切ります\n- **[[認証 VLAN]]** — 利用者や機器の認証結果に応じて、接続先の VLAN を動的に割り当てる仕組みです",
+      "after": ""
+    },
+    {
+      "file": "data/ap/materials_v4/10-1.json",
+      "topic_id": 172,
+      "field": "detail",
+      "op": "insert",
+      "heading": "### タグ VLAN とセグメント間の通信",
+      "before": "レイヤー 3 スイッチや[[ルータ]]が仲介します。",
+      "after": "レイヤー 3 スイッチや[[ルータ]]が仲介します。[[パケットフィルタリング]]や[[認証 VLAN]]との違いは、それぞれの論点で説明します。"
+    },
+    {
+      "file": "data/ap/materials_v4/11-14.json",
+      "topic_id": 598,
+      "field": "detail",
+      "op": "move",
+      "heading": "172 の ### 混同しやすい用語 → 598 の ### 混同しやすい用語（新設の節、detail の末尾）",
+      "before": "アプリケーション層の中身の検査は別の方式の持ち場です。",
+      "after": "アプリケーション層の中身の検査は別の方式の持ち場です。\n### 混同しやすい用語\n- **[[VLAN]]** — 条件を判定せず、ブロードキャストの届く範囲を区切ります。パケットフィルタリングは IP アドレスやポート番号を条件に、通信を通すか捨てるかを決めます"
+    },
+    {
+      "file": "data/ap/materials_v4/10-9.json",
+      "topic_id": 168,
+      "field": "detail",
+      "op": "replace",
+      "heading": "### 混同しやすい用語",
+      "before": "- **[[DMZ（非武装地帯）]]** — 公開サーバを置くための区画です。中継を担うのはリバースプロキシなどの機器で、DMZ はその置き場所を指します",
+      "after": "[[DMZ（非武装地帯）]]との違いは、その論点で説明します。"
+    },
+    {
+      "file": "data/ap/materials_v4/11-14.json",
+      "topic_id": 485,
+      "field": "detail",
+      "op": "move",
+      "heading": "168 の ### 混同しやすい用語 → 485 の ### 混同しやすい用語（新設の節、detail の末尾）",
+      "before": "(/figures/materials/ap/485-2.svg)",
+      "after": "(/figures/materials/ap/485-2.svg)\n### 混同しやすい用語\n- **[[リバースプロキシサーバ]]** — 公開サーバの手前で通信を中継する機器です。DMZ は中継を担う機器ではなく、その機器を置く区画を指します"
+    },
+    {
+      "file": "data/ap/materials_v4/11-7.json",
+      "topic_id": 186,
+      "field": "detail",
+      "op": "delete",
+      "heading": "### 混同しやすい用語",
+      "before": "### 混同しやすい用語\n- **[[ペネトレーションテスト法]]** — 実際に侵入を試みて安全性を確かめる**検査**そのものを指します。エクスプロイトコードは、その検査の中で使う道具の 1 つです",
+      "after": ""
+    },
+    {
+      "file": "data/ap/materials_v4/11-7.json",
+      "topic_id": 186,
+      "field": "detail",
+      "op": "insert",
+      "heading": "### 攻撃にも検証にも使える",
+      "before": "道具そのものは善悪どちらにも働きます。",
+      "after": "道具そのものは善悪どちらにも働きます。[[ペネトレーションテスト法]]との違いは、その論点で説明します。"
+    },
+    {
+      "file": "data/ap/materials_v4/16-4.json",
+      "topic_id": 637,
+      "field": "detail",
+      "op": "move",
+      "heading": "186 の ### 混同しやすい用語 → 637 の ### 混同しやすい用語（節の末尾に 1 文）",
+      "before": "統制の有効性を確かめる監査の技法とは目的が違います",
+      "after": "統制の有効性を確かめる監査の技法とは目的が違います\n\n[[エクスプロイトコード]]は、実際に侵入を試みるこの**検査**の中で使う道具の 1 つです。"
+    },
+    {
+      "file": "data/ap/materials_v4/11-10.json",
+      "topic_id": 570,
+      "field": "detail",
+      "op": "replace",
+      "heading": "### 混同しやすい用語",
+      "before": "- **[[クロスサイトスクリプティング]]** — 正規サイトの入力欄にスクリプトを埋め込み、閲覧者のブラウザで実行させる手口です。順位の操作とは別物です",
+      "after": "[[クロスサイトスクリプティング]]との違いは、その論点で説明します。"
+    },
+    {
+      "file": "data/ap/materials_v4/11-11.json",
+      "topic_id": 658,
+      "field": "detail",
+      "op": "move",
+      "heading": "570 の ### 混同しやすい用語 → 658 の ### 混同しやすい用語（段落の末尾、図の前）",
+      "before": "どちらも、送り込む物と実行される場所がクロスサイトスクリプティングと違います。",
+      "after": "どちらも、送り込む物と実行される場所がクロスサイトスクリプティングと違います。\n[[SEO ポイズニング]]は検索結果の順位を操作する手口で、入力欄にスクリプトを埋め込んで閲覧者のブラウザで実行させるクロスサイトスクリプティングとは別物です。"
+    },
+    {
+      "file": "data/ap/materials_v4/11-10.json",
+      "topic_id": 480,
+      "field": "detail",
+      "op": "replace",
+      "heading": "### 混同しやすい用語",
+      "before": "- **[[第三者中継（オープンリレー）]]** — 名前は似ていますが、悪用されるのはメールの中継機能です。誘導ではなく迷惑メールの送信に使われます",
+      "after": "[[第三者中継（オープンリレー）]]との違いは、その論点で説明します。"
+    },
+    {
+      "file": "data/ap/materials_v4/11-17.json",
+      "topic_id": 196,
+      "field": "detail",
+      "op": "move",
+      "heading": "480 の ### 混同しやすい用語 → 196 の ### 混同しやすい用語（新設の節、detail の末尾）",
+      "before": "などで認証済みの利用者からの送信」に限ることです。",
+      "after": "などで認証済みの利用者からの送信」に限ることです。\n### 混同しやすい用語\n- **[[オープンリダイレクトの悪用]]** — 名前は似ていますが、悪用されるのは Web サイトの遷移の機能で、偽サイトへの誘導に使われます。第三者中継で悪用されるのはメールの中継機能で、迷惑メールの送信に使われます"
+    }
+  ],
+  "owners": [
+    {
+      "unit": "10",
+      "op": "delete",
+      "before": {
+        "subject": "TCP と UDP の違い（確認応答・順序制御・再送の有無と、UDP が向く用途）",
+        "owner": 171,
+        "topics": [
+          171,
+          357,
+          447
+        ]
+      },
+      "after": null
+    },
+    {
+      "unit": "23",
+      "op": "replace",
+      "before": {
+        "subject": "請負と派遣で誰が作業者に指揮命令するか",
+        "owner": 428,
+        "topics": [
+          428,
+          50,
+          465,
+          1
+        ]
+      },
+      "after": {
+        "subject": "請負では受注者が作業者に指揮命令し、発注者は作業者へ直接指示しないこと",
+        "owner": 428,
+        "topics": [
+          428,
+          50,
+          465,
+          1
+        ]
+      }
+    }
+  ],
+  "figure_after": [],
+  "ledgers": [
+    {
+      "file": "data/ap/rewrite_ledgers/10-5.json",
+      "topic_id": 171,
+      "point": "順序の管理と再送のためにシーケンス番号と確認応答番号をヘッダーに持ち、UDP には無い欄",
+      "before": {
+        "fate": "kept",
+        "where": "explanation"
+      },
+      "after": {
+        "fate": "later",
+        "where": "357 の ### TCP と UDP の比較（シーケンス番号、確認応答番号の行。TCP が持つことは 171 の explanation）"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/10-5.json",
+      "topic_id": 171,
+      "point": "送信元・宛先のポート番号とチェックサムは TCP にも UDP にもあり、信頼性のための欄だけが TCP 固有（要点の箇条）",
+      "before": {
+        "fate": "duplicate",
+        "where": "### TCP と UDP の比較"
+      },
+      "after": {
+        "fate": "later",
+        "where": "357 の ### TCP と UDP の比較（ポート番号・チェックサムとシーケンス番号の行）"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/10-5.json",
+      "topic_id": 171,
+      "point": "通信の前に 3 ウェイハンドシェイクでコネクションを確立し、UDP はコネクションレス（要点の箇条）",
+      "before": {
+        "fate": "duplicate",
+        "where": "### TCP と UDP の比較"
+      },
+      "after": {
+        "fate": "later",
+        "where": "357 の ### TCP と UDP の比較（コネクションの行。3 ウェイハンドシェイクは 171 の ### コネクションと流量の制御）"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/10-5.json",
+      "topic_id": 171,
+      "point": "UDP は順序の入れ替わりも欠落もそのまま上位へ渡す",
+      "before": {
+        "fate": "kept",
+        "where": "### シーケンス番号で順序と到達を守る"
+      },
+      "after": {
+        "fate": "later",
+        "where": "357 の ### TCP と UDP の比較"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/10-5.json",
+      "topic_id": 171,
+      "point": "UDP はヘッダーが 8 バイトと小さく処理も軽いので、音声・映像の配信や DNS の問合せのように速さを優先する用途に向く",
+      "before": {
+        "fate": "kept",
+        "where": "### TCP と UDP の比較"
+      },
+      "after": {
+        "fate": "later",
+        "where": "357 の ### TCP と UDP の比較"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/10-5.json",
+      "topic_id": 171,
+      "point": "ヘッダーの項目の表（ポート番号・チェックサムは両方、シーケンス番号・確認応答番号・ウィンドウサイズ・コントロールフラグは TCP だけ）",
+      "before": {
+        "fate": "kept",
+        "where": "### TCP と UDP の比較"
+      },
+      "after": {
+        "fate": "later",
+        "where": "357 の ### TCP と UDP の比較"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/10-5.json",
+      "topic_id": 171,
+      "point": "ヘッダーの大きさ: TCP は 20 バイト（オプションなし）、UDP は 8 バイト固定",
+      "before": {
+        "fate": "kept",
+        "where": "### TCP と UDP の比較"
+      },
+      "after": {
+        "fate": "later",
+        "where": "357 の ### TCP と UDP の比較"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/10-5.json",
+      "topic_id": 171,
+      "point": "いずれもシーケンス番号と確認応答があって成り立ち、UDP には無い",
+      "before": {
+        "fate": "kept",
+        "where": "### コネクションと流量の制御"
+      },
+      "after": {
+        "fate": "later",
+        "where": "357 の ### TCP と UDP の比較（確認応答・順序制御・再送とウィンドウサイズの行。シーケンス番号と確認応答で成り立つことは 171 の ### コネクションと流量の制御）"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/10-5.json",
+      "topic_id": 357,
+      "point": "オーバーヘッドが小さく遅延を嫌う通信で使われる",
+      "before": {
+        "fate": "owner",
+        "where": "171"
+      },
+      "after": {
+        "fate": "kept",
+        "where": "### TCP と UDP の比較"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/10-5.json",
+      "topic_id": 357,
+      "point": "TCP はコネクションを確立し確認応答や再送で信頼性を保証する",
+      "before": {
+        "fate": "owner",
+        "where": "171"
+      },
+      "after": {
+        "fate": "kept",
+        "where": "### TCP と UDP の比較"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/10-5.json",
+      "topic_id": 357,
+      "point": "UDP は音声・映像のストリーミングや DNS の問合せなど速さを優先する用途で使う",
+      "before": {
+        "fate": "owner",
+        "where": "171"
+      },
+      "after": {
+        "fate": "kept",
+        "where": "### TCP と UDP の比較"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/10-5.json",
+      "topic_id": 357,
+      "point": "「信頼性のための機能をもたない」「データグラム通信」なら UDP、「確認応答」「順序制御」なら TCP（見分け方）",
+      "before": {
+        "fate": "owner",
+        "where": "171"
+      },
+      "after": {
+        "fate": "kept",
+        "where": "### TCP と UDP の比較"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/10-5.json",
+      "topic_id": 447,
+      "point": "確実に届ける必要がある通信は TCP、短く速さを優先する通信は UDP を使う（向く用途の違い）",
+      "before": {
+        "fate": "prior",
+        "where": "171"
+      },
+      "after": {
+        "fate": "prior",
+        "where": "357"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/23-1.json",
+      "topic_id": 428,
+      "point": "指揮命令・雇用関係・報酬の対象の 3 点で形態が決まる",
+      "before": {
+        "fate": "kept",
+        "where": "### 3つの契約形態の違い"
+      },
+      "after": {
+        "fate": "later",
+        "where": "50 の ### 派遣・請負・出向の違い"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/23-1.json",
+      "topic_id": 428,
+      "point": "請負・準委任・派遣の指揮命令と報酬の対象の表",
+      "before": {
+        "fate": "kept",
+        "where": "### 3つの契約形態の違い"
+      },
+      "after": {
+        "fate": "later",
+        "where": "50 の ### 派遣・請負・出向の違い"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/23-1.json",
+      "topic_id": 428,
+      "point": "請負は雇用と指揮命令が受注者にまとまり、派遣は指揮命令権だけが派遣先へ移る",
+      "before": {
+        "fate": "kept",
+        "where": "### 3つの契約形態の違い"
+      },
+      "after": {
+        "fate": "later",
+        "where": "50 の ### 派遣・請負・出向の違い（請負の側は 428 の ### 指揮命令が受注者に残る理由）"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/23-1.json",
+      "topic_id": 428,
+      "point": "雇用主はどの形態でも作業者を雇っている側（請負・準委任は受注者、派遣は派遣元）",
+      "before": {
+        "fate": "kept",
+        "where": "### 3つの契約形態の違い"
+      },
+      "after": {
+        "fate": "later",
+        "where": "50 の ### 派遣・請負・出向の違い"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/23-1.json",
+      "topic_id": 428,
+      "point": "請負では雇用関係も指揮命令権も受注者の側にまとまる（表の後の文）",
+      "before": {
+        "fate": "duplicate",
+        "where": "### 3つの契約形態の違い の表"
+      },
+      "after": {
+        "fate": "duplicate",
+        "where": "### 指揮命令が受注者に残る理由"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/23-2.json",
+      "topic_id": 1,
+      "point": "派遣社員は派遣先の指揮命令下で働く（請負と派遣で誰が指揮命令するか）",
+      "before": {
+        "fate": "owner",
+        "where": "428"
+      },
+      "after": {
+        "fate": "owner",
+        "where": "50"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/16-3.json",
+      "topic_id": 741,
+      "point": "派遣＝派遣先（委託側）が派遣労働者を指揮命令する",
+      "before": {
+        "fate": "owner",
+        "where": "428"
+      },
+      "after": {
+        "fate": "owner",
+        "where": "50"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/16-3.json",
+      "topic_id": 741,
+      "point": "派遣は仕事の完成そのものには責任を負わない",
+      "before": {
+        "fate": "owner",
+        "where": "428"
+      },
+      "after": {
+        "fate": "owner",
+        "where": "50"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/03-9.json",
+      "topic_id": 513,
+      "point": "LPWA は低消費電力のまま数キロメートル届く広域向けで、距離が PAN と大きく違う",
+      "before": {
+        "fate": "kept",
+        "where": "### 混同しやすい用語"
+      },
+      "after": {
+        "fate": "owner",
+        "where": "677（### 混同しやすい用語の BLE の項目と図 1）"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/10-1.json",
+      "topic_id": 172,
+      "point": "パケットフィルタリングは IP アドレスやポート番号を条件に通すか捨てるかを決め、VLAN は届く範囲を区切る",
+      "before": {
+        "fate": "kept",
+        "where": "### 混同しやすい用語"
+      },
+      "after": {
+        "fate": "owner",
+        "where": "598（### 混同しやすい用語）"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/10-1.json",
+      "topic_id": 172,
+      "point": "認証 VLAN は認証結果に応じて接続先の VLAN を動的に割り当てる",
+      "before": {
+        "fate": "kept",
+        "where": "### 混同しやすい用語"
+      },
+      "after": {
+        "fate": "owner",
+        "where": "367（explanation の定義）"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/10-9.json",
+      "topic_id": 168,
+      "point": "DMZ は公開サーバを置く区画で、中継を担うのは機器",
+      "before": {
+        "fate": "kept",
+        "where": "### 混同しやすい用語"
+      },
+      "after": {
+        "fate": "owner",
+        "where": "485（### 混同しやすい用語）"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/11-7.json",
+      "topic_id": 186,
+      "point": "ペネトレーションテスト法は検査そのもの、エクスプロイトコードはその中で使う道具",
+      "before": {
+        "fate": "kept",
+        "where": "### 混同しやすい用語"
+      },
+      "after": {
+        "fate": "owner",
+        "where": "637（### 混同しやすい用語）"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/11-10.json",
+      "topic_id": 570,
+      "point": "クロスサイトスクリプティングとの違い（入力欄にスクリプトを埋め込み閲覧者のブラウザで実行させる。順位の操作とは別物）",
+      "before": {
+        "fate": "kept",
+        "where": "### 混同しやすい用語（学ぶ順で後の 658 の語。他の束の論点で 7 つの行き先に当たる物が無いので残した。報告の spec_gaps）"
+      },
+      "after": {
+        "fate": "owner",
+        "where": "658（### 混同しやすい用語）"
+      }
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/11-10.json",
+      "topic_id": 480,
+      "point": "第三者中継（オープンリレー）との違い（悪用されるのはメールの中継機能で、迷惑メールの送信に使われる）",
+      "before": {
+        "fate": "kept",
+        "where": "### 混同しやすい用語（学ぶ順で後の 196 の語。他の束の論点で 7 つの行き先に当たる物が無いので残した。報告の spec_gaps）"
+      },
+      "after": {
+        "fate": "owner",
+        "where": "196（### 混同しやすい用語）"
+      }
+    }
+  ],
+  "returned": [],
+  "noticed": [
+    {
+      "topic_id": 163,
+      "what": "163 の ### 通信の種類との対応 の「グループ宛ての [[マルチキャスト]] にはクラス D を使います」が、要点の箇条「クラス D はマルチキャスト専用」と表の D の行（主な用途 マルチキャスト）と同じ点をなぞる（E の候補。ユニキャストにクラス A〜C を使う点は表に無い）"
+    },
+    {
+      "topic_id": 480,
+      "what": "480 の ### 混同しやすい用語 が detail の末尾でなく、後ろに ### 遷移先を外から受け取らない が続く（write_materials.md「見出し」の混同の節は末尾）"
+    },
+    {
+      "topic_id": 1,
+      "what": "単元 23 の owners の行（subject を請負の前提に書き換えた行）の topics に 1 が残る。1 は指揮命令の比較を [[労働者派遣契約]] で指すようにしたので、請負の前提に触れるのは表の「請負・委託 → 受注した会社」だけになった（topics は A の 5 の範囲外として変えていない）"
+    }
+  ],
+  "gates": {
+    "check_materials": 0,
+    "check_material_style": 0,
+    "render_check": 0,
+    "check_explanations": 0,
+    "check_unit_plans": 0,
+    "unfixed_warnings": [
+      {
+        "topic_id": 171,
+        "reason": "様式の門の lostNumber「前の世代にある 20 が無い」。TCP のヘッダー 20 バイトは表ごと 357 の ### TCP と UDP の比較 へ移した（台帳 10-5 の 171 の行を later に書き換え済み）"
+      }
+    ]
+  },
+  "chars": {
+    "before": 15685,
+    "after": 15785
+  },
+  "chars_note": "A・B で移した文（比較表・混同の項目）と、新しく立てた ### 混同しやすい用語・### TCP と UDP の比較 の見出しと、前の論点に置いた指す 1 文の分だけ増えた"
+}

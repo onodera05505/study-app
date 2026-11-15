@@ -1,0 +1,20 @@
+{
+  "target": "ip",
+  "unit": "21",
+  "items": [
+    {
+      "no": 1,
+      "figure": {
+        "topic_id": 371,
+        "figure_id": 1
+      },
+      "source": "open_items",
+      "kind": "restore",
+      "what": "371 の外した図 1（3 つの関係演算を並べた blocks）を 371 に戻すかの判断。比較を持つのは 371 なので戻すなら 371。戻すときは本文 ### 表を縦に切る操作 の比較の 1 文と同じ点になるので、図を残して文を縮める（台帳の該当行と removed_figures も合わせる）",
+      "proposal": "残る図と本文で要点が運べていなければ 371 に戻す",
+      "questions": [],
+      "related": [],
+      "restore_from": "data/ip/rewrite_open_items/lists_2026-11-16/restore/371-1.json"
+    }
+  ]
+}

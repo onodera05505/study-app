@@ -1,0 +1,40 @@
+{
+  "target": "ap",
+  "units": ["14", "22"],
+  "status": "done",
+  "items": [
+    {"no": 225, "topic_id": 633, "type": "B", "verdict": "fixed",
+     "rule": "write_materials.md「他の論点との分担」の単元をまたぐ行（前の単元の論点は後の単元の論点の語との比較を持たず、自分の側と指す 1 文だけ）、rewrite_open_items.md「B の直し方」1・2",
+     "what": "633（単元 14）の ### 混同しやすい用語 にあった後の単元 22 の 766（ガントチャート）との比較の箇条を外し、766 を指す 1 文に替えた（633 の側の性質は定義の文と ### 二つの尺度を重ねて見る が言い切っている。EVM の箇条は前の論点 8 との比較なので残した）。766 にはトレンドチャートとの比較が無かったので、766 の detail 末尾に ### 混同しやすい用語 を立て、外した比較を主語とつなぎだけ直して 1 項目で移した。owners は単元 14・22 とも単元をまたぐ行を持たず直していない。図は 633・766 とも ガントチャート／トレンドチャートを持たず触れていない",
+     "questions_checked": ["2018h30a-q52", "2016h28a-q74"]},
+    {"no": 226, "topic_id": 8, "type": "H", "verdict": "fixed",
+     "rule": "rewrite_open_items.md「点の台帳の直し方」H（where を今その点がある所へ書き換える）",
+     "what": "台帳 14-6 の 8 の行「どちらの効率を使う場面かを最初に確かめる（解き方の言い回し）」の where が今は無い見出し ### 計算の解き方 を指していた。点は今の ### 計算の解き方（完成時総コスト見積り） の末尾の文「EAC を出すときに割るのは、コスト効率の CPI です。」にあるので、where の見出しの名前をそこに書き換えた（fate は duplicate のまま）",
+     "questions_checked": ["2022r04h-q51", "2017h29h-q51"]}
+  ],
+  "edits": [
+    {"file": "data/ap/materials_v4/14-6.json", "topic_id": 633, "field": "detail", "op": "delete", "heading": "### 混同しやすい用語",
+     "before": "- **[[ガントチャート]]** — 作業ごとの日程の計画と実績を帯状に並べる図で、持っている軸は日程だけです。トレンドチャートは、折れ線に費用という 2 つ目の尺度を重ねた図です", "after": null},
+    {"file": "data/ap/materials_v4/14-6.json", "topic_id": 633, "field": "detail", "op": "insert", "heading": "### 混同しやすい用語",
+     "before": null, "after": "帯状に日程を並べる図との違いは、[[ガントチャート]] で説明しています。"},
+    {"file": "data/ap/materials_v4/22-8.json", "topic_id": 766, "field": "detail", "op": "move", "heading": "### 混同しやすい用語",
+     "before": {"topic_id": 633, "heading": "### 混同しやすい用語", "text": "- **[[ガントチャート]]** — 作業ごとの日程の計画と実績を帯状に並べる図で、持っている軸は日程だけです。トレンドチャートは、折れ線に費用という 2 つ目の尺度を重ねた図です"},
+     "after": {"topic_id": 766, "heading": "### 混同しやすい用語（detail の末尾に新設）", "text": "### 混同しやすい用語\n- **[[トレンドチャート]]** — 折れ線に費用という 2 つ目の尺度を重ねた図です。ガントチャートが持っている軸は日程だけです"}}
+  ],
+  "owners": [],
+  "figure_after": [],
+  "ledgers": [
+    {"file": "data/ap/rewrite_ledgers/14-6.json", "topic_id": 633, "point": "進捗管理の図は表現の形で決まる。折れ線で二尺度＝トレンドチャート、帯状に日程＝ガントチャート",
+     "before": {"fate": "duplicate", "where": "### 混同しやすい用語（ガントチャートの項）"}, "after": {"fate": "owner", "where": "766"}},
+    {"file": "data/ap/rewrite_ledgers/14-6.json", "topic_id": 633, "point": "ガントチャートは日程の軸だけで費用の軸が無い。トレンドチャートは費用という二つ目の尺度を重ねた図",
+     "before": {"fate": "kept", "where": "### 混同しやすい用語"}, "after": {"fate": "owner", "where": "766"}},
+    {"file": "data/ap/rewrite_ledgers/14-6.json", "topic_id": 8, "point": "どちらの効率を使う場面かを最初に確かめる（解き方の言い回し）",
+     "before": {"fate": "duplicate", "where": "### 計算の解き方（EAC で割るのはコスト効率の CPI、の 1 文）"}, "after": {"fate": "duplicate", "where": "### 計算の解き方（完成時総コスト見積り）（EAC を出すときに割るのはコスト効率の CPI、の 1 文）"}}
+  ],
+  "returned": [],
+  "noticed": [
+    {"topic_id": 8, "what": "### 計算の解き方（完成時総コスト見積り） は write_materials.md「見出し」の「### 計算の解き方 は中身を言う名前に替えない」に合わない名前に見える（図の after が指すかは未確認。一覧に無いので直していない）"}
+  ],
+  "gates": {"check_materials": 0, "check_material_style": 0, "render_check": 0, "check_explanations": 0, "check_unit_plans": null},
+  "chars": {"before": 3356, "after": 3383}
+}

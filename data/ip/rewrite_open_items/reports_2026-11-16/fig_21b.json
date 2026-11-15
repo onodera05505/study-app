@@ -1,0 +1,29 @@
+{
+  "target": "ip",
+  "unit": "21",
+  "status": "fixed",
+  "blocked": [],
+  "items": [
+    {"no": 1, "figure": {"topic_id": 371, "figure_id": 1}, "kind": "duplicate", "verdict": "applies", "action": "remove", "what": "371-1 の 2 段目（選択）と 3 段目（結合）だけで 196-1 の要点（選択は条件に合う行を取り出し、結合は共通の列で 2 表をつなぐ）が言えるので同じ内容と判定。3 つの関係演算を並べる比較は学ぶ順で最後の 371 が持ち（unit_plans/21 に関係演算の受け持ちは無い）、持たない側の 196-1 を外した。371-1 は直していない", "questions_checked": ["2025r07-q66", "2023r05-q100", "2021r03-q95", "2019h31h-q78", "2018h30h-q65", "2022r04-q98"]}
+  ],
+  "changed_figures": [],
+  "moved": [],
+  "removed": [
+    {"topic_id": 196, "figure_id": 1, "caption": "2 つの関係演算が表をどう変えるかを並べた図です。選択は条件に合う行を取り出し、結合は共通の列の値で 2 つの表をつなぎます。", "kept": {"topic_id": 371, "figure_id": 1}, "reason": "same_content"}
+  ],
+  "restored": [],
+  "ledgers": [
+    {"file": "data/ip/rewrite_ledgers/21-3.json", "changed_points": 0, "removed_figures_added": 1, "removed_figures_dropped": 0}
+  ],
+  "not_fixed": [
+    {"kind": "text_followup", "no": 1, "topic_id": 196, "figure_id": 1, "what": "materials_v4 の 196 の explanation の末尾に 196-1 の図の行が残る（差し込みの道具で外す）。図の置き場の決まり（持たない論点は持つ論点を文で指す）により、196 の本文に 3 つの関係演算の並びは [[射影]] の図で見られる旨の 1 文が要るかを本文の後追いで判断してほしい"},
+    {"kind": "other", "no": 1, "topic_id": 196, "figure_id": 1, "what": "台帳 21-3 の shared「3 つの関係演算が表をどう変えるかの図（blocks）」の holder が 196 のまま（今の持ち主は 371）。同じ shared の「関係演算の 3 つの説明と比較表」の holder 196 も、点の行は 371 の図 1 を指している。この段は shared を変えない決まりなので親が合わせてほしい。196 の aside の行の where の注記「3 つの中身は図 1 が持つ」も今は 371 の図 1"}
+  ],
+  "not_fixed_counts": {"text_followup": 1, "other": 1},
+  "counts": {"applies": 1, "not_applies": 0, "data_suspect": 0},
+  "gates": {
+    "render_check": {"stops": 0, "warnings_before": 0, "warnings_after": 0},
+    "unfixed_warnings": []
+  },
+  "written": ["data/ip/material_figures/196.json", "data/ip/rewrite_ledgers/21-3.json", "public/figures/materials/ip/196-2.svg", "public/figures/materials/ip/371-1.svg", "data/ip/rewrite_open_items/reports_2026-11-16/figures_png/ip-21/196-2.png", "data/ip/rewrite_open_items/reports_2026-11-16/figures_png/ip-21/371-1.png"]
+}

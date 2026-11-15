@@ -1,0 +1,195 @@
+{
+ "target": "ip",
+ "units": [
+  "04",
+  "07",
+  "14",
+  "17",
+  "23"
+ ],
+ "status": "done",
+ "items": [
+  {
+   "no": 211,
+   "topic_id": 326,
+   "type": "D",
+   "verdict": "fixed",
+   "rule": "rewrite_open_items.md「D の直し方」3 → rewrite_text_followup.md「直し方」3「判断材料で、今の教材のどこにも無い」の戻し方（置く所 1）",
+   "what": "旧版の detail「参入障壁をつくる — その技術を使った商品や事業に他社が入ってこられず、市場での優位を守れます」と旧版の図 1 の箱「参入障壁 他社が市場に入れない」にあった点が、今の本文にも今の図 1（使い方の 3 つの箱）にも無かった。2022r04-q6 の c（他社の参入を阻止できる）の正解の根拠なので、### 特許が与える独占権 の「効果は独占権の使い方から生まれます」の続きに 1 文で戻した。台帳の行は既に kept・同じ見出しを指しているので変えていない",
+   "questions_checked": [
+    "2022r04-q6"
+   ]
+  },
+  {
+   "no": 212,
+   "topic_id": 125,
+   "type": "H",
+   "verdict": "by_rule",
+   "rule": "rewrite_materials_by_group.md「情報を落とさない確かめ方」の explanation の定義（誤答のケアは問題解説へ送ってよい）、rewrite_text_followup.md「直し方」3 の 2 行目",
+   "what": "2018h30a-q17 の正解（営業部門長と合意する）は図 1 の手順 4「まとめた要件を利用部門の責任者と合意する」と caption で選べる。「開発側の中だけで承認しても完了にならない」はエ（プロジェクトマネージャが承認）を打ち消すだけの誤答のケアで、エの note が同じ点を持つので、台帳の行（explanation）は正しい。直していない",
+   "questions_checked": [
+    "2018h30a-q17",
+    "2024r06-q33"
+   ]
+  },
+  {
+   "no": 213,
+   "topic_id": 513,
+   "type": "F",
+   "verdict": "fixed",
+   "rule": "rewrite_open_items.md「F の直し方」→ rewrite_unit_crosscheck.md ⑥（予告・前提の文を指す物の手前へ移す。文の位置の直し）",
+   "what": "### 一致するかを見る手順 で、「*A*.te??」の条件を言う文より前に、その条件を前提にした「前後の * は 0 文字でもよいので…A で始まる名前にも一致します」があった。2 文の順を入れ替えただけで、文字は変えていない",
+   "questions_checked": []
+  },
+  {
+   "no": 214,
+   "topic_id": 385,
+   "type": "A",
+   "verdict": "fixed",
+   "rule": "write_materials.md「他の論点との分担」（3 つ以上を並べる比較は学ぶ順で最後の論点が持つ。後の論点が前の論点との違いを 1 か所で言う）、rewrite_open_items.md「A の直し方」2 と「D の直し方」3（戻し方の置く所 3: 旧版で explanation の要点の箇条だった点）",
+   "what": "まとまり「証明書と暗号化通信」の学ぶ順で 385 は 386（SSL/TLS）より後、228（WPA2）は前のまとまりで、区間ごとの暗号化との比較は 385 が持つ。今の 385 は本文にも図 1 にも違いが無かった（旧版の図 1 の「SSL/TLS が守る」「守られない区間」は図の見直しで外れ、旧版の要点の箇条「区間ごとの暗号化とは違い、メール自体を暗号化します」は台帳で図へ送られていた）。explanation の要点の箇条の末尾に「[[SSL/TLS（…）]] のような区間ごとの暗号化とは違い、メール自体を暗号化します」を 1 項目戻し、台帳の行を kept・explanation に書き換えた。386・228 は S/MIME の語を持たないので直す所は無い",
+   "questions_checked": [
+    "2021r03-q68",
+    "2018h30h-q69"
+   ]
+  },
+  {
+   "no": 215,
+   "topic_id": 29,
+   "type": "H",
+   "verdict": "fixed",
+   "rule": "rewrite_open_items.md「点の台帳の直し方」H",
+   "what": "5 行の点は今の ### 繰返しの回数と正多角形の角度 の節にすべてある（初期値・増分・終値、両方含む、0 から 6 回・1 から 5 回、外角で正六角形 60 度）。where の見出しを今の名前に書き換えた（duplicate の行は括弧の注記を残した）。本文は変えていない",
+   "questions_checked": []
+  }
+ ],
+ "edits": [
+  {
+   "file": "data/ip/materials_v4/04-5.json",
+   "topic_id": 326,
+   "field": "detail",
+   "op": "insert",
+   "heading": "### 特許が与える独占権",
+   "before": "特許化の効果は、どれもこの独占権の使い方から生まれます。使用料で回収できるのは、開発費の**一部**です。",
+   "after": "特許化の効果は、どれもこの独占権の使い方から生まれます。自社だけで使えば、その技術を使った商品や事業に他社が入れず、市場での優位を守れます。使用料で回収できるのは、開発費の**一部**です。"
+  },
+  {
+   "file": "data/ip/materials_v4/17-2.json",
+   "topic_id": 513,
+   "field": "detail",
+   "op": "move",
+   "heading": "### 一致するかを見る手順",
+   "before": "前後の「*」は 0 文字でもよいので、「*A*.te??」は A で始まる名前にも一致します。「*A*.te??」は、どこかに A があり、その後ろに「.te」が続き、さらにちょうど 2 文字で終わる、という条件です。",
+   "after": "「*A*.te??」は、どこかに A があり、その後ろに「.te」が続き、さらにちょうど 2 文字で終わる、という条件です。前後の「*」は 0 文字でもよいので、「*A*.te??」は A で始まる名前にも一致します。"
+  },
+  {
+   "file": "data/ip/materials_v4/23-10.json",
+   "topic_id": 385,
+   "field": "explanation",
+   "op": "insert",
+   "heading": "explanation",
+   "before": "- メールを運ぶのは [[SMTP]] や [[POP3]] で、S/MIME はメールソフト間で安全にやりとりするための決まりごとを定めた**規格**です",
+   "after": "- メールを運ぶのは [[SMTP]] や [[POP3]] で、S/MIME はメールソフト間で安全にやりとりするための決まりごとを定めた**規格**です\n- [[SSL/TLS（Secure Sockets Layer/Transport Layer Security）]] のような区間ごとの暗号化とは違い、**メール自体**を暗号化します"
+  }
+ ],
+ "owners": [],
+ "figure_after": [],
+ "ledgers": [
+  {
+   "file": "data/ip/rewrite_ledgers/23-10.json",
+   "topic_id": 385,
+   "point": "区間ごとの暗号化とは違い、メール自体を暗号化する",
+   "before": {
+    "fate": "figure",
+    "where": "385 の図 1（「S/MIME メールそのものを暗号化」の箱と、途中のサーバでも暗号化したままの線）。区間ごとの暗号化との違いは 2021r03-q68 の解説"
+   },
+   "after": {
+    "fate": "kept",
+    "where": "explanation"
+   }
+  },
+  {
+   "file": "data/ip/rewrite_ledgers/14-1.json",
+   "topic_id": 29,
+   "point": "0 からと 1 からでは 1 回ずれる（要点の箇条）",
+   "before": {
+    "fate": "duplicate",
+    "where": "### 繰返しの回数（0 から 6 未満は 6 回、1 からは 5 回）"
+   },
+   "after": {
+    "fate": "duplicate",
+    "where": "### 繰返しの回数と正多角形の角度（0 から 6 未満は 6 回、1 からは 5 回）"
+   }
+  },
+  {
+   "file": "data/ip/rewrite_ledgers/14-1.json",
+   "topic_id": 29,
+   "point": "ループ端や for では制御変数の初期値・増分・終値を指定する",
+   "before": {
+    "fate": "kept",
+    "where": "### 繰返しの回数"
+   },
+   "after": {
+    "fate": "kept",
+    "where": "### 繰返しの回数と正多角形の角度"
+   }
+  },
+  {
+   "file": "data/ip/rewrite_ledgers/14-1.json",
+   "topic_id": 29,
+   "point": "初期値と終値の両方が含まれる",
+   "before": {
+    "fate": "kept",
+    "where": "### 繰返しの回数"
+   },
+   "after": {
+    "fate": "kept",
+    "where": "### 繰返しの回数と正多角形の角度"
+   }
+  },
+  {
+   "file": "data/ip/rewrite_ledgers/14-1.json",
+   "topic_id": 29,
+   "point": "0 から 6 未満は 6 回、1 からは 5 回",
+   "before": {
+    "fate": "kept",
+    "where": "### 繰返しの回数"
+   },
+   "after": {
+    "fate": "kept",
+    "where": "### 繰返しの回数と正多角形の角度"
+   }
+  },
+  {
+   "file": "data/ip/rewrite_ledgers/14-1.json",
+   "topic_id": 29,
+   "point": "正多角形を描くロボットの曲がる角度は内角でなく外角で、一周 360 度なので正六角形は 60 度",
+   "before": {
+    "fate": "kept",
+    "where": "### 繰返しの回数"
+   },
+   "after": {
+    "fate": "kept",
+    "where": "### 繰返しの回数と正多角形の角度"
+   }
+  }
+ ],
+ "returned": [],
+ "noticed": [
+  {
+   "topic_id": 326,
+   "what": "台帳 04-5 の行「交渉力を得る — 提携を組むとき、有力な特許を持つ側は有利な条件を出せる」は kept・### 特許が与える独占権 だが、今の本文は「クロスライセンスも、有力な特許を持つ側の交渉力があって成り立ちます」だけで、「提携で有利な条件を出せる」の句が無い（2022r04-q6 の a の根拠。旧版の図 1 の箱「交渉力 提携で有利な条件を出せる」も外れている）。一覧に無いので触れていない"
+  }
+ ],
+ "gates": {
+  "check_materials": 0,
+  "check_material_style": 0,
+  "render_check": 0,
+  "check_explanations": 0,
+  "check_unit_plans": null
+ },
+ "chars": {
+  "before": 83917,
+  "after": 84054
+ }
+}

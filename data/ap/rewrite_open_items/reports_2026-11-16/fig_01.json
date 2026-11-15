@@ -1,0 +1,35 @@
+{
+  "target": "ap",
+  "unit": "01",
+  "status": "fixed",
+  "blocked": [],
+  "items": [
+    {"no": 1, "figure": {"topic_id": 62, "figure_id": 1}, "kind": "figure_only_term", "verdict": "applies", "action": "edit", "what": "検査式の箱を c0・c1・c2、誤り位置の箱を i にし、線を「重み 1・2・4」「i が 0 でない／i が 0（全部 0）」にして、explanation の中心の式 i＝c0＋c1×2＋c2×4 と対応して読めるようにした。c0〜c2・i は本文の explanation が中心の式の記号として定義した教材の言葉で、重み 1・2・4 は 2 の累乗で定義から決まる値。受信語・各式の値・誤り位置 3・訂正後の符号語は図に入れていないので、登場物と題材の線・値の線・答え合わせの印には当たらないと判定した", "questions_checked": ["2024r06h-q4", "2022r04h-q4", "2020r02o-q10", "2018h30a-q9"]}
+  ],
+  "changed_figures": [
+    {"topic_id": 62, "figure_id": 1, "png": "data/ap/rewrite_open_items/reports_2026-11-16/figures_png/ap-01/62-1.png", "intended_point": "崩れて 1 になった検査式 c0・c1・c2 を重み 1・2・4 で足した値 i が誤ったビットの位置で、i が 0 でなければそのビットを反転して訂正し、0 なら誤りは無い"}
+  ],
+  "moved": [],
+  "removed": [],
+  "restored": [],
+  "ledgers": [
+    {"file": "data/ap/rewrite_ledgers/01-7.json", "changed_points": 0, "removed_figures_added": 0, "removed_figures_dropped": 0}
+  ],
+  "not_fixed": [],
+  "not_fixed_counts": {},
+  "counts": {"applies": 1, "not_applies": 0, "data_suspect": 0},
+  "gates": {
+    "render_check": {"stops": 0, "warnings_before": 0, "warnings_after": 0},
+    "unfixed_warnings": []
+  },
+  "written": [
+    "data/ap/material_figures/62.json",
+    "public/figures/materials/ap/62-1.svg",
+    "public/figures/materials/ap/62-2.svg",
+    "data/ap/rewrite_open_items/reports_2026-11-16/figures_png/ap-01/62-1.png",
+    "data/ap/rewrite_open_items/reports_2026-11-16/figures_png/ap-01/62-1.svg",
+    "data/ap/rewrite_open_items/reports_2026-11-16/figures_png/ap-01/62-2.png",
+    "data/ap/rewrite_open_items/reports_2026-11-16/figures_png/ap-01/62-2.svg",
+    "data/ap/rewrite_open_items/reports_2026-11-16/fig_01.json"
+  ]
+}

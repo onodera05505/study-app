@@ -1,0 +1,93 @@
+{
+  "target": "ap",
+  "units": [
+    "10",
+    "11"
+  ],
+  "status": "done",
+  "items": [
+    {
+      "no": 250,
+      "topic_id": 163,
+      "type": "E",
+      "verdict": "fixed",
+      "rule": "rewrite_unit_crosscheck.md X11（文章や箇条が同じ論点の表と同じ内容をなぞるときは表を残して文章の側を縮める）、write_materials.md「1 つの点は 1 か所で言う」（要点の箇条が表と同じ結論を 1 行で言うのは重複に数えない）",
+      "what": "### 通信の種類との対応 の「グループ宛ての [[マルチキャスト]] にはクラス D を使います」は、### クラスと先頭ビットの対応 の表の D の行（主な用途 マルチキャスト）をなぞっていた。表と要点の箇条（重複に数えない）を残し、文からクラス D の句を外して「1 対 1 のユニキャストにはクラス A〜C を使います。」にした。ユニキャストの点は表に無いので残した",
+      "questions_checked": [
+        "2024r06a-q35"
+      ]
+    },
+    {
+      "no": 251,
+      "topic_id": 480,
+      "type": "F",
+      "verdict": "fixed",
+      "rule": "write_materials.md「見出し」（### 混同しやすい用語 は detail の末尾に置く）、rewrite_unit_crosscheck.md ⑥（見出しと中身・位置）",
+      "what": "### 混同しやすい用語 の節（箇条 1 項目と、第三者中継（オープンリレー）を指す 1 文）を、### 遷移先を外から受け取らない の後ろ（detail の末尾）へそのまま移した。文は 1 字も変えていない。図 1 の after は explanation で、どちらの見出しも指していない",
+      "questions_checked": [
+        "2021r03a-q44"
+      ]
+    }
+  ],
+  "edits": [
+    {
+      "file": "data/ap/materials_v4/10-3.json",
+      "topic_id": 163,
+      "field": "detail",
+      "op": "replace",
+      "heading": "### 通信の種類との対応",
+      "before": "アドレスクラスは宛先の種類とも対応しています。1 対 1 のユニキャストにはクラス A〜C を使い、グループ宛ての [[マルチキャスト]] にはクラス D を使います。",
+      "after": "アドレスクラスは宛先の種類とも対応しています。1 対 1 のユニキャストにはクラス A〜C を使います。"
+    },
+    {
+      "file": "data/ap/materials_v4/11-10.json",
+      "topic_id": 480,
+      "field": "detail",
+      "op": "move",
+      "heading": "### 混同しやすい用語",
+      "before": {
+        "topic_id": 480,
+        "heading": "### 混同しやすい用語",
+        "position": "### なぜ危険になるのか の後、### 遷移先を外から受け取らない の前"
+      },
+      "after": {
+        "topic_id": 480,
+        "heading": "### 混同しやすい用語",
+        "position": "detail の末尾（### 遷移先を外から受け取らない の後）"
+      }
+    }
+  ],
+  "owners": [],
+  "figure_after": [],
+  "ledgers": [
+    {
+      "file": "data/ap/rewrite_ledgers/10-3.json",
+      "topic_id": 163,
+      "point": "マルチキャストにはクラス D を使う（### 通信の種類との対応 の文と表の D の行で 2 回）",
+      "before": null,
+      "after": {
+        "point": "マルチキャストにはクラス D を使う（### 通信の種類との対応 の文と表の D の行で 2 回）",
+        "fate": "duplicate",
+        "where": "### クラスと先頭ビットの対応 の表"
+      }
+    }
+  ],
+  "returned": [],
+  "noticed": [
+    {
+      "topic_id": 163,
+      "what": "台帳の既にある行「ユニキャストにはクラス A〜C、マルチキャストにはクラス D を使う」（kept、### 通信の種類との対応）は、ユニキャストの側が同じ節に残るので書き換えず、外したクラス D の側は 1 行足して duplicate にした（point は変えない決まりのため 2 行で表した）"
+    }
+  ],
+  "gates": {
+    "check_materials": 0,
+    "check_material_style": 0,
+    "render_check": 0,
+    "check_explanations": 0,
+    "check_unit_plans": 0
+  },
+  "chars": {
+    "before": 1810,
+    "after": 1778
+  }
+}

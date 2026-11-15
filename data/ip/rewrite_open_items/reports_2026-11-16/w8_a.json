@@ -1,0 +1,87 @@
+{
+  "target": "ip",
+  "units": [
+    "06"
+  ],
+  "status": "done",
+  "items": [
+    {
+      "no": 293,
+      "topic_id": 262,
+      "type": "I",
+      "verdict": "fixed",
+      "rule": "rewrite_open_items.md 種 I（図の after が指していない見出しは消す）、write_materials.md「他の論点との分担」（前の論点は比較を持つ後の論点を指す 1 文だけ）",
+      "what": "262 の図の仕様は figures が空で、### BPR・BPM との違い を after に持つ図は無い。見出しの行だけを消し、498 を指す 1 文はそのまま残して ### 記号をそろえる意味 の末尾に入る形にした（文は 1 字も変えていない）。262-1.svg の図の行は触っていない。",
+      "questions_checked": [
+        "2023r05-q23"
+      ]
+    },
+    {
+      "no": 294,
+      "topic_id": 498,
+      "type": "E",
+      "verdict": "fixed",
+      "rule": "rewrite_unit_crosscheck.md X11（本文が同じ論点の図と同じ点をなぞるときは図の読み方の 1〜2 文に縮める）、write_materials.md「1 つの点は 1 か所で言う」",
+      "what": "498 の ### 混同しやすい用語 の 2 文（BPR・BPM は活動、BPMN は表記法）は、図 3 の行「指すもの」「何をするか」と caption が全部言っていたので、図を読む前の導入 1 文「名前の似た [[BPM]]・[[BPMN（…）]] との違いは、3 つを並べた表で見比べます。」に縮めた。消した点は台帳で行き先を図 3 にした。",
+      "questions_checked": [
+        "2018h30a-q13"
+      ]
+    }
+  ],
+  "edits": [
+    {
+      "file": "data/ip/materials_v4/06-2.json",
+      "topic_id": 262,
+      "field": "detail",
+      "op": "delete",
+      "heading": "### BPR・BPM との違い",
+      "before": "### BPR・BPM との違い\nBPR・BPM との違いは [[BPR（Business Process Reengineering）]] で説明します。",
+      "after": "BPR・BPM との違いは [[BPR（Business Process Reengineering）]] で説明します。"
+    },
+    {
+      "file": "data/ip/materials_v4/06-3.json",
+      "topic_id": 498,
+      "field": "detail",
+      "op": "replace",
+      "heading": "### 混同しやすい用語",
+      "before": "BPR と、名前の似た [[BPM]] は、業務をどう変えるか・どう回すかという活動の名前です。[[BPMN（Business Process Model and Notation）]] は、業務の流れを図に描くときの表記法です。",
+      "after": "名前の似た [[BPM]]・[[BPMN（Business Process Model and Notation）]] との違いは、3 つを並べた表で見比べます。"
+    }
+  ],
+  "owners": [],
+  "figure_after": [],
+  "ledgers": [
+    {
+      "file": "data/ip/rewrite_ledgers/06-3.json",
+      "topic_id": 498,
+      "point": "BPR と BPM は業務をどう変えるか・どう回すかという活動の名前で、BPMN は業務の流れを図に描くときの表記法（### 混同しやすい用語 の文）",
+      "before": {},
+      "after": {
+        "fate": "figure",
+        "where": "498 の図 3（行「指すもの」の「活動」「表記法」と、行「何をするか」・caption）"
+      }
+    }
+  ],
+  "returned": [],
+  "noticed": [
+    {
+      "topic_id": 498,
+      "what": "rewrite_ledgers/06-3.json の shared「BPR と BPM の違い（一度きりの作り直しと、続けて回す改善）」の holder が 262 のまま。今その違いを持つのは 498 の図 3（直していない）"
+    },
+    {
+      "topic_id": 262,
+      "what": "一覧の questions に挙がる 2019h31h-q2 は 06-4 の論点 468（ワークフロー）の過去問で、262・498 には紐づいていない"
+    }
+  ],
+  "gates": {
+    "check_materials": 0,
+    "check_material_style": 0,
+    "render_check": 0,
+    "check_explanations": 0,
+    "check_unit_plans": null
+  },
+  "chars": {
+    "before": 15361,
+    "after": 15310
+  }
+}

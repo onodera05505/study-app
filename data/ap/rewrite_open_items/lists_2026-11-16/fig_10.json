@@ -1,0 +1,44 @@
+{
+  "target": "ap",
+  "unit": "10",
+  "items": [
+    {
+      "no": 1,
+      "figure": {
+        "topic_id": 479,
+        "figure_id": 2
+      },
+      "source": "open_items",
+      "kind": "body_rule",
+      "what": "479 の図 2（matrix）のエニーキャストの列を外せる。点は本文 ### 宛先の種類と届く範囲 に戻り、台帳も kept。外した後の図は ユニキャストとブロードキャストの 2 列になる",
+      "proposal": "エニーキャストの列を図から外す",
+      "questions": [],
+      "related": [
+        {
+          "topic_id": 479,
+          "figure_id": 1
+        }
+      ],
+      "restore_from": null
+    },
+    {
+      "no": 2,
+      "figure": {
+        "topic_id": 676,
+        "figure_id": 1
+      },
+      "source": "open_items",
+      "kind": "body_rule",
+      "what": "676 の図 1（explanation の直後の matrix）の IP アドレスの行を外せる。点は本文 ### SSID が果たす役割 に戻り、台帳も kept。行を外すと SSID の 1 行だけの表になるので、図 1 を残すか図 2 に寄せるかを図の見直しの段で決める",
+      "proposal": "IP アドレスの行を外し、1 行だけになる図 1 を残すか図 2 に寄せるかを決める",
+      "questions": [],
+      "related": [
+        {
+          "topic_id": 676,
+          "figure_id": 2
+        }
+      ],
+      "restore_from": null
+    }
+  ]
+}

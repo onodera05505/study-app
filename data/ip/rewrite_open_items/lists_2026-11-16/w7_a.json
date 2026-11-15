@@ -1,0 +1,23 @@
+{
+ "target": "ip",
+ "units": [
+  "15"
+ ],
+ "items": [
+  {
+   "no": 292,
+   "unit": "15",
+   "topic_id": 432,
+   "figure": null,
+   "source": "figures_review",
+   "kind": "ledger_row",
+   "what": "data/ip/rewrite_ledgers/15-2.json の 432 の owner の 2 行（SRAM…キャッシュに使う／DRAM…主記憶に使う）の where の括弧「対比は 432 の図 2 にも残る」と、aside の行の「対比そのものは 432 の図 2 と 169 にある」が、移した後は「169 の図 2」を指すべき古い記述になった。この段の決まり（fate が figure の行だけを直し、他の行は変えない）に従い直していない",
+   "related": [
+    {
+     "topic_id": 169,
+     "figure_id": 2
+    }
+   ]
+  }
+ ]
+}

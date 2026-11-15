@@ -1,0 +1,46 @@
+{
+ "target": "ip",
+ "units": [
+  "06"
+ ],
+ "items": [
+  {
+   "no": 293,
+   "unit": "06",
+   "topic_id": 262,
+   "figure": null,
+   "source": "text_followup",
+   "kind": "heading",
+   "what": "図 1 が 498 の図 3 へ移り、262 の ### BPR・BPM との違い の下は 498 を指す 1 文だけになった。write_materials.md の「見出しの下が図だけになるときは」に沿って節ごと消し、指す 1 文を ### 記号をそろえる意味 の末尾などへ移す直しは、節の構成の組み直しで本文の後追いの段の範囲の外（見出しを消すので heading にも近い）。262 の図の仕様は figures が空で、この見出しを after に持つ図は無い（元の申告: 262 の ### BPR・BPM との違い は、図が 498 へ移って 498 を指す 1 文だけが残る。節ごと消し、498 を指す 1 文を残すなら ### 記号をそろえる意味 の末尾などへ移す（write_materials.md「見出しの下が図だけになるときは」）。materials_v4/06-2.json の 262 の detail に残る図の行 ![…](/figures/materials/ip/262-1.svg) も、図の差し込みのときに外れることを確かめる）",
+   "questions": [
+    "2018h30a-q13",
+    "2019h31h-q2",
+    "2023r05-q23"
+   ],
+   "related": [
+    {
+     "topic_id": 262,
+     "figure_id": 1
+    },
+    {
+     "topic_id": 498,
+     "figure_id": 3
+    }
+   ]
+  },
+  {
+   "no": 294,
+   "unit": "06",
+   "topic_id": 498,
+   "figure": {
+    "topic_id": 498,
+    "figure_id": 3
+   },
+   "source": "text_followup",
+   "kind": "duplicate",
+   "what": "498 の ### 混同しやすい用語 の BPM・BPMN の文が、移ってきた図 3 と caption が言う点（BPR・BPM は活動、BPMN は表記法）をなぞる。文を図を読む前の導入 1 文に縮めるか、図に無いことだけにする直し（元の申告: 498 の ### 混同しやすい用語 の文「BPR と、名前の似た BPM は…活動の名前です。BPMN は…表記法です。」は、移した図 3 と caption が言う点と同じ（1 つの点は 1 か所で言う）。図を残すので、文は図を読む前の導入 1 文に縮めるか、図に無いこと（理由）だけにする）",
+   "questions": [],
+   "related": []
+  }
+ ]
+}

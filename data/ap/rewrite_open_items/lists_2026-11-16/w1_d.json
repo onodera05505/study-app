@@ -1,0 +1,189 @@
+{
+ "target": "ap",
+ "units": [
+  "10"
+ ],
+ "items": [
+  {
+   "no": 28,
+   "unit": "10",
+   "topic_id": 166,
+   "figure": 1,
+   "source": "figures_review",
+   "kind": "text_followup",
+   "what": "UPS の箱（選択肢ウの語）と caption 2 文目を図から外したいが、点「給電元のスイッチを UPS につなぐと、先の機器すべてを一括して停電から守れる」（data/ap/rewrite_ledgers/10-2.json の 166 の points[7]、fate figure）が本文にも問題解説（2025r07h-q29 の note ウ は UPS 一般の説明だけ）にも無い。本文（### LAN ケーブルに電力を重ねるしくみ など）へ戻せば、図から UPS の箱を外してコンセント→PoE スイッチを直に結び、caption 2 文目を消せる",
+   "related": [
+    29
+   ]
+  },
+  {
+   "no": 34,
+   "unit": "10",
+   "topic_id": 166,
+   "figure": 1,
+   "source": "text_followup",
+   "kind": "other",
+   "what": "点「給電元のスイッチを UPS につなぐと、先の機器すべてを一括して停電から守れる」は判断材料でも問題解説に送ってよい物でもない応用情報の周辺知識。この段の範囲の 3 は判断材料だけを戻すので、本文の ### LAN ケーブルに電力を重ねるしくみ へ戻して図から UPS の箱を外すか、図に残すかを本人に諮る（戻さず図から外すと行き先が 8 つの fate のどれにも当たらず落ちる）",
+   "related": []
+  },
+  {
+   "no": 118,
+   "unit": "10",
+   "topic_id": 357,
+   "figure": null,
+   "source": "acceptance",
+   "kind": "heading",
+   "what": "唯一の節が 1 文",
+   "related": []
+  },
+  {
+   "no": 29,
+   "unit": "10",
+   "topic_id": 479,
+   "figure": 2,
+   "source": "figures_review",
+   "kind": "text_followup",
+   "what": "エニーキャストの列は本文に説明が無いが、点「エニーキャストは同じアドレスを持つ複数の中から最も近い 1 台だけへ届く」（data/ap/rewrite_ledgers/10-1.json の 479 の points[14]、fate figure）の行き場が他に無いので残した。本文へ戻すか扱いを決めれば列を外せる。あわせて 479 の本文 ### 宛先の種類と届く範囲 が学ぶ順で後のマルチキャスト（175）との違いを言っており（比較は 175 が持つ）、175 の本文 ### 1 回の送信で済む理由 は届く範囲の比べを [[ブロードキャスト]] へ指している",
+   "related": [
+    14,
+    175
+   ]
+  },
+  {
+   "no": 31,
+   "unit": "10",
+   "topic_id": 479,
+   "figure": 2,
+   "source": "figures_review",
+   "kind": "unit_plan",
+   "what": "data/ap/unit_plans/10.json の owners「宛先の 3 種類（ユニキャスト・ブロードキャスト・マルチキャスト）の届く範囲」（owner 479）は比較で、受け持ちに置けない（比較は学ぶ順で後の 175 が持つ）",
+   "related": [
+    175
+   ]
+  },
+  {
+   "no": 33,
+   "unit": "10",
+   "topic_id": 479,
+   "figure": 2,
+   "source": "figures_review",
+   "kind": "unit_plan",
+   "what": "data/ap/unit_plans/10.json の owners の行「宛先の 3 種類（ユニキャスト・ブロードキャスト・マルチキャスト）の届く範囲」が 479 を受け持ちにしているが、write_materials.md の「他の論点との分担」は比較を受け持ちに置かず、マルチキャスト（175）は学ぶ順で後なので 479 の図には入れられない。図は 479 の側（ユニキャスト・ブロードキャスト・エニーキャスト）だけにしてある。行の書き方を合わせるのは単元の構成の側",
+   "related": [
+    175
+   ]
+  },
+  {
+   "no": 35,
+   "unit": "10",
+   "topic_id": 479,
+   "figure": 2,
+   "source": "text_followup",
+   "kind": "other",
+   "what": "点「エニーキャストは同じアドレスを持つ複数の中から最も近い 1 台だけへ届く」は判断材料でも問題解説に送ってよい物でもない応用情報の周辺知識。本文の ### 宛先の種類と届く範囲 へ戻して図 2 の列を外すか、図に残すかを本人に諮る",
+   "related": []
+  },
+  {
+   "no": 37,
+   "unit": "10",
+   "topic_id": 479,
+   "figure": 2,
+   "source": "text_followup",
+   "kind": "unit_plan",
+   "what": "479 の本文 ### 宛先の種類と届く範囲 が学ぶ順で後の [[マルチキャスト]]（175）との違いを言い、175 の ### 1 回の送信で済む理由 は届く範囲の比べを [[ブロードキャスト]] へ指している。単元の構成の受け持ち（宛先の 3 種類の届く範囲 → owner 479）に比較が入っており、write_materials.md の「比べる 2 つは学ぶ順で後の論点が持つ」と合わない",
+   "related": [
+    175
+   ]
+  },
+  {
+   "no": 38,
+   "unit": "10",
+   "topic_id": 479,
+   "figure": 2,
+   "source": "text_followup",
+   "kind": "unit_plan",
+   "what": "479 の ### 宛先の種類と届く範囲 が学ぶ順で後のマルチキャスト（175）との違いを言っており（比較は後の論点の 175 が持つ決まり）、175 の ### 1 回の送信で済む理由 は届く範囲の比べを [[ブロードキャスト]] へ指している。比較の持ち方は単元の構成の判断",
+   "related": [
+    175
+   ]
+  },
+  {
+   "no": 32,
+   "unit": "10",
+   "topic_id": 505,
+   "figure": 3,
+   "source": "figures_review",
+   "kind": "unit_plan",
+   "what": "data/ap/unit_plans/10.json の owners「ARP と RARP の変換の向き」（owner 505）は比較で、受け持ちに置けない。3 つを並べる比較の図は 656 へ移した",
+   "related": [
+    656
+   ]
+  },
+  {
+   "no": 117,
+   "unit": "10",
+   "topic_id": 505,
+   "figure": null,
+   "source": "acceptance",
+   "kind": "heading",
+   "what": "`### 混同しやすい用語` に用語が無い",
+   "related": []
+  },
+  {
+   "no": 26,
+   "unit": "10",
+   "topic_id": 656,
+   "figure": 1,
+   "source": "figures_review",
+   "kind": "other",
+   "what": "656 のファイルに図が無かったので移した図の ID は 1。public/figures/materials/ap/656-1.svg（外した 656 の旧図 1 の SVG）は移した図で上書きされた。505-3.svg は消していない",
+   "related": []
+  },
+  {
+   "no": 30,
+   "unit": "10",
+   "topic_id": 656,
+   "figure": 1,
+   "source": "figures_review",
+   "kind": "text_followup",
+   "what": "656 の本文 ### 名前の Reverse と向き の「IP アドレスから MAC アドレスを求める向きとの比べは、[[ARP（アドレス解決プロトコル）]] で説明しました」は、比較の図が 656 に来たので食い違う。台帳 10-4 の 656 points[16]（fate owner）の where も「505 の図 3」を指したまま（この段は figure の行だけを書き換えるので触れていない）",
+   "related": [
+    16,
+    505
+   ]
+  },
+  {
+   "no": 36,
+   "unit": "10",
+   "topic_id": 656,
+   "figure": 1,
+   "source": "text_followup",
+   "kind": "other",
+   "what": "台帳 10-4.json の 656 の points[16]（fate owner）の where が「505（向きの比較は 505 の explanation の箇条 1 と 505 の図 3）」のまま。図 3 は 656 の図 1 へ移った。この段は repoint を台帳に書かず、他の行を変えないので触れていない",
+   "related": [
+    16,
+    505
+   ]
+  },
+  {
+   "no": 141,
+   "unit": "10",
+   "topic_id": 656,
+   "figure": null,
+   "source": "acceptance",
+   "kind": "ledger_where",
+   "what": "点の台帳の where が、今は点の無い所を指す行がある",
+   "related": []
+  },
+  {
+   "no": 27,
+   "unit": "10",
+   "topic_id": 676,
+   "figure": 1,
+   "source": "figures_review",
+   "kind": "other",
+   "what": "IP アドレスの行は本文に対比の説明が無いが、点「接続後にホストを識別するのは IP アドレスで、SSID とは役割の層が違う」（data/ap/rewrite_ledgers/10-2.json の 676 の points[6]、fate figure）の行き場が他に無く、選択肢の語とも重ならないので残した。本文へ戻すなら行を外して図 2 に寄せられるかを見直せる",
+   "related": []
+  }
+ ]
+}

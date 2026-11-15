@@ -1,0 +1,334 @@
+{
+ "target": "ap",
+ "units": [
+  "01"
+ ],
+ "status": "done",
+ "items": [
+  {
+   "no": 135,
+   "topic_id": 59,
+   "type": "H",
+   "verdict": "fixed",
+   "rule": "rewrite_open_items.md「点の台帳の直し方」の H（where を今その点がある所へ）",
+   "what": "台帳 01-8 の 59 の 2 行（ホールドアウト検証は 1 回だけ…／交差検証は分け方の偶然に…）の where が、今の本文に無い見出し「### ホールドアウト検証との違い」を指していた。今の見出し「### ホールドアウト法との違い」に点があることを確かめ、where を書き換えた。他の行の where は実在を確かめた",
+   "questions_checked": []
+  },
+  {
+   "no": 0,
+   "topic_id": 62,
+   "type": "G",
+   "verdict": "returned",
+   "rule": "rewrite_open_items.md「G の直し方」（本文の語が過去問の語で変えられないときは figure_followup）",
+   "what": "本文（explanation の要点 2 項目と ### 計算の解き方）の c0・c1・c2・i は、紐づく過去問 2024r06h-q4 の問題文と問題解説の correct_reason が使う記号で、本文を図の語（検査式 1〜3・重みの和）に合わせると問題解説と食い違う。本文は直さず図の側へ返した",
+   "questions_checked": [
+    "2024r06h-q4",
+    "2022r04h-q4",
+    "2020r02o-q10",
+    "2018h30a-q9"
+   ]
+  },
+  {
+   "no": 5,
+   "topic_id": 62,
+   "type": "G",
+   "verdict": "returned",
+   "rule": "rewrite_open_items.md「G の直し方」（本文の語が過去問の語で変えられないときは figure_followup）",
+   "what": "no 0 と同じ揺れ（本文 c0・c1・c2・i、図 1 は 検査式 1〜3・1 になった式の重みの和）。本文の記号は 2024r06h-q4 と問題解説の語なので変えられず、図の側へ返した",
+   "questions_checked": [
+    "2024r06h-q4"
+   ]
+  },
+  {
+   "no": 1,
+   "topic_id": 63,
+   "type": "A",
+   "verdict": "fixed",
+   "rule": "write_materials.md「他の論点との分担」（3 つ以上を並べる比較は学ぶ順で最後の論点）、rewrite_open_items.md「A の直し方」2〜4・「I 中身の無い節」、「G の直し方」",
+   "what": "比較は 61 の図 2（### 割り算の向きと検出の範囲。caption が見分けを言う）に 1 か所であるので移さず、63 の ### 誤り検出・訂正の 3 方式の比較 の比較の文を外し、指す 1 文「検出と訂正の範囲を他の方式と並べた比較は、[[CRC]] の図にあります。」を ### 何ビットまで訂正できるか の末尾に置いた。節は指す 1 文だけになり、どの図の after も指していないので見出しを消した。62 の指す文は既に 61 を指していたが「検査ビットが1つの方式」が図の列（水平垂直パリティ）と合わないので図の語に合わせた。61 の指す文は既に直っていた。台帳 01-7 の 63・62・61 の比較の行を書き換えた（shared の holder 63 は、台帳の直し方の決まり（shared は変えない）のとおり変えていない）",
+   "questions_checked": [
+    "2023r05a-q4",
+    "2024r06h-q4",
+    "2022r04h-q4",
+    "2020r02o-q10",
+    "2018h30a-q9",
+    "2025r07a-q4"
+   ]
+  },
+  {
+   "no": 3,
+   "topic_id": 63,
+   "type": "A",
+   "verdict": "fixed",
+   "rule": "unit_plan.md「受け持ち」（比較・使い分けは受け持ちに書かない）、rewrite_open_items.md「A の直し方」5",
+   "what": "owners の「誤り検出・訂正の方式の比較（パリティ・ハミング符号・CRC の検出と訂正）」owner 63 は比較だけを書いた行なので消した。owners の他の行・学ぶ順・まとまり・前提は変えていない",
+   "questions_checked": []
+  },
+  {
+   "no": 6,
+   "topic_id": 63,
+   "type": "A",
+   "verdict": "fixed",
+   "rule": "rewrite_open_items.md「A の直し方」3・5、「I 中身の無い節」、「点の台帳の直し方」",
+   "what": "no 1・no 3 と同じ直し（63 の比較の節を外して指す 1 文に、owners の比較の行を消した）。台帳 01-7 の 62『検査ビット 1 つのパリティは…（方式の比較）』は 1 方向のパリティの側が 63 の explanation にあるので prior 63、61『パリティチェックが…』は比較を持つ 61 の図 2 の検出の行にあるので figure に書き換えた",
+   "questions_checked": [
+    "2023r05a-q4",
+    "2024r06h-q4",
+    "2020r02o-q10",
+    "2018h30a-q9",
+    "2025r07a-q4"
+   ]
+  },
+  {
+   "no": 2,
+   "topic_id": 66,
+   "type": "E",
+   "verdict": "fixed",
+   "rule": "write_materials.md「1 つの点は 1 か所で言う」（図・表が同じ点を言うときは図を残す）、rewrite_unit_crosscheck.md X11",
+   "what": "66 の ### 4つのセンサーの守備範囲 の表のうち、LiDAR の行（距離と立体形状・霧や雪での減衰）と超音波センサーの行（至近距離・数十メートル以上）は、図 1 の LiDAR と超音波センサーの列（形まで分かる・雨や霧で散乱／近距離向き・数メートル程度）と同じ点なので、表の 2 行を外した。可視光カメラとミリ波レーダーの行は図に無いので残した。台帳 01-10 の 66 の 2 行の where を合わせた",
+   "questions_checked": [
+    "2024r06a-q4"
+   ]
+  },
+  {
+   "no": 4,
+   "topic_id": 66,
+   "type": "E",
+   "verdict": "fixed",
+   "rule": "write_materials.md「1 つの点は 1 か所で言う」、rewrite_unit_crosscheck.md X11",
+   "what": "no 2 と同じ直し（表の LiDAR・超音波センサーの行を外して図 1 に寄せた）。2024r06a-q4 は explanation の箇条（カメラだけが色や文字を読む・天候・遮蔽物）と図 1（超音波は数メートル程度）と問題解説で解ける",
+   "questions_checked": [
+    "2024r06a-q4"
+   ]
+  },
+  {
+   "no": 136,
+   "topic_id": 508,
+   "type": "H",
+   "verdict": "fixed",
+   "rule": "rewrite_open_items.md「点の台帳の直し方」の H",
+   "what": "台帳 01-9 の 508 の 2 行の where が、今の本文に無い見出し「### 主なセンサと測る物理量」を指していた。今の見出し「### 主なセンサーと測る物理量」に表と表の後の文があることを確かめ、where を書き換えた。他の行の where と図の番号は実在を確かめた",
+   "questions_checked": []
+  }
+ ],
+ "edits": [
+  {
+   "file": "data/ap/materials_v4/01-7.json",
+   "topic_id": 63,
+   "field": "detail",
+   "op": "delete",
+   "heading": "### 誤り検出・訂正の 3 方式の比較",
+   "before": "### 誤り検出・訂正の 3 方式の比較\n誤りの位置まで特定できる水平垂直パリティと[[ハミング符号]]は訂正まで行い、[[CRC]] は検出だけを行います。",
+   "after": null
+  },
+  {
+   "file": "data/ap/materials_v4/01-7.json",
+   "topic_id": 63,
+   "field": "detail",
+   "op": "insert",
+   "heading": "### 何ビットまで訂正できるか",
+   "before": null,
+   "after": "検出と訂正の範囲を他の方式と並べた比較は、[[CRC]] の図にあります。"
+  },
+  {
+   "file": "data/ap/materials_v4/01-7.json",
+   "topic_id": 62,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 誤り位置が分かるしくみ",
+   "before": "検査ビットが1つの方式と検出・訂正の範囲を比べた表は、[[CRC]]の図にあります。",
+   "after": "水平垂直パリティと検出・訂正の範囲を比べた表は、[[CRC]]の図にあります。"
+  },
+  {
+   "file": "data/ap/materials_v4/01-10.json",
+   "topic_id": 66,
+   "field": "detail",
+   "op": "delete",
+   "heading": "### 4つのセンサーの守備範囲",
+   "before": "| LiDAR | 距離と立体形状 | 霧や雪での減衰 |",
+   "after": null
+  },
+  {
+   "file": "data/ap/materials_v4/01-10.json",
+   "topic_id": 66,
+   "field": "detail",
+   "op": "delete",
+   "heading": "### 4つのセンサーの守備範囲",
+   "before": "| 超音波センサー | 至近距離の距離 | 数十メートル以上の距離 |",
+   "after": null
+  }
+ ],
+ "owners": [
+  {
+   "unit": "01",
+   "op": "delete",
+   "before": {
+    "subject": "誤り検出・訂正の方式の比較（パリティ・ハミング符号・CRC の検出と訂正）",
+    "owner": 63,
+    "topics": [
+     63,
+     62,
+     61
+    ]
+   },
+   "after": null
+  }
+ ],
+ "figure_after": [],
+ "ledgers": [
+  {
+   "file": "data/ap/rewrite_ledgers/01-7.json",
+   "topic_id": 63,
+   "point": "3 方式のうち位置を特定できる 2 つは訂正まで、CRC は検出だけ（見分けの一言）",
+   "before": {
+    "fate": "kept",
+    "where": "### 誤り検出・訂正の 3 方式の比較"
+   },
+   "after": {
+    "fate": "later",
+    "where": "61 の ### 割り算の向きと検出の範囲（図 2 の訂正の行と caption）"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/01-7.json",
+   "topic_id": 62,
+   "point": "検査ビット 1 つのパリティは偶奇しか分からず検出まで。ハミング符号は位置まで絞れるので訂正できる（方式の比較）",
+   "before": {
+    "fate": "owner",
+    "where": "63"
+   },
+   "after": {
+    "fate": "prior",
+    "where": "63"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/01-7.json",
+   "topic_id": 61,
+   "point": "パリティチェックが 1 ビットの偶奇しか見ないのに対し CRC は複数ビットの誤りを検出できる",
+   "before": {
+    "fate": "owner",
+    "where": "63"
+   },
+   "after": {
+    "fate": "figure",
+    "where": "61 の図 2（検出できる誤りの行）"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/01-8.json",
+   "topic_id": 59,
+   "point": "ホールドアウト検証は 1 回だけ分けて繰り返さない。偏ると性能を見誤る",
+   "before": {
+    "fate": "kept",
+    "where": "### ホールドアウト検証との違い"
+   },
+   "after": {
+    "fate": "kept",
+    "where": "### ホールドアウト法との違い"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/01-8.json",
+   "topic_id": 59,
+   "point": "交差検証は分け方の偶然に左右されにくい。代わりに計算の手間は k 倍",
+   "before": {
+    "fate": "kept",
+    "where": "### ホールドアウト検証との違い"
+   },
+   "after": {
+    "fate": "kept",
+    "where": "### ホールドアウト法との違い"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/01-9.json",
+   "topic_id": 508,
+   "point": "主なセンサと測る物理量・変換のしかたの表（サーミスタ・超音波センサ・フォトトランジスタ・ポテンショメータ・ホール素子）",
+   "before": {
+    "fate": "kept",
+    "where": "### 主なセンサと測る物理量"
+   },
+   "after": {
+    "fate": "kept",
+    "where": "### 主なセンサーと測る物理量"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/01-9.json",
+   "topic_id": 508,
+   "point": "同じ物理量を測る素子が複数あるので、素子名と物理量を対にして覚える",
+   "before": {
+    "fate": "kept",
+    "where": "### 主なセンサと測る物理量 の表の後の文（同じ温度でも原理が違う）と explanation の箇条 3"
+   },
+   "after": {
+    "fate": "kept",
+    "where": "### 主なセンサーと測る物理量 の表の後の文（同じ温度でも原理が違う）と explanation の箇条 3"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/01-10.json",
+   "topic_id": 66,
+   "point": "LiDAR は光を使うので霧や雪で届きにくく、色や文字は読めない",
+   "before": {
+    "fate": "duplicate",
+    "where": "### 4つのセンサーの守備範囲 の表と explanation の箇条"
+   },
+   "after": {
+    "fate": "duplicate",
+    "where": "explanation の 1・2 つ目の箇条（色や文字を読めるのは可視光カメラだけ・光を使う LiDAR は天候に弱い）"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/01-10.json",
+   "topic_id": 66,
+   "point": "4 つのセンサーの主に捉えるもの・苦手なものの表",
+   "before": {
+    "fate": "kept",
+    "where": "### 4つのセンサーの守備範囲"
+   },
+   "after": {
+    "fate": "kept",
+    "where": "### 4つのセンサーの守備範囲 の表（可視光カメラ・ミリ波レーダー）と 66 の図 1（LiDAR・超音波センサー）"
+   }
+  }
+ ],
+ "returned": [
+  {
+   "no": 0,
+   "topic_id": 62,
+   "figure": 1,
+   "kind": "figure_followup",
+   "what": "62 の図 1 のノードの語（検査式 1〜3・誤り位置＝1 になった式の重みの和）が、本文と 2024r06h-q4 の問題解説の記号（c0・c1・c2、i＝c0＋c1×2＋c2×4）と対応して読めない。本文は過去問と問題解説の語なので変えられない。図の側で対応が読めるようにする（例: ノードに c0〜c2・i を添える）。c0〜c2・i は 2024r06h-q4 の記号なので、material_figures_spec.md の登場物と題材の線に当たるかは図の見直しの段で判定する"
+  },
+  {
+   "no": 5,
+   "topic_id": 62,
+   "figure": 1,
+   "kind": "figure_followup",
+   "what": "no 0 と同じ図 1 の語の揺れ（本文 c0・c1・c2・i、図 検査式 1〜3・重みの和）。図の側で本文の記号との対応が読めるようにする。図に過去問の記号を入れてよいかは図の見直しの段の判定"
+  }
+ ],
+ "noticed": [
+  {
+   "topic_id": 66,
+   "what": "### 4つのセンサーの守備範囲 の文「[[超音波センサー]]は音波の反射で数メートルの至近距離を測り、安価なので駐車支援に使われます。」の「数メートルの至近距離」が、図 1 の超音波センサーの列（近距離向き・数メートル程度）と同じ点をなぞる（一覧の項目は表と図の重なりで、この文は直していない）"
+  },
+  {
+   "topic_id": 63,
+   "what": "台帳 data/ap/rewrite_ledgers/01-7.json の shared の比較の行（holder 63・item に「63 の図 3 の比較表」）は、比較が 61 の図 2 へ移った今の置き場と合わない。台帳の直し方の決まりで shared は変えていない"
+  }
+ ],
+ "gates": {
+  "check_materials": 0,
+  "check_material_style": 0,
+  "render_check": 0,
+  "check_explanations": 0,
+  "check_unit_plans": 0
+ },
+ "chars": {
+  "before": 5462,
+  "after": 5351
+ }
+}

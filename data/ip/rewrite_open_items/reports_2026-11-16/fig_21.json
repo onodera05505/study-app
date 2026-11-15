@@ -1,0 +1,30 @@
+{
+  "target": "ip",
+  "unit": "21",
+  "status": "fixed",
+  "blocked": [],
+  "items": [
+    {"no": 1, "figure": {"topic_id": 371, "figure_id": 1}, "kind": "restore", "verdict": "applies", "action": ["restore", "edit", "caption", "after"], "what": "残る側の 196 図 1 は選択と結合の 2 段だけで射影を持たず、3 つの関係演算の比較（射影は列・選択は行・結合はつなぐ）が言えないので同じ内容でないと判定し、3 つ以上の比較を持つ学ぶ順で最後の 371 に図 ID 1 で戻した。戻す前の図は 2022r04-q98 の従業員表（番号・氏名・所属、G02）と「氏名だけの表」を写していたので、題材を書籍表（書籍番号・書名・分類）に替え、各段の 2 行目で射影は行の数を変えない・選択は列を変えないを運ぶ形にした。線のラベルを 196 図 1 と同じ意味の「〜（列を取り出す）」形にし、after を実在しない ### 関係演算の三本柱 から ### 表を縦に切る操作 へ、caption を読み方の文に直した", "questions_checked": ["2022r04-q98"]}
+  ],
+  "changed_figures": [
+    {"topic_id": 371, "figure_id": 1, "png": "data/ip/rewrite_open_items/reports_2026-11-16/figures_png/ip-21/371-1.png", "intended_point": "関係演算の 3 つのうち、射影は列を取り出し（行の数は変えない）、選択は行を取り出し（列は変えない）、結合は共通の列で 2 つの表をつなぐ"}
+  ],
+  "moved": [],
+  "removed": [],
+  "restored": [
+    {"topic_id": 371, "figure_id": 1, "after": "### 表を縦に切る操作"}
+  ],
+  "ledgers": [
+    {"file": "data/ip/rewrite_ledgers/21-3.json", "changed_points": 3, "removed_figures_added": 0, "removed_figures_dropped": 1}
+  ],
+  "not_fixed": [
+    {"kind": "text_followup", "no": 1, "topic_id": 371, "figure_id": 1, "what": "371 の ### 表を縦に切る操作 の 2 文目「行を条件で横に切るのが[[選択]]、2 つの表を共通の列で横につなぐのが[[結合]]です。」は、戻した図 1 と同じ点（3 つの関係演算の違い）で、1 つの点は 1 か所（図を残す）に当たる。文を縮める（図を読む前の導入 1 文と、選択・結合を [[ ]] で指す程度にする）直しが本文側に要る。台帳 21-3.json の 371 の行「行を条件で絞るのが選択、2 つの表を共通の列でつなぐのが結合（要点の箇条）」「射影・選択・結合の比較表（取り出すもの・表の切り方）」は図 1 に付け替え済み"}
+  ],
+  "not_fixed_counts": {"text_followup": 1},
+  "counts": {"applies": 1, "not_applies": 0, "data_suspect": 0},
+  "gates": {
+    "render_check": {"stops": 0, "warnings_before": 0, "warnings_after": 0},
+    "unfixed_warnings": []
+  },
+  "written": ["data/ip/material_figures/371.json", "data/ip/rewrite_ledgers/21-3.json", "public/figures/materials/ip/371-1.svg", "data/ip/rewrite_open_items/reports_2026-11-16/figures_png/ip-21/371-1.png", "data/ip/rewrite_open_items/reports_2026-11-16/figures_png/ip-21/371-1.svg"]
+}
