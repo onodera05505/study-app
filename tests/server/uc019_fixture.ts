@@ -211,6 +211,12 @@ function errorCode(json: Json): string | undefined {
 export const build = (ws: Workspace, req: { data?: string; cycle?: number | string; out?: string } = {}, opts: RunOptions = {}, extra: string[] = []) =>
   run(BUILD, ws, ['--data', req.data ?? 'data/eng', '--cycle', String(req.cycle ?? 8), '--out', req.out ?? 'packs/c8', ...extra], opts)
 
+/** パックを作る入口を、コマンドの引数をそのまま渡して呼ぶ（引数の欠け・重なり・並びを組むため）。 */
+export const buildRaw = (ws: Workspace, args: string[]) => run(BUILD, ws, args)
+
+/** 採点の入口を、コマンドの引数をそのまま渡して呼ぶ。 */
+export const gradeRaw = (ws: Workspace, args: string[]) => run(GRADE, ws, args)
+
 /** 採点の入口を呼ぶ。extra は request の欄のあとに付ける引数。 */
 export const grade = (ws: Workspace, req: { data?: string; cycle?: number | string; answers?: string; explain?: string } = {}, extra: string[] = []) =>
   run(GRADE, ws, [

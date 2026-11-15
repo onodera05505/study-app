@@ -20,14 +20,10 @@ from xml.parsers import expat
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from material_generations import generation_dirs  # noqa: E402
-from attach_material_figures import SRC_CHAR  # noqa: E402
+from material_figure_line import figure_line, malformed_lines, map_figure_lines, png_target  # noqa: E402
 from learner_eval import (Refused, contract_args, current_questions, place_root, read_json,  # noqa: E402
                           remove_created_dirs, result_path, roadmap_learning, run, snapshot_path, write_exclusive)
 
-# 配る本文の図の行の参照先。/figures/materials/<key>/<サブパス>
-# 説明文には角かっこ（「A[1]」など）が入ってよい。`](` だけは入らない（表示側 Markdown.tsx と同じ読み方）。
-# サブパスの字は図の差し込み（attach_material_figures.py）の指す先の字と同じ集合で読む。
-FIGURE_REF = re.compile(r"(!\[(?:[^\]\n]|\](?!\())*\]\()/figures/materials/([a-z]+)/(" + SRC_CHAR + r"+)(\))")
 CHOICES = ("ア", "イ", "ウ", "エ")
 # 1 つの図を描く待ち時間の上限（契約の writePackFigure の renderTimeoutSeconds）
 RENDER_TIMEOUT_SECONDS = 30
@@ -120,9 +116,13 @@ def delivered_bodies(d: Path, units: list[dict]) -> dict[int, dict]:
     return bodies
 
 
-def png_target(subpath: str) -> str:
-    """key のディレクトリより下のサブパスを保ち、拡張子だけを .png にしたパックの中のパス。"""
-    return f"figures/{Path(subpath).with_suffix('.png').as_posix()}"
+# @implements REQ-513
+def check_figure_lines(units: list[dict], bodies: dict[int, dict]) -> None:
+    """配る本文に図の置き場を指すのに図の行の形に合わない行があれば、単位の学ぶ順に、その単位と書かれたままの行を挙げて止める。"""
+    hit = [{"unit": u["topic_id"], "line": l} for u in units
+           for l in malformed_lines(bodies[u["topic_id"]]["explanation"] + "\n" + bodies[u["topic_id"]]["detail"])]
+    if hit:
+        raise Refused("INVALID_INPUT", "図の置き場を指すのに図の行の形に合わない行がある", lines=hit)
 
 
 # @implements REQ-320
@@ -132,11 +132,14 @@ def figure_refs(root: Path, units: list[dict], bodies: dict[int, dict]) -> list[
     refs, missing = [], []
     for u in units:
         m = bodies[u["topic_id"]]
-        for x in FIGURE_REF.finditer(m["explanation"] + "\n" + m["detail"]):
-            ref = f"/figures/materials/{x.group(2)}/{x.group(3)}"
-            src = root / "public" / "figures" / "materials" / x.group(2) / x.group(3)
+        for line in (m["explanation"] + "\n" + m["detail"]).split("\n"):
+            f = figure_line(line)
+            if f is None:
+                continue
+            ref = f.src
+            src = root / "public" / ref.lstrip("/")
             if src.is_file():
-                refs.append({"unit": u["topic_id"], "ref": ref, "src": src, "target": png_target(x.group(3))})
+                refs.append({"unit": u["topic_id"], "ref": ref, "src": src, "target": png_target(ref)})
             else:
                 missing.append({"unit": u["topic_id"], "ref": ref})
     if missing:
@@ -158,8 +161,8 @@ def figures_by_target(refs: list[dict]) -> dict[str, Path]:
 
 
 def to_pack_refs(text: str) -> str:
-    """図の参照先だけを、単位のファイルから見たパックの中の PNG に変える。"""
-    return FIGURE_REF.sub(lambda r: f"{r.group(1)}../{png_target(r.group(3))}{r.group(4)}", text)
+    """図の行の指す先だけを、単位のファイルから見たパックの中の PNG に変える。"""
+    return map_figure_lines(text, lambda f: f"{f.head}{f.caption}{f.mid}../{png_target(f.src)}{f.tail}")
 
 
 # @implements REQ-306
@@ -362,6 +365,7 @@ def build() -> dict:
     terms = explain_terms(d)
     rm, units = roadmap_units(d)
     bodies = delivered_bodies(d, units)
+    check_figure_lines(units, bodies)
     refs = figure_refs(place_root(d), units, bodies)
     figures = figures_by_target(refs)
     questions = roadmap_questions(units, current)

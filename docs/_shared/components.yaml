@@ -95,3 +95,19 @@ schemas:
     type: integer
     const: 30
     description: 1 つの図を描く待ち時間の上限（学習者役のパックと単元の読み物が使う同じ描き手）
+  MaterialFigureRefPrefix:
+    type: string
+    const: /figures/materials/
+    description: 配信の置き場の図の画像を指す前置き。本文の行がこれを含むなら、その行は MaterialFigureLine に合わなければならない（BR-054）
+  MaterialFigureLine:
+    type: string
+    pattern: "^[ \\t\\u3000]*!\\[(?:[^\\]\\n]|\\](?!\\())+\\]\\(/figures/materials/[a-z]+/(?:[a-z0-9_-]+/)*[a-z0-9_-]+\\.(?:svg|png)\\)[ \\t\\u3000]*$"
+    description: 図の行（BR-054）。行全体が 1 つの画像の記法で、図の説明文は空でなく `](` を含まず、指す先は MaterialFigureSrc と同じ形。行頭と行末の半角の空白・タブ・全角の空白は図の行に含む
+  MaterialFigureSrc:
+    type: string
+    pattern: "^/figures/materials/[a-z]+/(?:[a-z0-9_-]+/)*[a-z0-9_-]+\\.(?:svg|png)$"
+    description: 図の行の指す先（MaterialFigureLine の丸かっこの中と同じ形）。学びの key の段、0 個以上のサブパスの段、名前と拡張子。実体は置き場の根の public の下の同じパス
+  MaterialFigurePng:
+    type: string
+    pattern: "^figures/(?:[a-z0-9_-]+/)*[a-z0-9_-]+\\.png$"
+    description: 図を PNG に描いて出力先に置く先。MaterialFigureSrc の学びの key の段より下のサブパスと名前を保ち、拡張子だけを .png にする

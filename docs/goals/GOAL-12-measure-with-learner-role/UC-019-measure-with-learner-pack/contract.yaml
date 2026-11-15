@@ -6,7 +6,7 @@
 x-uc: UC-019
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-11
+x-updated: 2026-11-16
 
 schemas:
   PackSnapshot:
@@ -89,7 +89,16 @@ schemas:
               required: [unit, ref]
               properties:
                 unit: { type: integer, minimum: 1 }
-                ref: { type: string, minLength: 1 }
+                ref: { $ref: "../../../_shared/components.yaml#/schemas/MaterialFigureSrc" }
+          lines:
+            type: array
+            description: 配信の置き場の図を指す前置きを含むのに図の行の形に合わない行（BR-054）
+            items:
+              type: object
+              required: [unit, line]
+              properties:
+                unit: { type: integer, minimum: 1 }
+                line: { type: string, minLength: 1, description: 配る本文に書かれたままの行 }
           roadmapRows:
             type: array
             description: ロードマップの読めない行。何番目の行か、欠けるか型の違う欄の名前
@@ -99,7 +108,7 @@ schemas:
               properties:
                 index: { type: integer, minimum: 0 }
                 fields: { type: array, minItems: 1, items: { type: string } }
-          arguments: { type: array, description: 契約の引数の形の外にある引数の名前, items: { type: string } }
+          arguments: { type: array, description: 契約の引数の形の外にある引数（挙げ方は BR-055）, items: { type: string, minLength: 1 } }
           qids: { type: array, description: 選択肢の外の答えを書いた問題, items: { type: string } }
           placeholders: { type: array, description: 学習者役への指示の雛形の埋まらない差し込みの名前, items: { type: string, minLength: 1 } }
           unreadable: { type: array, description: 無いか読めないファイル, items: { type: string } }
@@ -193,7 +202,7 @@ operations:
             units: { type: array, items: { type: string, pattern: "^units/[0-9]{2,}_.+\\.md$" } }
             quiz: { type: string, const: quiz.md }
             explain: { type: string, const: explain.md, description: 説明テストの語の一覧を持つ学びだけ }
-            figures: { type: array, description: 本文の図を描いた PNG。元の置き場のサブパスを保ち拡張子だけ .png にする, items: { type: string, pattern: "^figures/.+\\.png$" } }
+            figures: { type: array, description: 本文の図を描いた PNG, items: { $ref: "../../../_shared/components.yaml#/schemas/MaterialFigurePng" } }
     errors:
       - code: INVALID_INPUT
         when: 引数が契約の形の外
@@ -217,6 +226,8 @@ operations:
         when: 配る本文を選ぶ教材の世代のファイルが読めない
       - code: NOT_FOUND
         when: 配る本文の無い単位がある
+      - code: INVALID_INPUT
+        when: 図の置き場を指すのに図の行の形に合わない行がある
       - code: NOT_FOUND
         when: 配る本文が指す図の画像が無い
       - code: INVALID_INPUT
@@ -296,6 +307,22 @@ operations:
         request: { data: tests/fixtures/learner-pack/figure-not-drawable/data/itc, cycle: 1, out: ../learner_packs/figure-not-drawable }
         error: INTERNAL
         response: { error: { code: INTERNAL, reason: 図を PNG に描けない, figures: [{ unit: 16, ref: /figures/materials/itc/16-1.svg }] } }
+      abbreviatedArgument:
+        request: { data: data/eng, cycle: 8, o: ../learner_packs/eng_c8 }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: 引数が契約の形の外, arguments: [out, o] } }
+      figureLineMalformed:
+        request: { data: tests/fixtures/learner-pack/figure-line-malformed/data/itc, cycle: 1, out: ../learner_packs/figure-line-malformed }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: 図の置き場を指すのに図の行の形に合わない行がある, lines: [{ unit: 12, line: "![図](/figures/materials/itc/../../zz-9.svg)" }, { unit: 16, line: "![図](/figures/materials/ITC/16-1.svg)" }] } }
+      bodyMissingBeforeFigureLineMalformed:
+        request: { data: tests/fixtures/learner-pack/body-missing-and-figure-line-malformed/data/itc, cycle: 1, out: ../learner_packs/body-missing-and-figure-line-malformed }
+        error: NOT_FOUND
+        response: { error: { code: NOT_FOUND, reason: 配る本文の無い単位がある, units: [12] } }
+      figureLineMalformedBeforeFigureMissing:
+        request: { data: tests/fixtures/learner-pack/figure-line-malformed-and-figure-missing/data/itc, cycle: 1, out: ../learner_packs/figure-line-malformed-and-figure-missing }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: 図の置き場を指すのに図の行の形に合わない行がある, lines: [{ unit: 16, line: "![図](/figures/materials/ITC/16-1.svg)" }] } }
       badArgumentsBeforeNotRoadmap:
         request: { data: data/ip, cycle: 0, out: ../learner_packs/ip_c0 }
         error: INVALID_INPUT
@@ -757,7 +784,7 @@ operations:
               topic_id: { type: integer, minimum: 1 }
               term: { type: string, minLength: 1 }
               explanation: { type: string, minLength: 1 }
-              detail: { type: string, minLength: 1, description: 出典の節と図の行を含む。図の行は /figures/materials/ の下の、学びの key のディレクトリにある図の画像のファイルを指す }
+              detail: { type: string, minLength: 1, description: 出典の節と図の行（BR-054）を含む }
     errors:
       - code: NOT_FOUND
         when: 配る本文が無い
@@ -784,13 +811,13 @@ operations:
       type: object
       required: [src]
       properties:
-        src: { type: string, pattern: "^/figures/materials/[a-z]+/.+\\.(svg|png)$", description: 本文の図の行の参照先。実体は置き場の根の public の下の同じパス }
+        src: { $ref: "../../../_shared/components.yaml#/schemas/MaterialFigureSrc" }
         root: { type: string, pattern: "^tests/fixtures/learner-pack/[a-z0-9-]+$", description: 置き場の根。リポジトリのときは持たない }
     response:
       type: object
       required: [file]
       properties:
-        file: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?public/figures/materials/[a-z]+/.+\\.(svg|png)$" }
+        file: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?public/figures/materials/", description: 置き場の根の public の下の、src と同じパス }
     errors:
       - code: NOT_FOUND
         when: 画像が置き場所に無い
@@ -854,7 +881,7 @@ operations:
         field: { type: string }
         middle: { type: string, description: 単元 }
         explanation: { type: string, minLength: 1 }
-        detail: { type: string, minLength: 1, description: 配る本文の detail。図の行だけを、../figures/ の下の、元のサブパスを保ち拡張子を .png にした画像を指すように変える }
+        detail: { type: string, minLength: 1, description: 配る本文の detail。図の行だけを、../ に続く MaterialFigurePng の置く先を指すように変える }
     response: { type: object, required: [path], properties: { path: { type: string, pattern: "^units/[0-9]{2,}_.+\\.md$" } } }
     errors: []
     examples:
@@ -930,13 +957,13 @@ operations:
       properties:
         out: { type: string, minLength: 1 }
         renderTimeoutSeconds: { $ref: "../../../_shared/components.yaml#/schemas/FigureRenderTimeoutSeconds" }
-        file: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?public/figures/materials/[a-z]+/.+\\.(svg|png)$" }
-        target: { type: string, pattern: "^figures/.+\\.png$", description: file の public/figures/materials/ の下の学びの key のディレクトリより下のパスを、サブパスごと figures/ の下に保ち、拡張子だけを .png にする }
+        file: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?public/figures/materials/", description: readFigure の file }
+        target: { $ref: "../../../_shared/components.yaml#/schemas/MaterialFigurePng" }
     response:
       type: object
       required: [path, mediaType]
       properties:
-        path: { type: string, pattern: "^figures/.+\\.png$" }
+        path: { $ref: "../../../_shared/components.yaml#/schemas/MaterialFigurePng" }
         mediaType: { type: string, const: image/png, description: 元の図に書かれた文字（長音符・中黒を含む）を欠かさずに描いた画像 }
     errors:
       - code: INTERNAL

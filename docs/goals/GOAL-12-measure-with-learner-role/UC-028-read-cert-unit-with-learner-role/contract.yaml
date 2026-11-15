@@ -1,0 +1,532 @@
+# UC-028 の境界: 作り手が手元で呼ぶ単元の読み物を作る入口と、それが読み書きするファイルの形。
+# 読み方は docs/adr/ADR-0008（手元の道具の境界を local-store で読む）。
+# この契約のパス（data・out）は、相対ならコマンドを呼んだ作業ディレクトリが起点。登録簿はリポジトリの src/shared/targets.json。
+# 置き場の根は data/ と public/ を持つ場所で、リポジトリ（前置き無し）か、検査用の作り物 tests/fixtures/unit-reading/<名前>/ のどちらか。
+#   学びの置き場はその根の data/<学びの key>、配る本文の図の画像はその根の public/figures/materials/<学びの key> の下。学びの key は data の最後の段
+x-uc: UC-028
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-16
+
+schemas:
+  ReadingItem:
+    type: object
+    description: 単元の読み物の項目の番号ごとの論点。作り手にだけ返し、単元の読み物には項目の番号と論点の名前だけを出す
+    required: [no, topic_id, term, generation]
+    properties:
+      no: { type: integer, minimum: 1 }
+      topic_id: { type: integer, minimum: 1 }
+      term: { type: string, minLength: 1, description: 論点の一覧の term }
+      generation: { type: string, pattern: "^materials(_v[0-9]+)?$", description: 投入がその論点の配る本文を選んだ教材の世代 }
+  FigureRef:
+    type: object
+    required: [topic_id, ref]
+    properties:
+      topic_id: { type: integer, minimum: 1 }
+      ref: { $ref: "../../../_shared/components.yaml#/schemas/MaterialFigureSrc" }
+  ToolError:
+    type: object
+    description: 入口が断ったときに返す形。当たった物は、その失敗が挙げる物の欄だけを持つ
+    required: [error]
+    properties:
+      error:
+        type: object
+        required: [code, reason]
+        properties:
+          code: { type: string, enum: [INVALID_INPUT, NOT_FOUND, CONFLICT, INTERNAL] }
+          reason: { type: string, minLength: 1 }
+          arguments: { type: array, description: 契約の引数の形の外にある引数（挙げ方は BR-055）, items: { type: string, minLength: 1 } }
+          unit: { type: string, pattern: "^[0-9]{2}$" }
+          gateReasons: { type: array, description: 単元の構成の門の止める理由のうち、その単元に関する物, items: { type: string, minLength: 1 } }
+          topics: { type: array, description: 当たった論点の ID, items: { type: integer, minimum: 1 } }
+          unreadable: { type: array, description: 読めないファイル, items: { type: string } }
+          figures:
+            type: array
+            description: 当たった図と、その図に当たった理由
+            items:
+              type: object
+              required: [topic_id, ref]
+              properties:
+                topic_id: { type: integer, minimum: 1 }
+                ref: { $ref: "../../../_shared/components.yaml#/schemas/MaterialFigureSrc" }
+                cause: { type: string, enum: [imageMissing, headingMissing] }
+          lines:
+            type: array
+            description: 配信の置き場の図を指す前置きを含むのに図の行の形に合わない行（BR-054）
+            items:
+              type: object
+              required: [topic_id, line]
+              properties:
+                topic_id: { type: integer, minimum: 1 }
+                line: { type: string, minLength: 1, description: 配る本文に書かれたままの行 }
+
+operations:
+  buildUnitReading:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 資格対策の学びの 1 単元を、利用者と同じ見え方の単元の読み物と図の画像にして出力先に作る
+    request:
+      type: object
+      required: [data, unit, out]
+      additionalProperties: false
+      properties:
+        data: { type: string, pattern: "^(tests/fixtures/unit-reading/[a-z0-9-]+/)?data/[a-z]+$" }
+        unit: { type: string, pattern: "^[0-9]{2}$", description: 単元の番号（単元の構成のファイルの名前と同じ 2 桁） }
+        out: { type: string, minLength: 1, description: 単元の読み物の出力先。学びの置き場（置き場の根の data/ の下全体）の外で、無いか空の場所 }
+    response:
+      type: object
+      required: [reading, figures, items]
+      properties:
+        reading: { type: string, const: reading.md, description: 出力先の中の単元の読み物 }
+        figures: { type: array, description: 図の画像を PNG に描いた物, items: { $ref: "../../../_shared/components.yaml#/schemas/MaterialFigurePng" } }
+        items: { type: array, minItems: 1, items: { $ref: "#/schemas/ReadingItem" } }
+    errors:
+      - code: INVALID_INPUT
+        when: 引数が契約の形の外
+      - code: INVALID_INPUT
+        when: 登録簿に無い学びか、ロードマップ型の学び
+      - code: INVALID_INPUT
+        when: 出力先が学びの置き場の中
+      - code: CONFLICT
+        when: 出力先に中身がある
+      - code: NOT_FOUND
+        when: 単元が無いか、単元の構成を持たない
+      - code: INVALID_INPUT
+        when: 読むファイルが契約の形として読めない
+      - code: INVALID_INPUT
+        when: 単元の構成が門の止める理由に当たる
+      - code: NOT_FOUND
+        when: 配る本文の無い論点がある
+      - code: CONFLICT
+        when: 書き直した世代と前の世代が単元の中で混ざる
+      - code: INVALID_INPUT
+        when: 図の置き場を指すのに図の行の形に合わない行がある
+      - code: NOT_FOUND
+        when: 図の画像か差し込み位置の見出しが無い
+      - code: INVALID_INPUT
+        when: 同じ PNG の名前になる図が 2 つ以上ある
+      - code: INTERNAL
+        when: 図を PNG に描けない
+      - code: CONFLICT
+        when: 作る間に同じ出力先に書かれた
+    examples:
+      ok:
+        request: { data: data/ip, unit: "21", out: ../unit_readings/ip_21 }
+        response:
+          reading: reading.md
+          figures: [figures/369-1.png, figures/369-2.png, figures/278-1.png, figures/278-2.png, figures/32-1.png, figures/32-2.png, figures/193-1.png, figures/33-1.png, figures/192-1.png, figures/192-2.png, figures/196-1.png, figures/196-2.png, figures/195-1.png, figures/440-1.png, figures/34-1.png, figures/34-2.png, figures/518-2.png, figures/372-1.png, figures/393-1.png, figures/393-2.png, figures/197-1.png, figures/197-2.png, figures/198-1.png, figures/368-1.png]
+          items:
+            - { no: 1, topic_id: 369, term: 関係データベース, generation: materials_v4 }
+            - { no: 2, topic_id: 278, term: 主キー, generation: materials_v4 }
+            - { no: 3, topic_id: 32, term: 外部キー, generation: materials_v4 }
+            - { no: 4, topic_id: 193, term: データ分析, generation: materials_v4 }
+            - { no: 5, topic_id: 33, term: 正規化, generation: materials_v4 }
+            - { no: 6, topic_id: 192, term: インデックス, generation: materials_v4 }
+            - { no: 7, topic_id: 196, term: 選択・結合, generation: materials_v4 }
+            - { no: 8, topic_id: 371, term: 射影, generation: materials_v4 }
+            - { no: 9, topic_id: 195, term: データの抽出, generation: materials_v4 }
+            - { no: 10, topic_id: 440, term: 集合演算, generation: materials_v4 }
+            - { no: 11, topic_id: 478, term: SQL, generation: materials_v4 }
+            - { no: 12, topic_id: 34, term: トランザクション, generation: materials_v4 }
+            - { no: 13, topic_id: 518, term: バックワードリカバリ（ロールバック）, generation: materials_v4 }
+            - { no: 14, topic_id: 372, term: ACID 特性, generation: materials_v4 }
+            - { no: 15, topic_id: 393, term: 排他制御, generation: materials_v4 }
+            - { no: 16, topic_id: 197, term: チェックポイント, generation: materials_v4 }
+            - { no: 17, topic_id: 198, term: バックアップ, generation: materials_v4 }
+            - { no: 18, topic_id: 368, term: DBMS, generation: materials_v4 }
+      badArguments:
+        request: { data: data/ip, unit: "1", out: "" }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: 引数が契約の形の外, arguments: [unit, out] } }
+      unknownLearning:
+        request: { data: data/zzz, unit: "01", out: ../unit_readings/zzz_01 }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: 登録簿に無い学び } }
+      roadmapLearning:
+        request: { data: data/eng, unit: "01", out: ../unit_readings/eng_01 }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: ロードマップ型の学び } }
+      outInsideData:
+        request: { data: data/ip, unit: "21", out: data/ip/reading_21 }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: 出力先が学びの置き場の中 } }
+      outInsideOtherLearning:
+        request: { data: data/ip, unit: "21", out: data/ap/reading_21 }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: 出力先が学びの置き場の中 } }
+      outNotEmpty:
+        request: { data: data/ip, unit: "21", out: docs }
+        error: CONFLICT
+        response: { error: { code: CONFLICT, reason: 出力先に中身がある } }
+      unitMissing:
+        request: { data: data/ip, unit: "99", out: ../unit_readings/ip_99 }
+        error: NOT_FOUND
+        response: { error: { code: NOT_FOUND, reason: 単元が無いか、単元の構成を持たない, unit: "99" } }
+      materialsUnreadable:
+        request: { data: tests/fixtures/unit-reading/materials-unreadable/data/ip, unit: "21", out: ../unit_readings/materials-unreadable }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: 読むファイルが契約の形として読めない, unreadable: [tests/fixtures/unit-reading/materials-unreadable/data/ip/materials_v4/21-2.json] } }
+      unitPlanGateStops:
+        request: { data: tests/fixtures/unit-reading/unit-plan-gate-stops/data/ip, unit: "21", out: ../unit_readings/unit-plan-gate-stops }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: 単元の構成が門の止める理由に当たる, unit: "21", gateReasons: [前提の論点 999 が学びに無い] } }
+      bodyMissing:
+        request: { data: tests/fixtures/unit-reading/body-missing/data/ip, unit: "21", out: ../unit_readings/body-missing }
+        error: NOT_FOUND
+        response: { error: { code: NOT_FOUND, reason: 配る本文の無い論点がある, topics: [478] } }
+      mixedGenerations:
+        request: { data: tests/fixtures/unit-reading/mixed-generations/data/ip, unit: "21", out: ../unit_readings/mixed-generations }
+        error: CONFLICT
+        response: { error: { code: CONFLICT, reason: 書き直した世代と前の世代が単元の中で混ざる, topics: [34, 518, 372, 393, 197, 198, 368] } }
+      figureMissing:
+        request: { data: tests/fixtures/unit-reading/figure-missing/data/ip, unit: "21", out: ../unit_readings/figure-missing }
+        error: NOT_FOUND
+        response: { error: { code: NOT_FOUND, reason: 図の画像か差し込み位置の見出しが無い, figures: [{ topic_id: 369, ref: /figures/materials/ip/369-2.svg, cause: imageMissing }] } }
+      figureHeadingMissing:
+        request: { data: tests/fixtures/unit-reading/figure-heading-missing/data/ip, unit: "21", out: ../unit_readings/figure-heading-missing }
+        error: NOT_FOUND
+        response: { error: { code: NOT_FOUND, reason: 図の画像か差し込み位置の見出しが無い, figures: [{ topic_id: 369, ref: /figures/materials/ip/369-1.svg, cause: headingMissing }] } }
+      figureNameCollision:
+        request: { data: tests/fixtures/unit-reading/figure-name-collision/data/ip, unit: "21", out: ../unit_readings/figure-name-collision }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: 同じ PNG の名前になる図が 2 つ以上ある, figures: [{ topic_id: 369, ref: /figures/materials/ip/369-1.svg }, { topic_id: 278, ref: /figures/materials/ip/369-1.png }] } }
+      figureNotDrawable:
+        request: { data: tests/fixtures/unit-reading/figure-not-drawable/data/ip, unit: "21", out: ../unit_readings/figure-not-drawable }
+        error: INTERNAL
+        response: { error: { code: INTERNAL, reason: 図を PNG に描けない, figures: [{ topic_id: 32, ref: /figures/materials/ip/32-1.svg }] } }
+      abbreviatedArgument:
+        request: { data: data/ip, unit: "21", o: ../unit_readings/ip_21 }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: 引数が契約の形の外, arguments: [out, o] } }
+      figureLineMalformed:
+        request: { data: tests/fixtures/unit-reading/figure-line-malformed/data/ip, unit: "21", out: ../unit_readings/figure-line-malformed }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: 図の置き場を指すのに図の行の形に合わない行がある, lines: [{ topic_id: 369, line: "![図](/figures/materials/ip/../../zz-9.svg)" }, { topic_id: 278, line: "![図](/figures/materials/IP/369-9.svg)" }, { topic_id: 32, line: "![図](/figures/materials/369-9.svg)" }] } }
+      mixedBeforeFigureLineMalformed:
+        request: { data: tests/fixtures/unit-reading/mixed-and-figure-line-malformed/data/ip, unit: "21", out: ../unit_readings/mixed-and-figure-line-malformed }
+        error: CONFLICT
+        response: { error: { code: CONFLICT, reason: 書き直した世代と前の世代が単元の中で混ざる, topics: [34, 518, 372, 393, 197, 198, 368] } }
+      figureLineMalformedBeforeFigureMissing:
+        request: { data: tests/fixtures/unit-reading/figure-line-malformed-and-figure-missing/data/ip, unit: "21", out: ../unit_readings/figure-line-malformed-and-figure-missing }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: 図の置き場を指すのに図の行の形に合わない行がある, lines: [{ topic_id: 369, line: "![図](/figures/materials/IP/369-9.svg)" }] } }
+      badArgumentsBeforeRoadmap:
+        request: { data: data/eng, unit: "1", out: ../unit_readings/eng_1 }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: 引数が契約の形の外, arguments: [unit] } }
+      roadmapBeforeOutInside:
+        request: { data: data/eng, unit: "01", out: data/eng/reading_01 }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: ロードマップ型の学び } }
+      outInsideBeforeOutNotEmpty:
+        request: { data: data/ip, unit: "21", out: data/ip }
+        error: INVALID_INPUT
+        response: { error: { code: INVALID_INPUT, reason: 出力先が学びの置き場の中 } }
+      outNotEmptyBeforeUnitMissing:
+        request: { data: data/ip, unit: "99", out: docs }
+        error: CONFLICT
+        response: { error: { code: CONFLICT, reason: 出力先に中身がある } }
+      bodyMissingBeforeMixed:
+        request: { data: tests/fixtures/unit-reading/body-missing-and-mixed/data/ip, unit: "21", out: ../unit_readings/body-missing-and-mixed }
+        error: NOT_FOUND
+        response: { error: { code: NOT_FOUND, reason: 配る本文の無い論点がある, topics: [478] } }
+      mixedBeforeFigureMissing:
+        request: { data: tests/fixtures/unit-reading/mixed-and-figure-missing/data/ip, unit: "21", out: ../unit_readings/mixed-and-figure-missing }
+        error: CONFLICT
+        response: { error: { code: CONFLICT, reason: 書き直した世代と前の世代が単元の中で混ざる, topics: [34, 518, 372, 393, 197, 198, 368] } }
+
+  readReadingRegistry:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 登録簿から 1 つの学びがロードマップ型かを読む
+    request:
+      type: object
+      required: [key]
+      additionalProperties: false
+      properties:
+        key: { type: string, pattern: "^[a-z]+$", description: 学びの key（data の最後の段） }
+    response:
+      type: object
+      required: [roadmap]
+      properties:
+        roadmap: { type: boolean, description: ロードマップ型の学びか }
+    errors:
+      - code: NOT_FOUND
+        when: 登録簿に無い学び
+    examples:
+      ok:
+        request: { key: ip }
+        response: { roadmap: false }
+      roadmap:
+        request: { key: eng }
+        response: { roadmap: true }
+      missing:
+        request: { key: zzz }
+        error: NOT_FOUND
+
+  readReadingUnitPlan:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 学びの置き場から 1 単元の単元の構成を読む（形の正本は単元の構成の門の契約。ここは読み物が使う欄だけ）
+    request:
+      type: object
+      required: [data, unit]
+      additionalProperties: false
+      properties:
+        data: { type: string, pattern: "^(tests/fixtures/unit-reading/[a-z0-9-]+/)?data/[a-z]+$" }
+        unit: { type: string, pattern: "^[0-9]{2}$" }
+    response:
+      type: object
+      required: [overview, groups, prerequisites]
+      properties:
+        overview: { type: string, minLength: 1 }
+        groups:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            required: [name, description, topics]
+            properties:
+              name: { type: string, minLength: 1 }
+              description: { type: string, minLength: 1 }
+              topics: { type: array, minItems: 1, items: { type: integer, minimum: 1 } }
+        prerequisites: { type: object, description: 論点の ID → 前提の論点の ID の並び, additionalProperties: { type: array, items: { type: integer, minimum: 1 } } }
+    errors:
+      - code: NOT_FOUND
+        when: その単元の構成のファイルが無い
+      - code: INVALID_INPUT
+        when: 単元の構成として読めない
+    examples:
+      ok:
+        request: { data: data/ip, unit: "21" }
+        response: { overview: データを表の形で持ち、キーの値で表どうしをつなぐ関係データベースの仕組みを学びます。表とキーの土台、重複を生まない表の設計、表から必要なデータを取り出す操作、同時利用と障害に備えるトランザクションの順に進みます。正規化の目的の「一貫性」と ACID 特性の「一貫性」は別の意味です。, groups: [{ name: 表とキー, description: データを行と列の表で持ち、主キーで行を見分け、外部キーで表どうしをつなぐ土台を扱います。, topics: [369, 278, 32] }], prerequisites: { "278": [369] } }
+      missing:
+        request: { data: data/ip, unit: "99" }
+        error: NOT_FOUND
+      unreadable:
+        request: { data: tests/fixtures/unit-reading/unit-plan-unreadable/data/ip, unit: "21" }
+        error: INVALID_INPUT
+
+  readReadingTopics:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 学びの置き場の論点の一覧から、論点の名前と出題頻度を読む
+    request:
+      type: object
+      required: [data]
+      additionalProperties: false
+      properties:
+        data: { type: string, pattern: "^(tests/fixtures/unit-reading/[a-z0-9-]+/)?data/[a-z]+$" }
+    response:
+      type: object
+      required: [topics]
+      properties:
+        topics:
+          type: array
+          items:
+            type: object
+            required: [id, term, question_count]
+            properties:
+              id: { type: integer, minimum: 1 }
+              term: { type: string, minLength: 1 }
+              question_count: { type: integer, minimum: 0 }
+    errors:
+      - code: INVALID_INPUT
+        when: 論点の一覧として読めない
+    examples:
+      ok:
+        request: { data: data/ip }
+        response: { topics: [{ id: 369, term: 関係データベース, question_count: 3 }] }
+      unreadable:
+        request: { data: tests/fixtures/unit-reading/topics-unreadable/data/ip }
+        error: INVALID_INPUT
+
+  readReadingDeliveredBody:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 資格対策の学びの配る本文を、投入と同じ選び方で論点ごとに教材の世代から選んで、選んだ世代と共に読む
+    request:
+      type: object
+      required: [data]
+      additionalProperties: false
+      properties:
+        data: { type: string, pattern: "^(tests/fixtures/unit-reading/[a-z0-9-]+/)?data/[a-z]+$" }
+    response:
+      type: object
+      required: [materials]
+      properties:
+        materials:
+          type: array
+          items:
+            type: object
+            required: [topic_id, explanation, detail, generation]
+            properties:
+              topic_id: { type: integer, minimum: 1 }
+              explanation: { type: string, minLength: 1 }
+              detail: { type: string, minLength: 1, description: 出典の節を含む。前の世代から選んだ論点は図の行を含む }
+              generation: { type: string, pattern: "^materials(_v[0-9]+)?$" }
+    errors:
+      - code: INVALID_INPUT
+        when: 教材の世代のファイルが JSON として読めないか、topic_id の無い行がある
+    examples:
+      ok:
+        request: { data: data/ip }
+        response: { materials: [{ topic_id: 369, explanation: "**関係データベース**は…", detail: "### 表・レコード・フィールド\n…", generation: materials_v4 }] }
+      unreadable:
+        request: { data: tests/fixtures/unit-reading/materials-unreadable/data/ip }
+        error: INVALID_INPUT
+
+  readReadingGlossary:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 投入が組み立てるのと同じ用語集を、学びの置き場の用語集の元から組み立てて読む
+    request:
+      type: object
+      required: [data]
+      additionalProperties: false
+      properties:
+        data: { type: string, pattern: "^(tests/fixtures/unit-reading/[a-z0-9-]+/)?data/[a-z]+$" }
+    response:
+      type: object
+      required: [terms]
+      properties:
+        terms: { type: array, description: 用語集の正式な表記, items: { type: string, minLength: 1 } }
+    errors:
+      - code: INVALID_INPUT
+        when: 用語集の元のファイルが読めない
+    examples:
+      ok:
+        request: { data: data/ip }
+        response: { terms: [関係データベース, 主キー] }
+      unreadable:
+        request: { data: tests/fixtures/unit-reading/glossary-unreadable/data/ip }
+        error: INVALID_INPUT
+
+  readReadingFigureSpec:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 1 論点の図の仕様から、図の番号・差し込み位置・説明文を読む（形の正本は図の仕様書）
+    request:
+      type: object
+      required: [data, topic_id]
+      additionalProperties: false
+      properties:
+        data: { type: string, pattern: "^(tests/fixtures/unit-reading/[a-z0-9-]+/)?data/[a-z]+$" }
+        topic_id: { type: integer, minimum: 1 }
+    response:
+      type: object
+      required: [figures]
+      properties:
+        figures:
+          type: array
+          description: 図の仕様の無い論点は空
+          items:
+            type: object
+            required: [id, after, caption]
+            properties:
+              id: { type: integer, minimum: 1 }
+              after: { type: string, minLength: 1 }
+              caption: { type: string, minLength: 1 }
+    errors:
+      - code: INVALID_INPUT
+        when: 図の仕様として読めない
+    examples:
+      ok:
+        request: { data: data/ip, topic_id: 369 }
+        response: { figures: [{ id: 1, after: "### 表・レコード・フィールド", caption: 外から内へ単位が細かくなる入れ子です。データベースは表の、表はレコードの、レコードはフィールドの集まりです。 }, { id: 2, after: "### 表どうしを項目の値でつなぐ", caption: 左が受注表の行、右が顧客表の行です。同じ顧客番号の値で結ぶので、氏名と住所は顧客表に 1 回だけ書けば済みます。 }] }
+      none:
+        request: { data: data/ip, topic_id: 15 }
+        response: { figures: [] }
+      unreadable:
+        request: { data: tests/fixtures/unit-reading/figure-spec-unreadable/data/ip, topic_id: 369 }
+        error: INVALID_INPUT
+
+  readReadingFigure:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 図の参照先が指す画像を、配信の置き場から読む
+    request:
+      type: object
+      required: [src]
+      additionalProperties: false
+      properties:
+        src: { $ref: "../../../_shared/components.yaml#/schemas/MaterialFigureSrc" }
+        root: { type: string, pattern: "^tests/fixtures/unit-reading/[a-z0-9-]+$", description: 置き場の根。リポジトリのときは持たない }
+    response:
+      type: object
+      required: [file]
+      properties:
+        file: { type: string, pattern: "^(tests/fixtures/unit-reading/[a-z0-9-]+/)?public/figures/materials/", description: 置き場の根の public の下の、src と同じパス }
+    errors:
+      - code: NOT_FOUND
+        when: 画像が置き場所に無い
+    examples:
+      ok:
+        request: { src: /figures/materials/ip/369-1.svg }
+        response: { file: public/figures/materials/ip/369-1.svg }
+      missing:
+        request: { src: /figures/materials/ip/999-9.svg }
+        error: NOT_FOUND
+
+  writeUnitReading:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 出力先に単元の読み物（reading.md）を書く
+    request:
+      type: object
+      required: [out, body]
+      additionalProperties: false
+      properties:
+        out: { type: string, minLength: 1 }
+        body: { type: string, minLength: 1, description: 単元の読み物の全文。押すと説明が出る語の印は語の直後の ※。図は出力先の中の MaterialFigurePng の置く先の PNG を指す }
+    response: { type: object, required: [path], properties: { path: { type: string, const: reading.md } } }
+    errors: []
+    examples:
+      ok:
+        request: { out: ../unit_readings/ip_21, body: "# データベース（18 項目）\n…" }
+        response: { path: reading.md }
+
+  writeReadingFigure:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 図の画像を PNG に描いて出力先の figures/ の下に書く
+    request:
+      type: object
+      required: [out, src, renderTimeoutSeconds]
+      additionalProperties: false
+      properties:
+        out: { type: string, minLength: 1 }
+        src: { $ref: "../../../_shared/components.yaml#/schemas/MaterialFigureSrc" }
+        root: { type: string, pattern: "^tests/fixtures/unit-reading/[a-z0-9-]+$", description: 置き場の根。リポジトリのときは持たない }
+        renderTimeoutSeconds: { $ref: "../../../_shared/components.yaml#/schemas/FigureRenderTimeoutSeconds" }
+    response: { type: object, required: [path], properties: { path: { $ref: "../../../_shared/components.yaml#/schemas/MaterialFigurePng" } } }
+    errors:
+      - code: INTERNAL
+        when: 図を PNG に描けない
+    examples:
+      notDrawable:
+        request: { out: ../unit_readings/figure-not-drawable, src: /figures/materials/ip/32-1.svg, root: tests/fixtures/unit-reading/figure-not-drawable, renderTimeoutSeconds: 30 }
+        error: INTERNAL
+      ok:
+        request: { out: ../unit_readings/ip_21, src: /figures/materials/ip/369-1.svg, renderTimeoutSeconds: 30 }
+        response: { path: figures/369-1.png }

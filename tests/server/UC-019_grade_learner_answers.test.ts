@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   DELIVERED_FILE, EXPLAIN_FILE, QUESTIONS_DIR, QUESTION_BUNDLES, ROADMAP_FILE, SNAPSHOT_8, UNITS,
-  PNG, addFigureLine, grade, makeWorkspace, prepareGrade, question, resultFile, roadmapOf, snapshotFile, toolError, writeQuestions,
+  PNG, addFigureLine, grade, gradeRaw, makeWorkspace, prepareGrade, question, resultFile, roadmapOf, snapshotFile, toolError, writeQuestions,
   type Json, type Run, type Workspace,
 } from './uc019_fixture'
 
@@ -644,45 +644,91 @@ describe('UC-019 学習者役の答えを採点する（gradeLearnerAnswers）',
   })
 
   describe('引数が契約の形の外（REQ-340）', () => {
-    const refusedArgs = (req: { data?: string; cycle?: number | string; answers?: string; explain?: string }, names: string[]) => {
+    /** 採点の前提（写し・答え・説明テストの採点）をそろえた作業場所。 */
+    const ready = () => {
       const ws = makeWorkspace()
       prepareGrade(ws, BASE)
       ws.write('answers/explain_grade.json', { grades: { 単位五: 2 } })
-      const before = ws.snapshotTree()
-      const r = grade(ws, req)
-      expect(r.status).toBe(1)
+      return { ws, before: ws.snapshotTree() }
+    }
+    /** 断ったうえで、挙げた引数（BR-055 の並び）と、作業場所のファイルが 1 つも変わらないこと。 */
+    const expectArgsRefused = (ws: Workspace, before: Record<string, string>, r: Run, names: string[]) => {
+      expect(r.status, r.stdout + r.stderr).toBe(1)
       expect(r.code, r.stdout).toBe('INVALID_INPUT')
-      expect([...(toolError(r.json)?.arguments ?? [])].sort()).toEqual([...names].sort())
+      expect(toolError(r.json)?.arguments).toEqual(names)
       expect(ws.snapshotTree()).toEqual(before)
     }
+    const refusedArgs = (req: { data?: string; cycle?: number | string; answers?: string; explain?: string }, names: string[]) => {
+      const { ws, before } = ready()
+      expectArgsRefused(ws, before, grade(ws, req), names)
+    }
+    const refusedRaw = (args: string[], names: string[]) => {
+      const { ws, before } = ready()
+      expectArgsRefused(ws, before, gradeRaw(ws, args), names)
+    }
+    const DATA = ['--data', 'data/eng']
+    const CYCLE = ['--cycle', '8']
+    const ANSWERS = ['--answers', 'answers/learner.json']
 
-    for (const cycle of [0, -1, '1.5', 'abc']) {
+    for (const cycle of [0, -1, '1.5', 'abc', '+8']) {
       /** @covers REQ-340#grade-bad-cycle */
-      it(`周の番号が 1 以上の整数でない（${JSON.stringify(cycle)}）なら採点の入口は断り、何も書かない`, () => {
+      it(`周の番号が 1 以上の 10 進の整数でない（${JSON.stringify(cycle)}）なら採点の入口は断り、cycle を挙げ、何も書かない`, () => {
         refusedArgs({ cycle }, ['cycle'])
       })
     }
 
     /** @covers REQ-340#grade-empty-answers */
-    it('答えのファイルが空なら採点の入口は断り、何も書かない', () => {
+    it('答えのファイルが空なら採点の入口は断り、answers を挙げ、何も書かない', () => {
       refusedArgs({ answers: '' }, ['answers'])
     })
 
     /** @covers REQ-340#grade-empty-explain */
-    it('説明テストの採点のファイルを空で渡すと採点の入口は断り、何も書かない', () => {
+    it('説明テストの採点のファイルを空で渡すと採点の入口は断り、explain を挙げ、何も書かない', () => {
       refusedArgs({ explain: '' }, ['explain'])
     })
 
     for (const data of ['eng', 'data/Eng', 'data/eng/', '../data/eng', 'data/eng2']) {
       /** @covers REQ-340#grade-bad-data */
-      it(`学びが学びの置き場の形でない（${data}）なら採点の入口は断り、何も書かない`, () => {
+      it(`学びが学びの置き場の形でない（${data}）なら採点の入口は断り、data を挙げ、何も書かない`, () => {
         refusedArgs({ data }, ['data'])
       })
     }
 
+    for (const [label, args, names] of [
+      ['data を付けない', [...CYCLE, ...ANSWERS], ['data']],
+      ['cycle を付けない', [...DATA, ...ANSWERS], ['cycle']],
+      ['answers を付けない', [...DATA, ...CYCLE], ['answers']],
+      ['引数を 1 つも付けない', [], ['data', 'cycle', 'answers']],
+      ['answers が名前だけで値が無い（最後の語）', [...DATA, ...CYCLE, '--answers'], ['answers']],
+      ['data が名前だけで値が無い（すぐ後が -- で始まる語）', ['--data', ...CYCLE, ...ANSWERS], ['data']],
+      ['answers を前の部分だけの名前 ans でしか渡さない', [...DATA, ...CYCLE, '--ans', 'answers/learner.json'], ['answers', 'ans']],
+      ['cycle を前の部分だけの名前 c でしか =付きで渡さない', [...DATA, '--c=8', ...ANSWERS], ['cycle', 'c']],
+    ] as const) {
+      /** @covers REQ-340#grade-missing-argument */
+      it(`採点の入口で引数が無い（${label}）なら断り、その欄を挙げ、何も書かない`, () => {
+        refusedRaw([...args], [...names])
+      })
+    }
+
+    for (const [label, args, names] of [
+      ['周の番号を 2 回（前が形の外、後ろが形の内）', [...DATA, '--cycle', '0', ...CYCLE, ...ANSWERS], ['cycle']],
+      ['答えのファイルを 2 回（どちらも形の内）', [...DATA, ...CYCLE, ...ANSWERS, '--answers', 'answers/other.json'], ['answers']],
+      ['説明テストの採点のファイルを同じ値で 2 回', [...DATA, ...CYCLE, ...ANSWERS, '--explain', 'answers/explain_grade.json', '--explain=answers/explain_grade.json'], ['explain']],
+    ] as const) {
+      /** @covers REQ-340#grade-duplicated-argument */
+      it(`採点の入口に同じ名前の引数を 2 回渡す（${label}）と断り、その名前を 1 回挙げ、何も書かない`, () => {
+        refusedRaw([...args], [...names])
+      })
+    }
+
     /** @covers REQ-340#grade-all-bad-arguments-listed */
-    it('形の外の引数が複数あれば、すべての名前を挙げる', () => {
+    it('形の外の引数が複数あれば、cycle・answers を request の順に 1 回ずつ挙げる', () => {
       refusedArgs({ cycle: 0, answers: '' }, ['cycle', 'answers'])
+    })
+
+    /** @covers REQ-340#grade-all-bad-arguments-listed */
+    it('コマンドの並びによらず、request の欄を request の順に、続けて契約に無い名前と語を現れた順に挙げる', () => {
+      refusedRaw(['--zz', '1', '--explain', '', '--answers', '', 'stray', '--cycle', '0', ...DATA], ['cycle', 'answers', 'explain', 'zz', 'stray'])
     })
 
     /** @covers REQ-340#bad-args-before-not-roadmap-grade */
@@ -690,17 +736,32 @@ describe('UC-019 学習者役の答えを採点する（gradeLearnerAnswers）',
       refusedArgs({ data: 'data/ip', cycle: 0 }, ['cycle'])
     })
 
-    for (const extra of [['--out', 'packs/c8'], ['--dat', 'data/eng'], ['--cyc', '8'], ['--ans', 'answers/learner.json'], ['--exp', 'answers/explain_grade.json']]) {
-      // @covers REQ-340#grade-extra-argument
-      it(`契約に無い引数（${extra.join(' ')}。契約の引数名の前の部分だけの名前を含む）があれば、契約の引数がそろっていても採点の入口は断り、何も書かない`, () => {
+    for (const [extra, names] of [
+      [['--out', 'packs/c8'], ['out']],
+      [['--dat', 'data/eng'], ['dat']],
+      [['--cyc', '8'], ['cyc']],
+      [['--ans', 'answers/learner.json'], ['ans']],
+      [['--exp', 'answers/explain_grade.json'], ['exp']],
+      [['--out=packs/c8'], ['out']],
+      [['stray'], ['stray']],
+      [['-a'], ['-a']],
+    ] as const) {
+      /** @covers REQ-340#grade-extra-argument */
+      it(`契約の引数がそろったうえで契約に無い引数（${extra.join(' ')}）があれば、採点の入口は断り、${names.join('・')} を挙げ、何も書かない`, () => {
+        const { ws, before } = ready()
+        expectArgsRefused(ws, before, grade(ws, {}, [...extra]), [...names])
+      })
+    }
+
+    for (const args of [['--answers', '-a.json'], ['--answers=-a.json']]) {
+      /** @covers REQ-340#hyphen-value-in-shape */
+      it(`- で始まる値（${args.join(' ')}）は答えのファイルの値として読み、断らずにそのファイルで採点する`, () => {
         const ws = makeWorkspace()
-        prepareGrade(ws, BASE)
-        ws.write('answers/explain_grade.json', { grades: { 単位五: 2 } })
-        const before = ws.snapshotTree()
-        const r = grade(ws, {}, extra)
-        expect(r.status, r.stdout + r.stderr).toBe(1)
-        expect(r.code, r.stdout).toBe('INVALID_INPUT')
-        expect(ws.snapshotTree()).toEqual(before)
+        prepareGrade(ws, BASE, SNAPSHOT_8, '-a.json')
+        const r = gradeRaw(ws, [...DATA, ...CYCLE, ...args])
+        expect(r.status, r.stdout + r.stderr).toBe(0)
+        expect(r.json.score).toBe('2/4')
+        expect(ws.exists(resultFile(8))).toBe(true)
       })
     }
   })

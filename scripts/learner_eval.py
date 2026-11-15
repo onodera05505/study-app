@@ -1,15 +1,16 @@
-"""学習者役のパックを作る入口（build_learner_pack.py）と採点の入口（grade_learner.py）が共に読む物。
+"""学習者役のパックを作る入口（build_learner_pack.py）・採点の入口（grade_learner.py）・指示を描き出す入口（render_prompts.py）と、
+単元の読み物を作る入口（build_unit_reading.py）が共に読む物（引数の読み方・登録簿・断りの形）。
 契約は docs/goals/GOAL-12-measure-with-learner-role/UC-019-measure-with-learner-pack/contract.yaml。
 data・out・answers・explain は、コマンドを呼んだ作業ディレクトリからのパスとして読む。
 置き場の根は data の 2 段上（リポジトリなら作業ディレクトリ、検査用の作り物なら tests/fixtures/learner-pack/<名前>）で、
 学びの置き場は根の data/<key>、図の置き場は根の public/。登録簿は targets.py（リポジトリの src/shared/targets.json）から読む。"""
 from __future__ import annotations
-import argparse
 import json
 import os
 import re
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from targets import targets  # noqa: E402
@@ -40,38 +41,71 @@ def run(main) -> int:
         return 1
 
 
-class _Parser(argparse.ArgumentParser):
-    def error(self, message: str):
-        raise Refused("INVALID_INPUT", "引数が契約の形の外", arguments=[])
-
-
 def _shape_ok(kind, v: str) -> bool:
     if callable(kind):
         return bool(kind(v))
     if kind == "data":
-        return bool(DATA_ARG.match(v))
+        return DATA_ARG.fullmatch(v) is not None
     if kind == "cycle":
-        return bool(re.fullmatch(r"[0-9]+", v)) and int(v) >= 1
+        return re.fullmatch(r"[0-9]+", v) is not None and int(v) >= 1
     return v != ""
 
 
-# @implements REQ-340
-def contract_args(prog: str, shape: dict[str, str], required: tuple[str, ...]) -> argparse.Namespace:
-    """引数を契約の request の形で読む。形の外の引数があれば、何も読み書きする前に、その名前をすべて挙げて断る。
-    shape は引数の名前 → data（学びの置き場の形）・cycle（1 以上の整数）・text（空でない文字）、
-    または値を受けて形に合うかを返す関数（入口ごとの契約の形）。"""
-    # 契約の引数名の前の部分だけの名前（--dat など）は契約に無い引数として断るので、略した名前を契約の引数と読まない
-    ap = _Parser(prog=prog, add_help=False, allow_abbrev=False)
-    for name in shape:
-        ap.add_argument(f"--{name}")
-    a, unknown = ap.parse_known_args()
-    bad = [name for name in shape if (getattr(a, name) is None and name in required)
-           or (getattr(a, name) is not None and not _shape_ok(shape[name], getattr(a, name)))]
-    bad += [u.split("=", 1)[0].lstrip("-") for u in unknown if u.startswith("-")]
-    if bad or unknown:
-        raise Refused("INVALID_INPUT", "引数が契約の形の外", arguments=bad or unknown)
-    if getattr(a, "cycle", None) is not None:
-        a.cycle = int(a.cycle)
+def _arg_pairs(argv: list[str]) -> list[tuple[str | None, str | None, str]]:
+    """コマンドの引数を (名前, 値, 語) の並びに読む。`--` で始まる語は常に名前で、`--名前=値` は = より後を値、
+    = の無い `--名前` はすぐ後の語が `--` で始まらなければその語を値とし、そうでなければ値を持たない。
+    どの名前の値でもない語は名前を None にして語のまま持つ。"""
+    out: list[tuple[str | None, str | None, str]] = []
+    i = 0
+    while i < len(argv):
+        tok = argv[i]
+        if tok.startswith("--"):
+            body = tok[2:]
+            if "=" in body:
+                name, value = body.split("=", 1)
+            elif i + 1 < len(argv) and not argv[i + 1].startswith("--"):
+                name, value = body, argv[i + 1]
+                i += 1
+            else:
+                name, value = body, None
+            out.append((name, value, tok))
+        else:
+            out.append((None, None, tok))
+        i += 1
+    return out
+
+
+# @implements REQ-340, BR-055
+def contract_args(prog: str, shape: dict[str, str], required: tuple[str, ...], argv: list[str] | None = None) -> SimpleNamespace:
+    """引数を契約の request の形で読む。形の外の引数があれば、何も読み書きする前に、当たった物を 1 回ずつ挙げて断る。
+    shape は契約の request の欄を request に並ぶ順に、欄の名前 → data（学びの置き場の形）・cycle（1 以上の整数）・
+    text（空でない文字）、または値を受けて形に合うかを返す関数（入口ごとの契約の形）。
+    挙げる並びは、契約の欄を shape の順に、続けて契約に無い名前と語をコマンドに現れた順にする。"""
+    pairs = _arg_pairs(sys.argv[1:] if argv is None else argv)
+    seen: dict[str, list[str | None]] = {}
+    extra: list[str] = []
+    for name, value, tok in pairs:
+        if name is not None and name in shape:
+            seen.setdefault(name, []).append(value)
+            continue
+        # 名前の空の `--`・`--=値` は名前で挙げられないので、語のまま挙げる
+        word = name if name else tok
+        if word not in extra:
+            extra.append(word)
+    bad = []
+    for name, kind in shape.items():
+        vals = seen.get(name)
+        if vals is None:
+            if name in required:
+                bad.append(name)
+        elif len(vals) > 1 or vals[0] is None or not _shape_ok(kind, vals[0]):
+            bad.append(name)
+    if bad or extra:
+        raise Refused("INVALID_INPUT", "引数が契約の形の外", arguments=bad + [w for w in extra if w not in bad])
+    a = SimpleNamespace(**{name: (seen[name][0] if name in seen else None) for name in shape})
+    for name, kind in shape.items():
+        if kind == "cycle" and getattr(a, name) is not None:
+            setattr(a, name, int(getattr(a, name)))
     return a
 
 

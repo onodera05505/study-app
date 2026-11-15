@@ -273,24 +273,42 @@ describe('UC-019 学習者役への指示を雛形から描き出す（renderLea
   })
 
   describe('入口の引数が契約の形の外（REQ-411）', () => {
-    /** 断ったうえで、挙げた引数の名前と、作業場所のファイルが 1 つも変わらないこと。 */
+    /** 断ったうえで、挙げた引数（BR-055 の並び）と、作業場所のファイルが 1 つも変わらないこと。 */
     const refusedArgs = (args: string[], names: string[]) => {
       const { ws } = itcWorkspace()
       const before = ws.snapshotTree()
       const r = render(ws, args)
       expectRefused(r, ws, before)
-      expect([...(toolError(r.json)?.arguments ?? [])].sort()).toEqual([...names].sort())
+      expect(toolError(r.json)?.arguments).toEqual(names)
     }
 
-    /** @covers REQ-411#data-missing */
-    it('学びを渡さなければ断り、data を挙げ、何も書かない', () => {
-      refusedArgs([], ['data'])
-    })
+    for (const [label, args, names] of [
+      ['引数を付けない', [], ['data']],
+      ['data が名前だけで値が無い', ['--data'], ['data']],
+      ['data を前の部分だけの名前 dat でしか渡さない', ['--dat', 'data/itc'], ['data', 'dat']],
+      ['data を前の部分だけの名前 d でしか =付きで渡さない', ['--d=data/itc'], ['data', 'd']],
+    ] as const) {
+      /** @covers REQ-411#data-missing */
+      it(`学びを渡さない（${label}）なら断り、data を挙げ、何も書かない`, () => {
+        refusedArgs([...args], [...names])
+      })
+    }
 
-    for (const data of ['itc', 'data/Itc', 'data/itc/', '../data/itc', 'data/itc2', 'other/data/itc', 'tests/fixtures/learner-pack/Bad/data/itc', 'tests/fixtures/learner-pack/x/y/data/itc', '']) {
+    for (const data of ['itc', 'data/Itc', 'data/itc/', '../data/itc', 'data/itc2', 'other/data/itc', 'tests/fixtures/learner-pack/Bad/data/itc', 'tests/fixtures/learner-pack/x/y/data/itc', '', '-x']) {
       /** @covers REQ-411#data-not-in-shape */
       it(`学びが学びの置き場の形でない（${JSON.stringify(data)}）なら断り、data を挙げ、何も書かない`, () => {
         refusedArgs(['--data', data], ['data'])
+      })
+    }
+
+    for (const [label, args] of [
+      ['同じ値で 2 回', ['--data', 'data/itc', '--data', 'data/itc']],
+      ['前が形の外、後ろが形の内', ['--data', 'data/Itc', '--data', 'data/itc']],
+      ['= 付きと無しで 2 回', ['--data=data/itc', '--data', 'data/itc']],
+    ] as const) {
+      /** @covers REQ-411#duplicated-argument */
+      it(`学びを 2 回渡す（${label}）と断り、data を 1 回挙げ、何も書かない`, () => {
+        refusedArgs([...args], ['data'])
       })
     }
 
@@ -298,9 +316,14 @@ describe('UC-019 学習者役への指示を雛形から描き出す（renderLea
       ['周の番号', ['--data', 'data/itc', '--cycle', '1'], ['cycle']],
       ['出力先', ['--data', 'data/itc', '--out', 'packs/x'], ['out']],
       ['契約に無い 2 つの引数', ['--data', 'data/itc', '--cycle', '1', '--out', 'packs/x'], ['cycle', 'out']],
+      ['現れた順に挙げる', ['--zz', '1', '--data', 'data/itc', '--aa', '2'], ['zz', 'aa']],
+      ['どの名前の値でもない語', ['--data', 'data/itc', 'stray'], ['stray']],
+      ['- 1 字で始まるどの名前の値でもない語', ['--data', 'data/itc', '-x'], ['-x']],
+      ['= 付きの契約に無い名前', ['--data', 'data/itc', '--cycle=1'], ['cycle']],
+      ['契約の引数名の前の部分だけの名前', ['--data', 'data/itc', '--dat', 'data/itc'], ['dat']],
     ] as const) {
       /** @covers REQ-411#unknown-argument */
-      it(`契約に無い引数（${label}）を渡せば断り、その名前を挙げ、何も書かない`, () => {
+      it(`契約に無い引数（${label}）を渡せば断り、その名前か語を挙げ、何も書かない`, () => {
         refusedArgs([...args], [...names])
       })
     }

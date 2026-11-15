@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, it, vi } from 'vitest'
 import {
-  DELIVERED, DELIVERED_FILE, EDITED, EXPLAIN_FILE, EXPLAIN_TERMS, QUESTIONS_DIR, QUESTION_BUNDLES, ROADMAP_FILE, SNAPSHOT_8, SVG, UNITS,
-  PNG, addFigureLine, roadmapOf, build, dropBody, imageRefs, isInside, isPng, makeWorkspace, packDetail, pngSize, question, resolveIn, resultFile, snapshotFile, svgWithText,
+  DELIVERED, DELIVERED_FILE, EDITED, EDITED_FILE, EXPLAIN_FILE, EXPLAIN_TERMS, QUESTIONS_DIR, QUESTION_BUNDLES, ROADMAP_FILE, SNAPSHOT_8, SVG, UNITS,
+  PNG, addFigureLine, roadmapOf, build, buildRaw, copyFixture, dropBody, imageRefs, isInside, isPng, makeWorkspace, packDetail, pngSize, question, resolveIn, resultFile, snapshotFile, svgWithText,
   toolError, withoutMacTools, writeQuestions,
   type Json, type Run, type Workspace,
 } from './uc019_fixture'
@@ -137,6 +137,17 @@ describe('UC-019 学習者役のパックを作る（buildLearnerPack）', { tim
         expect(md).toContain(m.explanation)
         expect(md).toContain(packDetail(m.detail))
       }
+    })
+
+    /** @covers REQ-305#full-body */
+    it('行頭と行末に空白を持つ図の行も図の行として、参照先だけを変えて空白ごと全文含む', () => {
+      const w = makeWorkspace()
+      const detail = `${DELIVERED.find((m) => m.topic_id === 4)!.detail}\n\u3000 ![足した図](/figures/materials/eng/5-1.svg)\t`
+      w.write(DELIVERED_FILE, { bundle: 'roadmap', materials: DELIVERED.map((m) => (m.topic_id === 4 ? { ...m, detail } : m)) })
+      const res = build(w)
+      expect(res.status, res.stdout + res.stderr).toBe(0)
+      const file = w.files(PACK).filter((f) => f.startsWith('units/')).find((f) => w.read(`${PACK}/${f}`).includes(DELIVERED.find((m) => m.topic_id === 4)!.explanation))!
+      expect(w.read(`${PACK}/${file}`)).toContain(packDetail(detail))
     })
 
     /** @covers REQ-305#delivered-not-edited */
@@ -677,6 +688,15 @@ describe('UC-019 学習者役のパックを作る（buildLearnerPack）', { tim
     })
     }
 
+    /** @covers REQ-320#figure-missing */
+    it('行頭と行末に空白を持つ図の行が指す画像が無くても NOT_FOUND で止め、単位と空白を除いた参照先を挙げる', () => {
+      const ws = makeWorkspace()
+      ws.write(DELIVERED_FILE, { bundle: 'roadmap', materials: DELIVERED.map((m) => (m.topic_id === 4 ? { ...m, detail: `${m.detail}\n\u3000![足した図](/figures/materials/eng/4-1.svg)\t` } : m)) })
+      const r = build(ws)
+      expectRefused(r, ws, 'NOT_FOUND', untouched(ws))
+      expect(figuresOf(r)).toEqual([{ unit: 4, ref: '/figures/materials/eng/4-1.svg' }])
+    })
+
     /** @covers REQ-320#figure-only-in-other-learning */
     it('同じ名前の画像が別の学びの置き場にしか無ければ NOT_FOUND で止める', () => {
       const ws = makeWorkspace()
@@ -697,6 +717,163 @@ describe('UC-019 学習者役のパックを作る（buildLearnerPack）', { tim
       const r = build(ws)
       expectRefused(r, ws, 'NOT_FOUND', untouched(ws))
       expect(figuresOf(r)).toEqual([{ unit: 9, ref: '/figures/materials/eng/9-1.png' }])
+    })
+  })
+
+  describe('図の置き場を指すのに図の行の形に合わない行がある（REQ-513）', () => {
+    /** 最も後の世代の配る本文で、単位の detail（既定）か explanation の末尾に 1 行を足す。 */
+    const addLines = (ws: Workspace, adds: { unit: number; line: string; field?: 'detail' | 'explanation' }[]) => {
+      ws.write(DELIVERED_FILE, {
+        bundle: 'roadmap',
+        materials: DELIVERED.map((m) => {
+          const mine = adds.filter((a) => a.unit === m.topic_id)
+          const detail = mine.filter((a) => (a.field ?? 'detail') === 'detail').reduce((d, a) => `${d}\n${a.line}`, m.detail)
+          const explanation = mine.filter((a) => a.field === 'explanation').reduce((d, a) => `${d}\n${a.line}`, m.explanation)
+          return { ...m, explanation, detail }
+        }),
+      })
+    }
+    /** ToolError の lines を契約の欄（unit・line）だけにして、並びによらず比べられる形にする。 */
+    const linesOf = (r: Run) =>
+      ((toolError(r.json)?.lines ?? []) as Json[]).map((x) => ({ unit: x.unit, line: x.line })).sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)))
+    const sortLines = (xs: { unit: number; line: string }[]) => [...xs].sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)))
+
+    for (const [label, line] of [
+      ['段に .. を含む', '![図](/figures/materials/eng/../../zz-9.svg)'],
+      ['学びの段が大文字', '![図](/figures/materials/ENG/5-1.svg)'],
+      ['学びの段に数字', '![図](/figures/materials/eng2/5-1.svg)'],
+      ['学びの段が無い', '![図](/figures/materials/5-1.svg)'],
+      ['拡張子が svg・png でない', '![図](/figures/materials/eng/5-1.jpg)'],
+      ['拡張子が大文字', '![図](/figures/materials/eng/5-1.SVG)'],
+      ['図の説明文が空', '![](/figures/materials/eng/5-1.svg)'],
+      ['図の説明文が ]( を含む', '![a](b](/figures/materials/eng/5-1.svg)'],
+      ['画像でなくリンクの記法', '[図](/figures/materials/eng/5-1.svg)'],
+      ['題を添えた画像', '![図](/figures/materials/eng/5-1.svg "題")'],
+      ['行の前に文がある', '図は ![図](/figures/materials/eng/5-1.svg)'],
+      ['行の後に文がある', '![図](/figures/materials/eng/5-1.svg)。'],
+      ['1 行に画像が 2 つ', '![図](/figures/materials/eng/5-1.svg)![図](/figures/materials/eng/9-1.png)'],
+      ['外の URL の中に前置きを含む', '![図](https://example.com/figures/materials/eng/5-1.svg)'],
+      ['文の中で前置きに触れる', '図は /figures/materials/eng/5-1.svg にある'],
+      ['行の中のコードで前置きに触れる', '`/figures/materials/eng/5-1.svg`'],
+      ['行頭に空白を持つ形に合わない行', '  ![図](/figures/materials/eng/../5-1.svg)'],
+    ] as const) {
+      /** @covers REQ-513#line-malformed */
+      it(`配る本文に前置きを含み形に合わない行（${label}）があれば INVALID_INPUT で止め、単位と書かれたままの行を挙げ、パックも写しも作らない`, () => {
+        const ws = makeWorkspace()
+        addLines(ws, [{ unit: 4, line }])
+        const r = build(ws)
+        expectRefused(r, ws, 'INVALID_INPUT', untouched(ws))
+        expect(linesOf(r)).toEqual([{ unit: 4, line }])
+      })
+    }
+
+    /** @covers REQ-513#line-malformed */
+    it('配る本文の説明の行に前置きを含み形に合わない行があっても止め、その単位と行を挙げる', () => {
+      const ws = makeWorkspace()
+      const line = '図は /figures/materials/eng/5-1.svg を見る'
+      addLines(ws, [{ unit: 4, line, field: 'explanation' }])
+      const r = build(ws)
+      expectRefused(r, ws, 'INVALID_INPUT', untouched(ws))
+      expect(linesOf(r)).toEqual([{ unit: 4, line }])
+    })
+
+    /** @covers REQ-513#several-lines-listed */
+    it('形に合わない行が複数の単位と 1 つの単位の中に複数あれば、すべての単位と行を挙げる', () => {
+      const ws = makeWorkspace()
+      const adds = [
+        { unit: 4, line: '![図](/figures/materials/ENG/5-1.svg)' },
+        { unit: 4, line: '[図](/figures/materials/eng/9-1.png)' },
+        { unit: 5, line: '![図](/figures/materials/eng/5-1.jpg)' },
+      ]
+      addLines(ws, adds)
+      const r = build(ws)
+      expectRefused(r, ws, 'INVALID_INPUT', untouched(ws))
+      expect(linesOf(r)).toEqual(sortLines(adds))
+    })
+
+    for (const [label, line] of [
+      ['行頭に全角の空白・行末にタブ', '　![図](/figures/materials/eng/5-1.svg)\t'],
+      ['行頭にタブと半角の空白・行末に半角の空白', ' \t![図](/figures/materials/eng/sub/2-1.svg) '],
+      ['図の説明文が ( の続かない ] を含む', '![図[1]の説明](/figures/materials/eng/9-1.png)'],
+    ] as const) {
+      /** @covers REQ-513#well-formed-variants-ok */
+      it(`図の行の形に合う行（${label}）は図の行として読み、止めずにパックを作る`, () => {
+        const ws = makeWorkspace()
+        addLines(ws, [{ unit: 4, line }])
+        const r = build(ws)
+        expect(r.status, r.stdout + r.stderr).toBe(0)
+        expect(toolError(r.json)).toBeUndefined()
+      })
+    }
+
+    /** @covers REQ-513#only-delivered-body-checked */
+    it('形に合わない行が配る本文に選ばれない前の世代の教材にだけあれば、止めずにパックを作る', () => {
+      const ws = makeWorkspace()
+      ws.write(EDITED_FILE, { bundle: 1, materials: EDITED.map((m) => (m.topic_id === 5 ? { ...m, detail: `${m.detail}\n![図](/figures/materials/ENG/5-1.svg)` } : m)) })
+      const r = build(ws)
+      expect(r.status, r.stdout + r.stderr).toBe(0)
+    })
+
+    /** @covers REQ-513#body-missing-before-line-malformed */
+    it('配る本文の無い単位と形に合わない行が両方あれば、配る本文の無い単位を挙げて NOT_FOUND で止める', () => {
+      const ws = makeWorkspace()
+      addLines(ws, [{ unit: 4, line: '![図](/figures/materials/ENG/5-1.svg)' }])
+      dropBody(ws, 9)
+      const r = build(ws)
+      expectRefused(r, ws, 'NOT_FOUND', untouched(ws))
+      expect(toolError(r.json).units).toEqual([9])
+      expect(toolError(r.json).lines).toBeUndefined()
+    })
+
+    /** @covers REQ-513#line-malformed-before-figure-missing */
+    it('形に合わない行と画像の無い図が両方あれば、形に合わない行だけを挙げて INVALID_INPUT で止める', () => {
+      const ws = makeWorkspace()
+      addLines(ws, [{ unit: 4, line: '![図](/figures/materials/ENG/5-1.svg)' }])
+      ws.remove('public/figures/materials/eng/sub/2-1.svg')
+      const r = build(ws)
+      expectRefused(r, ws, 'INVALID_INPUT', untouched(ws))
+      expect(linesOf(r)).toEqual([{ unit: 4, line: '![図](/figures/materials/ENG/5-1.svg)' }])
+      expect(toolError(r.json).figures).toBeUndefined()
+    })
+
+    describe('契約の例が指す作り物の置き場から呼ぶ', () => {
+      /** 作り物を写して呼ぶ。断ったときは作り物の置き場の写しも出力先も残さない。 */
+      const fromFixture = (name: string) => {
+        const ws = makeWorkspace()
+        const data = `${copyFixture(ws, name)}/data/itc`
+        const before = untouched(ws, 'packs/fx')
+        const r = build(ws, { data, cycle: 1, out: 'packs/fx' })
+        expect(r.status, r.stdout + r.stderr).toBe(1)
+        expect(ws.snapshotTree(before.out)).toEqual(before.tree)
+        expect(ws.exists(`${data}/eval/pack_cycle_1.json`)).toBe(false)
+        return r
+      }
+
+      /** @covers REQ-513#several-lines-listed */
+      it('figure-line-malformed: 単位 12 と 16 の形に合わない行を挙げて INVALID_INPUT で止める', () => {
+        const r = fromFixture('figure-line-malformed')
+        expect(r.code).toBe('INVALID_INPUT')
+        expect(linesOf(r)).toEqual(sortLines([
+          { unit: 12, line: '![図](/figures/materials/itc/../../zz-9.svg)' },
+          { unit: 16, line: '![図](/figures/materials/ITC/16-1.svg)' },
+        ]))
+      })
+
+      /** @covers REQ-513#body-missing-before-line-malformed */
+      it('body-missing-and-figure-line-malformed: 配る本文の無い単位 12 を挙げて NOT_FOUND で止める', () => {
+        const r = fromFixture('body-missing-and-figure-line-malformed')
+        expect(r.code).toBe('NOT_FOUND')
+        expect(toolError(r.json).units).toEqual([12])
+        expect(toolError(r.json).lines).toBeUndefined()
+      })
+
+      /** @covers REQ-513#line-malformed-before-figure-missing */
+      it('figure-line-malformed-and-figure-missing: 単位 16 の形に合わない行だけを挙げて INVALID_INPUT で止める', () => {
+        const r = fromFixture('figure-line-malformed-and-figure-missing')
+        expect(r.code).toBe('INVALID_INPUT')
+        expect(linesOf(r)).toEqual([{ unit: 16, line: '![図](/figures/materials/ITC/16-1.svg)' }])
+        expect(toolError(r.json).figures).toBeUndefined()
+      })
     })
   })
 
@@ -839,39 +1016,85 @@ describe('UC-019 学習者役のパックを作る（buildLearnerPack）', { tim
   })
 
   describe('引数が契約の形の外（REQ-340）', () => {
-    /** 断ったうえで、作業場所のファイルが 1 つも変わらないこと。 */
+    /** 断ったうえで、挙げた引数（BR-055 の並び）と、作業場所のファイルが 1 つも変わらないこと。 */
+    const expectArgsRefused = (ws: Workspace, before: Record<string, string>, r: Run, names: string[]) => {
+      expect(r.status, r.stdout + r.stderr).toBe(1)
+      expect(r.code, r.stdout).toBe('INVALID_INPUT')
+      expect(toolError(r.json)?.arguments).toEqual(names)
+      expect(ws.snapshotTree()).toEqual(before)
+    }
+    /** request の欄を名前と値の組で渡して呼ぶ。 */
     const refusedArgs = (req: { data?: string; cycle?: number | string; out?: string }, names: string[]) => {
       const ws = makeWorkspace()
       const before = ws.snapshotTree()
-      const r = build(ws, req)
-      expect(r.status).toBe(1)
-      expect(r.code, r.stdout).toBe('INVALID_INPUT')
-      expect([...(toolError(r.json)?.arguments ?? [])].sort()).toEqual([...names].sort())
-      expect(ws.snapshotTree()).toEqual(before)
+      expectArgsRefused(ws, before, build(ws, req), names)
     }
+    /** コマンドの引数をそのまま渡して呼ぶ。 */
+    const refusedRaw = (args: string[], names: string[]) => {
+      const ws = makeWorkspace()
+      const before = ws.snapshotTree()
+      expectArgsRefused(ws, before, buildRaw(ws, args), names)
+    }
+    const DATA = ['--data', 'data/eng']
+    const CYCLE = ['--cycle', '8']
+    const OUT = ['--out', 'packs/c8']
 
-    for (const cycle of [0, -1, '1.5', 'abc']) {
+    for (const cycle of [0, -1, '1.5', 'abc', '+8']) {
       /** @covers REQ-340#build-bad-cycle */
-      it(`周の番号が 1 以上の整数でない（${JSON.stringify(cycle)}）ならパックを作る入口は断り、何も書かない`, () => {
+      it(`周の番号が 1 以上の 10 進の整数でない（${JSON.stringify(cycle)}）ならパックを作る入口は断り、cycle を挙げ、何も書かない`, () => {
         refusedArgs({ cycle }, ['cycle'])
       })
     }
 
     /** @covers REQ-340#build-empty-out */
-    it('出力先が空ならパックを作る入口は断り、何も書かない', () => {
+    it('出力先が空ならパックを作る入口は断り、out を挙げ、何も書かない', () => {
       refusedArgs({ out: '' }, ['out'])
     })
 
     for (const data of ['eng', 'data/Eng', 'data/eng/', '../data/eng', 'data/eng2']) {
       /** @covers REQ-340#build-bad-data */
-      it(`学びが学びの置き場の形でない（${data}）ならパックを作る入口は断り、何も書かない`, () => {
+      it(`学びが学びの置き場の形でない（${data}）ならパックを作る入口は断り、data を挙げ、何も書かない`, () => {
         refusedArgs({ data }, ['data'])
       })
     }
 
+    for (const [label, args, names] of [
+      ['data を付けない', [...CYCLE, ...OUT], ['data']],
+      ['cycle を付けない', [...DATA, ...OUT], ['cycle']],
+      ['out を付けない', [...DATA, ...CYCLE], ['out']],
+      ['引数を 1 つも付けない', [], ['data', 'cycle', 'out']],
+      ['out が名前だけで値が無い（最後の語）', [...DATA, ...CYCLE, '--out'], ['out']],
+      ['cycle が名前だけで値が無い（すぐ後が -- で始まる語）', [...DATA, '--cycle', ...OUT], ['cycle']],
+      ['out を前の部分だけの名前 o でしか渡さない', [...DATA, ...CYCLE, '--o', '../learner_packs/eng_c8'], ['out', 'o']],
+      ['data を前の部分だけの名前 dat でしか渡さない', ['--dat', 'data/eng', ...CYCLE, ...OUT], ['data', 'dat']],
+      ['cycle を前の部分だけの名前 cyc でしか =付きで渡さない', [...DATA, '--cyc=8', ...OUT], ['cycle', 'cyc']],
+    ] as const) {
+      /** @covers REQ-340#build-missing-argument */
+      it(`パックを作る入口で引数が無い（${label}）なら断り、その欄を挙げ、何も書かない`, () => {
+        refusedRaw([...args], [...names])
+      })
+    }
+
+    for (const [label, args, names] of [
+      ['周の番号を 2 回（前が形の外、後ろが形の内）', [...DATA, '--cycle', '0', '--cycle', '8', ...OUT], ['cycle']],
+      ['出力先を 2 回（どちらも形の内）', [...DATA, ...CYCLE, '--out', 'packs/a', '--out', 'packs/b'], ['out']],
+      ['学びを同じ値で 2 回', [...DATA, ...DATA, ...CYCLE, ...OUT], ['data']],
+      ['出力先を = 付きと無しで 2 回', [...DATA, ...CYCLE, '--out=packs/a', ...OUT], ['out']],
+    ] as const) {
+      /** @covers REQ-340#build-duplicated-argument */
+      it(`パックを作る入口に同じ名前の引数を 2 回渡す（${label}）と断り、その名前を 1 回挙げ、何も書かない`, () => {
+        refusedRaw([...args], [...names])
+      })
+    }
+
     /** @covers REQ-340#build-all-bad-arguments-listed */
-    it('形の外の引数が複数あれば、すべての名前を挙げる', () => {
+    it('形の外の引数が複数あれば、cycle・out を request の順に 1 回ずつ挙げる', () => {
       refusedArgs({ cycle: 0, out: '' }, ['cycle', 'out'])
+    })
+
+    /** @covers REQ-340#build-all-bad-arguments-listed */
+    it('コマンドの並びによらず、request の欄を request の順に、続けて契約に無い名前と語を現れた順に挙げる', () => {
+      refusedRaw(['--zz', '1', '--out', '', 'stray', '--cycle', '0', '--cycle', '1', '--aa', '2', ...DATA], ['cycle', 'out', 'zz', 'stray', 'aa'])
     })
 
     /** @covers REQ-340#bad-args-before-not-roadmap-build */
@@ -879,15 +1102,32 @@ describe('UC-019 学習者役のパックを作る（buildLearnerPack）', { tim
       refusedArgs({ data: 'data/ip', cycle: 0, out: 'packs/ip' }, ['cycle'])
     })
 
-    for (const extra of [['--unit', '01'], ['--dat', 'data/eng'], ['--cyc', '8'], ['--o', 'packs/other']]) {
-      // @covers REQ-340#build-extra-argument
-      it(`契約に無い引数（${extra.join(' ')}。契約の引数名の前の部分だけの名前を含む）があれば、契約の引数がそろっていてもパックを作る入口は断り、何も書かない`, () => {
+    for (const [extra, names] of [
+      [['--unit', '01'], ['unit']],
+      [['--unit=01'], ['unit']],
+      [['--dat', 'data/eng'], ['dat']],
+      [['--cyc', '8'], ['cyc']],
+      [['--o', 'packs/other'], ['o']],
+      [['stray'], ['stray']],
+      [['-x'], ['-x']],
+      [['--unit', '01', 'stray', '--o', 'packs/other'], ['unit', 'stray', 'o']],
+    ] as const) {
+      /** @covers REQ-340#build-extra-argument */
+      it(`契約の引数がそろったうえで契約に無い引数（${extra.join(' ')}）があれば、パックを作る入口は断り、${names.join('・')} を挙げ、何も書かない`, () => {
         const ws = makeWorkspace()
         const before = ws.snapshotTree()
-        const r = build(ws, {}, {}, extra)
-        expect(r.status, r.stdout + r.stderr).toBe(1)
-        expect(r.code, r.stdout).toBe('INVALID_INPUT')
-        expect(ws.snapshotTree()).toEqual(before)
+        expectArgsRefused(ws, before, build(ws, {}, {}, [...extra]), [...names])
+      })
+    }
+
+    for (const args of [['--out', '-x'], ['--out=-x']]) {
+      /** @covers REQ-340#hyphen-value-in-shape */
+      it(`- で始まる値（${args.join(' ')}）は出力先の値として読み、断らずに -x にパックを作る`, () => {
+        const ws = makeWorkspace()
+        const r = buildRaw(ws, [...DATA, ...CYCLE, ...args])
+        expect(r.status, r.stdout + r.stderr).toBe(0)
+        expect(ws.exists('-x/roadmap.md')).toBe(true)
+        expect(ws.exists(snapshotFile(8))).toBe(true)
       })
     }
   })
