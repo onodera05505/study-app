@@ -12,6 +12,7 @@ import {
   symlinkSync,
   writeFileSync,
 } from 'node:fs'
+import { rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { delimiter, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -347,9 +348,13 @@ beforeAll(async () => {
   ])
 }, 600_000)
 
-afterAll(() => {
-  for (const dir of shadows) rmSync(dir, { recursive: true, force: true })
-})
+/** 影の根を消す時間の上限。影の根は 1 つに数千のファイル（public の写しと、組み立ての道具がそれを写した配信物）を持ち、
+ *  ほかのテストファイルと並行して回っているときは、消すのにフックの既定の上限より長く掛かる。 */
+const CLEANUP_TIMEOUT_MS = 120_000
+
+afterAll(async () => {
+  await Promise.all(shadows.map((dir) => rm(dir, { recursive: true, force: true })))
+}, CLEANUP_TIMEOUT_MS)
 
 describe('UC-016 配備の手続き（偽の配備の道具と組み立ての道具で回す）', () => {
   describe('REQ-224 新しい版の配信で版の印を書き出す', () => {
