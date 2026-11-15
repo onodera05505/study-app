@@ -1,0 +1,84 @@
+{
+  "target": "ip",
+  "units": [
+    "06",
+    "21",
+    "15"
+  ],
+  "status": "done",
+  "items": [
+    {
+      "no": 1,
+      "topic_id": 498,
+      "type": "H",
+      "verdict": "by_rule",
+      "rule": "rewrite_open_items.md「点の台帳の直し方」（行は全文で引き、引く名前は変えない。H で書き換えるのは where・removed_figures の kept だけ）、rewrite_materials_by_group.md の shared の item（束に出た例・図・比較表の名前）",
+      "what": "台帳 06-3 の shared「BPR・BPM・BCM を何をするかと時間軸で並べた表（498 の図 2）」は、旧版の 498 の図 2（束の figures。行は BPR・BPM・BCM の 3 つ）の名前で、当時の記録として合っている。今の 498 の図 2 は BPR と BCM の 2 行、BPM の側は 498 の図 3（列 BPM）にある。shared が持つ行き先は holder だけで、holder 498 は今も正しいので変えていない。item は行を引く名前なので書き換えない",
+      "questions_checked": []
+    },
+    {
+      "no": 2,
+      "topic_id": 478,
+      "type": "H",
+      "verdict": "fixed",
+      "rule": "rewrite_open_items.md「点の台帳の直し方」の H、rewrite_materials_by_group.md の fate prior（同じ束の学ぶ順で前の論点）",
+      "what": "台帳 21-3 の 478 の行「選択・射影・結合の 3 つの説明」が owner 196 のままだった。3 つを並べた説明は 371 の ### 表を縦に切る操作 と 371 の図 1（射影・選択・結合の 3 段）にある。371 は同じ束 21-3 で学ぶ順が 478 より前（196→371→195→440→478）なので、fate を prior、where を 371 にした",
+      "questions_checked": []
+    },
+    {
+      "no": 3,
+      "topic_id": 432,
+      "type": "H",
+      "verdict": "fixed",
+      "rule": "rewrite_materials_by_group.md「情報を落とさない確かめ方」の removed_figures（外した図の ID・説明文・残る図の論点 ID と図 ID）",
+      "what": "旧版の 432 の図 2（SRAM と DRAM の matrix）は今の 432 の図の仕様に無く、同じ内容の図が 169 の図 2 に残っている（caption は同じ文、最下行は 169 の言い方）。台帳 15-2 の 432 に removed_figures が無かったので、figure_id 2・旧 caption・kept {169, 図 2} の 1 行を足した。432 の点の行はどれも行き先があることは前の波で確かめ済みのため触っていない",
+      "questions_checked": []
+    }
+  ],
+  "edits": [],
+  "owners": [],
+  "figure_after": [],
+  "ledgers": [
+    {
+      "file": "data/ip/rewrite_ledgers/21-3.json",
+      "topic_id": 478,
+      "point": "選択・射影・結合の 3 つの説明",
+      "before": {
+        "fate": "owner",
+        "where": "196"
+      },
+      "after": {
+        "fate": "prior",
+        "where": "371（### 表を縦に切る操作 と 371 の図 1 の射影・選択・結合の 3 段）"
+      }
+    },
+    {
+      "file": "data/ip/rewrite_ledgers/15-2.json",
+      "topic_id": 432,
+      "point": "removed_figures",
+      "before": null,
+      "after": {
+        "removed_figures": [
+          {
+            "figure_id": 2,
+            "caption": "行ごとに 2 つのメモリの値が逆になります。上の 2 行の違いから、最下行の使われる所が決まると読みます。",
+            "kept": {
+              "topic_id": 169,
+              "figure_id": 2
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "returned": [],
+  "noticed": [],
+  "gates": {
+    "check_materials": 0,
+    "check_material_style": 0
+  },
+  "chars": {
+    "before": 0,
+    "after": 0
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "target": "ip",
+  "unit": "15",
+  "items": [
+    {
+      "no": 1,
+      "figure": {"topic_id": 508, "figure_id": 1},
+      "source": "open_items",
+      "kind": "heading",
+      "verdict": "applies",
+      "action": ["after"],
+      "what": "### 32ビットと64ビットで変わるもの は、### ビット数が意味するもの の 1 文目の言い直し 1 文と図 508-1 だけだった。write_materials.md の「1 つの点は 1 か所で言う」と「見出しの下が図だけになるとき（導入も要らないなら見出しを立てず、図が支える別のブロックの節に置く）」に当たる",
+      "done": "図 508-1 の after を ### ビット数が意味するもの へ移した（節の末尾、### OS との組合せ の前）。### 32ビットと64ビットで変わるもの の見出しと 1 文を消し、1 文だけが持っていた点（ビット数が決めるのはデータの幅とアドレスの幅だけ）を ### ビット数が意味するもの の 1 文目の直後に 1 文（「ビット数が決めるのは、この 2 つだけです。」）で寄せた。本文に既に入っていた図の行は、after の位置（新しい節の末尾）へ動かした。図の要素・caption は変えていない",
+      "questions_checked": []
+    },
+    {
+      "no": 2,
+      "figure": {"topic_id": 508, "figure_id": 2},
+      "source": "open_items",
+      "kind": "ledger_kept",
+      "verdict": "not_applies",
+      "reason": "rule_allows",
+      "action": ["none"],
+      "what": "台帳 15-1 の 508 の removed_figures（図 2、CPU×OS の組合せ）の kept が null",
+      "done": "直さない。図 2 は同じ内容の図が残ったから外したのではなく、要点が本文だけで言える（外すの 2、text_suffices）図で、残る図が無い。rewrite_figures_review.md の報告の形は「kept は 2 のとき null」と決めており、rewrite_materials_by_group.md の kept（残る図の論点 ID と図 ID）も残る図が無ければ指す物が無い。点の行き先は points の 2 行（### OS との組合せ と explanation の箇条、fate は kept）が持っており、決まりに合う"
+    }
+  ],
+  "changed_figures": [{"topic_id": 508, "figure_id": 1}],
+  "ledgers": [
+    {"file": "data/ip/rewrite_ledgers/15-1.json", "changed_points": 1, "removed_figures_added": 0, "removed_figures_dropped": 0, "note": "508 の行「ビット数が決めるのはデータの幅とアドレスの幅だけなので…」の where の ### 32ビットと64ビットで変わるもの を ### ビット数が意味するもの に。図の行（508 の図 1）は図 ID が変わらないので where のまま"}
+  ],
+  "not_fixed": [],
+  "not_fixed_counts": {},
+  "counts": {"applies": 1, "not_applies": 1, "data_suspect": 0},
+  "gates": {
+    "check_materials": {"command": "python3 scripts/check_materials.py --data data/ip --dir data/ip/materials_v4 --all", "exit": 0},
+    "check_material_style": {"command": "python3 scripts/check_material_style.py --data data/ip --dir materials_v4", "exit": 0, "topic_508_findings": 0},
+    "render_check": "回していない（SVG の描き直しは無し。図の差し込みは親）"
+  },
+  "written": [
+    "data/ip/materials_v4/15-1.json（論点 508 の detail だけ）",
+    "data/ip/material_figures/508.json（図 1 の after だけ）",
+    "data/ip/rewrite_ledgers/15-1.json（論点 508 の行 1 件の where だけ）",
+    "data/ip/rewrite_open_items/reports_2026-11-16/w11_fig_508.json"
+  ]
+}

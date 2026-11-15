@@ -1,0 +1,59 @@
+{
+  "target": "ip",
+  "units": ["06", "21", "15"],
+  "status": "done",
+  "items": [
+    {"no": 1, "topic_id": 262, "type": "H", "verdict": "fixed",
+     "rule": "rewrite_open_items.md「点の台帳の直し方」の H、rewrite_materials_by_group.md「情報を落とさない確かめ方」の shared の holder",
+     "what": "台帳 06-2 の shared「BPR・BPM・BPMN の違い」の holder が 262 のままだった。262 の今の本文は BPR・BPM との違いを 498 に任せ、図の仕様も無い。違いを持つのは 498 の ### 混同しやすい用語 と 498 の図 3 なので、holder を 498 にした。item と topics は当時の記録なので変えていない",
+     "questions_checked": []},
+    {"no": 2, "topic_id": 498, "type": "H", "verdict": "fixed",
+     "rule": "rewrite_open_items.md「点の台帳の直し方」の H",
+     "what": "台帳 06-3 の shared「BPR と BPM の違い」の holder が 262 のままだった。今は 498 の図 3（BPR と BPM の列、行「指すもの」の「一度に作り直す」と「続けて回す」）が持つので holder を 498 にした。同じ台帳の 119 の行「BPM は業務プロセスを継続して改善していく取組全体（BPM の定義）」も owner 262 を指していたが、262 の本文に BPM の定義は無い。119 自身の ### 混同しやすい用語 の [[BPM]] の箇条にあるので、fate を kept、where をその箇条にした（498 の図 3 にもあると添えた）",
+     "questions_checked": []},
+    {"no": 3, "topic_id": 371, "type": "H", "verdict": "fixed",
+     "rule": "rewrite_open_items.md「点の台帳の直し方」の H",
+     "what": "台帳 21-3 の shared 2 行（関係演算の 3 つの説明と比較表、3 つの関係演算の図）の holder が 196 のままだった。196 の図 1 は外れていて、3 つの説明は 371 の ### 表を縦に切る操作 と 371 の図 1（射影・選択・結合の 3 段）にあるので、2 行とも holder を 371 にした。196 の aside の行の注記「（3 つの中身は図 1 が持つ）」も、371 の節と 371 の図 1 を指すように書き換えた",
+     "questions_checked": []},
+    {"no": 4, "topic_id": 432, "type": "H", "verdict": "already",
+     "rule": "rewrite_open_items.md「点の台帳の直し方」の H",
+     "what": "受入 6 回目が挙げた「432 の owner の括弧が 432 の図 2 を指したまま」は、コミット f3aa61d3 で「169（対比は 169 の図 2 にも残る）」に直してあった。今の台帳 15-2 に「432 の図 2」を指す行は無い。432 の行が指す見出し（### 記憶階層で速さと容量を両立させる・### 1次キャッシュと2次キャッシュ・### キャッシュメモリに SRAM を使う理由）、169 の ### 半導体メモリの種類と使われる所、169 の図 2、432 の図 1（1 次・2 次の層）がすべて今の現物にあることを確かめた",
+     "questions_checked": []},
+    {"no": 5, "topic_id": 498, "type": "F", "verdict": "fixed",
+     "rule": "rewrite_unit_crosscheck.md ⑥（予告の文を指す物の手前へ移す。図は動かせないので本文の文を動かす）",
+     "what": "### 混同しやすい用語 で「3 つを並べた表で見比べます」の文と図 3 の間に BCM の文が挟まっていた。差し込みの道具は同じ after の図を節の末尾に仕様の順（図 3 → 図 2）で置くので、本文の側で BCM の文を「3 つを並べた表」の文の前へ移し、表を予告する文の直後に図 3 が来るようにした。文の字句は変えていない",
+     "questions_checked": ["2018h30a-q13"]}
+  ],
+  "edits": [
+    {"file": "data/ip/materials_v4/06-3.json", "topic_id": 498, "field": "detail", "op": "move",
+     "heading": "### 混同しやすい用語",
+     "before": "名前の似た [[BPM]]・[[BPMN（Business Process Model and Notation）]] との違いは、3 つを並べた表で見比べます。\n[[BCM（事業継続管理）]] は頭文字が似ていて紛れますが、継続の C と再設計の R で覚え分けます。",
+     "after": "[[BCM（事業継続管理）]] は頭文字が似ていて紛れますが、継続の C と再設計の R で覚え分けます。\n名前の似た [[BPM]]・[[BPMN（Business Process Model and Notation）]] との違いは、3 つを並べた表で見比べます。"}
+  ],
+  "owners": [],
+  "figure_after": [],
+  "ledgers": [
+    {"file": "data/ip/rewrite_ledgers/06-2.json", "topic_id": 262, "point": "shared: BPR・BPM・BPMN の違い（要点の箇条・混同しやすい用語・262 の図 1）",
+     "before": {"holder": 262}, "after": {"holder": 498}},
+    {"file": "data/ip/rewrite_ledgers/06-3.json", "topic_id": 498, "point": "shared: BPR と BPM の違い（一度きりの作り直しと、続けて回す改善）",
+     "before": {"holder": 262}, "after": {"holder": 498}},
+    {"file": "data/ip/rewrite_ledgers/06-3.json", "topic_id": 119, "point": "BPM は業務プロセスを継続して改善していく取組全体（BPM の定義）",
+     "before": {"fate": "owner", "where": "262"},
+     "after": {"fate": "kept", "where": "### 混同しやすい用語（[[BPM]] の箇条）。BPM が改善し続ける活動であることは 498 の図 3（列「BPM」）にも"}},
+    {"file": "data/ip/rewrite_ledgers/21-3.json", "topic_id": 371, "point": "shared: 関係演算の 3 つ（選択は行・射影は列・結合は表をつなぐ）の説明と比較表",
+     "before": {"holder": 196}, "after": {"holder": 371}},
+    {"file": "data/ip/rewrite_ledgers/21-3.json", "topic_id": 371, "point": "shared: 3 つの関係演算が表をどう変えるかの図（blocks）",
+     "before": {"holder": 196}, "after": {"holder": 371}},
+    {"file": "data/ip/rewrite_ledgers/21-3.json", "topic_id": 196, "point": "関係データベースの操作は大きく 3 つ覚えれば十分（書き手の都合の前置き）",
+     "before": {"fate": "aside", "where": "書き手の都合の前置きで、過去問にも定義・違いにも要らない（3 つの中身は図 1 が持つ）"},
+     "after": {"fate": "aside", "where": "書き手の都合の前置きで、過去問にも定義・違いにも要らない（3 つの中身は 371 の ### 表を縦に切る操作 と 371 の図 1 が持つ）"}}
+  ],
+  "returned": [],
+  "noticed": [
+    {"topic_id": 498, "what": "台帳 06-3 の shared「BPR・BPM・BCM を何をするかと時間軸で並べた表（498 の図 2）」の item の名前は、今の 498 の図 2（BPR と BCM の 2 行だけ）と合わない。holder 498 は正しいので変えていない"},
+    {"topic_id": 478, "what": "台帳 21-3 の 478 の行「選択・射影・結合の 3 つの説明」は owner 196 のまま。196 は選択と結合の定義を持つが、3 つを並べた説明は同じ束の 371（### 表を縦に切る操作・図 1）にある。一覧に無いので直していない"},
+    {"topic_id": 432, "what": "432 の旧図 2 は 169 の図 2 へ移っているが、台帳 15-2 の 432 に removed_figures の行が無い（点の行はどれも行き先がある）"}
+  ],
+  "gates": {"check_materials": 0, "check_material_style": 0},
+  "chars": {"before": 0, "after": 0}
+}
