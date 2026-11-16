@@ -41,7 +41,7 @@
 }
 ```
 
-- `source` は申告を返した段（`rewrite`・`crosscheck`・`figures_review`・`text_followup`・`acceptance`。この段の前の回が `noticed` で返した物は `open_items`、束の継ぎ目の数え上げが挙げた物は `seam`）、`kind` はその段が付けた種類、`what` は申告の文。`related` は申告が名指しした他の論点
+- `source` は申告を返した段（`rewrite`・`crosscheck`・`figures_review`・`text_followup`・`acceptance`。この段の前の回が `noticed` で返した物は `open_items`、束の継ぎ目の数え上げが挙げた物は `seam`、親が起こした読むだけの調査と照合が挙げた物は `survey`）、`kind` はその段が付けた種類、`what` は申告の文。`related` は申告が名指しした他の論点
 - `kind` と `what` は申告した段の読みで、当たっているとは限らない。**現物で確かめてから**範囲のどれに当たるかを決める
 
 ### 一覧の論点ごとに読む物
@@ -202,6 +202,7 @@ python3 scripts/check_unit_plans.py --data data/<対象>
 ---
 
 ## 改訂履歴（本文は常に現在形。変えるときは該当の文を書き換え、ここに 1 行）
+- 2026-11-16: 項目の `source` の値に、親が起こした読むだけの調査と照合が挙げた物（`survey`）を足した（狭めた線での ip の候補を直す段に渡すため）
 - 2026-11-16: C の直し方を、`write_materials.md` の狭めた線（写さない物は句の写しだけ）に合わせた。振り分け・組合せを言い直して持つ表や箇条は直さない
 
 - 2026-11-15: 新設。前の段と受入判定が直さずに返した申告を、正本の決まりで 1 件ずつ直すか決まりどおりと判定する段（`brain/PREMISES.md` の 2026-11-15 の行、`brain/rework/2026-08_ip-ap.md` 行 30）
