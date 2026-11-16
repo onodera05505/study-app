@@ -1,0 +1,48 @@
+{
+ "target": "ap",
+ "units": [
+  "23"
+ ],
+ "status": "done",
+ "items": [
+  {
+   "no": 1,
+   "topic_id": 503,
+   "type": "E",
+   "verdict": "fixed",
+   "rule": "write_materials.md「1 つの点は 1 か所で言う」（explanation の箇条が言った点を detail で同じ形でもう一度並べない）、rewrite_unit_crosscheck.md X11（要点の箇条と同じ点を detail の文章が読み上げ直すときは detail の文章の側を縮める）",
+   "what": "explanation の 3 つ目の箇条が Web ページに手を入れ本来の役目と違う動きをさせる行為を言い、detail「### 罪が成立する条件」の 2 文目が同じ行為を言い直していた。detail の側を「Web ページの書き換えは不正な指令に当たります」に縮め、行為の言い直しを外して不正な指令に当たるという条件だけを残した。台帳の既存の行（duplicate、where は explanation の箇条で detail には不正な指令に当たる理由だけを残す）と今の本文が一致したので台帳は変えていない。",
+   "questions_checked": [
+    "2021r03a-q78",
+    "2018h30h-q79"
+   ]
+  }
+ ],
+ "edits": [
+  {
+   "file": "data/ap/materials_v4/23-4.json",
+   "topic_id": 503,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 罪が成立する条件",
+   "before": "Web ページを書き換えて本来の役目と違う動きをさせるのは不正な指令に当たります。",
+   "after": "Web ページの書き換えは不正な指令に当たります。"
+  }
+ ],
+ "owners": [],
+ "figure_after": [],
+ "ledgers": [],
+ "returned": [],
+ "noticed": [],
+ "gates": {
+  "check_materials": 0,
+  "check_material_style": 0,
+  "render_check": 0,
+  "check_explanations": 0,
+  "check_unit_plans": null
+ },
+ "chars": {
+  "before": 28560,
+  "after": 28544
+ }
+}

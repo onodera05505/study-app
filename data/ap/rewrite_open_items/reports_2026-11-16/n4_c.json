@@ -1,0 +1,61 @@
+{
+ "target": "ap",
+ "units": [
+  "17"
+ ],
+ "status": "done",
+ "items": [
+  {
+   "no": 1,
+   "topic_id": 42,
+   "type": "D",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き直し」の「情報を落とさない」（重複でない含みを落とさない）と「書き方の約束」（選択肢の句をほぼそのまま置かない）。check_materials.py の表のセル 40 字の制約の中で言い直す",
+   "what": "旧版（束の current）の表にあった『中間成果物も含めて』（最終成果物に加えて）と『実績の』測定量の含みが今の表で落ちていた。開発の行は『途中の成果物から』を『途中の成果物も』に、運用の行は『〜を何で測るか（測定量）を決め』を『〜の実績を測る測定量を決め』に直した（2025r07h-q60 ウ・q65 ウの句は写さない言い方のまま、セルは 37 字・37 字）",
+   "questions_checked": [
+    "2025r07h-q65",
+    "2025r07h-q60",
+    "2022r04h-q61",
+    "2018h30h-q64",
+    "2017h29a-q62"
+   ]
+  }
+ ],
+ "edits": [
+  {
+   "file": "data/ap/materials_v4/17-1.json",
+   "topic_id": 42,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 令和5年版のプロセスごとの達成目標",
+   "before": "| 開発 | 工程全体 | 部品のつなぎ目（**インタフェース**）を洗い出し、途中の成果物からレビュー |",
+   "after": "| 開発 | 工程全体 | 部品のつなぎ目（**インタフェース**）を洗い出し、途中の成果物もレビュー |"
+  },
+  {
+   "file": "data/ap/materials_v4/17-1.json",
+   "topic_id": 42,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 令和5年版のプロセスごとの達成目標",
+   "before": "| 運用 | 工程全体 | 稼働率・性能・処理能力を何で測るか（**測定量**）を決め、サービス水準を保つ |",
+   "after": "| 運用 | 工程全体 | 稼働率・性能・処理能力の実績を測る**測定量**を決め、サービス水準を保つ |"
+  }
+ ],
+ "owners": [],
+ "figure_after": [],
+ "ledgers": [],
+ "returned": [],
+ "noticed": [],
+ "gates": {
+  "check_materials": 0,
+  "check_material_style": 0,
+  "render_check": 0,
+  "check_explanations": 0,
+  "check_unit_plans": null
+ },
+ "gates_note": "check_unit_plans は owners を直していないので回していない。点の台帳の行『プロセスごとの達成目標の表』は kept のまま当たるので書き換えなし",
+ "chars": {
+  "before": 1211,
+  "after": 1208
+ }
+}

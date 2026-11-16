@@ -1,0 +1,61 @@
+{
+ "target": "ap",
+ "units": [
+  "15"
+ ],
+ "status": "done",
+ "items": [
+  {
+   "no": 1,
+   "topic_id": 635,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "scripts/prompts/write_materials.md「書き方の約束」の写さない物（問題文の句をほぼそのままの言い回しで置く）／scripts/prompts/rewrite_open_items.md「C の直し方」",
+   "what": "2018h30a-q55 の図の d の説明「IT サービスを効果的かつ効率的に提供しサポートする」と継続的サービス改善の説明「サービス提供者のパフォーマンスを継続的に測定して」が、detail の箇条 4 と続く段落にほぼそのまま置かれていたので、教材の言葉（「毎日無駄なく確実に届け、利用者を支えます」「提供の実績を測り」）に言い直した。箇条の形・他の文は変えていない。",
+   "questions_checked": [
+    "2018h30a-q55"
+   ]
+  }
+ ],
+ "edits": [
+  {
+   "file": "data/ap/materials_v4/15-2.json",
+   "topic_id": 635,
+   "field": "detail",
+   "op": "replace",
+   "heading": "4 つの段階が受け持つ仕事",
+   "before": "日々 IT サービスを効果的かつ効率的に提供し、サポートします。",
+   "after": "出来上がったサービスを毎日無駄なく確実に届け、利用者を支えます。"
+  },
+  {
+   "file": "data/ap/materials_v4/15-2.json",
+   "topic_id": 635,
+   "field": "detail",
+   "op": "replace",
+   "heading": "4 つの段階が受け持つ仕事",
+   "before": "提供者のパフォーマンスを測定し、その結果を戦略へ戻して",
+   "after": "提供の実績を測り、その結果を戦略へ戻して"
+  }
+ ],
+ "owners": [],
+ "figure_after": [],
+ "ledgers": [],
+ "returned": [],
+ "noticed": [
+  {
+   "topic_id": 635,
+   "what": "箇条 4 の 2 文目「顧客と提供者の双方にとっての価値を実際に生む段階です」も、2018h30a-q55 の図の d の「顧客とサービス提供者にとっての価値を確保できるように」に近い。一覧に無いので直していない。"
+  }
+ ],
+ "gates": {
+  "check_materials": 0,
+  "check_material_style": 0,
+  "render_check": 0,
+  "check_explanations": 0,
+  "check_unit_plans": null
+ },
+ "chars": {
+  "before": 2368,
+  "after": 2361
+ }
+}

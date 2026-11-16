@@ -1,0 +1,235 @@
+{
+ "target": "ap",
+ "units": [
+  "10"
+ ],
+ "status": "done",
+ "items": [
+  {
+   "no": 1,
+   "topic_id": 161,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）／rewrite_open_items.md「C の直し方」",
+   "what": "要点の箇条「DNS サーバへ問合せを出す側のソフトウェアはリゾルバです」が誤答イの句（DNS サーバに問い合わせを行うソフトウェア）を用語だけ替えて置いていた。「名前解決を頼む側、つまり答えを DNS サーバへ聞きに行く部品をリゾルバと呼びます」に言い直した。逆引きの箇条は触れていない。",
+   "questions_checked": [
+    "2024r06a-q33"
+   ]
+  },
+  {
+   "no": 2,
+   "topic_id": 163,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）／rewrite_open_items.md「C の直し方」",
+   "what": "プライベートアドレスの節の「組織内のホストに割り振って、ユニキャスト通信を行うためのものです」が誤答ウの句をほぼそのまま置いていた。組織の中だけで通じる宛先で、各ホストに 1 つずつ持たせて 1 対 1 の通信に使う、と言い直した。3 つの範囲の値は変えていない。",
+   "questions_checked": [
+    "2024r06a-q35"
+   ]
+  },
+  {
+   "no": 3,
+   "topic_id": 165,
+   "type": "C",
+   "verdict": "by_rule",
+   "rule": "write_materials.md「書き方の約束」の「論点の定義・式・しくみが紐づく過去問の正解と重なるのはよい」／rewrite_open_items.md「C の直し方」の借りてよい物",
+   "what": "要点の箇条「早い者勝ちで送るコンテンション方式なので、混雑すると衝突と再送が増えてスループットが下がります」は、正解アと重なるのが結論の述語（スループットが下がる）だけで、因果（コンテンション方式・混雑で衝突と再送が増える）は教材の言葉で組み直されている。句の写しではなく、しくみが正解と重なる物なので直さない。",
+   "questions_checked": [
+    "2017h29a-q33",
+    "2017h29h-q31",
+    "2024r06h-q30"
+   ]
+  },
+  {
+   "no": 4,
+   "topic_id": 172,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）／rewrite_open_items.md「C の直し方」",
+   "what": "要点の箇条「アドレス情報が不要に流れ出すのを抑えられます」が正解イの句（アドレス情報の不要な流出のリスクを低減できる）を語尾だけ替えて置いていた。「どの端末がどのアドレスを使っているかを、他のセグメントの端末に知られにくくなります」に言い直した。",
+   "questions_checked": [
+    "2024r06a-q45"
+   ]
+  },
+  {
+   "no": 5,
+   "topic_id": 175,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）／rewrite_open_items.md「C の直し方」",
+   "what": "使われる場面の箇条「RIP-2 は 224.0.0.9 宛てに経路情報を送り、隣接するルータのグループだけが受け取ります」が正解エの句をほぼそのまま置いていた。事例（RIP-2・224.0.0.9）は借りてよい物として残し、ルータどうしが経路を知らせ合うときにその宛先へ送り、宛先に参加している近くのルータだけが受け取る、と言い直した。",
+   "questions_checked": [
+    "2023r05a-q35"
+   ]
+  },
+  {
+   "no": 6,
+   "topic_id": 177,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）／rewrite_open_items.md「C の直し方」",
+   "what": "要点の箇条「機器同士が経路情報を交換して各自で経路を決める従来の分散制御」が誤答イの句をほぼそのまま置いていた。各機器が隣の機器と経路を知らせ合い、それぞれが自分で経路を決める分散制御、と 2 文に言い直した。定義の文は触れていない。",
+   "questions_checked": [
+    "2021r03h-q35"
+   ]
+  },
+  {
+   "no": 7,
+   "topic_id": 402,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）／rewrite_open_items.md「C の直し方」",
+   "what": "要点の箇条「クライアントにサーバのアドレスを設定しておく必要はありません」が正解ウの句をほぼそのまま置いていた。「どこに DHCP サーバがあるかを前もってクライアントに教えておかなくて済みます」に言い直した。",
+   "questions_checked": [
+    "2022r04a-q31"
+   ]
+  },
+  {
+   "no": 8,
+   "topic_id": 525,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）／rewrite_open_items.md「C の直し方」",
+   "what": "複数台を並べる節の「移動しても設定を変えずに、近くの機器へ接続を引き継ぐため」が誤答アの句をほぼそのまま置いていた。端末を持って歩いても、つなぎ直しの操作なしに最寄りの台へ乗り換えられるようにするため、と言い直した。",
+   "questions_checked": [
+    "2021r03h-q36"
+   ]
+  },
+  {
+   "no": 9,
+   "topic_id": 718,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）／rewrite_open_items.md「C の直し方」",
+   "what": "なぜ止まらなくなるのかの節の「通信が極端に遅くなるか、全く通らなくなります」が正解エの句をほぼそのまま置いていた（定義の文ではない）。「通信はひどく滞るか、まったく流れなくなります」に言い直した。",
+   "questions_checked": [
+    "2017h29h-q35"
+   ]
+  },
+  {
+   "no": 10,
+   "topic_id": 719,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）／rewrite_open_items.md「C の直し方」",
+   "what": "要点の箇条の「伝送媒体やアクセス制御方式が異なるネットワークどうしをつなげます」が正解エの句をほぼそのまま置いていた。detail の「伝送媒体やアクセス制御方式が違うネットワークもつなげます」も同じ句だったので併せて直した。箇条は用語（伝送媒体・アクセス制御方式）を残して中身を添える形に、detail は媒体や送信の順番の決め方が違うネットワーク、と言い直した。",
+   "questions_checked": [
+    "2016h28a-q31"
+   ]
+  }
+ ],
+ "edits": [
+  {
+   "file": "data/ap/materials_v4/10-4.json",
+   "topic_id": 161,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "(explanation の要点の箇条)",
+   "before": "- DNS サーバへ問合せを出す側のソフトウェアは**リゾルバ**です",
+   "after": "- 名前解決を頼む側、つまり答えを DNS サーバへ聞きに行く部品を**リゾルバ**と呼びます"
+  },
+  {
+   "file": "data/ap/materials_v4/10-3.json",
+   "topic_id": 163,
+   "field": "detail",
+   "op": "replace",
+   "heading": "プライベートアドレスの 3 つの範囲",
+   "before": "組織内のホストに割り振って、ユニキャスト通信を行うためのものです。",
+   "after": "組織の中だけで通じる宛先で、各ホストに 1 つずつ持たせて 1 対 1 の通信に使います。"
+  },
+  {
+   "file": "data/ap/materials_v4/10-1.json",
+   "topic_id": 172,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "(explanation の要点の箇条)",
+   "before": "アドレス情報が不要に流れ出すのを抑えられます",
+   "after": "どの端末がどのアドレスを使っているかを、他のセグメントの端末に知られにくくなります"
+  },
+  {
+   "file": "data/ap/materials_v4/10-3.json",
+   "topic_id": 175,
+   "field": "detail",
+   "op": "replace",
+   "heading": "マルチキャストが使われる場面",
+   "before": "RIP-2 は 224.0.0.9 宛てに経路情報を送り、隣接するルータのグループだけが受け取ります。",
+   "after": "RIP-2 は、ルータどうしが経路を知らせ合うときに 224.0.0.9 宛てに送ります。受け取るのは、この宛先に参加している近くのルータだけです。"
+  },
+  {
+   "file": "data/ap/materials_v4/10-7.json",
+   "topic_id": 177,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "(explanation の要点の箇条)",
+   "before": "- 機器同士が経路情報を交換して各自で経路を決める従来の分散制御とは、決め方が逆向きです",
+   "after": "- 従来は、各機器が隣の機器と経路を知らせ合い、それぞれが自分で経路を決める分散制御でした。SDN とは決め方が逆向きです"
+  },
+  {
+   "file": "data/ap/materials_v4/10-4.json",
+   "topic_id": 402,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "(explanation の要点の箇条)",
+   "before": "クライアントにサーバのアドレスを設定しておく必要はありません",
+   "after": "どこに DHCP サーバがあるかを前もってクライアントに教えておかなくて済みます"
+  },
+  {
+   "file": "data/ap/materials_v4/10-2.json",
+   "topic_id": 525,
+   "field": "detail",
+   "op": "replace",
+   "heading": "複数台を並べるときの設計",
+   "before": "移動しても設定を変えずに、近くの機器へ接続を引き継ぐためです。",
+   "after": "端末を持って歩いても、つなぎ直しの操作なしに最寄りの台へ乗り換えられるようにするためです。"
+  },
+  {
+   "file": "data/ap/materials_v4/10-1.json",
+   "topic_id": 718,
+   "field": "detail",
+   "op": "replace",
+   "heading": "なぜ止まらなくなるのか",
+   "before": "結果として、通信が極端に遅くなるか、全く通らなくなります。",
+   "after": "結果として、通信はひどく滞るか、まったく流れなくなります。"
+  },
+  {
+   "file": "data/ap/materials_v4/10-1.json",
+   "topic_id": 719,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "(explanation の要点の箇条)",
+   "before": "**伝送媒体やアクセス制御方式が異なるネットワーク**どうしをつなげます",
+   "after": "**ケーブルか無線かといった伝送媒体や、送信の順番の決め方であるアクセス制御方式が違うネットワーク**どうしもつなげます"
+  },
+  {
+   "file": "data/ap/materials_v4/10-1.json",
+   "topic_id": 719,
+   "field": "detail",
+   "op": "replace",
+   "heading": "上の層で中継するほど下の層の違いを吸収できる",
+   "before": "伝送媒体やアクセス制御方式が違うネットワークもつなげます。",
+   "after": "媒体や送信の順番の決め方が違うネットワークどうしでもつなげます。"
+  }
+ ],
+ "owners": [],
+ "figure_after": [],
+ "ledgers": [],
+ "returned": [],
+ "noticed": [
+  {
+   "topic_id": 0,
+   "what": "一覧の target は ip だが、パス・単元・論点は ap の物だったので、依頼文のとおり ap として扱った。"
+  }
+ ],
+ "gates": {
+  "check_materials": 0,
+  "check_material_style": 0,
+  "render_check": 0,
+  "check_explanations": 0,
+  "check_unit_plans": null
+ },
+ "chars": {
+  "before": 42418,
+  "after": 42552,
+  "note": "単元 10 の全論点の explanation と detail の合計。句を教材の言葉で言い直したため 134 字増えた（719 の箇条で用語の中身を添えた分が主）。点は消していないので台帳は書き換えていない。check_unit_plans は owners を触っていないので回していない。単元 10 の論点に関する門の知らせは直す前と後で同じ。"
+ }
+}

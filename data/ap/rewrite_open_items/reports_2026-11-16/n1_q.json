@@ -1,0 +1,265 @@
+{
+ "target": "ap",
+ "units": [
+  "05"
+ ],
+ "status": "done",
+ "items": [
+  {
+   "no": 1,
+   "topic_id": 105,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）: write_materials.md「書き方の約束」、rewrite_open_items.md「C の直し方」",
+   "what": "本文の条件の句と結論の句が問題文・正解ウの句をほぼそのまま並べていた。場面は残し、条件を「1 ページの半分にも満たない大きさ」、結論を「主記憶にゆとりが生まれます」と言い直した。",
+   "questions_checked": [
+    "2022r04a-q17"
+   ]
+  },
+  {
+   "no": 2,
+   "topic_id": 106,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）: write_materials.md「書き方の約束」、rewrite_open_items.md「C の直し方」",
+   "what": "要点の箇条が正解ウの句をほぼそのまま置いていた（定義の文ではない）。「優先度が最上位のタスクも含めて、どのタスクよりも先に動きます」と言い直した。",
+   "questions_checked": [
+    "2022r04a-q18"
+   ]
+  },
+  {
+   "no": 3,
+   "topic_id": 106,
+   "type": "C",
+   "verdict": "by_rule",
+   "rule": "write_materials.md「書き方の約束」: 写さない物は句をほぼそのままの言い回しで置くこと。論点のしくみが過去問と重なるのはよい",
+   "what": "本文「タスクの切替えを禁止しても止められず、抑えるには割込み禁止を指定する」は、割込み処理ルーチンがスケジューリングと別の層で動くしくみの文。選択肢アと重なるのは OS の操作の名前「タスクの切替えを禁止」だけで、文の言い回し（〜すると呼び出されない）は置いていない。直さない。",
+   "questions_checked": [
+    "2022r04a-q18"
+   ]
+  },
+  {
+   "no": 4,
+   "topic_id": 108,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）: write_materials.md「書き方の約束」、rewrite_open_items.md「C の直し方」",
+   "what": "ファーストフィットの箇条の後半が選択肢アの句をほぼそのまま置いていた。振り分けは残し、低いアドレス側から埋まり高いアドレス側の大きな空きが手つかずになる、と言い直した。",
+   "questions_checked": [
+    "2025r07a-q5"
+   ]
+  },
+  {
+   "no": 5,
+   "topic_id": 108,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）: write_materials.md「書き方の約束」、rewrite_open_items.md「C の直し方」",
+   "what": "ベストフィットの箇条の後半が正解イの句をほぼそのまま置いていた。「要求を満たす最小の空きを使う」はしくみ（正解と重なってよい）なので残し、後半を「細切れの空きが散らばっていく」と言い直した。",
+   "questions_checked": [
+    "2025r07a-q5"
+   ]
+  },
+  {
+   "no": 6,
+   "topic_id": 108,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）: write_materials.md「書き方の約束」、rewrite_open_items.md「C の直し方」",
+   "what": "detail の説明の文の句「大きさをキーにした2分探索木」が正解ウの句ほぼそのまま。C の行（要点の箇条・説明の文が選択肢の句をほぼそのまま置くときは直す。定義の文の例外は explanation の冒頭だけ）で直す側に決まるので「空きの大きさで並べた2分探索木」と言い直した。続く「並べる基準が大きさでなければ」の文と合わせて解ける。",
+   "questions_checked": [
+    "2023r05h-q5"
+   ]
+  },
+  {
+   "no": 7,
+   "topic_id": 113,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）: write_materials.md「書き方の約束」、rewrite_open_items.md「C の直し方」",
+   "what": "要点の箇条が問題文（用語を答えさせる形）の句をほぼそのまま置いていた。定義の文ではないので直す。「各自の手元に過去の版まで丸ごと写したリポジトリ…履歴をたどることもコミットも手元で済みます」と言い直した。",
+   "questions_checked": [
+    "2024r06a-q19"
+   ]
+  },
+  {
+   "no": 8,
+   "topic_id": 115,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）: write_materials.md「書き方の約束」、rewrite_open_items.md「C の直し方」",
+   "what": "要点の箇条が問題文の句をほぼそのまま置いていた（定義の文ではない）。「部品で賄えない処理はコードを書いて足せる」と言い直した。",
+   "questions_checked": [
+    "2023r05a-q47"
+   ]
+  },
+  {
+   "no": 9,
+   "topic_id": 438,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）: write_materials.md「書き方の約束」、rewrite_open_items.md「C の直し方」",
+   "what": "要点の箇条の句「獲得と返却が速く」が選択肢イの句ほぼそのまま。語「獲得」「返却」は定義の文と揃えたまま、「獲得も返却も短い時間で済み」と言い直した。",
+   "questions_checked": [
+    "2022r04h-q18"
+   ]
+  },
+  {
+   "no": 10,
+   "topic_id": 440,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）: write_materials.md「書き方の約束」、rewrite_open_items.md「C の直し方」",
+   "what": "比較表の再帰可能の行のセルが選択肢イ（誤答）の句ほぼそのまま。表の形は変えず、セルを「実行中に自分自身を呼出し」と言い直した。",
+   "questions_checked": [
+    "2022r04h-q6"
+   ]
+  },
+  {
+   "no": 11,
+   "topic_id": 564,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）: write_materials.md「書き方の約束」、rewrite_open_items.md「C の直し方」",
+   "what": "説明の文が正解アの句をほぼそのまま置いていた。「そのページを補助記憶から読み込む待ちが生じません」と言い直した。",
+   "questions_checked": [
+    "2020r02o-q18"
+   ]
+  },
+  {
+   "no": 12,
+   "topic_id": 564,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）: write_materials.md「書き方の約束」、rewrite_open_items.md「C の直し方」",
+   "what": "要点の箇条が正解アの句「ページフォールトを契機に…主記憶が割り当てられる」をほぼそのまま置いていた（定義の文ではない）。「主記憶の割当てはページフォールトが起きたときに行われ」と言い直した。キーワードの行は変えていない。",
+   "questions_checked": [
+    "2018h30h-q19"
+   ]
+  }
+ ],
+ "edits": [
+  {
+   "file": "data/ap/materials_v4/05-4.json",
+   "topic_id": 105,
+   "field": "detail",
+   "op": "replace",
+   "heading": "ページサイズを変えると何が動くか",
+   "before": "**ほとんどのプログラムがページサイズの半分以下**という状況なら、ページサイズを半分にするだけで、末尾で捨てていた領域がほぼ半減し、主記憶の不足が緩和されます。",
+   "after": "**大半のプログラムが 1 ページの半分にも満たない大きさ**なら、ページを半分の大きさにするだけで、末尾で捨てていた領域がほぼ半減し、その分だけ主記憶にゆとりが生まれます。"
+  },
+  {
+   "file": "data/ap/materials_v4/05-1.json",
+   "topic_id": 106,
+   "field": "explanation",
+   "op": "replace",
+   "heading": null,
+   "before": "- 割込み処理ルーチン（割込みを受けて起動される処理）は、**最も優先度の高いタスクよりも先に**実行されます",
+   "after": "- 割込み処理ルーチン（割込みを受けて起動される処理）は、優先度が最上位のタスクも含めて、**どのタスクよりも先に**動きます"
+  },
+  {
+   "file": "data/ap/materials_v4/05-3.json",
+   "topic_id": 108,
+   "field": "explanation",
+   "op": "replace",
+   "heading": null,
+   "before": "下位アドレスばかり使われて細かい空きが溜まり、上位アドレスに大きな空きが残ります",
+   "after": "探し始める低いアドレス側から埋まって細かい空きが溜まり、高いアドレス側の大きな空きは手つかずになりがちです"
+  },
+  {
+   "file": "data/ap/materials_v4/05-3.json",
+   "topic_id": 108,
+   "field": "explanation",
+   "op": "replace",
+   "heading": null,
+   "before": "1 回の余りは最も小さく無駄が少なそうですが、どの要求にも足りない小さな空きが多数残ります",
+   "after": "1 回の余りは最も小さく無駄が少なそうですが、どの要求にも足りない細切れの空きが散らばっていきます"
+  },
+  {
+   "file": "data/ap/materials_v4/05-3.json",
+   "topic_id": 108,
+   "field": "detail",
+   "op": "replace",
+   "heading": "探索を速くするデータ構造",
+   "before": "**大きさをキーにした[[2分探索木]]**なら",
+   "after": "**空きの大きさで並べた[[2分探索木]]**なら"
+  },
+  {
+   "file": "data/ap/materials_v4/05-6.json",
+   "topic_id": 113,
+   "field": "explanation",
+   "op": "replace",
+   "heading": null,
+   "before": "- 分散型は各開発者の手元に全履歴を含んだリポジトリの複製を置くので、サーバにつながらなくても履歴を調べたり変更を記録したりできます",
+   "after": "- 分散型は各自の手元に過去の版まで丸ごと写したリポジトリがあるので、サーバに届かなくても、履歴をたどることもコミットも手元で済みます"
+  },
+  {
+   "file": "data/ap/materials_v4/05-6.json",
+   "topic_id": 115,
+   "field": "explanation",
+   "op": "replace",
+   "heading": null,
+   "before": "- 部品の組合せに加えて、**必要に応じて一部の処理をコードで書く**のがローコード開発です",
+   "after": "- 部品を組み合わせるだけでなく、**部品で賄えない処理はコードを書いて足せる**のがローコード開発です"
+  },
+  {
+   "file": "data/ap/materials_v4/05-3.json",
+   "topic_id": 438,
+   "field": "explanation",
+   "op": "replace",
+   "heading": null,
+   "before": "固定長ブロック方式は獲得と返却が速く、",
+   "after": "固定長ブロック方式は獲得も返却も短い時間で済み、"
+  },
+  {
+   "file": "data/ap/materials_v4/05-2.json",
+   "topic_id": 440,
+   "field": "detail",
+   "op": "replace",
+   "heading": "名前の似た 4 つの性質",
+   "before": "| 再帰可能 | 手続の中から自分自身を呼出し |",
+   "after": "| 再帰可能 | 実行中に自分自身を呼出し |"
+  },
+  {
+   "file": "data/ap/materials_v4/05-4.json",
+   "topic_id": 564,
+   "field": "detail",
+   "op": "replace",
+   "heading": "プリページングとの違い",
+   "before": "予想が当たれば参照した時点で既に主記憶にあるため、補助記憶へのアクセスによる遅れを減らせます。",
+   "after": "予想が当たれば参照した時点で既に主記憶にあるため、そのページを補助記憶から読み込む待ちが生じません。"
+  },
+  {
+   "file": "data/ap/materials_v4/05-4.json",
+   "topic_id": 564,
+   "field": "explanation",
+   "op": "replace",
+   "heading": null,
+   "before": "- 主記憶は**ページフォールトを契機に**割り当てられ、",
+   "after": "- 主記憶の割当ては**ページフォールトが起きたとき**に行われ、"
+  }
+ ],
+ "owners": [],
+ "figure_after": [],
+ "ledgers": [],
+ "returned": [],
+ "noticed": [
+  {
+   "topic_id": 0,
+   "what": "項目の一覧 n1_q.json の target が \"ip\" になっているが、置き場（data/ap/）・論点 ID・過去問は ap の単元 05 のもの。依頼のとおり ap として扱った。"
+  }
+ ],
+ "gates": {
+  "check_materials": 0,
+  "check_material_style": 0,
+  "render_check": 0,
+  "check_explanations": 0,
+  "check_unit_plans": null
+ },
+ "gate_notes": "check_unit_plans は owners を直していないので回していない。check_materials・check_material_style の知らせの増加は他の単元（12・15・22）の物で、単元 05 の知らせは直す前と同じ（05-3 id=438 の句読点の知らせは直す前からあり、論点名を指す [[ ]] の中の「，」による）。",
+ "chars": {
+  "before": 35196,
+  "after": 35245
+ },
+ "chars_note": "句を言い直すと元の句より少し長くなる物があり、単元 05 の合計で 49 字増えた。言い直しを縮めて増分を抑えた。点の台帳は、点を消していないので書き換えていない。"
+}

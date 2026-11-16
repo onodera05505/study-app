@@ -1,0 +1,422 @@
+{
+ "target": "ap",
+ "units": [
+  "11"
+ ],
+ "status": "done",
+ "items": [
+  {
+   "no": 1,
+   "topic_id": 6,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）、rewrite_open_items.md「C の直し方」",
+   "what": "### 混同しやすい用語 の線形解読法の行が誤答アの句（暗号化関数を線形近似する式を導き…）をほぼそのまま置いていた。定義の文ではないので、入力と出力の間に近似的に成り立つ一次式から鍵を割り出す、と言い直した。",
+   "questions_checked": [
+    "2025r07h-q37",
+    "2025r07a-q38",
+    "2022r04a-q37"
+   ]
+  },
+  {
+   "no": 2,
+   "topic_id": 6,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）、rewrite_open_items.md「C の直し方」",
+   "what": "同じ節の差分解読法の行が誤答ウの句（二つの平文の差とそれぞれの暗号文の差の関係から）とほぼ同じだった。平文に加えた違いが暗号文の違いにどう現れるかを手掛かりにする、と言い直した。",
+   "questions_checked": [
+    "2025r07h-q37"
+   ]
+  },
+  {
+   "no": 3,
+   "topic_id": 7,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）、rewrite_open_items.md「C の直し方」",
+   "what": "### 守れる範囲 の文が誤答イの句（権威 DNS サーバと DNS キャッシュサーバとの…ゾーン情報の漏えい）を否定形でほぼそのまま置いていた。署名は中身を隠さず、サーバ間を流れるゾーンの情報は見られれば読まれる、と言い直した（点は残る）。",
+   "questions_checked": [
+    "2024r06h-q37"
+   ]
+  },
+  {
+   "no": 4,
+   "topic_id": 32,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）、rewrite_open_items.md「C の直し方」",
+   "what": "explanation の要点の箇条が正解ウの句（本来とは異なる Web サーバに誘導される）とほぼ同文だった。定義の文ではないので、攻撃者の用意した別のサーバへつながる、と言い直した。",
+   "questions_checked": [
+    "2024r06h-q36"
+   ]
+  },
+  {
+   "no": 5,
+   "topic_id": 32,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）、rewrite_open_items.md「C の直し方」",
+   "what": "explanation の箇条が正解イの句（再帰的な問合せ…内部ネットワークからのものだけに応答）をほぼそのまま置いていた。再帰的な問合せを受け付ける相手を社内の利用者に絞る、と言い直した（括弧の言い換えは残した）。",
+   "questions_checked": [
+    "2017h29h-q41"
+   ]
+  },
+  {
+   "no": 6,
+   "topic_id": 32,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）、rewrite_open_items.md「C の直し方」",
+   "what": "### 偽の応答を防ぐ対策 の文「送信元ポート番号を 53 番などの決まった番号に固定しない」は用語に加え述部（53 番に固定する）まで誤答ウの句を否定で置いた形で、句の写しと判定した。用語は残し、53 番のような毎回同じ値を使わない、と述部を言い直した。",
+   "questions_checked": [
+    "2024r06a-q42"
+   ]
+  },
+  {
+   "no": 7,
+   "topic_id": 33,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）、rewrite_open_items.md「C の直し方」",
+   "what": "explanation の箇条が問題文（使われていない IP アドレス空間に大量に届くパケット）と正解ウ（攻撃対象を探すために送信する）をつないでいた。どの機器も使っていないアドレスにまで通信が届くのは侵入できる相手を探しているから、と言い直した。見出しも問題文の句だったので「### 未使用のアドレスに届く探索の通信」に改め（図の after は explanation で影響なし）、台帳 11-7 の where 5 行を新しい見出しに合わせた。",
+   "questions_checked": [
+    "2024r06a-q38"
+   ]
+  },
+  {
+   "no": 8,
+   "topic_id": 34,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）、rewrite_open_items.md「C の直し方」",
+   "what": "explanation の箇条「顧客に渡した製品とその利用の中で起きたインシデント」が正解アと同じ骨組みだった。顧客の手元で使われている自社製品に関わるインシデント、と言い直した。キーワードの「顧客に渡した製品」は語なので残した。",
+   "questions_checked": [
+    "2025r07a-q40",
+    "2024r06h-q39"
+   ]
+  },
+  {
+   "no": 9,
+   "topic_id": 34,
+   "type": "C",
+   "verdict": "by_rule",
+   "rule": "write_materials.md「書き方の約束」の借りてよい物（過去問が選ばせる振り分け・組合せを教材の言葉で言い直し、表が過去問の項目を振り分け先に置く形でもよい）、rewrite_open_items.md「C の直し方」の振り分け・組合せを持つ表は直さない",
+   "what": "申告の句「傾向分析・マルウェア解析・注意喚起 | 関係組織、国や地域」は 34（PSIRT）には無く、同じ束 11-19 の 197（CSIRT）の ### 6 種類の機能とサービス対象 の表のセルにあった。照らす過去問も 2024r06h-q39（選択肢は組織名だけ）ではなく 197 の 2023r05a-q39。この表は過去問が選ばせる機能とサービス対象の組合せを、表の振り分け先として名詞の並びに言い直して持つ形なので直さない。",
+   "questions_checked": [
+    "2023r05a-q39",
+    "2024r06h-q39"
+   ]
+  },
+  {
+   "no": 10,
+   "topic_id": 35,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）、rewrite_open_items.md「C の直し方」",
+   "what": "### 解析を検知して守る手当て の 1 つ目の箇条が正解ウ（2024r06h-q44）の句を検出→検知の置き換えだけで置いていた。配線にプローブが当てられたと分かった時点で記憶した情報を消去する回路を組み込む、と言い直した。箇条の形は変えていない。",
+   "questions_checked": [
+    "2024r06h-q44"
+   ]
+  },
+  {
+   "no": 11,
+   "topic_id": 35,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）、rewrite_open_items.md「C の直し方」",
+   "what": "2 つ目の箇条が正解ウ（2021r03a-q40）の句を並べ替えただけだった。光センサなどで筐体の開封に気づいたらメモリの秘密情報を消去する、と言い直した。",
+   "questions_checked": [
+    "2021r03a-q40"
+   ]
+  },
+  {
+   "no": 12,
+   "topic_id": 35,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）、rewrite_open_items.md「C の直し方」",
+   "what": "3 つ目の箇条が正解ウ（2024r06a-q24・2022r04h-q23）とほぼ同じだった。中を調べようとすると回路そのものが壊れる作り、と言い直した。",
+   "questions_checked": [
+    "2024r06a-q24",
+    "2022r04h-q23"
+   ]
+  },
+  {
+   "no": 13,
+   "topic_id": 36,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）、rewrite_open_items.md「C の直し方」",
+   "what": "### 混同しやすい用語 の脆弱性管理の行が誤答ウの列挙（特定，評価，処理，報告するためのプロセス）をそのまま置いていた。4 つの段の点は残し、脆弱性を見つけ・深刻さを見積もり・手当てをして結果を伝えるまでの活動、と言い直した。",
+   "questions_checked": [
+    "2024r06a-q43"
+   ]
+  },
+  {
+   "no": 14,
+   "topic_id": 162,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）、rewrite_open_items.md「C の直し方」",
+   "what": "explanation の箇条「外部から内部の端末を狙う不正アクセスが困難になります」は用語に加え述部（外部からの不正アクセスを困難に）が正解エの句と重なるので句の写しと判定した。外部から内部の端末を名指しして入り込むことが難しくなる、と言い直した（detail の「名指しできません」と語を揃えた）。",
+   "questions_checked": [
+    "2017h29h-q36"
+   ]
+  },
+  {
+   "no": 15,
+   "topic_id": 180,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）、rewrite_open_items.md「C の直し方」",
+   "what": "explanation の要点の箇条「失効した証明書のシリアル番号と失効日時の対応」が正解イの句をほぼそのまま置いていた（定義の文ではない）。一覧の 1 件は証明書のシリアル番号とそれを失効させた日時の組、と言い直した。定義の文は変えていない。",
+   "questions_checked": [
+    "2020r02o-q36"
+   ]
+  },
+  {
+   "no": 16,
+   "topic_id": 181,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）、rewrite_open_items.md「C の直し方」",
+   "what": "explanation の箇条「市場での利用実績と今後の普及の見込みが十分か」が正解ウの句をほぼそのまま置いていた。市場で既に広く使われているか、これから広まりそうか、と言い直した（表の「十分か見込みあり」と同じ条件）。",
+   "questions_checked": [
+    "2025r07h-q35"
+   ]
+  }
+ ],
+ "edits": [
+  {
+   "file": "data/ap/materials_v4/11-4.json",
+   "topic_id": 6,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 混同しやすい用語",
+   "before": "暗号化関数を線形近似する式を導き、そこから鍵を求める数学的な解読法です",
+   "after": "暗号の入力と出力の間に近似的に成り立つ一次式を見つけ、そこから鍵を割り出す数学的な解読法です"
+  },
+  {
+   "file": "data/ap/materials_v4/11-4.json",
+   "topic_id": 6,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 混同しやすい用語",
+   "before": "2 つの平文の差と、対応する暗号文の差の関係から鍵を求める数学的な解読法です",
+   "after": "平文に加えた違いが暗号文の違いにどう現れるかを手掛かりに、鍵を割り出す数学的な解読法です"
+  },
+  {
+   "file": "data/ap/materials_v4/11-16.json",
+   "topic_id": 7,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 守れる範囲",
+   "before": "署名は付けるだけで中身を隠さないので、権威 DNS サーバとキャッシュサーバの間でゾーン情報が漏れるのは防げません。",
+   "after": "署名は付けるだけで中身を隠さないので、サーバの間を流れるゾーンの情報は、途中で見られればそのまま読まれます。"
+  },
+  {
+   "file": "data/ap/materials_v4/11-16.json",
+   "topic_id": 32,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "explanation",
+   "before": "正しい名前でアクセスした利用者が**本来とは異なる Web サーバへ誘導されます**",
+   "after": "正しい名前でアクセスした利用者が、**攻撃者の用意した別のサーバへつながります**"
+  },
+  {
+   "file": "data/ap/materials_v4/11-16.json",
+   "topic_id": 32,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "explanation",
+   "before": "に応答する範囲を**内部ネットワークからのものだけ**に限り、",
+   "after": "を受け付ける相手を**社内の利用者**に絞り、"
+  },
+  {
+   "file": "data/ap/materials_v4/11-16.json",
+   "topic_id": 32,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 偽の応答を防ぐ対策",
+   "before": "送信元ポート番号を 53 番などの決まった番号に固定しないのはこのためです。",
+   "after": "送信元ポート番号に 53 番のような毎回同じ値を使わないのはこのためです。"
+  },
+  {
+   "file": "data/ap/materials_v4/11-7.json",
+   "topic_id": 33,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "explanation",
+   "before": "使われていない IP アドレス空間に大量に届くパケットは、攻撃者やマルウェアが**攻撃対象を探して**送るものです",
+   "after": "どの機器も使っていないアドレスにまで多くの通信が届くのは、攻撃者やマルウェアが**侵入できる相手を探して**いるからです"
+  },
+  {
+   "file": "data/ap/materials_v4/11-7.json",
+   "topic_id": 33,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 使われていない IP アドレス空間に届くパケット",
+   "before": "### 使われていない IP アドレス空間に届くパケット",
+   "after": "### 未使用のアドレスに届く探索の通信"
+  },
+  {
+   "file": "data/ap/materials_v4/11-19.json",
+   "topic_id": 34,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "explanation",
+   "before": "担当するのは、**顧客に渡した製品**とその利用の中で起きたインシデントです。",
+   "after": "担当するのは、**顧客の手元で使われている自社製品**に関わるインシデントです。"
+  },
+  {
+   "file": "data/ap/materials_v4/11-4.json",
+   "topic_id": 35,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 解析を検知して守る手当て",
+   "before": "読出し用プローブの取付けを検知したら、チップ内の保存情報を**消去する**回路を設けます",
+   "after": "配線にプローブが当てられたと分かった時点で、チップに記憶した情報を**消去する**回路を組み込みます"
+  },
+  {
+   "file": "data/ap/materials_v4/11-4.json",
+   "topic_id": 35,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 解析を検知して守る手当て",
+   "before": "ケースが開けられたことを光センサなどで検知し、内蔵メモリの秘密情報を**消去します**",
+   "after": "光センサなどで筐体の開封に気づいたら、メモリに持っている秘密情報を**消去します**"
+  },
+  {
+   "file": "data/ap/materials_v4/11-4.json",
+   "topic_id": 35,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 解析を検知して守る手当て",
+   "before": "開封や研磨などで内部を解析しようとすると、内部回路が**破壊される**構造にします",
+   "after": "開封や研磨などで中を調べようとすると、回路そのものが**壊れる**作りにします"
+  },
+  {
+   "file": "data/ap/materials_v4/11-20.json",
+   "topic_id": 36,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 混同しやすい用語",
+   "before": "特定から評価、処理、報告までの一連のプロセスを指す言葉です",
+   "after": "脆弱性を見つけ、深刻さを見積もり、手当てをして結果を伝えるまでの活動を指す言葉です"
+  },
+  {
+   "file": "data/ap/materials_v4/11-14.json",
+   "topic_id": 162,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "explanation",
+   "before": "外部から内部の端末を狙う不正アクセスが**困難**になります",
+   "after": "外部から内部の端末を名指しして入り込むことが**難しく**なります"
+  },
+  {
+   "file": "data/ap/materials_v4/11-3.json",
+   "topic_id": 180,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "explanation",
+   "before": "載るのは失効した証明書の**シリアル番号と失効日時の対応**です。",
+   "after": "一覧の 1 件は、証明書の**シリアル番号**と、それを**失効させた日時**の組です。"
+  },
+  {
+   "file": "data/ap/materials_v4/11-2.json",
+   "topic_id": 181,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "explanation",
+   "before": "**市場での利用実績と今後の普及の見込み**が十分かの 2 段の条件です",
+   "after": "**市場で既に広く使われているか、これから広まりそうか**の 2 段の条件です"
+  }
+ ],
+ "owners": [],
+ "figure_after": [],
+ "ledgers": [
+  {
+   "file": "data/ap/rewrite_ledgers/11-7.json",
+   "topic_id": 33,
+   "point": "割り当てられていない・使われていない IP アドレスの範囲がある",
+   "before": {
+    "where": "### 使われていない IP アドレス空間に届くパケット"
+   },
+   "after": {
+    "where": "### 未使用のアドレスに届く探索の通信"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/11-7.json",
+   "topic_id": 33,
+   "point": "本来通信は届かないのに大量のパケットが観測される",
+   "before": {
+    "where": "### 使われていない IP アドレス空間に届くパケット"
+   },
+   "after": {
+    "where": "### 未使用のアドレスに届く探索の通信"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/11-7.json",
+   "topic_id": 33,
+   "point": "攻撃者やマルウェアが攻撃できる機器やサーバを手当たり次第に探しているため",
+   "before": {
+    "where": "explanation の箇条と ### 使われていない IP アドレス空間に届くパケット"
+   },
+   "after": {
+    "where": "explanation の箇条と ### 未使用のアドレスに届く探索の通信"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/11-7.json",
+   "topic_id": 33,
+   "point": "近年は IoT 機器を狙った探索が多い",
+   "before": {
+    "where": "### 使われていない IP アドレス空間に届くパケット"
+   },
+   "after": {
+    "where": "### 未使用のアドレスに届く探索の通信"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/11-7.json",
+   "topic_id": 33,
+   "point": "未使用のアドレス空間を観測して兆候をつかむダークネット観測",
+   "before": {
+    "where": "### 使われていない IP アドレス空間に届くパケット"
+   },
+   "after": {
+    "where": "### 未使用のアドレスに届く探索の通信"
+   }
+  }
+ ],
+ "returned": [],
+ "noticed": [
+  {
+   "topic_id": 32,
+   "what": "detail の ### 偽の応答を防ぐ対策「再帰的な問合せに応答する範囲を内部に限れば」も 2017h29h-q41 の正解イの句に近い（一覧に無いので直していない）。"
+  },
+  {
+   "topic_id": 33,
+   "what": "キーワード「攻撃対象を探す」は 2024r06a-q38 の正解ウの句と同じ。キーワードは語の扱いとして直していない。"
+  },
+  {
+   "topic_id": 0,
+   "what": "一覧 n1_a.json の target が \"ip\" だが、依頼・パス・論点・過去問 ID は ap。ap として処理した。"
+  }
+ ],
+ "gates": {
+  "check_materials": 0,
+  "check_material_style": 0,
+  "render_check": 0,
+  "check_explanations": 0,
+  "check_unit_plans": 0
+ },
+ "chars": {
+  "before": 87015,
+  "after": 87046
+ },
+ "chars_note": "単元 11 の全論点の explanation と detail の合計。+31 字は句を教材の言葉で言い直した分で、点は足していない。門の警告は単元 11 では直す前後で増減なし。"
+}

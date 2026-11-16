@@ -1,0 +1,153 @@
+{
+  "target": "ap",
+  "units": [
+    "07",
+    "20"
+  ],
+  "status": "done",
+  "note": "項目の一覧の target は \"ip\" と書かれていたが、親の指示（対象 ap）と論点 297・381・135・654 の所在（data/ap/unit_plans/07・20）から ap として扱った",
+  "items": [
+    {
+      "no": 1,
+      "topic_id": 297,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）／rewrite_open_items.md「C の直し方」の、要点の箇条・説明の文が選択肢の句をほぼそのまま置くときは写さない物として直す行",
+      "what": "要点の箇条「前提として認識すべき制約は受け入れた上で」が正解イの句とほぼ同じだった（定義の文ではない）。「避けられない制約は前提として織り込み、そのうえで」と言い直した。",
+      "questions_checked": [
+        "2023r05a-q61"
+      ]
+    },
+    {
+      "no": 2,
+      "topic_id": 297,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）／rewrite_open_items.md「C の直し方」の、要点の箇条・説明の文が選択肢の句をほぼそのまま置くときは写さない物として直す行",
+      "what": "要点の箇条「予想される課題や可能性を洗い出し」が正解イの句そのままだった。「見込まれる課題と可能性を挙げ」と言い直した。",
+      "questions_checked": [
+        "2023r05a-q61"
+      ]
+    },
+    {
+      "no": 3,
+      "topic_id": 381,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）／rewrite_open_items.md「C の直し方」の、要点の箇条・説明の文が選択肢の句をほぼそのまま置くときは写さない物として直す行",
+      "what": "要点の箇条「経費を企業が全額負担しても、研究は対等の立場で進めます」が正解ウの句の組立てをほぼそのまま置いていた。「資金を企業だけが出す場合も、研究上は大学と企業が対等です」と言い直した。定義の文の「対等の立場」は触っていない。",
+      "questions_checked": [
+        "2023r05h-q70"
+      ]
+    },
+    {
+      "no": 4,
+      "topic_id": 135,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）／rewrite_open_items.md「C の直し方」の、要点の箇条・説明の文が選択肢の句をほぼそのまま置くときは写さない物として直す行",
+      "what": "detail「3 つの性質の違い」の説明の文「空間的・時間的・文脈的に近くに表示された物を指します」が誤答エの句をほぼそのまま置いていた。「画面の位置・表示の時期・文脈のどれかが近い物です」と言い直した（点は落としていない）。",
+      "questions_checked": [
+        "2023r05a-q24"
+      ]
+    },
+    {
+      "no": 5,
+      "topic_id": 135,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）／rewrite_open_items.md「C の直し方」の、要点の箇条・説明の文が選択肢の句をほぼそのまま置くときは写さない物として直す行。申告の箇所は論点（アイコン）の定義の文ではなく要点の箇条なので、定義の文の例外に当たらない",
+      "what": "要点の箇条「表す機能をいったん理解したアイコンを、後からどれだけ容易に思い出せるか」が正解アの句と重なっていた。「一度意味を覚えたアイコンを、次に見たときにすぐ思い出せるか」と言い直した。キーワード「思い出しやすさ」と detail の「覚えていて次も使えるか」とは食い違わない。",
+      "questions_checked": [
+        "2023r05a-q24"
+      ]
+    },
+    {
+      "no": 6,
+      "topic_id": 654,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）／rewrite_open_items.md「C の直し方」の、要点の箇条・説明の文が選択肢の句をほぼそのまま置くときは写さない物として直す行",
+      "what": "要点の箇条「利用の状況を理解しながら多くの人の水準を改善していくこと」が正解イの句をほぼそのまま置いていた。「利用者ごとの状況を踏まえ、より多くの人のアクセシビリティを高めること」と言い直した。一律の水準を定めない点は detail「JIS X 8341-1 が求めること」が持つので、ア・エとの区別は今も付く。",
+      "questions_checked": [
+        "2017h29a-q24",
+        "2018h30h-q24",
+        "2016h28a-q24"
+      ]
+    }
+  ],
+  "edits": [
+    {
+      "file": "data/ap/materials_v4/20-3.json",
+      "topic_id": 297,
+      "field": "explanation",
+      "op": "replace",
+      "heading": null,
+      "before": "前提として認識すべき制約は受け入れた上で、それでもありたい姿を先に置きます",
+      "after": "避けられない制約は前提として織り込み、そのうえでありたい姿を先に置きます"
+    },
+    {
+      "file": "data/ap/materials_v4/20-3.json",
+      "topic_id": 297,
+      "field": "explanation",
+      "op": "replace",
+      "heading": null,
+      "before": "描いた姿と現在との差から、予想される課題や可能性を洗い出し、今から何をすべきかを決めます",
+      "after": "描いた姿と現在との差から、見込まれる課題と可能性を挙げ、今から何をすべきかを決めます"
+    },
+    {
+      "file": "data/ap/materials_v4/20-2.json",
+      "topic_id": 381,
+      "field": "explanation",
+      "op": "replace",
+      "heading": null,
+      "before": "経費を企業が全額負担しても、研究は対等の立場で進めます",
+      "after": "資金を企業だけが出す場合も、研究上は大学と企業が対等です"
+    },
+    {
+      "file": "data/ap/materials_v4/07-1.json",
+      "topic_id": 135,
+      "field": "detail",
+      "op": "replace",
+      "heading": "3 つの性質の違い",
+      "before": "弁別性が比べる「近くの別のアイコン」は、空間的・時間的・文脈的に近くに表示された物を指します。",
+      "after": "弁別性が比べる「近くの別のアイコン」は、画面の位置・表示の時期・文脈のどれかが近い物です。"
+    },
+    {
+      "file": "data/ap/materials_v4/07-1.json",
+      "topic_id": 135,
+      "field": "explanation",
+      "op": "replace",
+      "heading": null,
+      "before": "**習得性**は、表す機能をいったん理解したアイコンを、後から**どれだけ容易に思い出せるか**を表す性質です",
+      "after": "**習得性**は、一度意味を覚えたアイコンを、次に見たときに**すぐ思い出せるか**を表す性質です"
+    },
+    {
+      "file": "data/ap/materials_v4/07-2.json",
+      "topic_id": 654,
+      "field": "explanation",
+      "op": "replace",
+      "heading": null,
+      "before": "JIS X 8341-1（第1部：共通指針）の目的は、利用の状況を理解しながら**多くの人の水準を改善していくこと**です",
+      "after": "JIS X 8341-1（第1部：共通指針）の目的は、利用者ごとの状況を踏まえ、**より多くの人のアクセシビリティを高めること**です"
+    }
+  ],
+  "owners": [],
+  "figure_after": [],
+  "ledgers": [],
+  "returned": [],
+  "noticed": [],
+  "gates": {
+    "check_materials": 0,
+    "check_material_style": 0,
+    "render_check": 0,
+    "check_explanations": 0,
+    "check_unit_plans": null
+  },
+  "gates_note": "check_unit_plans は owners を直していないので回していない。check_materials・check_material_style の出力は直す前と後で差分なし（担当の論点の指摘・知らせは前後とも 0）",
+  "chars": {
+    "before": 3130,
+    "after": 3126,
+    "scope": "論点 297・381・135・654 の explanation＋detail の文字数の合計"
+  }
+}

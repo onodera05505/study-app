@@ -1,0 +1,107 @@
+{
+  "target": "ap",
+  "units": [
+    "21"
+  ],
+  "status": "done",
+  "items": [
+    {
+      "no": 1,
+      "topic_id": 690,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "写さない物（選択肢・問題文の句をほぼそのまま置く）に当たる: write_materials.md「書き方の約束」・rewrite_open_items.md「C の直し方」の 2 つ目。定義の文・キーワードの行ではない",
+      "what": "### 混同しやすい用語 のロジスティクスの箇条が誤答イ「物流全体を，費用対効果が最適になるように総合的に管理し」をほぼそのまま置いていた。「調達から販売までのモノの流れを一つにつなぎ、かけた費用に見合う効果が最も大きくなるよう全体をまとめて管理する活動」に言い直した。",
+      "questions_checked": [
+        "2017h29a-q73"
+      ]
+    },
+    {
+      "no": 2,
+      "topic_id": 690,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "写さない物（選択肢・問題文の句をほぼそのまま置く）に当たる: write_materials.md「書き方の約束」・rewrite_open_items.md「C の直し方」の 2 つ目。定義の文・キーワードの行ではない",
+      "what": "同じ節の SCM の箇条が誤答ア「企業間で全体最適の視点から見直し」をほぼそのまま置いていた。「取引先を含む**企業どうし**でつなぎ、供給網全体として無駄が最も少なくなるよう組み直す考え方」に言い直した（太字の位置は保った）。",
+      "questions_checked": [
+        "2017h29a-q73"
+      ]
+    },
+    {
+      "no": 3,
+      "topic_id": 757,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "写さない物（選択肢・問題文の句をほぼそのまま置く）に当たる: write_materials.md「書き方の約束」・rewrite_open_items.md「C の直し方」の 2 つ目。定義の文・キーワードの行ではない",
+      "what": "explanation の要点の箇条（定義の文ではない）が誤答イ「作業場所を通過するに従い製品の加工が進む」をほぼそのまま置いていた。「製品が流れる順に、工程ごとの担当者が少しずつ手を加えていく分業型」に言い直した。",
+      "questions_checked": [
+        "2017h29h-q70"
+      ]
+    },
+    {
+      "no": 4,
+      "topic_id": 758,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "写さない物（選択肢・問題文の句をほぼそのまま置く）に当たる: write_materials.md「書き方の約束」・rewrite_open_items.md「C の直し方」の 2 つ目。定義の文・キーワードの行ではない",
+      "what": "### 混同しやすい用語 の EOS の箇条が誤答エ「発注情報をデータエントリ端末から入力することによって，本部又は仕入先に送信し」をほぼそのまま置いていた。「店舗の担当者が手元の機器で打ち込んだ注文を、回線で本部や仕入先へ届ける」に言い直した。",
+      "questions_checked": [
+        "2016h28h-q72"
+      ]
+    }
+  ],
+  "edits": [
+    {
+      "file": "data/ap/materials_v4/21-4.json",
+      "topic_id": 690,
+      "field": "detail",
+      "op": "replace",
+      "heading": "混同しやすい用語",
+      "before": "物流全体を費用対効果が最適になるよう総合的に管理する活動です。",
+      "after": "調達から販売までのモノの流れを一つにつなぎ、かけた費用に見合う効果が最も大きくなるよう全体をまとめて管理する活動です。"
+    },
+    {
+      "file": "data/ap/materials_v4/21-4.json",
+      "topic_id": 690,
+      "field": "detail",
+      "op": "replace",
+      "heading": "混同しやすい用語",
+      "before": "供給の流れを**企業間**で全体最適の視点から見直す考え方です。",
+      "after": "供給の流れを、取引先を含む**企業どうし**でつなぎ、供給網全体として無駄が最も少なくなるよう組み直す考え方です。"
+    },
+    {
+      "file": "data/ap/materials_v4/21-3.json",
+      "topic_id": 757,
+      "field": "explanation",
+      "op": "replace",
+      "heading": "",
+      "before": "こちらは各作業場所を通るにつれて加工が進む分業型です",
+      "after": "こちらは製品が流れる順に、工程ごとの担当者が少しずつ手を加えていく分業型です"
+    },
+    {
+      "file": "data/ap/materials_v4/21-5.json",
+      "topic_id": 758,
+      "field": "detail",
+      "op": "replace",
+      "heading": "混同しやすい用語",
+      "before": "店舗や本部が端末から入力した発注情報を仕入先へ送る、発注に特化したしくみです。",
+      "after": "店舗の担当者が手元の機器で打ち込んだ注文を、回線で本部や仕入先へ届ける、発注に特化したしくみです。"
+    }
+  ],
+  "owners": [],
+  "figure_after": [],
+  "ledgers": [],
+  "returned": [],
+  "noticed": [],
+  "gates": {
+    "check_materials": 0,
+    "check_material_style": 0,
+    "render_check": 0,
+    "check_explanations": 0,
+    "check_unit_plans": null
+  },
+  "chars": {
+    "before": 2930,
+    "after": 3005
+  }
+}

@@ -1,0 +1,104 @@
+{
+ "target": "ap",
+ "units": [
+  "03"
+ ],
+ "status": "done",
+ "items": [
+  {
+   "no": 1,
+   "topic_id": 472,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」写さない物（選択肢の句をほぼそのまま置く）／rewrite_open_items.md C の直し方",
+   "what": "detail「USB 3.0 で変わったこと」の箇条が正解エの句「外付け磁気ディスクとの接続などに使用される」をほぼそのまま置いていた。定義の文ではない説明の箇条なので、「外付けハードディスクのように大量のデータを読み書きする周辺機器に向いた速さです」と言い直した（5G ビット／秒・SuperSpeed は残した）。",
+   "questions_checked": [
+    "2016h28h-q10",
+    "2018h30h-q12",
+    "2021r03a-q10"
+   ]
+  },
+  {
+   "no": 2,
+   "topic_id": 561,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」写さない物（選択肢の句をほぼそのまま置く）／rewrite_open_items.md C の直し方",
+   "what": "detail「アドレスを指すレジスタと中身を持つレジスタ」の文が誤答エ「割込みの許可状態，及び条件分岐の判断に必要な演算結果の状態」の句をほぼそのまま置いていた。「割込みを受け付けるかどうかの印と、分岐の判定に使う直前の演算結果の印」と言い直した（ステータスレジスタが持つという点は残した）。",
+   "questions_checked": [
+    "2020r02o-q8",
+    "2016h28h-q8"
+   ]
+  },
+  {
+   "no": 3,
+   "topic_id": 562,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」写さない物／rewrite_open_items.md C の直し方（要点・説明の文が選択肢の句をほぼそのまま置くときは直す。定義の文ではない）",
+   "what": "explanation の要点の文（定義の文の後）が正解ウ「メモリセル構成が単純なので，ビット当たりの単価が安くなる」を語を挟んだだけで置いていた。「1 ビットのセルをトランジスタ1個とコンデンサ1個だけで組めるので大容量化しやすく、1 ビットあたりの値段を低く抑えられます」と言い直した。detail の比較表（高集積で安い）と合わせて正解が選べる。",
+   "questions_checked": [
+    "2020r02o-q20",
+    "2019h31h-q20",
+    "2016h28h-q21"
+   ]
+  },
+  {
+   "no": 4,
+   "topic_id": 434,
+   "type": "C",
+   "verdict": "by_rule",
+   "rule": "rewrite_open_items.md C の直し方「申告が指すのがキーワードの行（keywords）→ 直さない。キーワードは句の写しの線の外」（2026-11-16 の親の裁定）",
+   "what": "申告の「どの部分にも割り当て」は explanation のキーワードの行にある。キーワードの行は句の写しの線の外なので直さない。",
+   "questions_checked": [
+    "2022r04h-q10"
+   ]
+  }
+ ],
+ "edits": [
+  {
+   "file": "data/ap/materials_v4/03-8.json",
+   "topic_id": 472,
+   "field": "detail",
+   "op": "replace",
+   "heading": "USB 3.0 で変わったこと",
+   "before": "- 加わった 5G ビット／秒の **SuperSpeed** は、外付け磁気ディスクなど大量のデータを運ぶ接続で使われます",
+   "after": "- 加わった 5G ビット／秒の **SuperSpeed** は、外付けハードディスクのように大量のデータを読み書きする周辺機器に向いた速さです"
+  },
+  {
+   "file": "data/ap/materials_v4/03-1.json",
+   "topic_id": 561,
+   "field": "detail",
+   "op": "replace",
+   "heading": "アドレスを指すレジスタと中身を持つレジスタ",
+   "before": "図に無いレジスタでは、割込みの許可状態や、条件分岐に使う演算結果の状態を[[ステータスレジスタ（フラグレジスタ）]]が持ちます。",
+   "after": "図に無いレジスタでは、[[ステータスレジスタ（フラグレジスタ）]]が、割込みを受け付けるかどうかの印と、分岐の判定に使う直前の演算結果の印を持ちます。"
+  },
+  {
+   "file": "data/ap/materials_v4/03-5.json",
+   "topic_id": 562,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "",
+   "before": "メモリセルがトランジスタ1個とコンデンサ1個で済むほど単純なので、大容量化しやすく**ビット当たりの単価が安く**なります。",
+   "after": "1 ビットのセルをトランジスタ1個とコンデンサ1個だけで組めるので大容量化しやすく、**1 ビットあたりの値段を低く**抑えられます。"
+  }
+ ],
+ "owners": [],
+ "figure_after": [],
+ "ledgers": [],
+ "returned": [],
+ "noticed": [],
+ "gates": {
+  "check_materials": 0,
+  "check_material_style": 0,
+  "render_check": 0,
+  "check_explanations": 0,
+  "check_unit_plans": 0
+ },
+ "chars": {
+  "before": 2707,
+  "after": 2734,
+  "scope": "直した 3 論点の explanation＋detail の合計。言い直しで 27 字増えた（足した内容は無い）。門の知らせは直す前と後で同数・差分なし"
+ }
+}

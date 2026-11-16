@@ -1,0 +1,129 @@
+{
+ "target": "ap",
+ "units": [
+  "04"
+ ],
+ "status": "done",
+ "items": [
+  {
+   "no": 1,
+   "topic_id": 649,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の本文が過去問から借りてよい物と写さない物の行（写さない物＝選択肢の句をほぼそのまま置く）、rewrite_open_items.md「C の直し方」",
+   "what": "explanation の要点の箇条（定義の文ではない）が正解ウの句「交換する場合…インストール作業」をほぼそのまま置いていたので、教材の言葉に言い直した。",
+   "questions_checked": [
+    "2018h30h-q13"
+   ]
+  },
+  {
+   "no": 2,
+   "topic_id": 650,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の本文が過去問から借りてよい物と写さない物の行（写さない物＝選択肢の句をほぼそのまま置く）、rewrite_open_items.md「C の直し方」",
+   "what": "要点の箇条の「全面的なサービス停止を避ける」が正解ウの句をそのまま置いていたので「システムが丸ごと止まる事態を防ぐ」に言い直した。キーワードの行「全面停止しない」は線の外で触れていない。",
+   "questions_checked": [
+    "2018h30h-q15"
+   ]
+  },
+  {
+   "no": 3,
+   "topic_id": 708,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の本文が過去問から借りてよい物と写さない物の行（写さない物＝選択肢の句をほぼそのまま置く）、rewrite_open_items.md「C の直し方」",
+   "what": "要点の箇条が正解イ「各層の OS は異なってもよい」に語を足しただけの形だったので「層ごとに別の機種・別の OS で動かせます」に言い直した。",
+   "questions_checked": [
+    "2016h28h-q12"
+   ]
+  },
+  {
+   "no": 4,
+   "topic_id": 712,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の本文が過去問から借りてよい物と写さない物の行（写さない物＝選択肢の句をほぼそのまま置く）、rewrite_open_items.md「C の直し方」",
+   "what": "detail「性能評価法の比べ方」のベンチマークテストの文が誤答ウの句をほぼそのまま置いていたので、入出力の処理や OS の働きも込みにしてシステムを丸ごと動かしたときの処理能力を測る、と言い直した（情報は落としていない）。",
+   "questions_checked": [
+    "2017h29h-q14"
+   ]
+  },
+  {
+   "no": 5,
+   "topic_id": 712,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の本文が過去問から借りてよい物と写さない物の行（写さない物＝選択肢の句をほぼそのまま置く）、rewrite_open_items.md「C の直し方」",
+   "what": "命令ミックスの文が誤答エの句（使用頻度を重みとした加重平均）をほぼそのまま置いていたので、よく使われる命令ほど大きく効くように平均をとる（加重平均）と言い直した。",
+   "questions_checked": [
+    "2017h29h-q14"
+   ]
+  }
+ ],
+ "edits": [
+  {
+   "file": "data/ap/materials_v4/04-1.json",
+   "topic_id": 649,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "explanation",
+   "before": "**端末を交換してもインストール作業がほとんど要りません**",
+   "after": "**端末を入れ替えても、新しい端末にソフトやデータを入れ直す手間がほとんどかかりません**"
+  },
+  {
+   "file": "data/ap/materials_v4/04-4.json",
+   "topic_id": 650,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "explanation",
+   "before": "狙いは**全面的なサービス停止を避ける**ことです",
+   "after": "狙いは、**システムが丸ごと止まる事態を防ぐ**ことです"
+  },
+  {
+   "file": "data/ap/materials_v4/04-1.json",
+   "topic_id": 708,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "explanation",
+   "before": "**各層を動かすコンピュータや OS が異なっていてもかまいません**",
+   "after": "**層ごとに別の機種・別の OS で動かせます**"
+  },
+  {
+   "file": "data/ap/materials_v4/04-7.json",
+   "topic_id": 712,
+   "field": "detail",
+   "op": "replace",
+   "heading": "性能評価法の比べ方",
+   "before": "[[ベンチマークテスト]]は、入出力や制御プログラムまで含めたシステム全体の総合力を測るもので、",
+   "after": "[[ベンチマークテスト]]は、入出力の処理や OS の働きも込みにして、システムを丸ごと動かしたときの処理能力を測るもので、"
+  },
+  {
+   "file": "data/ap/materials_v4/04-7.json",
+   "topic_id": 712,
+   "field": "detail",
+   "op": "replace",
+   "heading": "性能評価法の比べ方",
+   "before": "[[命令ミックス]]は、命令の種類ごとの使用頻度を重みにして平均命令実行時間を加重平均で出します。",
+   "after": "[[命令ミックス]]は、よく使われる命令ほど大きく効くように平均をとり（加重平均）、命令 1 つあたりの平均実行時間を出します。"
+  }
+ ],
+ "owners": [],
+ "figure_after": [],
+ "ledgers": [],
+ "returned": [],
+ "noticed": [],
+ "gates": {
+  "check_materials": 0,
+  "check_material_style": 0,
+  "render_check": 0,
+  "check_explanations": 0,
+  "check_unit_plans": null
+ },
+ "gates_note": "check_unit_plans は owners を直していないので回していない。check_materials・check_material_style の出力は直す前後で同一（知らせの増減なし）",
+ "chars": {
+  "before": 3737,
+  "after": 3774
+ },
+ "chars_note": "649・650・708・712 の explanation+detail の合計。句を言い直したための +37 字"
+}

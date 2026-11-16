@@ -1,0 +1,42 @@
+{
+  "target": "ap",
+  "units": ["18"],
+  "status": "done",
+  "items": [
+    {"no": 1, "topic_id": 579, "type": "C", "verdict": "fixed",
+     "rule": "write_materials.md「書き方の約束」の写さない物（選択肢の句をほぼそのまま置く）。rewrite_open_items.md「C の直し方」",
+     "what": "detail「記録のシステム（SoR）」の文が誤答エ（2020r02o-q72）の句「日々の仕訳伝票を入力…取引データベースを維持…財務報告」をほぼそのまま置いていた。「会計の取引を誤りなく積み上げ、決算の数字まで出す仕組み」に言い直した（会計・財務報告の仕組みが SoR 側だという点は残した）。",
+     "questions_checked": ["2020r02o-q72"]},
+    {"no": 2, "topic_id": 579, "type": "C", "verdict": "fixed",
+     "rule": "write_materials.md「書き方の約束」の写さない物（選択肢の句をほぼそのまま置く）。rewrite_open_items.md「C の直し方」",
+     "what": "explanation の要点の箇条「社内の定型業務を処理して結果を記録する」が誤答イの句とほぼ同じだった。「社内の業務で起きた取引を正確に書き残す」に言い直した（定型業務は detail の SoR の節が言う）。",
+     "questions_checked": ["2020r02o-q72"]},
+    {"no": 3, "topic_id": 641, "type": "C", "verdict": "fixed",
+     "rule": "write_materials.md「書き方の約束」の写さない物。振り分けは借りてよいが、セルの句は教材の言葉で言い直す（rewrite_open_items.md「C の直し方」。表の形は変えない）",
+     "what": "detail の表のインフラの行のセル「複数のアプリケーションが共有する基盤部分の提供」が誤答ウ（2018h30a-q61）とほぼ同じだった。セルを「業務アプリ全体を支える基盤づくり」に言い直した（カテゴリの振り分けと表の形は不変）。",
+     "questions_checked": ["2018h30a-q61"]},
+    {"no": 4, "topic_id": 546, "type": "C", "verdict": "by_rule",
+     "rule": "rewrite_open_items.md「C の直し方」: 申告が指すのがキーワードの行（keywords）は直さない。キーワードは句の写しの線の外（write_materials.md のキーワードの決まりが優先）。「直してよい文」もキーワードを変えない",
+     "what": "申告はキーワードの行「初期の委託金額を抑える」。2026-11-16 の改訂でキーワードの行は直さないと決まったので、変えていない。",
+     "questions_checked": []},
+    {"no": 5, "topic_id": 577, "type": "C", "verdict": "by_rule",
+     "rule": "write_materials.md「書き方の約束」の借りてよい物（過去問が選ばせる振り分けを教材の言葉で言い直す。表が過去問の項目を振り分けの先に置く形でもよい）と、しくみが正解と重なるのはよい",
+     "what": "detail の表の要件定義の行「利害関係者の識別、ニーズの引出し、要件の定義と合意」を確認した。各セルは 2 文節の作業名で、誤答イ（2020r02o-q62）「システムのライフサイクルの全期間を通して，システムの利害関係者を識別する」・エ「利害関係者の要件が正確に表現されていることを，利害関係者とともに確立する」の句をそのまま置いてはいない。作業を要件定義プロセスに振り分けた言い直しで、「ニーズの引出し」は 2017h29a-q64 の正解（要件定義プロセスのしくみ）と重なる物に当たる。直さない。",
+     "questions_checked": ["2020r02o-q62", "2017h29a-q64"]}
+  ],
+  "edits": [
+    {"file": "data/ap/materials_v4/18-1.json", "topic_id": 579, "field": "detail", "op": "replace", "heading": "記録のシステム（SoR）",
+     "before": "日々の仕訳伝票を入力して取引データベースを維持し、財務報告につなげる仕組みもこちら側で", "after": "会計の取引を誤りなく積み上げ、決算の数字まで出す仕組みもこちら側で"},
+    {"file": "data/ap/materials_v4/18-1.json", "topic_id": 579, "field": "explanation", "op": "replace", "heading": "explanation",
+     "before": "対になるのは、社内の定型業務を処理して結果を記録する[[SoR（Systems of Record）]]です", "after": "対になるのは、社内の業務で起きた取引を正確に書き残す[[SoR（Systems of Record）]]です"},
+    {"file": "data/ap/materials_v4/18-1.json", "topic_id": 641, "field": "detail", "op": "replace", "heading": "4つのカテゴリと投資の目的",
+     "before": "| インフラ | 複数のアプリケーションが共有する**基盤部分**の提供 |", "after": "| インフラ | 業務アプリ全体を支える**基盤**づくり |"}
+  ],
+  "owners": [],
+  "figure_after": [],
+  "ledgers": [],
+  "returned": [],
+  "noticed": [],
+  "gates": {"check_materials": 0, "check_material_style": 0, "render_check": 0, "check_explanations": 0, "check_unit_plans": null},
+  "chars": {"before": 19907, "after": 19890}
+}
