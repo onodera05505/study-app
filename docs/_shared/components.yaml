@@ -32,7 +32,6 @@ errorCodes:
   NOT_CONFIGURED: この配備にはその機能の設定が無い（SSO の場所や共有秘密、トークンの署名の秘密。404/503）
   INTERNAL: サーバで処理できなかった（500。全経路共通の最終段）
   STORAGE_UNAVAILABLE: 端末の記憶に書けない・読めない（local-store）
-  PERMISSION_DENIED: OS の権限が拒否されている（requires を宣言する操作だけ。この学びでは未使用）
 
 schemas:
   ErrorBody:
