@@ -180,7 +180,7 @@
       ".ts",
       ".tsx"
     ],
-    "test_pattern": "^\\s*x?(?:it|test)(?:\\.(?:skip|only|fixme|todo|concurrent|each\\(.*?\\)|for\\(.*?\\)))*\\(\\s*[\"'`](.+?)[\"'`]|^\\s*x?(?:it|test)(?:\\.\\w+)*\\.(?:each|for)[(`]\\s*\\[?\\s*$|^\\s*x?(?:it|test)(?:\\.(?:skip|only|fixme|todo|concurrent))*\\(\\s*$",
+    "test_pattern": "^\\s*x?(?:it|test)(?:\\.(?:skip|only|fixme|todo|concurrent|each\\(.*?\\)|for\\(.*?\\)))*\\(\\s*[\"'`](.+?)[\"'`]|^\\s*x?(?:it|test)(?:\\.\\w+)*\\.(?:each|for)(?:<.*>)?[(`]\\s*\\[?\\s*$|^\\s*x?(?:it|test)(?:\\.(?:skip|only|fixme|todo|concurrent))*\\(\\s*$",
     "pending_pattern": "^\\s*(?:it|test|describe)(?:\\.describe)?\\.(?:skip|fixme|todo|skipIf|runIf)\\b|^\\s*x(?:it|test|describe)\\(|^\\s*x?(?:it|test)(?:\\.\\w+)*\\(\\s*[\"'`].*?[\"'`]\\s*,\\s*\\{[^}]*\\b(?:skip|todo):\\s*true",
     "covers_placement": "before",
     "system": {
@@ -193,7 +193,7 @@
         ".tsx",
         ".py"
       ],
-      "test_pattern": "^\\s*x?(?:it|test)(?:\\.(?:skip|only|fixme|todo|concurrent|each\\(.*?\\)|for\\(.*?\\)))*\\(\\s*[\"'`](.+?)[\"'`]|^\\s*x?(?:it|test)(?:\\.\\w+)*\\.(?:each|for)[(`]\\s*\\[?\\s*$|^\\s*x?(?:it|test)(?:\\.(?:skip|only|fixme|todo|concurrent))*\\(\\s*$|^def\\s+(check_scenario_[\\p{L}\\p{N}_]+)\\s*\\(",
+      "test_pattern": "^\\s*x?(?:it|test)(?:\\.(?:skip|only|fixme|todo|concurrent|each\\(.*?\\)|for\\(.*?\\)))*\\(\\s*[\"'`](.+?)[\"'`]|^\\s*x?(?:it|test)(?:\\.\\w+)*\\.(?:each|for)(?:<.*>)?[(`]\\s*\\[?\\s*$|^\\s*x?(?:it|test)(?:\\.(?:skip|only|fixme|todo|concurrent))*\\(\\s*$|^def\\s+(check_scenario_[\\p{L}\\p{N}_]+)\\s*\\(",
       "pending_pattern": "^\\s*(?:it|test|describe)(?:\\.describe)?\\.(?:skip|fixme|todo|skipIf|runIf)\\b|^\\s*x(?:it|test|describe)\\(|^\\s*x?(?:it|test)(?:\\.\\w+)*\\(\\s*[\"'`].*?[\"'`]\\s*,\\s*\\{[^}]*\\b(?:skip|todo):\\s*true",
       "scenario_placement": "before",
       "comment_pattern": "^\\s*(?:\\/\\/|\\/\\*|\\*|#|--|<!--)"
