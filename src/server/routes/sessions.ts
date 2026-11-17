@@ -61,6 +61,7 @@ const CREATE_LABELS = { kind: '種別', topicId: '論点', field: '分野', midd
 const ANSWER_LABELS = { idx: '問題の番号', answer: '解答' }
 
 // @implements REQ-050, REQ-051, REQ-055, REQ-057, REQ-105, REQ-109, REQ-243, REQ-247, BR-017, REQ-281, REQ-273, REQ-347
+// @operation UC-004#startSession
 sessionRoutes.post('/', async (c) => {
   const raw = await c.req.json().catch(() => null)
   const parsed = createBody.safeParse(raw)
@@ -149,6 +150,7 @@ sessionRoutes.post('/', async (c) => {
 
 /** 進行中のテスト。中断からの復帰に使う。 */
 // @implements BR-015
+// @operation UC-006#getCurrentSession
 sessionRoutes.get('/current', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -164,6 +166,7 @@ sessionRoutes.get('/current', async (c) => {
 
 /** 進行中のテストを破棄する。 */
 // @implements REQ-085, REQ-090
+// @operation UC-006#discardCurrentSession
 sessionRoutes.delete('/current', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -201,6 +204,7 @@ function isExpired(s: {
 
 /** 現在の問題（未回答の最小 idx）。 */
 // @implements REQ-058, REQ-060, REQ-071, REQ-111, REQ-116, REQ-117, REQ-237, REQ-238, REQ-240, REQ-344, REQ-346, BR-021, BR-034
+// @operation UC-004#getCurrentQuestion
 sessionRoutes.get('/:id/current', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -273,6 +277,7 @@ const answerBody = z.object({
 
 /** 1問回答する。採点は**出題時スナップショット**に対して行う。 */
 // @implements REQ-061, REQ-064, REQ-066, REQ-067, REQ-072, REQ-119, REQ-250, REQ-253, BR-020, BR-022, BR-023
+// @operation UC-004#answerQuestion
 sessionRoutes.post('/:id/answer', async (c) => {
   const raw = await c.req.json().catch(() => null)
   const parsed = answerBody.safeParse(raw)
@@ -361,6 +366,7 @@ async function finalize(db: ReturnType<typeof getDb>, sessionId: string) {
 }
 
 // @implements REQ-069, REQ-073, REQ-075, REQ-254, BR-024
+// @operation UC-004#finishSession
 sessionRoutes.post('/:id/finish', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -387,6 +393,7 @@ sessionRoutes.post('/:id/finish', async (c) => {
 
 /** 結果の詳細。間違えた問題から論点へ戻れるようにする。 */
 // @implements REQ-115, REQ-120, REQ-121, REQ-252
+// @operation UC-004#getSessionResult
 sessionRoutes.get('/:id', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -480,6 +487,7 @@ sessionRoutes.get('/:id', async (c) => {
 
 /** 受験履歴。 */
 // @implements REQ-095, REQ-096, REQ-097
+// @operation UC-007#listExamHistory
 sessionRoutes.get('/', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id

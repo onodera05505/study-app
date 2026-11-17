@@ -114,6 +114,7 @@ export const unitGroupTopics = sqliteTable(
       foreignColumns: [unitGroups.middleNo, unitGroups.groupNo],
     }).onDelete('cascade'),
     // まとまりの論点を学ぶ順に引く問い合わせに使う
+    // @implements BR-031
     uniqueIndex('uq_unit_group_topics_position').on(t.middleNo, t.groupNo, t.position),
     check('ck_unit_group_topics_position_positive', sql`${t.position} >= 1`),
   ],
@@ -135,6 +136,7 @@ export const topicPrerequisites = sqliteTable(
   },
   (t) => [
     primaryKey({ columns: [t.topicId, t.prerequisiteTopicId] }),
+    // @implements REQ-479
     uniqueIndex('uq_topic_prerequisites_position').on(t.topicId, t.position),
     check('ck_topic_prerequisites_position_positive', sql`${t.position} >= 1`),
     check('ck_topic_prerequisites_not_self', sql`${t.topicId} <> ${t.prerequisiteTopicId}`),
@@ -206,6 +208,7 @@ export const users = sqliteTable(
     role: text('role').notNull().default('MEMBER'), // ADMIN | MEMBER
     createdAt: integer('created_at').notNull().default(now),
   },
+  // @implements REQ-192
   (t) => [uniqueIndex('uq_user_email').on(t.email)],
 )
 

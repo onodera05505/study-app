@@ -36,6 +36,7 @@ export function listOrder(roadmap: boolean): SQL {
 }
 
 /** listOrder が使う ug の JOIN 句。ロードマップ型は単元の構成の表を参照しない。 */
+// @implements BR-031, REQ-474
 export function listOrderJoin(roadmap: boolean): SQL {
   return roadmap ? sql`` : sql`LEFT JOIN unit_group_topics ug ON ug.topic_id = t.id`
 }

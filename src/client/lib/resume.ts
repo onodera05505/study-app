@@ -6,6 +6,7 @@ export type ResumeLinkState = { fromResumeLink: true }
 
 export const RESUME_LINK_STATE: ResumeLinkState = { fromResumeLink: true }
 
+// @implements REQ-342
 export function isFromResumeLink(state: unknown): boolean {
   return !!state && typeof state === 'object' && (state as Partial<ResumeLinkState>).fromResumeLink === true
 }
@@ -13,6 +14,7 @@ export function isFromResumeLink(state: unknown): boolean {
 /** 前回の続きの論点が見つからなかったことを単元の一覧に知らせる状態。term は覚えていた論点の名前。 */
 export type ResumeGoneState = { resumeGone: { term: string | null } }
 
+// @implements REQ-342
 export function resumeGoneOf(state: unknown): { term: string | null } | null {
   if (!state || typeof state !== 'object') return null
   const g = (state as Partial<ResumeGoneState>).resumeGone

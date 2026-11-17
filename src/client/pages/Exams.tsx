@@ -14,6 +14,7 @@ type Exam = {
 /** 進行中のテストの範囲と回答の進み具合（GET /api/sessions/current の session の一部） */
 type InProgress = { scopeLabel: string; questionCount: number; answered: number }
 
+// @implements REQ-102, REQ-103
 export function Exams() {
   // null は「まだ取得していない」、[] は「取得した結果が空」
   const [exams, setExams] = useState<Exam[] | null>(null)

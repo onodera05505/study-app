@@ -58,6 +58,7 @@ export function ensureGlossary() {
 }
 
 /** 用語集。未取得なら null。 */
+// @implements REQ-005, REQ-264
 export function useGlossary(): Map<string, GlossaryEntry> | null {
   const g = useSyncExternalStore(subscribe, snapshot)
   useEffect(ensureGlossary, [])

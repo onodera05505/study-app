@@ -15,12 +15,14 @@ const ssoOn = (env: Bindings) => !!env.SSO_PORTAL_URL
 
 /** 画面がログインの形を決めるための設定（公開）。 */
 // @implements REQ-205
+// @operation UC-013#getAuthConfig
 authRoutes.get('/config', (c) => c.json({ sso: ssoOn(c.env), portal: c.env.SSO_PORTAL_URL ?? null, app: c.env.EXAM }))
 
 const ssoBody = z.object({ code: z.string().min(1).max(100) })
 
 /** まなびばから戻ってきた使い捨てコードを、まなびばのサーバでメールと名前に交換し、この学びのトークンを出す。 */
 // @implements REQ-191, REQ-192, REQ-193, REQ-206, REQ-207, REQ-208, REQ-274, BR-002
+// @operation UC-013#signInWithCode
 authRoutes.post('/sso', async (c) => {
   const secret = getSecret(c.env)
   if (!secret) return c.json(NOT_CONFIGURED.body, NOT_CONFIGURED.status)

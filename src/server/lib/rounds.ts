@@ -12,6 +12,7 @@ export type TopicRound = {
 }
 
 /** 学ぶ順に並ぶ回（補足の回と順序なしの 1 回を除く）の番号とラベル。番号は回の順で 1 起点。 */
+// @implements REQ-286
 export function orderedRounds(rows: TopicRound[], spec: RoadmapSpec | undefined): Map<string, { day: number; label: string | null }> {
   const first = new Map<string, { at: number; label: string | null }>()
   for (const r of rows) {
@@ -28,6 +29,7 @@ export function orderedRounds(rows: TopicRound[], spec: RoadmapSpec | undefined)
 }
 
 /** ロードマップ型の全ての論点と、その属する回。 */
+// @implements REQ-281
 export async function allTopicRounds(db: Db): Promise<TopicRound[]> {
   return db.all<TopicRound>(sql`
     SELECT t.id AS id, t.sort_order AS sortOrder, t.round AS round, t.round_label AS roundLabel

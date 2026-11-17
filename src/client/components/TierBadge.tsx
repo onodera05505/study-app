@@ -13,6 +13,7 @@ export function TierText({ label }: { label: string }) {
   )
 }
 
+// @implements REQ-284
 export function TierBadge({ level, label }: { level: number | null | undefined; label: string }) {
   return (
     <span className={`rm-tier t-${level ?? 0}`}>

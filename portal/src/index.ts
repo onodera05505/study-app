@@ -169,9 +169,11 @@ api.get('/health', (c) => c.json({ ok: true }))
 
 /** 学びの一覧（公開。URL は公開情報。合言葉や秘密は含めない） */
 // @implements REQ-183
+// @operation UC-013#listLearnings
 api.get('/learnings', (c) => c.json({ learnings: LEARNINGS.map(({ key, brand, kind, desc }) => ({ key, brand, kind, desc })) }))
 
 // @implements REQ-181, REQ-182
+// @operation UC-013#signIn
 api.post('/login', async (c) => {
   const p = await parseBody(c, loginBody)
   if (!p.ok) return p.res
@@ -187,6 +189,7 @@ api.post('/login', async (c) => {
 
 /** 学び側サーバが使い捨てコードをメールと名前に交換する（共有秘密）。権限は交換時にも見る。 */
 // @implements REQ-200, REQ-201, REQ-202, REQ-203, BR-003, BR-004
+// @operation UC-013#exchangeCode
 api.post('/sso/exchange', async (c) => {
   // 共有秘密は本文の検証より先に見る（合わなければ 403 で止まり、本文が欠けていても DB も見ない）
   const secret = ((await c.req.json().catch(() => null)) as { secret?: unknown } | null)?.secret
@@ -218,6 +221,7 @@ const requireLogin = async (c: Context<AppEnv>, next: Next) => {
 for (const path of ['/logout', '/me', '/me/*', '/admin/*']) api.use(path, requireLogin)
 
 // @implements REQ-189
+// @operation UC-013#signOut
 api.post('/logout', async (c) => {
   const sid = getCookie(c, SESSION_COOKIE)
   if (sid) await c.env.DB.prepare(`DELETE FROM sessions WHERE id = ?`).bind(sid).run()
@@ -226,12 +230,14 @@ api.post('/logout', async (c) => {
 })
 
 // @implements REQ-184
+// @operation UC-013#getMe
 api.get('/me', async (c) => {
   const a = c.get('account')
   return c.json({ account: a, grants: await grantsOf(c.env, a.id) })
 })
 
 // @implements REQ-209, REQ-210, REQ-212, BR-007
+// @operation UC-014#changeOwnPassword
 api.post('/me/password', async (c) => {
   const a = c.get('account')
   const p = await parseBody(c, mePasswordBody)
@@ -253,6 +259,7 @@ admin.use('*', async (c, next) => {
 })
 
 // @implements REQ-162
+// @operation UC-011#listAccounts
 admin.get('/accounts', async (c) => {
   const rows = await c.env.DB.prepare(
     `SELECT a.id, a.email, a.name, a.role, a.created_at AS createdAt,
@@ -263,6 +270,7 @@ admin.get('/accounts', async (c) => {
 })
 
 // @implements REQ-163, REQ-164, REQ-405
+// @operation UC-011#createAccount
 admin.post('/accounts', async (c) => {
   const p = await parseBody(c, accountCreateBody)
   if (!p.ok) return p.res
@@ -284,6 +292,7 @@ const OTHER_ADMIN_REMAINS = `EXISTS (SELECT 1 FROM accounts WHERE role = 'ADMIN'
 const LAST_ADMIN_MSG = '最後の管理者は外せません'
 
 // @implements REQ-165, REQ-166, REQ-167, REQ-173, REQ-404, REQ-405, BR-006
+// @operation UC-011#updateAccount
 admin.put('/accounts/:id', async (c) => {
   const id = c.req.param('id')
   const p = await parseBody(c, accountUpdateBody)
@@ -326,6 +335,7 @@ admin.put('/accounts/:id', async (c) => {
 })
 
 // @implements REQ-168, REQ-174, REQ-403, REQ-405, BR-007
+// @operation UC-011#resetAccountPassword
 admin.post('/accounts/:id/password', async (c) => {
   const id = c.req.param('id')
   const p = await parseBody(c, passwordResetBody)
@@ -341,6 +351,7 @@ admin.post('/accounts/:id/password', async (c) => {
 })
 
 // @implements REQ-170, REQ-172, REQ-175, REQ-404, REQ-405, BR-006
+// @operation UC-011#deleteAccount
 admin.delete('/accounts/:id', async (c) => {
   const id = c.req.param('id')
   if (id === c.get('account').id) return c.json({ error: '自分は削除できません' }, 400)
@@ -359,6 +370,7 @@ app.route('/api', api)
 // ---- SSO の入口（ブラウザが来る） ----------------------------------------------
 
 // @implements REQ-185, REQ-186, REQ-187, REQ-188, BR-003, BR-004
+// @operation UC-013#startSso
 app.get('/sso/start', async (c) => {
   const key = c.req.query('app') ?? ''
   const learning = learningOf(key)

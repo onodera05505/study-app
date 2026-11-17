@@ -83,6 +83,7 @@ function useCountUp(target: number, ms = 700): number {
 }
 
 /** ホーム。連続記録・次に学ぶ・前回の続きへの導線。 */
+// @implements REQ-044
 export function Home() {
   const [me, setMe] = useState<Me | null>(null)
   const [error, setError] = useState('')

@@ -54,6 +54,7 @@ const ALL_TIERS = TIERS.map((t) => t.level)
  *  資格版の「分野 → 単元 → 論点」は出題頻度で歩く形。ロードマップ型は学ぶ順が決まっているので、
  *  回の並びそのままを 1 枚で見せ、いま学ぶ位置（最初のまだ理解していない単位）に「ここから」を付ける。
  *  補足の回の単位は末尾に別枠で置く。回の見出しと回ごとの確認の語、印の語は登録簿の語で出す。 */
+// @implements REQ-129
 export function Roadmap() {
   // null は「まだ取得していない」、[] は「取得した結果が空」
   const [units, setUnits] = useState<Unit[] | null>(null)

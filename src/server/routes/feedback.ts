@@ -25,6 +25,7 @@ const body = z.object({
 const DAILY_LIMIT = 20
 
 // @implements REQ-159, REQ-160, REQ-161
+// @operation UC-010#submitFeedback
 feedbackRoutes.post('/', async (c) => {
   const raw = await c.req.json().catch(() => null)
   const parsed = body.safeParse(raw)

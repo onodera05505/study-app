@@ -15,6 +15,7 @@ export const catalogRoutes = new Hono<{ Bindings: Bindings; Variables: Variables
 
 /** 分野ごとの論点数と理解度の内訳。理解度の段階は lib/understanding が求め、未（unanswered）は資格対策だけが持つ。 */
 // @implements REQ-014, BR-029, REQ-480
+// @operation UC-002#listFields
 catalogRoutes.get('/fields', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -49,6 +50,7 @@ catalogRoutes.get('/fields', async (c) => {
 
 /** 分野配下の単元。理解した数は lib/understanding の段階で数える。 */
 // @implements REQ-015, REQ-019, REQ-480
+// @operation UC-002#listCategories
 catalogRoutes.get('/categories', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -108,6 +110,7 @@ async function unitStructureOf(db: Db, middleNo: number): Promise<UnitStructure 
 /** 論点一覧。並びは structure（学びの種類で決まる一覧の並び）か recommended（おすすめ順）。
  *  資格対策で単元を 1 つ指定し structure で並べたときだけ、その単元の構成を添える。 */
 // @implements REQ-474, REQ-021, REQ-042, REQ-265, REQ-478, REQ-480, BR-029, BR-031, REQ-279, REQ-282, REQ-413
+// @operation UC-002#listTopics
 catalogRoutes.get('/topics', async (c) => {
   const parsed = topicQuery.safeParse(c.req.query())
   if (!parsed.success) return c.json({ error: '検索条件が正しくありません' }, 400)
@@ -202,6 +205,7 @@ type TopicLinkRow = { id: number; term: string; questionCount: number }
 
 /** 論点の詳細。教材と、その論点が出題された過去問と、前提の論点と、同じまとまり（構成の無い単元では同じ小項目）の他の論点。 */
 // @implements REQ-023, REQ-045, REQ-478, REQ-479, REQ-480, REQ-483, REQ-284, REQ-413
+// @operation UC-002#getTopicDetail
 catalogRoutes.get('/topics/:id', async (c) => {
   const id = Number(c.req.param('id'))
   if (!Number.isInteger(id)) return c.json({ error: '不正な ID です' }, 400)
@@ -369,6 +373,7 @@ const progressBody = z.object({ status: z.number().int().min(1).max(3) })
 
 /** 理解度の記録（未理解 / やや理解 / 理解）。 */
 // @implements REQ-034, REQ-035, REQ-036, REQ-037, REQ-268
+// @operation UC-003#recordUnderstanding
 catalogRoutes.put('/topics/:id/progress', async (c) => {
   const id = Number(c.req.param('id'))
   const raw = await c.req.json().catch(() => null)
@@ -396,6 +401,7 @@ catalogRoutes.put('/topics/:id/progress', async (c) => {
  *  以降はメモリから引く（用語ごとに問い合わせると、1画面で何十回も往復する）。
  *  中身が変わるのは seed を入れ直したときだけなので、長めにキャッシュしてよい。 */
 // @implements REQ-002
+// @operation UC-001#getGlossary
 catalogRoutes.get('/glossary', async (c) => {
   const db = getDb(c.env)
   const rows = await db.all<{ term: string; brief: string; topicId: number | null }>(sql`
@@ -408,6 +414,7 @@ catalogRoutes.get('/glossary', async (c) => {
 
 /** 過去問の一覧（回ごと）。過去問実践の入口で使う。 */
 // @implements REQ-102, BR-038
+// @operation UC-008#listExams
 catalogRoutes.get('/exams', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id

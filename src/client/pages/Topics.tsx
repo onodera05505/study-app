@@ -79,6 +79,7 @@ function TopicListRow({ t, showItem }: { t: TopicRow; showItem: boolean }) {
  *  単元を選んで初めて論点の一覧に入る。
  *
  *  「中分類」はシラバスの用語で、学習者には通じない。画面では「単元」と呼ぶ。 */
+// @implements REQ-014
 export function Topics() {
   const [params, setParams] = useSearchParams()
   // 知らせは論点の画面から移ってきた時だけ出す。履歴で戻った・再読み込みで来た（POP）ときは出し直さない

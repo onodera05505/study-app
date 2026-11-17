@@ -42,6 +42,7 @@ function formatTime(sec: number): string {
   ).padStart(2, '0')}`
 }
 
+// @implements REQ-059
 export function Session() {
   const { id } = useParams()
   const navigate = useNavigate()

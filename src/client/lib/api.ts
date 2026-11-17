@@ -1,9 +1,12 @@
 const TOKEN_KEY = 'study-app.token'
 
+// @implements REQ-190, REQ-195
+// @operation UC-013#readToken
 export function getToken(): string | null {
   return localStorage.getItem(TOKEN_KEY)
 }
 // @implements REQ-191
+// @operation UC-013#saveToken
 export function setToken(token: string) {
   localStorage.setItem(TOKEN_KEY, token)
 }
@@ -24,6 +27,8 @@ export function getUserName(): string | null {
 }
 
 // @implements REQ-198, BR-010
+// @operation UC-013#clearToken
+// @operation UC-005#clearLastTopic
 export function clearToken() {
   localStorage.removeItem(TOKEN_KEY)
   // 「前回の続き」は端末に残る。消さないと、次にログインした別のアカウントに
@@ -49,6 +54,7 @@ function markSessionExpired() {
 
 /** 印が立っていれば true を返し、同時に消す（出すのは一度だけ）。 */
 // @implements REQ-197, BR-011
+// @operation UC-013#takeSessionExpired
 export function takeSessionExpired(): boolean {
   try {
     const hit = sessionStorage.getItem(EXPIRED_KEY) === '1'
@@ -59,6 +65,7 @@ export function takeSessionExpired(): boolean {
   }
 }
 
+// @implements REQ-261, REQ-262
 export class ApiError extends Error {
   constructor(
     message: string,
@@ -87,6 +94,7 @@ function parseBody(text: string, ok: boolean): any {
 }
 
 // @implements REQ-196
+// @operation UC-013#markSessionExpired
 export async function api<T = any>(
   path: string,
   /** anonymous: 端末のトークンを添えず、401 でもトークンを捨てない（本人を得る前の要求に使う）。 */
@@ -143,6 +151,7 @@ const memo = new Map<string, Promise<unknown>>()
  *  （演習の回答を送ったとき・模試を締めたとき）に呼ぶ。
  *  /fields と /categories は分野・単元の構造だけでなく「理解した数」も返す（進捗の集計を含む）ので、
  *  捨てずにいると記録や回答のあとに一覧へ戻ったときに古い数が出る。 */
+// @implements REQ-040, REQ-484
 export function invalidateCached() {
   memo.clear()
 }
@@ -181,6 +190,7 @@ function isLastTopic(v: unknown): v is LastTopic {
 }
 
 // @implements REQ-082, BR-011, BR-012, BR-041
+// @operation UC-005#readLastTopic
 export function getLastTopic(): LastTopic | null {
   try {
     const raw = localStorage.getItem(LAST_TOPIC_KEY)
@@ -194,6 +204,7 @@ export function getLastTopic(): LastTopic | null {
 
 /** この端末が覚えた前回の続きを捨てる。 */
 // @implements REQ-342
+// @operation UC-005#clearLastTopic
 export function clearLastTopic() {
   try {
     localStorage.removeItem(LAST_TOPIC_KEY)
@@ -203,6 +214,7 @@ export function clearLastTopic() {
 }
 
 // @implements REQ-077, REQ-078, BR-011, BR-013
+// @operation UC-005#saveLastTopic
 export function setLastTopic(t: LastTopic) {
   try {
     localStorage.setItem(LAST_TOPIC_KEY, JSON.stringify(t))

@@ -101,6 +101,7 @@ api.use('*', async (c, next) => {
 })
 
 // @implements REQ-043, REQ-044, REQ-271, REQ-272, REQ-480
+// @operation UC-003#getHomeSummary
 api.get('/me', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
