@@ -43,7 +43,7 @@
     ]
   },
   "source": {
-    "_comment": "実現単位は、TypeScript・JavaScript では export した関数とクラス、Python では名前が _ で始まらない def、シェルでは関数。要件（REQ・BR）を実現する単位は、直上に連続するコメント行に @implements を持つ。Python でそのファイルの中からしか呼ばれない補助は、名前を _ で始めて単位から外す。scripts/ は要件に結んであるファイルだけを unit_dirs に列挙し、残りは要件を持たない技術部品（support_dirs）。コマンドの入口は def main で、技術部品の main は入口に数えない（entry_exclude）。API に当てる検査（scripts/check_api.py・check_portal_api.py）はシナリオテストなので source から外し、tests.system に置く。入口は、経路を受ける登録（.get・.post など）とコマンドの def main。経路の束を別の経路の下に結ぶだけの行（.route）は操作を受けないので、入口に数えない（束の中の登録が 1 つずつ入口になる）。",
+    "_comment": "実現単位は、TypeScript・JavaScript では export した関数とクラス、Python では名前が _ で始まらない def、シェルでは関数。要件（REQ・BR）を実現する単位は、直上に連続するコメント行に @implements を持つ。Python でそのファイルの中からしか呼ばれない補助は、名前を _ で始めて単位から外す。scripts/ は要件に結んであるファイルだけを unit_dirs に列挙し、残りは要件を持たない技術部品（support_dirs）。コマンドの入口は def main で、技術部品の main は入口に数えない（entry_exclude）。API に当てる検査（scripts/check_api.py・check_portal_api.py）はシナリオテストなので source から外し、tests.system に置く。入口は、経路を受ける登録（.get・.post など）とコマンドの def main、シェルでは本体を包んだ main。export default <名前> は組み立て済みの物を渡すだけの行なので単位に数えない。保存先への接続を作るだけのファイル（src/server/lib/db.ts）は技術部品。経路の束を別の経路の下に結ぶだけの行（.route）は操作を受けないので、入口に数えない（束の中の登録が 1 つずつ入口になる）。",
     "dirs": [
       "src",
       "portal/src",
@@ -66,6 +66,7 @@
       "!src/**/*.css",
       "!src/**/*.json",
       "!portal/src/**/*.json",
+      "!src/server/lib/db.ts",
       "scripts/apply_summary_override.py",
       "scripts/attach_material_figures.py",
       "scripts/build_learner_pack.py",
@@ -94,12 +95,14 @@
       "scripts/seed_remote.sh",
       "scripts/targets.py",
       "scripts/verify_seed_remote.py",
+      "scripts/check_render.sh",
       "portal/static/app.js"
     ],
     "support_dirs": [
       "src/**/*.css",
       "src/**/*.json",
       "portal/src/**/*.json",
+      "src/server/lib/db.ts",
       "scripts/**",
       "!scripts/apply_summary_override.py",
       "!scripts/attach_material_figures.py",
@@ -129,14 +132,15 @@
       "!scripts/seed_remote.sh",
       "!scripts/targets.py",
       "!scripts/verify_seed_remote.py",
+      "!scripts/check_render.sh",
       "!scripts/check_api.py",
       "!scripts/check_portal_api.py",
       "portal/static/**",
       "!portal/static/app.js"
     ],
-    "unit_pattern": "^export\\s+(?:default\\s+)?(?:async\\s+)?function\\*?\\s*(\\w*)\\s*[<(]|^export\\s+(?:default\\s+)?(?:abstract\\s+)?class\\s+(\\w+)|^export\\s+(?:const|let)\\s+(\\w+)\\s*(?::[^=]+)?=\\s*(?:async\\s*)?(?:<[^>]*>\\s*)?(?:\\(|function\\b|\\w+\\s*=>|\\w+\\s*\\(\\s*(?:async\\s*)?(?:\\(|function\\b|\\w+\\s*=>))|^export\\s+default\\s+(?:(\\w+)\\s*;?\\s*$|(?:async\\s*)?(?:\\(|\\w+\\s*\\())|^export\\s*\\{(?!(?:\\s*type\\s+\\w+(?:\\s+as\\s+\\w+)?\\s*,?)*\\s*\\})\\s*([^}]*?)\\s*(?:\\}\\s*;?\\s*)?$|^def\\s+((?!_)[\\p{L}\\p{N}_]+)\\s*\\(|^([A-Za-z_][A-Za-z0-9_]*)\\s*\\(\\)\\s*\\{",
+    "unit_pattern": "^export\\s+(?:default\\s+)?(?:async\\s+)?function\\*?\\s*(\\w*)\\s*[<(]|^export\\s+(?:default\\s+)?(?:abstract\\s+)?class\\s+(\\w+)|^export\\s+(?:const|let)\\s+(\\w+)\\s*(?::[^=]+)?=\\s*(?:async\\s*)?(?:<[^>]*>\\s*)?(?:\\(|function\\b|\\w+\\s*=>|\\w+\\s*\\(\\s*(?:async\\s*)?(?:\\(|function\\b|\\w+\\s*=>))|^export\\s+default\\s+(?:async\\s*)?(?:\\(|\\w+\\s*\\()|^export\\s*\\{(?!(?:\\s*type\\s+\\w+(?:\\s+as\\s+\\w+)?\\s*,?)*\\s*\\})\\s*([^}]*?)\\s*(?:\\}\\s*;?\\s*)?$|^def\\s+((?!_)[\\p{L}\\p{N}_]+)\\s*\\(|^([A-Za-z_][A-Za-z0-9_]*)\\s*\\(\\)\\s*\\{",
     "implements_placement": "before",
-    "entry_pattern": "\\.(?:get|post|put|patch|delete|all)\\(\\s*[\"'`](\\/[^\"'`]*)|\\.on\\(\\s*(?:[\"'`][A-Z]+[\"'`]|\\[[^\\]]*\\])\\s*,\\s*[\"'`](\\/[^\"'`]*)|^def\\s+(main)\\s*\\(",
+    "entry_pattern": "\\.(?:get|post|put|patch|delete|all)\\(\\s*[\"'`](\\/[^\"'`]*)|\\.on\\(\\s*(?:[\"'`][A-Z]+[\"'`]|\\[[^\\]]*\\])\\s*,\\s*[\"'`](\\/[^\"'`]*)|^def\\s+(main)\\s*\\(|^(main)\\s*\\(\\)\\s*\\{",
     "entry_exclude": [
       "scripts/**",
       "!scripts/apply_summary_override.py",
@@ -166,7 +170,8 @@
       "!scripts/render_svg_png.mjs",
       "!scripts/seed_remote.sh",
       "!scripts/targets.py",
-      "!scripts/verify_seed_remote.py"
+      "!scripts/verify_seed_remote.py",
+      "!scripts/check_render.sh"
     ],
     "comment_pattern": "^\\s*(?:\\/\\/|\\/\\*|\\*|#|--|<!--)"
   },
