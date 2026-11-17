@@ -1,7 +1,7 @@
 ---
 id: ADR-0006
 title: 保証点 — 「取得前と結果が空を区別する」（BR-015）は応答と画面の両方で守る
-status: accepted
+status: superseded
 date: 2026-10-01
 ---
 
