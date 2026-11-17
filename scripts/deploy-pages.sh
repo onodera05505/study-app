@@ -23,16 +23,20 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 EXAM="${1:-ip}"
+# 登録簿に無い学びは、登録簿の学びの一覧を示し、門を回さず何も配信しないまま断る
+# @implements REQ-558
 [ "$(python3 scripts/targets.py has "$EXAM")" = yes ] || { echo "第1引数は対象の ID（$(python3 scripts/targets.py keys)）"; exit 1; }
-# プロジェクト名と DB は scripts/pages_projects.json が正本
-read -r PROJECT DB < <(python3 -c "import json;c=json.load(open('scripts/pages_projects.json'))['$EXAM'];print(c['project'],c['db'])")
+# Pages のプロジェクト名は scripts/pages_projects.json が正本（保存先は wrangler.jsonc の env.<学び>。ADR-0004）
+PROJECT=$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['$EXAM']['project'])")
 URL=$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['$EXAM'].get('url','https://${PROJECT}.pages.dev'))")
 
 # 配備の道具はプロジェクトが固定した版だけを使う（無ければ別の版に倒さず止まる）
 # @implements REQ-351, REQ-352
 source scripts/pinned_wrangler.sh
 
-# アカウントの取り違えを止める門（同じ Mac で別アカウントのログインに差し替わることがある）
+# アカウントの取り違えを止める門（同じ Mac で別アカウントのログインに差し替わることがある）。
+# 決めたアカウントと違うか、ログイン中のアカウントを確かめられなければ、両方を示して配信しないまま失敗で終える
+# @implements REQ-559
 WANT=$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['account_id'])")
 # 道具の出力は一度変数に受けてから読む（pipefail の下で読み手が先に抜けると、書き手が SIGPIPE で落ちる）
 WHOAMI=$("$WRANGLER" whoami 2>/dev/null || true)
@@ -40,25 +44,39 @@ ACCOUNT_RE='[0-9a-f]{32}'; HAVE=""
 [[ $WHOAMI =~ $ACCOUNT_RE ]] && HAVE="${BASH_REMATCH[0]}"
 [ "$HAVE" = "$WANT" ] || { echo "ログイン中のアカウント（${HAVE:-不明}）が想定（${WANT}）と違う。npx wrangler login で個人アカウントを選び直す"; exit 1; }
 
-echo "▶ D1 に migrations が全部当たっているか（未適用のまま出すと、新しい列を読む SQL が 500 になる）"
-bash scripts/d1_migrations.sh "$EXAM" check
-
-echo "▶ ロードマップ型なら、D1 の論点が回を持っているか（migrations だけ当てて seed が古いまま出さない。資格型は素通り）"
-bash scripts/check_d1_rounds.sh "$EXAM"
-
 # macOS 標準の bash 3.2 は $VAR 直後の全角文字を変数名に巻き込むので ${VAR} で区切る
-echo "▶ 対象: ${EXAM}（Pages: $PROJECT / D1: ${DB}）"
+echo "▶ 対象: ${EXAM}（Pages: ${PROJECT}）"
 
-echo "▶ ソースの静的な門（PBKDF2 の反復回数の上限・一覧の空配列初期化。不変条件 O5 / D11）"
-python3 scripts/check_source.py
+# 配信の前に門をすべて回す。どれかが止めたら set -e でここで終わり、その学びを配信しない。
+# 引数 before-build はビルドの前に回せる門、after-build は配信する dist（版の印を含む）を見る描画の検査
+# @implements REQ-560
+stop_unless_gates_pass() {
+  if [ "$1" = after-build ]; then
+    echo "▶ 描画検査（実データ全件を jsdom で描いて見る。配信する dist の版の印も見る。落ちたらデプロイしない）"
+    # データ側の検査が通っても画面だけ壊れることがある。何を見ているかは scripts/check_render.tsx の先頭。
+    bash scripts/check_render.sh "$EXAM"
+    return
+  fi
 
-echo "▶ ロードマップ型の回の語・印の語が登録簿に揃っているか（BR-037。資格型は素通り）"
-# @implements BR-037
-python3 scripts/check_roadmap_registry.py "$EXAM"
+  echo "▶ D1 に migrations が全部当たっているか（未適用のまま出すと、新しい列を読む SQL が 500 になる）"
+  bash scripts/d1_migrations.sh "$EXAM" check
 
-echo "▶ 文書の索引と「不変条件と門」の対応表が現物と合っているか"
-# 索引に無い文書は無いのと同じ。表が名指しするスクリプトが消えていたら表が嘘になる。
-python3 scripts/check_docs.py
+  echo "▶ ロードマップ型なら、D1 の論点が回を持っているか（migrations だけ当てて seed が古いまま出さない。資格型は素通り）"
+  bash scripts/check_d1_rounds.sh "$EXAM"
+
+  echo "▶ ソースの静的な門（PBKDF2 の反復回数の上限・一覧の空配列初期化。不変条件 O5 / D11）"
+  python3 scripts/check_source.py
+
+  echo "▶ ロードマップ型の回の語・印の語が登録簿に揃っているか（BR-037。資格型は素通り）"
+  # @implements BR-037
+  python3 scripts/check_roadmap_registry.py "$EXAM"
+
+  echo "▶ 文書の索引と「不変条件と門」の対応表が現物と合っているか"
+  # 索引に無い文書は無いのと同じ。表が名指しするスクリプトが消えていたら表が嘘になる。
+  python3 scripts/check_docs.py
+}
+
+stop_unless_gates_pass before-build
 
 echo "▶ フロントをビルド"
 # 試験名とタイトルは .env / .env.ap から読ませる（--mode で切り替わる）
@@ -68,10 +86,7 @@ npx vite build --mode "$EXAM"
 # @implements REQ-224, REQ-225, REQ-226
 printf '{"build": "%s", "at": "%s"}\n' "$(git rev-parse --short HEAD 2>/dev/null || echo unknown)" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > dist/version.json
 
-echo "▶ 描画検査（実データ全件を jsdom で描いて見る。配信する dist の版の印も見る。落ちたらデプロイしない）"
-# データ側の検査が通っても画面だけ壊れることがある。版の印の項目は配信する dist を見るので、
-# 版の印を書いた後・配信の前に回す。何を見ているかは scripts/check_render.tsx の先頭。
-bash scripts/check_render.sh "$EXAM"
+stop_unless_gates_pass after-build
 
 echo "▶ Worker を1ファイルにまとめる（Pages の advanced mode 用）"
 # --env で wrangler.jsonc の env ブロックを選ぶ。試験ごとに D1 の bind 先が違う。
@@ -84,8 +99,9 @@ PAGES_DIR=$(mktemp -d)
 trap 'rm -rf "$PAGES_DIR"' EXIT
 cp -R dist "$PAGES_DIR/dist"
 
-# Workers 用設定の env.<試験> から D1 と vars を写して、Pages 用の設定を組む
-# @implements BR-033
+# Workers 用設定の env.<試験> から D1 と vars を写して、Pages 用の設定を組む。
+# D1 はその学びの key に結んだ保存先（env.<学び>.d1_databases。ADR-0004）だけを写し、最上位の既定や別の学びの保存先は結ばない
+# @implements REQ-524, BR-033
 python3 - wrangler.jsonc "$EXAM" "$PROJECT" > "$PAGES_DIR/wrangler.jsonc" <<'PY'
 import json, re, sys
 
@@ -95,21 +111,27 @@ raw = open(src, encoding='utf-8').read()
 raw = re.sub(r'(?m)^\s*//.*$', '', raw)
 raw = re.sub(r'(?<!:)//(?![^\n"]*").*$', '', raw, flags=re.M)
 cfg = json.loads(raw)
-env = cfg['env'][exam]
+env = (cfg.get('env') or {}).get(exam) or {}
+
+# migrations_dir は Pages の設定では受け付けない
+bound = [{k: v for k, v in d.items() if k != 'migrations_dir'}
+         for d in (env.get('d1_databases') or [])]
+# その学びの key に保存先が結んでいなければ、Pages 用の設定を組まずに止まる（配信しない）
+# @implements REQ-543
+if not bound:
+    sys.exit(f"{exam} の保存先が wrangler.jsonc の env.{exam}.d1_databases に結んでいない。配信しない")
 
 print(json.dumps({
     'name': project,
     'compatibility_date': cfg['compatibility_date'],
     'compatibility_flags': cfg.get('compatibility_flags', []),
     'pages_build_output_dir': 'dist',
-    # migrations_dir は Pages の設定では受け付けない
-    'd1_databases': [{k: v for k, v in d.items() if k != 'migrations_dir'}
-                     for d in env['d1_databases']],
+    'd1_databases': bound,
     'vars': env['vars'],
 }, indent=2, ensure_ascii=False))
 PY
 
-echo "  D1: $(python3 -c "import json,sys; print(json.load(open(sys.argv[1]))['d1_databases'][0]['database_name'])" "$PAGES_DIR/wrangler.jsonc")"
+echo "  D1: $(python3 -c "import json,sys; print(', '.join(d.get('database_name', '?') for d in json.load(open(sys.argv[1]))['d1_databases']))" "$PAGES_DIR/wrangler.jsonc")"
 # 一時の場所は git の外なので、配信に添える版の値（コミット）は作業ツリーで読んで渡す。読めなければ添えない
 COMMIT_ARGS=()
 COMMIT_HASH=$(git rev-parse HEAD 2>/dev/null || true)

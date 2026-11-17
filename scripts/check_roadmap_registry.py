@@ -18,7 +18,7 @@ import json, math, re, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from targets import ROOT, target  # noqa: E402
+from targets import ROOT, keys, target  # noqa: E402
 
 # 登録簿 roadmapSpec に要る語（キー → (何の語か, 入っていなければならない差し込み)）。
 # roundHeading は画面の回の見出し、roundLabel は確認問題の回の見出し（exam_label）と日の回のラベルを作る型
@@ -36,7 +36,7 @@ DAY_WORDS = {"perRoundCount": ("1 回の論点数の語", ["{perDay}"])}
 QUESTIONS_PER_UNIT = 2
 
 
-def is_roadmap(key: str) -> bool:
+def _is_roadmap(key: str) -> bool:
     return bool(target(key).get("roadmap"))
 
 
@@ -50,10 +50,10 @@ def _extra_rounds(key: str) -> set[str]:
     return set(t.get("exemptRounds", [])) | ({spec["extraRoundId"]} if spec.get("extraRoundId") else set())
 
 
-# @implements BR-037
+# @implements REQ-547, BR-037
 def registry_problems(key: str, data: Path | None = None) -> list[str]:
     """登録簿に回の語・印の語・日の値が揃っているか。"""
-    if not is_roadmap(key): return []
+    if not _is_roadmap(key): return []
     t = target(key); spec = t.get("roadmapSpec") or {}; gb = _group_by(key, data); out: list[str] = []
     words = {**ROUND_WORDS, **(DAY_WORDS if gb == "day" else {})}
     if gb == "chapter": words["roundHeading"] = ("回の見出しの語", ["{day}", "{label}"])  # 章の名前は {label}
@@ -96,7 +96,7 @@ def seed_problems(key: str, topics: list[dict], per_exam: dict[str, int], labels
                   links: list[dict] | None = None, exam_of: dict[str, str] | None = None) -> list[str]:
     """投入データの論点の回・回のラベル・印と、回ごとの問題数。topics は seed.sql の topics の行（列名 → 値）、
     links は topic_questions の行、exam_of は確認問題の ID → その回（past_questions.exam）。"""
-    if not is_roadmap(key): return []
+    if not _is_roadmap(key): return []
     t = target(key); spec = t.get("roadmapSpec") or {}; gb = _group_by(key, data); extra = _extra_rounds(key); out: list[str] = []
     if topics and not any("round" in r for r in topics):
         return [f"{key}: 論点に回（round・round_label・tier の列）が無い（build_target_dataset.py → build_seed.py を流し直す）"]
@@ -162,11 +162,14 @@ def seed_problems(key: str, topics: list[dict], per_exam: dict[str, int], labels
     return out
 
 
-# @implements BR-037
+# @operation UC-032#checkRoadmapRegistry
+# @implements REQ-546, REQ-548
 def main() -> int:
+    # 断るとき（学びが 1 つでない・登録簿に無い）は門の判定をせず、終了コード 2 で終える
     if len(sys.argv) != 2: print(__doc__); return 2
     key = sys.argv[1]
-    if not is_roadmap(key): print(f"{key}: ロードマップ型ではないので見るものは無い"); return 0
+    if key not in keys(): print(f"{key}: 登録簿に無い学び（登録簿の学び: {' '.join(keys())}）"); return 2
+    if not _is_roadmap(key): print(f"{key}: ロードマップ型ではないので見るものは無い"); return 0
     probs = registry_problems(key)
     for p in probs: print(f"✘ {p}")
     if probs: return 1

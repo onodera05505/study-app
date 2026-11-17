@@ -17,7 +17,9 @@ SEEN=""
 # @implements REQ-216
 seen() { SEEN="${SEEN}$1 $2"$'\n'; }
 # 全応答に載るべきセキュリティヘッダ（CSP・HSTS・X-Frame-Options DENY・nosniff・Referrer-Policy）。
-# 抜けても画面は動くので、本番の応答を見て確かめる。
+# 抜けても画面は動くので、本番の死活確認の応答を見て確かめる。届かなければどのヘッダも載っていない側に挙げる
+# @implements REQ-523
+# @operation UC-015#readDeploymentHealthHeaders
 check_headers() {
   local url="$1" name="$2" h want
   h="$(curl -s -D - -o /dev/null -A "$UA" "$url/api/health" | tr -d '\r' | tr 'A-Z' 'a-z' || true)"
@@ -25,6 +27,36 @@ check_headers() {
               "x-content-type-options: nosniff" "referrer-policy:"; do
     grep -q "^${want}" <<< "$h" || { echo "  ✘ ${name} の応答に ${want} が無い（secureHeaders）"; NG=1; }
   done
+}
+# 配備の死活確認を認証なしで叩き、生きている印でなければ（届かないときも）その配備を挙げる。
+# show を渡すと、受けた本文を 1 行で出す
+# @implements REQ-217
+# @operation UC-015#checkDeploymentHealth
+check_health() {
+  local url="$1" name="$2" show="${3:-}" h
+  seen "$name" checkDeploymentHealth
+  h="$(curl -s -A "$UA" "$url/api/health" || true)"
+  [ -z "$show" ] || printf '%-6s %s -> %s\n' "$name" "$url" "$h"
+  [ "$h" = '{"ok":true}' ] || { echo "  ✘ ${name} の死活確認（/api/health）が生きている印を返さない"; NG=1; }
+}
+# 配備の入口の画面を成す経路を認証なしで外から開き、200 でなければ（届かないときも）その配備と経路を挙げる
+# @implements REQ-218
+# @operation UC-015#openDeploymentEntry
+check_entry() {
+  local url="$1" name="$2" path="$3" s
+  seen "$name" openDeploymentEntry
+  s="$(curl -s -o /dev/null -w '%{http_code}' -A "$UA" "$url$path" || true)"
+  [ "$s" = 200 ] || { echo "  ✘ ${name} の ${path} が ${s:-000}（画面が開けない）"; NG=1; }
+}
+# 学び側のパスワードでのログインと登録の経路は学び側が受け持たない（受け持たない経路の断り＝404）。
+# 本文は決められた形を満たさない {} だけにして、経路が開いていても状態を変えない
+# @implements REQ-350
+# @operation UC-015#probeRetiredPasswordRoute
+probe_retired_password_route() {
+  local url="$1" name="$2" route="$3" s
+  seen "$name" probeRetiredPasswordRoute
+  s="$(curl -s -o /dev/null -w '%{http_code}' -A "$UA" -X POST -H 'Content-Type: application/json' -d '{}' "$url/api/auth/$route" || true)"
+  [ "$s" = 404 ] || { echo "  ✘ ${name} の学び側のパスワードでの経路 /api/auth/${route} が受け持たない経路の断り（404）でなく ${s:-000}（probeRetiredPasswordRoute）"; NG=1; }
 }
 # 本番の Pages プロジェクトの秘密の一覧を機械で確かめる（O13）。共有秘密 SSO_SECRET は まなびばと各学び、
 # トークンの署名の秘密 JWT_SECRET は各学び。名前が一覧にあることだけを見て、値は読まない・出さない。
@@ -69,46 +101,29 @@ check_secrets() {
   done <<< "$list"
 }
 PORTAL="$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['_portal']['url'])")"
-# @implements REQ-213, REQ-217
-printf '%-6s %s -> ' まなびば "$PORTAL"; seen まなびば checkDeploymentHealth; H="$(curl -s -A "$UA" "$PORTAL/api/health" || true)"; echo "$H"
-[ "$H" = '{"ok":true}' ] || { echo "  ✘ まなびばの死活確認（/api/health）が生きている印を返さない"; NG=1; }
+check_health "$PORTAL" まなびば show
 check_headers "$PORTAL" まなびば
 # health（API）だけでは静的ファイル側の 500 を見逃すので、入口の画面を成す経路も開く
-# @implements REQ-214, REQ-218
 for path in / /app.js /style.css; do
-  seen まなびば openDeploymentEntry
-  S="$(curl -s -o /dev/null -w '%{http_code}' -A "$UA" "$PORTAL$path" || true)"
-  [ "$S" = 200 ] || { echo "  ✘ まなびばの ${path} が ${S:-000}（画面が開けない）"; NG=1; }
+  check_entry "$PORTAL" まなびば "$path"
 done
-# @implements REQ-214, REQ-218
 for k in $(python3 scripts/targets.py keys); do
   U="$(python3 scripts/targets.py url "$k")"
-  # @implements REQ-213, REQ-217
-  seen "$k" checkDeploymentHealth
-  H="$(curl -s -A "$UA" "$U/api/health" || true)"
-  [ "$H" = '{"ok":true}' ] || { echo "  ✘ ${k} の死活確認（/api/health）が生きている印を返さない"; NG=1; }
-  seen "$k" openDeploymentEntry
-  R="$(curl -s -o /dev/null -w '%{http_code}' -A "$UA" "$U/" || true)"
-  [ "$R" = 200 ] || { echo "  ✘ ${k} の画面（/）が ${R:-000}"; NG=1; }
+  check_health "$U" "$k"
+  check_entry "$U" "$k" /
   check_headers "$U" "$k"
   # config は sso・portal・app を返す
   seen "$k" getAuthConfig
   C="$(curl -s -A "$UA" "$U/api/auth/config" || true)"
   printf '%-6s %s -> %s\n' "$k" "$U" "$C"
   grep -q '"sso":true' <<< "$C" || { echo "  ✘ ${k} の sso が有効でない（SSO_PORTAL_URL が env に無い）"; NG=1; }
-  # 学び側はパスワードでのログインと登録の経路を受け持たない（受け持たない経路の断り＝404）。
-  # 本文は決められた形を満たさない {} だけにして、経路が開いていても状態を変えない
-  # @implements REQ-350
   for route in login register; do
-    seen "$k" probeRetiredPasswordRoute
-    L="$(curl -s -o /dev/null -w '%{http_code}' -A "$UA" -X POST -H 'Content-Type: application/json' -d '{}' "$U/api/auth/$route" || true)"
-    [ "$L" = 404 ] || { echo "  ✘ ${k} の学び側のパスワードでの経路 /api/auth/${route} が受け持たない経路の断り（404）でなく ${L:-000}（probeRetiredPasswordRoute）"; NG=1; }
+    probe_retired_password_route "$U" "$k" "$route"
   done
 done
 echo "▶ 本番の秘密の一覧（名前だけを見る。値は読まない）"
 check_secrets
 # 見た配備ごとに、見た項目を契約の operation の名前で並べる
-# @implements REQ-216
 echo "▶ 見た項目"
 for name in まなびば $(python3 scripts/targets.py keys); do
   ops="$(printf '%s' "$SEEN" | awk -v n="$name" '$1 == n && !s[$2]++ { printf "%s ", $2 }')"

@@ -19,6 +19,9 @@ EXAM="${1:-}"; MODE="${2:-}"; WHERE="--remote"
 case "$MODE" in check|apply) ;; *) echo "第2引数は check か apply"; exit 1;; esac
 DB=$(python3 scripts/targets.py db "$EXAM")
 
+# 未適用の migrations を数える。0＝全部当たっている、1＝未適用がある、2＝一覧が取れない・読めない（確かめられない）。
+# check は 1 と 2 のどちらでも失敗で終え、seed_remote.sh はその前で止まるので控えも投入もしない。
+# @implements REQ-553
 pending () {
   local out
   out=$(npx wrangler d1 migrations list "$DB" --env "$EXAM" "$WHERE" </dev/null 2>&1) || { echo "$out" | tail -5 >&2; echo "  migrations の一覧が取れない（${DB} ${WHERE}）" >&2; return 2; }

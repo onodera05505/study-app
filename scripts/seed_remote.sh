@@ -19,48 +19,70 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-EXAM="${1:-}"
-[ "$(python3 scripts/targets.py has "$EXAM")" = yes ] || { echo "第1引数は対象の ID（$(python3 scripts/targets.py keys)）"; exit 1; }
-DB=$(python3 scripts/targets.py db "$EXAM")
-WHERE="--remote"
-if [ "${2:-}" = "--local" ]; then WHERE="--local"; fi
-SEED="data/${EXAM}/seed.sql"
-[ -f "$SEED" ] || { echo "seed が無い: ${SEED}（先に python3 scripts/build_seed.py --data data/${EXAM}）"; exit 1; }
-
-echo "▶ 0/4 D1 に migrations が全部当たっているか（未適用だと seed の新しい列の INSERT が落ちる）"
-bash scripts/d1_migrations.sh "$EXAM" check "$WHERE"
-
-# @implements BR-032
-echo "▶ 1/4 seed の中身を検査"
-python3 scripts/check_seed.py --data "data/${EXAM}"
-
-if [ "$WHERE" = "--remote" ]; then
-  echo "▶ 2/4 本番 D1 をバックアップ"
-  bash scripts/backup_d1.sh "$EXAM"
-else
-  echo "▶ 2/4 バックアップは省略（--local）"
-fi
-
-echo "▶ 3/4 投入: ${DB} ${WHERE} ← ${SEED}"
+# 投入を流し、失敗したら 10 秒おいて 1 回だけやり直す。2 回目も落ちたら突き合わせに進まずに止める。
+# --remote は Authentication error [code: 10000] で落ちることがあり、そのとき DB は元のまま（docs/応用情報を追加する.md の落とし穴）。
 # wrangler は文ごとの結果 JSON を全部出す（1万行超）。ログに逃がして、失敗時だけ末尾を見せる。
-LOG=$(mktemp -t seed_${EXAM}).log
-run_seed () { npx wrangler d1 execute "$DB" --env "$EXAM" "$WHERE" --file="$SEED" >"$LOG" 2>&1; }
-# --remote は Authentication error [code: 10000] で落ちることがある。DB は元のままなので1回だけやり直す
-# （docs/応用情報を追加する.md の落とし穴）。
-if ! run_seed; then
-  tail -5 "$LOG" >&2
+# 引数: 保存先の名前・学び・流す先（--remote か --local）・投入のファイル・ログのファイル
+# @implements REQ-556
+run_seed() {
+  local db="$1" exam="$2" where="$3" seed="$4" log="$5"
+  if npx wrangler d1 execute "$db" --env "$exam" "$where" --file="$seed" >"$log" 2>&1; then return 0; fi
+  tail -5 "$log" >&2
   echo "  投入が失敗。10秒おいて1回だけやり直す" >&2
   sleep 10
-  run_seed || { tail -20 "$LOG" >&2; echo "  投入が2回失敗。ログ: ${LOG}" >&2; exit 1; }
-fi
-echo "  投入 OK（文の数 $(grep -c '"success": true' "$LOG" || true) / ログ: ${LOG}）"
+  if npx wrangler d1 execute "$db" --env "$exam" "$where" --file="$seed" >"$log" 2>&1; then return 0; fi
+  tail -20 "$log" >&2
+  echo "  投入が2回失敗。ログ: ${log}" >&2
+  exit 1
+}
 
-echo "▶ 4/4 入った中身を seed と突き合わせ"
-if [ "$WHERE" = "--local" ]; then
-  python3 scripts/verify_seed_remote.py --data "data/${EXAM}" --exam "$EXAM" --local
-else
-  python3 scripts/verify_seed_remote.py --data "data/${EXAM}" --exam "$EXAM"
-fi
+# 断るとき（第 2 引数の誤り・登録簿に無い学び・投入が無い）は、門も控えも回さず保存先に何も流さずに終了コード 1 で終える。
+# 第 2 引数は学びより先に見る（契約 seedRemote の errors の順）。
+# @operation UC-032#seedRemote
+# @implements REQ-564, REQ-552
+main() {
+  local exam="${1:-}" where="--remote"
+  case "${2:-}" in
+    "") ;;
+    --local) where="--local" ;;
+    *) echo "第2引数は空か --local（渡された値: ${2}）"; exit 1 ;;
+  esac
+  [ "$(python3 scripts/targets.py has "$exam")" = yes ] || { echo "第1引数は対象の ID（$(python3 scripts/targets.py keys)）"; exit 1; }
+  local db seed="data/${exam}/seed.sql"
+  db=$(python3 scripts/targets.py db "$exam")
+  [ -f "$seed" ] || { echo "seed が無い: ${seed}（先に python3 scripts/build_seed.py --data data/${exam}）"; exit 1; }
 
-echo
-echo "完了: ${DB}（${WHERE}）"
+  echo "▶ 0/4 D1 に migrations が全部当たっているか（未適用だと seed の新しい列の INSERT が落ちる）"
+  bash scripts/d1_migrations.sh "$exam" check "$where"
+
+  # @implements REQ-554, BR-032
+  echo "▶ 1/4 seed の中身を検査"
+  python3 scripts/check_seed.py --data "data/${exam}"
+
+  # @implements REQ-555
+  if [ "$where" = "--remote" ]; then
+    echo "▶ 2/4 本番 D1 をバックアップ"
+    bash scripts/backup_d1.sh "$exam"
+  else
+    echo "▶ 2/4 バックアップは省略（--local）"
+  fi
+
+  echo "▶ 3/4 投入: ${db} ${where} ← ${seed}"
+  local log
+  log=$(mktemp -t "seed_${exam}").log
+  run_seed "$db" "$exam" "$where" "$seed" "$log"
+  echo "  投入 OK（文の数 $(grep -c '"success": true' "$log" || true) / ログ: ${log}）"
+
+  # @implements REQ-557
+  echo "▶ 4/4 入った中身を seed と突き合わせ"
+  if [ "$where" = "--local" ]; then
+    python3 scripts/verify_seed_remote.py --data "data/${exam}" --exam "$exam" --local
+  else
+    python3 scripts/verify_seed_remote.py --data "data/${exam}" --exam "$exam"
+  fi
+
+  echo
+  echo "完了: ${db}（${where}）"
+}
+
+main "$@"

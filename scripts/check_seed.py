@@ -132,7 +132,8 @@ def _question_values(sql: str) -> list[dict]:
     return _insert_rows(sql, "past_questions")
 
 
-# @implements BR-032
+# @operation UC-027#checkSeed
+# @implements REQ-531, REQ-487, BR-032
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", default="data/ip", type=Path)
@@ -145,15 +146,23 @@ def main() -> int:
     d = args.data
     sql_path = args.sql or (d / "seed.sql")
     args.figures = args.figures or Path("public/figures") / d.name
-    if not sql_path.exists():
-        sys.exit(f"{sql_path} がありません。先に build_seed.py を実行してください")
-
     sys.path.insert(0, str(Path(__file__).parent))
+    from material_generations import emit_refusal, learning_refusal
+    from targets import target
+
+    # 断る順は契約 checkSeed の errors の順（検査する投入が無い → 登録簿に無い学び）
+    # 検査する投入が無ければ、中身を検査せずに断る
+    # @implements REQ-565
+    if not sql_path.exists():
+        return emit_refusal({"error": {"code": "NOT_FOUND",
+                                       "reason": f"{sql_path} がありません。先に build_seed.py を実行してください"}})
+    refusal = learning_refusal(d, registered=True)
+    if refusal:
+        return emit_refusal(refusal)
+
     from build_seed import EXAM_NAMES  # 試験名の対応表は1か所に持つ
 
-    want_name = EXAM_NAMES.get(d.name)
-    if not want_name:
-        sys.exit(f"{d} の試験名が分かりません（build_seed.py の EXAM_NAMES を見てください）")
+    want_name = EXAM_NAMES[d.name]
 
     sql = sql_path.read_text(encoding="utf-8")
     problems: list[str] = []
@@ -183,6 +192,17 @@ def main() -> int:
         elif any(o in cit for o in other_names):
             wrong_name.append(cit)
 
+    # 出典の年度ラベルは、その過去問の回の年度ラベル（同じ行の exam_label）と同じでなければならない。
+    # 違えば別の回を名乗る出典になる
+    wrong_year = [
+        (q["id"], q["citation"]) for q in _question_values(sql)
+        if q.get("citation") is not None and not q["citation"].startswith(f"出典：{q.get('exam_label')} ")
+    ]
+    if wrong_year:
+        problems.append(
+            f"出典の年度ラベルがその回の年度ラベルと違う過去問 {len(wrong_year)} 問: "
+            + " / ".join(f"{qid}『{cit}』" for qid, cit in wrong_year[:3])
+        )
     if wrong_name:
         problems.append(
             f"出典の試験名が『{want_name}』でないものが {len(wrong_name)} 種類: "
@@ -199,9 +219,9 @@ def main() -> int:
 
     # --- 回ごとの問題数 ---------------------------------------------------
     # ロードマップ型は回の語・回・印と合わせて check_roadmap_registry が見る
-    from check_roadmap_registry import is_roadmap, registry_problems, seed_problems
+    from check_roadmap_registry import registry_problems, seed_problems
     want_n = QUESTIONS_PER_EXAM.get(d.name)
-    if is_roadmap(d.name):
+    if target(d.name).get("roadmap"):
         problems.extend(registry_problems(d.name, d))
         problems.extend(seed_problems(d.name, _insert_rows(sql, "topics"), per_exam, labels, d,
                                       links=_insert_rows(sql, "topic_questions"),

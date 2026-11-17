@@ -19,10 +19,17 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
-EXAM="${1:-ip}"
-python3 "$ROOT/scripts/material_generations.py" --data "data/${EXAM//\//_}" --registered --refusal-only || exit 1
+# @operation UC-027#checkRender
+# @implements BR-025, REQ-471, REQ-487
+main() {
+  local EXAM="${1:-ip}"
+  python3 "$ROOT/scripts/material_generations.py" --data "data/${EXAM//\//_}" --registered --refusal-only || exit 1
 
-# 学びの置き場は呼んだ作業ディレクトリから決め、tsx はリポジトリの根で回す（根の tsconfig が JSX の変換を決める）
-DATA="$(pwd)/data/${EXAM}"
-cd "$ROOT"
-npx tsx scripts/check_render.tsx --data "$DATA"
+  # 学びの置き場は呼んだ作業ディレクトリから決め、tsx はリポジトリの根で回す（根の tsconfig が JSX の変換を決める）
+  local DATA
+  DATA="$(pwd)/data/${EXAM}"
+  cd "$ROOT"
+  npx tsx scripts/check_render.tsx --data "$DATA"
+}
+
+main "$@"
