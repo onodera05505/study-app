@@ -6,7 +6,7 @@
 過去問（IPA 公開分）を起点に、その背後にある**論点**を学習単位として構成する。
 単なる過去問暗記にせず、周辺知識を添えて理解を深められるようにするのが方針。
 
-- 作業の前提と決まり: [`CLAUDE.md`](CLAUDE.md)（着手前の三分類・分担の原則・落とし穴・仕様 ⇔ コード ⇔ テストの門）
+- 作業の前提と決まり: [`CLAUDE.md`](CLAUDE.md)（地図。着手前の三分類・設計の中核・構成）から、[`docs/作業の進め方.md`](docs/作業の進め方.md)（分担の原則・仕様 ⇔ コード ⇔ テストの門）、[`docs/落とし穴.md`](docs/落とし穴.md)、[`docs/文書の索引.md`](docs/文書の索引.md) を引く
 - 仕様の正本: [`docs/goals/`](docs/goals/)（GOAL → UC → REQ → 契約）・[`docs/rules/`](docs/rules/)（BR）・[`docs/adr/`](docs/adr/)・[`docs/01-glossary.md`](docs/01-glossary.md)。旧の要件定義書は [`docs/attic/要件定義書_draft.md`](docs/attic/要件定義書_draft.md)
 - 壊してはいけないことと、何がそれを守っているか: [`docs/不変条件と門.md`](docs/不変条件と門.md)
 - 開発の経緯: `docs/作業ログ_*`（最初は [`docs/作業ログ_2026-08-23.md`](docs/作業ログ_2026-08-23.md)）、トラブルの記録は [`brain/INDEX.md`](brain/INDEX.md)
@@ -78,7 +78,7 @@
 原本 harness（`tsay-dev/harness`）の作法で回す。要求はまず `docs/goals/` の UC（状態 × イベント表）と REQ（EARS 1 文、1 要件 1 か所のコード）に写し、
 承認後に implementer と test-author を別コンテキストで並行させる。コードには `@implements REQ-nnn`、テストには `@covers REQ-nnn#class`。
 書き込みの瞬間は PreToolUse の門、作業終了の瞬間は Stop の門が止める。未返済は `.trace-baseline.json` に持ち、縮む方向にしか動かさない
-（[`docs/検証の返済計画.md`](docs/検証の返済計画.md)）。詳しくは [`CLAUDE.md`](CLAUDE.md) の「仕様 ⇔ コード ⇔ テスト の対応」。
+（[`docs/検証の返済計画.md`](docs/検証の返済計画.md)）。詳しくは [`docs/作業の進め方.md`](docs/作業の進め方.md) の「仕様 ⇔ コード ⇔ テスト の対応」。
 
 ## セットアップ（ローカル）
 

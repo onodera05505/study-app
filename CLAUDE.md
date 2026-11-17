@@ -8,6 +8,9 @@
 IT パスポート試験の学習アプリ。**このディレクトリがプロジェクトのルート**で、
 以降のパスはすべてここからの相対パス。
 
+このファイルは**地図**（固有の決まり・構成・層の向き・命名・規約からの逸脱・正本へのリンク。150 行以内）。
+決まりの全文と理由は、下の「場面から読む物を引く」の行き先が持つ。ここに写さない。
+
 ## 着手前に要求を3つに分ける（コードやデータを触る前に）
 
 要求を **質問 / バグ修正 / 仕様変更** のどれかに置いてから動く。判定軸はコードの行数ではなく
@@ -16,116 +19,13 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 
 - **質問**: 調べて答える。直さない
 - **バグ修正**: 意図は変えず、実装や データを意図に合わせる。観測できる挙動が変わってもバグ修正。
-  **データの修正は、原本の画像と照合してから**（下記「データが壊れていると報告されたら」）
+  **データの修正は、原本の画像と照合してから**（[`docs/落とし穴.md`](docs/落とし穴.md)）
 - **仕様変更**: 意図そのものを変える／新設する。1行でも該当する。先に本人へ提示して合意し、
   合意した内容を `docs/goals/` の UC・REQ（spec-author）か該当の手順書に書いてから着手する。
   既存の文書と矛盾する要求は、実装で黙って上書きせず矛盾を提示して止まる
 
 分類と根拠（どの文書のどこか）を作業の最初に一言で書く。空回りしたら粘らない：
 検証が3回続けて落ちる、または同じ誤りを繰り返したら、新しいコンテキストでやり直す。
-
-## まず読むもの
-
-**点／線の区別**: `作業ログ_*`・`レビュー詳細_*`・`改善候補_*` は**点**（当時の記録。書き換えず、
-古くなったら追記）。それ以外は**線**（今の手順・判断。振る舞いを変える作業と同じ作業で更新する）。
-`docs/` の全ファイルはこの表に載せる（`scripts/check_docs.py` が見る）。
-
-**作業ログを書いたら、型を中央ブレインへ還す。** このプロジェクトの知見はこれまで `docs/作業ログ_*` と
-固有の `brain/` に溜まり、中央のアプローチ（`~/.claude/brain/approaches/`）には 2026-09-11 まで 1 本も
-入っていなかった（同日に 7 本へ整理して移した）。以後、`作業ログ_2026-09-11` 以降のファイルは
-末尾に `ブレイン: 参照した型 <名前 か 当たり無し（grep: 引いた語）> / 適用前に確認した値 Y / 追加 Z / 更新 W` の行を必ず置く
-（追加・更新が無いときだけ `無し（理由）`。「参照した型」の素の「無し」は 2026-09-14 以降は落ちる）。
-`check_docs.py` が行の有無を見たうえで、中央の `~/.claude/brain/check_return_line.py` を呼んで文法まで見る
-（無ければデプロイの門で止まる。中央の門をここに複製しない）。実例はこのリポジトリ、型は中央。
-
-| 目的 | ファイル |
-| --- | --- |
-| **トラブル・不具合・原因不明のエラーに当たったら、調査の前に必ずここ**（過去の全事例の索引。解決したら報告書を1枚還す） | [`brain/INDEX.md`](brain/INDEX.md) |
-| **着手前に毎回読む未決・本人の指示・開始時の質疑応答**（決定と制約は本ファイルに集約し、ここには置かない） | [`brain/PREMISES.md`](brain/PREMISES.md) |
-| **フィードバックの採否の規則と判定の実例**（審議で毎回名指しする。規則が安定したら自動採用へ） | [`brain/feedback/判断基準.md`](brain/feedback/判断基準.md) / [`brain/feedback/審議台帳.md`](brain/feedback/審議台帳.md) |
-| このプロジェクト固有の作業の型の索引（中央にない値・実例つきの手順。今は空。中央は `~/.claude/brain/APPROACHES.md`） | [`brain/APPROACHES.md`](brain/APPROACHES.md) |
-| **壊してはいけないことと、何がそれを守っているか**（門の無い行＝バックログ。不変条件を足したら行を足す） | [`docs/不変条件と門.md`](docs/不変条件と門.md) |
-| 何を作っているか・どう動かすか | [`README.md`](README.md) |
-| **過去問の回を追加する手順**（一番よく使う） | [`docs/回を追加する手順.md`](docs/回を追加する手順.md) |
-| **ロードマップ対象（資格以外の学び）を 3 つ目以降として本番に出す手順**（itc が実例） | [`docs/ロードマップ対象を追加する.md`](docs/ロードマップ対象を追加する.md) |
-| **応用情報（午前）を同じコードで別データ・別配備として足した手順と落とし穴**（資格型を足すときの手本） | [`docs/応用情報を追加する.md`](docs/応用情報を追加する.md) |
-| **基本情報（科目A）を足す手順**（`fe`。科目A のみ・旧午前 22 回のうち最新 5 回から・模試 60 問 90 分。応用情報の型を `--data data/fe` で） | [`docs/基本情報を追加する.md`](docs/基本情報を追加する.md) |
-| **未修正のバグ**（着手前に必ず見る。今は空） | [`docs/未修正のバグ.md`](docs/未修正のバグ.md) |
-| **検証の穴と来週やるテスト**（データを直す前に見る） | [`docs/懸念_表示データに検証が無い.md`](docs/懸念_表示データに検証が無い.md) |
-| 旧の要件定義書の退役の印（原本は attic。設計判断は `docs/adr/`、決まりは `docs/goals/`・`docs/rules/`） | [`docs/要件定義書_draft.md`](docs/要件定義書_draft.md) / [`docs/attic/要件定義書_draft.md`](docs/attic/要件定義書_draft.md) |
-| これまでの経緯・失敗の記録 | [`docs/作業ログ_2026-08-23.md`](docs/作業ログ_2026-08-23.md) |
-| 画面が遅いと言われたときの調べ方 | [`docs/作業ログ_2026-08-29_表示の遅さ.md`](docs/作業ログ_2026-08-29_表示の遅さ.md) |
-| 図の取り違え・管理者アカウント・バックアップ | [`docs/作業ログ_2026-08-31_図の取り違えと管理者アカウント.md`](docs/作業ログ_2026-08-31_図の取り違えと管理者アカウント.md) |
-| 応用情報の残り3回を同時に取り込み、10年分を達成した記録 | [`docs/作業ログ_2026-08-31_応用情報の残り3回.md`](docs/作業ログ_2026-08-31_応用情報の残り3回.md) |
-| 教材に図を足す仕組みと優先度付け | [`docs/作業ログ_2026-09-01_教材の図.md`](docs/作業ログ_2026-09-01_教材の図.md) |
-| **問題解説・用語ポップ・教材 v3（教材と解説の役割分担。教材を書くなら必読）** | [`docs/作業ログ_2026-09-01_問題解説と教材v3.md`](docs/作業ログ_2026-09-01_問題解説と教材v3.md) |
-| **検査の層と門（表示・API・画面・使いやすさ。何かを検査する前に見る）** | [`docs/検査観点カタログ.md`](docs/検査観点カタログ.md) |
-| 世の中の e ラーニングと比べた強み・足りないもの・市場の要約（2026-09-14 の調査。採否台帳は `brain/approaches/学習アプリの充実の検討事項.md`） | [`docs/検討事項_2026-09-14_市場比較.md`](docs/検討事項_2026-09-14_市場比較.md) |
-| 一斉検査で出た改善候補（大半は修正済み。UI を触る前に見る） | [`docs/改善候補_2026-09-02.md`](docs/改善候補_2026-09-02.md) |
-| 一斉検査→一括修正の経緯と落とし穴（audit と画面仕様の結合など） | [`docs/作業ログ_2026-09-02_一斉検査と修正.md`](docs/作業ログ_2026-09-02_一斉検査と修正.md) |
-| 教材を v2 に書き直したときの記録 | [`docs/作業ログ_2026-08-24_教材のv2書き直し.md`](docs/作業ログ_2026-08-24_教材のv2書き直し.md) |
-| 出典が全880問誤っていた事故の修正記録（`check_seed.py` が生まれた経緯） | [`docs/作業ログ_2026-08-29_出典表示の修正.md`](docs/作業ログ_2026-08-29_出典表示の修正.md) |
-| このプロジェクトの型を中央ブレインへ還した記録（何が入っていなかったか・還元の門） | [`docs/作業ログ_2026-09-11_ブレインへの還元.md`](docs/作業ログ_2026-09-11_ブレインへの還元.md) |
-| **ロードマップ生成の試作を一晩で 3 周した記録**（IT コンサル就活。学習者役の別エージェント・門・測り方の変更。資格以外の対象を作るなら必読） | [`docs/作業ログ_2026-09-15_ロードマップ試作.md`](docs/作業ログ_2026-09-15_ロードマップ試作.md) |
-| 2 つ目のロードマップ対象（マーケティング）で、事前の質問が手戻りをどれだけ減らしたかを測った記録（型側の穴の一覧） | [`docs/作業ログ_2026-09-15_マーケティング.md`](docs/作業ログ_2026-09-15_マーケティング.md) |
-| 利用者フィードバックの受け口（上部メニュー→DB→`scripts/feedback.py`→改善フェーズ Skill）を作った記録 | [`docs/作業ログ_2026-09-16_フィードバック.md`](docs/作業ログ_2026-09-16_フィードバック.md) |
-| **SSO と権限**（まなびばが認証の正本。学び側のパスワード・登録は廃止。移行と配備の手順） | [`docs/作業ログ_2026-09-17_SSO.md`](docs/作業ログ_2026-09-17_SSO.md) |
-| **身体に触れる学び（マッサージ）を 1 日で作って出した記録**（共通の決まりのファイル・決まりは境目で書く・仕上げの読み比べは 1 人・独立解答の unsafe・人が見るべき出典） | [`docs/作業ログ_2026-09-17_マッサージ.md`](docs/作業ログ_2026-09-17_マッサージ.md) |
-| 門 O5・D11 の追加、還元行の門を中央に委ねた経緯、ブレインの配線（APPROACHES／PREMISES）の記録 | [`docs/作業ログ_2026-09-14_門と配線.md`](docs/作業ログ_2026-09-14_門と配線.md) |
-| **全コンテンツのセルフフィードバック**（8 対象を読む→型→直す→突き合わせの 4 段で読み直し、ロードマップ型 6 対象を再投入。指示書 `scripts/prompts/self_*.md`、要約は `apply_summary_override.py`。資格版は判断待ち） | [`docs/作業ログ_2026-09-25_セルフフィードバック.md`](docs/作業ログ_2026-09-25_セルフフィードバック.md) |
-| **脆弱性診断**（認証・認可・SQL・XSS・ヘッダ・秘密・依存を本番の経路で確認。入られる穴は無し、直した 3 点と運用で足す指摘） | [`docs/作業ログ_2026-09-25_脆弱性診断.md`](docs/作業ログ_2026-09-25_脆弱性診断.md) |
-| **仕様 ⇔ コード ⇔ テストのトレーサビリティ**（`docs/spec.yaml`・`@implements`／`@verifies`・`scripts/trace_check`・Stop フック。harness から取った物と取らなかった物、第 1 段の範囲） | [`docs/作業ログ_2026-09-28_トレーサビリティ.md`](docs/作業ログ_2026-09-28_トレーサビリティ.md) |
-| **仕様書 → ユースケース → 要件 の 3 層化**（UC を書類に、要件を 1 か所のコードの粒度に。trace_check 2.0.0 の S4・S5・C7） | [`docs/作業ログ_2026-09-29_三層のトレーサビリティ.md`](docs/作業ログ_2026-09-29_三層のトレーサビリティ.md) |
-| **要件の仕分け表**（点。監査で仕様書に無いと判った要件 116 件と矛盾 3 件を、残す（追記先の節）／消す／合わせる の案で 1 件ずつ。2026-09-29 に全件「現状を仕様書に書いて残す」で決着） | [`docs/検討事項_2026-09-29_要件の仕分け.md`](docs/検討事項_2026-09-29_要件の仕分け.md) |
-| **ビジョン**（原本 harness の docs。解決する課題・対象・KPI・やらないこと。draft） | [`docs/00-vision.md`](docs/00-vision.md) |
-| **アクター**（閉じた集合 ACT-01〜06。人 3・システム 3。draft） | [`docs/02-actors.md`](docs/02-actors.md) |
-| **GOAL の置き場**（`docs/goals/GOAL-nn-<slug>/GOAL.md`。UC・REQ・contract はその下。Phase 3〜5 で作る） | [`docs/goals/`](docs/goals/) |
-| **未着手の GOAL**（backlog。GOAL-07 学びの中のコンテンツ管理） | [`docs/goals-backlog.md`](docs/goals-backlog.md) |
-| **非機能要件**（閾値と計測方法がある物だけ。NFR-001 セキュリティヘッダ） | [`docs/nfr/`](docs/nfr/) |
-| **ADR**（原本 harness の決定の記録。ADR-0001 境界の読み方、0002 実行環境と配信、0003 認可の置き場、0004 永続化、0005 層構造、0006/0007 保証点。既存の ADR は書き換えず supersedes で重ねる） | [`docs/adr/`](docs/adr/) |
-| **共有の語彙（契約）**（`_shared/components.yaml`。Phase 5 で埋める） | [`docs/_shared/`](docs/_shared/) |
-| **用語集**（線。業務語の正本。原本 harness のテンプレで spec-author が書く。識別子は契約へ） | [`docs/01-glossary.md`](docs/01-glossary.md) |
-| attic: 識別子列つきの空の用語集（写した型の草案。2026-09-30 の移行で退役） | [`docs/attic/01-glossary_2026-09-29_識別子列つき.md`](docs/attic/01-glossary_2026-09-29_識別子列つき.md) |
-| **保留台帳**（線。reviewer の指摘のうち機械判定に落とせない物。縮む方向にしか動かない） | [`docs/verification/DEFERRED.md`](docs/verification/DEFERRED.md) |
-| **検証の返済計画**（線。`.trace-baseline.json` の中身を項目・UC 別に並べ、返す順と `/develop` の順。縮む方向にしか動かさない） | [`docs/検証の返済計画.md`](docs/検証の返済計画.md) |
-| **検証方針（全体）**（線。プロジェクト全体で単体テストが観測できない範囲とその理由。REQ ごとの方針は各 REQ の `## 検証方針`） | [`docs/verification/GLOBAL.md`](docs/verification/GLOBAL.md) |
-| **原本 harness への移行**（2026-09-30 本人決定。APM で develop-core、docs-migrate の 7 Phase。Phase 0 の記録と実体・状態値の全文） | [`docs/作業ログ_2026-09-30_原本harnessへの移行.md`](docs/作業ログ_2026-09-30_原本harnessへの移行.md) |
-| **移行後の最初の `/develop`**（署名の秘密が無い配備は発行も検証も断る。本人決定 → spec-author → 門 → 並行 → reviewer 2 巡の運び） | [`docs/作業ログ_2026-10-03_develop第1件_署名の秘密.md`](docs/作業ログ_2026-10-03_develop第1件_署名の秘密.md) |
-| **基本情報 科目A（`fe`）を 1 日でデータ完成まで運んだ記録**（最新 5 回 400 問・論点 315・解説 397・図 45。初回の論点マスタの作り方・v2 を飛ばす・波の完了判定は中身の一致で。本番は本人の bootstrap 待ち） | [`docs/作業ログ_2026-10-05_基本情報.md`](docs/作業ログ_2026-10-05_基本情報.md) |
-| **ポートフォリオの説明資料**（線。外の審査者向け。AI にどう任せ・何で確かめ・何を決めたか。数値は現物と照合して更新する） | [`docs/ポートフォリオ_AIとの向き合い方.md`](docs/ポートフォリオ_AIとの向き合い方.md) |
-| ポートフォリオ提出に向けて README・CLAUDE.md・経緯コメントを今の姿に揃えた記録（ずれの棚卸し・門の扱い・公開前に見るもの） | [`docs/作業ログ_2026-11-02_ポートフォリオ提出.md`](docs/作業ログ_2026-11-02_ポートフォリオ提出.md) |
-| **エンジニア入門（`eng`）を一晩で作った記録**（資格型と学び型のハイブリッド。章で束ねる・3 段の印・200 単位・確認問題 400・図 18。到達基準の数の決め打ち・D1 の LIKE の上限・独立解答の範囲・並行の作業場所） | [`docs/作業ログ_2026-11-02_エンジニア入門.md`](docs/作業ログ_2026-11-02_エンジニア入門.md) |
-| **学習者役 3〜6 周目と未返済 482 件の返済を Workflow で一晩回した記録**（収束しない指標と 3 周とも詰まった 28 単位の構造の案、baseline 482→24、門が閉じた UC の欠陥 13 件は別ブランチ `repay-baseline-2026-11-03`。朝の判断待ちの一覧） | [`docs/作業ログ_2026-11-03_学習者役と返済.md`](docs/作業ログ_2026-11-03_学習者役と返済.md) |
-| **残作業の台帳の一括消化**（OQ・DEFERRED・baseline を 5 分類 19 束に仕分け、仕様 31 本を承認 → テスト∥実装 → 審査 2 巡。baseline 19→0。教材の門 GOAL-10 は収束せず草案で止めた。本番の移行 0008 と配備は本人待ち） | [`docs/作業ログ_2026-11-06_台帳の一括消化.md`](docs/作業ログ_2026-11-06_台帳の一括消化.md) |
-| **利用者のフィードバックから画面・名前・教材を整え、全部の学びを本番に出した記録**（副題・階層の道筋・理解度の記号・ヘッダー、「キーワード」、203 単位の名前の分割、eng の面接の枠組みの撤去、配備の手順の欠陥と不安定なテスト 2 本。指示に決まりを直書きして単調になった再発） | [`docs/作業ログ_2026-11-09_フィードバックと画面の整理.md`](docs/作業ログ_2026-11-09_フィードバックと画面の整理.md) |
-| **図を付ける判断基準を「理解しやすいか」に置き、型を 4 → 10 に広げ、7 学びを再選定して ecl に図 42 枚を描いた記録**（Clark & Lyons × Mayer の基準、REQ-438・440、門の文言は表に・必須は全部エラーの行に、段で分けた費用の計画 A〜E と残り） | [`docs/作業ログ_2026-11-14_図の判断基準と10型.md`](docs/作業ログ_2026-11-14_図の判断基準と10型.md) |
-| **教材をまとまりごとに書き直し、一覧をシラバスの階層に、理解度を回答からの判定にして ip・ap を本番に出した記録**（様式の調査 → 基準 → 単元の構成 → 書き直し ip 122 束・ap 179 束 → 単元の突き合わせ → 図の見直し → 図を指す文の後追い → 受入 5 回。束の継ぎ目が最後まで残った・本文と図は段を決めて順に直す・測る物の世代を先に確かめる。画面は本人の確認待ち） | [`docs/作業ログ_2026-11-15_テキスト最適化.md`](docs/作業ログ_2026-11-15_テキスト最適化.md) |
-| **テキスト最適化の残タスクの台帳**（線。ip・ap で本番に出ている物と、できていない物 T1〜T12。直していない申告の控えは `data/{ip,ap}/rewrite_open_items/`。本人が着手を決めるまで起こさない） | [`docs/残タスク_テキスト最適化.md`](docs/残タスク_テキスト最適化.md) |
-| **原本 harness への移行の棚卸し**（docs-migrate Phase 0。文書ごとの分類と処遇、実体と状態値、矛盾。本人の答えは `OPEN-QUESTIONS.md`） | [`docs/INVENTORY.md`](docs/INVENTORY.md) |
-| attic: 旧の要件の正本 `spec.yaml`（REQ は `docs/goals/**/REQ-nnn.md` に移った。旧パスは退役の印だけ） | [`docs/attic/spec.yaml`](docs/attic/spec.yaml) / [`docs/spec.yaml`](docs/spec.yaml) |
-| attic: 旧のユースケースの書類 UC-001〜019（UC は `docs/goals/<GOAL>/<UC>/UC.md` に移った。旧パスは退役の印だけ） | [`docs/attic/usecases/`](docs/attic/usecases/) / [`docs/usecases/`](docs/usecases/) |
-| 一斉検査のレビュー全量（学習系・受験系。改善候補の根拠） | [`docs/レビュー詳細_2026-09-02_学習系.md`](docs/レビュー詳細_2026-09-02_学習系.md) / [`docs/レビュー詳細_2026-09-02_受験系.md`](docs/レビュー詳細_2026-09-02_受験系.md) |
-
-## 現在地（2026-11-02 に数値を現物と照合済み）
-
-- 公開されている **29回のうち11回・1,100問**を取り込み済み（38%）
-- 論点 532件、うち全件に教材（解説・周辺知識）あり。**教材は単元のまとまりごとに書き直した世代（`data/ip/materials_v4`。2026-11-15。応用情報も同じ）**。一覧はシラバスの階層 → まとまり → 学ぶ順（`data/<対象>/unit_plans/`）で、出題頻度は ★ の 3 段の印、理解度は過去問への回答の履歴から判定する（`docs/作業ログ_2026-11-15_テキスト最適化.md`。fe は書き直していない）
-- **Cloudflare は個人アカウント**（2026-09-15 に社用から移した。account_id・Pages 名・URL・合言葉は `scripts/pages_projects.json`。別アカウントでログインしていると wrangler と各スクリプトが止まる）
-- 入口「まなびば」（**認証と権限の正本**。学びの一覧・ログイン・管理。`portal/`、`scripts/deploy_portal.sh`。要件 §15）: **https://manabiba-5oz.pages.dev**。学び側はここからのログインだけ受ける（v0.8、2026-09-17）
-- 本番稼働中: **https://itpass-study-d02.pages.dev**
-- 応用情報（午前）も同コード・別データ・別デプロイで稼働中: **https://ap-am-study-2px.pages.dev**
-  （**18回・1,440問・論点772件**、全件教材あり。手順と落とし穴は `docs/応用情報を追加する.md`）
-  **直近10年分（2016h28h まで）の目標は 2026-08-31 に達成済み**
-- 3 つ目: **IT コンサル就活ロードマップ**（資格でない学びの試作。42 単位＋補足 5、確認問題 94）: **https://itc-roadmap.pages.dev**
-  （手順は `docs/ロードマップ対象を追加する.md`、経緯は `docs/作業ログ_2026-09-15_ロードマップ試作.md`）
-- 4 つ目: **マーケティング 実務の判断**: https://mkt-roadmap.pages.dev ／ 5 つ目: **マッサージ 肩と腰の手当て**（身体に触れる最初の対象。42 単位・問題 84）: **https://msg-roadmap.pages.dev**（`docs/作業ログ_2026-09-17_マッサージ.md`）
-- IT パスポートの**未取込は18回**。新しい順に `2017h29h` → `2009h21a`
-- 6 つ目: **基本情報 科目A 最短合格**（`fe`。旧午前の最新 5 回・400 問・論点 315、全件に解説と教材。**データは完成、本番は未配備**＝本人の `bootstrap_personal.sh fe` 待ち。`docs/基本情報を追加する.md`）
-- 7 つ目: **エンジニア入門**（`eng`。資格型と学び型のハイブリッド。章で束ねる 202 単位（2026-11-03 に 126・141 を分割）・各単位に ★★★／★★／★ の印・確認問題 404・図 166（2026-11-04〜05 に図解の第 1〜3 段）。学習者役 6 周（`docs/作業ログ_2026-11-03_学習者役と返済.md`）。本番: **https://eng-roadmap.pages.dev**。`docs/作業ログ_2026-11-02_エンジニア入門.md`）
-
-`data/pdfs/` に全29回の PDF、`data/pages/` に全ページの画像、
-`data/answer_keys.json` に全2,900問の正解表が揃っている。前工程は済んでいるので、
-追加作業は「画像を読む → 分類 → 教材」だけ。
 
 ## 設計の中核（ここを壊さない）
 
@@ -140,154 +40,93 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 - 分類は自前で行う（IPA の公開問題に分野タグは無い）。テーマ分けは IPA シラバスの階層に乗せる。
   **合否が分野単位の AND 条件なので、分類が分野に接続していないと最重要のフィードバックが出せない**
 
-上の各項目と下の「落とし穴」を、**どのスクリプトが守っているか**まで含めて一覧にしたのが
+上の各項目と [`docs/落とし穴.md`](docs/落とし穴.md) の各項目を、**どのスクリプトが守っているか**まで含めて一覧にしたのが
 [`docs/不変条件と門.md`](docs/不変条件と門.md)。不変条件を足したら行を足す。門を作ったら状態を更新する。
 
-## 作業を分担させるときの原則
+## 場面から読む物を引く
 
-**担当エージェントは `.claude/agents/` の型を使い、モデルは Opus に固定してある。**
-メインの会話は Fable、実装・読み取り・分類・執筆・検証の実作業は Opus、という使い分け
-（コストと質のトレードオフとして本人が決めた方針。2026-08-31〜）。
-Agent ツールの `subagent_type` に型の名前を渡す。型に無い臨時の作業を任せるときも
-`model: opus` を明示し、既定（メインのモデル＝Fable）を継承させない。
+| 場面 | 読む物 |
+| --- | --- |
+| 着手する（毎回） | [`brain/PREMISES.md`](brain/PREMISES.md)（未決・本人の指示）、[`docs/未修正のバグ.md`](docs/未修正のバグ.md) |
+| トラブル・原因不明のエラー | [`brain/INDEX.md`](brain/INDEX.md)（調査の前に。解決したら報告書を 1 枚還す） |
+| 文書を探す・足す、作業ログを書く | [`docs/文書の索引.md`](docs/文書の索引.md)（点／線の区別、`docs/` の全ファイルの表、還元行の決まり） |
+| 仕様・実装・テストに触る、担当に任せる | [`docs/作業の進め方.md`](docs/作業の進め方.md)（`/develop` の運び、担当の型と仕様書、権限、環境の制約） |
+| データを直す、seed・配備・本番に触る | [`docs/落とし穴.md`](docs/落とし穴.md)、[`README.md`](README.md) の「本番」 |
+| 壊してはいけないことと、それを守る門 | [`docs/不変条件と門.md`](docs/不変条件と門.md)、[`docs/検査観点カタログ.md`](docs/検査観点カタログ.md) |
+| 回・対象を足す | [`docs/回を追加する手順.md`](docs/回を追加する手順.md)、[`docs/応用情報を追加する.md`](docs/応用情報を追加する.md)、[`docs/基本情報を追加する.md`](docs/基本情報を追加する.md)、[`docs/ロードマップ対象を追加する.md`](docs/ロードマップ対象を追加する.md)、Skill `learn-target` |
+| 今の数・本番の URL | [`docs/現在地.md`](docs/現在地.md) |
+| 利用者のフィードバック | Skill `improve-from-feedback`、[`brain/feedback/判断基準.md`](brain/feedback/判断基準.md) |
 
-| 型 | 工程 | 1体あたりの担当 |
+## 作業の約束（1 行ずつ。全文は行き先）
+
+- 要求は Skill `/develop` の手順で運ぶ。親（この会話）は仕様も実装もテストも書かない。実装の前に REQ があるか確かめ、無ければ仕様が先（[`docs/作業の進め方.md`](docs/作業の進め方.md)）
+- 作業完了の条件は `npm test` が全部通ること。赤や欠けは上流（仕様の正本）から直し、実装に合わせて要件やテストを寄せない
+- 「仕様外」の印・除外の印は存在しない。検査の緩和・テストの skip は本人の許可なく行わない
+- 担当は `.claude/agents/` の型で、モデルは Opus。決まりは指示に直書きせず、先に仕様書（`scripts/prompts/`）へ書く。成果物は自己申告でなく機械で確かめ、受入は別コンテキスト（`qa-acceptance`）
+- 「データが壊れている」という報告は、原本の画像と照合してから判断する
+- seed は `bash scripts/seed_remote.sh`、配備は `bash scripts/deploy-pages.sh` を通す。wrangler を直に叩かない。破壊的な操作は毎回確認する
+- 仕様書の本文は現在形だけ。経緯は `## 改訂履歴` と作業ログ（点）へ
+
+## 構成
+
+同じコードを、対象（`ip`・`ap`・…）ごとに別のデータ・別の D1・別の Pages として配備する。対象の一覧は `src/shared/targets.json`、
+配備先は `scripts/pages_projects.json`、D1 の結び先は `wrangler.jsonc` の `env.<対象>`。
+
+| 置き場 | 中身 |
+| --- | --- |
+| `src/client/` | 学び側の画面（React + Vite の SPA。`pages/`・`components/`・`lib/`） |
+| `src/server/` | 学び側の API（Hono。`index.ts` が受け口、`routes/` → `lib/` → `db/`） |
+| `src/shared/` | 画面と API が共有する物（対象の登録簿など） |
+| `portal/` | 入口「まなびば」（認証と権限の正本。`src/index.ts`・`static/`・`migrations/`。学び側とは別の配備） |
+| `scripts/` | 作り手と運用の道具（取り込み・生成・門・seed・配備）。`scripts/prompts/` は担当が最初に読む仕様書 |
+| `data/<対象>/`・`public/figures/<対象>/` | 対象ごとの原本と生成物（論点 ID・教材・単元の構成・図の仕様）／図の画像 |
+| `migrations/`・`contracts/fixtures/` | 学び側の D1 の構造の変更／出荷済みの版が書いたデータの控え |
+| `tests/` | `client/`・`server/`・`portal/`・`scenario/`、入力の置き場 `fixtures/` |
+| `docs/` | 仕様の正本（`goals/`・`rules/`・`nfr/`・`adr/`・`_shared/`・`01-glossary.md`）と、手順書・記録 |
+| `brain/` | このプロジェクトの前提・トラブルの報告書・作業の型・手戻りの台帳 |
+| `.harness/`・`.claude/`・`apm_modules/` | 原本 harness の道具と展開物（APM が作る。手で直さない）。宣言は `traceconfig.json`・`apm.yml` |
+
+## 層と命名
+
+- 層の向き（[`ADR-0005`](docs/adr/ADR-0005-layering.md)）: `src/client` と `src/server` は互いを import せず、共有するのは `src/shared` だけ。サーバーは `routes/` → `lib/` → `db/` の一方向
+- 仕様の置き場: `docs/goals/GOAL-nn-<slug>/UC-nnn-<slug>/` に `UC.md`・`REQ-nnn.md`・`contract.yaml`、横断の決まりは `docs/rules/BR-nnn.md`。次の番号は `node .harness/tools/trace-check/trace-check.mjs --next req`（`uc`・`br`・`adr` も同じ）
+- 注釈: コードに `@implements REQ-nnn`／`BR-nnn`、境界の入口に `@operation UC-nnn#操作名`、テストは `it(` の直前の行に `@covers REQ-nnn#class`（1 テスト 1 クラス）、シナリオは `@scenario UC-nnn`。ID だけを書く（[`.claude/rules/comments.md`](.claude/rules/comments.md)）
+- テストの名前: `tests/server/UC-nnn_<話題>.test.ts`、`tests/client/UC-nnn_<話題>.test.tsx`、`tests/scenario/UC-nnn-<slug>.test.tsx`（UC 1 本に 1 本）。土台は `UC-nnn_fixture.ts`
+- 文書の名前: `作業ログ_<日付>_<題>`・`レビュー詳細_*`・`改善候補_*` は点（書き換えず追記）、それ以外は線。足したら [`docs/文書の索引.md`](docs/文書の索引.md) に行を足す
+- 図の画像は `public/figures/<対象>/` に分ける（試験 ID は対象をまたいで一意でない）
+
+## 操作 → 入口（R-1204）
+
+テストは、契約（`contract.yaml`）の操作名と `transport` から、次の規則で入口を導く。実装を読んで導かない。
+
+| 契約の transport | 入口 | 呼び方 |
 | --- | --- | --- |
-| `extract-questions` | 読み取り | 1チャンク（10〜12ページ） |
-| `verify-answers` | 解答検証 | 40問 |
-| `classify-questions` | 分類 | 1バッチ（26〜27問） |
-| `crop-figures` | 図の切り出し座標 | 1回分 |
-| `write-materials` | 教材執筆 | 1バンドル（最大8論点） |
-| `write-explanations` | 問題解説＋教材 v3 化 | 1バンドル（8論点、問題は畳んで 15〜25 件） |
-| `qa-acceptance` | 受入判定（実装者と別コンテキスト） | 1件の変更（受入基準・変更範囲・試験を渡す） |
+| `http`（学び側） | `src/server/index.ts` の default export（Hono の app。経路は `/api` の下） | 契約の `wire` から `Request` を組んで `app.request()` |
+| `http`（まなびば） | `portal/src/index.ts` の default export（同上） | 同上 |
+| `local-store`（画面の手元の保存） | `src/client/lib/` の export。名前は操作名の `read…` を `get…`、`save…` を `set…` に読み替え、ほかは操作名のまま | その関数を呼ぶ |
+| 道具を回す操作 | `scripts/<操作名を snake_case にした名前>.py`（または `.sh`） | 子プロセスで回し、終了の状態・出力・書き出したファイルを見る |
+| 道具の中の読み書き（`read…`・`write…`） | その操作を `@operation` で持つ道具 | 道具を回し、契約が名指す置き場のファイルで見る |
 
-**受入は実装した文脈と分ける。** データ・API・画面に触る変更を反映する前に、`qa-acceptance` に
-受入基準を渡して合否を出させる。同じ会話の中で「確認しました」と書くのは独立した受入ではない。
-直すのは呼び出し側で、担当は直さない。
+規則に従わない入口: `markSessionExpired` は `api`（`src/client/lib/api.ts`）、画面から出る `http` の `fetchVersionStamp` は `rememberBuild`・`checkForUpdate`（`src/client/lib/version.ts`）、
+下書きの読み書き `readFeedbackDraft`・`saveFeedbackDraft` は `src/client/pages/Feedback.tsx`。道具の名前と違う操作は
+`renderLearnerInstructions`（`render_prompts.py`）、`gradeLearnerAnswers`（`grade_learner.py`）、`listDeliveredMaterials`（`material_generations.py`）、
+`checkFigureSpecs`（`render_material_figures.py`）、`buildUnitInputs`（`build_rewrite_bundles.py`）、本番の確かめ 4 つ（`check_sso_prod.sh`）。
 
-不変の指示（仕様を最初に読む・正解表を読まない・検証コマンド等）は型に畳み込んである。
-**呼び出し時のプロンプトには回ごとの可変部分だけを書く**：試験ID、担当範囲、入出力パス、
-手本のパス、その回で判明している注意点。型と重複する指示を書き直さない。
+## スタックの規約からの逸脱
 
-**仕様書の本文は常に現在形（今どう作るか）だけにする。決まりを変えるときは該当の文を書き換え、
-足さない。** 経緯は末尾の `## 改訂履歴` に日付と 1 行（理由の詳細は作業ログへ）。本文に日付・「廃止」
-「以前は」「方針変更」・版の名前（v2/v3）が現れたら `check_docs.py` が止める。書き換えで元の決まりが
-落ちないよう、`python3 scripts/spec_inventory.py <仕様書>` で旧版（git HEAD）の原子（規則・例・数値）が
-新版に残っていることを確かめ、消した・言い回しを変えた物は `brain/spec_consolidation/<仕様書名>.md` に理由つきで
-追記し `--dropped` で渡す。統合は「日付つき注記を履歴へ・二重の値の古い方を消す・廃止節を消す」の 3 種類に限り、
-まとめ直さない。別の担当に旧版と新版を読み比べさせ「消えた決まり」を挙げさせてから確定する
-（本人の決定 2026-09-27「保つ前提で可能な限り統合していく」）。
+`.claude/rules/` のスタックの葉（Cloudflare / Hono / React）と違う所。葉とここが食い違ったら、ここが優先。
 
-**親が作業中に決めた決まりを、担当への指示に直書きしない。** 先に仕様書（下の一覧の、担当が最初に
-読むファイル）に書き、指示では「読め」で渡す。指示に決まりを 3 行以上書いていたら仕様書が足りない信号。
-決まりが仕様書に無いと次の生成に効かない（2026-09-27、図の caption の決まりが 8 体の指示に直書きされ
-`material_figures_spec.md` に落ちていなかった。中央 `reports/134`）。決めたら同じ作業で
-①仕様書 ②門（見られるなら）③`brain/PREMISES.md` の決定行に `→ 反映: \`<線のファイル>\``（`check_docs.py` が実在を見る）
-④生成後の決定は `brain/rework/<日付>_<対象>.md`（資格版は `2026-08_ip-ap.md`。`check_rework.py`）の 4 つに書く。
+- 配置は機能単位（`apps/api/src/features/<feature>/`）でなく、上の「構成」。実現単位は `*.service.ts` でなく、`src/**`・`portal/src/**` と要件に結んだ `scripts/` の道具（区分は traceconfig の `source`）
+- 画面の単体テスト（`tests/client/`）を持つ。葉は作らないと決めているが、ここでは要件のクラスを画面の部品で確かめる
+- シナリオテストは Playwright でなく、vitest + jsdom（`tests/scenario/`）と API を通す道具（`scripts/check_api.py`・`check_portal_api.py`）
+- `@covers` はテスト本文の先頭行でなく、`it(` の直前の行
+- 配信は Workers + Static Assets でなく Pages（[`ADR-0002`](docs/adr/ADR-0002-runtime-and-delivery.md)）。画面の経路は React Router、サーバーの状態の取得は自前（TanStack を使わない）
+- `layering` は宣言しない（型検査とビルドの入口の分離が見る。ADR-0005）
 
-読み取り・分類・執筆はページや論点の範囲で分担するため、**担当ごとに流儀がずれる**。
-1件ずつ見ても気づけないので、仕様を文書に固定してある。**担当には必ず最初に読ませること**
-（型がそう指示している）。
+## 正本へのリンク
 
-- `scripts/prompts/extract_questions.md` — 画像から問題を読み取る
-- `scripts/prompts/classify_questions.md` — シラバス項目と論点に紐づける
-- `scripts/prompts/write_materials.md` — 教材を書く
-- `scripts/prompts/write_question_explanations.md` — 問題解説（誤答の note は用語ポップに流用される）
-- `scripts/prompts/material_figures_spec.md` — 教材の図の仕様 JSON（caption・after・4 つの型）
-- `scripts/prompts/unit_plan.md` — 単元の構成（全体像・まとまり・学ぶ順・受け持ち・前提）
-- `scripts/prompts/rewrite_materials_by_group.md` — 教材をまとまりごとに書き直す（教材 1 本の基準と中身の型ごとの書き分け。続く段は `rewrite_unit_crosscheck.md` 単元の突き合わせ → `rewrite_figures_review.md` 図の見直し → `rewrite_text_followup.md` 図を指す文の後追い → `rewrite_open_items.md` 前の段が直さずに返した申告の消化。学習者役は `rewrite_unit_learner.md`）
-- `scripts/prompts/self_review.md` / `self_fix.md` / `self_fix_shikaku.md` / `self_crosscheck.md` — 読み直し（セルフフィードバック）の 4 段
-- ロードマップ型は `scripts/prompts/roadmap_*.md` をテンプレートに `render_prompts.py` が `data/<対象>/prompts/` へ描出する
-
-1バッチの大きさを守る（教材は8論点まで）。超えると出力量オーバーで落ちる。
-**実行中の担当が読んでいるファイルを上書きしない。** やり直すときは新しい名前にする。
-担当には `scripts/build_material_bundles.py` を実行させない。入力バンドルが作り直され、
-並行して動いている他の担当の担当範囲がずれる。
-
-**担当の自己申告は当てにならない。** 67体で書き直したとき、担当していない論点番号を
-report してきた例が複数あった（ファイルの中身は正しかった）。報告文ではなく
-**成果物を機械で検証する**こと。`check_materials.py` が担当バンドルと出力の論点を突き合わせる。
-
-## 検証で「データが壊れている」と報告されたら
-
-**必ず原本の画像と照合してから判断すること。** これまで8回報告があり、**7回は誤報**だった。
-信じて直すと正しいデータを壊す。
-
-一方、8回目は**本物**だった（平成30年度春期 問5：選択肢に答えが漏れていた）。
-だから無視してよいという話ではなく、**毎回確認する**のが正しい。
-
-特に「IPA の図は通常こうなっている」のような**一般論を根拠にした指摘ほど原本に当たる価値がある**
-（PPM の軸の件がまさにそれで、その回だけ通例と違っていた）。
-
-## 忘れやすい落とし穴
-
-- **seed の投入は `bash scripts/seed_remote.sh ip|ap` で行う。wrangler を直に叩かない。**
-  check_seed → backup → `--remote` 付きの投入 → 投入後の突き合わせ（`verify_seed_remote.py`）を
-  1本で回し、どれか落ちれば止まる。`--local` を付けるとローカル D1 でのリハーサル。
-  以前は手打ちで、`--remote` の付け忘れ（ローカルだけ変わる）が落とし穴だった
-- **Pages の secret は更新しただけでは反映されない。** 稼働中のデプロイは古い値を持ち続けるので、
-  `wrangler pages secret put` のあとに必ず再デプロイする。合言葉を変えたのに通らない、はこれ
-- **Pages のデプロイには D1 のバインディングが要る。** 設定ファイル無しで
-  `wrangler pages deploy` すると `env.DB` が undefined になり、ログインも登録も 500 で落ちる
-  （2026-08-29 に応用情報側で発生）。`scripts/deploy-pages.sh` が wrangler.jsonc の
-  `env.<試験>` から Pages 用設定を組んで渡すので、**デプロイはこのスクリプト経由で行う**
-- Cloudflare Workers の **PBKDF2 は反復回数 100,000 が上限**。ローカルの miniflare は
-  上限を課さないので、超えると本番でだけログインが 500 になる
-- Cloudflare のボット対策が**素の HTTP クライアントを 403 で弾く**。API を叩いて確認するときは
-  ブラウザ相当の User-Agent を付ける
-- 公開先が Pages なのは、workers.dev の URL に**アカウント名（本名）が入る**から。
-  共通サブドメインを変えると同アカウントの他の Worker（稼働中の業務システム）の URL も
-  一斉に変わるため触れない
-- **投入が成功したことと、入った中身が正しいことは別。** `Executed N queries` は
-  SQL が通ったとしか言っていない。seed 投入後は件数と代表値を SELECT して確かめる。
-  出典が全880問おかしいまま数か月気づかなかった事故がある
-  （[`docs/懸念_表示データに検証が無い.md`](docs/懸念_表示データに検証が無い.md)）
-- **IT パスポートと応用情報には同じ試験 ID がある。** 令和2年度10月＝`2020r02o` が両方に
-  ある（コロナ禍で春期が中止になり10月に1回だけ実施された回）。図の画像を平置きにして
-  いたためファイル名がぶつかり、IT パスポートの画面に応用情報の図が出ていた。
-  画像は `public/figures/<試験>/` に分ける。**試験をまたぐ ID の一意性を仮定しないこと**
-- **seed を流す前のバックアップは `seed_remote.sh` が自動で取る**（`scripts/backup_d1.sh`）。
-  進捗と受験履歴は本番 D1 にしか無く、seed の投入は `DELETE FROM topics …` を含む
-  （`progress` は CASCADE で消える）。単独で取るなら `bash scripts/backup_d1.sh ip|ap`
-- **一覧を空配列で初期化しない。** 取得前と「結果が空」が区別できず、読み込み中に
-  「該当する論点がありません」と誤って出る。`null`＝未取得 / `[]`＝空、で分ける
-- **画面の確認は毎回やる。** スクリプト検証を素通りする不具合が実際に2件あった
-  （図が一瞬空欄になる、押せない選択肢にホバーが乗って正誤の色を隠す）。
-  2026-09-01 の用語ポップ全滅（`**[[用語]]**` が文字のまま）を機に、描画そのものは
-  `bash scripts/check_render.sh ip|ap` が門になった（deploy-pages.sh がビルド前に自動で回す。
-  実データ全件を jsdom で描いて DOM を見る）。**それでも人が見るのはログイン後の画面**
-  （出典・一部改変・模試結果・見た目の崩れ）
-
-## 仕様 ⇔ コード ⇔ テスト の対応（作業完了の条件）
-
-原本 harness（`tsay-dev/harness` v4.1.0。APM で `develop-core` を `.claude/` に展開、道具は `.harness/`）の作法で回す。
-仕様の正本は `docs/goals/<GOAL>/<UC>/`（`UC.md`・`REQ-nnn.md`・`contract.yaml`）、横断の決まりは `docs/rules/BR-nnn.md`、
-用語は `docs/01-glossary.md`、決定は `docs/adr/`。規約は `.claude/rules/docs.md`（R-101〜R-1207）と `.claude/rules/comments.md`。
-
-- **要求を受けたら Skill `/develop` の手順で動く**: `spec-author`（実装もテストも読まない）が GOAL → UC（状態×イベント表）→ REQ（EARS 1 文、**1 要件 1 か所のコード**）→ 契約 → 用語集 の順に草案を書き、本人が承認して UC・REQ を `active`、契約を `fixed` → `implementer` と `test-author` を**別コンテキストで並行**（test-author は実装を読まない。中央 `reports/106`）→ `npm test` が通るまで。書き込みの瞬間は `gate-hook`（PreToolUse。UC の `phase:` が 実装／検証 で、REQ が全部 `active`・契約が `fixed` でないと `src/`・`portal/`・`scripts/` に書けない）、終了の瞬間は `stop-gate`（Stop）が止める
-- **実装の前に REQ があるか確かめる。** 無ければ UC の表のセルと REQ の追加を提案する（次の番号は `node .harness/tools/trace-check/trace-check.mjs --next req`。UC・BR・ADR も同じ）。仕様に無い機能を勝手に作らない。GOAL や BR から直接コードに結ばない（UC → REQ を経る）。test-author は REQ の `## 検証方針` に分割クラスを宣言してからテストを書く（テストの下限と上限）
-- **コードには `@implements REQ-nnn`／`BR-nnn`、テストには `@covers REQ-nnn#class`**（`it(` の直前の行。1 テスト 1 クラス）、UC 1 本にシナリオテスト 1 本（`@scenario UC-nnn`。`tests/scenario/` か `scripts/check_*api.py`）。ID だけを書き、要件の文を写さない。ファイル先頭にまとめない。コメントは今の仕様だけ（経緯・日付を書かない）
-- **作業完了の条件は `npm test`（spec-lint → trace-check → vitest → check_source → check_docs）が全部通ること。** Stop フック・pre-commit・CI が同じ検査を回す。**合流の条件はテスト緑＋trace-check の新規違反 0**（R-803）。`.trace-baseline.json` は既知の未返済（返済計画 `docs/検証の返済計画.md`）で、**縮む方向にしか動かさない**（R-804。`--update-baseline` は解消済みを消すときだけ。育てるのは本人の許可制）
-- **上流が先**（R-801）: 赤や欠けは SSOT を直してから再導出する。親（この会話）は仕様も実装もテストも書かない。赤は三分岐で裁く: ①仕様が決めている → 実装の欠陥（implementer） ②テストが仕様に無い手順・DOM を固定 → test-author が再導出 ③仕様が表現できていない → spec-author。コミット前に `reviewer`（別コンテキスト・読み取り専用）の `阻止` ゼロ。機械判定に落とせない指摘は `docs/verification/DEFERRED.md`
-- **赤の切り分けで実装を読んで要件やテストを実装に寄せない**（追認）。テスト設計に渡す契約は `contract.yaml` の operation の名前と型だけ
-- **どの要件にも当たらないコード・テスト・道具は、要件を書いてから作る**（仕様が絶対の正解）。**「仕様外」の印・除外の印は存在しない。提案もしない**（2026-11-05 本人「仕様外の印なんていうものは存在してはいけません」）。利用者から観測しにくい実装の値（反復回数・トークンの形・見比べる間隔）も、開発側の道具（門・学習者パック）も、要件か BR か NFR に書いて `@covers`／`@implements` で結ぶ。検査の緩和・テストの skip・中身の無いタグやテストは本人の許可なく行わない
-
-## 権限プロンプトを減らす運用
-
-`.claude/settings.json` にプロジェクトのパイプライン（scripts/ 配下・デプロイ・バックアップ・
-curl 確認・sips）を許可済み。編集は `defaultMode: acceptEdits` で自動承認される。
-それでもプロンプトが出るのは**複合ワンライナー**（for/until ループ、`X=$(...)` 代入、
-`cat >` リダイレクト、mv/cp/rm）が主因。許可リストでは救えないので、
-**繰り返す処理はワンライナーにせず scripts/ のスクリプトに起こす**こと
-（`python3 scripts/*` と `bash scripts/check_*.sh` / `audit_screens.sh` / `deploy-pages.sh` / `backup_d1.sh` は
-`.claude/settings.json` で許可済みなのでプロンプトが出ない。2026-09-14 に個別列挙から総称に畳んだ）。
-破壊的操作（rm、本番 DB の DELETE 等）は意図的に許可していない。毎回確認が正しい。
-`seed_remote.sh` は本番の `DELETE FROM topics` を含むので許可リストに入れていない（入れるかは未決。`brain/PREMISES.md`）。
-
-## この環境の制約
-
-- `data/pdfs/`（181MB）と `data/pages/` は `.gitignore` 済み。スクリプトで再生成できる
-- git リポジトリ（2026-09 に初回コミット）。コミットは Conventional Commits の形
-  （`feat(materials): …` / `fix(seed): …`。type は feat fix docs style refactor perf test chore ci build revert）。
-  `.githooks/commit-msg` が形式を見る。クローン直後に一度 `bash scripts/install_githooks.sh`
-- 1 セッションで起こせる**サブエージェントには上限（200体）がある**（2026-08 に到達）。1回分の取り込みに約15体、新しい資格型の対象 5 回分で約 90 体使う
+- 規約: [`.claude/rules/docs.md`](.claude/rules/docs.md)（R-101〜R-1207）、[`.claude/rules/comments.md`](.claude/rules/comments.md)、手順は Skill `/develop`
+- 検査の宣言とコマンド: `traceconfig.json`（次の版への移行の間は `traceconfig.next.json` と `.harness-next/` が並ぶ）、`package.json` の `scripts`
+- 仕様: [`docs/goals/`](docs/goals/)・[`docs/rules/`](docs/rules/)・[`docs/nfr/`](docs/nfr/)・[`docs/adr/`](docs/adr/)・[`docs/01-glossary.md`](docs/01-glossary.md)・[`docs/_shared/`](docs/_shared/)
+- 検証の台帳: [`docs/verification/GLOBAL.md`](docs/verification/GLOBAL.md)・[`docs/verification/DEFERRED.md`](docs/verification/DEFERRED.md)・[`docs/検証の返済計画.md`](docs/検証の返済計画.md)
+- 人の運用手順（動かし方・本番・secret）: [`README.md`](README.md)

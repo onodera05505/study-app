@@ -13,7 +13,7 @@
 
 ## 見るもの
 
-- **docs/ の索引網羅** — `docs/*.md` の全ファイル名が `CLAUDE.md` の表に載っているか
+- **docs/ の索引網羅** — `docs/*.md` の全ファイル名が `docs/文書の索引.md` に載っているか
 - **brain の索引網羅** — `brain/reports/*.md` の全ファイル名が `brain/INDEX.md` に載っているか
 - **門の実在** — `docs/不変条件と門.md` がバッククォートで名指しするパス
   （scripts/ src/ .claude/ docs/ brain/ 配下）が実在するか。`<試験>` のような
@@ -194,7 +194,7 @@ def main() -> int:
     root = Path(args.root).resolve()
 
     errors: list[str] = []
-    n_docs = check_index(root, "CLAUDE.md", "docs", errors)
+    n_docs = check_index(root, "docs/文書の索引.md", "docs", errors)
     n_brain = check_index(root, "brain/INDEX.md", "brain/reports", errors)
     n_gates = check_gate_paths(root, errors)
     n_logs = check_worklog_brain_line(root, errors)

@@ -52,7 +52,7 @@
 ## 資格版（ip / ap）を担当するときの補足
 - 教材は `data/<key>/materials_v3/expl_NN.json`（`materials` に 7 論点ほど。キーは topic_id / term / explanation / detail）。**要約・練習・roadmap.json は無い**ので、その型（要約ずれ・練習）は見ない
 - 同じ NN の問題解説が `data/<key>/question_explanations/expl_NN.json` にある（`explanations[]`: question_id / correct / correct_reason / choices[].note）。**教材と解説の役割分担**（誤答のケアは解説へ、教材は概念）が守られているか、解説の `note` が「〜の取り違え」の決め打ちになっていないか、を `役割分担`・`問題` で見る
-- 過去問の原文は見なくてよい（原本との照合は親がやる）。**「データが間違っている」と感じた所は severity を付けず `kind: その他` で「原本と照合したい」と書く**（誤報が 7/8 の実績。CLAUDE.md）
+- 過去問の原文は見なくてよい（原本との照合は親がやる）。**「データが間違っている」と感じた所は severity を付けず `kind: その他` で「原本と照合したい」と書く**（誤報が 7/8 の実績。`docs/落とし穴.md`）
 - 出力は `data/<key>/review/expl_NN.json`（`bundle` には `expl_NN` と書く）
 
 ## 報告（親へ）
