@@ -43,11 +43,14 @@
     ]
   },
   "source": {
+    "_comment": "実現単位は、TypeScript・JavaScript では export した関数とクラス、Python では名前が _ で始まらない def、シェルでは関数。要件（REQ・BR）を実現する単位は、直上に連続するコメント行に @implements を持つ。Python でそのファイルの中からしか呼ばれない補助は、名前を _ で始めて単位から外す。scripts/ は要件に結んであるファイルだけを unit_dirs に列挙し、残りは要件を持たない技術部品（support_dirs）。コマンドの入口は def main で、技術部品の main は入口に数えない（entry_exclude）。API に当てる検査（scripts/check_api.py・check_portal_api.py）はシナリオテストなので source から外し、tests.system に置く。",
     "dirs": [
       "src",
       "portal/src",
       "scripts",
-      "portal/static"
+      "portal/static",
+      "!scripts/check_api.py",
+      "!scripts/check_portal_api.py"
     ],
     "extensions": [
       ".ts",
@@ -126,12 +129,45 @@
       "!scripts/seed_remote.sh",
       "!scripts/targets.py",
       "!scripts/verify_seed_remote.py",
+      "!scripts/check_api.py",
+      "!scripts/check_portal_api.py",
       "portal/static/**",
       "!portal/static/app.js"
     ],
-    "unit_pattern": "^export\\s+(?:default\\s+)?(?:async\\s+)?function\\*?\\s*(\\w*)\\s*[<(]|^export\\s+(?:default\\s+)?(?:abstract\\s+)?class\\s+(\\w+)|^export\\s+(?:const|let)\\s+(\\w+)\\s*(?::[^=]+)?=\\s*(?:async\\s*)?(?:<[^>]*>\\s*)?(?:\\(|function\\b|\\w+\\s*=>|\\w+\\s*\\(\\s*(?:async\\s*)?(?:\\(|function\\b|\\w+\\s*=>))|^export\\s+default\\s+(?:(\\w+)\\s*;?\\s*$|(?:async\\s*)?(?:\\(|\\w+\\s*\\())|^export\\s*\\{(?!(?:\\s*type\\s+\\w+(?:\\s+as\\s+\\w+)?\\s*,?)*\\s*\\})\\s*([^}]*?)\\s*(?:\\}\\s*;?\\s*)?$|^def\\s+((?!_)[\\p{L}\\p{N}_]+)\\s*\\(",
+    "unit_pattern": "^export\\s+(?:default\\s+)?(?:async\\s+)?function\\*?\\s*(\\w*)\\s*[<(]|^export\\s+(?:default\\s+)?(?:abstract\\s+)?class\\s+(\\w+)|^export\\s+(?:const|let)\\s+(\\w+)\\s*(?::[^=]+)?=\\s*(?:async\\s*)?(?:<[^>]*>\\s*)?(?:\\(|function\\b|\\w+\\s*=>|\\w+\\s*\\(\\s*(?:async\\s*)?(?:\\(|function\\b|\\w+\\s*=>))|^export\\s+default\\s+(?:(\\w+)\\s*;?\\s*$|(?:async\\s*)?(?:\\(|\\w+\\s*\\())|^export\\s*\\{(?!(?:\\s*type\\s+\\w+(?:\\s+as\\s+\\w+)?\\s*,?)*\\s*\\})\\s*([^}]*?)\\s*(?:\\}\\s*;?\\s*)?$|^def\\s+((?!_)[\\p{L}\\p{N}_]+)\\s*\\(|^([A-Za-z_][A-Za-z0-9_]*)\\s*\\(\\)\\s*\\{",
     "implements_placement": "before",
-    "entry_pattern": "\\.(?:get|post|put|patch|delete|all)\\(\\s*[\"'`](\\/[^\"'`]*)|\\.route\\(\\s*[\"'`](\\/[^\"'`]*)|\\.on\\(\\s*(?:[\"'`][A-Z]+[\"'`]|\\[[^\\]]*\\])\\s*,\\s*[\"'`](\\/[^\"'`]*)",
+    "entry_pattern": "\\.(?:get|post|put|patch|delete|all)\\(\\s*[\"'`](\\/[^\"'`]*)|\\.route\\(\\s*[\"'`](\\/[^\"'`]*)|\\.on\\(\\s*(?:[\"'`][A-Z]+[\"'`]|\\[[^\\]]*\\])\\s*,\\s*[\"'`](\\/[^\"'`]*)|^def\\s+(main)\\s*\\(",
+    "entry_exclude": [
+      "scripts/**",
+      "!scripts/apply_summary_override.py",
+      "!scripts/attach_material_figures.py",
+      "!scripts/build_learner_pack.py",
+      "!scripts/build_rewrite_bundles.py",
+      "!scripts/build_roadmap.py",
+      "!scripts/build_seed.py",
+      "!scripts/build_target_dataset.py",
+      "!scripts/build_unit_reading.py",
+      "!scripts/check_material_style.py",
+      "!scripts/check_roadmap.py",
+      "!scripts/check_roadmap_registry.py",
+      "!scripts/check_seed.py",
+      "!scripts/check_source.py",
+      "!scripts/check_sso_prod.sh",
+      "!scripts/check_unit_plans.py",
+      "!scripts/deploy-pages.sh",
+      "!scripts/deploy_portal.sh",
+      "!scripts/grade_learner.py",
+      "!scripts/learner_eval.py",
+      "!scripts/material_figure_line.py",
+      "!scripts/material_generations.py",
+      "!scripts/pinned_wrangler.sh",
+      "!scripts/render_material_figures.py",
+      "!scripts/render_prompts.py",
+      "!scripts/render_svg_png.mjs",
+      "!scripts/seed_remote.sh",
+      "!scripts/targets.py",
+      "!scripts/verify_seed_remote.py"
+    ],
     "comment_pattern": "^\\s*(?:\\/\\/|\\/\\*|\\*|#|--|<!--)"
   },
   "tests": {
