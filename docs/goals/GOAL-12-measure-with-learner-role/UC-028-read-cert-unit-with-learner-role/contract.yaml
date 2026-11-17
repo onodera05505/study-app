@@ -77,6 +77,7 @@ operations:
         out: { type: string, minLength: 1, description: 単元の読み物の出力先。学びの置き場（置き場の根の data/ の下全体）の外で、無いか空の場所 }
     response:
       type: object
+      description: 終了の状態 0。errors に当たったときは ToolError を出して終了の状態 1
       required: [reading, figures, items]
       properties:
         reading: { type: string, const: reading.md, description: 出力先の中の単元の読み物 }

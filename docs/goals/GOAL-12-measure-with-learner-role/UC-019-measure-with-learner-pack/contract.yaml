@@ -189,6 +189,7 @@ operations:
         out: { type: string, minLength: 1, description: パックの出力先。学びの置き場（置き場の根の data/ の下全体）の外で、無いか空の場所 }
     response:
       type: object
+      description: 終了の状態 0。errors に当たったときは ToolError を出して終了の状態 1
       required: [snapshotPath, snapshot, files]
       properties:
         snapshotPath: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+/eval/pack_cycle_[0-9]+\\.json$" }
@@ -351,7 +352,7 @@ operations:
         cycle: { type: integer, minimum: 1 }
         answers: { type: string, minLength: 1, description: 答えのファイル（読んだままの形は readLearnerAnswers、書き方は writePackQuiz の answerFormat） }
         explain: { type: string, minLength: 1, description: 説明テストの採点のファイル（形は readExplainGrades） }
-    response: { $ref: "#/schemas/CycleResult" }
+    response: { $ref: "#/schemas/CycleResult", description: 終了の状態 0。errors に当たったときは ToolError を出して終了の状態 1 }
     errors:
       - code: INVALID_INPUT
         when: 引数が契約の形の外
@@ -534,6 +535,7 @@ operations:
         data: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+$", description: 学びの置き場。最後の段が登録簿の学びの key }
     response:
       type: object
+      description: 終了の状態 0。errors に当たったときは ToolError を出して終了の状態 1
       required: [path]
       properties:
         path: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+/prompts/roadmap_learner\\.md$", description: 描き出した指示。中身の形は writeLearnerInstructions }

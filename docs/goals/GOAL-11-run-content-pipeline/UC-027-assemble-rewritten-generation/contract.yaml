@@ -1,6 +1,6 @@
-# UC-027 の境界: 作り手が手元で呼ぶ道具の入口 5 つ（投入の組み立て・図の差し込み・図の仕様の検査・実データの描画の検査・投入後の突き合わせ）の形。
+# UC-027 の境界: 作り手が手元で呼ぶ道具の入口 7 つ（投入の組み立て・図の差し込み・図の仕様の検査・実データの描画の検査・流す前の投入の検査・投入後の突き合わせ・配る本文の教材の一覧）の形。
 # 読み方は docs/adr/ADR-0008（手元の道具の境界を local-store で読む）。パスは相対ならコマンドを呼んだ作業ディレクトリが起点。
-# 入口は scripts/build_seed.py・scripts/attach_material_figures.py・scripts/render_material_figures.py（--check）・scripts/check_render.sh・scripts/verify_seed_remote.py。
+# 入口は scripts/build_seed.py・scripts/attach_material_figures.py・scripts/render_material_figures.py（--check）・scripts/check_render.sh・scripts/check_seed.py・scripts/verify_seed_remote.py・scripts/material_generations.py。
 # request の各欄は同じ名前の引数（examName は --exam-name、dryRun は --dry-run のように、大文字の前に - を入れた小文字）。checkRender の learning だけは第 1 引数。
 # 単元の構成の形と判定は UC-024 の契約が持つ。投入の表の形の正本は DB のスキーマ。教材の世代の選び方の正本は scripts/material_generations.py。
 x-uc: UC-027
@@ -188,6 +188,48 @@ operations:
         request: { learning: zzz }
         error: INVALID_INPUT
 
+  checkSeed:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 流す前の投入の中身を検査し、問題があれば示して失敗で終える
+    request:
+      type: object
+      required: [data]
+      additionalProperties: false
+      properties:
+        data: { type: string, pattern: "^data/[a-z]+$", description: 学びの置き場。末尾が登録簿の学びの key }
+        sql: { type: string, minLength: 1, description: 検査する投入。省略すると学びの置き場の seed.sql }
+        figures: { type: string, minLength: 1, description: 過去問の図の画像の置き場。省略すると public/figures の下の、学びの key と同じ名前のディレクトリ }
+        public: { type: string, minLength: 1, description: 教材の図の画像の配信の置き場。省略すると public }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1], description: プロセスの終了コードと同じ。1 は問題が 1 件以上 }
+    errors:
+      - code: NOT_FOUND
+        when: 検査する投入が無い
+      - code: INVALID_INPUT
+        when: 登録簿に無い学び
+    examples:
+      ok:
+        request: { data: data/ip }
+        response: { exitCode: 0 }
+      withProblems:
+        request: { data: data/ap, sql: data/ap/seed_wrong_citation.sql }
+        response: { exitCode: 1 }
+      seedMissing:
+        request: { data: data/ip, sql: data/ip/no_such_seed.sql }
+        error: NOT_FOUND
+      unknownLearning:
+        request: { data: data/zzz, sql: data/ip/seed.sql }
+        error: INVALID_INPUT
+      seedMissingBeforeUnknownLearning:
+        request: { data: data/zzz }
+        error: NOT_FOUND
+
   verifySeedRemote:
     transport: local-store
     direction: inbound
@@ -220,4 +262,55 @@ operations:
         response: { exitCode: 1 }
       unknownLearning:
         request: { data: data/zzz, exam: zzz }
+        error: INVALID_INPUT
+
+  listDeliveredMaterials:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 論点ごとに配る本文と同じ選び方で選んだ教材を、選んだ世代の名前とファイルの名前を添えて出す
+    request:
+      type: object
+      required: [data]
+      additionalProperties: false
+      properties:
+        data: { type: string, minLength: 1, description: 学びの置き場 }
+        registered: { type: boolean, description: true なら登録簿に無い学びを断る }
+        refusalOnly: { type: boolean, description: true なら断るかどうかだけを見て、通れば materials と topicsByGeneration を出さない }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, const: 0, description: プロセスの終了コードと同じ }
+        topicsByGeneration: { $ref: "#/schemas/GenerationCounts" }
+        materials:
+          type: array
+          description: 論点の番号の順。選んだ教材の欄をそのまま持つ
+          items:
+            type: object
+            required: [topic_id, term, explanation, detail, _generation, _file]
+            properties:
+              topic_id: { type: integer, minimum: 1 }
+              term: { type: string, minLength: 1 }
+              explanation: { type: string }
+              detail: { type: string }
+              _generation: { type: string, pattern: "^materials(_v[0-9]+)?$", description: 選んだ世代のディレクトリの名前 }
+              _file: { type: string, pattern: "\\.json$", description: 選んだ教材があったファイルの名前 }
+    errors:
+      - code: INVALID_INPUT
+        when: registered を渡した、登録簿に無い学び
+    examples:
+      ok:
+        request: { data: data/ip }
+        response:
+          exitCode: 0
+          topicsByGeneration: { materials_v3: 500, materials_v4: 32 }
+          materials:
+            - { topic_id: 201, term: 選択・結合, explanation: "**選択・結合**とは、…です。", detail: "### しくみ\n…", _generation: materials_v4, _file: 21-2.json }
+      refusalOnlyPasses:
+        request: { data: data/ip, registered: true, refusalOnly: true }
+        response: { exitCode: 0 }
+      unknownLearning:
+        request: { data: data/zzz, registered: true }
         error: INVALID_INPUT

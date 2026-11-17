@@ -1,0 +1,110 @@
+# UC-032 の境界: 運用者が配備と投入の前に呼ぶ道具の入口 3 つ（登録簿の門・ソースの門・投入を本番の保存先へ流す手続き）の形。振る舞いは ./UC.md と同じ場所の REQ が持つ。
+# 読み方は ../../../adr/ADR-0008-local-tool-boundary.md（手元の道具の境界を local-store で読む）、共有語彙は ../../../_shared/components.yaml。
+# 入口は scripts/check_roadmap_registry.py・scripts/check_source.py・scripts/seed_remote.sh。request の各欄は同じ名前の引数で、learning だけは第 1 引数、seedRemote の local は第 2 引数の --local。
+# 断ったとき（errors）は終了コードが 0 でなく、門の判定も保存先への書き込みもしない。門が止めたときは response の exitCode が 1。
+# 手続きの中で呼ぶ流す前の投入の検査と投入後の突き合わせの形は UC-027 の checkSeed と verifySeedRemote が正本。ここには再掲しない（R-101）。
+# 投入（学びの置き場の seed.sql）は作業ツリーに追跡されず、組み立て（UC-027 の buildSeed）で書き出す。seedRemote の ok の例は組み立てのあと、seedMissing の例は組み立てる前に回す。
+# 上限の値・登録簿の語と値・保存先の名前は値なので書かない（R-102）。正本は scripts/check_source.py の上限の定数、src/shared/targets.json、wrangler.jsonc の env.<学び>.d1_databases（ADR-0004）。
+x-uc: UC-032
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-17
+
+schemas:
+  GateResult:
+    type: object
+    required: [exitCode]
+    properties:
+      exitCode: { type: integer, enum: [0, 1], description: プロセスの終了コードと同じ。0 は通した、1 は止めた }
+
+operations:
+  checkRoadmapRegistry:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 学びの登録簿に、ロードマップ型の回の語・印の語・束ね方に合う値がそろっているかを門にかける
+    request:
+      type: object
+      required: [learning]
+      additionalProperties: false
+      properties:
+        learning: { type: string, pattern: "^[a-z]+$", description: 登録簿の学びの key。第 1 引数 }
+    response: { $ref: "#/schemas/GateResult" }
+    errors:
+      - code: INVALID_INPUT
+        when: 学びを 1 つでなく渡す
+      - code: INVALID_INPUT
+        when: 登録簿に無い学び
+    examples:
+      ok:
+        request: { learning: eng }
+        response: { exitCode: 0 }
+      okQualification:
+        request: { learning: ip }
+        response: { exitCode: 0 }
+      noLearning:
+        request: {}
+        error: INVALID_INPUT
+      unknownLearning:
+        request: { learning: zzz }
+        error: INVALID_INPUT
+
+  checkSource:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 手元のソースが、パスワードの記録を作る計算量の上限と、取得する一覧を空の一覧で始めない決まりを満たすかを門にかける
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        auth: { type: string, minLength: 1, description: パスワードの記録を作るコードのファイル。省略するとプロジェクトの既定の位置 }
+        client: { type: string, minLength: 1, description: 画面のコードの置き場。省略するとプロジェクトの既定の位置 }
+    response: { $ref: "#/schemas/GateResult" }
+    errors:
+      - code: INVALID_INPUT
+        when: 知らない引数を渡す
+    examples:
+      ok:
+        request: {}
+        response: { exitCode: 0 }
+      unknownArgument:
+        request: { verbose: true }
+        error: INVALID_INPUT
+
+  seedRemote:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 学びの投入を、構造の変更と流す前の投入の検査の門・本番の控え・投入・投入後の突き合わせの順に保存先へ流す
+    request:
+      type: object
+      required: [learning]
+      additionalProperties: false
+      properties:
+        learning: { type: string, pattern: "^[a-z]+$", description: 登録簿の学びの key。第 1 引数 }
+        local: { type: boolean, description: true なら本番でなく手元の保存先へ流す。第 2 引数の --local }
+    response: { $ref: "#/schemas/GateResult" }
+    errors:
+      - code: INVALID_INPUT
+        when: 第 2 引数が空でも --local でもない
+      - code: INVALID_INPUT
+        when: 登録簿に無い学び
+      - code: NOT_FOUND
+        when: その学びの投入が書き出されていない
+    examples:
+      ok:
+        request: { learning: ip, local: true }
+        response: { exitCode: 0 }
+      mistypedLocalBeforeSeedMissing:
+        request: { learning: fe, locl: true }
+        error: INVALID_INPUT
+      unknownLearning:
+        request: { learning: zzz, local: true }
+        error: INVALID_INPUT
+      seedMissing:
+        request: { learning: fe, local: true }
+        error: NOT_FOUND

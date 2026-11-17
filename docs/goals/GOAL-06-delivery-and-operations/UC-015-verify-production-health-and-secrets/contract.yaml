@@ -1,4 +1,4 @@
-# UC-015 本番が生きていることと秘密がそろっていることを機械で確かめる — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-213〜223・350）
+# UC-015 本番が生きていることと秘密がそろっていることを機械で確かめる — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-213〜223・350・523）
 # 読み方の決まりは docs/adr/ADR-0001（決め 6: 外から叩く死活確認と入口の画面、および秘密の名前の一覧）
 # 共有語彙（authSchemes・errorCodes・共有の形）は ../../../_shared/components.yaml
 # 検査が叩く経路のうち、認証の形（/api/auth/config）は UC-013 の getAuthConfig が形の正本。ここには再掲しない（R-101）
@@ -11,7 +11,7 @@
 x-uc: UC-015
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-06
+x-updated: 2026-11-17
 
 operations:
   checkDeploymentHealth:
@@ -36,6 +36,41 @@ operations:
     examples:
       ok: { request: { deployment: _portal }, response: { ok: true } }
       okLearning: { request: { deployment: ip }, response: { ok: true } }
+      noAnswer: { request: { deployment: ip }, error: UPSTREAM_UNAVAILABLE }
+
+  readDeploymentHealthHeaders:
+    transport: http
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 配備の死活確認を認証なしで外から叩き、応答に載っていたヘッダの名前と値を受け取る
+    wire: { method: GET, path: /api/health, success: 200 }
+    request:
+      type: object
+      required: [deployment]
+      properties:
+        deployment:
+          type: string
+          minLength: 1
+          description: 叩く配備の key（まなびばと各学び）。key と URL の値の正本は scripts/pages_projects.json
+    response:
+      type: object
+      required: [headers]
+      properties:
+        headers:
+          type: object
+          additionalProperties: { type: string }
+          description: 応答に載っていたヘッダ。鍵はヘッダの名前を小文字にした物、値はその値。定められたヘッダの名前と値の正本は scripts/check_sso_prod.sh
+    errors:
+      - code: UPSTREAM_UNAVAILABLE
+        when: 配備に届かずヘッダが得られない
+    examples:
+      ok:
+        request: { deployment: _portal }
+        response: { headers: { content-security-policy: "default-src 'self'", strict-transport-security: "max-age=31536000; includeSubDomains", x-frame-options: DENY, x-content-type-options: nosniff, referrer-policy: no-referrer } }
+      headerMissing:
+        request: { deployment: ip }
+        response: { headers: { content-security-policy: "default-src 'self'", x-content-type-options: nosniff } }
       noAnswer: { request: { deployment: ip }, error: UPSTREAM_UNAVAILABLE }
 
   openDeploymentEntry:
