@@ -132,8 +132,112 @@ def unit_of(c: dict, i: int, place: dict, sig: str, term_of: dict[int, str]) -> 
     return u
 
 
+# @implements REQ-563
+def settings_of(cfg: dict, max_units: int, per_day: int, min_per_goal: int) -> tuple[int, int, int, object]:
+    """(単位の数の上限, 日で束ねる 1 回の論点数, 到達基準ごとに確保する単位の数, 回の束ね方)。ロードマップの設定に値があればその値、
+    無ければ渡した引数の値（引数の既定は argparse が持つ）。回の束ね方は設定に無ければ日。設定が無い学びは cfg を空で渡す。"""
+    return cfg.get("max", max_units), cfg.get("per_day", per_day), cfg.get("min_per_goal", min_per_goal), cfg.get("group_by", "day")
+
+
+# @implements REQ-532
+def grouping_refusal(group_by) -> str | None:
+    """回の束ね方が日でも章でもなければ、その束ね方を示す断りの文。"""
+    return None if group_by in ("day", "chapter") else f"group_by は day か chapter: {group_by}"
+
+
+# @implements REQ-533
+def chapter_refusal(cands: list[dict], levels_of) -> str | None:
+    """章で束ねるときの候補の断りの文。章の名前か印を欠く候補を先に、次に登録簿の印の段に無い印の候補を、名前で示す。
+    levels_of は登録簿の印の段を返す関数で、章の名前と印がそろっているときだけ登録簿を読む。"""
+    lack = [c["term"] for c in cands if not c.get("chapter") or c.get("tier") is None]
+    if lack: return f"章で束ねるのに chapter か tier が無い候補 {len(lack)} 件: {lack[:5]}"
+    levels = levels_of()
+    off = [c["term"] for c in cands if c.get("tier") not in levels]
+    if off: return f"印が登録簿 roadmapSpec.tiers の段に無い候補 {len(off)} 件: {off[:5]}"
+    return None
+
+
+# @implements REQ-534
+def included_and_excluded(cfg: dict) -> list:
+    """含める一覧（must_include）と除く一覧（exclude）の両方にある論点の ID を昇順で。"""
+    return sorted(set(cfg.get("must_include", [])) & set(cfg.get("exclude", [])))
+
+
+# @implements REQ-535
+def split_by_goals(cands: list[dict]) -> tuple[list[dict], list[str]]:
+    """(到達基準を持つ候補, 到達基準を 1 つも持たず落とす候補の名前)。単位は前者からだけ選ぶので、含める一覧にあっても後者は単位にならない。"""
+    return [c for c in cands if c.get("goals")], [c["term"] for c in cands if not c.get("goals")]
+
+
+# @implements REQ-536
+def select_units(linked: list[dict], must: set, max_units: int, min_per_goal: int, min_per_field: dict, n_goals: int) -> list[dict]:
+    """到達基準を持つ候補（score の降順に並べた linked）から単位を選ぶ。含める一覧を先に、残りを上限まで score 順に取り、
+    到達基準ごと・分野ごとの最低数を補い、選んだ単位の前提の候補を上限を超えても含める。上限を超えた分は、前提として要らず
+    最低数を割らない単位を score の低い順に外す。"""
+    chosen = [c for c in linked if c["id"] in must] + [c for c in linked if c["id"] not in must][: max(0, max_units - len(must))]
+    all_by_id = {c["id"]: c for c in linked}
+    def ensure_goals():
+        for g in range(1, n_goals + 1):
+            for c in linked:
+                if len([x for x in chosen if g in x["goals"]]) >= min_per_goal: break
+                if c not in chosen and g in c["goals"]: chosen.append(c)
+    def ensure_fields():
+        for f, n in min_per_field.items():
+            for c in linked:
+                if len([x for x in chosen if x["field"] == f]) >= n: break
+                if c not in chosen and c["field"] == f: chosen.append(c)
+    def ensure_prereqs():
+        changed = True
+        while changed:
+            changed = False
+            for c in list(chosen):
+                for p in c.get("prereq", []):
+                    if p in all_by_id and all_by_id[p] not in chosen:
+                        chosen.append(all_by_id[p]); changed = True
+    def needed_by_others(c):
+        return any(c["id"] in x.get("prereq", []) for x in chosen if x is not c)
+    def trim():
+        while len(chosen) > max_units:
+            removable = [c for c in sorted(chosen, key=lambda c: (c["score"], c["term"]))
+                         if c["id"] not in must and not needed_by_others(c)
+                         and all(len([x for x in chosen if g in x["goals"]]) - 1 >= min_per_goal for g in c["goals"])
+                         and len([x for x in chosen if x["field"] == c["field"]]) - 1 >= min_per_field.get(c["field"], 0)]
+            if not removable: break
+            chosen.remove(removable[0])
+    # trim の後に前提を補うと上限を超え直すので、変わらなくなるまで回す（min_per_field の合計は max より小さくしておく）
+    ensure_goals(); ensure_fields(); ensure_prereqs()
+    for _ in range(10):
+        before = len(chosen); trim(); ensure_prereqs()
+        if len(chosen) <= max_units or len(chosen) == before: break
+    return chosen
+
+
+# @implements REQ-537
+def prereqs_behind(ordered: list[dict], by_id: dict[int, dict]) -> list[tuple[str, str]]:
+    """並べ終えた学ぶ順で、前提の単位が自分より後ろにある (単位の名前, 前提の単位の名前)。"""
+    pos_of = {c["id"]: i for i, c in enumerate(ordered)}
+    return [(c["term"], by_id[p]["term"]) for c in ordered for p in c.get("prereq", []) if p in pos_of and pos_of[p] > pos_of[c["id"]]]
+
+
+# @implements REQ-538
+def write_bundles(d: Path, out: Path, units: list[dict], sig: str) -> None:
+    """書き手への束の割り当て（out/material_bundles/bundle_NN.json、8 論点ずつ）を書く。学びの置き場に書き手の教材の束
+    （materials/bundle_*.json）があるあいだは作り直さない。並びが変わると教材の束と組がずれ、門 check_roadmap_bundle が落ちる。"""
+    bdir = out / "material_bundles"; bdir.mkdir(exist_ok=True)
+    if any((d / "materials").glob("bundle_*.json")):
+        print("注: materials/ が既にあるので material_bundles/ は作り直さない（順序の変更は roadmap.json だけに反映）")
+        return
+    for p in bdir.glob("bundle_[0-9][0-9].json"): p.unlink()  # 連番の束だけ作り直す。手で作った追加の束（bundle_c2_new_a 等）は担当が読んでいる入力なので消さない
+    for n, i in enumerate(range(0, len(units), 8), 1):
+        chunk = units[i:i + 8]
+        (bdir / f"bundle_{n:02d}.json").write_text(json.dumps({"bundle": f"bundle_{n:02d}", "topics": [
+            # 副の信号のキーは対象ごとに違う（interview_count / care_count / life_count / syllabus_weight）ので sig で写す
+            {k: u[k] for k in ("topic_id", "term", "field", "middle", "summary", "goals", "prereq", "sources", "source_count", sig)} for u in chunk]},
+            ensure_ascii=False, indent=2), encoding="utf-8")
+
 
 # @implements REQ-430, REQ-434, REQ-437
+# @operation UC-030#buildRoadmap
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--max", type=int, default=40); ap.add_argument("--per-day", type=int, default=3); ap.add_argument("--min-per-goal", type=int, default=4)
     ap.add_argument("--out", default=None, help="roadmap.json と material_bundles/ の書き先（既定は --data）")
@@ -155,15 +259,12 @@ def main() -> int:
     # 候補の前提は論点の ID。どの候補にも当たらない前提は並べるときに使われないので知らせる
     stray = [(c["id"], p) for c in cands for p in c.get("prereq", []) if not (_is_id(p) and p in cand_ids)]
     if stray: print(f"警告: 候補の前提のうち、どの候補の ID にも当たらない物 {len(stray)} 件: " + "; ".join(f"{t} ← {p!r}" for t, p in stray[:5]))
-    a.max = cfg.get("max", a.max); a.per_day = cfg.get("per_day", a.per_day); a.min_per_goal = cfg.get("min_per_goal", a.min_per_goal)
-    group_by = cfg.get("group_by", "day")
-    if group_by not in ("day", "chapter"): print(f"group_by は day か chapter: {group_by}"); return 1
+    a.max, a.per_day, a.min_per_goal, group_by = settings_of(cfg, a.max, a.per_day, a.min_per_goal)
+    refusal = grouping_refusal(group_by)
+    if refusal: print(refusal); return 1
     if group_by == "chapter":
-        lack = [c["term"] for c in cands if not c.get("chapter") or c.get("tier") is None]
-        if lack: print(f"章で束ねるのに chapter か tier が無い候補 {len(lack)} 件: {lack[:5]}"); return 1
-        levels = {t.get("level") for t in ((_target(d.name).get("roadmapSpec") or {}).get("tiers") or [])}
-        off = [c["term"] for c in cands if c.get("tier") not in levels]
-        if off: print(f"印が登録簿 roadmapSpec.tiers の段に無い候補 {len(off)} 件: {off[:5]}"); return 1
+        refusal = chapter_refusal(cands, lambda: {t.get("level") for t in ((_target(d.name).get("roadmapSpec") or {}).get("tiers") or [])})
+        if refusal: print(refusal); return 1
     file_order = {c["id"]: i for i, c in enumerate(cands)}
     # 分野ごとの最低数。分野が「部位」のように意味を持つ対象では、副の信号の偏りで分野が空になりうる。無ければ掛けない
     min_per_field = cfg.get("min_per_field", {})
@@ -171,56 +272,20 @@ def main() -> int:
     # 設定すると前提を守ったまま分野の順に並べ、到達基準 6 を最後に回す規約は使わない
     field_order = cfg.get("field_order", [])
     excl = set(cfg.get("exclude", [])); must = set(cfg.get("must_include", []))
+    both = included_and_excluded(cfg)
+    if both: print("must_include が exclude でも除かれている:", both); return 1
     apply_config_to_candidates(cands, cfg)
     cands = [c for c in cands if c["id"] not in excl]
-    missing_must = must - {c["id"] for c in cands}
-    if missing_must: print("must_include が exclude でも除かれている:", sorted(missing_must)); return 1
     # 副の信号のキー名は対象ごとに違う（interview_count / care_count など）ので登録簿から読む。読まないと 0 として黙って無視される
     sig = (_target(d.name).get("roadmapSpec") or {}).get("secondarySignal", "interview_count")
     if not any(sig in c for c in cands):
         print(f"警告: 副の信号 {sig} を持つ候補が無い（登録簿 roadmapSpec.secondarySignal を確かめる）")
     for c in cands: c["score"] = c.get("source_count", 0) + 0.5 * c.get(sig, 0)
-    linked = [c for c in cands if c.get("goals")]
+    linked, dropped = split_by_goals(cands)
     # 到達基準の数は対象ごとに違うので、候補が持つ到達基準の最大の番号から読む
     n_goals = max((g for c in linked for g in c["goals"]), default=6)
-    dropped = [c["term"] for c in cands if not c.get("goals")]
     linked.sort(key=lambda c: (-c["score"], c["term"]))
-    chosen = [c for c in linked if c["id"] in must] + [c for c in linked if c["id"] not in must][: max(0, a.max - len(must))]
-    all_by_id = {c["id"]: c for c in linked}
-    def ensure_goals():
-        for g in range(1, n_goals + 1):
-            for c in linked:
-                if len([x for x in chosen if g in x["goals"]]) >= a.min_per_goal: break
-                if c not in chosen and g in c["goals"]: chosen.append(c)
-    def ensure_fields():
-        for f, n in min_per_field.items():
-            for c in linked:
-                if len([x for x in chosen if x["field"] == f]) >= n: break
-                if c not in chosen and c["field"] == f: chosen.append(c)
-    def ensure_prereqs():
-        changed = True
-        while changed:
-            changed = False
-            for c in list(chosen):
-                for p in c.get("prereq", []):
-                    if p in all_by_id and all_by_id[p] not in chosen:
-                        chosen.append(all_by_id[p]); changed = True
-    def needed_by_others(c):
-        return any(c["id"] in x.get("prereq", []) for x in chosen if x is not c)
-    def trim():
-        # 上限に収める: 前提として要らず、到達基準の最低数を割らない単位を、score の低い順に外す
-        while len(chosen) > a.max:
-            removable = [c for c in sorted(chosen, key=lambda c: (c["score"], c["term"]))
-                         if c["id"] not in must and not needed_by_others(c)
-                         and all(len([x for x in chosen if g in x["goals"]]) - 1 >= a.min_per_goal for g in c["goals"])
-                         and len([x for x in chosen if x["field"] == c["field"]]) - 1 >= min_per_field.get(c["field"], 0)]
-            if not removable: break
-            chosen.remove(removable[0])
-    # trim の後に前提を補うと上限を超え直すので、変わらなくなるまで回す（min_per_field の合計は max より小さくしておく）
-    ensure_goals(); ensure_fields(); ensure_prereqs()
-    for _ in range(10):
-        before = len(chosen); trim(); ensure_prereqs()
-        if len(chosen) <= a.max or len(chosen) == before: break
+    chosen = select_units(linked, must, a.max, a.min_per_goal, min_per_field, n_goals)
     if len(chosen) > a.max:
         print(f"警告: 上限 {a.max} に収まらない（{len(chosen)} 件）。min_per_field の合計か must_include を見直す")
     chosen.sort(key=lambda c: (-c["score"], c["term"]))  # must_include を先頭に置いた並びを score 順に戻す（順序は前提とスコアだけで決める）
@@ -272,8 +337,7 @@ def main() -> int:
             continue
         ordered = rest[:lo] + members + rest[lo:]
     # 並べ終えたら前提が前にあるかを確かめる（門は check_roadmap にもある）
-    pos_of = {c["id"]: i for i, c in enumerate(ordered)}
-    bad = [(c["term"], by_id[p]["term"]) for c in ordered for p in c.get("prereq", []) if p in pos_of and pos_of[p] > pos_of[c["id"]]]
+    bad = prereqs_behind(ordered, by_id)
     if bad: print(f"警告: 前提が後ろにある {len(bad)} 件: " + "; ".join(f"{t} ← {p}" for t, p in bad[:5]))
     term_of = {c["id"]: c["term"] for c in ordered}
     units = []
@@ -289,19 +353,7 @@ def main() -> int:
                    "dropped_no_goal": dropped, "units": units}
     out.mkdir(parents=True, exist_ok=True)
     (out / "roadmap.json").write_text(json.dumps(roadmap, ensure_ascii=False, indent=2), encoding="utf-8")
-    bdir = out / "material_bundles"; bdir.mkdir(exist_ok=True)
-    if any((d / "materials").glob("bundle_*.json")):
-        # 教材が書かれた後は割り当て（執筆用バンドル）を作り直さない。並びが変わると materials/bundle_NN と組がずれ、
-        # 門 check_roadmap_bundle が落ちる。単位の追加は手で追加バンドルを作る
-        print("注: materials/ が既にあるので material_bundles/ は作り直さない（順序の変更は roadmap.json だけに反映）")
-    else:
-      for p in bdir.glob("bundle_[0-9][0-9].json"): p.unlink()  # 連番のバンドルだけ作り直す。手で作った追加バンドル（bundle_c2_new_a 等）は消さない（担当が読んでいる入力を消さない）
-      for n, i in enumerate(range(0, len(units), 8), 1):
-        chunk = units[i:i + 8]
-        (bdir / f"bundle_{n:02d}.json").write_text(json.dumps({"bundle": f"bundle_{n:02d}", "topics": [
-            # 副の信号のキーは対象ごとに違う（interview_count / care_count / life_count / syllabus_weight）ので sig で写す
-            {k: u[k] for k in ("topic_id", "term", "field", "middle", "summary", "goals", "prereq", "sources", "source_count", sig)} for u in chunk]},
-            ensure_ascii=False, indent=2), encoding="utf-8")
+    write_bundles(d, out, units, sig)
     goals = {g: sum(1 for u in units if g in u["goals"]) for g in range(1, n_goals + 1)}
     fields = {}
     for u in units: fields[u["field"]] = fields.get(u["field"], 0) + 1

@@ -36,11 +36,10 @@ from build_seed import (  # 計算・派生の定義は1か所に持つ
     TERM_REF,
     build_glossary,
     content_key_of,
-    exam_of_question_id,
     exam_rank,
-    load_materials,
     read_explanations,
 )
+from learning_parts import exam_of_question_id, load_materials  # noqa: E402
 
 LABELS = ["ア", "イ", "ウ", "エ"]
 # 引用とみなす一致長。check_materials.py と揃える。

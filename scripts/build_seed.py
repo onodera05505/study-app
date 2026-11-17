@@ -42,8 +42,8 @@ PBKDF2_ITERATIONS = 100_000  # src/server/lib/auth.ts と揃える。
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from targets import exam_names as _exam_names, exam_settings as _exam_settings  # noqa: E402
-from material_generations import (emit_refusal, generation_counts, learning_refusal, materials_of,  # noqa: E402
-                                  select_materials)
+from material_generations import emit_refusal, generation_counts, learning_refusal, select_materials  # noqa: E402
+from learning_parts import exam_of_question_id, materials_of  # noqa: E402
 EXAM_NAMES = _exam_names()
 EXAM_SETTINGS = _exam_settings()
 
@@ -104,23 +104,11 @@ SEASON_RANK = {"h": 0, "o": 1, "a": 2}
 TERM_REF = re.compile(r"\[\[([^\[\]\n]+)\]\]")
 
 
+# @implements REQ-462
 def exam_rank(exam: str) -> tuple[int, int]:
     """回の新旧。大きいほど新しい。"""
     head = exam[:4]
     return (int(head) if head.isdigit() else 0, SEASON_RANK.get(exam[-1:], 3))
-
-
-def exam_of_question_id(qid: str) -> str:
-    """"2024r06-q53" → "2024r06"。"""
-    return qid.rsplit("-q", 1)[0]
-
-
-def load_materials(d: Path) -> dict[int, dict]:
-    """論点 ID → 配る本文の教材。選び方は scripts/material_generations.py の select_materials。
-
-    書き直しは論点の一部から進めるので、世代が混在していても配れる。表示側（Markdown.tsx）は
-    最も古い世代のプレーンテキストもそのまま描ける。"""
-    return materials_of(select_materials(d))
 
 
 def _unit_plan_files(d: Path) -> list[Path]:
@@ -198,6 +186,7 @@ def _strip_marks(text: str) -> str:
     return body.strip()
 
 
+# @implements BR-062
 def note_brief(note: str) -> str:
     """誤答 note のうち用語集（ポップ）に使う部分＝1 文目。「〜です。〜ではありません」の 2 文目は
     その問題の正解との対比で、他の問題のポップに出ると浮くので落とす。"""
@@ -233,6 +222,7 @@ def _term_index(d: Path, topics: list[dict]) -> dict[str, int]:
     return idx
 
 
+# @implements REQ-529, BR-062
 def build_glossary(
     d: Path, explanations: dict[str, dict], materials: dict[int, dict], topics: list[dict]
 ) -> tuple[dict[str, dict], list[str]]:

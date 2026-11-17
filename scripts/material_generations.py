@@ -62,6 +62,7 @@ def select_materials(d: Path) -> dict[int, Chosen]:
     return out
 
 
+# @implements REQ-470, REQ-488
 def is_rewritten(generation: str) -> bool:
     """世代のディレクトリの名前が書き直した世代か。"""
     mo = GENERATION_DIR.match(generation)
@@ -88,10 +89,6 @@ def emit_refusal(refusal: dict) -> int:
     return 1
 
 
-def materials_of(chosen: dict[int, Chosen]) -> dict[int, dict]:
-    return {tid: c.material for tid, c in chosen.items()}
-
-
 # @implements REQ-471
 def generation_counts(chosen: dict[int, Chosen]) -> dict[str, int]:
     """世代の名前 → その世代から選んだ論点の数（古い世代から順に、1 つも選ばなかった世代は出さない）。"""
@@ -106,7 +103,8 @@ def _number(name: str) -> int:
     return int(mo.group(1) or 1) if mo else 0
 
 
-# @implements REQ-471, REQ-487
+# @operation UC-027#listDeliveredMaterials
+# @implements REQ-530, REQ-471, REQ-487
 def main() -> int:
     ap = argparse.ArgumentParser(description="論点ごとに選んだ教材の世代と中身を JSON で出す")
     ap.add_argument("--data", required=True, type=Path)

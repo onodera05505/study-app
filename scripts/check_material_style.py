@@ -18,7 +18,8 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from check_unit_plans import PLAN_DIR, PLAN_NAME, Refused, gate_findings, read_syllabus_units, read_topics, topic_units  # noqa: E402
+from check_unit_plans import PLAN_DIR, PLAN_NAME, Refused, gate_findings  # noqa: E402
+from learning_parts import read_syllabus_units, read_topics, topic_units  # noqa: E402
 from material_generations import REWRITTEN_FROM, generation_dirs, is_rewritten  # noqa: E402
 from targets import targets  # noqa: E402
 

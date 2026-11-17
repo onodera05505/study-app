@@ -25,8 +25,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_seed import content_key_of, exam_rank, read_explanations  # noqa: E402
 from material_generations import select_materials  # noqa: E402
 from check_unit_plans import (  # noqa: E402
-    Refused, gate_findings, learning_files, learning_order, qualification_learning, tool_error, topic_units,
+    Refused, gate_findings, learning_files, learning_order, qualification_learning, tool_error,
 )
+from learning_parts import topic_units  # noqa: E402
 
 UNIT_INPUT_NAME = re.compile(r"^[0-9]{2}\.json$")
 REWRITE_BUNDLE_NAME = re.compile(r"^[0-9]{2}-[1-9][0-9]*\.json$")

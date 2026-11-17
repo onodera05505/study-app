@@ -16,7 +16,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
-from learner_eval import Refused, contract_args, read_json, registered_roadmap, run  # noqa: E402
+from learner_io import read_json  # noqa: E402
+from learner_eval import Refused, contract_args, registered_roadmap, run  # noqa: E402
 
 PROMPTS = ROOT / "scripts" / "prompts"
 LEARNER = "roadmap_learner.md"
@@ -28,6 +29,7 @@ BY_DAY_MARK = re.compile(r"\{\{[#/]byDay\}\}")
 HISTORY = "## 改訂履歴"
 
 
+# @implements REQ-359
 # @operation UC-019#readLearnerTemplate
 def read_learner_template() -> dict:
     """学習者役への指示の雛形（契約の readLearnerTemplate）。本文と、節の見出し・差し込みの名前・日で束ねる学びだけの塊の中の差し込みの名前。"""
@@ -80,8 +82,7 @@ def without_history(text: str) -> str:
     return "\n".join(lines[:at] + lines[end:]).rstrip("\n") + "\n"
 
 
-# @implements REQ-360
-def answer_format(text: str) -> dict:
+def _answer_format(text: str) -> dict:
     """指示の囲みのうち answers と units を持つ JSON（契約の writeLearnerInstructions の answerFormat）。
     雛形がこの書き方を持たないか、単位の行が単位の ID を持たないときは雛形の誤りとして止める。"""
     for block in re.findall(r"```[a-z]*\n(.*?)```", text, flags=re.S):
@@ -97,6 +98,7 @@ def answer_format(text: str) -> dict:
     raise RuntimeError(f"{LEARNER}: 答えと自己申告の書き方（answers と units を持つ JSON の囲み）が無い")
 
 
+# @implements REQ-526
 # @operation UC-019#readRoadmap
 def read_roadmap(d: Path) -> dict:
     """学びのロードマップ（契約の readRoadmap）。登録簿がロードマップを持つ学びとし、置き場に無いか読めないときは空。"""
@@ -163,7 +165,15 @@ def main() -> dict:
     key = d.name
     r = registered_roadmap(key)
     texts = render_all(key, r["entry"], r["roadmapSpec"], read_roadmap(d))
-    answer_format(texts[LEARNER])
+    return write_instructions(d, texts)
+
+
+# @implements REQ-360
+# @operation UC-019#writeLearnerInstructions
+def write_instructions(d: Path, texts: dict[str, str]) -> dict:
+    """描き出した全テンプレートを <学びの置き場>/prompts/ に書く。学習者役への指示が答えと自己申告の書き方を
+    持たないときは、何も書かずに雛形の誤りとして止める。"""
+    _answer_format(texts[LEARNER])
     out = d / "prompts"
     out.mkdir(parents=True, exist_ok=True)
     for name, text in texts.items():

@@ -88,7 +88,10 @@ def insert_at_section_end(detail: str, heading: str, line: str) -> str:
     raise KeyError(heading)
 
 
+# @implements REQ-542
 def insert_after_heading(detail: str, heading: str, line: str) -> str:
+    """見出しの行の直後に 1 行入れる。同じ見出しに続けて呼ぶと、後から入れた行が上に並ぶ。
+    見出しが本文に無ければ KeyError（呼ぶ側が短い説明の末尾へ回す）。"""
     lines = detail.split("\n")
     for i, l in enumerate(lines):
         if l.strip() == heading.strip():

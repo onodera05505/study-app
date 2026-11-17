@@ -19,8 +19,10 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from material_generations import is_rewritten, select_materials, materials_of  # noqa: E402
-from learner_eval import Refused, contract_args, place_root, read_json, registry_learning, remove_created_dirs, run  # noqa: E402
+from material_generations import is_rewritten, select_materials  # noqa: E402
+from learning_parts import materials_of  # noqa: E402
+from learner_io import place_root, read_json, registry_learning  # noqa: E402
+from learner_eval import Refused, contract_args, remove_created_dirs, run  # noqa: E402
 from build_learner_pack import (check_out, delivered_bodies, read_generations,  # noqa: E402
                                 render_svgs, well_formed, _missing_ancestors)
 from material_figure_line import figure_srcs, malformed_lines, map_figure_lines, png_target  # noqa: E402
@@ -425,9 +427,11 @@ def figure_list(order: list[int], refs: list[dict]) -> list[str]:
 
 
 # @implements REQ-511
-def publish(work: Path, out: Path) -> None:
-    """作り終えた一時の場所を出力先に付け替える。付け替えは出力先が無いか空のときだけ通るので、
+# @operation UC-028#writeUnitReading
+def publish(work: Path, out: Path, body: str) -> None:
+    """単元の読み物を図を描き終えた一時の場所に書き、その場所を出力先に付け替える。付け替えは出力先が無いか空のときだけ通るので、
     同じ出力先に同時に作る呼び出しのうち書けるのは 1 つだけで、ほかの呼び出しは書かれた物を書き換えない。"""
+    (work / READING).write_text(body, encoding="utf-8")
     try:
         os.rename(work, out)
     except OSError:
@@ -435,8 +439,8 @@ def publish(work: Path, out: Path) -> None:
 
 
 # @implements UC-028, REQ-509, REQ-511
-# @operation UC-028#writeUnitReading
-def build() -> dict:
+# @operation UC-028#buildUnitReading
+def main() -> dict:
     a = read_args()
     key = qualification_key(a.data)
     d = Path(a.data)
@@ -462,8 +466,7 @@ def build() -> dict:
         work = out.parent / f".{out.name}.{os.getpid()}.tmp"
         work.mkdir()
         draw_figures(work, root, targets, refs)
-        (work / READING).write_text(body, encoding="utf-8")
-        publish(work, out)
+        publish(work, out, body)
     except BaseException:
         # 失敗したときは作りかけの物も、コマンドが作った出力先の親のディレクトリも残さない
         if work is not None:
@@ -475,4 +478,4 @@ def build() -> dict:
 
 
 if __name__ == "__main__":
-    sys.exit(run(build))
+    sys.exit(run(main))

@@ -24,6 +24,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from targets import targets  # noqa: E402
+from learning_parts import topic_units  # noqa: E402
 
 # 契約 checkUnitPlans の response.limits の値。門と書き直しの束を作る道具はここだけから引く。
 LIMITS = {"groupTopicsMax": 8, "groupTopicsMinWarn": 3, "prerequisitesMax": 2}
@@ -118,20 +119,6 @@ def qualification_learning(data: str) -> Path:
     return d
 
 
-def read_syllabus_units(d: Path) -> dict[int, dict]:
-    return learning_files(d)[0]
-
-
-def read_topics(d: Path) -> list[dict]:
-    return learning_files(d)[1]
-
-
-def topic_units(syllabus: dict[int, dict], topics: list[dict]) -> dict[int, int]:
-    """論点 ID → 論点の小項目が属する単元の番号。"""
-    item_unit = {n: u for u, s in syllabus.items() for n in s["items"]}
-    return {t["id"]: item_unit.get(t["syllabus_item"], 0) for t in topics}
-
-
 def _f(kind: str, where: str, reason: str) -> dict:
     return {"kind": kind, "where": where, "reason": reason}
 
@@ -204,7 +191,7 @@ def _missing(v, kind: type) -> bool:
     return False
 
 
-# @implements REQ-444
+# @implements REQ-444, BR-058
 def check_plan_shape(name: str, plan, syllabus: dict[int, dict]) -> list[dict]:
     """1 つの単元の構成の形・必須の要素・単元の番号・指す単元・まとまりの名前の重なりを見る。返すのは止める理由。
     欄の型か欄の名前が契約の形と合わなければ、読めない理由だけを返し、中身を他に確かめない。"""
@@ -293,7 +280,7 @@ def _readable_view(plan: dict) -> dict:
     return {**plan, "groups": groups, "owners": plan.get("owners") or [], "prerequisites": plan.get("prerequisites") or {}}
 
 
-# @implements BR-031
+# @implements BR-057
 def learning_order(plan: dict) -> list[int]:
     """単元の学ぶ順（まとまりの順に、まとまりの中の並びをつないだ論点 ID。重なりは最初の位置）。"""
     order: list[int] = []
@@ -426,7 +413,7 @@ def _prerequisite_cycles(plans: dict[str, dict]) -> list[dict]:
     return stops
 
 
-# @implements REQ-447
+# @implements REQ-447, BR-058
 def check_prerequisites(plans: dict[str, dict], unit_of: dict[int, int]) -> list[dict]:
     """形の読めた単元の構成すべての前提を見る。単元をまたぐ循環は全部の単元の構成を合わせて判定する。"""
     stops: list[dict] = []
@@ -534,6 +521,7 @@ def _summary(result: dict) -> str:
     return "\n".join(lines)
 
 
+# @implements REQ-443, REQ-466
 def tool_error(e: Refused) -> str:
     """契約の ToolError の JSON。"""
     return json.dumps({"error": {"code": e.code, "reason": e.reason}}, ensure_ascii=False, indent=1)

@@ -12,11 +12,14 @@ from pathlib import Path
 
 
 # @implements REQ-435
+# @operation UC-030#applySummaryOverride
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", required=True); ap.add_argument("--id", required=True, action="append", type=int, dest="ids")
     ap.add_argument("--summary", required=True, action="append")
     a = ap.parse_args()
+    # 組にする前に数を確かめる。数が違うと、どの単位にどの要約を当てるか決まらない
+    # @implements REQ-545
     if len(a.ids) != len(a.summary): print("--id と --summary の数が合わない"); return 1
     d = Path(a.data)
     cfgp = d / "roadmap_config.json"; cfg = json.loads(cfgp.read_text(encoding="utf-8"))

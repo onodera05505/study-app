@@ -22,6 +22,7 @@ def target(key: str) -> dict:
 def keys() -> list[str]:
     return sorted(targets())
 
+# @implements BR-005
 def deploy(key: str) -> dict:
     p = {k: v for k, v in json.loads(_P.read_text(encoding="utf-8")).items() if not k.startswith("_")}
     if key not in p: raise SystemExit(f"対象 '{key}' が scripts/pages_projects.json に無い")

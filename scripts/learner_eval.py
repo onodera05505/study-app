@@ -13,7 +13,7 @@ from pathlib import Path
 from types import SimpleNamespace
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from targets import targets  # noqa: E402
+from learner_io import read_json, registry_learning  # noqa: E402
 
 CHOICES = ("ア", "イ", "ウ", "エ")
 DATA_ARG = re.compile(r"^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+$")
@@ -31,6 +31,7 @@ def _emit(obj: dict) -> None:
     print(json.dumps(obj, ensure_ascii=False, indent=1))
 
 
+# @implements BR-061, REQ-527, REQ-528
 def run(main) -> int:
     """入口を回し、成功なら結果の JSON と 0、errors に当たれば契約の ToolError の JSON と 1 を返す。"""
     try:
@@ -109,27 +110,6 @@ def contract_args(prog: str, shape: dict[str, str], required: tuple[str, ...], a
     return a
 
 
-def read_json(p: Path):
-    return json.loads(p.read_text(encoding="utf-8"))
-
-
-def place_root(d: Path) -> Path:
-    """学びの置き場 <根>/data/<key> の根。"""
-    return d.parent.parent
-
-
-# @operation UC-019#readRegistryLearning
-def registry_learning(key: str) -> dict | None:
-    """登録簿の 1 つの学び（契約の readRegistryLearning）。登録簿に無ければ None。"""
-    t = targets().get(key)
-    if t is None:
-        return None
-    res = {"roadmap": t.get("roadmap") is True, "entry": t}
-    if res["roadmap"]:
-        res["roadmapSpec"] = t.get("roadmapSpec") or {}
-    return res
-
-
 # @implements REQ-318, REQ-410
 def registered_roadmap(key: str) -> dict:
     """登録簿にあり、ロードマップを持つ学びだけを通し、その登録簿の項目を返す。"""
@@ -195,11 +175,15 @@ def current_questions(d: Path) -> list[dict]:
     return qs
 
 
+# @implements REQ-309
 def snapshot_path(d: Path, cycle: int) -> Path:
+    """その周のパックの写しの置き場（学びの置き場の eval/ の下。パックの外）。"""
     return d / "eval" / f"pack_cycle_{cycle}.json"
 
 
+# @implements REQ-314
 def result_path(d: Path, cycle: int) -> Path:
+    """その周の結果の置き場（学びの置き場の eval/ の下）。"""
     return d / "eval" / f"cycle_{cycle}.json"
 
 

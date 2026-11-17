@@ -10,7 +10,8 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from learner_eval import (CHOICES, Refused, contract_args, current_questions, read_json, result_path,  # noqa: E402
+from learner_io import read_json  # noqa: E402
+from learner_eval import (CHOICES, Refused, contract_args, current_questions, result_path,  # noqa: E402
                           roadmap_learning, run, snapshot_path, write_exclusive)
 
 SHIFT_WINDOW = 3
@@ -261,7 +262,8 @@ def cycle_result(cycle: int, snap: dict, graded: list[dict], changed: list[str],
 
 
 # @implements UC-019, REQ-340
-def grade() -> dict:
+# @operation UC-019#gradeLearnerAnswers
+def main() -> dict:
     a = contract_args("grade_learner.py", {"data": "data", "cycle": "cycle", "answers": "text", "explain": "text"},
                       ("data", "cycle", "answers"))
     d, _, _ = roadmap_learning(a.data)
@@ -290,4 +292,4 @@ def write_result(d: Path, cycle: int, res: dict) -> None:
 
 
 if __name__ == "__main__":
-    sys.exit(run(grade))
+    sys.exit(run(main))

@@ -28,7 +28,34 @@ from __future__ import annotations
 import argparse, glob, json, re, sys
 from pathlib import Path
 
+# @implements REQ-539
+def check_units(units: list[dict], mats: dict[int, dict], qs: dict[int, list[dict]], levels: set | None) -> str | None:
+    """ロードマップの単位に教材があり確認問題が 1 単位あたりの数（2 問）であること、印を持つ学び（levels が None でない）では
+    補足の論点を含む全単位の印が登録簿の段にあることを確かめる。当たらなければその単位の名前を挙げた断りの文を返し、
+    すべて満たせば None を返す。確かめる順は 教材 → 確認問題の数 → 印。"""
+    road = [u for u in units if not u.get("_extra")]
+    missing = [u["term"] for u in road if u["topic_id"] not in mats]
+    if missing: return f"教材が無い単位（何も書き出していない）: {'、'.join(missing)}"
+    bad = [u["term"] for u in road if len(qs.get(u["topic_id"], [])) != 2]
+    if bad: return f"確認問題が 2 問でない単位（何も書き出していない）: {'、'.join(bad)}"
+    if levels is not None:
+        lack = [u["term"] for u in units if u.get("tier") not in levels]
+        if lack: return f"印が登録簿 roadmapSpec.tiers の段に無い単位（何も書き出していない）: {'、'.join(lack[:5])}"
+    return None
+
+
+# @implements REQ-540
+def supplementary_units(units: list[dict], mats: dict[int, dict], cands: dict[int, dict], field: str, middle: str) -> list[dict]:
+    """ロードマップの単位に無い論点の教材を、補足の分野・中分類の単位にして論点の ID の順に返す。order は学ぶ順の末尾から続け、
+    `_extra` の印で補足の回に入れる。問題が無い論点も載せる（question_count 0）。印は候補の印を移す。"""
+    unit_ids = {u["topic_id"] for u in units}
+    return [{"order": len(units) + i, "topic_id": tid, "term": mats[tid]["term"], "field": field, "middle": middle,
+             "summary": "", "goals": [], "prereq": [], "sources": [], "tier": cands.get(tid, {}).get("tier"), "_extra": True}
+            for i, tid in enumerate(sorted(set(mats) - unit_ids), 1)]
+
+
 # @implements REQ-414, REQ-422
+# @operation UC-030#buildTargetDataset
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", default="data/itc", type=Path)
     a = ap.parse_args(); d = a.data; key = d.name
@@ -55,23 +82,13 @@ def main() -> int:
     qs: dict[int, list[dict]] = {}
     for f in sorted(glob.glob(str(d / "roadmap_questions" / "bundle_*.json"))):
         for q in json.loads(Path(f).read_text(encoding="utf-8"))["questions"]: qs.setdefault(q["topic_id"], []).append(q)
-    unit_ids = {u["topic_id"] for u in units}
-    missing = [u["term"] for u in units if u["topic_id"] not in mats]; assert not missing, f"教材が無い: {missing}"
-    bad = [u["term"] for u in units if len(qs.get(u["topic_id"], [])) != 2]; assert not bad, f"問題が 2 問でない: {bad}"
-    # 補足: ロードマップから外したが教材を残す単位。補足の分野に学ぶ順の末尾で並べ、確認問題は補足の回に入れる。
-    # 問題が無い単位も載せる（question_count 0）。印を持つ学びでは補足の単位も候補の印を持つ
-    extra_ids = sorted(set(mats) - unit_ids)
-    for i, tid in enumerate(extra_ids, 1):
-        m = mats[tid]
-        units.append({"order": len(units) + 1, "topic_id": tid, "term": m["term"], "field": EXTRA_FIELD, "middle": EXTRA_MIDDLE,
-                      "summary": "", "goals": [], "prereq": [], "sources": [], "tier": cands.get(tid, {}).get("tier"), "_extra": True})
-    if has_tiers:
-        levels = {t.get("level") for t in spec["tiers"]}
-        lack = [u["term"] for u in units if u.get("tier") not in levels]
-        assert not lack, f"印が登録簿 roadmapSpec.tiers の段に無い単位: {lack[:5]}"
+    extra = supplementary_units(units, mats, cands, EXTRA_FIELD, EXTRA_MIDDLE)
+    units.extend(extra)
+    refusal = check_units(units, mats, qs, {t.get("level") for t in spec["tiers"]} if has_tiers else None)
+    if refusal: print(refusal); return 1
     # 副題は名前とは別の欄で受け取り、名前から切り出さない。欄が無い単位は副題なし。空の文字列や文字列でない値は投入しない
     bad_sub = [u["term"] for u in units if "subtitle" in u and u["subtitle"] is not None and (not isinstance(u["subtitle"], str) or not u["subtitle"].strip())]
-    assert not bad_sub, f"副題が空か文字列でない単位（副題が無いなら subtitle の欄を書かない）: {bad_sub[:5]}"
+    if bad_sub: print(f"副題が空か文字列でない単位（何も書き出していない。副題が無いなら subtitle の欄を書かない）: {'、'.join(bad_sub[:5])}"); return 1
 
     # --- 階層: 分野 → 中分類 ---
     fields = list(target(key)["fields"])  # 登録簿の並び（補足の分野を含む）
@@ -143,7 +160,7 @@ def main() -> int:
     if any((d / "material_figures").glob("*.json")):
         import subprocess
         subprocess.run([sys.executable, str(Path(__file__).with_name("attach_material_figures.py")), "--data", str(d)], check=True)
-    print(f"項目 {len(items)} / 論点 {len(topics)}（補足 {len(extra_ids)}）/ 回 {len(qfiles)}（{'章' if by_chapter else '日'}で束ねる）/ 問題 {sum(len(v) for v in qfiles.values())} / 解説 {len(expl)} / 教材 v3 {len(v3)}")
+    print(f"項目 {len(items)} / 論点 {len(topics)}（補足 {len(extra)}）/ 回 {len(qfiles)}（{'章' if by_chapter else '日'}で束ねる）/ 問題 {sum(len(v) for v in qfiles.values())} / 解説 {len(expl)} / 教材 v3 {len(v3)}")
     return 0
 
 if __name__ == "__main__":

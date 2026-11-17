@@ -35,8 +35,8 @@ from build_seed import (  # 計算の定義は1か所に持つ（content_key が
     EXPLANATION_DIR,
     content_key_of,
     exam_rank,
-    load_materials,
 )
+from learning_parts import load_materials  # noqa: E402
 
 TOPICS_PER_BUNDLE = 8  # これ以上増やすと出力量オーバーで担当が落ちる（教材と同じ）
 

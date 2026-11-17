@@ -21,7 +21,8 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from material_generations import generation_dirs  # noqa: E402
 from material_figure_line import figure_line, malformed_lines, map_figure_lines, png_target  # noqa: E402
-from learner_eval import (Refused, contract_args, current_questions, place_root, read_json,  # noqa: E402
+from learner_io import place_root, read_json  # noqa: E402
+from learner_eval import (Refused, contract_args, current_questions,  # noqa: E402
                           remove_created_dirs, result_path, roadmap_learning, run, snapshot_path, write_exclusive)
 
 CHOICES = ("ア", "イ", "ウ", "エ")
@@ -367,7 +368,8 @@ def keep_snapshot(d: Path, snapshot: dict) -> Path:
 
 
 # @implements UC-019, REQ-340
-def build() -> dict:
+# @operation UC-019#buildLearnerPack
+def main() -> dict:
     a = contract_args("build_learner_pack.py", {"data": "data", "cycle": "cycle", "out": "text"}, ("data", "cycle", "out"))
     d, key, t = roadmap_learning(a.data)
     out = Path(a.out)
@@ -404,4 +406,4 @@ def build() -> dict:
 
 
 if __name__ == "__main__":
-    sys.exit(run(build))
+    sys.exit(run(main))
