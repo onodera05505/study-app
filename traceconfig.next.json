@@ -1,0 +1,180 @@
+{
+  "id_patterns": {
+    "goal": "\\bGOAL-\\d{2}\\b",
+    "uc": "\\bUC-\\d{3}\\b",
+    "req": "\\bREQ-\\d{3}\\b",
+    "br": "\\bBR-\\d{3}\\b",
+    "nfr": "\\bNFR-\\d{3}\\b",
+    "adr": "\\bADR-\\d{4}\\b"
+  },
+  "covers_pattern": "@covers\\s+(REQ-\\d{3})(?!\\d)(?:#([\\w-]+))?",
+  "scenario_pattern": "@scenario\\s+(UC-\\d{3})(?!\\d)",
+  "nfr_pattern": "@covers\\s+(NFR-\\d{3})(?!\\d)",
+  "operation_pattern": "@operation\\s+(UC-\\d{3})#(\\w+)",
+  "implements_pattern": "@implements\\s+((?:REQ|BR|UC)-\\d{3}(?!\\d)(?:\\s*[,、/]\\s*(?:REQ|BR|UC)-\\d{3}(?!\\d))*)",
+  "docs": {
+    "goals_dir": "docs/goals",
+    "goals_backlog": "docs/goals-backlog.md",
+    "rules_dir": "docs/rules",
+    "nfr_dir": "docs/nfr",
+    "adr_dir": "docs/adr",
+    "verification_global": "docs/verification/GLOBAL.md",
+    "verification_deferred": "docs/verification/DEFERRED.md",
+    "shared": "docs/_shared/components.yaml",
+    "actors": "docs/02-actors.md",
+    "vision": "docs/00-vision.md",
+    "glossary": "docs/01-glossary.md"
+  },
+  "policy": {
+    "_comment": "組織とプロジェクトで変わる方針の値（ADR-0050）。develop-core と rules-* はここをキー名で読み、未宣言なら記した既定値を使う。方法論そのもの（人間ゲート、作成者 ≠ 判定者、成果物の型）はここに置かない。language は会話と成果物（docs、契約の説明文、ADR、コミットメッセージ、コード内コメント、テストのタイトル、利用者向けの文言）の言語で、BCP 47 の言語タグ。未宣言なら ja。harness 自身のプロンプト正本の言語（ADR-0043）とは別。",
+    "language": "ja"
+  },
+  "commands": {
+    "typecheck": "npm run typecheck",
+    "lint": "python3 scripts/check_source.py && python3 scripts/check_docs.py",
+    "test": "npx vitest run",
+    "system": {
+      "none": "シナリオのうち vitest で走る物は test に含まれる。API に当てる物（scripts/check_api.sh）はローカルに wrangler dev を立てるので、終了ごとには回さず配備の門（deploy-pages.sh）で回す"
+    }
+  },
+  "git": {
+    "exempt_branches": [
+      "dependabot/**"
+    ]
+  },
+  "source": {
+    "dirs": [
+      "src",
+      "portal/src",
+      "scripts",
+      "portal/static"
+    ],
+    "extensions": [
+      ".ts",
+      ".tsx",
+      ".py",
+      ".sh",
+      ".js",
+      ".mjs"
+    ],
+    "unit_dirs": [
+      "src/**",
+      "portal/src/**",
+      "!src/**/*.css",
+      "!src/**/*.json",
+      "!portal/src/**/*.json",
+      "scripts/apply_summary_override.py",
+      "scripts/attach_material_figures.py",
+      "scripts/build_learner_pack.py",
+      "scripts/build_rewrite_bundles.py",
+      "scripts/build_roadmap.py",
+      "scripts/build_seed.py",
+      "scripts/build_target_dataset.py",
+      "scripts/build_unit_reading.py",
+      "scripts/check_material_style.py",
+      "scripts/check_roadmap.py",
+      "scripts/check_roadmap_registry.py",
+      "scripts/check_seed.py",
+      "scripts/check_source.py",
+      "scripts/check_sso_prod.sh",
+      "scripts/check_unit_plans.py",
+      "scripts/deploy-pages.sh",
+      "scripts/deploy_portal.sh",
+      "scripts/grade_learner.py",
+      "scripts/learner_eval.py",
+      "scripts/material_figure_line.py",
+      "scripts/material_generations.py",
+      "scripts/pinned_wrangler.sh",
+      "scripts/render_material_figures.py",
+      "scripts/render_prompts.py",
+      "scripts/render_svg_png.mjs",
+      "scripts/seed_remote.sh",
+      "scripts/targets.py",
+      "scripts/verify_seed_remote.py",
+      "portal/static/app.js"
+    ],
+    "support_dirs": [
+      "src/**/*.css",
+      "src/**/*.json",
+      "portal/src/**/*.json",
+      "scripts/**",
+      "!scripts/apply_summary_override.py",
+      "!scripts/attach_material_figures.py",
+      "!scripts/build_learner_pack.py",
+      "!scripts/build_rewrite_bundles.py",
+      "!scripts/build_roadmap.py",
+      "!scripts/build_seed.py",
+      "!scripts/build_target_dataset.py",
+      "!scripts/build_unit_reading.py",
+      "!scripts/check_material_style.py",
+      "!scripts/check_roadmap.py",
+      "!scripts/check_roadmap_registry.py",
+      "!scripts/check_seed.py",
+      "!scripts/check_source.py",
+      "!scripts/check_sso_prod.sh",
+      "!scripts/check_unit_plans.py",
+      "!scripts/deploy-pages.sh",
+      "!scripts/deploy_portal.sh",
+      "!scripts/grade_learner.py",
+      "!scripts/learner_eval.py",
+      "!scripts/material_figure_line.py",
+      "!scripts/material_generations.py",
+      "!scripts/pinned_wrangler.sh",
+      "!scripts/render_material_figures.py",
+      "!scripts/render_prompts.py",
+      "!scripts/render_svg_png.mjs",
+      "!scripts/seed_remote.sh",
+      "!scripts/targets.py",
+      "!scripts/verify_seed_remote.py",
+      "portal/static/**",
+      "!portal/static/app.js"
+    ],
+    "unit_pattern": "^export\\s+(?:default\\s+)?(?:async\\s+)?function\\*?\\s*(\\w*)\\s*[<(]|^export\\s+(?:default\\s+)?(?:abstract\\s+)?class\\s+(\\w+)|^export\\s+(?:const|let)\\s+(\\w+)\\s*(?::[^=]+)?=\\s*(?:async\\s*)?(?:<[^>]*>\\s*)?(?:\\(|function\\b|\\w+\\s*=>|\\w+\\s*\\(\\s*(?:async\\s*)?(?:\\(|function\\b|\\w+\\s*=>))|^export\\s+default\\s+(?:(\\w+)\\s*;?\\s*$|(?:async\\s*)?(?:\\(|\\w+\\s*\\())|^export\\s*\\{(?!(?:\\s*type\\s+\\w+(?:\\s+as\\s+\\w+)?\\s*,?)*\\s*\\})\\s*([^}]*?)\\s*(?:\\}\\s*;?\\s*)?$|^def\\s+((?!_)[\\p{L}\\p{N}_]+)\\s*\\(",
+    "implements_placement": "before",
+    "entry_pattern": "\\.(?:get|post|put|patch|delete|all)\\(\\s*[\"'`](\\/[^\"'`]*)|\\.route\\(\\s*[\"'`](\\/[^\"'`]*)|\\.on\\(\\s*(?:[\"'`][A-Z]+[\"'`]|\\[[^\\]]*\\])\\s*,\\s*[\"'`](\\/[^\"'`]*)",
+    "comment_pattern": "^\\s*(?:\\/\\/|\\/\\*|\\*|#|--|<!--)"
+  },
+  "tests": {
+    "dirs": [
+      "tests/client",
+      "tests/server",
+      "tests/portal"
+    ],
+    "extensions": [
+      ".ts",
+      ".tsx"
+    ],
+    "test_pattern": "^\\s*x?(?:it|test)(?:\\.(?:skip|only|fixme|todo|concurrent|each\\(.*?\\)|for\\(.*?\\)))*\\(\\s*[\"'`](.+?)[\"'`]|^\\s*x?(?:it|test)(?:\\.\\w+)*\\.(?:each|for)[(`]\\s*\\[?\\s*$|^\\s*x?(?:it|test)(?:\\.(?:skip|only|fixme|todo|concurrent))*\\(\\s*$",
+    "pending_pattern": "^\\s*(?:it|test|describe)(?:\\.describe)?\\.(?:skip|fixme|todo|skipIf|runIf)\\b|^\\s*x(?:it|test|describe)\\(|^\\s*x?(?:it|test)(?:\\.\\w+)*\\(\\s*[\"'`].*?[\"'`]\\s*,\\s*\\{[^}]*\\b(?:skip|todo):\\s*true",
+    "covers_placement": "before",
+    "system": {
+      "dirs": [
+        "tests/scenario",
+        "scripts/check_api.py",
+        "scripts/check_portal_api.py"
+      ],
+      "extensions": [
+        ".tsx",
+        ".py"
+      ],
+      "test_pattern": "^\\s*x?(?:it|test)(?:\\.(?:skip|only|fixme|todo|concurrent|each\\(.*?\\)|for\\(.*?\\)))*\\(\\s*[\"'`](.+?)[\"'`]|^\\s*x?(?:it|test)(?:\\.\\w+)*\\.(?:each|for)[(`]\\s*\\[?\\s*$|^\\s*x?(?:it|test)(?:\\.(?:skip|only|fixme|todo|concurrent))*\\(\\s*$|^def\\s+(check_scenario_[\\p{L}\\p{N}_]+)\\s*\\(",
+      "pending_pattern": "^\\s*(?:it|test|describe)(?:\\.describe)?\\.(?:skip|fixme|todo|skipIf|runIf)\\b|^\\s*x(?:it|test|describe)\\(|^\\s*x?(?:it|test)(?:\\.\\w+)*\\(\\s*[\"'`].*?[\"'`]\\s*,\\s*\\{[^}]*\\b(?:skip|todo):\\s*true",
+      "scenario_placement": "before",
+      "comment_pattern": "^\\s*(?:\\/\\/|\\/\\*|\\*|#|--|<!--)"
+    }
+  },
+  "schema": {
+    "files": [
+      "src/server/db/schema.ts",
+      "portal/migrations/0001_init.sql"
+    ],
+    "extensions": [
+      ".ts",
+      ".sql"
+    ],
+    "constraint_pattern": "\\b(uniqueIndex|unique|check)\\(\\s*[\"'`]|^\\s*(UNIQUE|CHECK)\\b|^CREATE UNIQUE INDEX\\s+(\\w+)|\\b(\\w+)\\s+\\w+[^,]*\\bUNIQUE\\b"
+  },
+  "contract": {
+    "none": "下書き: エラーコードの単一の出所をまだ決めていない（段 2 で決めて置き換える。fixed の契約があるので none のままでは通らない）"
+  }
+}
