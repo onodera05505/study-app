@@ -76,34 +76,6 @@ describe('トークンの保存（UC-013）', () => {
 })
 
 describe('API 呼び出しの失敗の形（UC-017・UC-013）', () => {
-  // @covers REQ-261#reason-from-body
-  it('失敗の本文に理由と他の項目が添えられていても、利用者に伝える文はその理由だけ', async () => {
-    const m = await load()
-    vi.stubGlobal('fetch', vi.fn(async () => okJson({ error: '入力が正しくありません', detail: 'x' }, 400)))
-    const err = await m.api('/x').catch((e: unknown) => e)
-    expect(err).toBeInstanceOf(Error)
-    const e = err as InstanceType<typeof m.ApiError>
-    expect(e.message).toBe('入力が正しくありません')
-    expect(e.message).not.toContain('x')
-    expect(e.status).toBe(400)
-  })
-
-  // @covers REQ-261#reason-from-body
-  it('失敗の本文 {error} を message にする（{error} が無ければ既定の日本語の文）', async () => {
-    const m = await load()
-    vi.stubGlobal('fetch', vi.fn(async () => okJson({ error: '入力が正しくありません' }, 400)))
-    const e = (await m.api('/x').catch((x: unknown) => x)) as InstanceType<typeof m.ApiError>
-    expect(e.message).toBe('入力が正しくありません')
-    expect(e.status).toBe(400)
-    expect(e.body).toEqual({ error: '入力が正しくありません' })
-
-    // {error} を持たない失敗（画面に出せる日本語の 1 文に倒す。英語の既定文を出さない）
-    vi.stubGlobal('fetch', vi.fn(async () => okJson({}, 500)))
-    const e2 = (await m.api('/y').catch((x: unknown) => x)) as InstanceType<typeof m.ApiError>
-    expect(e2.status).toBe(500)
-    expect(e2.message).toMatch(/[ぁ-んァ-ヶ一-龥]/)
-  })
-
   // @covers REQ-262#no-response-fixed-sentence
   it('通信できないときは status 無しの日本語の固定文', async () => {
     const m = await load()

@@ -1,9 +1,8 @@
 // @vitest-environment jsdom
-/** 横断の決まり BR-027（出典の併記）・BR-028（同一内容のまとめ）を、過去問を出す 3 つの画面で
- *  1 本で実行する写し（正常系のみ。投入の側の門は既定のテストが見る）。
+/** 過去問を出す 3 つの画面（論点の学習・出題・結果）の出典と「一部改変」（BR-027）を、
+ *  アプリの入口（App）から画面の道筋で開いて見る。
  *
- *  操作で辿るのは画面の側だけ。投入と出題時のスナップショットはサーバ側なので、
- *  3 つの画面に同じ出典・同じ改変の印を返すことで表す。
+ *  サーバの応答は fetch の偽物で返し、出典は API が組み立てた文字列（citation）、改変の印は modified で渡す。
  *  画面の文字は決まりと要件の文面から採る。 */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
@@ -20,8 +19,8 @@ const EXAM_CODE = '2024r06'
 const QUESTION_TEXT = '次のうち正しいものはどれか。'
 const CHOICES = { ア: '正しい', イ: '誤り' }
 
-/** GET /api/topics/12（論点の学習画面）。改変の印が立った過去問 1 件。 */
-const TOPIC_DETAIL = {
+/** GET /api/topics/12（論点の学習画面）。過去問 1 件。modified は 0/1。 */
+const topicDetail = (modified: 0 | 1) => ({
   topic: {
     id: 12,
     term: '損益分岐点',
@@ -53,7 +52,7 @@ const TOPIC_DETAIL = {
       figureDescription: null,
       figureImage: null,
       citation: CITATION,
-      modified: 1,
+      modified,
       timesAsked: 1,
       otherCitations: [],
       explanation: null,
@@ -64,17 +63,17 @@ const TOPIC_DETAIL = {
   siblings: [],
   nextTopic: null,
   neighbors: null,
-}
+})
 
 /** GET /api/sessions/s1/current（出題画面）。出題時のスナップショットの出典と改変の印。 */
-const CURRENT = {
+const current = (modified: boolean) => ({
   session: { id: 's1', kind: 'drill', scopeLabel: '論点「損益分岐点」', questionCount: 1, sourceExam: null },
   question: {
     idx: 0,
     text: QUESTION_TEXT,
     choices: CHOICES,
     citation: CITATION,
-    modified: true,
+    modified,
     hasFigure: false,
     figureDescription: null,
     figureImage: null,
@@ -84,10 +83,10 @@ const CURRENT = {
   answered: 0,
   remainingSec: null,
   finished: false,
-}
+})
 
 /** GET /api/sessions/s1（結果画面）。間違えた 1 問を振り返る。 */
-const RESULT = {
+const result = (modified: boolean) => ({
   session: { kind: 'mock', scopeLabel: '令和6年度', questionCount: 1, sourceExam: EXAM_CODE },
   overall: { total: 1, correct: 0, pct: 0 },
   fields: [{ field: 'ストラテジ系', total: 1, correct: 0, pct: 0 }],
@@ -104,7 +103,7 @@ const RESULT = {
       userAnswer: 'イ',
       result: 2,
       citation: CITATION,
-      modified: true,
+      modified,
       hasFigure: false,
       figureDescription: null,
       figureImage: null,
@@ -115,18 +114,19 @@ const RESULT = {
       explanation: null,
     },
   ],
-}
+})
 
-function stubApi() {
+/** 改変の印を 1 つに揃えて応答を返す偽の fetch。 */
+function stubApi(modified: boolean) {
   vi.stubGlobal('fetch', async (raw: string) => {
     const url = new URL(String(raw), 'http://localhost')
     const p = url.pathname
     let body: unknown = {}
     if (p.includes('version.json')) body = { build: 'abc1234', at: '2026-09-28T00:00:00Z' }
     else if (p.endsWith('/auth/config')) body = { sso: true, portal: 'https://manabiba.example', app: 'ip' }
-    else if (p.endsWith('/sessions/s1/current')) body = CURRENT
-    else if (p.endsWith('/sessions/s1')) body = RESULT
-    else if (/\/topics\/\d+$/.test(p)) body = TOPIC_DETAIL
+    else if (p.endsWith('/sessions/s1/current')) body = current(modified)
+    else if (p.endsWith('/sessions/s1')) body = result(modified)
+    else if (/\/topics\/\d+$/.test(p)) body = topicDetail(modified ? 1 : 0)
     else if (p.endsWith('/glossary')) body = { glossary: [] }
     else if (p.endsWith('/topics')) body = { topics: [] }
     else if (p.endsWith('/fields')) body = { fields: [] }
@@ -143,12 +143,14 @@ let root: Root | null = null
 
 const text = () => (host.textContent ?? '').replace(/\s+/g, ' ')
 
-/** 画面を開く（毎回根を作り直す）。 */
-async function open(entry: string) {
+/** 改変の印を決めてアプリの入口から画面を開く（毎回根を作り直す）。 */
+async function open(entry: string, modified: boolean) {
   if (root) {
     await act(async () => root!.unmount())
     host.remove()
   }
+  vi.unstubAllGlobals()
+  stubApi(modified)
   host = document.createElement('div')
   document.body.appendChild(host)
   root = createRoot(host)
@@ -162,8 +164,7 @@ beforeEach(() => {
   ;(globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true
   localStorage.clear()
   sessionStorage.clear()
-  stubApi()
-  setToken('token-for-scenario')
+  setToken('token-for-citation')
 })
 
 afterEach(async () => {
@@ -175,32 +176,60 @@ afterEach(async () => {
   vi.unstubAllGlobals()
 })
 
-describe('BR-027/028 過去問を出す画面の出典と「一部改変」', () => {
-  // 横断の決まり（BR-027 出典・BR-028 同一内容）のシナリオ。UC のシナリオではないので @scenario は付けない
-  it('論点の学習画面・出題画面・結果画面のどこでも、同じ出典と「一部改変」が出る', async () => {
-    // 開発側が過去問を本番のデータへ入れる。システムは過去問ごとに出典を組み立てて列に持たせる
-    //（投入の SQL はサーバ側。この写しでは 3 つの画面に同じ出典を返すことで表す）
+describe('入口から開いた論点の学習画面の出典（UC-002）', () => {
+  // @covers REQ-023#citation-per-question
+  it('原本から変えていない過去問に出典が出て、年度ラベルが内部コードのまま出ない', async () => {
+    await open('/topics/12', false)
+    expect(text(), '論点の学習画面に出典が出ていない').toContain(CITATION)
+    expect(text(), '年度ラベルが内部コードのまま出ている').not.toContain(EXAM_CODE)
+  })
 
-    // 利用者が論点の学習画面を開く。画面は過去問ごとに出典を出し、改変の印が立つ問題には「一部改変」を併記する
-    await open('/topics/12')
+  // @covers REQ-023#modified-question
+  it('改変の印が立つ過去問には「一部改変」を併記し、立っていない過去問には出さない', async () => {
+    await open('/topics/12', true)
     expect(text(), '論点の学習画面に出典が出ていない').toContain(CITATION)
     expect(text(), '改変した過去問に「一部改変」が併記されていない').toContain('一部改変')
-    expect(text(), '年度ラベルが内部コードのまま出ている').not.toContain(EXAM_CODE)
 
-    // 利用者が演習・模試を始める。システムは出題時のスナップショットに出典と改変の印を入れる
+    await open('/topics/12', false)
+    expect(text()).toContain(CITATION)
+    expect(text(), '改変していない過去問に「一部改変」が出ている').not.toContain('一部改変')
+  })
+})
 
-    // 利用者が演習・模試の問題を解く。画面は出題中の問題に出典を出し、「一部改変」を併記する
-    await open('/sessions/s1')
+describe('入口から開いた出題画面の出典（UC-004）', () => {
+  // @covers REQ-245#citation-in-question
+  it('出題中の問題に出典が出て、年度ラベルが内部コードのまま出ない', async () => {
+    await open('/sessions/s1', false)
     expect(text(), '出題画面に出典が出ていない').toContain(CITATION)
-    expect(text(), '出題中の改変した問題に「一部改変」が併記されていない').toContain('一部改変')
     expect(text(), '年度ラベルが内部コードのまま出ている').not.toContain(EXAM_CODE)
+  })
 
-    // 利用者が結果画面を開く。画面は問題ごとに出典を出し、「一部改変」を併記する
-    await open('/sessions/s1/result')
+  // @covers REQ-245#modified-in-question
+  it('改変の印が立つ出題には「一部改変」を併記し、立っていない出題には出さない', async () => {
+    await open('/sessions/s1', true)
+    expect(text(), '出題中の改変した問題に「一部改変」が併記されていない').toContain('一部改変')
+
+    await open('/sessions/s1', false)
+    expect(text()).toContain(CITATION)
+    expect(text(), '改変していない出題に「一部改変」が出ている').not.toContain('一部改変')
+  })
+})
+
+describe('入口から開いた結果画面の出典（UC-008）', () => {
+  // @covers REQ-252#citation-per-item
+  it('振り返る問題に出典が出て、年度ラベルが内部コードのまま出ない', async () => {
+    await open('/sessions/s1/result', false)
     expect(text(), '結果画面に出典が出ていない').toContain(CITATION)
+    expect(text(), '年度ラベルが内部コードのまま出ている').not.toContain(EXAM_CODE)
+  })
+
+  // @covers REQ-252#modified-item
+  it('改変の印が立つ問題には「一部改変」を併記し、立っていない問題には出さない', async () => {
+    await open('/sessions/s1/result', true)
     expect(text(), '結果の改変した問題に「一部改変」が併記されていない').toContain('一部改変')
 
-    // 事後条件: 過去問を出すどの画面にも出典があり、出題済みの問題には当時の出典が出る
-    expect(text(), '年度ラベルが内部コードのまま出ている').not.toContain(EXAM_CODE)
+    await open('/sessions/s1/result', false)
+    expect(text()).toContain(CITATION)
+    expect(text(), '改変していない問題に「一部改変」が出ている').not.toContain('一部改変')
   })
 })
