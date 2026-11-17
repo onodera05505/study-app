@@ -82,6 +82,7 @@ def roadmap_units(d: Path) -> tuple[dict, list[dict]]:
 
 
 # @implements REQ-358
+# @operation UC-019#readDeliveredBody
 def read_generations(d: Path) -> dict[int, dict]:
     """投入と同じく教材の世代を古い順（material_generations.generation_dirs）に、
     世代の中はファイル名の順に読み、論点ごとに後の物を選ぶ。契約の教材の世代の形（JSON で、どの行も整数の topic_id を持つ）
@@ -126,6 +127,7 @@ def check_figure_lines(units: list[dict], bodies: dict[int, dict]) -> None:
 
 
 # @implements REQ-320
+# @operation UC-019#readFigure
 def figure_refs(root: Path, units: list[dict], bodies: dict[int, dict]) -> list[dict]:
     """本文の図の行を {unit, ref, src, target} で並べる。画像は置き場の根の public の下の同じパスにある。
     指す画像が置き場所に無ければ、その単位と図を挙げて止める。"""
@@ -160,12 +162,14 @@ def figures_by_target(refs: list[dict]) -> dict[str, Path]:
     return {t: next(iter(s)) for t, s in srcs.items()}
 
 
+# @implements REQ-305, REQ-306
 def to_pack_refs(text: str) -> str:
     """図の行の指す先だけを、単位のファイルから見たパックの中の PNG に変える。"""
     return map_figure_lines(text, lambda f: f"{f.head}{f.caption}{f.mid}../{png_target(f.src)}{f.tail}")
 
 
 # @implements REQ-306
+# @operation UC-019#writePackFigure
 def write_figures(out: Path, figures: dict[str, Path], refs: list[dict]) -> list[str]:
     """配る本文の図を、サブパスを保ち拡張子を .png にした PNG にして figures/ の下に置く（本文の参照先は to_pack_refs が合わせる）。
     元が PNG の図は写し、SVG はブラウザの文字の描画で元の幅と高さのまま描く。"""
@@ -215,19 +219,21 @@ def render_svgs(jobs: list[dict]) -> set[str]:
 
 
 # @implements REQ-305
+# @operation UC-019#writePackUnit
 def write_unit(out: Path, u: dict, body: dict) -> str:
-    fn = unit_file(u)
+    fn = _unit_file(u)
     text = [f"# {u['term']}", "", f"単位の ID: {u['topic_id']} ／ 分野: {u['field']} ／ 単元: {u['middle']}", "",
             to_pack_refs(body["explanation"]), "", to_pack_refs(body["detail"]), ""]
     (out / fn).write_text("\n".join(text), encoding="utf-8")
     return fn
 
 
-def unit_file(u: dict) -> str:
+def _unit_file(u: dict) -> str:
     safe = re.sub(r"[/\\ ]", "_", u["term"])
     return f"units/{u['order']:02d}_{safe}.md"
 
 
+# @implements REQ-304
 def round_label(u: dict, by_chapter: bool, spec: dict) -> str:
     """回の見出しの語。章で束ねる学びは roundLabel を章の番号と名前で、日で束ねる学びは日で埋める。
     ロードマップの任意の欄（round・chapter・day）が無い行は、ある欄だけで見出しを作る。"""
@@ -246,6 +252,9 @@ ANSWER_FORMAT = {"answers": {}, "units": [{"topic_id": 1, "minutes": 5, "underst
 
 
 # @implements REQ-304
+# @operation UC-019#writePackRoadmap
+# @operation UC-019#writePackQuiz
+# @operation UC-019#writePackExplain
 def write_roadmap_quiz_explain(out: Path, rm: dict, units: list[dict], spec: dict, files: list[str],
                                questions: list[dict], terms: list[str] | None) -> None:
     by_chapter = rm.get("group_by") == "chapter"
@@ -283,6 +292,7 @@ def write_roadmap_quiz_explain(out: Path, rm: dict, units: list[dict], spec: dic
 
 
 # @implements REQ-335
+# @operation UC-019#readExplainTerms
 def explain_terms(d: Path) -> list[str] | None:
     """説明テストの語の一覧。一覧の無い学びと語が 1 つも無い学びは None（説明テストを出さない）。"""
     p = d / "explain_terms.json"
@@ -334,6 +344,7 @@ def _missing_ancestors(p: Path) -> list[Path]:
     return out
 
 
+# @implements REQ-336, REQ-355
 def discard_pack(out: Path, created: list[Path]) -> None:
     """作りかけのパックを消す。コマンドが作った出力先はディレクトリごと、前からあった出力先は中身だけを消し、
     コマンドが作った親のディレクトリは空のときだけ消す。"""
@@ -346,6 +357,7 @@ def discard_pack(out: Path, created: list[Path]) -> None:
 
 
 # @implements REQ-355
+# @operation UC-019#writePackSnapshot
 def keep_snapshot(d: Path, snapshot: dict) -> Path:
     """その周の写しを排他の作成で書く。作る間にほかの呼び出しが同じ周の写しを書いていれば、写しを書き換えずに止める。"""
     sp = snapshot_path(d, snapshot["cycle"])
@@ -354,7 +366,7 @@ def keep_snapshot(d: Path, snapshot: dict) -> Path:
     return sp
 
 
-# @implements UC-019
+# @implements UC-019, REQ-340
 def build() -> dict:
     a = contract_args("build_learner_pack.py", {"data": "data", "cycle": "cycle", "out": "text"}, ("data", "cycle", "out"))
     d, key, t = roadmap_learning(a.data)

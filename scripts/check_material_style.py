@@ -50,7 +50,7 @@ NUMBER = re.compile(LIMITS["numberPattern"])
 TO_HALF = str.maketrans("０１２３４５６７８９．", "0123456789.")
 
 
-def finding(kind: str, where: str, reason: str) -> dict:
+def _finding(kind: str, where: str, reason: str) -> dict:
     return {"kind": kind, "where": where, "reason": reason}
 
 
@@ -114,6 +114,8 @@ def _material_ok(m) -> bool:
             and _text(m.get("explanation")) and _text(m.get("detail")))
 
 
+# @implements REQ-454
+# @operation UC-025#readRewrittenMaterialFile
 def read_rewritten_file(path: Path) -> list[dict] | None:
     """書き直した世代の 1 つの束の教材（契約の readRewrittenMaterialFile）。形として読めなければ None。"""
     try:
@@ -147,15 +149,15 @@ def unreadable_output(gen: str, path: Path, stops: list[dict]) -> list[dict] | N
     """束の名前の形でないか契約の教材の形として読めない JSON のファイルを、そのファイルを挙げて止める理由にする。"""
     where = f"{gen}/{path.name}"
     if not BUNDLE_FILE.match(path.name):
-        stops.append(finding("unreadableOutput", where, "束の名前の形（単元の番号 2 桁-まとまりの順.json）でない"))
+        stops.append(_finding("unreadableOutput", where, "束の名前の形（単元の番号 2 桁-まとまりの順.json）でない"))
         return None
     ms = read_rewritten_file(path)
     if ms is None:
-        stops.append(finding("unreadableOutput", where, "契約の教材の形として読めない（書いている途中か壊れている）"))
+        stops.append(_finding("unreadableOutput", where, "契約の教材の形として読めない（書いている途中か壊れている）"))
     return ms
 
 
-def stop_units(stop: dict) -> set[int]:
+def _stop_units(stop: dict) -> set[int]:
     """単元の構成の門の止める理由が関する単元の番号（単元の構成のファイルの名前の番号）。
     前提の循環のように複数の単元の構成にまたがる物は、それに入るすべての単元の構成の単元を持つ。"""
     return {int(mo.group(1)) for name in stop.get("_files", []) if (mo := PLAN_NAME.match(name))}
@@ -169,19 +171,19 @@ def plans_for(d: Path, units: set[int]) -> tuple[list[dict], dict[int, dict]]:
     _, readable, gate_stops = gate_findings(d)
     by_unit: dict[int, list[dict]] = {}
     for s in gate_stops:
-        for u in stop_units(s) & units:
+        for u in _stop_units(s) & units:
             by_unit.setdefault(u, []).append(s)
     stops: list[dict] = []
     usable: dict[int, dict] = {}
     for u in sorted(units):
         rel = f"{PLAN_DIR}/{u:02d}.json"
         if not (d / rel).is_file():
-            stops.append(finding("unitPlanStops", rel, f"単元 {u} の単元の構成が無い"))
+            stops.append(_finding("unitPlanStops", rel, f"単元 {u} の単元の構成が無い"))
         elif by_unit.get(u):
             why = "／".join(f"{s['kind']}（{s['where']}）: {s['reason']}" for s in by_unit[u])
-            stops.append(finding("unitPlanStops", rel, f"単元 {u} の単元の構成が単元の構成の門の止める理由に当たる: {why}"))
+            stops.append(_finding("unitPlanStops", rel, f"単元 {u} の単元の構成が単元の構成の門の止める理由に当たる: {why}"))
         elif u not in readable:
-            stops.append(finding("unitPlanStops", rel, f"単元 {u} の単元の構成が読めない"))
+            stops.append(_finding("unitPlanStops", rel, f"単元 {u} の単元の構成が読めない"))
         else:
             usable[u] = readable[u]
     return stops, usable
@@ -198,7 +200,7 @@ def topics_not_in_plan(materials: dict[int, dict], unit_of: dict[int, int], usab
         grouped = {t for g in usable[u]["groups"] for t in g["topics"]} if u in usable else set()
         if tid not in grouped:
             why = "論点の一覧に無いか単元が決まらない" if u == 0 else f"単元 {u} の単元の構成のどのまとまりにも無い"
-            out.append(finding("topicNotInPlan", f"{m['_where']} topic {tid}", why))
+            out.append(_finding("topicNotInPlan", f"{m['_where']} topic {tid}", why))
     return out
 
 
@@ -206,6 +208,8 @@ def _figure_ok(f) -> bool:
     return isinstance(f, dict) and _is_id(f.get("id")) and _text(f.get("after")) and _text(f.get("caption"))
 
 
+# @implements REQ-455
+# @operation UC-025#readFigureSpec
 def read_figures(d: Path, tid: int) -> list[dict] | None:
     """1 論点の図の仕様の図（契約の readFigureSpec）。ファイルが無ければ空、形として読めなければ None。"""
     try:
@@ -227,24 +231,24 @@ def figure_stops(tid: int, figures: list[dict] | None) -> list[dict]:
     """図の仕様のファイルが読めないか、短い説明の直後に置く図が上限を超える論点を、そのファイルと図を挙げて止める理由にする。"""
     where = f"material_figures/{tid}.json"
     if figures is None:
-        return [finding("unreadableFigureSpec", where, "図の仕様の形として読めない")]
+        return [_finding("unreadableFigureSpec", where, "図の仕様の形として読めない")]
     after_ex = [f for f in figures if f["after"] == "explanation"]
     if len(after_ex) <= LIMITS["explanationFiguresMax"]:
         return []
     ids = "・".join(str(f["id"]) for f in after_ex)
-    return [finding("explanationFigures", where,
+    return [_finding("explanationFigures", where,
                     f"短い説明の直後に置く図が {len(after_ex)} 枚（図 {ids}）で上限 {LIMITS['explanationFiguresMax']} を超える")]
 
 
-def drop_figure_rows(text: str) -> str:
+def _drop_figure_rows(text: str) -> str:
     """図の行（![説明文](図のパス)）を本文から外す。"""
     return FIGURE_ROW.sub("", text)
 
 
-def plain(text: str, drop_terms: bool = False) -> str:
+def _plain(text: str, drop_terms: bool = False) -> str:
     """記法と空白を除いた本文。一致の長さはこの字数で数える。図の行と表の区切り行は本文に含めない。
     drop_terms のときは [[ ]] で囲んだ用語を中の字ごと除き、前後をつなぐ。"""
-    text = drop_figure_rows(text)
+    text = _drop_figure_rows(text)
     if drop_terms:
         text = TERM_MARK.sub("", text)
     lines = []
@@ -256,7 +260,7 @@ def plain(text: str, drop_terms: bool = False) -> str:
     return re.sub(r"\s", "", "".join(lines))
 
 
-def sections(m: dict) -> list[tuple[str, str, str]]:
+def _sections(m: dict) -> list[tuple[str, str, str]]:
     """教材を (箇所, 見出し, 文) に割る。explanation が 1 つ、detail は ### の見出しごと（最初の見出しの前は detail）。
     見出しのある箇所は、見出しの下の文が空でも残す。"""
     out = [("explanation", "", m["explanation"])]
@@ -277,18 +281,18 @@ def sections(m: dict) -> list[tuple[str, str, str]]:
 def exam_phrases(tid: int, m: dict) -> list[dict]:
     """問われ方・覚え方の言い回しが、見出しの行の文そのものも含めて、混同しやすい用語の見出しの外にある箇所を警告にする。"""
     out: list[dict] = []
-    for where, heading, text in sections(m):
+    for where, heading, text in _sections(m):
         if heading == CONFUSABLE_HEADING:
             continue
-        parts = (plain(heading), plain(text))
+        parts = (_plain(heading), _plain(text))
         for phrase in LIMITS["examPhrases"]:
             if any(phrase in part for part in parts):
-                out.append(finding("examPhrase", f"{m['_where']} topic {tid} {where}",
+                out.append(_finding("examPhrase", f"{m['_where']} topic {tid} {where}",
                                    f"「{phrase}」が混同しやすい用語の見出しの外にある"))
     return out
 
 
-def common_run(a: str, b: str, n: int) -> str | None:
+def _common_run(a: str, b: str, n: int) -> str | None:
     """a と b に共通する n 字の連続があれば、その最初の 1 つを返す。区切りの \\0 をまたぐ連続は数えない。"""
     if n <= 0 or len(a) < n or len(b) < n:
         return None
@@ -305,17 +309,17 @@ def same_topic_repeats(tid: int, m: dict, figures: list[dict]) -> list[dict]:
     """同じ論点の中で、図の説明文と本文、短い説明と詳しい解説が長く一致する 2 か所を警告にする。"""
     n = LIMITS["sameTopicMatchLength"]
     where = f"{m['_where']} topic {tid}"
-    ex, det = plain(m["explanation"]), plain(m["detail"])
+    ex, det = _plain(m["explanation"]), _plain(m["detail"])
     out: list[dict] = []
-    hit = common_run(ex, det, n)
+    hit = _common_run(ex, det, n)
     if hit:
-        out.append(finding("sameTopicRepeat", where, f"explanation と detail が「{hit}」で {n} 字以上一致する"))
+        out.append(_finding("sameTopicRepeat", where, f"explanation と detail が「{hit}」で {n} 字以上一致する"))
     for f in figures:
-        cap = plain(f["caption"])
+        cap = _plain(f["caption"])
         for place, body in (("explanation", ex), ("detail", det)):
-            hit = common_run(cap, body, n)
+            hit = _common_run(cap, body, n)
             if hit:
-                out.append(finding("sameTopicRepeat", where, f"図 {f['id']} の説明文と {place} が「{hit}」で {n} 字以上一致する"))
+                out.append(_finding("sameTopicRepeat", where, f"図 {f['id']} の説明文と {place} が「{hit}」で {n} 字以上一致する"))
     return out
 
 
@@ -329,22 +333,22 @@ def same_unit_repeats(materials: dict[int, dict], usable: dict[int, dict]) -> li
         unit_topics: list[int] = []
         for g in plan["groups"]:
             unit_topics += [t for t in g["topics"] if t in materials and t not in unit_topics]
-        bodies = {t: plain(materials[t]["explanation"], drop_terms=True) + "\0" + plain(materials[t]["detail"], drop_terms=True)
+        bodies = {t: _plain(materials[t]["explanation"], drop_terms=True) + "\0" + _plain(materials[t]["detail"], drop_terms=True)
                   for t in unit_topics}
         for i, a in enumerate(unit_topics):
             for b in unit_topics[i + 1:]:
-                hit = common_run(bodies[a], bodies[b], n)
+                hit = _common_run(bodies[a], bodies[b], n)
                 if not hit:
                     continue
                 owners = [o for o in plan.get("owners") or [] if {a, b} <= set(o["topics"])]
                 reason = f"本文が「{hit}」で {n} 字以上一致する"
                 if owners:
                     reason += "。受け持ち: " + "・".join(f"論点 {o['owner']}（{o['subject']}）" for o in owners)
-                out.append(finding("sameUnitRepeat", f"{materials[a]['_where']} topic {a} ⇔ {materials[b]['_where']} topic {b}", reason))
+                out.append(_finding("sameUnitRepeat", f"{materials[a]['_where']} topic {a} ⇔ {materials[b]['_where']} topic {b}", reason))
     return out
 
 
-def previous_materials(d: Path) -> dict[int, dict]:
+def _previous_materials(d: Path) -> dict[int, dict]:
     """前の世代の教材。配る本文の選び方（古い世代から重ねて後勝ち）で、書き直した世代を除いて論点ごとに最も新しい物。読めないファイルは飛ばす。"""
     out: dict[int, dict] = {}
     for g in generation_dirs(d):
@@ -361,10 +365,10 @@ def previous_materials(d: Path) -> dict[int, dict]:
     return out
 
 
-def numbers(text: str) -> set[str]:
+def _numbers(text: str) -> set[str]:
     """数値を取り出す。全角は半角に寄せ、図の行の中は数えない。小数点を含まない数値は桁数の下限以上だけ。"""
     out: set[str] = set()
-    for mo in NUMBER.finditer(drop_figure_rows(text)):
+    for mo in NUMBER.finditer(_drop_figure_rows(text)):
         v = mo.group(0).translate(TO_HALF)
         if "." in v or len(v) >= LIMITS["numberMinDigits"]:
             out.add(v)
@@ -380,15 +384,15 @@ def lost_numbers(tid: int, m: dict, prev: dict | None) -> list[dict]:
     """前の世代の教材にあって書き直した世代の教材に無い数値を警告にする。"""
     if prev is None:
         return []
-    lost = numbers(_text_of(prev)) - numbers(_text_of(m))
-    return [finding("lostNumber", f"{m['_where']} topic {tid}", f"前の世代にある {v} が無い")
+    lost = _numbers(_text_of(prev)) - _numbers(_text_of(m))
+    return [_finding("lostNumber", f"{m['_where']} topic {tid}", f"前の世代にある {v} が無い")
             for v in sorted(lost, key=lambda x: (float(x), x))]
 
 
 # @implements REQ-473, BR-042
 def style_warnings(d: Path, materials: dict[int, dict], figures: dict[int, list[dict]], usable: dict[int, dict]) -> list[dict]:
     """警告の全部。問われ方の文・同じ点の繰り返し・受け持ちの説明の繰り返し・消えた数値だけを見て、字数・文数・見出しや項目の数は見ない。"""
-    prev = previous_materials(d)
+    prev = _previous_materials(d)
     out: list[dict] = []
     for tid, m in sorted(materials.items()):
         out += exam_phrases(tid, m)
@@ -420,6 +424,8 @@ def check_material_style() -> dict:
     return {"exitCode": 1 if stops else 0, "topics": len(materials), "stops": stops, "warnings": warnings, "limits": LIMITS}
 
 
+# @implements REQ-451, REQ-453
+# @operation UC-025#checkMaterialStyle
 def main() -> int:
     try:
         res = check_material_style()

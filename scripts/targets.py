@@ -12,11 +12,13 @@ _P = ROOT / "scripts" / "pages_projects.json"
 def targets() -> dict:
     return {k: v for k, v in json.loads(_T.read_text(encoding="utf-8")).items() if not k.startswith("_")}
 
+# @implements BR-005
 def target(key: str) -> dict:
     t = targets()
     if key not in t: raise SystemExit(f"対象 '{key}' が src/shared/targets.json に無い（scripts/new_target.py で登録する）")
     return t[key]
 
+# @implements BR-005
 def keys() -> list[str]:
     return sorted(targets())
 
@@ -26,9 +28,11 @@ def deploy(key: str) -> dict:
     return p[key]
 
 # 資格版の互換: 出典の試験名と模試設定
+# @implements BR-005
 def exam_names() -> dict[str, str]:
     return {k: v["examName"] for k, v in targets().items()}
 
+# @implements BR-005
 def exam_settings() -> dict[str, tuple[int, int]]:
     return {k: (v["mockSize"], v["mockMinutes"] * 60) for k, v in targets().items()}
 

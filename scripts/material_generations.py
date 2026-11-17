@@ -80,6 +80,7 @@ def learning_refusal(d: Path, *, registered: bool) -> dict | None:
     return None
 
 
+# @implements REQ-487
 def emit_refusal(refusal: dict) -> int:
     """断りを標準出力に 1 つ出し、人が読む理由を標準エラーに出して、終了コード 1 を返す。"""
     print(refusal["error"]["reason"], file=sys.stderr)
@@ -91,6 +92,7 @@ def materials_of(chosen: dict[int, Chosen]) -> dict[int, dict]:
     return {tid: c.material for tid, c in chosen.items()}
 
 
+# @implements REQ-471
 def generation_counts(chosen: dict[int, Chosen]) -> dict[str, int]:
     """世代の名前 → その世代から選んだ論点の数（古い世代から順に、1 つも選ばなかった世代は出さない）。"""
     counts: dict[str, int] = {}
@@ -104,6 +106,7 @@ def _number(name: str) -> int:
     return int(mo.group(1) or 1) if mo else 0
 
 
+# @implements REQ-471, REQ-487
 def main() -> int:
     ap = argparse.ArgumentParser(description="論点ごとに選んだ教材の世代と中身を JSON で出す")
     ap.add_argument("--data", required=True, type=Path)

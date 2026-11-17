@@ -28,6 +28,7 @@ from __future__ import annotations
 import argparse, glob, json, re, sys
 from pathlib import Path
 
+# @implements REQ-414, REQ-422
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", default="data/itc", type=Path)
     a = ap.parse_args(); d = a.data; key = d.name
@@ -68,7 +69,6 @@ def main() -> int:
         levels = {t.get("level") for t in spec["tiers"]}
         lack = [u["term"] for u in units if u.get("tier") not in levels]
         assert not lack, f"印が登録簿 roadmapSpec.tiers の段に無い単位: {lack[:5]}"
-    # @implements REQ-414, REQ-422
     # 副題は名前とは別の欄で受け取り、名前から切り出さない。欄が無い単位は副題なし。空の文字列や文字列でない値は投入しない
     bad_sub = [u["term"] for u in units if "subtitle" in u and u["subtitle"] is not None and (not isinstance(u["subtitle"], str) or not u["subtitle"].strip())]
     assert not bad_sub, f"副題が空か文字列でない単位（副題が無いなら subtitle の欄を書かない）: {bad_sub[:5]}"

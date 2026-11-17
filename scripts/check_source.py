@@ -45,6 +45,7 @@ def check_iterations(auth: Path, errors: list[str]) -> None:
         errors.append(f"O5: PBKDF2 の反復回数 {n:,} が Workers の上限 {PBKDF2_MAX:,} を超えている（本番だけログインが 500 になる）")
 
 
+# @implements BR-015
 def check_empty_lists(client: Path, errors: list[str]) -> int:
     n = 0
     for f in sorted(client.rglob("*.tsx")):
@@ -55,6 +56,7 @@ def check_empty_lists(client: Path, errors: list[str]) -> int:
     return n
 
 
+# @implements BR-039, BR-015
 def main() -> int:
     root = Path(__file__).resolve().parent.parent
     ap = argparse.ArgumentParser()

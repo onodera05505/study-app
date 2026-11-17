@@ -39,6 +39,7 @@ def _key_id(k):
     return int(k) if isinstance(k, str) and k.isdigit() else None
 
 
+# @implements REQ-430, REQ-434
 def config_refs(cfg: dict) -> list[tuple[str, object]]:
     """ロードマップの設定が単位を指す所を (場所, 値) で平らに並べる。鍵は ID に読み直した値を返す（読めなければ元の鍵）。"""
     refs: list[tuple[str, object]] = []
@@ -88,7 +89,7 @@ def apply_config_to_candidates(cands: list[dict], cfg: dict) -> None:
         if c["id"] in summary: c["summary"] = summary[c["id"]]
 
 
-def chapter_order(chosen: list[dict], file_order: dict[int, int], fields: list[str]) -> tuple[list[dict], list[str]]:
+def _chapter_order(chosen: list[dict], file_order: dict[int, int], fields: list[str]) -> tuple[list[dict], list[str]]:
     """章で束ねる並び。戻り値は (並べた単位, 注意)。単位には _round と _chapter を付ける。"""
     notes: list[str] = []
     fi = {f: i for i, f in enumerate(fields)}
@@ -132,6 +133,7 @@ def unit_of(c: dict, i: int, place: dict, sig: str, term_of: dict[int, str]) -> 
 
 
 
+# @implements REQ-430, REQ-434, REQ-437
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--max", type=int, default=40); ap.add_argument("--per-day", type=int, default=3); ap.add_argument("--min-per-goal", type=int, default=4)
     ap.add_argument("--out", default=None, help="roadmap.json と material_bundles/ の書き先（既定は --data）")
@@ -232,7 +234,7 @@ def main() -> int:
             if p in by_id: visit(by_id[p], stack + (c["id"],))
         seen.add(c["id"]); ordered.append(c)
     if group_by == "chapter":
-        ordered, notes = chapter_order(chosen, file_order, list(_target(d.name)["fields"]))
+        ordered, notes = _chapter_order(chosen, file_order, list(_target(d.name)["fields"]))
         for n in notes: print("注:", n)
     elif field_order:
         fi = {f: i for i, f in enumerate(field_order)}

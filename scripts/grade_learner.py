@@ -21,6 +21,7 @@ ALIASES = {"understood": ("understanding", "understand"),
 
 
 # @implements REQ-322
+# @operation UC-019#readPackSnapshot
 def read_snapshot(d: Path, cycle: int) -> dict:
     p = snapshot_path(d, cycle)
     if not p.is_file():
@@ -57,6 +58,7 @@ def readable_snapshot(p: Path) -> dict:
 
 
 # @implements REQ-332
+# @operation UC-019#readCycleResult
 def check_result_free(d: Path, cycle: int) -> None:
     p = result_path(d, cycle)
     if p.exists():
@@ -64,6 +66,7 @@ def check_result_free(d: Path, cycle: int) -> None:
 
 
 # @implements REQ-329
+# @operation UC-019#readLearnerAnswers
 def read_answers(path: str) -> dict:
     p = Path(path)
     if not p.is_file():
@@ -80,6 +83,7 @@ def read_answers(path: str) -> dict:
 
 
 # @implements REQ-330
+# @operation UC-019#readExplainGrades
 def read_explain_grades(path: str) -> dict:
     p = Path(path)
     if not p.is_file():
@@ -176,11 +180,12 @@ def shift_suspects(graded: list[dict]) -> list[str]:
     return out
 
 
-def frac(c: int, n: int) -> str:
+def _frac(c: int, n: int) -> str:
     return f"{c}/{n}"
 
 
 # @implements REQ-339
+# @operation UC-019#readCycleResult
 def previous_result(d: Path, cycle: int) -> dict | None:
     """その周より小さい番号の周の結果のうち最も大きい番号の物。契約の readCycleResult の形として読めなければ挙げて止める。"""
     prev = []
@@ -231,9 +236,9 @@ def cycle_result(cycle: int, snap: dict, graded: list[dict], changed: list[str],
             x["confusing"] = per_unit[tid]["confusing"]
         return x
 
-    res = {"cycle": cycle, "score": frac(correct, total), "rate": round(correct / total, 3) if total else 0,
-           "by_goal": {str(g): frac(*by_goal[g]) for g in sorted(by_goal)},
-           "by_field": {f: frac(*v) for f, v in by_field.items()},
+    res = {"cycle": cycle, "score": _frac(correct, total), "rate": round(correct / total, 3) if total else 0,
+           "by_goal": {str(g): _frac(*by_goal[g]) for g in sorted(by_goal)},
+           "by_field": {f: _frac(*v) for f, v in by_field.items()},
            "per_unit": per_unit,
            "reported_units": len(reported),
            "avg_understood": round(sum(reported) / len(reported), 2) if reported else 0,
@@ -255,7 +260,7 @@ def cycle_result(cycle: int, snap: dict, graded: list[dict], changed: list[str],
     return res
 
 
-# @implements UC-019
+# @implements UC-019, REQ-340
 def grade() -> dict:
     a = contract_args("grade_learner.py", {"data": "data", "cycle": "cycle", "answers": "text", "explain": "text"},
                       ("data", "cycle", "answers"))
@@ -277,6 +282,7 @@ def grade() -> dict:
 
 
 # @implements REQ-356
+# @operation UC-019#writeCycleResult
 def write_result(d: Path, cycle: int, res: dict) -> None:
     """周の結果を排他の作成で書く。採点する間にほかの呼び出しが同じ周の結果を書いていれば、書き換えずに断る。"""
     if not write_exclusive(result_path(d, cycle), res):

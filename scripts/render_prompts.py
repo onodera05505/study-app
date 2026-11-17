@@ -28,10 +28,11 @@ BY_DAY_MARK = re.compile(r"\{\{[#/]byDay\}\}")
 HISTORY = "## 改訂履歴"
 
 
+# @operation UC-019#readLearnerTemplate
 def read_learner_template() -> dict:
     """学習者役への指示の雛形（契約の readLearnerTemplate）。本文と、節の見出し・差し込みの名前・日で束ねる学びだけの塊の中の差し込みの名前。"""
     text = (PROMPTS / LEARNER).read_text(encoding="utf-8")
-    headings = [ln for ln in outside_fences(text) if re.match(r"^#{1,6} ", ln)]
+    headings = [ln for ln in _outside_fences(text) if re.match(r"^#{1,6} ", ln)]
     by_day = [n for body in BY_DAY.findall(text) for n in PLACEHOLDER.findall(body)]
     return {
         "text": text,
@@ -41,7 +42,7 @@ def read_learner_template() -> dict:
     }
 
 
-def is_chapter(rm: dict) -> bool:
+def _is_chapter(rm: dict) -> bool:
     """章で束ねる学びか（ロードマップの group_by が chapter）。無ければ日で束ねる学び。"""
     return rm.get("group_by") == "chapter"
 
@@ -56,7 +57,7 @@ def by_day_blocks(text: str, chapter: bool) -> str:
     return out
 
 
-def outside_fences(text: str) -> list[str]:
+def _outside_fences(text: str) -> list[str]:
     """コードの囲みの外の行。"""
     out, fenced = [], False
     for ln in text.split("\n"):
@@ -96,6 +97,7 @@ def answer_format(text: str) -> dict:
     raise RuntimeError(f"{LEARNER}: 答えと自己申告の書き方（answers と units を持つ JSON の囲み）が無い")
 
 
+# @operation UC-019#readRoadmap
 def read_roadmap(d: Path) -> dict:
     """学びのロードマップ（契約の readRoadmap）。登録簿がロードマップを持つ学びとし、置き場に無いか読めないときは空。"""
     try:
@@ -105,12 +107,13 @@ def read_roadmap(d: Path) -> dict:
     return rm if isinstance(rm, dict) else {}
 
 
+# @implements REQ-412
 def values(key: str, entry: dict, spec: dict, rm: dict) -> dict:
     """差し込みの値。days は日で束ねる学びのロードマップの days だけが埋め、章で束ねる学びでは埋めない。"""
     v = dict(spec)
     v.setdefault("targetName", entry.get("brand"))
     v.setdefault("key", key)
-    if not is_chapter(rm) and type(rm.get("days")) is int and rm["days"] >= 1:
+    if not _is_chapter(rm) and type(rm.get("days")) is int and rm["days"] >= 1:
         v["days"] = rm["days"]
     else:
         v.pop("days", None)
@@ -126,6 +129,7 @@ def values(key: str, entry: dict, spec: dict, rm: dict) -> dict:
     return {k: x for k, x in v.items() if x is not None}
 
 
+# @implements REQ-412
 def fill(text: str, v: dict) -> tuple[str, list[str]]:
     """差し込みを埋め、埋まらなかった差し込みの名前を雛形に現れる順に返す。"""
     out = PLACEHOLDER.sub(lambda m: str(v[m.group(1)]) if m.group(1) in v else m.group(0), text)
@@ -136,7 +140,7 @@ def fill(text: str, v: dict) -> tuple[str, list[str]]:
 def render_all(key: str, entry: dict, spec: dict, rm: dict) -> dict[str, str]:
     """全テンプレートを描き出した本文（テンプレートの名前 → 本文）。埋まらない差し込みが残れば、その名前を挙げて断る。"""
     v = values(key, entry, spec, rm)
-    chapter = is_chapter(rm)
+    chapter = _is_chapter(rm)
     texts: dict[str, str] = {}
     left: list[str] = []
     for name in TEMPLATES:
@@ -152,6 +156,7 @@ def render_all(key: str, entry: dict, spec: dict, rm: dict) -> dict[str, str]:
 
 
 # @implements UC-019, REQ-411
+# @operation UC-019#renderLearnerInstructions
 def main() -> dict:
     a = contract_args("render_prompts.py", {"data": "data"}, ("data",))
     d = Path(a.data)

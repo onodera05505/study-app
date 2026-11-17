@@ -58,30 +58,31 @@ HEADING = re.compile(r"^###" + LINE_SPACE + r"+[^\n\r\u2028\u2029]*[^" + re.esca
                      + LINE_SPACE + r"*\Z")
 
 
-def figure_src(line: str) -> Optional[str]:
+def _figure_src(line: str) -> Optional[str]:
     """図の行なら指す先を、そうでなければ None を返す。"""
     mo = IMAGE.match(line.strip(LINE_SPACES))
     return mo.group(1) if mo and mo.group(1).startswith(FIGURE_PREFIX) else None
 
 
-def strip_images(text: str) -> str:
+def _strip_images(text: str) -> str:
     """図の行を行ごと外す（外した行の跡に空行を残さない）。"""
-    out = "\n".join(l for l in text.split("\n") if figure_src(l) is None)
+    out = "\n".join(l for l in text.split("\n") if _figure_src(l) is None)
     return re.sub(r"\n{3,}", "\n\n", out).strip("\n")
 
 
-def is_heading(line: str) -> bool:
+def _is_heading(line: str) -> bool:
     """画面が見出しとして出す行か。"""
     return HEADING.match(line.strip(LINE_SPACES)) is not None
 
 
+# @implements REQ-470
 def insert_at_section_end(detail: str, heading: str, line: str) -> str:
     """見出しの節の末尾（次の見出しの行の直前。後に見出しが無ければ detail の末尾）に 1 行入れる。
     同じ見出しに続けて呼ぶと、後から入れた行が下に並ぶ。"""
     lines = detail.split("\n")
     for i, l in enumerate(lines):
         if l.strip() == heading.strip():
-            end = next((j for j in range(i + 1, len(lines)) if is_heading(lines[j])), len(lines))
+            end = next((j for j in range(i + 1, len(lines)) if _is_heading(lines[j])), len(lines))
             lines.insert(end, line)
             return "\n".join(lines)
     raise KeyError(heading)
@@ -96,12 +97,13 @@ def insert_after_heading(detail: str, heading: str, line: str) -> str:
     raise KeyError(heading)
 
 
+# @implements REQ-470
 def keep_placed(text: str, lines_by_src: dict[str, str]) -> tuple[str, set[str]]:
     """既に入っている図の行をその場所のまま（同じ図が何度あっても数も変えず）仕様の行に合わせ、仕様に無い図の行を外す。
     (本文, 入っていた src) を返す。"""
     out, found, dropped = [], set(), False
     for l in text.split("\n"):
-        src = figure_src(l)
+        src = _figure_src(l)
         if src is None:
             out.append(l)
         elif src in lines_by_src:
@@ -113,7 +115,7 @@ def keep_placed(text: str, lines_by_src: dict[str, str]) -> tuple[str, set[str]]
     return (re.sub(r"\n{3,}", "\n\n", body).strip("\n") if dropped else body), found
 
 
-def unplaced(problems: list, where: str, reason: str) -> None:
+def _unplaced(problems: list, where: str, reason: str) -> None:
     """差し込まなかった図を問題として記す。where は図の仕様書の門の表の `{where}` の形。"""
     problems.append(f"{where}: {reason}")
 
@@ -130,6 +132,7 @@ def write_materials(changed_files: dict[Path, dict], problems: list[str], dry_ru
     return 0
 
 
+# @implements REQ-470
 def place_figures(m: dict, spec: dict, spec_name: str, exam: str, public: Path, rewritten: bool,
                   all_to_explanation: bool, problems: list) -> tuple[str, str, int]:
     """1 論点の教材に図を差し込んだ (explanation, detail, 教材にある図の数)。"""
@@ -139,14 +142,13 @@ def place_figures(m: dict, spec: dict, spec_name: str, exam: str, public: Path, 
         where = f"[{spec_name}] 論点 {m['topic_id']} 図 {fig['id']}"
         src = f"/figures/materials/{exam}/{m['topic_id']}-{fig['id']}.svg"
         if not (public / src.lstrip("/")).exists():
-            unplaced(problems, where, f"画像が無い {src}（先に render_material_figures.py を実行）")
+            _unplaced(problems, where, f"画像が無い {src}（先に render_material_figures.py を実行）")
             continue
         lines_by_src[src] = f"![{fig['caption']}]({src})"
         figs.append((where, src, fig["after"]))
 
-    # @implements REQ-470
     if rewritten:
-        ex, det = strip_images(m["explanation"]), strip_images(m["detail"])
+        ex, det = _strip_images(m["explanation"]), _strip_images(m["detail"])
         placed = 0
         for where, src, after in figs:
             if after == "explanation":
@@ -155,7 +157,7 @@ def place_figures(m: dict, spec: dict, spec_name: str, exam: str, public: Path, 
                 try:
                     det = insert_at_section_end(det, after, lines_by_src[src])
                 except KeyError:
-                    unplaced(problems, where, f"after {after!r} が教材に無い")
+                    _unplaced(problems, where, f"after {after!r} が教材に無い")
                     continue
             placed += 1
         return ex, det, placed
@@ -177,6 +179,8 @@ def place_figures(m: dict, spec: dict, spec_name: str, exam: str, public: Path, 
     return ex, det, len(figs)
 
 
+# @operation UC-027#attachMaterialFigures
+# @implements REQ-471, REQ-487
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", default="data/ap")

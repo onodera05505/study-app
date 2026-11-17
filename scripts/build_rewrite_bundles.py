@@ -36,11 +36,13 @@ def _read(p: Path):
     return json.loads(p.read_text(encoding="utf-8"))
 
 
+# @implements REQ-461, REQ-462
 def latest_materials(d: Path) -> dict[int, tuple[str, dict]]:
     """論点 ID → (世代の名前, 教材)。選び方は配る本文と同じ material_generations.select_materials。"""
     return {tid: (c.generation, c.material) for tid, c in select_materials(d).items()}
 
 
+# @implements REQ-461
 def topical_units(syllabus: dict[int, dict], topics: list[dict]) -> list[int]:
     """論点が 1 つ以上あるシラバスの単元の番号。"""
     unit_of = topic_units(syllabus, topics)
@@ -67,6 +69,9 @@ def refuse_existing_output(out: Path, name: re.Pattern) -> None:
             raise Refused("CONFLICT", f"出力先 {out} に既に束のファイルがある（{len(found)} 件）")
 
 
+# @implements REQ-464
+# @operation UC-026#writeUnitInput
+# @operation UC-026#writeRewriteBundle
 def write_all(out: Path, files: list[tuple[str, dict]]) -> list[str]:
     """組み立てた束をすべて新しいファイルとして書き出す。1 つでも書き出せなければ書いた分を消して断る。"""
     written: list[Path] = []
@@ -125,7 +130,7 @@ def unit_inputs(d: Path, units: list[int], syllabus: dict[int, dict], topics: li
     return files
 
 
-def figure_files(d: Path) -> dict[int, tuple[str, list]]:
+def _figure_files(d: Path) -> dict[int, tuple[str, list]]:
     """論点 ID → (図の仕様のパス, figures)。図の仕様は material_figures/*.json の 1 ファイル＝1 論点。"""
     out: dict[int, tuple[str, list]] = {}
     src = d / "material_figures"
@@ -140,7 +145,7 @@ def figure_files(d: Path) -> dict[int, tuple[str, list]]:
     return out
 
 
-def folded_questions(d: Path) -> dict[str, dict]:
+def _folded_questions(d: Path) -> dict[str, dict]:
     """問題 ID → 問題。正解表に正解の無い問題は answer を None で持つ。
     正解表のファイルが無ければ、どの問題にも正解が無いものとして持つ（束に入る過去問があれば refuse_missing_answers が断る）。"""
     keys_path = d / "answer_keys.json"
@@ -166,7 +171,7 @@ def folded_questions(d: Path) -> dict[str, dict]:
     return out
 
 
-def linked_questions(t: dict, questions: dict[str, dict]) -> list[dict]:
+def _linked_questions(t: dict, questions: dict[str, dict]) -> list[dict]:
     """論点に紐づく過去問のうち、問題のファイルにある物。"""
     return [q for link in t.get("questions", []) if (q := questions.get(f"{link['exam']}-q{link['number']}"))]
 
@@ -193,10 +198,11 @@ def explanation_index(d: Path, questions: dict[str, dict]) -> dict[str, dict]:
     return explanations
 
 
+# @implements REQ-462, REQ-492
 def topic_questions(t: dict, questions: dict[str, dict]) -> list[dict]:
     """論点に紐づく過去問を同一内容（content_key）で 1 件に畳む。代表は最も新しい回の問題で、新しい順に並べる。"""
     best: dict[str, dict] = {}
-    for q in linked_questions(t, questions):
+    for q in _linked_questions(t, questions):
         if (q["content_key"] not in best or exam_rank(q["_exam"]) > exam_rank(best[q["content_key"]]["_exam"])):
             best[q["content_key"]] = q
     ordered = sorted(best.values(), key=lambda q: (exam_rank(q["_exam"]), q["question_id"]), reverse=True)
@@ -212,7 +218,7 @@ def rewrite_bundles(d: Path, units: list[int], plans: dict[int, dict], topics: l
     ref = lambda tid: {"topic_id": tid, "term": by_id[tid]["term"]}  # noqa: E731
     materials = latest_materials(d)
     explanations = explanation_index(d, questions)
-    figures = figure_files(d)
+    figures = _figure_files(d)
     files: list[tuple[str, dict]] = []
     for u in units:
         plan = plans[u]
@@ -275,7 +281,7 @@ def gated_plans(d: Path, units: list[int]) -> dict[int, dict]:
     return plans
 
 
-def parse_args() -> argparse.Namespace:
+def _parse_args() -> argparse.Namespace:
     ap = argparse.ArgumentParser(description="資格対策の教材の書き直しに配る束を作る")
     ap.add_argument("--data", required=True, help="学びの置き場（例 data/ip）")
     ap.add_argument("--out", required=True, type=Path, help="束を書き出す置き場")
@@ -284,9 +290,11 @@ def parse_args() -> argparse.Namespace:
     return ap.parse_args()
 
 
-# @implements UC-026
+# @implements UC-026, REQ-461, REQ-462
+# @operation UC-026#buildUnitInputs
+# @operation UC-026#buildRewriteBundles
 def main() -> int:
-    args = parse_args()
+    args = _parse_args()
     try:
         d = qualification_learning(args.data)
         syllabus, topics = learning_files(d)
@@ -297,7 +305,7 @@ def main() -> int:
         else:
             refuse_existing_output(args.out, REWRITE_BUNDLE_NAME)
             plans = gated_plans(d, units)
-            questions = folded_questions(d)
+            questions = _folded_questions(d)
             refuse_missing_answers(units, plans, questions, {t["id"]: t for t in topics})
             files = rewrite_bundles(d, units, plans, topics, questions)
         written = write_all(args.out, files)

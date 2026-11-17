@@ -55,6 +55,7 @@ def _text(v) -> bool:
     return isinstance(v, str) and v != ""
 
 
+# @implements BR-051
 def frequency_floors() -> list[int]:
     """BR-051 の段の境目（配列の i 番目が段 i+1 の出題頻度の下限）。"""
     mo = re.search(r"FREQUENCY_TIER_FLOORS\s*=\s*\[([0-9,\s]+)\]", TIER_SOURCE.read_text(encoding="utf-8"))
@@ -68,12 +69,14 @@ def frequency_line(count: int, floors: list[int]) -> str:
     return f"出題 {count} 回" + (f" {'★' * tier}" if tier else "")
 
 
+# @implements REQ-497
 def short_term(term: str) -> str:
     """末尾の括弧書きを落とした表記（src/client/components/TermPop.tsx の shortTerm と同じ読み方）。"""
     mo = re.match(r"^(.+?)\s*[（(].*[）)]$", term)
     return mo.group(1) if mo else term
 
 
+# @implements REQ-497
 def terms_keeping_paren(glossary: set[str]) -> set[str]:
     """括弧書きを落とすと用語集の他の語の用語か、他の語を短くした表記と同じになる語（TermPop.tsx の termsKeepingParen と同じ）。"""
     by_short: dict[str, list[str]] = {}
@@ -101,6 +104,7 @@ def read_args():
 
 
 # @implements REQ-502, BR-004
+# @operation UC-028#readReadingRegistry
 def qualification_key(data: str) -> str:
     """登録簿にあり、ロードマップ型でない学びだけを通し、学びの key を返す。"""
     key = Path(data).name
@@ -118,7 +122,7 @@ def check_destination(out: Path, d: Path) -> None:
     check_out(out, d)
 
 
-def plan_path(d: Path, unit: str) -> Path:
+def _plan_path(d: Path, unit: str) -> Path:
     return d / "unit_plans" / f"{unit}.json"
 
 
@@ -132,7 +136,7 @@ def check_unit(d: Path, unit: str) -> None:
         in_learning = int(unit) in _parse_syllabus(sp, _read_json(sp))
     except (OSError, ValueError, GateRefused):
         in_learning = True
-    if not in_learning or not plan_path(d, unit).is_file():
+    if not in_learning or not _plan_path(d, unit).is_file():
         raise Refused("NOT_FOUND", "単元が無いか、単元の構成を持たない", unit=unit)
 
 
@@ -180,7 +184,7 @@ def _read_checked(p: Path, ok, bad: list[str]):
     return raw
 
 
-def glossary_sources(d: Path) -> list[tuple[Path, object]]:
+def _glossary_sources(d: Path) -> list[tuple[Path, object]]:
     """投入が用語集を組み立てるときに読む、論点の一覧と教材の世代以外のファイルと、その形の確かめ方。"""
     files = [(p, _explanations_ok) for p in sorted((d / "question_explanations").glob("*.json"))]
     for name in ("glossary_overrides.json", "topic_aliases.json"):
@@ -190,6 +194,8 @@ def glossary_sources(d: Path) -> list[tuple[Path, object]]:
 
 
 # @implements REQ-507
+# @operation UC-028#readReadingUnitPlan
+# @operation UC-028#readReadingTopics
 def read_sources(d: Path, unit: str) -> tuple[dict, list[dict]]:
     """教材の世代・単元の構成・論点の一覧・用語集の元・単元の論点の図の仕様を、契約の形として読めるか確かめて読む。
     読めないファイルが 1 つでもあれば、読めないファイルをすべて挙げて止める。返すのは (単元の構成, 論点の一覧)。"""
@@ -198,9 +204,9 @@ def read_sources(d: Path, unit: str) -> tuple[dict, list[dict]]:
         read_generations(d)
     except Refused as e:
         bad.extend(e.detail.get("unreadable", []))
-    plan = _read_checked(plan_path(d, unit), _plan_ok, bad)
+    plan = _read_checked(_plan_path(d, unit), _plan_ok, bad)
     topics = _read_checked(d / "topics.json", _topics_ok, bad)
-    for p, ok in glossary_sources(d):
+    for p, ok in _glossary_sources(d):
         _read_checked(p, ok, bad)
     if plan is not None:
         for tid in [t for g in plan["groups"] for t in g["topics"]]:
@@ -225,6 +231,7 @@ def check_gate(d: Path, unit: str) -> None:
 
 
 # @implements REQ-506
+# @operation UC-028#readReadingDeliveredBody
 def unit_bodies(d: Path, order: list[int]) -> dict[int, dict]:
     """投入と同じ選び方で選んだ単元の論点の配る本文。どの世代からも選べない論点があれば挙げて止める。"""
     try:
@@ -257,17 +264,19 @@ def check_figure_lines(order: list[int], bodies: dict[int, dict]) -> None:
         raise Refused("INVALID_INPUT", "図の置き場を指すのに図の行の形に合わない行がある", lines=hit)
 
 
+# @implements REQ-498
 def reading_figure(png: str, caption: str) -> str:
     """読み物の図。出力先の中の PNG を指す説明文の無い画像と、その直下に 1 回だけ置く図の説明文。"""
     return f"\n\n![]({png})\n\n図の説明: {caption}\n\n"
 
 
-def image_file(root: Path, ref: str) -> Path:
+def _image_file(root: Path, ref: str) -> Path:
     """図の参照先 /figures/materials/<key>/<サブパス> が指す配信の置き場の画像。"""
     return root / "public" / ref.lstrip("/")
 
 
 # @implements REQ-496, REQ-508, BR-026
+# @operation UC-028#readReadingFigureSpec
 def place_figures(d: Path, root: Path, key: str, order: list[int], bodies: dict[int, dict],
                   gens: dict[int, str]) -> tuple[dict[int, tuple[str, str]], list[dict]]:
     """論点ごとに図を読み物の形で置いた (説明, 詳しい解説) と、読み物の順の図の {topic_id, ref, target}。
@@ -304,7 +313,7 @@ def place_figures(d: Path, root: Path, key: str, order: list[int], bodies: dict[
         text = ex + "\n" + det
         mine.sort(key=lambda r: text.find(f"![]({r['target']})"))
         for r in mine:
-            if not image_file(root, r["ref"]).is_file():
+            if not _image_file(root, r["ref"]).is_file():
                 missing.append({"topic_id": tid, "ref": r["ref"], "cause": "imageMissing"})
         refs += mine
         placed[tid] = (ex, det)
@@ -327,13 +336,15 @@ def figure_targets(refs: list[dict]) -> dict[str, str]:
 
 
 # @implements REQ-498, REQ-500, REQ-509
+# @operation UC-028#readReadingFigure
+# @operation UC-028#writeReadingFigure
 def draw_figures(work: Path, root: Path, targets: dict[str, str], refs: list[dict]) -> None:
     """図を PNG にして work の下の出力先と同じパスに置く。元が PNG の図は写し、SVG は図の中の script を走らせず
     図のファイルの外の資源を取りに行かない描き手（scripts/render_svg_png.mjs）で描く。
     XML として整わない図・待ち時間の上限のうちに描けない図があれば、その論点と図を挙げて止める。"""
     jobs = []
     for target, ref in targets.items():
-        src = image_file(root, ref)
+        src = _image_file(root, ref)
         (work / target).parent.mkdir(parents=True, exist_ok=True)
         if src.suffix == ".png":
             shutil.copyfile(src, work / target)
@@ -345,10 +356,10 @@ def draw_figures(work: Path, root: Path, targets: dict[str, str], refs: list[dic
         failed |= render_svgs(drawable)
     if failed:
         raise Refused("INTERNAL", "図を PNG に描けない",
-                      figures=[{"topic_id": r["topic_id"], "ref": r["ref"]} for r in unique_refs(refs) if r["target"] in failed])
+                      figures=[{"topic_id": r["topic_id"], "ref": r["ref"]} for r in _unique_refs(refs) if r["target"] in failed])
 
 
-def unique_refs(refs: list[dict]) -> list[dict]:
+def _unique_refs(refs: list[dict]) -> list[dict]:
     """同じ論点の同じ図を 1 つにした、読み物の順の図。"""
     seen, out = set(), []
     for r in refs:
@@ -390,6 +401,8 @@ def compose(plan: dict, topics: dict[int, dict], placed: dict[int, tuple[str, st
     return "\n".join(lines).rstrip("\n") + "\n"
 
 
+# @implements REQ-497
+# @operation UC-028#readReadingGlossary
 def learning_glossary(d: Path, topics: list[dict]) -> set[str]:
     """投入が組み立てるのと同じ用語集の正式な表記。"""
     explanations, _ = read_explanations(d)
@@ -401,6 +414,7 @@ def _natural(s: str) -> list:
     return [int(x) if x.isdigit() else x for x in re.split(r"([0-9]+)", s)]
 
 
+# @implements REQ-498
 def figure_list(order: list[int], refs: list[dict]) -> list[str]:
     """作り手に返す図の PNG。項目の番号の順に、同じ項目の中は PNG の名前の順（数は数として比べる）に 1 回ずつ並べる。"""
     pos = {t: i for i, t in enumerate(order)}
@@ -420,7 +434,8 @@ def publish(work: Path, out: Path) -> None:
         raise Refused("CONFLICT", "作る間に同じ出力先に書かれた")
 
 
-# @implements UC-028
+# @implements UC-028, REQ-509, REQ-511
+# @operation UC-028#writeUnitReading
 def build() -> dict:
     a = read_args()
     key = qualification_key(a.data)

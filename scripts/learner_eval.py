@@ -27,17 +27,17 @@ class Refused(Exception):
         self.code, self.reason, self.detail = code, reason, detail
 
 
-def emit(obj: dict) -> None:
+def _emit(obj: dict) -> None:
     print(json.dumps(obj, ensure_ascii=False, indent=1))
 
 
 def run(main) -> int:
     """入口を回し、成功なら結果の JSON と 0、errors に当たれば契約の ToolError の JSON と 1 を返す。"""
     try:
-        emit(main())
+        _emit(main())
         return 0
     except Refused as e:
-        emit({"error": {"code": e.code, "reason": e.reason, **e.detail}})
+        _emit({"error": {"code": e.code, "reason": e.reason, **e.detail}})
         return 1
 
 
@@ -118,6 +118,7 @@ def place_root(d: Path) -> Path:
     return d.parent.parent
 
 
+# @operation UC-019#readRegistryLearning
 def registry_learning(key: str) -> dict | None:
     """登録簿の 1 つの学び（契約の readRegistryLearning）。登録簿に無ければ None。"""
     t = targets().get(key)
@@ -141,6 +142,7 @@ def registered_roadmap(key: str) -> dict:
 
 
 # @implements REQ-318
+# @operation UC-019#readRoadmap
 def roadmap_learning(data: str) -> tuple[Path, str, dict]:
     """登録簿にあり種類がロードマップ型で、ロードマップを持つ学びだけを通す。(置き場, key, 登録簿の項目) を返す。"""
     d = Path(data)
@@ -169,6 +171,7 @@ def _question_ok(q) -> bool:
 
 
 # @implements REQ-333
+# @operation UC-019#readRoadmapQuestions
 def current_questions(d: Path) -> list[dict]:
     """学びの今の確認問題（roadmap_questions/bundle_*.json をファイル名の順に、ファイルの中の順で）。"""
     files = sorted((d / "roadmap_questions").glob("bundle_*.json"))
@@ -217,6 +220,7 @@ def write_exclusive(p: Path, obj) -> bool:
         tmp.unlink(missing_ok=True)
 
 
+# @implements REQ-336, REQ-355
 def remove_created_dirs(created: list[Path]) -> None:
     """コマンドが作ったディレクトリを深い順に、空のときだけ消す（同時に進む呼び出しが置いた物は消さない）。"""
     for c in created:

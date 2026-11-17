@@ -40,12 +40,12 @@ def is_roadmap(key: str) -> bool:
     return bool(target(key).get("roadmap"))
 
 
-def group_by(key: str, data: Path | None = None) -> str:
+def _group_by(key: str, data: Path | None = None) -> str:
     rm = (data or ROOT / "data" / key) / "roadmap.json"
     return json.loads(rm.read_text(encoding="utf-8")).get("group_by", "day") if rm.exists() else "day"
 
 
-def extra_rounds(key: str) -> set[str]:
+def _extra_rounds(key: str) -> set[str]:
     t = target(key); spec = t.get("roadmapSpec") or {}
     return set(t.get("exemptRounds", [])) | ({spec["extraRoundId"]} if spec.get("extraRoundId") else set())
 
@@ -54,7 +54,7 @@ def extra_rounds(key: str) -> set[str]:
 def registry_problems(key: str, data: Path | None = None) -> list[str]:
     """登録簿に回の語・印の語・日の値が揃っているか。"""
     if not is_roadmap(key): return []
-    t = target(key); spec = t.get("roadmapSpec") or {}; gb = group_by(key, data); out: list[str] = []
+    t = target(key); spec = t.get("roadmapSpec") or {}; gb = _group_by(key, data); out: list[str] = []
     words = {**ROUND_WORDS, **(DAY_WORDS if gb == "day" else {})}
     if gb == "chapter": words["roundHeading"] = ("回の見出しの語", ["{day}", "{label}"])  # 章の名前は {label}
     for k, (what, holes) in words.items():
@@ -97,7 +97,7 @@ def seed_problems(key: str, topics: list[dict], per_exam: dict[str, int], labels
     """投入データの論点の回・回のラベル・印と、回ごとの問題数。topics は seed.sql の topics の行（列名 → 値）、
     links は topic_questions の行、exam_of は確認問題の ID → その回（past_questions.exam）。"""
     if not is_roadmap(key): return []
-    t = target(key); spec = t.get("roadmapSpec") or {}; gb = group_by(key, data); extra = extra_rounds(key); out: list[str] = []
+    t = target(key); spec = t.get("roadmapSpec") or {}; gb = _group_by(key, data); extra = _extra_rounds(key); out: list[str] = []
     if topics and not any("round" in r for r in topics):
         return [f"{key}: 論点に回（round・round_label・tier の列）が無い（build_target_dataset.py → build_seed.py を流し直す）"]
     per_day = spec.get("perDay"); qpr = t.get("questionsPerRound")
@@ -162,6 +162,7 @@ def seed_problems(key: str, topics: list[dict], per_exam: dict[str, int], labels
     return out
 
 
+# @implements BR-037
 def main() -> int:
     if len(sys.argv) != 2: print(__doc__); return 2
     key = sys.argv[1]
@@ -169,7 +170,7 @@ def main() -> int:
     probs = registry_problems(key)
     for p in probs: print(f"✘ {p}")
     if probs: return 1
-    print(f"✓ {key}: 回の語・印の語が登録簿に揃っている（{'章' if group_by(key) == 'chapter' else '日'}で束ねる）"); return 0
+    print(f"✓ {key}: 回の語・印の語が登録簿に揃っている（{'章' if _group_by(key) == 'chapter' else '日'}で束ねる）"); return 0
 
 
 if __name__ == "__main__":

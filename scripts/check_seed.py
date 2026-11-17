@@ -78,11 +78,11 @@ CITATION = re.compile(r"'出典：((?:[^']|'')*)'")
 MATERIAL_IMAGE = re.compile(r"!\[(?:[^\]\n]|\](?!\())*\]\(([^)\s]+)\)")
 
 
-def unquote(s: str) -> str:
+def _unquote(s: str) -> str:
     return s.replace("''", "'")
 
 
-def insert_rows(sql: str, table: str) -> list[dict]:
+def _insert_rows(sql: str, table: str) -> list[dict]:
     """指定したテーブルの INSERT を列名つきで読み出す。
 
     本文や選択肢に `)` も `'`（SQL では `''`）も改行も入るので、正規表現では
@@ -121,15 +121,15 @@ def insert_rows(sql: str, table: str) -> list[dict]:
             i += 1
         if len(values) == len(cols):
             rows.append({
-                c: (unquote(v[1:-1]) if v.startswith("'") else None if v == "NULL" else v)
+                c: (_unquote(v[1:-1]) if v.startswith("'") else None if v == "NULL" else v)
                 for c, v in zip(cols, values)
             })
     return rows
 
 
-def question_values(sql: str) -> list[dict]:
+def _question_values(sql: str) -> list[dict]:
     """past_questions の INSERT を列名つきで読み出す。"""
-    return insert_rows(sql, "past_questions")
+    return _insert_rows(sql, "past_questions")
 
 
 # @implements BR-032
@@ -169,7 +169,7 @@ def main() -> int:
 
     rows = QUESTION_ROW.findall(sql)
     for qid, exam, label, _number in rows:
-        label = unquote(label)
+        label = _unquote(label)
         per_exam[exam] += 1
         labels[exam].add(label)
         if EXAM_CODE.match(label):
@@ -177,7 +177,7 @@ def main() -> int:
 
     # 出典は「出典：<ラベル> <試験名> 問N」。試験名が違えば IPA の表示義務を満たさない
     other_names = {v for k, v in EXAM_NAMES.items() if v != want_name}
-    for cit in {unquote(m) for m in CITATION.findall(sql)}:
+    for cit in {_unquote(m) for m in CITATION.findall(sql)}:
         if want_name not in cit:
             wrong_name.append(cit)
         elif any(o in cit for o in other_names):
@@ -203,9 +203,9 @@ def main() -> int:
     want_n = QUESTIONS_PER_EXAM.get(d.name)
     if is_roadmap(d.name):
         problems.extend(registry_problems(d.name, d))
-        problems.extend(seed_problems(d.name, insert_rows(sql, "topics"), per_exam, labels, d,
-                                      links=insert_rows(sql, "topic_questions"),
-                                      exam_of={r["id"]: r["exam"] for r in question_values(sql)}))
+        problems.extend(seed_problems(d.name, _insert_rows(sql, "topics"), per_exam, labels, d,
+                                      links=_insert_rows(sql, "topic_questions"),
+                                      exam_of={r["id"]: r["exam"] for r in _question_values(sql)}))
     elif want_n:
         for exam, n in sorted(per_exam.items()):
             if exam in QUESTIONS_EXEMPT: continue
@@ -278,7 +278,7 @@ def main() -> int:
     # content_key で1問にまとめて出す。まとめる以上、グループの中で正解が
     # 割れていてはいけない（どちらかの読み取りが間違っている）。
     dup_groups: dict[str, list[dict]] = defaultdict(list)
-    rows_full = question_values(sql)
+    rows_full = _question_values(sql)
     for row in rows_full:
         if row.get("content_key"):
             dup_groups[row["content_key"]].append(row)
@@ -300,12 +300,12 @@ def main() -> int:
     # 畳んだ数を入れると出題頻度＝重要度の並びが変わり、頻出論点から潰す最短経路が崩れる。
     key_of = {q["id"]: q.get("content_key") for q in rows_full}
     linked: dict[int, list[str]] = defaultdict(list)
-    for link in insert_rows(sql, "topic_questions"):
+    for link in _insert_rows(sql, "topic_questions"):
         if str(link.get("topic_id") or "").isdigit():
             linked[int(link["topic_id"])].append(str(link.get("question_id")))
     count_mismatch: list[str] = []
     folded: list[int] = []
-    for t in insert_rows(sql, "topics"):
+    for t in _insert_rows(sql, "topics"):
         if not str(t.get("id") or "").isdigit():
             continue
         tid = int(t["id"])
@@ -331,7 +331,7 @@ def main() -> int:
     # 解説は content_key で問題と結ぶ（FK は張っていない）。鍵が1文字でも違えば
     # どの問題にも表示されない。投入は通るので、ここで見ないと気づけない。
     question_keys = {r["content_key"] for r in rows_full if r.get("content_key")}
-    expl = insert_rows(sql, "question_explanations")
+    expl = _insert_rows(sql, "question_explanations")
     stray_expl = [r["content_key"] for r in expl if r.get("content_key") not in question_keys]
     if stray_expl:
         problems.append(
@@ -342,9 +342,9 @@ def main() -> int:
     # 用語集の topic_id も FK を張っていない（論点の統合で参照先が消えうるため）。
     # 消えた論点を指したままだと、ポップの「この論点を学ぶ →」が 404 に飛ぶ。
     topic_ids = {
-        int(r["id"]) for r in insert_rows(sql, "topics") if str(r.get("id") or "").isdigit()
+        int(r["id"]) for r in _insert_rows(sql, "topics") if str(r.get("id") or "").isdigit()
     }
-    gloss = insert_rows(sql, "glossary")
+    gloss = _insert_rows(sql, "glossary")
     stray_topic = [
         (r["term"], r["topic_id"]) for r in gloss
         if r.get("topic_id") is not None and int(r["topic_id"]) not in topic_ids

@@ -38,6 +38,7 @@ def _kw(key: str) -> str:
     sys.path.insert(0, str(Path(__file__).resolve().parent)); from targets import target
     return (target(key).get("roadmapSpec") or {}).get("keywordLabel", "キーワード")  # 教材の行の見出し語は登録簿 roadmapSpec.keywordLabel が決める
 
+# @implements BR-037
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--solutions", nargs="*", default=[])
     a = ap.parse_args(); d = Path(a.data)
@@ -64,7 +65,6 @@ def main() -> int:
                 # （セルフフィードバックの読む段で eca 1・msg 6 件が見つかった 2026-09-24）
                 warns.append(f"順序 {u['order']} {u['term']}: 前提『{pt}』という単位がロードマップに無い（名寄せ後の古い名前か）")
     # 章で束ねる学び: 各単位に章の番号・章の名前・登録簿にある段の印。★（印 1）は章の末尾（前提で前に出たものは警告）
-    # @implements BR-037
     if rm.get("group_by") == "chapter":
         levels = {t.get("level") for t in ((target(d.name).get("roadmapSpec") or {}).get("tiers") or [])}
         for u in rm["units"]:

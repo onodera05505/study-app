@@ -14,6 +14,7 @@ UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, l
 NG=0
 # 見た項目（配備の表示名と契約の operation の名前の組）。結びで配備ごとに並べる
 SEEN=""
+# @implements REQ-216
 seen() { SEEN="${SEEN}$1 $2"$'\n'; }
 # 全応答に載るべきセキュリティヘッダ（CSP・HSTS・X-Frame-Options DENY・nosniff・Referrer-Policy）。
 # 抜けても画面は動くので、本番の応答を見て確かめる。
@@ -28,6 +29,7 @@ check_headers() {
 # 本番の Pages プロジェクトの秘密の一覧を機械で確かめる（O13）。共有秘密 SSO_SECRET は まなびばと各学び、
 # トークンの署名の秘密 JWT_SECRET は各学び。名前が一覧にあることだけを見て、値は読まない・出さない。
 # 配備ごとの表示名・Pages プロジェクト名・必要な秘密の名前を 1 行ずつ返す（必要な名前の定義はここだけ）
+# @implements REQ-215
 secret_targets() {
   local key
   printf '%s\t%s\t%s\n' まなびば "$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['_portal']['project'])")" "SSO_SECRET"
@@ -38,6 +40,7 @@ secret_targets() {
 # ログイン中のアカウントが分かり、そのどれも配備を持たないときだけアカウント違い（FORBIDDEN）として
 # 一覧の取得より先に判定する。ログインしていない・アカウントが分からないときは取得を試み、失敗は取得の失敗に挙げる。
 # @implements REQ-215, REQ-221, REQ-222, BR-009
+# @operation UC-015#listDeploymentSecretNames
 check_secrets() {
   local name project want s out have expect list
   expect="$(python3 scripts/targets.py account)"

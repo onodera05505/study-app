@@ -75,6 +75,7 @@ MODIFICATION_MARKS = (
 )
 
 
+# @implements BR-052
 def content_key_of(qq: dict) -> str:
     """同一内容の問題をまとめるキー。
 
@@ -122,7 +123,7 @@ def load_materials(d: Path) -> dict[int, dict]:
     return materials_of(select_materials(d))
 
 
-def unit_plan_files(d: Path) -> list[Path]:
+def _unit_plan_files(d: Path) -> list[Path]:
     return sorted((d / "unit_plans").glob("*.json")) if (d / "unit_plans").is_dir() else []
 
 
@@ -145,30 +146,31 @@ def unit_plan_statements(files: list[Path]) -> list[str]:
     lines = [f"DELETE FROM {t};  -- 単元の構成から毎回作り直す（利用者のデータを持たない）" for t in UNIT_PLAN_TABLES]
     plans = [json.loads(f.read_text(encoding="utf-8")) for f in files]
     for p in plans:
-        lines.append(f"INSERT INTO unit_plans (middle_no, overview) VALUES ({q(p['unit_no'])}, {q(p['overview'])});")
+        lines.append(f"INSERT INTO unit_plans (middle_no, overview) VALUES ({_q(p['unit_no'])}, {_q(p['overview'])});")
     for p in plans:
         for g_no, g in enumerate(p["groups"], start=1):
             lines.append(
                 "INSERT INTO unit_groups (middle_no, group_no, name, description) VALUES ("
-                + ", ".join(q(x) for x in (p["unit_no"], g_no, g["name"], g["description"])) + ");"
+                + ", ".join(_q(x) for x in (p["unit_no"], g_no, g["name"], g["description"])) + ");"
             )
     for p in plans:
         for g_no, g in enumerate(p["groups"], start=1):
             for pos, tid in enumerate(g["topics"], start=1):
                 lines.append(
                     "INSERT INTO unit_group_topics (topic_id, middle_no, group_no, position) VALUES ("
-                    + ", ".join(q(x) for x in (tid, p["unit_no"], g_no, pos)) + ");"
+                    + ", ".join(_q(x) for x in (tid, p["unit_no"], g_no, pos)) + ");"
                 )
     for p in plans:
         for key, pres in (p.get("prerequisites") or {}).items():
             for pos, pre in enumerate(pres, start=1):
                 lines.append(
                     "INSERT INTO topic_prerequisites (topic_id, prerequisite_topic_id, position) VALUES ("
-                    + ", ".join(q(x) for x in (int(key), pre, pos)) + ");"
+                    + ", ".join(_q(x) for x in (int(key), pre, pos)) + ");"
                 )
     return lines
 
 
+# @implements BR-052
 def read_explanations(d: Path) -> tuple[dict[str, dict], list[str]]:
     """問題ごとの解説を読む。戻り値は (content_key → 解説, 複数ファイルに重複した鍵)。
 
@@ -189,7 +191,7 @@ def read_explanations(d: Path) -> tuple[dict[str, dict], list[str]]:
     return out, duplicated
 
 
-def strip_marks(text: str) -> str:
+def _strip_marks(text: str) -> str:
     """用語集の brief に載せるために記法を落とす。ポップの中でポップは開けない。"""
     body = TERM_REF.sub(r"\1", text or "")
     body = re.sub(r"\*\*(.+?)\*\*", r"\1", body)
@@ -204,14 +206,14 @@ def note_brief(note: str) -> str:
     return (mo.group(1) if mo else body).strip()
 
 
-def first_sentence(text: str) -> str:
+def _first_sentence(text: str) -> str:
     """教材の explanation の第1文。用語集の穴埋めに使う。"""
-    body = strip_marks(text).split("\n")[0].strip()
+    body = _strip_marks(text).split("\n")[0].strip()
     mo = re.search(r"^(.+?[。．])", body)
     return (mo.group(1) if mo else body)[:140]
 
 
-def term_index(d: Path, topics: list[dict]) -> dict[str, int]:
+def _term_index(d: Path, topics: list[dict]) -> dict[str, int]:
     """論点名・別名 → 論点 ID。用語がドンピシャの論点を指すかの判定に使う。
 
     **完全一致だけ**を採る。部分一致で寄せると「DNS」と「DNS キャッシュポイズニング」
@@ -247,14 +249,14 @@ def build_glossary(
     第1文で補う。補えなければ解決できなかった用語として返す（check_explanations.py が
     これを問題として止める。glossary に無い用語は画面で色が付かないので、
     ポップのつもりで書いた箇所が黙って素の文字になる）。"""
-    to_topic = term_index(d, topics)
+    to_topic = _term_index(d, topics)
     gl: dict[str, dict] = {}
 
     for e in explanations.values():
         rank = exam_rank(exam_of_question_id(e.get("question_id", "")))
         for c in e.get("choices", []):
             term = (c.get("term") or "").strip()
-            note = strip_marks(c.get("note") or "")
+            note = _strip_marks(c.get("note") or "")
             # 正解の行は「正解。〜」で始まる約束。用語の説明としては要らない
             note = re.sub(r"^正解[。．，、]?\s*", "", note).strip()
             # ポップの説明は note の 1 文目だけ。2 文目は「正解と違う点」で
@@ -277,7 +279,7 @@ def build_glossary(
             v = {"brief": v} if isinstance(v, str) else dict(v)
             cur = gl.setdefault(term, {"brief": "", "topic_id": to_topic.get(term), "_rank": (0, 0)})
             if v.get("brief"):
-                cur["brief"] = strip_marks(v["brief"])
+                cur["brief"] = _strip_marks(v["brief"])
             if "topic_id" in v:
                 cur["topic_id"] = v["topic_id"]
 
@@ -297,20 +299,21 @@ def build_glossary(
         tid = to_topic.get(term)
         ex = (materials.get(tid) or {}).get("explanation") if tid else None
         if tid and ex:
-            gl[term] = {"brief": first_sentence(ex), "topic_id": tid, "_rank": (0, 0)}
+            gl[term] = {"brief": _first_sentence(ex), "topic_id": tid, "_rank": (0, 0)}
         else:
             unresolved.append(term)
 
     return {k: v for k, v in gl.items() if v["brief"]}, unresolved
 
 
+# @implements BR-027
 def is_modified(qq: dict) -> bool:
     """原文を書き換えているか。立っていれば画面に「一部改変」を併記する。"""
     body = qq.get("text", "") + " " + " ".join((qq.get("choices") or {}).values())
     return any(pat.search(body) for pat, _ in MODIFICATION_MARKS)
 
 
-def q(v) -> str:
+def _q(v) -> str:
     """SQL リテラルに変換する。"""
     if v is None:
         return "NULL"
@@ -321,19 +324,20 @@ def q(v) -> str:
     return "'" + str(v).replace("'", "''") + "'"
 
 
-def hash_password(password: str) -> str:
+def _hash_password(password: str) -> str:
     """auth.ts の verifyPassword が読める形式 "iterations:saltHex:hashHex"。"""
     salt = os.urandom(16)
     dk = hashlib.pbkdf2_hmac("sha256", password.encode(), salt, PBKDF2_ITERATIONS, dklen=32)
     return f"{PBKDF2_ITERATIONS}:{binascii.hexlify(salt).decode()}:{binascii.hexlify(dk).decode()}"
 
 
-def say(*parts) -> None:
+def _say(*parts) -> None:
     """人が読む報告。標準出力は結果の JSON だけにする。"""
     print(*parts, file=sys.stderr)
 
 
-# @implements UC-027
+# @operation UC-027#buildSeed
+# @implements UC-027, REQ-467, REQ-487
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", default="data/ip", type=Path)
@@ -360,13 +364,13 @@ def main() -> int:
     exam_name = args.exam_name or EXAM_NAMES[d.name]
 
     # 単元の構成は門を通ったものだけを投入する。止める理由があれば何も書き出さない。
-    plan_files = unit_plan_files(d)
+    plan_files = _unit_plan_files(d)
     if plan_files:
         stops = unit_plan_stops(d)
         if stops:
-            say(f"[停止] 単元の構成が門の止める理由に当たります（{len(stops)} 件）。投入を書き出しません:")
+            _say(f"[停止] 単元の構成が門の止める理由に当たります（{len(stops)} 件）。投入を書き出しません:")
             for x in stops:
-                say(f"  - {x.get('where')}: {x.get('reason')}（{x.get('kind')}）")
+                _say(f"  - {x.get('where')}: {x.get('reason')}（{x.get('kind')}）")
             return emit_refusal({"error": {"code": "CONFLICT", "reason": "単元の構成が単元の構成の門の止める理由に当たる",
                                            "stops": stops}})
 
@@ -392,7 +396,7 @@ def main() -> int:
     for it in syllabus["items"]:
         lines.append(
             "INSERT INTO syllabus_items (id, name, field, major_no, major, middle_no, middle) VALUES ("
-            + ", ".join(q(x) for x in (
+            + ", ".join(_q(x) for x in (
                 it["number"], it["name"], it["field"],
                 it["major_no"], it["major"], it["middle_no"], it["middle"],
             ))
@@ -437,7 +441,7 @@ def main() -> int:
                 "INSERT INTO past_questions (id, exam, exam_label, number, text, choices, answer,"
                 " has_figure, figure_description, figure_image, citation, modified,"
                 " content_key) VALUES ("
-                + ", ".join(q(x) for x in (
+                + ", ".join(_q(x) for x in (
                     qid, exam, label, n, qq["text"],
                     json.dumps(qq["choices"], ensure_ascii=False),
                     answer,
@@ -494,7 +498,7 @@ def main() -> int:
         vals += [t.get(c) for c in extra_cols]
         lines.append(
             f"INSERT INTO topics ({cols}) VALUES ("
-            + ", ".join(q(x) for x in vals)
+            + ", ".join(_q(x) for x in vals)
             + ") ON CONFLICT(id) DO UPDATE SET term=excluded.term,"
             " syllabus_item_id=excluded.syllabus_item_id, is_new=excluded.is_new,"
             " explanation=excluded.explanation, detail=excluded.detail,"
@@ -502,7 +506,7 @@ def main() -> int:
         )
         for qid in valid:
             lines.append(
-                f"INSERT INTO topic_questions (topic_id, question_id, is_primary) VALUES ({tid}, {q(qid)}, 1);"
+                f"INSERT INTO topic_questions (topic_id, question_id, is_primary) VALUES ({tid}, {_q(qid)}, 1);"
             )
             linked += 1
 
@@ -540,7 +544,7 @@ def main() -> int:
         lines.append(
             "INSERT INTO question_explanations (content_key, correct_reason, choices_json,"
             " updated_at) VALUES ("
-            + ", ".join(q(x) for x in (
+            + ", ".join(_q(x) for x in (
                 ck,
                 e.get("correct_reason"),
                 json.dumps(choices, ensure_ascii=False),
@@ -560,7 +564,7 @@ def main() -> int:
         g = glossary[term]
         lines.append(
             "INSERT INTO glossary (term, brief, topic_id) VALUES ("
-            + ", ".join(q(x) for x in (term, g["brief"], g.get("topic_id")))
+            + ", ".join(_q(x) for x in (term, g["brief"], g.get("topic_id")))
             + ") ON CONFLICT(term) DO UPDATE SET brief=excluded.brief, topic_id=excluded.topic_id;"
         )
 
@@ -580,8 +584,8 @@ def main() -> int:
     if args.admin_password:
         lines.append(
             "INSERT INTO users (id, email, name, password_hash, role) VALUES ("
-            + ", ".join(q(x) for x in (
-                "admin", args.admin_email, "管理者", hash_password(args.admin_password), "ADMIN",
+            + ", ".join(_q(x) for x in (
+                "admin", args.admin_email, "管理者", _hash_password(args.admin_password), "ADMIN",
             ))
             + ") ON CONFLICT(id) DO UPDATE SET email=excluded.email,"
             " password_hash=excluded.password_hash, role=excluded.role;"
@@ -589,46 +593,46 @@ def main() -> int:
 
     out.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
-    say(f"→ {out}（{len(lines)} 文）")
-    say(f"  シラバス項目 : {len(syllabus['items'])}")
-    say(f"  過去問       : {len(question_ids)}")
-    say(f"  論点         : {len(topics['topics'])}")
-    say(f"  論点⇔過去問  : {linked} 件")
+    _say(f"→ {out}（{len(lines)} 文）")
+    _say(f"  シラバス項目 : {len(syllabus['items'])}")
+    _say(f"  過去問       : {len(question_ids)}")
+    _say(f"  論点         : {len(topics['topics'])}")
+    _say(f"  論点⇔過去問  : {linked} 件")
     written = sum(1 for t in topics["topics"] if materials.get(t["id"]))
-    say(f"  教材あり     : {written} / {len(topics['topics'])} 論点")
+    _say(f"  教材あり     : {written} / {len(topics['topics'])} 論点")
     v2 = sum(1 for m in materials.values() if "###" in (m.get("detail") or ""))
-    say(f"  うち v2 済み : {v2} 論点")
-    say(f"  図の画像あり : {len(list(args.figures.glob('*.png')))} 問")
-    say(f"  問題解説     : {expl_written} 本 / 用語集 {len(glossary)} 語")
+    _say(f"  うち v2 済み : {v2} 論点")
+    _say(f"  図の画像あり : {len(list(args.figures.glob('*.png')))} 問")
+    _say(f"  問題解説     : {expl_written} 本 / 用語集 {len(glossary)} 語")
     if missing_figure_image:
-        say(f"\n[警告] 図として描かれているのに画像が無い問題 {len(missing_figure_image)} 件。")
-        say("        scripts/crop_figures.py で切り出すと学習しやすくなります:")
+        _say(f"\n[警告] 図として描かれているのに画像が無い問題 {len(missing_figure_image)} 件。")
+        _say("        scripts/crop_figures.py で切り出すと学習しやすくなります:")
         for x in missing_figure_image[:10]:
-            say(f"          {x}")
+            _say(f"          {x}")
     if args.admin_password:
-        say(f"  管理ユーザ   : {args.admin_email} / {args.admin_password}（作成・更新する）")
+        _say(f"  管理ユーザ   : {args.admin_email} / {args.admin_password}（作成・更新する）")
     else:
-        say("  管理ユーザ   : 作らない（--admin-password を渡したときだけ作る）")
+        _say("  管理ユーザ   : 作らない（--admin-password を渡したときだけ作る）")
     if expl_unknown:
-        say(f"\n[警告] 実在しない content_key を指す解説 {len(expl_unknown)} 件（投入しません）:")
+        _say(f"\n[警告] 実在しない content_key を指す解説 {len(expl_unknown)} 件（投入しません）:")
         for x in expl_unknown[:5]:
-            say(f"  {x}")
+            _say(f"  {x}")
     if expl_dup:
-        say(f"[警告] 複数ファイルに重複した解説 {len(set(expl_dup))} 件（後勝ち）: {sorted(set(expl_dup))[:5]}")
+        _say(f"[警告] 複数ファイルに重複した解説 {len(set(expl_dup))} 件（後勝ち）: {sorted(set(expl_dup))[:5]}")
     if unresolved_terms:
-        say(f"[警告] 用語集で解決できない [[用語]] {len(unresolved_terms)} 件"
+        _say(f"[警告] 用語集で解決できない [[用語]] {len(unresolved_terms)} 件"
               f"（画面では色が付かず素の文字になる）: {unresolved_terms[:5]}")
     if material_mismatch:
-        say(f"\n[警告] 教材と論点の対応がずれています {len(material_mismatch)} 件（該当分は投入しません）:")
+        _say(f"\n[警告] 教材と論点の対応がずれています {len(material_mismatch)} 件（該当分は投入しません）:")
         for x in material_mismatch[:5]:
-            say(f"  {x}")
+            _say(f"  {x}")
     if missing_answer:
-        say(f"\n[警告] 正解表に無く投入しなかった問題 {len(missing_answer)} 件: {missing_answer[:5]}")
+        _say(f"\n[警告] 正解表に無く投入しなかった問題 {len(missing_answer)} 件: {missing_answer[:5]}")
     if orphan_links:
-        say(f"[警告] 未投入の問題を指す紐付け {len(orphan_links)} 件（無視した）: {sorted(set(orphan_links))[:5]}")
+        _say(f"[警告] 未投入の問題を指す紐付け {len(orphan_links)} 件（無視した）: {sorted(set(orphan_links))[:5]}")
     counts = generation_counts(chosen)
-    say(f"  選んだ世代   : {counts}")
-    say(f"  単元の構成   : {len(plan_files)} 単元")
+    _say(f"  選んだ世代   : {counts}")
+    _say(f"  単元の構成   : {len(plan_files)} 単元")
     print(json.dumps({"exitCode": 0, "output": out.as_posix(), "topicsByGeneration": counts,
                       "units": len(plan_files)}, ensure_ascii=False))
     return 0

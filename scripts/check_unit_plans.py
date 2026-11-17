@@ -86,6 +86,9 @@ def _parse_topics(p: Path, raw) -> list[dict]:
         raise Refused("INVALID_INPUT", f"{p} が形として読めない")
 
 
+# @implements REQ-443, REQ-466
+# @operation UC-024#readSyllabusUnits
+# @operation UC-024#readTopicUnits
 def learning_files(d: Path) -> tuple[dict[int, dict], list[dict]]:
     """(シラバスの単元, 論点の一覧)。どちらかが無ければ NOT_FOUND、無いものが無くて読めなければ INVALID_INPUT。
     シラバスの単元は middle_no → {unit, field, major, items}（items は小項目の番号 → 小項目の名前）。"""
@@ -151,19 +154,22 @@ def _unplaced(f: dict) -> dict:
     return {**f, "_unplaced": True}
 
 
+# @implements REQ-444
 def blocks_reading(findings: list[dict]) -> bool:
     return any(f.get("_blocks") for f in findings)
 
 
+# @implements REQ-444
 def unplaced(findings: list[dict]) -> bool:
     return any(f.get("_unplaced") for f in findings)
 
 
+# @implements REQ-442, REQ-444
 def incomplete(findings: list[dict]) -> bool:
     return any(f.get("_incomplete") for f in findings)
 
 
-def public(findings: list[dict]) -> list[dict]:
+def _public(findings: list[dict]) -> list[dict]:
     return [{k: v for k, v in f.items() if not k.startswith("_")} for f in findings]
 
 
@@ -279,7 +285,7 @@ def check_plan_shape(name: str, plan, syllabus: dict[int, dict]) -> list[dict]:
     return stops
 
 
-def readable_view(plan: dict) -> dict:
+def _readable_view(plan: dict) -> dict:
     """形として読めた単元の構成を、欠けた要素を空として確かめに使える形にそろえる（まとまり・論点の並び・受け持ち・前提）。
     論点の並びが欠けたまとまりは、_missing_topics を付けて残す（まとまりの番号を保つため）。"""
     groups = [{**g, "topics": g.get("topics") or [], "_missing_topics": not g.get("topics")}
@@ -287,6 +293,7 @@ def readable_view(plan: dict) -> dict:
     return {**plan, "groups": groups, "owners": plan.get("owners") or [], "prerequisites": plan.get("prerequisites") or {}}
 
 
+# @implements BR-031
 def learning_order(plan: dict) -> list[int]:
     """単元の学ぶ順（まとまりの順に、まとまりの中の並びをつないだ論点 ID。重なりは最初の位置）。"""
     order: list[int] = []
@@ -452,16 +459,18 @@ def check_owners(name: str, plan: dict, unit_of: dict[int, int]) -> list[dict]:
     return stops
 
 
-def plan_files(d: Path) -> list[Path]:
+def _plan_files(d: Path) -> list[Path]:
     plan_dir = d / PLAN_DIR
     return sorted(plan_dir.glob("*.json")) if plan_dir.is_dir() else []
 
 
+# @implements BR-048
+# @operation UC-024#readUnitPlan
 def gate_findings(d: Path) -> tuple[dict, dict[int, dict], list[dict]]:
     """gate() と同じ判定をし、止める理由ごとに関わる単元の構成のファイルの名前（_files）を添えた物も返す。"""
     syllabus, topics = learning_files(d)
     unit_of = topic_units(syllabus, topics)
-    files = plan_files(d)
+    files = _plan_files(d)
     stops: list[dict] = []
     warnings: list[dict] = []
     readable: dict[str, dict] = {}
@@ -478,7 +487,7 @@ def gate_findings(d: Path) -> tuple[dict, dict[int, dict], list[dict]]:
         stops.extend(mark(shape))
         if blocks_reading(shape):
             continue
-        view = readable_view(plan)
+        view = _readable_view(plan)
         stops.extend(mark(check_group_max(p.name, view)))
         warnings.extend(check_group_min(p.name, view))
         if unplaced(shape):
@@ -499,8 +508,8 @@ def gate_findings(d: Path) -> tuple[dict, dict[int, dict], list[dict]]:
         "exitCode": 1 if stops else 0,
         "units": len(files),
         "topics": len(seen_topics),
-        "stops": public(stops),
-        "warnings": public(warnings),
+        "stops": _public(stops),
+        "warnings": _public(warnings),
         "limits": dict(LIMITS),
     }
     return result, {plan["unit_no"]: plan for plan in readable.values()}, stops
@@ -514,7 +523,7 @@ def gate(d: Path) -> tuple[dict, dict[int, dict]]:
     return result, plans
 
 
-def summary(result: dict) -> str:
+def _summary(result: dict) -> str:
     """人が読む要約。"""
     lines = [f"単元の構成 {result['units']} 単元・論点 {result['topics']}"]
     for label, key in (("止める理由", "stops"), ("警告", "warnings")):
@@ -530,7 +539,8 @@ def tool_error(e: Refused) -> str:
     return json.dumps({"error": {"code": e.code, "reason": e.reason}}, ensure_ascii=False, indent=1)
 
 
-# @implements UC-024
+# @implements UC-024, REQ-442, REQ-443
+# @operation UC-024#checkUnitPlans
 def main() -> int:
     ap = argparse.ArgumentParser(description="資格対策の学びの単元の構成を教材の門にかける")
     ap.add_argument("--data", required=True, help="学びの置き場（例 data/ip）")
@@ -542,7 +552,7 @@ def main() -> int:
         print(e.reason, file=sys.stderr)
         return 2
     print(json.dumps(result, ensure_ascii=False, indent=1))
-    print(summary(result), file=sys.stderr)
+    print(_summary(result), file=sys.stderr)
     return result["exitCode"]
 
 

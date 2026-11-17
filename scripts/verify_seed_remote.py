@@ -62,7 +62,7 @@ FIRST_QUESTION = re.compile(r"^INSERT INTO past_questions \(.*?\) VALUES \('([^'
 EXAM_CODE = re.compile(r"^\d{4}[hr]\d{2}[hao]?$")
 
 
-def parse_seed(sql: Path) -> tuple[dict[str, int], tuple[int, str] | None, tuple[str, str, str] | None]:
+def _parse_seed(sql: Path) -> tuple[dict[str, int], tuple[int, str] | None, tuple[str, str, str] | None]:
     counts: dict[str, int] = {t: 0 for t in (*TABLES, *UNIT_PLAN_TABLES)}
     topic = question = None
     with sql.open(encoding="utf-8") as f:
@@ -84,7 +84,7 @@ def parse_seed(sql: Path) -> tuple[dict[str, int], tuple[int, str] | None, tuple
     return counts, topic, question
 
 
-def d1_query(db: str, exam: str, where: str, sql: str) -> list[dict]:
+def _d1_query(db: str, exam: str, where: str, sql: str) -> list[dict]:
     cmd = ["npx", "wrangler", "d1", "execute", db, "--env", exam, where, "--json", "--command", sql]
     proc = subprocess.run(cmd, capture_output=True, text=True)
     if proc.returncode != 0:
@@ -101,16 +101,18 @@ def d1_query(db: str, exam: str, where: str, sql: str) -> list[dict]:
     return results
 
 
-def say(*parts) -> None:
+def _say(*parts) -> None:
     """人が読む報告。標準出力は結果の JSON だけにする。"""
     print(*parts, file=sys.stderr)
 
 
-def result(code: int) -> int:
+def _result(code: int) -> int:
     print(json.dumps({"exitCode": code}))
     return code
 
 
+# @operation UC-027#verifySeedRemote
+# @implements REQ-487, REQ-489
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", required=True, type=Path)
@@ -127,11 +129,10 @@ def main() -> int:
     if not sql.exists():
         raise SystemExit(f"seed が無い: {sql}")
     db, where = DB_OF[args.exam], ("--local" if args.local else "--remote")
-    counts, topic, question = parse_seed(sql)
+    counts, topic, question = _parse_seed(sql)
     if topic is None or question is None:
         raise SystemExit("seed から代表値（先頭の論点・過去問）を読めなかった。build_seed.py の出力形が変わった?")
     tables = dict(TABLES)
-    # @implements REQ-489
     if REWRITES_UNIT_PLANS.search(sql.read_text(encoding="utf-8")):
         tables.update({t: "eq" for t in UNIT_PLAN_TABLES})
 
@@ -148,15 +149,15 @@ def main() -> int:
         # （章の見出しなど）で D1 の型の長さの上限（50 バイト）を超えて SQLITE_ERROR になる
         "    OR substr(citation, 1, length('出典：' || exam_label || ' ')) <> '出典：' || exam_label || ' '"
     )
-    say(f"▶ {db}（{where}）を seed {sql} と突き合わせる")
-    results = d1_query(db, args.exam, where, "; ".join(stmts))
+    _say(f"▶ {db}（{where}）を seed {sql} と突き合わせる")
+    results = _d1_query(db, args.exam, where, "; ".join(stmts))
 
     problems: list[str] = []
     for i, (t, mode) in enumerate(tables.items()):
         n_db, n_seed = results[i][0]["n"], counts[t]
         ok = (n_db == n_seed) if mode == "eq" else (n_db >= n_seed)
         mark = "=" if mode == "eq" else "≧"
-        say(f"  {'✓' if ok else '✘'} {t:22s} DB {n_db:6d} {mark} seed {n_seed:6d}")
+        _say(f"  {'✓' if ok else '✘'} {t:22s} DB {n_db:6d} {mark} seed {n_seed:6d}")
         if not ok:
             problems.append(f"{t} の件数: DB {n_db} / seed {n_seed}（期待 DB {mark} seed）")
 
@@ -165,7 +166,7 @@ def main() -> int:
     if got != topic:
         problems.append(f"先頭の論点が違う: seed {topic} / DB {got}")
     else:
-        say(f"  ✓ 論点 {topic[0]} = {topic[1]!r}")
+        _say(f"  ✓ 論点 {topic[0]} = {topic[1]!r}")
 
     # 先頭の過去問の出典（回・年度ラベル）が DB でも同じ値か（表の取り違えはここで止まる）
     row = results[len(tables) + 1]
@@ -173,14 +174,14 @@ def main() -> int:
     if got_q != question:
         problems.append(f"先頭の過去問が違う: seed {question} / DB {got_q}")
     else:
-        say(f"  ✓ 過去問 {question[0]} の年度ラベル = {question[2]!r}")
+        _say(f"  ✓ 過去問 {question[0]} の年度ラベル = {question[2]!r}")
 
     # 年度ラベルが内部コード（exam と同じ値）のまま残っている行は 0
     n_raw = results[len(tables) + 2][0]["n"]
     if n_raw:
         problems.append(f"年度ラベルが内部コードのままの過去問が {n_raw} 件（exam_labels.json の足し忘れ）")
     else:
-        say("  ✓ 年度ラベルが内部コードのままの行: 0")
+        _say("  ✓ 年度ラベルが内部コードのままの行: 0")
 
     # 出典が「出典：<年度ラベル> <試験名> 問N」の形をしていない行は 0
     n_bad = results[len(tables) + 3][0]["n"]
@@ -190,16 +191,16 @@ def main() -> int:
             "（空・年度ラベルが合わない・問番号が無い）"
         )
     else:
-        say("  ✓ 出典が「出典：<年度ラベル> <試験名> 問N」の形: 全件")
+        _say("  ✓ 出典が「出典：<年度ラベル> <試験名> 問N」の形: 全件")
 
     if problems:
-        say()
+        _say()
         for p in problems:
-            say(f"✘ {p}")
-        say(f"問題 {len(problems)} 件。DB の中身が seed と合っていない。")
-        return result(1)
-    say("✓ DB の中身は seed と一致")
-    return result(0)
+            _say(f"✘ {p}")
+        _say(f"問題 {len(problems)} 件。DB の中身が seed と合っていない。")
+        return _result(1)
+    _say("✓ DB の中身は seed と一致")
+    return _result(0)
 
 
 if __name__ == "__main__":
