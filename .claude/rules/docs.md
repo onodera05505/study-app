@@ -2,141 +2,124 @@
 paths:
   - "docs/**"
   - "traceconfig.json"
+  - "**/CLAUDE.md"
+  - "**/AGENTS.md"
 ---
 
-> **External executable assets:** tools and templates are not APM dependencies. Resolve `HARNESS_ROOT` to the separate harness checkout (normally `.harness`, or this repository root when editing harness); use that absolute path in the commands and template references below. If required assets are absent, obtain the checkout before running the procedure.
+# 📚 docs の SDD / SSOT 規約（ID 付きルール）
 
+> 対象はすべてのプラットフォームの `docs/` 配下の全ファイルです。指摘では ID で引用します（`R-101`）。
+> 各成果物の書式の正本は `${HARNESS_ROOT}/templates/develop/`、機械検査は `"${HARNESS_ROOT}/tools/spec-lint"`（書式、ライフサイクル）と `"${HARNESS_ROOT}/tools/trace-check"`（トレーサビリティ C1–C27）です。この末端ファイルが持つのは、テンプレートにもツールにも置けない原則と、誰が何を書いてよいかだけです。機械が検査する規則には検査器を添えます。
 
-# 📚 SDD / SSOT conventions for docs (the rules with IDs)
+## 1. SSOT の原則
 
-> **Scope: every file under `docs/` on every platform and every framework** (vision, glossary, actors, GOAL / UC / REQ, BR, NFR, ADR, verification, the boundary contracts). Cite these rules by ID in review findings and send-backs (`R-101`, not "the single-parent thing").
-> **The format of each artifact is authoritative in `${HARNESS_ROOT}/templates/develop/`**, and the machine checks are `"${HARNESS_ROOT}/tools/spec-lint"` (format, lifecycle) and `"${HARNESS_ROOT}/tools/trace-check"` (traceability C1–C14). This leaf holds only what neither a template nor a tool can hold: the principles, and who may write what.
+- **R-101 (MUST)** 事実の本文はリポジトリ内のちょうど 1 箇所にあり、ほかは ID またはパスで参照します。
+- **R-102 (MUST)** 機械可読にできる事実（型、スキーマ、制約、定数、設定）の SSOT を文書にしません。文書は存在と意図だけを持ち、値と構造はコード、DB、契約に置きます。
+- **R-103 (MUST)** 参照は下流 → 上流の一方向です。上流文書は下流を列挙せず、逆引きは `trace-check` が導出します。
+- **R-104 (MUST)** 検証手段（テスト、検査、計測）のない文を要件やルールにしません。検証できなければ方針として vision か ADR の Context に置きます。
+- **R-105 (SHOULD)** 同じ文が 2 つの UC に現れたら BR へ抽出します。active な BR は、少なくとも 1 つの active な REQ の `br:` から参照します（C22。規則を REQ のテストで検証する）。
 
----
+## 2. ID の文法
 
-## 1. SSOT principles
+- **R-201 (MUST)** ID は不変、内容は変更可能です。廃止は `status: withdrawn` であり削除ではありません。
+- **R-202 (MUST)** `GOAL-nn` / `UC-nnn` / `REQ-nnn` / `BR-nnn` / `NFR-nnn` / `ADR-nnnn` / `ACT-nn` / `KPI-nn`。番号は再利用しません。桁幅は `traceconfig.json` で変えます。
+- **R-203 (MUST)** 1 ID に 1 ファイル、frontmatter の `id:` に宣言します（例外は `goals-backlog.md` の `###` 見出しと ACT / KPI 表だけ）。本文に現れるほかの ID は参照で、参照先の定義は C16（BR）・C17（REQ）・C18（ACT・KPI）が検査します。
+- **R-204 (MUST)** 採番は `node "${HARNESS_ROOT}/tools/trace-check/trace-check.mjs" --next <goal|uc|req|br|nfr|adr>`（原子的な予約。`--reserve N` で連番、`--next req` は UC 表が予約した ID も数える）。二重定義は C12 が検出します。
+- **R-205 (MUST)** 数値部は固定幅のゼロ埋めです。番号に所属や分類を埋め込みません（所属は frontmatter、R-1007）。
 
-- **R-101 (MUST)** The body of a fact exists in exactly one place in the repository (the single-parent constraint). Everywhere else references it by ID or path and never transcribes it.
-- **R-102 (MUST)** A fact that can be machine-readable (a type, a schema, a constraint, a constant, a setting) never has a document as its SSOT. The document states existence and intent only; the value and the structure live in code, the DB, or the contract.
-- **R-103 (MUST)** References run one way, downstream → upstream. An upstream document never enumerates its downstream. The reverse map (which UCs use this BR, which tests cover this REQ) is derived by `trace-check`, never hand-written.
-- **R-104 (MUST)** A statement with no means of verification (a test, a check, a measurement) is not written as a requirement or a rule. If it cannot be verified it is a direction, and belongs in the vision or in an ADR's Context.
-- **R-105 (SHOULD)** When the same statement appears in two UCs, extract it into a business rule (BR). Duplication is the signal for extraction.
+## 3. 各文書に書いてよいもの
 
-## 2. ID grammar
+- **R-301 (MUST)** GOAL は What（アクターが目指す達成後の状態・成果）を定義します。操作、機能の利用、実装手段を目的に置き換えません。手段を別のものに替えても同じ達成状態を指す文にします。未着手の backlog にも適用します。
+- **R-302 (MUST)** UC は GOAL に至る How（アクターとシステムの観測可能なやり取りによる達成手段）を定義します。成功時の事後条件が `goal:` の状態の実現にどう寄与するかを示します。ここでの How は利用・業務のシナリオであり、アルゴリズム、技術選定、画面構造などの実装設計ではありません。意味の適合は文書とレビューによる説得的統制です（R-301 ともに R-901）。
 
-- **R-201 (MUST)** An ID is immutable; its content is mutable. Retirement is `status: withdrawn`, never deletion.
-- **R-202 (MUST)** The ID scheme: `GOAL-nn` / `UC-nnn` / `REQ-nnn` / `BR-nnn` / `NFR-nnn` / `ADR-nnnn` / `ACT-nn` / `KPI-nn`. Numbers are never reused. A host that needs different widths changes `traceconfig.json`.
-- **R-203 (MUST)** A definition is one ID, one file, declared in the frontmatter `id:` (the only exceptions are the `###` headings of `goals-backlog.md` and the ACT / KPI tables). Every other occurrence of an ID in a body is a reference.
-- **R-204 (MUST)** Numbers are assigned by `node "${HARNESS_ROOT}/tools/trace-check/trace-check.mjs" --next <goal|uc|req|br|nfr|adr>`. Never hunt for the largest number by eye. A collision (the same ID defined twice) is a C12 failure. `--next` reserves what it returns atomically (`.trace-reservations.json`, a transient file), so concurrent producer Tasks may each call it; `--next req` also counts the IDs a UC table has reserved, file or no file. `--reserve N` takes N consecutive numbers in one call.
-- **R-205 (MUST)** The numeric part is fixed-width and zero-padded (lexical order = numeric order). A number carries no meaning: never bake membership or classification into an ID (membership's SSOT is the frontmatter, R-1007).
-
-## 3. What each document may hold
-
-| Document | Write (MUST) | Never write (MUST NOT) |
+| 文書 | 書くもの (MUST) | 書かないもの (MUST NOT) |
 | --- | --- | --- |
-| `00-vision.md` | the problem, the audience, measurable success metrics (KPI), out of scope | a feature list, screens, technology choices |
-| `01-glossary.md` | term, one-sentence definition, code identifier, forbidden synonyms | class design, table definitions |
-| `02-actors.md` | the closed set of actors (`ACT-nn`, system actors included) | the UCs that realize a goal (R-103) |
-| `GOAL.md` | one sentence in the actor's words, `actor`, `origin` (KPI), `domain` (R-1009) | the list of its UCs |
-| `UC.md` | scenario, the state × event table, pre/post conditions, BR **references** | the content of a BR, the content of a REQ, a list of derived REQs, the evaluation order of a contract's errors (R-1207) |
-| `REQ-nnn.md` | one EARS sentence, frontmatter (`pattern`, `uc`, `br`, `status`), the verification policy | implementation means, UI detail, the content of a test case |
-| `BR-nnn.md` | the rule's existence, its intent, `enforced_at` | its referrers, a value that could be machine-readable (R-102), the evaluation order of a contract's errors (R-1207) |
-| `NFR-nnn.md` | threshold + measurement method | anything unmeasurable (R-104) |
-| `ADR-nnnn-<slug>.md` | Context / Decision / Consequences, the rejected options and why | the current design state (an ADR is never updated, only superseded) |
-| `verification/GLOBAL.md` | the project-wide "not verified" ranges with reasons | per-REQ policy (that lives in the REQ) |
-| `verification/DEFERRED.md` | reviewer findings that cannot become a machine check, one row each, until resolved or promoted (orchestrator only) | findings a test or a lint can decide, open questions awaiting a human (those go to issue tracking) |
-| `contract.yaml` | the shape of the boundary (operations, types, errors **in evaluation order**, one failure example per error code) | a prose copy of the same content, rules, purpose, prose about the order or exclusivity of errors |
+| `00-vision.md` | 課題、対象者、計測可能な成功指標（KPI）、対象外 | 機能一覧、画面、技術選定 |
+| `01-glossary.md` | 用語、1 文の定義、コード識別子（active な仕様が使う語はコードに存在すること。C25）、禁止同義語 | クラス設計、テーブル定義 |
+| `02-actors.md` | actor の閉じた集合（`ACT-nn`、システム actor を含む。種別は「人間」か「システム」で始め、「システム」で始まる actor だけが人間でない。spec-lint / C15） | goal を実現する UC（R-103） |
+| `GOAL.md` / `goals-backlog.md` | R-301 の達成状態を actor の言葉で 1 文、`actor`、`origin`（KPI）、`domain`（R-1009。backlog の書式はテンプレート） | 達成手段、操作手順、配下 UC の一覧 |
+| `UC.md` | R-302 のシナリオ、状態 × イベント表、事前・事後条件、BR の**参照** | 実装設計、BR 本文、REQ 本文、導出 REQ の一覧、契約のエラー評価順序（R-1207） |
+| `REQ-nnn.md` | EARS 1 文、frontmatter（`pattern`、`uc`、`br`、`status`）、検証方針 | 実装手段、UI 詳細、テストケースの内容 |
+| `BR-nnn.md` | ルールの存在、意図、`enforced_at` | 参照元、機械可読にできる値（R-102）、契約のエラー評価順序（R-1207） |
+| `NFR-nnn.md` | 閾値 + 計測方法、検証の所在（保留でないテストの `@covers NFR-nnn` か `measured_by:`。`measured_by` は `docs.*` で宣言した文書（GLOBAL.md を含む）の外にあるリポジトリ内のファイルで、中にその NFR の ID が現れる。外部の計測は ID と計測先を書いた runbook を指す。C20） | 計測できないもの（R-104） |
+| `ADR-nnnn-<slug>.md` | Context / Decision / Consequences、却下した選択肢と理由 | 現在の設計状態（ADR は更新せず置き換える） |
+| `verification/GLOBAL.md` | プロジェクト全体の「検証しない」範囲と理由 | REQ ごとの方針（REQ に置く） |
+| `verification/DEFERRED.md` | 機械検査にできない reviewer 指摘を解決・昇格まで 1 行ずつ保持（オーケストレーターのみ） | テストや lint が判定できる指摘、人間待ちの未決事項（issue 管理へ） |
+| `contract.yaml` | 境界の形（操作、型、**評価順の**エラー、エラーコードごとに失敗例 1 つ） | 同内容の説明文コピー、ルール、目的、エラーの順序・排他性の説明文 |
 
-## 4. Requirements (EARS)
+## 4. 要件（EARS）
 
-- **R-401 (MUST)** One requirement, one sentence, externally observable behavior only. The test: **if every line of implementation were replaced, would the sentence still be true?** If it could become false, it is design, not a requirement.
-- **R-402 (MUST)** State the pattern: `Ubiquitous` / `Event-driven` / `State-driven` / `Unwanted behaviour` / `Optional` (the frontmatter `pattern:`).
-- **R-403 (SHOULD)** Every UC has at least one `Unwanted behaviour` requirement. Zero is a sign of under-examination.
-- **R-404 (MUST)** Which cell of the UC's state × event table a REQ was derived from is held **by the UC's table** (the cell names the REQ). That mapping exists nowhere else and is not duplication.
+- **R-401 (MUST)** 1 要件に 1 文、外部から観測可能な振る舞いだけです。判定: 実装の全行を置き換えてもその文は真か。偽になり得るなら設計です（文の数は spec-lint）。
+- **R-402 (MUST)** `pattern:` に `Ubiquitous` / `Event-driven` / `State-driven` / `Unwanted behaviour` / `Optional` のいずれかを明示します（spec-lint）。
+- **R-403 (SHOULD)** 各 UC に最低 1 つの `Unwanted behaviour` 要件を置きます。
+- **R-404 (MUST)** REQ を導出したセルは UC の表が保持し、対応をほかに置きません。表と UC の REQ は 1 対 1 です（C17）。
 
-## 5. Use cases
+## 5. ユースケース
 
-- **R-501 (MUST)** Fill every cell of the state × event table. An impossible cell says `不可` plus the reason. **An empty cell is a hole in the spec.**
-- **R-502 (MUST)** Sweep every step of the main scenario for the 4 exception classes: permission, invariant violation, concurrency, external dependency.
-- **R-503 (SHOULD)** A UC is "a unit of value the user completes in one sitting". Do not split down to login / logout.
+- **R-501 (MUST)** 状態 × イベント表のすべてのセルを埋め、不可能なセルには `不可` と理由を書きます（spec-lint）。
+- **R-502 (MUST)** 主シナリオの各ステップを権限、不変条件違反、並行性、外部依存の 4 分類で走査します（spec-lint）。
+- **R-503 (SHOULD)** UC は「一度の着席で完了する価値の単位」です。login / logout に細分化しません。
 
-## 6. Verification
+## 6. 検証
 
-- **R-601 (MUST)** The SSOT for a case's setup, action, and expected value is the test code. Never transcribe it into a document.
-- **R-602 (MUST)** A test references its requirement directly with `@covers REQ-nnn#class`. No intermediate ledger of case IDs.
-- **R-603 (MUST)** The coverage matrix is `trace-check`'s output and nothing else. Never hand-write one.
-- **R-604 (MUST)** A verification policy always states what is **not** verified, with the reason. The test for every other line: **if this line were deleted, could it be reconstructed from the test code?** If yes, do not write it.
+- **R-601 (MUST)** ケースの準備、操作、期待値の SSOT はテストコードです。文書に転記しません。
+- **R-602 (MUST)** テストは `@covers REQ-nnn#class` で要件を直接参照します（C3）。
+- **R-603 (MUST)** 網羅表は `trace-check` の出力だけで、手書きしません。
+- **R-604 (MUST)** 検証方針には必ず「検証しない」ものと理由を書き、それ以外はテストコードから復元できない行だけを書きます。
 
-## 7. Connecting to code
+## 7. コードとの接続
 
-- **R-701 (MUST)** Implementation references its upstream IDs with `@implements REQ-nnn / BR-nnn / UC-nnn` annotations (reference only, no content). Where to put them is in `comments.md`. An ID that does not exist fails C5.
-- **R-702 (MUST)** Layer dependency direction is enforced by lint / `trace-check` C6 (`layering` in `traceconfig.json`), never by prose alone.
-- **R-703 (MUST)** Agreement between the implementation's error codes and the contract vocabulary (`docs/_shared/components.yaml` `errorCodes`) is machine-checked (C7) when the host configures `contract` in `traceconfig.json`.
-- **R-704 (MUST)** The DB design's SSOT is the host's native schema source (a migration, `schema.prisma`, a model file — declared in `traceconfig.json` `schema`), never a document (R-102 applied). A BR whose `enforced_at` names the database is realized as a constraint annotated `@implements BR-nnn` in that source (C13). When a rule can be enforced at several points, the SSOT of the guarantee is decided by asymmetry — removing which point breaks correctness — and recorded in an ADR.
-- **R-705 (MUST)** Every `active` REQ and every `active` BR is annotated from implementation with `@implements` (C14; the reverse of C5). The annotation lives on the realizing unit (`comments.md`), in `source` or the schema source. A docs-only host (no `source` in `traceconfig.json`) is not subject to C14. `@implements UC-nnn` on the use-case entry remains craft, not this check. C14 sees the annotation's existence, not whether the unit realizes the sentence (R-901).
+- **R-701 (MUST)** 実装は `@implements REQ-nnn / BR-nnn / UC-nnn` で上流 ID を参照します（ID のみ。配置は comments 末端ファイル。存在しない ID は C5）。
+- **R-702 (MUST)** 層の依存方向は lint / C6（`traceconfig.json` の `layering`）で強制します。
+- **R-703 (MUST)** 実装のエラーコードは `_shared` の `errorCodes` に含まれ（C7）、`errorCodes` のコードはどれかの契約の `errors` で使われます（C24）。
+- **R-704 (MUST)** DB 設計の SSOT は利用プロジェクトのスキーマ正本（`traceconfig.json` の `schema`）であり文書ではありません。`enforced_at` が DB の BR は、その正本で `@implements BR-nnn` 付きの制約として実現します（C13）。複数箇所で強制できるルールは、どの箇所を除くと正しさが壊れるかで保証の SSOT を決め、ADR に記録します。
+- **R-705 (MUST)** すべての `active` REQ と BR に実装からの `@implements` があります（C14）。逆向き（実現単位を置く場所 `source.unit_dirs` の、どの仕様も指さない単位）は C19 が検出します。仕様を持たない技術部品は `source.support_dirs` に置き、`source.dirs` のファイルはどちらかに入れます（C27）。C14 / C19 が見るのは注釈の存在で、単位が文を実現するかは reviewer に残ります（R-901）。
 
-## 8. Change process
+## 8. 変更手順
 
-- **R-801 (MUST) The upstream-first rule.** When implementation exposes an error or a gap in the spec, never finish by fixing only the code: update the upstream SSOT, then re-derive (contract → tests → implementation).
-- **R-802 (MUST)** A decision is changed by adding a new ADR with `supersedes:`. An existing ADR is never rewritten.
-- **R-803 (MUST)** The merge condition: tests green **and** zero new `trace-check` violations.
-- **R-804 (SHOULD)** The baseline (`.trace-baseline.json` and spec-lint's `.spec-baseline.json`, the ledgers of pre-existing violations) only ever shrinks. Growth is sent back in review. The one exception: when a check first applies to pre-existing material (a migration turning REQs `active`, a `fixed` contract landed before its REQs settle), the baseline records the pre-existing gaps once; the migration playbook names that point and the phase report names the count.
+- **R-801 (MUST) 上流優先。** 実装が仕様の誤りや穴を示したら、上流 SSOT を更新して再導出します（契約 → テスト → 実装）。
+- **R-802 (MUST)** 判断の変更は `supersedes:` を持つ新 ADR の追加で行い、既存 ADR を書き換えません。
+- **R-803 (MUST)** マージ条件はテスト成功かつ `spec-lint` / `trace-check` の違反ゼロです。
+- **R-804 (MUST)** 紐づきに例外を作りません。既知の違反を通す baseline、コードに書く例外の印、検査の黙った省略は持たず、対象が無いことは `traceconfig.json` に理由付きで宣言します（`{ "none": "<理由>" }`。それを求める active な文書・fixed な契約が無い間だけ通る。C26）。`traceconfig.json` の変更は人間が承認します（ADR-0057）。既存資料への導入は宣言の範囲を広げて進めます（ADR-0056）。
 
-## 9. Kinds of control (choose knowingly)
+## 9. 統制の種類
 
-- **R-901 (SHOULD)** For every rule, know whether it is **structural** (enforced by a type, a constraint, a check) or **persuasive** (a document, a review). Where only persuasive control exists (the glossary, for instance), say so in the document.
+- **R-901 (SHOULD)** 各ルールが構造的（型、制約、検査）か説得的（文書、レビュー）かを把握し、説得的統制だけの場合は文書に明記します。
 
-## 10. File granularity and the reading contract (context discipline)
+## 10. ファイル粒度と配置
 
-- **R-1001 (MUST)** GOAL / UC / REQ / BR / NFR / ADR are one ID, one file. The file name is the ID (`REQ-047.md`; the node files are `GOAL.md` and `UC.md`, `ADR-nnnn-<slug>.md` for ADRs).
-- **R-1002 (MUST)** A REQ's verification policy lives **inside the REQ file** (`## 検証方針`), so one ID's SSOT is one read. Only the project-wide exclusions go to `docs/verification/GLOBAL.md`.
-- **R-1003 (MUST)** Indexes are generated, never committed. When a map of the whole is needed, run `trace-check --index`. A committed index rots on the first missed regeneration.
-- **R-1004 (MUST)** Reading a whole directory (`cat docs/goals/**`) is never the default. Decide what to read from the reference graph (the table below).
-- **R-1005 (SHOULD)** One file is roughly 100 lines or fewer. Past that, split, or make the value machine-readable (R-102).
-- **R-1006 (MUST)** The vertical series GOAL → UC → REQ is a tree (pairwise disjoint), so the file system matches the tree: `docs/goals/<GOAL-nn-slug>/<UC-nnn-slug>/` holds `UC.md`, its `REQ-*.md`, and its `contract.yaml`; `GOAL.md` sits directly in the goal directory. The horizontal spaces (BR / NFR / ADR / glossary / `_shared`) are not disjoint and stay central under `docs/`. Mixed layouts (flat and nested) are forbidden.
-- **R-1007 (MUST)** Membership's SSOT is the frontmatter (`goal:` on a UC, `uc:` on a REQ, `x-uc:` on a contract); the directory is only placement. Directory-prefix ↔ `id` agreement, the presence of the node file, and a REQ sitting directly under its own `uc:` are checked by `trace-check` C9. To reorganize, update the frontmatter first and move files by following C9's violations.
-- **R-1008 (SHOULD)** A goal not yet started lives in `docs/goals-backlog.md` and is promoted to a directory when work begins (never create an empty directory).
-- **R-1009 (MUST)** When the vision names more than one domain, every goal declares which one it belongs to: the frontmatter `domain:` in `GOAL.md`, the `- **ドメイン**:` line in `goals-backlog.md`. **The closed set of allowed values is `00-vision.md`'s** (R-101) — a value outside it is a send-back. A goal that spans the domains takes the value the vision gives that case, never an ad-hoc one. The domain is a classification and is therefore never baked into an ID (R-205); its SSOT is the frontmatter (R-1007).
+- **R-1001 (MUST)** GOAL / UC / REQ / BR / NFR / ADR は 1 ID に 1 ファイルです。ファイル名は ID（ノードファイルは `GOAL.md` と `UC.md`、ADR は `ADR-nnnn-<slug>.md`）。
+- **R-1002 (MUST)** REQ の検証方針は REQ ファイル内の `## 検証方針` に置きます（C2）。プロジェクト全体の除外だけを `docs/verification/GLOBAL.md` に置きます。
+- **R-1003 (MUST)** 索引は生成し、コミットしません（`trace-check --index`）。
+- **R-1004 (MUST)** ディレクトリ全体の読み取りを既定にせず、frontmatter の参照（UC の `goal:`、REQ の `uc:`、`br:`）から読むものを決めます。
+- **R-1005 (SHOULD)** 1 ファイルはおおむね 100 行以下です。超えたら分割するか、値を機械可読にします。
+- **R-1006 (MUST)** GOAL → UC → REQ は木なので、`docs/goals/<GOAL-nn-slug>/<UC-nnn-slug>/` に `UC.md`、その `REQ-*.md`、`contract.yaml` を置き、横断領域（BR / NFR / ADR / glossary / `_shared`）は `docs/` 直下に集約します。
+- **R-1007 (MUST)** 所属の SSOT は frontmatter で、ディレクトリは配置です。一致は C9 が検査し、再構成時は先に frontmatter を更新します。
+- **R-1008 (SHOULD)** 未着手 goal は `docs/goals-backlog.md` に置き、着手時にディレクトリへ昇格します。
+- **R-1009 (MUST)** vision に複数ドメインがあれば、各 goal は `domain:`（backlog は `- **ドメイン**:` 行）で所属を宣言し、許容値の閉じた集合は `00-vision.md` が持ちます。
+- **R-1010 (MUST)** 利用プロジェクトの作業指針（`docs/` と同じ階層の `CLAUDE.md` / `AGENTS.md`）は地図です。構成、層の向き、命名規則、`traceconfig.json` に置けない逸脱、正本へのリンクだけを持ち、コード・設定・テストに正本がある事実（部品の振る舞い、環境変数、フェイクの使い方）と人の運用手順（README へ）を写しません。150 行以下（spec-lint）。REQ を持たない技術部品の振る舞いの正本は、その単位の doc comment です（ADR-0051）。
 
-### The reading contract per task (what a Task input passes)
+## 11. 分割クラス（テスト生成の下限と上限）
 
-| Task | Read | Do not read |
-| --- | --- | --- |
-| implement / test `REQ-nnn` | that REQ, the `UC.md` beside it, the BRs its `br:` names, related ADRs | other REQs, the vision, every BR |
-| add a UC | `02-actors.md`, the goal's `GOAL.md`, `01-glossary.md`, the UC template, one neighboring UC directory in the same goal | other goals' directories |
-| implement the vertical slice `UC-nnn` | the whole UC directory (`ls` defines the scope), the referenced BRs, related ADRs | other UC directories |
-| change `BR-nnn` | that BR, `trace-check`'s C4 output (its referrers), related ADRs | — |
-| get the whole picture (session start) | `trace-check --index` output only | file bodies |
-| review | the changed files plus their frontmatter references | — |
+- **R-1101 (MUST)** 各 `active` REQ の `## 検証方針` に 1 つ以上の分割クラスを `` - `#name` — 意図を 1 行 `` で宣言します。クラス一覧がその要件に必要なテスト全体の SSOT です。
+- **R-1102 (MUST)** 各テストは `@covers REQ-nnn#class` で宣言済みクラスをちょうど 1 つ指定します（C11）。
+- **R-1103 (MUST)** テスト追加前に方針へクラスを宣言します。方針外のテストは C11 で失敗します（生成テストの上限）。
+- **R-1104 (MUST)** 各宣言済みクラスを最低 1 つのテストで覆います（C10）。検証しない入力領域はクラスにせず、理由とともに「検証しない」に書きます。
+- **R-1105 (SHOULD)** 同値クラスごとに 1 クラスです。複数クラスをまたぐ 1 テストは分割の失敗です。
+- **R-1106 (MUST)** `UC.md` の `## 主シナリオ` と `成功時` 事後条件が UC シナリオテストの SSOT です。actor が人間の各 `active` UC に正常系シナリオテストを 1 つ置き、`@scenario UC-nnn` を付けます（C15 は保留でないものの存在を検査）。失敗経路は REQ のクラスです。
+- **R-1107 (MUST)** シナリオテストは用語集の語でステップを実行し、事後条件を検証するだけです。シナリオにないステップ、DOM・ビュー階層の assertion は禁止で、追加ステップは先にゲート経由で `UC.md` を変えます。
+- **R-1108 (MUST)** ロケーターは実装を読まず、可視文言は `01-glossary.md`、識別子は契約の操作名とリクエストフィールド名から導出します（ADR-0037。構文はスタックの system-testing 末端ファイル）。食い違えば見た目を動かします。
 
-To find an ID from meaning, grep the frontmatter first: `grep -rl "uc: UC-012" docs/goals/`, `grep -rl "IDOR" docs/rules/`.
+C10 / C11 / C15 が保証するのは宣言と存在の一致です。分割が入力空間を尽くすか、assertion が文の意味を検証するかは reviewer の責任です（R-901）。
 
-## 11. Partition classes (the lower and upper bound of test generation)
+## 12. 契約一般（HTTP 以外の境界）
 
-The test code is the SSOT for case content, but "why this test exists" and "how many are enough" cannot be reconstructed from code. Those two are made machine-checkable by declaring partition classes.
+契約は所有権、変更周期、寿命が異なる 2 者の境界での機械可読な合意で、HTTP はその一例です。
 
-- **R-1101 (MUST)** Every `active` REQ's `## 検証方針` declares one or more partition classes as `` - `#name` — one line of intent ``. **The class list = the SSOT for the full set of tests that must exist for that requirement.**
-- **R-1102 (MUST)** Every test names exactly one declared class with `@covers REQ-nnn#class`. A `@covers` with no class, or naming an undeclared class, is a violation (C11).
-- **R-1103 (MUST)** To add a test, first declare its class in the policy (R-801 applied). This is the **upper bound** on AI-generated tests: a test outside the policy fails C11.
-- **R-1104 (MUST)** Every declared class is covered by at least one test (C10). An input region deliberately not verified is not declared as a class; it goes in `検証しない` with its reason.
-- **R-1105 (SHOULD)** One class per equivalence class. Several tests per class is fine (several boundary points); one test spanning several classes is a failed partition.
-
-**What the machine cannot see (know this):** C10 / C11 guarantee agreement between declaration and implementation. Whether the partition exhausts the input space, and whether an assertion verifies the meaning of the EARS sentence, remain the reviewer's responsibility (R-901 persuasive control).
-
-The scenario test (the system suite — a browser, simulator, or device) is bound the same way, at the UC level rather than the REQ level (`docs/adr/ADR-0035`):
-
-- **R-1106 (MUST)** The `## 主シナリオ` and `成功時` post-condition of `UC.md` are the SSOT of the UC's scenario test. Every `active` UC whose actor is human has **one** scenario test, happy path only, carrying `@scenario UC-nnn` (C15 checks existence and that the UC exists). Failure paths are partition classes of the REQs, never scenario tests.
-- **R-1107 (MUST)** A scenario test performs the scenario's steps and asserts its post-condition, in glossary terms, and nothing else: no step the scenario does not list, no DOM or view-hierarchy assertion. To add a step, change `UC.md` through its gate first (R-801 applied); a test that diverges from the scenario is the test's defect, never the scenario's.
-- **R-1108 (MUST)** Locators are derived, never read from the implementation: visible wording from `01-glossary.md`, function-named identifiers from the contract's operation and request field names (`docs/adr/ADR-0037`; the stack's system-testing leaf holds the syntax). When a scenario test and an appearance disagree, the appearance moves.
-
-## 12. Contracts in general (boundaries that are not HTTP)
-
-A contract is a **machine-readable agreement at a boundary between two parties with different ownership, change cadence, or lifetime**. HTTP is one case.
-
-- **R-1201 (MUST)** At the start (Phase 1 of a migration), enumerate the boundaries and assign each a contract SSOT and a checker. Consider at least: (a) **time** — persisted data written by a shipped version, (b) **the OS / platform**, (c) **between modules** (public types), (d) **an external API we do not own**.
-- **R-1202 (MUST) The time boundary.** Data actually written by each shipped version is kept as golden fixtures under `contracts/fixtures/` (**append-only**; editing an existing fixture is itself a contract violation). A test proves the current code can read every fixture, declared as the partition class `#persist-vN-compat`. For an app that lives entirely on the device, this is the most important contract there is.
-- **R-1203 (MUST)** OS contracts (Info.plist, entitlements, a manifest) are machine-readable and therefore their own SSOT. Never transcribe them into prose (R-102).
-- **R-1204 (SHOULD)** Between modules the language's type system is the contract and the compiler plus C6 are the checkers. Unintended public-API drift may be watched with a snapshot comparison (the same shape as the baseline ratchet). Where a contract operation is reached from a test, the entry (file and export) is derived from the operation name by the framework testing leaf's "operation → entry" convention — or declared once in the host's `CLAUDE.md` / `AGENTS.md` when no rules package applies — never from reading the implementation.
-- **R-1205 (SHOULD)** An external API is held defensively on the client side: a DTO layer, recorded-response fixtures, and tolerant decoding that ignores unknown fields.
-- **R-1206 (MUST)** Every UC carries `contract.yaml` (the harness format, not OpenAPI — why: `docs/adr/ADR-0001`). A UC that crosses no boundary **declares** it with `operations: {}` and `x-no-boundary: <reason>`; it never simply lacks a contract (that would open a hole in the implementation start gate). Never fabricate an HTTP operation for a boundary that is not HTTP.
-- **R-1207 (MUST)** The evaluation order of an operation's failure conditions has exactly one home: the order of its `errors:` list in `contract.yaml`, first match wins. `when` is a label for the entry, not a proof of exclusivity. UC / BR / ADR prose and schema comments never restate the order, and no `x-*` key under an operation may carry it (spec-lint rejects them). Precedence between neighbouring entries is refuted by an example that satisfies both conditions (executed by `contract-run`) or by a test class, never by prose.
+- **R-1201 (MUST)** 開始時に境界を列挙し、契約の SSOT と検査者を割り当てます。最低限: 時間（出荷済み版が書いた永続データ）、OS / プラットフォーム、モジュール間（公開型）、所有しない外部 API。
+- **R-1202 (MUST)** 時間の境界。出荷済み各版が書いたデータを `contracts/fixtures/` の golden fixture に追記専用で保持し、現行コードが全 fixture を読めることを分割クラス `#persist-vN-compat` のテストで証明します。
+- **R-1203 (MUST)** OS 契約（Info.plist、entitlements、manifest）は機械可読なのでそれ自身が SSOT です。
+- **R-1204 (SHOULD)** モジュール間は言語の型システムが契約、コンパイラーと C6 が検査者です。テストが契約操作を呼ぶ入口は、フレームワークの testing 末端ファイルの「operation → entry」規約で操作名から導出し、ルールパッケージがなければ利用プロジェクトの `CLAUDE.md` / `AGENTS.md` に命名規則として 1 回宣言します（操作ごとの表にせず、規則に従わないものだけを挙げます）。テストの足場（境界フェイク、fixture、テスト用 app）の使い方の正本はそのテストコードの型とコメントで、作業指針に写しません。実装を読んで導出しません。
+- **R-1205 (SHOULD)** 外部 API はクライアント側で防御的に扱います（DTO 層、記録した応答 fixture、未知フィールドを無視するデコード）。
+- **R-1206 (MUST)** 各 UC に `contract.yaml` を置きます（harness 書式、ADR-0001）。境界の入口と契約の操作は `@operation` で双方向に対応させます（C21）。境界を越えない UC は `operations: {}` と `x-no-boundary: <reason>` で宣言し、欠落させません。HTTP でない境界に HTTP 操作を捏造しません。
+- **R-1207 (MUST)** 失敗条件の評価順序は `contract.yaml` の `errors:` 一覧順だけに置き、最初の一致を採用します。`when` はラベルで排他性の証明ではなく、順序を UC / BR / ADR / スキーマコメント / 操作配下の `x-*` に再記述しません（spec-lint が `x-*` を拒否）。隣接項目の優先順位は両条件を満たす例（`contract-run`）またはテストクラスで反証します。

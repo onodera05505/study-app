@@ -1,7 +1,8 @@
 name: study-app
 version: 1.0.0
-description: "学びのアプリ（まなびば＋学び）。開発の型は tsay-dev/harness の develop-core を APM で選択導入する（Vite＋React＋Hono＋Cloudflare。スタック別の rules は原本に無いので develop-core のみ）"
-targets: [claude]
+targets: [cursor, claude, grok-build, codex]
 dependencies:
   apm:
-    - tsay-dev/harness/packages/develop-core#v4.1.0
+    - tsay-dev/harness/packages/develop-core#c4be71581ba5469f62ab791d43d9dfa917c03c1f
+    - tsay-dev/harness/packages/grilling#c4be71581ba5469f62ab791d43d9dfa917c03c1f
+    - tsay-dev/harness/packages/rules-cloudflare-hono-react#c4be71581ba5469f62ab791d43d9dfa917c03c1f

@@ -23,92 +23,25 @@ paths:
   - "**/.maestro/**/*.yml"
 ---
 
-> **External executable assets:** tools and templates are not APM dependencies. Resolve `HARNESS_ROOT` to the separate harness checkout (normally `.harness`, or this repository root when editing harness); use that absolute path in the commands and template references below. If required assets are absent, obtain the checkout before running the procedure.
+# 💬 コード内コメントには現在の仕様だけを書く
 
+> 対象はすべてのプラットフォームの本番コードとテストコードです。フレームワーク固有の記法（doc comment の形式）は各フレームワークの coding 末端ファイルが上書きし、この文書は書く内容と書かない内容だけを定めます。新しいフレームワークを追加したら、その言語の拡張子を上記 `applyTo:` に追加します。コメントは利用プロジェクトの `traceconfig.json` の `policy.language`（未宣言なら日本語）で書き、識別子、API 名、フレームワークのキーワードは維持します。
 
-# 💬 In-code comments describe only the current spec
+## 到達状態
 
-> **Scope: production code and test code, on every platform and every framework.**
-> Framework-specific notation (the form of doc comments, and so on) is overridden by each
-> framework's `coding.md`. What this document defines is only **what to write and what not to write**.
-> **When you add a new framework to the harness, add that language's extensions to the `applyTo:` above**
-> (this leaf binds every platform, so a gap in the coverage means this document alone stops being delivered).
+コメントは、今このコードを読む人が**現在の仕様**を理解するためだけに存在します。履歴は git コミットメッセージと ADR にあり、コードに複製すると更新されない 2 つ目の記録になります。
 
----
+- **書かないもの（見つけたら触った範囲で削除する）**: 過去との差分（「以前は X だったが Y に変更した」）、作業記録や日付・担当者・チケット番号だけの注記、コメントアウトした古いコード、変更の意図（コミットメッセージ / ADR へ）、コードの言い換え。
+- **書いてよいもの**: 読むだけでは分からない理由と制約（外部仕様の癖、意図的に非効率な選択、回避しているバグ）、壊れやすい前提と不変条件、フレームワークが要求する doc comment。すべて現在形で書きます。
+- 履歴コメントが現在の仕様の説明も兼ねていたら、先に現在形へ書き直してから履歴部分を落とします。正しいか確認できないコメントはコードを正として判断し、コメントを根拠に実装を変えません。清掃は同じコミットの一部として扱い、報告に 1 行残します。
 
-## 0. Language
+## トレーサビリティ注釈（ID のみ）
 
-**Write comments in Japanese.** These rules are written in English for token density, but that is a
-property of the instructions, not of the code. Identifiers, API names, and framework keywords stay as
-they are; only prose is Japanese.
+`trace-check`（`"${HARNESS_ROOT}/tools/trace-check/"`）が読む、必ず入れる唯一のコメントです。要件を言い換えず ID だけを書きます（R-701。存在しない・撤回済みの ID は C5 など）。注釈は**コメントの中**に書きます（文字列リテラルの中の注釈は数えません）。単位への注釈は、単位の行か、その直上に連続するコメント行（空行・コード行で切れる）に書きます（`after` を宣言した場合は単位の行か次の行）。行頭が `#` / `@` の行の注釈は、その前に `//` などのコメント開始記号があるか、`traceconfig.json` の `comment_pattern` がその言語の `#` をコメントと宣言した場合だけ数えます。
 
----
-
-## 1. The principle
-
-**A comment exists so that whoever reads this code now understands the current spec.**
-The history of a change, a work log, a past state — **none of it stays in the code.**
-
-Why: the history is already in git (the commit message) and in ADRs. Copying it into the code creates
-a second copy that the next change does not update, and **stale history gets read as the current spec.**
-
----
-
-## 2. What not to write (delete it when you find it)
-
-- Diffs against the past: "it used to be X but was changed to Y", "in the old implementation…", "fixed for Z"
-- Work logs, dates, assignees, or notes that are only a ticket number (`// 2026-08-14 修正`)
-- Commented-out old code (**it is in git, so delete it. Never "keep it just in case"**)
-- Explanations of the intent behind a change ("why this modification was made") — that belongs to the commit message / ADR
-- Restatements of what the code already says (`// ユーザーを取得する` directly above `getUser()`)
-
-## 3. What may be written
-
-- **Reasons and constraints** that reading cannot reveal (quirks of an external spec, a deliberately inefficient choice, a bug being worked around)
-- Fragile premises and invariants ("the caller has already taken the lock", and the like)
-- Doc comments required by the framework's or language's conventions (follow each `coding.md`)
-
-All of it **in the present tense, as the current spec**. Not "changed to X" but "is X".
-
----
-
-## 4. Traceability annotations (an ID, never content)
-
-The one comment that always goes in. `trace-check` (`"${HARNESS_ROOT}/tools/trace-check/"`) reads it to derive the map between docs and code, so it is machine-read, not prose.
-
-- **Production code** that realizes a requirement, a rule, or a use case carries `@implements REQ-nnn` / `@implements BR-nnn` / `@implements UC-nnn` in the doc comment of the unit that realizes it (a use-case class, a rule function, the branch that enforces a check). Several IDs may share one line, separated by `,` or `/` (`/// @implements UC-001, REQ-009 / BR-015` — the default `implements_pattern` reads the whole list; never one line per ID). **Write the ID only — never restate the requirement** (R-701; an ID that does not exist fails C5). **Put it on the unit, not the file header** — a file-level dump makes grep return the whole file (R-705 / C14 requires existence; granularity is this leaf).
-- **Test code** carries `@covers REQ-nnn#class` — exactly one declared partition class per test (the placement per runner is in each framework's testing leaf, and the host declares it to trace-check as `tests.covers_placement`: `before` = the doc comment above the test, `after` = the first line of the body; C10 / C11 check it).
-- **The schema source** (a migration, `schema.prisma`, a model file) carries `@implements BR-nnn` on the constraint that enforces a rule, in that format's comment syntax (`-- @implements BR-007`, `/// @implements BR-007`); C13 checks it for every BR enforced at the database, and C14 counts it toward the BR's implementation annotation.
-- These annotations are the current spec's address, not history: when a requirement is withdrawn or moved, update or remove the annotation in the same change.
-
----
-
-## 5. Where history belongs
-
-| What you want to write | Destination |
-| --- | --- |
-| What was changed and why | git commit message |
-| The reasoning and trade-offs behind a design decision | `docs/adr/` |
-| The current behavior and rules | `docs/goals/**/UC-nnn-<slug>/` (UC.md, REQ-nnn.md) and `docs/rules/BR-nnn.md` |
-| Why the code as it is now is the way it is | an in-code comment (this document) |
-
----
-
-## 6. Existing history comments
-
-**Delete them within the range of the files you touched.** Do not file a bulk cleanup as separate work.
-
-- If a history comment doubles as an explanation of the current spec, **rewrite it in the present tense first**, then drop the history part
-- For a comment whose continued correctness you cannot confirm, judge with the code as authoritative (never change an implementation on the grounds of a comment)
-- Treat the cleanup as **part of the same commit as that change**, not as a separate logical change. If you cleaned something up, leave one line about it in your report
-
----
-
-## ✅ Checklist before returning
-
-- [ ] Nothing of the "it used to be", "changed", "fixed for" kind is left
-- [ ] No commented-out code is left
-- [ ] No notes that are only a date, an assignee, or a ticket number
-- [ ] No comment you kept is merely a restatement of what the code says
-- [ ] The history was routed to the commit message / ADR
-- [ ] Every unit that realizes a REQ / BR / UC carries its `@implements`, and every test its `@covers REQ-nnn#class`
+- **本番コード**: 実現単位（ユースケースクラス、ルール関数、検査を強制する分岐）の doc comment に `@implements REQ-nnn` / `@implements BR-nnn` / `@implements UC-nnn`。複数 ID は `,`、`、`、`/` で区切って 1 行に書けます（`/// @implements UC-001, REQ-009 / BR-015`）。ファイルヘッダーではなく単位に置きます（C14 は存在を要求し、粒度はこの文書が定めます）。`unit_dirs` の単位は REQ か BR を少なくとも 1 つ指します（UC だけではテストに辿れない。C19）。
+- **REQ を持たない技術部品**（ADR-0051）: `traceconfig.json` の `source.support_dirs` に置き、`@implements` を求められません（`source.dirs` のファイルは `unit_dirs` か `support_dirs` のどちらかに入る。C27）。その自己検査は `tests.dirs` の外に置きます。`unit_dirs` の単位に `@implements` が無ければ C19 が、`tests.dirs` のテストに `@covers` が無ければ C11 が検出します（ADR-0055）。
+- **境界の入口と外部境界のクライアント**: 契約の操作を受ける入口（`source.entry_pattern` に一致する行）と、外部の操作を呼ぶクライアントの単位（`source.unit_pattern` に一致する行。`support_dirs` でもよい）の窓に `@operation UC-nnn#operationName`。入口の窓に書くのは `direction: inbound` の操作で、owned かつ inbound の操作は入口の窓の注釈だけが実装を指します。どちらの窓にも帰属しない、入口に無い、契約に無い操作を指す、fixed 契約の操作をどこも指さない、のいずれも C21 が検出します。
+- **テストコード**: テストごとに `@covers REQ-nnn#class` を宣言済みクラスにちょうど 1 つ（2 つ以上は C11）。位置は利用プロジェクトが `traceconfig.json` の `tests.covers_placement` に宣言し、C10 / C11 が検査します。シナリオテストは同じ位置に `@scenario UC-nnn`（C15）。NFR を検証するテストは同じ位置に `@covers NFR-nnn`（クラスなし、REQ の `@covers` とは別に数える。C20）。保留のテスト（`pending_pattern` に一致）は被覆に数えません。テストの行以外にある保留の印（`describe.skip` など）はそのファイルの全テストを保留にします。
+- **スキーマ正本**（migration、`schema.prisma`、モデルファイル）: ルールを強制する制約に、その書式のコメント構文で `@implements BR-nnn`（`-- @implements BR-007`）。C13 / C14 / C23 が読みます（`schema.constraint_pattern` に一致する制約はすべて注釈を持つ）。
+- 注釈は現在の仕様の参照先です。要件の撤回や移動と同じ変更で更新・削除します。

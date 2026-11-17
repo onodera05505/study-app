@@ -1,0 +1,26 @@
+---
+description: "R2 \u2014 \u975e\u516c\u958b\u30aa\u30d6\u30b8\u30a7\u30af\u30c8\u3001\u8a8d\u53ef\u6e08\u307f\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9 / \u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u3001\u6574\u5408\u6027"
+globs:
+  - "**/apps/api/src/features/**/*.repository.ts"
+  - "**/apps/api/src/features/**/*.routes.ts"
+  - "**/apps/api/src/features/**/*.service.ts"
+  - "**/apps/api/src/lib/**"
+  - "**/apps/web/src/features/**/api/**"
+  - "**/wrangler.toml"
+  - "**/wrangler.json"
+  - "**/wrangler.jsonc"
+  - "**/tests/integration/**"
+---
+
+# R2 — オブジェクトストレージ
+
+R2 を選択した機能にだけ適用する。認可方針は[セキュリティ](../../apm_modules/tsay-dev/harness/packages/rules-cloudflare-hono-react/.apm/instructions/backend-security.instructions.md)。
+
+- アプリケーション所有の非公開コンテンツは非公開バケットに置く。認可や CORS の失敗を回避するために公開バケットを有効にしない。
+- バインディングを使う前、署名付き権限を発行する前に、主体、テナント、リソース、読み書きを認可する。不透明なオブジェクトキーは認可ではない。オブジェクトキーはサーバーで生成し、所有はメタデータの正本に持つ。
+- サイズ、コンテンツ型、アップロード頻度に上限を設け、契約が要求する実コンテンツを検証する。ダウンロードは意図した content type、disposition、キャッシュヘッダーで配信し、ユーザー提供コンテンツをアプリのオリジンで実行させない。
+- 認証済み Worker 経由のアップロード / ダウンロードを既定とし、R2 資格情報やバインディングをブラウザに露出しない。
+- 直接アップロードを使う場合、事前署名付き S3 API URL は期限付き bearer 権限なのでメソッドとオブジェクトを限定し、認可後にだけ生成する。R2 S3 エンドポイントへの直接アップロードは同一オリジン API でもクロスオリジンになるため、厳密なオリジン / メソッド / ヘッダーでバケット CORS を設定する。事前署名 URL が任意のカスタムドメインで動くとは想定しない。
+- アップロードはサーバーで確定し、所有、存在、サイズ、検証を確認してからメタデータを公開する。R2 の書き込みと D1 の書き込みは単一トランザクションではないので、冪等な確定と整合、放棄分の削除を定義する。
+
+保持、削除、スキャン、公開配信の例外は利用プロジェクトが宣言する。

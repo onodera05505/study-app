@@ -1,47 +1,44 @@
-# Committing (the orchestrator runs git itself)
+# コミット（オーケストレーター自身が git を実行する）
 
-You, the orchestrator, land a slice as git commits (and a PR when the human asks). There is no committer agent: you hold the intent, so you decide the split and write the message. The format reference at the end of this file is the SSOT for commit messages and PRs.
+スライスはあなたが git コミットとして記録します（人間の依頼があれば PR も作ります）。意図を把握しているあなたが分割を決め、メッセージを書きます。メッセージと PR の書式はこのファイル末尾の書式リファレンスが SSOT で、機械で決まる部分は `tools/git-lint` が検査します（ADR-0039）。コミットメッセージと PR 本文は日本語です（`type`、scope、trailer は英語）。
 
-> **Language**: write commit messages and PR bodies in Japanese (the `type`, the scope, and the trailers stay in English).
+## ブランチを切る
 
-## When you may commit
+最初の作成者が書く前に切ります。
 
-- **Only after the terminal list passes** (*Phase 4: behaviour* in [playbook.md](playbook.md): `spec-lint validate`, `trace-check`, `contract-run`, then the host's `commands.typecheck` / `lint` / `test`, and `commands.system` where declared) **and the slice's reviewer pass is at zero `阻止`**. Green tests alone are not the condition.
-- **Only while no Task is running.** The git index is an exclusive resource; a producer writing mid-commit corrupts the diff. Close every concurrent section first, and commit slices one at a time in order of completion.
-- **One commit, one logical change.** Never mix formatting with logic; never mix two slices. You know which round produced which files — split along that line, and stack several commits when a slice landed several logical changes.
-- **Conventional Commits** (`type(scope): subject`): imperative subject, no trailing period, around 50 characters; the body carries the why; the footer carries `Refs:` / `ADR-nnnn` / `UC: UC-nnn` and `BREAKING CHANGE:`. Opt in to the machine check of the `UC:` trailer with `node "${HARNESS_ROOT}/tools/spec-lint/spec-lint.mjs" gate --message <file>` (it verifies that the named UC and its REQs are `active` and its contract `fixed`).
-- **A PR is one slice = one user value.** Fill in the body following the template (`.github/pull_request_template.md` if the project has one).
+- **幹は 1 本。** `git fetch origin` の後、`git switch -c <name> --no-track origin/<default>`（`<default>` は `git symbolic-ref --short refs/remotes/origin/HEAD`）。fetch できなければローカルのデフォルトから切り、基点が古い可能性を報告します。デフォルト以外の長寿命ブランチや単位別の幹は作りません。
+- **1 スライスに 1 本の短命ブランチ。** 同じスライスの再開は同じブランチ、新しいスライスはデフォルトから新しく切ります。未マージの作業に依存するスライスは、積む前に人間に尋ねます。
+- **名前は導出し、創作しない。** `<topic>` は小文字 ASCII の kebab-case、動詞を先頭に 2–5 語です。
 
-## Guardrails (never cross these)
+| 利用プロジェクト | 名前 | 決め方 |
+| --- | --- | --- |
+| `traceconfig.json` に `git.units` がある（モノレポ） | `<unit>/<topic>` | `<unit>` は宣言済みの名前。スライスのユーザー価値が現れるアプリ → 変更が収まる共有パッケージ → どれでもなければ `repo` の順で選ぶ。`<unit>` 単独のブランチは禁止 |
+| `git.units` がない | `<type>/<topic>` | `<type>` はスライスの主変更のコミット `type`。利用プロジェクトの `CLAUDE.md` / `AGENTS.md` に独自規約があればそれに従う |
 
-- **Never commit directly to the default branch (main, etc.).** If you are on it, cut a branch first.
-- **Push and PR creation happen only when the human explicitly asks.** Absent that, stop at the commit.
-- **Never use `--no-verify`.** Do not bypass commit-msg / pre-commit hooks — let them run.
-- Never perform destructive or irreversible operations such as `reset --hard`, `push --force`, or `clean -f`.
-- If secrets (keys, tokens) appear in the diff, do not commit — stop and report.
-- Limit what you commit to the slice's diff. Confirm with `git status` / `git diff` before staging, and never sweep in unrelated changes.
+単位をディレクトリ構成から推測しません。未宣言なら人間に尋ね、`git.units` に記録してから切ります。切った直後に `node "${HARNESS_ROOT}/tools/git-lint/git-lint.mjs" branch` を実行します（`git` ブロックがなければ「未検査」であり合格ではありません）。
 
-## Stop and route
+## コミットしてよい条件
 
-| Condition | What you do |
-| --- | --- |
-| A hook fails and the fix needs code or spec changes | do not patch it yourself: send it as a constraint to the owning producer (`implementer` / `test-author` / `spec-author`), re-run the terminal list, then commit |
-| Secrets in the diff | stop; the human decides (rotate, then re-stage without them) |
-| Changes no round of this slice produced (stray edits, another slice's files) | leave them out of the commit; if their origin is unknown, ask the human before touching them |
-| The diff contains several logical changes | split into several commits along the rounds that produced them — never one lump |
+- 完了条件（[SKILL.md](../SKILL.md) §3）をすべて満たした後だけ。テスト成功だけでは足りません。
+- Task が 1 つも実行中でないときだけ。git index は排他的資源です。
+- 1 コミットに 1 論理変更。書式とロジック、2 つのスライスを混ぜません。どの周回がどのファイルを作ったか把握しているので、その境界で分割します。
+- 1 PR は 1 スライス = 1 ユーザー価値。
 
-Record the sha and subject of each commit in the round ledger; commit success or failure is never escalated to the human by itself.
+## ガードレール（越えてはいけない）
+
+- デフォルトブランチに直接コミットしない。
+- push、PR 作成、マージは人間が明示的に依頼した場合だけ。マージ前に `gh pr checks <number>` を読み、失敗や保留があればマージしません。
+- `--no-verify` を使わない。hook が失敗し、修正にコードや仕様の変更が要るなら、自ら直さず担当作成者に制約として渡し、完了条件を再実行してからコミットします。
+- `reset --hard`、`push --force`、`clean -f` など破壊的・不可逆な操作をしない。
+- 差分に秘密情報があればコミットせず停止して報告する。
+- コミットはスライスの差分に限ります。stage 前に `git status` / `git diff` で確認し、このスライスのどの周回も作っていない変更は除外します（由来不明なら人間に尋ねる）。
+- コミットの sha と subject を記録します。
 
 ---
 
-# Format reference — Git rules (commit messages / PRs)
+# 書式リファレンス — Git 規約（コミットメッセージ / PR）
 
-> The format for commit messages and Pull Requests. **The SSOT for this format is this text.**
-> **A PR is issued per "one slice = one user value"** (a vertical slice). Related ADRs are referenced by their ID in `docs/adr/` (`ADR-XXXX`).
-
-## Commit message rules (Conventional Commits)
-
-### Format
+## コミットメッセージ規約（Conventional Commits）
 
 ```
 <type>(<scope>): <subject>
@@ -51,59 +48,43 @@ Record the sha and subject of each commit in the round ledger; commit success or
 <footer>
 ```
 
-- Everything except **type** (required) and **subject** (required) is optional. `scope` is the area affected (e.g. `auth`, `docs`).
+`type` と `subject` は必須、ほかは任意。`scope` は影響範囲で、モノレポでは必須（宣言済み単位名または `repo`。複数単位を変更するコミットはブランチの単位）。
 
-### The types
+### type 一覧
 
-| type | When to use it |
+| type | 用途 |
 | --- | --- |
-| `feat` | adding a feature |
-| `fix` | fixing a bug |
-| `docs` | documentation only |
-| `refactor` | internal improvement that does not change behavior |
-| `test` | adding or fixing tests |
-| `perf` | performance improvement |
-| `style` | formatting only (logic unchanged) |
-| `build` / `ci` | build and CI configuration |
-| `chore` | other chores (dependency updates, etc.) |
+| `feat` | 機能追加 |
+| `fix` | バグ修正 |
+| `docs` | 文書のみ |
+| `refactor` | 振る舞いを変えない内部改善 |
+| `test` | テスト追加・修正 |
+| `perf` | 性能改善 |
+| `style` | 書式のみ（ロジック不変） |
+| `build` / `ci` | ビルドと CI 設定 |
+| `chore` | その他の雑務（依存更新など） |
 
-### Rules for the subject (the summary line)
+### subject（要約行）の規則
 
-- **One commit, one logical change.** Never mix formatting with a logic change.
-- Write it in the imperative, present tense ("〜する", "add"). No trailing period.
-- Around 50 characters. What changed must be visible at a glance.
-- Keep the language consistent within the team (a Japanese subject is fine, but `type` stays in English).
+命令形・現在形、末尾のピリオドなし、約 50 文字。`traceconfig.json` の `policy.language`（未宣言なら日本語）で書くが `type` は英語のまま。
 
 ### body / footer
 
-- **body**: why you changed it, and the background (what you changed is visible in the diff). Wrap around 72 characters.
-- **footer**:
-  - Reference related issues / ADRs: `Refs: #123` / `ADR-0007`
-  - Name the corresponding use case: `UC: UC-012` (the UC ID of `docs/goals/**/UC-012-<slug>/`). That this UC and its REQs are
-    `active` and its contract `fixed` is machine-verified by the spec-lint tool (`"${HARNESS_ROOT}/tools/spec-lint/spec-lint.mjs" gate --message <file>`)
-    (so implementation does not proceed on a draft). Opt-in in practice.
-  - Breaking changes: `BREAKING CHANGE: <description>`
-  - Commits an AI took part in may carry a `Co-Authored-By:` trailer (optional).
-
-### Example
+- **body**: 変更理由と背景（変更内容は差分で分かる）。約 72 文字で折り返す。
+- **footer**: `Refs: #123` / `ADR-0007`、対応するユースケース `UC: UC-012`、破壊的変更 `BREAKING CHANGE: <説明>`。`UC:` trailer は `node "${HARNESS_ROOT}/tools/spec-lint/spec-lint.mjs" gate --message <file>` が UC と REQ の `active`、契約の `fixed` を検証します（モノレポではヘッダーの `scope` が示す単位の docs で引くため、`UC:` を持つコミットの scope を `repo` にしない）。`Co-Authored-By:` trailer は任意。
 
 ```
 feat(reservation): 予約フォームの入力検証を追加
 
 未入力・桁あふれ・不正文字を弾く。REQ-046（Unwanted behaviour）に対応。
-入力値は i_ 変数として受け、check_value で判定する。
 
 Refs: #142
 UC: UC-012
 ```
 
-## Pull Request rules
+## Pull Request 規約
 
-- **One PR = one slice (one user value).** Keep it small and reviewable. Always issue it with **that user value running vertically through the stack**.
-- **The title** follows the same rules as a commit (`type(scope): summary`).
-- The body follows the template below. In a project, place it as `.github/pull_request_template.md`.
-
-### PR template
+タイトルはコミットと同じ規則（`type(scope): summary`）。本文は次のテンプレートに従います（プロジェクトでは `.github/pull_request_template.md` に置く）。
 
 ```markdown
 ## 目的 / Why
@@ -118,7 +99,7 @@ UC: UC-012
 ## テスト
 - [ ] 追加/更新したテストと観点（失敗・空・境界・権限を含む）
 - [ ] ローカルで緑（テスト緑は前提であって完成条件ではない）
-- [ ] `trace-check` に新規違反なし（マージ条件 R-803）
+- [ ] `spec-lint` / `trace-check` / `contract-run` の違反ゼロ（マージ条件 R-803）
 
 ## 関連
 - Issue: #
@@ -129,11 +110,3 @@ UC: UC-012
 - [ ] コーディング規約に沿っている
 - [ ] 仕様変更は docs/goals（UC.md／REQ／contract.yaml）と docs/rules（BR）を正として更新した（逆流ルール R-801）
 ```
-
-## ✅ Checklist before commit / PR
-
-- [ ] Is this commit one logical change (no formatting mixed with logic)?
-- [ ] Is the subject imperative and concise, with an appropriate `type`?
-- [ ] Are breaking changes and related issues / ADRs in the footer?
-- [ ] Is the PR narrowed to one slice, with that user value running vertically?
-- [ ] Is every item of the PR template filled in?

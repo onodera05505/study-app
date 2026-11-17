@@ -40,11 +40,12 @@ portal/.migrate_accounts.sql
 .trace-gate/
 .trace-reservations.json
 
-# 原本 harness の別 checkout（tools/templates。APM の依存とは別）
+# 原本 harness の別 checkout（tools/templates。APM の依存とは別。apm.lock.yaml の resolved_commit と同じコミットで取得する）
 .harness/
-.trace-reservations.json
-
-
-# APM dependencies
-apm_modules/
+# 版を上げる間だけ置く、次の版の checkout（切り替えたら消す）
+.harness-next/
 .harness-gate/
+
+# apm_modules は追跡する。apm install が下の除外行を無ければ足すので残し、直後の否定で打ち消す
+apm_modules/
+!apm_modules/

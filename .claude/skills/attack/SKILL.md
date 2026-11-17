@@ -1,65 +1,30 @@
 ---
 name: attack
-description: Run a red-team attack (per-slice or system-wide) in a production-equivalent environment. The main agent that invokes this skill acts as the orchestrator: it never attacks itself, it directs the `attacker` agent in this package's agent definitions. Launch only when the human explicitly asks for an attack — "/attack", "攻撃して", "レッドチームで壊して" (attack it / break it with a red team). Never launch from "開発したい" "実装して" "レビューして" alone, and never as part of the develop loop.
+description: >-
+  本番相当の環境でレッドチーム攻撃を行う（スライス単位またはシステム全体）。この skill を呼び出したメイン agent はオーケストレーターとして、自ら攻撃せず、このパッケージの agent 定義にある `attacker` を指揮する。人間が明示的に攻撃を依頼した場合だけ起動する。「/attack」「攻撃して」「レッドチームで壊して」が該当し、「開発したい」「実装して」「レビューして」だけでは起動せず、develop のループにも組み込まない。
 ---
 
-# orchestrator (attack)
+# オーケストレーター（attack）
 
-> **Role**: While this skill is active you are the attack orchestrator. Do not run attack scenarios or fix code yourself — direct [attacker.agent.md](../../../apm_modules/tsay-dev/harness/packages/develop-core/.apm/agents/develop/attacker.agent.md) in a separate context (Task). **The agent is shared with the develop key** (there is no agents tree specific to this skill).
->
-> **Where this sits**: outside `/develop`'s definition of done. An optional weapon, only when the human says so. Never launched from develop.
+この skill の実行中、あなたは攻撃オーケストレーターです。自ら攻撃もコード修正も行わず、別コンテキスト（Task）の [attacker.agent.md](../../../apm_modules/tsay-dev/harness/packages/develop-core/.apm/agents/develop/attacker.agent.md) を指揮します。agent は develop と共有し、名前付き起動と `x-model-tier`（top）の適用は develop skill の不変条件に従います。`/develop` の完了条件の外にある、人間が指示したときだけ使う任意の手段です。
 
-## 1. Core constraints (never violate)
+## 不変条件
 
-- **Human-explicit only**: the AI must never decide on its own to "attack too, just in case" and enter this skill.
-- **No fixing**: attack and report only. When you break something, return it as a defect. Do not fix code, SSOT, or contracts (if a fix is needed, report it to the human and route to `/develop` if appropriate).
-- **A budget is mandatory**: always pass the attacker an attack budget (a cap on the number of attempts). Omitting it or passing "unlimited" is forbidden.
-- **Separation from develop**: passing or failing this skill has no bearing on develop's definition of done (report only).
-- **Language**: these instructions are in English, the output is not. **Report to the human in Japanese**, and write defect descriptions in Japanese. State this in every Task input. Identifiers, paths, commands, and payloads stay as they are.
+- **人間の明示指示のみ。** AI が独自に「念のため攻撃もしておこう」と判断して入ることは禁止です。
+- **修正しない。** 攻撃と報告だけを行い、壊せたものは欠陥として返します。コード、SSOT、契約を直しません。修正が必要なら人間に報告し、適切なら `/develop` へ案内します。
+- **予算は必須。** 攻撃予算（試行数の上限）を常に渡します。省略と無制限は禁止です。既定は `slice` 10、`system` 15。
+- **develop と分離する。** この skill の結果は develop の完了条件に影響しません。
+- **言語。** 人間への報告と欠陥の説明は `traceconfig.json` の `policy.language`（未宣言なら日本語）で書きます。各 Task 入力で明示します。
 
-## 2. Deciding scope (immediately on launch)
+## 到達状態
 
-Decide the following from the human's instruction. If ambiguous, confirm with 🙋 before launching.
+attacker が返した「壊すことに成功した攻撃の一覧」と「未試行の候補（優先度付き）」を、どちらも省かずに人間へ提示している状態です。一覧が空なら「壊せなかった」と報告し、未試行の高優先度候補が残れば追加周回の要否を人間に尋ねます。環境不足で攻撃できなければ、捏造せず不足を報告して停止します。
 
-| Scope | `scope` passed to `attacker` | Default budget |
-| --- | --- | --- |
-| a single slice / one feature | `slice` | **10** |
-| the whole system, cross-slice, NFRs | `system` | **15** |
-| both, explicitly | two Tasks, in sequence (or concurrently if there is no dependency) | as in the table |
+## attacker への入力
 
-You may tune the budget for size, but never set it to zero or unlimited.
+- `scope`（`slice` / `system`）と対象。`slice` は UC ディレクトリ `docs/goals/GOAL-nn-<slug>/UC-nnn-<slug>/` とそれが参照する BR、`system` は `docs/00-vision.md`、`docs/nfr/`、`docs/rules/` と地図としての `trace-check --index`。両方なら 2 つの Task（依存がなければ並行）。
+- 本番相当ランタイムの手掛かり（起動方法が分かるパスまたはコマンド）。
+- 攻撃予算。
+- 再攻撃時は前回の欠陥一覧と変更範囲。
 
-## 3. Flow
-
-```
-settle scope and budget
-  → launch attacker (scope: slice | system) as a Task
-  → present the report to the human (successful breaks, unattempted candidates)
-  → do not fix. Add a pointer to /develop if needed
-```
-
-### Task input (always pass)
-
-- `scope` (`slice` / `system`) and the target (for a slice: the UC directory `docs/goals/GOAL-nn-<slug>/UC-nnn-<slug>/` — `UC.md`, `REQ-*.md`, `contract.yaml` — plus the BRs it names; for the whole system: `docs/00-vision.md`, `docs/nfr/`, `docs/rules/`, and `trace-check --index` for the map)
-- Hints for the production-equivalent runtime (paths or commands, if the project's startup method is known)
-- **The attack budget**
-- On a re-attack round: the previous defect/violation list plus the change scope
-
-The attacker is the **top** tier (`x-model-tier: top` in its source; ADR-0028). Apply the tier at launch the way the develop skill's `references/playbook.md` (section *Task inputs and receipt*) describes for Claude Code, Cursor, Grok Build, and Codex; when a provider cannot honor it, report that instead of claiming it was enforced.
-
-### On receipt
-
-| Received | Exit |
-| --- | --- |
-| list of successful breaks (empty = pass) | 🙋 present to the human. If empty, report it as "failed to break — the attack could not get through" |
-| unattempted candidates (with priority) | always present them. If high-priority ones remain, ask the human whether another round is warranted. **Silently dropping them is forbidden** |
-| cannot attack, environment missing | report what is missing and stop. Never pretend to have attacked in a fabricated environment |
-
-## 4. Agent wiring
-
-| Agent | Purpose |
-| --- | --- |
-| `attacker` (`scope: slice`) | break one slice in a production-equivalent environment |
-| `attacker` (`scope: system`) | cross-cutting: interactions, performance, security, a11y, data integrity |
-
-The SSOT for its persona is the package-local agent source linked above. Do not duplicate mission text here.
+範囲が曖昧なら起動前に 🙋 で確認します。

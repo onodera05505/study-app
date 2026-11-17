@@ -1,24 +1,12 @@
-# Writing an ADR (the orchestrator writes it itself)
+# ADR の作成（オーケストレーター自身が書く）
 
-You, the orchestrator, record Architecture Decision Records — one file per decision, preserving "why this design or implementation was chosen" so it can be traced later. There is no adr-writer agent: the decision context is already in your working context, so you land it yourself. Typical triggers: an approved guarantee point from the schema gate, a rule's enforcement point, a framework or testing-strategy choice, a superseded decision.
+設計判断はあなたが Architecture Decision Record として記録します。判断の文脈はあなたの作業コンテキストにあり、別 agent に渡すと要約で失われます。典型的な契機は、スキーマゲートで承認された保証点、ルールの強制箇所、フレームワークやテスト戦略の選択、過去の判断の置き換えです。本文は `traceconfig.json` の `policy.language`（未宣言なら日本語）、節見出しはテンプレートのままです。
 
-> **Language**: write the ADR body (Context, Decision, Consequences, 却下した選択肢) in Japanese; the section headings stay as the template has them.
-> `applyTo: docs/**` matches `docs/adr/`, so **you are the receiving agent of [docs.instructions.md](../../../../apm_modules/tsay-dev/harness/packages/develop-core/.apm/instructions/docs.instructions.md)** — read it before writing (R-802, R-901, R-1001, and the ADR row of its "what each document may hold" table bind you).
+`applyTo: docs/**` は `docs/adr/` に一致するので、あなたが [docs.instructions.md](../../../../apm_modules/tsay-dev/harness/packages/develop-core/.apm/instructions/docs.instructions.md) の受け手です。書く前に読みます。
 
-## Only a settled decision is recorded
-
-- **Write only a decision settled with the human.** An ADR is not where a decision is made. If the decision, its trade-offs, or the options considered are unsettled or unknown, **ask the human — never fabricate an option or a consequence to fill the template.** If several decisions are mixed together, split them into several ADRs.
-- Status starts at `proposed` unless the human has already accepted the decision. An ADR never records the current design state (that lives in code, `docs/design.md`, and the contracts); it is a decision at a point in time.
-
-## Craft
-
-- **Template**: `${HARNESS_ROOT}/templates/develop/ADR.md` is the scaffold. The file is `docs/adr/ADR-nnnn-<slug>.md` (slug in lower kebab-case; the file-name prefix equals the frontmatter `id`).
-- **Number** with `node "${HARNESS_ROOT}/tools/trace-check/trace-check.mjs" --next adr` (atomic reservation; never infer the next number from a directory listing). Numbers are never skipped or reused.
-- **One ADR, one decision.**
-- **The rejected options are the substance.** Context → Decision → Consequences → 却下した選択肢, written so the reasoning can be traced later: every option that was considered appears under 却下した選択肢 with at least one sentence on why it lost. **An ADR with zero bad consequences was not examined** — write the cost, not only the gain.
-- **Name where the decision is enforced** (a type, a constraint, a check, a lint rule) in the Decision. A decision only prose enforces is persuasive control (R-901); say so explicitly.
-- **Superseding** (R-802): write `supersedes: ADR-nnnn` on the new record and set the old record's frontmatter `status: superseded`. **Never delete or rewrite the old body**; nothing else in the old file changes.
-
-## Before moving on
-
-Run `node "${HARNESS_ROOT}/tools/spec-lint/spec-lint.mjs" validate` and `node "${HARNESS_ROOT}/tools/trace-check/trace-check.mjs" --only C12` (ID collisions), and fix every error concerning the file you wrote. Reference the ADR by ID from the commit footer of the slice it belongs to ([commit.md](commit.md)).
+- **決着した判断だけを書く。** ADR は判断を決める場所ではありません。判断、トレードオフ、検討した選択肢が未確定なら人間に尋ね、テンプレートを埋めるために捏造しません。人間が受け入れていない判断は `status: proposed` で始めます。複数の判断が混在していたら分割します。
+- **テンプレート**は `${HARNESS_ROOT}/templates/develop/ADR.md`、ファイルは `docs/adr/ADR-nnnn-<slug>.md`（slug は小文字 kebab-case、接頭辞は frontmatter の `id` と一致）。
+- **採番**は `node "${HARNESS_ROOT}/tools/trace-check/trace-check.mjs" --next adr`。ディレクトリ一覧から推測せず、番号を飛ばさず、再利用しません。
+- **却下した選択肢が本質です。** 検討した選択肢をすべて載せ、負けた理由を最低 1 文添えます。悪い結果がゼロの ADR は検討不足です。Decision には判断の強制箇所（型、制約、検査、lint 規則）を明記し、説明文だけで強制する判断は説得による統制（R-901）だと書きます。
+- **置き換え**は新しい記録に `supersedes: ADR-nnnn` を書き、古い記録の frontmatter を `status: superseded` にします。古い本文は削除も書き換えもしません（R-802）。
+- 書いたら `node "${HARNESS_ROOT}/tools/spec-lint/spec-lint.mjs" validate` と `node "${HARNESS_ROOT}/tools/trace-check/trace-check.mjs" --only C12` を実行し、自ら書いたファイルのエラーを直します。所属するスライスのコミット footer から ADR を ID で参照します（[commit.md](commit.md)）。
