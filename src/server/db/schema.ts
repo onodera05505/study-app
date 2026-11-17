@@ -52,6 +52,7 @@ export const topics = sqliteTable(
   },
   (t) => [
     // 同じ論点が別レコードに割れると頻度が分散して重要度が壊れるので一意にする
+    // @implements BR-059
     uniqueIndex('uq_topic_term').on(t.syllabusItemId, t.term),
     index('idx_topic_freq').on(t.questionCount),
   ],
@@ -70,6 +71,7 @@ export const unitPlans = sqliteTable(
     /** 全体像。 */
     overview: text('overview').notNull(),
   },
+  // @implements BR-058
   (t) => [check('ck_unit_plans_overview_not_empty', sql`${t.overview} <> ''`)],
 )
 
@@ -88,8 +90,11 @@ export const unitGroups = sqliteTable(
   },
   (t) => [
     primaryKey({ columns: [t.middleNo, t.groupNo] }),
+    // @implements BR-057
     check('ck_unit_groups_group_no_positive', sql`${t.groupNo} >= 1`),
+    // @implements BR-058
     check('ck_unit_groups_name_not_empty', sql`${t.name} <> ''`),
+    // @implements BR-058
     check('ck_unit_groups_description_not_empty', sql`${t.description} <> ''`),
   ],
 )
@@ -114,8 +119,9 @@ export const unitGroupTopics = sqliteTable(
       foreignColumns: [unitGroups.middleNo, unitGroups.groupNo],
     }).onDelete('cascade'),
     // まとまりの論点を学ぶ順に引く問い合わせに使う
-    // @implements BR-031
+    // @implements BR-057
     uniqueIndex('uq_unit_group_topics_position').on(t.middleNo, t.groupNo, t.position),
+    // @implements BR-057
     check('ck_unit_group_topics_position_positive', sql`${t.position} >= 1`),
   ],
 )
@@ -138,7 +144,9 @@ export const topicPrerequisites = sqliteTable(
     primaryKey({ columns: [t.topicId, t.prerequisiteTopicId] }),
     // @implements REQ-479
     uniqueIndex('uq_topic_prerequisites_position').on(t.topicId, t.position),
+    // @implements REQ-479
     check('ck_topic_prerequisites_position_positive', sql`${t.position} >= 1`),
+    // @implements BR-058
     check('ck_topic_prerequisites_not_self', sql`${t.topicId} <> ${t.prerequisiteTopicId}`),
   ],
 )
@@ -172,6 +180,7 @@ export const pastQuestions = sqliteTable(
     contentKey: text('content_key'),
   },
   (t) => [
+    // @implements BR-060
     uniqueIndex('uq_question_exam_number').on(t.exam, t.number),
     index('idx_question_exam').on(t.exam, t.number),
     index('idx_question_content').on(t.contentKey),
@@ -300,6 +309,7 @@ export const sessionQuestions = sqliteTable(
     answeredAt: integer('answered_at'),
   },
   (t) => [
+    // @implements BR-022
     uniqueIndex('uq_sq_session_idx').on(t.sessionId, t.idx),
     // 未回答の最小 index を引く頻出クエリ
     index('idx_sq_progress').on(t.sessionId, t.result, t.idx),

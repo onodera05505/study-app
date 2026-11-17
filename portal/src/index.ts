@@ -165,6 +165,7 @@ async function openSession(c: any, accountId: string) {
 const api = new Hono<AppEnv>()
 
 // @implements REQ-213, REQ-260
+// @operation UC-017#getHealth
 api.get('/health', (c) => c.json({ ok: true }))
 
 /** 学びの一覧（公開。URL は公開情報。合言葉や秘密は含めない） */

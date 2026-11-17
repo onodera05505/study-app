@@ -17,6 +17,7 @@ export function Login(_props: { onDone: () => void }) {
     api<AuthConfig>('/auth/config').then(setCfg).catch(() => setCfg({ sso: false, portal: null, app: exam.key }))
   }, [])
 
+  // @implements REQ-525
   const base = ((cfg?.sso ? cfg.portal : null) ?? portal.url).replace(/\/$/, '')
 
   return (

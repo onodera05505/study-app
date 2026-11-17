@@ -7,7 +7,8 @@ import { secureHeaders } from 'hono/secure-headers'
 import { sql } from 'drizzle-orm'
 import { NOT_CONFIGURED, readToken } from './lib/auth'
 import type { Bindings, Variables } from './lib/db'
-import { getDb, getSecret } from './lib/db'
+import { getDb } from './lib/db'
+import { getSecret } from './lib/secret'
 import { nextTopics } from './lib/next-topics'
 import { joinStatus, stageOf } from './lib/understanding'
 import { authRoutes } from './routes/auth'
@@ -52,6 +53,7 @@ api.use('*', async (c, next) => {
 })
 
 // @implements REQ-213, REQ-260
+// @operation UC-017#getHealth
 api.get('/health', (c) => c.json({ ok: true }))
 
 api.route('/auth', authRoutes)

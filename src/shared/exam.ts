@@ -10,8 +10,12 @@
  */
 import targets from './targets.json'
 
-/** 入口「まなびば」（認証と権限の正本。要件 §15）。URL は公開情報。 */
-export const portal: { url: string; name: string } = (targets as unknown as { _portal: { url: string; name: string } })._portal
+type Portal = { url: string; name: string }
+
+const registry = targets as unknown as { _portal: Portal }
+
+/** 入口「まなびば」（認証と権限の正本）の URL と名前。登録簿の値をそのまま渡す。URL は公開情報。 */
+export const portal: Portal = registry._portal
 
 export type ExamKey = string
 

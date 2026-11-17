@@ -132,6 +132,7 @@ export function App() {
     }
   }, [authed, portal])
 
+  // @implements REQ-566
   useEffect(() => {
     // 入口の URL は公開の設定から取る（学び側は SSO_PORTAL_URL を知っているが、画面には焼き込まない）
     api<{ sso: boolean; portal: string | null }>('/auth/config')
