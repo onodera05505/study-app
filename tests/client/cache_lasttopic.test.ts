@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 /** 分野・単元の集計の記憶（apiCached / invalidateCached）と
- *  「前回の続き」（getLastTopic / setLastTopic）。
+ *  「前回の続き」（getLastTopic / setLastTopic。覚えられないときは論点の画面 TopicDetail を描いて見る）。
  *
  *  どちらも src/client/lib/api.ts がモジュールの中に状態を持つので、テストごとに読み直す。
  *  端末に置く値は鍵の名前に頼らずに見る（鍵の名前は仕様ではない）。 */
@@ -25,6 +25,30 @@ function keyHolding(s: Storage, needle: string): string | null {
 }
 
 const TOPIC = { id: 231, term: 'LTV', middle: '事業の指標', middleNo: 4 }
+
+/** 論点の画面が読む応答（契約 UC-002 getTopicDetail の形。過去問は持たない）。 */
+const TOPIC_DETAIL = {
+  topic: {
+    ...TOPIC,
+    subtitle: null,
+    explanation: '短い説明の本文です。',
+    detail: '詳しい解説の本文です。',
+    questionCount: 0,
+    frequencyTier: 3,
+    isNew: 0,
+    status: 3,
+    statusSource: 'override',
+    field: 'ストラテジ系',
+    major: '企業と法務',
+    itemName: '会計と財務',
+    tier: null,
+  },
+  questions: [],
+  prerequisites: [],
+  siblings: [],
+  nextTopic: null,
+  neighbors: null,
+}
 
 beforeEach(() => {
   localStorage.clear()
@@ -106,12 +130,54 @@ describe('前回の続き（UC-005）', () => {
   })
 
   // @covers REQ-078#storage-blocked-keeps-going
-  it('端末に保存できないときも例外を投げない（操作を止めない）', async () => {
-    const m = await load()
+  it('端末に保存できない（覚える操作が名前を持つ失敗を渡す）ときも、論点の画面は描かれ、導線が動く', async () => {
+    ;(globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true
+    vi.resetModules()
+    const React = await import('react')
+    const { createRoot } = await import('react-dom/client')
+    const { MemoryRouter, Route, Routes } = await import('react-router-dom')
+    const { TopicDetail } = await import('../../src/client/pages/TopicDetail')
+    vi.stubGlobal('fetch', vi.fn(async (raw: string) => {
+      const path = new URL(String(raw), 'http://localhost').pathname
+      if (path.endsWith('/glossary')) return okJson({ glossary: [] })
+      if (/\/topics\/\d+$/.test(path)) return okJson(TOPIC_DETAIL)
+      return okJson({})
+    }))
     vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
-      throw new Error('保存できない端末')
+      throw new DOMException('保存できない端末', 'QuotaExceededError')
     })
-    expect(() => m.setLastTopic(TOPIC)).not.toThrow()
+    const host = document.createElement('div')
+    document.body.appendChild(host)
+    const root = createRoot(host)
+    const h = React.createElement
+    try {
+      await React.act(async () => {
+        root.render(
+          h(
+            MemoryRouter,
+            { initialEntries: ['/topics/231'] },
+            h(
+              Routes,
+              null,
+              h(Route, { path: '/topics/:id', element: h(TopicDetail) }),
+              h(Route, { path: '/topics', element: h('div', null, '論点の一覧の画面') }),
+            ),
+          ),
+        )
+      })
+      expect(host.textContent, '論点の名前が出ていない').toContain(TOPIC.term)
+      expect(host.textContent, '論点の説明が出ていない').toContain('短い説明の本文です。')
+      // 画面の操作が止まっていない: 一覧への導線を選ぶと一覧の画面へ移る
+      const toList = [...host.querySelectorAll('a')].find((a) => a.getAttribute('href') === '/topics')
+      expect(toList, '一覧への導線が無い').toBeTruthy()
+      await React.act(async () => {
+        toList!.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, button: 0 }))
+      })
+      expect(host.textContent, '導線を選んでも一覧の画面へ移らない').toContain('論点の一覧の画面')
+    } finally {
+      await React.act(async () => root.unmount())
+      host.remove()
+    }
   })
 
   // @covers REQ-082#unreadable-value

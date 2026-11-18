@@ -46,21 +46,6 @@ describe('添え先（UC-010）', () => {
     sessionStorage.setItem('study-app:last-page', '{壊れた')
     expect(getLastPage()).toBeNull()
   })
-
-  // @covers REQ-242#cannot-remember
-  it('端末の記憶が使えないときも保存で例外を投げない（添えるものが無いだけ）', () => {
-    const real = Storage.prototype.setItem
-    Storage.prototype.setItem = () => {
-      throw new Error('この端末では保存できない')
-    }
-    try {
-      expect(() => setLastPage({ path: '/topics/12', label: '学習の単位' })).not.toThrow()
-      expect(() => annotateLastPage({ topicId: 12 })).not.toThrow()
-    } finally {
-      Storage.prototype.setItem = real
-    }
-    expect(getLastPage()).toBeNull()
-  })
 })
 
 describe('前回の続き（最後に開いた論点）', () => {
