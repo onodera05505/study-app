@@ -156,6 +156,18 @@ describe('UC-019 学習者役の答えを採点する（gradeLearnerAnswers）',
       expect(j.delta_understood).toBeCloseTo(0.5)
     })
 
+    /** @covers REQ-314#delta-from-zero-padded-name */
+    it('より小さい番号の周の結果が、周の数字が 0 で始まる名前（周 2 の採点に cycle_01.json）でだけあっても、それとの差を出す', () => {
+      const ws = makeWorkspace()
+      prepareGrade(ws, BASE, { ...SNAPSHOT_8, cycle: 2 })
+      ws.write('data/eng/eval/cycle_01.json', { cycle: 1, rate: 0.25, avg_understood: 1.5 })
+      const r = grade(ws, { cycle: 2 })
+      const j = ok(r)
+      expect(j.delta_rate).toBeCloseTo(0.25)
+      expect(j.delta_understood).toBeCloseTo(0.5)
+      expect(JSON.parse(ws.read(resultFile(2)))).toEqual(j)
+    })
+
     /** @covers REQ-314#no-earlier-no-delta */
     it('より小さい番号の周の結果が無ければ差を持たない', () => {
       const j = ok(graded(BASE, (ws) => ws.write(resultFile(9), { cycle: 9, rate: 0.1, avg_understood: 1 })).r)

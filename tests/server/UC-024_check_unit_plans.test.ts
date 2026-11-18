@@ -185,6 +185,22 @@ describe('UC-024 資格対策の単元の構成を教材の門で確かめる（
       }
     })
 
+    /** @covers REQ-444#owner-item-incomplete-unreadable */
+    it('受け持ちの項目に subject・owner・topics のどれかが無いか subject が空のファイルは、そのファイルを挙げて missingElement でなく unreadablePlan で止める（場合ごと）', () => {
+      for (const [label, edit] of <[string, (p: Json) => unknown][]>[
+        ['受け持ちの項目に subject が無い', (p: Json) => delete p.owners[0].subject],
+        ['受け持ちの項目の subject が空', (p: Json) => (p.owners[0].subject = '')],
+        ['受け持ちの項目に owner が無い', (p: Json) => delete p.owners[0].owner],
+        ['受け持ちの項目に topics が無い', (p: Json) => delete p.owners[0].topics],
+      ]) {
+        const r = check21((p) => void edit(p))
+        labelled(label, () => {
+          expectStop(r, 'unreadablePlan', planName(21))
+          noneOf(r, 'missingElement')
+        })
+      }
+    })
+
     /** @covers REQ-444#unreadable-skips-content */
     it('読めないファイルは、欠け・上限超え・下限未満・名前の重なり・前提の食い違いを持っていても、そのファイルについて読めない理由 1 件だけを挙げ、警告も挙げない（場合ごと）', () => {
       /** 読めることにすれば、欠け・上限超え・下限未満・名前の重なり・他の単元の論点・前提が後ろ に当たる中身。 */
