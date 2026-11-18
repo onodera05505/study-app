@@ -6,18 +6,33 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from targets import targets  # noqa: E402
+from tool_refusal import CODE, Refused  # noqa: E402
 
 
+# @implements REQ-579
 # @operation UC-019#readRegistryLearning
-def registry_learning(key: str) -> dict | None:
-    """登録簿の 1 つの学び（契約の readRegistryLearning）。登録簿に無ければ None。"""
+def read_registry_learning(*, key: str) -> dict:
+    """登録簿の 1 つの学び（契約の readRegistryLearning）。roadmap と、登録簿の学びの名前 brand（登録簿が持つときだけ）と、
+    ロードマップを持つ学びだけ roadmapSpec を持つ。登録簿に無ければ NOT_FOUND の失敗を渡す。"""
     t = targets().get(key)
     if t is None:
-        return None
-    res = {"roadmap": t.get("roadmap") is True, "entry": t}
+        raise Refused(CODE.NOT_FOUND, f"登録簿に無い学び『{key}』")
+    res = {"roadmap": t.get("roadmap") is True}
+    if isinstance(t.get("brand"), str) and t["brand"]:
+        res["brand"] = t["brand"]
     if res["roadmap"]:
         res["roadmapSpec"] = t.get("roadmapSpec") or {}
     return res
+
+
+def registry_learning(key: str) -> dict | None:
+    """登録簿の 1 つの学び（read_registry_learning を通して読む）。登録簿に無ければ None。"""
+    try:
+        return read_registry_learning(key=key)
+    except Refused as e:
+        if e.code != CODE.NOT_FOUND:
+            raise
+        return None
 
 
 def read_json(p: Path):

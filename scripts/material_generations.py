@@ -22,6 +22,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from tool_refusal import CODE, tool_error  # noqa: E402
 from targets import targets  # noqa: E402
 
 GENERATION_DIR = re.compile(r"^materials(?:_v([0-9]+))?$")
@@ -75,13 +76,13 @@ def learning_refusal(d: Path, *, registered: bool) -> dict | None:
     registered なら登録簿に無い学び（末尾の名前が登録簿の key でない）を INVALID_INPUT で、そうでなければ
     学びの置き場が無い学びを NOT_FOUND で断る。"""
     if registered and d.name not in targets():
-        return {"error": {"code": "INVALID_INPUT", "reason": f"登録簿に無い学び『{d.name}』"}}
+        return tool_error(CODE.INVALID_INPUT, f"登録簿に無い学び『{d.name}』")
     if not registered and not d.is_dir():
-        return {"error": {"code": "NOT_FOUND", "reason": f"学びの置き場が無い: {d}"}}
+        return tool_error(CODE.NOT_FOUND, f"学びの置き場が無い: {d}")
     return None
 
 
-# @implements REQ-487
+# @implements REQ-487, REQ-571
 def emit_refusal(refusal: dict) -> int:
     """断りを標準出力に 1 つ出し、人が読む理由を標準エラーに出して、終了コード 1 を返す。"""
     print(refusal["error"]["reason"], file=sys.stderr)

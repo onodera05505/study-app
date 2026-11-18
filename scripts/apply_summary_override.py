@@ -10,8 +10,11 @@ from __future__ import annotations
 import argparse, json, sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from tool_refusal import CODE, tool_error_line  # noqa: E402
 
-# @implements REQ-435
+
+# @implements REQ-435, REQ-571
 # @operation UC-030#applySummaryOverride
 def main() -> int:
     ap = argparse.ArgumentParser()
@@ -20,7 +23,10 @@ def main() -> int:
     a = ap.parse_args()
     # 組にする前に数を確かめる。数が違うと、どの単位にどの要約を当てるか決まらない
     # @implements REQ-545
-    if len(a.ids) != len(a.summary): print("--id と --summary の数が合わない"); return 1
+    if len(a.ids) != len(a.summary):
+        print("--id と --summary の数が合わない")
+        print(tool_error_line(CODE.INVALID_INPUT, f"論点の ID {len(a.ids)} 件と要約 {len(a.summary)} 件の数が合わない"))
+        return 1
     d = Path(a.data)
     cfgp = d / "roadmap_config.json"; cfg = json.loads(cfgp.read_text(encoding="utf-8"))
     rmp = d / "roadmap.json"; rm = json.loads(rmp.read_text(encoding="utf-8"))
@@ -31,7 +37,10 @@ def main() -> int:
     # 書く前に ID を全部確かめる。途中で止まると、表示だけ出て一部しか書かれない
     # @implements REQ-436
     missing = [i for i in a.ids if i not in by_id]
-    if missing: print("roadmap.json に無い論点の ID（何も書いていない）:", *missing, sep="\n  "); return 1
+    if missing:
+        print("roadmap.json に無い論点の ID（何も書いていない）:", *missing, sep="\n  ")
+        print(tool_error_line(CODE.NOT_FOUND, f"渡した論点の ID がロードマップのデータのどの単位にも無い: {missing}"))
+        return 1
     for i, s in zip(a.ids, a.summary):
         u = by_id[i]; old = u.get("summary", "")
         if old == s and ov.get(str(i)) == s: print(f"{i} {u['term']}: 変更なし"); continue

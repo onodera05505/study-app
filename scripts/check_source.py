@@ -20,10 +20,12 @@
 
 from __future__ import annotations
 
-import argparse
 import re
 import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from tool_refusal import RefusingArgumentParser  # noqa: E402
 
 PBKDF2_MAX = 100_000
 ITER_RE = re.compile(r"^\s*(?:export\s+)?const\s+ITERATIONS\s*=\s*([\d_]+)", re.M)
@@ -118,10 +120,10 @@ def check_empty_lists(client: Path, errors: list[str]) -> int:
 
 
 # @operation UC-032#checkSource
-# @implements REQ-549
+# @implements REQ-549, REQ-571
 def main() -> int:
     root = Path(__file__).resolve().parent.parent
-    ap = argparse.ArgumentParser()
+    ap = RefusingArgumentParser()
     ap.add_argument("--auth", default=str(root / "src/server/lib/auth.ts"))
     ap.add_argument("--client", default=str(root / "src/client"))
     a = ap.parse_args()

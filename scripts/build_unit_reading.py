@@ -19,16 +19,18 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+from tool_refusal import CODE  # noqa: E402
 from material_generations import is_rewritten, select_materials  # noqa: E402
 from learning_parts import materials_of  # noqa: E402
-from learner_io import place_root, read_json, registry_learning  # noqa: E402
+from learner_io import place_root, read_json  # noqa: E402
 from learner_eval import Refused, contract_args, remove_created_dirs, run  # noqa: E402
-from build_learner_pack import (check_out, delivered_bodies, read_generations,  # noqa: E402
+from build_learner_pack import (RENDER_TIMEOUT_SECONDS, check_out, delivered_bodies,  # noqa: E402
                                 render_svgs, well_formed, _missing_ancestors)
 from material_figure_line import figure_srcs, malformed_lines, map_figure_lines, png_target  # noqa: E402
 from attach_material_figures import insert_after_heading, insert_at_section_end  # noqa: E402
 from build_seed import TERM_REF, build_glossary, read_explanations  # noqa: E402
-from check_unit_plans import LEARNING_FILES, Refused as GateRefused, gate_findings, _parse_syllabus, _read_json  # noqa: E402
+from check_unit_plans import LEARNING_FILES, Refused as GateRefused, gate_findings, read_syllabus_units  # noqa: E402
+from targets import targets  # noqa: E402
 
 # 契約の buildUnitReading の request の data・unit の形
 DATA_ARG = re.compile(r"^(tests/fixtures/unit-reading/[a-z0-9-]+/)?data/[a-z]+$")
@@ -105,16 +107,28 @@ def read_args():
                          {"data": DATA_ARG.fullmatch, "unit": UNIT_ARG.fullmatch, "out": "text"}, ("data", "unit", "out"))
 
 
-# @implements REQ-502, BR-004
+# @implements REQ-502, REQ-579
 # @operation UC-028#readReadingRegistry
+def read_reading_registry(*, key: str) -> dict:
+    """登録簿の 1 つの学びがロードマップ型か（契約の readReadingRegistry）。登録簿に無ければ NOT_FOUND の失敗を渡す。"""
+    t = targets().get(key)
+    if t is None:
+        raise Refused(CODE.NOT_FOUND, "登録簿に無い学び")
+    return {"roadmap": t.get("roadmap") is True}
+
+
+# @implements REQ-502, BR-004
 def qualification_key(data: str) -> str:
     """登録簿にあり、ロードマップ型でない学びだけを通し、学びの key を返す。"""
     key = Path(data).name
-    r = registry_learning(key)
-    if r is None:
-        raise Refused("INVALID_INPUT", "登録簿に無い学び")
+    try:
+        r = read_reading_registry(key=key)
+    except Refused as e:
+        if e.code != CODE.NOT_FOUND:
+            raise
+        raise Refused(CODE.INVALID_INPUT, "登録簿に無い学び")
     if r["roadmap"]:
-        raise Refused("INVALID_INPUT", "ロードマップ型の学び")
+        raise Refused(CODE.INVALID_INPUT, "ロードマップ型の学び")
     return key
 
 
@@ -135,11 +149,11 @@ def check_unit(d: Path, unit: str) -> None:
     （シラバスが読めないことは単元の構成の門が止める理由として挙げる）。"""
     sp = d / LEARNING_FILES[0]
     try:
-        in_learning = int(unit) in _parse_syllabus(sp, _read_json(sp))
-    except (OSError, ValueError, GateRefused):
+        in_learning = int(unit) in {it["middle_no"] for it in read_syllabus_units(path=str(sp))["items"]}
+    except GateRefused:
         in_learning = True
     if not in_learning or not _plan_path(d, unit).is_file():
-        raise Refused("NOT_FOUND", "単元が無いか、単元の構成を持たない", unit=unit)
+        raise Refused(CODE.NOT_FOUND, "単元が無いか、単元の構成を持たない", unit=unit)
 
 
 def _plan_ok(p) -> bool:
@@ -195,29 +209,81 @@ def _glossary_sources(d: Path) -> list[tuple[Path, object]]:
     return files
 
 
-# @implements REQ-507
+def _unreadable_glossary_sources(d: Path) -> list[str]:
+    """用語集の元（論点の一覧と教材の世代のほか）のうち、形として読めないファイル。"""
+    bad: list[str] = []
+    for p, ok in _glossary_sources(d):
+        _read_checked(p, ok, bad)
+    return bad
+
+
+# @implements REQ-507, REQ-579
 # @operation UC-028#readReadingUnitPlan
+def read_reading_unit_plan(*, data: str, unit: str) -> dict:
+    """1 単元の単元の構成（契約の readReadingUnitPlan。前提が無ければ空として持つ）。ファイルが無ければ NOT_FOUND、
+    単元の構成として読めなければ INVALID_INPUT の失敗を渡す。失敗の unreadable はそのファイル。"""
+    p = _plan_path(Path(data), unit)
+    if not p.exists():
+        raise Refused(CODE.NOT_FOUND, "単元の構成のファイルが無い", unreadable=[p.as_posix()])
+    bad: list[str] = []
+    plan = _read_checked(p, _plan_ok, bad)
+    if plan is None:
+        raise Refused(CODE.INVALID_INPUT, "単元の構成として読めない", unreadable=bad)
+    return {**plan, "prerequisites": plan.get("prerequisites", {})}
+
+
+# @implements REQ-507, REQ-579
 # @operation UC-028#readReadingTopics
+def read_reading_topics(*, data: str) -> dict:
+    """論点の一覧（契約の readReadingTopics）。無いか論点の一覧として読めなければ INVALID_INPUT の失敗を渡す。"""
+    bad: list[str] = []
+    raw = _read_checked(Path(data) / "topics.json", _topics_ok, bad)
+    if raw is None:
+        raise Refused(CODE.INVALID_INPUT, "論点の一覧として読めない", unreadable=bad)
+    return {"topics": raw["topics"]}
+
+
+# @implements REQ-507, REQ-579
+# @operation UC-028#readReadingFigureSpec
+def read_reading_figure_spec(*, data: str, topic_id: int) -> dict:
+    """1 論点の図の仕様の図（契約の readReadingFigureSpec）。図の仕様の無い論点は空。
+    図の仕様として読めなければ INVALID_INPUT の失敗を渡す。失敗の unreadable はそのファイル。"""
+    sp = Path(data) / "material_figures" / f"{topic_id}.json"
+    if not sp.exists():
+        return {"figures": []}
+    bad: list[str] = []
+    raw = _read_checked(sp, _spec_ok, bad)
+    if raw is None:
+        raise Refused(CODE.INVALID_INPUT, "図の仕様として読めない", unreadable=bad)
+    return {"figures": raw["figures"]}
+
+
+# @implements REQ-507
 def read_sources(d: Path, unit: str) -> tuple[dict, list[dict]]:
     """教材の世代・単元の構成・論点の一覧・用語集の元・単元の論点の図の仕様を、契約の形として読めるか確かめて読む。
     読めないファイルが 1 つでもあれば、読めないファイルをすべて挙げて止める。返すのは (単元の構成, 論点の一覧)。"""
+    data = str(d)
     bad: list[str] = []
-    try:
-        read_generations(d)
-    except Refused as e:
-        bad.extend(e.detail.get("unreadable", []))
-    plan = _read_checked(_plan_path(d, unit), _plan_ok, bad)
-    topics = _read_checked(d / "topics.json", _topics_ok, bad)
-    for p, ok in _glossary_sources(d):
-        _read_checked(p, ok, bad)
+    found: dict[str, dict] = {}
+    reads = (("bodies", lambda: read_reading_delivered_body(data=data)),
+             ("plan", lambda: read_reading_unit_plan(data=data, unit=unit)),
+             ("topics", lambda: read_reading_topics(data=data)))
+    for name, read in reads:
+        try:
+            found[name] = read()
+        except Refused as e:
+            bad.extend(e.detail.get("unreadable", []))
+    bad.extend(_unreadable_glossary_sources(d))
+    plan = found.get("plan")
     if plan is not None:
         for tid in [t for g in plan["groups"] for t in g["topics"]]:
-            sp = d / "material_figures" / f"{tid}.json"
-            if sp.exists():
-                _read_checked(sp, _spec_ok, bad)
+            try:
+                read_reading_figure_spec(data=data, topic_id=tid)
+            except Refused as e:
+                bad.extend(e.detail.get("unreadable", []))
     if bad:
-        raise Refused("INVALID_INPUT", "読むファイルが契約の形として読めない", unreadable=bad)
-    return plan, topics["topics"]
+        raise Refused(CODE.INVALID_INPUT, "読むファイルが契約の形として読めない", unreadable=bad)
+    return plan, found["topics"]["topics"]
 
 
 # @implements REQ-504, BR-048
@@ -226,33 +292,44 @@ def check_gate(d: Path, unit: str) -> None:
     try:
         _, _, stops = gate_findings(d)
     except GateRefused as e:
-        raise Refused("INVALID_INPUT", "単元の構成が門の止める理由に当たる", unit=unit, gateReasons=[e.reason])
+        raise Refused(CODE.INVALID_INPUT, "単元の構成が門の止める理由に当たる", unit=unit, gateReasons=[e.reason])
     mine = [s["reason"] for s in stops if f"{unit}.json" in s.get("_files", [])]
     if mine:
-        raise Refused("INVALID_INPUT", "単元の構成が門の止める理由に当たる", unit=unit, gateReasons=mine)
+        raise Refused(CODE.INVALID_INPUT, "単元の構成が門の止める理由に当たる", unit=unit, gateReasons=mine)
+
+
+# @implements REQ-506, REQ-579
+# @operation UC-028#readReadingDeliveredBody
+def read_reading_delivered_body(*, data: str) -> dict:
+    """配る本文（契約の readReadingDeliveredBody）。投入と同じ選び方で論点ごとに教材の世代から選んだ本文のうち、
+    説明と詳しい解説の両方を持つ物を、選んだ世代と共に論点の番号の順に並べる。
+    教材の世代のファイルが読めなければ INVALID_INPUT の失敗を渡す（unreadable は読めないファイルのすべて）。"""
+    d = Path(data)
+    bodies = delivered_bodies(d, [])
+    chosen = select_materials(d)
+    return {"materials": [{"topic_id": tid, "explanation": m["explanation"], "detail": m["detail"],
+                           "generation": chosen[tid].generation} for tid, m in sorted(bodies.items())]}
 
 
 # @implements REQ-506
-# @operation UC-028#readReadingDeliveredBody
 def unit_bodies(d: Path, order: list[int]) -> dict[int, dict]:
-    """投入と同じ選び方で選んだ単元の論点の配る本文。どの世代からも選べない論点があれば挙げて止める。"""
-    try:
-        return delivered_bodies(d, [{"topic_id": t} for t in order])
-    except Refused as e:
-        if e.code != "NOT_FOUND":
-            raise
-        raise Refused("NOT_FOUND", "配る本文の無い論点がある", topics=e.detail.get("units", []))
+    """投入と同じ選び方で選んだ配る本文（論点 → 説明・詳しい解説・選んだ世代）。単元の論点のうちどの世代からも選べない
+    論点があれば挙げて止める。"""
+    bodies = {m["topic_id"]: m for m in read_reading_delivered_body(data=str(d))["materials"]}
+    missing = [t for t in order if t not in bodies]
+    if missing:
+        raise Refused(CODE.NOT_FOUND, "配る本文の無い論点がある", topics=missing)
+    return bodies
 
 
 # @implements REQ-505
-def unit_generations(d: Path, order: list[int]) -> dict[int, str]:
+def unit_generations(bodies: dict[int, dict], order: list[int]) -> dict[int, str]:
     """論点 → 配る本文を選んだ教材の世代。書き直した世代から選ぶ論点と前の世代から選ぶ論点が混ざれば、
     書き直した世代から選ばれない論点を挙げて止める。"""
-    chosen = select_materials(d)
-    gens = {t: chosen[t].generation for t in order}
+    gens = {t: bodies[t]["generation"] for t in order}
     rewritten = [t for t in order if is_rewritten(gens[t])]
     if rewritten and len(rewritten) < len(order):
-        raise Refused("CONFLICT", "書き直した世代と前の世代が単元の中で混ざる",
+        raise Refused(CODE.CONFLICT, "書き直した世代と前の世代が単元の中で混ざる",
                       topics=[t for t in order if not is_rewritten(gens[t])])
     return gens
 
@@ -263,7 +340,7 @@ def check_figure_lines(order: list[int], bodies: dict[int, dict]) -> None:
     hit = [{"topic_id": t, "line": l} for t in order
            for l in malformed_lines(bodies[t]["explanation"] + "\n" + bodies[t]["detail"])]
     if hit:
-        raise Refused("INVALID_INPUT", "図の置き場を指すのに図の行の形に合わない行がある", lines=hit)
+        raise Refused(CODE.INVALID_INPUT, "図の置き場を指すのに図の行の形に合わない行がある", lines=hit)
 
 
 # @implements REQ-498
@@ -272,13 +349,18 @@ def reading_figure(png: str, caption: str) -> str:
     return f"\n\n![]({png})\n\n図の説明: {caption}\n\n"
 
 
-def _image_file(root: Path, ref: str) -> Path:
-    """図の参照先 /figures/materials/<key>/<サブパス> が指す配信の置き場の画像。"""
-    return root / "public" / ref.lstrip("/")
+# @implements REQ-508, REQ-579
+# @operation UC-028#readReadingFigure
+def read_reading_figure(*, src: str, root: str | None = None) -> dict:
+    """図の参照先 /figures/materials/<key>/<サブパス> が指す画像（契約の readReadingFigure）。画像は置き場の根（root。
+    無ければ作業ディレクトリ）の public の下の src と同じパスにあり、そのパスを file で返す。無ければ NOT_FOUND の失敗を渡す。"""
+    f = Path(root if root is not None else ".") / "public" / src.lstrip("/")
+    if not f.is_file():
+        raise Refused(CODE.NOT_FOUND, "画像が置き場所に無い")
+    return {"file": f.as_posix()}
 
 
 # @implements REQ-496, REQ-508, BR-026
-# @operation UC-028#readReadingFigureSpec
 def place_figures(d: Path, root: Path, key: str, order: list[int], bodies: dict[int, dict],
                   gens: dict[int, str]) -> tuple[dict[int, tuple[str, str]], list[dict]]:
     """論点ごとに図を読み物の形で置いた (説明, 詳しい解説) と、読み物の順の図の {topic_id, ref, target}。
@@ -298,8 +380,7 @@ def place_figures(d: Path, root: Path, key: str, order: list[int], bodies: dict[
         ex = map_figure_lines(ex, lambda f: reading_figure(png_target(f.src), f.caption))
         det = map_figure_lines(det, lambda f: reading_figure(png_target(f.src), f.caption))
         if not lined:
-            sp = d / "material_figures" / f"{tid}.json"
-            for fig in (read_json(sp)["figures"] if sp.exists() else []):
+            for fig in read_reading_figure_spec(data=str(d), topic_id=tid)["figures"]:
                 ref = f"/figures/materials/{key}/{tid}-{fig['id']}.svg"
                 block = reading_figure(png_target(ref), fig["caption"])
                 if fig["after"] == "explanation":
@@ -315,12 +396,16 @@ def place_figures(d: Path, root: Path, key: str, order: list[int], bodies: dict[
         text = ex + "\n" + det
         mine.sort(key=lambda r: text.find(f"![]({r['target']})"))
         for r in mine:
-            if not _image_file(root, r["ref"]).is_file():
+            try:
+                read_reading_figure(src=r["ref"], root=root.as_posix())
+            except Refused as e:
+                if e.code != CODE.NOT_FOUND:
+                    raise
                 missing.append({"topic_id": tid, "ref": r["ref"], "cause": "imageMissing"})
         refs += mine
         placed[tid] = (ex, det)
     if missing:
-        raise Refused("NOT_FOUND", "図の画像か差し込み位置の見出しが無い", figures=missing)
+        raise Refused(CODE.NOT_FOUND, "図の画像か差し込み位置の見出しが無い", figures=missing)
     return placed, refs
 
 
@@ -332,21 +417,19 @@ def figure_targets(refs: list[dict]) -> dict[str, str]:
         by_target.setdefault(r["target"], set()).add(r["ref"])
     clash = {t for t, s in by_target.items() if len(s) > 1}
     if clash:
-        raise Refused("INVALID_INPUT", "同じ PNG の名前になる図が 2 つ以上ある",
+        raise Refused(CODE.INVALID_INPUT, "同じ PNG の名前になる図が 2 つ以上ある",
                       figures=[{"topic_id": r["topic_id"], "ref": r["ref"]} for r in refs if r["target"] in clash])
     return {t: next(iter(s)) for t, s in by_target.items()}
 
 
-# @implements REQ-498, REQ-500, REQ-509
-# @operation UC-028#readReadingFigure
-# @operation UC-028#writeReadingFigure
-def draw_figures(work: Path, root: Path, targets: dict[str, str], refs: list[dict]) -> None:
-    """図を PNG にして work の下の出力先と同じパスに置く。元が PNG の図は写し、SVG は図の中の script を走らせず
-    図のファイルの外の資源を取りに行かない描き手（scripts/render_svg_png.mjs）で描く。
-    XML として整わない図・待ち時間の上限のうちに描けない図があれば、その論点と図を挙げて止める。"""
+# @implements REQ-498, REQ-500
+def _draw(work: Path, files: dict[str, Path], timeout: int) -> set[str]:
+    """出力先の中の PNG のパス → 図の画像を、work の下のそのパスに PNG で置き、描けなかった物の PNG のパスを返す。
+    元が PNG の図は写し、SVG は図の中の script を走らせず図のファイルの外の資源を取りに行かない描き手
+    （scripts/render_svg_png.mjs）で、描き手を 1 回だけ起こしてまとめて描く（1 つの図の待ち時間の上限は timeout 秒）。
+    XML として整わない図は描き手に渡さず、描けなかった物に入れる。"""
     jobs = []
-    for target, ref in targets.items():
-        src = _image_file(root, ref)
+    for target, src in files.items():
         (work / target).parent.mkdir(parents=True, exist_ok=True)
         if src.suffix == ".png":
             shutil.copyfile(src, work / target)
@@ -355,9 +438,36 @@ def draw_figures(work: Path, root: Path, targets: dict[str, str], refs: list[dic
     failed = {j["target"] for j in jobs if not well_formed(Path(j["src"]))}
     drawable = [j for j in jobs if j["target"] not in failed]
     if drawable:
-        failed |= render_svgs(drawable)
+        failed |= render_svgs(drawable, timeout)
+    return failed
+
+
+# @implements REQ-498, REQ-500, REQ-579
+# @operation UC-028#writeReadingFigure
+def write_reading_figure(*, out: str, src: str, renderTimeoutSeconds: int, root: str | None = None) -> dict:
+    """図 1 つを PNG に描いて出力先の figures/ の下に置く（契約の writeReadingFigure）。置く先は src の学びの key の段より下の
+    サブパスと名前を保ち拡張子だけ .png にしたパス。画像が無いか、XML として整わないか、待ち時間の上限のうちに描けなければ
+    INTERNAL の失敗を渡す。"""
+    target = png_target(src)
+    try:
+        file = Path(read_reading_figure(src=src, root=root)["file"])
+    except Refused as e:
+        if e.code != CODE.NOT_FOUND:
+            raise
+        raise Refused(CODE.INTERNAL, "図を PNG に描けない（画像が置き場所に無い）", figures=[{"ref": src}])
+    if _draw(Path(out), {target: file}, renderTimeoutSeconds):
+        raise Refused(CODE.INTERNAL, "図を PNG に描けない", figures=[{"ref": src}])
+    return {"path": target}
+
+
+# @implements REQ-498, REQ-500, REQ-509
+def draw_figures(work: Path, root: Path, targets: dict[str, str], refs: list[dict]) -> None:
+    """図を PNG にして work の下の出力先と同じパスに置く。図 1 つの書き出し（write_reading_figure）と同じ _draw で、
+    描き手を 1 回だけ起こしてまとめて描く。描けない図があれば、その論点と図を挙げて止める。"""
+    files = {target: Path(read_reading_figure(src=ref, root=root.as_posix())["file"]) for target, ref in targets.items()}
+    failed = _draw(work, files, RENDER_TIMEOUT_SECONDS)
     if failed:
-        raise Refused("INTERNAL", "図を PNG に描けない",
+        raise Refused(CODE.INTERNAL, "図を PNG に描けない",
                       figures=[{"topic_id": r["topic_id"], "ref": r["ref"]} for r in _unique_refs(refs) if r["target"] in failed])
 
 
@@ -403,13 +513,23 @@ def compose(plan: dict, topics: dict[int, dict], placed: dict[int, tuple[str, st
     return "\n".join(lines).rstrip("\n") + "\n"
 
 
-# @implements REQ-497
+# @implements REQ-497, REQ-579
 # @operation UC-028#readReadingGlossary
-def learning_glossary(d: Path, topics: list[dict]) -> set[str]:
-    """投入が組み立てるのと同じ用語集の正式な表記。"""
+def read_reading_glossary(*, data: str) -> dict:
+    """投入が組み立てるのと同じ用語集の正式な表記（契約の readReadingGlossary）。用語集の元（問題解説・表記の上書き・
+    別名・論点の一覧・教材の世代）のファイルが読めなければ INVALID_INPUT の失敗を渡す。"""
+    d = Path(data)
+    bad = _unreadable_glossary_sources(d)
+    if bad:
+        raise Refused(CODE.INVALID_INPUT, "用語集の元のファイルが読めない", unreadable=bad)
+    topics = read_reading_topics(data=data)["topics"]
+    try:
+        chosen = select_materials(d)
+    except (OSError, ValueError, AttributeError, KeyError, TypeError):
+        raise Refused(CODE.INVALID_INPUT, "用語集の元の教材の世代のファイルが読めない")
     explanations, _ = read_explanations(d)
-    gl, _ = build_glossary(d, explanations, materials_of(select_materials(d)), topics)
-    return set(gl)
+    gl, _ = build_glossary(d, explanations, materials_of(chosen), topics)
+    return {"terms": sorted(gl)}
 
 
 def _natural(s: str) -> list:
@@ -426,16 +546,25 @@ def figure_list(order: list[int], refs: list[dict]) -> list[str]:
     return sorted(first, key=lambda t: (first[t], _natural(t)))
 
 
-# @implements REQ-511
+# @implements REQ-494, REQ-579
 # @operation UC-028#writeUnitReading
+def write_unit_reading(*, out: str, body: str) -> dict:
+    """単元の読み物の全文を出力先の reading.md に書く（契約の writeUnitReading。出力先が無ければ作る）。"""
+    o = Path(out)
+    o.mkdir(parents=True, exist_ok=True)
+    (o / READING).write_text(body, encoding="utf-8")
+    return {"path": READING}
+
+
+# @implements REQ-511
 def publish(work: Path, out: Path, body: str) -> None:
     """単元の読み物を図を描き終えた一時の場所に書き、その場所を出力先に付け替える。付け替えは出力先が無いか空のときだけ通るので、
     同じ出力先に同時に作る呼び出しのうち書けるのは 1 つだけで、ほかの呼び出しは書かれた物を書き換えない。"""
-    (work / READING).write_text(body, encoding="utf-8")
+    write_unit_reading(out=str(work), body=body)
     try:
         os.rename(work, out)
     except OSError:
-        raise Refused("CONFLICT", "作る間に同じ出力先に書かれた")
+        raise Refused(CODE.CONFLICT, "作る間に同じ出力先に書かれた")
 
 
 # @implements UC-028, REQ-509, REQ-511
@@ -451,13 +580,13 @@ def main() -> dict:
     check_gate(d, a.unit)
     order = [t for g in plan["groups"] for t in g["topics"]]
     bodies = unit_bodies(d, order)
-    gens = unit_generations(d, order)
+    gens = unit_generations(bodies, order)
     check_figure_lines(order, bodies)
     root = place_root(d)
     placed, refs = place_figures(d, root, key, order, bodies, gens)
     targets = figure_targets(refs)
     topics = {t["id"]: t for t in topic_rows}
-    body = compose(plan, topics, placed, learning_glossary(d, topic_rows))
+    body = compose(plan, topics, placed, set(read_reading_glossary(data=a.data)["terms"]))
 
     created = _missing_ancestors(out.parent)
     work = None

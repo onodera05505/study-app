@@ -36,6 +36,16 @@ run_seed() {
   exit 1
 }
 
+# 断る: 人が読む文を出したあと、標準出力の最後の行に断りの形（契約の ToolError）を 1 行で出し、終了コード 1 で終える。
+# 断りの種類の名前は scripts/tool_refusal.py が src/shared/error-codes.json から引く（出所に無い名前は出せない）。
+# 引数: 断りの種類の名前・人が読む文・断りの形に載せる理由
+# @implements REQ-571
+refuse() {
+  echo "$2"
+  python3 scripts/tool_refusal.py "$1" "$3"
+  exit 1
+}
+
 # 断るとき（第 2 引数の誤り・登録簿に無い学び・投入が無い）は、門も控えも回さず保存先に何も流さずに終了コード 1 で終える。
 # 第 2 引数は学びより先に見る（契約 seedRemote の errors の順）。
 # @operation UC-032#seedRemote
@@ -45,12 +55,14 @@ main() {
   case "${2:-}" in
     "") ;;
     --local) where="--local" ;;
-    *) echo "第2引数は空か --local（渡された値: ${2}）"; exit 1 ;;
+    *) refuse INVALID_INPUT "第2引数は空か --local（渡された値: ${2}）" "第 2 引数が空でも --local でもない（${2}）" ;;
   esac
-  [ "$(python3 scripts/targets.py has "$exam")" = yes ] || { echo "第1引数は対象の ID（$(python3 scripts/targets.py keys)）"; exit 1; }
+  [ "$(python3 scripts/targets.py has "$exam")" = yes ] ||
+    refuse INVALID_INPUT "第1引数は対象の ID（$(python3 scripts/targets.py keys)）" "登録簿に無い学び『${exam}』"
   local db seed="data/${exam}/seed.sql"
   db=$(python3 scripts/targets.py db "$exam")
-  [ -f "$seed" ] || { echo "seed が無い: ${seed}（先に python3 scripts/build_seed.py --data data/${exam}）"; exit 1; }
+  [ -f "$seed" ] ||
+    refuse NOT_FOUND "seed が無い: ${seed}（先に python3 scripts/build_seed.py --data data/${exam}）" "その学びの投入が書き出されていない: ${seed}"
 
   echo "▶ 0/4 D1 に migrations が全部当たっているか（未適用だと seed の新しい列の INSERT が落ちる）"
   bash scripts/d1_migrations.sh "$exam" check "$where"

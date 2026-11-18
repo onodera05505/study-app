@@ -19,6 +19,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from targets import ROOT, keys, target  # noqa: E402
+from tool_refusal import CODE, tool_error_line  # noqa: E402
 
 # 登録簿 roadmapSpec に要る語（キー → (何の語か, 入っていなければならない差し込み)）。
 # roundHeading は画面の回の見出し、roundLabel は確認問題の回の見出し（exam_label）と日の回のラベルを作る型
@@ -163,12 +164,18 @@ def seed_problems(key: str, topics: list[dict], per_exam: dict[str, int], labels
 
 
 # @operation UC-032#checkRoadmapRegistry
-# @implements REQ-546, REQ-548
+# @implements REQ-546, REQ-548, REQ-571
 def main() -> int:
-    # 断るとき（学びが 1 つでない・登録簿に無い）は門の判定をせず、終了コード 2 で終える
-    if len(sys.argv) != 2: print(__doc__); return 2
+    # 断るとき（学びが 1 つでない・登録簿に無い）は門の判定をせず、人が読む文のあとに断りの形を出して終了コード 2 で終える
+    if len(sys.argv) != 2:
+        print(__doc__)
+        print(tool_error_line(CODE.INVALID_INPUT, f"学びを 1 つでなく {len(sys.argv) - 1} 個渡した"))
+        return 2
     key = sys.argv[1]
-    if key not in keys(): print(f"{key}: 登録簿に無い学び（登録簿の学び: {' '.join(keys())}）"); return 2
+    if key not in keys():
+        print(f"{key}: 登録簿に無い学び（登録簿の学び: {' '.join(keys())}）")
+        print(tool_error_line(CODE.INVALID_INPUT, f"登録簿に無い学び『{key}』"))
+        return 2
     if not _is_roadmap(key): print(f"{key}: ロードマップ型ではないので見るものは無い"); return 0
     probs = registry_problems(key)
     for p in probs: print(f"✘ {p}")

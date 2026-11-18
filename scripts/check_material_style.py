@@ -18,7 +18,8 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from check_unit_plans import PLAN_DIR, PLAN_NAME, Refused, gate_findings  # noqa: E402
+from tool_refusal import CODE  # noqa: E402
+from check_unit_plans import PLAN_DIR, PLAN_NAME, Refused, gate_findings, tool_error  # noqa: E402
 from learning_parts import read_syllabus_units, read_topics, topic_units  # noqa: E402
 from material_generations import REWRITTEN_FROM, generation_dirs, is_rewritten  # noqa: E402
 from targets import targets  # noqa: E402
@@ -72,14 +73,14 @@ def _text(v) -> bool:
 def _args() -> argparse.Namespace:
     class _Parser(argparse.ArgumentParser):
         def error(self, message: str):
-            raise Refused("INVALID_INPUT", "引数が契約の形の外")
+            raise Refused(CODE.INVALID_INPUT, "引数が契約の形の外")
 
     ap = _Parser(prog="check_material_style.py", add_help=False)
     ap.add_argument("--data")
     ap.add_argument("--dir")
     a, unknown = ap.parse_known_args()
     if unknown or a.data is None or not DATA_ARG.match(a.data):
-        raise Refused("INVALID_INPUT", "引数が契約の形の外")
+        raise Refused(CODE.INVALID_INPUT, "引数が契約の形の外")
     return a
 
 
@@ -90,23 +91,23 @@ def accepted_request(a: argparse.Namespace) -> tuple[Path, str, dict[int, int]]:
     d = Path(a.data)
     entry = targets().get(d.name)
     if entry is None:
-        raise Refused("INVALID_INPUT", f"登録簿に無い学び『{d.name}』")
+        raise Refused(CODE.INVALID_INPUT, f"登録簿に無い学び『{d.name}』")
     if entry.get("kind") != "exam":
-        raise Refused("INVALID_INPUT", f"資格対策でない学び『{d.name}』")
+        raise Refused(CODE.INVALID_INPUT, f"資格対策でない学び『{d.name}』")
     gen = a.dir if a.dir is not None else f"materials_v{REWRITTEN_FROM}"
     # 契約の形は値の全体に当てる（match の `$` は末尾の改行の手前でも当たるので fullmatch で照らす）
     if not DIR_ARG.fullmatch(gen) or not is_rewritten(gen):
-        raise Refused("INVALID_INPUT", f"書き直した世代の名前でない『{gen}』（materials_v{REWRITTEN_FROM} 以降）")
+        raise Refused(CODE.INVALID_INPUT, f"書き直した世代の名前でない『{gen}』（materials_v{REWRITTEN_FROM} 以降）")
     for name in ("syllabus.json", "topics.json"):
         if not (d / name).is_file():
-            raise Refused("NOT_FOUND", f"{d / name} が無い")
+            raise Refused(CODE.NOT_FOUND, f"{d / name} が無い")
     syllabus = read_syllabus_units(d)
     try:
         items = read_file(d / "syllabus.json")["items"]
     except (OSError, ValueError, KeyError, TypeError):
         items = None
     if not isinstance(items, list):
-        raise Refused("INVALID_INPUT", f"{d / 'syllabus.json'} が形として読めない")
+        raise Refused(CODE.INVALID_INPUT, f"{d / 'syllabus.json'} が形として読めない")
     return d, gen, topic_units(syllabus, read_topics(d))
 
 
@@ -115,20 +116,33 @@ def _material_ok(m) -> bool:
             and _text(m.get("explanation")) and _text(m.get("detail")))
 
 
-# @implements REQ-454
+# @implements REQ-454, REQ-579
 # @operation UC-025#readRewrittenMaterialFile
-def read_rewritten_file(path: Path) -> list[dict] | None:
-    """書き直した世代の 1 つの束の教材（契約の readRewrittenMaterialFile）。形として読めなければ None。"""
+def read_rewritten_material_file(*, path: str) -> dict:
+    """書き直した世代の 1 つの束の教材（契約の readRewrittenMaterialFile の response）。無ければ NOT_FOUND、
+    JSON でないか束の名前と教材の並びの形でなければ INVALID_INPUT を渡す。"""
+    p = Path(path)
     try:
-        obj = read_file(path)
+        obj = read_file(p)
+    except FileNotFoundError:
+        raise Refused(CODE.NOT_FOUND, f"{p} が無い")
     except (OSError, ValueError):
-        return None
+        raise Refused(CODE.INVALID_INPUT, f"{p} が JSON として読めない")
     if not isinstance(obj, dict) or not isinstance(obj.get("bundle"), str) or not BUNDLE_NAME.match(obj["bundle"]):
-        return None
+        raise Refused(CODE.INVALID_INPUT, f"{p} の bundle が束の名前の形でない")
     ms = obj.get("materials")
     if not isinstance(ms, list) or not all(_material_ok(m) for m in ms):
+        raise Refused(CODE.INVALID_INPUT, f"{p} の materials が教材の形でない")
+    return {"bundle": obj["bundle"], "materials": ms}
+
+
+# @implements REQ-454
+def read_rewritten_file(path: Path) -> list[dict] | None:
+    """書き直した世代の 1 つの束の教材。読めなければ（読む間に消えた物を含む）None。"""
+    try:
+        return read_rewritten_material_file(path=str(path))["materials"]
+    except Refused:
         return None
-    return ms
 
 
 # @implements REQ-452
@@ -209,22 +223,33 @@ def _figure_ok(f) -> bool:
     return isinstance(f, dict) and _is_id(f.get("id")) and _text(f.get("after")) and _text(f.get("caption"))
 
 
-# @implements REQ-455
+# @implements REQ-455, REQ-579
 # @operation UC-025#readFigureSpec
-def read_figures(d: Path, tid: int) -> list[dict] | None:
-    """1 論点の図の仕様の図（契約の readFigureSpec）。ファイルが無ければ空、形として読めなければ None。"""
+def read_figure_spec(*, path: str) -> dict:
+    """1 論点の図の仕様（契約の readFigureSpec の response）。無ければ NOT_FOUND、
+    JSON でないか論点の番号と図の並び（番号・差し込み位置・説明文）の形でなければ INVALID_INPUT を渡す。"""
+    p = Path(path)
     try:
-        obj = read_file(d / "material_figures" / f"{tid}.json")
+        obj = read_file(p)
     except FileNotFoundError:
-        return []
+        raise Refused(CODE.NOT_FOUND, f"{p} が無い")
     except (OSError, ValueError):
-        return None
+        raise Refused(CODE.INVALID_INPUT, f"{p} が JSON として読めない")
     if not isinstance(obj, dict) or not _is_id(obj.get("topic_id")):
-        return None
+        raise Refused(CODE.INVALID_INPUT, f"{p} の topic_id が論点の番号でない")
     figs = obj.get("figures")
     if not isinstance(figs, list) or not all(_figure_ok(f) for f in figs):
-        return None
-    return figs
+        raise Refused(CODE.INVALID_INPUT, f"{p} の figures が図の並びの形でない")
+    return {"topic_id": obj["topic_id"], "figures": figs}
+
+
+# @implements REQ-455
+def read_figures(d: Path, tid: int) -> list[dict] | None:
+    """1 論点の図の仕様の図。ファイルが無ければ空、形として読めなければ None。"""
+    try:
+        return read_figure_spec(path=str(d / "material_figures" / f"{tid}.json"))["figures"]
+    except Refused as e:
+        return [] if e.code == CODE.NOT_FOUND else None
 
 
 # @implements REQ-455
@@ -425,13 +450,13 @@ def check_material_style() -> dict:
     return {"exitCode": 1 if stops else 0, "topics": len(materials), "stops": stops, "warnings": warnings, "limits": LIMITS}
 
 
-# @implements REQ-451, REQ-453
+# @implements REQ-451, REQ-453, REQ-571
 # @operation UC-025#checkMaterialStyle
 def main() -> int:
     try:
         res = check_material_style()
     except Refused as e:
-        print(json.dumps({"error": {"code": e.code, "reason": e.reason}}, ensure_ascii=False, indent=1))
+        print(tool_error(e))
         return 2
     print(json.dumps(res, ensure_ascii=False, indent=1))
     return res["exitCode"]

@@ -41,6 +41,7 @@ PBKDF2_ITERATIONS = 100_000  # src/server/lib/auth.ts と揃える。
 # 出典表示に入れる試験名と模試設定は対象の登録簿（src/shared/targets.json）から引く。
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+from tool_refusal import CODE, tool_error  # noqa: E402
 from targets import exam_names as _exam_names, exam_settings as _exam_settings  # noqa: E402
 from material_generations import emit_refusal, generation_counts, learning_refusal, select_materials  # noqa: E402
 from learning_parts import exam_of_question_id, materials_of  # noqa: E402
@@ -361,8 +362,7 @@ def main() -> int:
             _say(f"[停止] 単元の構成が門の止める理由に当たります（{len(stops)} 件）。投入を書き出しません:")
             for x in stops:
                 _say(f"  - {x.get('where')}: {x.get('reason')}（{x.get('kind')}）")
-            return emit_refusal({"error": {"code": "CONFLICT", "reason": "単元の構成が単元の構成の門の止める理由に当たる",
-                                           "stops": stops}})
+            return emit_refusal(tool_error(CODE.CONFLICT, "単元の構成が単元の構成の門の止める理由に当たる", stops=stops))
 
     syllabus = json.loads((d / "syllabus.json").read_text(encoding="utf-8"))
     topics = json.loads((d / "topics.json").read_text(encoding="utf-8"))

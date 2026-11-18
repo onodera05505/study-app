@@ -236,13 +236,14 @@ def write_bundles(d: Path, out: Path, units: list[dict], sig: str) -> None:
             ensure_ascii=False, indent=2), encoding="utf-8")
 
 
-# @implements REQ-430, REQ-434, REQ-437
+# @implements REQ-430, REQ-434, REQ-437, REQ-571
 # @operation UC-030#buildRoadmap
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--max", type=int, default=40); ap.add_argument("--per-day", type=int, default=3); ap.add_argument("--min-per-goal", type=int, default=4)
     ap.add_argument("--out", default=None, help="roadmap.json と material_bundles/ の書き先（既定は --data）")
     sys.path.insert(0, str(Path(__file__).parent))
     from targets import target as _target
+    from tool_refusal import CODE, tool_error_line
     a = ap.parse_args(); d = Path(a.data); out = Path(a.out) if a.out else d
     cands = json.loads((d / "topics_candidates.json").read_text(encoding="utf-8"))["candidates"]
     cfg = json.loads((d / "roadmap_config.json").read_text(encoding="utf-8")) if (d / "roadmap_config.json").exists() else {}
@@ -250,21 +251,23 @@ def main() -> int:
     unmatched = unmatched_config_ids(cfg, cand_ids)
     if unmatched:
         print(f"ロードマップの設定が指す論点の ID のうち、どの候補にも当たらない物 {len(unmatched)} 件（何も書き出していない）:", *unmatched, sep="\n  ")
+        print(tool_error_line(CODE.NOT_FOUND, f"ロードマップの設定が指す論点の ID がどの候補にも無い: {unmatched}"))
         return 1
     # 単位の前提は名前で書き出すので、名前が同じ単位があると前提が取り違えられる
     dups = duplicate_terms(cands)
     if dups:
         print(f"候補の中で名前が同じ単位 {len(dups)} 件（何も書き出していない）:", *dups, sep="\n  ")
+        print(tool_error_line(CODE.INVALID_INPUT, f"候補の中に名前が同じ単位がある: {dups}"))
         return 1
     # 候補の前提は論点の ID。どの候補にも当たらない前提は並べるときに使われないので知らせる
     stray = [(c["id"], p) for c in cands for p in c.get("prereq", []) if not (_is_id(p) and p in cand_ids)]
     if stray: print(f"警告: 候補の前提のうち、どの候補の ID にも当たらない物 {len(stray)} 件: " + "; ".join(f"{t} ← {p!r}" for t, p in stray[:5]))
     a.max, a.per_day, a.min_per_goal, group_by = settings_of(cfg, a.max, a.per_day, a.min_per_goal)
     refusal = grouping_refusal(group_by)
-    if refusal: print(refusal); return 1
+    if refusal: print(refusal); print(tool_error_line(CODE.INVALID_INPUT, refusal)); return 1
     if group_by == "chapter":
         refusal = chapter_refusal(cands, lambda: {t.get("level") for t in ((_target(d.name).get("roadmapSpec") or {}).get("tiers") or [])})
-        if refusal: print(refusal); return 1
+        if refusal: print(refusal); print(tool_error_line(CODE.INVALID_INPUT, refusal)); return 1
     file_order = {c["id"]: i for i, c in enumerate(cands)}
     # 分野ごとの最低数。分野が「部位」のように意味を持つ対象では、副の信号の偏りで分野が空になりうる。無ければ掛けない
     min_per_field = cfg.get("min_per_field", {})
@@ -273,7 +276,10 @@ def main() -> int:
     field_order = cfg.get("field_order", [])
     excl = set(cfg.get("exclude", [])); must = set(cfg.get("must_include", []))
     both = included_and_excluded(cfg)
-    if both: print("must_include が exclude でも除かれている:", both); return 1
+    if both:
+        print("must_include が exclude でも除かれている:", both)
+        print(tool_error_line(CODE.INVALID_INPUT, f"含める一覧の論点の ID が除く一覧にもある: {both}"))
+        return 1
     apply_config_to_candidates(cands, cfg)
     cands = [c for c in cands if c["id"] not in excl]
     # 副の信号のキー名は対象ごとに違う（interview_count / care_count など）ので登録簿から読む。読まないと 0 として黙って無視される

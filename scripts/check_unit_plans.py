@@ -23,6 +23,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from tool_refusal import CODE, tool_error as _tool_error  # noqa: E402
 from targets import targets  # noqa: E402
 from learning_parts import topic_units  # noqa: E402
 
@@ -63,46 +64,78 @@ def _is_int(v) -> bool:
     return isinstance(v, int) and not isinstance(v, bool) and v >= 1
 
 
-def _parse_syllabus(p: Path, raw) -> dict[int, dict]:
+def _syllabus_units(items: list[dict]) -> dict[int, dict]:
+    """シラバスの小項目の並びを、単元の番号 → {unit, field, major, items}（items は小項目の番号 → 小項目の名前）にする。"""
+    units: dict[int, dict] = {}
+    for it in items:
+        u = units.setdefault(it["middle_no"], {"unit": it["middle"], "field": it.get("field", ""),
+                                               "major": it.get("major", ""), "items": {}})
+        u["items"][it["number"]] = it.get("name", "")
+    return units
+
+
+def _load(p: Path):
+    """p を JSON として読む。無ければ NOT_FOUND、開けないか JSON でなければ INVALID_INPUT（stage は json）を渡す。"""
     try:
-        units: dict[int, dict] = {}
-        for it in raw["items"]:
+        return _read_json(p)
+    except FileNotFoundError:
+        raise Refused(CODE.NOT_FOUND, f"{p} が無い", stage="missing")
+    except (OSError, ValueError):
+        raise Refused(CODE.INVALID_INPUT, f"{p} が JSON として読めない", stage="json")
+
+
+# @implements REQ-579
+# @operation UC-024#readSyllabusUnits
+def read_syllabus_units(*, path: str) -> dict:
+    """学びのシラバスの小項目の並び（契約の readSyllabusUnits の response）。無ければ NOT_FOUND、
+    JSON でないか小項目が番号・単元の番号・単元の名前を持たなければ INVALID_INPUT。"""
+    p = Path(path)
+    raw = _load(p)
+    try:
+        items = raw["items"]
+        for it in items:
             assert _is_int(it["number"]) and _is_int(it["middle_no"]) and isinstance(it["middle"], str) and it["middle"]
-            u = units.setdefault(it["middle_no"], {"unit": it["middle"], "field": it.get("field", ""),
-                                                   "major": it.get("major", ""), "items": {}})
-            u["items"][it["number"]] = it.get("name", "")
-        return units
-    except (KeyError, TypeError, AssertionError):
-        raise Refused("INVALID_INPUT", f"{p} が形として読めない")
+        _syllabus_units(items)
+    except (KeyError, TypeError, AssertionError, AttributeError):
+        raise Refused(CODE.INVALID_INPUT, f"{p} が形として読めない", stage="shape")
+    return {"items": items}
 
 
-def _parse_topics(p: Path, raw) -> list[dict]:
+# @implements REQ-579
+# @operation UC-024#readTopicUnits
+def read_topic_units(*, path: str) -> dict:
+    """学びの論点の一覧（契約の readTopicUnits の response）。無ければ NOT_FOUND、
+    JSON でないか論点が番号・名前・小項目を持たなければ INVALID_INPUT。"""
+    p = Path(path)
+    raw = _load(p)
     try:
         topics = raw["topics"]
         assert isinstance(topics, list)
         for t in topics:
             assert _is_int(t["id"]) and isinstance(t["term"], str) and t["term"] and _is_int(t["syllabus_item"])
-        return topics
     except (KeyError, TypeError, AssertionError):
-        raise Refused("INVALID_INPUT", f"{p} が形として読めない")
+        raise Refused(CODE.INVALID_INPUT, f"{p} が形として読めない", stage="shape")
+    return {"topics": topics}
 
 
 # @implements REQ-443, REQ-466
-# @operation UC-024#readSyllabusUnits
-# @operation UC-024#readTopicUnits
 def learning_files(d: Path) -> tuple[dict[int, dict], list[dict]]:
     """(シラバスの単元, 論点の一覧)。どちらかが無ければ NOT_FOUND、無いものが無くて読めなければ INVALID_INPUT。
+    読めないときは、JSON として読めないファイルを形として読めないファイルより先に、シラバス・論点の一覧の順に挙げる。
     シラバスの単元は middle_no → {unit, field, major, items}（items は小項目の番号 → 小項目の名前）。"""
     missing = [name for name in LEARNING_FILES if not (d / name).is_file()]
     if missing:
-        raise Refused("NOT_FOUND", f"学びの置き場 {d} に {'・'.join(missing)} が無い")
-    parsed = []
-    for name in LEARNING_FILES:
+        raise Refused(CODE.NOT_FOUND, f"学びの置き場 {d} に {'・'.join(missing)} が無い")
+    read: dict[str, dict] = {}
+    refused: list[Refused] = []
+    for name, op in zip(LEARNING_FILES, (read_syllabus_units, read_topic_units)):
         try:
-            parsed.append(_read_json(d / name))
-        except (OSError, ValueError):
-            raise Refused("INVALID_INPUT", f"{d / name} が JSON として読めない")
-    return _parse_syllabus(d / LEARNING_FILES[0], parsed[0]), _parse_topics(d / LEARNING_FILES[1], parsed[1])
+            read[name] = op(path=str(d / name))
+        except Refused as e:
+            refused.append(e)
+    if refused:
+        raise next((e for e in refused if e.detail.get("stage") != "shape"), refused[0])
+    return _syllabus_units(read[LEARNING_FILES[0]]["items"]), read[LEARNING_FILES[1]]["topics"]
 
 
 # @implements REQ-443, REQ-466
@@ -112,9 +145,9 @@ def qualification_learning(data: str) -> Path:
     d = Path(data)
     entry = targets().get(d.name)
     if entry is None:
-        raise Refused("INVALID_INPUT", f"登録簿に無い学び『{d.name}』")
+        raise Refused(CODE.INVALID_INPUT, f"登録簿に無い学び『{d.name}』")
     if entry.get("kind", "roadmap") != "exam":
-        raise Refused("INVALID_INPUT", f"資格対策でない学び『{d.name}』")
+        raise Refused(CODE.INVALID_INPUT, f"資格対策でない学び『{d.name}』")
     learning_files(d)
     return d
 
@@ -451,8 +484,27 @@ def _plan_files(d: Path) -> list[Path]:
     return sorted(plan_dir.glob("*.json")) if plan_dir.is_dir() else []
 
 
-# @implements BR-048
+# @implements REQ-579, REQ-444
 # @operation UC-024#readUnitPlan
+def read_unit_plan(*, path: str) -> dict:
+    """1 単元の単元の構成（契約の readUnitPlan の response。形は UnitPlanFields）。無ければ NOT_FOUND、JSON でないか欄の型か欄の名前が
+    契約の UnitPlanFields と合わなければ INVALID_INPUT を渡す。INVALID_INPUT の失敗の findings は、門がそのファイルを
+    止める理由として挙げる unreadablePlan の並び。要素の欠けは読めた側として返し、門が missingElement として挙げる。"""
+    p = Path(path)
+    try:
+        plan = _read_json(p)
+    except FileNotFoundError:
+        raise Refused(CODE.NOT_FOUND, f"{p} が無い")
+    except (OSError, ValueError):
+        raise Refused(CODE.INVALID_INPUT, f"{p} が JSON として読めない", findings=[
+            _f("unreadablePlan", _where(p.name), "JSON として読めない（書いている途中か壊れている）")])
+    shape = check_plan_shape(p.name, plan, {})
+    if blocks_reading(shape):
+        raise Refused(CODE.INVALID_INPUT, f"{p} が単元の構成の形として読めない", findings=shape)
+    return plan
+
+
+# @implements BR-048
 def gate_findings(d: Path) -> tuple[dict, dict[int, dict], list[dict]]:
     """gate() と同じ判定をし、止める理由ごとに関わる単元の構成のファイルの名前（_files）を添えた物も返す。"""
     syllabus, topics = learning_files(d)
@@ -466,14 +518,14 @@ def gate_findings(d: Path) -> tuple[dict, dict[int, dict], list[dict]]:
     for p in files:
         mark = lambda fs: [{**f, "_files": [p.name]} for f in fs]  # noqa: E731
         try:
-            plan = _read_json(p)
-        except (OSError, ValueError):
-            stops.extend(mark([_f("unreadablePlan", _where(p.name), "JSON として読めない（書いている途中か壊れている）")]))
+            plan = read_unit_plan(path=str(p))
+        except Refused as e:
+            # 置き場の並びにあって読めないファイル（並べたあとに消えた物を含む）は、形として読めない止める理由にする
+            stops.extend(mark(e.detail.get("findings") or [
+                _f("unreadablePlan", _where(p.name), "JSON として読めない（書いている途中か壊れている）")]))
             continue
         shape = check_plan_shape(p.name, plan, syllabus)
         stops.extend(mark(shape))
-        if blocks_reading(shape):
-            continue
         view = _readable_view(plan)
         stops.extend(mark(check_group_max(p.name, view)))
         warnings.extend(check_group_min(p.name, view))
@@ -521,10 +573,10 @@ def _summary(result: dict) -> str:
     return "\n".join(lines)
 
 
-# @implements REQ-443, REQ-466
+# @implements REQ-443, REQ-466, REQ-571
 def tool_error(e: Refused) -> str:
-    """契約の ToolError の JSON。"""
-    return json.dumps({"error": {"code": e.code, "reason": e.reason}}, ensure_ascii=False, indent=1)
+    """契約の ToolError の JSON。名前は出所のファイル（tool_refusal）にある物だけを通す。"""
+    return json.dumps(_tool_error(e.code, e.reason), ensure_ascii=False, indent=1)
 
 
 # @implements UC-024, REQ-442, REQ-443

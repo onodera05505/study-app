@@ -10,8 +10,9 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from tool_refusal import CODE, Refused  # noqa: E402
 from learner_io import read_json  # noqa: E402
-from learner_eval import (CHOICES, Refused, contract_args, current_questions, result_path,  # noqa: E402
+from learner_eval import (CHOICES, contract_args, current_questions, result_path,  # noqa: E402
                           roadmap_learning, run, snapshot_path, write_exclusive)
 
 SHIFT_WINDOW = 3
@@ -21,13 +22,20 @@ ALIASES = {"understood": ("understanding", "understand"),
            "unknown_terms": ("unclear_terms", "unexplained_terms")}
 
 
-# @implements REQ-322
+# @implements REQ-322, REQ-334, REQ-579
 # @operation UC-019#readPackSnapshot
-def read_snapshot(d: Path, cycle: int) -> dict:
-    p = snapshot_path(d, cycle)
+def read_pack_snapshot(*, data: str, cycle: int) -> dict:
+    """その周のパックの写し（契約の readPackSnapshot）。無ければ NOT_FOUND、写しの形として読めなければ INVALID_INPUT の失敗を渡す。"""
+    p = snapshot_path(Path(data), cycle)
     if not p.is_file():
-        raise Refused("NOT_FOUND", "その周のパックの写しが無い")
+        raise Refused(CODE.NOT_FOUND, "その周のパックの写しが無い")
     return readable_snapshot(p)
+
+
+# @implements REQ-322
+def read_snapshot(d: Path, cycle: int) -> dict:
+    """採点に使うその周のパックの写し（read_pack_snapshot を通して読む）。"""
+    return read_pack_snapshot(data=str(d), cycle=cycle)
 
 
 def _pos_int(v) -> bool:
@@ -54,47 +62,86 @@ def readable_snapshot(p: Path) -> dict:
         units = {u["topic_id"] for u in s["units"]}
         assert all(q["topic_id"] in units for q in s["questions"])
     except (OSError, ValueError, AssertionError):
-        raise Refused("INVALID_INPUT", "その周のパックの写しが読めない", unreadable=[p.as_posix()])
+        raise Refused(CODE.INVALID_INPUT, "その周のパックの写しが読めない", unreadable=[p.as_posix()])
     return s
 
 
-# @implements REQ-332
+# @implements REQ-339, REQ-579
 # @operation UC-019#readCycleResult
+def read_cycle_result(*, data: str, cycle: int) -> dict:
+    """その周の結果（契約の readCycleResult。学びの置き場の eval/cycle_<周>.json）。無ければ NOT_FOUND、JSON として読めないか、
+    cycle・rate・avg_understood のどれかが無いか型が違えば INVALID_INPUT の失敗を渡す。"""
+    p = result_path(Path(data), cycle)
+    if not p.exists():
+        raise Refused(CODE.NOT_FOUND, "その周の結果が無い", unreadable=[p.as_posix()])
+    return readable_result(p)
+
+
+# @implements REQ-339
+def readable_result(p: Path) -> dict:
+    """周の結果のファイル p を契約の CycleResult として読む（read_cycle_result と previous_result が共に使う）。
+    JSON として読めないか、cycle・rate・avg_understood のどれかが無いか型が違えば、そのファイルを挙げて INVALID_INPUT で止める。"""
+    num = lambda v, hi: type(v) in (int, float) and 0 <= v <= hi  # noqa: E731
+    try:
+        r = read_json(p)
+        assert isinstance(r, dict) and type(r.get("cycle")) is int and r["cycle"] >= 1
+        assert num(r.get("rate"), 1) and num(r.get("avg_understood"), 3)
+    except (OSError, ValueError, AssertionError):
+        raise Refused(CODE.INVALID_INPUT, "周の結果が読めない", unreadable=[p.as_posix()])
+    return r
+
+
+# @implements REQ-332
 def check_result_free(d: Path, cycle: int) -> None:
-    p = result_path(d, cycle)
-    if p.exists():
-        raise Refused("CONFLICT", "その周の結果が既にある")
+    """その周の結果があれば（読めるかに依らず）断る。あるかは read_cycle_result を通して見る。"""
+    try:
+        read_cycle_result(data=str(d), cycle=cycle)
+    except Refused as e:
+        if e.code == CODE.NOT_FOUND:
+            return
+    raise Refused(CODE.CONFLICT, "その周の結果が既にある")
 
 
-# @implements REQ-329
+# @implements REQ-329, REQ-579
 # @operation UC-019#readLearnerAnswers
-def read_answers(path: str) -> dict:
+def read_learner_answers(*, path: str) -> dict:
+    """学習者役が返した答えと自己申告（契約の readLearnerAnswers）。無ければ NOT_FOUND、JSON として読めないか、
+    answers か units が無ければ INVALID_INPUT の失敗を渡す。行ごとの読めない条件はここでは見ない。"""
     p = Path(path)
     if not p.is_file():
-        raise Refused("NOT_FOUND", "答えのファイルが無い", unreadable=[path])
+        raise Refused(CODE.NOT_FOUND, "答えのファイルが無い", unreadable=[path])
     try:
         L = read_json(p)
         assert isinstance(L, dict) and isinstance(L.get("answers"), dict) and isinstance(L.get("units"), list)
     except (OSError, ValueError, AssertionError):
-        raise Refused("INVALID_INPUT", "答えのファイルが読めない", unreadable=[path])
-    outside = sorted(q for q, v in L["answers"].items() if v not in CHOICES)
-    if outside:
-        raise Refused("INVALID_INPUT", "選択肢の外の答えがある", qids=outside)
+        raise Refused(CODE.INVALID_INPUT, "答えのファイルが読めない", unreadable=[path])
     return L
 
 
-# @implements REQ-330
+# @implements REQ-329
+def read_answers(path: str) -> dict:
+    """採点する答えと自己申告（read_learner_answers を通して読む）。選択肢の外の答えがあれば挙げて断る。"""
+    L = read_learner_answers(path=path)
+    outside = sorted(q for q, v in L["answers"].items() if v not in CHOICES)
+    if outside:
+        raise Refused(CODE.INVALID_INPUT, "選択肢の外の答えがある", qids=outside)
+    return L
+
+
+# @implements REQ-330, REQ-579
 # @operation UC-019#readExplainGrades
-def read_explain_grades(path: str) -> dict:
+def read_explain_grades(*, path: str) -> dict:
+    """説明テストの採点（契約の readExplainGrades。grades は語 → 0・1・2）。無ければ NOT_FOUND、形として読めなければ
+    INVALID_INPUT の失敗を渡す。"""
     p = Path(path)
     if not p.is_file():
-        raise Refused("NOT_FOUND", "説明テストの採点のファイルが無い", unreadable=[path])
+        raise Refused(CODE.NOT_FOUND, "説明テストの採点のファイルが無い", unreadable=[path])
     try:
         g = read_json(p)["grades"]
         assert isinstance(g, dict) and all(type(v) is int and v in (0, 1, 2) for v in g.values())
     except (OSError, ValueError, KeyError, TypeError, AssertionError):
-        raise Refused("INVALID_INPUT", "説明テストの採点のファイルが読めない", unreadable=[path])
-    return g
+        raise Refused(CODE.INVALID_INPUT, "説明テストの採点のファイルが読めない", unreadable=[path])
+    return {"grades": g}
 
 
 def _in_range(name: str, v) -> bool:
@@ -186,9 +233,9 @@ def _frac(c: int, n: int) -> str:
 
 
 # @implements REQ-339
-# @operation UC-019#readCycleResult
 def previous_result(d: Path, cycle: int) -> dict | None:
-    """その周より小さい番号の周の結果のうち最も大きい番号の物。契約の readCycleResult の形として読めなければ挙げて止める。"""
+    """その周より小さい番号の周の結果のうち最も大きい番号の物。見つけたファイルをそのまま読み（ファイル名の周の数字が 0 で始まる物も読む）、
+    形の確かめは read_cycle_result と同じ readable_result を使う。読めなければ挙げて止める。"""
     prev = []
     for p in (d / "eval").glob("cycle_*.json"):
         n = p.stem[len("cycle_"):]
@@ -197,14 +244,10 @@ def previous_result(d: Path, cycle: int) -> dict | None:
     if not prev:
         return None
     p = max(prev)[1]
-    num = lambda v, hi: type(v) in (int, float) and 0 <= v <= hi  # noqa: E731
     try:
-        r = read_json(p)
-        assert isinstance(r, dict) and type(r.get("cycle")) is int and r["cycle"] >= 1
-        assert num(r.get("rate"), 1) and num(r.get("avg_understood"), 3)
-    except (OSError, ValueError, AssertionError):
-        raise Refused("INVALID_INPUT", "差を取る前の周の結果が読めない", unreadable=[p.as_posix()])
-    return r
+        return readable_result(p)
+    except Refused:
+        raise Refused(CODE.INVALID_INPUT, "差を取る前の周の結果が読めない", unreadable=[p.as_posix()])
 
 
 # @implements REQ-314
@@ -272,10 +315,10 @@ def main() -> dict:
     check_result_free(d, a.cycle)
     prev = previous_result(d, a.cycle)
     L = read_answers(a.answers)
-    grades = read_explain_grades(a.explain) if a.explain is not None else None
+    grades = read_explain_grades(path=a.explain)["grades"] if a.explain is not None else None
     hits = unreadable_rows(L["units"], {u["topic_id"] for u in snap["units"]})
     if hits:
-        raise Refused("INVALID_INPUT", "自己申告に読めない行がある", rows=hits)
+        raise Refused(CODE.INVALID_INPUT, "自己申告に読めない行がある", rows=hits)
     rows = [normalize_row(r) for r in L["units"]]
     graded, changed = grade_questions(snap, L["answers"], current)
     res = cycle_result(a.cycle, snap, graded, changed, rows, grades, prev)
@@ -283,12 +326,21 @@ def main() -> dict:
     return res
 
 
-# @implements REQ-356
+# @implements REQ-356, REQ-579
 # @operation UC-019#writeCycleResult
+def write_cycle_result(*, data: str, result: dict) -> dict:
+    """周の結果（契約の writeCycleResult）を排他の作成で書く。その周の結果が既にあれば（採点する間にほかの呼び出しが
+    書いた物を含む）、書き換えずに CONFLICT の失敗を渡す。"""
+    p = result_path(Path(data), result["cycle"])
+    if not write_exclusive(p, result):
+        raise Refused(CODE.CONFLICT, "採点する間に同じ周の結果が書かれた")
+    return {"path": p.as_posix()}
+
+
+# @implements REQ-356
 def write_result(d: Path, cycle: int, res: dict) -> None:
-    """周の結果を排他の作成で書く。採点する間にほかの呼び出しが同じ周の結果を書いていれば、書き換えずに断る。"""
-    if not write_exclusive(result_path(d, cycle), res):
-        raise Refused("CONFLICT", "採点する間に同じ周の結果が書かれた")
+    """周の結果を書く（write_cycle_result を通して書く。res の cycle は採点した周）。"""
+    write_cycle_result(data=str(d), result=res)
 
 
 if __name__ == "__main__":

@@ -148,14 +148,14 @@ def main() -> int:
     args.figures = args.figures or Path("public/figures") / d.name
     sys.path.insert(0, str(Path(__file__).parent))
     from material_generations import emit_refusal, learning_refusal
+    from tool_refusal import CODE, tool_error
     from targets import target
 
     # 断る順は契約 checkSeed の errors の順（検査する投入が無い → 登録簿に無い学び）
     # 検査する投入が無ければ、中身を検査せずに断る
     # @implements REQ-565
     if not sql_path.exists():
-        return emit_refusal({"error": {"code": "NOT_FOUND",
-                                       "reason": f"{sql_path} がありません。先に build_seed.py を実行してください"}})
+        return emit_refusal(tool_error(CODE.NOT_FOUND, f"{sql_path} がありません。先に build_seed.py を実行してください"))
     refusal = learning_refusal(d, registered=True)
     if refusal:
         return emit_refusal(refusal)

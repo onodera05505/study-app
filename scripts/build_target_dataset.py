@@ -28,19 +28,22 @@ from __future__ import annotations
 import argparse, glob, json, re, sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from tool_refusal import CODE, tool_error_line  # noqa: E402
+
 # @implements REQ-539
-def check_units(units: list[dict], mats: dict[int, dict], qs: dict[int, list[dict]], levels: set | None) -> str | None:
+def check_units(units: list[dict], mats: dict[int, dict], qs: dict[int, list[dict]], levels: set | None) -> tuple[str, str] | None:
     """ロードマップの単位に教材があり確認問題が 1 単位あたりの数（2 問）であること、印を持つ学び（levels が None でない）では
-    補足の論点を含む全単位の印が登録簿の段にあることを確かめる。当たらなければその単位の名前を挙げた断りの文を返し、
+    補足の論点を含む全単位の印が登録簿の段にあることを確かめる。当たらなければ (断りの種類の名前, その単位の名前を挙げた断りの文) を返し、
     すべて満たせば None を返す。確かめる順は 教材 → 確認問題の数 → 印。"""
     road = [u for u in units if not u.get("_extra")]
     missing = [u["term"] for u in road if u["topic_id"] not in mats]
-    if missing: return f"教材が無い単位（何も書き出していない）: {'、'.join(missing)}"
+    if missing: return CODE.NOT_FOUND, f"教材が無い単位（何も書き出していない）: {'、'.join(missing)}"
     bad = [u["term"] for u in road if len(qs.get(u["topic_id"], [])) != 2]
-    if bad: return f"確認問題が 2 問でない単位（何も書き出していない）: {'、'.join(bad)}"
+    if bad: return CODE.INVALID_INPUT, f"確認問題が 2 問でない単位（何も書き出していない）: {'、'.join(bad)}"
     if levels is not None:
         lack = [u["term"] for u in units if u.get("tier") not in levels]
-        if lack: return f"印が登録簿 roadmapSpec.tiers の段に無い単位（何も書き出していない）: {'、'.join(lack[:5])}"
+        if lack: return CODE.INVALID_INPUT, f"印が登録簿 roadmapSpec.tiers の段に無い単位（何も書き出していない）: {'、'.join(lack[:5])}"
     return None
 
 
@@ -54,7 +57,7 @@ def supplementary_units(units: list[dict], mats: dict[int, dict], cands: dict[in
             for i, tid in enumerate(sorted(set(mats) - unit_ids), 1)]
 
 
-# @implements REQ-414, REQ-422
+# @implements REQ-414, REQ-422, REQ-571
 # @operation UC-030#buildTargetDataset
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", default="data/itc", type=Path)
@@ -85,10 +88,18 @@ def main() -> int:
     extra = supplementary_units(units, mats, cands, EXTRA_FIELD, EXTRA_MIDDLE)
     units.extend(extra)
     refusal = check_units(units, mats, qs, {t.get("level") for t in spec["tiers"]} if has_tiers else None)
-    if refusal: print(refusal); return 1
+    if refusal:
+        code, reason = refusal
+        print(reason)
+        print(tool_error_line(code, reason))
+        return 1
     # 副題は名前とは別の欄で受け取り、名前から切り出さない。欄が無い単位は副題なし。空の文字列や文字列でない値は投入しない
     bad_sub = [u["term"] for u in units if "subtitle" in u and u["subtitle"] is not None and (not isinstance(u["subtitle"], str) or not u["subtitle"].strip())]
-    if bad_sub: print(f"副題が空か文字列でない単位（何も書き出していない。副題が無いなら subtitle の欄を書かない）: {'、'.join(bad_sub[:5])}"); return 1
+    if bad_sub:
+        reason = f"副題が空か文字列でない単位（何も書き出していない。副題が無いなら subtitle の欄を書かない）: {'、'.join(bad_sub[:5])}"
+        print(reason)
+        print(tool_error_line(CODE.INVALID_INPUT, reason))
+        return 1
 
     # --- 階層: 分野 → 中分類 ---
     fields = list(target(key)["fields"])  # 登録簿の並び（補足の分野を含む）

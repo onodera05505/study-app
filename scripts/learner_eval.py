@@ -13,32 +13,25 @@ from pathlib import Path
 from types import SimpleNamespace
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from tool_refusal import CODE, Refused, tool_error  # noqa: E402
 from learner_io import read_json, registry_learning  # noqa: E402
 
 CHOICES = ("ア", "イ", "ウ", "エ")
 DATA_ARG = re.compile(r"^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+$")
 
 
-class Refused(Exception):
-    """契約の errors に当たって止まる。応答は契約の ToolError の形で、detail はその失敗が挙げる物の欄だけを持つ。"""
-
-    def __init__(self, code: str, reason: str, **detail):
-        super().__init__(reason)
-        self.code, self.reason, self.detail = code, reason, detail
-
-
 def _emit(obj: dict) -> None:
     print(json.dumps(obj, ensure_ascii=False, indent=1))
 
 
-# @implements BR-061, REQ-527, REQ-528
+# @implements BR-061, REQ-527, REQ-528, REQ-571
 def run(main) -> int:
     """入口を回し、成功なら結果の JSON と 0、errors に当たれば契約の ToolError の JSON と 1 を返す。"""
     try:
         _emit(main())
         return 0
     except Refused as e:
-        _emit({"error": {"code": e.code, "reason": e.reason, **e.detail}})
+        _emit(tool_error(e.code, e.reason, **e.detail))
         return 1
 
 
@@ -102,7 +95,7 @@ def contract_args(prog: str, shape: dict[str, str], required: tuple[str, ...], a
         elif len(vals) > 1 or vals[0] is None or not _shape_ok(kind, vals[0]):
             bad.append(name)
     if bad or extra:
-        raise Refused("INVALID_INPUT", "引数が契約の形の外", arguments=bad + [w for w in extra if w not in bad])
+        raise Refused(CODE.INVALID_INPUT, "引数が契約の形の外", arguments=bad + [w for w in extra if w not in bad])
     a = SimpleNamespace(**{name: (seen[name][0] if name in seen else None) for name in shape})
     for name, kind in shape.items():
         if kind == "cycle" and getattr(a, name) is not None:
@@ -112,29 +105,48 @@ def contract_args(prog: str, shape: dict[str, str], required: tuple[str, ...], a
 
 # @implements REQ-318, REQ-410
 def registered_roadmap(key: str) -> dict:
-    """登録簿にあり、ロードマップを持つ学びだけを通し、その登録簿の項目を返す。"""
+    """登録簿にあり、ロードマップを持つ学びだけを通し、その登録簿の学び（read_registry_learning の形）を返す。"""
     r = registry_learning(key)
     if r is None:
-        raise Refused("INVALID_INPUT", "登録簿に無い学び")
+        raise Refused(CODE.INVALID_INPUT, "登録簿に無い学び")
     if not r["roadmap"]:
-        raise Refused("INVALID_INPUT", "ロードマップを持たない学び")
+        raise Refused(CODE.INVALID_INPUT, "ロードマップを持たない学び")
     return r
 
 
-# @implements REQ-318
+# @implements REQ-526, REQ-579
 # @operation UC-019#readRoadmap
+def read_roadmap(*, data: str) -> dict:
+    """学びのロードマップ（契約の readRoadmap。学びの置き場の roadmap.json の中身）。無ければ NOT_FOUND、
+    JSON の object として読めなければ INVALID_INPUT の失敗を渡す。object として読めて units の並びを持たないときも
+    INVALID_INPUT で、そのときは読めた object を失敗の roadmap に添える（単位に依らない値だけを使う呼び手が読む）。"""
+    p = Path(data) / "roadmap.json"
+    if not p.exists():
+        raise Refused(CODE.NOT_FOUND, "ロードマップが無い", unreadable=[p.as_posix()])
+    try:
+        rm = read_json(p)
+        assert isinstance(rm, dict)
+    except (OSError, ValueError, AssertionError):
+        raise Refused(CODE.INVALID_INPUT, "ロードマップが読めない", unreadable=[p.as_posix()])
+    if not isinstance(rm.get("units"), list):
+        raise Refused(CODE.INVALID_INPUT, "ロードマップが単位の並びを持たない", unreadable=[p.as_posix()], roadmap=rm)
+    return rm
+
+
+# @implements REQ-318
 def roadmap_learning(data: str) -> tuple[Path, str, dict]:
-    """登録簿にあり種類がロードマップ型で、ロードマップを持つ学びだけを通す。(置き場, key, 登録簿の項目) を返す。"""
+    """登録簿にあり種類がロードマップ型で、ロードマップを持つ学びだけを通す。(置き場, key, 登録簿の学び) を返す
+    （登録簿の学びは read_registry_learning の形。roadmap・brand・roadmapSpec）。
+    ロードマップが無い・読めない・単位が 1 つも無い学びは、ロードマップを持たない学びとして断る。"""
     d = Path(data)
     key = d.name
-    t = registered_roadmap(key)["entry"]
-    rp = d / "roadmap.json"
+    t = registered_roadmap(key)
     try:
-        rm = read_json(rp)
-        units = rm["units"]
-        assert isinstance(units, list) and units
-    except (OSError, ValueError, KeyError, TypeError, AssertionError):
-        raise Refused("INVALID_INPUT", "ロードマップを持たない学び")
+        units = read_roadmap(data=data)["units"]
+    except Refused:
+        units = []
+    if not units:
+        raise Refused(CODE.INVALID_INPUT, "ロードマップを持たない学び")
     return d, key, t
 
 
@@ -150,13 +162,15 @@ def _question_ok(q) -> bool:
             and i(q.get("tests_goal")))
 
 
-# @implements REQ-333
+# @implements REQ-333, REQ-579
 # @operation UC-019#readRoadmapQuestions
-def current_questions(d: Path) -> list[dict]:
-    """学びの今の確認問題（roadmap_questions/bundle_*.json をファイル名の順に、ファイルの中の順で）。"""
+def read_roadmap_questions(*, data: str) -> dict:
+    """学びの今の確認問題（契約の readRoadmapQuestions。roadmap_questions/bundle_*.json をファイル名の順に、ファイルの中の順で）。
+    束が 1 つも無ければ NOT_FOUND、形として読めない束があればそれをすべて挙げて INVALID_INPUT の失敗を渡す。"""
+    d = Path(data)
     files = sorted((d / "roadmap_questions").glob("bundle_*.json"))
     if not files:
-        raise Refused("NOT_FOUND", "今の確認問題が無い")
+        raise Refused(CODE.NOT_FOUND, "今の確認問題が無い")
     qs: list[dict] = []
     bad: list[str] = []
     for f in files:
@@ -171,8 +185,14 @@ def current_questions(d: Path) -> list[dict]:
         else:
             bad.append(f.as_posix())
     if bad:
-        raise Refused("INVALID_INPUT", "今の確認問題が読めない", unreadable=bad)
-    return qs
+        raise Refused(CODE.INVALID_INPUT, "今の確認問題が読めない", unreadable=bad)
+    return {"questions": qs}
+
+
+# @implements REQ-333
+def current_questions(d: Path) -> list[dict]:
+    """学びの今の確認問題の並び（read_roadmap_questions を通して読む）。"""
+    return read_roadmap_questions(data=str(d))["questions"]
 
 
 # @implements REQ-309

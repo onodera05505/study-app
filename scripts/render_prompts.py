@@ -16,11 +16,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
-from learner_io import read_json  # noqa: E402
-from learner_eval import Refused, contract_args, registered_roadmap, run  # noqa: E402
+from tool_refusal import CODE  # noqa: E402
+from learner_eval import Refused, contract_args, read_roadmap, registered_roadmap, run  # noqa: E402
 
 PROMPTS = ROOT / "scripts" / "prompts"
 LEARNER = "roadmap_learner.md"
+# 学習者役への指示の雛形（契約の readLearnerTemplate の path。リポジトリの根からのパス）
+LEARNER_TEMPLATE = f"scripts/prompts/{LEARNER}"
 TEMPLATES = ("roadmap_materials.md", "roadmap_questions.md", LEARNER, "roadmap_explain_grader.md")
 PLACEHOLDER = re.compile(r"\{\{(\w+)\}\}")
 # 日で束ねる学びだけの塊。行の中に置き、入れ子にしない（改行をまたがない）
@@ -29,12 +31,13 @@ BY_DAY_MARK = re.compile(r"\{\{[#/]byDay\}\}")
 HISTORY = "## 改訂履歴"
 
 
-# @implements REQ-359
+# @implements REQ-359, REQ-579
 # @operation UC-019#readLearnerTemplate
-def read_learner_template() -> dict:
-    """学習者役への指示の雛形（契約の readLearnerTemplate）。本文と、節の見出し・差し込みの名前・日で束ねる学びだけの塊の中の差し込みの名前。"""
-    text = (PROMPTS / LEARNER).read_text(encoding="utf-8")
-    headings = [ln for ln in _outside_fences(text) if re.match(r"^#{1,6} ", ln)]
+def read_learner_template(*, path: str) -> dict:
+    """学習者役への指示の雛形（契約の readLearnerTemplate。path はリポジトリの根からのパス）。節の見出し・差し込みの名前・
+    日で束ねる学びだけの塊の中の差し込みの名前と、描き出しに使う本文 text。"""
+    text = (ROOT / path).read_text(encoding="utf-8")
+    headings = _headings(text)
     by_day = [n for body in BY_DAY.findall(text) for n in PLACEHOLDER.findall(body)]
     return {
         "text": text,
@@ -42,6 +45,11 @@ def read_learner_template() -> dict:
         "placeholders": list(dict.fromkeys(PLACEHOLDER.findall(text))),
         "byDayPlaceholders": list(dict.fromkeys(by_day)),
     }
+
+
+def _headings(text: str) -> list[str]:
+    """コードの囲みの外の見出しの行を、現れる順に。"""
+    return [ln for ln in _outside_fences(text) if re.match(r"^#{1,6} ", ln)]
 
 
 def _is_chapter(rm: dict) -> bool:
@@ -99,21 +107,20 @@ def _answer_format(text: str) -> dict:
 
 
 # @implements REQ-526
-# @operation UC-019#readRoadmap
-def read_roadmap(d: Path) -> dict:
-    """学びのロードマップ（契約の readRoadmap）。登録簿がロードマップを持つ学びとし、置き場に無いか読めないときは空。"""
+def roadmap_or_empty(d: Path) -> dict:
+    """差し込みの値を取るロードマップ（read_roadmap を通して読む）。置き場に無いか JSON の object として読めないときは空で、
+    object として読めて単位の並びを持たないときはその object。"""
     try:
-        rm = read_json(d / "roadmap.json")
-    except (OSError, ValueError):
-        return {}
-    return rm if isinstance(rm, dict) else {}
+        return read_roadmap(data=str(d))
+    except Refused as e:
+        return e.detail.get("roadmap", {})
 
 
 # @implements REQ-412
-def values(key: str, entry: dict, spec: dict, rm: dict) -> dict:
-    """差し込みの値。days は日で束ねる学びのロードマップの days だけが埋め、章で束ねる学びでは埋めない。"""
+def values(key: str, brand: str | None, spec: dict, rm: dict) -> dict:
+    """差し込みの値。targetName は roadmapSpec が持たなければ登録簿の学びの名前 brand。days は日で束ねる学びのロードマップの days だけが埋め、章で束ねる学びでは埋めない。"""
     v = dict(spec)
-    v.setdefault("targetName", entry.get("brand"))
+    v.setdefault("targetName", brand)
     v.setdefault("key", key)
     if not _is_chapter(rm) and type(rm.get("days")) is int and rm["days"] >= 1:
         v["days"] = rm["days"]
@@ -139,21 +146,21 @@ def fill(text: str, v: dict) -> tuple[str, list[str]]:
 
 
 # @implements REQ-412
-def render_all(key: str, entry: dict, spec: dict, rm: dict) -> dict[str, str]:
+def render_all(key: str, brand: str | None, spec: dict, rm: dict) -> dict[str, str]:
     """全テンプレートを描き出した本文（テンプレートの名前 → 本文）。埋まらない差し込みが残れば、その名前を挙げて断る。"""
-    v = values(key, entry, spec, rm)
+    v = values(key, brand, spec, rm)
     chapter = _is_chapter(rm)
     texts: dict[str, str] = {}
     left: list[str] = []
     for name in TEMPLATES:
         if name == LEARNER:
-            text = without_history(read_learner_template()["text"])
+            text = without_history(read_learner_template(path=LEARNER_TEMPLATE)["text"])
         else:
             text = re.sub(r"<!-- テンプレート。.*?-->\n\n", "", (PROMPTS / name).read_text(encoding="utf-8"), flags=re.S)
         texts[name], miss = fill(by_day_blocks(text, chapter), v)
         left += [m for m in miss if m not in left]
     if left:
-        raise Refused("INVALID_INPUT", "雛形の差し込みに埋まらない物が残る", placeholders=left)
+        raise Refused(CODE.INVALID_INPUT, "雛形の差し込みに埋まらない物が残る", placeholders=left)
     return texts
 
 
@@ -164,21 +171,35 @@ def main() -> dict:
     d = Path(a.data)
     key = d.name
     r = registered_roadmap(key)
-    texts = render_all(key, r["entry"], r["roadmapSpec"], read_roadmap(d))
+    texts = render_all(key, r.get("brand"), r["roadmapSpec"], roadmap_or_empty(d))
     return write_instructions(d, texts)
 
 
 # @implements REQ-360
-# @operation UC-019#writeLearnerInstructions
 def write_instructions(d: Path, texts: dict[str, str]) -> dict:
-    """描き出した全テンプレートを <学びの置き場>/prompts/ に書く。学習者役への指示が答えと自己申告の書き方を
-    持たないときは、何も書かずに雛形の誤りとして止める。"""
-    _answer_format(texts[LEARNER])
+    """描き出した全テンプレートを <学びの置き場>/prompts/ に書く（学習者役への指示は write_learner_instructions を通して書く）。
+    学習者役への指示が答えと自己申告の書き方を持たないときは、何も書かずに雛形の誤りとして止める。"""
+    learner = texts[LEARNER]
+    _answer_format(learner)
     out = d / "prompts"
     out.mkdir(parents=True, exist_ok=True)
     for name, text in texts.items():
-        (out / name).write_text(text, encoding="utf-8")
+        if name == LEARNER:
+            write_learner_instructions(path=(out / LEARNER).as_posix(), body=learner)
+        else:
+            (out / name).write_text(text, encoding="utf-8")
     return {"path": (out / LEARNER).as_posix()}
+
+
+# @implements REQ-360, REQ-579
+# @operation UC-019#writeLearnerInstructions
+def write_learner_instructions(*, path: str, body: str) -> dict:
+    """描き出した学習者役への指示 body を path にそのまま書く（契約の writeLearnerInstructions）。書くファイルの親の置き場が無ければ作る。
+    body が答えと自己申告の書き方を持つことは、呼ぶ側（write_instructions）が何も書く前に確かめる。"""
+    p = Path(path)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(body, encoding="utf-8")
+    return {"path": path}
 
 
 if __name__ == "__main__":

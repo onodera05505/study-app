@@ -22,6 +22,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from tool_refusal import CODE  # noqa: E402
 from build_seed import content_key_of, exam_rank, read_explanations  # noqa: E402
 from material_generations import select_materials  # noqa: E402
 from check_unit_plans import (  # noqa: E402
@@ -57,7 +58,7 @@ def requested_units(units: list[int] | None, syllabus: dict[int, dict], topics: 
         return topical_units(syllabus, topics)
     unknown = sorted({u for u in units if u not in syllabus})
     if unknown:
-        raise Refused("INVALID_INPUT", f"指定した単元 {unknown} がシラバスに無い")
+        raise Refused(CODE.INVALID_INPUT, f"指定した単元 {unknown} がシラバスに無い")
     return sorted(set(units))
 
 
@@ -67,14 +68,52 @@ def refuse_existing_output(out: Path, name: re.Pattern) -> None:
     if out.is_dir():
         found = sorted(p.name for p in out.iterdir() if name.match(p.name))
         if found:
-            raise Refused("CONFLICT", f"出力先 {out} に既に束のファイルがある（{len(found)} 件）")
+            raise Refused(CODE.CONFLICT, f"出力先 {out} に既に束のファイルがある（{len(found)} 件）")
+
+
+def _write_new(path: str, body: dict) -> dict:
+    """body を path に新しいファイルとして書く（親のディレクトリが無ければ作る）。既にあれば CONFLICT、
+    書き出せなければ書きかけを残さずに STORAGE_UNAVAILABLE（detail の strerror に理由）を渡す。"""
+    p = Path(path)
+    try:
+        p.parent.mkdir(parents=True, exist_ok=True)
+    except OSError as e:
+        raise Refused(CODE.STORAGE_UNAVAILABLE, f"{p} に書き出せない（{e.strerror or e}）", strerror=e.strerror or str(e))
+    try:
+        f = p.open("x", encoding="utf-8")
+    except FileExistsError:
+        raise Refused(CODE.CONFLICT, f"{p} が既にある")
+    except OSError as e:
+        raise Refused(CODE.STORAGE_UNAVAILABLE, f"{p} に書き出せない（{e.strerror or e}）", strerror=e.strerror or str(e))
+    try:
+        with f:
+            f.write(json.dumps(body, ensure_ascii=False, indent=2) + "\n")
+    except OSError as e:
+        p.unlink(missing_ok=True)
+        raise Refused(CODE.STORAGE_UNAVAILABLE, f"{p} に書き出せない（{e.strerror or e}）", strerror=e.strerror or str(e))
+    return {"path": path}
+
+
+# @implements REQ-464, REQ-579
+# @operation UC-026#writeUnitInput
+def write_unit_input(*, path: str, unit_no: int, unit: str, field: str, major: str, topics: list[dict]) -> dict:
+    """1 単元の単元の入力の束を新しいファイルとして書き出す（契約の writeUnitInput）。"""
+    return _write_new(path, {"unit_no": unit_no, "unit": unit, "field": field, "major": major, "topics": topics})
+
+
+# @implements REQ-464, REQ-579
+# @operation UC-026#writeRewriteBundle
+def write_rewrite_bundle(*, path: str, bundle: str, unit_no: int, unit: str, overview: str, group: dict,
+                         groups_in_unit: list[dict], owners: list[dict], topics: list[dict]) -> dict:
+    """1 つのまとまりの書き直しの束を新しいファイルとして書き出す（契約の writeRewriteBundle）。"""
+    return _write_new(path, {"bundle": bundle, "unit_no": unit_no, "unit": unit, "overview": overview, "group": group,
+                             "groups_in_unit": groups_in_unit, "owners": owners, "topics": topics})
 
 
 # @implements REQ-464
-# @operation UC-026#writeUnitInput
-# @operation UC-026#writeRewriteBundle
-def write_all(out: Path, files: list[tuple[str, dict]]) -> list[str]:
-    """組み立てた束をすべて新しいファイルとして書き出す。1 つでも書き出せなければ書いた分を消して断る。"""
+def write_all(out: Path, files: list[tuple[str, dict]], write) -> list[str]:
+    """組み立てた束をすべて、束の形の書き出し（write_unit_input か write_rewrite_bundle）で新しいファイルとして書き出す。
+    1 つでも書き出せなければ書いた分を消して断る。"""
     written: list[Path] = []
     created = not out.exists()
 
@@ -87,16 +126,19 @@ def write_all(out: Path, files: list[tuple[str, dict]]) -> list[str]:
     try:
         out.mkdir(parents=True, exist_ok=True)
         for name, body in files:
-            p = out / name
-            with p.open("x", encoding="utf-8") as f:
-                written.append(p)
-                f.write(json.dumps(body, ensure_ascii=False, indent=2) + "\n")
+            write(path=str(out / name), **body)
+            written.append(out / name)
     except FileExistsError:
         undo()
-        raise Refused("CONFLICT", f"出力先 {out} に既に束のファイルがある")
+        raise Refused(CODE.CONFLICT, f"出力先 {out} に既に束のファイルがある")
     except OSError as e:
         undo()
-        raise Refused("STORAGE_UNAVAILABLE", f"{out} に書き出せない（{e.strerror or e}）")
+        raise Refused(CODE.STORAGE_UNAVAILABLE, f"{out} に書き出せない（{e.strerror or e}）")
+    except Refused as e:
+        undo()
+        if e.code == CODE.CONFLICT:
+            raise Refused(CODE.CONFLICT, f"出力先 {out} に既に束のファイルがある")
+        raise Refused(e.code, f"{out} に書き出せない（{e.detail.get('strerror', e.reason)}）")
     return [str(out / name) for name, _ in files]
 
 
@@ -184,7 +226,7 @@ def refuse_missing_answers(units: list[int], plans: dict[int, dict], questions: 
     missing = sorted({q["question_id"] for u in units for g in plans[u]["groups"] for tid in g["topics"]
                       for q in topic_questions(by_id[tid], questions) if not q["answer"]})
     if missing:
-        raise Refused("NOT_FOUND", f"束に入る過去問 {missing} の正解が正解表に無い")
+        raise Refused(CODE.NOT_FOUND, f"束に入る過去問 {missing} の正解が正解表に無い")
 
 
 # @implements BR-052
@@ -274,11 +316,11 @@ def gated_plans(d: Path, units: list[int]) -> dict[int, dict]:
     wanted = {f"{u:02d}.json" for u in units}
     missing = [u for u in units if not (d / "unit_plans" / f"{u:02d}.json").is_file()]
     if missing:
-        raise Refused("NOT_FOUND", f"単元 {missing} の単元の構成が無い")
+        raise Refused(CODE.NOT_FOUND, f"単元 {missing} の単元の構成が無い")
     mine = [f for f in stops if wanted & set(f["_files"])]
     if mine:
         lines = "；".join(f"[{f['kind']}] {f['where']}: {f['reason']}" for f in mine)
-        raise Refused("CONFLICT", f"求めた単元の単元の構成に教材の門の止める理由が {len(mine)} 件ある（{lines}）")
+        raise Refused(CODE.CONFLICT, f"求めた単元の単元の構成に教材の門の止める理由が {len(mine)} 件ある（{lines}）")
     return plans
 
 
@@ -302,14 +344,14 @@ def main() -> int:
         units = requested_units(args.units, syllabus, topics)
         if args.unit_inputs:
             refuse_existing_output(args.out, UNIT_INPUT_NAME)
-            files = unit_inputs(d, units, syllabus, topics)
+            files, write = unit_inputs(d, units, syllabus, topics), write_unit_input
         else:
             refuse_existing_output(args.out, REWRITE_BUNDLE_NAME)
             plans = gated_plans(d, units)
             questions = _folded_questions(d)
             refuse_missing_answers(units, plans, questions, {t["id"]: t for t in topics})
-            files = rewrite_bundles(d, units, plans, topics, questions)
-        written = write_all(args.out, files)
+            files, write = rewrite_bundles(d, units, plans, topics, questions), write_rewrite_bundle
+        written = write_all(args.out, files, write)
     except Refused as e:
         print(tool_error(e))
         print(e.reason, file=sys.stderr)
