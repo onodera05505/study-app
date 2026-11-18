@@ -8,6 +8,7 @@ import {
   readdirSync,
   readFileSync,
   realpathSync,
+  renameSync,
   symlinkSync,
   writeFileSync,
 } from 'node:fs'
@@ -29,10 +30,20 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
  *   保存先を名指す D1 の操作（`d1 migrations list <名前> --env <key>` など）は、その設定に名前の合う保存先が無ければ本物と同じく失敗する
  * - 組み立ての道具（vite）: 偽物が配信物の置き場を作る
  * - curl・PATH の wrangler・npx が取りに行く別の版: 外へ出さずに記録する
+ * - 配信の前の門（ソースの門・登録簿の門・文書の索引の門・実データの描画の検査。UC-032 の REQ-560 が止める理由に挙げる物）:
+ *   影の根の写しを、呼ばれたことを記録して「通った」（終了の状態 0）で返す包みに差し替える（先例は `UC-032_fixture.ts`）
  * 子のプロセスでは外への通信を塞ぐ（届かない代理・無効のトークン・node の外向きの接続を断る前置き）。本番には届かない。
  *
+ * 偽の wrangler の `--env <名前>` の扱いは本物（4.140.0）に合わせる: 設定に `env` の節が 1 つでもあって名前の節が無ければ誤りで終わり、
+ * `env` の節が 1 つも無ければ最上位の設定に倒す。`d1_databases` は `env` の節に継がない。呼ばれた操作は終了の状態ごと記録する。
+ *
  * 影の根は、書き込みうる場所（scripts・public・src・portal）を写し、それ以外を元の場所へのリンクにする。
- * REQ-543 の入力では `wrangler.jsonc` だけを写して書き換える（最上位の既定の保存先は残す）。
+ * REQ-543 の入力では `wrangler.jsonc` だけを写して書き換える（最上位の既定の保存先は残す）。REQ-543 が止めたことは、
+ * REQ-560 の止める理由（構造の変更の確かめと配信の前の門）がどれも止めていないのに配信せず失敗で終わることで見る。
+ * - 学びの節が無い形: `env` の節を 1 つも残さず、保存先の名前が最上位の既定と同じ資格対策の学びを配る。本物の道具の下でも
+ *   構造の変更の確かめは最上位の既定に倒れて通るので、偽の wrangler はそのまま答える
+ * - 節に保存先が無い・空の形: 本物の道具の下では構造の変更の確かめが先に「確かめられない」になる（REQ-560 の範囲）。
+ *   REQ-543 の判定だけを切り出すため、構造の変更の一覧（`d1 migrations list`）を「当たっていない物は無い」と答える世界で回す
  */
 
 const ROOT = join(fileURLToPath(new URL('.', import.meta.url)), '..', '..')
@@ -77,7 +88,17 @@ const OWN = REPO_CONFIG.env?.[LEARNING_KEY]?.d1_databases ?? []
 const DEFAULT = REPO_CONFIG.d1_databases ?? []
 /** 設定にある全部の保存先（最上位と全ての学びの節）。 */
 const EVERY = [...DEFAULT, ...Object.values(REPO_CONFIG.env ?? {}).flatMap((e) => e?.d1_databases ?? [])]
-const ACCOUNT = (JSON.parse(readFileSync(join(ROOT, 'scripts', 'pages_projects.json'), 'utf8')) as { account_id: string }).account_id
+const PROJECTS = JSON.parse(readFileSync(join(ROOT, 'scripts', 'pages_projects.json'), 'utf8')) as Record<string, unknown> & { account_id: string }
+const ACCOUNT = PROJECTS.account_id
+const REGISTRY = JSON.parse(readFileSync(join(ROOT, 'src', 'shared', 'targets.json'), 'utf8')) as Record<string, { roadmap?: boolean } | undefined>
+/** 保存先の名前が最上位の既定と同じ資格対策の学び（`env` の節が無いと本物の道具が最上位に倒し、構造の変更の確かめが通る学び）。 */
+const DEFAULT_NAMED_KEY =
+  Object.keys(REGISTRY).find(
+    (k) =>
+      !k.startsWith('_') &&
+      REGISTRY[k]?.roadmap === false &&
+      DEFAULT.some((d) => d.database_name !== undefined && d.database_name === (PROJECTS[k] as { db?: string } | undefined)?.db),
+  ) ?? ''
 const PINNED_VERSION = (
   JSON.parse(readFileSync(join(ROOT, 'package-lock.json'), 'utf8')) as { packages: Record<string, { version?: string }> }
 ).packages['node_modules/wrangler']?.version ?? '0.0.0'
@@ -107,7 +128,12 @@ const TOOL = ${JSON.stringify(tool)}
 const VERSION = ${JSON.stringify(tool === 'pinned' ? PINNED_VERSION : '9.9.9-unpinned')}
 const argv = process.argv.slice(2)
 const entry = { tool: TOOL, cwd: process.cwd(), argv }
-const log = () => fs.appendFileSync(process.env.STUB_LOG, JSON.stringify(entry) + '\\n')
+// 呼ばれた操作は、終わるときに終了の状態ごと記録する
+process.on('exit', (code) => {
+  entry.exit = code
+  fs.appendFileSync(process.env.STUB_LOG, JSON.stringify(entry) + '\\n')
+})
+const log = () => {}
 const valueOf = (...names) => {
   for (let i = 0; i < argv.length; i++) {
     for (const n of names) {
@@ -153,6 +179,15 @@ const readConfig = (file) => {
   }
   return cfg
 }
+/** 本物と同じ --env の解き方。節があればその節（d1_databases は継がない）、節が無く env の節が 1 つでもあれば誤り、1 つも無ければ最上位。 */
+const resolveEnv = (cfg, env) => {
+  const envs = (cfg && cfg.env && typeof cfg.env === 'object') ? cfg.env : {}
+  if (!env) return { ok: true, scope: cfg || {} }
+  if (Object.prototype.hasOwnProperty.call(envs, env) && envs[env]) return { ok: true, scope: envs[env] }
+  if (Object.keys(envs).length > 0) return { ok: false }
+  console.warn('▲ [WARNING] No environment found in configuration with name "' + env + '". Using the top-level configuration.')
+  return { ok: true, scope: cfg || {} }
+}
 const pagesBindings = (cfg) => {
   if (!cfg) return []
   return [...(cfg.d1_databases || []), ...((cfg.env && cfg.env.production && cfg.env.production.d1_databases) || []), ...((cfg.env && cfg.env.preview && cfg.env.preview.d1_databases) || [])]
@@ -181,6 +216,11 @@ if (argv[0] === 'pages' && argv[1] === 'deploy') {
 }
 if (argv[0] === 'deploy' && argv.includes('--dry-run')) {
   log()
+  const resolved = resolveEnv(readConfig(findConfig()), valueOf('--env', '-e'))
+  if (!resolved.ok) {
+    console.error('✘ [ERROR] No environment found in configuration with name "' + valueOf('--env', '-e') + '".')
+    process.exit(1)
+  }
   const outdir = valueOf('--outdir')
   if (outdir) {
     fs.mkdirSync(path.resolve(outdir), { recursive: true })
@@ -192,10 +232,20 @@ if (argv[0] === 'deploy' && argv.includes('--dry-run')) {
 if (argv[0] === 'd1' && argv[1] !== 'list' && argv[1] !== 'create') {
   // 保存先を名指す D1 の操作。本物と同じく、設定（--env があればその節）に名前か binding の合う保存先が無ければ失敗する
   log()
+  if (process.env.STUB_MIGRATIONS_PASS === '1' && argv[1] === 'migrations' && argv[2] === 'list') {
+    // 構造の変更の確かめが通る世界: 当たっていない構造の変更は無いと答える
+    entry.forced = true
+    console.log('✅ No migrations to apply!')
+    process.exit(0)
+  }
   const name = argv[1] === 'migrations' ? argv[3] : argv[2]
-  const cfg = readConfig(findConfig()) || {}
   const env = valueOf('--env', '-e')
-  const list = env ? ((cfg.env && cfg.env[env] && cfg.env[env].d1_databases) || []) : (cfg.d1_databases || [])
+  const resolved = resolveEnv(readConfig(findConfig()) || {}, env)
+  if (!resolved.ok) {
+    console.error('✘ [ERROR] No environment found in configuration with name "' + env + '".')
+    process.exit(1)
+  }
+  const list = resolved.scope.d1_databases || []
   if (!list.some((d) => d && (d.binding === name || d.database_name === name))) {
     console.error("✘ [ERROR] Couldn't find a D1 DB with the name or binding '" + name + "' in your wrangler.json file.")
     process.exit(1)
@@ -267,8 +317,31 @@ for a in "$@"; do [ "$a" = -w ] && { printf '200'; exit 0; }; done
 printf '{}'
 `
 
+/** 差し替える配信の前の門（影の根の scripts の中のファイル名 → 記録の名前）。REQ-560 が止める理由に挙げる門と検査。 */
+const GATES = {
+  check_source: 'check_source.py',
+  check_roadmap_registry: 'check_roadmap_registry.py',
+  check_docs: 'check_docs.py',
+  check_render: 'check_render.sh',
+} as const
+type Gate = keyof typeof GATES
+
+/** 門の包み。呼ばれたことを記録して「通った」で返す。 */
+const gateWrapper = (gate: Gate, file: string) =>
+  file.endsWith('.py')
+    ? `#!/usr/bin/env python3
+import json, os, sys
+with open(os.environ["STUB_LOG"], "a", encoding="utf-8") as f:
+    f.write(json.dumps({"tool": ${JSON.stringify(gate)}, "argv": sys.argv[1:], "exit": 0}) + "\\n")
+sys.exit(0)
+`
+    : `#!/usr/bin/env bash
+printf '{"tool":"${gate}","argv":"%s","exit":0}\\n' "$*" >> "$STUB_LOG"
+exit 0
+`
+
 type Shadow = { dir: string; root: string; bin: string; log: string; guard: string; tmp: string }
-type LogEntry = { tool: string; argv: string[] | string; deploy?: { configFile: string | null; d1: D1[] } }
+type LogEntry = { tool: string; argv: string[] | string; exit?: number; forced?: boolean; deploy?: { configFile: string | null; d1: D1[] } }
 type Run = { code: number; out: string; log: LogEntry[] }
 
 const writeExecutable = (path: string, body: string) => {
@@ -298,6 +371,12 @@ const makeShadow = (name: string, editConfig?: (c: WranglerConfig) => void): Sha
         filter: (src) => !/\/(node_modules|dist|\.wrangler)(\/|$)/.test(src.slice(from.length)),
       })
     } else symlinkSync(from, join(root, entry))
+  }
+  // 配信の前の門を、通ったと返す包みに差し替える（写しの本物は _real_ を付けて残す）
+  for (const [gate, file] of Object.entries(GATES) as Array<[Gate, string]>) {
+    const at = join(root, 'scripts', file)
+    if (existsSync(at)) renameSync(at, join(root, 'scripts', `_real_${file}`))
+    writeExecutable(at, gateWrapper(gate, file))
   }
   const modules = join(root, 'node_modules')
   const dotBin = join(modules, '.bin')
@@ -337,8 +416,11 @@ const REAL_NPX = (process.env.PATH ?? '')
   .map((p) => join(p, 'npx'))
   .find((p) => existsSync(p)) ?? 'npx'
 
+/** 外の世界の決め方。migrationsPass は構造の変更の一覧を「当たっていない物は無い」と答える世界。 */
+type World = { migrationsPass?: boolean }
+
 /** 影の根で学び側の配備の手続きを 1 回回す。 */
-const runDeploy = (shadow: Shadow): Promise<Run> =>
+const runDeploy = (shadow: Shadow, key: string, world: World = {}): Promise<Run> =>
   new Promise((resolve) => {
     const env: Record<string, string | undefined> = {
       ...process.env,
@@ -346,6 +428,7 @@ const runDeploy = (shadow: Shadow): Promise<Run> =>
       NODE_OPTIONS: `--require ${shadow.guard}`,
       STUB_LOG: shadow.log,
       STUB_UNPINNED: join(shadow.dir, 'unpinned-wrangler.js'),
+      STUB_MIGRATIONS_PASS: world.migrationsPass ? '1' : '0',
       REAL_NPX,
       CLOUDFLARE_API_TOKEN: 'stub-invalid-token-do-not-use',
       CLOUDFLARE_ACCOUNT_ID: ACCOUNT,
@@ -361,7 +444,7 @@ const runDeploy = (shadow: Shadow): Promise<Run> =>
       WRANGLER_SEND_METRICS: 'false',
       CI: '1',
     }
-    execFile('bash', [join(shadow.root, 'scripts', 'deploy-pages.sh'), LEARNING_KEY], { cwd: shadow.root, env, maxBuffer: 1 << 26, timeout: 540_000 }, (error, stdout, stderr) => {
+    execFile('bash', [join(shadow.root, 'scripts', 'deploy-pages.sh'), key], { cwd: shadow.root, env, maxBuffer: 1 << 26, timeout: 540_000 }, (error, stdout, stderr) => {
       const code = error ? (typeof (error as { code?: unknown }).code === 'number' ? (error as { code: number }).code : 1) : 0
       const log = readFileSync(shadow.log, 'utf8')
         .split('\n')
@@ -378,6 +461,8 @@ const runDeploy = (shadow: Shadow): Promise<Run> =>
   })
 
 const deploysOf = (r: Run) => r.log.filter((e) => e.deploy !== undefined)
+const isWrangler = (e: LogEntry) => e.tool === 'pinned' || e.tool === 'unpinned'
+const argvOf = (e: LogEntry) => (Array.isArray(e.argv) ? e.argv : [e.argv])
 const idsOf = (list: D1[]) => [...new Set(list.map((d) => d.database_id ?? `name:${d.database_name ?? ''}`))].sort()
 const tail = (r: Run) => r.out.split('\n').slice(-40).join('\n')
 
@@ -389,14 +474,23 @@ const run = (name: string) => {
 }
 
 beforeAll(async () => {
-  const inputs: Array<[string, ((c: WranglerConfig) => void) | undefined]> = [
-    ['bound', undefined],
-    ['envMissing', (c) => { delete c.env?.[LEARNING_KEY] }],
-    ['databasesMissing', (c) => { delete c.env?.[LEARNING_KEY]?.d1_databases }],
-    ['databasesEmpty', (c) => { const e = c.env?.[LEARNING_KEY]; if (e) e.d1_databases = [] }],
+  const inputs: Array<[string, string, ((c: WranglerConfig) => void) | undefined, World]> = [
+    ['bound', LEARNING_KEY, undefined, {}],
+    // env の節を 1 つも残さない（その学びの節も無い）。本物の道具は最上位に倒すので、構造の変更の確かめは通る
+    ['envMissing', DEFAULT_NAMED_KEY, (c) => { delete c.env }, {}],
+    ['databasesMissing', LEARNING_KEY, (c) => { delete c.env?.[LEARNING_KEY]?.d1_databases }, { migrationsPass: true }],
+    ['databasesEmpty', LEARNING_KEY, (c) => { const e = c.env?.[LEARNING_KEY]; if (e) e.d1_databases = [] }, { migrationsPass: true }],
   ]
-  await Promise.all(inputs.map(async ([name, edit]) => { runs[name] = await runDeploy(makeShadow(name, edit)) }))
+  await Promise.all(inputs.map(async ([name, key, edit, world]) => { runs[name] = await runDeploy(makeShadow(name, edit), key, world) }))
 }, 600_000)
+
+/** REQ-560 の止める理由（構造の変更の確かめと配信の前の門）と、配備の道具の操作のどれも止めていない。 */
+const expectNoOtherStop = (r: Run) => {
+  const failed = r.log.filter((e) => isWrangler(e) && e.exit !== 0).map((e) => `${argvOf(e).join(' ')} → ${e.exit ?? '記録なし'}`)
+  expect(failed, `配備の道具の操作が失敗している（構造の変更の確かめなど、REQ-543 でない物が止めた）:\n${tail(r)}`).toEqual([])
+  const gates = r.log.filter((e) => (Object.keys(GATES) as string[]).includes(e.tool))
+  expect(gates.filter((e) => e.exit !== 0), '配信の前の門が止めている').toEqual([])
+}
 
 /** 影の根を消す時間の上限（1 つに数千のファイルを持ち、並行して回っていると既定の上限より長く掛かる）。 */
 const CLEANUP_TIMEOUT_MS = 120_000
@@ -425,22 +519,29 @@ describe('UC-016 配信物に結ぶ保存先（偽の配備の道具で学び側
 
   describe('REQ-543 学びの key に保存先が結んでいなければ配信しないまま止まる', () => {
     // @covers REQ-543#learning-env-missing
-    it('設定にその学びの key の節が無いと、配信せず、手続きは失敗で終わる', () => {
+    it('設定にその学びの key の節が無いと、構造の変更の確かめと門が止めなくても、配信せず、手続きは失敗で終わる', () => {
+      expect(DEFAULT_NAMED_KEY, '仕込み: 保存先の名前が最上位の既定と同じ資格対策の学びが無い').not.toBe('')
+      expect(REPO_CONFIG.env?.[DEFAULT_NAMED_KEY]?.d1_databases?.length, '仕込み: その学びが元の設定で保存先を key に結んでいない').toBeGreaterThan(0)
+      expect(DEFAULT.length, '仕込み: 最上位の既定の保存先が無い').toBeGreaterThan(0)
       const r = run('envMissing')
+      expect(r.log.some((e) => isWrangler(e) && argvOf(e)[0] === 'd1' && e.forced), '仕込み: 構造の変更の確かめを差し替えている').toBe(false)
+      expectNoOtherStop(r)
       expect(deploysOf(r), '保存先が結んでいないのに配信している').toEqual([])
       expect(r.code, `保存先が結んでいないのに手続きが成功で終わった:\n${tail(r)}`).not.toBe(0)
     })
 
     // @covers REQ-543#databases-missing
-    it('その学びの key の節に保存先の項目が無いと、配信せず、手続きは失敗で終わる', () => {
+    it('その学びの key の節に保存先の項目が無いと、構造の変更の確かめと門が止めなくても、配信せず、手続きは失敗で終わる', () => {
       const r = run('databasesMissing')
+      expectNoOtherStop(r)
       expect(deploysOf(r), '保存先が結んでいないのに配信している').toEqual([])
       expect(r.code, `保存先が結んでいないのに手続きが成功で終わった:\n${tail(r)}`).not.toBe(0)
     })
 
     // @covers REQ-543#databases-empty
-    it('その学びの key の節の保存先の項目が空だと、配信せず、手続きは失敗で終わる', () => {
+    it('その学びの key の節の保存先の項目が空だと、構造の変更の確かめと門が止めなくても、配信せず、手続きは失敗で終わる', () => {
       const r = run('databasesEmpty')
+      expectNoOtherStop(r)
       expect(deploysOf(r), '保存先が結んでいないのに配信している').toEqual([])
       expect(r.code, `保存先が結んでいないのに手続きが成功で終わった:\n${tail(r)}`).not.toBe(0)
     })
