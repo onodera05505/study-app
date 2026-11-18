@@ -1,7 +1,7 @@
 x-uc: UC-004
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-06
+x-updated: 2026-11-18
 
 operations:
   # 分野の一覧（GET /api/fields）と単元の一覧（GET /api/categories）は同じ経路なので UC-002 の契約が正本（UC-002: listFields / listCategories。ADR-0001 の決め 10）
@@ -71,6 +71,9 @@ operations:
       - code: NOT_FOUND
         when: 選んだ範囲に出題できる問題が 1 問も無い
         wire: { status: 404 }
+      - code: INTERNAL
+        when: テストを作る途中で出題の保存に失敗した
+        wire: { status: 500 }
     examples:
       okDrill:
         request: { kind: drill, topicId: 2 }
@@ -147,6 +150,9 @@ operations:
       unauthenticatedBeforeInvalidKind:
         request: { kind: daily }
         error: UNAUTHENTICATED
+      saveFailed:
+        request: { kind: middle, middleNo: 12 }
+        error: INTERNAL
 
   getCurrentQuestion:
     transport: http

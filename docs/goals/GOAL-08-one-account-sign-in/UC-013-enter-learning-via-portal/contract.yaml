@@ -6,7 +6,7 @@
 x-uc: UC-013
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-07
+x-updated: 2026-11-18
 
 operations:
   # ---- まなびば（認証と権限の正本。学びとは別の配備・別の DB） ----
@@ -110,13 +110,13 @@ operations:
     response: { type: object, required: [location], properties: { location: { type: string, description: Location ヘッダ。成功時はその学びの入口の /sso/callback に使い捨てコードを付けた絶対 URL } } }
     errors:
       - code: INVALID_INPUT
-        when: app が登録簿に無い（本文は JSON でなく平文の 1 文）
+        when: app が登録簿に無い（本文は JSON でなく平文の 1 文。名前は応答のヘッダ X-Error-Code）
         wire: { status: 400 }
       - code: UNAUTHENTICATED
-        when: セッションが無い（まなびばの中のログイン画面へ戻す 302）
+        when: セッションが無い（まなびばの中のログイン画面へ戻す 302。名前は応答のヘッダ X-Error-Code）
         wire: { status: 302 }
       - code: FORBIDDEN
-        when: その学びの権限が無い（まなびばの中の一覧へ戻す 302）
+        when: その学びの権限が無い（まなびばの中の一覧へ戻す 302。名前は応答のヘッダ X-Error-Code）
         wire: { status: 302 }
     examples:
       ok: { request: { app: ip }, response: { location: https://itpass-study-d02.pages.dev/sso/callback?code=3f1c9a52-7b0e-4a1d-9c3e-2f5b8d6a1e40 } }
