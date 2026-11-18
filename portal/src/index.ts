@@ -8,10 +8,10 @@
 import { Hono } from 'hono'
 import type { Context, Next } from 'hono'
 import { deleteCookie, getCookie, setCookie } from 'hono/cookie'
-import { HTTPException } from 'hono/http-exception'
 import { secureHeaders } from 'hono/secure-headers'
 import { z } from 'zod'
 import { hashPassword, verifyPassword } from '../../src/server/lib/auth'
+import { ErrorCode, refuse } from '../../src/server/lib/refusal'
 import learnings from './learnings.json'
 
 type Bindings = { DB: D1Database; ASSETS: Fetcher; SSO_SECRET?: string }
@@ -109,7 +109,7 @@ async function parseBody<S extends z.ZodType>(
   schema: S,
 ): Promise<{ ok: true; data: z.output<S> } | { ok: false; res: Response }> {
   const parsed = schema.safeParse(await c.req.json().catch(() => null))
-  if (!parsed.success) return { ok: false, res: c.json({ error: validationMessage(parsed.error) }, 400) }
+  if (!parsed.success) return { ok: false, res: refuse(c, ErrorCode.INVALID_INPUT, { error: validationMessage(parsed.error), status: 400 }) }
   return { ok: true, data: parsed.data }
 }
 
@@ -180,10 +180,10 @@ api.post('/login', async (c) => {
   if (!p.ok) return p.res
   const { email, password } = p.data
   // 長すぎるパスワードは 400 にせず 401（メールが在るか無いかを漏らさない。ハッシュも計算しない）
-  if (password.length > 200) return c.json({ error: 'メールアドレスまたはパスワードが違います' }, 401)
+  if (password.length > 200) return refuse(c, ErrorCode.UNAUTHENTICATED, { error: 'メールアドレスまたはパスワードが違います', status: 401 })
   const acc = await c.env.DB.prepare(`SELECT id, email, name, role, password_hash FROM accounts WHERE email = ?`).bind(email).first<Account>()
   const ok = acc && (await verifyPassword(password, acc.password_hash!))
-  if (!acc || !ok) return c.json({ error: 'メールアドレスまたはパスワードが違います' }, 401)
+  if (!acc || !ok) return refuse(c, ErrorCode.UNAUTHENTICATED, { error: 'メールアドレスまたはパスワードが違います', status: 401 })
   await openSession(c, acc.id)
   return c.json({ account: { id: acc.id, email: acc.email, name: acc.name, role: acc.role }, grants: await grantsOf(c.env, acc.id) })
 })
@@ -194,7 +194,7 @@ api.post('/login', async (c) => {
 api.post('/sso/exchange', async (c) => {
   // 共有秘密は本文の検証より先に見る（合わなければ 403 で止まり、本文が欠けていても DB も見ない）
   const secret = ((await c.req.json().catch(() => null)) as { secret?: unknown } | null)?.secret
-  if (!c.env.SSO_SECRET || typeof secret !== 'string' || secret !== c.env.SSO_SECRET) return c.json({ error: '不正な要求です' }, 403)
+  if (!c.env.SSO_SECRET || typeof secret !== 'string' || secret !== c.env.SSO_SECRET) return refuse(c, ErrorCode.FORBIDDEN, { error: '不正な要求です', status: 403 })
   const p = await parseBody(c, exchangeBody)
   if (!p.ok) return p.res
   const { code, app: learningKey } = p.data
@@ -204,9 +204,9 @@ api.post('/sso/exchange', async (c) => {
   )
     .bind(code)
     .first<{ code: string; account_id: string; learning: string; expires_at: number; used_at: number | null; email: string; name: string }>()
-  if (!row || row.learning !== learningKey || row.used_at || row.expires_at < now()) return c.json({ error: 'コードが無効です。もう一度ログインしてください' }, 401)
+  if (!row || row.learning !== learningKey || row.used_at || row.expires_at < now()) return refuse(c, ErrorCode.UNAUTHENTICATED, { error: 'コードが無効です。もう一度ログインしてください', status: 401 })
   const grant = await c.env.DB.prepare(`SELECT 1 AS ok FROM grants WHERE account_id = ? AND learning = ?`).bind(row.account_id, learningKey).first()
-  if (!grant) return c.json({ error: 'この学びの権限がありません' }, 403)
+  if (!grant) return refuse(c, ErrorCode.FORBIDDEN, { error: 'この学びの権限がありません', status: 403 })
   await c.env.DB.prepare(`UPDATE sso_codes SET used_at = ? WHERE code = ?`).bind(now(), code).run()
   return c.json({ email: row.email, name: row.name })
 })
@@ -215,7 +215,7 @@ api.post('/sso/exchange', async (c) => {
 // @implements REQ-223, REQ-255, BR-001
 const requireLogin = async (c: Context<AppEnv>, next: Next) => {
   const acc = await accountOf(c.env, getCookie(c, SESSION_COOKIE))
-  if (!acc) return c.json({ error: 'ログインが必要です' }, 401)
+  if (!acc) return refuse(c, ErrorCode.UNAUTHENTICATED, { error: 'ログインが必要です', status: 401 })
   c.set('account', acc)
   await next()
 }
@@ -245,7 +245,7 @@ api.post('/me/password', async (c) => {
   if (!p.ok) return p.res
   const { current, next: newPassword } = p.data
   const row = await c.env.DB.prepare(`SELECT password_hash FROM accounts WHERE id = ?`).bind(a.id).first<{ password_hash: string }>()
-  if (!row || !(await verifyPassword(current, row.password_hash))) return c.json({ error: '現在のパスワードが違います' }, 401)
+  if (!row || !(await verifyPassword(current, row.password_hash))) return refuse(c, ErrorCode.UNAUTHENTICATED, { error: '現在のパスワードが違います', status: 401 })
   await c.env.DB.prepare(`UPDATE accounts SET password_hash = ?, updated_at = ? WHERE id = ?`).bind(await hashPassword(newPassword), now(), a.id).run()
   return c.json({ ok: true })
 })
@@ -255,7 +255,7 @@ api.post('/me/password', async (c) => {
 const admin = new Hono<AppEnv>()
 // @implements REQ-176
 admin.use('*', async (c, next) => {
-  if (c.get('account').role !== 'ADMIN') return c.json({ error: '管理者だけが使えます' }, 403)
+  if (c.get('account').role !== 'ADMIN') return refuse(c, ErrorCode.FORBIDDEN, { error: '管理者だけが使えます', status: 403 })
   await next()
 })
 
@@ -279,7 +279,7 @@ admin.post('/accounts', async (c) => {
   // 作成の役割は求めから採らず、いつも利用者にする
   const role = 'MEMBER'
   const dup = await c.env.DB.prepare(`SELECT id FROM accounts WHERE email = ?`).bind(email).first()
-  if (dup) return c.json({ error: 'このメールアドレスは登録済みです' }, 409)
+  if (dup) return refuse(c, ErrorCode.CONFLICT, { error: 'このメールアドレスは登録済みです', status: 409 })
   const id = crypto.randomUUID()
   const stmts = [c.env.DB.prepare(`INSERT INTO accounts (id, email, name, password_hash, role) VALUES (?, ?, ?, ?, ?)`).bind(id, email, name, await hashPassword(password), role)]
   for (const g of grants) stmts.push(c.env.DB.prepare(`INSERT INTO grants (account_id, learning, granted_by) VALUES (?, ?, ?)`).bind(id, g, c.get('account').id))
@@ -300,8 +300,8 @@ admin.put('/accounts/:id', async (c) => {
   if (!p.ok) return p.res
   const { name, role, grants } = p.data
   const target = await c.env.DB.prepare(`SELECT id, role FROM accounts WHERE id = ?`).bind(id).first<{ id: string; role: string }>()
-  if (!target) return c.json({ error: 'アカウントが見つかりません' }, 404)
-  if (role !== undefined && role !== 'ADMIN' && id === c.get('account').id) return c.json({ error: '自分の管理者権限は外せません' }, 400)
+  if (!target) return refuse(c, ErrorCode.NOT_FOUND, { error: 'アカウントが見つかりません', status: 404 })
+  if (role !== undefined && role !== 'ADMIN' && id === c.get('account').id) return refuse(c, ErrorCode.INVALID_INPUT, { error: '自分の管理者権限は外せません', status: 400 })
   // 降格は、重なった求めが先に書き込んでいても管理者が 0 人にならないときだけ書く。
   // 同じ batch の文すべてに同じ条件を添え、通らなければどの項目も権限も変えない。
   const demotion = role === 'MEMBER'
@@ -329,8 +329,8 @@ admin.put('/accounts/:id', async (c) => {
   const results = await c.env.DB.batch(stmts)
   if (role !== undefined && !results[roleAt].meta.changes) {
     const still = await c.env.DB.prepare(`SELECT 1 AS ok FROM accounts WHERE id = ?`).bind(id).first()
-    if (!still) return c.json({ error: 'アカウントが見つかりません' }, 404)
-    return c.json({ error: LAST_ADMIN_MSG }, 409)
+    if (!still) return refuse(c, ErrorCode.NOT_FOUND, { error: 'アカウントが見つかりません', status: 404 })
+    return refuse(c, ErrorCode.CONFLICT, { error: LAST_ADMIN_MSG, status: 409 })
   }
   return c.json({ ok: true })
 })
@@ -341,13 +341,13 @@ admin.post('/accounts/:id/password', async (c) => {
   const id = c.req.param('id')
   const p = await parseBody(c, passwordResetBody)
   if (!p.ok) return p.res
-  if (id === c.get('account').id) return c.json({ error: '自分のパスワードはこの操作では変えられません。アカウントの欄から変えてください' }, 400)
+  if (id === c.get('account').id) return refuse(c, ErrorCode.INVALID_INPUT, { error: '自分のパスワードはこの操作では変えられません。アカウントの欄から変えてください', status: 400 })
   // パスワードの入れ替えと、その相手の開いているセッションの終わらせは 1 つの書き込みにまとめる
   const [r] = await c.env.DB.batch([
     c.env.DB.prepare(`UPDATE accounts SET password_hash = ?, updated_at = ? WHERE id = ?`).bind(await hashPassword(p.data.password), now(), id),
     c.env.DB.prepare(`DELETE FROM sessions WHERE account_id = ?`).bind(id),
   ])
-  if (!r.meta.changes) return c.json({ error: 'アカウントが見つかりません' }, 404)
+  if (!r.meta.changes) return refuse(c, ErrorCode.NOT_FOUND, { error: 'アカウントが見つかりません', status: 404 })
   return c.json({ ok: true })
 })
 
@@ -355,13 +355,13 @@ admin.post('/accounts/:id/password', async (c) => {
 // @operation UC-011#deleteAccount
 admin.delete('/accounts/:id', async (c) => {
   const id = c.req.param('id')
-  if (id === c.get('account').id) return c.json({ error: '自分は削除できません' }, 400)
+  if (id === c.get('account').id) return refuse(c, ErrorCode.INVALID_INPUT, { error: '自分は削除できません', status: 400 })
   // 権限とセッションは外部キーの CASCADE で同じ文の中で消える。管理者の削除は、ほかに管理者が残るときだけ書く
   const r = await c.env.DB.prepare(`DELETE FROM accounts WHERE id = ? AND (role != 'ADMIN' OR ${OTHER_ADMIN_REMAINS})`).bind(id, id).run()
   if (r.meta.changes) return c.json({ ok: true })
   const still = await c.env.DB.prepare(`SELECT 1 AS ok FROM accounts WHERE id = ?`).bind(id).first()
-  if (!still) return c.json({ error: 'アカウントが見つかりません' }, 404)
-  return c.json({ error: LAST_ADMIN_MSG }, 409)
+  if (!still) return refuse(c, ErrorCode.NOT_FOUND, { error: 'アカウントが見つかりません', status: 404 })
+  return refuse(c, ErrorCode.CONFLICT, { error: LAST_ADMIN_MSG, status: 409 })
 })
 
 // @implements REQ-171
@@ -375,11 +375,11 @@ app.route('/api', api)
 app.get('/sso/start', async (c) => {
   const key = c.req.query('app') ?? ''
   const learning = learningOf(key)
-  if (!learning) return c.text('知らない学びです', 400)
+  if (!learning) return refuse(c, ErrorCode.INVALID_INPUT, { text: '知らない学びです', status: 400 })
   const acc = await accountOf(c.env, getCookie(c, SESSION_COOKIE))
-  if (!acc) return c.redirect(`/?next=${encodeURIComponent(`/sso/start?app=${key}`)}`)
+  if (!acc) return refuse(c, ErrorCode.UNAUTHENTICATED, { redirect: `/?next=${encodeURIComponent(`/sso/start?app=${key}`)}` })
   const grant = await c.env.DB.prepare(`SELECT 1 AS ok FROM grants WHERE account_id = ? AND learning = ?`).bind(acc.id, key).first()
-  if (!grant) return c.redirect(`/?denied=${encodeURIComponent(key)}`)
+  if (!grant) return refuse(c, ErrorCode.FORBIDDEN, { redirect: `/?denied=${encodeURIComponent(key)}` })
   const code = crypto.randomUUID()
   await c.env.DB.prepare(`INSERT INTO sso_codes (code, account_id, learning, expires_at) VALUES (?, ?, ?, ?)`).bind(code, acc.id, key, now() + CODE_TTL_SEC).run()
   return c.redirect(`${learning.url}/sso/callback?code=${encodeURIComponent(code)}`)
@@ -387,10 +387,9 @@ app.get('/sso/start', async (c) => {
 
 // @implements REQ-258, BR-002
 app.onError((err, c) => {
-  if (err instanceof HTTPException) return err.getResponse()
   // 想定していない例外。中身（message・stack）は本文に出さず、ログにだけ残す
   console.error('unhandled error', err)
-  return c.json({ error: 'サーバでエラーが発生しました' }, 500)
+  return refuse(c, ErrorCode.INTERNAL, { error: 'サーバでエラーが発生しました', status: 500 })
 })
 
 // 知らない /api は 404。残りは静的ファイル（SPA）で、画面の経路は assets 側に委ねる。
@@ -398,7 +397,7 @@ app.onError((err, c) => {
 // ヘッダーを足そうとして TypeError（Can't modify immutable headers）になり画面が 500 になる（本番の実行環境だけで起き、ローカルの wrangler dev では起きない）
 // @implements REQ-214, REQ-256
 app.notFound(async (c) => {
-  if (c.req.path === '/api' || c.req.path.startsWith('/api/')) return c.json({ error: '見つかりません' }, 404)
+  if (c.req.path === '/api' || c.req.path.startsWith('/api/')) return refuse(c, ErrorCode.NOT_FOUND, { error: '見つかりません', status: 404 })
   const res = await c.env.ASSETS.fetch(c.req.raw)
   return new Response(res.body, res)
 })

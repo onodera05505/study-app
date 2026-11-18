@@ -6,6 +6,7 @@ import { getDb, schema } from '../lib/db'
 import { explanationOf, type ExplanationColumns } from '../lib/explanations'
 import { buildQuestions, snapshotOf } from '../lib/session-builder'
 import { bodyErrorMessage } from '../lib/body-error'
+import { ErrorCode, refuse } from '../lib/refusal'
 import { examOf } from '../../shared/exam'
 
 export const sessionRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>()
@@ -65,7 +66,7 @@ const ANSWER_LABELS = { idx: '問題の番号', answer: '解答' }
 sessionRoutes.post('/', async (c) => {
   const raw = await c.req.json().catch(() => null)
   const parsed = createBody.safeParse(raw)
-  if (!parsed.success) return c.json({ error: bodyErrorMessage(parsed.error, raw, CREATE_LABELS) }, 400)
+  if (!parsed.success) return refuse(c, ErrorCode.INVALID_INPUT, { error: bodyErrorMessage(parsed.error, raw, CREATE_LABELS), status: 400 })
   const body = parsed.data
 
   const db = getDb(c.env)
@@ -77,7 +78,7 @@ sessionRoutes.post('/', async (c) => {
     where: and(eq(schema.sessions.userId, userId), eq(schema.sessions.status, 'in_progress')),
   })
   if (running) {
-    return c.json({ error: '進行中のテストがあります' }, 409)
+    return refuse(c, ErrorCode.CONFLICT, { error: '進行中のテストがあります', status: 409 })
   }
 
   const cfg = await settings(db, c.env)
@@ -97,7 +98,7 @@ sessionRoutes.post('/', async (c) => {
     roadmap: target.roadmap ? { key: target.key, spec: target.roadmapSpec } : undefined,
   })
   if (built.questions.length === 0) {
-    return c.json({ error: '出題できる問題がありません' }, 404)
+    return refuse(c, ErrorCode.NOT_FOUND, { error: '出題できる問題がありません', status: 404 })
   }
 
   const sessionId = crypto.randomUUID()
@@ -133,7 +134,7 @@ sessionRoutes.post('/', async (c) => {
     await db.batch(statements as unknown as Parameters<typeof db.batch>[0])
   } catch (err) {
     console.error('出題の保存に失敗', err)
-    return c.json({ error: '出題を保存できなかったため、テストを始められませんでした' }, 500)
+    return refuse(c, ErrorCode.INTERNAL, { error: '出題を保存できなかったため、テストを始められませんでした', status: 500 })
   }
 
   return c.json(
@@ -209,7 +210,7 @@ sessionRoutes.get('/:id/current', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
   const s = await loadSession(db, userId, c.req.param('id'))
-  if (!s) return c.json({ error: 'テストが見つかりません' }, 404)
+  if (!s) return refuse(c, ErrorCode.NOT_FOUND, { error: 'テストが見つかりません', status: 404 })
 
   const q = await db.get<{ idx: number; snapshot: string }>(sql`
     SELECT idx, snapshot FROM session_questions
@@ -281,14 +282,14 @@ const answerBody = z.object({
 sessionRoutes.post('/:id/answer', async (c) => {
   const raw = await c.req.json().catch(() => null)
   const parsed = answerBody.safeParse(raw)
-  if (!parsed.success) return c.json({ error: bodyErrorMessage(parsed.error, raw, ANSWER_LABELS) }, 400)
+  if (!parsed.success) return refuse(c, ErrorCode.INVALID_INPUT, { error: bodyErrorMessage(parsed.error, raw, ANSWER_LABELS), status: 400 })
 
   const db = getDb(c.env)
   const userId = c.get('user').id
   const s = await loadSession(db, userId, c.req.param('id'))
-  if (!s) return c.json({ error: 'テストが見つかりません' }, 404)
-  if (s.status !== 'in_progress') return c.json({ error: 'このテストは終了しています' }, 409)
-  if (isExpired(s)) return c.json({ error: '制限時間を過ぎています' }, 409)
+  if (!s) return refuse(c, ErrorCode.NOT_FOUND, { error: 'テストが見つかりません', status: 404 })
+  if (s.status !== 'in_progress') return refuse(c, ErrorCode.CONFLICT, { error: 'このテストは終了しています', status: 409 })
+  if (isExpired(s)) return refuse(c, ErrorCode.CONFLICT, { error: '制限時間を過ぎています', status: 409 })
 
   const current = await db.get<{
     id: string
@@ -303,12 +304,12 @@ sessionRoutes.post('/:id/answer', async (c) => {
      WHERE sq.session_id = ${s.id} AND sq.result = 0
      ORDER BY sq.idx LIMIT 1
   `)
-  if (!current) return c.json({ error: '未回答の問題がありません' }, 409)
+  if (!current) return refuse(c, ErrorCode.CONFLICT, { error: '未回答の問題がありません', status: 409 })
 
   // 中断・再開でクライアントとサーバの位置がずれたまま採点すると、
   // 別の問題に答えが記録されてしまう。ずれていたら採点しない。
   if (current.idx !== parsed.data.idx) {
-    return c.json({ error: '表示中の問題が最新ではありません' }, 409)
+    return refuse(c, ErrorCode.CONFLICT, { error: '表示中の問題が最新ではありません', status: 409 })
   }
 
   const snap = JSON.parse(current.snapshot)
@@ -325,7 +326,7 @@ sessionRoutes.post('/:id/answer', async (c) => {
     })
     .where(and(eq(schema.sessionQuestions.id, current.id), eq(schema.sessionQuestions.result, 0)))
   if (written.meta.changes === 0) {
-    return c.json({ error: '同じ問題への回答が先に記録されています' }, 409)
+    return refuse(c, ErrorCode.CONFLICT, { error: '同じ問題への回答が先に記録されています', status: 409 })
   }
 
   const remaining = await db.get<{ n: number }>(
@@ -371,7 +372,7 @@ sessionRoutes.post('/:id/finish', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
   const s = await loadSession(db, userId, c.req.param('id'))
-  if (!s) return c.json({ error: 'テストが見つかりません' }, 404)
+  if (!s) return refuse(c, ErrorCode.NOT_FOUND, { error: 'テストが見つかりません', status: 404 })
 
   // 締めたテストは、最初の締めで確定した正答数をそのまま返す（BR-024）。
   // 記録から数え直すと、確定後に記録が変わった場合に確定した結果と食い違う。
@@ -398,11 +399,11 @@ sessionRoutes.get('/:id', async (c) => {
   const db = getDb(c.env)
   const userId = c.get('user').id
   const s = await loadSession(db, userId, c.req.param('id'))
-  if (!s) return c.json({ error: 'テストが見つかりません' }, 404)
+  if (!s) return refuse(c, ErrorCode.NOT_FOUND, { error: 'テストが見つかりません', status: 404 })
   // 終わっていない回の結果は返さない。URL を直に開けば、まだ答えていない問題の
   // 正解と解説がそのまま読めてしまう（過去問実践の途中でも開ける）。
   if (s.status !== 'completed') {
-    return c.json({ error: 'このテストはまだ終了していません' }, 404)
+    return refuse(c, ErrorCode.NOT_FOUND, { error: 'このテストはまだ終了していません', status: 404 })
   }
 
   const cfg = await settings(db, c.env)

@@ -7,6 +7,7 @@ import { getDb } from '../lib/db'
 import { getSecret } from '../lib/secret'
 import { NOT_CONFIGURED, issueToken } from '../lib/auth'
 import { bodyErrorMessage } from '../lib/body-error'
+import { ErrorCode, refuse } from '../lib/refusal'
 
 export const authRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
@@ -26,12 +27,12 @@ const ssoBody = z.object({ code: z.string().min(1).max(100) })
 // @operation UC-013#signInWithCode
 authRoutes.post('/sso', async (c) => {
   const secret = getSecret(c.env)
-  if (!secret) return c.json(NOT_CONFIGURED.body, NOT_CONFIGURED.status)
-  if (!ssoOn(c.env)) return c.json({ error: 'この環境では SSO が設定されていません' }, 404)
-  if (!c.env.SSO_SECRET) return c.json(NOT_CONFIGURED.body, NOT_CONFIGURED.status)
+  if (!secret) return refuse(c, ErrorCode.NOT_CONFIGURED, NOT_CONFIGURED)
+  if (!ssoOn(c.env)) return refuse(c, ErrorCode.NOT_CONFIGURED, { error: 'この環境では SSO が設定されていません', status: 404 })
+  if (!c.env.SSO_SECRET) return refuse(c, ErrorCode.NOT_CONFIGURED, NOT_CONFIGURED)
   const raw = await c.req.json().catch(() => null)
   const parsed = ssoBody.safeParse(raw)
-  if (!parsed.success) return c.json({ error: bodyErrorMessage(parsed.error, raw, { code: 'コード' }) }, 400)
+  if (!parsed.success) return refuse(c, ErrorCode.INVALID_INPUT, { error: bodyErrorMessage(parsed.error, raw, { code: 'コード' }), status: 400 })
   const body = parsed.data
   let res: Response
   try {
@@ -41,10 +42,14 @@ authRoutes.post('/sso', async (c) => {
       body: JSON.stringify({ code: body.code, app: c.env.EXAM, secret: c.env.SSO_SECRET }),
     })
   } catch {
-    return c.json({ error: 'まなびばに繋がりませんでした。もう一度お試しください' }, 502)
+    return refuse(c, ErrorCode.UPSTREAM_UNAVAILABLE, { error: 'まなびばに繋がりませんでした。もう一度お試しください', status: 502 })
   }
   const data = (await res.json().catch(() => null)) as { email?: string; name?: string; error?: string } | null
-  if (!res.ok || !data?.email) return c.json({ error: data?.error ?? 'ログインに失敗しました。まなびばからやり直してください' }, res.status === 403 ? 403 : 401)
+  if (!res.ok || !data?.email) {
+    const error = data?.error ?? 'ログインに失敗しました。まなびばからやり直してください'
+    if (res.status === 403) return refuse(c, ErrorCode.FORBIDDEN, { error, status: 403 })
+    return refuse(c, ErrorCode.UNAUTHENTICATED, { error, status: 401 })
+  }
 
   const db = getDb(c.env)
   const email = data.email.trim().toLowerCase()

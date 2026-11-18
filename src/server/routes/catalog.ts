@@ -9,6 +9,7 @@ import { frequencyTierOf } from '../lib/frequency-tier'
 import { listOrder, listOrderJoin, nextTopics, recommendedOrder } from '../lib/next-topics'
 import { joinStatus, stageOf, statusOf, statusSourceOf } from '../lib/understanding'
 import { bodyErrorMessage } from '../lib/body-error'
+import { ErrorCode, refuse } from '../lib/refusal'
 import { compareExam, dedupe } from '../lib/session-builder'
 
 export const catalogRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>()
@@ -113,7 +114,7 @@ async function unitStructureOf(db: Db, middleNo: number): Promise<UnitStructure 
 // @operation UC-002#listTopics
 catalogRoutes.get('/topics', async (c) => {
   const parsed = topicQuery.safeParse(c.req.query())
-  if (!parsed.success) return c.json({ error: '検索条件が正しくありません' }, 400)
+  if (!parsed.success) return refuse(c, ErrorCode.INVALID_INPUT, { error: '検索条件が正しくありません', status: 400 })
   const { field, middleNo, status, sort, limit } = parsed.data
 
   const db = getDb(c.env)
@@ -208,7 +209,7 @@ type TopicLinkRow = { id: number; term: string; questionCount: number }
 // @operation UC-002#getTopicDetail
 catalogRoutes.get('/topics/:id', async (c) => {
   const id = Number(c.req.param('id'))
-  if (!Number.isInteger(id)) return c.json({ error: '不正な ID です' }, 400)
+  if (!Number.isInteger(id)) return refuse(c, ErrorCode.INVALID_INPUT, { error: '不正な ID です', status: 400 })
 
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -338,7 +339,7 @@ catalogRoutes.get('/topics/:id', async (c) => {
     nextP,
     neighborsP,
   ])
-  if (!topic) return c.json({ error: '論点が見つかりません' }, 404)
+  if (!topic) return refuse(c, ErrorCode.NOT_FOUND, { error: '論点が見つかりません', status: 404 })
 
   const link = (r: TopicLinkRow) => ({
     id: r.id,
@@ -378,13 +379,13 @@ catalogRoutes.put('/topics/:id/progress', async (c) => {
   const id = Number(c.req.param('id'))
   const raw = await c.req.json().catch(() => null)
   const parsed = progressBody.safeParse(raw)
-  if (!Number.isInteger(id)) return c.json({ error: '論点の番号が正しくありません' }, 400)
-  if (!parsed.success) return c.json({ error: bodyErrorMessage(parsed.error, raw, { status: '理解度' }) }, 400)
+  if (!Number.isInteger(id)) return refuse(c, ErrorCode.INVALID_INPUT, { error: '論点の番号が正しくありません', status: 400 })
+  if (!parsed.success) return refuse(c, ErrorCode.INVALID_INPUT, { error: bodyErrorMessage(parsed.error, raw, { status: '理解度' }), status: 400 })
   const db = getDb(c.env)
   const userId = c.get('user').id
   // 存在しない論点は 404（外部キー違反で 500 にしない）
   const exists = await db.get<{ id: number }>(sql`SELECT id FROM topics WHERE id = ${id}`)
-  if (!exists) return c.json({ error: '論点が見つかりません' }, 404)
+  if (!exists) return refuse(c, ErrorCode.NOT_FOUND, { error: '論点が見つかりません', status: 404 })
   await db
     .insert(schema.progress)
     .values({ userId, topicId: id, status: parsed.data.status })

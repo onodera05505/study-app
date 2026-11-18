@@ -73,7 +73,7 @@ export async function verifyPassword(password: string, stored: string): Promise<
  *  同じ形で断る。本文はどの設定が足りないかを明かさない。 */
 export const NOT_CONFIGURED = {
   status: 503,
-  body: { error: 'この配備はまだ設定が終わっていません。管理者に連絡してください' },
+  error: 'この配備はまだ設定が終わっていません。管理者に連絡してください',
 } as const
 
 export type TokenPayload = {

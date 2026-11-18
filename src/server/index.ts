@@ -2,13 +2,13 @@ import { examOf, resolveExam } from '../shared/exam'
 import { Hono } from 'hono'
 import type { Context } from 'hono'
 import { matchedRoutes } from 'hono/route'
-import { HTTPException } from 'hono/http-exception'
 import { secureHeaders } from 'hono/secure-headers'
 import { sql } from 'drizzle-orm'
 import { NOT_CONFIGURED, readToken } from './lib/auth'
 import type { Bindings, Variables } from './lib/db'
 import { getDb } from './lib/db'
 import { getSecret } from './lib/secret'
+import { ErrorCode, refuse } from './lib/refusal'
 import { nextTopics } from './lib/next-topics'
 import { joinStatus, stageOf } from './lib/understanding'
 import { authRoutes } from './routes/auth'
@@ -48,7 +48,7 @@ const api = new Hono<{ Bindings: Bindings; Variables: Variables }>()
  */
 api.use('*', async (c, next) => {
   if (!hasRouteHandler(c)) return next()
-  if (!resolveExam(c.env.EXAM)) return c.json(NOT_CONFIGURED.body, NOT_CONFIGURED.status)
+  if (!resolveExam(c.env.EXAM)) return refuse(c, ErrorCode.NOT_CONFIGURED, NOT_CONFIGURED)
   return next()
 })
 
@@ -82,11 +82,11 @@ api.use('*', async (c, next) => {
   if (!hasRouteHandler(c)) return next()
   if (c.req.path.startsWith('/api/auth/') || c.req.path === '/api/health') return next()
   const secret = getSecret(c.env)
-  if (!secret) return c.json(NOT_CONFIGURED.body, NOT_CONFIGURED.status)
+  if (!secret) return refuse(c, ErrorCode.NOT_CONFIGURED, NOT_CONFIGURED)
   const header = c.req.header('Authorization') ?? ''
   const token = header.startsWith('Bearer ') ? header.slice(7) : ''
   const payload = token ? await readToken(secret, token) : null
-  if (!payload) return c.json({ error: 'ログインが必要です' }, 401)
+  if (!payload) return refuse(c, ErrorCode.UNAUTHENTICATED, { error: 'ログインが必要です', status: 401 })
   c.set('user', { id: payload.sub, name: payload.name, role: payload.role })
 
   // その日に「動きがあった」ことを記録する。ホームを開いたときだけでなく、
@@ -195,15 +195,14 @@ app.route('/api', api)
 
 // @implements REQ-258, BR-002
 app.onError((err, c) => {
-  if (err instanceof HTTPException) return err.getResponse()
   // 内部エラーの詳細は返さない。ログには残す。
   console.error('unhandled error', err)
-  return c.json({ error: 'サーバでエラーが発生しました' }, 500)
+  return refuse(c, ErrorCode.INTERNAL, { error: 'サーバでエラーが発生しました', status: 500 })
 })
 
 // @implements REQ-256
 app.notFound(async (c) => {
-  if (c.req.path.startsWith('/api/')) return c.json({ error: '見つかりません' }, 404)
+  if (c.req.path.startsWith('/api/')) return refuse(c, ErrorCode.NOT_FOUND, { error: '見つかりません', status: 404 })
   // SPA のルーティングは assets 側の single-page-application 設定に委ねる。
   // ASSETS が返す Response はヘッダが immutable で、後段の secureHeaders が
   // 書き込もうとして落ちる。複製して可変にしてから返す。

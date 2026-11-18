@@ -4,6 +4,7 @@ import { z } from 'zod'
 import type { Bindings, Variables } from '../lib/db'
 import { getDb } from '../lib/db'
 import { bodyErrorMessage } from '../lib/body-error'
+import { ErrorCode, refuse } from '../lib/refusal'
 
 /** 利用者からのフィードバック。
  *
@@ -37,7 +38,7 @@ feedbackRoutes.post('/', async (c) => {
     const reason = onBody
       ? issue.message
       : bodyErrorMessage(parsed.error, raw, { body: '本文', kind: '種類', page: 'ページ', topicId: '論点', questionId: '問題' })
-    return c.json({ error: reason }, 400)
+    return refuse(c, ErrorCode.INVALID_INPUT, { error: reason, status: 400 })
   }
   const db = getDb(c.env)
   const userId = c.get('user').id
@@ -46,7 +47,7 @@ feedbackRoutes.post('/', async (c) => {
     SELECT COUNT(*) AS n FROM feedback WHERE user_id = ${userId} AND created_at >= ${since}
   `)
   if ((recent?.n ?? 0) >= DAILY_LIMIT) {
-    return c.json({ error: '本日の送信は上限に達しました。明日またお願いします' }, 429)
+    return refuse(c, ErrorCode.RATE_LIMITED, { error: '本日の送信は上限に達しました。明日またお願いします', status: 429 })
   }
   const id = crypto.randomUUID()
   const v = parsed.data
