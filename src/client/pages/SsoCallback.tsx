@@ -8,7 +8,7 @@ import { portal } from '../../shared/exam'
  *  端末に前のトークンがあっても、換えられたときだけコードの本人のトークンに入れ替え、
  *  コードが無いか換えられないときは前のトークンに触れない。 */
 /** 端末がトークンを保存できなかったときに出す 1 文。 */
-const TOKEN_NOT_SAVED = 'この端末にログインの情報を保存できなかったため、ブラウザの設定を確かめてからまなびばでやり直してください'
+const TOKEN_NOT_SAVED = 'この端末にログインの情報を保存できなかったため、ブラウザの設定を確かめてからまなびばでやり直してください。'
 
 // @implements REQ-191, REQ-193, REQ-406, REQ-407
 export function SsoCallback({ onDone }: { onDone: () => void }) {
