@@ -4,7 +4,7 @@ title: 学習者役のパックを作って読ませ、伝わったかを周の�
 actor: ACT-07
 goal: GOAL-12
 status: active
-phase: 実装
+phase: 完了
 ---
 
 # UC-019 学習者役のパックを作って読ませ、伝わったかを周の結果で測る

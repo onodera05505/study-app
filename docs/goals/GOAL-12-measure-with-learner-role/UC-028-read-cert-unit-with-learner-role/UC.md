@@ -4,7 +4,7 @@ title: 資格対策の単元を利用者と同じ見え方の読み物にして�
 actor: ACT-07
 goal: GOAL-12
 status: active
-phase: 実装
+phase: 完了
 ---
 
 # UC-028 資格対策の単元を利用者と同じ見え方の読み物にして学習者役に通読させる

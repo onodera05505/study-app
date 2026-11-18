@@ -4,7 +4,7 @@ title: 論点の理解度を記録して次に学ぶ論点を辿る
 actor: ACT-01
 goal: GOAL-01
 status: active
-phase: 実装
+phase: 完了
 ---
 
 # UC-003 論点の理解度を記録して次に学ぶ論点を辿る

@@ -4,7 +4,7 @@ title: 模試を制限時間つきで受け、合否の目安と分野別の結�
 actor: ACT-01
 goal: GOAL-02
 status: active
-phase: 実装
+phase: 完了
 ---
 
 # UC-008 模試を制限時間つきで受け、合否の目安と分野別の結果を見る

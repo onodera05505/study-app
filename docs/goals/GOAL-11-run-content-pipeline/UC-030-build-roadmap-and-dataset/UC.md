@@ -4,7 +4,7 @@ title: ロードマップ型の学びのロードマップと投入データを�
 actor: ACT-07
 goal: GOAL-11
 status: active
-phase: 実装
+phase: 完了
 ---
 
 # UC-030 ロードマップ型の学びのロードマップと投入データを論点の候補から組み立てる

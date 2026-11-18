@@ -4,7 +4,7 @@ title: 配備と投入の前に門を回し、通らない物を本番に出さ�
 actor: ACT-03
 goal: GOAL-06
 status: active
-phase: 実装
+phase: 完了
 ---
 
 # UC-032 配備と投入の前に門を回し、通らない物を本番に出さない
