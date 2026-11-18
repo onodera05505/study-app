@@ -216,6 +216,7 @@
     "constraint_pattern": "\\b(uniqueIndex|unique|check)\\(\\s*[\"'`]|^\\s*(UNIQUE|CHECK)\\b|^CREATE UNIQUE INDEX\\s+(\\w+)|\\b(\\w+)\\s+\\w+[^,]*\\bUNIQUE\\b"
   },
   "contract": {
-    "none": "下書き: エラーコードの単一の出所をまだ決めていない（段 2 で決めて置き換える。fixed の契約があるので none のままでは通らない）"
+    "error_source": "src/shared/error-codes.json",
+    "error_code_pattern": "\"([A-Z][A-Z_]*)\"\\s*:"
   }
 }
