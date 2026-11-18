@@ -88,10 +88,10 @@ const callPortal = (route: Route, db: D1Database) =>
     portalEnv(db),
   )
 
-/** 断りの本文は契約の ErrorBody（`{ error }` だけ）。文言は照合しない。 */
+/** 断りの本文は契約の ErrorBody（`{ error, code }` だけ）。文言は照合しない。 */
 const errorBodyOf = async (res: Response, where: string) => {
   const body = (await res.json()) as Record<string, unknown>
-  expect(Object.keys(body), `${where}: 本文が {error} だけでない`).toEqual(['error'])
+  expect(Object.keys(body).sort(), `${where}: 本文が {error, code} だけでない`).toEqual(['code', 'error'])
   expect(typeof body.error, `${where}: error が文字列でない`).toBe('string')
   return body.error as string
 }
@@ -133,8 +133,8 @@ describe('UC-015 本番の検査が外から叩くまなびばの境界', () => 
       expect(fromLearning.status).toBe(fromPortal.status)
       const portalBody = (await fromPortal.json()) as Record<string, unknown>
       const learningBody = (await fromLearning.json()) as Record<string, unknown>
-      expect(Object.keys(portalBody)).toEqual(['error'])
-      expect(Object.keys(learningBody)).toEqual(Object.keys(portalBody))
+      expect(Object.keys(portalBody).sort()).toEqual(['code', 'error'])
+      expect(Object.keys(learningBody).sort()).toEqual(Object.keys(portalBody).sort())
       expect(fromPortal.headers.get('content-type')?.split(';')[0]).toBe(fromLearning.headers.get('content-type')?.split(';')[0])
     })
 

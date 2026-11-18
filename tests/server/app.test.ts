@@ -13,7 +13,7 @@ describe('認証の境界（UC-015・UC-017）', () => {
   it('トークンが無いと保護された経路は 401', async () => {
     const res = await app.request('/api/fields', {}, env())
     expect(res.status).toBe(401)
-    expect(await res.json()).toEqual({ error: 'ログインが必要です' })
+    expect(await res.json()).toEqual({ error: 'ログインが必要です', code: 'UNAUTHENTICATED' })
   })
 
   // @covers REQ-255#credential-malformed
@@ -67,7 +67,7 @@ describe('失敗の形（UC-013・UC-017）', () => {
       expect(res.status).toBe(400)
       // 契約が決めるのは ErrorBody の形だけ（文言の語は REQ-257 が検証しないと置く）
       const body = (await res.json()) as Record<string, unknown>
-      expect(Object.keys(body)).toEqual(['error'])
+      expect(Object.keys(body).sort()).toEqual(['code', 'error'])
       expect(typeof body.error).toBe('string')
       expect(String(body.error).trim()).not.toBe('')
       expect(String(body.error)).toMatch(/[ぁ-んァ-ヶ一-龥]/)
@@ -79,7 +79,7 @@ describe('失敗の形（UC-013・UC-017）', () => {
     const res = await app.request('/api/no-such-path', {}, sso())
     expect(res.status).toBe(404)
     const body = (await res.json()) as Record<string, unknown>
-    expect(Object.keys(body)).toEqual(['error'])
+    expect(Object.keys(body).sort()).toEqual(['code', 'error'])
     expect(String(body.error)).toMatch(/[ぁ-んァ-ヶ一-龥]/)
   })
 })
@@ -95,7 +95,7 @@ describe('SSO のコード交換（学び側。UC-013）', () => {
       expect(res.status).toBe(503)
       const body = (await res.json()) as Record<string, unknown>
       // 足りない設定を名指ししない（BR-002）。本文が等しいことは signing_secret.test.ts が見る
-      expect(Object.keys(body)).toEqual(['error'])
+      expect(Object.keys(body).sort()).toEqual(['code', 'error'])
       const error = String(body.error)
       expect(error).toMatch(/[ぁ-んァ-ヶ一-龥]/)
       expect(error.trim().split('\n')).toHaveLength(1)
@@ -121,11 +121,11 @@ describe('SSO のコード交換（学び側。UC-013）', () => {
   // @covers REQ-193#exchange-refused
   it('まなびばがコードを拒んだら 401 で、その理由をそのまま返す', async () => {
     const orig = globalThis.fetch
-    globalThis.fetch = (async () => new Response(JSON.stringify({ error: 'コードが無効です' }), { status: 401 })) as typeof fetch
+    globalThis.fetch = (async () => new Response(JSON.stringify({ error: 'コードが無効です', code: 'UNAUTHENTICATED' }), { status: 401 })) as typeof fetch
     try {
       const res = await app.request('/api/auth/sso', json({ code: 'used' }), sso())
       expect(res.status).toBe(401)
-      expect(await res.json()).toEqual({ error: 'コードが無効です' })
+      expect(await res.json()).toEqual({ error: 'コードが無効です', code: 'UNAUTHENTICATED' })
     } finally {
       globalThis.fetch = orig
     }

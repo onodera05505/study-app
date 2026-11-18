@@ -46,11 +46,11 @@ const sessionCookieOf = (res: Response): string => {
   return header!.split(';')[0].slice(SESSION_COOKIE.length + 1)
 }
 
-/** 失敗の本文は契約の ErrorBody（`{ error }` だけ）。文言は照合しない。 */
+/** 失敗の本文は契約の ErrorBody（`{ error, code }` だけ）。文言は照合しない。 */
 const expectError = async (res: Response, status: number, label: string) => {
   expect(res.status, label).toBe(status)
   const body = (await res.json()) as Record<string, unknown>
-  expect(Object.keys(body), `${label}: 本文が {error} だけでない`).toEqual(['error'])
+  expect(Object.keys(body).sort(), `${label}: 本文が {error, code} だけでない`).toEqual(['code', 'error'])
   expect(typeof body.error, `${label}: error が文字列でない`).toBe('string')
 }
 

@@ -297,10 +297,10 @@ const writes = (w: World, table: RegExp) =>
 const sessionWrites = (w: World) => writes(w, /"?sessions"?\b/i)
 const answerWrites = (w: World) => writes(w, /"?session_questions"?\b/i)
 
-/** 契約の ErrorBody（鍵は error だけで、日本語の 1 文）。 */
+/** 契約の ErrorBody（鍵は error と code だけで、日本語の 1 文）。 */
 async function errorBody(res: Response) {
   const body = (await res.json()) as Record<string, unknown>
-  expect(Object.keys(body)).toEqual(['error'])
+  expect(Object.keys(body).sort()).toEqual(['code', 'error'])
   expect(String(body.error)).toMatch(JAPANESE)
   return body
 }

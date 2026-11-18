@@ -54,10 +54,10 @@ const call = (method: string, path: string, token?: string) =>
     env(),
   )
 
-/** 失敗の本文は契約の ErrorBody（`{ error }` だけ）。文言そのものは照合しない。 */
+/** 失敗の本文は契約の ErrorBody（`{ error, code }` だけ）。文言そのものは照合しない。 */
 const errorOf = async (res: Response) => {
   const body = (await res.json()) as Record<string, unknown>
-  expect(Object.keys(body)).toEqual(['error'])
+  expect(Object.keys(body).sort()).toEqual(['code', 'error'])
   const error = String(body.error)
   expect(error).toMatch(JAPANESE)
   return error
@@ -168,7 +168,7 @@ describe('知らない経路と想定していない例外（UC-017）', () => {
     const text = await res.text()
     expect(text).not.toMatch(/TypeError|Cannot read|\bat \b|stack|D1|drizzle/i)
     const body = JSON.parse(text) as Record<string, unknown>
-    expect(Object.keys(body)).toEqual(['error'])
+    expect(Object.keys(body).sort()).toEqual(['code', 'error'])
     expect(String(body.error)).toMatch(JAPANESE)
   })
 })

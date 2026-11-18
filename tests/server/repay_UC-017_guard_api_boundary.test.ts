@@ -53,10 +53,10 @@ const init = (method: string, body?: unknown, token?: string): RequestInit => ({
   ...(body === undefined ? {} : { body: typeof body === 'string' ? body : JSON.stringify(body) }),
 })
 
-/** 失敗の本文は _shared の ErrorBody（`{ error }` だけ・日本語）。文言そのものは照合しない。 */
+/** 失敗の本文は _shared の ErrorBody（`{ error, code }` だけ・日本語）。文言そのものは照合しない。 */
 const errorOf = async (res: Response, label: string) => {
   const body = (await res.json()) as Record<string, unknown>
-  expect(Object.keys(body), `${label}: 本文が {error} だけでない`).toEqual(['error'])
+  expect(Object.keys(body).sort(), `${label}: 本文が {error, code} だけでない`).toEqual(['code', 'error'])
   const error = String(body.error)
   expect(error, `${label}: 理由が日本語でない`).toMatch(JAPANESE)
   return error

@@ -1,7 +1,7 @@
 /** 論点の一覧（UC-002 の listTopics ＝ GET /api/topics）の、受け付けない求め。
  *
  *  叩くのは契約の操作の入口だけ。認証を通った要求は来訪の記録で D1 を触るので、何も返さない偽の D1 を渡す。
- *  拒みの観測は 400 と ErrorBody（鍵は error だけ）で、内側の値が通ることも同じ偽の D1 で確かめる
+ *  拒みの観測は 400 と ErrorBody（鍵は error と code だけ）で、内側の値が通ることも同じ偽の D1 で確かめる
  *  （内側が通らなければ外側の 400 は拒みの証拠にならない）。 */
 
 import { describe, expect, it } from 'vitest'
@@ -30,12 +30,12 @@ async function list(query: string) {
   return app.request(`/api/topics${query}`, { headers: { Authorization: `Bearer ${token}` } }, env())
 }
 
-/** 一覧を返さず、受け付けなかったこと（400 と {error} だけ）を示している。 */
+/** 一覧を返さず、受け付けなかったこと（400 と {error, code} だけ）を示している。 */
 async function expectRejected(query: string) {
   const res = await list(query)
   expect(res.status, `${query} が 400 にならない`).toBe(400)
   const body = (await res.json()) as Record<string, unknown>
-  expect(Object.keys(body), `${query} の応答が {error} だけでない`).toEqual(['error'])
+  expect(Object.keys(body).sort(), `${query} の応答が {error, code} だけでない`).toEqual(['code', 'error'])
   expect(body).not.toHaveProperty('topics')
 }
 

@@ -305,10 +305,10 @@ const writes = (w: World, table: RegExp) =>
 const sessionWrites = (w: World) => writes(w, /"?sessions"?\b/i)
 const answerWrites = (w: World) => writes(w, /"?session_questions"?\b/i)
 
-/** 契約の ErrorBody（鍵は error だけで、日本語の 1 文）。 */
+/** 契約の ErrorBody（鍵は error と code だけで、日本語の 1 文）。 */
 async function errorBody(res: Response) {
   const body = (await res.json()) as Record<string, unknown>
-  expect(Object.keys(body)).toEqual(['error'])
+  expect(Object.keys(body).sort()).toEqual(['code', 'error'])
   expect(String(body.error)).toMatch(JAPANESE)
   return body
 }
@@ -714,7 +714,7 @@ describe('他人のテスト（UC-004。BR-018）', () => {
       expect(text, `${label} で他人のテストの内容が漏れている`).not.toContain('他人の範囲')
       expect(text, `${label} で他人のテストの問題文が漏れている`).not.toContain('問題文その')
       const body = JSON.parse(text) as Record<string, unknown>
-      expect(Object.keys(body), label).toEqual(['error'])
+      expect(Object.keys(body).sort(), label).toEqual(['code', 'error'])
       expect(String(body.error), label).toMatch(JAPANESE)
 
       const missing = await call(nobody())

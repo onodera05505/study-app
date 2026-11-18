@@ -354,7 +354,7 @@ describe('模試の開始（POST /api/sessions。UC-008）', () => {
       const res = await request('POST', '/api/sessions', body, tables, executed)
       expect(res.status, label).toBe(404)
       const payload = (await res.json()) as Record<string, unknown>
-      expect(Object.keys(payload), `${label}: 本文は {error} だけ`).toEqual(['error'])
+      expect(Object.keys(payload).sort(), `${label}: 本文は {error, code} だけ`).toEqual(['code', 'error'])
       expect(String(payload.error), label).toMatch(/[ぁ-んァ-ヶ一-龥]/)
       expect(anyInsert(executed), `${label}: テストか出題の行が書かれている`).toEqual([])
     }

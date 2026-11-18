@@ -147,10 +147,10 @@ export async function answerCurrent(w: World, id: string, choice = CORRECT, user
   return cur.question.idx
 }
 
-/** 契約の ErrorBody（鍵は error だけで、日本語の 1 文）か。 */
+/** 契約の ErrorBody（鍵は error と code だけで、日本語の 1 文）か。 */
 export async function errorBodyOf(res: Response): Promise<Record<string, unknown>> {
   const body = (await res.json()) as Record<string, unknown>
-  if (Object.keys(body).join(',') !== 'error') throw new Error(`本文が ErrorBody でない: ${JSON.stringify(body)}`)
+  if (Object.keys(body).sort().join(',') !== 'code,error') throw new Error(`本文が ErrorBody でない: ${JSON.stringify(body)}`)
   if (!JAPANESE.test(String(body.error))) throw new Error(`理由が日本語の文でない: ${JSON.stringify(body)}`)
   return body
 }

@@ -62,11 +62,11 @@ const request = (method: string, body?: unknown, token?: string): RequestInit =>
   ...(body === undefined ? {} : { body: typeof body === 'string' ? body : JSON.stringify(body) }),
 })
 
-/** 配備に設定が無いことに当たる断り（503 と {error} だけ・日本語の 1 文）。 */
+/** 配備に設定が無いことに当たる断り（503 と {error, code} だけ・日本語の 1 文）。 */
 const expectNotConfigured = async (res: Response, label: string) => {
   expect(res.status, label).toBe(503)
   const body = (await res.json()) as Record<string, unknown>
-  expect(Object.keys(body), `${label}: 本文が {error} だけでない`).toEqual(['error'])
+  expect(Object.keys(body).sort(), `${label}: 本文が {error, code} だけでない`).toEqual(['code', 'error'])
   expect(String(body.error), `${label}: 理由が日本語でない`).toMatch(JAPANESE)
   expect(String(body.error).trim().split('\n'), label).toHaveLength(1)
 }

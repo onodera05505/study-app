@@ -5,7 +5,7 @@ import app from '../../portal/src/index'
  * まなびばの想定していない例外の扱い（UC-017 の REQ-258・REQ-260）。
  *
  * D1 を壊した env（prepare などが必ず投げる偽の D1）で DB を引く経路を呼び、
- * 応答が 500・本文が固定の日本語の {error} だけであることを見る。
+ * 応答が 500・本文が固定の日本語の {error, code} だけであることを見る。
  * 例外の message（boom）・stack・コードの場所が本文に出たら情報漏洩。
  */
 
@@ -34,14 +34,14 @@ const login = (email: string) => ({
 /** 本文が {error: 文字列} なら、その文を返す（他の鍵があれば失敗させる）。 */
 const errorText = async (res: Response) => {
   const body = (await res.json()) as Record<string, unknown>
-  expect(Object.keys(body), '5xx の本文に error 以外の鍵がある（内部の情報を出さない）').toEqual(['error'])
+  expect(Object.keys(body).sort(), '5xx の本文に error と code 以外の鍵がある（内部の情報を出さない）').toEqual(['code', 'error'])
   expect(typeof body.error).toBe('string')
   return body.error as string
 }
 
 describe('想定していない例外（まなびば。UC-017）', () => {
   // @covers REQ-258#portal-internal-fixed
-  it('DB が壊れている呼び出しは 500 で、本文は固定の日本語の {error} だけ（例外の message も stack も出さない）', async () => {
+  it('DB が壊れている呼び出しは 500 で、本文は固定の日本語の {error, code} だけ（例外の message も stack も出さない）', async () => {
     const res = await app.request('/api/login', login('portal-onerror@example.com'), env())
     expect(res.status, '想定していない例外が 500 になっていない').toBe(500)
     const text = await errorText(res)

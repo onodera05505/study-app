@@ -430,7 +430,7 @@ describe('残り時間が 0 に達した模試への回答（POST /api/sessions/
       expect(res.status, `経過 ${elapsed} 秒`).toBe(409)
       // 本文は契約の ErrorBody だけ（正誤も正解も解説も入らない）
       const body = (await res.json()) as Record<string, unknown>
-      expect(Object.keys(body), `経過 ${elapsed} 秒`).toEqual(['error'])
+      expect(Object.keys(body).sort(), `経過 ${elapsed} 秒`).toEqual(['code', 'error'])
       expect(String(body.error), `経過 ${elapsed} 秒`).toMatch(JAPANESE)
       expect(answerWrites(executed), `経過 ${elapsed} 秒で回答か締めが書かれている`).toEqual([])
     }

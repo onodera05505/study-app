@@ -428,7 +428,7 @@ describe('UC-011 アカウントと学びの権限の管理（まなびば）', 
       const res = await reset(env, admin, ADMIN.id, { password: NEXT })
       expect(res.status).toBe(400)
       const body = (await res.json()) as Record<string, unknown>
-      expect(Object.keys(body), '断りの本文が {error} の形でない').toEqual(['error'])
+      expect(Object.keys(body).sort(), '断りの本文が {error, code} の形でない').toEqual(['code', 'error'])
       expect(String(body.error), '自分のパスワードはこの操作で変えられないことが日本語で示されない').toMatch(/[ぁ-んァ-ヶ一-龥]/)
       expect(await meStatus(env, admin), '呼び出した端末のセッションが終わった').toBe(200)
       expect(await meStatus(env, otherDevice), '別の端末のセッションが終わった').toBe(200)

@@ -410,7 +410,7 @@ describe('合否の目安の判定（GET /api/sessions/:id の passed。UC-008�
 
 describe('完了していないテストの結果（GET /api/sessions/:id。UC-008）', () => {
   // @covers REQ-115#not-finished-not-shown
-  it('進行中のテストの結果は示さず、まだ終わっていない旨の 404 の {error} だけが返る', async () => {
+  it('進行中のテストの結果は示さず、まだ終わっていない旨の 404 の {error, code} だけが返る', async () => {
     // 同じ表で完了なら結果が返る（下の 404 は完了していないことだけが出している）
     const done = await atElapsed(4000, () =>
       request('GET', `/api/sessions/${SID}`, undefined, completed([{ field: 'ストラテジ系', total: 10, correct: 7 }])),
@@ -427,7 +427,7 @@ describe('完了していないテストの結果（GET /api/sessions/:id。UC-0
     expect(text, '完了していないのに問題の本文が渡っている').not.toContain(snapshot(0).text)
     expect(text, '完了していないのに問題解説が渡っている').not.toContain(LEAK)
     const body = JSON.parse(text) as Record<string, unknown>
-    expect(Object.keys(body), '本文は {error} だけ').toEqual(['error'])
+    expect(Object.keys(body).sort(), '本文は {error, code} だけ').toEqual(['code', 'error'])
     expect(String(body.error)).toMatch(JAPANESE)
   })
 })

@@ -182,7 +182,7 @@ async function overlap(hooked: Hooked, first: () => Promise<Response> | Response
 async function expectLastAdminRefusal(res: Response, label: string) {
   expect(res.status, `${label}: 最後の管理者を外す求めが 409 で断られない`).toBe(409)
   const body = (await res.json()) as Record<string, unknown>
-  expect(Object.keys(body), `${label}: 断りの本文が {error} の形でない`).toEqual(['error'])
+  expect(Object.keys(body).sort(), `${label}: 断りの本文が {error, code} の形でない`).toEqual(['code', 'error'])
   expect(String(body.error), `${label}: 理由が日本語で示されない`).toMatch(JAPANESE)
 }
 

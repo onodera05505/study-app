@@ -205,7 +205,7 @@ describe('UC-013 学び側がコードを換えて本人を受け入れる', () 
       const res = await app.request('/api/auth/sso', json({ code: CODE }), { EXAM: 'ip', JWT_SECRET: 'test-secret', DB: db } as unknown as Bindings)
       expect(res.status).toBe(404)
       const body = (await res.json()) as Record<string, unknown>
-      expect(Object.keys(body)).toEqual(['error'])
+      expect(Object.keys(body).sort()).toEqual(['code', 'error'])
       expect(String(body.error)).toMatch(JAPANESE)
       expect(portal.calls).toEqual([])
       expect(users()).toEqual([])

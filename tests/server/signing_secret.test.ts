@@ -22,7 +22,7 @@ const TOKEN =
 const expectNotConfigured = async (res: Response, label: string): Promise<string> => {
   expect(res.status, label).toBe(503)
   const body = (await res.json()) as Record<string, unknown>
-  expect(Object.keys(body), label).toEqual(['error'])
+  expect(Object.keys(body).sort(), label).toEqual(['code', 'error'])
   const error = String(body.error)
   expect(error, label).toMatch(JAPANESE)
   expect(error.trim().split('\n'), label).toHaveLength(1)
@@ -155,7 +155,7 @@ describe('受け持たない /api の経路は設定の不足では断らない�
       const res = await app.request('/api/no-such-path', { headers }, noSecret())
       expect(res.status, label).toBe(404)
       const body = (await res.json()) as Record<string, unknown>
-      expect(Object.keys(body), label).toEqual(['error'])
+      expect(Object.keys(body).sort(), label).toEqual(['code', 'error'])
       expect(String(body.error), label).toMatch(JAPANESE)
     }
   })
