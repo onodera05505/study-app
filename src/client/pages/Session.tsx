@@ -7,6 +7,7 @@ import { Figure } from '../components/Figure'
 import { api, invalidateCached } from '../lib/api'
 import { formatChoice } from '../lib/choice'
 import { annotateLastPage } from '../lib/lastPage'
+import { withoutStorage } from '../lib/storage'
 
 type Current = {
   session: {
@@ -95,7 +96,8 @@ export function Session() {
       const d = await api<Current>(`/sessions/${id}/current`)
       setData(d)
       // フィードバックに添える（どのテストの何問目か。問題 ID は見せない設計なのでセッション ID と番号で引く）
-      if (d.question) annotateLastPage({ questionId: `${d.session.id}#${d.question.idx}`, label: `${d.session.scopeLabel} の ${d.question.idx + 1} 問目` })
+      // 端末の記憶が使えなければ添えないだけで、問題の画面は止めない
+      if (d.question) withoutStorage(() => annotateLastPage({ questionId: `${d.session.id}#${d.question!.idx}`, label: `${d.session.scopeLabel} の ${d.question!.idx + 1} 問目` }), null)
       setRemaining(d.remainingSec)
       setPicked(null)
       setJudged(null)

@@ -2,6 +2,7 @@ import { exam } from '../exam'
 import { tierLabelOf } from '../../shared/exam'
 import { useEffect, useState } from 'react'
 import { annotateLastPage } from '../lib/lastPage'
+import { withoutStorage } from '../lib/storage'
 import { Link, useLocation, useNavigate, useNavigationType, useParams } from 'react-router-dom'
 import { BackLink } from '../components/BackLink'
 import { DupBadge } from '../components/DupBadge'
@@ -118,15 +119,20 @@ export function TopicDetail() {
         // ロードマップ型で記録が無い論点は未理解（BR-029）。資格対策は未（0）を含めてそのまま示す
         setStatus(d.topic.status ?? 1)
         setSource(d.topic.statusSource ?? null)
-        // フィードバックに添える（どの単位を読んでいたか）
-        annotateLastPage({ topicId: d.topic.id, label: `学習の単位「${d.topic.term}」` })
-        // ホームに「前回の続き」を出すために控えておく
-        setLastTopic({
-          id: d.topic.id,
-          term: d.topic.term,
-          middle: d.topic.middle,
-          middleNo: d.topic.middleNo,
-        })
+        // フィードバックに添える（どの単位を読んでいたか）。端末の記憶が使えなければ添えないだけ
+        withoutStorage(() => annotateLastPage({ topicId: d.topic.id, label: `学習の単位「${d.topic.term}」` }), null)
+        // ホームに「前回の続き」を出すために控えておく。端末が覚えられなくても論点の画面は止めない
+        // @implements REQ-078
+        withoutStorage(
+          () =>
+            setLastTopic({
+              id: d.topic.id,
+              term: d.topic.term,
+              middle: d.topic.middle,
+              middleNo: d.topic.middleNo,
+            }),
+          null,
+        )
       })
       .catch((e) => {
         // @implements REQ-342

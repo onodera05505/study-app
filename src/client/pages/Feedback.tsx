@@ -2,14 +2,16 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { api } from '../lib/api'
 import { getLastPage } from '../lib/lastPage'
+import { getFeedbackDraft, setFeedbackDraft } from '../lib/feedbackDraft'
+import { withoutStorage } from '../lib/storage'
 
 /** フィードバック（要件 §5.5-4）。自由記述を送る。送った本人には受付の文だけ返す。
  *  その場で AI は応答しない（溜めて開発側が改善フェーズで読む）。 */
 // @implements REQ-151, REQ-153
-// @operation UC-010#readFeedbackDraft
-// @operation UC-010#saveFeedbackDraft
 export function Feedback() {
-  const last = getLastPage()
+  // 添え先が読めなければ覚えていない扱いにし、送ることは止めない
+  // @implements REQ-242
+  const last = withoutStorage(getLastPage, null)
   // 途中の入力は遷移しても消さない（警告ではなく下書きの保持で応える。受け付けられたら消す）
   const [text, setText] = useState(() => readDraft())
   // 種類（良かった／改善の提案／その他）。どれか 1 つを選んでから送る
@@ -141,22 +143,12 @@ const KINDS = [
   { value: 'other' as const, label: 'その他' },
 ]
 
-const DRAFT_KEY = 'study-app:feedback-draft'
-// @implements REQ-153, BR-011
+/** 下書きを読む。端末の記憶が使えなければ下書きが無い扱いにする。 */
 function readDraft(): string {
-  try {
-    return sessionStorage.getItem(DRAFT_KEY) ?? ''
-  } catch {
-    return ''
-  }
+  return withoutStorage(getFeedbackDraft, '')
 }
-// @implements REQ-153, BR-011
+/** 下書きを置く・捨てる。端末の記憶が使えなければ保持しないだけにする。 */
 function writeDraft(v: string) {
-  try {
-    if (v) sessionStorage.setItem(DRAFT_KEY, v)
-    else sessionStorage.removeItem(DRAFT_KEY)
-  } catch {
-    /* 使えない環境では保持しないだけ */
-  }
+  withoutStorage(() => setFeedbackDraft(v), '')
 }
 

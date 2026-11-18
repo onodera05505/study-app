@@ -15,6 +15,7 @@ import { Result } from './pages/Result'
 import { History } from './pages/History'
 import { Feedback } from './pages/Feedback'
 import { setLastPage } from './lib/lastPage'
+import { withoutStorage } from './lib/storage'
 import { CHECK_INTERVAL_MS, checkForUpdate, rememberBuild } from './lib/version'
 import { exam } from './exam'
 
@@ -159,11 +160,12 @@ export function App() {
     checkForUpdate().then((v) => v && setUpdateReady(true))
   }, [location.pathname])
 
-  // 「直前に開いていた画面」を覚える（フィードバックに自動で添える）。/feedback 自身は記録しない
-  // @implements REQ-146, REQ-147
+  // 「直前に開いていた画面」を覚える（フィードバックに自動で添える）。/feedback 自身は記録しない。
+  // 端末が覚えられなければ添え先を覚えていない扱いのまま、画面の移りは止めない
+  // @implements REQ-146, REQ-147, REQ-242
   useEffect(() => {
     if (location.pathname.startsWith('/feedback')) return
-    setLastPage({ path: location.pathname, label: pageLabel(location.pathname) })
+    withoutStorage(() => setLastPage({ path: location.pathname, label: pageLabel(location.pathname) }), null)
   }, [location.pathname])
 
   // アカウントメニューは、外側を触るか Esc で閉じる

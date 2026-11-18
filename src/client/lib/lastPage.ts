@@ -1,3 +1,5 @@
+import { touchStorage } from './storage'
+
 /** 「直前に開いていた画面」を覚えておく。フィードバックに自動で添えるため。
  *
  *  App が画面の移動ごとに記録する。/feedback 自身は記録しない（戻り先が自分になる）。
@@ -13,14 +15,12 @@ export type LastPage = {
 
 const KEY = 'study-app:last-page'
 
-// @implements REQ-146, REQ-242, BR-011, BR-012
+/** 添え先を端末の記憶に 1 件だけ置く。書けなければ名前つきの失敗を渡す。 */
+// @implements REQ-146, BR-012
 // @operation UC-010#setLastPage
-export function setLastPage(p: LastPage) {
-  try {
-    sessionStorage.setItem(KEY, JSON.stringify(p))
-  } catch {
-    /* 私用ブラウズなどで使えないことがある。添えられないだけなので無視 */
-  }
+export function setLastPage(p: LastPage): LastPage {
+  touchStorage(() => sessionStorage.setItem(KEY, JSON.stringify(p)))
+  return p
 }
 
 /** 契約 LastPage の形（path は空でない文字列、label は文字列、topicId・questionId は在れば型どおり）か。 */
@@ -34,13 +34,14 @@ function isLastPage(v: unknown): v is LastPage {
   return true
 }
 
-/** 覚えていない・読めない・形が壊れている記憶はどれも null。 */
+/** 覚えていない・覚えた値が JSON として読めない・形が壊れている記憶はどれも null。
+ *  端末の記憶そのものが読めなければ名前つきの失敗を渡す。 */
 // @implements REQ-242
 // @operation UC-010#readLastPage
 export function getLastPage(): LastPage | null {
+  const raw = touchStorage(() => sessionStorage.getItem(KEY))
+  if (!raw) return null
   try {
-    const raw = sessionStorage.getItem(KEY)
-    if (!raw) return null
     const v: unknown = JSON.parse(raw)
     return isLastPage(v) ? v : null
   } catch {
@@ -49,10 +50,11 @@ export function getLastPage(): LastPage | null {
 }
 
 /** 画面が自分の中身（論点名・問題 ID）を知ったときに、名前と ID だけを上書きする。 */
-// @implements REQ-148, REQ-149, BR-011
+/** 添え先を覚えていなければ何もせず null。端末の記憶が読めない・書けなければ名前つきの失敗を渡す。 */
+// @implements REQ-148, REQ-149
 // @operation UC-010#annotateLastPage
-export function annotateLastPage(patch: Partial<LastPage>) {
+export function annotateLastPage(patch: Partial<LastPage>): LastPage | null {
   const cur = getLastPage()
-  if (!cur) return
-  setLastPage({ ...cur, ...patch })
+  if (!cur) return null
+  return setLastPage({ ...cur, ...patch })
 }

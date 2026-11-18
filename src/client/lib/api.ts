@@ -1,14 +1,23 @@
+import { touchStorage } from './storage'
+
 const TOKEN_KEY = 'study-app.token'
 
-// @implements REQ-190, REQ-195
+/** 端末の記憶にあるトークン。無いか、端末の記憶が使えず読めなければ null（トークンが無い扱い）。 */
+// @implements REQ-190, REQ-195, REQ-575
 // @operation UC-013#readToken
 export function getToken(): string | null {
-  return localStorage.getItem(TOKEN_KEY)
+  try {
+    return localStorage.getItem(TOKEN_KEY)
+  } catch {
+    return null
+  }
 }
+/** トークンを端末の記憶に保存する。書けなければ名前つきの失敗を渡す。 */
 // @implements REQ-191
 // @operation UC-013#saveToken
-export function setToken(token: string) {
-  localStorage.setItem(TOKEN_KEY, token)
+export function setToken(token: string): string {
+  touchStorage(() => localStorage.setItem(TOKEN_KEY, token))
+  return token
 }
 /** ログインしている人の名前。トークン（JWT）の中身から読む。サーバに聞かない。
  *  誰でログインしているかが分かるよう、ヘッダーに出す。 */
@@ -26,14 +35,18 @@ export function getUserName(): string | null {
   }
 }
 
-// @implements REQ-198, BR-010
+/** この端末の記憶からトークンを捨てる。端末の記憶が使えず捨てられなければ何もせずに終え、続きを止めない。 */
+// @implements REQ-198, REQ-576, BR-010
 // @operation UC-013#clearToken
-// @operation UC-005#clearLastTopic
 export function clearToken() {
-  localStorage.removeItem(TOKEN_KEY)
+  try {
+    localStorage.removeItem(TOKEN_KEY)
+  } catch {
+    // 捨てられなくても、ログアウト・断られた要求・トークンの入れ替えの続きへ進む
+  }
   // 「前回の続き」は端末に残る。消さないと、次にログインした別のアカウントに
   // 前の人が読んでいた論点が出る（同じ端末を分け合って使うことがある）。
-  localStorage.removeItem(LAST_TOPIC_KEY)
+  clearLastTopic()
 }
 
 /** トークンが期限切れで捨てられたことの印。
@@ -213,14 +226,12 @@ export function clearLastTopic() {
   }
 }
 
-// @implements REQ-077, REQ-078, BR-011, BR-013
+/** 開いた論点を前回の続きとして端末の記憶に書く。書けなければ名前つきの失敗を渡す。 */
+// @implements REQ-077, BR-013
 // @operation UC-005#saveLastTopic
-export function setLastTopic(t: LastTopic) {
-  try {
-    localStorage.setItem(LAST_TOPIC_KEY, JSON.stringify(t))
-  } catch {
-    // プライベートモードなどで保存できなくても、機能そのものは止めない
-  }
+export function setLastTopic(t: LastTopic): LastTopic {
+  touchStorage(() => localStorage.setItem(LAST_TOPIC_KEY, JSON.stringify(t)))
+  return t
 }
 
 export type Field = {
