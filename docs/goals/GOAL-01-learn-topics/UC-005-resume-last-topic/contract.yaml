@@ -6,7 +6,7 @@
 x-uc: UC-005
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-06
+x-updated: 2026-11-18
 
 operations:
   # ---- 端末の記憶（この端末に残る。鍵の名前は operation 名が表し、値の形だけを書く） ----
@@ -22,11 +22,16 @@ operations:
       required: [lastTopic]
       properties:
         lastTopic: { $ref: "#/schemas/LastTopic" }
+    response:
+      type: object
+      required: [lastTopic]
+      properties:
+        lastTopic: { $ref: "#/schemas/LastTopic", description: 書いたあとに読むと、書いた値 }
     errors:
       - code: STORAGE_UNAVAILABLE
-        when: 端末の記憶に書けない（捕まえて無視し、呼び出し元の操作を止めない）
+        when: 端末の記憶に書けない
     examples:
-      ok: { request: { lastTopic: { id: 412, term: 公開鍵暗号方式, middle: 情報セキュリティ, middleNo: 11 } } }
+      ok: { request: { lastTopic: { id: 412, term: 公開鍵暗号方式, middle: 情報セキュリティ, middleNo: 11 } }, response: { lastTopic: { id: 412, term: 公開鍵暗号方式, middle: 情報セキュリティ, middleNo: 11 } } }
       storageBlocked: { request: { lastTopic: { id: 412, term: 公開鍵暗号方式, middle: 情報セキュリティ, middleNo: 11 } }, error: STORAGE_UNAVAILABLE }
 
   readLastTopic:

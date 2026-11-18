@@ -244,11 +244,12 @@ operations:
     auth: none
     summary: 学び側が発行したトークンを端末の記憶に保存する
     request: { type: object, required: [token], properties: { token: { type: string, minLength: 1, description: 学び側が発行した JWT の文字列 } } }
+    response: { type: object, required: [token], properties: { token: { type: string, minLength: 1, description: 書いたあとに読むと、書いたトークン } } }
     errors:
       - code: STORAGE_UNAVAILABLE
         when: 端末の記憶に書けない
     examples:
-      ok: { request: { token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0ZDJiOGExMCIsIm5hbWUiOiJ0YXJvIiwicm9sZSI6Ik1FTUJFUiIsImV4cCI6MTc5OTk5OTk5OX0.c2lnbmF0dXJlLXNhbXBsZQ } }
+      ok: { request: { token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0ZDJiOGExMCIsIm5hbWUiOiJ0YXJvIiwicm9sZSI6Ik1FTUJFUiIsImV4cCI6MTc5OTk5OTk5OX0.c2lnbmF0dXJlLXNhbXBsZQ }, response: { token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0ZDJiOGExMCIsIm5hbWUiOiJ0YXJvIiwicm9sZSI6Ik1FTUJFUiIsImV4cCI6MTc5OTk5OTk5OX0.c2lnbmF0dXJlLXNhbXBsZQ } }
       storageUnavailable: { request: { token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0ZDJiOGExMCIsIm5hbWUiOiJ0YXJvIiwicm9sZSI6Ik1FTUJFUiIsImV4cCI6MTc5OTk5OTk5OX0.c2lnbmF0dXJlLXNhbXBsZQ }, error: STORAGE_UNAVAILABLE }
 
   readToken:
@@ -256,19 +257,20 @@ operations:
     direction: outbound
     owned: true
     auth: none
-    summary: 端末の記憶にあるトークンを読む。無ければ null
+    summary: 端末の記憶にあるトークンを読む。無いか、端末の記憶が使えず読めなければ null
     response: { type: object, required: [token], properties: { token: { type: [string, "null"] } } }
     errors: []
     examples:
       ok: { response: { token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0ZDJiOGExMCIsIm5hbWUiOiJ0YXJvIiwicm9sZSI6Ik1FTUJFUiIsImV4cCI6MTc5OTk5OTk5OX0.c2lnbmF0dXJlLXNhbXBsZQ } }
       none: { response: { token: null } }
+      unreadable: { response: { token: null } }
 
   clearToken:
     transport: local-store
     direction: outbound
     owned: true
     auth: none
-    summary: この端末の記憶からトークンを捨てる。他の端末の記憶には触れない
+    summary: この端末の記憶からトークンを捨てる。他の端末の記憶には触れず、端末の記憶が使えず捨てられなければ何もしない
     response: { type: object, required: [token], properties: { token: { type: "null", description: 捨てたあとに読むと null } } }
     errors: []
     examples:
@@ -281,9 +283,10 @@ operations:
     auth: none
     summary: ログインの期限が切れて締め出されたことの印を、このタブを閉じるまで残す
     request: { type: object, required: [expired], properties: { expired: { type: string, const: "1" } } }
+    response: { type: object, required: [expired], properties: { expired: { type: boolean, description: 残したあとに期限切れの印を読むと true、端末の記憶が使えず残せなかったときは false（takeSessionExpired の expired と同じ読み） } } }
     errors: []
     examples:
-      ok: { request: { expired: "1" } }
+      ok: { request: { expired: "1" }, response: { expired: true } }
 
   takeSessionExpired:
     transport: local-store

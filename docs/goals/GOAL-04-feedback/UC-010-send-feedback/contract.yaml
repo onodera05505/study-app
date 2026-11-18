@@ -4,7 +4,7 @@
 x-uc: UC-010
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-06
+x-updated: 2026-11-18
 
 operations:
   # ---- 学び側（この配備。フィードバックの受け口） ----
@@ -94,11 +94,16 @@ operations:
     auth: none
     summary: 利用者が移った学びの画面を、添え先として端末の記憶に 1 件だけ置く
     request: { $ref: "#/schemas/LastPage" }
+    response:
+      type: object
+      required: [lastPage]
+      properties:
+        lastPage: { $ref: "#/schemas/LastPage", description: 書いたあとに読むと、書いた添え先 }
     errors:
       - code: STORAGE_UNAVAILABLE
-        when: 端末の記憶に書けない（捕まえて無視し、添え先を覚えないだけ）
+        when: 端末の記憶に書けない
     examples:
-      ok: { request: { path: /topics/412, label: 学習の単位の詳細 } }
+      ok: { request: { path: /topics/412, label: 学習の単位の詳細 }, response: { lastPage: { path: /topics/412, label: 学習の単位の詳細 } } }
       unavailable: { request: { path: /topics/412, label: 学習の単位の詳細 }, error: STORAGE_UNAVAILABLE }
 
   annotateLastPage:
@@ -114,12 +119,22 @@ operations:
         label: { type: string, description: 人が読む名前。論点名や問の位置を含む }
         topicId: { type: integer, minimum: 1 }
         questionId: { type: string, maxLength: 64, description: 受験の id と問の位置をつないだ値 }
+    response:
+      type: object
+      required: [lastPage]
+      properties:
+        lastPage:
+          description: 足したあとに読むと、覚えていた添え先に名前と論点・問題を重ねた物。添え先を覚えていなければ null のまま
+          anyOf:
+            - { $ref: "#/schemas/LastPage" }
+            - { type: "null" }
     errors:
       - code: STORAGE_UNAVAILABLE
-        when: 端末の記憶が読めない・書けない（捕まえて無視し、何も足さない）
+        when: 端末の記憶が読めない・書けない
     examples:
-      okTopic: { request: { label: 学習の単位「LTV」, topicId: 412 } }
-      okQuestion: { request: { label: 分野別の演習 の 3 問目, questionId: "51d0e9b7-6a24-4c83-9f15-7b2e0d8a43c6#2" } }
+      okTopic: { request: { label: 学習の単位「LTV」, topicId: 412 }, response: { lastPage: { label: 学習の単位「LTV」, topicId: 412 } } }
+      okQuestion: { request: { label: 分野別の演習 の 3 問目, questionId: "51d0e9b7-6a24-4c83-9f15-7b2e0d8a43c6#2" }, response: { lastPage: { label: 分野別の演習 の 3 問目, questionId: "51d0e9b7-6a24-4c83-9f15-7b2e0d8a43c6#2" } } }
+      noRecord: { request: { label: 学習の単位「LTV」, topicId: 412 }, response: { lastPage: null } }
       unavailable: { request: { label: 学習の単位「LTV」, topicId: 412 }, error: STORAGE_UNAVAILABLE }
 
   readLastPage:
@@ -127,7 +142,7 @@ operations:
     direction: outbound
     owned: true
     auth: none
-    summary: 端末の記憶にある添え先を読む。覚えていなければ null
+    summary: 端末の記憶にある添え先を読む。覚えていないか、覚えた値が LastPage の形に合わなければ null
     response:
       type: object
       required: [lastPage]
@@ -138,11 +153,12 @@ operations:
             - { type: "null" }
     errors:
       - code: STORAGE_UNAVAILABLE
-        when: 端末の記憶が読めない、または覚えた値が壊れている（捕まえて null を返す）
+        when: 端末の記憶が読めない
     examples:
       ok: { response: { lastPage: { path: /topics/412, label: 学習の単位「LTV」, topicId: 412 } } }
       okTopicThenQuestion: { response: { lastPage: { path: /topics/412, label: 学習の単位「LTV」 の 3 問目, topicId: 412, questionId: "51d0e9b7-6a24-4c83-9f15-7b2e0d8a43c6#2" } } }
       none: { response: { lastPage: null } }
+      broken: { response: { lastPage: null } }
       unavailable: { error: STORAGE_UNAVAILABLE }
 
   saveFeedbackDraft:
@@ -156,12 +172,17 @@ operations:
       required: [body]
       properties:
         body: { type: string, maxLength: 2000, description: 空文字のときは記憶から下書きを消す（受付後の片付けもこれ） }
+    response:
+      type: object
+      required: [body]
+      properties:
+        body: { type: string, maxLength: 2000, description: 書いたあとに読むと、書いた本文。消したあとは空文字 }
     errors:
       - code: STORAGE_UNAVAILABLE
-        when: 端末の記憶に書けない・消せない（捕まえて無視し、下書きを残さないだけ）
+        when: 端末の記憶に書けない・消せない
     examples:
-      ok: { request: { body: 単位「LTV」の 1÷解約率のところが分かりにく } }
-      cleared: { request: { body: "" } }
+      ok: { request: { body: 単位「LTV」の 1÷解約率のところが分かりにく }, response: { body: 単位「LTV」の 1÷解約率のところが分かりにく } }
+      cleared: { request: { body: "" }, response: { body: "" } }
       unavailable: { request: { body: 単位「LTV」の 1÷解約率のところが分かりにく }, error: STORAGE_UNAVAILABLE }
 
   readFeedbackDraft:
@@ -174,10 +195,10 @@ operations:
       type: object
       required: [body]
       properties:
-        body: { type: string, maxLength: 2000, description: 下書きが無い・読めないときは空文字 }
+        body: { type: string, maxLength: 2000, description: 下書きが無いときは空文字 }
     errors:
       - code: STORAGE_UNAVAILABLE
-        when: 端末の記憶が読めない（捕まえて空文字を返す）
+        when: 端末の記憶が読めない
     examples:
       ok: { response: { body: 単位「LTV」の 1÷解約率のところが分かりにく } }
       none: { response: { body: "" } }
