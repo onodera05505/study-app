@@ -103,12 +103,12 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 | --- | --- | --- |
 | `http`（学び側） | `src/server/index.ts` の default export（Hono の app。経路は `/api` の下） | 契約の `wire` から `Request` を組んで `app.request()` |
 | `http`（まなびば） | `portal/src/index.ts` の default export（同上） | 同上 |
-| `local-store`（画面の手元の保存） | `src/client/lib/` の export。名前は操作名の `read…` を `get…`、`save…` を `set…` に読み替え、ほかは操作名のまま | その関数を呼ぶ |
+| `local-store`（画面の手元の保存） | `src/client/lib/` の export。名前は操作名の `read…` を `get…`、`save…` を `set…` に読み替え、ほかは操作名のまま | その関数を呼ぶ。契約の `errors` に当たる失敗は、投げられた値の `code` で名前を読む |
 | 道具を回す操作 | `scripts/<操作名を snake_case にした名前>.py`（または `.sh`） | 子プロセスで回し、終了の状態・出力・書き出したファイルを見る |
 | 道具の中の読み書き（`read…`・`write…`） | その操作を `@operation` で持つ道具 | 道具を回し、契約が名指す置き場のファイルで見る |
 
-規則に従わない入口: `markSessionExpired` は `api`（`src/client/lib/api.ts`）、画面から出る `http` の `fetchVersionStamp` は `rememberBuild`・`checkForUpdate`（`src/client/lib/version.ts`）、
-下書きの読み書き `readFeedbackDraft`・`saveFeedbackDraft` は `src/client/pages/Feedback.tsx`。道具の名前と違う操作は
+規則に従わない入口: `markSessionExpired` は `api`（`src/client/lib/api.ts`）、画面から出る `http` の `fetchVersionStamp` は `rememberBuild`・`checkForUpdate`（`src/client/lib/version.ts`）。
+道具の名前と違う操作は
 `renderLearnerInstructions`（`render_prompts.py`）、`gradeLearnerAnswers`（`grade_learner.py`）、`listDeliveredMaterials`（`material_generations.py`）、
 `checkFigureSpecs`（`render_material_figures.py`）、`buildUnitInputs`（`build_rewrite_bundles.py`）、本番の確かめ 4 つ（`check_sso_prod.sh`）。
 
