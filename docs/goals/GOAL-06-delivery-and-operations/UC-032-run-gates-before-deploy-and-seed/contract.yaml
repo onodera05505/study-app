@@ -1,14 +1,14 @@
 # UC-032 の境界: 運用者が配備と投入の前に呼ぶ道具の入口 3 つ（登録簿の門・ソースの門・投入を本番の保存先へ流す手続き）の形。振る舞いは ./UC.md と同じ場所の REQ が持つ。
 # 読み方は ../../../adr/ADR-0008-local-tool-boundary.md（手元の道具の境界を local-store で読む）、共有語彙は ../../../_shared/components.yaml。
 # 入口は scripts/check_roadmap_registry.py・scripts/check_source.py・scripts/seed_remote.sh。request の各欄は同じ名前の引数で、learning だけは第 1 引数、seedRemote の local は第 2 引数の --local。
-# 断ったとき（errors）は終了コードが 0 でなく、門の判定も保存先への書き込みもしない。門が止めたときは response の exitCode が 1。
+# 断ったとき（errors）は標準出力に共有の形の ToolError（REQ-571）を出し、終了コードが 0 でなく、門の判定も保存先への書き込みもしない。門が止めたときは response の exitCode が 1。
 # 手続きの中で呼ぶ流す前の投入の検査と投入後の突き合わせの形は UC-027 の checkSeed と verifySeedRemote が正本。ここには再掲しない（R-101）。
 # 投入（学びの置き場の seed.sql）は作業ツリーに追跡されず、組み立て（UC-027 の buildSeed）で書き出す。seedRemote の ok の例は組み立てのあと、seedMissing の例は組み立てる前に回す。
 # 上限の値・登録簿の語と値・保存先の名前は値なので書かない（R-102）。正本は scripts/check_source.py の上限の定数、src/shared/targets.json、wrangler.jsonc の env.<学び>.d1_databases（ADR-0004）。
 x-uc: UC-032
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-17
+x-updated: 2026-11-18
 
 schemas:
   GateResult:

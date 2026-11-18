@@ -1,12 +1,13 @@
 # UC-019 の境界: 作り手が手元で呼ぶパックを作る入口と採点の入口、それらが読み書きするファイルの形。
 # 読み方は docs/adr/ADR-0008（手元の道具の境界を local-store で読む）。
-# この契約のパス（data・out・answers・explain・path・file）は、相対ならコマンドを呼んだ作業ディレクトリが起点。登録簿はリポジトリの src/shared/targets.json。
+# 読み書きの操作（direction: outbound）は ADR-0013 の読み: 操作ごとの関数が入口で、request の欄をキーワード引数で受け、response の形を返し、errors に当たる失敗は名前を code に持つ失敗として渡す。
+# この契約のパス（data・out・answers・explain・path・file）は、相対ならコマンドを呼んだ作業ディレクトリが起点。登録簿はリポジトリの src/shared/targets.json、学習者役への指示の雛形（readLearnerTemplate の path）はリポジトリの直下が起点。
 # 置き場の根は data/ と public/ を持つ場所で、リポジトリ（前置き無し）か、検査用の作り物 tests/fixtures/learner-pack/<名前>/ のどちらか。
 #   学びの置き場はその根の data/<学びの key>、配る本文の図の画像はその根の public/figures/materials/<学びの key> の下。学びの key は data の最後の段
 x-uc: UC-019
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-16
+x-updated: 2026-11-18
 
 schemas:
   PackSnapshot:
@@ -70,57 +71,54 @@ schemas:
       units: { type: array, items: { type: object, description: 欄の有無と型を問わない 1 行 } }
       overall: { type: object }
   ToolError:
-    type: object
-    description: 入口が断ったときに返す形。当たった物は、その失敗が挙げる物の欄だけを持つ
-    required: [error]
-    properties:
-      error:
-        type: object
-        required: [code, reason]
-        properties:
-          code: { type: string, enum: [INVALID_INPUT, NOT_FOUND, CONFLICT, INTERNAL] }
-          reason: { type: string, minLength: 1 }
-          units: { type: array, description: 配る本文の無い単位の ID, items: { type: integer, minimum: 1 } }
-          figures:
-            type: array
-            description: 当たった図（置き場所に無い・PNG に描けない・同じ PNG の名前になる）。属する単位の ID と本文の図の行の参照先の組
-            items:
-              type: object
-              required: [unit, ref]
-              properties:
-                unit: { type: integer, minimum: 1 }
-                ref: { $ref: "../../../_shared/components.yaml#/schemas/MaterialFigureSrc" }
-          lines:
-            type: array
-            description: 配信の置き場の図を指す前置きを含むのに図の行の形に合わない行（BR-054）
-            items:
-              type: object
-              required: [unit, line]
-              properties:
-                unit: { type: integer, minimum: 1 }
-                line: { type: string, minLength: 1, description: 配る本文に書かれたままの行 }
-          roadmapRows:
-            type: array
-            description: ロードマップの読めない行。何番目の行か、欠けるか型の違う欄の名前
-            items:
-              type: object
-              required: [index, fields]
-              properties:
-                index: { type: integer, minimum: 0 }
-                fields: { type: array, minItems: 1, items: { type: string } }
-          arguments: { type: array, description: 契約の引数の形の外にある引数（挙げ方は BR-055）, items: { type: string, minLength: 1 } }
-          qids: { type: array, description: 選択肢の外の答えを書いた問題, items: { type: string } }
-          placeholders: { type: array, description: 学習者役への指示の雛形の埋まらない差し込みの名前, items: { type: string, minLength: 1 } }
-          unreadable: { type: array, description: 無いか読めないファイル, items: { type: string } }
-          rows:
-            type: array
-            description: 自己申告の読めない行。当たった行をすべて、当たった条件とともに持つ
-            items:
-              type: object
-              required: [index, conditions]
-              properties:
-                index: { type: integer, minimum: 0, description: units の中の何番目の行か }
-                conditions: { type: array, minItems: 1, items: { type: string, enum: [missingId, idNotInteger, idNotInSnapshot, duplicateId, aliasConflict, valueOutOfRange] } }
+    description: 入口が断ったときに返す形。当たった物は、その失敗が挙げる物の欄だけを持つ。核（error の code と reason）は共有の形の ToolError、ここは名前の絞り込みと追加の欄
+    allOf:
+      - { $ref: "../../../_shared/components.yaml#/schemas/ToolError" }
+      - properties:
+          error:
+            properties:
+              code: { type: string, enum: [INVALID_INPUT, NOT_FOUND, CONFLICT, INTERNAL] }
+              units: { type: array, description: 配る本文の無い単位の ID, items: { type: integer, minimum: 1 } }
+              figures:
+                type: array
+                description: 当たった図（置き場所に無い・PNG に描けない・同じ PNG の名前になる）。属する単位の ID と本文の図の行の参照先の組
+                items:
+                  type: object
+                  required: [unit, ref]
+                  properties:
+                    unit: { type: integer, minimum: 1 }
+                    ref: { $ref: "../../../_shared/components.yaml#/schemas/MaterialFigureSrc" }
+              lines:
+                type: array
+                description: 配信の置き場の図を指す前置きを含むのに図の行の形に合わない行（BR-054）
+                items:
+                  type: object
+                  required: [unit, line]
+                  properties:
+                    unit: { type: integer, minimum: 1 }
+                    line: { type: string, minLength: 1, description: 配る本文に書かれたままの行 }
+              roadmapRows:
+                type: array
+                description: ロードマップの読めない行。何番目の行か、欠けるか型の違う欄の名前
+                items:
+                  type: object
+                  required: [index, fields]
+                  properties:
+                    index: { type: integer, minimum: 0 }
+                    fields: { type: array, minItems: 1, items: { type: string } }
+              arguments: { type: array, description: 契約の引数の形の外にある引数（挙げ方は BR-055）, items: { type: string, minLength: 1 } }
+              qids: { type: array, description: 選択肢の外の答えを書いた問題, items: { type: string } }
+              placeholders: { type: array, description: 学習者役への指示の雛形の埋まらない差し込みの名前, items: { type: string, minLength: 1 } }
+              unreadable: { type: array, description: 無いか読めないファイル, items: { type: string } }
+              rows:
+                type: array
+                description: 自己申告の読めない行。当たった行をすべて、当たった条件とともに持つ
+                items:
+                  type: object
+                  required: [index, conditions]
+                  properties:
+                    index: { type: integer, minimum: 0, description: units の中の何番目の行か }
+                    conditions: { type: array, minItems: 1, items: { type: string, enum: [missingId, idNotInteger, idNotInSnapshot, duplicateId, aliasConflict, valueOutOfRange] } }
   UnitRef:
     type: object
     required: [topic_id, term]
@@ -588,8 +586,9 @@ operations:
         path: { type: string, const: scripts/prompts/roadmap_learner.md }
     response:
       type: object
-      required: [headings, placeholders, byDayPlaceholders]
+      required: [text, headings, placeholders, byDayPlaceholders]
       properties:
+        text: { type: string, minLength: 1, description: 雛形の全文。差し込みと日で束ねる学びだけの塊は印のまま }
         headings: { type: array, description: 雛形の節の見出し（改訂履歴の節を含む）, items: { type: string, minLength: 1 } }
         placeholders: { type: array, description: "雛形の差し込み（{{名前}}）の名前。値は登録簿の学びの語（readRegistryLearning）と、日で束ねる学び（readRoadmap に group_by が無い）ではロードマップの days（readRoadmap）が埋め、既定値では埋めない", items: { type: string, minLength: 1 } }
         byDayPlaceholders: { type: array, description: "日で束ねる学びだけの塊（雛形で {{#byDay}} と {{/byDay}} に挟んだ文。行の中に置けて入れ子にしない）の中の差し込みの名前。日で束ねる学びでは塊の文を印を除いて出し、章で束ねる学び（readRoadmap の group_by が chapter）では塊を印ごと出さず、中の差し込みを埋めない", items: { type: string, minLength: 1 } }
@@ -616,6 +615,7 @@ operations:
       required: [roadmap]
       properties:
         roadmap: { type: boolean, description: ロードマップを持つ学びか }
+        brand: { type: string, minLength: 1, description: 登録簿の学びの名前。指示の差し込み targetName を roadmapSpec が持たないときの値 }
         roadmapSpec:
           type: object
           description: ロードマップを持つ学びだけ
@@ -628,7 +628,7 @@ operations:
     examples:
       ok:
         request: { key: itc }
-        response: { roadmap: true, roadmapSpec: { learnerRole: "あなたは文系の大学 3 年生です。IT の知識はスマホとレポート作成くらいで、プログラミングの経験はありません。\nIT コンサルの就活を考え始めたところで、業界の言葉は聞いたことがあっても説明できません。", goalVerb: 面接で示せる } }
+        response: { roadmap: true, roadmapSpec: { goalVerb: 面接で示せる } }
       notRoadmap:
         request: { key: ip }
         response: { roadmap: false }
@@ -798,7 +798,7 @@ operations:
         error: INVALID_INPUT
       ok:
         request: { data: data/eng }
-        response: { materials: [{ topic_id: 1, term: コンピュータの 5 つの働き, explanation: "**コンピュータの 5 つの働き**は…", detail: "### しくみ\n![…](/figures/materials/eng/1-1.svg)\n…" }] }
+        response: { materials: [{ topic_id: 1, term: コンピュータの 5 つの働き, explanation: "**コンピュータの 5 つの働き**は…" }] }
       missing:
         request: { data: data/ip }
         error: NOT_FOUND
@@ -844,7 +844,8 @@ operations:
       type: object
       required: [out, units]
       properties:
-        out: { type: string, minLength: 1 }
+        out: { type: string, minLength: 1, description: パックの出力先。書くファイルの親の置き場（出力先とその下）が無ければ作る }
+        target: { type: string, description: 一覧の題に添える学びの名前（ロードマップの target）。省略すると題に名前を添えない }
         units:
           type: array
           description: 学ぶ順。各行に、学習者役への指示が名指す括弧の形で単位の ID を出し、属する回を添える
@@ -876,7 +877,7 @@ operations:
       required: [out, file, topic_id, term, field, middle, explanation, detail]
       additionalProperties: false
       properties:
-        out: { type: string, minLength: 1 }
+        out: { type: string, minLength: 1, description: パックの出力先。書くファイルの親の置き場（出力先とその下）が無ければ作る }
         file: { type: string, pattern: "^units/[0-9]{2,}_.+\\.md$" }
         topic_id: { type: integer, minimum: 1 }
         term: { type: string }
@@ -888,7 +889,7 @@ operations:
     errors: []
     examples:
       ok:
-        request: { out: ../learner_packs/eng_c8, file: "units/01_コンピュータの_5_つの働き.md", topic_id: 1, term: コンピュータの 5 つの働き, field: コンピュータの仕組み, middle: コンピュータを形づくる部品, explanation: "**コンピュータの 5 つの働き**は…", detail: "### しくみ\n![…](../figures/1-1.png)\n…" }
+        request: { out: ../learner_packs/eng_c8, file: "units/01_コンピュータの_5_つの働き.md", topic_id: 1, term: コンピュータの 5 つの働き, field: コンピュータの仕組み, middle: コンピュータを形づくる部品, explanation: "**コンピュータの 5 つの働き**は…", detail: "![…](../figures/1-1.png)" }
         response: { path: "units/01_コンピュータの_5_つの働き.md" }
 
   writePackQuiz:
@@ -901,7 +902,7 @@ operations:
       type: object
       required: [out, answerFormat, questions]
       properties:
-        out: { type: string, minLength: 1 }
+        out: { type: string, minLength: 1, description: パックの出力先。書くファイルの親の置き場（出力先とその下）が無ければ作る }
         answerFormat:
           description: ファイルの先頭に出す書き方。units の topic_id を必須として示し、answers は学習者役が書く欄なので作り手は空にする
           allOf:
@@ -938,7 +939,7 @@ operations:
       type: object
       required: [out, terms]
       properties:
-        out: { type: string, minLength: 1 }
+        out: { type: string, minLength: 1, description: パックの出力先。書くファイルの親の置き場（出力先とその下）が無ければ作る }
         terms: { type: array, minItems: 1, items: { type: string, minLength: 1 } }
     response: { type: object, required: [path], properties: { path: { type: string, const: explain.md } } }
     errors: []
@@ -1174,21 +1175,14 @@ operations:
     summary: 雛形から描き出した学びの学習者役への指示を書く
     request:
       type: object
-      required: [path, headings, answerFormat]
+      required: [path, body]
+      additionalProperties: false
       properties:
         path: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+/prompts/roadmap_learner\\.md$" }
-        headings:
-          type: array
-          description: 指示の節の見出し。雛形の改訂履歴の節を持たない
-          items: { type: string, minLength: 1, not: { const: "## 改訂履歴" } }
-        answerFormat:
-          description: 指示が示す答えと自己申告の書き方。units の topic_id を必須とする
-          allOf:
-            - { $ref: "#/schemas/LearnerAnswers" }
-            - { properties: { units: { type: array, minItems: 1 } } }
+        body: { type: string, minLength: 1, description: renderLearnerInstructions が雛形から描き出した指示の全文。そのまま書く。雛形の改訂履歴の節を持たず、答えと自己申告の書き方（LearnerAnswers の形で units の topic_id を必須とする）を示す }
     response: { type: object, required: [path], properties: { path: { type: string, pattern: "^(tests/fixtures/learner-pack/[a-z0-9-]+/)?data/[a-z]+/prompts/roadmap_learner\\.md$" } } }
     errors: []
     examples:
       ok:
-        request: { path: data/eng/prompts/roadmap_learner.md, headings: ["# 学習者ロール", "## やること", "## 守ること"], answerFormat: { answers: { t1-1: ア }, units: [{ topic_id: 1, understood: 3, minutes: 5, confusing: "", unknown_terms: [] }] } }
+        request: { path: data/eng/prompts/roadmap_learner.md, body: "# 学習者ロール" }
         response: { path: data/eng/prompts/roadmap_learner.md }

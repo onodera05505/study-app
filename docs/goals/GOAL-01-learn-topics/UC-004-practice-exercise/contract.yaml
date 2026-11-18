@@ -213,13 +213,13 @@ operations:
             idx: 3
             text: "インターネットの検索エンジンの検索結果において，自社のホームページの表示順位を，より上位にしようとするための技法や手法の総称はどれか。"
             choices: { "ア": "DNS", "イ": "RSS", "ウ": "SEO", "エ": "SNS" }
-            citation: "出典：平成30年度 秋期 ITパスポート試験 問3"
+            citation: "出典：令和3年度 ITパスポート試験 問18"
             modified: false
             hasFigure: false
             figureDescription: null
             figureImage: null
             timesAsked: 2
-            otherCitations: ["出典：令和3年度 ITパスポート試験 問18"]
+            otherCitations: ["出典：平成30年度 秋期 ITパスポート試験 問3"]
           answered: 3
           remainingSec: null
           finished: false
@@ -530,13 +530,11 @@ operations:
       ok:
         request: { id: "3f2a7c1e-5b84-4d6a-9e10-2c7b8a4f0d55" }
         response:
-          session: { id: "3f2a7c1e-5b84-4d6a-9e10-2c7b8a4f0d55", kind: mock, status: completed, sourceExam: 2024r06, scopeLabel: 令和6年度 を通しで受験, timeLimitSec: 7200, questionCount: 100, correctCount: 64, startedAt: 1759276800, finishedAt: 1759283500 }
-          overall: { total: 100, correct: 64, pct: 64 }
+          session: { id: "3f2a7c1e-5b84-4d6a-9e10-2c7b8a4f0d55", kind: mock, status: completed, sourceExam: 2024r06, scopeLabel: 令和6年度 を通しで受験, timeLimitSec: 7200, questionCount: 1, correctCount: 0, startedAt: 1759276800, finishedAt: 1759283500 }
+          overall: { total: 1, correct: 0, pct: 0 }
           fields:
-            - { field: ストラテジ系, total: 35, correct: 20, pct: 57 }
-            - { field: マネジメント系, total: 20, correct: 11, pct: 55 }
-            - { field: テクノロジ系, total: 45, correct: 33, pct: 73 }
-          passed: true
+            - { field: テクノロジ系, total: 1, correct: 0, pct: 0 }
+          passed: false
           expired: false
           criteria: { overallPct: 60, fieldPct: 30 }
           approximation: IPA の合否は項目応答理論（IRT）で算出され換算式が非公開のため、ここでの点数は素点による目安です。

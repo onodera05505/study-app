@@ -235,7 +235,7 @@ operations:
     examples:
       ok:
         request: { path: data/ip/materials_v3/expl_01.json }
-        response: { materials: [{ topic_id: 1, term: 個人情報保護法, explanation: "**個人情報保護法**は…", detail: "### しくみ\n…" }] }
+        response: { materials: [{ topic_id: 1, term: 個人情報保護法, explanation: "**個人情報保護法**は…" }] }
       missing:
         request: { path: data/ip/materials_v3/expl_99.json }
         error: NOT_FOUND

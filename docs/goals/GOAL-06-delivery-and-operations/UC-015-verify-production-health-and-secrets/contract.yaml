@@ -6,12 +6,36 @@
 #   検査がその 2 つの経路を叩く形（REQ-350）はこの契約の probeRetiredPasswordRoute が正本
 # REQ-223（認証の要る応答を認証なしで叩くと断られる）の形は、各 UC の auth: bearer / session の operation の
 #   UNAUTHENTICATED が持つ。ここには再掲しない（R-101）
-# 配備ごとの URL・Pages プロジェクト名・必要な秘密の名前・配備先のアカウントは値なので書かない（R-102）。
-#   値の正本は scripts/pages_projects.json と scripts/check_sso_prod.sh
+# 配備ごとの URL・Pages プロジェクト名・必要な秘密の名前・配備先のアカウントは値なので形（request・response の制約）に書かない（R-102）。
+#   値の正本は scripts/pages_projects.json と scripts/check_sso_prod.sh。例に現れるヘッダと秘密の名前は、その正本の値の写し
 x-uc: UC-015
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-17
+x-updated: 2026-11-19
+
+schemas:
+  CheckProblems:
+    description: 本番の検査が契約の errors に当たる問題を 1 つ以上挙げるとき、標準出力の最後の行に出す機械向けの 1 行（REQ-578）。error.code は problems のうち code を持つ最初の項目の名前。各操作の失敗例の名前は、その操作の名前と request の deployment（と path・route）が合う problems の項目の code
+    allOf:
+      - { $ref: "../../../_shared/components.yaml#/schemas/ToolError" }
+      - properties:
+          error:
+            required: [problems]
+            properties:
+              code: { type: string, enum: [UPSTREAM_UNAVAILABLE, FORBIDDEN] }
+              problems:
+                type: array
+                minItems: 1
+                description: 人が読む一覧に挙げた問題のすべて。応答の値で見つけた問題（足りない秘密の名前・欠けたヘッダ・閉じていない経路・SSO の設定）は code を持たない
+                items:
+                  type: object
+                  required: [deployment, operation]
+                  properties:
+                    deployment: { type: string, minLength: 1, description: 配備の key（request の deployment と同じ値） }
+                    operation: { type: string, minLength: 1, description: その問題を見た操作の名前（借りる UC-013 の getAuthConfig を含む） }
+                    path: { type: string, description: openDeploymentEntry の問題だけが持つ。request の path と同じ値 }
+                    route: { type: string, description: probeRetiredPasswordRoute の問題だけが持つ。request の route と同じ値 }
+                    code: { type: string, enum: [UPSTREAM_UNAVAILABLE, FORBIDDEN], description: 契約の errors に当たる問題だけが持つ断りの種類の名前 }
 
 operations:
   checkDeploymentHealth:
@@ -180,7 +204,7 @@ operations:
       - code: UPSTREAM_UNAVAILABLE
         when: 一覧の取得が失敗する（配備先に届かない・プロジェクトが見つからない・ログインしていない・ログイン中のアカウントが分からない）
     examples:
-      ok: { request: { deployment: ip } }
+      ok: { request: { deployment: ip }, response: { names: [SSO_SECRET, JWT_SECRET] } }
       noSecretsConfigured: { request: { deployment: itc }, response: { names: [] } }
       wrongAccount: { request: { deployment: ip }, error: FORBIDDEN }
       listUnavailable: { request: { deployment: ip }, error: UPSTREAM_UNAVAILABLE }

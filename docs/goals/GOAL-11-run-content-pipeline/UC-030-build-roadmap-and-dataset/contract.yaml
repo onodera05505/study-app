@@ -1,11 +1,11 @@
 # UC-030 の境界契約。振る舞いと規則は ./UC.md と同じ場所の REQ が持つ。
 # 読み方の決まりは ../../../adr/ADR-0001-boundary-reading.md と ../../../adr/ADR-0008-local-tool-boundary.md、共有語彙は ../../../_shared/components.yaml。
 # この契約が持つのは、作り手が手元で呼ぶ入口 3 つ（scripts/build_roadmap.py・scripts/apply_summary_override.py・scripts/build_target_dataset.py）。
-# パスは相対ならコマンドを呼んだ作業ディレクトリが起点。断ったときは終了コード 1 で、何も書き出さずに理由を標準出力に出す。
+# パスは相対ならコマンドを呼んだ作業ディレクトリが起点。断ったときは終了コード 1 で、何も書き出さずに、共有の形の ToolError（../../../_shared/components.yaml。REQ-571）を標準出力に出す。
 x-uc: UC-030
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-17
+x-updated: 2026-11-18
 
 schemas:
   Done:

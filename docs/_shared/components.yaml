@@ -46,6 +46,17 @@ schemas:
     required: [ok]
     properties:
       ok: { type: boolean, const: true }
+  ToolError:
+    type: object
+    description: 作り手の道具が契約の errors に当たって止まるときに標準出力へ出す形の核（ADR-0012）。UC ごとの名前の絞り込みと追加の欄は各契約が持つ
+    required: [error]
+    properties:
+      error:
+        type: object
+        required: [code, reason]
+        properties:
+          code: { type: string, minLength: 1, description: 断りの種類の名前（errorCodes の名前のどれか。BR-064） }
+          reason: { type: string, minLength: 1, description: 止まった理由の文 }
   QuestionSnapshot:
     type: object
     required: [idx, text, choices, citation, modified, hasFigure]

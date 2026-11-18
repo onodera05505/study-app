@@ -210,7 +210,7 @@ operations:
     examples:
       ok:
         request: { path: data/itc/materials/bundle_01.json }
-        response: { materials: [{ topic_id: 1, term: ITコンサルタントの仕事, explanation: "**ITコンサルタントの仕事**は…", detail: "### しくみ\n…" }] }
+        response: { materials: [{ topic_id: 1, term: ITコンサルタントの仕事, explanation: "**ITコンサルタントの仕事**は…" }] }
       missing:
         request: { path: data/itc/materials/bundle_99.json }
         error: NOT_FOUND

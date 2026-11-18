@@ -4,7 +4,7 @@
 x-uc: UC-002
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-15
+x-updated: 2026-11-18
 
 operations:
   listFields:
@@ -43,7 +43,6 @@ operations:
         response:
           fields:
             - { field: "テクノロジ系", topics: 312, questions: 1680, understood: 40, partly: 12, untouched: 30, unanswered: 230 }
-            - { field: "マネジメント系", topics: 96, questions: 440, understood: 8, partly: 4, untouched: 6, unanswered: 78 }
       unauthenticated:
         request: { authorization: "" }
         error: UNAUTHENTICATED

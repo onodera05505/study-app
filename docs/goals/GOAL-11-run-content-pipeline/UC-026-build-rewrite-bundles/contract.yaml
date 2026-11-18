@@ -1,23 +1,21 @@
 # UC-026 の境界: 作り手が手元で呼ぶ束を作る道具の入口 2 つと、道具が書き出す束のファイルの形。
 # 読み方は docs/adr/ADR-0008（手元の道具の境界を local-store で読む）。パスは相対ならコマンドを呼んだ作業ディレクトリが起点。
+# 読み書きの操作（direction: outbound）は ADR-0013 の読み: 操作ごとの関数が入口で、request の欄をキーワード引数で受け、response の形を返し、errors に当たる失敗は名前を code に持つ失敗として渡す。
 # 入口は scripts/build_rewrite_bundles.py（単元の入力の束は --unit-inputs）。単元の構成の形と判定は UC-024 の契約が持つ。
 x-uc: UC-026
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-15
+x-updated: 2026-11-18
 
 schemas:
   ToolError:
-    type: object
-    description: 入口が断ったときに標準出力へ 1 つだけ出す形。終了コードは 2
-    required: [error]
-    properties:
-      error:
-        type: object
-        required: [code, reason]
-        properties:
-          code: { type: string, enum: [INVALID_INPUT, NOT_FOUND, CONFLICT] }
-          reason: { type: string, minLength: 1 }
+    description: 入口が断ったときに標準出力へ 1 つだけ出す形。終了コードは 2。核（error の code と reason）は共有の形の ToolError、ここは名前の絞り込みと追加の欄
+    allOf:
+      - { $ref: "../../../_shared/components.yaml#/schemas/ToolError" }
+      - properties:
+          error:
+            properties:
+              code: { type: string, enum: [INVALID_INPUT, NOT_FOUND, CONFLICT] }
   BuildRequest:
     type: object
     required: [data, out]
@@ -193,6 +191,8 @@ operations:
               detail: { type: string }
     response: { type: object, required: [path], properties: { path: { type: string } } }
     errors:
+      - code: CONFLICT
+        when: 書き出す先のファイルが既にある
       - code: STORAGE_UNAVAILABLE
         when: 書き出せない
     examples:
@@ -204,10 +204,13 @@ operations:
           field: テクノロジ系
           major: 技術要素
           topics:
-            - { topic_id: 214, term: 関係データベース, syllabus_item: 54, syllabus_item_name: データベース方式, question_count: 3, related_terms: [], explanation: "**関係データベース**とは、…です。", detail: "### 表と行と列\n…" }
+            - { topic_id: 214, term: 関係データベース, syllabus_item: 54, syllabus_item_name: データベース方式, question_count: 3, related_terms: [], explanation: "**関係データベース**とは、…です。", detail: "### 表と行と列" }
         response: { path: data/ip/unit_inputs/21.json }
+      exists:
+        request: { path: data/ip/unit_inputs/21.json, unit_no: 21, unit: データベース, field: テクノロジ系, major: 技術要素, topics: [{ topic_id: 214, term: 関係データベース, syllabus_item: 54, syllabus_item_name: データベース方式, question_count: 0, related_terms: [], explanation: "…", detail: "…" }] }
+        error: CONFLICT
       unwritable:
-        request: { path: /unwritable/21.json, unit_no: 21, unit: データベース, field: テクノロジ系, major: 技術要素, topics: [] }
+        request: { path: /unwritable/21.json, unit_no: 21, unit: データベース, field: テクノロジ系, major: 技術要素, topics: [{ topic_id: 214, term: 関係データベース, syllabus_item: 54, syllabus_item_name: データベース方式, question_count: 0, related_terms: [], explanation: "…", detail: "…" }] }
         error: STORAGE_UNAVAILABLE
 
   writeRewriteBundle:
@@ -305,6 +308,8 @@ operations:
               figures: { type: array, description: 図の仕様の figures の写し, items: { type: object } }
     response: { type: object, required: [path], properties: { path: { type: string } } }
     errors:
+      - code: CONFLICT
+        when: 書き出す先のファイルが既にある
       - code: STORAGE_UNAVAILABLE
         when: 書き出せない
     examples:
@@ -328,12 +333,15 @@ operations:
               question_count: 5
               related_terms: []
               prerequisites: [{ topic_id: 214, term: 関係データベース }]
-              current: { generation: materials_v3, explanation: "**選択・結合**とは、…です。", detail: "### しくみ\n…" }
+              current: { generation: materials_v3, explanation: "**選択・結合**とは、…です。", detail: "### しくみ" }
               questions: [{ question_id: 2026r08-q97, content_key: 50bfe9f96eabc25f, stem: "…", choices: { "ア": "…" }, answer: "イ" }]
               question_explanations: [{ question_id: 2026r08-q97, content_key: 50bfe9f96eabc25f, correct_reason: "…", choices: [] }]
               figure_file: data/ip/material_figures/201.json
               figures: []
         response: { path: data/ip/rewrite_bundles/21-2.json }
+      exists:
+        request: { path: data/ip/rewrite_bundles/21-2.json, bundle: "21-2", unit_no: 21, unit: データベース, overview: "…", group: { index: 2, name: 表を操作する, description: "…" }, groups_in_unit: [], owners: [], topics: [{ topic_id: 201, term: 選択・結合, field: テクノロジ系, major: 技術要素, middle: データベース, syllabus_item_name: データ操作, question_count: 0, related_terms: [], prerequisites: [], current: { generation: materials_v3, explanation: "…", detail: "…" }, questions: [], question_explanations: [], figure_file: null, figures: [] }] }
+        error: CONFLICT
       unwritable:
-        request: { path: /unwritable/21-2.json, bundle: "21-2", unit_no: 21, unit: データベース, overview: "…", group: { index: 2, name: 表を操作する, description: "…" }, groups_in_unit: [], owners: [], topics: [] }
+        request: { path: /unwritable/21-2.json, bundle: "21-2", unit_no: 21, unit: データベース, overview: "…", group: { index: 2, name: 表を操作する, description: "…" }, groups_in_unit: [], owners: [], topics: [{ topic_id: 201, term: 選択・結合, field: テクノロジ系, major: 技術要素, middle: データベース, syllabus_item_name: データ操作, question_count: 0, related_terms: [], prerequisites: [], current: { generation: materials_v3, explanation: "…", detail: "…" }, questions: [], question_explanations: [], figure_file: null, figures: [] }] }
         error: STORAGE_UNAVAILABLE

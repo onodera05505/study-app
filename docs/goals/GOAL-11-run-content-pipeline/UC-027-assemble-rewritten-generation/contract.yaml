@@ -6,7 +6,7 @@
 x-uc: UC-027
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-15
+x-updated: 2026-11-18
 
 schemas:
   GenerationCounts:
@@ -15,16 +15,13 @@ schemas:
     propertyNames: { pattern: "^materials(_v[0-9]+)?$" }
     additionalProperties: { type: integer, minimum: 1 }
   ToolError:
-    type: object
-    description: 入口が断ったときに標準出力へ 1 つだけ出す形。終了コードは 0 でない
-    required: [error]
-    properties:
-      error:
-        type: object
-        required: [code, reason]
-        properties:
-          code: { type: string, enum: [INVALID_INPUT, NOT_FOUND, CONFLICT] }
-          reason: { type: string, minLength: 1 }
+    description: 入口が断ったときに標準出力へ 1 つだけ出す形。終了コードは 0 でない。核（error の code と reason）は共有の形の ToolError、ここは名前の絞り込みと追加の欄
+    allOf:
+      - { $ref: "../../../_shared/components.yaml#/schemas/ToolError" }
+      - properties:
+          error:
+            properties:
+              code: { type: string, enum: [INVALID_INPUT, NOT_FOUND, CONFLICT] }
 
 operations:
   buildSeed:
@@ -60,7 +57,7 @@ operations:
     examples:
       ok:
         request: { data: data/ip }
-        response: { exitCode: 0, output: data/ip/seed.sql, topicsByGeneration: { materials_v3: 500, materials_v4: 32 }, units: 2 }
+        response: { exitCode: 0, output: data/ip/seed.sql }
       unchanged:
         request: { data: data/fe }
         response: { exitCode: 0, output: data/fe/seed.sql, topicsByGeneration: { materials_v3: 315 }, units: 0 }
@@ -111,7 +108,7 @@ operations:
     examples:
       ok:
         request: { data: data/ip }
-        response: { exitCode: 0, figures: 709, topicsByGeneration: { materials_v3: 500, materials_v4: 32 }, problems: [] }
+        response: { exitCode: 0, problems: [] }
       withProblems:
         request: { data: data/ip, only: [205], dryRun: true }
         response: { exitCode: 1, figures: 0, topicsByGeneration: { materials_v4: 1 }, problems: ["[205.json] 論点 205 図 1: after '### しくみ' が教材に無い"] }
@@ -183,7 +180,7 @@ operations:
     examples:
       ok:
         request: { learning: ip }
-        response: { exitCode: 0, topics: 532, topicsByGeneration: { materials_v3: 500, materials_v4: 32 } }
+        response: { exitCode: 0 }
       unknownLearning:
         request: { learning: zzz }
         error: INVALID_INPUT
@@ -303,11 +300,7 @@ operations:
     examples:
       ok:
         request: { data: data/ip }
-        response:
-          exitCode: 0
-          topicsByGeneration: { materials_v3: 500, materials_v4: 32 }
-          materials:
-            - { topic_id: 201, term: 選択・結合, explanation: "**選択・結合**とは、…です。", detail: "### しくみ\n…", _generation: materials_v4, _file: 21-2.json }
+        response: { exitCode: 0, topicsByGeneration: {} }
       refusalOnlyPasses:
         request: { data: data/ip, registered: true, refusalOnly: true }
         response: { exitCode: 0 }

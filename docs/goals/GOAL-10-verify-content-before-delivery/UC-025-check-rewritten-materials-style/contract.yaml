@@ -1,10 +1,11 @@
 # UC-025 の境界: 作り手が手元で呼ぶ様式の門の入口 1 つと、門が読むファイル（書き直した世代の教材・図の仕様）の形。
 # 読み方は docs/adr/ADR-0008（手元の道具の境界を local-store で読む）。パスは相対ならコマンドを呼んだ作業ディレクトリが起点。
+# 読み書きの操作（direction: outbound）は ADR-0013 の読み: 操作ごとの関数が入口で、request の欄をキーワード引数で受け、response の形を返し、errors に当たる失敗は名前を code に持つ失敗として渡す。
 # 入口は scripts/check_material_style.py（--data・--dir）。単元の構成の形と判定は UC-024 の契約が持つ。
 x-uc: UC-025
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-15
+x-updated: 2026-11-18
 
 schemas:
   Finding:
@@ -15,16 +16,13 @@ schemas:
       where: { type: string, minLength: 1, description: ファイル・単元・論点・図・箇所のどれか。まとまりを挙げるときは「まとまり n」で、n は学ぶ順の 1 始まり（束の名前と同じ数え方） }
       reason: { type: string, minLength: 1 }
   ToolError:
-    type: object
-    description: 入口が断ったときに標準出力へ 1 つだけ出す形。終了コードは 2（止める理由ありの 1 と分ける）
-    required: [error]
-    properties:
-      error:
-        type: object
-        required: [code, reason]
-        properties:
-          code: { type: string, enum: [INVALID_INPUT, NOT_FOUND] }
-          reason: { type: string, minLength: 1 }
+    description: 入口が断ったときに標準出力へ 1 つだけ出す形。終了コードは 2（止める理由ありの 1 と分ける）。核（error の code と reason）は共有の形の ToolError、ここは名前の絞り込みと追加の欄
+    allOf:
+      - { $ref: "../../../_shared/components.yaml#/schemas/ToolError" }
+      - properties:
+          error:
+            properties:
+              code: { type: string, enum: [INVALID_INPUT, NOT_FOUND] }
   Limits:
     type: object
     description: 門が使った値
@@ -124,7 +122,7 @@ operations:
           exitCode: 1
           topics: 8
           stops:
-            - { kind: explanationFigures, where: "material_figures/105.json", reason: "短い説明の直後に置く図が 2 枚で上限 1 を超える" }
+            - { kind: explanationFigures, where: "material_figures/105.json", reason: "短い説明の直後に置く図が 2 枚（図 1・2）で上限 1 を超える" }
           warnings:
             - { kind: examPhrase, where: "materials_v4/05-1.json topic 105 explanation", reason: "「試験では」が混同しやすい用語の見出しの外にある" }
           limits:
@@ -230,7 +228,7 @@ operations:
     examples:
       ok:
         request: { path: data/ip/materials_v4/21-2.json }
-        response: { bundle: "21-2", materials: [{ topic_id: 201, term: 選択・結合, explanation: "**選択・結合**とは、…です。", detail: "### 3 つの関係演算の違い\n…" }] }
+        response: { bundle: "21-2", materials: [{ topic_id: 201, term: 選択・結合, explanation: "**選択・結合**とは、…です。" }] }
       missing:
         request: { path: data/ip/materials_v4/21-9.json }
         error: NOT_FOUND
