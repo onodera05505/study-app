@@ -33,6 +33,7 @@
     "typecheck": "npm run typecheck",
     "lint": "python3 scripts/check_source.py && python3 scripts/check_docs.py",
     "test": "npx vitest run",
+    "contract_adapter": "npx tsx scripts/contract_adapter/main.ts",
     "system": {
       "none": "シナリオのうち vitest で走る物は test に含まれる。API に当てる物（scripts/check_api.sh）はローカルに wrangler dev を立てるので、終了ごとには回さず配備の門（deploy-pages.sh）で回す"
     }
@@ -96,6 +97,7 @@
       "scripts/targets.py",
       "scripts/verify_seed_remote.py",
       "scripts/check_render.sh",
+      "scripts/contract_adapter/**",
       "portal/static/app.js"
     ],
     "support_dirs": [
@@ -135,6 +137,7 @@
       "!scripts/check_render.sh",
       "!scripts/check_api.py",
       "!scripts/check_portal_api.py",
+      "!scripts/contract_adapter/**",
       "portal/static/**",
       "!portal/static/app.js"
     ],
