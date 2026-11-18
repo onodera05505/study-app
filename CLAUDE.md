@@ -104,13 +104,16 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 | `http`（学び側） | `src/server/index.ts` の default export（Hono の app。経路は `/api` の下） | 契約の `wire` から `Request` を組んで `app.request()` |
 | `http`（まなびば） | `portal/src/index.ts` の default export（同上） | 同上 |
 | `local-store`（画面の手元の保存） | `src/client/lib/` の export。名前は操作名の `read…` を `get…`、`save…` を `set…` に読み替え、ほかは操作名のまま | その関数を呼ぶ。契約の `errors` に当たる失敗は、投げられた値の `code` で名前を読む |
-| 道具を回す操作 | `scripts/<操作名を snake_case にした名前>.py`（または `.sh`） | 子プロセスで回し、終了の状態・出力・書き出したファイルを見る |
-| 道具の中の読み書き（`read…`・`write…`） | その操作を `@operation` で持つ道具 | 道具を回し、契約が名指す置き場のファイルで見る |
+| 道具を回す操作 | `scripts/<操作名を snake_case にした名前>.py`（または `.sh`） | 子プロセスで回し、終了の状態・出力・書き出したファイルを見る。断りの名前は、標準出力の全体を JSON として読み（読めなければ最後の空でない行を読む）、その `error.code` で読む |
+| 道具の中の読み書き（`read…`・`write…`） | `scripts/` の Python の関数。その操作の `@operation` を直上に持ち（1 操作に 1 か所。ファイルは注釈の行から引く）、名前は操作名を snake_case にした物（[`ADR-0013`](docs/adr/ADR-0013-tool-io-operations-as-functions.md)） | 契約の `request` の項目をその名前のままキーワード引数で渡して呼び、返り値を `response` として読む。契約の `errors` に当たる失敗は、投げられた値の `code` で名前を読む |
 
-規則に従わない入口: `markSessionExpired` は `api`（`src/client/lib/api.ts`）、画面から出る `http` の `fetchVersionStamp` は `rememberBuild`・`checkForUpdate`（`src/client/lib/version.ts`）。
+規則に従わない入口: `markSessionExpired` は `api`（`src/client/lib/api.ts`）、画面から出る `http` の `fetchVersionStamp` は `rememberBuild`・`checkForUpdate`（`src/client/lib/version.ts`）、
+まなびばの `listLearnings` は `createApp`（`portal/src/index.ts`。学びの登録簿の並びを受けて app を組む。default export はリポジトリの登録簿で組んだ物）。
 道具の名前と違う操作は
 `renderLearnerInstructions`（`render_prompts.py`）、`gradeLearnerAnswers`（`grade_learner.py`）、`listDeliveredMaterials`（`material_generations.py`）、
 `checkFigureSpecs`（`render_material_figures.py`）、`buildUnitInputs`（`build_rewrite_bundles.py`）、本番の確かめ 4 つ（`check_sso_prod.sh`）。
+契約の実例を実装に渡す `answerContractExamples` は `scripts/contract_adapter/main.ts`（`npx tsx` で回す。標準入力の 1 行が 1 例）。
+契約の実例の確かめを回す入口は `npm run contract-run`（引数はそのまま原本の contract-run に渡る）。
 
 ## スタックの規約からの逸脱
 
