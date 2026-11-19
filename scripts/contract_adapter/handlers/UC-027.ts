@@ -13,7 +13,8 @@
  * - planStops: 単元の構成の 1 つに、実在しない論点を足す（単元の構成の門の止める理由）
  * - withProblems・afterMissing: 論点 205 の図 1 の差し込み位置を、配る本文の教材に無い見出し `### しくみ` にする
  * - checkSeed の withProblems: 出典の試験名を登録簿の名前と違う名前にして組み立てた投入（--exam-name・--out）
- * - verifySeedRemote: ok は手元の保存先に組み立てた投入を流した状態、mismatch は本番の保存先（偽物）に何も流していない状態
+ * - verifySeedRemote: ok は手元の保存先に組み立てた投入を流した状態、mismatch は本番の保存先（偽物）に何も流していない状態、
+ *   seedMissing は突き合わせる投入が無い状態（投入を組み立てず、渡した投入のファイルも置かない）
  */
 
 import { copyFile, readdir, readFile } from 'node:fs/promises'
@@ -173,6 +174,9 @@ const verifySeedRemote: Operation = (line) => {
         await buildSeedIn(s, line, 'data/ip')
         return answerOf(await run(s), [0, 1])
       })
+    case 'seedMissing':
+      // 学びの置き場の写しは投入を持たず、渡した投入のファイルも置かない
+      return inShadow({ learnings: ['ip'] }, async (s) => answerOf(await run(s), [0, 1]))
     case 'unknownLearning':
       return inShadow({ learnings: ['ip'] }, async (s) => {
         await buildSeedIn(s, line, 'data/ip')

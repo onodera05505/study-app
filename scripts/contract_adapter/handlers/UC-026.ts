@@ -12,6 +12,7 @@
  * - outputExists・outputExistsBeforePlanMissing（buildRewriteBundles）: 出力先に書き直しの束の名前のファイル 21-1.json がある
  * - planStops: 単元 23 の構成で論点 233 がどのまとまりにも入っていない
  * - answerMissing: 正解表に過去問 2019h31h の 7 の正解が無い
+ * - writeFailed: 出力先の位置にふつうのファイルがあり、出力先を作れない（束を書き出せない）
  * - unknownLearning（zzz）・notQualification（itc）: 基の学びと同じ形
  * - syllabusMissing（fe）: 論点の一覧はあり、シラバスが無い。syllabusUnreadable（ap）: シラバスが JSON として読めない
  */
@@ -119,6 +120,10 @@ const REWRITE_BUNDLES: Record<string, Prepare> = {
   answerMissing: (shadow, key) => learning(shadow, key, { answerMissing: true }),
   planMissingWhenUnitsOmitted: plain,
   outputExistsBeforePlanMissing: existing('21-1.json'),
+  writeFailed: async (shadow, key, out) => {
+    await learning(shadow, key)
+    await shadow.write(out, '出力先の位置にあるふつうのファイル')
+  },
 }
 
 /** 実例の request を道具の引数にして回す。 */

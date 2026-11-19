@@ -1,3 +1,7 @@
+import { spawnSync } from 'node:child_process'
+import fs from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { describe, expect, it, vi } from 'vitest'
 import {
   DATA, EXPLANATIONS, FIGURE_103, QUESTIONS, TOPICLESS_UNIT, TOPICS, UNITS,
@@ -40,6 +44,20 @@ function expectRefused(r: Run, code: string, label = '') {
 const TOPICAL_UNITS = UNITS.filter((u) => u.middle_no !== TOPICLESS_UNIT)
 /** 作業場の out の下にファイルが 1 つも無いこと。 */
 const expectNothingWritten = (ws: Workspace, out: string) => expect(ws.files(out)).toEqual([])
+
+/** 書けるファイルの大きさの上限（512 バイトの区画の数）を付けて、書き直しの束を作る入口を呼ぶ。 */
+function runLimited(ws: Workspace, blocks: number, args: string[]): Run {
+  const tool = path.join(fileURLToPath(new URL('../../', import.meta.url)), 'scripts', 'build_rewrite_bundles.py')
+  const r = spawnSync('sh', ['-c', `ulimit -f ${blocks}; exec python3 "$0" "$@"`, tool, ...args], { cwd: ws.dir, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
+  let json: Json = undefined
+  try {
+    json = JSON.parse(r.stdout.trim())
+  } catch {
+    json = undefined
+  }
+  const code = json && typeof json === 'object' && json.error && typeof json.error === 'object' ? json.error.code : undefined
+  return { status: r.status, stdout: r.stdout, stderr: r.stderr, json, code, text: `${r.stdout}${r.stderr}` }
+}
 
 /** 単元 21 の構成を書き換える。 */
 function edit21(ws: Workspace, edit: (p: Json) => void) {
@@ -548,6 +566,66 @@ describe('UC-026 資格対策の教材の書き直しに配る束を作る（bui
           throw new Error(`${label} ${(e as Error).message}`)
         }
       }
+    })
+  })
+
+  describe('出力先に束を書き出せなければ、書き出した束を残さずに断り、出力先を示す（REQ-584）', () => {
+    /** 書き込めないようにした置き場を、後片付けで消せるように戻す。 */
+    const restoreMode = (ws: Workspace, rel: string) => fs.chmodSync(ws.abs(rel), 0o755)
+
+    /** @covers REQ-584#out-path-is-file */
+    it('出力先の位置に通常のファイルがあって出力先を作れなければ、STORAGE_UNAVAILABLE で断り、そのファイルを書き換えず、出力先を示す', () => {
+      const ws = makeWorkspace()
+      ws.write(RW_OUT, 'ふつうのファイル')
+      const r = buildRewriteBundles(ws, { out: RW_OUT, units: [21] })
+      expectRefused(r, 'STORAGE_UNAVAILABLE')
+      expect(ws.read(RW_OUT)).toBe('ふつうのファイル')
+      expect(reasonOf(r)).toContain(RW_OUT)
+    })
+
+    /** @covers REQ-584#out-not-writable */
+    it('出力先のディレクトリに書き込めなければ、STORAGE_UNAVAILABLE で断り、束を 1 つも残さず、出力先を示す', () => {
+      const ws = makeWorkspace()
+      fs.mkdirSync(ws.abs(RW_OUT), { recursive: true })
+      fs.chmodSync(ws.abs(RW_OUT), 0o555)
+      try {
+        const r = buildRewriteBundles(ws, { out: RW_OUT, units: [21] })
+        expectRefused(r, 'STORAGE_UNAVAILABLE')
+        expectNothingWritten(ws, RW_OUT)
+        expect(reasonOf(r)).toContain(RW_OUT)
+      } finally {
+        restoreMode(ws, RW_OUT)
+      }
+    })
+
+    /** @covers REQ-584#partial-write-removed */
+    it('1 つ目の束は書き出せて後の束を書き出せなければ、STORAGE_UNAVAILABLE で断り、先に書き出した束を残さず、出力先を示す', () => {
+      // 単元 21 の束は 21-1・21-2 の 2 つ。後のまとまりの説明を長くして 21-2 だけを大きくし、
+      // 書けるファイルの大きさの上限（ulimit -f）を 2 つの間に置いて、21-2 だけを書き出せなくする
+      const longer = (ws: Workspace) => edit21(ws, (p) => (p.groups[1].description = `${'応用のまとまりの長い説明です。'.repeat(8000)}`))
+      const base = makeWorkspace()
+      longer(base)
+      expectOk(buildRewriteBundles(base, { out: RW_OUT, units: [21] }))
+      const [small, large] = [1, 2].map((k) => fs.statSync(base.abs(rwFile(21, k))).size)
+      expect(large, '仕込み: 後の束が十分に大きくない').toBeGreaterThan(small + 4 * 512)
+      const blocks = Math.ceil(small / 512) + 1
+
+      const ws = makeWorkspace()
+      longer(ws)
+      const r = runLimited(ws, blocks, ['--data', DATA, '--out', RW_OUT, '--units', '21'])
+      expectRefused(r, 'STORAGE_UNAVAILABLE')
+      expectNothingWritten(ws, RW_OUT)
+      expect(reasonOf(r)).toContain(RW_OUT)
+    })
+
+    /** @covers REQ-584#answer-missing-before-write-failed */
+    it('束に入る過去問の正解が正解表に無く、出力先にも書き出せなければ、NOT_FOUND で断る', () => {
+      const ws = makeWorkspace()
+      ws.write(`${DATA}/answer_keys.json`, { '2018h30a': { '1': 'ア' }, '2019h31h': { '5': 'ア', '7': 'ウ' } })
+      ws.write(RW_OUT, 'ふつうのファイル')
+      const r = buildRewriteBundles(ws, { out: RW_OUT, units: [21] })
+      expectRefused(r, 'NOT_FOUND')
+      expect(ws.read(RW_OUT)).toBe('ふつうのファイル')
     })
   })
 })

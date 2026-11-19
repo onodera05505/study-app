@@ -10,11 +10,13 @@
  * - tests/fixtures/<名前>/<学び> を指す例は、リポジトリにその fixture があれば写す。buildTargetDataset の fixture
  *   （roadmap-dataset-*）がリポジトリに無いときは、学びの写しを同じ相対パスに置き、例の名前が示す 1 つ（両方の例は 2 つ）の
  *   状態にする: 教材の無い単位（教材の束から 1 単位の教材を外す）・確認問題の数が違う単位（1 単位の確認問題を 1 つ外す）・
- *   登録簿の段に無い印の単位（印を段の最大より 1 大きくする）・副題が空の単位
+ *   登録簿の段に無い印の単位（印を段の最大より 1 大きくする）・副題が空の単位・ロードマップのデータが無い（roadmap.json を外す）
+ * - buildTargetDataset の unknownLearning は、登録簿に無い学びの置き場を、組み立てに要る物がそろった学び itc の写しとして置く
+ * - buildRoadmap の candidatesMissing は、ロードマップの設定だけを持つ fixture（論点の候補のファイルが無い）
  */
 
 import { existsSync, readFileSync } from 'node:fs'
-import { mkdir, readdir, rename } from 'node:fs/promises'
+import { mkdir, readdir, rename, rm } from 'node:fs/promises'
 import { join } from 'node:path'
 import { defineHandler, type ExampleLine, type Operation } from '../kit/protocol'
 import { REPO_ROOT } from '../kit/tool'
@@ -90,7 +92,7 @@ function tierOutside(key: string): number {
 }
 
 const buildRoadmap: Operation = (line) => {
-  const known = ['ok', 'unknownConfigId', 'duplicateTerm', 'unknownGrouping', 'chapterMissing', 'tierOutsideRegistry', 'includedAndExcluded', 'unknownConfigIdBeforeDuplicateTerm']
+  const known = ['ok', 'candidatesMissing', 'unknownConfigId', 'duplicateTerm', 'unknownGrouping', 'chapterMissing', 'tierOutsideRegistry', 'includedAndExcluded', 'unknownConfigIdBeforeDuplicateTerm']
   if (!known.includes(line.case)) unknownCase(line)
   const { fixture } = placeOf(line)
   if (fixture && !existsSync(join(REPO_ROOT, fixture))) unknownCase(line)
@@ -104,6 +106,7 @@ const applySummaryOverride: Operation = (line) => {
 
 const DATASET_PREMISE: Record<string, (s: ProjectShadow, data: string, key: string) => Promise<void>> = {
   ok: async () => {},
+  roadmapMissing: async (s, data) => rm(s.path(`${data}/roadmap.json`)),
   materialMissing: async (s, data) => dropMaterial(s, data, (await unitsOf(s, data))[9].topic_id),
   questionCount: async (s, data) => dropOneQuestion(s, data, (await unitsOf(s, data))[2].topic_id),
   tierOutsideRegistry: async (s, data, key) => setUnitField(s, data, (await unitsOf(s, data))[3].topic_id, 'tier', tierOutside(key)),
@@ -116,6 +119,14 @@ const DATASET_PREMISE: Record<string, (s: ProjectShadow, data: string, key: stri
 }
 
 const buildTargetDataset: Operation = (line) => {
+  if (line.case === 'unknownLearning') {
+    // 登録簿に無い学びの置き場は、組み立てに要る物がそろった学び itc の写しとして置く（登録簿だけで断るかを見る）
+    const { key } = placeOf(line)
+    return inShadow({}, async (s) => {
+      await s.learning('itc', key)
+      return answerOf(await s.run(py('build_target_dataset.py', argsOf(line.request))))
+    })
+  }
   const premise = DATASET_PREMISE[line.case]
   if (!premise) unknownCase(line)
   return withPlace(line, premise, 'build_target_dataset.py', argsOf(line.request))
