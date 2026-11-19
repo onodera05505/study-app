@@ -5,7 +5,7 @@
 x-uc: UC-026
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-18
+x-updated: 2026-11-19
 
 schemas:
   ToolError:
@@ -15,7 +15,7 @@ schemas:
       - properties:
           error:
             properties:
-              code: { type: string, enum: [INVALID_INPUT, NOT_FOUND, CONFLICT] }
+              code: { type: string, enum: [INVALID_INPUT, NOT_FOUND, CONFLICT, STORAGE_UNAVAILABLE] }
   BuildRequest:
     type: object
     required: [data, out]
@@ -119,6 +119,8 @@ operations:
         when: 求めた単元に関する単元の構成の門の止める理由がある
       - code: NOT_FOUND
         when: 束に入る過去問の正解が正解表に無い
+      - code: STORAGE_UNAVAILABLE
+        when: 出力先に束を書き出せない
     examples:
       ok:
         request: { data: data/ip, out: data/ip/rewrite_bundles, units: [21] }
@@ -156,6 +158,9 @@ operations:
       outputExistsBeforePlanMissing:
         request: { data: data/ip, out: data/ip/rewrite_bundles, units: [1] }
         error: CONFLICT
+      writeFailed:
+        request: { data: data/ip, out: data/ip/rewrite_bundles_e, units: [21] }
+        error: STORAGE_UNAVAILABLE
 
   writeUnitInput:
     transport: local-store

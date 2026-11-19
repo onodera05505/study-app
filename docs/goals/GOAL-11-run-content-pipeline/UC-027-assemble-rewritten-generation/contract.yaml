@@ -6,7 +6,7 @@
 x-uc: UC-027
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-18
+x-updated: 2026-11-19
 
 schemas:
   GenerationCounts:
@@ -250,6 +250,8 @@ operations:
     errors:
       - code: INVALID_INPUT
         when: 登録簿に無い学び
+      - code: NOT_FOUND
+        when: 突き合わせる投入が無い
     examples:
       ok:
         request: { data: data/ip, exam: ip, local: true }
@@ -260,6 +262,9 @@ operations:
       unknownLearning:
         request: { data: data/zzz, exam: zzz }
         error: INVALID_INPUT
+      seedMissing:
+        request: { data: data/ip, exam: ip, sql: data/ip/no_such_seed.sql, local: true }
+        error: NOT_FOUND
 
   listDeliveredMaterials:
     transport: local-store

@@ -5,7 +5,7 @@
 x-uc: UC-030
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-18
+x-updated: 2026-11-19
 
 schemas:
   Done:
@@ -34,6 +34,8 @@ operations:
     response: { $ref: "#/schemas/Done" }
     errors:
       - code: NOT_FOUND
+        when: 論点の候補が無い
+      - code: NOT_FOUND
         when: ロードマップの設定が指す論点の ID がどの候補にも無い
       - code: INVALID_INPUT
         when: 候補の中に名前が同じ単位がある
@@ -49,6 +51,9 @@ operations:
       ok:
         request: { data: data/eng }
         response: { exitCode: 0 }
+      candidatesMissing:
+        request: { data: tests/fixtures/roadmap-build-candidates-missing/itc }
+        error: NOT_FOUND
       unknownConfigId:
         request: { data: tests/fixtures/roadmap-build-unknown-id/itc }
         error: NOT_FOUND
@@ -118,6 +123,10 @@ operations:
         data: { type: string, pattern: "^([A-Za-z0-9._-]+/)*[a-z]+$", description: 学びの置き場。省略すると data/itc }
     response: { $ref: "#/schemas/Done" }
     errors:
+      - code: INVALID_INPUT
+        when: 登録簿に無い学び
+      - code: NOT_FOUND
+        when: ロードマップのデータが無い
       - code: NOT_FOUND
         when: 教材の無い単位がある
       - code: INVALID_INPUT
@@ -130,6 +139,12 @@ operations:
       ok:
         request: { data: data/eng }
         response: { exitCode: 0 }
+      unknownLearning:
+        request: { data: data/zzz }
+        error: INVALID_INPUT
+      roadmapMissing:
+        request: { data: tests/fixtures/roadmap-dataset-roadmap-missing/itc }
+        error: NOT_FOUND
       materialMissing:
         request: { data: tests/fixtures/roadmap-dataset-material-missing/itc }
         error: NOT_FOUND
