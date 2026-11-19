@@ -110,10 +110,10 @@ def write_rewrite_bundle(*, path: str, bundle: str, unit_no: int, unit: str, ove
                              "groups_in_unit": groups_in_unit, "owners": owners, "topics": topics})
 
 
-# @implements REQ-464
+# @implements REQ-464, REQ-584
 def write_all(out: Path, files: list[tuple[str, dict]], write) -> list[str]:
     """組み立てた束をすべて、束の形の書き出し（write_unit_input か write_rewrite_bundle）で新しいファイルとして書き出す。
-    1 つでも書き出せなければ書いた分を消して断る。"""
+    1 つでも書き出せなければ書いた分を消して、出力先を示して断る（出力先がディレクトリでないファイルのときも書き出せない側）。"""
     written: list[Path] = []
     created = not out.exists()
 
@@ -128,9 +128,6 @@ def write_all(out: Path, files: list[tuple[str, dict]], write) -> list[str]:
         for name, body in files:
             write(path=str(out / name), **body)
             written.append(out / name)
-    except FileExistsError:
-        undo()
-        raise Refused(CODE.CONFLICT, f"出力先 {out} に既に束のファイルがある")
     except OSError as e:
         undo()
         raise Refused(CODE.STORAGE_UNAVAILABLE, f"{out} に書き出せない（{e.strerror or e}）")

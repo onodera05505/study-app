@@ -236,6 +236,14 @@ def write_bundles(d: Path, out: Path, units: list[dict], sig: str) -> None:
             ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+# @implements REQ-581
+def candidates_missing(d: Path) -> str | None:
+    """学びの置き場に論点の候補（topics_candidates.json）が無ければ（学びの置き場が無いときを含む）、その置き場を示す断りの文。
+    あれば None。ロードマップのデータも書き手への束の割り当ても書き出す前に見る。"""
+    p = d / "topics_candidates.json"
+    return None if p.is_file() else f"学びの置き場に論点の候補が無い（何も書き出していない）: {p}"
+
+
 # @implements REQ-430, REQ-434, REQ-437, REQ-571
 # @operation UC-030#buildRoadmap
 def main() -> int:
@@ -245,6 +253,8 @@ def main() -> int:
     from targets import target as _target
     from tool_refusal import CODE, tool_error_line
     a = ap.parse_args(); d = Path(a.data); out = Path(a.out) if a.out else d
+    refusal = candidates_missing(d)
+    if refusal: print(refusal); print(tool_error_line(CODE.NOT_FOUND, refusal)); return 1
     cands = json.loads((d / "topics_candidates.json").read_text(encoding="utf-8"))["candidates"]
     cfg = json.loads((d / "roadmap_config.json").read_text(encoding="utf-8")) if (d / "roadmap_config.json").exists() else {}
     cand_ids = {c["id"] for c in cands}

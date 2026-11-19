@@ -39,6 +39,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from targets import deploy as _deploy, keys as _keys  # 対象と DB の対応は登録簿から
 from material_generations import emit_refusal, learning_refusal  # noqa: E402
+from tool_refusal import CODE, tool_error  # noqa: E402
 DB_OF = {k: _deploy(k)["db"] for k in _keys()}
 
 # 表ごとの比較のしかた。"eq" は seed が作り直す表、"ge" は UPSERT だけの表（古い行が残ってよい）
@@ -101,6 +102,12 @@ def _d1_query(db: str, exam: str, where: str, sql: str) -> list[dict]:
     return results
 
 
+# @implements REQ-583
+def seed_refusal(sql: Path) -> dict | None:
+    """突き合わせる投入（渡した投入か、学びの置き場の seed.sql）が無ければ、DB を見る前に断る NOT_FOUND の ToolError。あれば None。"""
+    return None if sql.is_file() else tool_error(CODE.NOT_FOUND, f"seed が無い: {sql}")
+
+
 def _say(*parts) -> None:
     """人が読む報告。標準出力は結果の JSON だけにする。"""
     print(*parts, file=sys.stderr)
@@ -126,8 +133,9 @@ def main() -> int:
             return emit_refusal(refusal)
 
     sql = args.sql or args.data / "seed.sql"
-    if not sql.exists():
-        raise SystemExit(f"seed が無い: {sql}")
+    refusal = seed_refusal(sql)
+    if refusal:
+        return emit_refusal(refusal)
     db, where = DB_OF[args.exam], ("--local" if args.local else "--remote")
     counts, topic, question = _parse_seed(sql)
     if topic is None or question is None:

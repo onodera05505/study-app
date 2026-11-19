@@ -57,12 +57,30 @@ def supplementary_units(units: list[dict], mats: dict[int, dict], cands: dict[in
             for i, tid in enumerate(sorted(set(mats) - unit_ids), 1)]
 
 
+# @implements REQ-582
+def dataset_refusal(d: Path, registered: set[str]) -> tuple[str, str] | None:
+    """投入データを書き出す前に断る学び。学びの置き場の最後の段が登録簿に無ければ INVALID_INPUT、学びの置き場に
+    ロードマップのデータ（roadmap.json）が無ければ NOT_FOUND の (断りの種類の名前, 断りの文)。どちらでもなければ None。
+    確かめる順は 登録簿 → ロードマップのデータ。"""
+    if d.name not in registered:
+        return CODE.INVALID_INPUT, f"登録簿に無い学び『{d.name}』（何も書き出していない。scripts/new_target.py で登録する）"
+    if not (d / "roadmap.json").is_file():
+        return CODE.NOT_FOUND, f"学びの置き場にロードマップのデータが無い（何も書き出していない）: {d / 'roadmap.json'}"
+    return None
+
+
 # @implements REQ-414, REQ-422, REQ-571
 # @operation UC-030#buildTargetDataset
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", default="data/itc", type=Path)
     a = ap.parse_args(); d = a.data; key = d.name
-    sys.path.insert(0, str(Path(__file__).parent)); from targets import target
+    sys.path.insert(0, str(Path(__file__).parent)); from targets import target, targets
+    refusal = dataset_refusal(d, set(targets()))
+    if refusal:
+        code, reason = refusal
+        print(reason)
+        print(tool_error_line(code, reason))
+        return 1
     spec = target(key).get("roadmapSpec") or {}
     EXTRA_FIELD, EXTRA_MIDDLE = spec.get("extraField", "補足（ロードマップ外）"), spec.get("extraMiddle", "ロードマップ外")
     EXTRA_ROUND, EXTRA_LABEL, ROUND_LABEL = spec.get("extraRoundId", f"{key}-ex"), spec.get("extraRoundLabel", "補足（ロードマップ外）"), spec.get("roundLabel", "{day} 日目")
