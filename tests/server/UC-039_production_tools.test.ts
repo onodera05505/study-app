@@ -40,6 +40,8 @@ const realBackup = (s: Shadow39): Shadow39 => {
 const backupFiles = (s: Shadow39) => (existsSync(s.path('backups')) ? readdirSync(s.path('backups')).filter((n) => n.endsWith('.sql')) : [])
 /** 学びの保存先に模試の設定の行を置く。 */
 const appSettings = (file: string) => sql(file, "INSERT INTO app_settings (id, mock_size, mock_time_limit_sec) VALUES ('default', 1, 1);")
+/** 手元の閉じた口（届かない回の場所。接続は断られる）。 */
+const CLOSED_PORT = 'https://127.0.0.1:9'
 const mockOf = (key: string) => ({ size: REGISTRY[key].mockSize as number, sec: (REGISTRY[key].mockMinutes as number) * 60 })
 
 describe('UC-039 学びとまなびばを本番に用意して出し、本番の保存先を手入れする', () => {
@@ -469,27 +471,21 @@ describe('UC-039 学びとまなびばを本番に用意して出し、本番の
   })
 
   describe('本番の SSO の一巡は、一時のアカウントで確かめ、終わったら消し、食い違いがあれば失敗で終える（REQ-623）', () => {
-    // 本番の相手の代わりは無い（道具は本番の URL を直に呼ぶ）。OS の囲いが外への接続を断つので、確かめは必ず食い違う
+    // 届かない回: 配備先の一覧のまなびばと学びの場所を手元の閉じた口に向ける（本番の場所は使わない）。確かめは必ず食い違う
     const smoke = once(async () => {
       const s = shadow39('623')
       sql(learningDb(s, 'local', 'mkt'), "INSERT INTO users (id, email, name, password_hash) VALUES ('ac', 'apicheck@example.com', 'ac', '100000:aabb:ccdd');")
-      const portal = portalDb(s, 'remote')
-      const learning = learningDb(s, 'remote', 'mkt')
+      portalDb(s, 'remote')
+      learningDb(s, 'remote', 'mkt')
+      setLocation(s, '_portal', CLOSED_PORT)
+      setLocation(s, 'mkt', CLOSED_PORT)
       const r = await runTool(s, 'check_sso_prod_smoke.py', ['mkt'], { applySeed: true })
-      return { r, portal, learning }
+      return { r }
     })
     // @covers REQ-623#unreachable-fails
     it('本番のまなびばに届かず確かめが食い違えば、失敗で終える', async () => {
       const { r } = await smoke()
       expect(r.code, redact(r.out)).not.toBe(0)
-    })
-    // @covers REQ-623#temporary-account-removed
-    it('確かめが終われば、作った一時のアカウントと学びに残った記録を消す', async () => {
-      const { r, portal, learning } = await smoke()
-      const created = wranglerCalls(r).some((a) => a[1] === 'execute' && /INSERT/i.test(a.join(' ')) && /accounts/i.test(a.join(' ')))
-      expect(created, '一時のアカウントを作っていない').toBe(true)
-      expect(rows(portal, 'SELECT id FROM accounts').length, '一時のアカウントが残った').toBe(0)
-      expect(rows(learning, 'SELECT id FROM users').length, '学びに記録が残った').toBe(0)
     })
 
     /** まなびばと学びの代わりの相手（本物の app を手元の HTTPS の口で受ける）に向けて回す。手元の確かめの利用者は道具が知る合言葉で置く。 */
@@ -497,9 +493,12 @@ describe('UC-039 学びとまなびばを本番に用意して出し、本番の
       const s = shadow39('623-match')
       sql(learningDb(s, 'local', 'mkt'), `INSERT INTO users (id, email, name, password_hash) VALUES ('ac', 'apicheck@example.com', 'ac', '${await hashPassword('apicheck-pass-1234')}');`)
       const c = await startCounterparts(s, 'mkt')
+      const portal = portalDb(s, 'remote')
+      const learning = learningDb(s, 'remote', 'mkt')
+      const usersBefore = rows(learning, 'SELECT id FROM users').map((x) => String(x.id)).sort()
       try {
         const r = await runTool(s, 'check_sso_prod_smoke.py', ['mkt'], { applySeed: true }, c.env)
-        return { s, r, requests: [...c.requests] }
+        return { s, r, requests: [...c.requests], portal, learning, usersBefore }
       } finally {
         await c.close()
       }
@@ -531,6 +530,18 @@ describe('UC-039 学びとまなびばを本番に用意して出し、本番の
       expect(calls.filter((e) => e.tool !== 'pinned').length, '写しの置き場の配備の道具でない物を呼んだ').toBe(0)
       const root = realpathSync(s.root)
       expect(calls.filter((e) => !String(e.cwd ?? '').startsWith(root) && !String(e.cwd ?? '').startsWith(s.root)).map((e) => redact(String(e.cwd))), '写しの置き場の外で配備の道具を呼んだ').toEqual([])
+    })
+
+    // @covers REQ-623#temporary-account-removed
+    it('確かめが終われば、作った一時のアカウントと学びに残った記録を消す', async () => {
+      const { r, requests, portal, learning, usersBefore } = await matched()
+      ok(r)
+      const created = wranglerCalls(r).some((a) => a[1] === 'execute' && /INSERT/i.test(a.join(' ')) && /accounts/i.test(a.join(' ')))
+      expect(created, '一時のアカウントを作っていない').toBe(true)
+      expect(requests.some((x) => x.startsWith('learning→portal ')), '一時のアカウントで学びに入っていない（学び側の記録ができていない）').toBe(true)
+      expect(rows(portal, 'SELECT id FROM accounts').length, '一時のアカウントが残った').toBe(0)
+      const usersAfter = rows(learning, 'SELECT id FROM users').map((x) => String(x.id)).sort()
+      expect(usersAfter, '学びに一時の利用者の記録が残った').toEqual(usersBefore)
     })
 
     // @covers REQ-623#portal-from-registry

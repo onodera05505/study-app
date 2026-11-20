@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { afterAll, describe, expect, it, vi } from 'vitest'
 import { LEARNINGS, ROOT, type Shadow39, jsonFiles, outOf, ownLearning, readJson, removeShadows, run42, shadow42, snapshot } from './UC-042_fixture'
@@ -219,10 +219,25 @@ describe('UC-042 書き手と担当に渡す束を作り、教材の手入れと
   describe('読み直しの指摘を集計し、何も書き換えず、指摘が無ければ失敗で終える（REQ-648）', () => {
     // @covers REQ-648#summary-shown
     it('学びの読み直しの指摘を集計して示し、成功で終える', async () => {
+      // 指摘の数が決まった読み直しを置く: 型「役割分担」2 件・「硬い語」1 件、重さ「中」2 件・「低」1 件
       const s = shadow42('review')
-      const r = await run42(s, 'summarize_review.py', ['--key', 'ip'])
+      ownLearning(s, 'mkt')
+      const dir = s.path('data/mkt/review')
+      const sample = readJson(join(dir, 'bundle_01.json'))
+      const findings = (sample.findings as Json[]).slice(0, 3)
+      expect(findings.length, '仕込み: 読み直しの指摘が 3 件に満たない').toBe(3)
+      const planted = [['役割分担', '中'], ['役割分担', '中'], ['硬い語', '低']]
+      planted.forEach(([kind, severity], i) => Object.assign(findings[i], { kind, severity }))
+      rmSync(dir, { recursive: true, force: true })
+      mkdirSync(dir, { recursive: true })
+      writeFileSync(join(dir, 'bundle_01.json'), JSON.stringify({ ...sample, findings }, null, 2))
+      const r = await run42(s, 'summarize_review.py', ['--key', 'mkt'])
       expect(r.code, outOf(r)).toBe(0)
-      expect(r.out).toContain('ip')
+      const lines = r.out.split('\n')
+      const counted = (label: string, n: number) => lines.some((l) => l.includes(label) && new RegExp(`(?<!\\d)${n}(?!\\d)`).test(l))
+      expect(lines.some((l) => /(^|[^a-z])mkt([^a-z]|$)/.test(l) && /(?<!\d)3(?!\d)/.test(l)), `学びごとの件数の行が無い:\n${outOf(r)}`).toBe(true)
+      expect(counted('役割分担', 2) && counted('硬い語', 1), `型ごとの件数の行が無い:\n${outOf(r)}`).toBe(true)
+      expect(counted('中', 2) && counted('低', 1), `重さごとの件数の行が無い:\n${outOf(r)}`).toBe(true)
     })
 
     // @covers REQ-648#nothing-written
@@ -258,17 +273,27 @@ describe('UC-042 書き手と担当に渡す束を作り、教材の手入れと
       writeFileSync(file, JSON.stringify(body, null, 2))
       return { s, file }
     }
+    /** 置き場の JSON の文字列の値に含まれる空白（半角・全角）の数。 */
+    const spacesIn = (dir: string) => {
+      const walk = (v: unknown): number =>
+        typeof v === 'string' ? (v.match(/[ \u3000]/g) ?? []).length : v && typeof v === 'object' ? Object.values(v).reduce((n: number, x) => n + walk(x), 0) : 0
+      const files = (d: string): string[] =>
+        readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? files(join(d, e.name)) : e.name.endsWith('.json') ? [join(d, e.name)] : []))
+      return files(dir).reduce((n, f) => n + walk(readJson(f)), 0)
+    }
     const countOf = (out: string) => Math.max(0, ...[...out.matchAll(/(\d+)\s*箇所/g)].map((m) => Number(m[1])))
 
     // @covers REQ-649#tightened-and-counted
     it('数字と単位の間の空白を詰め、詰めた数を示す', async () => {
       const { s, file } = plant()
+      const spaces = spacesIn(s.path('data/mkt'))
       const r = await run42(s, 'tighten_number_units.py', ['--data', 'data/mkt'])
       expect(r.code, outOf(r)).toBe(0)
       const text = readFileSync(file, 'utf8')
       const tightened = PLANTED.filter((p) => !text.includes(p))
       expect(tightened.length, `足した空白が 1 つも詰まっていない:\n${outOf(r)}`).toBeGreaterThan(0)
-      expect(r.out, '数を示していない').toMatch(/\d/)
+      // 示した数（「n 箇所」）は、学びの置き場の文字列から実際に消えた空白の数と合う
+      expect(countOf(r.out), `詰めた数が実際に詰まった数と合わない:\n${outOf(r)}`).toBe(spaces - spacesIn(s.path('data/mkt')))
     })
 
     // @covers REQ-649#dry-run-unchanged

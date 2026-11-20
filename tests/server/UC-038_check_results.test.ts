@@ -155,7 +155,7 @@ describe('UC-038 取り込み・分類・書き直しの結果と手順書の書
     it('どの問題も正解なら、正解率 100% を示して成功で終える', () => {
       const s = toolShadow()
       answerability(s, {}, [])
-      expectEnded(checkAnswerability(s), 0, '100')
+      expectEnded(checkAnswerability(s), 0, '100%')
     })
 
     // @covers REQ-603#wrong-shown

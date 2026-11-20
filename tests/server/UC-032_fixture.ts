@@ -488,6 +488,8 @@ export type World = {
   seedFails?: number
   backupFail?: boolean
   applySeed?: boolean
+  /** 代理を通さない宛先（手元の代わりの相手に向ける回だけ）。既定は空で、どの宛先も閉じた代理を通る */
+  noProxy?: string
 }
 
 export type LogEntry = {
@@ -540,6 +542,9 @@ export function runCommand(shadow: Shadow, command: string, args: string[], worl
       ALL_PROXY: 'http://127.0.0.1:9',
       https_proxy: 'http://127.0.0.1:9',
       http_proxy: 'http://127.0.0.1:9',
+      // 親の環境の値を引き継がない（代理を通さない宛先が本番の名前に当たると、閉じた代理を迂回して外へ届く）
+      NO_PROXY: world.noProxy ?? '',
+      no_proxy: world.noProxy ?? '',
       TMPDIR: shadow.tmp,
       TMP: shadow.tmp,
       TEMP: shadow.tmp,

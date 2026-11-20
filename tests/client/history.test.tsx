@@ -207,9 +207,11 @@ describe('履歴の画面（UC-007）', () => {
 
   // @covers REQ-100#fetch-failed-shows-reason-and-reload
   it('取得に失敗したときは理由と読み直しを出す', async () => {
-    stubApi({ status: 500, body: { error: '履歴を取得できませんでした' } })
+    // サーバーが返す理由は、汎用の失敗の文と取り違えない独自の文にする
+    const reason = 'uc007-理由-履歴の保存先が応えない'
+    stubApi({ status: 500, body: { error: reason } })
     await draw()
-    expect(text()).toMatch(/取得できません|取れません|失敗/)
+    expect(text(), 'サーバーが返した理由を示していない').toContain(reason)
     expect(btn(/再読み込み|読み直/), '読み直しの導線が無い').toBeTruthy()
   })
 

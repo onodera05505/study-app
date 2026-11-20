@@ -25,6 +25,7 @@ import {
   type ProdCheckRun,
 } from '../kit/tc'
 import { defineHandler, Unanswerable, type Answer, type ExampleLine, type Operation } from '../kit/protocol'
+import { toolAnswer } from '../kit/tool'
 
 /** 見張りの配備（例が名指さない学び）。 */
 const WATCH = 'cnv'
@@ -63,9 +64,18 @@ function itemsOf(problems: CheckProblem[], line: ExampleLine): CheckProblem[] {
   )
 }
 
+/** 見張りの配備を届かなくして道具を回す。 */
+async function runWatched(rules: FakeHttpRule[], account: FakeAccount = {}): Promise<ProdCheckRun> {
+  return runProdCheck([{ url: `${await deploymentUrl(WATCH)}/api/health`, exit: UNREACHABLE }, ...rules], account)
+}
+
 /** 見張りの配備を届かなくして道具を回し、機械向けの行が読めることを確かめる。 */
 async function runWithWatch(rules: FakeHttpRule[], account: FakeAccount = {}): Promise<ProdCheckRun & { problems: CheckProblem[] }> {
-  const run = await runProdCheck([{ url: `${await deploymentUrl(WATCH)}/api/health`, exit: UNREACHABLE }, ...rules], account)
+  return checkWatched(await runWatched(rules, account))
+}
+
+/** 機械向けの行が読め、見張りの配備の問題が挙がっていることを確かめる。 */
+function checkWatched(run: ProdCheckRun): ProdCheckRun & { problems: CheckProblem[] } {
   if (run.problems === null) throw new Unanswerable(`機械向けの 1 行が無い（終了の状態 ${run.code}、出力の末尾: ${run.stdoutTail.slice(0, 200)}）`)
   if (!run.problems.some((p) => p.deployment === WATCH)) throw new Unanswerable('見張りの配備の届かない死活確認が問題に挙がっていない')
   return { ...run, problems: run.problems }
@@ -81,12 +91,22 @@ function expectItems(items: CheckProblem[], problemValue: boolean | undefined): 
  * 前提の答えを置いて道具を回し、道具が送った例の要求と、代わりの配備先がそれに返した物から答えを読む。
  * @implements REQ-567, REQ-568, REQ-569, REQ-570
  */
-async function answerHttp(line: ExampleLine, premise: Premise, read: (call: HttpCall) => Record<string, unknown>): Promise<Answer> {
+async function answerHttp(
+  line: ExampleLine,
+  premise: Premise,
+  read: (call: HttpCall) => Record<string, unknown>,
+  options: { unnamedStopAnswers?: boolean } = {},
+): Promise<Answer> {
   const r = request(line)
   const method = premise.rule.method ?? 'GET'
   const url = normalize(`${await deploymentUrl(r.deployment)}${premise.rule.path}`)
-  const run = await runWithWatch([{ ...premise.rule, url }])
-  const sent = run.calls.filter((c): c is HttpCall => c.kind === 'http' && c.method === method && c.url === url)
+  const raw = await runWatched([{ ...premise.rule, url }])
+  const sentRaw = raw.calls.filter((c): c is HttpCall => c.kind === 'http' && c.method === method && c.url === url)
+  // 道具が名前を出さずに 0 でない終了の状態で止まった（機械向けの行が無いか、例の要求を送る前に止まった）ときは、
+  // ほかの道具と同じく kit/tool.ts の toolAnswer の答えにする（止まった理由を実例の控えに残す）
+  if (options.unnamedStopAnswers && raw.code !== 0 && (raw.problems === null || sentRaw.length === 0)) return toolAnswer(raw.run, () => ({}))
+  const run = checkWatched(raw)
+  const sent = sentRaw
   if (sent.length === 0) throw new Unanswerable(`道具が ${method} ${url} を送っていない（実装が応えなかった）`)
   const items = itemsOf(run.problems, line)
   const named = items.find((p) => typeof p.code === 'string' && p.code !== '')
@@ -121,8 +141,8 @@ const readDeploymentHealthHeaders: Operation = async (line) => {
 const openDeploymentEntry: Operation = async (line) => {
   const path = String(request(line).path)
   const status = (call: HttpCall) => ({ status: call.status })
-  if (line.case === 'notOpenable') return answerHttp(line, { rule: { path, status: 404 } }, status)
-  return answerHttp(line, { rule: { path, status: 200 } }, status)
+  if (line.case === 'notOpenable') return answerHttp(line, { rule: { path, status: 404 } }, status, { unnamedStopAnswers: true })
+  return answerHttp(line, { rule: { path, status: 200 } }, status, { unnamedStopAnswers: true })
 }
 
 const probeRetiredPasswordRoute: Operation = async (line) => {

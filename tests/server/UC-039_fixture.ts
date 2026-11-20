@@ -175,6 +175,9 @@ const SANDBOX: string | null =
 export function runTool(s: Shadow39, script: string, args: string[] = [], world: World = {}, env: Record<string, string> = {}): Promise<Run> {
   const interpreter = script.endsWith('.py') ? 'python3' : 'bash'
   const [command, prefix] = SANDBOX ? ['sandbox-exec', ['-p', SANDBOX, interpreter]] : [interpreter, []]
+  // 代理を通さない宛先は runCommand が既定で空にするので、env に置かれた物は world で渡す
+  const noProxy = env.NO_PROXY ?? env.no_proxy
+  if (noProxy !== undefined) world = { ...world, noProxy }
   // runCommand は呼んだときの process.env から子の環境を組むので、足す変数はその間だけ置く
   const saved = Object.fromEntries(Object.keys(env).map((k) => [k, process.env[k]]))
   Object.assign(process.env, env)

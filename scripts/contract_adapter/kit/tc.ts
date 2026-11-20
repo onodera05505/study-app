@@ -15,6 +15,7 @@
 import { pathToFileURL } from 'node:url'
 import { join } from 'node:path'
 import { Unanswerable, type Answer } from './protocol'
+import type { ToolRun } from './tool'
 
 type ApiModule = typeof import('../../../src/client/lib/api')
 type LastPageModule = typeof import('../../../src/client/lib/lastPage')
@@ -299,7 +300,8 @@ export type FakeAccount = {
   projects?: Record<string, { exit?: number; names?: string[] }>
 }
 
-export type ProdCheckRun = { code: number; problems: CheckProblem[] | null; calls: ProdCall[]; stdoutTail: string }
+/** run は道具を回した結果そのもの（標準出力・標準エラーの全体。kit/tool.ts の toolAnswer に渡せる形）。 */
+export type ProdCheckRun = { code: number; problems: CheckProblem[] | null; calls: ProdCall[]; stdoutTail: string; run: ToolRun }
 
 let deploymentUrls: Map<string, string> | null = null
 
@@ -439,7 +441,7 @@ export async function runProdCheck(rules: FakeHttpRule[], account: FakeAccount =
     }
     const run = await runTool(['bash', 'scripts/check_sso_prod.sh'], { cwd: REPO_ROOT, env, timeoutMs: 90_000 })
     const calls = await readCalls(await readFile(shadow.path('calls.log'), 'utf8'))
-    return { code: run.code, problems: lastLineProblems(run.stdout), calls, stdoutTail: run.stdout.trim().split('\n').slice(-3).join(' / ') }
+    return { code: run.code, problems: lastLineProblems(run.stdout), calls, stdoutTail: run.stdout.trim().split('\n').slice(-3).join(' / '), run }
   } finally {
     await shadow.cleanup()
   }

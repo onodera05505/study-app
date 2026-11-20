@@ -336,7 +336,8 @@ describe('UC-041 過去問の回を取り込む', () => {
     // @covers REQ-641#answer-pdf-missing
     it('解答例の PDF が無ければ（正解表を作る）', async () => {
       const s = shadow41()
-      failedWith(await s.run('extract_answer_keys_ap.py', ['--data', 'data/ap', '--pdf-dir', 'data/ap/pdfs']), 'pdfs')
+      // 理由の文の中身（解答例が無いこと）を見る。引数のパスに出る語では照らさない
+      failedWith(await s.run('extract_answer_keys_ap.py', ['--data', 'data/ap', '--pdf-dir', 'data/ap/pdfs']), '解答例')
     })
     // @covers REQ-641#extracted-missing
     it('読み取りの結果が無ければ（まとめる）', async () => {

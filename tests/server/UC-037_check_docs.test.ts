@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, symlinkSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, symlinkSync, writeFileSync } from 'node:fs'
 import { homedir, tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterAll, describe, expect, it, vi } from 'vitest'
@@ -19,8 +19,7 @@ const INDEX = 'docs/文書の索引.md'
 const GATES = 'docs/不変条件と門.md'
 const PREMISES = 'brain/PREMISES.md'
 const LEDGER = 'brain/feedback/審議台帳.md'
-/** 手元の共通の置き場の追跡の道具の正本と、リポジトリに写した追跡の道具の置き場（docs/INVENTORY.md の「scripts/trace/*.mjs」）。 */
-const CENTRAL = join(homedir(), '.claude', 'brain', 'tools', 'trace')
+/** リポジトリに写した追跡の道具の置き場（docs/INVENTORY.md の「scripts/trace/*.mjs」）。 */
 const TRACE_COPY = 'scripts/trace/stop_gate.mjs'
 
 const checkDocs = (s: Shadow) => s.run('check_docs.py', ['--root', s.root])
@@ -123,11 +122,18 @@ describe('UC-037 配備の前に、文書の索引と門の対応表と決定の
 
     // @covers REQ-601#tracking-tool-copy-differs
     it('リポジトリに写した追跡の道具が手元の共通の置き場の正本と違うと、その道具を挙げて失敗で終える', () => {
-      const original = join(CENTRAL, 'stop_gate.mjs')
-      expect(existsSync(original), `仕込み: 共通の置き場の正本 ${original} が無い`).toBe(true)
-      const s = toolShadow()
-      s.write(TRACE_COPY, `${readFileSync(original, 'utf8')}\n// 写しだけに足した行\n`)
-      expectFailedNaming(checkDocs(s), 'stop_gate.mjs')
+      // 実行する機械の共通の置き場を前提にせず、一時の HOME に偽の正本を置く
+      const home = mkdtempSync(join(tmpdir(), 'uc037-home-'))
+      try {
+        const original = '// uc037 の偽の正本（追跡の道具）\nexport {}\n'
+        mkdirSync(join(home, '.claude', 'brain', 'tools', 'trace'), { recursive: true })
+        writeFileSync(join(home, '.claude', 'brain', 'tools', 'trace', 'stop_gate.mjs'), original)
+        const s = toolShadow()
+        s.write(TRACE_COPY, `${original}// 写しだけに足した行\n`)
+        expectFailedNaming(s.run('check_docs.py', ['--root', s.root], { HOME: home }), 'stop_gate.mjs')
+      } finally {
+        rmSync(home, { recursive: true, force: true })
+      }
     })
 
     // @covers REQ-601#tracking-tool-no-central
@@ -140,7 +146,7 @@ describe('UC-037 配備の前に、文書の索引と門の対応表と決定の
         // 共通の置き場は、追跡の道具の正本（tools/trace）だけを除いてリンクで写す
         const brain = join(homedir(), '.claude', 'brain')
         mkdirSync(join(home, '.claude', 'brain', 'tools'), { recursive: true })
-        for (const name of readdirSync(brain)) if (name !== 'tools') symlinkSync(join(brain, name), join(home, '.claude', 'brain', name))
+        if (existsSync(brain)) for (const name of readdirSync(brain)) if (name !== 'tools') symlinkSync(join(brain, name), join(home, '.claude', 'brain', name))
         if (existsSync(join(brain, 'tools')))
           for (const name of readdirSync(join(brain, 'tools'))) if (name !== 'trace') symlinkSync(join(brain, 'tools', name), join(home, '.claude', 'brain', 'tools', name))
         const r = s.run('check_docs.py', ['--root', s.root], { HOME: home })

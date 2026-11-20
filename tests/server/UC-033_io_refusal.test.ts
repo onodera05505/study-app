@@ -8,8 +8,9 @@ import { callOperation, type PyResult } from '../../scripts/contract_adapter/kit
  * UC-033 の REQ-579: 作り手と運用者の道具が置き場のファイルを読み書きする操作は、呼ばれて契約の errors に当たるとき、
  * 呼んだ側に断りの種類の名前を持つ失敗を渡す。
  *
- * 入口は CLAUDE.md の「操作 → 入口」の「道具の中の読み書き」の行（ADR-0013）: `@operation UC-nnn#操作名` を直上に持つ
- * `scripts/` の Python の関数（名前は操作名の snake_case）を、契約の request の項目をキーワード引数にして呼ぶ。
+ * 入口は CLAUDE.md の「操作 → 入口」の「道具の中の読み書き」の行（ADR-0013・ADR-0016）: 置き場と名前で引く `scripts/` の
+ * Python の最上位の関数（名前は操作名の snake_case。その UC の道具を回す操作のファイルを先に引き、無ければ `scripts/lib/` を引く）を、
+ * 契約の request の項目をキーワード引数にして呼ぶ。
  * 呼ぶのは契約の実例を渡す受け渡し役と同じ橋（scripts/contract_adapter/kit/py.ts の callOperation）で、
  * 投げられた値の `code` を名前として受け取る。理由の文言は照らさない。
  *
