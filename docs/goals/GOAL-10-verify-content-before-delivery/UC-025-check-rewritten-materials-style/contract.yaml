@@ -77,6 +77,8 @@ operations:
         limits: { $ref: "#/schemas/Limits" }
     errors:
       - code: INVALID_INPUT
+        when: 引数が契約の形の外（知らない名前・値の無い名前・学びの置き場の欠けか形の外）
+      - code: INVALID_INPUT
         when: 登録簿に無い学び
       - code: INVALID_INPUT
         when: 資格対策でない学び
@@ -87,6 +89,9 @@ operations:
       - code: INVALID_INPUT
         when: シラバスか論点の一覧が読めない
     examples:
+      badArguments:
+        request: { dir: materials_v4 }
+        error: INVALID_INPUT
       pass:
         request: { data: data/ip, dir: materials_v4 }
         response:

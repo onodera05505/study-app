@@ -1,0 +1,121 @@
+# UC-036 の境界: 運用者が手元で呼ぶ、手元の配備に API と画面を当てる道具の入口 5 つ。振る舞いは ./UC.md の要件が持つ。
+# 読み方は ../../../adr/ADR-0008-local-tool-boundary.md（手元の道具の境界を local-store で読む）と ../../../adr/ADR-0014-entries-from-apps-and-tools.md（入口の名前）。
+# request の各欄は同じ名前の引数（learning は第 1 引数。auditScreens の learning も第 1 引数）。response の exitCode はプロセスの終了コード。
+# これらの道具は断りの種類の名前を出さない（errors: []）。止まり方は要件と exitCode が持つ。
+x-uc: UC-036
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-19
+
+operations:
+  checkApi:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 手元に起こした学びの配備に要求を当て、契約と登録簿との食い違いを挙げる
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        learning: { type: string, pattern: "^[a-z]+$", description: 登録簿の学びの key。省略すると ip }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: { learning: ip }
+        response: { exitCode: 0 }
+
+  checkPortalApi:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 手元に起こしたまなびばの配備に要求を当て、要件との食い違いを挙げる
+    request:
+      type: object
+      additionalProperties: false
+      properties: {}
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: {}
+        response: { exitCode: 0 }
+
+  auditFixtures:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 手元の学びの配備に、API を通して検査用のアカウントを用意する（前提: 学び側の配備は、この道具が起こす手元の SSO の偽物の場所と共有秘密を与えて起こしておく。値の正本は scripts/audit_fixtures.mjs）
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        base: { type: string, minLength: 1, description: 手元の配備の場所。省略すると http://127.0.0.1:8787 }
+        json: { type: string, minLength: 1, description: 用意したアカウントの一覧を書き出すファイル }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: {}
+        response: { exitCode: 0 }
+
+  auditScreens:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 手元の学びの配備で画面の写しを撮り、一覧とともに書き出す
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        learning: { type: string, pattern: "^[a-z]+$", description: 登録簿の学びの key。省略すると ip }
+        out: { type: string, minLength: 1, description: 写しの書き出し先 }
+        limit: { type: integer, minimum: 1, description: 撮る組の数の上限 }
+        keep: { type: boolean, description: true なら出力先の前の回の写しを消さない（--keep） }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: { learning: ip, limit: 2 }
+        response: { exitCode: 0 }
+
+  checkSsoFlow:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 手元に起こしたまなびばと学びの配備で SSO を一巡する（前提の状態: 手元のまなびばと学び mkt が決まった口で同じ手元用の共有秘密を持って応じ、手元のまなびばに道具が使うメールとパスワードでログインできる、学び mkt の権限を持つ管理者がいる。値の正本は scripts/check_sso_flow.py）
+    request:
+      type: object
+      additionalProperties: false
+      properties: {}
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: {}
+        response: { exitCode: 0 }

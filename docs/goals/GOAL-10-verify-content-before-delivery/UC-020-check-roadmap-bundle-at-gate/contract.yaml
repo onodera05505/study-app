@@ -1,9 +1,10 @@
 # UC-020 の境界: 作り手が手元で呼ぶ束の門の入口 1 つと、門が読むファイル（割り当て・書き手の教材と確認問題・ロードマップ・集めた資料・登録簿）の形。
 # 読み方は docs/adr/ADR-0008（手元の道具の境界を local-store で読む）。パスは相対ならコマンドを呼んだ作業ディレクトリが起点。
+# 入口の response は、人が読む結果の行のあとに標準出力の最後の行として出す機械向けの 1 行（JSON）の形。人が読む行の形は契約に持たない。
 x-uc: UC-020
-x-status: draft
+x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-11
+x-updated: 2026-11-19
 
 schemas:
   Finding:
@@ -30,6 +31,7 @@ operations:
         bundle: { type: string, pattern: "^bundle_[a-z0-9_]+$" }
     response:
       type: object
+      description: errors に当たったときは response を出さず、標準出力に ToolError を 1 行出して終了の状態 2 で終える
       required: [exitCode, topics, questions, stops, warnings, limits]
       properties:
         exitCode: { type: integer, enum: [0, 1], description: 0 は通した、1 は stops が 1 件以上 }
@@ -51,7 +53,7 @@ operations:
               - { $ref: "#/schemas/Finding" }
               - properties:
                   kind:
-                    enum: [avoidWord, usageSectionMissing, notationOutside, unclosedEmphasis, styleMinority, termMarkupMixed, indentedLine, sourceWhereCode, verbatimBody, tableTooNarrow, tableTooShort, tableTooWide, tableTooLong, tableCellLong]
+                    enum: [avoidWord, usageSectionMissing, verbatimBody, tableTooNarrow, tableTooShort, tableTooWide, tableTooLong, tableCellLong]
         limits:
           type: object
           description: 門が使った閾値と表示の制約
@@ -64,12 +66,17 @@ operations:
             tableCellLength: { type: integer, const: 40, description: 超えたら警告 }
     errors:
       - code: INVALID_INPUT
+        when: 必須の引数が無いか、知らない名前の引数か、値の無い引数がある
+      - code: INVALID_INPUT
         when: 登録簿に無い学び
       - code: INVALID_INPUT
         when: ロードマップ型でない学び
       - code: NOT_FOUND
         when: 束の割り当てが無い
     examples:
+      badArguments:
+        request: { data: data/itc }
+        error: INVALID_INPUT
       pass:
         request: { data: data/itc, bundle: bundle_01 }
         response:
@@ -118,6 +125,8 @@ operations:
     errors:
       - code: NOT_FOUND
         when: 割り当てが無い
+      - code: INVALID_INPUT
+        when: JSON として読めないか、topics の並びが無い
     examples:
       ok:
         request: { path: data/itc/material_bundles/bundle_01.json }
@@ -125,6 +134,9 @@ operations:
       missing:
         request: { path: data/itc/material_bundles/bundle_99.json }
         error: NOT_FOUND
+      unreadable:
+        request: { path: data/itc/material_bundles/bundle_02.json }
+        error: INVALID_INPUT
 
   readBundleMaterials:
     transport: local-store
@@ -214,7 +226,7 @@ operations:
               choice_notes:
                 type: object
                 required: ["ア", "イ", "ウ", "エ"]
-                description: 正解の説明は「正解」で始まり、誤答の説明は「正解」で始まらない
+                description: 正解の説明は「正解」で始まり、誤答の説明は「正解。」の印で始まらない（文として「正解」で始まる誤答の説明はよい）
                 additionalProperties: { type: string, minLength: 1 }
               tests_goal: { type: integer, minimum: 1 }
     errors:

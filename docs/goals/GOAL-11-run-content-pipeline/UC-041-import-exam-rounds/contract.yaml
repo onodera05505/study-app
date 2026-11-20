@@ -1,0 +1,284 @@
+# UC-041 の境界: 作り手が手元で呼ぶ、過去問の回を取り込む道具の入口 11 個。振る舞いは ./UC.md の要件が持つ。
+# 読み方は ../../../adr/ADR-0008-local-tool-boundary.md（手元の道具の境界を local-store で読む）と ../../../adr/ADR-0014-entries-from-apps-and-tools.md（入口の名前）。
+# request の各欄は同じ名前の引数（回の ID は第 1 引数。pdfDir は --pdf-dir のように、大文字の前に - を入れた小文字）。response の exitCode はプロセスの終了コード。
+# これらの道具は断りの種類の名前を出さない（errors を持たない）。止まり方は要件と exitCode が持つ。
+# 外へ取りに行く 2 つの操作の実例は、公開の配布先の代わりの偽の配布先を前提にする。PDF と画像を扱う操作の実例は、tests/fixtures/import の下に置く小さな作り物の PDF を前提にする（前提を作るのは受け渡し役）。
+x-uc: UC-041
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-19
+
+operations:
+  fetchPdfs:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: IT パスポートの過去問の PDF を取る
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        origin: { type: string, minLength: 1, description: 取りに行く先の場所（スキームとホスト。--origin）。省略すると IPA の公開の配布の場所 }
+        out: { type: string, minLength: 1 }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: { origin: "http://127.0.0.1:8795", out: tests/fixtures/import/ip/pdfs }
+        response: { exitCode: 0 }
+
+  fetchPdfsAp:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 応用情報か基本情報の過去問の PDF を取る
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        exam: { type: string, enum: [ap, fe] }
+        origin: { type: string, minLength: 1, description: 取りに行く先の場所（スキームとホスト。--origin）。省略すると IPA の公開の場所 }
+        out: { type: string, minLength: 1 }
+        recent: { type: integer, minimum: 1 }
+        exams: { type: array, items: { type: string, minLength: 1, description: 回の ID } }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: { exam: ap, recent: 1, origin: "http://127.0.0.1:8795", out: tests/fixtures/import/ap/pdfs }
+        response: { exitCode: 0 }
+
+  renderPages:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 問題冊子のページを画像に書き出す
+    request:
+      type: object
+      required: [exam]
+      additionalProperties: false
+      properties:
+        exam: { type: string, minLength: 1, description: 回の ID }
+        data: { type: string, minLength: 1, description: 学びの置き場 }
+        pdfDir: { type: string, minLength: 1 }
+        out: { type: string, minLength: 1 }
+        dpi: { type: integer, minimum: 1 }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: { exam: 2024r06, data: tests/fixtures/import/ip, out: tests/fixtures/import/ip/pages }
+        response: { exitCode: 0 }
+
+  mergeQuestions:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 読み取りの結果を 1 回分の問題にまとめる
+    request:
+      type: object
+      required: [exam]
+      additionalProperties: false
+      properties:
+        exam: { type: string, minLength: 1, description: 回の ID }
+        extractedDir: { type: string, minLength: 1 }
+        outDir: { type: string, minLength: 1 }
+        count: { type: integer, minimum: 1 }
+        noNormalize: { type: boolean }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: { exam: 2024r06 }
+        response: { exitCode: 0 }
+
+  extractAnswerKeys:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: IT パスポートの解答例から正解表を作る
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        pdfDir: { type: string, minLength: 1 }
+        out: { type: string, minLength: 1 }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: { pdfDir: tests/fixtures/import/ip/pdfs, out: tests/fixtures/import/ip/answer_keys.json }
+        response: { exitCode: 0 }
+
+  extractAnswerKeysAp:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 応用情報か基本情報の解答例から正解表と分野の表を作る
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        data: { type: string, minLength: 1, description: 学びの置き場 }
+        pdfDir: { type: string, minLength: 1 }
+        out: { type: string, minLength: 1 }
+        fieldsOut: { type: string, minLength: 1 }
+        manual: { type: string, minLength: 1 }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: { data: tests/fixtures/import/ap }
+        response: { exitCode: 0 }
+
+  parseSyllabus:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: IT パスポートのシラバスから分類の受け皿を作る
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        pdf: { type: string, minLength: 1 }
+        out: { type: string, minLength: 1 }
+        startPage: { type: integer, minimum: 1 }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: {}
+        response: { exitCode: 0 }
+
+  parseSyllabusAp:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 応用情報か基本情報のシラバスから分類の受け皿と索引を作る
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        data: { type: string, minLength: 1, description: 学びの置き場 }
+        pdf: { type: string, minLength: 1 }
+        out: { type: string, minLength: 1 }
+        indexOut: { type: string, minLength: 1 }
+        version: { type: string, minLength: 1 }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: { data: data/ap }
+        response: { exitCode: 0 }
+
+  buildClassifyBundles:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 回の分類の束を作る
+    request:
+      type: object
+      required: [exam]
+      additionalProperties: false
+      properties:
+        exam: { type: string, minLength: 1, description: 回の ID }
+        data: { type: string, minLength: 1, description: 学びの置き場 }
+        size: { type: integer, minimum: 1 }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: { exam: 2024r06h, data: data/ap }
+        response: { exitCode: 0 }
+
+  buildTopics:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 分類の結果から論点と出題頻度を組む
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        data: { type: string, minLength: 1, description: 学びの置き場 }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: { data: data/ip }
+        response: { exitCode: 0 }
+
+  cropFigures:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 図の位置の一覧からページ画像の図を切り出す
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        boxes: { type: string, minLength: 1 }
+        pdfDir: { type: string, minLength: 1 }
+        out: { type: string, minLength: 1 }
+        dpi: { type: integer, minimum: 1 }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: { boxes: tests/fixtures/import/ip/figures/boxes.json, pdfDir: tests/fixtures/import/ip/pdfs, out: tests/fixtures/import/public/figures }
+        response: { exitCode: 0 }

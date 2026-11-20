@@ -1,0 +1,251 @@
+# UC-042 の境界: 作り手が手元で呼ぶ、束を作り教材を手入れし学びを足す道具の入口 9 個。振る舞いは ./UC.md の要件が持つ。
+# 読み方は ../../../adr/ADR-0008-local-tool-boundary.md（手元の道具の境界を local-store で読む）と ../../../adr/ADR-0014-entries-from-apps-and-tools.md（入口の名前）。
+# request の各欄は同じ名前の引数（newTarget の key は第 1 引数。topicsPerBundle は --topics-per-bundle のように、大文字の前に - を入れた小文字）。response の exitCode はプロセスの終了コード。
+# これらの道具は断りの種類の名前を出さない（errors を持たない）。止まり方は要件と exitCode が持つ。
+# 配備先のアカウント・保存先の名前・秘密の値は値なので書かない（R-102）。値の正本は scripts/pages_projects.json と src/shared/targets.json。
+x-uc: UC-042
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-19
+
+operations:
+  buildAnswerabilityBundles:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 解ける度合いの確かめの束を作る
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        data: { type: string, minLength: 1, description: 学びの置き場 }
+        out: { type: string, minLength: 1 }
+        size: { type: integer, minimum: 1 }
+        calcOnly: { type: boolean }
+        only: { type: array, items: { type: integer, minimum: 1 } }
+        skipDone: { type: boolean }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0] }
+    errors: []
+    examples:
+      ok:
+        request: { data: data/ip, size: 20 }
+        response: { exitCode: 0 }
+
+  buildExplanationBundles:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 問題解説の束を作る
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        data: { type: string, minLength: 1, description: 学びの置き場 }
+        out: { type: string, minLength: 1 }
+        topicsPerBundle: { type: integer, minimum: 1 }
+        maxQuestions: { type: integer, minimum: 1 }
+        fresh: { type: boolean }
+        limit: { type: integer, minimum: 1 }
+        missing: { type: boolean }
+        only: { type: array, items: { type: integer, minimum: 1 } }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0] }
+    errors: []
+    examples:
+      ok:
+        request: { data: data/ip, limit: 8 }
+        response: { exitCode: 0 }
+
+  buildMaterialBundles:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 教材の束を作る
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        data: { type: string, minLength: 1, description: 学びの置き場 }
+        out: { type: string, minLength: 1 }
+        fresh: { type: boolean }
+        limit: { type: integer, minimum: 1 }
+        missing: { type: boolean }
+        only: { type: array, items: { type: integer, minimum: 1 } }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0] }
+    errors: []
+    examples:
+      ok:
+        request: { data: data/ip, limit: 8 }
+        response: { exitCode: 0 }
+
+  planMaterialFigures:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 資格対策の学びで図を付ける論点を優先度の順に示す
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        data: { type: string, minLength: 1, description: 学びの置き場 }
+        top: { type: integer, minimum: 0 }
+        out: { type: string }
+        minCount: { type: integer, minimum: 1 }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0] }
+    errors: []
+    examples:
+      ok:
+        request: { data: data/ap }
+        response: { exitCode: 0 }
+
+  planRoadmapFigures:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: ロードマップ型の学びで図を付ける単位を選ぶ
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        data: { type: string, minLength: 1, description: 学びの置き場 }
+        top: { type: integer, minimum: 1 }
+        out: { type: string, minLength: 1 }
+        ids: { type: string, minLength: 1 }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0] }
+    errors: []
+    examples:
+      ok:
+        request: { data: data/itc }
+        response: { exitCode: 0 }
+
+  scanWords:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 学びの教材などから禁じた語を一覧する
+    request:
+      type: object
+      required: [data]
+      additionalProperties: false
+      properties:
+        data: { type: string, minLength: 1, description: 学びの置き場 }
+        rx: { type: string, minLength: 1 }
+        bold: { type: boolean }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0] }
+    errors: []
+    examples:
+      ok:
+        request: { data: data/msg, bold: true }
+        response: { exitCode: 0 }
+
+  summarizeReview:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 読み直しの指摘を集計する
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        key: { type: string, pattern: "^[a-z]+$" }
+        kind: { type: string, minLength: 1 }
+        severity: { type: string, minLength: 1 }
+        bundle: { type: string, minLength: 1 }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: {}
+        response: { exitCode: 0 }
+
+  tightenNumberUnits:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 数字と単位の間の空白を詰める
+    request:
+      type: object
+      required: [data]
+      additionalProperties: false
+      properties:
+        data: { type: string, minLength: 1, description: 学びの置き場 }
+        dryRun: { type: boolean }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0] }
+    errors: []
+    examples:
+      ok:
+        request: { data: data/mkt, dryRun: true }
+        response: { exitCode: 0 }
+
+  newTarget:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 新しい学びを登録するか、登録簿の整合を確かめる
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        key: { type: string, pattern: "^[a-z]+$" }
+        kind: { type: string, enum: [roadmap, exam] }
+        name: { type: string, minLength: 1 }
+        targetName: { type: string, minLength: 1 }
+        examName: { type: string, minLength: 1 }
+        fields: { type: string, minLength: 1 }
+        perDay: { type: integer, minimum: 1 }
+        days: { type: integer, minimum: 1 }
+        mockSize: { type: integer, minimum: 1 }
+        mockMinutes: { type: integer, minimum: 1 }
+        fieldRatio: { type: string, minLength: 1 }
+        passRule: { type: string, minLength: 1 }
+        check: { type: boolean }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: { check: true }
+        response: { exitCode: 0 }

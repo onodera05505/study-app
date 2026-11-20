@@ -1,0 +1,69 @@
+# UC-034 の境界: 運用者が手元で呼ぶ、入口の一覧を出す道具の入口 1 つの形。振る舞いは ./UC.md の要件が持つ。
+# 読み方は ../../../adr/ADR-0008-local-tool-boundary.md（手元の道具の境界を local-store で読む）、一覧の導き方は ../../../adr/ADR-0014-entries-from-apps-and-tools.md、共有語彙は ../../../_shared/components.yaml。
+# 一覧は標準出力の 1 行に 1 件の JSON で、response の entries はその行を順に読んだ物。行の形の正本は .harness/tools/lint-entries/README.md の「一覧の形」。
+# 断ったとき（errors）は入口を 1 件も出さず、標準出力に共有の形の ToolError（REQ-571）を出し、終了コードが 0 でない。
+x-uc: UC-034
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-19
+
+schemas:
+  RouteEntry:
+    type: object
+    required: [kind, method, path]
+    additionalProperties: false
+    properties:
+      kind: { type: string, const: http }
+      method: { type: string, minLength: 1, description: 契約の wire.method と同じ表記 }
+      path: { type: string, minLength: 1, description: "契約の wire.path と同じ書き方（パラメーターは {名前}）" }
+  ToolEntry:
+    type: object
+    required: [kind, name]
+    additionalProperties: false
+    properties:
+      kind: { type: string, const: local-store }
+      name: { type: string, minLength: 1, description: 契約の操作の名前と同じ文字 }
+
+operations:
+  listEntries:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 学び側とまなびばの app の経路と、道具の置き場の道具を、入口の一覧として 1 行に 1 件ずつ出す
+    request:
+      type: object
+      additionalProperties: false
+      properties: {}
+    response:
+      type: object
+      required: [exitCode, entries]
+      properties:
+        exitCode: { type: integer, const: 0, description: プロセスの終了コードと同じ }
+        entries:
+          type: array
+          description: 標準出力の行を順に読んだ物。同じ入口は 1 回だけ
+          items:
+            oneOf:
+              - { $ref: "#/schemas/RouteEntry" }
+              - { $ref: "#/schemas/ToolEntry" }
+    errors:
+      - code: INVALID_INPUT
+        when: 名前の表が読めない
+      - code: NOT_FOUND
+        when: 名前の表に挙げたファイルが無い
+      - code: INTERNAL
+        when: app を読み込めない
+    examples:
+      ok:
+        request: {}
+        response: { exitCode: 0 }
+      tableUnreadable:
+        request: {}
+        error: INVALID_INPUT
+      listedFileMissing:
+        request: {}
+        error: NOT_FOUND
+      appUnloadable:
+        request: {}
+        error: INTERNAL

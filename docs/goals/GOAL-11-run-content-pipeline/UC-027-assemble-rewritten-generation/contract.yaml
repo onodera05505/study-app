@@ -39,8 +39,6 @@ operations:
         out: { type: string, minLength: 1, description: 投入の書き出し先。省略すると学びの置き場の seed.sql }
         examName: { type: string, minLength: 1, description: 出典に入れる試験名。省略すると登録簿の学びの名前。渡しても登録簿に無い学びは断る }
         figures: { type: string, minLength: 1, description: 道具の --figures にそのまま渡す値 }
-        adminEmail: { type: string, minLength: 1, description: adminPassword と組で渡したときだけ管理ユーザを作る・更新する }
-        adminPassword: { type: string, minLength: 1 }
     response:
       type: object
       required: [exitCode, output, topicsByGeneration, units]

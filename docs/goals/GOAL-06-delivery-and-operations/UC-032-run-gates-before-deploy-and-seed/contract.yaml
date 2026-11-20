@@ -108,3 +108,45 @@ operations:
       seedMissing:
         request: { learning: fe, local: true }
         error: NOT_FOUND
+
+  deployPages:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 学び側の配備の手続き。門と回の確かめを回してから、学びを本番に配信する（入口は scripts/deploy-pages.sh。learning は第 1 引数）
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        learning: { type: string, pattern: "^[a-z]+$", description: 登録簿の学びの key。省略すると ip }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1], description: プロセスの終了コード。1 は配信しないまま止まった }
+    errors: []
+    examples:
+      ok: { request: { learning: ip }, response: { exitCode: 0 } }
+
+  checkD1Rounds:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 学びの保存先で、学ぶ順を持つ論点のすべてに回があるかを確かめる（入口は scripts/check_d1_rounds.sh。learning は第 1 引数、local は第 2 引数の --local）
+    request:
+      type: object
+      required: [learning]
+      additionalProperties: false
+      properties:
+        learning: { type: string, pattern: "^[a-z]+$", description: 登録簿の学びの key }
+        local: { type: boolean, description: true なら本番でなく手元の保存先 }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1], description: プロセスの終了コード。1 は回の無い論点があるか、回を読めない }
+    errors: []
+    examples:
+      ok: { request: { learning: itc, local: true }, response: { exitCode: 0 } }

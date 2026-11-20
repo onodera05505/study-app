@@ -1,0 +1,271 @@
+# UC-039 の境界: 運用者が手元で呼ぶ、本番の用意と手入れの道具の入口 11 個。振る舞いは ./UC.md の要件が持つ。
+# 読み方は ../../../adr/ADR-0008-local-tool-boundary.md（手元の道具の境界を local-store で読む）と ../../../adr/ADR-0014-entries-from-apps-and-tools.md（入口の名前）。
+# request の各欄は同じ名前の引数（学びは第 1 引数。d1Migrations の mode は第 2 引数、local は --local。targets の what と key は第 1・第 2 引数）。response の exitCode はプロセスの終了コード。
+# checkSsoProdSmoke のほかの道具は断りの種類の名前を出さない（errors: []）。止まり方は要件と exitCode が持つ。
+# 配備先のアカウント・保存先の名前・秘密の値は値なので書かない（R-102）。値の正本は scripts/pages_projects.json と src/shared/targets.json。
+x-uc: UC-039
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-19
+
+operations:
+  bootstrapPersonal:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 学びごとに配信先・保存先の構造・トークンの署名の秘密を本番に用意する
+    request:
+      type: object
+      required: [learnings]
+      additionalProperties: false
+      properties:
+        learnings: { type: array, minItems: 1, items: { type: string, pattern: "^[a-z]+$", description: 登録簿の学びの key } }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: { learnings: [fe] }
+        response: { exitCode: 0 }
+
+  finishRemote:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 投入・配信・記録の復元・模試の設定の揃えを順に回して学びを本番に出す
+    request:
+      type: object
+      required: [learning]
+      additionalProperties: false
+      properties:
+        learning: { type: string, pattern: "^[a-z]+$", description: 登録簿の学びの key }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: { learning: ip }
+        response: { exitCode: 0 }
+
+  alignAppSettings:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 保存先の模試の問題数と制限時間を登録簿の値に揃える
+    request:
+      type: object
+      required: [learning]
+      additionalProperties: false
+      properties:
+        learning: { type: string, pattern: "^[a-z]+$", description: 登録簿の学びの key }
+        local: { type: boolean, description: true なら本番でなく手元の保存先 }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: { learning: ap, local: true }
+        response: { exitCode: 0 }
+
+  backupD1:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 本番の保存先を丸ごと控えのファイルに書き出す
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        learning: { type: string, pattern: "^[a-z]+$", description: 登録簿の学びの key か all。省略すると all }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: { learning: ip }
+        response: { exitCode: 0 }
+
+  d1Migrations:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 保存先に当たっていない構造の変更を確かめるか当てる
+    request:
+      type: object
+      required: [learning, mode]
+      additionalProperties: false
+      properties:
+        learning: { type: string, pattern: "^[a-z]+$", description: 登録簿の学びの key }
+        mode: { type: string, enum: [check, apply] }
+        local: { type: boolean, description: true なら本番でなく手元の保存先 }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: { learning: ip, mode: check, local: true }
+        response: { exitCode: 0 }
+
+  extractUserData:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 保存先の控えから利用者のデータだけを抜き出す
+    request:
+      type: object
+      required: [backup, seed, out]
+      additionalProperties: false
+      properties:
+        backup: { type: string, minLength: 1 }
+        seed: { type: string, minLength: 1 }
+        out: { type: string, minLength: 1 }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: { backup: backups/ip.sql, seed: data/ip/seed.sql, out: backups/restore_ip.sql }
+        response: { exitCode: 0 }
+
+  portalMigrateAccounts:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 学び側の利用者をまなびばのアカウントに移す
+    request:
+      type: object
+      required: [admin]
+      additionalProperties: false
+      properties:
+        admin: { type: string, minLength: 1, description: 管理者にするメール }
+        skip: { type: string, minLength: 1, description: 移さないメール }
+        dryRun: { type: boolean }
+        local: { type: boolean, description: true なら本番でなく手元の保存先 }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: { admin: apicheck@example.com, dryRun: true, local: true }
+        response: { exitCode: 0 }
+
+  buildPortal:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 登録簿からまなびばの学びの一覧と静的なファイルを組み立てる
+    request:
+      type: object
+      additionalProperties: false
+      properties: {}
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: {}
+        response: { exitCode: 0 }
+
+  setSsoSecret:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 手元の共有秘密を学び側の配信先全部に置く
+    request:
+      type: object
+      additionalProperties: false
+      properties: {}
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: {}
+        response: { exitCode: 0 }
+
+  checkSsoProdSmoke:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 本番のまなびばと学びで、一時のアカウントで SSO を一巡する（保存先の設定と配備の道具は道具を置いたリポジトリから、まなびばと学びの場所は配備先の一覧から決めるので、写しの置き場に置いて代わりの相手に向けて回せる）
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        learning: { type: string, pattern: "^[a-z]+$", description: 登録簿の学びの key。省略すると mkt }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors:
+      - code: NOT_FOUND
+        when: 配備先の一覧にまなびばか指定した学びの場所が無い
+    examples:
+      ok:
+        request: { learning: mkt }
+        response: { exitCode: 0 }
+      locationMissing:
+        request: { learning: zzz }
+        error: NOT_FOUND
+
+  targets:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 登録簿の学びの一覧と学びごとの値を答える
+    request:
+      type: object
+      required: [what]
+      additionalProperties: false
+      properties:
+        what: { type: string, enum: [keys, title, kind, db, project, url, account, has] }
+        key: { type: string, pattern: "^[a-z]+$", description: 登録簿の学びの key }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: { what: keys }
+        response: { exitCode: 0 }

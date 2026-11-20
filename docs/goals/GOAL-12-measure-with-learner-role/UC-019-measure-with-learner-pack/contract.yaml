@@ -1186,3 +1186,47 @@ operations:
       ok:
         request: { path: data/eng/prompts/roadmap_learner.md, body: "# 学習者ロール" }
         response: { path: data/eng/prompts/roadmap_learner.md }
+
+  renderSvgPng:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: SVG の図を、元の幅と高さのまま PNG に描く（入口は scripts/render_svg_png.mjs。timeout は第 1 引数、figures は標準入力の JSON の配列。パックを作る入口が呼ぶ）
+    request:
+      type: object
+      required: [figures]
+      additionalProperties: false
+      properties:
+        timeout: { type: number, exclusiveMinimum: 0, description: 1 つの図を描く待ち時間の上限（秒）。省略すると 30 }
+        figures:
+          type: array
+          items:
+            type: object
+            required: [src, dst]
+            additionalProperties: false
+            properties:
+              src: { type: string, minLength: 1, description: SVG のパス }
+              dst: { type: string, minLength: 1, description: 書き出す PNG のパス }
+    response:
+      type: object
+      required: [failed]
+      properties:
+        failed:
+          type: array
+          description: 描けなかった図だけ。描けた図はこの並びに無く、dst に PNG がある
+          items:
+            type: object
+            required: [src, reason]
+            properties:
+              src: { type: string, minLength: 1 }
+              reason: { type: string, minLength: 1 }
+    errors: []
+    examples:
+      ok:
+        request: { timeout: 30, figures: [{ src: tests/fixtures/learner-pack/figures/ok.svg, dst: out/ok.png }] }
+        response: { failed: [] }
+      notSvg:
+        request: { timeout: 30, figures: [{ src: tests/fixtures/learner-pack/figures/not-svg.svg, dst: out/not-svg.png }] }
+        response: { failed: [{ src: tests/fixtures/learner-pack/figures/not-svg.svg }] }
+

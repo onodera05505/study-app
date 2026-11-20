@@ -1,9 +1,10 @@
 # UC-021 の境界: 作り手が手元で呼ぶ学び全体の門の入口 1 つと、門が読むファイル（ロードマップ・教材・確認問題・集めた資料・登録簿・独立解答）の形。
 # 読み方は docs/adr/ADR-0008（手元の道具の境界を local-store で読む）。パスは相対ならコマンドを呼んだ作業ディレクトリが起点。
+# 入口の response は、人が読む結果の行のあとに標準出力の最後の行として出す機械向けの 1 行（JSON）の形。人が読む行の形は契約に持たない。
 x-uc: UC-021
-x-status: draft
+x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-11
+x-updated: 2026-11-19
 
 schemas:
   Finding:
@@ -55,11 +56,11 @@ operations:
               - { $ref: "#/schemas/Finding" }
               - properties:
                   kind:
-                    enum: [avoidWord, usageSectionMissing, notationOutside, unclosedEmphasis, styleMinority, termMarkupMixed, indentedLine, sourceWhereCode, verbatimBody, verbatimSummary, answerPositionBias, pairAnswerNeverSame, answerLongest, answerTopTwoLength, answerCommas, absoluteWordsWrong, quoteOnlyInAnswer, stemSaysMaterial, bothLongestInUnit, prereqUnknown, lowestTierNotLast, tableTooNarrow, tableTooShort, tableTooWide, tableTooLong, tableCellLong]
+                    enum: [avoidWord, usageSectionMissing, unclosedEmphasis, styleMinority, sourceWhereCode, verbatimBody, verbatimSummary, answerPositionBias, pairAnswerNeverSame, answerLongest, answerTopTwoLength, answerCommas, absoluteWordsWrong, quoteOnlyInAnswer, stemSaysMaterial, bothLongestInUnit, prereqUnknown, lowestTierNotLast, tableTooNarrow, tableTooShort, tableTooWide, tableTooLong, tableCellLong]
         limits:
           type: object
           description: 門が使った閾値（止める・警告の境目）と表示の制約
-          required: [verbatimLength, independentMismatchRate, questionsPerUnit, headingLevel, tableColumns, tableRows, tableCellLength, answerPositionShare, pairSameShare, answerLongestShare, answerTopTwoShare, absoluteWrongShare, biasMinQuestions]
+          required: [verbatimLength, independentMismatchRate, questionsPerUnit, headingLevel, tableColumns, tableRows, tableCellLength, answerPositionShare, pairSameShare, answerLongestShare, answerTopTwoShare, answerCommasRatio, answerCommasFloor, absoluteWords, absoluteMinChoices, absoluteWrongShare, bothLongestMinUnits, biasMinQuestions, styleMinUnits, styleMinorityShare, goalsWhenNone]
           properties:
             verbatimLength: { type: integer, const: 14, description: 正解の選択肢と本文か要約がこの字数以上連続して一致したら警告 }
             independentMismatchRate: { type: number, const: 0.2, description: 1 本の独立解答の食い違いの割合がこれを超えたら止める }
@@ -71,10 +72,20 @@ operations:
             answerPositionShare: { type: number, const: 0.45, description: 1 つの正解の位置の割合がこれを超えたら警告 }
             pairSameShare: { type: number, const: 0.1, description: 同じ単位の 2 問で正解の記号が重なる割合がこれを下回ったら警告 }
             answerLongestShare: { type: number, const: 0.6 }
-            answerTopTwoShare: { type: number, const: 0.75 }
-            absoluteWrongShare: { type: number, const: 0.85 }
+            answerTopTwoShare: { type: number, const: 0.75, description: 正解が 2 番目に長い誤答より長い問題の割合がこれを超えたら警告 }
+            answerCommasRatio: { type: number, const: 2, description: 正解の読点の平均が誤答の読点の平均のこの倍を超えたら警告 }
+            answerCommasFloor: { type: number, const: 0.2, description: 誤答の読点の平均がこれを下回るときは、これを誤答の平均とみなす }
+            absoluteWords: { type: array, const: [必ず, すべて, 全部, いっさい, 絶対, だけ見れば, 見なくてよい, しなくてよい, 放っておく, そのまま信じ], description: 言い切る語 }
+            absoluteMinChoices: { type: integer, const: 15, description: 言い切る語を含む選択肢がこの数以上のときだけ警告 }
+            absoluteWrongShare: { type: number, const: 0.85, description: 言い切る語を含む選択肢のうち誤答の割合がこれを超えたら警告 }
+            bothLongestMinUnits: { type: integer, const: 3, description: 2 問とも正解が最も長い単位がこの数以上で警告 }
             biasMinQuestions: { type: integer, const: 20, description: 偏りの警告は問題がこの数以上のときだけ }
+            styleMinUnits: { type: integer, const: 10, description: 文体のずれは教材がこの数以上のときだけ見る }
+            styleMinorityShare: { type: number, const: 0.25, description: 多数と違う文体の単位の割合がこれ未満のときだけ警告 }
+            goalsWhenNone: { type: integer, const: 6, description: どの単位も到達基準を持たないときの到達基準の数 }
     errors:
+      - code: INVALID_INPUT
+        when: 必須の引数が無いか、知らない名前の引数か、値の無い引数がある
       - code: INVALID_INPUT
         when: 登録簿に無い学び
       - code: INVALID_INPUT
@@ -88,15 +99,18 @@ operations:
       - code: INVALID_INPUT
         when: 添えた独立解答が読めない
     examples:
+      badArguments:
+        request: {}
+        error: INVALID_INPUT
       pass:
-        request: { data: data/itc }
+        request: { data: data/ecl }
         response:
           exitCode: 0
           topics: 42
           questions: 84
           stops: []
           warnings: []
-          limits: { verbatimLength: 14, independentMismatchRate: 0.2, questionsPerUnit: 2, headingLevel: "###", tableColumns: { min: 2, max: 4 }, tableRows: { min: 2, max: 8 }, tableCellLength: 40, answerPositionShare: 0.45, pairSameShare: 0.1, answerLongestShare: 0.6, answerTopTwoShare: 0.75, absoluteWrongShare: 0.85, biasMinQuestions: 20 }
+          limits: { verbatimLength: 14, independentMismatchRate: 0.2, questionsPerUnit: 2, headingLevel: "###", tableColumns: { min: 2, max: 4 }, tableRows: { min: 2, max: 8 }, tableCellLength: 40, answerPositionShare: 0.45, pairSameShare: 0.1, answerLongestShare: 0.6, answerTopTwoShare: 0.75, answerCommasRatio: 2, answerCommasFloor: 0.2, absoluteWords: [必ず, すべて, 全部, いっさい, 絶対, だけ見れば, 見なくてよい, しなくてよい, 放っておく, そのまま信じ], absoluteMinChoices: 15, absoluteWrongShare: 0.85, bothLongestMinUnits: 3, biasMinQuestions: 20, styleMinUnits: 10, styleMinorityShare: 0.25, goalsWhenNone: 6 }
       unknownLearning:
         request: { data: data/zzz }
         error: INVALID_INPUT
@@ -148,11 +162,11 @@ operations:
               topic_id: { type: integer, minimum: 1 }
               term: { type: string, minLength: 1 }
               summary: { type: string }
-              prereqs: { type: array, description: 前提の単位の論点名, items: { type: string } }
+              prereq: { type: array, description: 前提の単位の論点名, items: { type: string } }
               round: { type: integer, minimum: 1, description: 章の番号 }
               chapter: { type: string, description: 章の名前 }
               tier: { type: integer, description: 印の段 }
-              goals: { type: array, items: { type: integer, minimum: 1 } }
+              goals: { type: array, description: 単位が測る到達基準の番号。学びの到達基準は 1 から全単位の goals の最大の番号まで（どの単位も持たなければ 1 から limits.goalsWhenNone まで）, items: { type: integer, minimum: 1 } }
     errors:
       - code: NOT_FOUND
         when: ロードマップが無い
@@ -161,7 +175,7 @@ operations:
     examples:
       ok:
         request: { path: data/itc/roadmap.json }
-        response: { units: [{ order: 1, topic_id: 1, term: ITコンサルタントの仕事, summary: "…", prereqs: [], goals: [1] }] }
+        response: { units: [{ order: 1, topic_id: 1, term: ITコンサルタントの仕事, summary: "…", prereq: [], goals: [1] }] }
       missing:
         request: { path: data/ip/roadmap.json }
         error: NOT_FOUND
@@ -200,7 +214,7 @@ operations:
                   type: object
                   required: [name]
                   properties:
-                    name: { type: string, minLength: 1, not: { const: 一般常識 }, description: 集めた資料の名前か、「〜の集計」（括弧に英小文字の鍵を添えてよい） }
+                    name: { type: string, minLength: 1, not: { const: 一般常識 }, description: 集めた資料の名前か、「〜の集計」（括弧に英小文字と _ の鍵を添えてよい） }
                     where: { type: string }
     errors:
       - code: NOT_FOUND
@@ -257,7 +271,7 @@ operations:
               choice_notes:
                 type: object
                 required: ["ア", "イ", "ウ", "エ"]
-                description: 正解の説明は「正解」で始まり、誤答の説明は「正解」で始まらない
+                description: 正解の説明は「正解」で始まり、誤答の説明は「正解。」の印で始まらない（文として「正解」で始まる誤答の説明はよい）
                 additionalProperties: { type: string, minLength: 1 }
               tests_goal: { type: integer, minimum: 1 }
     errors:
@@ -282,7 +296,7 @@ operations:
     direction: outbound
     owned: true
     auth: none
-    summary: 学びで集めた資料の 1 ファイルから資料の名前を読む（入れ子の資料も含む）
+    summary: 学びで集めた資料の 1 ファイルから資料の名前を読む（最上位の sources と、topics・themes・weights の各項目の sources か、それが無ければ examples の、name を持つ資料）
     request:
       type: object
       required: [path]
@@ -346,7 +360,7 @@ operations:
     examples:
       ok:
         request: { learning: eng }
-        response: { kind: roadmap, roadmapSpec: { keywordLabel: キーワード, usageSection: ひとことで説明すると, ngWords: [最新, 近年, 年収, 万円, 激務], tiers: [{ level: 3, label: "★★★ まず押さえる", rule: IT 面接で聞かれる・初日から会話に出る・他の多くの単位の前提になる }, { level: 2, label: "★★ 1 年目に要る", rule: 入社 1 年目の仕事で使う・知らないと事故や手戻りになる }, { level: 1, label: "★ 必要になったら", rule: 基本情報の水準・特定の職種や場面で要る }] } }
+        response: { kind: roadmap, roadmapSpec: { keywordLabel: キーワード, usageSection: ひとことで説明すると, ngWords: [最新, 近年, 年収, 万円, 激務], tiers: [{ level: 3, label: "★★★ まず押さえる", rule: 説明を求められやすい・初日から会話に出る・他の多くの単位の前提になる }, { level: 2, label: "★★ 1 年目に要る", rule: 入社 1 年目の仕事で使う・知らないと事故や手戻りになる }, { level: 1, label: "★ 必要になったら", rule: 基本情報の水準・特定の職種や場面で要る }] } }
       unknown:
         request: { learning: zzz }
         error: NOT_FOUND

@@ -39,3 +39,23 @@ operations:
         response: { versionStamp: null }
       unreachable:
         response: { versionStamp: null }
+
+  deployPortal:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: まなびばの配備の手続き。組み立ててから本番に配信する（入口は scripts/deploy_portal.sh）
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        setup: { type: boolean, description: --setup を渡す }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1], description: プロセスの終了コード。1 は配信しないまま止まった }
+    errors: []
+    examples:
+      ok: { request: {}, response: { exitCode: 0 } }

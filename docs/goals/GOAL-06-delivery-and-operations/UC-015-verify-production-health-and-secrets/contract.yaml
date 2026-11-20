@@ -209,3 +209,28 @@ operations:
       wrongAccount: { request: { deployment: ip }, error: FORBIDDEN }
       listUnavailable: { request: { deployment: ip }, error: UPSTREAM_UNAVAILABLE }
       notLoggedIn: { request: { deployment: ip }, error: UPSTREAM_UNAVAILABLE }
+
+  checkSsoProd:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 本番の検査を回し、まなびばと各学びの配備に上の外向きの操作を当てて、問題が無いか、挙げた問題を返す（入口は scripts/check_sso_prod.sh。引数は無い）
+    request:
+      type: object
+      additionalProperties: false
+      properties: {}
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1], description: プロセスの終了コード。1 は問題が 1 件以上（契約の errors に当たる問題があれば、最後の行の CheckProblems の名前で断る） }
+    errors:
+      - code: UPSTREAM_UNAVAILABLE
+        when: 挙げた問題のうち名前を持つ最初の物が、配備に届かない・一覧が取れない問題
+      - code: FORBIDDEN
+        when: 挙げた問題のうち名前を持つ最初の物が、ログイン中のアカウントのどれもその配備を持たない問題
+    examples:
+      ok: { request: {}, response: { exitCode: 0 } }
+      healthUnreachable: { request: {}, error: UPSTREAM_UNAVAILABLE }
+      wrongAccount: { request: {}, error: FORBIDDEN }
