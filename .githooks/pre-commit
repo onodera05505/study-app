@@ -1,11 +1,10 @@
 #!/bin/sh
-# pre-commit — コミットの前に速い門を回す。原本 harness の spec-lint・trace-check（.harness/ の別 checkout）と静的な門。
-# 有効化（クローンごとに一度）:  bash scripts/install_githooks.sh。.harness/ が無ければ: git clone --depth 1 --branch <apm.yml の develop-core の tag> https://github.com/tsay-dev/harness .harness
+# pre-commit — コミットの前に速い門を回す。原本 harness の verify --level lint（.harness/ の別 checkout）と静的な門。
+# 有効化（クローンごとに一度）:  bash scripts/install_githooks.sh。.harness/ が無ければ: git clone https://github.com/tsay-dev/harness .harness && git -C .harness checkout <apm.yml の develop-core の版>
 # 単体テスト込みの全部は `npm test`（Stop フックと CI が回す）。--no-verify で回避できるので CI にも同じ検査がある。
 set -eu
 cd "$(git rev-parse --show-toplevel)"
-[ -d .harness ] || { echo "pre-commit: .harness/ が無い（git clone --depth 1 --branch <apm.yml の develop-core の tag> https://github.com/tsay-dev/harness .harness）"; exit 1; }
-node .harness/tools/spec-lint/spec-lint.mjs validate
-node .harness/tools/trace-check/trace-check.mjs
+[ -d .harness ] || { echo "pre-commit: .harness/ が無い（git clone https://github.com/tsay-dev/harness .harness && git -C .harness checkout <apm.yml の develop-core の版>）"; exit 1; }
+node .harness/bin/harness.mjs verify --level lint
 python3 scripts/check_source.py
 python3 scripts/check_docs.py

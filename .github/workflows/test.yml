@@ -1,4 +1,4 @@
-# test — 原本 harness の門（spec-lint → trace-check）→ 単体テスト → 静的な門 を、フックを回避しても止まる層として回す。
+# test — 原本 harness の完了の判定（harness verify。仕様と紐づきの検査 → 契約の実例 → 型 → 静的な門 → 単体テスト → 実行の記録）を、フックを回避しても止まる層として回す。
 # pre-commit は --no-verify で通れるので、同じ npm test を CI でも走らせる（回避不能な層）。
 name: test
 on:
@@ -17,7 +17,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: git clone --depth 1 --branch "$(grep -o 'develop-core#v[0-9.]*' apm.yml | cut -d'#' -f2)" https://github.com/tsay-dev/harness .harness
+      # 原本 harness は apm.yml が固定しているコミットで取る
+      - run: |
+          ref="$(grep -o 'develop-core#[0-9a-f]\{40\}' apm.yml | cut -d'#' -f2)"
+          git clone https://github.com/tsay-dev/harness .harness
+          git -C .harness checkout --quiet "$ref"
       - run: npm ci
       # 学習者役のパックの図を PNG に描く Chromium と、日本語の字形を含む依存のフォント（scripts/render_svg_png.mjs）
       - run: npx playwright install --with-deps chromium

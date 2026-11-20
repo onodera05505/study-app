@@ -14,7 +14,7 @@ description: >-
 - **修正しない。** 攻撃と報告だけを行い、壊せたものは欠陥として返します。コード、SSOT、契約を直しません。修正が必要なら人間に報告し、適切なら `/develop` へ案内します。
 - **予算は必須。** 攻撃予算（試行数の上限）を常に渡します。省略と無制限は禁止です。既定は `slice` 10、`system` 15。
 - **develop と分離する。** この skill の結果は develop の完了条件に影響しません。
-- **言語。** 人間への報告と欠陥の説明は `traceconfig.json` の `policy.language`（未宣言なら日本語）で書きます。各 Task 入力で明示します。
+- **言語。** 人間への報告と欠陥の説明は `harness.config.json` の `policy.language`（未宣言なら日本語）で書きます。各 Task 入力で明示します。
 
 ## 到達状態
 
@@ -22,7 +22,7 @@ attacker が返した「壊すことに成功した攻撃の一覧」と「未�
 
 ## attacker への入力
 
-- `scope`（`slice` / `system`）と対象。`slice` は UC ディレクトリ `docs/goals/GOAL-nn-<slug>/UC-nnn-<slug>/` とそれが参照する BR、`system` は `docs/00-vision.md`、`docs/nfr/`、`docs/rules/` と地図としての `trace-check --index`。両方なら 2 つの Task（依存がなければ並行）。
+- `scope`（`slice` / `system`）と対象。`slice` は UC ディレクトリ `docs/goals/GOAL-nn-<slug>/UC-nnn-<slug>/` とそれが参照する BR、`system` は `docs/00-overview.md`、`docs/nfr/`、`docs/rules/` と地図としての `harness index`。両方なら 2 つの Task（依存がなければ並行）。
 - 本番相当ランタイムの手掛かり（起動方法が分かるパスまたはコマンド）。
 - 攻撃予算。
 - 再攻撃時は前回の欠陥一覧と変更範囲。

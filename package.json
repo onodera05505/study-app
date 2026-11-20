@@ -15,9 +15,10 @@
     "typecheck": "tsc --noEmit -p . && tsc --noEmit -p tsconfig.node.json",
     "check:render": "bash scripts/check_render.sh",
     "audit:screens": "bash scripts/audit_screens.sh",
-    "test": "node .harness/tools/spec-lint/spec-lint.mjs validate && node .harness/tools/trace-check/trace-check.mjs && vitest run && python3 scripts/check_source.py && python3 scripts/check_docs.py",
+    "test": "node .harness/bin/harness.mjs verify --level fast",
     "test:unit": "vitest run",
-    "contract-run": "node .harness-next/tools/contract-run/contract-run.mjs --config traceconfig.next.json"
+    "test:record": "node tests/support/coverage/run.mjs",
+    "contract-run": "node .harness/bin/harness.mjs run cases"
   },
   "dependencies": {
     "drizzle-orm": "^0.45.2",
@@ -29,8 +30,10 @@
     "@types/node": "^24.19.2",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
+    "@vitest/coverage-v8": "5.0.2",
     "@vitejs/plugin-react": "^6.1.0",
     "axe-core": "^4.13.0",
+    "c8": "^10.1.3",
     "drizzle-kit": "^0.31.10",
     "jsdom": "^27.0.0",
     "playwright": "^1.62.1",

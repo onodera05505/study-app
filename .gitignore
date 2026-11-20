@@ -11,6 +11,8 @@ data/*/seed.sql
 backups/
 
 node_modules/
+# テストのコマンドが書き出す実行の記録（tests/support/coverage/run.mjs。ADR-0015）。根の置き場だけ（足場 tests/support/coverage/ は追跡する）
+/coverage/
 dist/
 .wrangler/
 .dev.vars

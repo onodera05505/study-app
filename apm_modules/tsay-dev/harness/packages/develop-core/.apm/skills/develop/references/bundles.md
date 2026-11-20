@@ -2,24 +2,24 @@
 
 ルール（末端ファイル）の本文は展開せず、**パス**で Task 入力に渡します。配送先はオーケストレーターが決め、agent 自身にカタログを巡回させません。末端ファイルが唯一の SSOT で、内容を複製しません。
 
-- **参照は一方向（rules → skill）。** skill が末端ファイルについて見てよいのは、パス（列挙用）と frontmatter の `applyTo:`（配送判定用）だけです。本文を読まず、ファイル名の意味に依存せず、要約や節見出しを skill に書きません。
+- **参照は skill → agent の 1 本だけ（ADR-0048）。** skill が末端ファイルについて見てよいのは、パス（列挙用）と frontmatter の `applyTo:`（配送判定用）だけです。本文を読まず、ファイル名の意味に依存せず、要約や節見出しを skill に書きません。
 - **このファイルに具体的なフレームワーク名や末端ファイル一覧を書かない。** 定めるのは配送先の決め方だけです。
 
 ## 束の組み立て
 
-1. `apm_modules/` のインストール済み `develop-core`（従来方式では `.harness-legacy.json` が記録するパッケージ）の `.apm/instructions/*.instructions.md` を列挙します。フレームワークが不明でも共通の末端ファイルは必ず届けます。
-2. 明示的にインストールされた `rules-*` パッケージだけから `.apm/instructions/*.instructions.md` を列挙します。未選択のスタックを外部チェックアウトで探しません。
+1. `apm_modules/` のインストール済み `develop-core`の `.apm/instructions/*.instructions.md` を列挙します。フレームワークが不明でも共通の末端ファイルは必ず届けます。
+2. 明示的にインストールされた `rules-*` パッケージと、それが `apm.yml` の依存で引き込む `rules-*` パッケージ（`apm.lock.yaml` で `resolved_by` を持つもの）だけから `.apm/instructions/*.instructions.md` を列挙します。未選択のスタックを外部チェックアウトで探しません。
 3. 各末端ファイルの frontmatter `applyTo:`（カンマ区切り glob）だけを読みます。
 4. 作成者ごとに、今回の起動でその作成者が作成・編集するパスを列挙し、`applyTo:` が一致する末端ファイルを**すべて**渡します。
 
 | 受け手 | 「書くパス」 |
 | --- | --- |
 | `spec-author` | 今回書く `docs/` 配下のパス |
-| `test-author`（`backend-logic`） | 作成するテストファイルと、`## 検証方針` を書く REQ のパス |
-| `test-author`（`scenario`） | 作成するシナリオテストのパス（`traceconfig.json` の `tests.system`） |
+| `test-author`（`backend-logic`） | 作成するテストファイル（DB で守る BR のテストは、実 DB のテストの置き場のパスも）と、検証方針を書く REQ（`UC.md` のパスと REQ の ID） |
+| `test-author`（`scenario`） | 作成するシナリオテストのパス（`harness.config.json` の `tests.system`） |
 | `implementer`（`logic` / `appearance` / `probe`） | 作成・編集する本番コードのパス |
 | `implementer`（`schema`） | スキーマ正本のパス |
-| 自ら書くオーケストレーター（ADR / `DEFERRED.md` / `traceconfig.json`） | 自ら書く docs パスと `traceconfig.json`（利用プロジェクト直下からの相対パス）。一致する末端ファイルを書く前に読む |
+| 自ら書くオーケストレーター（ADR / `harness.config.json` / 凍結済みの `DEFERRED.md` の行の削除） | 自ら書く docs パスと `harness.config.json`（利用プロジェクト直下からの相対パス）。一致する末端ファイルを書く前に読む |
 
 - 何も一致しなければ絞り込みが誤っている可能性が高いので、共通の末端ファイルに加え、選択したスタックパッケージの末端ファイルをすべて渡します。不足より過剰を選びます。
 - 同じパスを書く担当には同じ束を渡します（束を分割しない）。implementer が予定外のパスを書くときは、書く前に `applyTo:` が一致する末端ファイルを自ら開きます。

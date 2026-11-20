@@ -4,8 +4,8 @@ dependencies:
 - repo_url: tsay-dev/harness
   name: develop-core
   host: github.com
-  resolved_commit: c4be71581ba5469f62ab791d43d9dfa917c03c1f
-  resolved_ref: c4be71581ba5469f62ab791d43d9dfa917c03c1f
+  resolved_commit: 1ce5b0e047f73ecab20405edb01867fd6c90c684
+  resolved_ref: 1ce5b0e047f73ecab20405edb01867fd6c90c684
   version: 1.0.0
   virtual_path: packages/develop-core
   is_virtual: true
@@ -65,56 +65,56 @@ dependencies:
   - .grok/skills/docs-migrate
   - .grok/skills/docs-migrate/SKILL.md
   deployed_file_hashes:
-    .agents/skills/attack/SKILL.md: sha256:b519be50d35f834e5c732924f87d68df01bba5007022267c1f665f7c11a3c585
-    .agents/skills/develop/SKILL.md: sha256:768b78d1af545e0b68bb33d23d14cfcbe734d9474bb4cec7648731709c000468
-    .agents/skills/develop/references/adr.md: sha256:8819607da57b394e93e3266e8bbf8a26d731ce39bf066c1f67a249cf0d2df352
-    .agents/skills/develop/references/bundles.md: sha256:f3d74792bc86eaaef6af0dfb3081ff4dd616116d761ecffdee4f5d5381eceae8
-    .agents/skills/develop/references/commit.md: sha256:e59df4c07b3d92764672224c54a500d1e3507b313f58ac9b685da53e82b54738
-    .agents/skills/docs-migrate/SKILL.md: sha256:0417351b5c9f946f8d96148561f1278bd7e660b399360069ebcef6ef86af44ad
-    .claude/agents/attacker.md: sha256:ac8deeb5ee54bc78e5c7bf4dacd3128a9471fa4248b331c8361eadca345f43b8
-    .claude/agents/implementer.md: sha256:05a1377ce85571624746abab3560d4fef6fa0c2c607180eea8d52bc6575edf3b
-    .claude/agents/reviewer.md: sha256:f75a2cc78152e8c164ba2c7735a47e46df495003d00e84df78d011e0654440c7
-    .claude/agents/spec-author.md: sha256:98e18b3276ba9d8d3caf27154a6300b52c7d8b102ef536fa5d8e66c9369c7416
-    .claude/agents/test-author.md: sha256:6a5212c92f6f5dccfd0d197654a03404f3dbd4fe1b5d88ea38b956a429eca8c8
-    .claude/rules/comments.md: sha256:9af958ce6a77120a6b6aefc04066b1098474cf84ae9090cf28323dcd73b9611d
-    .claude/rules/docs.md: sha256:258a0196ca1d7a215e6638278520606ea570b6644509375113e2901c5f443b13
-    .claude/skills/attack/SKILL.md: sha256:b519be50d35f834e5c732924f87d68df01bba5007022267c1f665f7c11a3c585
-    .claude/skills/develop/SKILL.md: sha256:768b78d1af545e0b68bb33d23d14cfcbe734d9474bb4cec7648731709c000468
-    .claude/skills/develop/references/adr.md: sha256:8819607da57b394e93e3266e8bbf8a26d731ce39bf066c1f67a249cf0d2df352
-    .claude/skills/develop/references/bundles.md: sha256:f3d74792bc86eaaef6af0dfb3081ff4dd616116d761ecffdee4f5d5381eceae8
-    .claude/skills/develop/references/commit.md: sha256:e59df4c07b3d92764672224c54a500d1e3507b313f58ac9b685da53e82b54738
-    .claude/skills/docs-migrate/SKILL.md: sha256:0417351b5c9f946f8d96148561f1278bd7e660b399360069ebcef6ef86af44ad
-    .codex/agents/attacker.toml: sha256:d3545c34fe0671d58de93ee58430c75e999ee46be7915191a4b67d53da959a14
-    .codex/agents/implementer.toml: sha256:551512e89784f2d027a3c41cd5fb484099992b73f1b5f59e91007d60f1592a6d
-    .codex/agents/reviewer.toml: sha256:3a577ed9c253252274ad1c021aa826c179a23575920dc01e00d65c7fea291f42
-    .codex/agents/spec-author.toml: sha256:89fb9fe720bf266fadf2eaab89f779b53b732cc8a96d2fc2bc8af0cd972e3ac5
-    .codex/agents/test-author.toml: sha256:1a18f5813654e4f98fc64017214bf5f6f98ba71abe8e97c39691d56a067dbc50
-    .cursor/agents/attacker.md: sha256:ac8deeb5ee54bc78e5c7bf4dacd3128a9471fa4248b331c8361eadca345f43b8
-    .cursor/agents/implementer.md: sha256:05a1377ce85571624746abab3560d4fef6fa0c2c607180eea8d52bc6575edf3b
-    .cursor/agents/reviewer.md: sha256:f75a2cc78152e8c164ba2c7735a47e46df495003d00e84df78d011e0654440c7
-    .cursor/agents/spec-author.md: sha256:98e18b3276ba9d8d3caf27154a6300b52c7d8b102ef536fa5d8e66c9369c7416
-    .cursor/agents/test-author.md: sha256:6a5212c92f6f5dccfd0d197654a03404f3dbd4fe1b5d88ea38b956a429eca8c8
-    .cursor/rules/comments.mdc: sha256:7d1f6f27dd6a9d63e72a94f353d69c4ae1d3fc2f1d73c62ac1e81f8cbefd550b
-    .cursor/rules/docs.mdc: sha256:e5643b6384f282a06f9c5e6b09edfa2d4eecec4aedd0163c4dc0b6c12d6ed1e7
-    .grok/agents/attacker.md: sha256:ac8deeb5ee54bc78e5c7bf4dacd3128a9471fa4248b331c8361eadca345f43b8
-    .grok/agents/implementer.md: sha256:05a1377ce85571624746abab3560d4fef6fa0c2c607180eea8d52bc6575edf3b
-    .grok/agents/reviewer.md: sha256:f75a2cc78152e8c164ba2c7735a47e46df495003d00e84df78d011e0654440c7
-    .grok/agents/spec-author.md: sha256:98e18b3276ba9d8d3caf27154a6300b52c7d8b102ef536fa5d8e66c9369c7416
-    .grok/agents/test-author.md: sha256:6a5212c92f6f5dccfd0d197654a03404f3dbd4fe1b5d88ea38b956a429eca8c8
-    .grok/rules/comments.instructions.md: sha256:fdf22154e537d2bcdbe66bcc410fd9a0a00fe34853247cce2aecbb029095858b
-    .grok/rules/docs.instructions.md: sha256:b09fdb082ce58cc8d3a422a319fd295c355b6b87e34b3ceda0949c0116f0bceb
-    .grok/skills/attack/SKILL.md: sha256:b519be50d35f834e5c732924f87d68df01bba5007022267c1f665f7c11a3c585
-    .grok/skills/develop/SKILL.md: sha256:768b78d1af545e0b68bb33d23d14cfcbe734d9474bb4cec7648731709c000468
-    .grok/skills/develop/references/adr.md: sha256:8819607da57b394e93e3266e8bbf8a26d731ce39bf066c1f67a249cf0d2df352
-    .grok/skills/develop/references/bundles.md: sha256:f3d74792bc86eaaef6af0dfb3081ff4dd616116d761ecffdee4f5d5381eceae8
-    .grok/skills/develop/references/commit.md: sha256:e59df4c07b3d92764672224c54a500d1e3507b313f58ac9b685da53e82b54738
-    .grok/skills/docs-migrate/SKILL.md: sha256:0417351b5c9f946f8d96148561f1278bd7e660b399360069ebcef6ef86af44ad
-  content_hash: sha256:513acc2f3e4f51703f61d912b6b4247c46fe2e0028ac9267cb0a399ff31a980d
+    .agents/skills/attack/SKILL.md: sha256:156d7e815731987aa6fc98b32c448183891522f45c0db6faf721a4eb2e6c77a5
+    .agents/skills/develop/SKILL.md: sha256:f8488fadde9fd8ab9d485365aae883e3756c5934f40b8d3e58c1d7bfafbffa56
+    .agents/skills/develop/references/adr.md: sha256:0f8e4c8bb084c2bb38f7db8d330255d9ed1a24905d548170426fc7ceae101742
+    .agents/skills/develop/references/bundles.md: sha256:cc24b6369fa36d73a9448d7b5b1d88bdf4469b53c3ead8035344cfa25120c444
+    .agents/skills/develop/references/commit.md: sha256:0d9821b9d4f601ed852da56be5bbe9bc164e780dd8b7a325bf3feaa752901bae
+    .agents/skills/docs-migrate/SKILL.md: sha256:0b9c1c87b95c0c3643c7429a8541b76ba68db524d85152c04844473e3bda1857
+    .claude/agents/attacker.md: sha256:8ca8c919ac6b2cee5ea474e03cdefe03105464c6ea5a596c15ce2dab9e5e3a33
+    .claude/agents/implementer.md: sha256:3aa8146d802d50d89da5359a271e4e95545081e2963ff24b2a5bfa80ad3e0624
+    .claude/agents/reviewer.md: sha256:8de8f1d16d404f2f91acfc56c303e0ab6eac73e91e4298c89251af3dca998785
+    .claude/agents/spec-author.md: sha256:30c0d853d5106b587f094bc7876f2eb0da4a17e5d89ab6958295ac2970a704b2
+    .claude/agents/test-author.md: sha256:08c7663f67077e6254e8c1ea2eb25044c8a81c2fbc28ba821d88913728948198
+    .claude/rules/comments.md: sha256:f40f7ac1c25b73f50440cc1ffdd94dadae809dede2690b77053770f5f947c82d
+    .claude/rules/docs.md: sha256:8cd99474c715524b5ef203c732ee7345bd3704e56795ca9dbfd2fa5e1a7742c4
+    .claude/skills/attack/SKILL.md: sha256:156d7e815731987aa6fc98b32c448183891522f45c0db6faf721a4eb2e6c77a5
+    .claude/skills/develop/SKILL.md: sha256:f8488fadde9fd8ab9d485365aae883e3756c5934f40b8d3e58c1d7bfafbffa56
+    .claude/skills/develop/references/adr.md: sha256:0f8e4c8bb084c2bb38f7db8d330255d9ed1a24905d548170426fc7ceae101742
+    .claude/skills/develop/references/bundles.md: sha256:cc24b6369fa36d73a9448d7b5b1d88bdf4469b53c3ead8035344cfa25120c444
+    .claude/skills/develop/references/commit.md: sha256:0d9821b9d4f601ed852da56be5bbe9bc164e780dd8b7a325bf3feaa752901bae
+    .claude/skills/docs-migrate/SKILL.md: sha256:0b9c1c87b95c0c3643c7429a8541b76ba68db524d85152c04844473e3bda1857
+    .codex/agents/attacker.toml: sha256:95b302f1f13b03f28a6b71a450adaba3e1aec5161ef286d3e3fa314038e5c519
+    .codex/agents/implementer.toml: sha256:b686dd07cc0b6e6c762e430a78b572613959b56772cb05b99589016e2f17668c
+    .codex/agents/reviewer.toml: sha256:4ce54be3707b31f623336ef1d33cbbaa687c63105e6d57f3d10aade51229b91b
+    .codex/agents/spec-author.toml: sha256:f02c0e08a970aaf79f1cbb48f271db1e9278a7b4522e45c76d07a70b04e5efc6
+    .codex/agents/test-author.toml: sha256:9bbfda63d92966cf9f83cd76c8e4d0b19b5ab37bd360f1466975a72d0b3e1b0c
+    .cursor/agents/attacker.md: sha256:8ca8c919ac6b2cee5ea474e03cdefe03105464c6ea5a596c15ce2dab9e5e3a33
+    .cursor/agents/implementer.md: sha256:3aa8146d802d50d89da5359a271e4e95545081e2963ff24b2a5bfa80ad3e0624
+    .cursor/agents/reviewer.md: sha256:8de8f1d16d404f2f91acfc56c303e0ab6eac73e91e4298c89251af3dca998785
+    .cursor/agents/spec-author.md: sha256:30c0d853d5106b587f094bc7876f2eb0da4a17e5d89ab6958295ac2970a704b2
+    .cursor/agents/test-author.md: sha256:08c7663f67077e6254e8c1ea2eb25044c8a81c2fbc28ba821d88913728948198
+    .cursor/rules/comments.mdc: sha256:5e07482aed4e9dcd687249e20d5ac645ed08850b663426338fc36b0f1e63ac21
+    .cursor/rules/docs.mdc: sha256:4a149508b56e0d161e5b8e7c29b4209e3e7d1a476ceacc1988a3bbb3990105c0
+    .grok/agents/attacker.md: sha256:8ca8c919ac6b2cee5ea474e03cdefe03105464c6ea5a596c15ce2dab9e5e3a33
+    .grok/agents/implementer.md: sha256:3aa8146d802d50d89da5359a271e4e95545081e2963ff24b2a5bfa80ad3e0624
+    .grok/agents/reviewer.md: sha256:8de8f1d16d404f2f91acfc56c303e0ab6eac73e91e4298c89251af3dca998785
+    .grok/agents/spec-author.md: sha256:30c0d853d5106b587f094bc7876f2eb0da4a17e5d89ab6958295ac2970a704b2
+    .grok/agents/test-author.md: sha256:08c7663f67077e6254e8c1ea2eb25044c8a81c2fbc28ba821d88913728948198
+    .grok/rules/comments.instructions.md: sha256:a4305e7fe7fe3f24b80205c85d620384e472fdc4d20481c23368c2be9c5c9809
+    .grok/rules/docs.instructions.md: sha256:9f75ad805c6eb1afa4487325421c51394d9471ed633e71e674c0d493f1ad767a
+    .grok/skills/attack/SKILL.md: sha256:156d7e815731987aa6fc98b32c448183891522f45c0db6faf721a4eb2e6c77a5
+    .grok/skills/develop/SKILL.md: sha256:f8488fadde9fd8ab9d485365aae883e3756c5934f40b8d3e58c1d7bfafbffa56
+    .grok/skills/develop/references/adr.md: sha256:0f8e4c8bb084c2bb38f7db8d330255d9ed1a24905d548170426fc7ceae101742
+    .grok/skills/develop/references/bundles.md: sha256:cc24b6369fa36d73a9448d7b5b1d88bdf4469b53c3ead8035344cfa25120c444
+    .grok/skills/develop/references/commit.md: sha256:0d9821b9d4f601ed852da56be5bbe9bc164e780dd8b7a325bf3feaa752901bae
+    .grok/skills/docs-migrate/SKILL.md: sha256:0b9c1c87b95c0c3643c7429a8541b76ba68db524d85152c04844473e3bda1857
+  content_hash: sha256:a94a6897f92ca4bb6f3e10653aeb6f2ef547fd568566c2c55cff57af17a1b274
 - repo_url: tsay-dev/harness
   name: grilling
   host: github.com
-  resolved_commit: c4be71581ba5469f62ab791d43d9dfa917c03c1f
-  resolved_ref: c4be71581ba5469f62ab791d43d9dfa917c03c1f
+  resolved_commit: 1ce5b0e047f73ecab20405edb01867fd6c90c684
+  resolved_ref: 1ce5b0e047f73ecab20405edb01867fd6c90c684
   version: 1.0.0
   virtual_path: packages/grilling
   is_virtual: true
@@ -143,8 +143,8 @@ dependencies:
 - repo_url: tsay-dev/harness
   name: rules-cloudflare-hono-react
   host: github.com
-  resolved_commit: c4be71581ba5469f62ab791d43d9dfa917c03c1f
-  resolved_ref: c4be71581ba5469f62ab791d43d9dfa917c03c1f
+  resolved_commit: 1ce5b0e047f73ecab20405edb01867fd6c90c684
+  resolved_ref: 1ce5b0e047f73ecab20405edb01867fd6c90c684
   version: 1.0.0
   virtual_path: packages/rules-cloudflare-hono-react
   is_virtual: true
@@ -157,10 +157,8 @@ dependencies:
   - .claude/rules/backend-storage.md
   - .claude/rules/backend-testing.md
   - .claude/rules/common-coding.md
+  - .claude/rules/common-harness-config.md
   - .claude/rules/common-testing.md
-  - .claude/rules/common-traceconfig.md
-  - .claude/rules/frontend-dataflow.md
-  - .claude/rules/frontend-routing.md
   - .claude/rules/platform-routing.md
   - .claude/rules/platform-runtime.md
   - .claude/rules/system-testing.md
@@ -171,10 +169,8 @@ dependencies:
   - .cursor/rules/backend-storage.mdc
   - .cursor/rules/backend-testing.mdc
   - .cursor/rules/common-coding.mdc
+  - .cursor/rules/common-harness-config.mdc
   - .cursor/rules/common-testing.mdc
-  - .cursor/rules/common-traceconfig.mdc
-  - .cursor/rules/frontend-dataflow.mdc
-  - .cursor/rules/frontend-routing.mdc
   - .cursor/rules/platform-routing.mdc
   - .cursor/rules/platform-runtime.mdc
   - .cursor/rules/system-testing.mdc
@@ -185,57 +181,81 @@ dependencies:
   - .grok/rules/backend-storage.instructions.md
   - .grok/rules/backend-testing.instructions.md
   - .grok/rules/common-coding.instructions.md
+  - .grok/rules/common-harness-config.instructions.md
   - .grok/rules/common-testing.instructions.md
-  - .grok/rules/common-traceconfig.instructions.md
-  - .grok/rules/frontend-dataflow.instructions.md
-  - .grok/rules/frontend-routing.instructions.md
   - .grok/rules/platform-routing.instructions.md
   - .grok/rules/platform-runtime.instructions.md
   - .grok/rules/system-testing.instructions.md
   deployed_file_hashes:
-    .claude/rules/backend-coding.md: sha256:a2eadd51f7a46bc7fbd9ec18187cabd5d085573136934f2908db2f7bd99518a4
+    .claude/rules/backend-coding.md: sha256:88746d7382b3f926d418b2444a4a0e025ba93436252497a505f85440fe9d84cc
     .claude/rules/backend-database.md: sha256:127f7acb69bc801115937f64238bfb2365a19513f40c3852dee414ae6171a1e3
-    .claude/rules/backend-realtime.md: sha256:1c604fd643cdc3aad1f7f34c59b9a355f343d27947daa84e8ea279b74f43386d
+    .claude/rules/backend-realtime.md: sha256:85a233d2361c7c8e8e9541d3c6be3a6e16223cc5e80b36bb506e4bb0cebd47f5
     .claude/rules/backend-security.md: sha256:fd77ba788ca42e8bd8d15795ae9636060311a38ed0ece34c9b28b47e5fffd346
     .claude/rules/backend-storage.md: sha256:bba72e23713acc1a2f2922aad7979a1b4a074de30290c71436035b3d5214ae04
-    .claude/rules/backend-testing.md: sha256:e37e7f7e57c839d3124cc14fec58f35dbeb17c59fbded68999e226e5bc37bd78
-    .claude/rules/common-coding.md: sha256:49032d8201814c26730b1094728ef30675331bf67215b3b49bdc88873781529b
-    .claude/rules/common-testing.md: sha256:66ea8b4283b6b994e59a9c83cecce881a8a5468578851cdb3cd9c6aa0f278863
-    .claude/rules/common-traceconfig.md: sha256:18ae1c48b75c32a50442fe9508f3c608e21fb049cd7a84a1ee0a7b2cf5c1f1a0
-    .claude/rules/frontend-dataflow.md: sha256:b03b2e30963bd3cce5565f93e9e2501429bb1c3b5d218fdc647cbd049f3d9be0
-    .claude/rules/frontend-routing.md: sha256:14a2515ab2dfb8a7e68eb883dd09ca0d6170b917dd7e3b1a93337b5d487da049
+    .claude/rules/backend-testing.md: sha256:569d3bfc7e60c789c8e9b3b3c8cb5e2b8dce77e63eecc27c91fb1d14f03c9a01
+    .claude/rules/common-coding.md: sha256:13ccb72cb01dc1143a8259a1617232e0d2c4fcec6c7fe996d52e1caecb68248b
+    .claude/rules/common-harness-config.md: sha256:4845d6b62ed670d7390b856067f8f517fa9ecf7c645881f4ed7b1a66d066a95f
+    .claude/rules/common-testing.md: sha256:622f6a737308ccea402088a5bdf9281544f0a9f0ee287dd6ec10d4f7910b8831
     .claude/rules/platform-routing.md: sha256:a304928a611573eab337c1b1c1b1c0076a0791b0fe7cefd538c57a8997ef3c41
     .claude/rules/platform-runtime.md: sha256:de92a662d9aba749f2113817dbf2a04b41454280796b659bbac0022bb57e5a44
-    .claude/rules/system-testing.md: sha256:05b3863463e782f5f0e75498476b8471bb0271e9733a35dd2b0734e9b20bf0db
-    .cursor/rules/backend-coding.mdc: sha256:09f27ee61a6cb4e6e360d1596bb720d35613baee75f16feb86a14eed37199394
+    .claude/rules/system-testing.md: sha256:05f647167623450571968f46e90cba07937f157dae8c890331e9c0c5744938d3
+    .cursor/rules/backend-coding.mdc: sha256:ba44e6301fbe65ef1659374a0df9d8a50a950e945fa6ff37382da89a290d2424
     .cursor/rules/backend-database.mdc: sha256:bf1a7b508ed7c33d874f3428bc0c2b062f113440cfd440e7686cc72ec4034099
-    .cursor/rules/backend-realtime.mdc: sha256:77852d2d8de7d12fdf7c17558a68c31dd43d821e02a6ec95ce93cf602be3228c
+    .cursor/rules/backend-realtime.mdc: sha256:8bd60fa886dac4353a03ffa076433f546ed97633cf2eb9ee769773c22957e279
     .cursor/rules/backend-security.mdc: sha256:3870e806885e44a3ad87799155220ec787d10bc9170db0e8c8dd67526528aca7
     .cursor/rules/backend-storage.mdc: sha256:be9a5807e0b41eab3b423bdfe166571da5f6445bcf6adf89facf4d24cdeb27f9
-    .cursor/rules/backend-testing.mdc: sha256:bc4f2d2e865458dde8d0d5938a10ecb40543584492991c0a0047a70cb460d192
-    .cursor/rules/common-coding.mdc: sha256:3bf0671baa8be30f1182a2d986f43f5284f5f7a9bf720d1e05e2668832420ccc
-    .cursor/rules/common-testing.mdc: sha256:b1ccecfb2d3da7763b48704901669a4a714edfbf43ef35b5d2a2c6ff88a54fe3
-    .cursor/rules/common-traceconfig.mdc: sha256:f34f069435f81876cceb608d021f9227ce7773ff30d4bd58e8ab9745b93763f6
-    .cursor/rules/frontend-dataflow.mdc: sha256:4d3f32681926873aa05f455c96476d485b4d91c1427deb7c96d5c58a5264d14d
-    .cursor/rules/frontend-routing.mdc: sha256:a5032e6c3318e306bcdc68a241073f32a62a79d2d80ae264c18296b4d6c52596
+    .cursor/rules/backend-testing.mdc: sha256:0d335a5be34de17a55cc129d5f9c97b3f5058f1b6aa641a3f4ddceef6049b947
+    .cursor/rules/common-coding.mdc: sha256:74580b126a78cbdd31b3876fc9ab31faaaae0a3741457f6eaab76ef9105b0f89
+    .cursor/rules/common-harness-config.mdc: sha256:9a3cd6a6c715fb2f82a0b2a66066244d799f74a1bbd03583cdfc8ac759a960b0
+    .cursor/rules/common-testing.mdc: sha256:c488ec70722700fb5ae2ebcf3f4c8b311a20ee4c1bbf347b721acdb805b8b96c
     .cursor/rules/platform-routing.mdc: sha256:391ebb204de37b6783a15729c60676facc09ee90a1c4d59f526aadb34409d4b0
     .cursor/rules/platform-runtime.mdc: sha256:142060740fdf270136a64614184d55c3db4c6f1c53fdbfb7f6acd4448e1f58e1
-    .cursor/rules/system-testing.mdc: sha256:02d4a905897a7fa427a067c0eb1b43e75e982813441d1f0b54f54301122d2233
-    .grok/rules/backend-coding.instructions.md: sha256:19eb9e8d4279591cb865cffbfb1deff771c4c565f01a9a1e80fe4f04c63cd2e3
+    .cursor/rules/system-testing.mdc: sha256:eaa7f28203977f1173463d9874f79ebe32c81ebcb0f23318bdba05f677ea017b
+    .grok/rules/backend-coding.instructions.md: sha256:ccf5a0395babc2bd007bc5125030cbf3eca6e34118bdc16465d2c80646c00151
     .grok/rules/backend-database.instructions.md: sha256:5be8aba4cfc07ce524ab11e40ffcd5127d597903605c743048624e98accb1bee
-    .grok/rules/backend-realtime.instructions.md: sha256:64bbcc01ab84b7bd410043969c6add38400b66647050d25acecbc419d3fdf339
+    .grok/rules/backend-realtime.instructions.md: sha256:cc0fbcb735decb873fcc0293acd6b5bbe57dc7f1cf68b04b71893231284b127a
     .grok/rules/backend-security.instructions.md: sha256:95ea61f8d29e48d2b61eeea5bc03aa639517f58d948550f6d5b45149760971ea
     .grok/rules/backend-storage.instructions.md: sha256:d640d3f2f34cffea5c9c742c3b5d6b0399a2844809af435981bb1bdf56820d7a
-    .grok/rules/backend-testing.instructions.md: sha256:73b5388d386d718d47840429b9c6cf4f3b2c4e0e61f3881ecd27a6c37a676ca8
-    .grok/rules/common-coding.instructions.md: sha256:156a2e00fd7f560219f46ebe425d4ba750990fa57882f9858a15fe73d8006109
-    .grok/rules/common-testing.instructions.md: sha256:3091739f3b7674855fc1eecd7da6776b6f0a0de2a7c52844c6fa990163098b70
-    .grok/rules/common-traceconfig.instructions.md: sha256:2bdc81f3e96ea83fcb379f6fe53b90f8f20b539c3f6db534e4ab3c35966442ce
-    .grok/rules/frontend-dataflow.instructions.md: sha256:3da89b35f27a72643b96176d0587c2ab162282f7527cb2a11a04d8f74c23ae7a
-    .grok/rules/frontend-routing.instructions.md: sha256:26d7ea024144ac139317f6e682e39a1565b33b2eb0c9e64b298ad9029ff4008a
+    .grok/rules/backend-testing.instructions.md: sha256:6e44d5c6736b57f17b3e0590ab6b1ba6db57ac2517b9593b25ffb7e42bb64ee3
+    .grok/rules/common-coding.instructions.md: sha256:3f00e92b16e6d1e75032f5926623cc42e67f616035bdde7584e0c8895aecb9de
+    .grok/rules/common-harness-config.instructions.md: sha256:66fb4c168318861c1fa8d2bd5eb4ef5eed1bcbfcf4f3fab43b7918cc57a0c07c
+    .grok/rules/common-testing.instructions.md: sha256:51399a85088ba276bf6eb00ae323024b0cbad40f3cb1d127803429721ca18e74
     .grok/rules/platform-routing.instructions.md: sha256:47db9f51ef5673d12eb111ce9b8f8c571e3639a104ca7c292cee188e6bcbd59d
     .grok/rules/platform-runtime.instructions.md: sha256:09222362f1883575e6c5b32793e6be537c6c6456792b72b1f7082fc2dd5200c1
-    .grok/rules/system-testing.instructions.md: sha256:7d49579339ca6fa57c792d9db842a91e4051da69adb951396aa7af053f5b8eae
-  content_hash: sha256:2cd60196268fb621e0bd3858d4495bf17200ca75d7cfcc3c2656c1780612453a
+    .grok/rules/system-testing.instructions.md: sha256:62c0a834c9e73a9b483b06d70cc8d149f42c1dd268ae219bb8268ab9abaaddcb
+  content_hash: sha256:352ec15e631b8ea70108aa9acbf69f7e9636c7f1095886c4bb9d0ab50c904d4a
+- repo_url: tsay-dev/harness
+  name: rules-hono-react-spa
+  host: github.com
+  resolved_commit: 1ce5b0e047f73ecab20405edb01867fd6c90c684
+  resolved_ref: 1ce5b0e047f73ecab20405edb01867fd6c90c684
+  version: 1.0.0
+  virtual_path: packages/rules-hono-react-spa
+  is_virtual: true
+  depth: 2
+  resolved_by: tsay-dev/harness
+  package_type: apm_package
+  deployed_files:
+  - .claude/rules/common-lint.md
+  - .claude/rules/frontend-dataflow.md
+  - .claude/rules/frontend-routing.md
+  - .cursor/rules/common-lint.mdc
+  - .cursor/rules/frontend-dataflow.mdc
+  - .cursor/rules/frontend-routing.mdc
+  - .grok/rules/common-lint.instructions.md
+  - .grok/rules/frontend-dataflow.instructions.md
+  - .grok/rules/frontend-routing.instructions.md
+  deployed_file_hashes:
+    .claude/rules/common-lint.md: sha256:1f27d308711186e81223a155a6022d50f3ee7e4fdcc3305cb68f20e3690b69da
+    .claude/rules/frontend-dataflow.md: sha256:b03b2e30963bd3cce5565f93e9e2501429bb1c3b5d218fdc647cbd049f3d9be0
+    .claude/rules/frontend-routing.md: sha256:16bd1bb754c02a70ec6242a3be23e6004b7ff5cdd06aca6c6f80cbac1c0ddf9b
+    .cursor/rules/common-lint.mdc: sha256:872592c05fdf75c1690755fac3d5fbc687cbc13030f52cf50be38e65caa82879
+    .cursor/rules/frontend-dataflow.mdc: sha256:4d3f32681926873aa05f455c96476d485b4d91c1427deb7c96d5c58a5264d14d
+    .cursor/rules/frontend-routing.mdc: sha256:811b87435c3b4da084a6ae818deb335a7059f9cf67b023a82f42242e59ebce77
+    .grok/rules/common-lint.instructions.md: sha256:1beee499a1989437479fec1477b2e8c06e9860ecf47cdbf5dddada124bb91533
+    .grok/rules/frontend-dataflow.instructions.md: sha256:3da89b35f27a72643b96176d0587c2ab162282f7527cb2a11a04d8f74c23ae7a
+    .grok/rules/frontend-routing.instructions.md: sha256:60e5c56f8b3ce346e476b6d6a4076b2d81c7fdc9c28374a6750f46b640858486
+  content_hash: sha256:9572007051a222ae1bfb12a89860c673b1e55a0c607cff1a64efe3204d886d34
 deployments:
 - kind: project-relative
   target: claude
@@ -245,7 +265,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:ac8deeb5ee54bc78e5c7bf4dacd3128a9471fa4248b331c8361eadca345f43b8
+  content_hash: sha256:8ca8c919ac6b2cee5ea474e03cdefe03105464c6ea5a596c15ce2dab9e5e3a33
 - kind: project-relative
   target: claude
   value: .claude/agents/implementer.md
@@ -254,7 +274,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:05a1377ce85571624746abab3560d4fef6fa0c2c607180eea8d52bc6575edf3b
+  content_hash: sha256:3aa8146d802d50d89da5359a271e4e95545081e2963ff24b2a5bfa80ad3e0624
 - kind: project-relative
   target: claude
   value: .claude/agents/reviewer.md
@@ -263,7 +283,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:f75a2cc78152e8c164ba2c7735a47e46df495003d00e84df78d011e0654440c7
+  content_hash: sha256:8de8f1d16d404f2f91acfc56c303e0ab6eac73e91e4298c89251af3dca998785
 - kind: project-relative
   target: claude
   value: .claude/agents/spec-author.md
@@ -272,7 +292,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:98e18b3276ba9d8d3caf27154a6300b52c7d8b102ef536fa5d8e66c9369c7416
+  content_hash: sha256:30c0d853d5106b587f094bc7876f2eb0da4a17e5d89ab6958295ac2970a704b2
 - kind: project-relative
   target: claude
   value: .claude/agents/test-author.md
@@ -281,7 +301,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:6a5212c92f6f5dccfd0d197654a03404f3dbd4fe1b5d88ea38b956a429eca8c8
+  content_hash: sha256:08c7663f67077e6254e8c1ea2eb25044c8a81c2fbc28ba821d88913728948198
 - kind: project-relative
   target: claude
   value: .claude/rules/backend-coding.md
@@ -290,7 +310,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/rules-cloudflare-hono-react
   active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:a2eadd51f7a46bc7fbd9ec18187cabd5d085573136934f2908db2f7bd99518a4
+  content_hash: sha256:88746d7382b3f926d418b2444a4a0e025ba93436252497a505f85440fe9d84cc
 - kind: project-relative
   target: claude
   value: .claude/rules/backend-database.md
@@ -308,7 +328,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/rules-cloudflare-hono-react
   active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:1c604fd643cdc3aad1f7f34c59b9a355f343d27947daa84e8ea279b74f43386d
+  content_hash: sha256:85a233d2361c7c8e8e9541d3c6be3a6e16223cc5e80b36bb506e4bb0cebd47f5
 - kind: project-relative
   target: claude
   value: .claude/rules/backend-security.md
@@ -335,7 +355,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/rules-cloudflare-hono-react
   active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:e37e7f7e57c839d3124cc14fec58f35dbeb17c59fbded68999e226e5bc37bd78
+  content_hash: sha256:569d3bfc7e60c789c8e9b3b3c8cb5e2b8dce77e63eecc27c91fb1d14f03c9a01
 - kind: project-relative
   target: claude
   value: .claude/rules/comments.md
@@ -344,7 +364,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:9af958ce6a77120a6b6aefc04066b1098474cf84ae9090cf28323dcd73b9611d
+  content_hash: sha256:f40f7ac1c25b73f50440cc1ffdd94dadae809dede2690b77053770f5f947c82d
 - kind: project-relative
   target: claude
   value: .claude/rules/common-coding.md
@@ -353,7 +373,25 @@ deployments:
   owners:
   - tsay-dev/harness/packages/rules-cloudflare-hono-react
   active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:49032d8201814c26730b1094728ef30675331bf67215b3b49bdc88873781529b
+  content_hash: sha256:13ccb72cb01dc1143a8259a1617232e0d2c4fcec6c7fe996d52e1caecb68248b
+- kind: project-relative
+  target: claude
+  value: .claude/rules/common-harness-config.md
+  runtime: null
+  scope: project
+  owners:
+  - tsay-dev/harness/packages/rules-cloudflare-hono-react
+  active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
+  content_hash: sha256:4845d6b62ed670d7390b856067f8f517fa9ecf7c645881f4ed7b1a66d066a95f
+- kind: project-relative
+  target: claude
+  value: .claude/rules/common-lint.md
+  runtime: null
+  scope: project
+  owners:
+  - tsay-dev/harness/packages/rules-hono-react-spa
+  active_owner: tsay-dev/harness/packages/rules-hono-react-spa
+  content_hash: sha256:1f27d308711186e81223a155a6022d50f3ee7e4fdcc3305cb68f20e3690b69da
 - kind: project-relative
   target: claude
   value: .claude/rules/common-testing.md
@@ -362,16 +400,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/rules-cloudflare-hono-react
   active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:66ea8b4283b6b994e59a9c83cecce881a8a5468578851cdb3cd9c6aa0f278863
-- kind: project-relative
-  target: claude
-  value: .claude/rules/common-traceconfig.md
-  runtime: null
-  scope: project
-  owners:
-  - tsay-dev/harness/packages/rules-cloudflare-hono-react
-  active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:18ae1c48b75c32a50442fe9508f3c608e21fb049cd7a84a1ee0a7b2cf5c1f1a0
+  content_hash: sha256:622f6a737308ccea402088a5bdf9281544f0a9f0ee287dd6ec10d4f7910b8831
 - kind: project-relative
   target: claude
   value: .claude/rules/docs.md
@@ -380,15 +409,15 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:258a0196ca1d7a215e6638278520606ea570b6644509375113e2901c5f443b13
+  content_hash: sha256:8cd99474c715524b5ef203c732ee7345bd3704e56795ca9dbfd2fa5e1a7742c4
 - kind: project-relative
   target: claude
   value: .claude/rules/frontend-dataflow.md
   runtime: null
   scope: project
   owners:
-  - tsay-dev/harness/packages/rules-cloudflare-hono-react
-  active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
+  - tsay-dev/harness/packages/rules-hono-react-spa
+  active_owner: tsay-dev/harness/packages/rules-hono-react-spa
   content_hash: sha256:b03b2e30963bd3cce5565f93e9e2501429bb1c3b5d218fdc647cbd049f3d9be0
 - kind: project-relative
   target: claude
@@ -396,9 +425,9 @@ deployments:
   runtime: null
   scope: project
   owners:
-  - tsay-dev/harness/packages/rules-cloudflare-hono-react
-  active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:14a2515ab2dfb8a7e68eb883dd09ca0d6170b917dd7e3b1a93337b5d487da049
+  - tsay-dev/harness/packages/rules-hono-react-spa
+  active_owner: tsay-dev/harness/packages/rules-hono-react-spa
+  content_hash: sha256:16bd1bb754c02a70ec6242a3be23e6004b7ff5cdd06aca6c6f80cbac1c0ddf9b
 - kind: project-relative
   target: claude
   value: .claude/rules/platform-routing.md
@@ -425,7 +454,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/rules-cloudflare-hono-react
   active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:05b3863463e782f5f0e75498476b8471bb0271e9733a35dd2b0734e9b20bf0db
+  content_hash: sha256:05f647167623450571968f46e90cba07937f157dae8c890331e9c0c5744938d3
 - kind: project-relative
   target: claude
   value: .claude/skills/attack
@@ -443,7 +472,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:b519be50d35f834e5c732924f87d68df01bba5007022267c1f665f7c11a3c585
+  content_hash: sha256:156d7e815731987aa6fc98b32c448183891522f45c0db6faf721a4eb2e6c77a5
 - kind: project-relative
   target: claude
   value: .claude/skills/develop
@@ -461,7 +490,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:768b78d1af545e0b68bb33d23d14cfcbe734d9474bb4cec7648731709c000468
+  content_hash: sha256:f8488fadde9fd8ab9d485365aae883e3756c5934f40b8d3e58c1d7bfafbffa56
 - kind: project-relative
   target: claude
   value: .claude/skills/develop/references/adr.md
@@ -470,7 +499,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:8819607da57b394e93e3266e8bbf8a26d731ce39bf066c1f67a249cf0d2df352
+  content_hash: sha256:0f8e4c8bb084c2bb38f7db8d330255d9ed1a24905d548170426fc7ceae101742
 - kind: project-relative
   target: claude
   value: .claude/skills/develop/references/bundles.md
@@ -479,7 +508,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:f3d74792bc86eaaef6af0dfb3081ff4dd616116d761ecffdee4f5d5381eceae8
+  content_hash: sha256:cc24b6369fa36d73a9448d7b5b1d88bdf4469b53c3ead8035344cfa25120c444
 - kind: project-relative
   target: claude
   value: .claude/skills/develop/references/commit.md
@@ -488,7 +517,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:e59df4c07b3d92764672224c54a500d1e3507b313f58ac9b685da53e82b54738
+  content_hash: sha256:0d9821b9d4f601ed852da56be5bbe9bc164e780dd8b7a325bf3feaa752901bae
 - kind: project-relative
   target: claude
   value: .claude/skills/docs-migrate
@@ -506,7 +535,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:0417351b5c9f946f8d96148561f1278bd7e660b399360069ebcef6ef86af44ad
+  content_hash: sha256:0b9c1c87b95c0c3643c7429a8541b76ba68db524d85152c04844473e3bda1857
 - kind: project-relative
   target: claude
   value: .claude/skills/grill-me
@@ -560,7 +589,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:b519be50d35f834e5c732924f87d68df01bba5007022267c1f665f7c11a3c585
+  content_hash: sha256:156d7e815731987aa6fc98b32c448183891522f45c0db6faf721a4eb2e6c77a5
 - kind: project-relative
   target: codex
   value: .agents/skills/develop
@@ -578,7 +607,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:768b78d1af545e0b68bb33d23d14cfcbe734d9474bb4cec7648731709c000468
+  content_hash: sha256:f8488fadde9fd8ab9d485365aae883e3756c5934f40b8d3e58c1d7bfafbffa56
 - kind: project-relative
   target: codex
   value: .agents/skills/develop/references/adr.md
@@ -587,7 +616,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:8819607da57b394e93e3266e8bbf8a26d731ce39bf066c1f67a249cf0d2df352
+  content_hash: sha256:0f8e4c8bb084c2bb38f7db8d330255d9ed1a24905d548170426fc7ceae101742
 - kind: project-relative
   target: codex
   value: .agents/skills/develop/references/bundles.md
@@ -596,7 +625,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:f3d74792bc86eaaef6af0dfb3081ff4dd616116d761ecffdee4f5d5381eceae8
+  content_hash: sha256:cc24b6369fa36d73a9448d7b5b1d88bdf4469b53c3ead8035344cfa25120c444
 - kind: project-relative
   target: codex
   value: .agents/skills/develop/references/commit.md
@@ -605,7 +634,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:e59df4c07b3d92764672224c54a500d1e3507b313f58ac9b685da53e82b54738
+  content_hash: sha256:0d9821b9d4f601ed852da56be5bbe9bc164e780dd8b7a325bf3feaa752901bae
 - kind: project-relative
   target: codex
   value: .agents/skills/docs-migrate
@@ -623,7 +652,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:0417351b5c9f946f8d96148561f1278bd7e660b399360069ebcef6ef86af44ad
+  content_hash: sha256:0b9c1c87b95c0c3643c7429a8541b76ba68db524d85152c04844473e3bda1857
 - kind: project-relative
   target: codex
   value: .agents/skills/grill-me
@@ -668,7 +697,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:d3545c34fe0671d58de93ee58430c75e999ee46be7915191a4b67d53da959a14
+  content_hash: sha256:95b302f1f13b03f28a6b71a450adaba3e1aec5161ef286d3e3fa314038e5c519
 - kind: project-relative
   target: codex
   value: .codex/agents/implementer.toml
@@ -677,7 +706,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:551512e89784f2d027a3c41cd5fb484099992b73f1b5f59e91007d60f1592a6d
+  content_hash: sha256:b686dd07cc0b6e6c762e430a78b572613959b56772cb05b99589016e2f17668c
 - kind: project-relative
   target: codex
   value: .codex/agents/reviewer.toml
@@ -686,7 +715,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:3a577ed9c253252274ad1c021aa826c179a23575920dc01e00d65c7fea291f42
+  content_hash: sha256:4ce54be3707b31f623336ef1d33cbbaa687c63105e6d57f3d10aade51229b91b
 - kind: project-relative
   target: codex
   value: .codex/agents/spec-author.toml
@@ -695,7 +724,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:89fb9fe720bf266fadf2eaab89f779b53b732cc8a96d2fc2bc8af0cd972e3ac5
+  content_hash: sha256:f02c0e08a970aaf79f1cbb48f271db1e9278a7b4522e45c76d07a70b04e5efc6
 - kind: project-relative
   target: codex
   value: .codex/agents/test-author.toml
@@ -704,7 +733,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:1a18f5813654e4f98fc64017214bf5f6f98ba71abe8e97c39691d56a067dbc50
+  content_hash: sha256:9bbfda63d92966cf9f83cd76c8e4d0b19b5ab37bd360f1466975a72d0b3e1b0c
 - kind: project-relative
   target: cursor
   value: .cursor/agents/attacker.md
@@ -713,7 +742,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:ac8deeb5ee54bc78e5c7bf4dacd3128a9471fa4248b331c8361eadca345f43b8
+  content_hash: sha256:8ca8c919ac6b2cee5ea474e03cdefe03105464c6ea5a596c15ce2dab9e5e3a33
 - kind: project-relative
   target: cursor
   value: .cursor/agents/implementer.md
@@ -722,7 +751,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:05a1377ce85571624746abab3560d4fef6fa0c2c607180eea8d52bc6575edf3b
+  content_hash: sha256:3aa8146d802d50d89da5359a271e4e95545081e2963ff24b2a5bfa80ad3e0624
 - kind: project-relative
   target: cursor
   value: .cursor/agents/reviewer.md
@@ -731,7 +760,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:f75a2cc78152e8c164ba2c7735a47e46df495003d00e84df78d011e0654440c7
+  content_hash: sha256:8de8f1d16d404f2f91acfc56c303e0ab6eac73e91e4298c89251af3dca998785
 - kind: project-relative
   target: cursor
   value: .cursor/agents/spec-author.md
@@ -740,7 +769,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:98e18b3276ba9d8d3caf27154a6300b52c7d8b102ef536fa5d8e66c9369c7416
+  content_hash: sha256:30c0d853d5106b587f094bc7876f2eb0da4a17e5d89ab6958295ac2970a704b2
 - kind: project-relative
   target: cursor
   value: .cursor/agents/test-author.md
@@ -749,7 +778,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:6a5212c92f6f5dccfd0d197654a03404f3dbd4fe1b5d88ea38b956a429eca8c8
+  content_hash: sha256:08c7663f67077e6254e8c1ea2eb25044c8a81c2fbc28ba821d88913728948198
 - kind: project-relative
   target: cursor
   value: .cursor/rules/backend-coding.mdc
@@ -758,7 +787,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/rules-cloudflare-hono-react
   active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:09f27ee61a6cb4e6e360d1596bb720d35613baee75f16feb86a14eed37199394
+  content_hash: sha256:ba44e6301fbe65ef1659374a0df9d8a50a950e945fa6ff37382da89a290d2424
 - kind: project-relative
   target: cursor
   value: .cursor/rules/backend-database.mdc
@@ -776,7 +805,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/rules-cloudflare-hono-react
   active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:77852d2d8de7d12fdf7c17558a68c31dd43d821e02a6ec95ce93cf602be3228c
+  content_hash: sha256:8bd60fa886dac4353a03ffa076433f546ed97633cf2eb9ee769773c22957e279
 - kind: project-relative
   target: cursor
   value: .cursor/rules/backend-security.mdc
@@ -803,7 +832,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/rules-cloudflare-hono-react
   active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:bc4f2d2e865458dde8d0d5938a10ecb40543584492991c0a0047a70cb460d192
+  content_hash: sha256:0d335a5be34de17a55cc129d5f9c97b3f5058f1b6aa641a3f4ddceef6049b947
 - kind: project-relative
   target: cursor
   value: .cursor/rules/comments.mdc
@@ -812,7 +841,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:7d1f6f27dd6a9d63e72a94f353d69c4ae1d3fc2f1d73c62ac1e81f8cbefd550b
+  content_hash: sha256:5e07482aed4e9dcd687249e20d5ac645ed08850b663426338fc36b0f1e63ac21
 - kind: project-relative
   target: cursor
   value: .cursor/rules/common-coding.mdc
@@ -821,7 +850,25 @@ deployments:
   owners:
   - tsay-dev/harness/packages/rules-cloudflare-hono-react
   active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:3bf0671baa8be30f1182a2d986f43f5284f5f7a9bf720d1e05e2668832420ccc
+  content_hash: sha256:74580b126a78cbdd31b3876fc9ab31faaaae0a3741457f6eaab76ef9105b0f89
+- kind: project-relative
+  target: cursor
+  value: .cursor/rules/common-harness-config.mdc
+  runtime: null
+  scope: project
+  owners:
+  - tsay-dev/harness/packages/rules-cloudflare-hono-react
+  active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
+  content_hash: sha256:9a3cd6a6c715fb2f82a0b2a66066244d799f74a1bbd03583cdfc8ac759a960b0
+- kind: project-relative
+  target: cursor
+  value: .cursor/rules/common-lint.mdc
+  runtime: null
+  scope: project
+  owners:
+  - tsay-dev/harness/packages/rules-hono-react-spa
+  active_owner: tsay-dev/harness/packages/rules-hono-react-spa
+  content_hash: sha256:872592c05fdf75c1690755fac3d5fbc687cbc13030f52cf50be38e65caa82879
 - kind: project-relative
   target: cursor
   value: .cursor/rules/common-testing.mdc
@@ -830,16 +877,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/rules-cloudflare-hono-react
   active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:b1ccecfb2d3da7763b48704901669a4a714edfbf43ef35b5d2a2c6ff88a54fe3
-- kind: project-relative
-  target: cursor
-  value: .cursor/rules/common-traceconfig.mdc
-  runtime: null
-  scope: project
-  owners:
-  - tsay-dev/harness/packages/rules-cloudflare-hono-react
-  active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:f34f069435f81876cceb608d021f9227ce7773ff30d4bd58e8ab9745b93763f6
+  content_hash: sha256:c488ec70722700fb5ae2ebcf3f4c8b311a20ee4c1bbf347b721acdb805b8b96c
 - kind: project-relative
   target: cursor
   value: .cursor/rules/docs.mdc
@@ -848,15 +886,15 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:e5643b6384f282a06f9c5e6b09edfa2d4eecec4aedd0163c4dc0b6c12d6ed1e7
+  content_hash: sha256:4a149508b56e0d161e5b8e7c29b4209e3e7d1a476ceacc1988a3bbb3990105c0
 - kind: project-relative
   target: cursor
   value: .cursor/rules/frontend-dataflow.mdc
   runtime: null
   scope: project
   owners:
-  - tsay-dev/harness/packages/rules-cloudflare-hono-react
-  active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
+  - tsay-dev/harness/packages/rules-hono-react-spa
+  active_owner: tsay-dev/harness/packages/rules-hono-react-spa
   content_hash: sha256:4d3f32681926873aa05f455c96476d485b4d91c1427deb7c96d5c58a5264d14d
 - kind: project-relative
   target: cursor
@@ -864,9 +902,9 @@ deployments:
   runtime: null
   scope: project
   owners:
-  - tsay-dev/harness/packages/rules-cloudflare-hono-react
-  active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:a5032e6c3318e306bcdc68a241073f32a62a79d2d80ae264c18296b4d6c52596
+  - tsay-dev/harness/packages/rules-hono-react-spa
+  active_owner: tsay-dev/harness/packages/rules-hono-react-spa
+  content_hash: sha256:811b87435c3b4da084a6ae818deb335a7059f9cf67b023a82f42242e59ebce77
 - kind: project-relative
   target: cursor
   value: .cursor/rules/platform-routing.mdc
@@ -893,7 +931,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/rules-cloudflare-hono-react
   active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:02d4a905897a7fa427a067c0eb1b43e75e982813441d1f0b54f54301122d2233
+  content_hash: sha256:eaa7f28203977f1173463d9874f79ebe32c81ebcb0f23318bdba05f677ea017b
 - kind: project-relative
   target: grok-build
   value: .grok/agents/attacker.md
@@ -902,7 +940,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:ac8deeb5ee54bc78e5c7bf4dacd3128a9471fa4248b331c8361eadca345f43b8
+  content_hash: sha256:8ca8c919ac6b2cee5ea474e03cdefe03105464c6ea5a596c15ce2dab9e5e3a33
 - kind: project-relative
   target: grok-build
   value: .grok/agents/implementer.md
@@ -911,7 +949,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:05a1377ce85571624746abab3560d4fef6fa0c2c607180eea8d52bc6575edf3b
+  content_hash: sha256:3aa8146d802d50d89da5359a271e4e95545081e2963ff24b2a5bfa80ad3e0624
 - kind: project-relative
   target: grok-build
   value: .grok/agents/reviewer.md
@@ -920,7 +958,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:f75a2cc78152e8c164ba2c7735a47e46df495003d00e84df78d011e0654440c7
+  content_hash: sha256:8de8f1d16d404f2f91acfc56c303e0ab6eac73e91e4298c89251af3dca998785
 - kind: project-relative
   target: grok-build
   value: .grok/agents/spec-author.md
@@ -929,7 +967,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:98e18b3276ba9d8d3caf27154a6300b52c7d8b102ef536fa5d8e66c9369c7416
+  content_hash: sha256:30c0d853d5106b587f094bc7876f2eb0da4a17e5d89ab6958295ac2970a704b2
 - kind: project-relative
   target: grok-build
   value: .grok/agents/test-author.md
@@ -938,7 +976,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:6a5212c92f6f5dccfd0d197654a03404f3dbd4fe1b5d88ea38b956a429eca8c8
+  content_hash: sha256:08c7663f67077e6254e8c1ea2eb25044c8a81c2fbc28ba821d88913728948198
 - kind: project-relative
   target: grok-build
   value: .grok/rules/backend-coding.instructions.md
@@ -947,7 +985,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/rules-cloudflare-hono-react
   active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:19eb9e8d4279591cb865cffbfb1deff771c4c565f01a9a1e80fe4f04c63cd2e3
+  content_hash: sha256:ccf5a0395babc2bd007bc5125030cbf3eca6e34118bdc16465d2c80646c00151
 - kind: project-relative
   target: grok-build
   value: .grok/rules/backend-database.instructions.md
@@ -965,7 +1003,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/rules-cloudflare-hono-react
   active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:64bbcc01ab84b7bd410043969c6add38400b66647050d25acecbc419d3fdf339
+  content_hash: sha256:cc0fbcb735decb873fcc0293acd6b5bbe57dc7f1cf68b04b71893231284b127a
 - kind: project-relative
   target: grok-build
   value: .grok/rules/backend-security.instructions.md
@@ -992,7 +1030,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/rules-cloudflare-hono-react
   active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:73b5388d386d718d47840429b9c6cf4f3b2c4e0e61f3881ecd27a6c37a676ca8
+  content_hash: sha256:6e44d5c6736b57f17b3e0590ab6b1ba6db57ac2517b9593b25ffb7e42bb64ee3
 - kind: project-relative
   target: grok-build
   value: .grok/rules/comments.instructions.md
@@ -1001,7 +1039,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:fdf22154e537d2bcdbe66bcc410fd9a0a00fe34853247cce2aecbb029095858b
+  content_hash: sha256:a4305e7fe7fe3f24b80205c85d620384e472fdc4d20481c23368c2be9c5c9809
 - kind: project-relative
   target: grok-build
   value: .grok/rules/common-coding.instructions.md
@@ -1010,7 +1048,25 @@ deployments:
   owners:
   - tsay-dev/harness/packages/rules-cloudflare-hono-react
   active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:156a2e00fd7f560219f46ebe425d4ba750990fa57882f9858a15fe73d8006109
+  content_hash: sha256:3f00e92b16e6d1e75032f5926623cc42e67f616035bdde7584e0c8895aecb9de
+- kind: project-relative
+  target: grok-build
+  value: .grok/rules/common-harness-config.instructions.md
+  runtime: null
+  scope: project
+  owners:
+  - tsay-dev/harness/packages/rules-cloudflare-hono-react
+  active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
+  content_hash: sha256:66fb4c168318861c1fa8d2bd5eb4ef5eed1bcbfcf4f3fab43b7918cc57a0c07c
+- kind: project-relative
+  target: grok-build
+  value: .grok/rules/common-lint.instructions.md
+  runtime: null
+  scope: project
+  owners:
+  - tsay-dev/harness/packages/rules-hono-react-spa
+  active_owner: tsay-dev/harness/packages/rules-hono-react-spa
+  content_hash: sha256:1beee499a1989437479fec1477b2e8c06e9860ecf47cdbf5dddada124bb91533
 - kind: project-relative
   target: grok-build
   value: .grok/rules/common-testing.instructions.md
@@ -1019,16 +1075,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/rules-cloudflare-hono-react
   active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:3091739f3b7674855fc1eecd7da6776b6f0a0de2a7c52844c6fa990163098b70
-- kind: project-relative
-  target: grok-build
-  value: .grok/rules/common-traceconfig.instructions.md
-  runtime: null
-  scope: project
-  owners:
-  - tsay-dev/harness/packages/rules-cloudflare-hono-react
-  active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:2bdc81f3e96ea83fcb379f6fe53b90f8f20b539c3f6db534e4ab3c35966442ce
+  content_hash: sha256:51399a85088ba276bf6eb00ae323024b0cbad40f3cb1d127803429721ca18e74
 - kind: project-relative
   target: grok-build
   value: .grok/rules/docs.instructions.md
@@ -1037,15 +1084,15 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:b09fdb082ce58cc8d3a422a319fd295c355b6b87e34b3ceda0949c0116f0bceb
+  content_hash: sha256:9f75ad805c6eb1afa4487325421c51394d9471ed633e71e674c0d493f1ad767a
 - kind: project-relative
   target: grok-build
   value: .grok/rules/frontend-dataflow.instructions.md
   runtime: null
   scope: project
   owners:
-  - tsay-dev/harness/packages/rules-cloudflare-hono-react
-  active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
+  - tsay-dev/harness/packages/rules-hono-react-spa
+  active_owner: tsay-dev/harness/packages/rules-hono-react-spa
   content_hash: sha256:3da89b35f27a72643b96176d0587c2ab162282f7527cb2a11a04d8f74c23ae7a
 - kind: project-relative
   target: grok-build
@@ -1053,9 +1100,9 @@ deployments:
   runtime: null
   scope: project
   owners:
-  - tsay-dev/harness/packages/rules-cloudflare-hono-react
-  active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:26d7ea024144ac139317f6e682e39a1565b33b2eb0c9e64b298ad9029ff4008a
+  - tsay-dev/harness/packages/rules-hono-react-spa
+  active_owner: tsay-dev/harness/packages/rules-hono-react-spa
+  content_hash: sha256:60e5c56f8b3ce346e476b6d6a4076b2d81c7fdc9c28374a6750f46b640858486
 - kind: project-relative
   target: grok-build
   value: .grok/rules/platform-routing.instructions.md
@@ -1082,7 +1129,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/rules-cloudflare-hono-react
   active_owner: tsay-dev/harness/packages/rules-cloudflare-hono-react
-  content_hash: sha256:7d49579339ca6fa57c792d9db842a91e4051da69adb951396aa7af053f5b8eae
+  content_hash: sha256:62c0a834c9e73a9b483b06d70cc8d149f42c1dd268ae219bb8268ab9abaaddcb
 - kind: project-relative
   target: grok-build
   value: .grok/skills/attack
@@ -1100,7 +1147,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:b519be50d35f834e5c732924f87d68df01bba5007022267c1f665f7c11a3c585
+  content_hash: sha256:156d7e815731987aa6fc98b32c448183891522f45c0db6faf721a4eb2e6c77a5
 - kind: project-relative
   target: grok-build
   value: .grok/skills/develop
@@ -1118,7 +1165,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:768b78d1af545e0b68bb33d23d14cfcbe734d9474bb4cec7648731709c000468
+  content_hash: sha256:f8488fadde9fd8ab9d485365aae883e3756c5934f40b8d3e58c1d7bfafbffa56
 - kind: project-relative
   target: grok-build
   value: .grok/skills/develop/references/adr.md
@@ -1127,7 +1174,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:8819607da57b394e93e3266e8bbf8a26d731ce39bf066c1f67a249cf0d2df352
+  content_hash: sha256:0f8e4c8bb084c2bb38f7db8d330255d9ed1a24905d548170426fc7ceae101742
 - kind: project-relative
   target: grok-build
   value: .grok/skills/develop/references/bundles.md
@@ -1136,7 +1183,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:f3d74792bc86eaaef6af0dfb3081ff4dd616116d761ecffdee4f5d5381eceae8
+  content_hash: sha256:cc24b6369fa36d73a9448d7b5b1d88bdf4469b53c3ead8035344cfa25120c444
 - kind: project-relative
   target: grok-build
   value: .grok/skills/develop/references/commit.md
@@ -1145,7 +1192,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:e59df4c07b3d92764672224c54a500d1e3507b313f58ac9b685da53e82b54738
+  content_hash: sha256:0d9821b9d4f601ed852da56be5bbe9bc164e780dd8b7a325bf3feaa752901bae
 - kind: project-relative
   target: grok-build
   value: .grok/skills/docs-migrate
@@ -1163,7 +1210,7 @@ deployments:
   owners:
   - tsay-dev/harness/packages/develop-core
   active_owner: tsay-dev/harness/packages/develop-core
-  content_hash: sha256:0417351b5c9f946f8d96148561f1278bd7e660b399360069ebcef6ef86af44ad
+  content_hash: sha256:0b9c1c87b95c0c3643c7429a8541b76ba68db524d85152c04844473e3bda1857
 - kind: project-relative
   target: grok-build
   value: .grok/skills/grill-me
