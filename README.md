@@ -69,16 +69,16 @@
 | フロント | React + Vite（SPA, React Router） |
 | 配信 | API と静的配信を**同じ Worker から 1 デプロイ** |
 | 認証・権限 | 入口「まなびば」（`portal/`）が正本。学び側はまなびばからの使い捨てコードを交換してトークン（HS256）を得るだけで、**パスワードも登録も持たない**。まなびば側のパスワードは Web Crypto の PBKDF2 |
-| 検査 | spec-lint → trace-check → vitest（298）→ `check_source` → `check_docs` を `npm test` で。API は `check_api.sh`、描画は `check_render.sh`、本番は `check_sso_prod.sh` |
+| 検査 | 原本 harness の `verify`（仕様と紐づき → 契約の実例 → 型 → `check_source`・`check_docs` → vitest → 実行の記録）を `npm test` で。API は `check_api.sh`、描画は `check_render.sh`、本番は `check_sso_prod.sh` |
 
 セキュリティヘッダ・SQL・XSS・秘密の扱いは本番の経路で確認してある（[`docs/作業ログ_2026-09-25_脆弱性診断.md`](docs/作業ログ_2026-09-25_脆弱性診断.md)）。
 
 ## 仕様 ⇔ コード ⇔ テストの作法
 
-原本 harness（`tsay-dev/harness`）の作法で回す。要求はまず `docs/goals/` の UC（状態 × イベント表）と REQ（EARS 1 文、1 要件 1 か所のコード）に写し、
-承認後に implementer と test-author を別コンテキストで並行させる。コードには `@implements REQ-nnn`、テストには `@covers REQ-nnn#class`。
-書き込みの瞬間は PreToolUse の門、作業終了の瞬間は Stop の門が止める。未返済は `.trace-baseline.json` に持ち、縮む方向にしか動かさない
-（[`docs/検証の返済計画.md`](docs/検証の返済計画.md)）。詳しくは [`docs/作業の進め方.md`](docs/作業の進め方.md) の「仕様 ⇔ コード ⇔ テスト の対応」。
+原本 harness（`tsay-dev/harness`）の作法で回す。要求はまず `docs/goals/` の UC（状態 × イベント表）と REQ（EARS 1 文）に写し、
+承認後に implementer と test-author を別コンテキストで並行させる。手で書く紐づきはテストの `@covers REQ-nnn#class` だけで、実装との対応はテストの実行の記録と入口の一覧で確かめる。
+書き込みの瞬間は PreToolUse の門、作業終了の瞬間は Stop の門が止める。既知の違反を通す台帳は持たない。
+詳しくは [`docs/作業の進め方.md`](docs/作業の進め方.md) の「仕様 ⇔ コード ⇔ テスト の対応」。
 
 ## セットアップ（ローカル）
 

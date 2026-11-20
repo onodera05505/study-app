@@ -84,13 +84,13 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 | `tests/` | `client/`・`server/`・`portal/`・`scenario/`、入力の置き場 `fixtures/` |
 | `docs/` | 仕様の正本（`goals/`・`rules/`・`nfr/`・`adr/`・`_shared/`・`01-glossary.md`）と、手順書・記録 |
 | `brain/` | このプロジェクトの前提・トラブルの報告書・作業の型・手戻りの台帳 |
-| `.harness/`・`.claude/`・`apm_modules/` | 原本 harness の道具と展開物（APM が作る。手で直さない）。宣言は `traceconfig.json`・`apm.yml` |
+| `.harness/`・`.claude/`・`apm_modules/` | 原本 harness の道具と展開物（APM が作る。手で直さない）。宣言は `harness.config.json`・`apm.yml` |
 
 ## 層と命名
 
 - 層の向き（[`ADR-0005`](docs/adr/ADR-0005-layering.md)）: `src/client` と `src/server` は互いを import せず、共有するのは `src/shared` だけ。サーバーは `routes/` → `lib/` → `db/` の一方向
-- 仕様の置き場: `docs/goals/GOAL-nn-<slug>/UC-nnn-<slug>/` に `UC.md`・`REQ-nnn.md`・`contract.yaml`、横断の決まりは `docs/rules/BR-nnn.md`。次の番号は `node .harness/tools/trace-check/trace-check.mjs --next req`（`uc`・`br`・`adr` も同じ）
-- 注釈: コードに `@implements REQ-nnn`／`BR-nnn`、境界の入口に `@operation UC-nnn#操作名`、テストは `it(` の直前の行に `@covers REQ-nnn#class`（1 テスト 1 クラス）、シナリオは `@scenario UC-nnn`。ID だけを書く（[`.claude/rules/comments.md`](.claude/rules/comments.md)）
+- 仕様の置き場: `docs/goals/GOAL-nn-<slug>/UC-nnn-<slug>/` に `UC.md`（要件は `## 要件` の `### REQ-nnn`）・`contract.yaml`、横断の決まりは `docs/rules/BR-nnn.md`。次の番号は `node .harness/bin/harness.mjs next-id req`（`uc`・`br`・`adr` も同じ）
+- 注釈: 手で書く紐づきはテストの側だけ。テストは `it(` の直前の行に `@covers REQ-nnn#class`（1 テスト 1 クラス。DB で守る決まりは `@covers BR-nnn`）、シナリオは `@scenario UC-nnn`。ID だけを書く（[`.claude/rules/comments.md`](.claude/rules/comments.md)）
 - テストの名前: `tests/server/UC-nnn_<話題>.test.ts`、`tests/client/UC-nnn_<話題>.test.tsx`、`tests/scenario/UC-nnn-<slug>.test.tsx`（UC 1 本に 1 本）。土台は `UC-nnn_fixture.ts`
 - 文書の名前: `作業ログ_<日付>_<題>`・`レビュー詳細_*`・`改善候補_*` は点（書き換えず追記）、それ以外は線。足したら [`docs/文書の索引.md`](docs/文書の索引.md) に行を足す
 - 図の画像は `public/figures/<対象>/` に分ける（試験 ID は対象をまたいで一意でない）
@@ -104,22 +104,23 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 | `http`（学び側） | `src/server/index.ts` の default export（Hono の app。経路は `/api` の下） | 契約の `wire` から `Request` を組んで `app.request()` |
 | `http`（まなびば） | `portal/src/index.ts` の default export（同上） | 同上 |
 | `local-store`（画面の手元の保存） | `src/client/lib/` の export。名前は操作名の `read…` を `get…`、`save…` を `set…` に読み替え、ほかは操作名のまま | その関数を呼ぶ。契約の `errors` に当たる失敗は、投げられた値の `code` で名前を読む |
-| 道具を回す操作 | `scripts/<操作名を snake_case にした名前>.py`（または `.sh`） | 子プロセスで回し、終了の状態・出力・書き出したファイルを見る。断りの名前は、標準出力の全体を JSON として読み（読めなければ最後の空でない行を読む）、その `error.code` で読む |
-| 道具の中の読み書き（`read…`・`write…`） | `scripts/` の Python の関数。その操作の `@operation` を直上に持ち（1 操作に 1 か所。ファイルは注釈の行から引く）、名前は操作名を snake_case にした物（[`ADR-0013`](docs/adr/ADR-0013-tool-io-operations-as-functions.md)） | 契約の `request` の項目をその名前のままキーワード引数で渡して呼び、返り値を `response` として読む。契約の `errors` に当たる失敗は、投げられた値の `code` で名前を読む |
+| 道具を回す操作 | `scripts/<操作名を snake_case にした名前>.py`（または `.sh`・`.ts`。`.ts` は `npx tsx` で回す） | 子プロセスで回し、終了の状態・出力・書き出したファイルを見る。断りの名前は、標準出力の全体を JSON として読み（読めなければ最後の空でない行を読む）、その `error.code` で読む |
+| 道具の中の読み書き（`read…`・`write…`） | `scripts/` の Python の最上位の関数。名前は操作名を snake_case にした物。その UC の道具を回す操作のファイルを先に引き、無ければ `scripts/lib/` を引く（[`ADR-0013`](docs/adr/ADR-0013-tool-io-operations-as-functions.md)・[`ADR-0016`](docs/adr/ADR-0016-tool-io-functions-found-by-place-and-name.md)） | 契約の `request` の項目をその名前のままキーワード引数で渡して呼び、返り値を `response` として読む。契約の `errors` に当たる失敗は、投げられた値の `code` で名前を読む |
 
 規則に従わない入口: `markSessionExpired` は `api`（`src/client/lib/api.ts`）、画面から出る `http` の `fetchVersionStamp` は `rememberBuild`・`checkForUpdate`（`src/client/lib/version.ts`）、
 まなびばの `listLearnings` は `createApp`（`portal/src/index.ts`。学びの登録簿の並びを受けて app を組む。default export はリポジトリの登録簿で組んだ物）。
-道具の名前と違う操作は
-`renderLearnerInstructions`（`render_prompts.py`）、`gradeLearnerAnswers`（`grade_learner.py`）、`listDeliveredMaterials`（`material_generations.py`）、
-`checkFigureSpecs`（`render_material_figures.py`）、`buildUnitInputs`（`build_rewrite_bundles.py`）、本番の確かめ 4 つ（`check_sso_prod.sh`）。
-契約の実例を実装に渡す `answerContractExamples` は `scripts/contract_adapter/main.ts`（`npx tsx` で回す。標準入力の 1 行が 1 例）。
-契約の実例の確かめを回す入口は `npm run contract-run`（引数はそのまま原本の contract-run に渡る）。
+ファイル名と違う名前の操作・1 つのファイルが持つ複数の操作・直下でない入口の正本は `scripts/entry_names.json`（[`ADR-0014`](docs/adr/ADR-0014-entries-from-apps-and-tools.md)。ここに写さない）。
+本番の確かめの外向きの操作 4 つは `check_sso_prod.sh`。契約の実例の受け渡し役（`scripts/contract_adapter/main.ts`）は標準入力の 1 行が 1 例。
+契約の実例の確かめを回す入口は `npm run contract-run`（引数はそのまま原本の `harness run cases` に渡る）。
+実行の記録つきでテストを回す入口は `node tests/support/coverage/run.mjs`（= `npm run test:record`。ファイルを渡すとそれだけ回す。記録は `coverage/lcov.info`、生の記録は `coverage/.raw/`）。
+小さな置き場で回すときは `TEST_RECORD_ROOT=<置き場>` を渡す（置き場に `scripts/`・`tests/*.test.ts`・`node_modules` へのリンクを置く。記録は `<置き場>/coverage/lcov.info`）。
+Python の記録の環境の置き場は `TEST_RECORD_VENV`（既定はリポジトリの `.venv`）。子プロセスの生の記録の置き場は、子に渡る `NODE_V8_COVERAGE`（Node）と `TEST_RECORD_RAW`（その下の `py/`・`sh/`）。
 
 ## スタックの規約からの逸脱
 
 `.claude/rules/` のスタックの葉（Cloudflare / Hono / React）と違う所。葉とここが食い違ったら、ここが優先。
 
-- 配置は機能単位（`apps/api/src/features/<feature>/`）でなく、上の「構成」。実現単位は `*.service.ts` でなく、`src/**`・`portal/src/**` と要件に結んだ `scripts/` の道具（区分は traceconfig の `source`）
+- 配置は機能単位（`apps/api/src/features/<feature>/`）でなく、上の「構成」。実現単位は `*.service.ts` でなく、`src/**`・`portal/src/**` と要件に結んだ `scripts/` の道具（区分は `harness.config.json` の `source`）
 - 画面の単体テスト（`tests/client/`）を持つ。葉は作らないと決めているが、ここでは要件のクラスを画面の部品で確かめる
 - シナリオテストは Playwright でなく、vitest + jsdom（`tests/scenario/`）と API を通す道具（`scripts/check_api.py`・`check_portal_api.py`）
 - `@covers` はテスト本文の先頭行でなく、`it(` の直前の行
@@ -129,7 +130,7 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 ## 正本へのリンク
 
 - 規約: [`.claude/rules/docs.md`](.claude/rules/docs.md)（R-101〜R-1207）、[`.claude/rules/comments.md`](.claude/rules/comments.md)、手順は Skill `/develop`
-- 検査の宣言とコマンド: `traceconfig.json`（次の版への移行の間は `traceconfig.next.json` と `.harness-next/` が並ぶ）、`package.json` の `scripts`
+- 検査の宣言とコマンド: `harness.config.json`、`package.json` の `scripts`（入口は `node .harness/bin/harness.mjs`）
 - 仕様: [`docs/goals/`](docs/goals/)・[`docs/rules/`](docs/rules/)・[`docs/nfr/`](docs/nfr/)・[`docs/adr/`](docs/adr/)・[`docs/01-glossary.md`](docs/01-glossary.md)・[`docs/_shared/`](docs/_shared/)
-- 検証の台帳: [`docs/verification/GLOBAL.md`](docs/verification/GLOBAL.md)・[`docs/verification/DEFERRED.md`](docs/verification/DEFERRED.md)・[`docs/検証の返済計画.md`](docs/検証の返済計画.md)
+- 検証の台帳: [`docs/00-overview.md`](docs/00-overview.md) の「全体の方針」（検証しない範囲）・[`docs/verification/DEFERRED.md`](docs/verification/DEFERRED.md)（凍結済み）
 - 人の運用手順（動かし方・本番・secret）: [`README.md`](README.md)
