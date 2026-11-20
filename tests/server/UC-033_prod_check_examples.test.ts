@@ -2,7 +2,7 @@ import { execFileSync } from 'node:child_process'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { afterAll, describe, expect, it } from 'vitest'
-import { type ExampleKey, ROOT, contractRun, keyOf, opWith, realExample, removeTemps, shadowRoot, tailOf, verdictOf } from './UC-033_fixture'
+import { type ExampleKey, ROOT, contractRun, keyOf, opWith, realExample, removeTemps, runsTestMs, shadowRoot, tailOf, verdictOf } from './UC-033_fixture'
 
 /**
  * UC-033 の REQ-567・568: 外の相手を呼ぶ操作（本番の確かめ。UC-015 の openDeploymentEntry）の実例が、
@@ -70,7 +70,7 @@ describe('UC-033 確定した契約の実例を実装に当て、契約どおり
       expect(run.results, `--json の結果が読めない（終了 ${run.code}）:\n${tailOf(run)}`).not.toBeNull()
       for (const name of names) expect(verdictOf(run, entry(name))?.verdict, `${keyOf(entry(name))}:\n${tailOf(run)}`).toBe('pass')
       expect(run.code, tailOf(run)).toBe(0)
-    }, 300_000)
+    }, runsTestMs())
   })
 
   describe('REQ-568 合わない・不備・渡せない実例があれば、その実例を挙げて失敗で終える', () => {
@@ -85,7 +85,7 @@ describe('UC-033 確定した契約の実例を実装に当て、契約どおり
         expect(run.code, `経路を開かない道具で通った:\n${tailOf(run)}`).not.toBe(0)
         expect(run.code, '止められて終わった').not.toBe(-1)
         expect(`${run.stdout}\n${run.stderr}`, '通らなかった実例が挙がっていない').toContain(`openDeploymentEntry.${name}`)
-      }, 300_000)
+      }, runsTestMs())
     }
   })
 })

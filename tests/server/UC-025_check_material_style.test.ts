@@ -166,6 +166,78 @@ describe('UC-025 書き直した世代の様式の門', () => {
     })
   })
 
+  describe('REQ-663 引数の誤りは何も確かめずに断る', () => {
+    /** 断ったこと（標準出力の ToolError 1 つの INVALID_INPUT、終了コード 2、止める理由も警告も返さない）。 */
+    const expectRefused = (r: Run) => {
+      expect(r.status, out(r)).toBe(2)
+      expect(r.json, out(r)).toBeTypeOf('object')
+      expect(r.json.error?.code, out(r)).toBe('INVALID_INPUT')
+      expect(typeof r.json.error?.reason === 'string' && r.json.error.reason.length > 0, out(r)).toBe(true)
+      expect(r.json.stops).toBeUndefined()
+      expect(r.json.warnings).toBeUndefined()
+    }
+    /** 止める理由と警告に当たる物を仕込んだ置き場（断るなら何も確かめないことを見るため）。 */
+    const noisyWorkspace = () => {
+      const ws = ws0()
+      ws.model.figures[311][1].after = 'explanation'
+      v4Material(ws, 312).explanation += `\n- ${ws.fresh(3)}${EXAM_PHRASES[0]}${ws.fresh(3)}です。`
+      ws.materialize()
+      return ws
+    }
+
+    /** @covers REQ-663#unknown-argument */
+    it('知らない名前の引数を渡すと、止める理由のある置き場でも何も確かめずに INVALID_INPUT で断る', () => {
+      const ws = noisyWorkspace()
+      expectRefused(ws.gateArgs(['--data', `data/${ws.model.key}`, '--dir', ws.model.dir, '--unknown-argument', 'x']))
+    })
+
+    /** @covers REQ-663#value-missing */
+    it('値の要る引数（学びの置き場・書き直した世代）を名前だけ渡して値を付けないと、何も確かめずに INVALID_INPUT で断る（場合ごと）', () => {
+      const ws = noisyWorkspace()
+      for (const [label, args] of [
+        ['学びの置き場の値が無い', ['--dir', ws.model.dir, '--data']],
+        ['書き直した世代の値が無い', ['--data', `data/${ws.model.key}`, '--dir']],
+      ] as const) {
+        try {
+          expectRefused(ws.gateArgs([...args]))
+        } catch (e) {
+          throw new Error(`${label}: ${(e as Error).message}`)
+        }
+      }
+    })
+
+    /** @covers REQ-663#arguments-before-syllabus-missing */
+    it('引数を誤り、しかもシラバスの無い学びの置き場を渡すと、NOT_FOUND でなく INVALID_INPUT で断る（場合ごと。契約の errors の順）', () => {
+      const ws = noisyWorkspace()
+      ws.remove(`data/${ws.model.key}/syllabus.json`)
+      // 仕込みの確かめ: 引数が正しければ、この置き場はシラバスの欠けで NOT_FOUND で断られる
+      const control = ws.gate()
+      expect(control.json?.error?.code, `仕込み: シラバスの無い置き場が NOT_FOUND で断られない:\n${out(control)}`).toBe('NOT_FOUND')
+      for (const [label, args] of [
+        ['知らない名前の引数', ['--data', `data/${ws.model.key}`, '--dir', ws.model.dir, '--unknown-argument', 'x']],
+        ['書き直した世代の値が無い', ['--data', `data/${ws.model.key}`, '--dir']],
+      ] as const) {
+        try {
+          expectRefused(ws.gateArgs([...args]))
+        } catch (e) {
+          throw new Error(`${label}: ${(e as Error).message}`)
+        }
+      }
+    })
+
+    /** @covers REQ-663#missing-data */
+    it('学びの置き場を渡さないと、何も確かめずに INVALID_INPUT で断る', () => {
+      const ws = noisyWorkspace()
+      expectRefused(ws.gateArgs(['--dir', ws.model.dir]))
+    })
+
+    /** @covers REQ-663#data-not-in-shape */
+    it('学びの置き場を形の外の値（data/ の下の学びの key でない）で渡すと、何も確かめずに INVALID_INPUT で断る', () => {
+      const ws = noisyWorkspace()
+      expectRefused(ws.gateArgs(['--data', `other/${ws.model.key}`, '--dir', ws.model.dir]))
+    })
+  })
+
   describe('REQ-453 断る入力', () => {
     /** 断ったこと（標準出力の ToolError 1 つ、終了コード 2、止める理由も警告も返さない）。 */
     const expectRefused = (r: Run, code: 'INVALID_INPUT' | 'NOT_FOUND') => {

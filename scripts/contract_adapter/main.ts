@@ -17,13 +17,17 @@
  * - 起こした子のプロセスは受け渡し役より長く残さない。contract-run が時間切れで受け渡し役を止めたら（起こした側が
  *   居なくなったら）、子をプロセスグループごと止めて終える（kit/tool.ts の bindToCaller）。
  * - 回し始める実例ごとに「▶ UC 操作.例の名前」を標準エラーに出す（時間切れのときにどこで止まったかが分かる）。
+ * - 環境変数 CONTRACT_ADAPTER_NOTES にファイルのパスがあれば、標準エラーに書く行を、答えている実例の名前を頭に付けて
+ *   そのファイルにも足す（kit/tool.ts の noteForExample。別のプロセスで回す受け持ちも同じファイルに足す）。
  */
 
+import { spawn } from 'node:child_process'
 import { existsSync, readdirSync } from 'node:fs'
+import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { pathToFileURL } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 import { blockedAttempts, sealOutside } from './kit/outside'
-import { bindToCaller } from './kit/tool'
+import { answering, bindToCaller, noteForExample } from './kit/tool'
 import type { Answer, ExampleLine, Handler } from './kit/protocol'
 
 const HANDLERS_DIR = join(import.meta.dirname, 'handlers')
@@ -53,9 +57,49 @@ async function loadHandler(uc: string): Promise<Handler | null> {
       merged.operations[operation] = run
       if (handler.parallel) parallel.add(operation)
     }
+    if (handler.ownProcess) merged.ownProcess = true
   }
   merged.parallelOperations = parallel
   return merged
+}
+
+/**
+ * uc の実例を、別の受け渡し役のプロセス（このファイルを CONTRACT_ADAPTER_ONLY=uc で起こした物）で回し、答えの行をそのまま出す。
+ * そのプロセスが答えなかった実例は、渡せなかった実例として failed に足す。そのプロセスは、このプロセスが居なくなると自分で終える（bindToCaller）。
+ * @implements REQ-567, REQ-568, REQ-570
+ */
+function inOwnProcess(uc: string, lines: ExampleLine[], failed: string[]): Promise<void> {
+  return new Promise((resolve) => {
+    const child = spawn(process.execPath, [...process.execArgv, fileURLToPath(import.meta.url)], {
+      env: { ...process.env, CONTRACT_ADAPTER_ONLY: uc },
+      stdio: ['pipe', 'pipe', 'inherit'],
+    })
+    const answered = new Set<number>()
+    let buffer = ''
+    child.stdout.setEncoding('utf8')
+    child.stdout.on('data', (chunk: string) => {
+      buffer += chunk
+      let at: number
+      while ((at = buffer.indexOf('\n')) >= 0) {
+        const text = buffer.slice(0, at)
+        buffer = buffer.slice(at + 1)
+        if (text.trim() === '') continue
+        try {
+          answered.add((JSON.parse(text) as { id: number }).id)
+        } catch {
+          // 答えの形でない行は渡さない
+          continue
+        }
+        process.stdout.write(`${text}\n`)
+      }
+    })
+    child.on('close', (code) => {
+      for (const line of lines) if (!answered.has(line.id)) failed.push(`${label(line)}: ${uc} の受け渡し役のプロセスが答えずに終えた（終了の状態 ${code}）`)
+      resolve()
+    })
+    child.stdin.on('error', () => {})
+    child.stdin.end(lines.map((line) => JSON.stringify(line)).join('\n'))
+  })
 }
 
 /**
@@ -65,6 +109,13 @@ async function loadHandler(uc: string): Promise<Handler | null> {
  */
 export async function answerContractExamples(input: string): Promise<number> {
   sealOutside()
+  if (process.env.CONTRACT_ADAPTER_NOTES) {
+    const write = process.stderr.write.bind(process.stderr) as (...args: unknown[]) => boolean
+    process.stderr.write = ((chunk: unknown, ...rest: unknown[]) => {
+      noteForExample(typeof chunk === 'string' ? chunk : Buffer.from(chunk as Uint8Array).toString('utf8'))
+      return write(chunk, ...rest)
+    }) as typeof process.stderr.write
+  }
   const lines: ExampleLine[] = []
   const refused: string[] = []
   input.split('\n').forEach((text, index) => {
@@ -94,7 +145,7 @@ export async function answerContractExamples(input: string): Promise<number> {
     say(`▶ ${label(line)}`)
     let result: Answer
     try {
-      result = await handlers.get(line.uc)!.operations[line.operation](line)
+      result = await answering.run(label(line), () => handlers.get(line.uc)!.operations[line.operation](line))
     } catch (error) {
       failed.push(`${label(line)}: ${error instanceof Error ? error.message : String(error)}`)
       return
@@ -102,14 +153,19 @@ export async function answerContractExamples(input: string): Promise<number> {
     process.stdout.write(`${JSON.stringify({ id: line.id, ...result })}\n`)
   }
 
+  // 自分のプロセスで回す受け持ち（ownProcess）の実例は、UC ごとに別の受け渡し役のプロセスへ渡す（このプロセスが既にその 1 つなら自分で回す）
+  const only = process.env.CONTRACT_ADAPTER_ONLY
+  const elsewhere = only ? [] : lines.filter((line) => handlers.get(line.uc)!.ownProcess)
+  const here = lines.filter((line) => !elsewhere.includes(line))
   const isParallel = (line: ExampleLine) => handlers.get(line.uc)!.parallelOperations?.has(line.operation) ?? false
-  const serial = lines.filter((line) => !isParallel(line))
-  const parallel = lines.filter(isParallel)
+  const serial = here.filter((line) => !isParallel(line))
+  const parallel = here.filter(isParallel)
+  const lanes = [...new Set(elsewhere.map((line) => line.uc))].map((uc) => inOwnProcess(uc, elsewhere.filter((line) => line.uc === uc), failed))
   const runSerial = async () => {
     for (const line of serial) await answer(line)
   }
   // 並行の受け持ちの同時数は kit/tool.ts の runTool が絞るので、ここでは全部を一度に始める
-  await Promise.all([runSerial(), ...parallel.map(answer)])
+  await Promise.all([runSerial(), ...parallel.map(answer), ...lanes])
 
   const attempts = blockedAttempts()
   if (attempts.length > 0) say(`外へ出ようとして塞いだ要求が ${attempts.length} 件: ${[...new Set(attempts)].slice(0, 3).join(' / ')}`)
@@ -121,6 +177,19 @@ export async function answerContractExamples(input: string): Promise<number> {
   return 0
 }
 
+/**
+ * 受け渡し役が居なくなったら（終えた・止められた・強く止められた）、別のプロセスグループの見張りが、この受け渡し役の作った影の根
+ * （一時の置き場の `contract-adapter-<この受け渡し役の番号>-*`。kit/tool.ts の shadowRoot・受け持ちが名前に入れる）をまとめて消す。
+ * @implements REQ-570
+ */
+function sweepOwnShadowsAtExit(): void {
+  const sweep = 'while kill -0 "$1" 2>/dev/null; do sleep 1; done; rm -rf -- "$2"/contract-adapter-"$1"-*'
+  spawn('/bin/sh', ['-c', sweep, 'contract-adapter-sweep', String(process.pid), tmpdir()], { detached: true, stdio: 'ignore' }).unref()
+  // 見張りが居るので、影の根は実例ごとに消さない（kit/tool.ts の cleanupDeferred）
+  process.env.CONTRACT_ADAPTER_SWEEPER = String(process.pid)
+}
+
+sweepOwnShadowsAtExit()
 bindToCaller()
 process.exitCode = await answerContractExamples(await readStdin())
 // 実装が残したタイマーなどで終われないときも、答えを書き終えたら終える

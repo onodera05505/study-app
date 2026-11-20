@@ -2,7 +2,8 @@
  * UC-019 の受け持ち（道具を回す 3 操作。outbound の read…・write… は持たない）。
  *
  * 入口（CLAUDE.md の「操作 → 入口」）: buildLearnerPack ＝ `scripts/build_learner_pack.py`、
- * gradeLearnerAnswers ＝ `scripts/grade_learner.py`、renderLearnerInstructions ＝ `scripts/render_prompts.py`。
+ * gradeLearnerAnswers ＝ `scripts/grade_learner.py`、renderLearnerInstructions ＝ `scripts/render_prompts.py`、
+ * renderSvgPng ＝ `node scripts/render_svg_png.mjs <timeout>`（figures は標準入力の JSON の配列。応答は標準出力の JSON 1 つ。Chromium が要る）。
  * request の欄は欄の名前のままの長い名前の引数、作業ディレクトリは実例ごとの作業場所（kit/ta.ts）。登録簿はリポジトリの物。
  *
  * 前提（実例ごとに作る）:
@@ -17,8 +18,8 @@
 import { readdir, readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { defineHandler, Unanswerable, type ExampleLine, type Operation } from '../kit/protocol'
-import { inPlace, type Place } from '../kit/ta'
-import { REPO_ROOT } from '../kit/tool'
+import { inPlace, makePlace, NOT_A_FIGURE, type Place } from '../kit/ta'
+import { REPO_ROOT, runTool, toolAnswer } from '../kit/tool'
 
 type Json = any
 
@@ -207,6 +208,43 @@ function entry(script: string, table: Record<string, (place: Place, line: Exampl
   }
 }
 
+// ---- renderSvgPng ----
+
+/** 描ける SVG（幅と高さを持つ図）。 */
+const DRAWABLE_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="20"><rect width="40" height="20" fill="#3366cc"/></svg>\n'
+
+/**
+ * 図を PNG に描く入口を作業場所で回す。例が名指す SVG は作業場所の同じ相対パスに置く（ok は描ける図、notSvg は XML として整うが図でない物）。
+ * @implements REQ-567, REQ-570
+ */
+const renderSvgPng: Operation = async (line) => {
+  const figures = (line.request?.figures ?? []) as Array<{ src: string; dst: string }>
+  const body = line.case === 'ok' ? DRAWABLE_SVG : line.case === 'notSvg' ? NOT_A_FIGURE : null
+  if (body === null) throw new Unanswerable(`UC-019 renderSvgPng の例 ${line.case} の前提を知らない`)
+  const place = await makePlace()
+  try {
+    for (const f of figures) await place.write(f.src, body)
+    const args = line.request?.timeout === undefined ? [] : [String(line.request.timeout)]
+    const run = await runTool(['node', join(REPO_ROOT, 'scripts', 'render_svg_png.mjs'), ...args], {
+      cwd: place.dir,
+      env: process.env,
+      input: JSON.stringify(figures),
+      timeoutMs: 180_000,
+    })
+    return toolAnswer(run, (r) => {
+      try {
+        const value = JSON.parse(r.stdout.trim()) as unknown
+        if (value !== null && typeof value === 'object' && !Array.isArray(value)) return value as Record<string, unknown>
+      } catch {
+        // 下で名前を挙げて投げる
+      }
+      throw new Unanswerable(`道具が終了の状態 0 で JSON 1 つの応答を出さなかった: ${r.stdout.trim().slice(0, 200)}`)
+    })
+  } finally {
+    await place.shadow.cleanup()
+  }
+}
+
 /**
  * @implements REQ-567, REQ-570
  */
@@ -217,5 +255,6 @@ export default defineHandler({
     buildLearnerPack: entry('build_learner_pack.py', PACK),
     gradeLearnerAnswers: entry('grade_learner.py', GRADE),
     renderLearnerInstructions: entry('render_prompts.py', RENDER),
+    renderSvgPng,
   },
 })

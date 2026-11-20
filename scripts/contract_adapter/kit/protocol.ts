@@ -53,6 +53,12 @@ export type Handler = {
   uc: string
   /** 子プロセスを回す受け持ちだけ true（並行に回す）。既定は 1 件ずつ順に回す。 */
   parallel?: boolean
+  /**
+   * true なら、この受け持ちの実例を、受け渡し役が起こす別の受け渡し役のプロセスで回す（ほかの受け持ちと並ぶ）。
+   * プロセスに 1 つの物（kit/outside.ts の口・時計・ID）を差し替える受け持ちや、同期の子プロセスで本体を止める受け持ちを、
+   * 本体の 1 本の列から外すのに使う。そのプロセスの中では、parallel の決まりのまま回す。
+   */
+  ownProcess?: boolean
   operations: Record<string, Operation>
   /** 土台が使う（並行に回す操作の名前）。受け持ちは書かない。 */
   parallelOperations?: Set<string>

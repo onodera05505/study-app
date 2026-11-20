@@ -21,7 +21,7 @@ import { existsSync, readdirSync, readFileSync, realpathSync } from 'node:fs'
 import { DatabaseSync } from 'node:sqlite'
 import { join } from 'node:path'
 import { Unanswerable, type Answer, type ExampleLine } from './protocol'
-import { REPO_ROOT, fakeCommands, runTool, shadowRoot, toolErrorCode, unnamedStop, type Shadow, type ToolRun } from './tool'
+import { REPO_ROOT, cloneInto, fakeCommands, runTool, shadowRoot, toolErrorCode, unnamedStop, type Shadow, type ToolRun } from './tool'
 
 /** 書きうるので必ず写す最上位の置き場。 */
 const ALWAYS_COPIED = ['scripts', 'src', 'portal']
@@ -30,14 +30,8 @@ const OMITTED = new Set(['.git', 'data', 'tests', 'backups', 'node_modules', 'di
 /** 学びの置き場の写しから除く物。 */
 const LEARNING_EXCLUDED = new Set(['pdfs', 'pages', 'seed.sql'])
 
-/** 写しの道具（複製の印だけを作る写しが使える所ではそれを使う）。 */
-async function cloneTree(from: string[], to: string): Promise<void> {
-  if (from.length === 0) return
-  await mkdir(to, { recursive: true })
-  const command = process.platform === 'darwin' ? ['cp', '-cR', ...from, `${to}/`] : ['cp', '-R', '--reflink=auto', ...from, `${to}/`]
-  const run = await runTool(command, { timeoutMs: 60_000 })
-  if (run.code !== 0) throw new Unanswerable(`前提の写しを作れない: ${run.stderr.trim().slice(0, 200)}`)
-}
+/** 写しの道具（kit/tool.ts の cloneInto。APFS ではディレクトリごと 1 回の複製）。 */
+const cloneTree = cloneInto
 
 export type ProjectShadow = Shadow & {
   /** 影の根を cwd にし、偽物を PATH に入れた環境。 */

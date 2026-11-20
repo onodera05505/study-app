@@ -172,10 +172,37 @@ const listDeploymentSecretNames: Operation = async (line) => {
 }
 
 /**
+ * 本番の検査そのもの（checkSsoProd ＝ `bash scripts/check_sso_prod.sh`、引数なし）。代わりの配備先と代わりの配備先のアカウントに向けて 1 回回す。
+ * 前提: ok は全部そろった答え、healthUnreachable は学び ip の死活確認が届かない、wrongAccount はログイン中のアカウントが配備を持たない。
+ * 名前を持つ問題があれば、最初の物（契約 CheckProblems の error.code）の名前で断り、無ければ終了の状態を答える。
+ * @implements REQ-567, REQ-569, REQ-570
+ */
+const checkSsoProd: Operation = async (line) => {
+  let rules: FakeHttpRule[] = []
+  let account: FakeAccount = {}
+  switch (line.case) {
+    case 'ok':
+      break
+    case 'healthUnreachable':
+      rules = [{ url: `${await deploymentUrl('ip')}/api/health`, exit: UNREACHABLE }]
+      break
+    case 'wrongAccount':
+      account = { accountId: OTHER_ACCOUNT, listExit: 1 }
+      break
+    default:
+      throw new Unanswerable(`UC-015 checkSsoProd の例 ${line.case} の前提を知らない`)
+  }
+  const run = await runProdCheck(rules, account)
+  const named = run.problems?.find((p) => typeof p.code === 'string' && p.code !== '')
+  if (named) return { error: named.code! }
+  return { response: { exitCode: run.code } }
+}
+
+/**
  * @implements REQ-567, REQ-569, REQ-570
  */
 export default defineHandler({
   uc: 'UC-015',
   parallel: true,
-  operations: { checkDeploymentHealth, readDeploymentHealthHeaders, openDeploymentEntry, probeRetiredPasswordRoute, listDeploymentSecretNames },
+  operations: { checkDeploymentHealth, readDeploymentHealthHeaders, openDeploymentEntry, probeRetiredPasswordRoute, listDeploymentSecretNames, checkSsoProd },
 })

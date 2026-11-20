@@ -33,8 +33,8 @@ function placeOf(line: ExampleLine): { data: string; key: string; fixture: strin
   return { data, key, fixture: data.startsWith('tests/') ? data : null }
 }
 
-/** 置き場を前提どおりに置いて道具を回す。 */
-async function withPlace(line: ExampleLine, body: (s: ProjectShadow, data: string, key: string) => Promise<void>, script: string, args: string[]) {
+/** 置き場を前提どおりに置いて道具を回す。body は、リポジトリに無い fixture の置き場を学びの写しから作ったあとに前提を足す物（足す物が無ければ null）。 */
+async function withPlace(line: ExampleLine, body: ((s: ProjectShadow, data: string, key: string) => Promise<void>) | null, script: string, args: string[]) {
   const { data, key, fixture } = placeOf(line)
   const inRepo = fixture !== null && existsSync(join(REPO_ROOT, fixture))
   return inShadow({ learnings: fixture ? [] : [key], copy: inRepo ? [fixture] : [] }, async (s) => {
@@ -42,7 +42,7 @@ async function withPlace(line: ExampleLine, body: (s: ProjectShadow, data: strin
       await s.learning(key, '__copy__')
       await mkdir(s.path(join(fixture, '..')), { recursive: true })
       await rename(s.path('data/__copy__'), s.path(fixture))
-      await body(s, data, key)
+      if (body) await body(s, data, key)
     }
     return answerOf(await s.run(py(script, args)))
   })
@@ -96,12 +96,12 @@ const buildRoadmap: Operation = (line) => {
   if (!known.includes(line.case)) unknownCase(line)
   const { fixture } = placeOf(line)
   if (fixture && !existsSync(join(REPO_ROOT, fixture))) unknownCase(line)
-  return withPlace(line, async () => {}, 'build_roadmap.py', argsOf(line.request))
+  return withPlace(line, null, 'build_roadmap.py', argsOf(line.request))
 }
 
 const applySummaryOverride: Operation = (line) => {
   if (!['ok', 'countMismatch', 'unknownId', 'countMismatchBeforeUnknownId'].includes(line.case)) unknownCase(line)
-  return withPlace(line, async () => {}, 'apply_summary_override.py', argsOf(line.request, { repeated: ['id', 'summary'] }))
+  return withPlace(line, null, 'apply_summary_override.py', argsOf(line.request, { repeated: ['id', 'summary'] }))
 }
 
 const DATASET_PREMISE: Record<string, (s: ProjectShadow, data: string, key: string) => Promise<void>> = {

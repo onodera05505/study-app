@@ -51,6 +51,7 @@ export type PortalWorld = {
   asFetch: typeof globalThis.fetch
 }
 
+/** 書き込みの文の前に 1 度だけ前提を済ませる D1 の包み。まなびばの app が使う口（prepare・batch）だけを持つ。 */
 class HookedD1 {
   hook: ((sql: string) => Promise<void>) | null = null
   constructor(readonly inner: D1Database) {}
@@ -87,12 +88,6 @@ class HookedD1 {
     const originals = statements as unknown as Array<{ original: D1PreparedStatement; sql: string }>
     for (const { sql } of originals) await this.before(sql)
     return this.inner.batch(originals.map((o) => o.original))
-  }
-  exec(sql: string) {
-    return this.inner.exec(sql)
-  }
-  dump() {
-    return this.inner.dump()
   }
 }
 

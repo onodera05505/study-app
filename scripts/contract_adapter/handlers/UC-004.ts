@@ -284,6 +284,8 @@ const getSessionResult: Operation = async (line) => {
  */
 export default defineHandler({
   uc: 'UC-004',
+  // プロセスに 1 つの物（口・時計・ID）を差し替えるので、ほかの受け持ちと混ざらないよう自分のプロセスで回す
+  ownProcess: true,
   operations: { startSession, getCurrentQuestion, answerQuestion, finishSession, getSessionResult },
 })
 

@@ -1,0 +1,818 @@
+/** UC-036（手元の配備に API と画面を当てる道具 5 つ）のテストの土台。
+ *
+ *  入口は `CLAUDE.md` の「操作 → 入口」の「道具を回す操作」の行（操作名を snake_case にした `scripts/<名前>`）と、
+ *  契約の先頭の決まり（request の各欄は同じ名前の引数。learning は第 1 引数）:
+ *  - checkApi ＝ `bash scripts/check_api.sh [<learning>]`（手元に学びの配備を起こして当てる）
+ *  - checkPortalApi ＝ `bash scripts/check_portal_api.sh`（手元にまなびばの配備を起こして当てる）
+ *  - auditFixtures ＝ `node scripts/audit_fixtures.mjs [--base <場所>] [--json <ファイル>]`（起きている学びの配備に当てる）
+ *  - auditScreens ＝ `bash scripts/audit_screens.sh [<learning>] [--out <置き場>] [--limit <数>]`
+ *  - checkSsoFlow ＝ `python3 scripts/check_sso_flow.py`（起きているまなびばと学びの配備に当てる）
+ *  `.sh` と `.py`・`.mjs` が同じ名前で並ぶ道具は、契約の summary（配備を起こす）と事前条件から、配備を起こす `.sh` を入口とした。
+ *
+ *  影の根（toolShadow）は、リポジトリを一時の置き場に写した物。読むだけの重い置き場（data・public・node_modules など）は
+ *  リンクにし、ほかは写す。組み立ての出力（dist・portal/dist）は写さず、道具が影の根の中に作る。
+ *  手元の保存先（`.wrangler`・`portal/.wrangler`。UC の事前条件「手元の保存先がそろっている」）は、この作業ツリーに無ければ
+ *  同じリポジトリの主の作業ツリーの物を、影の根へ写す（APFS では複製の印だけ）。元の保存先は読むだけで書き換えない。
+ *  道具は影の根を作業の場所にして回し、終わったら道具が起こしたプロセスをプロセスグループごと止める。
+ *  外への通信: 道具が起こす wrangler の利用統計の送信は環境変数で止める。それ以外の外への口は道具の中にあり、ここでは塞げない。 */
+
+import { AsyncLocalStorage } from 'node:async_hooks'
+import { spawn, spawnSync, type ChildProcess } from 'node:child_process'
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs'
+import { rm } from 'node:fs/promises'
+import http from 'node:http'
+import { tmpdir } from 'node:os'
+import { dirname, join } from 'node:path'
+import { DatabaseSync } from 'node:sqlite'
+import { fileURLToPath } from 'node:url'
+
+export const ROOT = join(fileURLToPath(new URL('.', import.meta.url)), '..', '..')
+
+/** 登録簿（src/shared/targets.json）の学びの key。 */
+export const REGISTRY_KEYS = Object.keys(JSON.parse(readFileSync(join(ROOT, 'src', 'shared', 'targets.json'), 'utf8')) as Record<string, unknown>).filter(
+  (k) => !k.startsWith('_'),
+)
+
+/** 写さずにリンクにする最上位の置き場（読むだけで重い物）。 */
+const LINKED = new Set(['data', 'public', 'node_modules', '.harness', 'apm_modules'])
+/** 影の根に置かない最上位の物（道具が作り直す物と作業の跡）。手元の保存先は別に写す。 */
+const OMITTED = new Set(['.git', 'dist', 'coverage', 'full', 'backups', '.wrangler'])
+
+const temps: string[] = []
+
+/** 作った影の根をすべて消す。 */
+export async function removeTemps(): Promise<void> {
+  await Promise.all(temps.splice(0).map((dir) => rm(dir, { recursive: true, force: true })))
+}
+
+/** 影の根 1 つを消す（ほかの影の根は残す）。 */
+export async function removeShadow(s: { root: string }): Promise<void> {
+  const base = dirname(s.root)
+  const i = temps.indexOf(base)
+  if (i >= 0) temps.splice(i, 1)
+  await rm(base, { recursive: true, force: true })
+}
+
+/** 同じリポジトリの主の作業ツリー（git の共通の置き場の親）。 */
+function mainWorktree(): string | null {
+  const r = spawnSync('git', ['-C', ROOT, 'rev-parse', '--path-format=absolute', '--git-common-dir'], { encoding: 'utf8' })
+  return r.status === 0 ? dirname(r.stdout.trim()) : null
+}
+
+/** 手元の保存先（rel は `.wrangler` か `portal/.wrangler`）の在りか。この作業ツリー、無ければ主の作業ツリー。 */
+export function localStore(rel: string): string | null {
+  for (const base of [ROOT, mainWorktree()]) if (base && prepared(join(base, rel))) return join(base, rel)
+  return null
+}
+
+/** 手元の保存先がそろっているか（D1 のどれかに構造の変更が当たっている）。置き場だけあって中身の無い保存先は、そろっていない。 */
+function prepared(store: string): boolean {
+  const dir = join(store, 'state', 'v3', 'd1', 'miniflare-D1DatabaseObject')
+  if (!existsSync(dir)) return false
+  return readdirSync(dir)
+    .filter((n) => n.endsWith('.sqlite') && n !== 'metadata.sqlite')
+    .some((n) => {
+      const db = new DatabaseSync(join(dir, n), { readOnly: true })
+      try {
+        return ((db.prepare("SELECT COUNT(*) AS n FROM sqlite_master WHERE type='table' AND name='d1_migrations'").get() as { n: number }).n ?? 0) > 0
+      } catch {
+        return false
+      } finally {
+        db.close()
+      }
+    })
+}
+
+export type Shadow = {
+  root: string
+  path: (rel: string) => string
+  read: (rel: string) => string
+  write: (rel: string, content: string) => void
+}
+
+const cloneInto = (from: string[], to: string) => {
+  if (from.length === 0) return
+  const args = process.platform === 'darwin' ? ['-cR', ...from, `${to}/`] : ['-R', '--reflink=auto', ...from, `${to}/`]
+  const r = spawnSync('cp', args, { encoding: 'utf8' })
+  if (r.status !== 0) throw new Error(`影の根を写せない: ${r.stderr}`)
+}
+
+/** 影の根を作る。stores は手元の保存先も写すか（既定は写す）。 */
+export function toolShadow(opts: { stores?: boolean } = {}): Shadow {
+  const base = mkdtempSync(join(tmpdir(), 'uc036-'))
+  temps.push(base)
+  const root = join(base, 'root')
+  mkdirSync(root)
+  const cloned: string[] = []
+  for (const name of readdirSync(ROOT)) {
+    if (OMITTED.has(name)) continue
+    if (LINKED.has(name)) symlinkSync(join(ROOT, name), join(root, name))
+    else cloned.push(join(ROOT, name))
+  }
+  cloneInto(cloned, root)
+  for (const rel of ['portal/dist', 'portal/.wrangler']) spawnSync('rm', ['-rf', join(root, rel)])
+  if (opts.stores ?? true) {
+    for (const rel of ['.wrangler', 'portal/.wrangler']) {
+      const from = localStore(rel)
+      if (!from) throw new Error(`手元の保存先 ${rel} が無い（UC-036 の事前条件。作業ツリーか主の作業ツリーに要る）`)
+      cloneInto([from], dirname(join(root, rel)))
+    }
+  }
+  const path = (rel: string) => join(root, rel)
+  return {
+    root,
+    path,
+    read: (rel) => readFileSync(path(rel), 'utf8'),
+    write: (rel, content) => {
+      mkdirSync(dirname(path(rel)), { recursive: true })
+      writeFileSync(path(rel), content)
+    },
+  }
+}
+
+export type ToolRun = {
+  status: number | null
+  stdout: string
+  stderr: string
+  out: string
+  leftover: number
+  timedOut: boolean
+}
+
+/** 子の環境（wrangler の利用統計の送信を止める）。 */
+const childEnv = (extra: NodeJS.ProcessEnv = {}): NodeJS.ProcessEnv => ({
+  ...process.env,
+  WRANGLER_SEND_METRICS: 'false',
+  NO_UPDATE_NOTIFIER: '1',
+  ...extra,
+})
+
+/** プロセスグループに残っているプロセスの数。 */
+function groupSize(pgid: number): number {
+  const r = spawnSync('pgrep', ['-g', String(pgid)], { encoding: 'utf8' })
+  return r.stdout.split('\n').filter((l) => l.trim() !== '').length
+}
+
+/** 学びの API の検査の道具が立てる偽のまなびばの口（正本は scripts/check_api.py の SSO_FAKE_PORT）。 */
+const API_FAKE_PORT = (() => {
+  const m = /^SSO_FAKE_PORT\s*=\s*(\d+)/m.exec(readFileSync(join(ROOT, 'scripts', 'check_api.py'), 'utf8'))
+  if (!m) throw new Error('scripts/check_api.py から SSO_FAKE_PORT を読めない')
+  return Number(m[1])
+})()
+
+/** 道具と前提が使う手元の決まった口。 */
+export const PORTS = {
+  screens: 8787,
+  learning: 8788,
+  ssoPortal: 8790,
+  portal: 8791,
+  apiFake: API_FAKE_PORT,
+  ssoFake: 8793,
+} as const
+/** すべての口（口を名指さない呼び方はこれを使う）。 */
+export const ALL_PORTS: number[] = Object.values(PORTS)
+/** 操作ごとに使う口（道具が起こす配備・道具が立てる偽物・前提の配備）。口の重ならない操作は並べて回せる。 */
+export const PORTS_OF = {
+  checkApi: [PORTS.learning, PORTS.apiFake],
+  checkPortalApi: [PORTS.portal],
+  auditFixtures: [PORTS.screens, PORTS.ssoFake],
+  auditScreens: [PORTS.screens, PORTS.ssoFake],
+  checkSsoFlow: [PORTS.ssoPortal, PORTS.learning],
+} as const
+
+/** 操作ごとの、影の根の配備の調べ口の番号（separateInspector。道具が配備を起こす操作だけ）。 */
+export const INSPECTOR_OF = { checkApi: 9311, checkPortalApi: 9312, auditScreens: 9313 } as const
+
+const lockOf = (port: number) => join(tmpdir(), `study-app-uc036-port-${port}.lock`)
+/** 今の非同期の流れが持っている口（同じ流れの中で重ねて取るときは取り直さない）。 */
+const holding = new AsyncLocalStorage<Set<number>>()
+
+function alive(pid: number): boolean {
+  try {
+    process.kill(pid, 0)
+    return true
+  } catch (e) {
+    return (e as NodeJS.ErrnoException).code === 'EPERM'
+  }
+}
+
+/** 口 1 つの鍵を取る（置き場の作成で取る。持ち主のプロセスが居なくなった鍵は外す）。 */
+async function acquire(port: number): Promise<void> {
+  const lock = lockOf(port)
+  for (;;) {
+    try {
+      mkdirSync(lock)
+      writeFileSync(join(lock, 'pid'), String(process.pid))
+      return
+    } catch {
+      let owner = 0
+      try {
+        owner = Number(readFileSync(join(lock, 'pid'), 'utf8'))
+      } catch {
+        owner = 0
+      }
+      if (owner > 0 && !alive(owner)) rmSync(lock, { recursive: true, force: true })
+      else await new Promise((ok) => setTimeout(ok, 250))
+    }
+  }
+}
+
+/**
+ * 口の鍵を取って body を回す。ports を省くとすべての口。鍵は口ごとにあり、プロセスとテストのファイルをまたいで効く
+ * （口の重なる物どうしだけが順番を待つ）。番号の小さい口から取るので、待ち合いで止まらない。同じ非同期の流れの中で既に持つ口は取り直さない。
+ */
+export async function withPorts<T>(body: () => Promise<T>, ports: readonly number[] = ALL_PORTS): Promise<T> {
+  const mine = holding.getStore() ?? new Set<number>()
+  const need = [...new Set(ports)].filter((p) => !mine.has(p)).sort((x, y) => x - y)
+  const got: number[] = []
+  try {
+    for (const p of need) {
+      await acquire(p)
+      got.push(p)
+    }
+    return await holding.run(new Set([...mine, ...need]), body)
+  } finally {
+    for (const p of got) rmSync(lockOf(p), { recursive: true, force: true })
+  }
+}
+
+/** このプロセスが起こして、まだ止めていない道具のプロセスグループ。 */
+const liveGroups = new Set<number>()
+const killGroup = (pid: number) => {
+  try {
+    process.kill(-pid, 'SIGKILL')
+  } catch {
+    // もう居ない
+  }
+}
+/** このプロセスが終わるとき（時間切れで止められたときを含む）、起こした道具のプロセスグループを孫ごと止める。 */
+let exitHooked = false
+function hookExit(): void {
+  if (exitHooked) return
+  exitHooked = true
+  const stopAll = () => {
+    for (const pid of liveGroups) killGroup(pid)
+    liveGroups.clear()
+  }
+  process.on('exit', stopAll)
+  for (const signal of ['SIGTERM', 'SIGINT', 'SIGHUP'] as const) {
+    process.on(signal, () => {
+      stopAll()
+      if (process.listenerCount(signal) === 1) process.exit(1)
+    })
+  }
+}
+
+/**
+ * 道具のプロセスグループの見張りを、このプロセスと別のグループで起こす。このプロセスが居なくなったら（呼んだ側が時間切れで
+ * このプロセスのグループを止めた・強く止められたときを含む）、道具のプロセスグループを孫ごと止め、影の根の置き場を消して終わる。
+ * 道具が普通に終わったときは、見張りをこのプロセスが止める。
+ */
+function guardGroup(pgid: number, shadowBase: string): ChildProcess {
+  // 影の根の置き場も、止めたあとに消す（置き場の名前は引数で渡し、シェルの文に埋め込まない）
+  const script = 'while kill -0 "$1" 2>/dev/null; do sleep 1; done; kill -9 -"$2" 2>/dev/null; sleep 1; rm -rf -- "$3"; exit 0'
+  const w = spawn('/bin/sh', ['-c', script, 'uc036-guard', String(process.pid), String(pgid), shadowBase], { detached: true, stdio: 'ignore' })
+  w.unref()
+  return w
+}
+
+/**
+ * 影の根を作業の場所にして道具を回す（command の先頭は bash・python3・node、2 番目は `scripts/` からの相対の道具）。
+ * 道具が終わったら、道具のプロセスグループに残ったプロセスの数を数えて（leftover）、グループごと止める。口の鍵（withPorts）を取って回す。
+ */
+export function runTool(
+  shadow: Shadow,
+  command: string[],
+  opts: {
+    timeoutMs?: number
+    env?: NodeJS.ProcessEnv
+    ports?: readonly number[]
+  } = {},
+): Promise<ToolRun> {
+  return withPorts(() => runUnlocked(shadow, command, opts), opts.ports ?? ALL_PORTS)
+}
+
+function runUnlocked(shadow: Shadow, command: string[], opts: { timeoutMs?: number; env?: NodeJS.ProcessEnv }): Promise<ToolRun> {
+  hookExit()
+  return new Promise((resolve) => {
+    const child = spawn(command[0], command.slice(1), {
+      cwd: shadow.root,
+      env: childEnv(opts.env),
+      detached: true,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    })
+    if (child.pid !== undefined) liveGroups.add(child.pid)
+    const watchdog = child.pid === undefined ? undefined : guardGroup(child.pid, dirname(shadow.root))
+    let stdout = ''
+    let stderr = ''
+    let timedOut = false
+    child.stdout.on('data', (d) => (stdout += d))
+    child.stderr.on('data', (d) => (stderr += d))
+    const kill = () => killGroup(child.pid!)
+    const timer = setTimeout(() => {
+      timedOut = true
+      kill()
+    }, opts.timeoutMs ?? 600_000)
+    child.on('exit', (code) => {
+      clearTimeout(timer)
+      const leftover = groupSize(child.pid!)
+      kill()
+      liveGroups.delete(child.pid!)
+      if (watchdog?.pid !== undefined) killGroup(watchdog.pid)
+      // パイプを握った孫を止めたあとに close を待たずに返す
+      setTimeout(() => {
+        resolve({
+          status: code,
+          stdout,
+          stderr,
+          out: `${stdout}\n${stderr}`.split(shadow.root).join('<root>'),
+          leftover,
+          timedOut,
+        })
+      }, 200)
+    })
+  })
+}
+
+export const checkApi = (s: Shadow, learning?: string) => runTool(s, ['bash', 'scripts/check_api.sh', ...(learning ? [learning] : [])])
+export const checkPortalApi = (s: Shadow) => runTool(s, ['bash', 'scripts/check_portal_api.sh'])
+export const auditFixtures = (s: Shadow, args: string[], env?: NodeJS.ProcessEnv) =>
+  runTool(s, ['node', 'scripts/audit_fixtures.mjs', ...args], {
+    timeoutMs: 120_000,
+    env,
+  })
+export const auditScreens = (s: Shadow, args: string[]) =>
+  runTool(s, ['bash', 'scripts/audit_screens.sh', ...args], {
+    timeoutMs: 900_000,
+  })
+export const checkSsoFlow = (s: Shadow) => runTool(s, ['python3', 'scripts/check_sso_flow.py'], { timeoutMs: 120_000 })
+
+/**
+ * 影の根の配備の設定（wrangler.jsonc・portal/wrangler.jsonc の写し）に、手元の配備の調べ口（inspector）の番号を足す。
+ * 配備の道具は調べ口を既定の 1 つの番号で開くので、2 つの道具が同時に配備を起こすと、その口を取り合って起動に失敗する。
+ * 影の根ごとに違う番号にすると、口の重ならない道具を並べて回せる（リポジトリの設定は変えない。配備の口と動きは変わらない）。
+ */
+export function separateInspector(s: Shadow, port: number): void {
+  for (const rel of ['wrangler.jsonc', 'portal/wrangler.jsonc']) {
+    if (!existsSync(s.path(rel))) continue
+    const text = s.read(rel)
+    if (/"inspector_port"/.test(text)) throw new Error(`${rel} に既に inspector_port がある`)
+    const at = text.indexOf('{')
+    s.write(rel, `${text.slice(0, at + 1)}\n  "dev": { "inspector_port": ${port} },${text.slice(at + 1)}`)
+  }
+}
+
+/** 名前の無い例外で落ちたか。 */
+export const crashed = (r: ToolRun) => /Traceback \(most recent call last\)|^\s+at .+\(.+:\d+:\d+\)$/m.test(r.stderr)
+
+/**
+ * 影の根の配備の設定（wrangler.jsonc・portal/wrangler.jsonc）の入口を、元の入口の応答から name の応答ヘッダを外す包みに差し替える。
+ * 入口のコードは読まず、元の入口の default export の fetch をそのまま呼ぶ（名前のある export も引き継ぐ）。
+ */
+export function stripResponseHeader(s: Shadow, config: 'wrangler.jsonc' | 'portal/wrangler.jsonc', name: string): void {
+  const text = s.read(config)
+  const m = text.match(/"main"\s*:\s*"([^"]+)"/)
+  if (!m) throw new Error(`${config} に main が無い`)
+  const dir = dirname(config) === '.' ? '' : `${dirname(config)}/`
+  const original = m[1]
+  const wrapper = `${dirname(original)}/__uc036_strip_header.ts`
+  const rel = `./${original.split('/').pop()!.replace(/\.ts$/, '')}`
+  s.write(
+    `${dir}${wrapper}`,
+    [
+      `import worker from '${rel}'`,
+      `export * from '${rel}'`,
+      `const target = worker as unknown as { fetch: (req: Request, env: unknown, ctx: unknown) => Promise<Response> }`,
+      `export default {`,
+      `  ...(worker as object),`,
+      `  async fetch(req: Request, env: unknown, ctx: unknown): Promise<Response> {`,
+      `    const res = await target.fetch(req, env, ctx)`,
+      `    const out = new Response(res.body, res)`,
+      `    out.headers.delete(${JSON.stringify(name)})`,
+      `    return out`,
+      `  },`,
+      `}`,
+      '',
+    ].join('\n'),
+  )
+  s.write(config, text.replace(m[0], `"main": "${wrapper}"`))
+}
+
+// ---------------------------------------------------------------------------
+// 手元の保存先（影の根に写した学び側の D1）と、起きている配備の代わりの偽物
+
+/** 影の根の学び側の手元の保存先の SQLite のファイル（利用者の表を持つ物だけ）。 */
+export function learningDbs(s: Shadow): string[] {
+  const dir = s.path('.wrangler/state/v3/d1/miniflare-D1DatabaseObject')
+  if (!existsSync(dir)) return []
+  return readdirSync(dir)
+    .filter((n) => n.endsWith('.sqlite') && n !== 'metadata.sqlite')
+    .map((n) => join(dir, n))
+    .filter((f) => {
+      const db = new DatabaseSync(f)
+      try {
+        return db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='users'").get() !== undefined
+      } finally {
+        db.close()
+      }
+    })
+}
+
+/** f の SQLite を開いて body に渡し、閉じる。 */
+export function withDb<T>(f: string, body: (db: DatabaseSync) => T): T {
+  const db = new DatabaseSync(f)
+  try {
+    return body(db)
+  } finally {
+    db.close()
+  }
+}
+
+/** 保存先の全部の表の行を、表ごとに行の JSON の集まりで取る。 */
+export function rowsOf(db: DatabaseSync): Record<string, Set<string>> {
+  const tables = (
+    db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' AND name NOT LIKE '_cf_%'").all() as { name: string }[]
+  ).map((t) => t.name)
+  const out: Record<string, Set<string>> = {}
+  for (const t of tables) out[t] = new Set((db.prepare(`SELECT * FROM "${t}"`).all() as Record<string, unknown>[]).map((r) => JSON.stringify(r)))
+  return out
+}
+
+/** 利用者の表（users）の id と email。 */
+export const usersOf = (db: DatabaseSync) =>
+  db.prepare('SELECT id, email FROM users ORDER BY email').all() as {
+    id: string
+    email: string
+  }[]
+
+/** port の手元の口に、どの要求にも 200 の {"ok": true} で応える偽物を立てる（起きている配備の、要件と食い違う代わり）。 */
+export async function serveWrong(port: number): Promise<() => Promise<void>> {
+  const server = http.createServer((req, res) => {
+    req.resume()
+    res.writeHead(200, { 'content-type': 'application/json' })
+    res.end('{"ok": true}')
+  })
+  await new Promise<void>((ok, ng) => {
+    server.once('error', ng)
+    server.listen(port, '127.0.0.1', ok)
+  })
+  return () => new Promise((ok) => server.close(() => ok()))
+}
+
+// ---------------------------------------------------------------------------
+// 手元の SSO の一巡の前提（UC-036 の事前条件。起こし方の正本は scripts/check_sso_flow.py の頭の説明）:
+// まなびば（8790）と学び mkt（8788）を同じ手元用の共有秘密で起こし、学び側の利用者をまなびばのアカウントに手元で移して
+// 検査用の管理者を作る。ここでは配備の道具（wrangler dev）を起こさず、まなびばと学び側の app をこのプロセスの中で手元の口に立てる。
+// まなびばの保存先は、影の根に写した手元の保存先（portal/.wrangler）に、アカウントの移しの道具を `--local` で回した物を使う。
+
+/** 事前条件の値。正本の scripts/check_sso_flow.py から読む（口・学び・メールとパスワード・共有秘密・トークンの署名の秘密）。 */
+export const SSO_FLOW = (() => {
+  const text = readFileSync(join(ROOT, 'scripts', 'check_sso_flow.py'), 'utf8')
+  const pick = (re: RegExp, what: string) => {
+    const m = re.exec(text)
+    if (!m) throw new Error(`scripts/check_sso_flow.py から ${what} を読めない`)
+    return m[1]
+  }
+  return {
+    portalPort: Number(pick(/^PORTAL\s*=\s*"http:\/\/127\.0\.0\.1:(\d+)"/m, 'まなびばの口')),
+    learningPort: Number(pick(/APP\s*=\s*"http:\/\/127\.0\.0\.1:(\d+)"/m, '学びの口')),
+    learning: pick(/wrangler dev --env ([a-z]+)/, '学び'),
+    secret: pick(/SSO_SECRET:(\S+)/, '共有秘密'),
+    jwtSecret: pick(/JWT_SECRET:(\S+)/, 'トークンの署名の秘密'),
+    admin: pick(/^EMAIL\s*=\s*"([^"]+)"/m, 'メール'),
+    password: pick(/\bPW\s*=\s*"([^"]+)"/, 'パスワード'),
+  }
+})()
+
+/** 外向きの接続を断る前置き（NODE_OPTIONS の --require で子の node に入れる）。手元（loopback と UNIX ソケット）だけ通す。 */
+const NET_GUARD = `const net = require('node:net')
+const connect = net.Socket.prototype.connect
+const LOCAL = new Set(['localhost', '127.0.0.1', '::1'])
+net.Socket.prototype.connect = function (...args) {
+  let o = args[0]
+  if (Array.isArray(o)) o = o[0]
+  let host = null
+  let path = null
+  if (o && typeof o === 'object') { host = o.host ?? (o.path ? null : 'localhost'); path = o.path ?? null }
+  else if (typeof o === 'number') host = typeof args[1] === 'string' ? args[1] : 'localhost'
+  else if (typeof o === 'string') path = o
+  if (!path && host && !LOCAL.has(host)) throw new Error('テストの囲い: 外への接続を断った ' + host)
+  return connect.apply(this, args)
+}
+`
+
+/** 囲いの環境（子の node の外向きの接続を断ち、代理を届かない所に向け、資格情報を無効にする。手元の口は代理を通さない）。 */
+export function fencedEnv(s: Shadow): NodeJS.ProcessEnv {
+  const guard = join(dirname(s.root), 'net-guard.cjs')
+  if (!existsSync(guard)) writeFileSync(guard, NET_GUARD)
+  return {
+    NODE_OPTIONS: `--require ${guard}`,
+    HTTPS_PROXY: 'http://127.0.0.1:9',
+    HTTP_PROXY: 'http://127.0.0.1:9',
+    https_proxy: 'http://127.0.0.1:9',
+    http_proxy: 'http://127.0.0.1:9',
+    NO_PROXY: '127.0.0.1,localhost',
+    no_proxy: '127.0.0.1,localhost',
+    CLOUDFLARE_API_TOKEN: 'fenced-invalid-token-do-not-use',
+  }
+}
+
+/** 既にある SQLite のファイルを D1 の口で包む（prepare → bind → first / all / run / raw、batch、exec）。 */
+export function d1OfFile(db: DatabaseSync): unknown {
+  type Param = string | number | bigint | null | Uint8Array
+  const toParam = (v: unknown): Param =>
+    v === undefined || v === null
+      ? null
+      : typeof v === 'boolean'
+        ? v
+          ? 1
+          : 0
+        : typeof v === 'string' || typeof v === 'number' || typeof v === 'bigint' || v instanceof Uint8Array
+          ? v
+          : String(v)
+  const meta = () => {
+    const row = db.prepare('select changes() as changes, last_insert_rowid() as last_row_id').get() as { changes: number; last_row_id: number }
+    return {
+      changes: row.changes,
+      last_row_id: row.last_row_id,
+      duration: 0,
+      rows_read: 0,
+      rows_written: 0,
+      size_after: 0,
+      changed_db: row.changes > 0,
+    }
+  }
+  const statement = (sql: string, params: Param[] = []): any => ({
+    bind: (...values: unknown[]) => statement(sql, values.map(toParam)),
+    first: async (column?: string) => {
+      const row = (db.prepare(sql).get(...params) as Record<string, unknown> | undefined) ?? null
+      return row === null ? null : column === undefined ? row : (row[column] ?? null)
+    },
+    all: async () => ({
+      results: db.prepare(sql).all(...params),
+      success: true,
+      meta: meta(),
+    }),
+    run: async () => ({
+      results: db.prepare(sql).all(...params),
+      success: true,
+      meta: meta(),
+    }),
+    raw: async (options?: { columnNames?: boolean }) => {
+      const st = db.prepare(sql)
+      st.setReturnArrays(true)
+      const rows = st.all(...params)
+      return options?.columnNames ? [st.columns().map((c) => c.name), ...rows] : rows
+    },
+  })
+  return {
+    prepare: (sql: string) => statement(sql),
+    batch: async (statements: any[]) => {
+      db.exec('BEGIN')
+      try {
+        const out = []
+        for (const st of statements) out.push(await st.all())
+        db.exec('COMMIT')
+        return out
+      } catch (e) {
+        db.exec('ROLLBACK')
+        throw e
+      }
+    },
+    exec: async (sql: string) => {
+      db.exec(sql)
+      return { count: 0, duration: 0 }
+    },
+  }
+}
+
+type FetchApp = {
+  fetch: (req: Request, env: unknown, ctx: unknown) => Response | Promise<Response>
+}
+
+/** app を env の束縛で手元の口 port に立てる。 */
+export async function listenApp(app: FetchApp, env: unknown, port: number): Promise<() => Promise<void>> {
+  const ctx = { waitUntil: () => {}, passThroughOnException: () => {} }
+  const server = http.createServer(async (req, res) => {
+    const chunks: Buffer[] = []
+    for await (const c of req) chunks.push(c as Buffer)
+    const headers = new Headers()
+    for (const [k, v] of Object.entries(req.headers)) {
+      if (typeof v === 'string') headers.set(k, v)
+      else if (Array.isArray(v)) for (const x of v) headers.append(k, x)
+    }
+    try {
+      const r = await app.fetch(
+        new Request(`http://${req.headers.host ?? `127.0.0.1:${port}`}${req.url ?? '/'}`, {
+          method: req.method,
+          headers,
+          body: req.method === 'GET' || req.method === 'HEAD' || chunks.length === 0 ? undefined : Buffer.concat(chunks),
+          redirect: 'manual',
+        }),
+        env,
+        ctx,
+      )
+      if (process.env.UC036_TRACE) process.stderr.write(`[${port}] ${req.method} ${req.url} → ${r.status} ${r.headers.get('location') ?? ''}\n`)
+      // 見出しの名前は配備の道具（workerd）と同じく語の頭を大文字にして返す（大文字と小文字を区別して読む呼び手がある）
+      const canonical = (k: string) => k.replace(/(^|-)([a-z])/g, (_, a: string, b: string) => a + b.toUpperCase())
+      const out: Record<string, string | string[]> = {}
+      r.headers.forEach((v, k) => {
+        if (k !== 'set-cookie') out[canonical(k)] = v
+      })
+      const cookies = (r.headers as unknown as { getSetCookie?: () => string[] }).getSetCookie?.() ?? []
+      if (cookies.length) out['Set-Cookie'] = cookies
+      res.writeHead(r.status, out)
+      res.end(Buffer.from(await r.arrayBuffer()))
+    } catch (e) {
+      res.writeHead(500, { 'content-type': 'text/plain' })
+      res.end(String(e))
+    }
+  })
+  await new Promise<void>((ok, ng) => {
+    server.once('error', ng)
+    server.listen(port, '127.0.0.1', ok)
+  })
+  return () =>
+    new Promise((ok) => {
+      // 開いたままの接続（keep-alive）も切って、口をすぐに空ける
+      server.close(() => ok())
+      server.closeAllConnections()
+    })
+}
+
+export type SsoPair = {
+  /** まなびばの保存先（このプロセスの中の SQLite）。 */
+  portalSqlite: DatabaseSync
+  /** まなびばのアカウントのメール（並べた物）。 */
+  accounts: () => string[]
+  close: () => Promise<void>
+}
+
+/** 前提を作るときだけ使う、最初の管理者（まなびばに管理者を作る API は管理者のセッションを要るので、保存先に直に置く）。 */
+const BOOTSTRAP = {
+  id: 'uc036-bootstrap-admin',
+  email: 'uc036-bootstrap@example.com',
+  session: 'uc036-bootstrap-session',
+}
+
+/**
+ * SSO の一巡の前提の状態（UC-036 の事前条件）を起こす（呼ぶ側が口の鍵 withPorts を持つ）:
+ * 手元のまなびば（このプロセスの中の app と SQLite）と手元の学び（同じ）を決まった口に立て、同じ共有秘密を与え、学び側にはまなびばの場所と
+ * トークンの署名の秘密を与える。まなびばには、最初の管理者を保存先に直に置いてから、まなびばの契約の操作（createAccount・updateAccount）で、
+ * 一巡の道具が使うメールとパスワードで学びの権限を持つ管理者を作る。前提を作れなければ投げる。
+ */
+export async function startSsoPair(): Promise<SsoPair> {
+  const { createApp } = await import('../../portal/src/index')
+  const learningApp = (await import('../../src/server/index')).default as unknown as FetchApp
+  const { learningD1, portalD1, sqliteOf } = await import('../portal/repay_UC-014_sqlite_d1')
+  // 学びの登録簿はまなびばの配備と同じ物（portal/src/learnings.json）。入口の行き先は渡すだけで、そこへは届けない
+  const registry = JSON.parse(readFileSync(join(ROOT, 'portal', 'src', 'learnings.json'), 'utf8')) as { key: string; url: string }[]
+  if (!registry.some((l) => l.key === SSO_FLOW.learning)) throw new Error(`前提: まなびばの学びの登録簿に ${SSO_FLOW.learning} が無い`)
+  const portalApp = createApp(registry as never) as unknown as FetchApp & {
+    request: (p: string, i: RequestInit, e: unknown) => Promise<Response>
+  }
+  const portalDb = await portalD1()
+  const portalSqlite = sqliteOf(portalDb)
+  portalSqlite
+    .prepare('insert into accounts (id, email, name, password_hash, role) values (?, ?, ?, ?, ?)')
+    .run(BOOTSTRAP.id, BOOTSTRAP.email, '前提の管理者', 'not-used-for-login', 'ADMIN')
+  portalSqlite.prepare('insert into sessions (id, account_id, expires_at) values (?, ?, ?)').run(BOOTSTRAP.session, BOOTSTRAP.id, 4_100_000_000_000)
+  const portalEnv = {
+    DB: portalDb,
+    ASSETS: { fetch: async () => new Response('') },
+    SSO_SECRET: SSO_FLOW.secret,
+  }
+  const asBootstrap = (method: string, path: string, body: unknown) =>
+    portalApp.request(
+      path,
+      {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          Cookie: `mb_session=${BOOTSTRAP.session}`,
+        },
+        body: JSON.stringify(body),
+      },
+      portalEnv,
+    )
+  const created = await asBootstrap('POST', '/api/admin/accounts', {
+    email: SSO_FLOW.admin,
+    name: '検査用の管理者',
+    password: SSO_FLOW.password,
+    grants: [SSO_FLOW.learning],
+  })
+  if (created.status !== 201) throw new Error(`前提: 検査用の管理者を作れない（createAccount ${created.status}）: ${await created.text()}`)
+  const { id } = (await created.json()) as { id: string }
+  const promoted = await asBootstrap('PUT', `/api/admin/accounts/${id}`, {
+    role: 'ADMIN',
+  })
+  if (promoted.status !== 200) throw new Error(`前提: 検査用のアカウントを管理者にできない（updateAccount ${promoted.status}）: ${await promoted.text()}`)
+  // 最初の管理者のセッションは前提を作るためだけの物なので消す（一巡の道具が見るのは検査用の管理者だけ）
+  portalSqlite.prepare('delete from sessions where id = ?').run(BOOTSTRAP.session)
+  const learningEnv = {
+    EXAM: SSO_FLOW.learning,
+    DB: await learningD1(),
+    JWT_SECRET: SSO_FLOW.jwtSecret,
+    SSO_PORTAL_URL: `http://127.0.0.1:${SSO_FLOW.portalPort}`,
+    SSO_SECRET: SSO_FLOW.secret,
+    ASSETS: { fetch: async () => new Response('') },
+  }
+  const closers = [await listenApp(portalApp, portalEnv, SSO_FLOW.portalPort), await listenApp(learningApp, learningEnv, SSO_FLOW.learningPort)]
+  return {
+    portalSqlite,
+    accounts: () => (portalSqlite.prepare('select email from accounts order by email').all() as { email: string }[]).map((r) => r.email),
+    close: async () => {
+      for (const c of closers) await c()
+    },
+  }
+}
+
+/** 手元の口（127.0.0.1・localhost）にだけ届く fetch（外への口を塞いだプロセスの中で、手元の相手に届けるため）。 */
+export function localFetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
+  const req = new Request(input, init)
+  const url = new URL(req.url)
+  if (!['127.0.0.1', 'localhost'].includes(url.hostname)) return Promise.reject(new TypeError(`手元の口でない: ${req.url}`))
+  return req.arrayBuffer().then(
+    (body) =>
+      new Promise<Response>((ok, ng) => {
+        const headers: Record<string, string> = {}
+        req.headers.forEach((v, k) => (headers[k] = v))
+        const r = http.request(
+          {
+            host: url.hostname,
+            port: url.port,
+            path: `${url.pathname}${url.search}`,
+            method: req.method,
+            headers,
+          },
+          (res) => {
+            const chunks: Buffer[] = []
+            res.on('data', (c) => chunks.push(c as Buffer))
+            res.on('end', () => {
+              const h = new Headers()
+              for (const [k, v] of Object.entries(res.headers)) {
+                if (typeof v === 'string') h.set(k, v)
+                else if (Array.isArray(v)) for (const x of v) h.append(k, x)
+              }
+              ok(new Response(res.statusCode === 204 || res.statusCode === 304 ? null : Buffer.concat(chunks), { status: res.statusCode ?? 500, headers: h }))
+            })
+          },
+        )
+        r.on('error', ng)
+        if (body.byteLength > 0) r.write(Buffer.from(body))
+        r.end()
+      }),
+  )
+}
+
+/** 影の根の学び側の手元の保存先のうち、学び key の物（構造の変更が最も多く当たり、論点の数が学びの置き場の論点の一覧と同じ物）。 */
+export function learningDbOf(s: Shadow, key: string): string | null {
+  const topics = (JSON.parse(readFileSync(join(ROOT, 'data', key, 'topics.json'), 'utf8')) as { topics: unknown[] }).topics.length
+  let best: { f: string; mig: number } | null = null
+  for (const f of learningDbs(s)) {
+    const row = withDb(f, (db) => {
+      try {
+        const mig = (
+          db.prepare('SELECT COUNT(*) AS n FROM d1_migrations').get() as {
+            n: number
+          }
+        ).n
+        const n = (db.prepare('SELECT COUNT(*) AS n FROM topics').get() as { n: number }).n
+        return { mig, n }
+      } catch {
+        return null
+      }
+    })
+    if (row && row.n === topics && (!best || row.mig > best.mig)) best = { f, mig: row.mig }
+  }
+  return best?.f ?? null
+}
+
+/**
+ * 検査用のアカウントの用意（auditFixtures）の前提（UC-036 の事前条件）: 学び key の配備を、まなびばの場所を検査用のアカウントの道具が
+ * 起こす手元の SSO の偽物の場所、共有秘密をその偽物と同じ値（正本は scripts/audit_fixtures.mjs）にして、port に起こす。
+ * 配備の道具（wrangler dev）は起こさず、学び側の app を影の根に写した手元の保存先で、このプロセスの中で手元の口に立てる。
+ */
+export async function startAuditDeployment(s: Shadow, key = 'ip', port = 8787): Promise<() => Promise<void>> {
+  const fake = (await import(join(ROOT, 'scripts', 'audit_fixtures.mjs'))) as {
+    SSO_FAKE_URL: string
+    SSO_FAKE_SECRET: string
+  }
+  const file = learningDbOf(s, key)
+  if (!file) throw new Error(`前提: 影の根に学び ${key} の手元の保存先が無い`)
+  const app = (await import('../../src/server/index')).default as unknown as FetchApp
+  const sqlite = new DatabaseSync(file)
+  const env = {
+    EXAM: key,
+    DB: d1OfFile(sqlite),
+    JWT_SECRET: 'audit-fixtures-local-only-not-a-secret',
+    SSO_PORTAL_URL: fake.SSO_FAKE_URL,
+    SSO_SECRET: fake.SSO_FAKE_SECRET,
+    ASSETS: { fetch: async () => new Response('') },
+  }
+  const close = await listenApp(app, env, port)
+  return async () => {
+    await close()
+    sqlite.close()
+  }
+}

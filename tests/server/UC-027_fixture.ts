@@ -121,8 +121,32 @@ export const checkFigureSpecs = (ws: Ws, only: number[], data = ws.data) =>
     '--check',
     ...(only.length ? ['--only', ...only.map(String)] : []),
   ])
-/** checkRender: `bash scripts/check_render.sh <学び>` */
-export const checkRender = (ws: Ws, learning = ws.learning) => spawn(ws, 'bash', [path.join(SCRIPTS, 'check_render.sh'), learning])
+/** 描画の検査を回す根を作業場に作る。道具は自分の置き場の 1 つ上を根として、版の印の項目でその根のビルド（dist/）を見るので、
+ *  リポジトリの根でなく作業場を根にする（テストの合否がリポジトリの根の dist/ の有無と中身に左右されない。作業場には dist/ を置かないので、
+ *  版の印の項目はいつも「dist/ が無い」の警告になる）。
+ *  - 写す: 道具の置き場（scripts）と、道具が描く画面のソース（src・portal）と型の設定（tsconfig*.json）。ソースをリンクにすると、
+ *    実行の環境がリンクを解いた元の場所のソースを型の設定の外と見て、画面の部品を組めない
+ *  - 置かない: ビルド（dist）・作業の跡（.wrangler・coverage・backups）・git
+ *  - リンク: ほかの最上位の物。学びの置き場と図の置き場は作業場の物のまま */
+const TOOL_ROOT_COPIED = new Set(['scripts', 'src', 'portal', 'tsconfig.json', 'tsconfig.node.json'])
+const TOOL_ROOT_OMITTED = new Set(['.git', 'dist', 'data', 'public', '.wrangler', 'coverage', 'backups'])
+function ensureToolRoot(ws: Ws): void {
+  if (fs.existsSync(ws.abs('scripts/check_render.sh'))) return
+  const copied: string[] = []
+  for (const name of fs.readdirSync(ROOT)) {
+    if (TOOL_ROOT_OMITTED.has(name) || name.startsWith('.worker-build') || fs.existsSync(ws.abs(name))) continue
+    if (TOOL_ROOT_COPIED.has(name)) copied.push(path.join(ROOT, name))
+    else fs.symlinkSync(path.join(ROOT, name), ws.abs(name))
+  }
+  const r = spawnSync('cp', process.platform === 'darwin' ? ['-cR', ...copied, `${ws.dir}/`] : ['-R', ...copied, `${ws.dir}/`], { encoding: 'utf8' })
+  if (r.status !== 0) throw new Error(`仕込み: 道具の根を写せない: ${r.stderr}`)
+}
+
+/** checkRender: `bash scripts/check_render.sh <学び>`（作業場を根にした道具の写しを回す。ensureToolRoot） */
+export const checkRender = (ws: Ws, learning = ws.learning) => {
+  ensureToolRoot(ws)
+  return spawn(ws, 'bash', [ws.abs('scripts/check_render.sh'), learning])
+}
 
 /** wrangler の `d1 execute … --json --command <SQL>` を、環境変数 UC027_DB の SQLite ファイルに流して wrangler の --json の形で返す偽物。
  *  流したあとの DB を手元に作るために、wrangler（Cloudflare の CLI。こちらが持たない境界）だけを差し替える。 */

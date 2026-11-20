@@ -21,11 +21,16 @@
  * - unnamedStop: 道具が断りの名前を出さずに 0 でない終了の状態で止まったときの答え
  *   `{ response: { unnamedStop: { exitCode, stderr } } }`（終了の状態を最上位に持たないので、どの成功例にも合わない）。
  *   Python の Traceback を残して止まった（名前の無い例外）ときは Unanswerable を投げる。
+ * - noteForExample: 環境変数 CONTRACT_ADAPTER_NOTES にファイルのパスがあるときだけ、受け渡し役が標準エラーに書く行を、
+ *   いま答えている実例（answering。`UC 操作.例の名前`）を頭に付けてそのファイルにも足す。unnamedStop は、答えに入れない
+ *   道具の標準出力と標準エラーの末尾もそこにだけ書く（run cases は、正常に終わった受け渡し役の標準エラーを見せないため）。
  * - 子プロセスは道具ごとに自分のプロセスグループで起こし、時間切れでグループごと止める。受け渡し役が終わるとき
  *   （stopChildren・SIGTERM ほか）と、受け渡し役を起こした側が居なくなったとき（bindToCaller）も、残る子をグループごと止める。
  */
 
+import { AsyncLocalStorage } from 'node:async_hooks'
 import { type ChildProcess, execFileSync, spawn } from 'node:child_process'
+import { appendFileSync } from 'node:fs'
 import { chmod, cp, mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { availableParallelism, tmpdir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
@@ -43,11 +48,51 @@ export type Shadow = {
 }
 
 /**
+ * 影の根を実例ごとには消さず、受け渡し役が終えたあとの見張り（main.ts）に消させるか。見張りを起こした受け渡し役のプロセスの中でだけ true。
+ * 答えを書き終えるまでの時間から、消す時間を外すため（実例ごとに別の影の根を使うことは変えない）。
+ * @implements REQ-570
+ */
+export function cleanupDeferred(): boolean {
+  return process.env.CONTRACT_ADAPTER_SWEEPER === String(process.pid)
+}
+
+/** ディレクトリかファイルを、APFS の複製（clonefile）で 1 回に写す Python。複製できない置き場では cp に落ちる。引数は写し先の親と写す物。 */
+const CLONE = String.raw`
+import ctypes, os, subprocess, sys
+dest = sys.argv[1]
+try:
+    clonefile = ctypes.CDLL(None, use_errno=True).clonefile
+except AttributeError:
+    clonefile = None
+for src in sys.argv[2:]:
+    to = os.path.join(dest, os.path.basename(src.rstrip('/')))
+    if clonefile is not None and clonefile(src.encode(), to.encode(), 1) == 0:
+        continue
+    r = subprocess.run(['cp', '-cR' if sys.platform == 'darwin' else '-R', src, dest + '/'], capture_output=True, text=True)
+    if r.returncode != 0:
+        sys.stderr.write(r.stderr)
+        sys.exit(r.returncode)
+`
+
+/**
+ * from の各物を、to の下へ同じ名前で写す。APFS ではディレクトリごと 1 回の複製（clonefile）で写し、複製できない置き場では cp で写す。
+ * @implements REQ-570
+ */
+export async function cloneInto(from: string[], to: string): Promise<void> {
+  if (from.length === 0) return
+  await mkdir(to, { recursive: true })
+  const command = process.platform === 'darwin' ? ['python3', '-c', CLONE, to, ...from] : ['cp', '-R', '--reflink=auto', ...from, `${to}/`]
+  const run = await runTool(command, { timeoutMs: 60_000 })
+  if (run.code !== 0) throw new Unanswerable(`前提の写しを作れない: ${run.stderr.trim().slice(0, 200)}`)
+}
+
+/**
  * 実例 1 件の影の根を作る。copy はリポジトリの根からの相対パス（ファイルかディレクトリ）を同じ相対パスに写す。
  * @implements REQ-569, REQ-570
  */
 export async function shadowRoot(options: { copy?: string[]; files?: Record<string, string> } = {}): Promise<Shadow> {
-  const root = await mkdtemp(join(tmpdir(), 'contract-adapter-'))
+  // 名前に受け渡し役のプロセスの番号を入れる（受け渡し役が止められたとき、main.ts の見張りがその番号の影の根を消す）
+  const root = await mkdtemp(join(tmpdir(), `contract-adapter-${process.pid}-`))
   const path = (rel: string) => join(root, rel)
   const write = async (rel: string, content: string) => {
     await mkdir(dirname(path(rel)), { recursive: true })
@@ -58,7 +103,7 @@ export async function shadowRoot(options: { copy?: string[]; files?: Record<stri
     await cp(join(REPO_ROOT, rel), path(rel), { recursive: true })
   }
   for (const [rel, content] of Object.entries(options.files ?? {})) await write(rel, content)
-  return { root, path, write, cleanup: () => rm(root, { recursive: true, force: true }) }
+  return { root, path, write, cleanup: () => (cleanupDeferred() ? Promise.resolve() : rm(root, { recursive: true, force: true })) }
 }
 
 /**
@@ -162,6 +207,13 @@ async function slot<T>(body: () => Promise<T>): Promise<T> {
 }
 
 /**
+ * 実行の記録を取りながら回っているとき（子に Node の記録の置き場 NODE_V8_COVERAGE が渡っているとき）の、見張りの上限の倍率。
+ * 記録を取る回は子の道具と橋の 1 回ずつが遅くなり、受け渡し役が起きた直後に一斉に起こした子が揃って 37 秒から 60 秒あまり掛かった
+ * （2026-11-20 の実測。記録なしではどれも数秒以内）。上限は止まった道具を見つける見張りなので外さず、記録を取る回だけ 4 倍にする。
+ */
+const RECORDING_SCALE = process.env.NODE_V8_COVERAGE ? 4 : 1
+
+/**
  * 道具を子プロセスで回す（同時に回す数は土台が絞る）。timeoutMs を過ぎたら止めて Unanswerable を投げる。
  * @implements REQ-568, REQ-570
  */
@@ -169,6 +221,8 @@ export function runTool(
   command: string[],
   options: { cwd?: string; env?: NodeJS.ProcessEnv; input?: string; timeoutMs?: number } = {},
 ): Promise<ToolRun> {
+  // 見張りの上限は、走り始めてから数える（順番待ちは含まない）
+  const limitMs = (options.timeoutMs ?? 60_000) * RECORDING_SCALE
   return slot(
     () =>
       new Promise<ToolRun>((resolvePromise, reject) => {
@@ -187,8 +241,8 @@ export function runTool(
         const timer = setTimeout(() => {
           killGroup(child)
           live.delete(child)
-          reject(new Unanswerable(`道具が ${options.timeoutMs ?? 60_000} ms で応えない: ${command.join(' ')}`))
-        }, options.timeoutMs ?? 60_000)
+          reject(new Unanswerable(`道具が ${limitMs} ms で応えない: ${command.join(' ')}`))
+        }, limitMs)
         child.on('error', (error) => {
           clearTimeout(timer)
           live.delete(child)
@@ -249,9 +303,33 @@ export function toolAnswer(run: ToolRun, response: (run: ToolRun) => Record<stri
  */
 export function unnamedStop(run: ToolRun): Answer {
   const tail = (run.stderr || run.stdout).trim().split('\n').slice(-2).join(' / ').slice(0, 200)
+  for (const [what, text] of [['標準出力', run.stdout], ['標準エラー', run.stderr]] as const) {
+    const last = text.trim().split('\n').slice(-8)
+    noteForExample(`道具の${what}の末尾 ${last.length} 行（終了の状態 ${run.code}）:\n${last.map((l) => `  | ${l}`).join('\n')}`)
+  }
   if (/Traceback \(most recent call last\)/.test(run.stderr)) {
     throw new Unanswerable(`道具が名前の無い例外で止まった（終了の状態 ${run.code}）: ${tail}`)
   }
   process.stderr.write(`  道具が名前を出さずに止まった（終了の状態 ${run.code}）: ${tail}\n`)
   return { response: { unnamedStop: { exitCode: run.code, stderr: tail } } }
+}
+
+/** いま答えている実例の名前（`UC 操作.例の名前`）。受け渡し役が実例を受け持ちに渡す間だけ持つ（main.ts）。 */
+export const answering = new AsyncLocalStorage<string>()
+
+/**
+ * 環境変数 CONTRACT_ADAPTER_NOTES のファイルに、text の各行を、いま答えている実例の名前とタブを頭に付けて足す。
+ * 環境変数が無ければ何もしない。書けなければ黙って続ける（答えは変えない）。
+ * @implements REQ-568
+ */
+export function noteForExample(text: string): void {
+  const file = process.env.CONTRACT_ADAPTER_NOTES
+  if (!file) return
+  const head = answering.getStore() ?? '（実例の外）'
+  const lines = text.split('\n').filter((line) => line.trim() !== '')
+  try {
+    appendFileSync(file, lines.map((line) => `${head}\t${line}\n`).join(''))
+  } catch {
+    // 置き場が無いなどで書けなくても、答えと標準エラーは変えない
+  }
 }

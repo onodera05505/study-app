@@ -9,7 +9,8 @@ import {
   realExample,
   realOp,
   removeTemps,
-  shadowDocs,
+  runsTestMs,
+  shadowSpec,
   shadowRoot,
   tailOf,
   verdictOf,
@@ -19,7 +20,7 @@ import {
  * UC-033 の REQ-567・568・570: 契約の実例の確かめ（`npm run contract-run`）が、実例を実装に渡して照らし、
  * 合ったときだけ通り、合わない・不備・渡せない実例を挙げて失敗で終え、実例の結果が前提と回す順で変わらないこと。
  *
- * 照らす相手の実装は本物のまま。合わない実例は、本物の契約の操作と実例（名前と入力）を写した影の置き場（`--docs`）で
+ * 照らす相手の実装は本物のまま。合わない実例は、本物の契約の操作と実例（名前と入力）を写した影の根（`--root`。契約だけを差し替える）で
  * 照らす側だけを差し替えて作る。名前を出さずに断る実装・応えない実装は、影の根（`--root`）で道具 1 本だけを差し替えて作る。
  *
  * 使う操作と実例（どれも本物の契約の物）:
@@ -58,7 +59,7 @@ describe('UC-033 確定した契約の実例を実装に当て、契約どおり
     // @covers REQ-567#success-shape
     it('成功例の応答が実装の応答に含まれれば合う（実装の応答の余分な欄は妨げない）', async () => {
       const pass = realExample(...PLANS, 'pass') as { request: unknown; response: { exitCode: number; limits: unknown } }
-      const docs = shadowDocs([
+      const root = shadowSpec([
         { uc: 'UC-017', operations: { getHealth: opWith(...HEALTH, { ok: realExample(...HEALTH, 'ok') }) } },
         // 例の応答を exitCode と limits だけにする。実装の応答は units・topics・stops・warnings も持つ
         {
@@ -66,25 +67,25 @@ describe('UC-033 確定した契約の実例を実装に当て、契約どおり
           operations: { checkUnitPlans: opWith(...PLANS, { pass: { request: pass.request, response: { exitCode: pass.response.exitCode, limits: pass.response.limits } } }) },
         },
       ])
-      const run = await contractRun(['--docs', docs, '--json'])
+      const run = await contractRun(['--root', root, '--json'])
       expectVerdict(run, health(), 'pass')
       expectVerdict(run, plans('pass'), 'pass')
       expect(run.code, tailOf(run)).toBe(0)
-    }, 300_000)
+    }, runsTestMs())
 
     // @covers REQ-567#failure-name
     it('失敗例に実装が例と同じ断りの種類の名前で断れば合う', async () => {
-      const docs = shadowDocs([
+      const root = shadowSpec([
         { uc: 'UC-024', operations: { checkUnitPlans: opWith(...PLANS, { unknownLearning: realExample(...PLANS, 'unknownLearning') }) } },
       ])
-      const run = await contractRun(['--docs', docs, '--json'])
+      const run = await contractRun(['--root', root, '--json'])
       expectVerdict(run, plans('unknownLearning'), 'pass')
       expect(run.code, tailOf(run)).toBe(0)
-    }, 300_000)
+    }, runsTestMs())
 
     // @covers REQ-567#all-examples
     it('確定した契約の自分の持ち物の操作の実例を全件渡し、全件が合えば通る。下書きの契約と他者の形を写した操作の実例は渡さない', async () => {
-      const docs = shadowDocs([
+      const root = shadowSpec([
         {
           uc: 'UC-024',
           operations: {
@@ -97,20 +98,20 @@ describe('UC-033 確定した契約の実例を実装に当て、契約どおり
         // 下書きの契約
         { uc: 'UC-032', status: 'draft', operations: { checkSource: opWith(...SOURCE, { unknownArgument: realExample(...SOURCE, 'unknownArgument') }) } },
       ])
-      const run = await contractRun(['--docs', docs, '--json'])
+      const run = await contractRun(['--root', root, '--json'])
       expect(run.results, tailOf(run)).not.toBeNull()
       expect((run.results ?? []).map(keyOf).sort()).toEqual([keyOf(health()), keyOf(plans('unknownLearning'))].sort())
       expect(run.results?.every((r) => r.verdict === 'pass'), tailOf(run)).toBe(true)
       expect(run.summary).toEqual({ pass: 2, fail: 0, skip: 0 })
       expect(run.code, tailOf(run)).toBe(0)
-    }, 300_000)
+    }, runsTestMs())
   })
 
   describe('REQ-568 合わない・不備・渡せない実例を挙げて失敗で終える', () => {
     // @covers REQ-568#success-mismatch
     it('成功例に、実装が例の応答を含まない応答を返すか断れば、その実例を挙げて失敗で終える', async () => {
       const pass = realExample(...PLANS, 'pass') as { request: unknown; response: { limits: Record<string, unknown> } }
-      const docs = shadowDocs([
+      const root = shadowSpec([
         { uc: 'UC-017', operations: { getHealth: opWith(...HEALTH, { ok: realExample(...HEALTH, 'ok') }) } },
         {
           uc: 'UC-024',
@@ -124,16 +125,16 @@ describe('UC-033 確定した契約の実例を実装に当て、契約どおり
           },
         },
       ])
-      const run = await contractRun(['--docs', docs, '--json'])
+      const run = await contractRun(['--root', root, '--json'])
       expectVerdict(run, health(), 'pass')
       expectVerdict(run, plans('pass'), 'fail')
       expectVerdict(run, plans('unknownLearning'), 'fail')
       expect(run.code, tailOf(run)).not.toBe(0)
-    }, 300_000)
+    }, runsTestMs())
 
     // @covers REQ-568#failure-mismatch
     it('失敗例に、実装が応答を返すか例と違う名前で断れば、その実例を挙げて失敗で終える', async () => {
-      const docs = shadowDocs([
+      const root = shadowSpec([
         // 実装が応答を返す入力を失敗例にする
         { uc: 'UC-017', operations: { getHealth: opWith(...HEALTH, { ok: { error: 'INTERNAL' } }) } },
         {
@@ -147,12 +148,12 @@ describe('UC-033 確定した契約の実例を実装に当て、契約どおり
           },
         },
       ])
-      const run = await contractRun(['--docs', docs, '--json'])
+      const run = await contractRun(['--root', root, '--json'])
       expectVerdict(run, health(), 'fail')
       expectVerdict(run, plans('unknownLearning'), 'fail')
       expectVerdict(run, plans('notQualification'), 'pass')
       expect(run.code, tailOf(run)).not.toBe(0)
-    }, 300_000)
+    }, runsTestMs())
 
     // @covers REQ-568#failure-unnamed
     it('失敗例に、実装が名前を出さずに断れば（終了の状態だけで断る）、その実例を挙げて失敗で終える', async () => {
@@ -171,7 +172,7 @@ describe('UC-033 確定した契約の実例を実装に当て、契約どおり
       expect(unnamed, `名前を出さずに断った実例が挙がっていない:\n${tailOf(run)}`).toBeDefined()
       expect(unnamed?.verdict, '名前を出さずに断った実例が合ったことになっている').not.toBe('pass')
       expect(run.code, tailOf(run)).not.toBe(0)
-    }, 300_000)
+    }, runsTestMs())
 
     // @covers REQ-568#success-mismatch
     it('成功例に、実装が名前を出さずに止まるか断れば、例の応答が終了の状態か状態の番号だけでも合わない', async () => {
@@ -197,7 +198,7 @@ describe('UC-033 確定した契約の実例を実装に当て、契約どおり
       expectVerdict(run, key(...SEED, 'withProblems'), 'fail')
       expectVerdict(run, key(...HEALTH, 'statusOnly'), 'fail')
       expect(run.code, tailOf(run)).not.toBe(0)
-    }, 300_000)
+    }, runsTestMs())
 
     // @covers REQ-568#failure-unnamed
     it('失敗例に、実装が名前を出さずに断れば（HTTP の状態の番号だけで断る）、その実例を挙げて失敗で終える', async () => {
@@ -222,35 +223,35 @@ describe('UC-033 確定した契約の実例を実装に当て、契約どおり
       expect(unnamed, `名前を出さずに断った実例が挙がっていない:\n${tailOf(run)}`).toBeDefined()
       expect(unnamed?.verdict, '名前を出さずに断った実例が合ったことになっている').not.toBe('pass')
       expect(run.code, tailOf(run)).not.toBe(0)
-    }, 300_000)
+    }, runsTestMs())
 
     // @covers REQ-568#malformed-example
     it('応答も断りの名前も持たない実例があれば、その実例を挙げて失敗で終える（合う実例と混ぜても）', async () => {
       const { request } = realExample(...PLANS, 'unknownLearning')
-      const docs = shadowDocs([
+      const root = shadowSpec([
         { uc: 'UC-017', operations: { getHealth: opWith(...HEALTH, { ok: realExample(...HEALTH, 'ok') }) } },
         { uc: 'UC-024', operations: { checkUnitPlans: opWith(...PLANS, { unknownLearning: { request } }) } },
       ])
-      const run = await contractRun(['--docs', docs, '--json'])
+      const run = await contractRun(['--root', root, '--json'])
       expectVerdict(run, health(), 'pass')
       expectVerdict(run, plans('unknownLearning'), 'fail')
       expect(run.code, tailOf(run)).not.toBe(0)
-    }, 300_000)
+    }, runsTestMs())
 
     // @covers REQ-568#unreachable
     it('当たる入口の無い操作の実例があれば、通さずにその実例を挙げて失敗で終える', async () => {
       // UC-033 の契約の unknownOperation の例と同じ、入口の無い操作
       const zzz = { ...realOp(...SOURCE), examples: { ok: { request: {}, response: { exitCode: 0 } } } }
-      const docs = shadowDocs([
+      const root = shadowSpec([
         { uc: 'UC-017', operations: { getHealth: opWith(...HEALTH, { ok: realExample(...HEALTH, 'ok') }) } },
         { uc: 'UC-032', operations: { zzz } },
       ])
-      const run = await contractRun(['--docs', docs, '--json'])
+      const run = await contractRun(['--root', root, '--json'])
       expect(run.code, `入口の無い実例があるのに通った:\n${tailOf(run)}`).not.toBe(0)
       expect(run.code, '止められて終わった').not.toBe(-1)
       expect(verdictOf(run, key('UC-032', 'zzz', 'ok'))?.verdict).not.toBe('pass')
       expect(`${run.stdout}\n${run.stderr}`, '渡せなかった実例（操作 zzz）が挙がっていない').toContain('zzz')
-    }, 300_000)
+    }, runsTestMs())
 
     // @covers REQ-568#unreachable
     it('実装が応えない実例があれば、待ち続けずに失敗で終える', async () => {
@@ -297,7 +298,11 @@ describe('UC-033 確定した契約の実例を実装に当て、契約どおり
         expectVerdict(run, ok, 'pass')
         expectVerdict(run, err, 'pass')
       }
-    }, 300_000)
+    }, runsTestMs())
+
+    /** 順のテストが 1 件だけ回す、前のテストの状態で結果の変わりうる操作（終える・結果を見る）。 */
+    const ALONE_OPS = ['finishSession', 'getSessionResult']
+    const aloneRuns = ALONE_OPS.reduce((n, op) => n + Object.keys(CONTRACTS.find((c) => c.uc === 'UC-004')?.operations[op]?.examples ?? {}).length, 0)
 
     // @covers REQ-570#order-independent
     it('実例を 1 件だけ回したとき、ほかの実例のあとに回したとき、順を入れ替えたときで結果が同じ', async () => {
@@ -313,7 +318,7 @@ describe('UC-033 確定した契約の実例を実装に当て、契約どおり
       }
       // 契約の順（ほかの UC の実例と並べて回した結果）
       const inOrder = await inContractOrder()
-      const inReverse = await contractRun(['--docs', shadowDocs([{ uc, operations: reversed }]), '--json'])
+      const inReverse = await contractRun(['--root', shadowSpec([{ uc, operations: reversed }]), '--json'])
       expect(inOrder.results, tailOf(inOrder)).not.toBeNull()
       expect(inReverse.results, tailOf(inReverse)).not.toBeNull()
       const all = names.flatMap((op) => Object.keys(ops[op].examples ?? {}).map((n) => key(uc, op, n)))
@@ -322,14 +327,14 @@ describe('UC-033 確定した契約の実例を実装に当て、契約どおり
         expect(outcome(inReverse, k), `${keyOf(k)} の結果が順を入れ替えると変わる`).toBe(outcome(inOrder, k))
       }
       // 前のテストの状態で結果の変わりうる操作（終える・結果を見る）の実例を 1 件ずつ回す
-      for (const op of ['finishSession', 'getSessionResult']) {
+      for (const op of ALONE_OPS) {
         for (const n of Object.keys(ops[op].examples ?? {})) {
           const k = key(uc, op, n)
-          const alone = await contractRun(['--docs', shadowDocs([{ uc, operations: { [op]: opWith(uc, op, { [n]: realExample(uc, op, n) }) } }]), '--json'])
+          const alone = await contractRun(['--root', shadowSpec([{ uc, operations: { [op]: opWith(uc, op, { [n]: realExample(uc, op, n) }) } }]), '--json'])
           expect(outcome(alone, k), `${keyOf(k)} の結果が 1 件だけ回すと変わる`).toBe(outcome(inOrder, k))
         }
       }
-    }, 600_000)
+    }, runsTestMs(2 + aloneRuns)) // 契約の順・入れ替えた順・1 件ずつ
 
     // @covers REQ-570#premise-identity
     it('本人や権限を前提とする実例（学び側の本人・まなびばの管理者と管理者でない本人）で、前提の本人と権限が用意されて例どおりに応える', async () => {
@@ -343,6 +348,6 @@ describe('UC-033 確定した契約の実例を実装に当て、契約どおり
       expect(targets.length, '本人や権限を前提とする実例が無い').toBeGreaterThan(0)
       const run = await contractRun([...ucs.flatMap((uc) => ['--uc', uc]), '--json'])
       for (const k of targets) expectVerdict(run, k, 'pass')
-    }, 300_000)
+    }, runsTestMs())
   })
 })

@@ -2,8 +2,8 @@
  *
  *  入口は 2 つ（`CLAUDE.md` の「操作 → 入口」）。
  *  - 確かめを回す入口 `npm run contract-run`（引数はそのまま contract-run に渡る。フラグと `--json` の形は
- *    `.harness-next/tools/contract-run/README.md`）。実装とアダプター（`scripts/contract_adapter/`）は壊さず、
- *    「合わない」「不備」「渡せない」は README が決めている口（`--docs` の影の置き場、`--root` の影の根）だけで作る
+ *    `.harness/tools/run-cases/README.md`）。実装とアダプター（`scripts/contract_adapter/`）は壊さず、
+ *    「合わない」「不備」「渡せない」は README が決めている口（`--root` の影の根。契約だけか、契約と道具 1 本を差し替える）だけで作る
  *  - 作り手の道具（`scripts/<操作名を snake_case にした名前>.py`）。子プロセスで回し、標準出力の断りの名前を読む
  *
  *  影の置き場の契約は、本物の契約の操作の定義（transport・wire・auth など）と実例の名前・入力をそのまま写し、
@@ -18,10 +18,10 @@ import { closeSync, cpSync, mkdirSync, openSync, mkdtempSync, readdirSync, readF
 import { rm } from 'node:fs/promises'
 import { createServer, type Server } from 'node:http'
 import { tmpdir } from 'node:os'
-import { join, relative } from 'node:path'
+import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 // @ts-expect-error 原本の harness の依存なしの .mjs（型を持たない）。契約を spec-lint・trace-check・contract-run と同じ読み方で読む
-import { parseStrictYaml } from '../../.harness-next/tools/_shared/strict-yaml.mjs'
+import { parseStrictYaml } from '../../.harness/tools/_shared/strict-yaml.mjs'
 
 export const ROOT = join(fileURLToPath(new URL('.', import.meta.url)), '..', '..')
 
@@ -116,22 +116,21 @@ const writeGoals = (goals: string, contracts: ShadowContract[]) => {
   })
 }
 
-/** 契約だけを持つ影の docs を作り、`--docs` に渡す形（リポジトリの根からの相対）で返す。 */
-export function shadowDocs(contracts: ShadowContract[]): string {
-  const docs = join(tempDir('docs'), 'docs')
-  writeGoals(join(docs, 'goals'), contracts)
-  return relative(ROOT, docs)
+/** 契約だけを差し替えた影の根を作り、`--root` に渡すパスで返す（道具はどれも本物のまま）。
+ *  確かめの道具は、`--docs` が設定の `docs.goals_dir` と別の場所を指すと断るので、契約は影の根の `docs/goals` に置く。 */
+export function shadowSpec(contracts: ShadowContract[]): string {
+  return shadowRoot({ contracts, tools: {} })
 }
 
 /** 影の根: リポジトリの各物へのリンクに、契約（docs/goals）と道具の差し替え（scripts/<名前>）を重ねる。
  *  アダプターの置き場（scripts/contract_adapter）はリンクでなく写し（node はリンクを元の場所に解くので、
- *  リンクのままだと影の根の道具でなく元の道具を回してしまう）。設定（traceconfig*.json）も写す。 */
+ *  リンクのままだと影の根の道具でなく元の道具を回してしまう）。設定（harness.config.json）も写す。 */
 export function shadowRoot(opts: { contracts: ShadowContract[]; tools: Record<string, string> }): string {
   const root = join(tempDir('root'), 'root')
   mkdirSync(root)
-  const skip = new Set(['.git', 'docs', 'scripts', 'traceconfig.json', 'traceconfig.next.json'])
+  const skip = new Set(['.git', 'docs', 'scripts', 'harness.config.json'])
   for (const name of readdirSync(ROOT)) if (!skip.has(name)) symlinkSync(join(ROOT, name), join(root, name))
-  for (const name of ['traceconfig.json', 'traceconfig.next.json']) cpSync(join(ROOT, name), join(root, name))
+  for (const name of ['harness.config.json']) cpSync(join(ROOT, name), join(root, name))
   mkdirSync(join(root, 'docs'))
   for (const name of readdirSync(join(ROOT, 'docs'))) if (name !== 'goals') symlinkSync(join(ROOT, 'docs', name), join(root, 'docs', name))
   writeGoals(join(root, 'docs', 'goals'), opts.contracts)
@@ -158,19 +157,47 @@ export type ContractRunResult = {
   summary: { pass: number; fail: number; skip: number } | null
   /** 開始から終了までの秒数 */
   seconds: number
+  /** 受け渡し役が標準エラーに書いた行の写し（CONTRACT_ADAPTER_NOTES。各行は「実例の名前 タブ 行」） */
+  notes: string
+}
+
+/** 呼ぶ側が `--timeout` を渡さないときに確かめへ渡す、全実行の上限（秒）。原本の既定（120 秒）は、記録つきの全体の中
+ *  （子のプロセスに記録の仕掛けが付き、ほかのテストと並ぶ）で機械の負荷が高い回に足りず、アダプタ異常で結果が読めなくなる。
+ *  既定の 120 秒の中で終わることは、検査の一式の run cases の段が見る。 */
+export const RUN_TIMEOUT_S = 300
+/** 確かめに渡した上限（秒）から、テスト側で止める時刻（ミリ秒）。確かめが自分の上限で止まって結果を書き終える猶予を足す。 */
+export const limitMsFor = (timeoutS: number) => (timeoutS + 30) * 1000
+/** 上限を渡さずに contractRun を `runs` 回回すテスト（`it`・`beforeAll`）の上限（ミリ秒）。 */
+export const runsTestMs = (runs = 1) => runs * limitMsFor(RUN_TIMEOUT_S) + 30_000
+
+/** 引数の `--timeout <秒>`（`--timeout=<秒>`）の値。無ければ undefined。 */
+const timeoutOf = (args: string[]): number | undefined => {
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === '--timeout') return Number(args[i + 1])
+    if (args[i].startsWith('--timeout=')) return Number(args[i].slice('--timeout='.length))
+  }
+  return undefined
 }
 
 /** `npm run contract-run -- <args>` を 1 回回す。`limitMs` を過ぎたら止めて code を -1 にする。
+ *  `args` に `--timeout` が無ければ RUN_TIMEOUT_S を渡す（上限そのものを確かめるテストは自分の値を渡し、そのまま使う）。
+ *  `limitMs` の既定は、渡した上限に limitMsFor の猶予を足した物。
  *  標準出力はパイプでなく一時のファイルに向け、終わってから読む（原本の道具は書いた直後に終わり、パイプへの
  *  書き出しを待たないので、64KB を超える `--json` の結果がパイプでは切れる）。 */
 export function contractRun(args: string[], opts: { env?: Record<string, string>; limitMs?: number } = {}): Promise<ContractRunResult> {
+  const given = timeoutOf(args)
+  if (given === undefined) args = [...args, '--timeout', String(RUN_TIMEOUT_S)]
+  const limitMs = opts.limitMs ?? limitMsFor(given ?? RUN_TIMEOUT_S)
   const started = Date.now()
   const outFile = join(tempDir('stdout'), 'stdout.txt')
+  // 受け渡し役の理由の写しを置くこの回だけのファイル（run cases は、正常に終わった受け渡し役の標準エラーを見せない）
+  const notesFile = join(tempDir('notes'), 'notes.txt')
+  writeFileSync(notesFile, '')
   const outFd = openSync(outFile, 'w')
   return new Promise((resolve) => {
     const child = spawn('npm', ['run', '--silent', 'contract-run', '--', ...args], {
       cwd: ROOT,
-      env: { ...process.env, npm_config_update_notifier: 'false', NO_UPDATE_NOTIFIER: '1', ...opts.env },
+      env: { ...process.env, npm_config_update_notifier: 'false', NO_UPDATE_NOTIFIER: '1', CONTRACT_ADAPTER_NOTES: notesFile, ...opts.env },
       stdio: ['ignore', outFd, 'pipe'],
     })
     let stderr = ''
@@ -179,7 +206,7 @@ export function contractRun(args: string[], opts: { env?: Record<string, string>
     const timer = setTimeout(() => {
       killed = true
       child.kill('SIGKILL')
-    }, opts.limitMs ?? 280_000)
+    }, limitMs)
     let done = false
     const finish = (exitCode: number | null) => {
       if (done) return
@@ -203,6 +230,7 @@ export function contractRun(args: string[], opts: { env?: Record<string, string>
         results: Array.isArray(parsed?.results) ? parsed.results : null,
         summary: parsed?.summary ?? null,
         seconds: (Date.now() - started) / 1000,
+        notes: readFileSync(notesFile, 'utf8'),
       })
     }
     child.on('error', (error) => {
@@ -219,6 +247,44 @@ export const verdictOf = (run: ContractRunResult, k: ExampleKey) =>
 
 /** 失敗のときに読む、出力の末尾。 */
 export const tailOf = (run: ContractRunResult) => `${run.stdout}\n${run.stderr}`.split('\n').slice(-40).join('\n')
+
+/** 合わなかった実例ごとに、確かめの出力（標準出力の JSON でない行と標準エラー）からその実例を名指しする行を前後 2 行ごと拾い、
+ *  落ちたテストのメッセージにする。全実例を回すと出力は長く、tailOf の末尾 40 行に入るとは限らないため。
+ *  run cases は、アダプターが正常に終われば、アダプターの標準エラー（受け渡し役が書く理由）を自分の出力に流さない
+ *  （アダプターの異常のときだけ末尾 20 行を出す。`.harness/tools/run-cases/README.md`）。拾えないときはそう書く。 */
+export function explainNotPassed(run: ContractRunResult, notPassed: Verdict[]): string {
+  if (notPassed.length === 0) return ''
+  const lines = [...(run.results === null ? run.stdout.split('\n') : []), ...run.stderr.split('\n')]
+  const around = (needle: string) => {
+    const hit = new Set<number>()
+    lines.forEach((line, i) => {
+      if (!line.includes(needle)) return
+      for (let j = Math.max(0, i - 2); j <= Math.min(lines.length - 1, i + 2); j++) hit.add(j)
+    })
+    return [...hit].sort((x, y) => x - y).map((i) => `    | ${lines[i]}`)
+  }
+  const notes = run.notes.split('\n').filter((line) => line !== '')
+  const parts = notPassed.map((r) => {
+    const found = around(`${r.operation}.${r.case}`)
+    const said = notes.filter((line) => line.startsWith(`${keyOf(r)}\t`) || line.includes(`${r.operation}.${r.case}`))
+    return [
+      `- ${r.verdict} ${keyOf(r)}  ${r.detail ?? ''}`,
+      ...(said.length > 0
+        ? ['  受け渡し役がこの実例について書いた行（CONTRACT_ADAPTER_NOTES）:', ...said.map((line) => `    | ${line.replace(/^[^\t]*\t/, '')}`)]
+        : ['  受け渡し役がこの実例について書いた行は無い']),
+      ...(found.length > 0
+        ? ['  確かめの出力でこの実例を名指しする行:', ...found]
+        : ['  確かめの出力にこの実例を名指しする行は無い（run cases は、正常に終わったアダプターの標準エラーを流さない）']),
+    ].join('\n')
+  })
+  const stderrTail = run.stderr.split('\n').filter((l) => l.trim() !== '').slice(-20)
+  return [
+    `合わなかった実例 ${notPassed.length} 件（終了 ${run.code}）:`,
+    ...parts,
+    `確かめの標準エラーの末尾 ${stderrTail.length} 行:`,
+    ...stderrTail.map((l) => `    | ${l}`),
+  ].join('\n')
+}
 
 // ---------------------------------------------------------------------------
 // 外へ送られたものの記録（REQ-569）

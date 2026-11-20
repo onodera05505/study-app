@@ -106,6 +106,16 @@ export default defineHandler({
   parallel: true,
   operations: {
     checkMaterialStyle: async (line) => {
+      if (line.case === 'badArguments') {
+        // 引数の誤り（学びの置き場を渡さない）: request の欄をそのまま引数にし、資格対策の学び ip の写しを置いた影の根で回す
+        const dir = field(line.request, 'dir')
+        const data = field(line.request, 'data')
+        return inShadow(async (shadow) => {
+          await ipRewritten(shadow, 'ip')
+          const args = [...(data === undefined ? [] : ['--data', data]), ...(dir === undefined ? [] : ['--dir', dir])]
+          return answerOf(await runScript(shadow, 'check_material_style.py', args), [0, 1])
+        })
+      }
       const prepare = PRECONDITIONS[line.case]
       if (!prepare) throw new Unanswerable(`UC-025 checkMaterialStyle の例 ${line.case} の前提を知らない`)
       const key = keyOf(line.request)

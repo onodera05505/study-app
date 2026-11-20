@@ -9,6 +9,9 @@
  * 入口から読めるのは build だけで、配信の時点（at）は読めないので応答に含めない（含めると読んでいない値を作ることになる）。
  * 配信物（前提）: ok は build と at を持つ印、noStamp は印の形を持たない中身、unreachable は届かない。
  * 画面の外への口は偽の配信物に向け、要求が契約の wire（GET /version.json）であることを確かめる。
+ *
+ * まなびばの配備の手続き deployPortal（`bash scripts/deploy_portal.sh`）は、UC-032 の受け持ちと同じ影の根と偽の配備の道具で回す
+ * （handlers/UC-032.ts の runDeployProcedure。配信は偽物が受け、外への通信は塞ぐ）。ok の前提は、ログイン中のアカウントが配備を持つアカウント。
  */
 
 import { join } from 'node:path'
@@ -16,6 +19,8 @@ import { pathToFileURL } from 'node:url'
 import { REPO_ROOT } from '../kit/tool'
 import { withFetch } from '../kit/outside'
 import { defineHandler, Unanswerable, type Operation } from '../kit/protocol'
+import { argsOf, unknownCase } from '../kit/td'
+import { runDeployProcedure } from './UC-032'
 
 type Shelf = { kind: 'stamp'; body: unknown } | { kind: 'unreachable' }
 
@@ -65,5 +70,13 @@ const fetchVersionStamp: Operation = async (line) => {
  */
 export default defineHandler({
   uc: 'UC-016',
-  operations: { fetchVersionStamp },
+  // プロセスに 1 つの物（口・時計・ID）を差し替えるので、ほかの受け持ちと混ざらないよう自分のプロセスで回す
+  ownProcess: true,
+  operations: {
+    fetchVersionStamp,
+    deployPortal: (line) => {
+      if (line.case !== 'ok') unknownCase(line)
+      return runDeployProcedure('deploy_portal.sh', argsOf(line.request))
+    },
+  },
 })

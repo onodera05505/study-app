@@ -1,5 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { type ContractRunResult, type Witness, contractRun, keyOf, openWitness, opWith, realOp, removeTemps, shadowDocs, tailOf, verdictOf } from './UC-033_fixture'
+import { type ContractRunResult, type Witness, contractRun, keyOf, openWitness, opWith, realOp, removeTemps, runsTestMs, shadowSpec, tailOf, verdictOf } from './UC-033_fixture'
 
 /**
  * UC-033 の REQ-569: 本番の保存先・配備先・外の相手に触れる操作の実例を回しても、確かめはそれらに何も送らない。
@@ -10,7 +10,7 @@ import { type ContractRunResult, type Witness, contractRun, keyOf, openWitness, 
  * どこにも届かない。本番の保存先（D1 の remote）と配備先（Pages）は Cloudflare の API の向こうにあり、
  * 外の相手（まなびば・配備の死活確認）も手元の外にあるので、3 つとも手元の外への通信として現れる。
  *
- * 回す実例は本物の契約の操作の全実例（操作ごとに影の置き場に写す）。結果が合うかはここでは見ない（REQ-567・568）が、
+ * 回す実例は本物の契約の操作の全実例（操作ごとに影の根の契約に写す）。結果が合うかはここでは見ない（REQ-567・568）が、
  * 実例が確かめに渡されたこと（結果に挙がること）は見る（渡さずに送らないのでは確かめにならない）。
  */
 
@@ -29,9 +29,9 @@ afterAll(async () => {
 const runOps = async (ops: Array<[uc: string, op: string]>, args: string[] = []): Promise<{ run: ContractRunResult; sent: string[] }> => {
   const byUc = new Map<string, Record<string, ReturnType<typeof realOp>>>()
   for (const [uc, op] of ops) byUc.set(uc, { ...(byUc.get(uc) ?? {}), [op]: opWith(uc, op, realOp(uc, op).examples ?? {}) })
-  const docs = shadowDocs([...byUc].map(([uc, operations]) => ({ uc, operations })))
+  const root = shadowSpec([...byUc].map(([uc, operations]) => ({ uc, operations })))
   const before = witness.sent().length
-  const run = await contractRun(['--docs', docs, '--json', ...args], { env: witness.env })
+  const run = await contractRun(['--root', root, '--json', ...args], { env: witness.env })
   return { run, sent: witness.sent().slice(before) }
 }
 
@@ -57,7 +57,7 @@ describe('UC-033 確定した契約の実例を実装に当て、契約どおり
       const { run, sent } = await runOps(ops)
       expectRan(run, ops)
       expect(sent, '本番の保存先へ送られかけた').toEqual([])
-    }, 300_000)
+    }, runsTestMs())
 
     // @covers REQ-569#deploy-target
     it('配備先に触れる操作（配備先から秘密の名前の一覧を取る）の実例は、写しの操作も回すと指定したときだけ回り、回しても手元の外に何も送らない', async () => {
@@ -74,7 +74,7 @@ describe('UC-033 確定した契約の実例を実装に当て、契約どおり
       const { run, sent } = await runOps(ops, ['--include-external'])
       expectRan(run, ops)
       expect(sent, '配備先へ送られかけた').toEqual([])
-    }, 300_000)
+    }, runsTestMs(2)) // 指定なし・指定あり
 
     // @covers REQ-569#external-party
     it('外の相手を呼ぶ操作（本番の検査が配備を外から叩く 4 つ・学び側からまなびばへの使い捨てコードの交換・版の印を取りに行く）の実例を回しても、手元の外に何も送らない', async () => {
@@ -89,6 +89,6 @@ describe('UC-033 確定した契約の実例を実装に当て、契約どおり
       const { run, sent } = await runOps(ops)
       expectRan(run, ops)
       expect(sent, '外の相手へ送られかけた').toEqual([])
-    }, 300_000)
+    }, runsTestMs())
   })
 })

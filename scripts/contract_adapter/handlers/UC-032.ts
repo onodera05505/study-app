@@ -11,11 +11,19 @@
  * - ok: 組み立てたあと（影の根で ip の投入を組み立てる）。保存先は構造の変更がすべて当たった状態
  * - unknownLearning: 登録簿に無い学び zzz の置き場に、組み立てた投入を置く（その断りだけに当たる）
  * - seedMissing・mistypedLocalBeforeSeedMissing: fe の置き場の写しに投入を置かない（組み立てる前）
+ *
+ * 配備の手続き deployPages（`bash scripts/deploy-pages.sh <学び>`）と保存先の回の確かめ checkD1Rounds（`bash scripts/check_d1_rounds.sh <学び> [--local]`）は、
+ * UC-032 のテストの影の根と偽の配備の道具（tests/server/UC-032_fixture.ts の makeShadow・runProcedure）で回す。配信と保存先は偽物が受け、
+ * 外への通信は塞ぐ（REQ-569）。手続きの中で呼ぶ、別の契約が形を持つ門の道具は、通る包みにする（門の判定は各門の契約の実例が見る）。前提:
+ * - deployPages の ok: 本番と手元の保存先はどちらも構造の変更がすべて当たった状態で、ログイン中のアカウントは配備を持つアカウント
+ * - checkD1Rounds の ok: 手元の保存先の、学ぶ順を持つ論点のどれもが回を持つ
  */
 
-import { copyFile } from 'node:fs/promises'
-import { defineHandler, type Operation } from '../kit/protocol'
+import { copyFile, rm } from 'node:fs/promises'
+import { makeShadow, runProcedure, type StorageSpec } from '../../../tests/server/UC-032_fixture'
+import { defineHandler, type Answer, type Operation } from '../kit/protocol'
 import { answerOf, argsOf, inShadow, premise, unknownCase } from '../kit/td'
+import { toolErrorCode } from '../kit/tool'
 
 const checkRoadmapRegistry: Operation = (line) => {
   if (!['ok', 'okQualification', 'noLearning', 'unknownLearning'].includes(line.case)) unknownCase(line)
@@ -54,10 +62,41 @@ const seedRemote: Operation = (line) => {
 }
 
 /**
+ * 配備の手続きを、UC-032 のテストの影の根と偽の配備の道具で 1 回回し、答えに読む（断りの名前があれば断り、無ければ終了の状態）。
+ * @implements REQ-567, REQ-569, REQ-570
+ */
+export async function runDeployProcedure(script: string, args: string[], storage: { remote?: StorageSpec; local?: StorageSpec } = {}): Promise<Answer> {
+  const shadow = makeShadow('adapter', { copy: ['scripts', 'src', 'public', 'portal'], remote: storage.remote, local: storage.local })
+  try {
+    const run = await runProcedure(shadow, script, args)
+    const code = toolErrorCode(run.out)
+    if (code !== null) return { error: code }
+    return { response: { exitCode: run.code } }
+  } finally {
+    await rm(shadow.dir, { recursive: true, force: true })
+  }
+}
+
+const deployPages: Operation = (line) => {
+  if (line.case !== 'ok') unknownCase(line)
+  return runDeployProcedure('deploy-pages.sh', argsOf(line.request, { positional: ['learning'] }))
+}
+
+const checkD1Rounds: Operation = (line) => {
+  if (line.case !== 'ok') unknownCase(line)
+  const topics = [
+    { sortOrder: 1, round: 'day-01' },
+    { sortOrder: 2, round: 'day-01' },
+    { sortOrder: null, round: null },
+  ]
+  return runDeployProcedure('check_d1_rounds.sh', argsOf(line.request, { positional: ['learning'] }), { remote: { topics }, local: { topics } })
+}
+
+/**
  * @implements REQ-567, REQ-569, REQ-570
  */
 export default defineHandler({
   uc: 'UC-032',
   parallel: true,
-  operations: { checkRoadmapRegistry, checkSource, seedRemote },
+  operations: { checkRoadmapRegistry, checkSource, seedRemote, deployPages, checkD1Rounds },
 })

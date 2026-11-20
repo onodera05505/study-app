@@ -98,6 +98,8 @@ export type Workspace = {
   materialize: () => void
   /** 門を呼ぶ。dir を undefined にすると --dir を渡さない。 */
   gate: (req?: { data?: string; dir?: string | null }) => Run
+  /** 門を、引数の並びをそのまま渡して呼ぶ（引数の誤りを作るため）。 */
+  gateArgs: (args: string[]) => Run
 }
 
 /** 単元の番号と、その単元の論点。 */
@@ -216,6 +218,9 @@ export function makeWorkspace(): Workspace {
     const args = ['--data', req.data ?? `data/${model.key}`]
     const d = req.dir === undefined ? model.dir : req.dir
     if (d !== null) args.push('--dir', d)
+    return gateArgs(args)
+  }
+  const gateArgs = (args: string[]): Run => {
     const r = spawnSync('python3', [GATE, ...args], { cwd: dir, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
     return { status: r.status, stdout: r.stdout, stderr: r.stderr, json: parseJson(r.stdout) }
   }
@@ -231,6 +236,7 @@ export function makeWorkspace(): Workspace {
     model,
     materialize,
     gate,
+    gateArgs,
   }
 }
 

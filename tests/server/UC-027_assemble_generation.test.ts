@@ -1385,6 +1385,18 @@ describe('差し込み位置の確認・図の差し込み・描画の検査は�
     expect(r.out, '落ちた理由がその論点の実在しない図でない').toContain(`${R1}-999`)
   })
 
+  // @covers REQ-471#render-checks-delivered-generation
+  it('実データの描画の検査は、書き直した世代の教材の、決めた記法の外で文字のまま出る記法（閉じていない強調）でも落ち、その論点を挙げる', async () => {
+    const r = await restoring(() => {
+      editEntries(ws, REWRITTEN, R1, (m) => {
+        m.detail = `${m.detail}\n\n**閉じていない強調のまま終わる文です。`
+      })
+      return checkRender(ws)
+    })
+    expect(r.status, `書き直した世代の文字のまま出る記法を見逃した:\n${r.out}`).toBe(1)
+    expect(r.out, '落ちた理由にその論点が挙がっていない').toContain(String(R1))
+  })
+
   // @covers REQ-471#render-skips-superseded-generation
   it('実データの描画の検査は、書き直した世代に置き換わった前の世代の教材を描かず、その誤りでは落ちない', async () => {
     const r = await renderWithMissingImage(R1, V3)

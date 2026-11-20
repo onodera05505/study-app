@@ -22,7 +22,8 @@ type FeedbackDraftModule = typeof import('../../../src/client/lib/feedbackDraft'
 
 const CLIENT_LIB = join(import.meta.dirname, '..', '..', '..', 'src', 'client', 'lib')
 
-/** 端末の記憶の代わり。blocked の読み・書きは例外を投げる（端末の記憶が使えない）。 */
+/** 端末の記憶の代わり。blocked の読み・書きは例外を投げる（端末の記憶が使えない）。
+ *  実装（src/client/lib）が呼ぶ読み・書き・消す（getItem・setItem・removeItem）だけを持つ。length・key・clear は実装が呼ばないので置かない。 */
 class MemoryStorage {
   #items = new Map<string, string>()
   readBlocked = false
@@ -33,14 +34,6 @@ class MemoryStorage {
   }
   #refuseWrite() {
     if (this.writeBlocked) throw new Error('端末の記憶が使えない（前提: 書けない）')
-  }
-  get length(): number {
-    this.#refuseRead()
-    return this.#items.size
-  }
-  key(index: number): string | null {
-    this.#refuseRead()
-    return [...this.#items.keys()][index] ?? null
   }
   getItem(key: string): string | null {
     this.#refuseRead()
@@ -53,10 +46,6 @@ class MemoryStorage {
   removeItem(key: string): void {
     this.#refuseWrite()
     this.#items.delete(key)
-  }
-  clear(): void {
-    this.#refuseWrite()
-    this.#items.clear()
   }
   /** 前提を作る側だけが使う（塞いでいても見える）。 */
   entries(): [string, string][] {

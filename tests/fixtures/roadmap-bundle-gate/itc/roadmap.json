@@ -1,0 +1,71 @@
+{
+  "target": "仕込みの到達点",
+  "per_day": 3,
+  "days": 2,
+  "unit_count": 4,
+  "dropped_no_goal": [],
+  "units": [
+    {
+      "order": 1,
+      "day": 1,
+      "topic_id": 1,
+      "term": "課題の見極め",
+      "field": "業界と仕事",
+      "middle": "案件の流れ",
+      "summary": "相談から本当に解く問題を選ぶ",
+      "prereq": [],
+      "goals": [
+        1
+      ],
+      "sources": [
+        "仕事の進め方の手引き"
+      ]
+    },
+    {
+      "order": 2,
+      "day": 1,
+      "topic_id": 2,
+      "term": "工程の区切り",
+      "field": "業界と仕事",
+      "middle": "案件の流れ",
+      "summary": "仕事を段に分けて進める",
+      "prereq": [
+        1
+      ],
+      "goals": [
+        2
+      ],
+      "sources": []
+    },
+    {
+      "order": 3,
+      "day": 1,
+      "topic_id": 3,
+      "term": "提案の組み立て",
+      "field": "業界と仕事",
+      "middle": "案件の流れ",
+      "summary": "相手に選んでもらう形に整える",
+      "prereq": [
+        1
+      ],
+      "goals": [
+        1
+      ],
+      "sources": []
+    },
+    {
+      "order": 4,
+      "day": 2,
+      "topic_id": 4,
+      "term": "面接での語り方",
+      "field": "選考と自己理解",
+      "middle": "面接",
+      "summary": "経験を短く話す",
+      "prereq": [],
+      "goals": [
+        2
+      ],
+      "sources": []
+    }
+  ]
+}

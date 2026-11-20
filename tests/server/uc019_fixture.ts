@@ -14,6 +14,7 @@ import { tmpdir } from 'node:os'
 import * as path from 'node:path'
 import { env as processEnv } from 'node:process'
 import { fileURLToPath } from 'node:url'
+import { afterAll } from 'vitest'
 
 export const ROOT = path.join(fileURLToPath(new URL('.', import.meta.url)), '..', '..')
 const BUILD = path.join(ROOT, 'scripts', 'build_learner_pack.py')
@@ -114,9 +115,18 @@ export type Workspace = {
   snapshotTree: (rel?: string) => Record<string, string>
 }
 
+/** この土台が作った作業場。土台を読み込んだテストのファイルが終わるとき（落ちた・途中で投げたときも）に消す。
+ *  rmSync は作業場の中のリンクを辿らない（リンクの先のリポジトリの物は消さない）。道具が時間切れで止められた直後は、
+ *  孫のプロセスがまだ書いていて消しきれないことがあるので、少し待って消し直す。 */
+const createdWorkspaces: string[] = []
+afterAll(() => {
+  for (const dir of createdWorkspaces.splice(0)) fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 })
+})
+
 /** ロードマップ型の学び eng がそろい、どの周の写しも結果も無い作業場所を作る。 */
 export function makeWorkspace(): Workspace {
   const dir = fs.mkdtempSync(path.join(tmpdir(), 'uc019-'))
+  createdWorkspaces.push(dir)
   const abs = (rel: string) => (path.isAbsolute(rel) ? rel : path.join(dir, rel))
   const write = (rel: string, data: string | Uint8Array | object) => {
     fs.mkdirSync(path.dirname(abs(rel)), { recursive: true })

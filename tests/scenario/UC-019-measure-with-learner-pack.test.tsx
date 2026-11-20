@@ -68,7 +68,8 @@ beforeEach(() => {
 afterEach(() => {
   // 作業の場所の外（本物の学びの置き場）に写しや周の結果を書いていたら、テストが作った物だけ消す
   for (const p of repoGuards) if (existsSync(p)) rmSync(p)
-  rmSync(root, { recursive: true, force: true })
+  // 道具が時間切れで止められた直後は、孫のプロセスがまだ書いていて消しきれないことがあるので、少し待って消し直す
+  rmSync(root, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 })
 })
 
 describe('UC-019 学習者役のパックを作って読ませ、伝わったかを周の結果で測る', () => {
