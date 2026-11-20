@@ -11,8 +11,6 @@
 # ログインも認証を要する経路もすべて 503 で断る。
 JWT_SECRET=local-dev-only-not-a-secret
 
-# 新規登録に要る合言葉。設定しなければ誰でも登録できる。
-# SIGNUP_CODE=local-aikotoba
 
 # まなびば（SSO）をローカルで繋ぐときだけ。設定するとパスワードのログイン・登録は 404 になる。
 # SSO_PORTAL_URL=http://127.0.0.1:8790
