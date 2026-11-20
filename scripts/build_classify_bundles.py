@@ -33,6 +33,8 @@ def main() -> int:
     d = args.data
 
     qdata = json.loads((d / "questions" / f"{args.exam}.json").read_text(encoding="utf-8"))
+    if not (d / "question_fields.json").is_file():
+        sys.exit(f"{d}/question_fields.json がありません（回の公式の分野。extract_answer_keys_ap.py で作る）")
     fields = json.loads((d / "question_fields.json").read_text(encoding="utf-8")).get(args.exam)
     if not fields:
         sys.exit(f"{d}/question_fields.json に {args.exam} がありません")

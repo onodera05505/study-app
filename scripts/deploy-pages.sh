@@ -32,7 +32,7 @@ URL=$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'
 
 # 配備の道具はプロジェクトが固定した版だけを使う（無ければ別の版に倒さず止まる）
 # @implements REQ-351, REQ-352
-source scripts/pinned_wrangler.sh
+source scripts/lib/pinned_wrangler.sh
 
 # アカウントの取り違えを止める門（同じ Mac で別アカウントのログインに差し替わることがある）。
 # 決めたアカウントと違うか、ログイン中のアカウントを確かめられなければ、両方を示して配信しないまま失敗で終える
@@ -53,7 +53,7 @@ echo "▶ 対象: ${EXAM}（Pages: ${PROJECT}）"
 stop_unless_gates_pass() {
   if [ "$1" = after-build ]; then
     echo "▶ 描画検査（実データ全件を jsdom で描いて見る。配信する dist の版の印も見る。落ちたらデプロイしない）"
-    # データ側の検査が通っても画面だけ壊れることがある。何を見ているかは scripts/check_render.tsx の先頭。
+    # データ側の検査が通っても画面だけ壊れることがある。何を見ているかは scripts/lib/check_render.tsx の先頭。
     bash scripts/check_render.sh "$EXAM"
     return
   fi

@@ -4,6 +4,7 @@
     python3 scripts/fetch_pdfs_ap.py --recent 5
     python3 scripts/fetch_pdfs_ap.py --exams 2025r07a 2025r07h
     python3 scripts/fetch_pdfs_ap.py --exam fe --exams 2019r01a 2019h31h
+    python3 scripts/fetch_pdfs_ap.py --recent 1 --origin http://127.0.0.1:8795   # 取りに行く先を差し替える（既定は IPA の公開の場所）
 
 IT パスポートとは配布場所も命名も違うので、`fetch_pdfs.py` とは別にしてある。
 
@@ -29,8 +30,9 @@ import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-INDEX_URL = "https://www.ipa.go.jp/shiken/mondai-kaiotu/index.html"
+# 公開の場所（--origin の既定）と、その下の過去問の一覧のページのパス。年度ページと PDF のパスは一覧のページから拾う
 ORIGIN = "https://www.ipa.go.jp"
+INDEX_PATH = "/shiken/mondai-kaiotu/index.html"
 UA = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/125.0 Safari/537.36"
@@ -43,18 +45,18 @@ def get(url: str) -> str:
         return res.read().decode("utf-8", errors="replace")
 
 
-def list_year_pages() -> list[str]:
+def list_year_pages(origin: str) -> list[str]:
     """年度別ページの URL を新しい順に返す。"""
-    html = get(INDEX_URL)
+    html = get(origin + INDEX_PATH)
     paths = re.findall(r'href="(/shiken/mondai-kaiotu/(\d{4}[hr]\d{2})\.html)"', html)
     seen: dict[str, str] = {}
     for path, year in paths:
-        seen.setdefault(year, ORIGIN + path)
+        seen.setdefault(year, origin + path)
     # 2009h21 … 2025r07 の形。文字列の降順で新しい順になる
     return [seen[y] for y in sorted(seen, reverse=True)]
 
 
-def list_am_pdfs(year_url: str, exam: str) -> list[tuple[str, str]]:
+def list_am_pdfs(year_url: str, exam: str, origin: str) -> list[tuple[str, str]]:
     """年度ページから、その試験の午前（科目A）の PDF を拾う。戻り値は (ファイル名, URL)。
 
     ファイル名の頭が `2025r07a` のような、期まで含んだ試験ID。
@@ -64,7 +66,7 @@ def list_am_pdfs(year_url: str, exam: str) -> list[tuple[str, str]]:
     pattern = r'"(/shiken/mondai-kaiotu/[^"]*?_%s_am_(?:qs|ans)\.pdf)"' % re.escape(exam)
     for path in re.findall(pattern, html):
         name = path.rsplit("/", 1)[-1]
-        found[name] = ORIGIN + path
+        found[name] = origin + path
     return sorted(found.items())
 
 
@@ -94,7 +96,9 @@ def main() -> int:
     ap.add_argument("--out", type=Path, default=None, help="既定は data/<試験コード>/pdfs")
     ap.add_argument("--recent", type=int, default=5, help="新しい方から何回ぶん取るか")
     ap.add_argument("--exams", nargs="*", help="試験ID を直接指定する（例: 2025r07a）")
+    ap.add_argument("--origin", default=ORIGIN, help="取りに行く先（スキーム://ホスト）。既定は IPA の公開の場所")
     args = ap.parse_args()
+    origin = args.origin.rstrip("/")
     if not re.fullmatch(r"[a-z]{2,8}", args.exam):
         print(f"--exam は英小文字の試験コード（ap / fe）: {args.exam}", file=sys.stderr)
         return 1
@@ -104,8 +108,8 @@ def main() -> int:
 
     wanted: list[tuple[str, str]] = []
     exams: list[str] = []
-    for year_url in list_year_pages():
-        for name, url in list_am_pdfs(year_url, args.exam):
+    for year_url in list_year_pages(origin):
+        for name, url in list_am_pdfs(year_url, args.exam, origin):
             eid = exam_id(name)
             if args.exams and eid not in args.exams:
                 continue

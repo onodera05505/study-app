@@ -13,6 +13,47 @@ from pathlib import Path
 
 TABLES = ["users", "sessions", "session_questions", "progress", "daily_visits", "login_attempts"]
 
+
+def sql_values(vals: str) -> list[str | None]:
+    """VALUES(...) の中身を値の並びに分ける。文字列は '' を ' に戻した中身、NULL は None、ほかは書かれたままの字。"""
+    out: list[str | None] = []
+    i, n = 0, len(vals)
+    while i < n:
+        while i < n and vals[i] in " \t":
+            i += 1
+        if i < n and vals[i] == "'":
+            i += 1
+            buf = []
+            while i < n:
+                if vals[i] == "'" and i + 1 < n and vals[i + 1] == "'":
+                    buf.append("'"); i += 2
+                elif vals[i] == "'":
+                    i += 1; break
+                else:
+                    buf.append(vals[i]); i += 1
+            out.append("".join(buf))
+        else:
+            j = i
+            while j < n and vals[j] != ",":
+                j += 1
+            tok = vals[i:j].strip()
+            out.append(None if tok.upper() == "NULL" else tok)
+            i = j
+        while i < n and vals[i] in " \t":
+            i += 1
+        if i < n and vals[i] == ",":
+            i += 1
+    return out
+
+
+def column(cols: str, vals: str, name: str) -> str | None:
+    """INSERT の列の並びと値の並びから、名前の列の値。列が無いか数が合わなければ None。"""
+    names = [c.strip().strip('"') for c in cols.split(",")]
+    values = sql_values(vals)
+    if name not in names or len(values) != len(names):
+        return None
+    return values[names.index(name)]
+
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("backup", type=Path); ap.add_argument("--seed", type=Path, required=True); ap.add_argument("--out", type=Path, required=True)
     a = ap.parse_args()
@@ -25,11 +66,12 @@ def main() -> int:
         if not m or m.group(1) not in TABLES: continue
         t, cols, vals = m.groups()
         if t == "progress":
-            tm = re.match(r"'[^']*',(\d+),", vals)
-            if tm and int(tm.group(1)) not in topic_ids: dropped["progress"] += 1; continue
+            tid = column(cols, vals, "topic_id")
+            if tid is not None and tid.isdigit() and int(tid) not in topic_ids: dropped["progress"] += 1; continue
         if t == "session_questions":
-            qm = re.search(r"'((?:\d{4}[hr]\d{2}[hao]?|itc-d\d{2}|itc-ex)-q\d+)'", vals)
-            if qm and qm.group(1) not in qids: dropped["session_questions"] += 1; continue
+            # 問題の ID の形によらず、渡した投入に無い問題を指す行を落とす
+            qid = column(cols, vals, "question_id")
+            if qid is not None and qid not in qids: dropped["session_questions"] += 1; continue
         lines.append(f"INSERT OR IGNORE INTO {t} ({cols}) VALUES({vals});"); counts[t] += 1
     order = {t: i for i, t in enumerate(TABLES)}
     body = sorted(lines[1:], key=lambda l: order[re.match(r"INSERT OR IGNORE INTO ([a-z_]+)", l).group(1)])

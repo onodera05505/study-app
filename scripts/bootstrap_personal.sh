@@ -26,7 +26,7 @@ for EXAM in "${EXAMS[@]}"; do
   [ "$(python3 scripts/targets.py has "$EXAM")" = yes ] || { echo "登録簿に無い対象: ${EXAM}（$(python3 scripts/targets.py keys)。先に scripts/new_target.py）"; exit 1; }
 done
 for EXAM in "${EXAMS[@]}"; do
-  read -r PROJECT DB CODE < <(python3 -c "import json;c=json.load(open('$CFG'))['$EXAM'];print(c['project'],c['db'],c['signup_code'])")
+  read -r PROJECT DB < <(python3 -c "import json;c=json.load(open('$CFG'))['$EXAM'];print(c['project'],c['db'])")
   echo "▶ ${EXAM}: Pages ${PROJECT}"
   PROJECTS=$(npx wrangler pages project list 2>/dev/null || true)
   if grep -q "│ ${PROJECT} " <<< "$PROJECTS"; then
@@ -43,9 +43,8 @@ PY
   fi
   echo "▶ ${EXAM}: マイグレーション（${DB} --remote）"
   npx wrangler d1 migrations apply "$DB" --env "$EXAM" --remote
-  echo "▶ ${EXAM}: secret（JWT_SECRET は乱数・SIGNUP_CODE は pages_projects.json）"
+  echo "▶ ${EXAM}: secret（JWT_SECRET は乱数）"
   python3 -c "import secrets;print(secrets.token_hex(32))" | npx wrangler pages secret put JWT_SECRET --project-name "$PROJECT"
-  printf '%s' "$CODE" | npx wrangler pages secret put SIGNUP_CODE --project-name "$PROJECT"
 done
 echo
 echo "完了。次: bash scripts/finish_remote.sh ${EXAMS[*]}（デプロイ → 投入 → 進捗の復元 → 突き合わせ）。pages_projects.json が変わっていたらコミット"

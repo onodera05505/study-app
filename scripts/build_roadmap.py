@@ -250,6 +250,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--max", type=int, default=40); ap.add_argument("--per-day", type=int, default=3); ap.add_argument("--min-per-goal", type=int, default=4)
     ap.add_argument("--out", default=None, help="roadmap.json と material_bundles/ の書き先（既定は --data）")
     sys.path.insert(0, str(Path(__file__).parent))
+    sys.path.insert(0, str(Path(__file__).resolve().parent / "lib"))  # 単独で回さない部品の置き場（ADR-0014）
     from targets import target as _target
     from tool_refusal import CODE, tool_error_line
     a = ap.parse_args(); d = Path(a.data); out = Path(a.out) if a.out else d

@@ -18,6 +18,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+sys.path.insert(0, str(Path(__file__).resolve().parent / "lib"))  # 単独で回さない部品の置き場（ADR-0014）
 from tool_refusal import CODE  # noqa: E402
 from check_unit_plans import PLAN_DIR, PLAN_NAME, Refused, gate_findings, tool_error  # noqa: E402
 from learning_parts import read_syllabus_units, read_topics, topic_units  # noqa: E402
@@ -70,6 +71,7 @@ def _text(v) -> bool:
     return isinstance(v, str) and len(v) >= 1
 
 
+# @implements REQ-663
 def _args() -> argparse.Namespace:
     class _Parser(argparse.ArgumentParser):
         def error(self, message: str):

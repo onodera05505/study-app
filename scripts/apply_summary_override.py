@@ -11,6 +11,7 @@ import argparse, json, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent / "lib"))  # 単独で回さない部品の置き場（ADR-0014）
 from tool_refusal import CODE, tool_error_line  # noqa: E402
 
 

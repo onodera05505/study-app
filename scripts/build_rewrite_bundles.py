@@ -22,6 +22,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent / "lib"))  # 単独で回さない部品の置き場（ADR-0014）
 from tool_refusal import CODE  # noqa: E402
 from build_seed import content_key_of, exam_rank, read_explanations  # noqa: E402
 from material_generations import select_materials  # noqa: E402

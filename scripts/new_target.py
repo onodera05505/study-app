@@ -10,7 +10,7 @@
 
 やること（冪等。既にあるものは触らない）:
   1. src/shared/targets.json に対象を登録（ロードマップ型は既定値と roadmapSpec の骨組み、資格型は模試の設定）
-  2. scripts/pages_projects.json に Pages 名・DB 名・合言葉（読み違えにくい 10 文字）を登録
+  2. scripts/pages_projects.json に Pages 名・DB 名を登録（学び側での登録の合言葉は作らない）
   3. .env.<key>、wrangler.jsonc の env.<key>（database_id は対象ごとに違う PLACEHOLDER-<key>-…。bootstrap_personal.sh が D1 を作って埋める。
      同じ文字列にするとローカル D1 のファイルを共有し、前の対象の行が混ざる。中央 reports/06）
   4. ロードマップ型は data/<key>/ に kickoff.json（既定の答えを写し、対象ごとに聞く質問は空）、roadmap_config.json、explain_terms.json、prompts/。
@@ -18,7 +18,7 @@
   5. ロードマップ型は未回答の質問を一覧で出す（本人と答えてから生成へ）
 """
 from __future__ import annotations
-import argparse, json, re, secrets, string, subprocess, sys
+import argparse, json, re, string, subprocess, sys
 from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 T = ROOT / "src/shared/targets.json"; P = ROOT / "scripts/pages_projects.json"; W = ROOT / "wrangler.jsonc"
@@ -51,6 +51,10 @@ def check() -> int:
         if f'"{k}": {{' not in w: probs.append(f"{k}: wrangler.jsonc に env.{k} が無い")
         if t[k].get("roadmap") and not (ROOT / "data" / k / "kickoff.json").exists(): probs.append(f"{k}: data/{k}/kickoff.json が無い")
         if t[k].get("roadmap") and not (ROOT / "data" / k / "prompts").is_dir(): probs.append(f"{k}: data/{k}/prompts/ が無い（render_prompts.py）")
+    # 学び側での登録の合言葉を持つ学びは整合の外（値は出さず、学びの名前だけを挙げる）
+    for k, v in pj.items():
+        if isinstance(v, dict) and "signup_code" in v:
+            probs.append(f"{k}: scripts/pages_projects.json が学び側での登録の合言葉（signup_code）を持つ。鍵ごと消す")
     for x in probs: print(f"✘ {x}")
     print(f"対象 {len(t)} 件 / 問題 {len(probs)} 件"); return 1 if probs else 0
 
@@ -97,9 +101,9 @@ def main() -> int:
         save(T, t); print(f"targets.json に {key} を登録（roadmapSpec の（…）を質疑応答の答えで埋める）")
     pj = load(P)
     if key not in pj:
-        alphabet = "abcdefghjkmnpqrstuvwxyz23456789"
         project = a.project or (f"{key}-am-study" if exam else f"{key}-roadmap")
-        pj[key] = {"project": project, "db": f"study-app-{key}-db", "signup_code": "".join(secrets.choice(alphabet) for _ in range(10))}
+        # 学び側での登録の合言葉は作らず、配備先の一覧にも書かない（登録はまなびばだけ）
+        pj[key] = {"project": project, "db": f"study-app-{key}-db"}
         save(P, pj); print(f"pages_projects.json に {key} を登録（Pages {project} / DB study-app-{key}-db）")
     env = ROOT / f".env.{key}"
     if not env.exists(): env.write_text(f"# {a.name}。scripts/deploy-pages.sh {key} が --mode {key} で読ませる\nVITE_EXAM={key}\nVITE_TITLE={a.name}\n", encoding="utf-8"); print(f".env.{key}")

@@ -10,6 +10,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent / "lib"))  # 単独で回さない部品の置き場（ADR-0014）
 from tool_refusal import CODE, Refused  # noqa: E402
 from learner_io import read_json  # noqa: E402
 from learner_eval import (CHOICES, contract_args, current_questions, result_path,  # noqa: E402

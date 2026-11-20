@@ -6,7 +6,7 @@
 #
 # jsdom で実データ全件（教材・問題解説）を本物のコンポーネントで描いて DOM を見る。
 # 教材は配る本文と同じ選び方（scripts/material_generations.py）で論点ごとに世代を選ぶ。
-# 何を見ているかは scripts/check_render.tsx の先頭に書いてある。
+# 何を見ているかは scripts/lib/check_render.tsx の先頭に書いてある。
 #
 # データ側の検査（check_materials / check_explanations / check_seed）が全部通っていても
 # 画面だけ壊れていることがある。そこを埋める。
@@ -29,7 +29,7 @@ main() {
   local DATA
   DATA="$(pwd)/data/${EXAM}"
   cd "$ROOT"
-  npx tsx scripts/check_render.tsx --data "$DATA"
+  npx tsx scripts/lib/check_render.tsx --data "$DATA"
 }
 
 main "$@"

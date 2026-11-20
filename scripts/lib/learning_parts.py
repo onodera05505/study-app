@@ -5,6 +5,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # 道具の置き場（scripts/。部品が読む道具の側のモジュール）
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 

@@ -31,6 +31,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent / "lib"))  # 単独で回さない部品の置き場（ADR-0014）
 from build_seed import (  # 計算の定義は1か所に持つ（content_key がずれると解説が迷子になる）
     EXPLANATION_DIR,
     content_key_of,

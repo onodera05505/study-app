@@ -4,6 +4,7 @@ import json
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # 道具の置き場（scripts/。部品が読む道具の側のモジュール）
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from targets import targets  # noqa: E402
 from tool_refusal import CODE, Refused  # noqa: E402

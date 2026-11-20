@@ -81,7 +81,10 @@ def main() -> int:
     fields: dict[str, dict[str, str]] = {}
     problems: list[str] = []
 
-    for pdf in sorted(args.pdf_dir.glob(f"*_{exam_code}_am_ans.pdf")):
+    pdfs = sorted(args.pdf_dir.glob(f"*_{exam_code}_am_ans.pdf"))
+    if not pdfs:
+        sys.exit(f"{args.pdf_dir} に解答例の PDF（*_{exam_code}_am_ans.pdf）がありません")
+    for pdf in pdfs:
         exam = pdf.name.split("_", 1)[0]
         text = "\n".join(page.extract_text() or "" for page in pypdf.PdfReader(pdf).pages)
 

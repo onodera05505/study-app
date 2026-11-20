@@ -37,6 +37,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent / "lib"))  # 単独で回さない部品の置き場（ADR-0014）
 from targets import deploy as _deploy, keys as _keys  # 対象と DB の対応は登録簿から
 from material_generations import emit_refusal, learning_refusal  # noqa: E402
 from tool_refusal import CODE, tool_error  # noqa: E402

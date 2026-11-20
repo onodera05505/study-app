@@ -5,11 +5,23 @@
 """
 import json, subprocess, sys, urllib.request, urllib.error, urllib.parse, http.cookiejar
 from pathlib import Path
-ROOT = Path('/Users/yudai/develop/study-app')
+ROOT = Path(__file__).resolve().parent.parent  # 道具を置いたリポジトリ（保存先の設定と配備の道具はここから）
 KEY = sys.argv[1] if len(sys.argv) > 1 else "mkt"
-_cfg = json.load(open(Path(__file__).resolve().parent / "pages_projects.json"))
-if KEY not in _cfg or "url" not in _cfg[KEY]: sys.exit(f"{KEY} は pages_projects.json に url が無い（まだ本番に出していない）")
-PORTAL = "https://manabiba-5oz.pages.dev"; APP = _cfg[KEY]["url"].rstrip("/"); APP_DB = _cfg[KEY]["db"]
+sys.path.insert(0, str(ROOT / "scripts" / "lib"))  # 単独で回さない部品の置き場（ADR-0014）
+from tool_refusal import CODE, tool_error_line  # noqa: E402
+_cfg = json.load(open(ROOT / "scripts" / "pages_projects.json"))
+
+
+def _refuse_missing(reason: str):
+    """配備先の一覧に場所が無いときは、何もせずに名前つきの断りを出して終える。"""
+    print(reason, file=sys.stderr)
+    print(tool_error_line(CODE.NOT_FOUND, reason))
+    sys.exit(1)
+
+
+if not isinstance(_cfg.get("_portal"), dict) or not _cfg["_portal"].get("url"): _refuse_missing("pages_projects.json の _portal に url が無い（まなびばの本番の場所が分からない）")
+if not isinstance(_cfg.get(KEY), dict) or not _cfg[KEY].get("url"): _refuse_missing(f"{KEY} は pages_projects.json に url が無い（まだ本番に出していない）")
+PORTAL = _cfg["_portal"]["url"].rstrip("/"); APP = _cfg[KEY]["url"].rstrip("/"); APP_DB = _cfg[KEY]["db"]
 EMAIL = "sso-smoke@example.com"; PW = "apicheck-pass-1234"
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36"
 

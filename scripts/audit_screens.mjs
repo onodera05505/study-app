@@ -96,7 +96,9 @@ async function pickTopics(token) {
         const t = queue.shift()
         if (!t) return
         try {
-          details.push(await apiCall(BASE, `/topics/${t.id}`, { token }))
+          const d = await apiCall(BASE, `/topics/${t.id}`, { token })
+          // 中身の無い答え・論点や過去問の並びを持たない答えも、取れなかった 1 件として飛ばす
+          if (d && d.topic && Array.isArray(d.questions)) details.push(d)
         } catch {
           /* 1件くらい取れなくても選定は続ける */
         }
@@ -621,7 +623,8 @@ async function main() {
   console.log(`▶ L5 画面の検査 — exam=${EXAM} base=${BASE}`)
   console.log(`  出力先: ${OUT}`)
 
-  // 前回の PNG は消す（残っていると「今回撮れなかった」ものが撮れたように見える）
+  // 前回の PNG は消す（残っていると「今回撮れなかった」ものが撮れたように見える）。--keep のときは残す
+  // @implements REQ-664
   if (existsSync(OUT) && !has('--keep')) rmSync(OUT, { recursive: true, force: true })
   mkdirSync(OUT, { recursive: true })
 

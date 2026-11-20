@@ -19,6 +19,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+sys.path.insert(0, str(Path(__file__).resolve().parent / "lib"))  # 単独で回さない部品の置き場（ADR-0014）
 from tool_refusal import CODE  # noqa: E402
 from material_generations import is_rewritten, select_materials  # noqa: E402
 from learning_parts import materials_of  # noqa: E402

@@ -12,7 +12,7 @@ cd "$(dirname "$0")/.."
 # 配備の道具はプロジェクトが固定した版だけを使う（無ければ別の版に倒さず止まる）。
 # 設定を組む一時の場所でも同じ道具を使うよう、絶対パスの "$WRANGLER" で呼ぶ
 # @implements REQ-351, REQ-352
-source scripts/pinned_wrangler.sh
+source scripts/lib/pinned_wrangler.sh
 
 ACCOUNT="$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['account_id'])")"
 # 道具の出力は一度変数に受けてから読む（pipefail の下で読み手が先に抜けると、書き手が SIGPIPE で落ちる）

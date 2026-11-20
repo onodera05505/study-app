@@ -37,12 +37,12 @@ run_seed() {
 }
 
 # 断る: 人が読む文を出したあと、標準出力の最後の行に断りの形（契約の ToolError）を 1 行で出し、終了コード 1 で終える。
-# 断りの種類の名前は scripts/tool_refusal.py が src/shared/error-codes.json から引く（出所に無い名前は出せない）。
+# 断りの種類の名前は scripts/lib/tool_refusal.py が src/shared/error-codes.json から引く（出所に無い名前は出せない）。
 # 引数: 断りの種類の名前・人が読む文・断りの形に載せる理由
 # @implements REQ-571
 refuse() {
   echo "$2"
-  python3 scripts/tool_refusal.py "$1" "$3"
+  python3 scripts/lib/tool_refusal.py "$1" "$3"
   exit 1
 }
 

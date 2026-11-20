@@ -58,7 +58,7 @@
   const grantNames = (keys) =>
     keys.map((k) => (learnings.find((l) => l.key === k) || { brand: k }).brand).join('、') || 'なし'
 
-  // @implements REQ-162
+  // @implements REQ-162, REQ-661, REQ-662
   function renderAdmin(accounts) {
     const thead = $('#acc-table thead')
     const tbody = $('#acc-table tbody')

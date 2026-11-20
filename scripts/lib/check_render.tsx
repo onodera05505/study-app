@@ -43,7 +43,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { JSDOM } from 'jsdom'
 
-const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..')
+const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..', '..')
 
 /** ポップの中身。用語集の実際の文言は見ないので固定でよい。 */
 const BRIEF = '検査用の1行説明です。'
@@ -171,8 +171,6 @@ function setupDom() {
   g.KeyboardEvent = dom.window.KeyboardEvent
   g.HTMLElement = dom.window.HTMLElement
   g.getComputedStyle = dom.window.getComputedStyle
-  g.requestAnimationFrame = (fn: any) => setTimeout(() => fn(Date.now()), 0)
-  g.cancelAnimationFrame = (id: any) => clearTimeout(id)
   g.IS_REACT_ACT_ENVIRONMENT = true
   return dom
 }
@@ -228,7 +226,8 @@ async function main(): Promise<number> {
     return { ok: true, status: 200, text: async () => JSON.stringify(body) }
   }
 
-  // React の警告（key の重複など）は warning として拾う
+  // React の警告（key の重複など）は失敗にせず拾い、先頭の数件と件数を示す
+  // @implements REQ-665
   const consoleWarnings: string[] = []
   const realError = console.error
   console.error = (...a: any[]) => {
@@ -239,8 +238,8 @@ async function main(): Promise<number> {
   const { act, createElement: h } = React
   const { createRoot } = await import('react-dom/client')
   const { MemoryRouter } = await import('react-router-dom')
-  const { Markdown } = await import('../src/client/components/Markdown')
-  const { Explanation } = await import('../src/client/components/Explanation')
+  const { Markdown } = await import('../../src/client/components/Markdown')
+  const { Explanation } = await import('../../src/client/components/Explanation')
 
   const container = dom.window.document.getElementById('root')!
   const root = createRoot(container)

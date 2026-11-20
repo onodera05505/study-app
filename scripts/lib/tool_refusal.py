@@ -9,7 +9,7 @@
 
 シェルの道具は、標準出力に同じ形を 1 行で出すために、これをコマンドとして呼ぶ。
 
-    python3 scripts/tool_refusal.py <名前> <理由>
+    python3 scripts/lib/tool_refusal.py <名前> <理由>
 """
 from __future__ import annotations
 
@@ -19,7 +19,7 @@ import sys
 from pathlib import Path
 from types import SimpleNamespace
 
-NAMES_FILE = Path(__file__).resolve().parent.parent / "src" / "shared" / "error-codes.json"
+NAMES_FILE = Path(__file__).resolve().parent.parent.parent / "src" / "shared" / "error-codes.json"
 NAMES: dict[str, str] = json.loads(NAMES_FILE.read_text(encoding="utf-8"))
 CODE = SimpleNamespace(**NAMES)
 

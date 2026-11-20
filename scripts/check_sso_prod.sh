@@ -26,12 +26,12 @@ problem() {
   PROBLEMS="${PROBLEMS}${dep}"$'\t'"$2"$'\t'"${3:-}"$'\t'"${4:-}"$'\t'"${5:-}"$'\n'
 }
 # 挙げた問題に契約の errors に当たる物があるときだけ、標準出力に契約の CheckProblems の 1 行を出す
-# （error.code は名前を持つ最初の問題の名前。名前の出所は scripts/tool_refusal.py）
+# （error.code は名前を持つ最初の問題の名前。名前の出所は scripts/lib/tool_refusal.py）
 # @implements REQ-578
 emit_problems() {
   PROBLEMS="$PROBLEMS" python3 -c '
 import os, sys
-sys.path.insert(0, "scripts")
+sys.path.insert(0, "scripts/lib")
 from tool_refusal import tool_error_line
 problems = []
 for line in os.environ["PROBLEMS"].split("\n"):

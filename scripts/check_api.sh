@@ -9,6 +9,8 @@
 #
 # ポートは 8788 に固定してある。開発用の wrangler dev（8787）と衝突させないため。
 # 既に 8788 で動いていればそれを使い、無ければここで起動して、終わったら落とす。
+# check_api.py が起こす手元の SSO の偽物（偽のまなびば）は 8792（番号の出所は check_api.py の SSO_FAKE_PORT）。
+# 8791 は check_portal_api のまなびば、8790 は check_sso_flow のまなびばが使うので、同時に回してもぶつからない。
 #
 # 本番には当てない。ローカルの D1 だけを見る。
 set -euo pipefail
@@ -18,6 +20,9 @@ EXAM="${1:-ip}"
 [ "$(python3 scripts/targets.py has "$EXAM")" = yes ] || { echo "第1引数は対象の ID（$(python3 scripts/targets.py keys)）"; exit 1; }
 
 PORT=8788
+# 手元の SSO の偽物の口（check_api.py の SSO_FAKE_PORT から読む）
+SSO_FAKE_PORT="$(sed -n 's/^SSO_FAKE_PORT = \([0-9][0-9]*\)$/\1/p' scripts/check_api.py)"
+[ -n "$SSO_FAKE_PORT" ] || { echo "scripts/check_api.py に SSO_FAKE_PORT が無い"; exit 1; }
 BASE="http://127.0.0.1:${PORT}"
 # ログはプロジェクト直下に残さない（このディレクトリは git 管理外なので掃除されない）
 LOG="$(mktemp -t "check_api_${EXAM}")"
@@ -54,7 +59,7 @@ else
   # 検査の本人はその偽物が換えた使い捨てコードからだけ作る（学び側のパスワードの経路はどの配備にも無い）。
   # JWT_SECRET はローカルのこの検査専用の固定値（本番の値ではない）。渡さない配備ではトークンを発行も検証もしない。
   npx wrangler dev --env "$EXAM" --port "$PORT" --ip 127.0.0.1 \
-    --var "SSO_PORTAL_URL:http://127.0.0.1:8791" \
+    --var "SSO_PORTAL_URL:http://127.0.0.1:${SSO_FAKE_PORT}" \
     --var "SSO_SECRET:check-api-local-shared-not-a-secret" \
     --var "JWT_SECRET:check-api-local-only-not-a-secret" \
     --show-interactive-dev-session=false >"$LOG" 2>&1 &

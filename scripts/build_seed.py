@@ -19,11 +19,9 @@
 """
 
 import argparse
-import binascii
 import datetime
 import hashlib
 import json
-import os
 import re
 import sys
 from pathlib import Path
@@ -35,12 +33,11 @@ DIAGRAM_MARKER = re.compile(r"(箱|矢印|→|←|↑|↓|線が|分岐|合流|�
 # 担当が書いた問題ごとの解説の置き場。1担当1ファイル。
 EXPLANATION_DIR = "question_explanations"
 
-PBKDF2_ITERATIONS = 100_000  # src/server/lib/auth.ts と揃える。
-# Cloudflare Workers の PBKDF2 は 100,000 回が上限。超えると実行時エラーになる。
 
 # 出典表示に入れる試験名と模試設定は対象の登録簿（src/shared/targets.json）から引く。
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+sys.path.insert(0, str(Path(__file__).resolve().parent / "lib"))  # 単独で回さない部品の置き場（ADR-0014）
 from tool_refusal import CODE, tool_error  # noqa: E402
 from targets import exam_names as _exam_names, exam_settings as _exam_settings  # noqa: E402
 from material_generations import emit_refusal, generation_counts, learning_refusal, select_materials  # noqa: E402
@@ -315,13 +312,6 @@ def _q(v) -> str:
     return "'" + str(v).replace("'", "''") + "'"
 
 
-def _hash_password(password: str) -> str:
-    """auth.ts の verifyPassword が読める形式 "iterations:saltHex:hashHex"。"""
-    salt = os.urandom(16)
-    dk = hashlib.pbkdf2_hmac("sha256", password.encode(), salt, PBKDF2_ITERATIONS, dklen=32)
-    return f"{PBKDF2_ITERATIONS}:{binascii.hexlify(salt).decode()}:{binascii.hexlify(dk).decode()}"
-
-
 def _say(*parts) -> None:
     """人が読む報告。標準出力は結果の JSON だけにする。"""
     print(*parts, file=sys.stderr)
@@ -338,11 +328,6 @@ def main() -> int:
                     help="出典表示に入れる試験名。既定は --data から決まるので普段は不要")
     # 既定は public/figures/<試験>。試験ごとに分けないとファイル名がぶつかる（下の注記）。
     ap.add_argument("--figures", default=None, type=Path)
-    ap.add_argument("--admin-email", default="admin@example.com")
-    # 既定値を持たせない。渡したときだけ管理ユーザを作る（作らなくてもアプリは動く。
-    # 新規登録から普通のユーザを作ればよい）。理由は下の「管理ユーザ」の注記を見ること。
-    ap.add_argument("--admin-password", default=None,
-                    help="渡したときだけ管理ユーザ（ADMIN）を作る・更新する")
     args = ap.parse_args()
     d = args.data
     out = args.out or (d / "seed.sql")
@@ -558,7 +543,7 @@ def main() -> int:
             + ") ON CONFLICT(term) DO UPDATE SET brief=excluded.brief, topic_id=excluded.topic_id;"
         )
 
-    # --- 設定と管理ユーザ -----------------------------------------------
+    # --- 設定 -----------------------------------------------------------
     # 模試の問題数と制限時間は試験ごとに違うが、app_settings の列の既定値は 100 問 / 7200 秒（IT パスポート）。
     # 新しい D1 に最初に流すとき、その試験の値で行を作る（既にある行は触らない。運用で変えた値を上書きしない）。
     mock_size, mock_sec = EXAM_SETTINGS[d.name]
@@ -566,20 +551,6 @@ def main() -> int:
         f"INSERT INTO app_settings (id, mock_size, mock_time_limit_sec) VALUES ('default', {mock_size}, {mock_sec})"
         " ON CONFLICT(id) DO NOTHING;"
     )
-
-    # 管理ユーザは --admin-password を渡したときだけ作る。既定で出すと、
-    #   1. 初期データを入れるたびに、公開中のサイトに既知のパスワードの口ができる
-    #   2. UPSERT が password_hash を更新するので、DB 側で変えても再投入で元に戻る
-    # 回を追加したときの再投入で users に触らせないほうが安全なので、既定では出さない。
-    if args.admin_password:
-        lines.append(
-            "INSERT INTO users (id, email, name, password_hash, role) VALUES ("
-            + ", ".join(_q(x) for x in (
-                "admin", args.admin_email, "管理者", _hash_password(args.admin_password), "ADMIN",
-            ))
-            + ") ON CONFLICT(id) DO UPDATE SET email=excluded.email,"
-            " password_hash=excluded.password_hash, role=excluded.role;"
-        )
 
     out.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
@@ -599,10 +570,6 @@ def main() -> int:
         _say("        scripts/crop_figures.py で切り出すと学習しやすくなります:")
         for x in missing_figure_image[:10]:
             _say(f"          {x}")
-    if args.admin_password:
-        _say(f"  管理ユーザ   : {args.admin_email} / {args.admin_password}（作成・更新する）")
-    else:
-        _say("  管理ユーザ   : 作らない（--admin-password を渡したときだけ作る）")
     if expl_unknown:
         _say(f"\n[警告] 実在しない content_key を指す解説 {len(expl_unknown)} 件（投入しません）:")
         for x in expl_unknown[:5]:

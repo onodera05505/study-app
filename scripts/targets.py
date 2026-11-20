@@ -48,5 +48,4 @@ if __name__ == "__main__":
     elif what == "project": print(deploy(key)["project"])
     elif what == "url": print(deploy(key).get("url", f"https://{deploy(key)['project']}.pages.dev"))
     elif what == "account": print(json.loads(_P.read_text(encoding="utf-8"))["account_id"])
-    elif what == "code": print(deploy(key)["signup_code"])
     elif what == "has": print("yes" if key in targets() else "no")

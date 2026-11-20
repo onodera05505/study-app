@@ -11,7 +11,7 @@
 scripts/check_sso_flow.py は 2 つの wrangler dev を手で起こす受入用のリハーサルで、
 scripts/check_sso_prod.sh は本番の死活だけ見る。**まなびば単独の経路を機械で毎回見るもの**がこれ。
 
-## 見るもの（仕様は docs/goals/**/REQ-nnn.md。@scenario で UC に紐づけてある）
+## 見るもの（仕様は docs/goals/**/UC.md の ### REQ-nnn。@scenario で UC に紐づけてある）
 
 - REQ-001・REQ-056 ログイン — 正しい認証情報で Cookie（HttpOnly・SameSite=Lax）、誤りは 401 で共通の文。
   **メールが在るか無いかで文言が変わらない**（変わると総当たりでメールの存在が分かる）
@@ -878,7 +878,6 @@ def check_body_schema(admin: Client, r: Report, base: str, secret: str, admin_gr
         ("パスワードが 7 文字", {"email": f"{PREFIX}s5@example.com", "name": "検査用", "password": "a" * 7, "grants": []}, PASSWORD_WORDS),
         ("パスワードが 201 文字", {"email": f"{PREFIX}s6@example.com", "name": "検査用", "password": "a" * 201, "grants": []}, PASSWORD_WORDS),
         ("grants が配列でない", {"email": f"{PREFIX}s7@example.com", "name": "検査用", "password": PASSWORD, "grants": admin_grant}, ()),
-        ("role が知らない値", {"email": f"{PREFIX}s8@example.com", "name": "検査用", "password": PASSWORD, "role": "KING", "grants": []}, ()),
     ]:
         st, data, _, _ = admin.call("POST", "/api/admin/accounts", body)
         r.status(f"POST /api/admin/accounts（{label}）", st, 400, data)

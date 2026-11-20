@@ -1,6 +1,8 @@
 import { sql } from 'drizzle-orm'
 import { check, foreignKey, index, integer, primaryKey, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core'
 
+// 外部キー（参照する列・参照先・参照先を消したときの扱い）の値の SSOT はこの構造の宣言で、migrations/*.sql は同じ外部キーを作る
+// @implements BR-065
 const now = sql`(unixepoch())`
 
 /** シラバス Ver.6.5 の項目（1〜63）。分野・大分類・中分類はこの1テーブルに畳んである。

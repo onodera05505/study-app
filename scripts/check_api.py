@@ -56,7 +56,7 @@ API の形は静かに壊れる。SELECT の別名を1つ変えれば画面の�
     ないか、学ぶ順の前後の単位がロードマップ型だけに添えられ、端では該当側が null か
 16. **UC の基本の流れの写し**（`check_scenario_uc0xx`。`docs/goals/<GOAL>/<UC>/UC.md` の主シナリオの番号付きステップを
     順に 1 本で通し、最後に事後条件を見る）— 正常系だけ。失敗系・境界は 1〜15 が見る。
-    画面の描画は `scripts/check_render.tsx` の担当なので、画面が使う応答までを確かめる
+    画面の描画は `scripts/lib/check_render.tsx` の担当なので、画面が使う応答までを確かめる
 
 ## 触るもの・触らないもの
 
@@ -93,7 +93,9 @@ EMAIL_OTHER = "apicheck-other@example.com"
 
 # 手元の SSO の偽物。check_api.sh が学び側の配備にまなびばの場所（SSO_PORTAL_URL）としてこの場所を、
 # 共有秘密（SSO_SECRET）としてこの値を与える。値はローカルのこの検査専用で、本番の値ではない。
-SSO_FAKE_PORT = 8791
+# 口の番号の出所はこの 1 行（check_api.sh がここから読む）。8792 はこの検査の偽のまなびば専用
+# （8791 は check_portal_api のまなびば、8790 は check_sso_flow のまなびば）。
+SSO_FAKE_PORT = 8792
 SSO_FAKE_URL = f"http://127.0.0.1:{SSO_FAKE_PORT}"
 SSO_FAKE_SECRET = "check-api-local-shared-not-a-secret"
 
@@ -565,15 +567,17 @@ class Report:
         return False
 
     def error_body(self, label: str, body):
-        """失敗の本文が {error: 日本語の文字列} か。クライアントはこれを画面に出す。
+        """失敗の本文が {error: 日本語の文字列, code: 断りの種類の名前} の形か。クライアントは error を画面に出す。
 
-        契約の ErrorBody は additionalProperties: false なので、鍵は error だけ。
-        画面に出せない鍵を失敗の本文に混ぜると、クライアントが拾う約束が増える。"""
+        契約の ErrorBody（docs/_shared/components.yaml）は additionalProperties: false で、鍵は error と、
+        断りの種類の名前の code（BR-064）だけ。ほかの鍵を失敗の本文に混ぜると、クライアントが拾う約束が増える。"""
         if not self.shape(label, body, ERROR_BODY):
             return
-        extra = sorted(k for k in body if k != "error")
+        extra = sorted(k for k in body if k not in ("error", "code"))
         if extra:
-            self.error(f"{label}: 失敗の本文の鍵は error だけのはず（余分: {', '.join(extra)}）")
+            self.error(f"{label}: 失敗の本文の鍵は error と code だけのはず（余分: {', '.join(extra)}）")
+        if "code" in body and not (isinstance(body["code"], str) and body["code"]):
+            self.error(f"{label}: 失敗の本文の code が空でない文字列でない（{body['code']!r}）")
         if not JAPANESE.search(body["error"]):
             self.warn(f"{label}: error が日本語でない（{body['error'][:60]}）")
 

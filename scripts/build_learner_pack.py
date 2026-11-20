@@ -19,6 +19,7 @@ from xml.parsers import expat
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+sys.path.insert(0, str(Path(__file__).resolve().parent / "lib"))  # 単独で回さない部品の置き場（ADR-0014）
 from tool_refusal import CODE, Refused  # noqa: E402
 from material_generations import generation_dirs  # noqa: E402
 from material_figure_line import figure_line, malformed_lines, map_figure_lines, png_target  # noqa: E402
