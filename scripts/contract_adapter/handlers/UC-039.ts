@@ -17,7 +17,9 @@
  * - buildPortal: リポジトリの登録簿と配備先の一覧のまま
  * - setSsoSecret: 手元に偽の共有秘密を置く
  * - checkSsoProdSmoke: ok は、まなびばと学びの代わりの相手（tests/server/UC-039_counterparts.ts。本物の app を手元の HTTPS の口で受ける）を立て、
- *   影の根の配備先の一覧をそこへ向け、手元の確かめの利用者を置いて回す。locationMissing は、配備先の一覧に場所の無い学び（zzz）を渡す
+ *   影の根の配備先の一覧をそこへ向け、手元の確かめの利用者を置いて回す。locationMissing は、配備先の一覧に場所の無い学び（zzz）を渡す。
+ *   wrongAccount は、ok と同じ代わりの相手と確かめの利用者を置き、偽の配備の道具が決めたアカウントと違うアカウントを答える（world.whoami = other）
+ *   ようにして回す（道具が断らずに進んでも、代わりの相手のほかには届かない）
  * - targets（keys）: リポジトリの登録簿のまま
  */
 
@@ -146,12 +148,9 @@ function operation(name: string): Operation {
   }
 }
 
-/**
- * 本番の SSO の一巡を、代わりの相手に向けて回す（本番には届かない。道具は OS の囲いの中で、手元のほかへは出ない）。
- * @implements REQ-567, REQ-569, REQ-570
- */
+/** 本番の SSO の一巡を、代わりの相手に向けて回す（本番には届かない。道具は OS の囲いの中で、手元のほかへは出ない）。 */
 const checkSsoProdSmoke: Operation = async (line: ExampleLine) => {
-  if (!['ok', 'locationMissing'].includes(line.case)) throw new Unanswerable(`UC-039 checkSsoProdSmoke の例 ${line.case} の前提を知らない`)
+  if (!['ok', 'locationMissing', 'wrongAccount'].includes(line.case)) throw new Unanswerable(`UC-039 checkSsoProdSmoke の例 ${line.case} の前提を知らない`)
   const s = shadow39('adapter-smoke')
   try {
     const args = argumentsOf(line.request, ['learning'])
@@ -160,7 +159,8 @@ const checkSsoProdSmoke: Operation = async (line: ExampleLine) => {
     sql(learningDb(s, 'local', key), `INSERT INTO users (id, email, name, password_hash) VALUES ('ac', 'apicheck@example.com', 'ac', '${await hashPassword('apicheck-pass-1234')}');`)
     const c = await startCounterparts(s, key)
     try {
-      return answer(await runTool(s, 'check_sso_prod_smoke.py', args, { applySeed: true }, c.env))
+      const world: World = line.case === 'wrongAccount' ? { applySeed: true, whoami: 'other' } : { applySeed: true }
+      return answer(await runTool(s, 'check_sso_prod_smoke.py', args, world, c.env))
     } finally {
       await c.close()
     }
@@ -169,9 +169,6 @@ const checkSsoProdSmoke: Operation = async (line: ExampleLine) => {
   }
 }
 
-/**
- * @implements REQ-567, REQ-569, REQ-570
- */
 export default defineHandler({
   uc: 'UC-039',
   // 土台が同期の子プロセス（spawnSync）で道具を回すので、受け渡し役の本体を止めないよう、自分のプロセスで 1 件ずつ回す

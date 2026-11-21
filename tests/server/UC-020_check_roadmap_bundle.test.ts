@@ -277,7 +277,7 @@ describe('UC-020 書き手から上がったロードマップ型の束を教材
     })
   })
 
-  describe('束の教材のファイルが無い・読めない・割り当てやロードマップと食い違うと止める（REQ-366）', () => {
+  describe('束の教材のファイルが無い・読めない（項目が形の外を含む）・割り当てやロードマップと食い違うと止める（REQ-366）', () => {
     /** @covers REQ-366#materials-file-missing */
     it('束の教材のファイルが無いと、unreadableOutput で束を挙げて止める', () => {
       const ws = makeWorkspace()
@@ -348,6 +348,45 @@ describe('UC-020 書き手から上がったロードマップ型の束を教材
         const r = check(ws)
         labelled(label, () => expectStop(r, 'unreadableOutput', (f) => findingText(f).includes('roadmap')))
       }
+    })
+
+    /** @covers REQ-366#materials-item-not-in-shape */
+    it('出典（sources）が並びでない教材を持つ束は、unreadableOutput で束を挙げて止め、最後の行が機械向けの 1 行', () => {
+      const r = withMaterials((ms) => (material(ms, 1).sources = '仕事の進め方の手引き'))
+      expectStop(r, 'unreadableOutput', (f) => findingText(f).includes(BUNDLE))
+    })
+
+    /** @covers REQ-366#materials-topic-id-not-integer */
+    it('論点の番号（topic_id）が整数でない教材（[1]）を持つ束は、unreadableOutput で束を挙げて止め、最後の行が機械向けの 1 行', () => {
+      const r = withMaterials((ms) => (material(ms, 1).topic_id = [1]))
+      expectStop(r, 'unreadableOutput', (f) => findingText(f).includes(BUNDLE))
+    })
+
+    /** @covers REQ-366#assignment-item-not-in-shape */
+    it('論点の番号が整数でない項目を持つ割り当ては、unreadableOutput でそのファイルを挙げて止め、最後の行が機械向けの 1 行', () => {
+      const ws = makeWorkspace()
+      const doc = ws.readJson(assignmentFile())
+      doc.topics[0].topic_id = '1'
+      ws.write(assignmentFile(), doc)
+      expectStop(check(ws), 'unreadableOutput', (f) => findingText(f).includes('material_bundles'))
+    })
+
+    /** @covers REQ-366#roadmap-unit-without-topic */
+    it('論点の番号と論点名を持たない単位（数の並び）を持つロードマップは、unreadableOutput でそのファイルを挙げて止める', () => {
+      const ws = makeWorkspace()
+      const doc = ws.readJson(roadmapFile())
+      doc.units = [1, 2, 3, 4]
+      ws.write(roadmapFile(), doc)
+      expectStop(check(ws), 'unreadableOutput', (f) => findingText(f).includes('roadmap'))
+    })
+
+    /** @covers REQ-366#roadmap-unit-not-in-shape */
+    it('到達基準（goals）が並びでない単位を持つロードマップは、unreadableOutput でそのファイルを挙げて止め、最後の行が機械向けの 1 行', () => {
+      const ws = makeWorkspace()
+      const doc = ws.readJson(roadmapFile())
+      doc.units[0].goals = 1
+      ws.write(roadmapFile(), doc)
+      expectStop(check(ws), 'unreadableOutput', (f) => findingText(f).includes('roadmap'))
     })
   })
 
@@ -426,9 +465,28 @@ describe('UC-020 書き手から上がったロードマップ型の束を教材
       expectStop(r, 'bannedPattern', (f) => findingText(f).includes('t1-1') && findingText(f).includes(bannedReason))
     })
 
+    /** @covers REQ-370#banned-in-correct-note */
+    it('確認問題の正解の選択肢の説明に禁じた書き方がある束は、bannedPattern で問題と箇所と禁じた理由を挙げて止める', () => {
+      const r = withQuestions((qs) => (question(qs, 't1-1').choice_notes['ア'] = '正解。体重をかけて押しながら、理由をたどってから打つ手を選んでいます。'), MSG)
+      expectStop(r, 'bannedPattern', (f) => findingText(f).includes('t1-1') && findingText(f).includes(bannedReason))
+    })
+
+    /** @covers REQ-370#banned-in-reason */
+    it('確認問題の正解の根拠（reason）に禁じた書き方がある束は、bannedPattern で問題と箇所と禁じた理由を挙げて止める', () => {
+      const r = withQuestions((qs) => (question(qs, 't1-1').reason = '体重をかけて押しながら理由をたどってから、手の打ち方を選ぶのが見極めです。'), MSG)
+      expectStop(r, 'bannedPattern', (f) => findingText(f).includes('t1-1') && findingText(f).includes(bannedReason))
+    })
+
     /** @covers REQ-370#banned-only-in-wrong-choice */
     it('禁じた書き方が確認問題の誤答の選択肢にだけある束は、bannedPattern で止めない', () => {
       const r = withQuestions((qs) => (question(qs, 't1-1').choices['イ'] = '体重をかけて押しながら、広告の案をいくつも作って安い順に渡す'), MSG)
+      expectMachineLine(r)
+      expect(findingsOf(r.machine.stops, 'bannedPattern'), dump(r)).toEqual([])
+    })
+
+    /** @covers REQ-370#banned-only-in-stem */
+    it('禁じた書き方が確認問題の問題文にだけある束は、bannedPattern で止めない', () => {
+      const r = withQuestions((qs) => (question(qs, 't1-1').stem = '体重をかけて押すように頼まれた店長から相談を受けた。最初に取りかかる動きとして合うものはどれか。'), MSG)
       expectMachineLine(r)
       expect(findingsOf(r.machine.stops, 'bannedPattern'), dump(r)).toEqual([])
     })
@@ -557,6 +615,15 @@ describe('UC-020 書き手から上がったロードマップ型の束を教材
     /** @covers REQ-659#unreadable-source-skipped */
     it('JSON として読めない資料のファイルがあっても、止めも警告もせず、人が読む注の行を 1 行足す', () => {
       const r = brokenRun()
+      expectCleanPass(r)
+      expect(r.humanLines.length, `${dump(r)}\n--- 読めるときの出力 ---\n${dump(cleanRun())}`).toBe(cleanRun().humanLines.length + 1)
+    })
+
+    /** @covers REQ-659#source-file-not-in-shape */
+    it('sources が並びでない資料のファイル（{"sources": 5}）があっても、止めも警告もせず、人が読む注の行を 1 行足し、最後の行が機械向けの 1 行', () => {
+      const ws = makeWorkspace()
+      ws.write(BROKEN, '{"sources": 5}')
+      const r = check(ws)
       expectCleanPass(r)
       expect(r.humanLines.length, `${dump(r)}\n--- 読めるときの出力 ---\n${dump(cleanRun())}`).toBe(cleanRun().humanLines.length + 1)
     })

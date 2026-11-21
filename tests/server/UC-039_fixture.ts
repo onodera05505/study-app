@@ -69,8 +69,15 @@ export const FAKE_SSO_SECRET = 'uc039-fake-sso-secret-0123456789abcdef'
  *  - d1 の呼び出しは、影の置き場の db/<remote|local>/<保存先の名前>.sqlite があればそこに向ける（無ければ UC-032 の土台の共通の保存先）
  *  - STUB_APPLY_MIGRATIONS=1 のとき、d1 migrations apply は migrations のすべてを当てたと記録する
  *  - STUB_PROJECTS_EXIST=1 のとき、pages project list は配備先の一覧のすべての配信先を挙げる
- *  - pages secret put <名前> は、本物と同じく標準入力から値を読み、影の置き場の secrets/<名前>.<n> に残す */
+ *  - pages secret put <名前> は、本物と同じく標準入力から値を読み、影の置き場の secrets/<名前>.<n> に残す
+ *  - STUB_EXPORT_ROWS=<n> のとき、d1 export の書き出した控えのファイルの末尾に投入の文（INSERT）を n 行足す
+ *  - STUB_WHOAMI_SEVERAL=1 のとき、whoami は 2 つのアカウントを並べる（1 番目は決めたアカウントと違う物、2 番目は UC-032 の土台が答える物） */
 const WRANGLER_FRONT = String.raw`#!/usr/bin/env bash
+if [ "$1" = whoami ] && [ "$STUB_WHOAMI_SEVERAL" = 1 ]; then
+  set -o pipefail
+  "__ORIG__" "$@" | awk -v other="__OTHER__" '/│ Personal/ { print "│ Other        │ " other " │" } { print }'
+  exit $?
+fi
 if [ "$1" = d1 ]; then
   name="$3"; [ "$2" = migrations ] && name="$4"
   side=local; for a in "$@"; do [ "$a" = --remote ] && side=remote; done
@@ -90,6 +97,19 @@ if [ "$1" = pages ] && [ "$2" = secret ] && [ "$3" = put ]; then
   d="$STUB_SANDBOX/secrets"; mkdir -p "$d"
   n=$(ls "$d" | grep -c "^$4\." || true)
   cat > "$d/$4.$n"
+fi
+if [ "$1" = d1 ] && [ "$2" = export ] && [ -n "$STUB_EXPORT_ROWS" ]; then
+  "__ORIG__" "$@"; code=$?
+  out=""; prev=""
+  for a in "$@"; do
+    case "$prev" in --output|-o) out="$a" ;; esac
+    case "$a" in --output=*) out=$(printf '%s' "$a" | sed 's/^--output=//') ;; esac
+    prev="$a"
+  done
+  if [ "$code" = 0 ] && [ -n "$out" ] && [ -f "$out" ]; then
+    for i in $(seq 1 "$STUB_EXPORT_ROWS"); do printf 'INSERT INTO "uc039_rows" VALUES(%s);\n' "$i" >> "$out"; done
+  fi
+  exit "$code"
 fi
 exec "__ORIG__" "$@"
 `
@@ -135,7 +155,7 @@ export function shadow39(name: string, opts: Partial<ShadowOptions> & { wrap?: R
   for (const stub of [join(s.root, 'node_modules', 'wrangler', 'bin', 'wrangler.js'), join(s.dir, 'unpinned-wrangler.js')]) {
     const orig = stub.replace(/\.js$/, '.orig.js')
     renameSync(stub, orig)
-    writeFileSync(stub, WRANGLER_FRONT.replace('__ORIG__', orig))
+    writeFileSync(stub, WRANGLER_FRONT.split('__ORIG__').join(orig).split('__OTHER__').join(OTHER_ACCOUNT))
     chmodSync(stub, 0o755)
   }
   // npx wrangler は、作業の場所によらず影の根の偽物に渡す（UC-032 の偽の npx は作業の場所から node_modules を探すので、
@@ -162,6 +182,9 @@ export function shadow39(name: string, opts: Partial<ShadowOptions> & { wrap?: R
     },
   }
 }
+
+/** runTool の env に渡すと、ログイン中に 2 つのアカウントが見え、決めたアカウントが並びの 2 番目にある（world.whoami は既定の 'decided' のまま）。 */
+export const SEVERAL_ACCOUNTS: Record<string, string> = { STUB_WHOAMI_SEVERAL: '1' }
 
 /** 道具を囲う OS の決まり（macOS の sandbox-exec）。手元（localhost。テストが立てる代わりの相手）のほかへの接続をすべて断ち、作業ツリーとその隣（本体のチェックアウト）の置き場への
  *  書き込みを断つ。道具が影の根の外の決まった場所を作業の場所にしても、本体と本番に届かない（check_sso_prod_smoke.py は

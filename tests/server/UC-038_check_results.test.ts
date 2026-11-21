@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process'
-import { readdirSync, readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { afterAll, describe, expect, it, vi } from 'vitest'
 import { ROOT, type Shadow, type ToolRun, crashed, removeTemps, runReal, toolShadow } from './UC-037_fixture'
@@ -81,6 +81,22 @@ function materialResults(s: Shadow, states: Array<[correct: boolean, sufficient:
   s.write('uc038/results/bundle_01.json', json({ bundle: 1, answers }))
 }
 const checkMaterials = (s: Shadow, results = 'uc038/results') => s.run('check_answerability_materials.py', ['--data', 'data/ip', '--results', results])
+/** 教材で解いた結果の束を、結果の問題の ID（`<回>-q<問番号>`）だけを決めて置く。 */
+function resultsFor(s: Shadow, ids: string[]) {
+  const answers = ids.map((id, i) => ({
+    question_id: id,
+    topic_id: 9100 + i,
+    term: `仕込みの論点${i}`,
+    answer: 'ア',
+    sufficient: true,
+    basis: '仕込みの根拠',
+    missing: null,
+  }))
+  s.write('uc038/results/bundle_01.json', json({ bundle: 1, answers }))
+}
+/** 出力が問題を回と問番号で示したか（結果の ID の形 `<回>-q<n>` か、同じ行に回と「問<n>」）。 */
+const questionPattern = (exam: string, n: number) => new RegExp(`${exam}-q${n}(?!\\d)|${exam}[^\\n]*問\\s*${n}(?!\\d)`, 'g')
+const showsQuestion = (out: string, exam: string, n: number) => questionPattern(exam, n).test(out)
 
 // ---------------------------------------------------------------------------
 // 分類（checkClassified）
@@ -223,6 +239,65 @@ describe('UC-038 取り込み・分類・書き直しの結果と手順書の書
       const r = checkMaterials(s, 'uc038/no_such_results')
       expectEnded(r, 0)
       expect(r.out.trim().length, '無いことを示していない').toBeGreaterThan(0)
+    })
+  })
+
+  describe('教材で解いた結果の問題がどれも正解表で引けず、照らせる結果が 1 つも無ければ、引けなかった問題を回と問番号で示して失敗で終える（REQ-671）', () => {
+    // @covers REQ-671#no-scorable-results
+    it('正解表にほかの回があっても、結果の問題の回が正解表に無ければ、名前の無い例外で止まらず、その問題を回と問番号で示して失敗で終える', () => {
+      const s = toolShadow()
+      const exam = '2099t09'
+      expect(ipKeys[exam], `仕込み: 正解表に ${exam} がある`).toBeUndefined()
+      resultsFor(s, [`${exam}-q1`, `${exam}-q2`])
+      const r = checkMaterials(s)
+      expectEnded(r, 1, exam)
+      for (const n of [1, 2]) expect(showsQuestion(r.out, exam, n), `${exam} の問${n} を示していない`).toBe(true)
+    })
+
+    // @covers REQ-671#number-not-in-key
+    it('結果の問題の回は正解表にあるが問番号が無いだけなら、その問題を回と問番号で示し、その回を正解表に無い回とは示さずに失敗で終える', () => {
+      const s = toolShadow()
+      const exam = Object.keys(ipKeys)[0]
+      const n = 999
+      expect(ipKeys[exam][String(n)], `仕込み: 正解表の ${exam} に問${n} がある`).toBeUndefined()
+      resultsFor(s, [`${exam}-q${n}`])
+      const r = checkMaterials(s)
+      expectEnded(r, 1)
+      expect(showsQuestion(r.out, exam, n), `${exam} の問${n} を示していない`).toBe(true)
+      // 回は問題を示す中にだけ出る（回だけを挙げる行は、その回を正解表に無い回と示すこと）
+      expect(r.out.replace(questionPattern(exam, n), ''), `${exam} を問題とは別に挙げた（正解表に無い回と示した）`).not.toContain(exam)
+    })
+  })
+
+  describe('回を指定して問題文で解いた結果を照らすとき、その回の解いた結果が無ければ、無いことを示して失敗で終える（REQ-672）', () => {
+    /** 解いた結果が無いことを示した（その回の ID か「解いた結果」を出力に挙げた）。 */
+    const showsNoAnswers = (r: ToolRun) =>
+      expect(r.out.includes(EXAM) || r.out.includes('解いた結果'), `解いた結果が無いことを示していない:\n${r.out}`).toBe(true)
+    /** 正答 0 の正解率（「0/<n>」か「0%」）を示した。 */
+    const zeroRate = (out: string) => /(^|[^\d])0\s*\/\s*\d+|(^|[^\d.])0(\.0+)?\s*%/.test(out)
+
+    // @covers REQ-672#no-answers-for-exam
+    it('正解表と問題文にその回があっても、その回の解いた結果の置き場が無ければ、正答 0 の正解率で成功にせず、失敗で終える', () => {
+      const s = toolShadow()
+      answerability(s, {}, [])
+      s.remove(`uc038/answers/${EXAM}`)
+      const r = checkAnswerability(s)
+      expect(crashed(r), r.out).toBe(false)
+      expect(r.status, r.out).not.toBe(0)
+      showsNoAnswers(r)
+    })
+
+    // @covers REQ-672#answers-dir-empty
+    it('その回の解いた結果の置き場はあるが、解いた結果のファイルが 1 つも無ければ、正答 0 の正解率を示さず、失敗で終える', () => {
+      const s = toolShadow()
+      answerability(s, {}, [])
+      s.remove(`uc038/answers/${EXAM}/batch_01.json`)
+      expect(existsSync(s.path(`uc038/answers/${EXAM}`)), '仕込み: 解いた結果の置き場が無い').toBe(true)
+      const r = checkAnswerability(s)
+      expect(crashed(r), r.out).toBe(false)
+      expect(r.status, r.out).not.toBe(0)
+      expect(zeroRate(r.out), `正答 0 の正解率を示した:\n${r.out}`).toBe(false)
+      showsNoAnswers(r)
     })
   })
 

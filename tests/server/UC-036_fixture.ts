@@ -18,7 +18,7 @@
 
 import { AsyncLocalStorage } from 'node:async_hooks'
 import { spawn, spawnSync, type ChildProcess } from 'node:child_process'
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, realpathSync, rmSync, symlinkSync, writeFileSync } from 'node:fs'
 import { rm } from 'node:fs/promises'
 import http from 'node:http'
 import { tmpdir } from 'node:os'
@@ -334,17 +334,139 @@ function runUnlocked(shadow: Shadow, command: string[], opts: { timeoutMs?: numb
   })
 }
 
-export const checkApi = (s: Shadow, learning?: string) => runTool(s, ['bash', 'scripts/check_api.sh', ...(learning ? [learning] : [])])
-export const checkPortalApi = (s: Shadow) => runTool(s, ['bash', 'scripts/check_portal_api.sh'])
+export const checkApi = (s: Shadow, learning?: string, env?: NodeJS.ProcessEnv) =>
+  runTool(s, ['bash', 'scripts/check_api.sh', ...(learning ? [learning] : [])], { env })
+export const checkPortalApi = (s: Shadow, env?: NodeJS.ProcessEnv) => runTool(s, ['bash', 'scripts/check_portal_api.sh'], { env })
 export const auditFixtures = (s: Shadow, args: string[], env?: NodeJS.ProcessEnv) =>
   runTool(s, ['node', 'scripts/audit_fixtures.mjs', ...args], {
     timeoutMs: 120_000,
     env,
   })
-export const auditScreens = (s: Shadow, args: string[]) =>
+export const auditScreens = (s: Shadow, args: string[], env?: NodeJS.ProcessEnv) =>
   runTool(s, ['bash', 'scripts/audit_screens.sh', ...args], {
     timeoutMs: 900_000,
+    env,
   })
+
+/**
+ * 影の根の外に、空の一時の置き場を作る（REQ-668。道具を回す環境の TMPDIR にこれを渡し、回した後に残る物を見る）。
+ * 道具が示す場所と比べるので、シンボリックリンクを解いた実の場所を返す（macOS の /var は /private/var を指す）。
+ */
+export function emptyTemp(s: Shadow): string {
+  const dir = join(dirname(s.root), `tmp-${temps.length}-${Date.now()}`)
+  mkdirSync(dir)
+  return realpathSync(dir)
+}
+
+/** 道具の標準出力から ToolError を読む（全体を JSON として読み、読めなければ最後の空でない行。CLAUDE.md の「操作 → 入口」）。 */
+export function toolErrorOf(stdout: string): { code: string; reason: string } | null {
+  const read = (text: string) => {
+    try {
+      const e = (JSON.parse(text) as { error?: { code?: unknown; reason?: unknown } })?.error
+      return e && typeof e.code === 'string' ? { code: e.code, reason: typeof e.reason === 'string' ? e.reason : '' } : null
+    } catch {
+      return null
+    }
+  }
+  const lines = stdout.split('\n').filter((l) => l.trim() !== '')
+  return read(stdout.trim()) ?? (lines.length > 0 ? read(lines[lines.length - 1]) : null)
+}
+
+// ---------------------------------------------------------------------------
+// 配備が成功の状態で読めない答えを返す場合（REQ-667）
+
+/** 書き換える問い合わせ（GET の経路の正規表現）と、代わりに返す本文（空の本文か、期待した欄を持たない JSON）。 */
+export type AnswerRewrite = { path: string; body: string }
+
+/** 問い合わせごとに、書き換えた答えを返したことを数える手元の口（書き換えた問い合わせの経路を 1 件ずつ受ける）。 */
+export async function hitCounter(): Promise<{ url: string; hits: () => string[]; close: () => Promise<void> }> {
+  const got: string[] = []
+  const server = http.createServer((req, res) => {
+    let body = ''
+    req.on('data', (c) => (body += c))
+    req.on('end', () => {
+      got.push(body)
+      res.writeHead(204)
+      res.end()
+    })
+  })
+  await new Promise<void>((ok, ng) => {
+    server.once('error', ng)
+    server.listen(0, '127.0.0.1', ok)
+  })
+  const { port } = server.address() as { port: number }
+  return {
+    url: `http://127.0.0.1:${port}/hit`,
+    hits: () => [...got],
+    close: () =>
+      new Promise((ok) => {
+        server.close(() => ok())
+        server.closeAllConnections()
+      }),
+  }
+}
+
+/** 答えの書き換えの本体（配備の包みとこのプロセスの中の包みで同じ文を使う）。元の答えが 2xx の GET だけを書き換える。 */
+const REWRITE_BODY = `
+  const url = new URL(req.url)
+  const rule = req.method === 'GET' && res.status >= 200 && res.status < 300 ? RULES.find((r) => new RegExp(r.path).test(url.pathname)) : undefined
+  if (!rule) return res
+  if (HIT) {
+    try {
+      await fetch(HIT, { method: 'POST', body: url.pathname + url.search })
+    } catch {
+      // 数える口に届かなくても答えは書き換える
+    }
+  }
+  return new Response(rule.body, { status: res.status, headers: { 'content-type': 'application/json' } })
+`
+
+/**
+ * 影の根の学び側の配備の設定（wrangler.jsonc の写し）の入口を、元の入口の答えのうち rules に当たる 2xx の GET の答えを書き換える包みに
+ * 差し替える（画面の採取が起こす配備に使う）。入口のコードは読まず、元の入口の default export の fetch をそのまま呼ぶ。
+ * hitUrl があれば、書き換えるたびにその経路をそこへ送る。
+ */
+export function rewriteAnswers(s: Shadow, rules: AnswerRewrite[], hitUrl?: string): void {
+  const config = 'wrangler.jsonc'
+  const text = s.read(config)
+  const m = text.match(/"main"\s*:\s*"([^"]+)"/)
+  if (!m) throw new Error(`${config} に main が無い`)
+  const original = m[1]
+  const wrapper = `${dirname(original)}/__uc036_rewrite_answers.ts`
+  const rel = `./${original.split('/').pop()!.replace(/\.ts$/, '')}`
+  s.write(
+    wrapper,
+    [
+      `import worker from '${rel}'`,
+      `export * from '${rel}'`,
+      `const target = worker as unknown as { fetch: (req: Request, env: unknown, ctx: unknown) => Promise<Response> }`,
+      `const RULES: { path: string; body: string }[] = ${JSON.stringify(rules)}`,
+      `const HIT: string | null = ${JSON.stringify(hitUrl ?? null)}`,
+      `export default {`,
+      `  ...(worker as object),`,
+      `  async fetch(req: Request, env: unknown, ctx: unknown): Promise<Response> {`,
+      `    const res = await target.fetch(req, env, ctx)`,
+      REWRITE_BODY,
+      `  },`,
+      `}`,
+      '',
+    ].join('\n'),
+  )
+  s.write(config, text.replace(m[0], `"main": "${wrapper}"`))
+}
+
+/** app の答えのうち rules に当たる 2xx の GET の答えを書き換える包み（このプロセスの中に立てる配備に使う）。 */
+export function rewrittenApp(app: FetchApp, rules: AnswerRewrite[], hitUrl?: string): FetchApp {
+  const rewrite = new Function('RULES', 'HIT', 'req', 'res', `return (async () => {${REWRITE_BODY}})()`) as (
+    rules: AnswerRewrite[],
+    hit: string | null,
+    req: Request,
+    res: Response,
+  ) => Promise<Response>
+  return {
+    fetch: async (req, env, ctx) => rewrite(rules, hitUrl ?? null, req, await app.fetch(req, env, ctx)),
+  }
+}
 export const checkSsoFlow = (s: Shadow) => runTool(s, ['python3', 'scripts/check_sso_flow.py'], { timeoutMs: 120_000 })
 
 /**
@@ -792,15 +914,22 @@ export function learningDbOf(s: Shadow, key: string): string | null {
  * 検査用のアカウントの用意（auditFixtures）の前提（UC-036 の事前条件）: 学び key の配備を、まなびばの場所を検査用のアカウントの道具が
  * 起こす手元の SSO の偽物の場所、共有秘密をその偽物と同じ値（正本は scripts/audit_fixtures.mjs）にして、port に起こす。
  * 配備の道具（wrangler dev）は起こさず、学び側の app を影の根に写した手元の保存先で、このプロセスの中で手元の口に立てる。
+ * rewrite があれば、app の答えのうち当たる物を書き換えて返す（REQ-667 の、配備が成功の状態で読めない答えを返す場合）。
  */
-export async function startAuditDeployment(s: Shadow, key = 'ip', port = 8787): Promise<() => Promise<void>> {
+export async function startAuditDeployment(
+  s: Shadow,
+  key = 'ip',
+  port = 8787,
+  rewrite?: { rules: AnswerRewrite[]; hitUrl?: string },
+): Promise<() => Promise<void>> {
   const fake = (await import(join(ROOT, 'scripts', 'audit_fixtures.mjs'))) as {
     SSO_FAKE_URL: string
     SSO_FAKE_SECRET: string
   }
   const file = learningDbOf(s, key)
   if (!file) throw new Error(`前提: 影の根に学び ${key} の手元の保存先が無い`)
-  const app = (await import('../../src/server/index')).default as unknown as FetchApp
+  const plain = (await import('../../src/server/index')).default as unknown as FetchApp
+  const app = rewrite ? rewrittenApp(plain, rewrite.rules, rewrite.hitUrl) : plain
   const sqlite = new DatabaseSync(file)
   const env = {
     EXAM: key,

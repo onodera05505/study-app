@@ -1,11 +1,19 @@
 import { afterAll, describe, expect, it, vi } from 'vitest'
 import {
   REGISTRY_KEYS,
+  auditFixtures,
   auditScreens,
+  emptyTemp,
+  hitCounter,
+  rewriteAnswers,
+  startAuditDeployment,
+  toolErrorOf,
+  type AnswerRewrite,
   checkApi,
   checkPortalApi,
   checkSsoFlow,
   crashed,
+  learningDbOf,
   learningDbs,
   removeTemps,
   rowsOf,
@@ -22,6 +30,7 @@ import {
   type ToolRun,
 } from './UC-036_fixture'
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
+import { join } from 'node:path'
 
 /** UC-036 手元の配備に API と画面を当てる道具の境界（入口と影の根は UC-036_fixture.ts）。
  *  道具は手元に配備を起こす（wrangler dev。決まった口を使う）ので、このファイルのテストは 1 つずつ順に回す。
@@ -84,6 +93,11 @@ function screensRuns(): Promise<Screens> {
 }
 const auditUsers = (users: Record<string, unknown>) =>
   Object.fromEntries(Object.entries(users).map(([f, us]) => [f, (us as { id: string; email: string }[]).filter((u) => u.email.startsWith(AUDIT))]))
+
+/** describe をまたいで使い回す回（画面の採取の失敗の回を REQ-667 と REQ-668 で使う）。 */
+const shared: { fixturesWrongShape: () => Promise<{ r: ToolRun; hits: string[]; shots: string[]; temp: string }> } = {
+  fixturesWrongShape: () => Promise.reject(new Error('REQ-667 の describe が先に定義されていない')),
+}
 
 describe('UC-036 配る前に手元の配備に API と画面を当てる', () => {
   describe('学びの API の検査（checkApi）（REQ-596・REQ-597）', () => {
@@ -231,6 +245,40 @@ describe('UC-036 配る前に手元の配備に API と画面を当てる', () =
       expect(shots, '前の回の写しが消えた').toContain(OLD)
       expect(shots.filter((n) => n !== OLD).length, r.out.slice(-2000)).toBe(1)
     })
+
+    /** @covers REQ-664#other-files-kept */
+    it('出力先に前の回の写しと一覧と一緒に採取が書いていない文字のファイルがあると、写しと一覧を消して撮り、そのファイルは中身ごと残る', async () => {
+      const s = toolShadow()
+      const NOTES = 'notes.txt'
+      const notes = '採取が書いていない覚え書き\n'
+      s.write(`screens-other/${OLD}`, '前の回の写し')
+      s.write('screens-other/manifest.json', JSON.stringify({ shots: [{ file: OLD }] }))
+      s.write(`screens-other/${NOTES}`, notes)
+      const r = await auditScreens(s, ['ip', '--out', s.path('screens-other'), '--limit', '1'])
+      expectEnded(r, 0)
+      const shots = pngs(s.path('screens-other'))
+      expect(shots, '前の回の写しが残っている').not.toContain(OLD)
+      expect(shots.length, r.out.slice(-2000)).toBe(1)
+      expect(s.read('screens-other/manifest.json'), '一覧が前の回の写しを挙げている').not.toContain(OLD)
+      expect(existsSync(s.path(`screens-other/${NOTES}`)), `${NOTES} が消えた`).toBe(true)
+      expect(s.read(`screens-other/${NOTES}`), `${NOTES} の中身が変わった`).toBe(notes)
+    })
+  })
+
+  describe('画面の採取に登録簿に無い学びを指定する（REQ-674）', () => {
+    /** @covers REQ-674#unknown-learning */
+    it('登録簿に無い学び（zzz）を指定すると、配備を起こさず、出力先に写しも一覧も書かず、登録簿の学びをすべて示して失敗で終える', async () => {
+      const s = toolShadow({ stores: false })
+      const out = s.path('screens-unknown')
+      // 道具が失敗の回の記録を残しても影の根の中に収まるよう、一時の置き場を影の根の隣の空の置き場にする
+      const r = await auditScreens(s, ['zzz', '--out', out, '--limit', '1'], { TMPDIR: emptyTemp(s) })
+      expectEnded(r, 1)
+      for (const key of REGISTRY_KEYS) expect(r.out, `指定できる学び ${key} を示していない`).toContain(key)
+      expect(existsSync(s.path('.wrangler')), '配備を起こした（手元の保存先ができた）').toBe(false)
+      expect(existsSync(s.path('dist')), '配備のために組み立てた').toBe(false)
+      expect(pngs(out), '写しを撮った').toEqual([])
+      expect(existsSync(join(out, 'manifest.json')), '一覧を書いた').toBe(false)
+    })
   })
 
   describe('手元の SSO の一巡（checkSsoFlow）（REQ-629）', () => {
@@ -274,6 +322,192 @@ describe('UC-036 配る前に手元の配備に API と画面を当てる', () =
           for (const close of closers) await close()
         }
       })
+    })
+  })
+
+  describe('配備が成功の状態で読めない答えを返す（REQ-667）', () => {
+    /** 論点の一覧（listTopics。UC-002 の契約の GET /api/topics）。検査用のアカウントの用意に要る問い合わせ。 */
+    const TOPIC_LIST = '^/api/topics$'
+    /** 単元の一覧（listCategories。UC-002 の契約の GET /api/categories）。撮る画面の組み立てに要る問い合わせ。 */
+    const CATEGORY_LIST = '^/api/categories$'
+    /** 論点の詳細（getTopicDetail。UC-002 の契約の GET /api/topics/{id}）のうち、影の根の学び ip の保存先で番号の最も小さい論点の 1 件。 */
+    const oneTopicDetail = (sh: Shadow) => {
+      const f = learningDbOf(sh, 'ip')
+      if (!f) throw new Error('前提: 影の根に学び ip の手元の保存先が無い')
+      const { id } = withDb(f, (db) => db.prepare('SELECT MIN(id) AS id FROM topics').get() as { id: number })
+      return `^/api/topics/${id}$`
+    }
+    /** 中身の無い答え（本文が空）と、JSON として読めるが期待した一覧の欄を持たない答え。 */
+    const EMPTY = ''
+    const NO_LIST = '{"structure":null}'
+    /** 期待した一覧の欄を配列で持つが、その要素に null を含む答え（論点の一覧の topics と、単元の一覧の categories）。 */
+    const NULL_TOPIC = '{"topics":[null]}'
+    const NULL_CATEGORY = '{"categories":[null]}'
+
+    type Rewritten = { r: ToolRun; hits: string[]; shots: string[]; temp: string }
+    const runs = new Map<string, Promise<Rewritten>>()
+    /** 学び ip の配備の答えを rules で書き換え、組を 2 つに絞って画面を採取する（一時の置き場は空の置き場にする。REQ-668 と結果を使い回す）。 */
+    const screensWith = (name: string, rulesOf: AnswerRewrite[] | ((sh: Shadow) => AnswerRewrite[])) => {
+      if (!runs.has(name))
+        runs.set(
+          name,
+          withPorts(async () => {
+            const s = toolShadow()
+            const counter = await hitCounter()
+            try {
+              rewriteAnswers(s, typeof rulesOf === 'function' ? rulesOf(s) : rulesOf, counter.url)
+              const temp = emptyTemp(s)
+              const r = await auditScreens(s, ['ip', '--out', s.path('screens'), '--limit', '2'], { TMPDIR: temp })
+              return { r, hits: counter.hits(), shots: pngs(s.path('screens')), temp }
+            } finally {
+              await counter.close()
+            }
+          }),
+        )
+      return runs.get(name)!
+    }
+    /** 写しを撮らずに、書き換えた問い合わせ（経路 path）を示して UPSTREAM_UNAVAILABLE で失敗で終えたか。 */
+    const expectRefused = (x: Rewritten, path: string) => {
+      expect(x.hits.length, `書き換えた答えを返していない（問い合わせが来ていない）: ${x.r.out.slice(-2000)}`).toBeGreaterThan(0)
+      expectEnded(x.r, 1)
+      expect(x.shots, '写しを撮った').toEqual([])
+      const e = toolErrorOf(x.r.stdout)
+      expect(e?.code, `断りの名前が無い: ${x.r.stdout.slice(-2000)}`).toBe('UPSTREAM_UNAVAILABLE')
+      expect(e?.reason, '読めなかった問い合わせを示していない').toContain(path)
+    }
+    shared.fixturesWrongShape = () => screensWith('fixtures-wrong-shape', [{ path: TOPIC_LIST, body: NO_LIST }])
+
+    /** @covers REQ-667#fixtures-empty-answer */
+    it('画面の採取で、論点の一覧が成功の状態で本文の無い答えを返すと、写しを撮らずに、その問い合わせを示して UPSTREAM_UNAVAILABLE で失敗で終える', async () => {
+      expectRefused(await screensWith('fixtures-empty', [{ path: TOPIC_LIST, body: EMPTY }]), '/api/topics')
+    })
+
+    /** @covers REQ-667#fixtures-wrong-shape */
+    it('画面の採取で、論点の一覧が成功の状態で一覧の欄（topics）を持たない答えを返すと、写しを撮らずに、その問い合わせを示して UPSTREAM_UNAVAILABLE で失敗で終える', async () => {
+      expectRefused(await shared.fixturesWrongShape(), '/api/topics')
+    })
+
+    /** @covers REQ-667#screens-wrong-shape */
+    it('画面の採取で、単元の一覧が成功の状態で一覧の欄（categories）を持たない答えを返すと、写しを撮らずに、その問い合わせを示して UPSTREAM_UNAVAILABLE で失敗で終える', async () => {
+      expectRefused(await screensWith('screens-wrong-shape', [{ path: CATEGORY_LIST, body: '{}' }]), '/api/categories')
+    })
+
+    /** @covers REQ-667#fixtures-item-wrong-shape */
+    it('画面の採取で、論点の一覧が成功の状態で一覧の欄（topics）は持つが要素に null を含む答えを返すと、写しを撮らずに、その問い合わせを示して UPSTREAM_UNAVAILABLE で失敗で終える', async () => {
+      expectRefused(await screensWith('fixtures-item-wrong-shape', [{ path: TOPIC_LIST, body: NULL_TOPIC }]), '/api/topics')
+    })
+
+    /** @covers REQ-667#screens-item-wrong-shape */
+    it('画面の採取で、単元の一覧が成功の状態で一覧の欄（categories）は持つが要素に null を含む答えを返すと、写しを撮らずに、その問い合わせを示して UPSTREAM_UNAVAILABLE で失敗で終える', async () => {
+      expectRefused(await screensWith('screens-item-wrong-shape', [{ path: CATEGORY_LIST, body: NULL_CATEGORY }]), '/api/categories')
+    })
+
+    /** @covers REQ-667#fixtures-alone-wrong-shape */
+    it('検査用のアカウントの用意を単独で回し、論点の一覧が成功の状態で一覧の欄を持たない答えを返すと、その問い合わせを示して UPSTREAM_UNAVAILABLE で失敗で終える', async () => {
+      await withPorts(async () => {
+        const s = toolShadow()
+        const counter = await hitCounter()
+        const close = await startAuditDeployment(s, 'ip', 8787, { rules: [{ path: TOPIC_LIST, body: NO_LIST }], hitUrl: counter.url })
+        try {
+          const r = await auditFixtures(s, ['--base', 'http://127.0.0.1:8787', '--json', s.path('fixtures.json')])
+          expect(counter.hits().length, `書き換えた答えを返していない（問い合わせが来ていない）: ${r.out.slice(-2000)}`).toBeGreaterThan(0)
+          expectEnded(r, 1)
+          const e = toolErrorOf(r.stdout)
+          expect(e?.code, `断りの名前が無い: ${r.stdout.slice(-2000)}`).toBe('UPSTREAM_UNAVAILABLE')
+          expect(e?.reason, '読めなかった問い合わせを示していない').toContain('/api/topics')
+        } finally {
+          await close()
+          await counter.close()
+        }
+      })
+    })
+
+    /** @covers REQ-667#topic-detail-skipped */
+    it('論点の詳細が成功の状態で期待と違う形の答えを返しても、断らずにその 1 件を飛ばして撮り、成功で終える', async () => {
+      const x = await screensWith('topic-detail', (sh) => [{ path: oneTopicDetail(sh), body: '{}' }])
+      expect(x.hits.length, `書き換えた論点の詳細を問い合わせていない: ${x.r.out.slice(-2000)}`).toBeGreaterThan(0)
+      expectEnded(x.r, 0)
+      expect(toolErrorOf(x.r.stdout), '断った').toBeNull()
+      expect(x.shots.length, x.r.out.slice(-2000)).toBeGreaterThan(0)
+    })
+  })
+
+  describe('道具がその回に一時の置き場に作る記録（REQ-668）', () => {
+    /**
+     * 道具の回の記録でない物: 道具が起こす実行環境（Node と wrangler）が一時の置き場に置き、回をまたいで使い回す控え
+     * （Node のコンパイルの控えと、wrangler の新しい版の確かめの控え）。
+     */
+    const RUNTIME_CACHES = new Set(['node-compile-cache', 'update-check'])
+    /** 回した後に一時の置き場に残る、道具の回の記録（置き場は回す前に空）。 */
+    const leftIn = (temp: string) => readdirSync(temp).filter((n) => !RUNTIME_CACHES.has(n))
+    /** 道具の出力が示す、一時の置き場の中で今も在る場所。 */
+    const shownKept = (r: ToolRun, temp: string) => {
+      const text = `${r.stdout}\n${r.stderr}`
+      const forms = [temp, temp.replace(/^\/private\//, '/')]
+      const found: string[] = []
+      for (const form of forms) {
+        const re = new RegExp(`${form.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[^\\s'"、。）),]*`, 'g')
+        for (const m of text.matchAll(re)) found.push(m[0])
+      }
+      return found.filter((p) => !forms.includes(p.replace(/\/+$/, '')) && existsSync(p))
+    }
+    const expectKept = (r: ToolRun, temp: string) => {
+      expect(leftIn(temp).length, `一時の置き場に記録が残っていない: ${r.out.slice(-2000)}`).toBeGreaterThan(0)
+      expect(shownKept(r, temp).length, `残した記録の場所を示していない: ${r.out.slice(-2000)}`).toBeGreaterThan(0)
+    }
+
+    /** @covers REQ-668#check-api-success-removed */
+    it('学びの API の検査が成功で終えると、その回が一時の置き場に作った記録は残らない', async () => {
+      const s = toolShadow()
+      const temp = emptyTemp(s)
+      const r = await checkApi(s, 'ip', { TMPDIR: temp })
+      expectEnded(r, 0)
+      expect(leftIn(temp), '一時の置き場に残った物').toEqual([])
+    })
+
+    /** @covers REQ-668#check-api-failure-kept */
+    it('学びの API の検査が失敗で終えると、その回が一時の置き場に作った記録が残り、その場所が出力に示される', async () => {
+      const s = toolShadow()
+      stripResponseHeader(s, 'wrangler.jsonc', HEADER)
+      const temp = emptyTemp(s)
+      const r = await checkApi(s, 'ip', { TMPDIR: temp })
+      expectEnded(r, 1)
+      expectKept(r, temp)
+    })
+
+    /** @covers REQ-668#portal-api-success-removed */
+    it('まなびばの API の検査が成功で終えると、その回が一時の置き場に作った記録は残らない', async () => {
+      const s = toolShadow()
+      const temp = emptyTemp(s)
+      const r = await checkPortalApi(s, { TMPDIR: temp })
+      expectEnded(r, 0)
+      expect(leftIn(temp), '一時の置き場に残った物').toEqual([])
+    })
+
+    /** @covers REQ-668#portal-api-failure-kept */
+    it('まなびばの API の検査が失敗で終えると、その回が一時の置き場に作った記録が残り、その場所が出力に示される', async () => {
+      const s = toolShadow()
+      stripResponseHeader(s, 'portal/wrangler.jsonc', HEADER)
+      const temp = emptyTemp(s)
+      const r = await checkPortalApi(s, { TMPDIR: temp })
+      expectEnded(r, 1)
+      expectKept(r, temp)
+    })
+
+    /** @covers REQ-668#screens-success-removed */
+    it('画面の採取が成功で終えると、その回が一時の置き場に作った記録は残らない', async () => {
+      const s = toolShadow()
+      const temp = emptyTemp(s)
+      const r = await auditScreens(s, ['ip', '--out', s.path('screens'), '--limit', '1'], { TMPDIR: temp })
+      expectEnded(r, 0)
+      expect(leftIn(temp), '一時の置き場に残った物').toEqual([])
+    })
+
+    /** @covers REQ-668#screens-failure-kept */
+    it('画面の採取が失敗で終えると（論点の一覧が読めない答えを返す配備）、その回が一時の置き場に作った記録が残り、その場所が出力に示される', async () => {
+      const x = await shared.fixturesWrongShape()
+      expect(x.r.status, x.r.out.slice(-2000)).toBe(1)
+      expectKept(x.r, x.temp)
     })
   })
 })

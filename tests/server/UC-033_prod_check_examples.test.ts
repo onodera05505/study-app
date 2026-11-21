@@ -84,7 +84,8 @@ describe('UC-033 確定した契約の実例を実装に当て、契約どおり
         expect(verdictOf(run, entry(name))?.verdict, `経路を開かない道具で ${keyOf(entry(name))} が通った:\n${tailOf(run)}`).not.toBe('pass')
         expect(run.code, `経路を開かない道具で通った:\n${tailOf(run)}`).not.toBe(0)
         expect(run.code, '止められて終わった').not.toBe(-1)
-        expect(`${run.stdout}\n${run.stderr}`, '通らなかった実例が挙がっていない').toContain(`openDeploymentEntry.${name}`)
+        // 挙げたことは、結果（--json の results）にその実例が失敗の判定で載ることで見る（出力の文言の形には寄らない）
+        expect(verdictOf(run, entry(name))?.verdict, `通らなかった ${keyOf(entry(name))} が失敗として挙がっていない:\n${tailOf(run)}`).toBe('fail')
       }, runsTestMs())
     }
   })

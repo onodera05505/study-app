@@ -126,7 +126,7 @@ describe('UC-022 資格対策の問題解説を配る前に教材の門で確か
     })
   })
 
-  describe('登録簿に無い学び・資格対策でない学び・入力の束の置き場が無いときは、何も確かめずに断る（REQ-394）', () => {
+  describe('登録簿に無い学び・資格対策でない学び・入力の束の置き場が無い・正解表が無いか読めないときは、何も確かめずに断る（REQ-394）', () => {
     /** @covers REQ-394#bad-arguments */
     it('知らない名前の引数・値の無い引数は、INVALID_INPUT で断る（場合ごと）', () => {
       const ws = makeWorkspace()
@@ -164,9 +164,34 @@ describe('UC-022 資格対策の問題解説を配る前に教材の門で確か
     it('資格対策でない学びで入力の束の置き場も無いときは、INVALID_INPUT で断る', () => {
       expectRefusal(check(makeWorkspace(), 'data/itc', `${DATA}/explanation_bundles_x`), 'INVALID_INPUT')
     })
+
+    /** @covers REQ-394#answer-keys-missing */
+    it('正解表の無い学びは、壊れた問題解説があっても何も確かめずに NOT_FOUND で断る', () => {
+      const ws = makeWorkspace()
+      ws.remove(`${DATA}/answer_keys.json`)
+      ws.write(explanationsFile('expl_02'), '{"bundle": "expl_02", "explanations": [')
+      expectRefusal(check(ws), 'NOT_FOUND')
+    })
+
+    /** @covers REQ-394#answer-keys-unreadable */
+    it('JSON として読めない正解表の学びは、何も確かめずに INVALID_INPUT で断る', () => {
+      const ws = makeWorkspace()
+      ws.write(`${DATA}/answer_keys.json`, '{"2018h30a": {"1": "ア", ')
+      expectRefusal(check(ws), 'INVALID_INPUT')
+    })
+
+    /** @covers REQ-394#answer-key-value-not-string */
+    it('正解が文字列でない値（2019h31h の 5 が ["ア"]）を持つ正解表の学びは、壊れた問題解説があっても何も確かめずに INVALID_INPUT で断る', () => {
+      const ws = makeWorkspace()
+      const keys = ws.readJson(`${DATA}/answer_keys.json`)
+      keys['2019h31h']['5'] = ['ア']
+      ws.write(`${DATA}/answer_keys.json`, keys)
+      ws.write(explanationsFile('expl_02'), '{"bundle": "expl_02", "explanations": [')
+      expectRefusal(check(ws), 'INVALID_INPUT')
+    })
   })
 
-  describe('読めないファイル・問題解説の無い問題・2 つ以上ある問題は止める（REQ-395）', () => {
+  describe('読めないファイル（過去問を含む）・問題解説の無い問題・2 つ以上ある問題は止める（REQ-395）', () => {
     /** @covers REQ-395#explanations-file-unreadable */
     it('途中で途切れた問題解説のファイル（書き手が書いている途中）は、unreadableOutput でそのファイルを挙げて止める', () => {
       const ws = makeWorkspace()
@@ -192,6 +217,16 @@ describe('UC-022 資格対策の問題解説を配る前に教材の門で確か
       const ws = makeWorkspace()
       ws.write(bundleFile('expl_02'), '{"bundle": "expl_02", "topics": [')
       expectStop(check(ws), 'unreadableOutput', 'expl_02')
+    })
+
+    /** @covers REQ-395#past-questions-unreadable */
+    it('1 問（6）の問番号が文字列の過去問のファイル（2019h31h）が 1 つあり、ほかの回（2018h30a）が読める学びは、そのファイルを挙げて unreadableOutput で止める', () => {
+      const ws = makeWorkspace()
+      const file = `${DATA}/questions/2019h31h.json`
+      const doc = ws.readJson(file)
+      doc.questions.find((q: Json) => q.number === 6).number = '6'
+      ws.write(file, doc)
+      expectStop(check(ws), 'unreadableOutput', '2019h31h')
     })
 
     /** @covers REQ-395#explanations-file-missing */
@@ -242,6 +277,16 @@ describe('UC-022 資格対策の問題解説を配る前に教材の門で確か
     /** @covers REQ-397#choice-note-at-limit */
     it('用語の説明に使う選択肢の説明がちょうど 90 字なら、警告しない', () => {
       expectCleanPass(withQ5((x) => (choice(x, 'イ').note = politeOf(LIMITS.choiceNoteLength))))
+    })
+
+    /** @covers REQ-397#correct-choice-note-over-limit */
+    it('用語を持つ正解の選択肢の説明が「正解。」を含めて 91 字だと、止めずに choiceNoteLong で問題と選択肢を挙げる', () => {
+      const r = withQ5((x) => {
+        const a = choice(x, 'ア')
+        a.term = '請負契約'
+        a.note = `正解。${politeOf(LIMITS.choiceNoteLength + 1 - '正解。'.length)}`
+      })
+      expectWarningOnly(r, 'choiceNoteLong', '2019h31h-q5', 'ア')
     })
   })
 
@@ -298,6 +343,13 @@ describe('UC-022 資格対策の問題解説を配る前に教材の門で確か
       expectStop(withExplanations('expl_02', (xs) => xs.push({ ...q3, question_id: '2018h30a-q9' }), ws), 'questionMissing', '2018h30a-q9')
     })
 
+    /** @covers REQ-399#no-past-questions-readable */
+    it('過去問のファイルがどれも読めない（途切れている）学びの問題解説は、questionMissing で問題を挙げて止める', () => {
+      const ws = makeWorkspace()
+      for (const exam of ['2018h30a', '2019h31h']) ws.write(`${DATA}/questions/${exam}.json`, `{"exam": "${exam}", "questions": [`)
+      expectStop(check(ws), 'questionMissing', '2019h31h-q5')
+    })
+
     /** @covers REQ-399#content-key-unknown */
     it('同一内容の鍵が過去問のどれにも無い問題解説は、contentKeyMismatch で問題を挙げて止める', () => {
       expectStop(withQ5((x) => (x.content_key = '0000000000000000')), 'contentKeyMismatch', '2019h31h-q5')
@@ -334,6 +386,33 @@ describe('UC-022 資格対策の問題解説を配る前に教材の門で確か
       const quoted = text.slice(0, LIMITS.quoteLength - 1)
       const r = withExplanations('expl_01', (xs) => (explanation(xs, '2018h30a-q2').correct_reason = `問いは「${quoted}」と聞いています。`))
       expectNoStop(r, 'pastQuestionQuote')
+    })
+
+    /** @covers REQ-400#no-match-across-text-and-choices */
+    it('過去問の本文の末尾 15 字と選択肢アの先頭 15 字をつないだ 30 字だけが一致する問題解説は、pastQuestionQuote で止めない', () => {
+      // どの入力の束にも無い過去問 2018h30a-q4 の選択肢アを 15 字以上にして、本文の末尾とつないだ 30 字を正解の根拠に書く
+      const ws = makeWorkspace()
+      const file = `${DATA}/questions/2018h30a.json`
+      const doc = ws.readJson(file)
+      const q4 = doc.questions.find((q: Json) => q.number === 4)
+      q4.choices['ア'] = '運用の手順を決めて毎日の点検を続ける担当の役目'
+      ws.write(file, doc)
+      const half = LIMITS.quoteLength / 2
+      const joined = `${q4.text.slice(-half)}${q4.choices['ア'].slice(0, half)}`
+      const r = withExplanations('expl_01', (xs) => (explanation(xs, '2018h30a-q2').correct_reason = `問いは「${joined}」と聞いています。`), ws)
+      expectNoStop(r, 'pastQuestionQuote')
+    })
+
+    /** @covers REQ-400#match-across-explanation-fields */
+    it('正解の根拠の末尾 15 字と選択肢アの説明の先頭 15 字をつなぐと過去問（2018h30a-q2）の本文の 30 字と一致する問題解説（2018h30a-q3）は、pastQuestionQuote で止める', () => {
+      // 2018h30a-q3 の正解はウなので、選択肢アの説明は「正解」で始めなくてよい
+      const half = LIMITS.quoteLength / 2
+      const r = withExplanations('expl_02', (xs) => {
+        const x = explanation(xs, '2018h30a-q3')
+        x.correct_reason = `問いの書き出しは${text.slice(0, half)}`
+        choice(x, 'ア').note = `${text.slice(half, half * 2)}と続く問いの言い方です。`
+      })
+      expectStop(r, 'pastQuestionQuote', '2018h30a-q3')
     })
   })
 

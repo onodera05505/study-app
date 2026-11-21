@@ -10,8 +10,11 @@
  * - badArguments: 同じ学び（入力の束 1 つ）を置き、知らない名前の引数を渡す
  * - unknownLearning（zzz）・notQualification（itc）: 同じ形の学びを置き、問題解説のファイルは途中で途切れている（確かめれば止まる）
  * - bundlesMissing（ip）・notQualificationBeforeBundlesMissing（itc）: 学びはあり、request の bundles の置き場が無い
+ * - answerKeysMissing（fe）: 同じ形の学びから正解表を除き、問題解説のファイルは途中で途切れている（確かめれば止まる）
+ * - answerKeysUnreadable（ap）: 同じ形の学びの正解表が途中で途切れている
  */
 
+import { rm } from 'node:fs/promises'
 import { defineHandler, Unanswerable } from '../kit/protocol'
 import { contentKeyOf, inShadow, keyOf, runScript, writeJson } from '../kit/tb'
 import { answerOf, argsOf } from '../kit/td'
@@ -74,6 +77,14 @@ const PRECONDITIONS: Record<string, (shadow: Shadow, key: string) => Promise<voi
   notQualification: (shadow, key) => writeExplanationLearning(shadow, key, 4, true),
   bundlesMissing: (shadow, key) => writeExplanationLearning(shadow, key, 4, false),
   notQualificationBeforeBundlesMissing: (shadow, key) => writeExplanationLearning(shadow, key, 4, false),
+  answerKeysMissing: async (shadow, key) => {
+    await writeExplanationLearning(shadow, key, 4, true)
+    await rm(shadow.path(`data/${key}/answer_keys.json`), { force: true })
+  },
+  answerKeysUnreadable: async (shadow, key) => {
+    await writeExplanationLearning(shadow, key, 4, false)
+    await shadow.write(`data/${key}/answer_keys.json`, `{"${EXAM}": {"1": "ア", `)
+  },
 }
 
 /**

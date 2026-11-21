@@ -164,6 +164,14 @@ describe('UC-021 ロードマップ型の学び全体を配る前に教材の門
       l.raw['roadmap.json'] = JSON.stringify({ group_by: 'chapter' })
       expectRefused(runGate(l), 'INVALID_INPUT')
     })
+    // @covers REQ-375#roadmap-unit-not-in-shape
+    it('到達基準（goals）が並びでない単位を持つロードマップは、何も確かめずに INVALID_INPUT で断り、最後の行が断りの 1 行', () => {
+      const l = learning('eng', 6)
+      l.raw['roadmap.json'] = JSON.stringify({ ...l.roadmap, units: l.roadmap.units.map((u, i) => (i === 0 ? { ...u, goals: 1 } : u)) })
+      const r = runGate(l)
+      expectRefused(r, 'INVALID_INPUT')
+      expect(r.json?.error?.code, `最後の行が断りの 1 行でない: ${r.stdout.slice(-400)}`).toBe('INVALID_INPUT')
+    })
     // @covers REQ-375#not-roadmap-before-roadmap-missing
     it('ロードマップ型でなく、ロードマップも無い学び（ip）は、ロードマップ型でないとして INVALID_INPUT で断る', () => {
       const dir = workspace()
@@ -279,6 +287,13 @@ describe('UC-021 ロードマップ型の学び全体を配る前に教材の門
     // @covers REQ-380#material-file-unreadable
     it('JSON として読めない教材のファイルを、そのファイルを挙げて止める', () => {
       expectStop(STOPPED(), 'unreadableOutput', BROKEN_MATERIAL_FILE.replace(/\.json$/, ''))
+    })
+    // @covers REQ-380#material-sources-not-in-shape
+    it('出典が並びの形の文字列（"[{...}]"）の教材を持つファイルを、そのファイルを挙げて unreadableOutput で止める', () => {
+      const l = learning('eng', 12)
+      const m = materialAt(l, 0)
+      l.raw['materials/bundle_01.json'] = JSON.stringify({ bundle: 'bundle_01', materials: [{ ...m, sources: JSON.stringify(m.sources) }] })
+      expectStop(runGate(l), 'unreadableOutput', 'bundle_01')
     })
     // @covers REQ-380#duplicate-material
     it('同じ論点の教材が 2 つのファイルにあると止める', () => {
@@ -463,6 +478,13 @@ describe('UC-021 ロードマップ型の学び全体を配る前に教材の門
     // @covers REQ-387#too-few-questions
     it('問題が 1 単位あたりの数より少ない単位を questionCount で止める', () => {
       expectStop(STOPPED(), 'questionCount', ...stopUnit('oneQuestion'))
+    })
+    // @covers REQ-387#no-question-files
+    it('どの単位にも教材があり確認問題のファイルが 1 つも無い学びは、各単位を questionCount で止める', () => {
+      const l = learning('eng', 12)
+      l.questions = {}
+      const r = runGate(l)
+      for (const u of l.roadmap.units) labelled(u.term, () => expectStop(r, 'questionCount', ...unitNeedles(u)))
     })
   })
 
@@ -758,6 +780,47 @@ describe('UC-021 ロードマップ型の学び全体を配る前に教材の門
         if (i < 2 * LIMITS.bothLongestMinUnits) q.choices[q.answer] = l.fresh(11)
       })
       expectWarning(r, 'bothLongestInUnit')
+    })
+  })
+
+  describe('集めた資料のファイルが読めないあいだは、そのファイルを飛ばす（REQ-669）', () => {
+    /** 読めない資料のファイル（sources/broken.json）を足した msg と、そのファイルにしか無い資料の名前。 */
+    const withBrokenSource = (content: (name: string) => string) => {
+      const l = cleanMsg()
+      const name = `${l.fresh(6)}の記録`
+      l.raw['sources/broken.json'] = content(name)
+      return { l, name }
+    }
+    const notJson = (name: string) => `{"sources": [{"name": "${name}"}`
+    const BROKEN_SOURCE = once(() => runGate(withBrokenSource(notJson).l))
+    /** 人が読む行（最後の行より前の行）の数。 */
+    const humanLines = (r: Run) => r.lines.length - 1
+
+    // @covers REQ-669#unreadable-source-skipped
+    it('JSON として読めない資料のファイルがあっても、止めも警告もせず、人が読む注の行を 1 行足す', () => {
+      const r = BROKEN_SOURCE()
+      expectPassed(r)
+      expect(r.json.warnings).toEqual(CLEAN_MSG().json.warnings)
+      expect(humanLines(r), `${r.stdout}\n--- 読めるときの出力 ---\n${CLEAN_MSG().stdout}`).toBe(humanLines(CLEAN_MSG()) + 1)
+    })
+    // @covers REQ-669#source-file-not-in-shape
+    it('sources が並びでない資料のファイル（{"sources": 5}）があっても、止めも警告もせず、人が読む注の行を 1 行足し、最後の行が機械向けの 1 行', () => {
+      const r = runGate(withBrokenSource(() => '{"sources": 5}').l)
+      expectPassed(r)
+      expect(r.json.warnings).toEqual(CLEAN_MSG().json.warnings)
+      expect(humanLines(r), `${r.stdout}\n--- 読めるときの出力 ---\n${CLEAN_MSG().stdout}`).toBe(humanLines(CLEAN_MSG()) + 1)
+    })
+    // @covers REQ-669#other-sources-used
+    it('読めるほうの資料のファイルの名前の出典は止めない', () => {
+      const r = BROKEN_SOURCE()
+      expect(r.json, r.stderr.slice(-400)).not.toBeNull()
+      expect(findingsAbout(r.json.stops, 'unknownSource'), JSON.stringify(r.json.stops)).toEqual([])
+    })
+    // @covers REQ-669#skipped-names-unknown
+    it('読めないファイルにしか無い名前の出典は、unknownSource で止める', () => {
+      const { l, name } = withBrokenSource(notJson)
+      materialAt(l, 0).sources = [{ name, where: `${l.fresh(5)}の項目` }]
+      expectStop(runGate(l), 'unknownSource', name)
     })
   })
 

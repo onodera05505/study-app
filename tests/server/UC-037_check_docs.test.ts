@@ -157,6 +157,25 @@ describe('UC-037 配備の前に、文書の索引と門の対応表と決定の
       }
     })
 
+    // @covers REQ-601#return-line-grammar-no-central
+    it('中央の還元行の検査の道具が手元に無いときは、還元行の文法を見ず、素の「ブレイン: 無し」だけでは失敗にしない', () => {
+      const s = toolShadow()
+      const name = '作業ログ_2026-11-21_uc037文法.md'
+      // 還元行はあるが、中央の文法には合わない（素の「無し」）
+      s.write(`docs/${name}`, '# 仕込みの作業ログ\n\n文法を見ない場合の仕込み。\n\nブレイン: 無し\n')
+      append(s, INDEX, `| 仕込みの作業ログ（文法） | [\`docs/${name}\`](${name}) |`)
+      // 手元の共通の置き場を持たない HOME（中央の還元行の検査の道具も、追跡の道具の正本も無い）
+      const home = mkdtempSync(join(tmpdir(), 'uc037-home-'))
+      try {
+        const r = s.run('check_docs.py', ['--root', s.root], { HOME: home })
+        expect(crashed(r), r.out).toBe(false)
+        expect(r.out, '文法を見て作業ログを挙げた').not.toContain(name)
+        expect(r.status, r.out).toBe(0)
+      } finally {
+        rmSync(home, { recursive: true, force: true })
+      }
+    })
+
     // @covers REQ-601#all-mismatches-listed
     it('食い違いが 2 つの種類にあると、両方を挙げて失敗で終え、文書を書き換えない', () => {
       const s = toolShadow()

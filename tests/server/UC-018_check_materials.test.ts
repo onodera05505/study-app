@@ -178,7 +178,7 @@ describe('UC-018 資格対策の教材を配る前に教材の門で確かめる
     })
   })
 
-  describe('読めない教材のファイル・論点名の食い違い・学びに無い論点・束の割り当てとの違いを挙げて止める（REQ-294）', () => {
+  describe('読めない教材・過去問・束の割り当てのファイル・論点名の食い違い・学びに無い論点・束の割り当てとの違いを挙げて止める（REQ-294）', () => {
     // @covers REQ-294#file-unreadable
     it('途中で途切れた教材のファイル（書き手が書いている途中）を、そのファイルを挙げて unreadableOutput で止める', async () => {
       const l = makeLearning('unreadable')
@@ -192,6 +192,21 @@ describe('UC-018 資格対策の教材を配る前に教材の門で確かめる
       const { topic_id: _id, ...rest } = goodMaterial(1)
       l.put('materials_v3/01-2.json', { materials: [rest] })
       expectStopped(await gate(l), 'unreadableOutput', '01-2.json')
+    })
+
+    // @covers REQ-294#past-questions-unreadable
+    it('1 問が本文を欠く過去問のファイルを、そのファイルを挙げて unreadableOutput で止める', async () => {
+      const l = makeLearning('past-unreadable')
+      l.put('questions/2023r05.json', { exam: '2023r05', questions: [{ number: 1, choices: { ア: 'a', イ: 'b', ウ: 'c', エ: 'd' } }] })
+      expectStopped(await gate(l), 'unreadableOutput', '2023r05')
+    })
+
+    // @covers REQ-294#bundle-assignment-unreadable
+    it('途中で途切れた束の割り当てのファイルを、そのファイルを挙げて unreadableOutput で止める', async () => {
+      const l = makeLearning('assignment-unreadable', { materials: false })
+      l.materials('materials_v2', 'bundle_01.json', TOPICS.map((t) => goodV2(t.id)))
+      l.put('material_bundles/bundle_01.json', '{ "topics": [ { "topic_id": 1 }, ')
+      expectStopped(await gate(l), 'unreadableOutput', 'bundle_01')
     })
 
     // @covers REQ-294#term-mismatch
@@ -237,6 +252,12 @@ describe('UC-018 資格対策の教材を配る前に教材の門で確かめる
     // @covers REQ-295#uneven-cells
     it('行ごとのセルの数がヘッダとそろわない表を brokenTable で止める', async () => {
       expectStopped(await gate(withTopic1('uneven', withTable('| a | b |\n| --- | --- |\n| c | d | e |'))), 'brokenTable', '1')
+    })
+
+    // @covers REQ-295#separator-cells-not-counted
+    it('区切りの行だけがヘッダとセルの数の違う表は止めない', async () => {
+      const res = expectPassed(await gate(withTopic1('sep-cells', withTable('| a | b |\n| --- | --- | --- |\n| c | d |'))))
+      expect(kinds(res.stops)).not.toContain('brokenTable')
     })
 
     // @covers REQ-295#too-many-columns
@@ -455,6 +476,16 @@ describe('UC-018 資格対策の教材を配る前に教材の門で確かめる
     it('役割分担後の世代で常体の「。」で終わる箇条書きの項目を持つ教材を plainListEnding で警告する', () => run('plain-list-ending'))
     // @covers REQ-324#term-markup-mixed
     it('役割分担後の世代で素の太字で書いた語を本文の別の所で [[ ]] にも書いた教材を termMarkupMixed で警告する', () => run('term-markup-mixed'))
+
+    // @covers REQ-324#headed-kinds-not-on-plain
+    it('詳しい解説が見出しを持たない教材の、見出しを持つ教材の種類に当たる書き方（代表は説明の「正解はウです。」）は警告しない', async () => {
+      const l = withTopic1('headed-on-plain', (m) => {
+        m.explanation = '**記憶装置**とは、データを保つ装置です。正解はウです。\n**キーワード**：保存'
+        m.detail = '記憶装置はデータを保ちます。'
+      })
+      const res = expectPassed(await gate(l))
+      expect(findings(res.warnings, 'choiceSymbol'), JSON.stringify(res.warnings)).toEqual([])
+    })
   })
 
   describe('同じ論点の教材が 2 つ以上の世代にあるあいだ、最も後ろの世代の教材だけを確かめる（REQ-409）', () => {
@@ -481,6 +512,16 @@ describe('UC-018 資格対策の教材を配る前に教材の門で確かめる
       l.materials('materials_v3', '01-1.json', TOPICS.map((t) => goodMaterial(t.id)))
       const r = await gate(l, ['--data', DATA, '--public', PUBLIC, '--dir', `${DATA}/materials_v3`, `${DATA}/materials_v2`])
       expectStopped(r, 'termMismatch', '1')
+    })
+
+    // @covers REQ-409#older-generation-duplicate-ignored
+    it('前の世代の 2 つのファイルに重なる論点が後ろの世代にもあるとき、前の世代の重なりを duplicate で警告しない', async () => {
+      const l = makeLearning('older-dup', { materials: false })
+      l.materials('materials_v2', 'bundle_01.json', TOPICS.map((t) => goodV2(t.id)))
+      l.materials('materials_v2', 'bundle_02.json', [goodV2(1)])
+      l.materials('materials_v3', '01-1.json', TOPICS.map((t) => goodMaterial(t.id)))
+      const res = expectPassed(await gate(l))
+      expect(findings(res.warnings, 'duplicate'), JSON.stringify(res.warnings)).toEqual([])
     })
   })
 
@@ -556,7 +597,7 @@ describe('UC-018 資格対策の教材を配る前に教材の門で確かめる
     })
   })
 
-  describe('同じ世代の中で同じ論点の教材が重なれば、止めずに警告し、最も後の教材を確かめる（REQ-657）', () => {
+  describe('その論点の教材を持つ世代のうち見る世代の並びの最も後ろの世代の中で同じ論点の教材が重なれば、止めずに警告し、最も後の教材を確かめる（REQ-657）', () => {
     // @covers REQ-657#duplicate-warned
     it('同じ世代の 2 つのファイルにある論点を duplicate で警告する（止めない）', async () => {
       const l = makeLearning('dup-files')
@@ -578,6 +619,15 @@ describe('UC-018 資格対策の教材を配る前に教材の門で確かめる
       l.materials('materials_v3', '01-2.json', [{ ...goodMaterial(1), term: '後のファイルの名前' }])
       const res = expectStopped(await gate(l), 'termMismatch', '後のファイルの名前')
       expect(findings(res.stops, 'termMismatch', '前のファイルの名前')).toEqual([])
+    })
+
+    // @covers REQ-657#duplicate-only-in-older-generation
+    it('見る世代の並びの前の世代（materials_v2）の 2 つのファイルにあり、最も後ろの世代（materials_v3）には無い論点を、前の世代の置き場を挙げて duplicate で警告する（止めない）', async () => {
+      const l = makeLearning('dup-older-only', { materials: false })
+      l.materials('materials_v2', 'bundle_01.json', TOPICS.map((t) => goodV2(t.id)))
+      l.materials('materials_v2', 'bundle_02.json', [goodV2(1)])
+      l.materials('materials_v3', '01-1.json', [goodMaterial(2), goodMaterial(3)])
+      expectWarned(await gate(l), 'duplicate', 'materials_v2')
     })
   })
 })

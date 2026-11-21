@@ -307,6 +307,29 @@ describe('UC-041 過去問の回を取り込む', () => {
         'SWOT 分析': { count: 1, questions: ['2023r05-3'] },
       })
     })
+
+    // @covers REQ-639#same-question-counted-once
+    it('同じ回・同じ問番号の過去問が 2 つの分類の結果で同じ論点に入っていても、紐づく過去問に 1 回だけ載せ、出題頻度に 1 回だけ数える', async () => {
+      const s = shadow41()
+      s.json('data/ip/syllabus.json', {
+        version: 'x',
+        items: [{ number: 1, name: '経営・組織論', field: 'ストラテジ系', major_no: 1, major: '企業と法務', middle_no: 1, middle: '企業活動', terms: ['株主総会'] }],
+      })
+      s.json('data/ip/exam_labels.json', { '2024r06': '令和6年度' })
+      s.json('data/ip/answer_keys.json', { '2024r06': { 1: 'ア', 2: 'イ' } })
+      s.json('data/ip/questions/2024r06.json', { exam: '2024r06', question_count: 2, questions: [1, 2].map((n) => extractedQ(n, 1)) })
+      const c = (n: number) => ({ number: n, syllabus_item: 1, topic_term: '株主総会', topic_is_new: false, related_terms: [], confidence: 'high', notes: null })
+      // 問1 が 2 つの分類の結果の両方に入る
+      s.json('data/ip/classified/2024r06/batch_01.json', { exam: '2024r06', range: '1-2', classifications: [c(1), c(2)] })
+      s.json('data/ip/classified/2024r06/batch_02.json', { exam: '2024r06', range: '1-1', classifications: [c(1)] })
+      const r = await s.run('build_topics.py', ['--data', 'data/ip'])
+      ok(r)
+      const topics = json(s, 'data/ip/topics.json').topics as Array<{ term: string; question_count: number; questions: { exam: string; number: number }[] }>
+      const t = topics.find((x) => x.term === '株主総会')
+      expect(t, '論点が無い').toBeDefined()
+      expect(t!.questions.map((q) => `${q.exam}-${q.number}`).sort()).toEqual(['2024r06-1', '2024r06-2'])
+      expect(t!.question_count).toBe(2)
+    })
   })
 
   describe('図の位置の一覧にある問題ごとに、ページの範囲を画像として配信の置き場に書き出す（REQ-640）', () => {
@@ -357,6 +380,21 @@ describe('UC-041 過去問の回を取り込む', () => {
       s.json('data/ip/exam_labels.json', {})
       s.json('data/ip/answer_keys.json', {})
       failedWith(await s.run('build_topics.py', ['--data', 'data/ip']), 'classified')
+    })
+    // @covers REQ-641#topic-inputs-missing
+    it('回の名前の表が無ければ（論点を組む）、名前の無い例外で止まらず、無い物を 1 行で名指して失敗で終える', async () => {
+      const s = shadow41()
+      s.json('data/ip/syllabus.json', { version: 'x', items: [{ number: 1, name: '経営・組織論', field: 'ストラテジ系', major_no: 1, major: '企業と法務', middle_no: 1, middle: '企業活動', terms: [] }] })
+      s.json('data/ip/answer_keys.json', { '2024r06': { 1: 'ア' } })
+      s.json('data/ip/questions/2024r06.json', { exam: '2024r06', question_count: 1, questions: [extractedQ(1, 1)] })
+      s.json('data/ip/classified/2024r06/batch_01.json', {
+        exam: '2024r06',
+        range: '1-1',
+        classifications: [{ number: 1, syllabus_item: 1, topic_term: '株主総会', topic_is_new: false, related_terms: [], confidence: 'high', notes: null }],
+      })
+      const r = await s.run('build_topics.py', ['--data', 'data/ip'])
+      failedWith(r, 'exam_labels')
+      expect(r.out.split('\n').some((l) => l.includes('exam_labels')), `無い物を 1 行で名指していない: ${r.out.slice(-600)}`).toBe(true)
     })
     // @covers REQ-641#boxes-missing
     it('図の位置の一覧が無ければ（図を切り出す）', async () => {
