@@ -143,6 +143,7 @@ if (argv[0] === 'whoami') {
   console.log('👋 You are logged in with an OAuth Token.')
   console.log('┌──────────────┬──────────────────────────────────┐')
   console.log('│ Account Name │ Account ID                       │')
+  if (who === 'several') console.log('│ Other        │ ' + ${JSON.stringify(OTHER_ACCOUNT)} + ' │')
   console.log('│ Personal     │ ' + id + ' │')
   console.log('└──────────────┴──────────────────────────────────┘')
   process.exit(0)
@@ -482,7 +483,11 @@ export function makeShadow(name: string, opts: ShadowOptions): Shadow {
 /** 1 回の呼び出しの外の世界の決め方。 */
 export type World = {
   modes?: Partial<Record<Tool, ToolMode>>
-  whoami?: 'decided' | 'other' | 'fail'
+  /** ログイン中のアカウント（偽の whoami の答え）。'several' は 2 つを並べ、1 番目は決めたアカウントと違う物、2 番目は決めたアカウント */
+  whoami?: 'decided' | 'other' | 'fail' | 'several'
+  /** 子に渡す CLOUDFLARE_ACCOUNT_ID（向け先のアカウントの環境変数）。null は渡さない（親の環境の値も外す）。
+   *  省くと whoami に合わせた値（'other' なら違う値、'fail' なら渡さない、ほかは決めたアカウント） */
+  accountEnv?: string | null
   migrationsFail?: boolean
   queryFail?: boolean
   seedFails?: number
@@ -536,7 +541,14 @@ export function runCommand(shadow: Shadow, command: string, args: string[], worl
       STUB_APPLY_FILE: world.applySeed ? '1' : '0',
       REAL_NPX,
       CLOUDFLARE_API_TOKEN: 'stub-invalid-token-do-not-use',
-      CLOUDFLARE_ACCOUNT_ID: world.whoami === 'other' ? OTHER_ACCOUNT : world.whoami === 'fail' ? undefined : ACCOUNT,
+      CLOUDFLARE_ACCOUNT_ID:
+        world.accountEnv !== undefined
+          ? (world.accountEnv ?? undefined)
+          : world.whoami === 'other'
+            ? OTHER_ACCOUNT
+            : world.whoami === 'fail'
+              ? undefined
+              : ACCOUNT,
       HTTPS_PROXY: 'http://127.0.0.1:9',
       HTTP_PROXY: 'http://127.0.0.1:9',
       ALL_PROXY: 'http://127.0.0.1:9',

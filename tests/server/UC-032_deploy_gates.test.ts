@@ -8,7 +8,9 @@ import {
   type ShadowOptions,
   type StorageSpec,
   type Tool,
+  type LogEntry,
   type World,
+  argsOf,
   deployRuns,
   indexOf,
   inBatches,
@@ -62,6 +64,9 @@ const inputs: Input[] = [
   { name: 'roundMissing', learning: ROADMAP, remote: { topics: ordered(1) } },
   { name: 'manyRoundsMissing', learning: ROADMAP, remote: { topics: [...(ordered(MISSING) ?? []), ...unordered] } },
   { name: 'roundsUnreadable', learning: ROADMAP, remote: { topics: ordered() }, world: { queryFail: true } },
+  { name: 'severalAccounts', learning: QUALIFICATION, world: { whoami: 'several' } },
+  // ログイン中の並びは決めたアカウント（whoami の既定）のまま、向け先のアカウントの環境変数だけを違う値にする
+  { name: 'envAccountDiffers', learning: QUALIFICATION, world: { accountEnv: OTHER_ACCOUNT } },
 ]
 
 const runs: Record<string, Run> = {}
@@ -76,7 +81,8 @@ beforeAll(async () => {
     inputs.map((input) => async () => {
       const opts: ShadowOptions = { copy: ['scripts', 'src', 'public', 'portal'], remote: input.remote }
       const shadow = makeShadow(`deploy-${input.name}`, opts)
-      runs[input.name] = await runProcedure(shadow, 'deploy-pages.sh', [input.learning], input.world)
+      // 向け先のアカウントの環境変数（CLOUDFLARE_ACCOUNT_ID）は、与える入力のほかは子に渡さない
+      runs[input.name] = await runProcedure(shadow, 'deploy-pages.sh', [input.learning], { accountEnv: null, ...input.world })
     }),
     4,
   )
@@ -85,6 +91,11 @@ beforeAll(async () => {
 afterAll(async () => {
   await removeShadows()
 }, 120_000)
+
+const isWrangler = (e: LogEntry) => e.tool === 'pinned' || e.tool === 'unpinned'
+/** アカウントを照らす問い合わせ（wrangler whoami）か版の問い合わせか。 */
+const isCheckOrVersion = (e: LogEntry) => isWrangler(e) && ['whoami', '--version', '-v', 'version'].includes(argsOf(e)[0])
+const whoamiAt = (r: Run) => r.log.findIndex((e) => isWrangler(e) && argsOf(e)[0] === 'whoami')
 
 const expectNotDelivered = (r: Run, label: string) => {
   expect(deployRuns(r), `${label}: 配信している:\n${tail(r)}`).toEqual([])
@@ -103,7 +114,7 @@ describe('UC-032 配備と投入の前に門を回し、通らない物を本番
     })
   })
 
-  describe('REQ-559 ログイン中のアカウントが決めた配備のアカウントと違うか確かめられなければ、両方を示して配信しない', () => {
+  describe('REQ-559 ログイン中のアカウントか向け先のアカウントの環境変数が決めた配備のアカウントと違うか、確かめられなければ、配信しない', () => {
     // @covers REQ-559#other-account
     it('配備先に決めたアカウントと違うアカウントでログインしていると、両方のアカウントを示し、配信しないまま失敗で終わる', () => {
       const r = run('otherAccount')
@@ -117,6 +128,26 @@ describe('UC-032 配備と投入の前に門を回し、通らない物を本番
       const r = run('accountUnverifiable')
       expectNotDelivered(r, '確かめられないアカウント')
       expect(r.out, '決めたアカウントを示していない').toContain(ACCOUNT)
+    })
+
+    // @covers REQ-559#several-accounts-listed
+    it('ログイン中に 2 つのアカウントが見え、決めたアカウントが並びの 2 番目にあれば、合うとして、照らしたあとで配信の前の門（本番の保存先の構造の変更の確かめ）に進む', () => {
+      const r = run('severalAccounts')
+      const at = whoamiAt(r)
+      expect(at, `アカウントを照らしていない:\n${tail(r)}`).toBeGreaterThanOrEqual(0)
+      const gate = r.log.findIndex((e, i) => i > at && isWrangler(e) && argsOf(e)[0] === 'd1' && argsOf(e)[1] === 'migrations' && argsOf(e)[2] === 'list' && argsOf(e).includes('--remote'))
+      expect(gate, `照らしたあとで配信の前の門に進んでいない:\n${tail(r)}`).toBeGreaterThan(at)
+    })
+
+    // @covers REQ-559#env-account-differs
+    it('向け先のアカウントの環境変数が決めたアカウントと違えば、ログイン中の並びに決めたアカウントがあっても、照らすほかは何もせず、門も組み立ても配信もしないまま、食い違ったアカウントと決めたアカウントを示して失敗で終わる', () => {
+      const r = run('envAccountDiffers')
+      expectNotDelivered(r, '向け先のアカウントの環境変数が違う')
+      for (const g of GATES) expect(toolRuns(r, g), `${g} を回している`).toEqual([])
+      const others = r.log.filter((e) => !isCheckOrVersion(e)).map((e) => `${e.tool} ${argsOf(e).slice(0, 2).join(' ')}`)
+      expect(others, '照らすほかに何かをした').toEqual([])
+      expect(r.out.includes(OTHER_ACCOUNT), '食い違ったアカウント（向け先のアカウント）を示していない').toBe(true)
+      expect(r.out.includes(ACCOUNT), '決めたアカウントを示していない').toBe(true)
     })
   })
 

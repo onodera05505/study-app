@@ -2,7 +2,7 @@ import { existsSync, readdirSync, readFileSync, realpathSync, renameSync } from 
 import { join } from 'node:path'
 import { afterAll, describe, expect, it, vi } from 'vitest'
 import {
-  FAKE_SSO_SECRET, LEARNINGS, REGISTRY, ROOT, SEVERAL_ACCOUNTS, crashed, dbFile, firstIndex, learningDb, pagesCalls, portalDb, projectOf, redact, removeShadows, rows,
+  ENV_ACCOUNT_DIFFERS, FAKE_SSO_SECRET, LEARNINGS, REGISTRY, ROOT, SEVERAL_ACCOUNTS, crashed, dbFile, firstIndex, learningDb, pagesCalls, portalDb, projectOf, redact, removeShadows, rows,
   runTool, secretsPut, shadow39, sql, storageCalls, storageWrites, wranglerCalls, wrappedCalls, type LogEntry, type Run, type Shadow39, type World,
 } from './UC-039_fixture'
 import { setLocation, startCounterparts } from './UC-039_counterparts'
@@ -43,6 +43,8 @@ const appSettings = (file: string) => sql(file, "INSERT INTO app_settings (id, m
 /** 手元の閉じた口（届かない回の場所。接続は断られる）。 */
 const CLOSED_PORT = 'https://127.0.0.1:9'
 const mockOf = (key: string) => ({ size: REGISTRY[key].mockSize as number, sec: (REGISTRY[key].mockMinutes as number) * 60 })
+/** 配備の道具の呼び出しのうち、アカウントを照らす問い合わせ（whoami）と版の問い合わせのほかの物。 */
+const wranglerBeyondCheck = (r: Run) => wranglerCalls(r).filter((a) => !['whoami', '--version', '-v', 'version'].includes(a[0]))
 
 describe('UC-039 学びとまなびばを本番に用意して出し、本番の保存先を手入れする', () => {
   describe('本番の用意は、配信先が無ければ作り、構造の変更を当て、署名の秘密を新しい乱数で置き、登録の鍵は置かない（REQ-612）', () => {
@@ -104,6 +106,12 @@ describe('UC-039 学びとまなびばを本番に用意して出し、本番の
     // @covers REQ-613#unknown-learning-among
     it('登録簿に無い学びが 1 つでも混ざれば、ほかの学びも用意しない', async () => {
       nothingPrepared(await runTool(shadow39('613c'), 'bootstrap_personal.sh', ['fe', 'zzz']))
+    })
+    // @covers REQ-613#env-account-differs
+    it('向け先のアカウントの環境変数が決めたアカウントと違えば、ログイン中の並びに決めたアカウントがあっても、照らすほかは何もせず、どの学びも用意しない', async () => {
+      const r = await runTool(shadow39('613e'), 'bootstrap_personal.sh', ['fe'], ENV_ACCOUNT_DIFFERS)
+      nothingPrepared(r)
+      expect(wranglerBeyondCheck(r).length, `照らすほかに配備の道具を呼んだ: ${redact(r.out)}`).toBe(0)
     })
     // @covers REQ-613#several-accounts-listed
     it('ログイン中に 2 つのアカウントが見え、決めたアカウントが並びの 2 番目にあれば、合うとして学びの用意に進む', async () => {
@@ -201,6 +209,17 @@ describe('UC-039 学びとまなびばを本番に用意して出し、本番の
       const row = rows(file, 'SELECT mock_size, mock_time_limit_sec FROM app_settings')[0]
       expect(row.mock_size).toBe(mockOf('ap').size)
       expect(row.mock_time_limit_sec).toBe(mockOf('ap').sec)
+    })
+    // @covers REQ-616#env-account-differs
+    it('本番を指すときに、向け先のアカウントの環境変数が決めたアカウントと違えば、ログイン中の並びに決めたアカウントがあっても、照らすほかは何もせず、保存先に触らずに失敗で終える', async () => {
+      const s = shadow39('616f')
+      appSettings(learningDb(s, 'remote', 'ap'))
+      const r = await runTool(s, 'align_app_settings.sh', ['ap'], ENV_ACCOUNT_DIFFERS)
+      failed(r)
+      expect(nonEmptyLines(r).length, '理由を示していない').toBeGreaterThan(0)
+      expect(storageCalls(r).length, '保存先に触った').toBe(0)
+      expect(wranglerBeyondCheck(r).length, `照らすほかに配備の道具を呼んだ: ${redact(r.out)}`).toBe(0)
+      expect(rows(dbFile(s, 'remote', projectOf('ap').db!), 'SELECT mock_size FROM app_settings')[0].mock_size, '保存先の問題数を書き換えた').toBe(1)
     })
     // @covers REQ-616#several-accounts-listed
     it('本番を指すときに、ログイン中に 2 つのアカウントが見え、決めたアカウントが並びの 2 番目にあれば、合うとして保存先の書き換えに進む', async () => {
@@ -653,9 +672,11 @@ describe('UC-039 学びとまなびばを本番に用意して出し、本番の
     const argsOf = (e: LogEntry): string[] => (Array.isArray(e.argv) ? e.argv : [e.argv])
     /** 照らす問い合わせ（wrangler whoami）の最初の位置（無ければ -1）。 */
     const checkAt = (r: Run) => firstIndex(r, (e, a) => isWrangler(e) && a[0] === 'whoami')
-    /** 照らす問い合わせのほかに、配備の道具・外への要求・包みにした段のどれかを呼んだ記録（照らす前の版の問い合わせは数えない）。 */
+    /** 照らす問い合わせのほかに、配備の道具・外への要求・包みにした段のどれかを呼んだ記録（照らす前の版の問い合わせは数えない。
+     *  照らす問い合わせが無ければ、版の問い合わせはどれも照らす前の物として数えない）。 */
     const actions = (r: Run) => {
-      const at = checkAt(r)
+      const found = checkAt(r)
+      const at = found < 0 ? r.log.length : found
       return r.log.filter((e, i) => {
         if (isWrangler(e)) {
           const a = argsOf(e)
@@ -888,6 +909,75 @@ describe('UC-039 学びとまなびばを本番に用意して出し、本番の
         }
       }
       expect(missed, `照らしたあとで次の段に進まなかった道具:\n${missed.join('\n\n')}`).toEqual([])
+    }, 900_000)
+
+    // @covers REQ-673#env-account-differs
+    it('6 つの道具のそれぞれで、本番を指し、向け先のアカウントの環境変数が決めたアカウントと違えば、ログイン中の並びに決めたアカウントがあっても、照らすほかは何もせずに理由を示して失敗で終える', async () => {
+      const world = ENV_ACCOUNT_DIFFERS
+      const runs: Array<{ tool: string; check: () => Promise<void> }> = [
+        {
+          tool: 'finish_remote.sh',
+          check: async () => {
+            const r = await runTool(shadow39('673-env-finish', wrapAll()), 'finish_remote.sh', ['ip'], world)
+            refusedForAccount(r)
+            for (const f of FINISH_STEPS) expect(wrappedCalls(r, f).length, `${f} を回した`).toBe(0)
+          },
+        },
+        {
+          tool: 'backup_d1.sh',
+          check: async () => {
+            const s = realBackup(shadow39('673-env-backup'))
+            const r = await runTool(s, 'backup_d1.sh', ['ip'], { modes: { backup_d1: 'real' }, ...world })
+            refusedForAccount(r)
+            expect(backupFiles(s).length, '控えのファイルを書いた').toBe(0)
+          },
+        },
+        {
+          tool: 'd1_migrations.sh',
+          check: async () => {
+            const r = await runTool(shadow39('673-env-mig', { remote: { applied: 10 } }), 'd1_migrations.sh', ['ip', 'apply'], { modes: { backup_d1: 'real' }, ...world })
+            refusedForAccount(r)
+          },
+        },
+        {
+          tool: 'portal_migrate_accounts.py',
+          check: async () => {
+            const { s, portal } = accountsWorld('673-env-migrate', 'remote')
+            const r = await runTool(s, 'portal_migrate_accounts.py', ['--admin', 'a@example.invalid'], { applySeed: true, ...world })
+            refusedForAccount(r)
+            expect(rows(portal, 'SELECT id FROM accounts').length, 'まなびばにアカウントを書いた').toBe(0)
+          },
+        },
+        {
+          tool: 'set_sso_secret.sh',
+          check: async () => {
+            const s = shadow39('673-env-secret')
+            s.write('.sso_secret.local', `${FAKE_SSO_SECRET}\n`)
+            const r = await runTool(s, 'set_sso_secret.sh', [], world)
+            refusedForAccount(r)
+            expect(Object.keys(secretsPut(s)).length, '秘密を置いた').toBe(0)
+          },
+        },
+        {
+          tool: 'check_sso_prod_smoke.py',
+          check: async () => {
+            const { r, requests, portal } = await smokeAgainstCounterparts('673-env-smoke', world)
+            refusedForAccount(r)
+            expect(requests.length, 'まなびばか学びに要求を送った').toBe(0)
+            expect(rows(portal, 'SELECT id FROM accounts').length, '一時のアカウントを作った').toBe(0)
+          },
+        },
+      ]
+      // 道具ごとに確かめ、止まらなかった道具をまとめて挙げる（1 つ目で止めず、6 つすべての結果を出す）
+      const missed: string[] = []
+      for (const { tool, check } of runs) {
+        try {
+          await check()
+        } catch (e) {
+          missed.push(`${tool}: ${redact(String((e as Error).message ?? e))}`)
+        }
+      }
+      expect(missed, `照らすほかは何もせずに失敗で終えなかった道具:\n${missed.join('\n\n')}`).toEqual([])
     }, 900_000)
   })
 })

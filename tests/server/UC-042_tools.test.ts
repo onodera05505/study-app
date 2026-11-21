@@ -585,6 +585,34 @@ describe('UC-042 書き手と担当に渡す束を作り、教材の手入れと
       expect(lstatSync(s.path(`data/${key}`)).isSymbolicLink(), '学びの置き場を書き換えた').toBe(wasLink)
     })
 
+    // @covers REQ-651#existing-key-registry-size
+    it('登録簿に既にある学びの模試の問題数が道具の問題数と違うとき、合計が道具の問題数には合うが登録簿の問題数に合わない比率を渡すと、理由を示して失敗で終え、何も書かない', async () => {
+      const s = shadow42('new-existing-registry-size')
+      const key = LEARNINGS.find((k) => REGISTRY[k].kind === 'exam')!
+      const fields = REGISTRY[key].fields as string[]
+      // 道具に渡す問題数は、今の登録簿の値。写しの登録簿で、その学びの問題数だけを別の値にする
+      const size = REGISTRY[key].mockSize as number
+      const registry = read(s, REG)
+      registry[key].mockSize = size + 11
+      writeFileSync(s.path(REG), JSON.stringify(registry, null, 2))
+      const files = [REG, PROJ, 'wrangler.jsonc']
+      const before = files.map((f) => readFileSync(s.path(f), 'utf8'))
+      const dataBefore = readdirSync(s.path('data')).sort()
+      const wasLink = lstatSync(s.path(`data/${key}`)).isSymbolicLink()
+      // 登録簿の分野だけで、合計が道具に渡す問題数に合う比率。分野は渡さず、登録簿の分野に任せる
+      const share = Math.floor(size / fields.length)
+      const ratio = fields.map((f, i) => `${f}=${i === 0 ? size - share * (fields.length - 1) : share}`).join(',')
+      const args = EXAM_ARGS(ratio, String(size)).slice(1)
+      const withoutFields = args.filter((_, i) => args[i] !== '--fields' && args[i - 1] !== '--fields')
+      const r = await run42(s, 'new_target.py', [key, ...withoutFields])
+      expect(crashed(r), outOf(r)).toBe(false)
+      expect(r.code, outOf(r)).not.toBe(0)
+      expect(r.out.trim().length, '理由を示していない').toBeGreaterThan(0)
+      expect(files.map((f) => readFileSync(s.path(f), 'utf8')), '登録簿・配備先の一覧・手元の配備の設定のどれかを書いた').toEqual(before)
+      expect(readdirSync(s.path('data')).sort(), '学びの置き場を足した').toEqual(dataBefore)
+      expect(lstatSync(s.path(`data/${key}`)).isSymbolicLink(), '学びの置き場を書き換えた').toBe(wasLink)
+    })
+
     /** 配備先の一覧の、登録の鍵の項目を外す（with に挙げた学びにだけ、偽の登録の鍵を残す）。 */
     const withCodes = (s: Shadow39, keep: string[]) => {
       const proj = read(s, PROJ)

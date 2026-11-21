@@ -194,8 +194,13 @@ const SANDBOX: string | null =
     ? `(version 1)(allow default)(deny network-outbound (remote ip "*:*"))(allow network-outbound (remote ip "localhost:*"))(deny file-write* (subpath ${JSON.stringify(dirname(ROOT))}))`
     : null
 
-/** 道具を回す（.sh は bash、.py は python3。作業の場所は影の根。SANDBOX の囲いの中）。 */
+/** world に重ねると、向け先のアカウントの環境変数（CLOUDFLARE_ACCOUNT_ID）に決めたアカウントと違う値を与える（ログイン中の並びは world.whoami のまま）。 */
+export const ENV_ACCOUNT_DIFFERS: World = { accountEnv: OTHER_ACCOUNT }
+
+/** 道具を回す（.sh は bash、.py は python3。作業の場所は影の根。SANDBOX の囲いの中）。
+ *  向け先のアカウントの環境変数（CLOUDFLARE_ACCOUNT_ID）は、world.accountEnv で与えたときだけ子に渡す（既定は渡さず、親の環境の値も外す）。 */
 export function runTool(s: Shadow39, script: string, args: string[] = [], world: World = {}, env: Record<string, string> = {}): Promise<Run> {
+  world = { accountEnv: null, ...world }
   const interpreter = script.endsWith('.py') ? 'python3' : 'bash'
   const [command, prefix] = SANDBOX ? ['sandbox-exec', ['-p', SANDBOX, interpreter]] : [interpreter, []]
   // 代理を通さない宛先は runCommand が既定で空にするので、env に置かれた物は world で渡す
