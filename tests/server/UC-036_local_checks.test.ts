@@ -8,6 +8,8 @@ import {
   rewriteAnswers,
   startAuditDeployment,
   toolErrorOf,
+  DEPLOY_PORT_OF,
+  startExistingDeployment,
   type AnswerRewrite,
   checkApi,
   checkPortalApi,
@@ -93,6 +95,42 @@ function screensRuns(): Promise<Screens> {
 }
 const auditUsers = (users: Record<string, unknown>) =>
   Object.fromEntries(Object.entries(users).map(([f, us]) => [f, (us as { id: string; email: string }[]).filter((u) => u.email.startsWith(AUDIT))]))
+
+/** 空の一時の置き場を TMPDIR に渡して道具を回した回（REQ-668 と REQ-675 で結果を使い回す）。 */
+type TempRun = { r: ToolRun; temp: string }
+const once = <T>(f: () => Promise<T>) => {
+  let p: Promise<T> | undefined
+  return () => (p ??= f())
+}
+const withTemp = (prepare: (s: Shadow) => void, run: (s: Shadow, temp: string) => Promise<ToolRun>) =>
+  once(async (): Promise<TempRun> => {
+    const s = toolShadow()
+    prepare(s)
+    const temp = emptyTemp(s)
+    return { r: await run(s, temp), temp }
+  })
+const tempRuns = {
+  checkApiSuccess: withTemp(
+    () => {},
+    (s, temp) => checkApi(s, 'ip', { TMPDIR: temp }),
+  ),
+  checkApiFailure: withTemp(
+    (s) => stripResponseHeader(s, 'wrangler.jsonc', HEADER),
+    (s, temp) => checkApi(s, 'ip', { TMPDIR: temp }),
+  ),
+  portalApiSuccess: withTemp(
+    () => {},
+    (s, temp) => checkPortalApi(s, { TMPDIR: temp }),
+  ),
+  portalApiFailure: withTemp(
+    (s) => stripResponseHeader(s, 'portal/wrangler.jsonc', HEADER),
+    (s, temp) => checkPortalApi(s, { TMPDIR: temp }),
+  ),
+  screensSuccess: withTemp(
+    () => {},
+    (s, temp) => auditScreens(s, ['ip', '--out', s.path('screens'), '--limit', '1'], { TMPDIR: temp }),
+  ),
+}
 
 /** describe をまたいで使い回す回（画面の採取の失敗の回を REQ-667 と REQ-668 で使う）。 */
 const shared: { fixturesWrongShape: () => Promise<{ r: ToolRun; hits: string[]; shots: string[]; temp: string }> } = {
@@ -458,47 +496,35 @@ describe('UC-036 配る前に手元の配備に API と画面を当てる', () =
 
     /** @covers REQ-668#check-api-success-removed */
     it('学びの API の検査が成功で終えると、その回が一時の置き場に作った記録は残らない', async () => {
-      const s = toolShadow()
-      const temp = emptyTemp(s)
-      const r = await checkApi(s, 'ip', { TMPDIR: temp })
+      const { r, temp } = await tempRuns.checkApiSuccess()
       expectEnded(r, 0)
       expect(leftIn(temp), '一時の置き場に残った物').toEqual([])
     })
 
     /** @covers REQ-668#check-api-failure-kept */
     it('学びの API の検査が失敗で終えると、その回が一時の置き場に作った記録が残り、その場所が出力に示される', async () => {
-      const s = toolShadow()
-      stripResponseHeader(s, 'wrangler.jsonc', HEADER)
-      const temp = emptyTemp(s)
-      const r = await checkApi(s, 'ip', { TMPDIR: temp })
+      const { r, temp } = await tempRuns.checkApiFailure()
       expectEnded(r, 1)
       expectKept(r, temp)
     })
 
     /** @covers REQ-668#portal-api-success-removed */
     it('まなびばの API の検査が成功で終えると、その回が一時の置き場に作った記録は残らない', async () => {
-      const s = toolShadow()
-      const temp = emptyTemp(s)
-      const r = await checkPortalApi(s, { TMPDIR: temp })
+      const { r, temp } = await tempRuns.portalApiSuccess()
       expectEnded(r, 0)
       expect(leftIn(temp), '一時の置き場に残った物').toEqual([])
     })
 
     /** @covers REQ-668#portal-api-failure-kept */
     it('まなびばの API の検査が失敗で終えると、その回が一時の置き場に作った記録が残り、その場所が出力に示される', async () => {
-      const s = toolShadow()
-      stripResponseHeader(s, 'portal/wrangler.jsonc', HEADER)
-      const temp = emptyTemp(s)
-      const r = await checkPortalApi(s, { TMPDIR: temp })
+      const { r, temp } = await tempRuns.portalApiFailure()
       expectEnded(r, 1)
       expectKept(r, temp)
     })
 
     /** @covers REQ-668#screens-success-removed */
     it('画面の採取が成功で終えると、その回が一時の置き場に作った記録は残らない', async () => {
-      const s = toolShadow()
-      const temp = emptyTemp(s)
-      const r = await auditScreens(s, ['ip', '--out', s.path('screens'), '--limit', '1'], { TMPDIR: temp })
+      const { r, temp } = await tempRuns.screensSuccess()
       expectEnded(r, 0)
       expect(leftIn(temp), '一時の置き場に残った物').toEqual([])
     })
@@ -508,6 +534,88 @@ describe('UC-036 配る前に手元の配備に API と画面を当てる', () =
       const x = await shared.fixturesWrongShape()
       expect(x.r.status, x.r.out.slice(-2000)).toBe(1)
       expectKept(x.r, x.temp)
+    })
+  })
+
+  describe('道具がその回に起こした手元の配備のプロセス（REQ-675）', () => {
+    /**
+     * 道具が自分で配備を起こした回（道具を起こす直前に、配備に使う口を待ち受けるプロセスが無かった）で、道具が終えた時点で、
+     * 道具のプロセスグループに属するプロセスが 1 つも無く、配備に使う口を待ち受けるプロセスも無く、作業の場所が影の根の下にあるプロセスも無い
+     * （どれも土台が後片付けをする前に取った物）。
+     */
+    const expectNoneLeft = (r: ToolRun, status: number) => {
+      expectEnded(r, status)
+      expect(r.heldBefore, '前提: 道具を起こす前から配備に使う口を掴むプロセスがある（道具が自分で配備を起こした回でない）').toEqual([])
+      expect(r.leftover, `道具が終えた時点で、道具のプロセスグループに残ったプロセスの数: ${r.out.slice(-1500)}`).toBe(0)
+      expect(r.portHolders, '道具が終えた時点で、配備に使う口を掴んでいるプロセス').toEqual([])
+      expect(r.underRoot, '道具が終えた時点で、作業の場所が影の根の下にあるプロセス').toEqual([])
+    }
+
+    // @covers REQ-675#check-api-success-stopped
+    it('学びの API の検査が自分で配備を起こして成功で終えると、終えた時点でその回が起こした配備のプロセスが 1 つも残っていない', async () => {
+      expectNoneLeft((await tempRuns.checkApiSuccess()).r, 0)
+    })
+
+    // @covers REQ-675#check-api-failure-stopped
+    it('学びの API の検査が自分で配備を起こして失敗で終える（配備がセキュリティヘッダを 1 つ外した応答を返す）と、終えた時点でその回が起こした配備のプロセスが 1 つも残っていない', async () => {
+      expectNoneLeft((await tempRuns.checkApiFailure()).r, 1)
+    })
+
+    // @covers REQ-675#portal-api-success-stopped
+    it('まなびばの API の検査が自分で配備を起こして成功で終えると、終えた時点でその回が起こした配備のプロセスが 1 つも残っていない', async () => {
+      expectNoneLeft((await tempRuns.portalApiSuccess()).r, 0)
+    })
+
+    // @covers REQ-675#portal-api-failure-stopped
+    it('まなびばの API の検査が自分で配備を起こして失敗で終える（配備がセキュリティヘッダを 1 つ外した応答を返す）と、終えた時点でその回が起こした配備のプロセスが 1 つも残っていない', async () => {
+      expectNoneLeft((await tempRuns.portalApiFailure()).r, 1)
+    })
+
+    // @covers REQ-675#screens-success-stopped
+    it('画面の採取が自分で配備を起こして成功で終えると、終えた時点でその回が起こした配備のプロセスが 1 つも残っていない', async () => {
+      expectNoneLeft((await tempRuns.screensSuccess()).r, 0)
+    })
+
+    // @covers REQ-675#screens-failure-stopped
+    it('画面の採取が自分で配備を起こして失敗で終える（論点の一覧が読めない答えを返す配備）と、終えた時点でその回が起こした配備のプロセスが 1 つも残っていない', async () => {
+      expectNoneLeft((await shared.fixturesWrongShape()).r, 1)
+    })
+
+    /**
+     * 道具を回す前に、道具が配備に使う口で、道具と別のプロセスグループの死活確認に応じるプロセスを起こしておき、道具を回す。
+     * 道具の終わり方は問わない。道具が終えたあとに、そのプロセスが生きていて口に応じるかを返す。
+     */
+    const withExisting = (port: number, run: (s: Shadow) => Promise<ToolRun>) =>
+      withPorts(async () => {
+        const existing = await startExistingDeployment(port)
+        try {
+          const r = await run(toolShadow())
+          return { r, alive: existing.alive(), responds: await existing.responds(), pid: existing.pid }
+        } finally {
+          await existing.close()
+        }
+      })
+    const expectKeptAlive = (x: { r: ToolRun; alive: boolean; responds: boolean; pid: number }) => {
+      expect(x.r.timedOut, x.r.out.slice(-1500)).toBe(false)
+      expect(crashed(x.r), x.r.out.slice(-1500)).toBe(false)
+      expect(x.r.heldBefore, '前提: 既に応じている配備が口を掴んでいない').toContain(x.pid)
+      expect(x.alive, `道具が既に応じていた配備のプロセスを止めた: ${x.r.out.slice(-1500)}`).toBe(true)
+      expect(x.responds, '道具が終えたあと、既に応じていた配備が口に応じない').toBe(true)
+    }
+
+    // @covers REQ-675#check-api-existing-kept
+    it('学びの API の検査の口で道具が起こしていない配備が既に応じていると、道具が終えたあともその配備のプロセスが生きていて口に応じる', async () => {
+      expectKeptAlive(await withExisting(DEPLOY_PORT_OF.checkApi, (s) => checkApi(s, 'ip')))
+    })
+
+    // @covers REQ-675#portal-api-existing-kept
+    it('まなびばの API の検査の口で道具が起こしていない配備が既に応じていると、道具が終えたあともその配備のプロセスが生きていて口に応じる', async () => {
+      expectKeptAlive(await withExisting(DEPLOY_PORT_OF.checkPortalApi, (s) => checkPortalApi(s)))
+    })
+
+    // @covers REQ-675#screens-existing-kept
+    it('画面の採取の口で道具が起こしていない配備が既に応じていると、道具が終えたあともその配備のプロセスが生きていて口に応じる', async () => {
+      expectKeptAlive(await withExisting(DEPLOY_PORT_OF.auditScreens, (s) => auditScreens(s, ['ip', '--out', s.path('screens'), '--limit', '1'], { TMPDIR: emptyTemp(s) })))
     })
   })
 })

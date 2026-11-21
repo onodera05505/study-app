@@ -42,6 +42,7 @@ const temps: string[] = []
 
 /** 作った影の根をすべて消す。 */
 export async function removeTemps(): Promise<void> {
+  for (const dir of temps) sweepUnder(dir)
   await Promise.all(temps.splice(0).map((dir) => rm(dir, { recursive: true, force: true })))
 }
 
@@ -135,13 +136,39 @@ export type ToolRun = {
   stdout: string
   stderr: string
   out: string
+  /** 道具が終えた時点で、道具のプロセスグループに残っていたプロセスの数。 */
   leftover: number
+  /** 道具を起こす直前に、watchPorts の口を掴んで（待ち受けて）いたプロセス。 */
+  heldBefore: number[]
+  /** 道具が終えた時点で、watchPorts の口を掴んで（待ち受けて）いたプロセス。 */
+  portHolders: number[]
+  /** 道具が終えた時点で、作業の場所が影の根の下にあったプロセス（道具のプロセスグループの外に移った子を含む。REQ-675）。 */
+  underRoot: number[]
   timedOut: boolean
 }
 
-/** 子の環境（wrangler の利用統計の送信を止める）。 */
+/**
+ * 運用者のシェルと同じ環境（道具は運用者がシェルから回す）。テストの走り手（`npx vitest`）が子の環境に足した物を外す:
+ * PATH の `node_modules/.bin` と、走り手の node の置き場が Volta の版の置き場（`$VOLTA_HOME/tools/image/`）ならその置き場、
+ * npm が足す `npm_` で始まる変数、Volta が自分の下で起こした道具に付ける再帰の印（`_VOLTA_TOOL_RECURSION`）。
+ * 外さないと、道具の `npx` が運用者の PATH の先頭の物（Volta なら `npx` の shim。shim が npm を子として起こす）でなく、
+ * 走り手の node の置き場の npx に直に当たり、運用者の回と配備のプロセスの連なり（npx → npm exec → node wrangler → workerd）が変わる。
+ */
+function operatorEnv(): NodeJS.ProcessEnv {
+  const env: NodeJS.ProcessEnv = {}
+  for (const [k, v] of Object.entries(process.env)) if (!k.startsWith('npm_') && k !== '_VOLTA_TOOL_RECURSION') env[k] = v
+  const voltaImages = process.env.VOLTA_HOME ? join(process.env.VOLTA_HOME, 'tools', 'image') + '/' : null
+  const runnerNode = dirname(process.execPath)
+  env.PATH = (process.env.PATH ?? '')
+    .split(':')
+    .filter((d) => d !== '' && !d.endsWith('/node_modules/.bin') && !(voltaImages && d === runnerNode && d.startsWith(voltaImages)))
+    .join(':')
+  return env
+}
+
+/** 子の環境（運用者のシェルと同じ環境に、wrangler の利用統計の送信を止める変数を足す）。 */
 const childEnv = (extra: NodeJS.ProcessEnv = {}): NodeJS.ProcessEnv => ({
-  ...process.env,
+  ...operatorEnv(),
   WRANGLER_SEND_METRICS: 'false',
   NO_UPDATE_NOTIFIER: '1',
   ...extra,
@@ -151,6 +178,48 @@ const childEnv = (extra: NodeJS.ProcessEnv = {}): NodeJS.ProcessEnv => ({
 function groupSize(pgid: number): number {
   const r = spawnSync('pgrep', ['-g', String(pgid)], { encoding: 'utf8' })
   return r.stdout.split('\n').filter((l) => l.trim() !== '').length
+}
+
+/** ports の口を待ち受けているプロセスの番号。 */
+export function listeners(ports: readonly number[]): number[] {
+  const out = new Set<number>()
+  for (const port of ports) {
+    const r = spawnSync('lsof', ['-nP', '-t', `-iTCP:${port}`, '-sTCP:LISTEN'], { encoding: 'utf8' })
+    for (const l of r.stdout.split('\n')) if (l.trim() !== '') out.add(Number(l.trim()))
+  }
+  return [...out].sort((a, b) => a - b)
+}
+
+/** 作業の場所が dir の下にあるプロセスの番号（このプロセス自身を除く）。 */
+export function processesUnder(dir: string): number[] {
+  let base: string
+  try {
+    base = realpathSync(dir)
+  } catch {
+    return []
+  }
+  const r = spawnSync('lsof', ['-d', 'cwd', '-Fpn'], { encoding: 'utf8' })
+  const out = new Set<number>()
+  let pid = 0
+  for (const line of r.stdout.split('\n')) {
+    if (line.startsWith('p')) pid = Number(line.slice(1))
+    else if (line.startsWith('n') && pid > 0 && pid !== process.pid && (line.slice(1) === base || line.slice(1).startsWith(`${base}/`))) out.add(pid)
+  }
+  return [...out].sort((a, b) => a - b)
+}
+
+/**
+ * 作業の場所が dir の下にあるプロセスを止める（後片付け）。道具の子が別のプロセスグループに移っても、作業の場所は影の根の下に残るので、
+ * グループごと止めるだけでは残るプロセスもここで止める。
+ */
+export function sweepUnder(dir: string): void {
+  for (const pid of processesUnder(dir)) {
+    try {
+      process.kill(pid, 'SIGKILL')
+    } catch {
+      // もう居ない
+    }
+  }
 }
 
 /** 学びの API の検査の道具が立てる偽のまなびばの口（正本は scripts/check_api.py の SSO_FAKE_PORT）。 */
@@ -179,6 +248,9 @@ export const PORTS_OF = {
   auditScreens: [PORTS.screens, PORTS.ssoFake],
   checkSsoFlow: [PORTS.ssoPortal, PORTS.learning],
 } as const
+
+/** 道具が手元の配備を起こす操作ごとの、その配備に使う口（REQ-675 の「道具が配備に使う口」）。 */
+export const DEPLOY_PORT_OF = { checkApi: PORTS.learning, checkPortalApi: PORTS.portal, auditScreens: PORTS.screens } as const
 
 /** 操作ごとの、影の根の配備の調べ口の番号（separateInspector。道具が配備を起こす操作だけ）。 */
 export const INSPECTOR_OF = { checkApi: 9311, checkPortalApi: 9312, auditScreens: 9313 } as const
@@ -270,7 +342,10 @@ function hookExit(): void {
  */
 function guardGroup(pgid: number, shadowBase: string): ChildProcess {
   // 影の根の置き場も、止めたあとに消す（置き場の名前は引数で渡し、シェルの文に埋め込まない）
-  const script = 'while kill -0 "$1" 2>/dev/null; do sleep 1; done; kill -9 -"$2" 2>/dev/null; sleep 1; rm -rf -- "$3"; exit 0'
+  const script =
+    'while kill -0 "$1" 2>/dev/null; do sleep 1; done; kill -9 -"$2" 2>/dev/null; ' +
+    'base=$(cd "$3" 2>/dev/null && pwd -P); [ -n "$base" ] && lsof -d cwd -Fpn 2>/dev/null | awk -v b="$base" \'/^p/ { p = substr($0, 2) } /^n/ { n = substr($0, 2); if (n == b || index(n, b "/") == 1) print p }\' | xargs kill -9 2>/dev/null; ' +
+    'sleep 1; rm -rf -- "$3"; exit 0'
   const w = spawn('/bin/sh', ['-c', script, 'uc036-guard', String(process.pid), String(pgid), shadowBase], { detached: true, stdio: 'ignore' })
   w.unref()
   return w
@@ -287,13 +362,17 @@ export function runTool(
     timeoutMs?: number
     env?: NodeJS.ProcessEnv
     ports?: readonly number[]
+    /** 道具を起こす直前と終えた時点で、待ち受けているプロセスを取る口。 */
+    watchPorts?: readonly number[]
   } = {},
 ): Promise<ToolRun> {
   return withPorts(() => runUnlocked(shadow, command, opts), opts.ports ?? ALL_PORTS)
 }
 
-function runUnlocked(shadow: Shadow, command: string[], opts: { timeoutMs?: number; env?: NodeJS.ProcessEnv }): Promise<ToolRun> {
+function runUnlocked(shadow: Shadow, command: string[], opts: { timeoutMs?: number; env?: NodeJS.ProcessEnv; watchPorts?: readonly number[] }): Promise<ToolRun> {
   hookExit()
+  const watched = opts.watchPorts ?? []
+  const heldBefore = listeners(watched)
   return new Promise((resolve) => {
     const child = spawn(command[0], command.slice(1), {
       cwd: shadow.root,
@@ -316,7 +395,10 @@ function runUnlocked(shadow: Shadow, command: string[], opts: { timeoutMs?: numb
     child.on('exit', (code) => {
       clearTimeout(timer)
       const leftover = groupSize(child.pid!)
+      const portHolders = listeners(watched)
+      const underRoot = processesUnder(dirname(shadow.root))
       kill()
+      sweepUnder(dirname(shadow.root))
       liveGroups.delete(child.pid!)
       if (watchdog?.pid !== undefined) killGroup(watchdog.pid)
       // パイプを握った孫を止めたあとに close を待たずに返す
@@ -327,6 +409,9 @@ function runUnlocked(shadow: Shadow, command: string[], opts: { timeoutMs?: numb
           stderr,
           out: `${stdout}\n${stderr}`.split(shadow.root).join('<root>'),
           leftover,
+          heldBefore,
+          portHolders,
+          underRoot,
           timedOut,
         })
       }, 200)
@@ -335,8 +420,9 @@ function runUnlocked(shadow: Shadow, command: string[], opts: { timeoutMs?: numb
 }
 
 export const checkApi = (s: Shadow, learning?: string, env?: NodeJS.ProcessEnv) =>
-  runTool(s, ['bash', 'scripts/check_api.sh', ...(learning ? [learning] : [])], { env })
-export const checkPortalApi = (s: Shadow, env?: NodeJS.ProcessEnv) => runTool(s, ['bash', 'scripts/check_portal_api.sh'], { env })
+  runTool(s, ['bash', 'scripts/check_api.sh', ...(learning ? [learning] : [])], { env, watchPorts: [DEPLOY_PORT_OF.checkApi] })
+export const checkPortalApi = (s: Shadow, env?: NodeJS.ProcessEnv) =>
+  runTool(s, ['bash', 'scripts/check_portal_api.sh'], { env, watchPorts: [DEPLOY_PORT_OF.checkPortalApi] })
 export const auditFixtures = (s: Shadow, args: string[], env?: NodeJS.ProcessEnv) =>
   runTool(s, ['node', 'scripts/audit_fixtures.mjs', ...args], {
     timeoutMs: 120_000,
@@ -346,6 +432,7 @@ export const auditScreens = (s: Shadow, args: string[], env?: NodeJS.ProcessEnv)
   runTool(s, ['bash', 'scripts/audit_screens.sh', ...args], {
     timeoutMs: 900_000,
     env,
+    watchPorts: [DEPLOY_PORT_OF.auditScreens],
   })
 
 /**
@@ -482,6 +569,63 @@ export function separateInspector(s: Shadow, port: number): void {
     const at = text.indexOf('{')
     s.write(rel, `${text.slice(0, at + 1)}\n  "dev": { "inspector_port": ${port} },${text.slice(at + 1)}`)
   }
+}
+
+/** 道具が起こしていない、既に応じている手元の配備の代わり（REQ-675）。 */
+export type ExistingDeployment = {
+  pid: number
+  /** プロセスが生きているか。 */
+  alive: () => boolean
+  /** 口の死活確認（/api/health）に 200 で応じるか。 */
+  responds: () => Promise<boolean>
+  close: () => Promise<void>
+}
+
+/** 口の /api/health に GET を 1 回当てて、200 で応じたか。 */
+function healthy(port: number): Promise<boolean> {
+  return new Promise((ok) => {
+    const req = http.get({ host: '127.0.0.1', port, path: '/api/health', timeout: 2000 }, (res) => {
+      res.resume()
+      ok(res.statusCode === 200)
+    })
+    req.on('timeout', () => req.destroy())
+    req.on('error', () => ok(false))
+  })
+}
+
+/**
+ * port の手元の口に、このプロセスとも道具とも別のプロセスグループで、作業の場所を影の根の外に置いて、どの要求にも 200 の {"ok": true} で応える小さなプロセスを起こす
+ * （死活確認に応じる）。このプロセスが居なくなれば自分で終わる。呼ぶ側が口の鍵（withPorts）を持つ。応じるまで待って返す。
+ */
+export async function startExistingDeployment(port: number): Promise<ExistingDeployment> {
+  hookExit()
+  const script = [
+    "const http = require('node:http')",
+    `const parent = ${process.pid}`,
+    "http.createServer((req, res) => { req.resume(); res.writeHead(200, { 'content-type': 'application/json' }); res.end('{\"ok\": true}') })",
+    `  .listen(${port}, '127.0.0.1')`,
+    'setInterval(() => { try { process.kill(parent, 0) } catch { process.exit(0) } }, 1000)',
+  ].join('\n')
+  // 作業の場所は影の根の外（OS の一時の置き場）に置く。道具の居残りの見方（作業の場所が影の根の下にあるプロセス）に映らないように
+  const child = spawn(process.execPath, ['-e', script], { cwd: tmpdir(), detached: true, stdio: 'ignore' })
+  child.unref()
+  const pid = child.pid
+  if (pid === undefined) throw new Error('前提: 既に応じている配備の代わりを起こせない')
+  liveGroups.add(pid)
+  const close = async () => {
+    killGroup(pid)
+    liveGroups.delete(pid)
+    for (let i = 0; i < 50 && alive(pid); i++) await new Promise((ok) => setTimeout(ok, 100))
+  }
+  for (let i = 0; ; i++) {
+    if (await healthy(port)) break
+    if (i >= 100) {
+      await close()
+      throw new Error(`前提: 口 ${port} の既に応じている配備の代わりが応じない`)
+    }
+    await new Promise((ok) => setTimeout(ok, 100))
+  }
+  return { pid, alive: () => alive(pid), responds: () => healthy(port), close }
 }
 
 /** 名前の無い例外で落ちたか。 */
