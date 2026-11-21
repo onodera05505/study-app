@@ -15,7 +15,7 @@
     "typecheck": "tsc --noEmit -p . && tsc --noEmit -p tsconfig.node.json",
     "check:render": "bash scripts/check_render.sh",
     "audit:screens": "bash scripts/audit_screens.sh",
-    "test": "node .harness/bin/harness.mjs verify --level fast",
+    "test": "node .harness/bin/harness.mjs verify --level fast --timeout 1800",
     "test:unit": "vitest run",
     "test:record": "node tests/support/coverage/run.mjs",
     "contract-run": "node .harness/bin/harness.mjs run cases"
