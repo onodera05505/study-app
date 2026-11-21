@@ -24,11 +24,14 @@ PORT=8788
 SSO_FAKE_PORT="$(sed -n 's/^SSO_FAKE_PORT = \([0-9][0-9]*\)$/\1/p' scripts/check_api.py)"
 [ -n "$SSO_FAKE_PORT" ] || { echo "scripts/check_api.py に SSO_FAKE_PORT が無い"; exit 1; }
 BASE="http://127.0.0.1:${PORT}"
-# ログはプロジェクト直下に残さない（このディレクトリは git 管理外なので掃除されない）
-LOG="$(mktemp -t "check_api_${EXAM}")"
+# この回の記録（wrangler dev のログ）は、回す環境の一時の置き場（TMPDIR）に作る。プロジェクト直下には残さない。
+# 成功で終えたら消し、失敗で終えたら残してその場所を標準エラーに示す
+TMP_ROOT="${TMPDIR:-/tmp}"
+LOG="$(mktemp "${TMP_ROOT%/}/check_api_${EXAM}.XXXXXX")"
 PID=""
 
 cleanup() {
+  local status=$?
   if [ -n "$PID" ]; then
     kill "$PID" 2>/dev/null || true
     wait "$PID" 2>/dev/null || true
@@ -39,6 +42,7 @@ cleanup() {
     LEFT=$(lsof -ti "tcp:${PORT}" 2>/dev/null || true)
     if [ -n "$LEFT" ]; then kill $LEFT 2>/dev/null || true; fi
   fi
+  if [ "$status" -eq 0 ]; then rm -f "$LOG"; else echo "▶ この回の記録を残した: $LOG" >&2; fi
 }
 trap cleanup EXIT
 

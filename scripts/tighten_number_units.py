@@ -26,6 +26,8 @@ def walk(x, cnt):
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args(); d = Path(a.data)
+    # 学びの置き場が無ければ、0 箇所の成功にせず、置き場を名指して止める
+    if not d.is_dir(): sys.exit(f"学びの置き場 {d} がありません")
     files = sorted(glob.glob(str(d / "materials" / "*.json"))) + sorted(glob.glob(str(d / "roadmap_questions" / "*.json"))) + [str(d / "roadmap.json"), str(d / "roadmap_config.json")]
     total = 0
     for f in files:

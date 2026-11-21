@@ -13,6 +13,8 @@ from pathlib import Path
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", required=True); ap.add_argument("--rx"); ap.add_argument("--bold", action="store_true")
     a = ap.parse_args(); d = Path(a.data); rx = re.compile(a.rx) if a.rx else None; n = 0
+    # 学びの置き場が無ければ、当たり 0 件の成功にせず、置き場を名指して止める
+    if not d.is_dir(): sys.exit(f"学びの置き場 {d} がありません")
     for f in sorted(glob.glob(str(d / "materials" / "*.json"))):
         raw = json.loads(Path(f).read_text(encoding="utf-8")); items = raw["materials"] if isinstance(raw, dict) else raw
         for m in items:

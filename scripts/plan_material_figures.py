@@ -15,6 +15,7 @@
 import argparse
 import glob
 import json
+import sys
 from pathlib import Path
 
 
@@ -26,6 +27,11 @@ def main() -> None:
     ap.add_argument("--min-count", type=int, default=2, help="出題回数の下限（既定 2）")
     args = ap.parse_args()
     d = Path(args.data)
+
+    # 読む物が欠けたら、例外の跡でなく、無い物を 1 行で名指して止める
+    for name in ("topics.json",):
+        if not (d / name).is_file():
+            sys.exit(f"{d / name} がありません")
 
     topics = {t["id"]: t for t in json.load(open(d / "topics.json", encoding="utf-8"))["topics"]}
     inputs = {}

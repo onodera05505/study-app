@@ -84,6 +84,11 @@ def main() -> int:
     args = ap.parse_args()
     d = args.data
 
+    # 読む物が欠けたら、例外の跡でなく、無い物を 1 行で名指して止める
+    for name in ("syllabus.json", "exam_labels.json", "answer_keys.json"):
+        if not (d / name).is_file():
+            sys.exit(f"{d / name} がありません（論点を組むのに要る {name.removesuffix('.json')}）")
+
     syllabus = json.loads((d / "syllabus.json").read_text(encoding="utf-8"))
     item_by_no = {i["number"]: i for i in syllabus["items"]}
     labels = json.loads((d / "exam_labels.json").read_text(encoding="utf-8"))
@@ -131,7 +136,12 @@ def main() -> int:
             "is_new": Counter(),
             "related": Counter(),
             "questions": [],
+            "seen": set(),
         })
+        # 同じ回・同じ問番号は、分類の結果が重なっても 1 回だけ数える
+        if (r["exam"], r["number"]) in g["seen"]:
+            continue
+        g["seen"].add((r["exam"], r["number"]))
         g["displays"][display] += 1
         g["items"][r["item"]] += 1
         g["is_new"][r["is_new"]] += 1

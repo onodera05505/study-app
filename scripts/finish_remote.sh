@@ -12,6 +12,8 @@ cd "$(dirname "$0")/.."
 EXAM="${1:-}"
 [ "$(python3 scripts/targets.py has "$EXAM")" = yes ] || { echo "第1引数は対象の ID（$(python3 scripts/targets.py keys)）"; exit 1; }
 DB=$(python3 scripts/targets.py db "$EXAM")
+# 本番に触る前に、ログイン中のアカウントを決めたアカウントと照らす（違えば何もせずに失敗で終える）
+source scripts/lib/check_account.sh
 
 echo "▶ 1/6 seed 生成と検査"
 python3 scripts/build_seed.py --data "data/${EXAM}" >/dev/null

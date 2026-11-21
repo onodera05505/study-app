@@ -18,6 +18,8 @@ EXAM="${1:-}"; MODE="${2:-}"; WHERE="--remote"
 [ "$(python3 scripts/targets.py has "$EXAM")" = yes ] || { echo "第1引数は対象の ID（$(python3 scripts/targets.py keys)）"; exit 1; }
 case "$MODE" in check|apply) ;; *) echo "第2引数は check か apply"; exit 1;; esac
 DB=$(python3 scripts/targets.py db "$EXAM")
+# 本番を指すときは、一覧を問い合わせる前にログイン中のアカウントを決めたアカウントと照らす（手元を指すときは照らさない）
+if [ "$WHERE" = --remote ]; then source scripts/lib/check_account.sh; fi
 
 # 未適用の migrations を数える。0＝全部当たっている、1＝未適用がある、2＝一覧が取れない・読めない（確かめられない）。
 # check は 1 と 2 のどちらでも失敗で終え、seed_remote.sh はその前で止まるので控えも投入もしない。

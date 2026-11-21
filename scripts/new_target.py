@@ -10,7 +10,7 @@
 
 やること（冪等。既にあるものは触らない）:
   1. src/shared/targets.json に対象を登録（ロードマップ型は既定値と roadmapSpec の骨組み、資格型は模試の設定）
-  2. scripts/pages_projects.json に Pages 名・DB 名を登録（学び側での登録の合言葉は作らない）
+  2. scripts/pages_projects.json に Pages 名・DB 名を登録（学び側での登録の鍵は作らない）
   3. .env.<key>、wrangler.jsonc の env.<key>（database_id は対象ごとに違う PLACEHOLDER-<key>-…。bootstrap_personal.sh が D1 を作って埋める。
      同じ文字列にするとローカル D1 のファイルを共有し、前の対象の行が混ざる。中央 reports/06）
   4. ロードマップ型は data/<key>/ に kickoff.json（既定の答えを写し、対象ごとに聞く質問は空）、roadmap_config.json、explain_terms.json、prompts/。
@@ -51,10 +51,10 @@ def check() -> int:
         if f'"{k}": {{' not in w: probs.append(f"{k}: wrangler.jsonc に env.{k} が無い")
         if t[k].get("roadmap") and not (ROOT / "data" / k / "kickoff.json").exists(): probs.append(f"{k}: data/{k}/kickoff.json が無い")
         if t[k].get("roadmap") and not (ROOT / "data" / k / "prompts").is_dir(): probs.append(f"{k}: data/{k}/prompts/ が無い（render_prompts.py）")
-    # 学び側での登録の合言葉を持つ学びは整合の外（値は出さず、学びの名前だけを挙げる）
+    # 学び側での登録の鍵を持つ学びは整合の外（値は出さず、学びの名前だけを挙げる）
     for k, v in pj.items():
         if isinstance(v, dict) and "signup_code" in v:
-            probs.append(f"{k}: scripts/pages_projects.json が学び側での登録の合言葉（signup_code）を持つ。鍵ごと消す")
+            probs.append(f"{k}: scripts/pages_projects.json が学び側での登録の鍵（signup_code）を持つ。鍵ごと消す")
     for x in probs: print(f"✘ {x}")
     print(f"対象 {len(t)} 件 / 問題 {len(probs)} 件"); return 1 if probs else 0
 
@@ -80,9 +80,11 @@ def main() -> int:
     key = a.key; assert re.fullmatch(r"[a-z][a-z0-9]{1,15}", key), "key は英小文字と数字（2〜16 文字）"
     fields = [f.strip() for f in a.fields.split(",") if f.strip()] if a.fields else list(EXAM_FIELDS); extra = "補足（ロードマップ外）"
     t = load(T)
+    # 資格型の分野の比率は、登録簿に既にある学びでも、何かを書く前に確かめる。既にある学びはその学びの登録簿の分野と照らす
+    ratio = parse_ratio(a.field_ratio, list(t[key]["fields"]) if key in t else fields, a.mock_size) if exam else None
     if key not in t and exam:
         t[key] = {"kind": "exam", "brand": a.name, "title": a.name, "examName": a.exam_name, "mockSize": a.mock_size, "mockMinutes": a.mock_minutes, "practiceSize": a.practice_size,
-                  "fieldThreshold": a.field_threshold, "passRule": a.pass_rule, "fieldRatio": parse_ratio(a.field_ratio, fields, a.mock_size),
+                  "fieldThreshold": a.field_threshold, "passRule": a.pass_rule, "fieldRatio": ratio,
                   "fields": fields, "questionsPerRound": a.questions_per_round, "exemptRounds": [], "roadmap": False, "words": dict(EXAM_WORDS)}
         save(T, t); print(f"targets.json に {key} を登録（資格型。模試 {a.mock_size} 問 / {a.mock_minutes} 分）")
     elif key not in t:
@@ -102,7 +104,7 @@ def main() -> int:
     pj = load(P)
     if key not in pj:
         project = a.project or (f"{key}-am-study" if exam else f"{key}-roadmap")
-        # 学び側での登録の合言葉は作らず、配備先の一覧にも書かない（登録はまなびばだけ）
+        # 学び側での登録の鍵は作らず、配備先の一覧にも書かない（登録はまなびばだけ）
         pj[key] = {"project": project, "db": f"study-app-{key}-db"}
         save(P, pj); print(f"pages_projects.json に {key} を登録（Pages {project} / DB study-app-{key}-db）")
     env = ROOT / f".env.{key}"
@@ -134,8 +136,11 @@ def main() -> int:
     et = d / "explain_terms.json"
     if not et.exists(): save(et, {"_note": "閉じた本の説明テストの語（12 語）。到達基準を代表する語を選ぶ", "terms": []})
     (d / "prompts").mkdir(exist_ok=True)
-    print("\n▶ 未回答の質問（本人と答える）:")
-    subprocess.run([sys.executable, str(Path.home() / ".claude/brain/check_target_kickoff.py"), "--file", str(kf), "--warn"])
+    # 中央の質疑応答の検査の道具が手元にあるときだけ、未回答の質問を示す
+    kickoff_check = Path.home() / ".claude/brain/check_target_kickoff.py"
+    if kickoff_check.is_file():
+        print("\n▶ 未回答の質問（本人と答える）:")
+        subprocess.run([sys.executable, str(kickoff_check), "--file", str(kf), "--warn"])
     print(f"\n次: 答えを kickoff.json と targets.json の roadmapSpec に写す → python3 scripts/render_prompts.py --data data/{key} → 手順書 docs/ロードマップ対象を追加する.md の 1 から")
     return 0
 

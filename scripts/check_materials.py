@@ -365,11 +365,13 @@ def main() -> int:
     for path in sorted((d / "questions").glob("*.json")):
         try:
             texts += [q["text"] for q in read_past_questions(path=path.as_posix())["questions"]]
-        except Refused as e:
-            print(f"注: {e.reason}（この回の過去問と照らさない）")
+        except Refused:
+            stop("unreadableOutput", f"questions/{path.name}", "過去問の形として読めない（本文を欠く問題があるか壊れている）")
 
-    # 世代を並びの順に重ね、後の世代・後のファイル・ファイルの中の後の教材が勝つ。同じ世代の中の重なりは警告する
+    # 世代を並びの順に重ね、後の世代・後のファイル・ファイルの中の後の教材が勝つ。
+    # 同じ世代の中の重なりは、その論点の教材を持つ世代のうち最も後ろの世代のものだけを警告する
     materials: dict[int, tuple[str, str, dict]] = {}
+    duplicates: list[tuple[str, int, dict]] = []
     for sub in dirs:
         seen: dict[int, str] = {}
         for path in sorted(sub.glob("*.json")):
@@ -381,10 +383,12 @@ def main() -> int:
             for m in ms:
                 tid = m["topic_id"]
                 if tid in seen:
-                    warn("duplicate", f"{sub.name} id={tid} {m.get('term') or ''}".rstrip(),
-                         f"同じ世代の中で論点の教材が重なる（{seen[tid]} と {path.name}。後の物を確かめる）")
+                    duplicates.append((sub.name, tid, {
+                        "kind": "duplicate", "where": f"{sub.name} id={tid} {m.get('term') or ''}".rstrip(),
+                        "reason": f"同じ世代の中で論点の教材が重なる（{seen[tid]} と {path.name}。後の物を確かめる）"}))
                 seen[tid] = path.name
                 materials[tid] = (sub.name, path.name, m)
+    warns += [w for gen, tid, w in duplicates if materials[tid][0] == gen]
 
     image_pat = image_pattern(d.name)
     headed_count = figure_topics = figure_count = 0
@@ -427,7 +431,7 @@ def main() -> int:
             want = {t["topic_id"] for t in read_material_bundle(path=(d / "material_bundles" / path.name).as_posix())["topics"]}
         except Refused as e:
             if e.code != CODE.NOT_FOUND:
-                print(f"注: {e.reason}（この束は突き合わせない）")
+                stop("unreadableOutput", f"material_bundles/{path.name}", "束の割り当ての形として読めない（書いている途中か壊れている）")
             continue
         try:
             got = {m["topic_id"] for m in read_material_file(path=path.as_posix())["materials"]}

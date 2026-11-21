@@ -11,7 +11,7 @@
 - 結果: 人が読む行（数の要約・警告・問題点）のあとに、標準出力の最後の行として機械向けの 1 行
   {"exitCode","questions","stops","warnings","limits"} を出す。止める理由と警告は件数で打ち切らずにすべて並べる。
   止める理由が 1 件以上なら終了の状態 1、無ければ 0。人が読む行は --all が無ければ上位 20 件で打ち切る
-- 断るとき（引数の誤り・登録簿に無い学び・資格対策でない学び・入力の束の置き場が無い）は、何も確かめずに
+- 断るとき（引数の誤り・登録簿に無い学び・資格対策でない学び・入力の束の置き場が無い・正解表が無いか読めない）は、何も確かめずに
   標準出力に共有の形の断り（ToolError）を 1 行出して終了の状態 2 で終える
 - 正解の根拠と選択肢ごとの説明の量は見ない。用語の説明に使う選択肢の説明の字数だけを表示の制約として警告する
 """
@@ -92,9 +92,11 @@ def read_explanations(*, path: str) -> dict:
 
 # @operation UC-022#readAnswerKeys
 def read_answer_keys(*, path: str) -> dict:
-    """正解表（回 → 問番号（文字列）→ 正解）。無ければ NOT_FOUND、形として読めなければ INVALID_INPUT。"""
+    """正解表（回 → 問番号（文字列）→ 正解）。無ければ NOT_FOUND、JSON として読めないか、回の値が object でないか、
+    正解が文字列でなければ INVALID_INPUT。"""
     doc = _read_json(path)
-    if not isinstance(doc, dict) or not all(isinstance(v, dict) for k, v in doc.items() if not k.startswith("_")):
+    if not isinstance(doc, dict) or not all(isinstance(v, dict) and all(isinstance(a, str) for a in v.values())
+                                            for k, v in doc.items() if not k.startswith("_")):
         raise Refused(CODE.INVALID_INPUT, f"{path} が正解表の形でない")
     return {k: v for k, v in doc.items() if not k.startswith("_")}
 
@@ -161,7 +163,7 @@ def _text(v) -> bool:
 
 
 def _optional(read, note: str, empty):
-    """門の止め方を要件が決めていない読み物（正解表・過去問・論点・別名・教材・上書き）。無いか読めなければ注を 1 行出して空で続ける。"""
+    """門の止め方を要件が決めていない読み物（論点・別名・教材・上書き）。無いか読めなければ注を 1 行出して空で続ける。"""
     try:
         return read()
     except Refused as e:
@@ -194,6 +196,10 @@ def main() -> int:
     bundles = Path(args.bundles) if args.bundles else d / "explanation_bundles"
     if not bundles.is_dir():
         return refuse(CODE.NOT_FOUND, f"入力の束の置き場が無い: {bundles}")
+    try:
+        keys = read_answer_keys(path=(d / "answer_keys.json").as_posix())
+    except Refused as e:
+        return refuse(e.code, f"学びの正解表を読めない: {e.reason}")
 
     stops: list[dict] = []
     warns: list[dict] = []
@@ -201,7 +207,6 @@ def main() -> int:
     warn = lambda k, w, r: warns.append({"kind": k, "where": w, "reason": r})  # noqa: E731
 
     # --- 読み物 -----------------------------------------------------------
-    keys = _optional(lambda: read_answer_keys(path=(d / "answer_keys.json").as_posix()), "（正解表と照らさない）", {})
     topics = _optional(lambda: read_topics(path=(d / "topics.json").as_posix())["topics"], "（論点の名前で用語を解決しない）", [])
     aliases = _optional(lambda: read_topic_aliases(path=(d / "topic_aliases.json").as_posix()), "", {})
     overrides = _optional(lambda: read_glossary_overrides(path=(d / "glossary_overrides.json").as_posix()), "", {})
@@ -209,15 +214,20 @@ def main() -> int:
     by_key: dict[str, list[str]] = {}
     corpus: list[str] = []
     for path in sorted((d / "questions").glob("*.json")):
-        doc = _optional(lambda: read_past_questions(path=path.as_posix()), "（この回の過去問と照らさない）", None)
-        if not doc:
+        try:
+            doc = read_past_questions(path=path.as_posix())
+        except Refused:
+            # 読めないファイルの問題は照らさない（その問題を指す問題解説は「指す過去問が無い」側に数える）
+            stop("unreadableOutput", f"過去問のファイル {path.stem}（{path.as_posix()}）", "過去問の形として読めない")
             continue
         for qq in doc["questions"]:
             qid = f"{doc['exam']}-q{qq['number']}"
             qq = dict(qq, _exam=doc["exam"], _key=content_key_of(qq))
             questions[qid] = qq
             by_key.setdefault(qq["_key"], []).append(qid)
-            corpus.append(str(qq.get("text") or "") + "".join(str(v) for v in (qq.get("choices") or {}).values()))
+            # 本文と選択肢の文は 1 つずつ照らす（文をまたぐ一致は数えない）
+            corpus.append(str(qq.get("text") or ""))
+            corpus += [str(v) for v in (qq.get("choices") or {}).values()]
     # 原文の窓をハッシュで持つ。文字列のまま持つと数百 MB になる
     corpus_grams = {hash(g) for text in corpus for g in shingles(text)}
     # 配る教材: 論点ごとに後の世代・後のファイルの教材
@@ -317,10 +327,10 @@ def main() -> int:
 
         ck = e.get("content_key")
         q = questions.get(qid)
-        if questions and not q:
+        if not q:
             stop("questionMissing", where, "指す過去問が無い")
         if _text(ck):
-            if ck not in by_key and questions:
+            if ck not in by_key:
                 stop("contentKeyMismatch", where, f"同一内容の鍵 {ck} が過去問に無い")
             elif q and q["_key"] != ck:
                 stop("contentKeyMismatch", where, f"同一内容の鍵が指す過去問から作った鍵と違う（書かれた {ck} / 実際 {q['_key']}）— 誰にも表示されない解説になる")
@@ -339,6 +349,9 @@ def main() -> int:
                 continue
             lab, note = c.get("label"), c["note"].strip()
             term = c.get("term").strip() if isinstance(c.get("term"), str) else ""
+            # 用語の説明に使う説明の字数は、正解の選択肢でも「正解。」を含めて数える
+            if term and len(note) > LIMITS["choiceNoteLength"]:
+                warn("choiceNoteLong", f"{where} {lab}", f"用語の説明に使う選択肢の説明が {len(note)} 字（上限 {LIMITS['choiceNoteLength']} 字）")
             if lab == correct:
                 if not note.startswith("正解"):
                     marks.append(f"{lab}（正解の説明が「正解」で始まらない）")
@@ -352,8 +365,6 @@ def main() -> int:
             if term:
                 # 用語集に入るのは 1 文目だけ（build_seed.note_brief と同じ切り方）なので、割れも 1 文目で見る
                 notes_by_term.setdefault(term, set()).add(note_brief(note))
-            if term and len(note) > LIMITS["choiceNoteLength"]:
-                warn("choiceNoteLong", f"{where} {lab}", f"用語の説明に使う選択肢の説明が {len(note)} 字（上限 {LIMITS['choiceNoteLength']} 字）")
         if marks:
             stop("correctMarkMismatch", where, f"正解の印が正解と食い違う: {'・'.join(marks)}")
 

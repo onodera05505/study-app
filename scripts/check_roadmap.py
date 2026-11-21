@@ -14,7 +14,6 @@
 """
 from __future__ import annotations
 
-import ast
 import json
 import re
 import sys
@@ -79,23 +78,63 @@ def _read_json(path: str):
         raise Refused(CODE.INVALID_INPUT, f"{path} が JSON として読めない")
 
 
+# 契約の単位の欄と型（order・topic_id・term は必須）
+UNIT_FIELDS = {"order": int, "topic_id": int, "term": str, "summary": str, "prereq": list, "round": int,
+               "chapter": str, "tier": int, "goals": list}
+
+
+def _unit_in_shape(u) -> bool:
+    """ロードマップの単位が契約の単位の形か（必須の欄を持ち、欄がそれぞれの型。前提は文字列の並び、到達基準は整数の並び）。"""
+    if not isinstance(u, dict) or any(k not in u for k in ("order", "topic_id", "term")):
+        return False
+    for key, typ in UNIT_FIELDS.items():
+        if key not in u:
+            continue
+        v = u[key]
+        if not (type(v) is int if typ is int else isinstance(v, typ)):
+            return False
+    return all(isinstance(p, str) for p in u.get("prereq", [])) and all(type(g) is int for g in u.get("goals", []))
+
+
+def _object_list(item: dict, key: str) -> bool:
+    """項目がその欄を持たないか、object の並びとして持つか。"""
+    return key not in item or (isinstance(item[key], list) and all(isinstance(x, dict) for x in item[key]))
+
+
+def _sources_in_shape(doc) -> bool:
+    """集めた資料の形: object で、sources・topics・themes・weights と、その項目の sources・examples は持つなら並び。"""
+    if not isinstance(doc, dict):
+        return False
+    for key in ("sources", "topics", "themes", "weights"):
+        if key in doc and not isinstance(doc[key], list):
+            return False
+    for key in ("topics", "themes", "weights"):
+        for item in doc.get(key) or []:
+            if isinstance(item, dict) and any(k in item and not isinstance(item[k], list) for k in ("sources", "examples")):
+                return False
+    return True
+
+
 # @operation UC-021#readRoadmap
 def read_roadmap(*, path: str) -> dict:
-    """ロードマップ。無ければ NOT_FOUND、JSON として読めないか units の並びが無ければ INVALID_INPUT。"""
+    """ロードマップ。無ければ NOT_FOUND、JSON として読めないか、units の並びが無いか、単位が契約の単位の形
+    （order・topic_id・term を持ち、欄がそれぞれの型）でなければ INVALID_INPUT。"""
     doc = _read_json(path)
-    if not isinstance(doc, dict) or not isinstance(doc.get("units"), list):
-        raise Refused(CODE.INVALID_INPUT, f"{path} がロードマップの形（units の並び）でない")
+    us = doc.get("units") if isinstance(doc, dict) else None
+    if not isinstance(us, list) or not all(_unit_in_shape(u) for u in us):
+        raise Refused(CODE.INVALID_INPUT, f"{path} がロードマップの形（契約の単位の形の units の並び）でない")
     return doc
 
 
 # @operation UC-021#readMaterialFile
 def read_material_file(*, path: str) -> dict:
-    """教材の置き場の 1 つのファイルの教材。無ければ NOT_FOUND、教材の並び（materials。行は論点の ID を持つ object）として
-    読めなければ INVALID_INPUT。行の欄の欠けと空は門が必須の要素として見る。"""
+    """教材の置き場の 1 つのファイルの教材。無ければ NOT_FOUND、教材の並び（materials。行は論点の ID を持つ object で、
+    出典 sources を持つなら object の並び。文字列を並びとして読み替えない）として読めなければ INVALID_INPUT。
+    行の欄の欠けと空は門が必須の要素として見る。"""
     doc = _read_json(path)
     ms = doc.get("materials") if isinstance(doc, dict) else None
-    if not isinstance(ms, list) or not all(isinstance(m, dict) and type(m.get("topic_id")) is int for m in ms):
-        raise Refused(CODE.INVALID_INPUT, f"{path} が教材の形（論点の ID を持つ materials の並び）でない")
+    if not isinstance(ms, list) or not all(isinstance(m, dict) and type(m.get("topic_id")) is int and _object_list(m, "sources") for m in ms):
+        raise Refused(CODE.INVALID_INPUT, f"{path} が教材の形（論点の ID を持つ materials の並び。出典は object の並び）でない")
     return {"materials": ms}
 
 
@@ -113,25 +152,27 @@ def read_roadmap_questions(*, path: str) -> dict:
 # @operation UC-021#readSources
 def read_sources(*, path: str) -> dict:
     """集めた資料の 1 ファイルの資料の名前。sources の名前と、入れ子の資料（topics・themes・weights の項目の sources、
-    無ければ examples）の名前を拾う。読めなければ INVALID_INPUT。"""
+    無ければ examples）の名前を拾う。JSON として読めないか、object でないか、sources・topics・themes・weights か
+    その項目の sources・examples が並びでなければ INVALID_INPUT。"""
     try:
         doc = json.loads(Path(path).read_text(encoding="utf-8"))
     except (OSError, ValueError):
         raise Refused(CODE.INVALID_INPUT, f"{path} が JSON として読めない")
+    if not _sources_in_shape(doc):
+        raise Refused(CODE.INVALID_INPUT, f"{path} が集めた資料の形（sources・topics・themes・weights とその項目の sources・examples が並び）でない")
     names: list[str] = []
 
     def add(s) -> None:
         if isinstance(s, dict) and isinstance(s.get("name"), str) and s["name"] and s["name"] not in names:
             names.append(s["name"])
 
-    if isinstance(doc, dict):
-        for s in doc.get("sources") or []:
-            add(s)
-        for key in ("topics", "themes", "weights"):
-            for item in doc.get(key) or []:
-                if isinstance(item, dict):
-                    for s in item.get("sources") or item.get("examples") or []:
-                        add(s)
+    for s in doc.get("sources") or []:
+        add(s)
+    for key in ("topics", "themes", "weights"):
+        for item in doc.get(key) or []:
+            if isinstance(item, dict):
+                for s in item.get("sources") or item.get("examples") or []:
+                    add(s)
     return {"names": names}
 
 
@@ -339,13 +380,7 @@ def check_material(g: Gate, m: dict, spec: dict, terms: set, source_names: set, 
         check_tables(g, tag, field, text)
         if text.count("**") % 2 == 1:
             g.warn("unclosedEmphasis", f"{tag} の {field}", "強調の記号（**）が閉じていない")
-    srcs = m.get("sources")
-    if isinstance(srcs, str) and srcs.startswith("["):
-        try:
-            srcs = ast.literal_eval(srcs)
-        except (ValueError, SyntaxError):
-            srcs = []
-    srcs = srcs if isinstance(srcs, list) else []
+    srcs = m.get("sources") or []
     for s in srcs:
         name = s.get("name") if isinstance(s, dict) else None
         if not _text(name) or name.strip() == NOT_A_SOURCE:
@@ -595,10 +630,9 @@ def main() -> int:
         for hit, why in _banned_hits(banned, correct_side):
             g.stop("bannedPattern", tag, f"正解の側に禁じた書き方「{hit}」: {why}")
         shaped.append(q)
-    if qfiles:
-        for tid, u in units.items():
-            if per_topic.get(tid, 0) != LIMITS["questionsPerUnit"]:
-                g.stop("questionCount", _unit(u), f"確認問題が {per_topic.get(tid, 0)} 問（{LIMITS['questionsPerUnit']} 問のはず）")
+    for tid, u in units.items():
+        if per_topic.get(tid, 0) != LIMITS["questionsPerUnit"]:
+            g.stop("questionCount", _unit(u), f"確認問題が {per_topic.get(tid, 0)} 問（{LIMITS['questionsPerUnit']} 問のはず）")
     check_question_clues(g, shaped, units, mats)
 
     # 独立解答（1 本ずつ、ロードマップの単位の問題だけを数える）

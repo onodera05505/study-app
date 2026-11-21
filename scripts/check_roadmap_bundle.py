@@ -51,22 +51,52 @@ def _read_json(path: str):
         raise Refused(CODE.INVALID_INPUT, f"{path} が JSON として読めない")
 
 
+def _object_list(item: dict, key: str) -> bool:
+    """項目がその欄を持たないか、object の並びとして持つか。"""
+    return key not in item or (isinstance(item[key], list) and all(isinstance(x, dict) for x in item[key]))
+
+
+def _unit_in_shape(u) -> bool:
+    """ロードマップの単位が論点の番号（整数）と論点名を持ち、到達基準を持つなら整数の並びか。"""
+    return (isinstance(u, dict) and type(u.get("topic_id")) is int and _text(u.get("term"))
+            and ("goals" not in u or (isinstance(u["goals"], list) and all(type(g) is int for g in u["goals"]))))
+
+
+def _sources_in_shape(doc) -> bool:
+    """集めた資料の形: object で、sources・topics・themes・weights と、その項目の sources・examples は持つなら並び。"""
+    if not isinstance(doc, dict):
+        return False
+    for key in ("sources", "topics", "themes", "weights"):
+        if key in doc and not isinstance(doc[key], list):
+            return False
+    for key in ("topics", "themes", "weights"):
+        for item in doc.get(key) or []:
+            if isinstance(item, dict) and any(k in item and not isinstance(item[k], list) for k in ("sources", "examples")):
+                return False
+    return True
+
+
 # @operation UC-020#readBundleAssignment
 def read_bundle_assignment(*, path: str) -> dict:
-    """束の割り当て（書き手に渡した論点）。無ければ NOT_FOUND。"""
+    """束の割り当て（書き手に渡した論点）。無ければ NOT_FOUND、JSON として読めないか、topics の並びが無いか、
+    topics の項目が論点の番号（整数）を持つ object でなければ INVALID_INPUT。"""
     doc = _read_json(path)
-    if not isinstance(doc, dict) or not isinstance(doc.get("topics"), list):
-        raise Refused(CODE.INVALID_INPUT, f"{path} が割り当ての形（topics の並び）でない")
+    ts = doc.get("topics") if isinstance(doc, dict) else None
+    if not isinstance(ts, list) or not all(isinstance(t, dict) and type(t.get("topic_id")) is int for t in ts):
+        raise Refused(CODE.INVALID_INPUT, f"{path} が割り当ての形（論点の番号を持つ topics の並び）でない")
     return {"topics": doc["topics"]}
 
 
 # @operation UC-020#readBundleMaterials
 def read_bundle_materials(*, path: str) -> dict:
-    """書き手が書いた束の教材。無ければ NOT_FOUND、教材の並び（materials。行はそれぞれ object）として読めなければ INVALID_INPUT。
-    行の欄の欠けと空は門が必須の要素として見る（ここでは見ない）。"""
+    """書き手が書いた束の教材。無ければ NOT_FOUND、教材の並び（materials。行はそれぞれ論点の番号（整数。真偽値は
+    整数として扱わない）を持つ object で、出典 sources を持つなら object の並び）として読めなければ INVALID_INPUT。
+    論点名・説明・詳しい解説の欄の欠けと空は門が必須の要素として見る（ここでは見ない）。"""
     doc = _read_json(path)
-    if not isinstance(doc, dict) or not isinstance(doc.get("materials"), list) or not all(isinstance(m, dict) for m in doc["materials"]):
-        raise Refused(CODE.INVALID_INPUT, f"{path} が教材の形（materials の並び）でない")
+    ms = doc.get("materials") if isinstance(doc, dict) else None
+    if not isinstance(ms, list) or not all(isinstance(m, dict) and type(m.get("topic_id")) is int
+                                           and _object_list(m, "sources") for m in ms):
+        raise Refused(CODE.INVALID_INPUT, f"{path} が教材の形（materials の並び。論点の番号は整数、出典は object の並び）でない")
     return {"materials": doc["materials"]}
 
 
@@ -82,35 +112,39 @@ def read_bundle_questions(*, path: str) -> dict:
 
 # @operation UC-020#readRoadmap
 def read_roadmap(*, path: str) -> dict:
-    """ロードマップの論点名と到達基準。無ければ NOT_FOUND、JSON として読めないか units が無ければ INVALID_INPUT。"""
+    """ロードマップの論点名と到達基準。無ければ NOT_FOUND、JSON として読めないか、units の並びが無いか、units の項目が
+    論点の番号と論点名を持たないか、到達基準（goals）が整数の並びでなければ INVALID_INPUT。"""
     doc = _read_json(path)
-    if not isinstance(doc, dict) or not isinstance(doc.get("units"), list):
-        raise Refused(CODE.INVALID_INPUT, f"{path} がロードマップの形（units の並び）でない")
+    us = doc.get("units") if isinstance(doc, dict) else None
+    if not isinstance(us, list) or not all(_unit_in_shape(u) for u in us):
+        raise Refused(CODE.INVALID_INPUT, f"{path} がロードマップの形（論点の番号・論点名・整数の到達基準を持つ units の並び）でない")
     return {"units": doc["units"]}
 
 
 # @operation UC-020#readSources
 def read_sources(*, path: str) -> dict:
     """集めた資料の 1 ファイルの資料の名前。sources の名前と、入れ子の資料（topics[].sources[]・themes[].examples[]・
-    weights[].sources[]）の名前を拾う。読めなければ INVALID_INPUT。"""
+    weights[].sources[]）の名前を拾う。JSON として読めないか、object でないか、sources・topics・themes・weights か
+    その項目の sources・examples が並びでなければ INVALID_INPUT。"""
     try:
         doc = json.loads(Path(path).read_text(encoding="utf-8"))
     except (OSError, ValueError):
         raise Refused(CODE.INVALID_INPUT, f"{path} が JSON として読めない")
+    if not _sources_in_shape(doc):
+        raise Refused(CODE.INVALID_INPUT, f"{path} が集めた資料の形（sources・topics・themes・weights とその項目の sources・examples が並び）でない")
     names: list[str] = []
 
     def add(s) -> None:
         if isinstance(s, dict) and isinstance(s.get("name"), str) and s["name"] and s["name"] not in names:
             names.append(s["name"])
 
-    if isinstance(doc, dict):
-        for s in doc.get("sources") or []:
-            add(s)
-        for key in ("topics", "themes", "weights"):
-            for item in doc.get(key) or []:
-                if isinstance(item, dict):
-                    for s in item.get("sources") or item.get("examples") or []:
-                        add(s)
+    for s in doc.get("sources") or []:
+        add(s)
+    for key in ("topics", "themes", "weights"):
+        for item in doc.get(key) or []:
+            if isinstance(item, dict):
+                for s in item.get("sources") or item.get("examples") or []:
+                    add(s)
     return {"names": names}
 
 
@@ -313,9 +347,14 @@ def check_question(g: Gate, i: int, q: dict, goals: set[int], bodies: str, banne
         g.stop("unknownGoal", tag, f"測る到達基準 {q['tests_goal']} がその学びの到達基準 {sorted(goals)} に無い")
     if isinstance(choices, dict) and answer in CHOICES and isinstance(choices.get(answer), str):
         correct = choices[answer]
-        for pattern, why in banned.items():
-            for mo in re.finditer(pattern, correct):
-                g.stop("bannedPattern", tag, f"正解の選択肢に禁じた書き方「{mo.group(0)}」: {why}")
+        correct_side = [("正解の選択肢", correct), ("正解の選択肢の説明", notes.get(answer) if isinstance(notes, dict) else None),
+                        ("正解の根拠", q.get("reason"))]
+        for place, text in correct_side:
+            if not isinstance(text, str):
+                continue
+            for pattern, why in banned.items():
+                for mo in re.finditer(pattern, text):
+                    g.stop("bannedPattern", tag, f"{place}に禁じた書き方「{mo.group(0)}」: {why}")
         if verbatim(correct, bodies):
             g.warn("verbatimBody", tag, f"正解の選択肢が教材と {LIMITS['verbatimLength']} 字以上連続して一致する（言い換えるか場面適用にする）")
 
@@ -375,7 +414,7 @@ def main() -> int:
         materials = read_bundle_materials(path=mpath)["materials"]
     except Refused as e:
         materials = []
-        why = "束の教材のファイルが無い" if e.code == CODE.NOT_FOUND else "束の教材のファイルが教材の形として読めない（書いている途中か壊れている）"
+        why = "束の教材のファイルが無い" if e.code == CODE.NOT_FOUND else "束の教材のファイルが教材の形として読めない（書いている途中か壊れているか、項目が形の外）"
         g.stop("unreadableOutput", f"{a.bundle}（{mpath}）", why)
     else:
         assigned = {t.get("topic_id"): t.get("term") for t in (assignment or {}).get("topics", []) if isinstance(t, dict)}

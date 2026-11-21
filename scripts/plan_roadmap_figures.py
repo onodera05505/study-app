@@ -22,6 +22,8 @@ def classify(text: str) -> tuple[int, str, str]:
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--data", default="data/itc", type=Path); ap.add_argument("--top", type=int, default=16); ap.add_argument("--out", type=Path, default=None); ap.add_argument("--ids", default=None, help="人が選んだ topic_id をカンマ区切りで（型の自動判定を上書き。順序も維持）")
     a = ap.parse_args(); d = a.data
+    # 読む物が欠けたら、例外の跡でなく、無い物を 1 行で名指して止める
+    if not (d / "roadmap.json").is_file(): sys.exit(f"{d / 'roadmap.json'} がありません")
     rm = json.loads((d / "roadmap.json").read_text(encoding="utf-8")); n = rm["unit_count"]
     mats = {}
     for f in sorted((d / "materials").glob("*.json")):

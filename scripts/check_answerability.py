@@ -36,9 +36,16 @@ def main() -> int:
     qdata = json.loads((args.questions_dir / f"{args.exam}.json").read_text(encoding="utf-8"))
     meta = {q["number"]: q for q in qdata["questions"]}
 
+    answers_dir = args.answers_dir / args.exam
+    if not answers_dir.is_dir():
+        sys.exit(f"{answers_dir} が無く、{args.exam} の解いた結果がありません")
+    batches = sorted(answers_dir.glob("batch_*.json"))
+    if not batches:
+        sys.exit(f"{answers_dir} に batch_*.json が無く、{args.exam} の解いた結果がありません")
+
     given: dict[int, str] = {}
     unanswerable: dict[int, str] = {}
-    for path in sorted((args.answers_dir / args.exam).glob("batch_*.json")):
+    for path in batches:
         data = json.loads(path.read_text(encoding="utf-8"))
         for k, v in data.get("answers", {}).items():
             given[int(k)] = v

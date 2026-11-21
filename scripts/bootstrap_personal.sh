@@ -13,12 +13,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 CFG=scripts/pages_projects.json
-WANT=$(python3 -c "import json;print(json.load(open('$CFG'))['account_id'])")
-# 道具の出力は一度変数に受けてから読む（pipefail の下で読み手が先に抜けると、書き手が SIGPIPE で落ちる）
-WHOAMI=$(npx wrangler whoami 2>/dev/null || true)
-ACCOUNT_RE='[0-9a-f]{32}'; HAVE=""
-[[ $WHOAMI =~ $ACCOUNT_RE ]] && HAVE="${BASH_REMATCH[0]}"
-[ "$HAVE" = "$WANT" ] || { echo "ログイン中のアカウント（${HAVE:-不明}）が想定（${WANT}）と違う。npx wrangler login で個人アカウントを選び直す"; exit 1; }
+source scripts/lib/check_account.sh
 
 EXAMS=("$@")
 [ $# -gt 0 ] || { echo "対象の ID を 1 つ以上渡す（$(python3 scripts/targets.py keys)）"; exit 1; }

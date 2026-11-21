@@ -23,8 +23,16 @@
 set -uo pipefail
 cd "$(dirname "$0")/.."
 
+# 第 1 引数が選択肢（- で始まる）でなければ学びの key。登録簿（src/shared/targets.json）に無ければ、
+# 組み立ても配備も起こさずに指定できる学びを示して止まる。省略すると ip
 EXAM="ip"
-if [[ -n "${1:-}" && "$(python3 scripts/targets.py has "${1:-}")" == "yes" ]]; then EXAM="$1"; shift; fi
+if [[ -n "${1:-}" && "${1:-}" != -* ]]; then
+  if [[ "$(python3 scripts/targets.py has "$1")" != "yes" ]]; then
+    echo "!! 学び '$1' は登録簿（src/shared/targets.json）に無い。指定できる学び: $(python3 scripts/targets.py keys)"
+    exit 1
+  fi
+  EXAM="$1"; shift
+fi
 
 PORT=8787
 BASE="http://127.0.0.1:${PORT}"
@@ -36,11 +44,16 @@ echo "▶ 対象: ${EXAM}（${BASE}）"
 
 STARTED_BY_US=0
 DEV_PID=""
-DEV_LOG="$(mktemp -t audit_wrangler)"
+# この回の記録（wrangler dev のログ）は、回す環境の一時の置き場（TMPDIR）に作る。
+# 成功で終えたら消し、失敗で終えたら残してその場所を示す。
+# 後片付けの表示は標準エラーへ出す（標準出力の最後の行は、止まった道具が出す断りの形のまま残す）
+TMP_ROOT="${TMPDIR:-/tmp}"
+DEV_LOG="$(mktemp "${TMP_ROOT%/}/audit_wrangler.XXXXXX")"
 
 cleanup() {
+  local status=$?
   if [[ "$STARTED_BY_US" == "1" ]]; then
-    echo "▶ wrangler dev を止める (pid ${DEV_PID})"
+    echo "▶ wrangler dev を止める (pid ${DEV_PID})" >&2
     [[ -n "$DEV_PID" ]] && kill "$DEV_PID" 2>/dev/null
     # npx 越しに起動すると、wrangler の子（workerd）が親の SIGTERM で道連れにならず、
     # 8787 を掴んだまま残る。次回の実行が「起動済み」と誤認するので、
@@ -49,7 +62,9 @@ cleanup() {
     STRAY="$(lsof -ti:"$PORT" 2>/dev/null)"
     [[ -n "$STRAY" ]] && kill $STRAY 2>/dev/null
     wait "$DEV_PID" 2>/dev/null
+    STARTED_BY_US=0
   fi
+  if [[ "$status" -eq 0 ]]; then rm -f "$DEV_LOG"; else echo "▶ この回の記録を残した: ${DEV_LOG}" >&2; fi
 }
 trap cleanup EXIT INT TERM
 
@@ -97,7 +112,7 @@ else
 fi
 
 echo "▶ 検査用アカウントを用意する（API 経由。SQL は叩かない）"
-node scripts/audit_fixtures.mjs --base "$BASE" || { echo "!! フィクスチャの作成に失敗"; exit 1; }
+node scripts/audit_fixtures.mjs --base "$BASE" || { echo "!! フィクスチャの作成に失敗" >&2; exit 1; }
 
 echo "▶ 採取"
 node scripts/audit_screens.mjs --exam "$EXAM" --base "$BASE" "$@"

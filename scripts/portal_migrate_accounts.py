@@ -16,6 +16,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 from targets import deploy, keys  # noqa: E402
+sys.path.insert(0, str(ROOT / "scripts" / "lib"))  # 単独で回さない部品の置き場（ADR-0014）
+from account_check import account_mismatch  # noqa: E402
 
 
 def d1_json(args: list[str], cwd: Path, lenient: bool = False) -> list[dict]:
@@ -44,6 +46,11 @@ def main() -> int:
     where = "--local" if a.local else "--remote"
     skip = {s.strip().lower() for s in a.skip.split(",") if s.strip()}
     if a.admin.lower() in skip: sys.exit(f"--admin {a.admin} は移さないメール（--skip）に含まれている。既定パスワードの管理者は使わない（brain 04）")
+
+    # 本番を指すときは、保存先を読む前にログイン中のアカウントを決めたアカウントと照らす（手元を指すときは照らさない）
+    if not a.local:
+        reason = account_mismatch(ROOT)
+        if reason: sys.exit(reason)
 
     accounts: dict[str, dict] = {}  # email -> {id, name, hash, created, grants:set}
     for k in keys():

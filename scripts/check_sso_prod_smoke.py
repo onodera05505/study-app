@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parent.parent  # 道具を置いたリポジト�
 KEY = sys.argv[1] if len(sys.argv) > 1 else "mkt"
 sys.path.insert(0, str(ROOT / "scripts" / "lib"))  # 単独で回さない部品の置き場（ADR-0014）
 from tool_refusal import CODE, tool_error_line  # noqa: E402
+from account_check import account_mismatch  # noqa: E402
 _cfg = json.load(open(ROOT / "scripts" / "pages_projects.json"))
 
 
@@ -21,6 +22,12 @@ def _refuse_missing(reason: str):
 
 if not isinstance(_cfg.get("_portal"), dict) or not _cfg["_portal"].get("url"): _refuse_missing("pages_projects.json の _portal に url が無い（まなびばの本番の場所が分からない）")
 if not isinstance(_cfg.get(KEY), dict) or not _cfg[KEY].get("url"): _refuse_missing(f"{KEY} は pages_projects.json に url が無い（まだ本番に出していない）")
+# 手元を読む前・本番に書く前に、ログイン中のアカウントを決めたアカウントと照らす。違えば何もせずに FORBIDDEN で断る
+_mismatch = account_mismatch(ROOT)
+if _mismatch:
+    print(_mismatch, file=sys.stderr)
+    print(tool_error_line(CODE.FORBIDDEN, _mismatch))
+    sys.exit(1)
 PORTAL = _cfg["_portal"]["url"].rstrip("/"); APP = _cfg[KEY]["url"].rstrip("/"); APP_DB = _cfg[KEY]["db"]
 EMAIL = "sso-smoke@example.com"; PW = "apicheck-pass-1234"
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36"

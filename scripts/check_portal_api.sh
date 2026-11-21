@@ -18,10 +18,14 @@ PORT=8791
 BASE="http://127.0.0.1:${PORT}"
 # 共有秘密は検査の中だけの値。本番の SSO_SECRET は読まない（読む必要がない）
 SECRET="portalcheck-secret"
-LOG="$(mktemp -t check_portal_api)"
+# この回の記録（wrangler dev のログ）は、回す環境の一時の置き場（TMPDIR）に作る。
+# 成功で終えたら消し、失敗で終えたら残してその場所を標準エラーに示す
+TMP_ROOT="${TMPDIR:-/tmp}"
+LOG="$(mktemp "${TMP_ROOT%/}/check_portal_api.XXXXXX")"
 PID=""
 
 cleanup() {
+  local status=$?
   if [ -n "$PID" ]; then
     kill "$PID" 2>/dev/null || true
     wait "$PID" 2>/dev/null || true
@@ -31,6 +35,7 @@ cleanup() {
     LEFT=$(lsof -ti "tcp:${PORT}" 2>/dev/null || true)
     if [ -n "$LEFT" ]; then kill $LEFT 2>/dev/null || true; fi
   fi
+  if [ "$status" -eq 0 ]; then rm -f "$LOG"; else echo "▶ この回の記録を残した: $LOG" >&2; fi
 }
 trap cleanup EXIT
 

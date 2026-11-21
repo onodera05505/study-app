@@ -20,10 +20,44 @@
  *
  * 冪等。すでに居るアカウントは作り直さず、足りない分だけ足す。
  * **既存データは消さない**（DELETE を一切流さない。ローカル D1 には実データが入っている）。
+ *
+ * 配備が成功の状態（2xx）で中身の無い答えか、期待した欄を持たない答えか、一覧の要素が期待した形でない答えを返したら、用意を続けずに
+ * UnreadableAnswer で止まる。直接回したときは、読めなかった問い合わせを理由に持つ断りの形
+ * （{"error":{"code":"UPSTREAM_UNAVAILABLE","reason":…}}）を標準出力の最後の行に出して、終了 1 で終える。
  */
-import { writeFileSync } from 'node:fs'
+import { readFileSync, writeFileSync } from 'node:fs'
 import { createServer } from 'node:http'
 import { randomUUID } from 'node:crypto'
+
+// 断りの種類の名前の出所（ADR-0012）。名前の文字列をここで書かない
+const CODE = JSON.parse(readFileSync(new URL('../src/shared/error-codes.json', import.meta.url), 'utf8'))
+
+/** 配備が成功の状態で読めない答え（中身が無いか、期待した欄を持たないか、一覧の要素が期待した形でない）を返したことを表す失敗。message が読めなかった問い合わせの 1 行。 */
+export class UnreadableAnswer extends Error {
+  constructor(method, path, why) {
+    super(`${method} /api${path} が成功の状態で読めない答えを返した（${why}）`)
+    this.code = CODE.UPSTREAM_UNAVAILABLE
+  }
+}
+
+/** 断りの形（契約の ToolError）を 1 行の JSON で返す。 */
+export function toolErrorLine(e) {
+  return JSON.stringify({ error: { code: e.code, reason: e.message } })
+}
+
+const isRecord = (x) => x !== null && typeof x === 'object' && !Array.isArray(x)
+
+/**
+ * 成功の状態の答え data から欄 key を読む。kind が 'list' なら要素がどれもオブジェクトの配列、'value' なら null・undefined でない値、
+ * 'present' なら欄があること（値は null でもよい）を求め、満たさなければ（中身の無い答えを含む）UnreadableAnswer を投げる。
+ */
+export function fieldOf(data, key, kind, method, path) {
+  const v = isRecord(data) ? data[key] : undefined
+  const ok = kind === 'list' ? Array.isArray(v) : kind === 'present' ? isRecord(data) && key in data : v !== undefined && v !== null
+  if (!ok) throw new UnreadableAnswer(method, path, `${key} が無い`)
+  if (kind === 'list' && !v.every(isRecord)) throw new UnreadableAnswer(method, path, `${key} の要素が期待した形でない`)
+  return v
+}
 
 // 手元の SSO の偽物。audit_screens.sh が学び側の配備にまなびばの場所と共有秘密としてこの値を与える。
 // 値はローカルのこの検査専用で、本番の値ではない。ポートは check_api（8791）・check_sso_flow（8790）と分ける。
@@ -124,14 +158,13 @@ async function startSsoFake(appKey) {
 /** 検査の本人のトークンを返す。手元の SSO の偽物が発行したコードを学び側の signInWithCode で換える。 */
 async function ensureAccount(base, acc, sso) {
   const d = await apiCall(base, '/auth/sso', { method: 'POST', body: { code: sso.issue(acc.email, acc.name) } })
-  if (!d?.token) throw new Error(`検査の本人（${acc.email}）のコードの交換: トークンが返らない`)
-  return { ...acc, token: d.token }
+  return { ...acc, token: fieldOf(d, 'token', 'value', 'POST', '/auth/sso') }
 }
 
 /** 学び側の配備のまなびばの場所が手元の SSO の偽物か確かめ、偽物が発行するコードの宛て先（受け持つ学び）を返す。 */
 async function ssoTarget(base) {
   const config = await apiCall(base, '/auth/config')
-  if (!config?.sso || config.portal !== SSO_FAKE_URL) {
+  if (!fieldOf(config, 'sso', 'present', 'GET', '/auth/config') || config.portal !== SSO_FAKE_URL) {
     throw new Error(
       `GET /api/auth/config: まなびばの場所が手元の SSO の偽物（${SSO_FAKE_URL}）でない（${JSON.stringify(config).slice(0, 100)}）。` +
         ' wrangler dev に SSO_PORTAL_URL と SSO_SECRET を渡して起動し直すこと（audit_screens.sh が渡す）',
@@ -144,41 +177,43 @@ async function ssoTarget(base) {
 async function completeSession(base, token, createBody, maxAnswers = 200) {
   let created
   try {
-    created = await apiCall(base, '/sessions', { method: 'POST', body: createBody, token })
+    created = fieldOf(await apiCall(base, '/sessions', { method: 'POST', body: createBody, token }), 'id', 'value', 'POST', '/sessions')
   } catch (e) {
     if (e.status === 400) return null // 出題できる問題がない（弱点復習が空、など）
     throw e
   }
   const letters = ['ア', 'イ', 'ウ', 'エ']
   for (let n = 0; n < maxAnswers; n++) {
-    const cur = await apiCall(base, `/sessions/${created.id}/current`, { token })
-    if (cur.finished || !cur.question) break
-    await apiCall(base, `/sessions/${created.id}/answer`, {
+    const path = `/sessions/${created}/current`
+    const cur = await apiCall(base, path, { token })
+    if (fieldOf(cur, 'finished', 'present', 'GET', path) || !cur.question) break
+    await apiCall(base, `/sessions/${created}/answer`, {
       method: 'POST',
       body: { idx: cur.question.idx, answer: letters[(cur.question.idx + n) % 4] },
       token,
     })
   }
-  await apiCall(base, `/sessions/${created.id}/finish`, { method: 'POST', token })
-  return created.id
+  await apiCall(base, `/sessions/${created}/finish`, { method: 'POST', token })
+  return created
 }
 
 /** セッションを途中まで解いて **中断したまま** にする（進行中の状態を作る）。 */
 async function leaveInProgress(base, token, createBody, answers) {
-  const cur = await apiCall(base, '/sessions/current', { token })
-  if (cur.session) return cur.session.id // すでに中断中のものがある
-  const created = await apiCall(base, '/sessions', { method: 'POST', body: createBody, token })
+  const held = fieldOf(await apiCall(base, '/sessions/current', { token }), 'session', 'present', 'GET', '/sessions/current')
+  if (held) return held.id // すでに中断中のものがある
+  const created = fieldOf(await apiCall(base, '/sessions', { method: 'POST', body: createBody, token }), 'id', 'value', 'POST', '/sessions')
   const letters = ['ア', 'イ', 'ウ', 'エ']
   for (let n = 0; n < answers; n++) {
-    const c = await apiCall(base, `/sessions/${created.id}/current`, { token })
-    if (c.finished || !c.question) break
-    await apiCall(base, `/sessions/${created.id}/answer`, {
+    const path = `/sessions/${created}/current`
+    const c = await apiCall(base, path, { token })
+    if (fieldOf(c, 'finished', 'present', 'GET', path) || !c.question) break
+    await apiCall(base, `/sessions/${created}/answer`, {
       method: 'POST',
       body: { idx: c.question.idx, answer: letters[n % 4] },
       token,
     })
   }
-  return created.id
+  return created
 }
 
 async function setProgress(base, token, topicIds, statusOf) {
@@ -192,8 +227,7 @@ async function setProgress(base, token, topicIds, statusOf) {
 }
 
 async function completedSessions(base, token) {
-  const d = await apiCall(base, '/sessions', { token })
-  return d.sessions ?? []
+  return fieldOf(await apiCall(base, '/sessions', { token }), 'sessions', 'list', 'GET', '/sessions')
 }
 
 export async function buildFixtures(base, { log = console.log } = {}) {
@@ -209,10 +243,10 @@ export async function buildFixtures(base, { log = console.log } = {}) {
   }
 
   // 論点 ID は実データから採る（並び順ではなく API が返す ID をそのまま使う）
-  const topicList = await apiCall(base, '/topics?limit=200', { token: out.audit_mid.token })
-  const ids = topicList.topics.map((t) => t.id)
-  const fields = (await apiCall(base, '/fields', { token: out.audit_mid.token })).fields
-  const exams = (await apiCall(base, '/exams', { token: out.audit_mid.token })).exams
+  const listOf = async (path, key) => fieldOf(await apiCall(base, path, { token: out.audit_mid.token }), key, 'list', 'GET', path)
+  const ids = (await listOf('/topics?limit=200', 'topics')).map((t) => t.id)
+  const fields = await listOf('/fields', 'fields')
+  const exams = await listOf('/exams', 'exams')
 
   // ---- audit_new は登録だけ。何もしない（進捗ゼロ・履歴ゼロが見本）
   const newHist = await completedSessions(base, out.audit_new.token)
@@ -263,11 +297,20 @@ export async function buildFixtures(base, { log = console.log } = {}) {
   return out
 }
 
-// 直接実行されたときだけ動く（audit_screens.mjs からは import して使う）
-if (import.meta.url === `file://${process.argv[1]}`) {
+/** 直接実行の本体。用意したアカウントの一覧を --json に書き出す。 */
+async function main() {
   const base = arg('--base', 'http://127.0.0.1:8787')
   console.log(`▶ 検査用アカウントを用意する（${base}）`)
-  const res = await buildFixtures(base)
+  let res
+  try {
+    res = await buildFixtures(base)
+  } catch (e) {
+    if (!(e instanceof UnreadableAnswer)) throw e
+    // 標準出力がパイプのときの書き出しは非同期なので、process.exit で打ち切らずに終了の状態だけを決める
+    process.stdout.write(`${toolErrorLine(e)}\n`)
+    process.exitCode = 1
+    return
+  }
   const jsonPath = arg('--json', null)
   const dump = Object.fromEntries(
     Object.entries(res).map(([k, v]) => [
@@ -278,3 +321,6 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   if (jsonPath) writeFileSync(jsonPath, JSON.stringify(dump, null, 2))
   console.log('完了')
 }
+
+// 直接実行されたときだけ動く（audit_screens.mjs からは import して使う）
+if (import.meta.url === `file://${process.argv[1]}`) await main()
