@@ -35,14 +35,11 @@ URL=$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'
 source scripts/lib/pinned_wrangler.sh
 
 # アカウントの取り違えを止める門（同じ Mac で別アカウントのログインに差し替わることがある）。
-# 決めたアカウントと違うか、ログイン中のアカウントを確かめられなければ、両方を示して配信しないまま失敗で終える
+# 決めたアカウントと違うか、ログイン中のアカウントを確かめられなければ、両方を示して配信しないまま失敗で終える。
+# 照らし方はほかの本番に触る道具と同じ部品（並びのどこかにあれば合う・環境変数の向け先が違えば止める）。照らすのは固定した版の道具
 # @implements REQ-559
-WANT=$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['account_id'])")
-# 道具の出力は一度変数に受けてから読む（pipefail の下で読み手が先に抜けると、書き手が SIGPIPE で落ちる）
-WHOAMI=$("$WRANGLER" whoami 2>/dev/null || true)
-ACCOUNT_RE='[0-9a-f]{32}'; HAVE=""
-[[ $WHOAMI =~ $ACCOUNT_RE ]] && HAVE="${BASH_REMATCH[0]}"
-[ "$HAVE" = "$WANT" ] || { echo "ログイン中のアカウント（${HAVE:-不明}）が想定（${WANT}）と違う。npx wrangler login で個人アカウントを選び直す"; exit 1; }
+ACCOUNT_WRANGLER="$WRANGLER"
+source scripts/lib/check_account.sh
 
 # macOS 標準の bash 3.2 は $VAR 直後の全角文字を変数名に巻き込むので ${VAR} で区切る
 echo "▶ 対象: ${EXAM}（Pages: ${PROJECT}）"

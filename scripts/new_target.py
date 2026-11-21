@@ -80,8 +80,8 @@ def main() -> int:
     key = a.key; assert re.fullmatch(r"[a-z][a-z0-9]{1,15}", key), "key は英小文字と数字（2〜16 文字）"
     fields = [f.strip() for f in a.fields.split(",") if f.strip()] if a.fields else list(EXAM_FIELDS); extra = "補足（ロードマップ外）"
     t = load(T)
-    # 資格型の分野の比率は、登録簿に既にある学びでも、何かを書く前に確かめる。既にある学びはその学びの登録簿の分野と照らす
-    ratio = parse_ratio(a.field_ratio, list(t[key]["fields"]) if key in t else fields, a.mock_size) if exam else None
+    # 資格型の分野の比率は、登録簿に既にある学びでも、何かを書く前に確かめる。既にある学びはその学びの登録簿の分野と模試の問題数と照らす
+    ratio = parse_ratio(a.field_ratio, list(t[key]["fields"]) if key in t else fields, t[key]["mockSize"] if key in t else a.mock_size) if exam else None
     if key not in t and exam:
         t[key] = {"kind": "exam", "brand": a.name, "title": a.name, "examName": a.exam_name, "mockSize": a.mock_size, "mockMinutes": a.mock_minutes, "practiceSize": a.practice_size,
                   "fieldThreshold": a.field_threshold, "passRule": a.pass_rule, "fieldRatio": ratio,
