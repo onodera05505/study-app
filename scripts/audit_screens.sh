@@ -50,18 +50,39 @@ DEV_PID=""
 TMP_ROOT="${TMPDIR:-/tmp}"
 DEV_LOG="$(mktemp "${TMP_ROOT%/}/audit_wrangler.XXXXXX")"
 
+# その回に起こした配備（npx とその子・孫。npx が shim なら npm exec・node wrangler・workerd が下に連なる）を止める。
+# 先に連なりを控えてから片付けのできる止め方（SIGTERM）を送り、どれもいなくなるまで待つ（wrangler が手元の一時の置き場を片付けられる）。
+# 待っても残る物だけを最後に SIGKILL で止める
+descendants_of() {
+  local p
+  for p in $(pgrep -P "$1" 2>/dev/null); do echo "$p"; descendants_of "$p"; done
+}
+stop_started() {
+  local top="$1" tree p st alive=""
+  tree="$top $(descendants_of "$top")"
+  kill -TERM $tree 2>/dev/null || true
+  for _ in $(seq 1 150); do
+    alive=""
+    for p in $tree; do
+      st="$(ps -o stat= -p "$p" 2>/dev/null || true)"
+      if [ -n "$st" ] && [ "${st#Z}" = "$st" ]; then alive="$alive $p"; fi
+    done
+    [ -z "$alive" ] && break
+    sleep 0.2
+  done
+  if [ -n "$alive" ]; then kill -KILL $alive 2>/dev/null || true; fi
+  wait "$top" 2>/dev/null || true
+}
+
 cleanup() {
   local status=$?
   if [[ "$STARTED_BY_US" == "1" ]]; then
     echo "▶ wrangler dev を止める (pid ${DEV_PID})" >&2
-    [[ -n "$DEV_PID" ]] && kill "$DEV_PID" 2>/dev/null
-    # npx 越しに起動すると、wrangler の子（workerd）が親の SIGTERM で道連れにならず、
-    # 8787 を掴んだまま残る。次回の実行が「起動済み」と誤認するので、
+    [[ -n "$DEV_PID" ]] && stop_started "$DEV_PID"
+    # 止めたあとも 8787 を掴む物が残れば、次回の実行が「起動済み」と誤認するので、
     # **自分で起こしたときだけ** ポートを掴んでいるものごと落とす。
-    sleep 1
     STRAY="$(lsof -ti:"$PORT" 2>/dev/null)"
     [[ -n "$STRAY" ]] && kill $STRAY 2>/dev/null
-    wait "$DEV_PID" 2>/dev/null
     STARTED_BY_US=0
   fi
   if [[ "$status" -eq 0 ]]; then rm -f "$DEV_LOG"; else echo "▶ この回の記録を残した: ${DEV_LOG}" >&2; fi

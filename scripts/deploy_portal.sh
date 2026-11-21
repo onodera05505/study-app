@@ -14,12 +14,12 @@ cd "$(dirname "$0")/.."
 # @implements REQ-351, REQ-352
 source scripts/lib/pinned_wrangler.sh
 
-ACCOUNT="$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['account_id'])")"
-# 道具の出力は一度変数に受けてから読む（pipefail の下で読み手が先に抜けると、書き手が SIGPIPE で落ちる）
-WHOAMI="$("$WRANGLER" whoami 2>/dev/null || true)"
-if ! grep -q "$ACCOUNT" <<< "$WHOAMI"; then
-  echo "ログイン中の Cloudflare アカウントが登録簿（$ACCOUNT）と違う。npx wrangler login で個人アカウントに" >&2; exit 1
-fi
+# アカウントの取り違えを止める門。ほかの何よりも先に、ログイン中のアカウントと環境変数の向け先を決めたアカウントと照らし、
+# 違うか確かめられなければ、食い違ったアカウントと決めたアカウントを示して、配信しないまま失敗で終える。
+# 照らし方はほかの本番に触る道具と同じ部品（並びのどこかにあれば合う・環境変数の向け先が違えば止める）。照らすのは固定した版の道具
+ACCOUNT_WRANGLER="$WRANGLER"
+source scripts/lib/check_account.sh
+
 PROJECT="$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json')).get('_portal',{}).get('project','manabiba'))")"
 DB="manabiba-db"
 

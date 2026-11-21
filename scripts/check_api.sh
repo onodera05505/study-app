@@ -30,15 +30,35 @@ TMP_ROOT="${TMPDIR:-/tmp}"
 LOG="$(mktemp "${TMP_ROOT%/}/check_api_${EXAM}.XXXXXX")"
 PID=""
 
+# その回に起こした配備（npx とその子・孫。npx が shim なら npm exec・node wrangler・workerd が下に連なる）を止める。
+# 先に連なりを控えてから片付けのできる止め方（SIGTERM）を送り、どれもいなくなるまで待つ（wrangler が手元の一時の置き場を片付けられる）。
+# 待っても残る物だけを最後に SIGKILL で止める
+descendants_of() {
+  local p
+  for p in $(pgrep -P "$1" 2>/dev/null); do echo "$p"; descendants_of "$p"; done
+}
+stop_started() {
+  local top="$1" tree p st alive=""
+  tree="$top $(descendants_of "$top")"
+  kill -TERM $tree 2>/dev/null || true
+  for _ in $(seq 1 150); do
+    alive=""
+    for p in $tree; do
+      st="$(ps -o stat= -p "$p" 2>/dev/null || true)"
+      if [ -n "$st" ] && [ "${st#Z}" = "$st" ]; then alive="$alive $p"; fi
+    done
+    [ -z "$alive" ] && break
+    sleep 0.2
+  done
+  if [ -n "$alive" ]; then kill -KILL $alive 2>/dev/null || true; fi
+  wait "$top" 2>/dev/null || true
+}
+
 cleanup() {
   local status=$?
   if [ -n "$PID" ]; then
-    kill "$PID" 2>/dev/null || true
-    wait "$PID" 2>/dev/null || true
-    # wrangler は workerd を孫プロセスで持つ。npx 経由なので kill だけでは
-    # 取り残され、次回の起動がポートで詰まる。8788 はこの検査専用なので
-    # 掴んでいるものを掃除してよい。
-    sleep 1
+    stop_started "$PID"
+    # 口はこの検査専用なので、止めたあとも掴んでいる物があれば掃除してよい。
     LEFT=$(lsof -ti "tcp:${PORT}" 2>/dev/null || true)
     if [ -n "$LEFT" ]; then kill $LEFT 2>/dev/null || true; fi
   fi
