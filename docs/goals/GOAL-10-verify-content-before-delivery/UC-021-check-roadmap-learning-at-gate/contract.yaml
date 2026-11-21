@@ -93,7 +93,7 @@ operations:
       - code: NOT_FOUND
         when: ロードマップが無い
       - code: INVALID_INPUT
-        when: ロードマップが読めない
+        when: ロードマップが読めない（単位が形の外のときを含む）
       - code: NOT_FOUND
         when: 添えた独立解答のファイルが無い
       - code: INVALID_INPUT
@@ -171,7 +171,7 @@ operations:
       - code: NOT_FOUND
         when: ロードマップが無い
       - code: INVALID_INPUT
-        when: JSON として読めないか、units が無い
+        when: JSON として読めないか、units の並びが無いか、単位が object でないか、単位が order・topic_id・term を欠くか、単位の欄（order・topic_id・term・summary・prereq・round・chapter・tier・goals）が型の外
     examples:
       ok:
         request: { path: data/itc/roadmap.json }
@@ -220,7 +220,7 @@ operations:
       - code: NOT_FOUND
         when: ファイルが無い
       - code: INVALID_INPUT
-        when: 形として読めない
+        when: JSON として読めないか、materials の並びが無いか、教材が論点の番号（整数）を持つ object でないか、出典（sources）が object の並びでない（文字列を並びとして読み替えない。欄の欠けと空は門が必須の要素として見る）
     examples:
       ok:
         request: { path: data/itc/materials/bundle_01.json }
@@ -309,7 +309,7 @@ operations:
         names: { type: array, items: { type: string, minLength: 1 } }
     errors:
       - code: INVALID_INPUT
-        when: JSON として読めない
+        when: JSON として読めないか、object でないか、sources・topics・themes・weights か、その項目の sources・examples が並びでない
     examples:
       ok:
         request: { path: data/itc/sources/public_official.json }

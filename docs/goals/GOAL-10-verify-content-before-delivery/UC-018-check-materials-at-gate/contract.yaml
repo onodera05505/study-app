@@ -53,7 +53,7 @@ operations:
                     enum: [unreadableOutput, termMismatch, orphanMaterial, bundleMismatch, missingElement, brokenTable, tableTooShort, tableTooWide, tableTooLong, figureMissing, pastQuestionQuote]
         warnings:
           type: array
-          description: exitCode を変えない。当たった物を件数で打ち切らずにすべて持つ。情報の量（字数・文数・見出しの数・箇条書きや比較の項目の数）の種類は無い
+          description: exitCode を変えない。当たった物を件数で打ち切らずにすべて持つ。情報の量（字数・文数・見出しの数・箇条書きや比較の項目の数）の種類は無い。sourcePunctuation と duplicate を除き、markupInPlainText は見出しを持たない教材に、ほかは見出しを持つ教材に当たる
           items:
             allOf:
               - { $ref: "#/schemas/Finding" }
@@ -267,7 +267,7 @@ operations:
     direction: outbound
     owned: true
     auth: none
-    summary: 束の割り当て（書き手に渡した論点）を読む。束を突き合わせる世代の束のファイルと同じ名前の物だけを読む
+    summary: 束の割り当て（書き手に渡した論点）を読む。束を突き合わせる世代の束のファイルと同じ名前の物だけを読む（無ければ突き合わせず、読めなければ門が unreadableOutput で止める）
     request:
       type: object
       required: [path]

@@ -6,7 +6,7 @@
 x-uc: UC-042
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-19
+x-updated: 2026-11-21
 
 operations:
   buildAnswerabilityBundles:
@@ -29,7 +29,7 @@ operations:
       type: object
       required: [exitCode]
       properties:
-        exitCode: { type: integer, enum: [0] }
+        exitCode: { type: integer, enum: [0, 1] }
     errors: []
     examples:
       ok:
@@ -58,7 +58,7 @@ operations:
       type: object
       required: [exitCode]
       properties:
-        exitCode: { type: integer, enum: [0] }
+        exitCode: { type: integer, enum: [0, 1] }
     errors: []
     examples:
       ok:
@@ -85,7 +85,7 @@ operations:
       type: object
       required: [exitCode]
       properties:
-        exitCode: { type: integer, enum: [0] }
+        exitCode: { type: integer, enum: [0, 1] }
     errors: []
     examples:
       ok:
@@ -110,7 +110,7 @@ operations:
       type: object
       required: [exitCode]
       properties:
-        exitCode: { type: integer, enum: [0] }
+        exitCode: { type: integer, enum: [0, 1] }
     errors: []
     examples:
       ok:
@@ -135,7 +135,7 @@ operations:
       type: object
       required: [exitCode]
       properties:
-        exitCode: { type: integer, enum: [0] }
+        exitCode: { type: integer, enum: [0, 1] }
     errors: []
     examples:
       ok:
@@ -160,7 +160,7 @@ operations:
       type: object
       required: [exitCode]
       properties:
-        exitCode: { type: integer, enum: [0] }
+        exitCode: { type: integer, enum: [0, 1] }
     errors: []
     examples:
       ok:
@@ -209,7 +209,7 @@ operations:
       type: object
       required: [exitCode]
       properties:
-        exitCode: { type: integer, enum: [0] }
+        exitCode: { type: integer, enum: [0, 1] }
     errors: []
     examples:
       ok:

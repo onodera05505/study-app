@@ -4,7 +4,7 @@
 x-uc: UC-020
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-19
+x-updated: 2026-11-21
 
 schemas:
   Finding:
@@ -118,15 +118,15 @@ operations:
           type: array
           items:
             type: object
-            required: [topic_id, term]
+            required: [topic_id]
             properties:
               topic_id: { type: integer, minimum: 1 }
-              term: { type: string, minLength: 1 }
+              term: { type: string, minLength: 1, description: 論点名。門は止める理由の箇所に論点の番号と並べて添えるだけで、無くても割り当てとして読める }
     errors:
       - code: NOT_FOUND
         when: 割り当てが無い
       - code: INVALID_INPUT
-        when: JSON として読めないか、topics の並びが無い
+        when: JSON として読めないか、topics の並びが無いか、topics の項目が論点の番号（整数）を持つ object でない
     examples:
       ok:
         request: { path: data/itc/material_bundles/bundle_01.json }
@@ -169,13 +169,13 @@ operations:
                   type: object
                   required: [name]
                   properties:
-                    name: { type: string, minLength: 1, not: { const: 一般常識 }, description: 集めた資料の名前か、「〜の集計」（括弧に英小文字の鍵を添えてよい） }
+                    name: { type: string, minLength: 1, not: { const: 一般常識 }, description: 集めた資料の名前か、「〜の集計」（括弧に英小文字と _ の鍵を添えてよい） }
                     where: { type: string }
     errors:
       - code: NOT_FOUND
         when: ファイルが無い
       - code: INVALID_INPUT
-        when: 形として読めない
+        when: JSON として読めないか、materials の並びが無いか、教材が論点の番号（整数）を持つ object でないか、出典（sources）が object の並びでない（論点名・説明・詳しい解説の欄の欠けと空は門が必須の要素として見る）
     examples:
       ok:
         request: { path: data/itc/materials/bundle_01.json }
@@ -274,7 +274,7 @@ operations:
       - code: NOT_FOUND
         when: ロードマップが無い
       - code: INVALID_INPUT
-        when: JSON として読めないか、units が無い
+        when: JSON として読めないか、units の並びが無いか、units の項目が論点の番号と論点名を持たないか、到達基準（goals）が整数の並びでない
     examples:
       ok:
         request: { path: data/itc/roadmap.json }
@@ -304,7 +304,7 @@ operations:
         names: { type: array, items: { type: string, minLength: 1 } }
     errors:
       - code: INVALID_INPUT
-        when: JSON として読めない
+        when: JSON として読めないか、object でないか、sources・topics・themes・weights か、その項目の sources・examples が並びでない
     examples:
       ok:
         request: { path: data/itc/sources/public_official.json }

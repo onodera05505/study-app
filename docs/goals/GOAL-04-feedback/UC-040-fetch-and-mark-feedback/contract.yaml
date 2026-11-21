@@ -1,12 +1,12 @@
 # UC-040 の境界: 運用者が手元で呼ぶ、フィードバックを取り出して状態を付ける道具の入口 1 つ。振る舞いは ./UC.md の要件が持つ。
 # 読み方は ../../../adr/ADR-0008-local-tool-boundary.md（手元の道具の境界を local-store で読む）と ../../../adr/ADR-0014-entries-from-apps-and-tools.md（入口の名前）。
-# request の各欄は同じ名前の引数（command は第 1 引数、学びは第 2 引数、ids は続く引数）。response の exitCode はプロセスの終了コード。
+# request の各欄は同じ名前の引数（command は第 1 引数、学びは第 2 引数、ids は続く引数、note は値を `=` でつないだ 1 語の `--note=<値>`）。response の exitCode はプロセスの終了コード。
 # これらの道具は断りの種類の名前を出さない（errors: []）。止まり方は要件と exitCode が持つ。
 # 配備先のアカウント・保存先の名前・秘密の値は値なので書かない（R-102）。値の正本は scripts/pages_projects.json と src/shared/targets.json。
 x-uc: UC-040
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-19
+x-updated: 2026-11-21
 
 operations:
   feedback:
@@ -16,18 +16,37 @@ operations:
     auth: none
     summary: フィードバックを取り出し、処理の状態を付け、未処理の件数を示す
     request:
-      type: object
-      required: [command]
-      additionalProperties: false
-      properties:
-        command: { type: string, enum: [fetch, mark, summary] }
-        learning: { type: string, pattern: "^[a-z]+$", description: 登録簿の学びの key }
-        all: { type: boolean }
-        every: { type: boolean }
-        ids: { type: array, minItems: 1, items: { type: string, minLength: 1 } }
-        status: { type: string, minLength: 1 }
-        note: { type: string }
-        local: { type: boolean, description: true なら本番でなく手元の保存先 }
+      oneOf:
+        - type: object
+          description: 取り出す（fetch）。学びか、すべての学び（every）のどちらかが要る
+          required: [command]
+          additionalProperties: false
+          properties:
+            command: { type: string, enum: [fetch] }
+            learning: { type: string, pattern: "^[a-z]+$", description: 登録簿の学びの key }
+            all: { type: boolean }
+            every: { type: boolean }
+            local: { type: boolean, description: true なら本番でなく手元の保存先 }
+          anyOf:
+            - { required: [learning] }
+            - { required: [every], properties: { every: { enum: [true] } } }
+        - type: object
+          description: 処理の状態を付ける（mark）
+          required: [command, learning, ids, status]
+          additionalProperties: false
+          properties:
+            command: { type: string, enum: [mark] }
+            learning: { type: string, pattern: "^[a-z]+$", description: 登録簿の学びの key }
+            ids: { type: array, minItems: 1, items: { type: string, minLength: 1, pattern: "^[^-]" }, description: 先頭が「-」の id は道具の引数の名前と読まれるので受けない }
+            status: { type: string, enum: [new, triaged, done] }
+            note: { type: string }
+            local: { type: boolean, description: true なら本番でなく手元の保存先 }
+        - type: object
+          description: 未処理の件数を求める（summary）。本番の保存先だけを読む
+          required: [command]
+          additionalProperties: false
+          properties:
+            command: { type: string, enum: [summary] }
     response:
       type: object
       required: [exitCode]
@@ -38,3 +57,6 @@ operations:
       ok:
         request: { command: summary }
         response: { exitCode: 0 }
+      markNoteStartsWithDash:
+        request: { command: mark, learning: ip, ids: [no-such-feedback], status: done, note: "-x" }
+        response: { exitCode: 1 }

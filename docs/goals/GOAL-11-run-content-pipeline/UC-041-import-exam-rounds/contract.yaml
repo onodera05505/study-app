@@ -6,7 +6,7 @@
 x-uc: UC-041
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-19
+x-updated: 2026-11-21
 
 operations:
   fetchPdfs:
@@ -71,7 +71,7 @@ operations:
       properties:
         exam: { type: string, minLength: 1, description: 回の ID }
         data: { type: string, minLength: 1, description: 学びの置き場 }
-        pdfDir: { type: string, minLength: 1 }
+        pdfDir: { type: string, minLength: 1, description: 問題冊子の PDF の置き場（--pdf-dir）。省略すると学びの置き場の下の pdfs。この置き場の親の置き場の名前を試験のコード（ip・ap・fe）として、問題冊子のファイル名を決める }
         out: { type: string, minLength: 1 }
         dpi: { type: integer, minimum: 1 }
     response:
@@ -269,7 +269,7 @@ operations:
       additionalProperties: false
       properties:
         boxes: { type: string, minLength: 1 }
-        pdfDir: { type: string, minLength: 1 }
+        pdfDir: { type: string, minLength: 1, description: 問題冊子の PDF の置き場（--pdf-dir）。この置き場の親の置き場の名前を試験のコード（ip・ap・fe）として、問題冊子のファイル名を決める }
         out: { type: string, minLength: 1 }
         dpi: { type: integer, minimum: 1 }
     response:

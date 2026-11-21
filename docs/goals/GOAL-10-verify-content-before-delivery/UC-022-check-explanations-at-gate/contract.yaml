@@ -4,7 +4,7 @@
 x-uc: UC-022
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-19
+x-updated: 2026-11-21
 
 schemas:
   Finding:
@@ -58,8 +58,8 @@ operations:
           description: 門が使った閾値と表示の制約
           required: [quoteLength, choiceNoteLength]
           properties:
-            quoteLength: { type: integer, const: 30, description: 過去問の原文とこの字数以上連続して一致したら止める }
-            choiceNoteLength: { type: integer, const: 90, description: 用語の説明に使う選択肢ごとの説明がこの字数を超えたら警告 }
+            quoteLength: { type: integer, const: 30, description: 問題解説の正解の根拠と選択肢ごとの説明を続けた文が、過去問の本文か選択肢の文のどれか 1 つとこの字数以上連続して一致したら止める（過去問の側は文をまたぐ一致を数えず、問題解説の側は欄をまたぐ一致も数える） }
+            choiceNoteLength: { type: integer, const: 90, description: 用語の説明に使う選択肢ごとの説明（正解の選択肢の説明を含み、「正解。」も数える）がこの字数を超えたら警告 }
     errors:
       - code: INVALID_INPUT
         when: 知らない名前の引数か、値の無い引数がある
@@ -69,6 +69,10 @@ operations:
         when: 資格対策でない学び
       - code: NOT_FOUND
         when: 入力の束の置き場が無い
+      - code: NOT_FOUND
+        when: 学びの正解表が無い
+      - code: INVALID_INPUT
+        when: 学びの正解表が形として読めない
     examples:
       badArguments:
         request: { data: data/ip, unknownArgument: x }
@@ -92,6 +96,12 @@ operations:
         error: NOT_FOUND
       notQualificationBeforeBundlesMissing:
         request: { data: data/itc, bundles: data/ip/explanation_bundles_x }
+        error: INVALID_INPUT
+      answerKeysMissing:
+        request: { data: data/fe }
+        error: NOT_FOUND
+      answerKeysUnreadable:
+        request: { data: data/ap }
         error: INVALID_INPUT
 
   readLearningKind:
@@ -127,12 +137,12 @@ operations:
     direction: outbound
     owned: true
     auth: none
-    summary: 問題解説の入力の束 1 つ（書き手に渡した論点ごとの問題）を読む。束と同じ名前の問題解説のファイルと突き合わせる
+    summary: 問題解説の入力の束 1 つ（書き手に渡した論点ごとの問題）を読む。入力の束の置き場の「expl_」で始まる名前のファイルだけが束で、束と同じ名前の問題解説のファイルと突き合わせる
     request:
       type: object
       required: [path]
       properties:
-        path: { type: string, pattern: "^.+/[A-Za-z0-9_-]+\\.json$" }
+        path: { type: string, pattern: "^.+/expl_[A-Za-z0-9_-]*\\.json$" }
     response:
       type: object
       required: [topics]
@@ -234,7 +244,7 @@ operations:
       - code: NOT_FOUND
         when: 正解表が無い
       - code: INVALID_INPUT
-        when: 形として読めない
+        when: JSON として読めないか、回の値が object でないか、正解が文字列でない
     examples:
       ok:
         request: { path: data/ip/answer_keys.json }

@@ -1,11 +1,21 @@
 # UC-036 の境界: 運用者が手元で呼ぶ、手元の配備に API と画面を当てる道具の入口 5 つ。振る舞いは ./UC.md の要件が持つ。
 # 読み方は ../../../adr/ADR-0008-local-tool-boundary.md（手元の道具の境界を local-store で読む）と ../../../adr/ADR-0014-entries-from-apps-and-tools.md（入口の名前）。
 # request の各欄は同じ名前の引数（learning は第 1 引数。auditScreens の learning も第 1 引数）。response の exitCode はプロセスの終了コード。
-# これらの道具は断りの種類の名前を出さない（errors: []）。止まり方は要件と exitCode が持つ。
+# 検査用のアカウントの用意と画面の採取は、errors に当たって止まるとき標準出力へ ToolError を 1 つ出す。ほかの止まり方と、ほかの 3 つの道具の止まり方は要件と exitCode が持つ（errors: []）。
 x-uc: UC-036
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-19
+x-updated: 2026-11-21
+
+schemas:
+  ToolError:
+    description: 入口が errors に当たって止まるときに標準出力へ 1 つだけ出す形。終了コードは 1。核（error の code と reason）は共有の形の ToolError、ここは名前の絞り込み。reason は答えを読めなかった問い合わせを含む
+    allOf:
+      - { $ref: "../../../_shared/components.yaml#/schemas/ToolError" }
+      - properties:
+          error:
+            properties:
+              code: { type: string, enum: [UPSTREAM_UNAVAILABLE] }
 
 operations:
   checkApi:
@@ -68,11 +78,16 @@ operations:
       required: [exitCode]
       properties:
         exitCode: { type: integer, enum: [0, 1] }
-    errors: []
+    errors:
+      - code: UPSTREAM_UNAVAILABLE
+        when: アカウントの用意に要る問い合わせに、配備が成功の状態で中身の無い答えか期待と違う形の答えを返す
     examples:
       ok:
         request: {}
         response: { exitCode: 0 }
+      unreadableAnswer:
+        request: {}
+        error: UPSTREAM_UNAVAILABLE
 
   auditScreens:
     transport: local-store
@@ -93,11 +108,16 @@ operations:
       required: [exitCode]
       properties:
         exitCode: { type: integer, enum: [0, 1] }
-    errors: []
+    errors:
+      - code: UPSTREAM_UNAVAILABLE
+        when: アカウントの用意か撮る画面の組み立てに要る問い合わせ（論点の詳細の 1 件ずつを除く）に、配備が成功の状態で中身の無い答えか期待と違う形の答えを返す
     examples:
       ok:
         request: { learning: ip, limit: 2 }
         response: { exitCode: 0 }
+      unreadableAnswer:
+        request: { learning: ip, limit: 2 }
+        error: UPSTREAM_UNAVAILABLE
 
   checkSsoFlow:
     transport: local-store

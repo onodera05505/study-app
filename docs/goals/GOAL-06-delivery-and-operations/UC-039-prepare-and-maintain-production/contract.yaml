@@ -6,7 +6,7 @@
 x-uc: UC-039
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-19
+x-updated: 2026-11-21
 
 operations:
   bootstrapPersonal:
@@ -238,6 +238,8 @@ operations:
     errors:
       - code: NOT_FOUND
         when: 配備先の一覧にまなびばか指定した学びの場所が無い
+      - code: FORBIDDEN
+        when: ログイン中の配備先のアカウントが決めたアカウントと違う
     examples:
       ok:
         request: { learning: mkt }
@@ -245,6 +247,9 @@ operations:
       locationMissing:
         request: { learning: zzz }
         error: NOT_FOUND
+      wrongAccount:
+        request: { learning: mkt }
+        error: FORBIDDEN
 
   targets:
     transport: local-store
