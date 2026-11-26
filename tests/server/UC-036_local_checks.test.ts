@@ -10,6 +10,9 @@ import {
   toolErrorOf,
   DEPLOY_PORT_OF,
   startExistingDeployment,
+  startSameLearningDeployment,
+  startSlowHolder,
+  type ExistingDeployment,
   type AnswerRewrite,
   checkApi,
   checkPortalApi,
@@ -582,26 +585,37 @@ describe('UC-036 配る前に手元の配備に API と画面を当てる', () =
     })
 
     /**
-     * 道具を回す前に、道具が配備に使う口で、道具と別のプロセスグループの死活確認に応じるプロセスを起こしておき、道具を回す。
-     * 道具の終わり方は問わない。道具が終えたあとに、そのプロセスが生きていて口に応じるかを返す。
+     * 道具を回す前に、道具が配備に使う口を、道具と別のプロセスグループで作業の場所を影の根の外に置いたプロセス（道具が起こしていないプロセス）に
+     * 掴ませておき、道具を回す。道具の終わり方は問わない。道具が終えた時点でそのプロセスが生きているかを取り、afterTool（答えずに持っていた
+     * プロセスに答えさせる）のあとに、口の死活確認に応じるかを返す。
      */
-    const withExisting = (port: number, run: (s: Shadow) => Promise<ToolRun>) =>
+    const withForeign = <P extends ExistingDeployment>(start: () => Promise<P>, run: (s: Shadow) => Promise<ToolRun>, afterTool: (p: P) => void = () => {}) =>
       withPorts(async () => {
-        const existing = await startExistingDeployment(port)
+        const foreign = await start()
         try {
           const r = await run(toolShadow())
-          return { r, alive: existing.alive(), responds: await existing.responds(), pid: existing.pid }
+          const aliveAtEnd = foreign.alive()
+          afterTool(foreign)
+          return { r, alive: aliveAtEnd, responds: await foreign.responds(), pid: foreign.pid, foreign }
         } finally {
-          await existing.close()
+          await foreign.close()
         }
       })
+    const withExisting = (port: number, run: (s: Shadow) => Promise<ToolRun>) => withForeign(() => startExistingDeployment(port), run)
+    const withSlowHolder = (port: number, run: (s: Shadow) => Promise<ToolRun>) =>
+      withForeign(
+        () => startSlowHolder(port),
+        run,
+        (p) => p.release(),
+      )
     const expectKeptAlive = (x: { r: ToolRun; alive: boolean; responds: boolean; pid: number }) => {
       expect(x.r.timedOut, x.r.out.slice(-1500)).toBe(false)
       expect(crashed(x.r), x.r.out.slice(-1500)).toBe(false)
-      expect(x.r.heldBefore, '前提: 既に応じている配備が口を掴んでいない').toContain(x.pid)
-      expect(x.alive, `道具が既に応じていた配備のプロセスを止めた: ${x.r.out.slice(-1500)}`).toBe(true)
-      expect(x.responds, '道具が終えたあと、既に応じていた配備が口に応じない').toBe(true)
+      expect(x.r.heldBefore, '前提: 道具が起こしていないプロセスが口を掴んでいない').toContain(x.pid)
+      expect(x.alive, `道具が、道具が起こしていないプロセスを止めた: ${x.r.out.slice(-1500)}`).toBe(true)
+      expect(x.responds, '道具が終えたあと、道具が起こしていないプロセスが口に応じない').toBe(true)
     }
+    const screensOne = (s: Shadow) => auditScreens(s, ['ip', '--out', s.path('screens'), '--limit', '1'], { TMPDIR: emptyTemp(s) })
 
     // @covers REQ-675#check-api-existing-kept
     it('学びの API の検査の口で道具が起こしていない配備が既に応じていると、道具が終えたあともその配備のプロセスが生きていて口に応じる', async () => {
@@ -614,8 +628,31 @@ describe('UC-036 配る前に手元の配備に API と画面を当てる', () =
     })
 
     // @covers REQ-675#screens-existing-kept
-    it('画面の採取の口で道具が起こしていない配備が既に応じていると、道具が終えたあともその配備のプロセスが生きていて口に応じる', async () => {
-      expectKeptAlive(await withExisting(DEPLOY_PORT_OF.auditScreens, (s) => auditScreens(s, ['ip', '--out', s.path('screens'), '--limit', '1'], { TMPDIR: emptyTemp(s) })))
+    it('画面の採取の口で道具が起こしていない、撮る学びと画面の名が違う（画面の名を返さない）配備が既に応じていると、道具が終えたあともその配備のプロセスが生きていて口に応じる', async () => {
+      expectKeptAlive(await withExisting(DEPLOY_PORT_OF.auditScreens, screensOne))
+    })
+
+    // @covers REQ-675#screens-same-learning-kept
+    it('画面の採取の口で道具が起こしていない、撮る学び ip と同じ画面の名を返す配備が既に応じていると、道具はその配備へ死活確認と画面の名のほかの要求を当て、終えたあともその配備のプロセスが生きていて口に応じる', async () => {
+      const x = await withForeign(() => startSameLearningDeployment(DEPLOY_PORT_OF.auditScreens, 'ip'), screensOne)
+      const others = x.foreign.requests().filter((q) => q.path !== '/api/health' && !(q.method === 'GET' && !q.path.startsWith('/api/')))
+      expect(others.length, `既に応じている同じ画面の名の配備へ、死活確認と画面の名のほかの要求が来ていない（使って進んでいない）: ${x.r.out.slice(-1500)}`).toBeGreaterThan(0)
+      expectKeptAlive(x)
+    })
+
+    // @covers REQ-675#check-api-slow-held-kept
+    it('学びの API の検査の口を道具が起こしていないプロセスが掴み、道具が終えるまで死活確認に答えないと、終えたあともそのプロセスが生きていて口に応じる', async () => {
+      expectKeptAlive(await withSlowHolder(DEPLOY_PORT_OF.checkApi, (s) => checkApi(s, 'ip', { TMPDIR: emptyTemp(s) })))
+    })
+
+    // @covers REQ-675#portal-api-slow-held-kept
+    it('まなびばの API の検査の口を道具が起こしていないプロセスが掴み、道具が終えるまで死活確認に答えないと、終えたあともそのプロセスが生きていて口に応じる', async () => {
+      expectKeptAlive(await withSlowHolder(DEPLOY_PORT_OF.checkPortalApi, (s) => checkPortalApi(s, { TMPDIR: emptyTemp(s) })))
+    })
+
+    // @covers REQ-675#screens-slow-held-kept
+    it('画面の採取の口を道具が起こしていないプロセスが掴み、道具が終えるまで死活確認に答えないと、終えたあともそのプロセスが生きていて口に応じる', async () => {
+      expectKeptAlive(await withSlowHolder(DEPLOY_PORT_OF.auditScreens, screensOne))
     })
   })
 })

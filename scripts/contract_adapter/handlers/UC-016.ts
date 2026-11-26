@@ -11,10 +11,15 @@
  * 画面の外への口は偽の配信物に向け、要求が契約の wire（GET /version.json）であることを確かめる。
  *
  * まなびばの配備の手続き deployPortal（`bash scripts/deploy_portal.sh`）は、UC-032 の受け持ちと同じ影の根と偽の配備の道具で回す
- * （handlers/UC-032.ts の runDeployProcedure。配信は偽物が受け、外への通信は塞ぐ）。ok の前提は、ログイン中のアカウントが配備を持つアカウント。
+ * （handlers/UC-032.ts の runDeployProcedure。配信は偽物が受け、外への通信は塞ぐ）。前提（例の名前から）:
+ * - ok: ログイン中のアカウントが配備を持つアカウントで、固定した版の配備の道具が入っている
+ * - pinnedToolMissing: 向け先のアカウントの環境変数を与えず、固定した版の配備の道具を影の根から除く（別の版の偽物だけが残る）
+ * - envAccountDiffersWithoutPinnedTool: 向け先のアカウントの環境変数に配備を持つアカウントと違う値を与え、固定した版の配備の道具を除く
  */
 
+import { rmSync } from 'node:fs'
 import { join } from 'node:path'
+import { OTHER_ACCOUNT, type Shadow, type World } from '../../../tests/server/UC-032_fixture'
 import { pathToFileURL } from 'node:url'
 import { REPO_ROOT } from '../kit/tool'
 import { withFetch } from '../kit/outside'
@@ -32,6 +37,18 @@ const PREMISE: Record<string, Shelf> = {
 const PROBE: Shelf = { kind: 'stamp', body: { build: 'contract-adapter-probe', at: '2026-10-02T00:00:00Z' } }
 
 let windows = 0
+
+/** 影の根から固定した版の配備の道具（node_modules/wrangler と node_modules/.bin/wrangler・wrangler2）を除く。PATH の wrangler と npx wrangler の先は別の版の偽物のまま。 */
+const withoutPinnedTool = (s: Shadow) => {
+  rmSync(join(s.root, 'node_modules', 'wrangler'), { recursive: true, force: true })
+  for (const name of ['wrangler', 'wrangler2']) rmSync(join(s.root, 'node_modules', '.bin', name), { force: true })
+}
+
+const DEPLOY_PORTAL_PREMISE: Record<string, { world: World; pinned: boolean }> = {
+  ok: { world: {}, pinned: true },
+  pinnedToolMissing: { world: { accountEnv: null }, pinned: false },
+  envAccountDiffersWithoutPinnedTool: { world: { accountEnv: OTHER_ACCOUNT }, pinned: false },
+}
 
 const fetchVersionStamp: Operation = async (line) => {
   const premise = PREMISE[line.case]
@@ -75,8 +92,9 @@ export default defineHandler({
   operations: {
     fetchVersionStamp,
     deployPortal: (line) => {
-      if (line.case !== 'ok') unknownCase(line)
-      return runDeployProcedure('deploy_portal.sh', argsOf(line.request))
+      const premise = DEPLOY_PORTAL_PREMISE[line.case]
+      if (!premise) unknownCase(line)
+      return runDeployProcedure('deploy_portal.sh', argsOf(line.request), {}, premise.world, premise.pinned ? undefined : withoutPinnedTool)
     },
   },
 })

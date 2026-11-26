@@ -628,6 +628,129 @@ export async function startExistingDeployment(port: number): Promise<ExistingDep
   return { pid, alive: () => alive(pid), responds: () => healthy(port), close }
 }
 
+/** 学び key の登録簿の画面の名（src/shared/targets.json の title。画面の見出し（index.html の title）に出る名）。 */
+export function screenNameOf(key: string): string {
+  const entry = (JSON.parse(readFileSync(join(ROOT, 'src', 'shared', 'targets.json'), 'utf8')) as Record<string, { title?: unknown }>)[key]
+  if (!entry || typeof entry.title !== 'string') throw new Error(`前提: 登録簿に学び ${key} の画面の名が無い`)
+  return entry.title
+}
+
+/**
+ * 道具が起こしていない、道具が配備に使う口を掴むプロセスを起こす（REQ-675）。このプロセスとも道具とも別のプロセスグループで、作業の場所を
+ * 影の根の外（OS の一時の置き場）に置く。このプロセスが居なくなれば自分で終わる。handler は要求ごとに呼ぶ node の文（req・res・held を使う）。
+ * 呼ぶ側が口の鍵（withPorts）を持つ。口を待ち受けるまで待って返す。
+ */
+async function startForeignProcess(port: number, handler: string, log: string): Promise<{ pid: number; close: () => Promise<void> }> {
+  hookExit()
+  const script = [
+    "const http = require('node:http')",
+    "const fs = require('node:fs')",
+    `const parent = ${process.pid}`,
+    `const LOG = ${JSON.stringify(log)}`,
+    'const held = []',
+    'let released = false',
+    "const ok = (res) => { res.writeHead(200, { 'content-type': 'application/json' }); res.end('{\"ok\": true}') }",
+    "process.on('SIGUSR2', () => { released = true; for (const res of held.splice(0)) { try { ok(res) } catch {} } })",
+    'http.createServer((req, res) => {',
+    '  req.resume()',
+    "  try { fs.appendFileSync(LOG, JSON.stringify({ method: req.method, path: (req.url || '/').split('?')[0] }) + '\\n') } catch {}",
+    `  ${handler}`,
+    `}).listen(${port}, '127.0.0.1')`,
+    'setInterval(() => { try { process.kill(parent, 0) } catch { process.exit(0) } }, 1000)',
+  ].join('\n')
+  const child = spawn(process.execPath, ['-e', script], { cwd: tmpdir(), detached: true, stdio: 'ignore' })
+  child.unref()
+  const pid = child.pid
+  if (pid === undefined) throw new Error('前提: 口を掴むプロセスを起こせない')
+  liveGroups.add(pid)
+  const close = async () => {
+    killGroup(pid)
+    liveGroups.delete(pid)
+    for (let i = 0; i < 50 && alive(pid); i++) await new Promise((ok) => setTimeout(ok, 100))
+  }
+  for (let i = 0; ; i++) {
+    if (listeners([port]).includes(pid)) break
+    if (i >= 100 || !alive(pid)) {
+      await close()
+      throw new Error(`前提: 口 ${port} を掴むプロセスが口を待ち受けない`)
+    }
+    await new Promise((ok) => setTimeout(ok, 100))
+  }
+  return { pid, close }
+}
+
+/** 口を掴むプロセスが受けた要求（受けた順。経路は問い合わせの文字列を除く）。 */
+export type ReceivedRequest = { method: string; path: string }
+const readLog = (log: string): ReceivedRequest[] =>
+  existsSync(log)
+    ? readFileSync(log, 'utf8')
+        .split('\n')
+        .filter((l) => l.trim() !== '')
+        .map((l) => JSON.parse(l) as ReceivedRequest)
+    : []
+/** 受けた要求の記録のファイル（止めたあとも読めるよう、影の根の外の置き場に置き、removeTemps で消す）。 */
+const logOf = (what: string, port: number) => {
+  const dir = mkdtempSync(join(tmpdir(), `uc036-${what}-${port}-`))
+  temps.push(dir)
+  return join(dir, 'requests.jsonl')
+}
+
+/** 道具が起こしていない、既に応じている手元の配備のうち、撮る学びと同じ画面の名を返す物の代わり（REQ-675）。 */
+export type SameLearningDeployment = ExistingDeployment & {
+  /** 受けた要求（死活確認・画面の名の要求を含む）。 */
+  requests: () => ReceivedRequest[]
+}
+
+/**
+ * port の手元の口に、死活確認（/api/health）にすぐ 200 で応じ、`/api/` の下でない GET（画面）には学び key の登録簿の画面の名を見出し（title）に持つ
+ * 画面を返し、ほかの要求には 200 の {"ok": true} で応える、道具が起こしていないプロセスを起こす（startForeignProcess の囲い）。受けた要求を記録する。
+ */
+export async function startSameLearningDeployment(port: number, key: string): Promise<SameLearningDeployment> {
+  const page = `<!doctype html><html lang="ja"><head><meta charset="utf-8"><title>${screenNameOf(key)}</title></head><body><div id="root"></div></body></html>`
+  const log = logOf('same', port)
+  const handler = [
+    "const path = (req.url || '/').split('?')[0]",
+    "if (req.method === 'GET' && !path.startsWith('/api/')) {",
+    `  res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }); res.end(${JSON.stringify(page)}); return`,
+    '}',
+    'ok(res)',
+  ].join('\n  ')
+  const p = await startForeignProcess(port, handler, log)
+  if (!(await healthy(port))) {
+    await p.close()
+    throw new Error(`前提: 口 ${port} の同じ画面の名の配備の代わりが死活確認に応じない`)
+  }
+  return { pid: p.pid, alive: () => alive(p.pid), responds: () => healthy(port), requests: () => readLog(log), close: p.close }
+}
+
+/** 道具が起こしていない、口を掴んで死活確認に答えないプロセス（REQ-675）。 */
+export type SlowHolder = ExistingDeployment & {
+  /** 答えずに持っている要求に 200 で答え、これより後の要求にはすぐ 200 で答えるようにする（道具が終えたあとに呼ぶ）。 */
+  release: () => void
+}
+
+/**
+ * port の手元の口を掴み、release を呼ぶまでどの要求（死活確認を含む）にも答えずに持ち、release のあとは 200 の {"ok": true} で答える、
+ * 道具が起こしていないプロセスを起こす（startForeignProcess の囲い）。待つ時間の長さに依らない（答えないのは release までずっと）。
+ */
+export async function startSlowHolder(port: number): Promise<SlowHolder> {
+  const log = logOf('slow', port)
+  const p = await startForeignProcess(port, 'if (released) ok(res); else held.push(res)', log)
+  return {
+    pid: p.pid,
+    alive: () => alive(p.pid),
+    responds: () => healthy(port),
+    release: () => {
+      try {
+        process.kill(p.pid, 'SIGUSR2')
+      } catch {
+        // もう居ない（alive が false を返す）
+      }
+    },
+    close: p.close,
+  }
+}
+
 /** 名前の無い例外で落ちたか。 */
 export const crashed = (r: ToolRun) => /Traceback \(most recent call last\)|^\s+at .+\(.+:\d+:\d+\)$/m.test(r.stderr)
 

@@ -20,7 +20,7 @@
  */
 
 import { copyFile, rm } from 'node:fs/promises'
-import { makeShadow, runProcedure, type StorageSpec } from '../../../tests/server/UC-032_fixture'
+import { makeShadow, runProcedure, type Shadow, type StorageSpec, type World } from '../../../tests/server/UC-032_fixture'
 import { defineHandler, type Answer, type Operation } from '../kit/protocol'
 import { answerOf, argsOf, inShadow, premise, unknownCase } from '../kit/td'
 import { toolErrorCode } from '../kit/tool'
@@ -63,12 +63,20 @@ const seedRemote: Operation = (line) => {
 
 /**
  * 配備の手続きを、UC-032 のテストの影の根と偽の配備の道具で 1 回回し、答えに読む（断りの名前があれば断り、無ければ終了の状態）。
+ * world は外の世界の決め方（向け先のアカウントの環境変数など）、prepare は回す前に影の根を前提の形にする手（固定した版の道具を除くなど）。
  * @implements REQ-567, REQ-569, REQ-570
  */
-export async function runDeployProcedure(script: string, args: string[], storage: { remote?: StorageSpec; local?: StorageSpec } = {}): Promise<Answer> {
+export async function runDeployProcedure(
+  script: string,
+  args: string[],
+  storage: { remote?: StorageSpec; local?: StorageSpec } = {},
+  world: World = {},
+  prepare: (shadow: Shadow) => void = () => {},
+): Promise<Answer> {
   const shadow = makeShadow('adapter', { copy: ['scripts', 'src', 'public', 'portal'], remote: storage.remote, local: storage.local })
   try {
-    const run = await runProcedure(shadow, script, args)
+    prepare(shadow)
+    const run = await runProcedure(shadow, script, args, world)
     const code = toolErrorCode(run.out)
     if (code !== null) return { error: code }
     return { response: { exitCode: run.code } }
