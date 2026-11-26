@@ -15,11 +15,12 @@
 
 - **docs/ の索引網羅** — `docs/*.md` の全ファイル名が `docs/文書の索引.md` に載っているか
 - **brain の索引網羅** — `brain/reports/*.md` の全ファイル名が `brain/INDEX.md` に載っているか
-- **門の実在** — `docs/不変条件と門.md` がバッククォートで名指しするパス
-  （scripts/ src/ .claude/ docs/ brain/ data/ public/ 配下）が実在し、リポジトリ（`--root` の git の索引）が
+- **門の実在** — `docs/不変条件と門.md` がバッククォートで名指しするパス（空白を含まず `/` を含み、`/` で始まらない物。
+  先頭の置き場では絞らない。`/` で始まる物は画面や API の経路なので読まない）が実在し、リポジトリ（`--root` の git の索引）が
   追跡しているか。手元にあっても追跡していない物（git が無視する物を含む）は、ほかのクローンに無いので門にならない。
   ディレクトリは、その下に索引のパスが 1 つ以上あれば追跡と読む。`<試験>` のような
-  プレースホルダを含むものは見ない
+  プレースホルダを含むものは見ない。`--root` が git の作業ツリーの根でないか、git が索引の読み出しを断るときは、
+  追跡を確かめられない理由を挙げて失敗にする
 - **仕様書の本文が現在形か** — `SPEC_CURRENT_FORM` の仕様書の本文（`## 改訂履歴` より前）に
   日付・「廃止」「以前は」「方針変更」・版の名前が無いか（決まりは足さず書き換える。2026-09-27）
 - **trace の道具の複製が正本と同じか** — `scripts/trace/*.mjs` が `~/.claude/brain/tools/trace/` と一致するか（中央が無い環境では見ない。2026-09-28）
@@ -46,7 +47,7 @@ from pathlib import Path
 CENTRAL_RETURN_LINE = Path(os.path.expanduser("~/.claude/brain/check_return_line.py"))
 
 INVARIANTS_DOC = "docs/不変条件と門.md"
-PATH_IN_BACKTICKS = re.compile(r"`((?:scripts|src|\.claude|docs|brain|data|public)/[^`\s]+)`")
+PATH_IN_BACKTICKS = re.compile(r"`([^`\s/][^`\s]*/[^`\s]*)`")
 
 
 def check_index(root: Path, index_file: str, target_dir: str, errors: list[str]) -> int:
@@ -62,15 +63,23 @@ def check_index(root: Path, index_file: str, target_dir: str, errors: list[str])
     return len(files)
 
 
-def tracked_paths(root: Path) -> set[str] | None:
-    """root の git の索引にあるパス（root からの相対）。root が git の作業ツリーの根でなければ None（追跡を確かめられない）。"""
+def _git_reason(r: subprocess.CompletedProcess[str]) -> str:
+    lines = [ln.strip() for ln in (r.stderr or "").splitlines() if ln.strip()]
+    return lines[-1] if lines else f"終了の状態 {r.returncode}"
+
+
+def tracked_paths(root: Path) -> tuple[set[str] | None, str]:
+    """root の git の索引にあるパス（root からの相対）と、空の理由。
+    root が git の作業ツリーの根でないか、git が索引の読み出しを断るときは、None と確かめられない理由を返す。"""
     top = subprocess.run(["git", "-C", str(root), "rev-parse", "--show-toplevel"], capture_output=True, text=True)
-    if top.returncode != 0 or Path(top.stdout.strip()).resolve() != root.resolve():
-        return None
+    if top.returncode != 0:
+        return None, f"git が {root} を作業ツリーと読まない（{_git_reason(top)}）"
+    if Path(top.stdout.strip()).resolve() != root.resolve():
+        return None, f"{root} は git の作業ツリーの根でない（根は {top.stdout.strip()}）"
     r = subprocess.run(["git", "-C", str(root), "ls-files", "-z"], capture_output=True, text=True)
     if r.returncode != 0:
-        return None
-    return set(r.stdout.split("\0")) - {""}
+        return None, f"git が索引の読み出しを断る（{_git_reason(r)}）"
+    return set(r.stdout.split("\0")) - {""}, ""
 
 
 def is_tracked(path: str, tracked: set[str]) -> bool:
@@ -89,10 +98,9 @@ def check_gate_paths(root: Path, errors: list[str]) -> int:
         errors.append(f"対応表が無い: {INVARIANTS_DOC}")
         return 0
     text = doc.read_text(encoding="utf-8")
-    tracked = tracked_paths(root)
+    tracked, reason = tracked_paths(root)
     if tracked is None:
-        # git の作業ツリーでない置き場（文書の検査の前提の外）では、追跡は確かめず、確かめなかったことを示す
-        print(f"・{root} は git の作業ツリーの根でないので、門の対応表が名指すパスの追跡は確かめない")
+        errors.append(f"門の追跡を確かめられない: {INVARIANTS_DOC} が名指すパスをリポジトリが追跡しているかを確かめられない。{reason}")
     seen: set[str] = set()
     for m in PATH_IN_BACKTICKS.finditer(text):
         p = m.group(1)

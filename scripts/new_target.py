@@ -43,18 +43,24 @@ def parse_ratio(spec: str, fields: list[str], total: int) -> dict[str, int]:
     if sum(got.values()) != total: raise SystemExit(f"--field-ratio の合計 {sum(got.values())} が模試の問題数 {total} と合わない")
     return {f: got[f] for f in fields}
 
-def tracked_env_files() -> set[str] | None:
-    """リポジトリ（ROOT の git の索引）が追跡している、根の直下の `.env.*`。ROOT が git の作業ツリーの根でなければ None（追跡を確かめられない）。"""
+def _git_reason(r: subprocess.CompletedProcess[str]) -> str:
+    lines = [ln.strip() for ln in (r.stderr or "").splitlines() if ln.strip()]
+    return lines[-1] if lines else f"終了の状態 {r.returncode}"
+
+def tracked_env_files() -> tuple[set[str] | None, str]:
+    """リポジトリ（ROOT の git の索引）が追跡している、根の直下の `.env.*` と、空の理由。
+    ROOT が git の作業ツリーの根でないか、git が索引の読み出しを断るときは、None と確かめられない理由を返す。"""
     top = subprocess.run(["git", "-C", str(ROOT), "rev-parse", "--show-toplevel"], capture_output=True, text=True)
-    if top.returncode != 0 or Path(top.stdout.strip()).resolve() != ROOT.resolve(): return None
+    if top.returncode != 0: return None, f"git が {ROOT} を作業ツリーと読まない（{_git_reason(top)}）"
+    if Path(top.stdout.strip()).resolve() != ROOT.resolve(): return None, f"{ROOT} は git の作業ツリーの根でない（根は {top.stdout.strip()}）"
     r = subprocess.run(["git", "-C", str(ROOT), "ls-files", "-z", "--", ".env.*"], capture_output=True, text=True)
-    return set(r.stdout.split("\0")) - {""} if r.returncode == 0 else None
+    if r.returncode != 0: return None, f"git が索引の読み出しを断る（{_git_reason(r)}）"
+    return set(r.stdout.split("\0")) - {""}, ""
 
 def check() -> int:
     t = {k: v for k, v in load(T).items() if not k.startswith("_")}; pj = load(P); w = W.read_text(encoding="utf-8"); probs = []
-    tracked = tracked_env_files()
-    # git の作業ツリーでない置き場では、設定のファイルの追跡は確かめず、確かめなかったことを示す
-    if tracked is None: print(f"・{ROOT} は git の作業ツリーの根でないので、.env.<key> の追跡は確かめない")
+    tracked, reason = tracked_env_files()
+    if tracked is None: probs.append(f".env.<学び> をリポジトリが追跡しているかを確かめられない。{reason}")
     for k in t:
         if k not in pj: probs.append(f"{k}: scripts/pages_projects.json に無い")
         if not (ROOT / f".env.{k}").exists(): probs.append(f"{k}: .env.{k} が無い")

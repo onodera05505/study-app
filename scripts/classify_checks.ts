@@ -10,29 +10,37 @@
  *   契約（docs/goals の下の contract.yaml）を持つほかの UC は、受け持ちが無くても手元に依らない物に数える（契約の実例の確かめが無いことを示すのは run cases）
  * - 読み込みは、静的に書いた import・export … from・import('…')・require('…') の相対の名前だけを辿る。文字列から組み立てた名前は辿らない
  *
- * 名前と中身の食い違いがあれば、それをすべて挙げて終了の状態 1 で終える。食い違いは 3 つ。
+ * 名前と中身の食い違いがあれば、それをすべて挙げて終了の状態 1 で終える。食い違いは 4 つ。
  * - 手元の物の土台を読み込むのに、手元だけの名前を持たないテストのファイル
  * - 手元だけの名前を持つのに、手元の物の土台を読み込まないテストのファイル
- * - 手元の物を中で直に使うのに、手元の物の土台の名前を持たない土台。手元の物を使うとは、コメントを除いた中身が次のどれかを持つこと
+ * - 手元の物を中で直に使うのに、手元の物の土台の名前を持たない土台
+ * - 手元の物を中で直に使う、契約の受け渡し役のファイル（scripts/contract_adapter の handlers と kit の下。main.ts は含めない）。
+ *   受け渡し役は手元の物の土台を読み込んで使う（読み込む先の中は、その土台の側で見る）
+ * 手元の物を使うとは、コメントを除いた中身が次のどれかを持つこと
  *   - 囲いの道具 `sandbox-exec` か、配備の道具 `wrangler` を起こす文字列
  *   - 手元の保存先 `.wrangler` か、家の置き場（homedir()・process.env.HOME・`~/`）を名指す
- *   - git が無視するパスを名指す文字列（`/` を含むか `.` で始まる物を、根からか、`./`・`../` ならそのファイルの置き場から読む）。
- *     共有の置き場の検査の環境が持つ物（宣言した依存の node_modules と、ワークフローが固定した版で取る原本 harness の .harness）は除く
+ *   - リポジトリが追跡しないパスを名指す。名指すのは、`/` を含むか `.` で始まる 1 つの文字列（根からか、`./`・`../` ならそのファイルの置き場から読む）と、
+ *     パスを組む関数（join・resolve）に続けて渡した文字列の並び（'data', 'x', 'seed.sql' を data/x/seed.sql と読む）。
+ *     追跡しないパスは、根の作業ツリーに実際にあって git の索引に無いパス（ディレクトリは、その下に索引のパスが 1 つも無い物）。
+ *     どこにも無い名前（影の根の中だけで作る名前など）と、共有の置き場の検査の環境が持つ物
+ *     （宣言した依存の node_modules と、ワークフローが固定した版で取る原本 harness の .harness）は数えない
  *   - 契約の実例の確かめ（contract-run か run cases）を、同じ配列の中に `--uc` を持たずに起こす（UC を絞らないので、手元だけの UC の実例も回る）
- * 土台が手元の物を使っていることは、その土台の中だけで見る。テストのファイルの中は見ない（テストのファイルは土台を通して手元の物を使う決まり）。
+ * 手元の物を使っていることは、その土台と受け渡し役のファイルの中だけで見る。テストのファイルの中は見ない（テストのファイルは土台を通して手元の物を使う決まり）。
+ * 根が git の作業ツリーの根でないか、git が索引の読み出しを断るときは、追跡を確かめられない理由を示して終了の状態 1 で終える。
  *
  * 出力は標準出力。通ったときは 4 つの組（手元に依らないテストのファイル・手元だけのテストのファイル・手元に依らない UC・手元だけの UC）を、
  * 組の見出しの行と、その下の 2 字下げの名前の行（テストのファイルは根からの相対パス、UC は ID）で出す。
  * scripts/run_portable_checks.sh がこの形を読む。
  */
 import { spawnSync } from 'node:child_process'
-import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
+import { existsSync, lstatSync, readdirSync, readFileSync, realpathSync, statSync } from 'node:fs'
 import { dirname, join, relative, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const TESTS_DIR = 'tests'
 const HANDLERS_DIR = 'scripts/contract_adapter/handlers'
+const KIT_DIR = 'scripts/contract_adapter/kit'
 const GOALS_DIR = 'docs/goals'
 
 const TEST_FILE = /\.test\.tsx?$/
@@ -196,23 +204,99 @@ function reaches(file: string, target: string, seen = new Set<string>()): boolea
   return false
 }
 
-/** git が無視するパス（根からの相対）。 */
-function ignoredPaths(paths: string[]): Set<string> {
-  if (!paths.length) return new Set()
-  const r = spawnSync('git', ['check-ignore', '--stdin', '-z'], {
-    cwd: ROOT,
-    input: `${paths.join('\0')}\0`,
-    encoding: 'utf8',
-    maxBuffer: 64 * 1024 * 1024,
-  })
-  if (r.status !== 0 && r.status !== 1) throw new Error(`git check-ignore が通らない: ${r.stderr}`)
-  return new Set((r.stdout ?? '').split('\0').filter(Boolean))
+/** 追跡を確かめられないこと（理由を持つ）。 */
+class Unverifiable extends Error {}
+
+const gitReason = (r: ReturnType<typeof spawnSync>) =>
+  String(r.stderr ?? '')
+    .split('\n')
+    .map((l) => l.trim())
+    .filter(Boolean)
+    .pop() ?? (r.error ? r.error.message : `終了の状態 ${r.status}`)
+
+/** 根の git の索引にあるパス（根からの相対）。確かめられなければ Unverifiable を投げる。 */
+function indexedPaths(): Set<string> {
+  const top = spawnSync('git', ['rev-parse', '--show-toplevel'], { cwd: ROOT, encoding: 'utf8' })
+  if (top.status !== 0) throw new Unverifiable(`git が ${ROOT} を作業ツリーと読まない（${gitReason(top)}）`)
+  const topDir = top.stdout.trim()
+  if (realpathSync(topDir) !== realpathSync(ROOT)) throw new Unverifiable(`${ROOT} は git の作業ツリーの根でない（根は ${topDir}）`)
+  const r = spawnSync('git', ['ls-files', '-z'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 })
+  if (r.status !== 0) throw new Unverifiable(`git が索引の読み出しを断る（${gitReason(r)}）`)
+  return new Set(r.stdout.split('\0').filter(Boolean))
 }
 
-/** 土台の中の、パスとして読める文字列を、根からの相対に直した物。 */
+/** 根の作業ツリーに実際にあって、git の索引に無いパス（ディレクトリは、その下に索引のパスが 1 つも無い物）か。 */
+function untracked(p: string, indexed: Set<string>, indexedDirs: Set<string>): boolean {
+  // .git は git そのものの置き場で、作業ツリーのファイルでない（git は無視する物にも未追跡の物にも数えない。共有の置き場の写しにもある）
+  if (p === '.git' || p.startsWith('.git/')) return false
+  if (!lstatSync(join(ROOT, p), { throwIfNoEntry: false })) return false
+  const parts = p.split('/')
+  // 上の置き場が索引の 1 つの項目（追跡するリンク）なら、その下も追跡と読む
+  for (let i = 1; i <= parts.length; i++) if (indexed.has(parts.slice(0, i).join('/'))) return false
+  return !indexedDirs.has(p)
+}
+
+/** 索引のパスの上の置き場（根からの相対）。 */
+function dirsOf(indexed: Set<string>): Set<string> {
+  const out = new Set<string>()
+  for (const f of indexed) {
+    const parts = f.split('/')
+    for (let i = 1; i < parts.length; i++) out.add(parts.slice(0, i).join('/'))
+  }
+  return out
+}
+
+/** パスを組む関数（join・resolve）に続けて渡した文字列の並びを、/ で繋いだ物。 */
+function joinedLiterals(code: string): string[] {
+  const out: string[] = []
+  for (const m of code.matchAll(/\b(?:join|resolve)\s*\(/g)) {
+    // 引数を、括弧の深さ 0 のカンマで分ける（文字列の中のカンマと括弧は数えない）
+    const args: string[] = []
+    let depth = 0
+    let cur = ''
+    let quote = ''
+    let i = (m.index ?? 0) + m[0].length
+    for (; i < code.length; i++) {
+      const c = code[i]
+      if (quote) {
+        cur += c
+        if (c === '\\') cur += code[++i] ?? ''
+        else if (c === quote) quote = ''
+        continue
+      }
+      if (c === "'" || c === '"' || c === '`') quote = c
+      else if (c === '(' || c === '[' || c === '{') depth++
+      else if (c === ')' || c === ']' || c === '}') {
+        if (depth === 0) break
+        depth--
+      } else if (c === ',' && depth === 0) {
+        args.push(cur.trim())
+        cur = ''
+        continue
+      }
+      cur += c
+    }
+    args.push(cur.trim())
+    let run: string[] = []
+    const flush = () => {
+      if (run.length > 1) out.push(run.join('/'))
+      run = []
+    }
+    for (const a of args) {
+      const lit = /^(['"])([^'"\\]*)\1$/.exec(a) ?? /^`([^`$\\]*)`$/.exec(a)
+      if (lit) run.push(lit[2] ?? lit[1])
+      else flush()
+    }
+    flush()
+  }
+  return out
+}
+
+/** ファイルの中の、パスとして読める名指し（1 つの文字列と、パスを組む関数に渡した文字列の並び）を、根からの相対に直した物。 */
 function pathLiterals(file: string): string[] {
   const out = new Set<string>()
-  for (const s of parsed(file).strings) {
+  const { code, strings } = parsed(file)
+  for (const s of [...strings, ...joinedLiterals(code)]) {
     const v = s.trim()
     if (!v || /\s/.test(v) || v === '.' || v === '..') continue
     if (!(v.includes('/') || v.startsWith('.'))) continue
@@ -246,8 +330,8 @@ function startsWrangler(code: string, strings: string[]): boolean {
   return strings.some((s) => /^(?:npx\s+(?:-\S+\s+)*)?wrangler\s+[a-z]/.test(s.trim()))
 }
 
-/** 土台が中で直に使う手元の物（無ければ空）。ignored は git が無視するパスの集まり。 */
-function localUses(file: string, ignored: Set<string>): string[] {
+/** ファイルが中で直に使う手元の物（無ければ空）。isUntracked は、リポジトリが追跡しないパスかを答える。 */
+function localUses(file: string, isUntracked: (p: string) => boolean): string[] {
   const { code, strings } = parsed(file)
   const uses: string[] = []
   if (strings.some((s) => s.includes('sandbox-exec'))) uses.push('囲いの道具 sandbox-exec を起こす')
@@ -255,8 +339,8 @@ function localUses(file: string, ignored: Set<string>): string[] {
   if (strings.some((s) => /(?:^|\/)\.wrangler(?:\/|$)/.test(s.trim()))) uses.push('手元の保存先 .wrangler を名指す')
   if (/\bhomedir\s*\(|\bprocess\.env\.HOME\b|\bprocess\.env\[\s*['"]HOME['"]\s*\]/.test(code) || strings.some((s) => s.startsWith('~/')))
     uses.push('家の置き場を名指す')
-  const named = pathLiterals(file).filter((p) => ignored.has(p))
-  if (named.length) uses.push(`git が無視するパス ${named.join('・')} を名指す`)
+  const named = pathLiterals(file).filter(isUntracked)
+  if (named.length) uses.push(`リポジトリが追跡しないパス ${named.join('・')} を名指す`)
   if (runsAllCases(code)) uses.push('契約の実例の確かめを UC を絞らずに起こす')
   return uses
 }
@@ -290,9 +374,17 @@ function main(): number {
     ;(via ? localTests : portableTests).push(t)
   }
 
-  const candidates = new Set<string>()
-  for (const f of fixtures) if (!LOCAL_FIXTURE.test(f)) for (const p of pathLiterals(f)) candidates.add(p)
-  const ignored = ignoredPaths([...candidates])
+  let indexed: Set<string>
+  try {
+    indexed = indexedPaths()
+  } catch (e) {
+    if (!(e instanceof Unverifiable)) throw e
+    console.log(`✘ リポジトリが追跡するパスを確かめられない: ${e.message}`)
+    console.log('追跡を確かめられないので、振り分けを示さず、どのテストも回さない')
+    return 1
+  }
+  const indexedDirs = dirsOf(indexed)
+  const isUntracked = (p: string) => untracked(p, indexed, indexedDirs)
   const handlerFiles = new Map<string, string[]>()
   for (const f of walk(HANDLERS_DIR)) {
     const m = HANDLER_FILE.exec(f.slice(HANDLERS_DIR.length + 1))
@@ -303,13 +395,18 @@ function main(): number {
 
   for (const f of fixtures) {
     if (LOCAL_FIXTURE.test(f)) continue
-    const uses = localUses(f, ignored)
+    const uses = localUses(f, isUntracked)
     if (!uses.length) continue
     // 名前を直すと手元だけに移る物（この土台を直にか間接に読み込むテストのファイルと土台と受け持ち）も添える
     const users = [...fixtures, ...tests, ...handlers].filter((u) => u !== f && reaches(u, f))
     mismatches.push(
       [`手元の物を使うのに手元の物の土台の名前を持たない土台: ${f}（${uses.join('。')}）`, ...users.map((u) => `    この土台を読み込む物: ${u}`)].join('\n'),
     )
+  }
+  const adapterFiles = [...walk(HANDLERS_DIR), ...walk(KIT_DIR)].filter((f) => SOURCE_FILE.test(f))
+  for (const f of adapterFiles) {
+    const uses = localUses(f, isUntracked)
+    if (uses.length) mismatches.push(`手元の物の土台を通さずに手元の物を使う契約の受け渡し役のファイル: ${f}（${uses.join('。')}）`)
   }
   const ucs = [...new Set([...contractUcs(), ...handlerFiles.keys()])].sort()
   const localUcs = ucs.filter((uc) => (handlerFiles.get(uc) ?? []).some((f) => localFixtureReached(f)))

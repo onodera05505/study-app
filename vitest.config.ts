@@ -11,12 +11,13 @@ import { configDefaults, defineConfig } from 'vitest/config'
  *    共有の置き場の検査（scripts/run_portable_checks.sh）はこの組だけを回す
  *  - local: 手元だけのテストのファイル（名前が `.local.test.ts`・`.local.test.tsx` で終わる物。手元の物の土台を読み込む）。
  *    portable と並べて回す。名前と中身が合っていることは scripts/classify_checks.ts が見る
- *  - alone: 作業ツリーそのものに契約の実例の確かめ（全部の実例）を当てる手元だけのテスト。確かめは全体で 120 秒の上限を持ち、
+ *  - alone: 作業ツリーそのものに契約の実例の確かめ（全部の実例）を当てる手元だけのテスト。手元だけの名前のファイルだけを抱え、
+ *    手元に依らない名前のファイルは名前の形によらず portable が回す。確かめは全体で 120 秒の上限を持ち、
  *    UC-036 の実例は手元の決まった口を使うので、ほかのテスト（とくに同じ口を鍵つきで数分持つ UC-036 のテスト）と並べると、
  *    CPU と口の順番待ちで上限を超える。portable と local がすべて終わってから、単独で回す
  *  `vitest run`（組を絞らない）は 3 つの組を全部回す。どの組もこの設定の test を引き継ぐ（extends）。
  *  片付け（afterAll など）の上限は、負荷の高い回でも足りるように 1 か所で持つ。 */
-const ALONE = ['tests/scenario/UC-033-run-contract-examples-against-implementation{,.local}.test.tsx']
+const ALONE = ['tests/scenario/UC-033-run-contract-examples-against-implementation.local.test.tsx']
 const LOCAL = ['tests/**/*.local.test.ts', 'tests/**/*.local.test.tsx']
 
 /** ファイルを並べて回す数の上限（使えるコアの半分、下限 2）。テストの多くが子プロセス（Python・wrangler dev・vite・tsx）を起こすので、
