@@ -24,17 +24,36 @@ TMP_ROOT="${TMPDIR:-/tmp}"
 LOG="$(mktemp "${TMP_ROOT%/}/check_portal_api.XXXXXX")"
 PID=""
 
-# その回に起こした配備（npx とその子・孫。npx が shim なら npm exec・node wrangler・workerd が下に連なる）を止める。
-# 先に連なりを控えてから片付けのできる止め方（SIGTERM）を送り、どれもいなくなるまで待つ（wrangler が手元の一時の置き場を片付けられる）。
+# その回に起こした配備（npx とその子・孫。npx が shim なら npm exec・node wrangler・workerd が下に連なる）だけを止める。
+# 道具が起こしていないプロセスは、配備に使う口を掴んでいても止めない。
+# 起こした連なりは、起きた時刻と組にして起動を待つあいだから控えておく（先頭が先に終えて子が親を失っても控えから止められ、
+# 番号が別のプロセスに使い回されていれば時刻が違うので止めない）。
+# 片付けのできる止め方（SIGTERM）を送り、どれもいなくなるまで待つ（wrangler が手元の一時の置き場を片付けられる）。
 # 待っても残る物だけを最後に SIGKILL で止める
+STARTED=""
 descendants_of() {
   local p
   for p in $(pgrep -P "$1" 2>/dev/null); do echo "$p"; descendants_of "$p"; done
 }
+started_at() {
+  { ps -o lstart= -p "$1" 2>/dev/null || true; } | tr -s ' ' '_'
+}
+remember_started() {
+  local p t
+  for p in "$1" $(descendants_of "$1"); do
+    case " $STARTED " in *" $p@"*) continue ;; esac
+    t="$(started_at "$p")"
+    if [ -n "$t" ]; then STARTED="$STARTED $p@$t"; fi
+  done
+}
 stop_started() {
-  local top="$1" tree p st alive=""
-  tree="$top $(descendants_of "$top")"
-  kill -TERM $tree 2>/dev/null || true
+  local top="$1" tree="" entry p st alive=""
+  remember_started "$top"
+  for entry in $STARTED; do
+    p="${entry%%@*}"
+    if [ "$(started_at "$p")" = "${entry#*@}" ]; then tree="$tree $p"; fi
+  done
+  if [ -n "$tree" ]; then kill -TERM $tree 2>/dev/null || true; fi
   for _ in $(seq 1 150); do
     alive=""
     for p in $tree; do
@@ -52,9 +71,6 @@ cleanup() {
   local status=$?
   if [ -n "$PID" ]; then
     stop_started "$PID"
-    # 口はこの検査専用なので、止めたあとも掴んでいる物があれば掃除してよい。
-    LEFT=$(lsof -ti "tcp:${PORT}" 2>/dev/null || true)
-    if [ -n "$LEFT" ]; then kill $LEFT 2>/dev/null || true; fi
   fi
   if [ "$status" -eq 0 ]; then rm -f "$LOG"; else echo "▶ この回の記録を残した: $LOG" >&2; fi
 }
@@ -78,6 +94,7 @@ else
   PID=$!
 
   for _ in $(seq 1 90); do
+    remember_started "$PID"
     if curl -fsS --max-time 2 "${BASE}/api/health" >/dev/null 2>&1; then break; fi
     if ! kill -0 "$PID" 2>/dev/null; then
       echo "wrangler dev が起動せずに終了した。$LOG を見ること"; tail -20 "$LOG"; exit 1
@@ -87,6 +104,7 @@ else
   if ! curl -fsS --max-time 2 "${BASE}/api/health" >/dev/null 2>&1; then
     echo "90 秒待っても ${BASE} が応答しない。$LOG を見ること"; tail -20 "$LOG"; exit 1
   fi
+  remember_started "$PID"
 fi
 
 python3 scripts/check_portal_api.py --base "$BASE" --secret "$SECRET"

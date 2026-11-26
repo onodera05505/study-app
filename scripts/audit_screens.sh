@@ -50,17 +50,36 @@ DEV_PID=""
 TMP_ROOT="${TMPDIR:-/tmp}"
 DEV_LOG="$(mktemp "${TMP_ROOT%/}/audit_wrangler.XXXXXX")"
 
-# その回に起こした配備（npx とその子・孫。npx が shim なら npm exec・node wrangler・workerd が下に連なる）を止める。
-# 先に連なりを控えてから片付けのできる止め方（SIGTERM）を送り、どれもいなくなるまで待つ（wrangler が手元の一時の置き場を片付けられる）。
+# その回に起こした配備（npx とその子・孫。npx が shim なら npm exec・node wrangler・workerd が下に連なる）だけを止める。
+# 道具が起こしていないプロセスは、配備に使う口を掴んでいても止めない。
+# 起こした連なりは、起きた時刻と組にして起動を待つあいだから控えておく（先頭が先に終えて子が親を失っても控えから止められ、
+# 番号が別のプロセスに使い回されていれば時刻が違うので止めない）。
+# 片付けのできる止め方（SIGTERM）を送り、どれもいなくなるまで待つ（wrangler が手元の一時の置き場を片付けられる）。
 # 待っても残る物だけを最後に SIGKILL で止める
+STARTED=""
 descendants_of() {
   local p
   for p in $(pgrep -P "$1" 2>/dev/null); do echo "$p"; descendants_of "$p"; done
 }
+started_at() {
+  { ps -o lstart= -p "$1" 2>/dev/null || true; } | tr -s ' ' '_'
+}
+remember_started() {
+  local p t
+  for p in "$1" $(descendants_of "$1"); do
+    case " $STARTED " in *" $p@"*) continue ;; esac
+    t="$(started_at "$p")"
+    if [ -n "$t" ]; then STARTED="$STARTED $p@$t"; fi
+  done
+}
 stop_started() {
-  local top="$1" tree p st alive=""
-  tree="$top $(descendants_of "$top")"
-  kill -TERM $tree 2>/dev/null || true
+  local top="$1" tree="" entry p st alive=""
+  remember_started "$top"
+  for entry in $STARTED; do
+    p="${entry%%@*}"
+    if [ "$(started_at "$p")" = "${entry#*@}" ]; then tree="$tree $p"; fi
+  done
+  if [ -n "$tree" ]; then kill -TERM $tree 2>/dev/null || true; fi
   for _ in $(seq 1 150); do
     alive=""
     for p in $tree; do
@@ -79,10 +98,6 @@ cleanup() {
   if [[ "$STARTED_BY_US" == "1" ]]; then
     echo "▶ wrangler dev を止める (pid ${DEV_PID})" >&2
     [[ -n "$DEV_PID" ]] && stop_started "$DEV_PID"
-    # 止めたあとも 8787 を掴む物が残れば、次回の実行が「起動済み」と誤認するので、
-    # **自分で起こしたときだけ** ポートを掴んでいるものごと落とす。
-    STRAY="$(lsof -ti:"$PORT" 2>/dev/null)"
-    [[ -n "$STRAY" ]] && kill $STRAY 2>/dev/null
     STARTED_BY_US=0
   fi
   if [[ "$status" -eq 0 ]]; then rm -f "$DEV_LOG"; else echo "▶ この回の記録を残した: ${DEV_LOG}" >&2; fi
@@ -120,6 +135,7 @@ else
 
   # 起動には数十秒かかる。ヘルスチェックでポーリングする。
   for i in $(seq 1 90); do
+    remember_started "$DEV_PID"
     if curl -s -m 2 "${BASE}/api/health" >/dev/null 2>&1; then break; fi
     if ! kill -0 "$DEV_PID" 2>/dev/null; then
       echo "!! wrangler dev が落ちた。ログ:"; tail -30 "$DEV_LOG"; exit 1
@@ -129,6 +145,7 @@ else
   if ! curl -s -m 2 "${BASE}/api/health" >/dev/null 2>&1; then
     echo "!! wrangler dev が 90 秒で起動しなかった。ログ:"; tail -30 "$DEV_LOG"; exit 1
   fi
+  remember_started "$DEV_PID"
   echo "   起動した（$(running_title)）"
 fi
 
