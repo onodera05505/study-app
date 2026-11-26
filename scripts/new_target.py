@@ -4,7 +4,7 @@
     python3 scripts/new_target.py <key> --name "<画面に出す名前>" --target-name "<対象の一言>" --fields "分野1,分野2,…" [--per-day 3] [--days 14]
     python3 scripts/new_target.py <key> --kind exam --name "<画面に出す名前>" --exam-name "<試験の正式名>" \
         --mock-size 60 --mock-minutes 90 --field-ratio "テクノロジ系=38,マネジメント系=7,ストラテジ系=15" --pass-rule "<突破の条件の説明>"
-    python3 scripts/new_target.py --check            # 登録簿の整合（各対象に .env・wrangler env・pages_projects・kickoff）
+    python3 scripts/new_target.py --check            # 登録簿の整合（各対象に追跡する .env.<key>・wrangler env・pages_projects・kickoff）
 
 対象は 2 種類。`--kind roadmap`（既定）は教材から作るロードマップ型、`--kind exam` は過去問を取り込む資格型。
 
@@ -43,11 +43,22 @@ def parse_ratio(spec: str, fields: list[str], total: int) -> dict[str, int]:
     if sum(got.values()) != total: raise SystemExit(f"--field-ratio の合計 {sum(got.values())} が模試の問題数 {total} と合わない")
     return {f: got[f] for f in fields}
 
+def tracked_env_files() -> set[str] | None:
+    """リポジトリ（ROOT の git の索引）が追跡している、根の直下の `.env.*`。ROOT が git の作業ツリーの根でなければ None（追跡を確かめられない）。"""
+    top = subprocess.run(["git", "-C", str(ROOT), "rev-parse", "--show-toplevel"], capture_output=True, text=True)
+    if top.returncode != 0 or Path(top.stdout.strip()).resolve() != ROOT.resolve(): return None
+    r = subprocess.run(["git", "-C", str(ROOT), "ls-files", "-z", "--", ".env.*"], capture_output=True, text=True)
+    return set(r.stdout.split("\0")) - {""} if r.returncode == 0 else None
+
 def check() -> int:
     t = {k: v for k, v in load(T).items() if not k.startswith("_")}; pj = load(P); w = W.read_text(encoding="utf-8"); probs = []
+    tracked = tracked_env_files()
+    # git の作業ツリーでない置き場では、設定のファイルの追跡は確かめず、確かめなかったことを示す
+    if tracked is None: print(f"・{ROOT} は git の作業ツリーの根でないので、.env.<key> の追跡は確かめない")
     for k in t:
         if k not in pj: probs.append(f"{k}: scripts/pages_projects.json に無い")
-        if not (ROOT / f".env.{k}").exists() and not (k == "ip" and (ROOT / ".env").exists()): probs.append(f"{k}: .env.{k} が無い")  # ip は既定の .env
+        if not (ROOT / f".env.{k}").exists(): probs.append(f"{k}: .env.{k} が無い")
+        elif tracked is not None and f".env.{k}" not in tracked: probs.append(f"{k}: .env.{k} をリポジトリが追跡していない（git add する）")
         if f'"{k}": {{' not in w: probs.append(f"{k}: wrangler.jsonc に env.{k} が無い")
         if t[k].get("roadmap") and not (ROOT / "data" / k / "kickoff.json").exists(): probs.append(f"{k}: data/{k}/kickoff.json が無い")
         if t[k].get("roadmap") and not (ROOT / "data" / k / "prompts").is_dir(): probs.append(f"{k}: data/{k}/prompts/ が無い（render_prompts.py）")

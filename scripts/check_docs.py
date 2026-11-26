@@ -16,7 +16,9 @@
 - **docs/ の索引網羅** — `docs/*.md` の全ファイル名が `docs/文書の索引.md` に載っているか
 - **brain の索引網羅** — `brain/reports/*.md` の全ファイル名が `brain/INDEX.md` に載っているか
 - **門の実在** — `docs/不変条件と門.md` がバッククォートで名指しするパス
-  （scripts/ src/ .claude/ docs/ brain/ 配下）が実在するか。`<試験>` のような
+  （scripts/ src/ .claude/ docs/ brain/ data/ public/ 配下）が実在し、リポジトリ（`--root` の git の索引）が
+  追跡しているか。手元にあっても追跡していない物（git が無視する物を含む）は、ほかのクローンに無いので門にならない。
+  ディレクトリは、その下に索引のパスが 1 つ以上あれば追跡と読む。`<試験>` のような
   プレースホルダを含むものは見ない
 - **仕様書の本文が現在形か** — `SPEC_CURRENT_FORM` の仕様書の本文（`## 改訂履歴` より前）に
   日付・「廃止」「以前は」「方針変更」・版の名前が無いか（決まりは足さず書き換える。2026-09-27）
@@ -60,12 +62,37 @@ def check_index(root: Path, index_file: str, target_dir: str, errors: list[str])
     return len(files)
 
 
+def tracked_paths(root: Path) -> set[str] | None:
+    """root の git の索引にあるパス（root からの相対）。root が git の作業ツリーの根でなければ None（追跡を確かめられない）。"""
+    top = subprocess.run(["git", "-C", str(root), "rev-parse", "--show-toplevel"], capture_output=True, text=True)
+    if top.returncode != 0 or Path(top.stdout.strip()).resolve() != root.resolve():
+        return None
+    r = subprocess.run(["git", "-C", str(root), "ls-files", "-z"], capture_output=True, text=True)
+    if r.returncode != 0:
+        return None
+    return set(r.stdout.split("\0")) - {""}
+
+
+def is_tracked(path: str, tracked: set[str]) -> bool:
+    """path（ファイルかディレクトリ）をリポジトリが追跡しているか。ディレクトリは、その下に索引のパスが 1 つ以上あれば追跡と読む。
+    上の置き場が索引にある 1 つの項目（追跡しているリンク）なら、その下も追跡と読む。"""
+    p = path.rstrip("/")
+    parts = p.split("/")
+    if any("/".join(parts[:i]) in tracked for i in range(1, len(parts) + 1)):
+        return True
+    return any(t.startswith(p + "/") for t in tracked)
+
+
 def check_gate_paths(root: Path, errors: list[str]) -> int:
     doc = root / INVARIANTS_DOC
     if not doc.exists():
         errors.append(f"対応表が無い: {INVARIANTS_DOC}")
         return 0
     text = doc.read_text(encoding="utf-8")
+    tracked = tracked_paths(root)
+    if tracked is None:
+        # git の作業ツリーでない置き場（文書の検査の前提の外）では、追跡は確かめず、確かめなかったことを示す
+        print(f"・{root} は git の作業ツリーの根でないので、門の対応表が名指すパスの追跡は確かめない")
     seen: set[str] = set()
     for m in PATH_IN_BACKTICKS.finditer(text):
         p = m.group(1)
@@ -74,6 +101,8 @@ def check_gate_paths(root: Path, errors: list[str]) -> int:
         seen.add(p)
         if not (root / p).exists():
             errors.append(f"門が無い: {INVARIANTS_DOC} が名指しする {p} が存在しない")
+        elif tracked is not None and not is_tracked(p, tracked):
+            errors.append(f"門を追跡していない: {INVARIANTS_DOC} が名指しする {p} は手元にあるが、リポジトリが追跡していない（git が無視する物を含む）")
         elif p.endswith(".py"):
             # 存在しても壊れていれば門ではない（docstring の閉じ忘れで 1 度も走らない門があった。2026-09-17 受入の所見）
             import ast
