@@ -1969,14 +1969,40 @@ def validate_figure(fig, where, problems, warnings=None) -> None:
         _validate_item_type(fig, t, where, problems)
 
 
+# 論点のファイルの入れ子の深さの上限（いちばん外の辞書を 1 段と数える）。図の仕様書の形は 10 段に届かない。
+# JSON を読む部品が深い入れ子を読めるかは Python の版で違い、読めても後の形の検査（入れ子をたどる）が版ごとに違う所で
+# RecursionError になるので、読んだ直後にこの上限で切り、どの版でも「入れ子が深すぎる」として JSON が読めない側に落とす。
+MAX_JSON_DEPTH = 100
+
+
+def _json_depth_over(doc, limit: int) -> bool:
+    """doc の入れ子の深さが limit を超えるか。入れ子をたどるのに再帰を使わない（深い入れ子でも例外にならない）。"""
+    stack = [(doc, 1)]
+    while stack:
+        node, depth = stack.pop()
+        if isinstance(node, dict):
+            children = node.values()
+        elif isinstance(node, list):
+            children = node
+        else:
+            continue
+        if depth > limit:
+            return True
+        stack.extend((c, depth + 1) for c in children)
+    return False
+
+
 def _read_json(p):
     """JSON のファイルを読む。読めない（通常のファイルでない・OS の段で開けない・壊れている・入れ子が深すぎる・
-    文字コードが違う・桁が多すぎる）ときは (None, 理由) を返す。"""
+    文字コードが違う・桁が多すぎる）ときは (None, 理由) を返す。入れ子が深すぎるかは MAX_JSON_DEPTH で決める。"""
     try:
         # ディレクトリや名前付きパイプは開くと例外になるか読み込みが止まるので、開く前に通常のファイルか見る
         if not stat.S_ISREG(p.stat().st_mode):
             return None, "通常のファイルでない"
-        return json.loads(p.read_text(encoding="utf-8")), None
+        doc = json.loads(p.read_text(encoding="utf-8"))
+        if _json_depth_over(doc, MAX_JSON_DEPTH):
+            return None, "入れ子が深すぎる"
+        return doc, None
     except RecursionError:
         return None, "入れ子が深すぎる"
     except (OSError, ValueError, OverflowError) as e:
@@ -1989,7 +2015,6 @@ FIGURE_ERRORS = (TypeError, AttributeError, KeyError, IndexError, ValueError, Ov
                  RecursionError, ZeroDivisionError)
 
 
-# @implements REQ-440
 def load(paths, problems, warnings=None) -> list:
     docs, seen = [], {}
     for p in paths:
@@ -2020,7 +2045,6 @@ def load(paths, problems, warnings=None) -> list:
             fid = fig.get("id")
             shown = fid if _is_int(fid) and -INT_MAX <= fid <= INT_MAX else (f'#{i}' if fid is None else _show(fid))
             w = f"[{p.name}] 論点 {tid} 図 {shown}"
-            # @implements REQ-440
             if fid is None:
                 problems.append(f"{w}: id がありません")
             elif not _is_int(fid):
