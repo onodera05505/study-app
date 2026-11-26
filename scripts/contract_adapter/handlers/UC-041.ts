@@ -4,7 +4,7 @@
  * ほかは --名前。pdfDir は --pdf-dir のように大文字の前に - を入れた小文字。exams は名前の後ろに値を並べる）。
  * 応答は終了の状態（契約の exitCode）。道具は断りの種類の名前を出さない（errors: []）。
  *
- * 囲いは UC-041 のテストの土台（tests/server/UC-041_fixture.ts の shadow41）をそのまま使う: 影の根に scripts と src/shared を写し、
+ * 囲いは UC-041 のテストの土台（tests/server/UC-041_fixture.local.ts の shadow41）をそのまま使う: 影の根に scripts と src/shared を写し、
  * 道具は OS の囲い（外への接続と、作業ツリー・本体への書き込みを断つ）の中で回す。前提の PDF と JSON は影の根の中に作る
  * （契約が名指す tests/fixtures/import の下のパスも影の根の中に作り、リポジトリには置かない）。
  * 前提（例の名前ごと。どれも ok）:
@@ -25,7 +25,7 @@ import { copyFileSync, mkdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import {
   A, LOCAL_NO_PROXY, ROOT, apAnswerPdf, apSite, extractedQ, ipAnswerPdf, ipSite, localDistributor, makePdf, removeTemps, shadow41, type Run, type Shadow41, type Site,
-} from '../../../tests/server/UC-041_fixture'
+} from '../../../tests/server/UC-041_fixture.local'
 import { defineHandler, Unanswerable, type Answer, type ExampleLine, type Operation } from '../kit/protocol'
 import { toolAnswer } from '../kit/tool'
 

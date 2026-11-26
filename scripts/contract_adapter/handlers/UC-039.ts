@@ -4,7 +4,7 @@
  * 学びは第 1 引数、d1Migrations の mode は第 2 引数、targets の what と key は第 1・第 2 引数、extractUserData の backup は第 1 引数、
  * ほかは `--名前`（dryRun は --dry-run））。応答は終了の状態（契約の exitCode）。道具は断りの種類の名前を出さない（errors: []）。
  *
- * 囲いは UC-039 のテストの土台（tests/server/UC-039_fixture.ts の shadow39・runTool）をそのまま使う: 影の根、偽の配備の道具、
+ * 囲いは UC-039 のテストの土台（tests/server/UC-039_fixture.local.ts の shadow39・runTool）をそのまま使う: 影の根、偽の配備の道具、
  * 保存先の名前ごとの偽の保存先、外への接続と本体のチェックアウトへの書き込みを断つ OS の囲い。本番・外の相手には届かない。
  * 前提（例の名前ごと。どれも ok）:
  * - bootstrapPersonal（fe）: 配信先は無い
@@ -27,7 +27,7 @@ import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import {
   FAKE_SSO_SECRET, LEARNINGS, ROOT, learningDb, portalDb, runTool, shadow39, sql, removeShadows, type Run, type Shadow39, type World,
-} from '../../../tests/server/UC-039_fixture'
+} from '../../../tests/server/UC-039_fixture.local'
 import { defineHandler, Unanswerable, type Answer, type ExampleLine, type Operation } from '../kit/protocol'
 import { toolAnswer } from '../kit/tool'
 import { startCounterparts } from '../../../tests/server/UC-039_counterparts'

@@ -4,7 +4,7 @@
  *  （まなびばの Cookie は Secure なので HTTPS で受ける）。証明書はその場で作る手元だけの認証局が署名した物で、道具の Python には起動の前置き
  *  （Counterparts.env の PYTHONPATH と UC039_TEST_CA）でその認証局を信じさせる。
  *  学び側の app がまなびばへ送る交換の要求は、この口を通さずにまなびばの app へ直に渡す（テストのプロセスの fetch を差し替える）。
- *  保存先は影の根の偽の配備の道具が向ける SQLite のファイル（UC-039_fixture.ts の dbFile の本番の側）と同じ物で、道具が wrangler で作った
+ *  保存先は影の根の偽の配備の道具が向ける SQLite のファイル（UC-039_fixture.local.ts の dbFile の本番の側）と同じ物で、道具が wrangler で作った
  *  一時のアカウントを、代わりの相手がそのまま読む。影の根の配備先の一覧（scripts/pages_projects.json）のまなびばと学びの場所を、
  *  この口に書き換える（本物の一覧の値は読まない・出さない）。道具は OS の囲いの中で、手元のほかへは届かない。 */
 
@@ -18,7 +18,7 @@ import { DatabaseSync } from 'node:sqlite'
 import portalApp, { createApp } from '../../portal/src/index'
 import app from '../../src/server/index'
 import { d1Of } from './UC-002_sqlite_fixture'
-import { dbFile, learningDb, portalDb, projectOf, type Shadow39 } from './UC-039_fixture'
+import { dbFile, learningDb, portalDb, projectOf, type Shadow39 } from './UC-039_fixture.local'
 
 void portalApp
 

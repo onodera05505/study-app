@@ -4,7 +4,7 @@
  *  request の各欄は同じ名前の引数（dir は値を並べる。all は名前だけ）。結果は標準出力の最後の行の JSON（契約の response）、
  *  断ったときは標準出力の ToolError（`error.code`）。
  *
- *  囲いは UC-039 の土台（UC-039_fixture.ts の shadow39・runTool）をそのまま使う（外への接続と作業ツリー・本体への書き込みを断つ）。
+ *  囲いは UC-039 の土台（UC-039_fixture.local.ts の shadow39・runTool）をそのまま使う（外への接続と作業ツリー・本体への書き込みを断つ）。
  *  門には、影の根の中の作業の置き場 `w/` に作った小さな学び（登録簿の資格対策の学び ip の key を借りた `w/data/ip`）と、
  *  図の配信の置き場 `w/public` を渡す。原本の data/ は読まない・書き換えない。
  *
@@ -13,7 +13,7 @@
 
 import { existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname } from 'node:path'
-import { redact, removeShadows, runTool, shadow39, type Run, type Shadow39 } from './UC-039_fixture'
+import { redact, removeShadows, runTool, shadow39, type Run, type Shadow39 } from './UC-039_fixture.local'
 
 export { removeShadows }
 

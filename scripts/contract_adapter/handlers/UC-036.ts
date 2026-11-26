@@ -4,7 +4,7 @@
  * auditFixtures ＝ `node scripts/audit_fixtures.mjs [--base] [--json]`、auditScreens ＝ `bash scripts/audit_screens.sh [<learning>] [--out] [--limit]`、
  * checkSsoFlow ＝ `python3 scripts/check_sso_flow.py`。応答は終了の状態（契約の exitCode）。断りは auditFixtures と auditScreens だけが標準出力の ToolError で名前を出す（UPSTREAM_UNAVAILABLE）。
  *
- * 前提（UC の事前条件と、失敗例の配備の答え）は、テストの土台（tests/server/UC-036_fixture.ts）と同じ道具立てで、実例ごとに作る:
+ * 前提（UC の事前条件と、失敗例の配備の答え）は、テストの土台（tests/server/UC-036_fixture.local.ts）と同じ道具立てで、実例ごとに作る:
  * - 影の根: リポジトリの写しに、手元の保存先（`.wrangler`・`portal/.wrangler`）の写しを置く（元は書き換えない）
  * - auditFixtures: 学び ip の配備を、まなびばの場所と共有秘密を手元の SSO の偽物の値にして、既定の口 8787 に起こしておく
  *   （配備の道具は起こさず、学び側の app を影の根の手元の保存先でこのプロセスの中に立てる。学び側から偽物へは手元の口だけに届く fetch で届ける）
@@ -39,7 +39,7 @@ import {
   withPorts,
   type Shadow,
   type ToolRun,
-} from '../../../tests/server/UC-036_fixture'
+} from '../../../tests/server/UC-036_fixture.local'
 
 const answer = (r: ToolRun) => {
   if (r.timedOut) throw new Unanswerable(`道具が時間内に終わらない: ${r.out.slice(-300)}`)

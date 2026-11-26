@@ -3,14 +3,14 @@
  *  入口は `CLAUDE.md` の「操作 → 入口」の「道具を回す操作」の行: 操作名を snake_case にした `scripts/<名前>.py` を子プロセスで回す。
  *  request の各欄は同じ名前の引数（newTarget の key は第 1 引数。大文字の前に - を入れた小文字）。
  *
- *  囲いは UC-039 の土台（UC-039_fixture.ts の shadow39・runTool）をそのまま使う: 影の根（scripts・src・portal と最上位のファイルは写し、
+ *  囲いは UC-039 の土台（UC-039_fixture.local.ts の shadow39・runTool）をそのまま使う: 影の根（scripts・src・portal と最上位のファイルは写し、
  *  手元の秘密のファイルは置かない）と、外への接続と作業ツリー・本体への書き込みを断つ OS の囲い。
  *  学びの置き場（data）は影の根の中では元へのリンクなので、道具が書き換える学びは ownLearning で影の根の中の写しに替える
  *  （リンクのまま書けば OS の囲いが断つ）。配備先の一覧と手元の秘密の値は出力に出さない（redact）。 */
 
 import { cpSync, existsSync, lstatSync, readdirSync, readFileSync, statSync, unlinkSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { REGISTRY, LEARNINGS, ROOT, redact, removeShadows, runTool, shadow39, type Run, type Shadow39 } from './UC-039_fixture'
+import { REGISTRY, LEARNINGS, ROOT, redact, removeShadows, runTool, shadow39, type Run, type Shadow39 } from './UC-039_fixture.local'
 
 export { LEARNINGS, REGISTRY, ROOT, redact, removeShadows, type Run, type Shadow39 }
 

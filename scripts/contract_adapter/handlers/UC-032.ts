@@ -13,7 +13,7 @@
  * - seedMissing・mistypedLocalBeforeSeedMissing: fe の置き場の写しに投入を置かない（組み立てる前）
  *
  * 配備の手続き deployPages（`bash scripts/deploy-pages.sh <学び>`）と保存先の回の確かめ checkD1Rounds（`bash scripts/check_d1_rounds.sh <学び> [--local]`）は、
- * UC-032 のテストの影の根と偽の配備の道具（tests/server/UC-032_fixture.ts の makeShadow・runProcedure）で回す。配信と保存先は偽物が受け、
+ * UC-032 のテストの影の根と偽の配備の道具（tests/server/UC-032_fixture.local.ts の makeShadow・runProcedure）で回す。配信と保存先は偽物が受け、
  * 外への通信は塞ぐ（REQ-569）。手続きの中で呼ぶ、別の契約が形を持つ門の道具は、通る包みにする（門の判定は各門の契約の実例が見る）。前提:
  * - deployPages の ok: 本番と手元の保存先はどちらも構造の変更がすべて当たった状態で、ログイン中のアカウントは配備を持つアカウント
  * - deployPages の pinnedToolMissing: 向け先のアカウントの環境変数を与えず、固定した版の配備の道具を影の根から除く（別の版の偽物だけが残る）
@@ -30,7 +30,7 @@ import {
   type Shadow,
   type StorageSpec,
   type World,
-} from '../../../tests/server/UC-032_fixture'
+} from '../../../tests/server/UC-032_fixture.local'
 import { defineHandler, type Answer, type Operation } from '../kit/protocol'
 import { answerOf, argsOf, inShadow, premise, unknownCase } from '../kit/td'
 import { toolErrorCode } from '../kit/tool'

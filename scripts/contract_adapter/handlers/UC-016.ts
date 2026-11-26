@@ -19,7 +19,7 @@
 
 import { rmSync } from 'node:fs'
 import { join } from 'node:path'
-import { OTHER_ACCOUNT, type Shadow, type World } from '../../../tests/server/UC-032_fixture'
+import { OTHER_ACCOUNT, type Shadow, type World } from '../../../tests/server/UC-032_fixture.local'
 import { pathToFileURL } from 'node:url'
 import { REPO_ROOT } from '../kit/tool'
 import { withFetch } from '../kit/outside'
