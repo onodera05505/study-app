@@ -8,7 +8,7 @@
 x-uc: UC-032
 x-status: fixed
 x-spec: ./UC.md
-x-updated: 2026-11-18
+x-updated: 2026-11-26
 
 schemas:
   GateResult:
@@ -114,7 +114,7 @@ operations:
     direction: inbound
     owned: true
     auth: none
-    summary: 学び側の配備の手続き。門と回の確かめを回してから、学びを本番に配信する（入口は scripts/deploy-pages.sh。learning は第 1 引数）
+    summary: 学び側の配備の手続き。向け先とログイン中の配備先のアカウントを照らし、合えば門と回の確かめを回してから、学びを本番に配信する（入口は scripts/deploy-pages.sh。learning は第 1 引数）
     request:
       type: object
       additionalProperties: false
@@ -128,6 +128,8 @@ operations:
     errors: []
     examples:
       ok: { request: { learning: ip }, response: { exitCode: 0 } }
+      envAccountDiffersWithoutPinnedTool: { request: { learning: ip }, response: { exitCode: 1 } }
+      pinnedToolMissing: { request: { learning: ip }, response: { exitCode: 1 } }
 
   checkD1Rounds:
     transport: local-store
