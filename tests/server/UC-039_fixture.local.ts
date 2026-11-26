@@ -65,6 +65,9 @@ export function redact(text: string): string {
 /** 偽の共有秘密（手元に置く値。本物ではない）。 */
 export const FAKE_SSO_SECRET = 'uc039-fake-sso-secret-0123456789abcdef'
 
+/** 影の根に、手元の共有秘密のファイル（`.sso_secret.local`。リポジトリは追跡しない）として偽の共有秘密を置く。 */
+export const placeFakeSsoSecret = (s: Shadow39): void => s.write('.sso_secret.local', `${FAKE_SSO_SECRET}\n`)
+
 /** 偽の wrangler の前に置く包み（bash）。
  *  - d1 の呼び出しは、影の置き場の db/<remote|local>/<保存先の名前>.sqlite があればそこに向ける（無ければ UC-032 の土台の共通の保存先）
  *  - STUB_APPLY_MIGRATIONS=1 のとき、d1 migrations apply は migrations のすべてを当てたと記録する

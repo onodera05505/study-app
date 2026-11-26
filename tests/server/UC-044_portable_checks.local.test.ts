@@ -4,8 +4,10 @@ import {
   type Run,
   type Shadow44,
   calls,
+  groupsOf,
   makeShadow,
   outOf,
+  probeTest,
   ran,
   removeTemps,
   runCasesCalls,
@@ -25,6 +27,10 @@ afterAll(async () => {
 /** 原本 harness の呼び出しのうち、argv に words をすべて持つ物。 */
 const harnessWith = (s: Shadow44, ...words: string[]) => calls(s).filter((c) => c.tool === 'harness' && words.every((w) => c.argv.includes(w)))
 const UC_ID = /\bUC-\d{3}\b/
+
+/** 単独で回す組（組 alone。名前の形の正本は vitest.config.ts）の名前の形に当たり、手元だけの名前を持たないテストのファイル。
+ *  手元の物の土台は読み込まない。 */
+const ALONE_SHAPED = 'tests/scenario/UC-033-run-contract-examples-against-implementation.test.tsx'
 
 const failedWith = (r: Run) => {
   expect(r.status, outOf(r)).toBe(1)
@@ -86,6 +92,21 @@ describe('UC-044 手元に依らない検査を共有の置き場で回し、手
       expect(seen.some((c) => c.tool === 'typecheck'), '型（commands.typecheck）を回していない').toBe(true)
       expect(seen.some((c) => c.tool === 'check_source'), '静的な門（check_source）を回していない').toBe(true)
       expect(seen.some((c) => c.tool === 'check_docs'), '静的な門（check_docs）を回していない').toBe(true)
+    })
+
+    // @covers REQ-677#portable-alone-shape-ran
+    it('単独で回す組が抱える名前の形に当たるが手元だけの名前を持たないテストのファイルも、手元に依らない検査で回り、その結果で成否が決まる', () => {
+      const failing = makeShadow({ files: { [ALONE_SHAPED]: probeTest('alone-shaped', { fails: true }) } })
+      const r = runPortableChecks(failing)
+      expect(ran(failing, 'alone-shaped'), `${ALONE_SHAPED} が回っていない\n${outOf(r)}`).toBe(true)
+      failedWith(r)
+
+      const passing = makeShadow({ files: { [ALONE_SHAPED]: probeTest('alone-shaped') } })
+      const ok = runPortableChecks(passing)
+      expect(ran(passing, 'alone-shaped'), `${ALONE_SHAPED} が回っていない\n${outOf(ok)}`).toBe(true)
+      expect(ok.status, outOf(ok)).toBe(0)
+      const name = ALONE_SHAPED.split('/').pop() ?? ALONE_SHAPED
+      expect([...groupsOf(ok.out, name)], `「${name}」を手元の入口が受け持つ物として示した\n${outOf(ok)}`).not.toContain('local')
     })
 
     // @covers REQ-677#portable-failure-fails

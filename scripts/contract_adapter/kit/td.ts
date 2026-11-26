@@ -1,10 +1,12 @@
 /**
  * 道具を回す操作（UC-027・UC-030・UC-032 の inbound）の受け持ちが共有する部品。kit/tool.ts の上に、次の 3 つを足す。
  *
- * - projectShadow: リポジトリと同じ並びの影の根を実例ごとに作る。書きうる場所（scripts・src・portal と、前提として名指した
- *   学びの置き場・fixture）は写し（APFS では複製の印だけを作る写し）、それ以外は元の場所へのリンクにする。`data` と `tests` は
- *   ディレクトリを作り、`data` の名指していない学びだけをリンクにする。`backups` は空のディレクトリ。学びの置き場の写しは
- *   原本の PDF とページの画像（pdfs・pages）と、作業ツリーに追跡されない投入（seed.sql）を除く（投入は組み立てで書き出す）。
+ * - projectShadow: リポジトリが追跡する物（git の索引の並び）だけで、リポジトリと同じ並びの影の根を実例ごとに作る。
+ *   書きうる場所（scripts・src・portal と、前提として名指した学びの置き場・fixture）は、その下の追跡するファイルの写し
+ *   （APFS では複製の印だけを作る写し）、それ以外の追跡する最上位の物は元の場所へのリンクにする。`data` と `tests` は
+ *   ディレクトリを作り、`data` の名指していない学びだけをリンクにする。追跡しない物は影の根に置かない（共有の置き場の検査と
+ *   同じく、リポジトリが追跡する物と宣言した依存だけで回る）。宣言した依存（node_modules・原本 harness）は元へのリンク。
+ *   git を指定した影の根は git の作業ツリーで、索引にはリポジトリの索引の並びを入れる（追跡を確かめる道具が、リポジトリと同じ答えを得る）。
  * - 外の世界の偽物: 配備の道具（wrangler）を、影の根の node_modules（固定した版の位置）・PATH・npx の先の 3 か所で偽物にする。
  *   偽物は保存先を本番（`--remote`）と手元（付けないとき）の 2 つの SQLite で受け、構造の変更の確かめ・問い合わせ・投入を
  *   本物と同じ形で返す。curl は外へ出さない。子の環境は親の環境を引き継ぎ（外への通信を見張る変数を捨てない）、
@@ -16,22 +18,108 @@
  *   Python の Traceback を残して止まった（名前の無い例外）ときは Unanswerable を投げる。
  */
 
+import { spawnSync } from 'node:child_process'
 import { mkdir, readdir, readFile, rm, symlink, writeFile } from 'node:fs/promises'
 import { existsSync, readdirSync, readFileSync, realpathSync } from 'node:fs'
+import { dirname } from 'node:path'
 import { DatabaseSync } from 'node:sqlite'
 import { join } from 'node:path'
 import { Unanswerable, type Answer, type ExampleLine } from './protocol'
-import { REPO_ROOT, cloneInto, fakeCommands, runTool, shadowRoot, toolErrorCode, unnamedStop, type Shadow, type ToolRun } from './tool'
+import { REPO_ROOT, fakeCommands, runTool, shadowRoot, toolErrorCode, unnamedStop, type Shadow, type ToolRun } from './tool'
 
 /** 書きうるので必ず写す最上位の置き場。 */
 const ALWAYS_COPIED = ['scripts', 'src', 'portal']
-/** 影の根に置かない最上位の物（作り直す物と、作業の跡）。 */
-const OMITTED = new Set(['.git', 'data', 'tests', 'backups', 'node_modules', 'dist', 'full', '.wrangler', '.DS_Store'])
-/** 学びの置き場の写しから除く物。 */
-const LEARNING_EXCLUDED = new Set(['pdfs', 'pages', 'seed.sql'])
+/** 影の根の中に作り直す最上位の置き場（data は学びごとに、tests は前提として名指した物だけ）。 */
+const REBUILT = new Set(['data', 'tests'])
+/** 宣言した依存のうち、元へのリンクにする置き場（原本 harness。node_modules は layNodeModules が組む）。 */
+const PROVIDED_LINKED = ['.harness']
 
-/** 写しの道具（kit/tool.ts の cloneInto。APFS ではディレクトリごと 1 回の複製）。 */
-const cloneTree = cloneInto
+/** git を、手元の git の設定を読まずに回す。 */
+function git(cwd: string, args: string[], input?: string): string {
+  const r = spawnSync('git', args, {
+    cwd,
+    input,
+    encoding: 'utf8',
+    maxBuffer: 256 * 1024 * 1024,
+    env: { ...process.env, GIT_CONFIG_GLOBAL: '/dev/null', GIT_CONFIG_NOSYSTEM: '1' },
+  })
+  if (r.status !== 0) throw new Unanswerable(`影の根を組むための git ${args[0]} が通らない: ${(r.stderr ?? '').trim().slice(0, 200)}`)
+  return r.stdout
+}
+
+let trackedCache: string[] | null = null
+/** リポジトリが追跡するパス（git の索引の並び。根からの相対）。 */
+function trackedPaths(): string[] {
+  trackedCache ??= git(REPO_ROOT, ['ls-files', '-z']).split('\0').filter(Boolean)
+  return trackedCache
+}
+
+/** rel（根からの相対）の下の、リポジトリが追跡するパス。rel がファイルならそれ自身。 */
+const trackedUnder = (rel: string) => trackedPaths().filter((p) => p === rel || p.startsWith(`${rel}/`))
+
+/** リポジトリが追跡する最上位の名前。 */
+const trackedTop = () => [...new Set(trackedPaths().map((p) => p.split('/')[0]))]
+
+let untrackedCache: string[] | null = null
+/** 手元にあってリポジトリが追跡しないパス（git が無視する物も含む。追跡しない置き場は 1 つにまとめた、末尾が / の名前）。
+ *  写すときに、追跡しない物を含まない置き場を見分けるのにだけ使う。 */
+function untrackedPaths(): string[] {
+  untrackedCache ??= git(REPO_ROOT, ['ls-files', '-o', '-z', '--directory']).split('\0').filter(Boolean)
+  return untrackedCache
+}
+
+/** rel の下の直下の名前（rel/<名前>/… の <名前>）。 */
+const childrenOf = (paths: string[], rel: string) => [...new Set(paths.filter((p) => p.startsWith(`${rel}/`)).map((p) => p.slice(rel.length + 1).split('/')[0]).filter(Boolean))]
+
+/** 写しの組（リポジトリの中の元 → 影の根の中の先）を、1 つの Python で写す。APFS では元ごと 1 回の複製（clonefile。
+ *  ディレクトリは丸ごと、リンクはリンクのまま）、複製できない置き場ではその場で写す（shutil）。 */
+const CLONE_PAIRS = String.raw`
+import ctypes, json, os, shutil, sys
+pairs = json.load(sys.stdin)
+try:
+    clonefile = ctypes.CDLL(None, use_errno=True).clonefile
+except AttributeError:
+    clonefile = None
+for src, dst in pairs:
+    os.makedirs(os.path.dirname(dst), exist_ok=True)
+    if clonefile is not None and clonefile(src.encode(), dst.encode(), 1) == 0:
+        continue
+    if os.path.islink(src):
+        os.symlink(os.readlink(src), dst)
+    elif os.path.isdir(src):
+        shutil.copytree(src, dst, symlinks=True)
+    else:
+        shutil.copy2(src, dst)
+`
+
+async function clonePairs(pairs: Array<[string, string]>): Promise<void> {
+  if (pairs.length === 0) return
+  const r = spawnSync('python3', ['-c', CLONE_PAIRS], { input: JSON.stringify(pairs), encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
+  if (r.status !== 0) throw new Unanswerable(`前提の写しを作れない: ${(r.stderr ?? '').trim().slice(0, 200)}`)
+}
+
+/**
+ * リポジトリの from（根からの相対）の下の追跡するファイルだけを、影の根の to（根からの相対）の下へ同じ並びで写す組を挙げる。
+ * 追跡しない物を含まない直下の物は丸ごと 1 組にし、含む物だけを 1 段ずつ下りて分ける。
+ */
+function trackedPairs(root: string, from: string, to: string = from): Array<[string, string]> {
+  const files = trackedUnder(from)
+  if (files.length === 0) throw new Unanswerable(`前提の写しの元をリポジトリが追跡していない: ${from}`)
+  if (files.length === 1 && files[0] === from) return [[join(REPO_ROOT, from), join(root, to)]]
+  const mixed = new Set(childrenOf(untrackedPaths(), from))
+  return childrenOf(files, from).flatMap((c): Array<[string, string]> =>
+    mixed.has(c) ? trackedPairs(root, `${from}/${c}`, `${to}/${c}`) : [[join(REPO_ROOT, from, c), join(root, to, c)]],
+  )
+}
+
+/** from の下の追跡するファイルだけを、影の根の to の下へ写す。 */
+const copyTracked = (root: string, from: string, to: string = from) => clonePairs(trackedPairs(root, from, to))
+
+/** root を git の作業ツリーにし、索引にリポジトリの索引の並び（パス・種類・中身の名前）をそのまま入れる。 */
+function trackLikeRepository(root: string): void {
+  git(root, ['init', '-q'])
+  git(root, ['update-index', '-z', '--index-info'], git(REPO_ROOT, ['ls-files', '-s', '-z']))
+}
 
 export type ProjectShadow = Shadow & {
   /** 影の根を cwd にし、偽物を PATH に入れた環境。 */
@@ -49,33 +137,32 @@ export type ProjectShadow = Shadow & {
 
 /**
  * 実例 1 件の影の根を作る。learnings は写す学び（リポジトリの data/<key> を data/<key> に）、copy は写すリポジトリの相対パス
- * （tests/fixtures/... など。親はディレクトリを作る）。
- * @implements REQ-569, REQ-570
+ * （tests/fixtures/... など。親はディレクトリを作る）。git は影の根を git の作業ツリーにする（上の説明）。
  */
-export async function projectShadow(options: { learnings?: string[]; copy?: string[] } = {}): Promise<ProjectShadow> {
+export async function projectShadow(options: { learnings?: string[]; copy?: string[]; git?: boolean } = {}): Promise<ProjectShadow> {
   const shadow = await shadowRoot()
   const root = shadow.root
   try {
-    const top = await readdir(REPO_ROOT)
-    const copied = top.filter((name) => ALWAYS_COPIED.includes(name))
-    await cloneTree(
-      copied.map((name) => join(REPO_ROOT, name)),
-      root,
-    )
-    for (const name of top) {
-      if (OMITTED.has(name) || copied.includes(name) || name.startsWith('.worker-build')) continue
-      await symlink(join(REPO_ROOT, name), join(root, name))
-    }
-    await mkdir(join(root, 'backups'))
-    await mkdir(join(root, 'tests'))
+    const top = trackedTop()
     const own = new Set(options.learnings ?? [])
-    await mkdir(join(root, 'data'))
-    for (const name of await readdir(join(REPO_ROOT, 'data'))) {
-      if (!own.has(name)) await symlink(join(REPO_ROOT, 'data', name), join(root, 'data', name))
+    const pairs: Array<[string, string]> = []
+    for (const name of top) {
+      if (REBUILT.has(name)) continue
+      if (ALWAYS_COPIED.includes(name)) pairs.push(...trackedPairs(root, name))
+      else await symlink(join(REPO_ROOT, name), join(root, name))
     }
-    for (const rel of options.copy ?? []) {
-      const parent = join(root, rel, '..')
-      await cloneTree([join(REPO_ROOT, rel)], parent)
+    for (const rel of options.copy ?? []) pairs.push(...trackedPairs(root, rel))
+    for (const key of own) {
+      if (trackedUnder(`data/${key}`).length === 0) throw new Unanswerable(`前提の学びの置き場がリポジトリに無い: data/${key}`)
+      pairs.push(...trackedPairs(root, `data/${key}`))
+    }
+    await clonePairs(pairs)
+    for (const name of PROVIDED_LINKED) if (existsSync(join(REPO_ROOT, name))) await symlink(join(REPO_ROOT, name), join(root, name))
+    await mkdir(join(root, 'tests'), { recursive: true })
+    await mkdir(join(root, 'data'), { recursive: true })
+    const learningsInRepo = [...new Set(trackedUnder('data').map((p) => p.split('/')[1]).filter(Boolean))]
+    for (const name of learningsInRepo) {
+      if (!own.has(name)) await symlink(join(REPO_ROOT, 'data', name), join(root, 'data', name))
     }
     await layNodeModules(root)
     const tmp = shadow.path('.tmp')
@@ -112,7 +199,7 @@ export async function projectShadow(options: { learnings?: string[]; copy?: stri
       XDG_CONFIG_HOME: shadow.path('.xdg'),
       TMPDIR: tmp,
     }
-    for (const key of own) await cloneLearning(root, key, key)
+    if (options.git) trackLikeRepository(root)
     const project: ProjectShadow = {
       ...shadow,
       env,
@@ -130,18 +217,13 @@ export async function projectShadow(options: { learnings?: string[]; copy?: stri
   }
 }
 
-/** 学びの置き場をリポジトリの写しとして置く（pdfs・pages・seed.sql を除く）。 */
+/** 学びの置き場を、リポジトリが追跡するその学びのファイルの写しとして置く（追跡しない物は写さない。投入は組み立てで書き出す）。 */
 async function cloneLearning(root: string, from: string, to: string): Promise<void> {
-  const source = join(REPO_ROOT, 'data', from)
-  if (!existsSync(source)) throw new Unanswerable(`前提の学びの置き場がリポジトリに無い: data/${from}`)
+  if (trackedUnder(`data/${from}`).length === 0) throw new Unanswerable(`前提の学びの置き場がリポジトリに無い: data/${from}`)
   const target = join(root, 'data', to)
   await rm(target, { recursive: true, force: true })
   await mkdir(target, { recursive: true })
-  const children = (await readdir(source)).filter((name) => !LEARNING_EXCLUDED.has(name))
-  await cloneTree(
-    children.map((name) => join(source, name)),
-    target,
-  )
+  await copyTracked(root, `data/${from}`, `data/${to}`)
 }
 
 /** 影の根の node_modules。中身は元へのリンクで、wrangler だけを固定した版の位置に置いた偽物にする。 */
@@ -427,7 +509,7 @@ export function answerOf(run: ToolRun, exitCodes: number[] = [0]): Answer {
  * @implements REQ-570
  */
 export async function inShadow(
-  options: { learnings?: string[]; copy?: string[] },
+  options: { learnings?: string[]; copy?: string[]; git?: boolean },
   body: (shadow: ProjectShadow) => Promise<Answer>,
 ): Promise<Answer> {
   const shadow = await projectShadow(options)

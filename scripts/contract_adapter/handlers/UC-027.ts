@@ -9,7 +9,8 @@
  * 前提（例の名前と契約の errors の when から）:
  * - 学びの置き場はリポジトリの今の写し。登録簿に無い学び（data/zzz）は、その断りだけに当たるよう資格対策の学び ip の写しを置く。
  *   学びの置き場が無い断り（NOT_FOUND）の例だけ、data/zzz を置かない
- * - 投入（seed.sql）は作業ツリーに追跡されないので、投入が要る例は影の根で組み立て（buildSeed）てから回す
+ * - 投入（seed.sql）は作業ツリーに追跡されないので、投入が要る例は影の根で組み立て（buildSeed）てから回す。組み立てた投入を読み・写すのは
+ *   手元の物の土台（tests/server/UC-027_seed_fixture.local.ts）を通す
  * - planStops: 単元の構成の 1 つに、実在しない論点を足す（単元の構成の門の止める理由）
  * - withProblems・afterMissing: 論点 205 の図 1 の差し込み位置を、配る本文の教材に無い見出し `### しくみ` にする
  * - checkSeed の withProblems: 出典の試験名を登録簿の名前と違う名前にして組み立てた投入（--exam-name・--out）
@@ -17,7 +18,8 @@
  *   seedMissing は突き合わせる投入が無い状態（投入を組み立てず、渡した投入のファイルも置かない）
  */
 
-import { copyFile, readdir, readFile } from 'node:fs/promises'
+import { readdir } from 'node:fs/promises'
+import { copySeed, readSeed } from '../../../tests/server/UC-027_seed_fixture.local'
 import { defineHandler, type ExampleLine, type Operation } from '../kit/protocol'
 import { answerOf, argsOf, flowInto, inShadow, premise, unknownCase, type ProjectShadow } from '../kit/td'
 
@@ -166,7 +168,7 @@ const verifySeedRemote: Operation = (line) => {
     case 'ok':
       return inShadow({ learnings: ['ip'] }, async (s) => {
         await buildSeedIn(s, line, 'data/ip')
-        flowInto(s.localDb, await readFile(s.path('data/ip/seed.sql'), 'utf8'))
+        flowInto(s.localDb, await readSeed(s.root, 'ip'))
         return answerOf(await run(s), [0, 1])
       })
     case 'mismatch':
@@ -181,7 +183,7 @@ const verifySeedRemote: Operation = (line) => {
       return inShadow({ learnings: ['ip'] }, async (s) => {
         await buildSeedIn(s, line, 'data/ip')
         await s.learning('ip', 'zzz')
-        await copyFile(s.path('data/ip/seed.sql'), s.path('data/zzz/seed.sql'))
+        await copySeed(s.root, 'ip', 'zzz')
         return answerOf(await run(s), [0, 1])
       })
     default:

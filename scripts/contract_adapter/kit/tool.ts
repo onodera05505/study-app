@@ -56,36 +56,6 @@ export function cleanupDeferred(): boolean {
   return process.env.CONTRACT_ADAPTER_SWEEPER === String(process.pid)
 }
 
-/** ディレクトリかファイルを、APFS の複製（clonefile）で 1 回に写す Python。複製できない置き場では cp に落ちる。引数は写し先の親と写す物。 */
-const CLONE = String.raw`
-import ctypes, os, subprocess, sys
-dest = sys.argv[1]
-try:
-    clonefile = ctypes.CDLL(None, use_errno=True).clonefile
-except AttributeError:
-    clonefile = None
-for src in sys.argv[2:]:
-    to = os.path.join(dest, os.path.basename(src.rstrip('/')))
-    if clonefile is not None and clonefile(src.encode(), to.encode(), 1) == 0:
-        continue
-    r = subprocess.run(['cp', '-cR' if sys.platform == 'darwin' else '-R', src, dest + '/'], capture_output=True, text=True)
-    if r.returncode != 0:
-        sys.stderr.write(r.stderr)
-        sys.exit(r.returncode)
-`
-
-/**
- * from の各物を、to の下へ同じ名前で写す。APFS ではディレクトリごと 1 回の複製（clonefile）で写し、複製できない置き場では cp で写す。
- * @implements REQ-570
- */
-export async function cloneInto(from: string[], to: string): Promise<void> {
-  if (from.length === 0) return
-  await mkdir(to, { recursive: true })
-  const command = process.platform === 'darwin' ? ['python3', '-c', CLONE, to, ...from] : ['cp', '-R', '--reflink=auto', ...from, `${to}/`]
-  const run = await runTool(command, { timeoutMs: 60_000 })
-  if (run.code !== 0) throw new Unanswerable(`前提の写しを作れない: ${run.stderr.trim().slice(0, 200)}`)
-}
-
 /**
  * 実例 1 件の影の根を作る。copy はリポジトリの根からの相対パス（ファイルかディレクトリ）を同じ相対パスに写す。
  * @implements REQ-569, REQ-570

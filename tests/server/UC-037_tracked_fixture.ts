@@ -4,10 +4,12 @@
  *  影の根は、リポジトリが追跡するファイル（git の索引にあるパス）だけを写し、その上で `git init` と `git add -A` をして作る。
  *  学びの置き場（data・public）は重いので、元へのリンクにする（索引にはリンクが 1 つ載る）。
  *  道具は、影の根を作業の場所にし、`--root` に影の根を渡し、HOME を空の一時の置き場にして回す（手元の共通の置き場を読ませない）。
+ *  追跡を確かめられない置き場（unverifiable）は、同じ影の根の `.git` を消すか（`.git` の無い写し）、`.git` を無い先を指す
+ *  `gitdir:` の 1 行のファイルに替えて（git が索引の読み出しを断る）作る。
  *  観測するのは、終了の状態と、標準出力と標準エラーの文だけ。 */
 
 import { spawnSync } from 'node:child_process'
-import { constants, copyFileSync, existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, readlinkSync, symlinkSync, writeFileSync } from 'node:fs'
+import { constants, copyFileSync, existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, readlinkSync, rmSync, symlinkSync, writeFileSync } from 'node:fs'
 import { rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
@@ -50,6 +52,8 @@ export type TrackedShadow = {
   /** git が無視するか。 */
   ignored: (rel: string) => boolean
   checkDocs: () => Run
+  /** 影の根を、追跡を確かめられない置き場にする（no-git: `.git` の無い写し／refused: `.git` が読めない先を指す）。 */
+  unverifiable: (kind: 'no-git' | 'refused') => void
 }
 
 export function trackedShadow(): TrackedShadow {
@@ -100,6 +104,10 @@ export function trackedShadow(): TrackedShadow {
       const stdout = r.stdout ?? ''
       const stderr = r.stderr ?? ''
       return { status: r.status, stdout, stderr, out: `${stdout}\n${stderr}`.split(root).join('<root>') }
+    },
+    unverifiable: (kind) => {
+      rmSync(path('.git'), { recursive: true, force: true })
+      if (kind === 'refused') writeFileSync(path('.git'), `gitdir: ${join(base, 'no-such-git-dir')}\n`)
     },
   }
 }

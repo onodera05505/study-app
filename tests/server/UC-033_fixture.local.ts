@@ -13,7 +13,7 @@
  *  外へ何も送らないこと（REQ-569）は、子の側の外向きの通信をすべて、このプロセスが立てる記録する代理と、
  *  node の外向きの接続を記録して断る前置きに集めて、記録が空であることで見る（本番にも外の相手にも届かない）。 */
 
-import { execFile, spawn } from 'node:child_process'
+import { execFile, spawn, spawnSync } from 'node:child_process'
 import { closeSync, cpSync, mkdirSync, openSync, mkdtempSync, readdirSync, readFileSync, statSync, symlinkSync, writeFileSync } from 'node:fs'
 import { rm } from 'node:fs/promises'
 import { createServer, type Server } from 'node:http'
@@ -124,7 +124,9 @@ export function shadowSpec(contracts: ShadowContract[]): string {
 
 /** 影の根: リポジトリの各物へのリンクに、契約（docs/goals）と道具の差し替え（scripts/<名前>）を重ねる。
  *  アダプターの置き場（scripts/contract_adapter）はリンクでなく写し（node はリンクを元の場所に解くので、
- *  リンクのままだと影の根の道具でなく元の道具を回してしまう）。設定（harness.config.json）も写す。 */
+ *  リンクのままだと影の根の道具でなく元の道具を回してしまう）。設定（harness.config.json）も写す。
+ *  影の根は git の作業ツリーで、索引にはリポジトリの索引の並びと、差し替えた道具を入れる（アダプターは自分の置き場の根を
+ *  リポジトリの根と読み、その根の追跡する物から実例ごとの影の根を組むので、影の根でもリポジトリと同じ追跡の一覧を得る）。 */
 export function shadowRoot(opts: { contracts: ShadowContract[]; tools: Record<string, string> }): string {
   const root = join(tempDir('root'), 'root')
   mkdirSync(root)
@@ -141,7 +143,28 @@ export function shadowRoot(opts: { contracts: ShadowContract[]; tools: Record<st
     else symlinkSync(join(ROOT, 'scripts', name), join(root, 'scripts', name))
   }
   for (const [name, body] of Object.entries(opts.tools)) writeFileSync(join(root, 'scripts', name), body)
+  trackLikeRepository(root, Object.keys(opts.tools).map((name) => `scripts/${name}`))
   return root
+}
+
+/** git を、手元の git の設定を読まずに回す。 */
+function git(cwd: string, args: string[], input?: string): string {
+  const r = spawnSync('git', args, {
+    cwd,
+    input,
+    encoding: 'utf8',
+    maxBuffer: 256 * 1024 * 1024,
+    env: { ...process.env, GIT_CONFIG_GLOBAL: '/dev/null', GIT_CONFIG_NOSYSTEM: '1' },
+  })
+  if (r.status !== 0) throw new Error(`git ${args.join(' ')} が通らない: ${r.stderr}`)
+  return r.stdout
+}
+
+/** root を git の作業ツリーにし、索引にリポジトリの索引の並び（パス・種類・中身の名前）と、root の中の extra（根からの相対）を入れる。 */
+function trackLikeRepository(root: string, extra: string[]): void {
+  git(root, ['init', '-q'])
+  git(root, ['update-index', '-z', '--index-info'], git(ROOT, ['ls-files', '-s', '-z']))
+  if (extra.length) git(root, ['add', '-f', '--', ...extra])
 }
 
 // ---------------------------------------------------------------------------

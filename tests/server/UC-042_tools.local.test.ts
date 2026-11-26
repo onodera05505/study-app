@@ -655,7 +655,7 @@ describe('UC-042 書き手と担当に渡す束を作り、教材の手入れと
       expect(r.code, outOf(r)).toBe(0)
     })
 
-    describe('登録簿のどれかの学びの画面の組み立ての設定のファイルが無いか、リポジトリが追跡していなければ、その学びを挙げて失敗で終える（REQ-681）', () => {
+    describe('登録簿のどれかの学びの画面の組み立ての設定のファイルが無いか、リポジトリが追跡していないか、置き場が追跡を確かめられなければ、その学びか確かめられない理由を挙げて失敗で終える（REQ-681）', () => {
       /** 既定の学び（知らない key を倒す先。REQ-096）。 */
       const DEFAULT = 'ip'
       /** 名指しを見分けやすい、既定でない学び（key の長い物）。 */
@@ -722,6 +722,21 @@ describe('UC-042 書き手と担当に渡す束を作り、教材の手入れと
         const withDefault = await run42(s, 'new_target.py', ['--check'])
         expect(withDefault.code, `既定の設定のファイルがあるとき\n${outOf(withDefault)}`).toBe(0)
         expect(readFileSync(s.path('.env'), 'utf8'), '既定の設定のファイルを書き換えた').toBe(content)
+      })
+
+      // @covers REQ-681#tracking-unverifiable-fails
+      it('置き場が git の作業ツリーの根でないか、git が追跡の確かめを断ると、どの学びの設定のファイルも手元にあっても、確かめられない理由を示して失敗で終える', async () => {
+        for (const kind of ['no-git', 'refused'] as const) {
+          const s = prepared(`env-unverifiable-${kind}`)
+          for (const k of LEARNINGS) writeFileSync(s.path(`.env.${k}`), 'UC042_PLACEHOLDER=1\n')
+          expect(existsSync(s.path('.git')), `仕込み: ${kind} の影の根は git の作業ツリーでない`).toBe(false)
+          // refused: .git を、無い先を指す gitdir の 1 行にする（git が索引の読み出しを断る）
+          if (kind === 'refused') writeFileSync(s.path('.git'), `gitdir: ${s.path('no-such-git-dir')}\n`)
+          const r = await run42(s, 'new_target.py', ['--check'])
+          expect(crashed(r), `${kind}\n${outOf(r)}`).toBe(false)
+          expect(r.code, `${kind}\n${outOf(r)}`).not.toBe(0)
+          expect(r.out, `${kind} 確かめられない理由を示していない\n${outOf(r)}`).toMatch(/追跡|git/)
+        }
       })
     })
   })

@@ -1,4 +1,4 @@
-import { execFile } from 'node:child_process'
+import { execFile, spawnSync } from 'node:child_process'
 import {
   chmodSync,
   cpSync,
@@ -184,13 +184,28 @@ for a in "$@"; do [ "$a" = -w ] && { printf '200'; exit 0; }; done
 printf '{}'
 `
 
-const GIT_FAILS_STUB = `#!/usr/bin/env bash
-echo "fatal: not a git repository (or any of the parent directories): .git" >&2
-exit 128
-`
+/** 影の根を、リポジトリの索引の並び（追跡する物）だけを持ち、履歴（コミット）を持たない git の作業ツリーにする。
+ *  版を見分ける元の値（git の履歴）は読めず、追跡の確かめ（文書の検査・登録簿の整合）はリポジトリと同じ答えになる。 */
+const withoutHistory = (root: string) => {
+  const git = (cwd: string, args: string[], input?: string) => {
+    const r = spawnSync('git', args, {
+      cwd,
+      input,
+      encoding: 'utf8',
+      maxBuffer: 256 * 1024 * 1024,
+      env: { ...process.env, GIT_CONFIG_GLOBAL: '/dev/null', GIT_CONFIG_NOSYSTEM: '1' },
+    })
+    if (r.status !== 0) throw new Error(`git ${args.join(' ')} が通らない: ${r.stderr}`)
+    return r.stdout
+  }
+  git(root, ['init', '-q'])
+  git(root, ['update-index', '-z', '--index-info'], git(ROOT, ['ls-files', '-s', '-z']))
+  const head = spawnSync('git', ['rev-parse', '--verify', '-q', 'HEAD'], { cwd: root, encoding: 'utf8', env: { ...process.env, GIT_CONFIG_GLOBAL: '/dev/null', GIT_CONFIG_NOSYSTEM: '1' } })
+  if (head.status === 0) throw new Error('仕込み: 履歴の無い影の根で、git が今のコミットを読めてしまう')
+}
 
 type Shadow = { dir: string; root: string; bin: string; log: string }
-type ShadowOptions = { pinned: boolean; gitFails?: boolean; stampBlocked?: boolean }
+type ShadowOptions = { pinned: boolean; noHistory?: boolean; stampBlocked?: boolean }
 type LogEntry = { tool: string; cwd?: string; argv: string[] | string; deploy?: { dir: string | null; versionJson: string | null; indexHtml: string | null } }
 type Run = { code: number; out: string; log: LogEntry[] }
 
@@ -212,6 +227,7 @@ const makeShadow = (name: string, opts: ShadowOptions): Shadow => {
   mkdirSync(bin)
   for (const entry of readdirSync(ROOT)) {
     if (OMITTED(entry)) continue
+    if (entry === '.git' && opts.noHistory) continue
     const from = join(ROOT, entry)
     if (COPIED.has(entry)) {
       cpSync(from, join(root, entry), {
@@ -251,7 +267,7 @@ const makeShadow = (name: string, opts: ShadowOptions): Shadow => {
   writeExecutable(join(bin, 'wrangler'), `#!/usr/bin/env bash\nexec node "${unpinned}" "$@"\n`)
   writeExecutable(join(bin, 'npx'), NPX_STUB)
   writeExecutable(join(bin, 'curl'), CURL_STUB)
-  if (opts.gitFails) writeExecutable(join(bin, 'git'), GIT_FAILS_STUB)
+  if (opts.noHistory) withoutHistory(root)
   const log = join(dir, 'calls.log')
   writeFileSync(log, '')
   return { dir, root, bin, log }
@@ -334,8 +350,8 @@ beforeAll(async () => {
       ['learningNext', 'content-b'],
       ['learningSameAgain', 'content-b'],
     ]),
-    // 版を見分ける元の値（git）が読めない配備で、同じ中身を 2 回
-    sequence('learning-nogit', { pinned: true, gitFails: true }, 'deploy-pages.sh', [LEARNING_KEY], [
+    // 版を見分ける元の値（git の履歴）が読めない配備で、同じ中身を 2 回（追跡する物の索引はある）
+    sequence('learning-nohistory', { pinned: true, noHistory: true }, 'deploy-pages.sh', [LEARNING_KEY], [
       ['noSourceFirst', 'content-a'],
       ['noSourceAgain', 'content-a'],
     ]),

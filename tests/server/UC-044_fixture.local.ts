@@ -123,6 +123,8 @@ export type ShadowOptions = {
   indirect?: boolean
   /** ほかに置くファイル（根からの相対 → 中身）。git の索引に足す。 */
   files?: Record<string, string>
+  /** 索引に足さずに置くファイル（根からの相対 → 中身）。git が無視しないパスなら、無視されない未追跡のファイルになる。 */
+  untracked?: Record<string, string>
 }
 
 /** 影の根を作る（上の説明の小さな作業ツリー）。 */
@@ -174,6 +176,7 @@ export function makeShadow(opts: ShadowOptions = {}): Shadow44 {
   git(root, ['init', '-q'])
   writeFileSync(join(root, '.git', 'info', 'exclude'), '/node_modules\n/.harness/\n/.probe/\n')
   git(root, ['add', '-A'])
+  for (const [rel, content] of Object.entries(opts.untracked ?? {})) put(rel, content)
   return {
     root,
     localTest: LOCAL_TEST,

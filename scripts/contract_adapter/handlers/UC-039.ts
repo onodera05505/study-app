@@ -26,7 +26,7 @@
 import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import {
-  FAKE_SSO_SECRET, LEARNINGS, ROOT, learningDb, portalDb, runTool, shadow39, sql, removeShadows, type Run, type Shadow39, type World,
+  LEARNINGS, ROOT, placeFakeSsoSecret, learningDb, portalDb, runTool, shadow39, sql, removeShadows, type Run, type Shadow39, type World,
 } from '../../../tests/server/UC-039_fixture.local'
 import { defineHandler, Unanswerable, type Answer, type ExampleLine, type Operation } from '../kit/protocol'
 import { toolAnswer } from '../kit/tool'
@@ -130,7 +130,7 @@ const PLANS: Record<string, Plan> = {
     },
   },
   buildPortal: { script: 'build_portal.py', positional: [] },
-  setSsoSecret: { script: 'set_sso_secret.sh', positional: [], prepare: (s) => s.write('.sso_secret.local', `${FAKE_SSO_SECRET}\n`) },
+  setSsoSecret: { script: 'set_sso_secret.sh', positional: [], prepare: (s) => placeFakeSsoSecret(s) },
   targets: { script: 'targets.py', positional: ['what', 'key'] },
 }
 

@@ -9,7 +9,8 @@
  * 保存先は偽物が受ける 2 つの SQLite（本番と手元）にする。手続きの中の流す前の投入の検査と投入後の突き合わせは
  * 写しの本物を回す。前提（例の名前と契約の errors の when から）:
  * - ok: 組み立てたあと（影の根で ip の投入を組み立てる）。保存先は構造の変更がすべて当たった状態
- * - unknownLearning: 登録簿に無い学び zzz の置き場に、組み立てた投入を置く（その断りだけに当たる）
+ * - unknownLearning: 登録簿に無い学び zzz の置き場に、組み立てた投入を置く（その断りだけに当たる。投入を写すのは手元の物の土台
+ *   tests/server/UC-027_seed_fixture.local.ts を通す）
  * - seedMissing・mistypedLocalBeforeSeedMissing: fe の置き場の写しに投入を置かない（組み立てる前）
  *
  * 配備の手続き deployPages（`bash scripts/deploy-pages.sh <学び>`）と保存先の回の確かめ checkD1Rounds（`bash scripts/check_d1_rounds.sh <学び> [--local]`）は、
@@ -21,7 +22,8 @@
  * - checkD1Rounds の ok: 手元の保存先の、学ぶ順を持つ論点のどれもが回を持つ
  */
 
-import { copyFile, rm } from 'node:fs/promises'
+import { rm } from 'node:fs/promises'
+import { copySeed } from '../../../tests/server/UC-027_seed_fixture.local'
 import {
   makeShadow,
   OTHER_ACCOUNT,
@@ -60,7 +62,7 @@ const seedRemote: Operation = (line) => {
       return inShadow({ learnings: ['ip'] }, async (s) => {
         premise(await s.run(['python3', 'scripts/build_seed.py', '--data', 'data/ip']), 'ip の投入の組み立て', line)
         await s.learning('ip', 'zzz')
-        await copyFile(s.path('data/ip/seed.sql'), s.path('data/zzz/seed.sql'))
+        await copySeed(s.root, 'ip', 'zzz')
         return answerOf(await run(s), [0, 1])
       })
     case 'seedMissing':

@@ -1095,11 +1095,10 @@ describe('型ごとの形が図の仕様書に合わない図は描かずに止�
   const goodFigure = () => JSON.stringify({ id: 1, after: 'explanation', caption: CAPTION, ...blocks() })
 
   // @covers REQ-440#file-unreadable
-  it('JSON として読めないか入れ子が深すぎる論点のファイルは、例外で落ちずに、止めてそのファイルと JSON が読めない理由を示す', () => {
+  it('JSON として読めない論点のファイルは、例外で落ちずに、止めてそのファイルと JSON が読めない理由を示す', () => {
     const cases: [string, string][] = [
       ['閉じ括弧の欠けた JSON', fileBody(`[${goodFigure()}`)],
       ['末尾のカンマ', fileBody(`[${goodFigure()},]`)],
-      ['入れ子 2000 段', fileBody(`[${goodFigure().slice(0, -1)}, "deep": ${'['.repeat(2000)}${']'.repeat(2000)}}]`)],
     ]
     for (const [label, content] of cases) expectFileStopped(content, [/JSON/], label)
     const osCases: [string, (file: string) => void, string[]][] = [
@@ -1117,6 +1116,29 @@ describe('型ごとの形が図の仕様書に合わない図は描かずに止�
       ],
     ]
     for (const [label, setup, extra] of osCases) expectFileStopped(setup, [/JSON/], label, extra)
+  })
+
+  /** 決まりに従う図 1 枚の論点のファイルの最上位に、図の仕様書が読まない欄 deep を足し、ファイル全体の入れ子を depth 段にする
+   *  （最上位の辞書を 1 段目とし、配列か辞書に入るごとに 1 段足す。deep の値が 2 段目から depth 段目）。 */
+  const nestedFile = (kind: '配列' | '辞書', depth: number) => {
+    const k = depth - 1
+    const deep = kind === '配列' ? `${'['.repeat(k)}${']'.repeat(k)}` : `${'{"a": '.repeat(k - 1)}{}${'}'.repeat(k - 1)}`
+    return `{"topic_id": ${BAD_TOPIC}, "term": "調べる図", "figures": [${goodFigure()}], "deep": ${deep}}`
+  }
+
+  // @covers REQ-440#file-nesting-over-limit
+  it('配列か辞書の入れ子が 100 段を超える論点のファイルは、例外で落ちずに、止めてそのファイルと入れ子が深すぎる理由を示す', () => {
+    for (const kind of ['配列', '辞書'] as const)
+      for (const depth of [101, 2000]) expectFileStopped(nestedFile(kind, depth), [/入れ子|深すぎ/], `${kind}の入れ子 ${depth} 段`)
+  })
+
+  // @covers REQ-440#file-nesting-at-limit
+  it('配列か辞書の入れ子がちょうど 100 段で、ほかが決まりに従う論点のファイルは、入れ子の深さでは止めずに描く', () => {
+    for (const kind of ['配列', '辞書'] as const) {
+      const r = drawFile(nestedFile(kind, 100))
+      expect(r.status, `${kind}の入れ子 100 段 止まった:\n${r.out}`).toBe(0)
+      expect(fs.existsSync(svgPath(BAD_TOPIC, 1)), `${kind}の入れ子 100 段 図が描かれていない:\n${r.out}`).toBe(true)
+    }
   })
 
   // @covers REQ-440#file-top-type-mismatch

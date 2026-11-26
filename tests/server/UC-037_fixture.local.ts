@@ -6,7 +6,9 @@
  *
  *  影の根（toolShadow）は、リポジトリを一時の置き場に写した物。重い置き場（data・public・node_modules など）はリンクにし、
  *  ほかは写す（APFS では複製の印だけの写し）。前提はその上で書き換えて作り、リポジトリは書き換えない。
- *  道具は影の根の写しを、影の根を作業の場所にして回す（道具が自分の置き場から根を引いても、作業の場所から引いても、影の根を読む）。 */
+ *  道具は影の根の写しを、影の根を作業の場所にして回す（道具が自分の置き場から根を引いても、作業の場所から引いても、影の根を読む）。
+ *  git を指定した影の根は git の作業ツリーで、索引にはリポジトリが追跡するパス（リポジトリの索引の並び）だけを入れる
+ *  （リンクにした置き場の下のパスも、リポジトリが追跡していれば索引にある。写した追跡しないファイルは索引に無い）。 */
 
 import { spawnSync } from 'node:child_process'
 import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs'
@@ -42,7 +44,7 @@ export type ToolRun = { status: number | null; stdout: string; stderr: string; o
 /**
  * 影の根を作る。copyData は、リンクでなく写しにする学びの置き場の中の物（`data/` からの相対。`ap/classified` のように学びの中の 1 つの置き場でもよい）。
  */
-export function toolShadow(opts: { copyData?: string[] } = {}): Shadow {
+export function toolShadow(opts: { copyData?: string[]; git?: boolean } = {}): Shadow {
   const base = mkdtempSync(join(tmpdir(), 'uc037-'))
   temps.push(base)
   const root = join(base, 'root')
@@ -79,6 +81,7 @@ export function toolShadow(opts: { copyData?: string[] } = {}): Shadow {
     }
     build('')
   }
+  if (opts.git) trackLikeRepository(root)
   const path = (rel: string) => join(root, rel)
   return {
     root,
@@ -91,6 +94,25 @@ export function toolShadow(opts: { copyData?: string[] } = {}): Shadow {
     remove: (rel) => rmSync(path(rel), { recursive: true, force: true }),
     run: (script, args = [], env = {}) => runTool(root, script, args, env),
   }
+}
+
+/** git を、手元の git の設定を読まずに回す。 */
+function git(cwd: string, args: string[], input?: string): string {
+  const r = spawnSync('git', args, {
+    cwd,
+    input,
+    encoding: 'utf8',
+    maxBuffer: 64 * 1024 * 1024,
+    env: { ...process.env, GIT_CONFIG_GLOBAL: '/dev/null', GIT_CONFIG_NOSYSTEM: '1' },
+  })
+  if (r.status !== 0) throw new Error(`git ${args.join(' ')} が通らない: ${r.stderr}`)
+  return r.stdout
+}
+
+/** root を git の作業ツリーにし、索引にリポジトリの索引の並び（パス・種類・中身の名前）をそのまま入れる。 */
+function trackLikeRepository(root: string): void {
+  git(root, ['init', '-q'])
+  git(root, ['update-index', '-z', '--index-info'], git(ROOT, ['ls-files', '-s', '-z']))
 }
 
 /** root を作業の場所にして、root の写しの道具を回す。 */

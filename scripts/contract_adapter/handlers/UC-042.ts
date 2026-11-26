@@ -7,7 +7,8 @@
  * - buildAnswerabilityBundles・buildExplanationBundles・buildMaterialBundles: ip の写し
  * - planMaterialFigures: ap の写し、planRoadmapFigures: itc の写し、scanWords: msg の写し、tightenNumberUnits: mkt の写し
  * - summarizeReview: 全部の学びの置き場（リンクのまま。道具は読むだけ）
- * - newTarget（check）: 影の根の写しの登録簿と配備先の一覧
+ * - newTarget（check）: 影の根の写しの登録簿と配備先の一覧。影の根は git の作業ツリーで、索引にリポジトリの索引の並びを入れる
+ *   （登録簿の整合の確かめは、追跡を確かめられない置き場では失敗で終える）
  * 応答は終了の状態（契約の exitCode）。道具は断りの種類の名前を出さない（errors: []）。
  */
 
@@ -15,10 +16,10 @@ import { defineHandler, type ExampleLine, type Operation } from '../kit/protocol
 import { answerOf, argsOf, inShadow, unknownCase } from '../kit/td'
 
 const tool =
-  (script: string, learnings: string[], codes: number[], positional: string[] = []): Operation =>
+  (script: string, learnings: string[], codes: number[], positional: string[] = [], git = false): Operation =>
   (line: ExampleLine) => {
     if (line.case !== 'ok') unknownCase(line)
-    return inShadow({ learnings }, async (s) => answerOf(await s.run(['python3', `scripts/${script}`, ...argsOf(line.request, { positional })], 300_000), codes))
+    return inShadow({ learnings, git }, async (s) => answerOf(await s.run(['python3', `scripts/${script}`, ...argsOf(line.request, { positional })], 300_000), codes))
   }
 
 /**
@@ -36,6 +37,6 @@ export default defineHandler({
     scanWords: tool('scan_words.py', ['msg'], [0]),
     summarizeReview: tool('summarize_review.py', [], [0, 1]),
     tightenNumberUnits: tool('tighten_number_units.py', ['mkt'], [0]),
-    newTarget: tool('new_target.py', [], [0, 1], ['key']),
+    newTarget: tool('new_target.py', [], [0, 1], ['key'], true),
   },
 })
