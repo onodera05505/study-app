@@ -91,7 +91,7 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 - 層の向き（[`ADR-0005`](docs/adr/ADR-0005-layering.md)）: `src/client` と `src/server` は互いを import せず、共有するのは `src/shared` だけ。サーバーは `routes/` → `lib/` → `db/` の一方向
 - 仕様の置き場: `docs/goals/GOAL-nn-<slug>/UC-nnn-<slug>/` に `UC.md`（要件は `## 要件` の `### REQ-nnn`）・`contract.yaml`、横断の決まりは `docs/rules/BR-nnn.md`。次の番号は `node .harness/bin/harness.mjs next-id req`（`uc`・`br`・`adr` も同じ）
 - 注釈: 手で書く紐づきはテストの側だけ。テストは `it(` の直前の行に `@covers REQ-nnn#class`（1 テスト 1 クラス。DB で守る決まりは `@covers BR-nnn`）、シナリオは `@scenario UC-nnn`。ID だけを書く（[`.claude/rules/comments.md`](.claude/rules/comments.md)）
-- テストの名前: `tests/server/UC-nnn_<話題>.test.ts`、`tests/client/UC-nnn_<話題>.test.tsx`、`tests/scenario/UC-nnn-<slug>.test.tsx`（UC 1 本に 1 本）。土台は `UC-nnn_fixture.ts`
+- テストの名前: `tests/server/UC-nnn_<話題>.test.ts`、`tests/client/UC-nnn_<話題>.test.tsx`、`tests/scenario/UC-nnn-<slug>.test.tsx`（UC 1 本に 1 本）。土台は `UC-nnn_fixture.ts`。手元の物（macOS の囲い・手元の配備と保存先・追跡しないファイル）が要る土台は `UC-nnn_fixture.local.ts`、それを読み込むテストは `….local.test.ts(x)`（CI は回さず、手元の `npm test` が回す。名前と中身の食い違いは `classify_checks` が止める。UC-044）
 - 文書の名前: `作業ログ_<日付>_<題>`・`レビュー詳細_*`・`改善候補_*` は点（書き換えず追記）、それ以外は線。足したら [`docs/文書の索引.md`](docs/文書の索引.md) に行を足す
 - 図の画像は `public/figures/<対象>/` に分ける（試験 ID は対象をまたいで一意でない）
 
