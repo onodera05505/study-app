@@ -1,4 +1,6 @@
+import { readFileSync } from 'node:fs'
 import { availableParallelism } from 'node:os'
+import { parseEnv } from 'node:util'
 import { configDefaults, defineConfig } from 'vitest/config'
 
 /** 単体テスト。既定は node（サーバ・共有のロジック）。
@@ -22,9 +24,16 @@ const LOCAL = ['tests/**/*.local.test.ts', 'tests/**/*.local.test.tsx']
  *  この値はルートの test に置くので、3 つの組と、この設定を土台にする記録つきの設定のどれにも効く。 */
 const MAX_WORKERS = Math.max(2, Math.floor(availableParallelism() / 2))
 
+/** テストの中の画面がどの学びのものか（import.meta.env.VITE_EXAM など）。リポジトリが追跡する ip の配備の設定（`.env.ip`）から採り、
+ *  追跡しない既定の `.env` は読まない（envDir: false）。どのクローンでも同じ学びで回るように。
+ *  ほかの学びを描くテストは、ファイルの中で vi.stubEnv で差し替える。 */
+const TEST_ENV = parseEnv(readFileSync(new URL('./.env.ip', import.meta.url), 'utf8'))
+
 export default defineConfig({
+  envDir: false,
   test: {
     environment: 'node',
+    env: TEST_ENV,
     hookTimeout: 120_000,
     maxWorkers: MAX_WORKERS,
     projects: [
