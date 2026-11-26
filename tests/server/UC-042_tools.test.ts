@@ -1,3 +1,4 @@
+import { spawnSync } from 'node:child_process'
 import { existsSync, lstatSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { basename, join } from 'node:path'
@@ -437,9 +438,19 @@ describe('UC-042 書き手と担当に渡す束を作り、教材の手入れと
       '--pass-rule',
       '総合で 6 割',
     ]
-    /** 手元の秘密のファイルの代わり（中身の無い物）を、登録簿の学びごとに置く。 */
-    const fakeEnv = (s: Shadow39, keys: string[]) => {
+    /** 影の根を git の作業ツリーにし（まだなら）、rels を git の索引に足す。手元の git の設定は読まない。 */
+    const gitIn = (s: Shadow39, args: string[]) =>
+      spawnSync('git', args, { cwd: s.root, encoding: 'utf8', env: { ...process.env, GIT_CONFIG_GLOBAL: '/dev/null', GIT_CONFIG_NOSYSTEM: '1' } })
+    const track = (s: Shadow39, rels: string[]) => {
+      expect(existsSync(s.path('.git')) && lstatSync(s.path('.git')).isSymbolicLink(), '影の根の .git がリポジトリへのリンク').toBe(false)
+      if (!existsSync(s.path('.git'))) expect(gitIn(s, ['init', '-q']).status, '影の根を git の作業ツリーにできない').toBe(0)
+      if (rels.length) expect(gitIn(s, ['add', '-f', '--', ...rels]).status, '索引に足せない').toBe(0)
+    }
+    const tracked = (s: Shadow39, rel: string) => gitIn(s, ['ls-files', '--error-unmatch', '--', rel]).status === 0
+    /** 画面の組み立ての設定のファイルの代わり（中身の無い物）を、登録簿の学びごとに置き、リポジトリが追跡する物にする（untracked に挙げた学びは追跡しない）。 */
+    const fakeEnv = (s: Shadow39, keys: string[], untracked: string[] = []) => {
       for (const k of keys) writeFileSync(s.path(`.env.${k}`), 'UC042_PLACEHOLDER=1\n')
+      track(s, keys.filter((k) => !untracked.includes(k)).map((k) => `.env.${k}`))
     }
 
     // @covers REQ-650#roadmap-registered
@@ -642,6 +653,76 @@ describe('UC-042 書き手と担当に渡す束を作り、教材の手入れと
       withCodes(s, [])
       const r = await run42(s, 'new_target.py', ['--check'])
       expect(r.code, outOf(r)).toBe(0)
+    })
+
+    describe('登録簿のどれかの学びの画面の組み立ての設定のファイルが無いか、リポジトリが追跡していなければ、その学びを挙げて失敗で終える（REQ-681）', () => {
+      /** 既定の学び（知らない key を倒す先。REQ-096）。 */
+      const DEFAULT = 'ip'
+      /** 名指しを見分けやすい、既定でない学び（key の長い物）。 */
+      const OTHER = LEARNINGS.filter((k) => k !== DEFAULT).sort((a, b) => b.length - a.length)[0]
+      /** key を語として含む行がある（ほかの語の一部としては数えない）。 */
+      const namesLearning = (r: Run, key: string) => r.out.split('\n').some((l) => new RegExp(`(^|[^A-Za-z0-9_])${key}([^A-Za-z0-9_]|$)`).test(l))
+      const failedNamingLearning = (r: Run, key: string) => {
+        expect(crashed(r), outOf(r)).toBe(false)
+        expect(r.code, outOf(r)).not.toBe(0)
+        expect(namesLearning(r, key), `学び ${key} を挙げていない:\n${outOf(r)}`).toBe(true)
+      }
+      /** 登録の鍵を持たない（REQ-654 の側は整っている）影の根。 */
+      const prepared = (name: string) => {
+        const s = shadow42(name)
+        withCodes(s, [])
+        return s
+      }
+
+      // @covers REQ-681#setting-missing
+      it('ある学びの設定のファイルが無いと、その学びを挙げて失敗で終える', async () => {
+        const s = prepared('env-missing')
+        fakeEnv(s, LEARNINGS.filter((k) => k !== OTHER))
+        expect(existsSync(s.path(`.env.${OTHER}`)), '仕込み: 設定のファイルが無い').toBe(false)
+        failedNamingLearning(await run42(s, 'new_target.py', ['--check']), OTHER)
+      })
+
+      // @covers REQ-681#setting-untracked
+      it('ある学びの設定のファイルが手元にあっても、リポジトリが追跡していなければ、その学びを挙げて失敗で終える', async () => {
+        const s = prepared('env-untracked')
+        fakeEnv(s, LEARNINGS, [OTHER])
+        expect(existsSync(s.path(`.env.${OTHER}`)), '仕込み: 設定のファイルがある').toBe(true)
+        expect(tracked(s, `.env.${OTHER}`), '仕込み: 追跡していない').toBe(false)
+        failedNamingLearning(await run42(s, 'new_target.py', ['--check']), OTHER)
+      })
+
+      // @covers REQ-681#default-file-not-substitute
+      it('既定の学びでも、学びの名前の付かない既定の設定のファイルだけでは、その学びを挙げて失敗で終える', async () => {
+        const s = prepared('env-default-only')
+        fakeEnv(s, LEARNINGS.filter((k) => k !== DEFAULT))
+        writeFileSync(s.path('.env'), `VITE_EXAM=${DEFAULT}\n`)
+        expect(tracked(s, '.env'), '仕込み: 既定の設定のファイルは追跡しない').toBe(false)
+        expect(existsSync(s.path(`.env.${DEFAULT}`)), '仕込み: 既定の学びの名前の付いた設定のファイルが無い').toBe(false)
+        failedNamingLearning(await run42(s, 'new_target.py', ['--check']), DEFAULT)
+      })
+
+      // @covers REQ-681#all-tracked-passes
+      it('どの学びの設定のファイルもリポジトリが追跡し、ほかが整っていれば、成功で終える', async () => {
+        const s = prepared('env-all-tracked')
+        fakeEnv(s, LEARNINGS)
+        expect(existsSync(s.path('.env')), '仕込み: 既定の設定のファイルを置かない').toBe(false)
+        const r = await run42(s, 'new_target.py', ['--check'])
+        expect(crashed(r), outOf(r)).toBe(false)
+        expect(r.code, outOf(r)).toBe(0)
+      })
+
+      // @covers REQ-681#default-file-irrelevant
+      it('既定の学びの設定のファイルを追跡していれば、既定の設定のファイルがあっても無くても成功で終え、そのファイルを書き換えない', async () => {
+        const s = prepared('env-default-irrelevant')
+        fakeEnv(s, LEARNINGS)
+        const without = await run42(s, 'new_target.py', ['--check'])
+        expect(without.code, `既定の設定のファイルが無いとき\n${outOf(without)}`).toBe(0)
+        const content = 'VITE_EXAM=uc042-unrelated\nVITE_TITLE=uc042\n'
+        writeFileSync(s.path('.env'), content)
+        const withDefault = await run42(s, 'new_target.py', ['--check'])
+        expect(withDefault.code, `既定の設定のファイルがあるとき\n${outOf(withDefault)}`).toBe(0)
+        expect(readFileSync(s.path('.env'), 'utf8'), '既定の設定のファイルを書き換えた').toBe(content)
+      })
     })
   })
 
