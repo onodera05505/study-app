@@ -1,0 +1,52 @@
+# UC-044 の境界: 運用者（と共有の置き場の検査）が回す道具の入口 2 つ。振る舞いは ./UC.md の要件が持つ。
+# 読み方は ../../../adr/ADR-0008-local-tool-boundary.md（手元の道具の境界を local-store で読む）と ../../../adr/ADR-0014-entries-from-apps-and-tools.md（入口の名前）。
+# request の各欄は同じ名前の引数（引数は無い）。response の exitCode はプロセスの終了コード。
+# これらの道具は断りの種類の名前を出さない（errors を持たない）。止まり方は要件と exitCode が持つ。
+# runPortableChecks の実例は、受け渡し役が影の根に作る小さな作業ツリー（手元に依らないテストのファイルを持ち、手元の物を持たない）で回す。
+# 手元の物の土台とテストのファイルの名前の形、単体テストの組の名前は値なので書かない（R-102）。正本は vitest.config.ts と scripts/classify_checks.ts。
+x-uc: UC-044
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-26
+
+operations:
+  runPortableChecks:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 手元に依らない検査だけを回し、手元の入口が受け持つ物の名前を示す
+    request:
+      type: object
+      additionalProperties: false
+      properties: {}
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: {}
+        response: { exitCode: 0 }
+  classifyChecks:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: テストのファイルと受け持ちを、手元に依らない物と手元だけの物に分けて示す
+    request:
+      type: object
+      additionalProperties: false
+      properties: {}
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1] }
+    errors: []
+    examples:
+      ok:
+        request: {}
+        response: { exitCode: 0 }
