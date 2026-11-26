@@ -34,6 +34,7 @@ import {
   readFileSync,
   realpathSync,
   renameSync,
+  rmSync,
   symlinkSync,
   writeFileSync,
 } from 'node:fs'
@@ -478,6 +479,25 @@ export function makeShadow(name: string, opts: ShadowOptions): Shadow {
   const tmp = join(dir, 'tmp')
   mkdirSync(tmp)
   return { dir, root, bin, log, guard, tmp }
+}
+
+/** 影の根から固定した版の配備の道具（node_modules/wrangler と node_modules/.bin/wrangler・wrangler2）を除き、別の版の道具だけがある状態にする。
+ *  PATH の wrangler と npx wrangler の先は別の版の偽物のまま。npx は呼ばれたこと（tool 'npx'）を記録してから、もとの偽の npx に渡す。 */
+export function withoutPinnedTool(shadow: Shadow): void {
+  rmSync(join(shadow.root, 'node_modules', 'wrangler'), { recursive: true, force: true })
+  for (const name of ['wrangler', 'wrangler2']) rmSync(join(shadow.root, 'node_modules', '.bin', name), { force: true })
+  const npx = join(shadow.bin, 'npx')
+  const inner = join(shadow.dir, 'npx-uc032')
+  renameSync(npx, inner)
+  writeExecutable(
+    npx,
+    `#!/usr/bin/env bash
+args=""
+for a in "$@"; do args="$args,\\"$a\\""; done
+printf '{"tool":"npx","argv":[%s]}\\n' "\${args#,}" >> "$STUB_LOG"
+exec "${inner}" "$@"
+`,
+  )
 }
 
 /** 1 回の呼び出しの外の世界の決め方。 */

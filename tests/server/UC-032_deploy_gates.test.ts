@@ -19,6 +19,7 @@ import {
   runProcedure,
   tail,
   toolRuns,
+  withoutPinnedTool,
 } from './UC-032_fixture'
 
 /**
@@ -29,6 +30,7 @@ import {
  * 土台は `UC-032_fixture.ts`。門と描画の検査は、決めた終了の状態で返す包み（正本の形はそれぞれの契約）。
  * 本番の保存先は偽の SQLite で、学ぶ順を持つ論点は `topics.sort_order` が入った行、回は `topics.round`。
  * 学びは登録簿にある資格対策の学び ip と、ロードマップ型の学び eng、登録簿に無い zzz。
+ * 固定した版の配備の道具が無い入力は、影の根から固定した版を除いて別の版の偽物だけを残し、npx の呼び出しも記録する（withoutPinnedTool）。
  */
 
 const QUALIFICATION = 'ip'
@@ -50,7 +52,7 @@ const shows = (out: string, n: number) => new RegExp(`(?<![\\d.:/-])${n}(?![\\d.
 
 const GATES: Tool[] = ['check_source', 'check_roadmap_registry', 'check_docs', 'check_render']
 
-type Input = { name: string; learning: string; world?: World; remote?: StorageSpec }
+type Input = { name: string; learning: string; world?: World; remote?: StorageSpec; pinned?: false }
 
 const inputs: Input[] = [
   { name: 'unknown', learning: UNKNOWN },
@@ -67,6 +69,10 @@ const inputs: Input[] = [
   { name: 'severalAccounts', learning: QUALIFICATION, world: { whoami: 'several' } },
   // ログイン中の並びは決めたアカウント（whoami の既定）のまま、向け先のアカウントの環境変数だけを違う値にする
   { name: 'envAccountDiffers', learning: QUALIFICATION, world: { accountEnv: OTHER_ACCOUNT } },
+  // 環境変数を与えず、固定した版の道具を除く（ログイン中の並びは決めたアカウントのまま）
+  { name: 'pinnedToolMissing', learning: QUALIFICATION, pinned: false },
+  // 向け先のアカウントの環境変数を違う値にし、固定した版の道具を除く
+  { name: 'envAccountDiffersWithoutPinnedTool', learning: QUALIFICATION, world: { accountEnv: OTHER_ACCOUNT }, pinned: false },
 ]
 
 const runs: Record<string, Run> = {}
@@ -81,6 +87,7 @@ beforeAll(async () => {
     inputs.map((input) => async () => {
       const opts: ShadowOptions = { copy: ['scripts', 'src', 'public', 'portal'], remote: input.remote }
       const shadow = makeShadow(`deploy-${input.name}`, opts)
+      if (input.pinned === false) withoutPinnedTool(shadow)
       // 向け先のアカウントの環境変数（CLOUDFLARE_ACCOUNT_ID）は、与える入力のほかは子に渡さない
       runs[input.name] = await runProcedure(shadow, 'deploy-pages.sh', [input.learning], { accountEnv: null, ...input.world })
     }),
@@ -93,13 +100,23 @@ afterAll(async () => {
 }, 120_000)
 
 const isWrangler = (e: LogEntry) => e.tool === 'pinned' || e.tool === 'unpinned'
-/** アカウントを照らす問い合わせ（wrangler whoami）か版の問い合わせか。 */
-const isCheckOrVersion = (e: LogEntry) => isWrangler(e) && ['whoami', '--version', '-v', 'version'].includes(argsOf(e)[0])
-const whoamiAt = (r: Run) => r.log.findIndex((e) => isWrangler(e) && argsOf(e)[0] === 'whoami')
+/** 照らす問い合わせ（固定した版の wrangler whoami。REQ-351）。 */
+const isCheck = (e: LogEntry) => e.tool === 'pinned' && argsOf(e)[0] === 'whoami'
+const checkAt = (r: Run) => r.log.findIndex(isCheck)
+/** 照らす問い合わせのほかに呼んだ物（配備の道具のどの版も・版の問い合わせも・npx も・門も・組み立ても・配信も）。 */
+const actions = (r: Run) => r.log.filter((e) => !isCheck(e))
+const describeActions = (r: Run) => actions(r).map((e) => `${e.tool} ${argsOf(e).slice(0, 3).join(' ')}`).join('\n')
 
 const expectNotDelivered = (r: Run, label: string) => {
   expect(deployRuns(r), `${label}: 配信している:\n${tail(r)}`).toEqual([])
   expect(r.code, `${label}: 配信せずに成功で終わった:\n${tail(r)}`).not.toBe(0)
+}
+
+/** 照らす問い合わせ（checks 回。0 か 1）のほかは何もせず、配信しないまま失敗で終えた。 */
+const refusedForAccount = (r: Run, label: string, checks: 0 | 1) => {
+  expectNotDelivered(r, label)
+  expect(r.log.filter(isCheck).length, `${label}: 照らす問い合わせの回数が違う:\n${tail(r)}`).toBe(checks)
+  expect(actions(r).length, `${label}: 照らすほかに何かをした:\n${describeActions(r)}`).toBe(0)
 }
 
 describe('UC-032 配備と投入の前に門を回し、通らない物を本番に出さない（学び側の配備の手続き）', () => {
@@ -114,38 +131,50 @@ describe('UC-032 配備と投入の前に門を回し、通らない物を本番
     })
   })
 
-  describe('REQ-559 ログイン中のアカウントか向け先のアカウントの環境変数が決めた配備のアカウントと違うか、確かめられなければ、配信しない', () => {
+  describe('REQ-559 向け先かログイン中のアカウントが決めたアカウントと違うか、固定した版の道具が無いか確かめられなければ、照らすほかは何もせず配信しない', () => {
     // @covers REQ-559#other-account
-    it('配備先に決めたアカウントと違うアカウントでログインしていると、両方のアカウントを示し、配信しないまま失敗で終わる', () => {
+    it('決めたアカウントと違うアカウントだけでログインしていると、両方のアカウントを示し、照らす 1 回のほかは何もせずに、配信しないまま失敗で終わる', () => {
       const r = run('otherAccount')
-      expectNotDelivered(r, '違うアカウント')
-      expect(r.out, 'ログイン中のアカウントを示していない').toContain(OTHER_ACCOUNT)
-      expect(r.out, '決めたアカウントを示していない').toContain(ACCOUNT)
+      refusedForAccount(r, '違うアカウント', 1)
+      expect(r.out.includes(OTHER_ACCOUNT), 'ログイン中のアカウントを示していない').toBe(true)
+      expect(r.out.includes(ACCOUNT), '決めたアカウントを示していない').toBe(true)
     })
 
     // @covers REQ-559#account-unverifiable
-    it('ログイン中のアカウントを確かめられないと、決めたアカウントを示し、配信しないまま失敗で終わる', () => {
+    it('固定した版の道具は入っているが、ログイン中のアカウントを確かめられないと、決めたアカウントを示し、照らす 1 回のほかは配備の道具（版の問い合わせも）も門も呼ばずに、配信しないまま失敗で終わる', () => {
       const r = run('accountUnverifiable')
-      expectNotDelivered(r, '確かめられないアカウント')
-      expect(r.out, '決めたアカウントを示していない').toContain(ACCOUNT)
+      refusedForAccount(r, '確かめられないアカウント', 1)
+      expect(r.out.includes(ACCOUNT), '決めたアカウントを示していない').toBe(true)
+    })
+
+    // @covers REQ-559#pinned-tool-missing
+    it('環境変数を与えず、固定した版の道具が無く別の版の道具だけがあると、確かめられないとして決めたアカウントを示し、どの版の道具も npx も門も呼ばずに、配信しないまま失敗で終わる', () => {
+      const r = run('pinnedToolMissing')
+      refusedForAccount(r, '固定した版の道具が無い', 0)
+      expect(r.out.includes(ACCOUNT), '決めたアカウントを示していない').toBe(true)
     })
 
     // @covers REQ-559#several-accounts-listed
     it('ログイン中に 2 つのアカウントが見え、決めたアカウントが並びの 2 番目にあれば、合うとして、照らしたあとで配信の前の門（本番の保存先の構造の変更の確かめ）に進む', () => {
       const r = run('severalAccounts')
-      const at = whoamiAt(r)
+      const at = checkAt(r)
       expect(at, `アカウントを照らしていない:\n${tail(r)}`).toBeGreaterThanOrEqual(0)
       const gate = r.log.findIndex((e, i) => i > at && isWrangler(e) && argsOf(e)[0] === 'd1' && argsOf(e)[1] === 'migrations' && argsOf(e)[2] === 'list' && argsOf(e).includes('--remote'))
       expect(gate, `照らしたあとで配信の前の門に進んでいない:\n${tail(r)}`).toBeGreaterThan(at)
     })
 
     // @covers REQ-559#env-account-differs
-    it('向け先のアカウントの環境変数が決めたアカウントと違えば、ログイン中の並びに決めたアカウントがあっても、照らすほかは何もせず、門も組み立ても配信もしないまま、食い違ったアカウントと決めたアカウントを示して失敗で終わる', () => {
+    it('向け先のアカウントの環境変数が決めたアカウントと違えば、固定した版の道具が入っていてログイン中の並びに決めたアカウントがあっても、配備の道具を 1 回も呼ばず（版の問い合わせも）、門も組み立ても配信もしないまま、向け先と決めたアカウントを示して失敗で終わる', () => {
       const r = run('envAccountDiffers')
-      expectNotDelivered(r, '向け先のアカウントの環境変数が違う')
-      for (const g of GATES) expect(toolRuns(r, g), `${g} を回している`).toEqual([])
-      const others = r.log.filter((e) => !isCheckOrVersion(e)).map((e) => `${e.tool} ${argsOf(e).slice(0, 2).join(' ')}`)
-      expect(others, '照らすほかに何かをした').toEqual([])
+      refusedForAccount(r, '向け先のアカウントの環境変数が違う', 0)
+      expect(r.out.includes(OTHER_ACCOUNT), '食い違ったアカウント（向け先のアカウント）を示していない').toBe(true)
+      expect(r.out.includes(ACCOUNT), '決めたアカウントを示していない').toBe(true)
+    })
+
+    // @covers REQ-559#env-account-differs-without-pinned-tool
+    it('向け先のアカウントの環境変数が決めたアカウントと違い、固定した版の道具が無く別の版の道具だけがあると、固定した版が無いことより先に向け先と決めたアカウントを示し、どの版の道具も npx も門も呼ばずに、配信しないまま失敗で終わる', () => {
+      const r = run('envAccountDiffersWithoutPinnedTool')
+      refusedForAccount(r, '向け先が違い固定した版の道具が無い', 0)
       expect(r.out.includes(OTHER_ACCOUNT), '食い違ったアカウント（向け先のアカウント）を示していない').toBe(true)
       expect(r.out.includes(ACCOUNT), '決めたアカウントを示していない').toBe(true)
     })

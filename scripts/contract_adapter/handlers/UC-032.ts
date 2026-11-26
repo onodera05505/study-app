@@ -16,11 +16,21 @@
  * UC-032 のテストの影の根と偽の配備の道具（tests/server/UC-032_fixture.ts の makeShadow・runProcedure）で回す。配信と保存先は偽物が受け、
  * 外への通信は塞ぐ（REQ-569）。手続きの中で呼ぶ、別の契約が形を持つ門の道具は、通る包みにする（門の判定は各門の契約の実例が見る）。前提:
  * - deployPages の ok: 本番と手元の保存先はどちらも構造の変更がすべて当たった状態で、ログイン中のアカウントは配備を持つアカウント
+ * - deployPages の pinnedToolMissing: 向け先のアカウントの環境変数を与えず、固定した版の配備の道具を影の根から除く（別の版の偽物だけが残る）
+ * - deployPages の envAccountDiffersWithoutPinnedTool: 向け先のアカウントの環境変数に配備を持つアカウントと違う値を与え、固定した版の配備の道具を除く
  * - checkD1Rounds の ok: 手元の保存先の、学ぶ順を持つ論点のどれもが回を持つ
  */
 
 import { copyFile, rm } from 'node:fs/promises'
-import { makeShadow, runProcedure, type Shadow, type StorageSpec, type World } from '../../../tests/server/UC-032_fixture'
+import {
+  makeShadow,
+  OTHER_ACCOUNT,
+  runProcedure,
+  withoutPinnedTool,
+  type Shadow,
+  type StorageSpec,
+  type World,
+} from '../../../tests/server/UC-032_fixture'
 import { defineHandler, type Answer, type Operation } from '../kit/protocol'
 import { answerOf, argsOf, inShadow, premise, unknownCase } from '../kit/td'
 import { toolErrorCode } from '../kit/tool'
@@ -85,9 +95,22 @@ export async function runDeployProcedure(
   }
 }
 
+const DEPLOY_PAGES_PREMISE: Record<string, { world: World; pinned: boolean }> = {
+  ok: { world: {}, pinned: true },
+  pinnedToolMissing: { world: { accountEnv: null }, pinned: false },
+  envAccountDiffersWithoutPinnedTool: { world: { accountEnv: OTHER_ACCOUNT }, pinned: false },
+}
+
 const deployPages: Operation = (line) => {
-  if (line.case !== 'ok') unknownCase(line)
-  return runDeployProcedure('deploy-pages.sh', argsOf(line.request, { positional: ['learning'] }))
+  const premise = DEPLOY_PAGES_PREMISE[line.case]
+  if (!premise) unknownCase(line)
+  return runDeployProcedure(
+    'deploy-pages.sh',
+    argsOf(line.request, { positional: ['learning'] }),
+    {},
+    premise.world,
+    premise.pinned ? undefined : withoutPinnedTool,
+  )
 }
 
 const checkD1Rounds: Operation = (line) => {
