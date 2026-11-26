@@ -30,15 +30,17 @@ EXAM="${1:-ip}"
 PROJECT=$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['$EXAM']['project'])")
 URL=$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['$EXAM'].get('url','https://${PROJECT}.pages.dev'))")
 
-# 配備の道具はプロジェクトが固定した版だけを使う（無ければ別の版に倒さず止まる）
-# @implements REQ-351, REQ-352
+# 配備の道具はプロジェクトが固定した版だけを使う（無ければ別の版に倒さず止まる）。
+# 入っているかは道具を呼ばずに確かめる（ここでは止まらない）
 source scripts/lib/pinned_wrangler.sh
 
 # アカウントの取り違えを止める門（同じ Mac で別アカウントのログインに差し替わることがある）。
-# 決めたアカウントと違うか、ログイン中のアカウントを確かめられなければ、両方を示して配信しないまま失敗で終える。
-# 照らし方はほかの本番に触る道具と同じ部品（並びのどこかにあれば合う・環境変数の向け先が違えば止める）。照らすのは固定した版の道具
-# @implements REQ-559
+# 環境変数の向け先 → 固定した版の道具の有無 → ログイン中のアカウントの順に決めたアカウントと照らし、違うか確かめられなければ、
+# 食い違ったアカウントか確かめられないことを決めたアカウントとともに示して、その学びを配信しないまま失敗で終える。
+# 照らし方はほかの本番に触る道具と同じ部品（並びのどこかにあれば合う・環境変数の向け先が違えば止める）。
+# 照らす問い合わせは固定した版の道具で 1 回だけ行い、固定した版が無ければどの版の道具も呼ばない
 ACCOUNT_WRANGLER="$WRANGLER"
+ACCOUNT_WRANGLER_MISSING="$PINNED_WRANGLER_MISSING"
 source scripts/lib/check_account.sh
 
 # macOS 標準の bash 3.2 は $VAR 直後の全角文字を変数名に巻き込むので ${VAR} で区切る

@@ -10,9 +10,15 @@
 # ログイン中の並びを問い合わせる前に理由を 1 行示して 1 で終える（無いか同じなら、並びだけで照らす）。
 # source した側では exit がその道具ごと終えるので、照らす問い合わせのほかは何も起きない。
 # 固定した版の配備の道具で照らす道具は、source の前に ACCOUNT_WRANGLER にその道具のパスを置く（無ければ npx wrangler）。
+# その道具が入っていないと分かっていれば、ACCOUNT_WRANGLER_MISSING に理由を置く。向け先を照らしたあと、どの版の道具も呼ばずに、
+# ログイン中のアカウントを確かめられないとして、理由と決めたアカウントを 1 行示して 1 で終える（置かなければ並びで照らす）。
 ACCOUNT_WANT="$(python3 "$(dirname "${BASH_SOURCE[0]}")/../targets.py" account)"
 if [ -n "${CLOUDFLARE_ACCOUNT_ID:-}" ] && [ "$CLOUDFLARE_ACCOUNT_ID" != "$ACCOUNT_WANT" ]; then
   echo "環境変数 CLOUDFLARE_ACCOUNT_ID の向け先のアカウント（${CLOUDFLARE_ACCOUNT_ID}）が想定（${ACCOUNT_WANT}）と違う。環境変数を外すか、想定のアカウントにしてから回す"
+  exit 1
+fi
+if [ -n "${ACCOUNT_WRANGLER_MISSING:-}" ]; then
+  echo "ログイン中のアカウントを確かめられない（${ACCOUNT_WRANGLER_MISSING}）。想定のアカウントは ${ACCOUNT_WANT}"
   exit 1
 fi
 # 道具の出力は一度変数に受けてから読む（pipefail の下で読み手が先に抜けると、書き手が SIGPIPE で落ちる）
