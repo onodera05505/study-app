@@ -14,10 +14,12 @@
  *    差し替える先は `harness.config.json` の `commands` が宣言するコマンドが指す物（typecheck の npm スクリプト・lint の 2 つの道具・
  *    list_entries の道具）と、原本 harness の入口 `.harness/bin/harness.mjs`
  *  - テストは回ると `.probe/<名前>` に印を書く（手元の物の土台は読み込まれると `.probe/local-fixture` に書く）
+ *  追跡を確かめられない置き場（unverifiable）は、作った影の根の `.git` を消すか（`.git` の無い写し）、`.git` を無い先を指す
+ *  `gitdir:` の 1 行のファイルに替えて（git が索引の読み出しを断る）作る（UC-037_tracked_fixture.ts と同じ 2 つの形）。
  *  依存（node_modules）はリポジトリの物へのリンク。この土台はリポジトリが追跡しない置き場を名指すので、手元の物の土台（REQ-679）。 */
 
 import { spawnSync } from 'node:child_process'
-import { constants, copyFileSync, existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, readlinkSync, symlinkSync, writeFileSync } from 'node:fs'
+import { constants, copyFileSync, existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, readlinkSync, rmSync, symlinkSync, writeFileSync } from 'node:fs'
 import { rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
@@ -114,6 +116,8 @@ export type Shadow44 = {
   path: (rel: string) => string
   /** ファイルを置いて、git の索引に足す。 */
   add: (rel: string, content: string) => void
+  /** 影の根を、追跡を確かめられない置き場にする（no-git: `.git` の無い写し／refused: `.git` が読めない先を指す）。 */
+  unverifiable: (kind: 'no-git' | 'refused') => void
 }
 
 export type ShadowOptions = {
@@ -187,6 +191,10 @@ export function makeShadow(opts: ShadowOptions = {}): Shadow44 {
     add: (rel, content) => {
       put(rel, content)
       git(root, ['add', '-f', '--', rel])
+    },
+    unverifiable: (kind) => {
+      rmSync(path('.git'), { recursive: true, force: true })
+      if (kind === 'refused') writeFileSync(path('.git'), `gitdir: ${join(base, 'no-such-git-dir')}\n`)
     },
   }
 }
