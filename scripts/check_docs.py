@@ -47,7 +47,8 @@ from pathlib import Path
 CENTRAL_RETURN_LINE = Path(os.path.expanduser("~/.claude/brain/check_return_line.py"))
 
 INVARIANTS_DOC = "docs/不変条件と門.md"
-PATH_IN_BACKTICKS = re.compile(r"`([^`\s/][^`\s]*/[^`\s]*)`")
+# 根からの相対の書き方の物だけを読む。`/` で始まる物（画面や API の経路）・`~/` で始まる物（家の置き場）・`://` を含む物（URL）は読まない
+PATH_IN_BACKTICKS = re.compile(r"`(?!~/)(?![^`\s]*://)([^`\s/][^`\s]*/[^`\s]*)`")
 
 
 def check_index(root: Path, index_file: str, target_dir: str, errors: list[str]) -> int:

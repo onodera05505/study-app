@@ -4,7 +4,8 @@
 #   bash scripts/run_portable_checks.sh
 #
 # 回す順:
-#   1. 検査の振り分け（scripts/classify_checks.ts）。名前と中身の食い違いがあれば、それを挙げて、ほかの検査もテストも回さずに 1 で終える
+#   1. 検査の振り分け（scripts/classify_checks.ts）。振り分けが落ちれば（名前と中身の食い違いがあるか、リポジトリが追跡する物を確かめられない）、
+#      振り分けの道具が示した理由をそのまま示して、ほかの検査もテストも回さずに 1 で終える
 #   2. 仕様と紐づきの検査（原本 harness の verify --level lint。設定の形・lint spec・lint refs・lint entry）
 #   3. 入口の一覧（harness.config.json の commands.list_entries）と、その突き合わせ（原本 harness の lint entries --from）
 #   4. 手元に依らない UC の契約の実例（原本 harness の run cases に、その UC を --uc で 1 つずつ渡す。UC を絞らない確かめは起こさない）
@@ -31,7 +32,7 @@ trap 'rm -rf "$TMP"' EXIT
 echo "== 検査の振り分け（scripts/classify_checks.ts）"
 if ! npx tsx scripts/classify_checks.ts >"$TMP/classified"; then
   cat "$TMP/classified"
-  echo "✘ 名前と中身の食い違いがあるので、ほかの検査もテストも回さずに終える" >&2
+  echo "✘ 検査の振り分けが通らない（理由は上に示す）ので、ほかの検査もテストも回さずに終える" >&2
   exit 1
 fi
 cat "$TMP/classified"
