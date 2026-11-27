@@ -5,23 +5,114 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### しくみ",
-      "caption": "複数の企業をまたぐ調達〜販売の連鎖全体を統合するのが SCM、その中の1社に閉じた基幹業務の統合が ERP。",
+      "after": "### 連鎖全体で情報を共有するしくみ",
+      "caption": "モノは企業をまたいで川下へ流れ、販売実績と在庫の情報は SCM で共有されて川上の調達まで返ります。",
       "nodes": [
-        {"id": "scm", "label": "SCM\n調達から販売までを\n企業をまたいで統合", "row": 0, "col": 0, "emphasis": true},
-        {"id": "buy", "label": "部品メーカー\n調達", "row": 1, "col": 0},
-        {"id": "mfg", "label": "自社工場\n生産", "row": 1, "col": 1},
-        {"id": "log", "label": "卸・物流", "row": 1, "col": 2},
-        {"id": "sell", "label": "小売\n販売", "row": 1, "col": 3},
-        {"id": "erp", "label": "ERP\n1社の中の基幹業務\n（生産・在庫・会計・人事）", "row": 2, "col": 1}
+        {
+          "id": "buy",
+          "label": "部品メーカー\n調達",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "mfg",
+          "label": "自社工場\n生産",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "log",
+          "label": "卸・物流\n届ける",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "sell",
+          "label": "小売\n販売",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "scm",
+          "label": "SCM\n連鎖全体の情報を\n企業をまたいで共有",
+          "row": 1,
+          "col": 2,
+          "emphasis": true,
+          "shape": "cloud"
+        }
       ],
       "edges": [
-        {"from": "buy", "to": "mfg"},
-        {"from": "mfg", "to": "log"},
-        {"from": "log", "to": "sell"},
-        {"from": "scm", "to": "buy", "style": "dashed", "arrow": "none"},
-        {"from": "scm", "to": "sell", "style": "dashed", "arrow": "none"},
-        {"from": "erp", "to": "mfg", "style": "dashed", "arrow": "none"}
+        {
+          "from": "buy",
+          "to": "mfg",
+          "label": "部品"
+        },
+        {
+          "from": "mfg",
+          "to": "log",
+          "label": "製品"
+        },
+        {
+          "from": "log",
+          "to": "sell",
+          "label": "製品"
+        },
+        {
+          "from": "sell",
+          "to": "scm",
+          "label": "販売実績・在庫"
+        },
+        {
+          "from": "scm",
+          "to": "buy",
+          "label": "需要に合わせた調達量",
+          "style": "dashed"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### ERP との違い",
+      "caption": "SCM と ERP を同じ 3 つの観点で並べます。強調した範囲の行を左右で比べると、2 つの違いが読めます。",
+      "x": {
+        "label": "手法",
+        "values": [
+          "SCM",
+          "ERP"
+        ]
+      },
+      "y": {
+        "label": "観点",
+        "values": [
+          "範囲",
+          "統合する情報",
+          "狙い"
+        ]
+      },
+      "cells": [
+        [
+          "企業の壁を越える\n供給の連鎖の全体",
+          "自社の中で完結する\n基幹業務"
+        ],
+        [
+          "需要・在庫・生産の\n情報を企業間で共有",
+          "ヒト・モノ・カネ・情報\n自社の経営資源"
+        ],
+        [
+          "連鎖全体の最適化\n余分な在庫や欠品を防ぐ",
+          "社内の資源の\n使い方を最適にする"
+        ]
+      ],
+      "emphasis": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
       ]
     }
   ]

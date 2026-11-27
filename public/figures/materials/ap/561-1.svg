@@ -1,36 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="236" viewBox="0 0 836.5 308" role="img">
-<title>SP が指すのは退避先メモリのアドレス。呼出しで 1 段積まれ、SP が指す位置が動く。</title>
-<rect x="0.5" y="0.5" width="835.5" height="307" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(20 20)">
-<polyline points="329.25,23 465.5,23" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="465.5,23 457.5,26.6 457.5,19.4" fill="#1f2937"/>
-<polyline points="103,217 222,217" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="222,217 214,220.6 214,213.4" fill="#1f2937"/>
-<polyline points="693.5,120 574.5,120" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="574.5,120 582.5,116.4 582.5,123.6" fill="#1f2937"/>
-<rect x="233.25" y="0" width="96" height="46" rx="23" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="281.25" y="27.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">呼出し前</text>
-<rect x="465.5" y="0" width="96" height="46" rx="23" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="513.5" y="27.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">呼出し後</text>
-<rect x="233.25" y="97" width="96" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="281.25" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">空き</text>
-<rect x="222" y="194" width="118.5" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="281.25" y="221.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">main のデータ</text>
-<rect x="452.5" y="92" width="122" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="513.5" y="114.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">戻り番地</text>
-<text x="513.5" y="134.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">レジスタの内容</text>
-<rect x="454.25" y="194" width="118.5" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="513.5" y="221.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">main のデータ</text>
-<rect x="7" y="194" width="96" height="46" rx="23" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="55" y="221.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">SP</text>
-<rect x="693.5" y="97" width="96" height="46" rx="23" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="741.5" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">SP</text>
-<rect x="357.38" y="6" width="80" height="16" rx="3" fill="#ffffff"/>
-<text x="397.38" y="19.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">呼出しで積む</text>
-<rect x="110.5" y="200" width="104" height="16" rx="3" fill="#ffffff"/>
-<text x="162.5" y="213.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">指すのはアドレス</text>
-<rect x="605.4" y="103" width="57.2" height="16" rx="3" fill="#ffffff"/>
-<text x="634" y="116.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1 段動く</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="320" viewBox="0 0 640 320">
+<rect x="0.5" y="0.5" width="639" height="319" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(108 20)">
+<polyline points="288,38 164,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polygon points="164,38 172,34.4 172,41.6" fill="#1f2937"/>
+<polyline points="82,122 82,66" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="82,66 85.6,74 78.4,74" fill="#1f2937"/>
+<polyline points="82,224 82,178" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="82,178 85.6,186 78.4,186" fill="#1f2937"/>
+<rect x="0" y="10" width="164" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="82" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">戻り番地 B</text>
+<text x="82" y="52.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">内側の呼出しで積んだ</text>
+<rect x="288" y="0" width="136" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="356" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">スタックポインタ</text>
+<text x="356" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">CPU のレジスタ</text>
+<text x="356" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">中身はアドレス</text>
+<rect x="0" y="122" width="164" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="82" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">戻り番地 A</text>
+<text x="82" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">外側の呼出しで積んだ</text>
+<rect x="14" y="224" width="136" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="82" y="246.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">main のデータ</text>
+<text x="82" y="266.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">呼出し前からある</text>
+<rect x="168" y="21" width="116" height="16" rx="3" fill="#ffffff"/>
+<text x="226" y="34.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">一番上の位置を指す</text>
+<rect x="36" y="85" width="92" height="16" rx="3" fill="#ffffff"/>
+<text x="82" y="98.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">後に積むほど上</text>
+<rect x="42" y="192" width="80" height="16" rx="3" fill="#ffffff"/>
+<text x="82" y="205.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">その上に積む</text>
 </g>
-<text x="418.25" y="288" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">SP が指すのは退避先メモリのアドレス。呼出しで 1 段積まれ、SP が指す位置が動く。</text>
 </svg>

@@ -1,0 +1,80 @@
+{
+  "topic_id": 175,
+  "term": "パッケージ管理",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "設定ファイルには頼んだ名前と幅だけ、ロックファイルには入った全部の実際のバージョンを書きます。ロックファイルを共有すると、別の PC でも同じ組み合わせになります。",
+      "nodes": [
+        {
+          "id": "cfg",
+          "label": "設定ファイル\n頼んだ 3 つの名前と\n「この版以上」の幅",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "tool",
+          "label": "道具の install\n使う部品の先まで\nたどって取る",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "repo",
+          "label": "公開の置き場\nパッケージを配る",
+          "row": 0,
+          "col": 2,
+          "shape": "cloud"
+        },
+        {
+          "id": "all",
+          "label": "入った部品 40 個\n頼んだ 3 ＋\nそれが使う 37",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "lock",
+          "label": "ロックファイル\n40 個全部の\n実際のバージョン",
+          "row": 1,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "other",
+          "label": "別の PC\nロックどおりに入れて\n同じ組み合わせ",
+          "row": 2,
+          "col": 0
+        }
+      ],
+      "edges": [
+        {
+          "from": "cfg",
+          "to": "tool",
+          "label": "名前と幅を読む"
+        },
+        {
+          "from": "tool",
+          "to": "repo",
+          "label": "幅の中の版を取る",
+          "arrow": "both"
+        },
+        {
+          "from": "tool",
+          "to": "all",
+          "label": "先の先まで入れる"
+        },
+        {
+          "from": "all",
+          "to": "lock",
+          "label": "実際の版を書き留める"
+        },
+        {
+          "from": "lock",
+          "to": "other",
+          "label": "共有して同じ版を入れる"
+        }
+      ]
+    }
+  ]
+}

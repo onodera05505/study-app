@@ -1,0 +1,25 @@
+{
+  "topic_id": 40,
+  "term": "ビルドとライブラリ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "コンパイラは呼び先を名前だけ残し、リンカがライブラリの一覧で位置を引いて空欄に 101 番地を書きます。一覧に無ければ止まります。",
+      "nodes": [
+        {"id": "own", "label": "自分の機械語（1〜100 番地）\n日付へ行く（行き先: 空欄）", "row": 1, "col": 0},
+        {"id": "lib", "label": "ライブラリ（101 番地から）\n一覧: 日付は 0 番目", "row": 0, "col": 1},
+        {"id": "ln", "label": "リンカ\n一覧で『日付』を引き\n101＋0＝101", "row": 1, "col": 1, "emphasis": true},
+        {"id": "exe", "label": "実行ファイル\n日付へ行く（101 番地）", "row": 1, "col": 2},
+        {"id": "err", "label": "部品が見つからない\nと止まる", "row": 2, "col": 1, "shape": "round"}
+      ],
+      "edges": [
+        {"from": "own", "to": "ln", "label": "名前だけ残す"},
+        {"from": "lib", "to": "ln", "label": "名前と位置の一覧"},
+        {"from": "ln", "to": "exe", "label": "空欄を埋める"},
+        {"from": "ln", "to": "err", "label": "一覧に無い", "style": "dashed"}
+      ]
+    }
+  ]
+}

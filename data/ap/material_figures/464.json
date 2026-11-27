@@ -1,0 +1,77 @@
+{
+  "topic_id": 464,
+  "term": "不正アクセス行為を助長する行為",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "他人の ID とパスワードを渡したときは、左から 2 つの問いを順にたどります。どちらも「いいえ」なら助長行為で、相手が実際に使ったかは問いません。",
+      "nodes": [
+        {
+          "id": "give",
+          "label": "ID とパスワードを渡す\n他人の分を第三者へ",
+          "row": 0,
+          "col": 0,
+          "icon": "key"
+        },
+        {
+          "id": "q1",
+          "label": "相手は ID の本人か\nその管理者か",
+          "row": 0,
+          "col": 1,
+          "shape": "round"
+        },
+        {
+          "id": "q2",
+          "label": "正当な理由があるか\n業務上の必要など",
+          "row": 0,
+          "col": 2,
+          "shape": "round"
+        },
+        {
+          "id": "ng",
+          "label": "助長行為に当たる\n相手が使ったかは問わない",
+          "row": 0,
+          "col": 3,
+          "icon": "warning",
+          "emphasis": true
+        },
+        {
+          "id": "ok",
+          "label": "助長行為に当たらない\n本人へ返す・引継ぎで渡す",
+          "row": 1,
+          "col": 1,
+          "icon": "check"
+        }
+      ],
+      "edges": [
+        {
+          "from": "give",
+          "to": "q1",
+          "label": "渡した相手を見る"
+        },
+        {
+          "from": "q1",
+          "to": "ok",
+          "label": "はい"
+        },
+        {
+          "from": "q1",
+          "to": "q2",
+          "label": "いいえ"
+        },
+        {
+          "from": "q2",
+          "to": "ok",
+          "label": "はい"
+        },
+        {
+          "from": "q2",
+          "to": "ng",
+          "label": "いいえ"
+        }
+      ]
+    }
+  ]
+}

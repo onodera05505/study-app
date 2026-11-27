@@ -1,0 +1,35 @@
+#!/bin/sh
+# commit-msg — コミットメッセージの1行目が Conventional Commits の形かを見る（依存なし）。
+#
+# 有効化（クローンごとに一度）:  bash scripts/install_githooks.sh
+# 形式:  <type>(<scope>)?: <subject>      例: feat(materials): 教材に図を差し込む
+# type:  feat fix docs style refactor perf test chore ci build revert
+#
+# 履歴を機械で読める形に揃えるため。Merge / Revert / fixup! / squash! は素通し。
+set -eu
+
+msg_file="$1"
+subject="$(grep -v '^#' "$msg_file" | sed '/^[[:space:]]*$/d' | head -n1 || true)"
+
+case "$subject" in
+  "Merge "*|'Revert "'*|"fixup!"*|"squash!"*) exit 0 ;;
+esac
+
+types='feat|fix|docs|style|refactor|perf|test|chore|ci|build|revert'
+
+if ! printf '%s' "$subject" | grep -Eq "^(${types})(\([a-z0-9-]+\))?(!)?: .+"; then
+  {
+    echo "✘ コミットメッセージが規約に合っていません。"
+    echo "  形式: <type>(<scope>): <subject>"
+    echo "  type: ${types}"
+    echo "  例:   fix(seed): 出典の試験名を data の試験に合わせる"
+    echo "  実際: ${subject}"
+  } >&2
+  exit 1
+fi
+
+len="$(printf '%s' "$subject" | wc -m | tr -d ' ')"
+if [ "$len" -gt 72 ]; then
+  echo "⚠ 1行目が72文字を超えています（${len}）。簡潔に。" >&2
+fi
+exit 0

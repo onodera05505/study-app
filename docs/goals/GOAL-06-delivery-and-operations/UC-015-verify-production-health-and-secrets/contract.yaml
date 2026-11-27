@@ -1,0 +1,236 @@
+# UC-015 本番が生きていることと秘密がそろっていることを機械で確かめる — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-213〜223・350・523）
+# 読み方の決まりは docs/adr/ADR-0001（決め 6: 外から叩く死活確認と入口の画面、および秘密の名前の一覧）
+# 共有語彙（authSchemes・errorCodes・共有の形）は ../../../_shared/components.yaml
+# 検査が叩く経路のうち、認証の形（/api/auth/config）は UC-013 の getAuthConfig が形の正本。ここには再掲しない（R-101）
+# 学び側のパスワードでのログインと登録の経路は学び側が受け持たない（UC-013 の REQ-204）ので、どの契約にもその operation は無い。
+#   検査がその 2 つの経路を叩く形（REQ-350）はこの契約の probeRetiredPasswordRoute が正本
+# REQ-223（認証の要る応答を認証なしで叩くと断られる）の形は、各 UC の auth: bearer / session の operation の
+#   UNAUTHENTICATED が持つ。ここには再掲しない（R-101）
+# 配備ごとの URL・Pages プロジェクト名・必要な秘密の名前・配備先のアカウントは値なので形（request・response の制約）に書かない（R-102）。
+#   値の正本は scripts/pages_projects.json と scripts/check_sso_prod.sh。例に現れるヘッダと秘密の名前は、その正本の値の写し
+x-uc: UC-015
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-19
+
+schemas:
+  CheckProblems:
+    description: 本番の検査が契約の errors に当たる問題を 1 つ以上挙げるとき、標準出力の最後の行に出す機械向けの 1 行（REQ-578）。error.code は problems のうち code を持つ最初の項目の名前。各操作の失敗例の名前は、その操作の名前と request の deployment（と path・route）が合う problems の項目の code
+    allOf:
+      - { $ref: "../../../_shared/components.yaml#/schemas/ToolError" }
+      - properties:
+          error:
+            required: [problems]
+            properties:
+              code: { type: string, enum: [UPSTREAM_UNAVAILABLE, FORBIDDEN] }
+              problems:
+                type: array
+                minItems: 1
+                description: 人が読む一覧に挙げた問題のすべて。応答の値で見つけた問題（足りない秘密の名前・欠けたヘッダ・閉じていない経路・SSO の設定）は code を持たない
+                items:
+                  type: object
+                  required: [deployment, operation]
+                  properties:
+                    deployment: { type: string, minLength: 1, description: 配備の key（request の deployment と同じ値） }
+                    operation: { type: string, minLength: 1, description: その問題を見た操作の名前（借りる UC-013 の getAuthConfig を含む） }
+                    path: { type: string, description: openDeploymentEntry の問題だけが持つ。request の path と同じ値 }
+                    route: { type: string, description: probeRetiredPasswordRoute の問題だけが持つ。request の route と同じ値 }
+                    code: { type: string, enum: [UPSTREAM_UNAVAILABLE, FORBIDDEN], description: 契約の errors に当たる問題だけが持つ断りの種類の名前 }
+
+operations:
+  checkDeploymentHealth:
+    transport: http
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 配備の死活確認を認証なしで外から叩き、生きている印を受け取る
+    wire: { method: GET, path: /api/health, success: 200 }
+    request:
+      type: object
+      required: [deployment]
+      properties:
+        deployment:
+          type: string
+          minLength: 1
+          description: 叩く配備の key（まなびばと各学び）。key と URL の値の正本は scripts/pages_projects.json
+    response: { $ref: "../../../_shared/components.yaml#/schemas/Ok" }
+    errors:
+      - code: UPSTREAM_UNAVAILABLE
+        when: 配備に届かない、または死活確認の本文が生きている印でない（検査は両者を区別しない）
+    examples:
+      ok: { request: { deployment: _portal }, response: { ok: true } }
+      okLearning: { request: { deployment: ip }, response: { ok: true } }
+      noAnswer: { request: { deployment: ip }, error: UPSTREAM_UNAVAILABLE }
+
+  readDeploymentHealthHeaders:
+    transport: http
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 配備の死活確認を認証なしで外から叩き、応答に載っていたヘッダの名前と値を受け取る
+    wire: { method: GET, path: /api/health, success: 200 }
+    request:
+      type: object
+      required: [deployment]
+      properties:
+        deployment:
+          type: string
+          minLength: 1
+          description: 叩く配備の key（まなびばと各学び）。key と URL の値の正本は scripts/pages_projects.json
+    response:
+      type: object
+      required: [headers]
+      properties:
+        headers:
+          type: object
+          additionalProperties: { type: string }
+          description: 応答に載っていたヘッダ。鍵はヘッダの名前を小文字にした物、値はその値。定められたヘッダの名前と値の正本は scripts/check_sso_prod.sh
+    errors:
+      - code: UPSTREAM_UNAVAILABLE
+        when: 配備に届かずヘッダが得られない
+    examples:
+      ok:
+        request: { deployment: _portal }
+        response: { headers: { content-security-policy: "default-src 'self'", strict-transport-security: "max-age=31536000; includeSubDomains", x-frame-options: DENY, x-content-type-options: nosniff, referrer-policy: no-referrer } }
+      headerMissing:
+        request: { deployment: ip }
+        response: { headers: { content-security-policy: "default-src 'self'", x-content-type-options: nosniff } }
+      noAnswer: { request: { deployment: ip }, error: UPSTREAM_UNAVAILABLE }
+
+  openDeploymentEntry:
+    transport: http
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 配備の入口の画面を成す経路を認証なしで外から開き、開けることを確かめる
+    wire: { method: GET, path: '/{path}', success: 200 }
+    request:
+      type: object
+      required: [deployment, path]
+      properties:
+        deployment:
+          type: string
+          minLength: 1
+          description: 開く配備の key。key と URL の値の正本は scripts/pages_projects.json
+        path:
+          type: string
+          enum: [/, /app.js, /style.css]
+          description: 入口の画面を成す公開の経路。まなびばは enum の全部、学びは / だけを開く（配備ごとの一覧は成功の例のとおり）
+    response:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: integer
+          const: 200
+          description: 観測するのは状態コードだけ。本文は静的ファイルで形を持たない
+    errors:
+      - code: UPSTREAM_UNAVAILABLE
+        when: その経路が 200 を返さない（届かないときも状態コードが得られないまま同じ扱い）
+    examples:
+      ok: { request: { deployment: _portal, path: / }, response: { status: 200 } }
+      okPortalScript: { request: { deployment: _portal, path: /app.js }, response: { status: 200 } }
+      okPortalStyle: { request: { deployment: _portal, path: /style.css }, response: { status: 200 } }
+      okLearning: { request: { deployment: ip, path: / }, response: { status: 200 } }
+      notOpenable: { request: { deployment: _portal, path: /app.js }, error: UPSTREAM_UNAVAILABLE }
+
+  probeRetiredPasswordRoute:
+    transport: http
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 学び側の配備のパスワードでのログインと登録の経路に、決められた形を満たさない空の本文を認証なしで送り、返った状態コードを受け取る
+    wire: { method: POST, path: '/api/auth/{route}', success: 404 }
+    request:
+      type: object
+      required: [deployment, route, body]
+      properties:
+        deployment:
+          type: string
+          minLength: 1
+          description: 叩く学びの配備の key（まなびばは叩かない）。key と URL の値の正本は scripts/pages_projects.json
+        route:
+          type: string
+          enum: [login, register]
+          description: 叩く経路の名前。どの学びでも両方を叩く
+        body:
+          type: object
+          maxProperties: 0
+          description: 送る本文。空のオブジェクトだけで、経路が開いていても決められた形を満たさないので状態は変わらない
+    response:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+          description: 返った状態コード。受け持たない経路の断りは 404 で、それ以外の値はその経路が開いている側
+    errors:
+      - code: UPSTREAM_UNAVAILABLE
+        when: 配備に届かず状態コードが得られない
+    examples:
+      ok: { request: { deployment: ip, route: register, body: {} }, response: { status: 404 } }
+      okLogin: { request: { deployment: ip, route: login, body: {} }, response: { status: 404 } }
+      registerOpen: { request: { deployment: ap, route: register, body: {} }, response: { status: 400 } }
+      noAnswer: { request: { deployment: ip, route: login, body: {} }, error: UPSTREAM_UNAVAILABLE }
+
+  listDeploymentSecretNames:
+    transport: sdk
+    direction: outbound
+    owned: false
+    source: Cloudflare wrangler CLI の pages secret list（配備の Pages プロジェクトを指して秘密の名前を取る。プロジェクト名の値の正本は scripts/pages_projects.json）
+    auth: cloudflareAccount
+    summary: 配備に設定されている秘密の名前の一覧を取る（名前だけ。値は読まない）
+    request:
+      type: object
+      required: [deployment]
+      properties:
+        deployment:
+          type: string
+          minLength: 1
+          description: 一覧を取る配備の key。key と Pages プロジェクト名の値の正本は scripts/pages_projects.json
+    response:
+      type: object
+      required: [names]
+      properties:
+        names:
+          type: array
+          items: { type: string, minLength: 1 }
+          description: その配備に設定されている秘密の名前。値は含まれない。必要な名前が欠けている配備ではその名前がこの一覧に無い
+    errors:
+      - code: FORBIDDEN
+        when: ログイン中の配備先のアカウントが 1 つ以上分かり、そのどれもがその配備を持つアカウントでない
+      - code: UPSTREAM_UNAVAILABLE
+        when: 一覧の取得が失敗する（配備先に届かない・プロジェクトが見つからない・ログインしていない・ログイン中のアカウントが分からない）
+    examples:
+      ok: { request: { deployment: ip }, response: { names: [SSO_SECRET, JWT_SECRET] } }
+      noSecretsConfigured: { request: { deployment: itc }, response: { names: [] } }
+      wrongAccount: { request: { deployment: ip }, error: FORBIDDEN }
+      listUnavailable: { request: { deployment: ip }, error: UPSTREAM_UNAVAILABLE }
+      notLoggedIn: { request: { deployment: ip }, error: UPSTREAM_UNAVAILABLE }
+
+  checkSsoProd:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 本番の検査を回し、まなびばと各学びの配備に上の外向きの操作を当てて、問題が無いか、挙げた問題を返す（入口は scripts/check_sso_prod.sh。引数は無い）
+    request:
+      type: object
+      additionalProperties: false
+      properties: {}
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1], description: プロセスの終了コード。1 は問題が 1 件以上（契約の errors に当たる問題があれば、最後の行の CheckProblems の名前で断る） }
+    errors:
+      - code: UPSTREAM_UNAVAILABLE
+        when: 挙げた問題のうち名前を持つ最初の物が、配備に届かない・一覧が取れない問題
+      - code: FORBIDDEN
+        when: 挙げた問題のうち名前を持つ最初の物が、ログイン中のアカウントのどれもその配備を持たない問題
+    examples:
+      ok: { request: {}, response: { exitCode: 0 } }
+      healthUnreachable: { request: {}, error: UPSTREAM_UNAVAILABLE }
+      wrongAccount: { request: {}, error: FORBIDDEN }

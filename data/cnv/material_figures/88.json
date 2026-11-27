@@ -1,0 +1,52 @@
+{
+  "topic_id": 88,
+  "term": "長い話は区切って渡す",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### しくみ",
+      "caption": "一つ渡すたびに相手の返しが入ります。食い違いは、まだ一つ目を話しているうちに出てきます。",
+      "actors": [
+        {
+          "id": "me",
+          "label": "自分",
+          "icon": "person"
+        },
+        {
+          "id": "you",
+          "label": "相手",
+          "icon": "person"
+        }
+      ],
+      "steps": [
+        {
+          "from": "me",
+          "to": "you",
+          "label": "数を先に言う「三つあります」"
+        },
+        {
+          "from": "me",
+          "to": "you",
+          "label": "一つ目だけを渡す"
+        },
+        {
+          "from": "me",
+          "to": "me",
+          "label": "間を置いて相手の反応を見る"
+        },
+        {
+          "from": "you",
+          "to": "me",
+          "label": "その一つに返す「そこは違う」",
+          "note": "食い違いは一つ目の中で見つかる"
+        },
+        {
+          "from": "me",
+          "to": "you",
+          "label": "直してから次へ「二つ目に行きますね」"
+        }
+      ]
+    }
+  ]
+}

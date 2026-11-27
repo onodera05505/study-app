@@ -5,17 +5,71 @@
     {
       "id": 1,
       "type": "sequence",
-      "after": "### しくみ",
-      "caption": "最初の DISCOVER をブロードキャストで投げるので、クライアントに DHCP サーバのアドレスを設定しておく必要はない。",
+      "after": "### 最初の要求をブロードキャストで送るしくみ",
+      "caption": "最初の要求をブロードキャストで投げるので、相手のアドレスを知らないうちから設定を受け取れる流れを表しています。",
       "actors": [
-        {"id": "pc", "label": "PC（クライアント）"},
-        {"id": "sv", "label": "DHCP サーバ"}
+        {
+          "id": "pc",
+          "label": "PC（クライアント）"
+        },
+        {
+          "id": "sv",
+          "label": "DHCP サーバ"
+        }
       ],
       "steps": [
-        {"from": "pc", "to": "sv", "label": "DHCPDISCOVER をブロードキャスト", "note": "自分の IP も相手の IP も未知。送信元 0.0.0.0 ／ 宛先 255.255.255.255"},
-        {"from": "sv", "to": "pc", "label": "DHCPOFFER（貸せる IP アドレスを提示）"},
-        {"from": "pc", "to": "sv", "label": "DHCPREQUEST（その IP を使うと申告）"},
-        {"from": "sv", "to": "pc", "label": "DHCPACK（確定）", "note": "IP と一緒にサブネットマスクやデフォルトゲートウェイも配る。リースなので次回も同じとは限らない"}
+        {
+          "from": "pc",
+          "to": "sv",
+          "label": "DHCPDISCOVER をブロードキャスト",
+          "note": "自分の IP も相手の IP も未知。送信元 0.0.0.0 ／ 宛先 255.255.255.255"
+        },
+        {
+          "from": "sv",
+          "to": "pc",
+          "label": "DHCPOFFER（貸せる IP アドレスを提示）"
+        },
+        {
+          "from": "pc",
+          "to": "sv",
+          "label": "DHCPREQUEST（その IP を使うと申告）"
+        },
+        {
+          "from": "sv",
+          "to": "pc",
+          "label": "DHCPACK（確定）",
+          "note": "IP と一緒にサブネットマスクやデフォルトゲートウェイも配る。リースなので次回も同じとは限らない"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "cycle",
+      "after": "### リースという貸し方",
+      "caption": "1 つのアドレスがプールから貸し出され、期限が切れるとプールへ戻る輪を表しています。戻ったアドレスは別の機器へ回るので、次回も同じアドレスになるとは限りません。",
+      "center": "IP アドレス\nの貸出し",
+      "stages": [
+        {
+          "label": "アドレスプール\n貸せるアドレスの置き場",
+          "icon": "database",
+          "next_label": "空いているアドレス"
+        },
+        {
+          "label": "貸出し\nリース期間を付けて渡す",
+          "icon": "server",
+          "next_label": "IP アドレスと期限"
+        },
+        {
+          "label": "機器が利用\n期限までそのアドレスで通信",
+          "icon": "device",
+          "next_label": "リース期間が切れる"
+        },
+        {
+          "label": "期限切れ\nアドレスを手放す",
+          "icon": "clock",
+          "next_label": "プールへ戻り別の機器へ",
+          "emphasis": true
+        }
       ]
     }
   ]

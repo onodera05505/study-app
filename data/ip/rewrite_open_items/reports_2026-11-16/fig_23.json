@@ -1,0 +1,33 @@
+{
+  "target": "ip",
+  "unit": "23",
+  "status": "fixed",
+  "blocked": [],
+  "items": [
+    {"no": 1, "figure": {"topic_id": 291, "figure_id": 1}, "kind": "copy", "verdict": "applies", "action": ["edit", "caption"], "what": "部位を、紐づく過去問の正解の事例に当たる「難読化したプログラム（時間がかかる）」「専用チップで暗号化」から、選択肢に無い同じ種類の対策の例（基板を樹脂で固める・保守用の端子を塞ぐ・ケースを開けられると鍵を消す）に替え、whole を「攻撃者の手に渡った IoT 機器」、caption を部位ごとに守る例と読む形に直した。芯（解析を不可能にせず手間を割に合わなくさせる）は caption に残した", "questions_checked": ["2023r05-q57", "2021r03-q73", "2020r02o-q90"]}
+  ],
+  "changed_figures": [
+    {"topic_id": 291, "figure_id": 1, "png": "data/ip/rewrite_open_items/reports_2026-11-16/figures_png/ip-23/291-1.png", "intended_point": "耐タンパ性は、攻撃者の手に渡った機器の部位ごとに、分解・読み出し・こじ開けの手間を上げて、中身を取り出しにくくする性質である"}
+  ],
+  "moved": [],
+  "removed": [],
+  "restored": [],
+  "ledgers": [
+    {"file": "data/ip/rewrite_ledgers/23-12.json", "changed_points": 2, "removed_figures_added": 0, "removed_figures_dropped": 0}
+  ],
+  "not_fixed": [],
+  "not_fixed_counts": {},
+  "counts": {"applies": 1, "not_applies": 0, "data_suspect": 0},
+  "gates": {
+    "render_check": {"stops": 0, "warnings_before": 0, "warnings_after": 0},
+    "unfixed_warnings": []
+  },
+  "written": [
+    "data/ip/material_figures/291.json",
+    "data/ip/rewrite_ledgers/23-12.json",
+    "public/figures/materials/ip/291-1.svg",
+    "data/ip/rewrite_open_items/reports_2026-11-16/figures_png/ip-23/291-1.png",
+    "data/ip/rewrite_open_items/reports_2026-11-16/figures_png/ip-23/291-1.svg",
+    "data/ip/rewrite_open_items/reports_2026-11-16/fig_23.json"
+  ]
+}

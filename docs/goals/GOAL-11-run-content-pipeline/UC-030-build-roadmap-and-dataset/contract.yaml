@@ -1,0 +1,162 @@
+# UC-030 の境界契約。振る舞いと規則は ./UC.md と同じ場所の REQ が持つ。
+# 読み方の決まりは ../../../adr/ADR-0001-boundary-reading.md と ../../../adr/ADR-0008-local-tool-boundary.md、共有語彙は ../../../_shared/components.yaml。
+# この契約が持つのは、作り手が手元で呼ぶ入口 3 つ（scripts/build_roadmap.py・scripts/apply_summary_override.py・scripts/build_target_dataset.py）。
+# パスは相対ならコマンドを呼んだ作業ディレクトリが起点。断ったときは終了コード 1 で、何も書き出さずに、共有の形の ToolError（../../../_shared/components.yaml。REQ-571）を標準出力に出す。
+x-uc: UC-030
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-19
+
+schemas:
+  Done:
+    type: object
+    required: [exitCode]
+    properties:
+      exitCode: { type: integer, const: 0, description: プロセスの終了コードと同じ。断ったときは終了コード 1 }
+
+operations:
+  buildRoadmap:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: ロードマップ型の学びの論点の候補とロードマップの設定から、ロードマップのデータと書き手への束の割り当てを組み立て直す
+    request:
+      type: object
+      required: [data]
+      additionalProperties: false
+      properties:
+        data: { type: string, pattern: "^([A-Za-z0-9._-]+/)*[a-z]+$", description: 学びの置き場。最後の段が登録簿の学びの key }
+        out: { type: string, minLength: 1, description: 書き出す置き場。省略すると data }
+        max: { type: integer, minimum: 1, description: 単位の数の上限。ロードマップの設定に値があればそちらを使う }
+        per-day: { type: integer, minimum: 1, description: 日で束ねる学びの 1 回の論点数。ロードマップの設定に値があればそちらを使う }
+        min-per-goal: { type: integer, minimum: 0, description: 到達基準ごとに確保する単位の数。ロードマップの設定に値があればそちらを使う }
+    response: { $ref: "#/schemas/Done" }
+    errors:
+      - code: NOT_FOUND
+        when: 論点の候補が無い
+      - code: NOT_FOUND
+        when: ロードマップの設定が指す論点の ID がどの候補にも無い
+      - code: INVALID_INPUT
+        when: 候補の中に名前が同じ単位がある
+      - code: INVALID_INPUT
+        when: 回の束ね方が日でも章でもない
+      - code: INVALID_INPUT
+        when: 章で束ねるのに章の名前か印を欠く候補がある
+      - code: INVALID_INPUT
+        when: 章で束ねるのに登録簿の段に無い印の候補がある
+      - code: INVALID_INPUT
+        when: 含める一覧の論点の ID が除く一覧にもある
+    examples:
+      ok:
+        request: { data: data/eng }
+        response: { exitCode: 0 }
+      candidatesMissing:
+        request: { data: tests/fixtures/roadmap-build-candidates-missing/itc }
+        error: NOT_FOUND
+      unknownConfigId:
+        request: { data: tests/fixtures/roadmap-build-unknown-id/itc }
+        error: NOT_FOUND
+      duplicateTerm:
+        request: { data: tests/fixtures/roadmap-build-duplicate-term/itc }
+        error: INVALID_INPUT
+      unknownGrouping:
+        request: { data: tests/fixtures/roadmap-build-unknown-grouping/itc }
+        error: INVALID_INPUT
+      chapterMissing:
+        request: { data: tests/fixtures/roadmap-build-chapter-missing/eng }
+        error: INVALID_INPUT
+      tierOutsideRegistry:
+        request: { data: tests/fixtures/roadmap-build-tier-outside/eng }
+        error: INVALID_INPUT
+      includedAndExcluded:
+        request: { data: tests/fixtures/roadmap-build-included-and-excluded/itc }
+        error: INVALID_INPUT
+      unknownConfigIdBeforeDuplicateTerm:
+        request: { data: tests/fixtures/roadmap-build-unknown-id-and-duplicate-term/itc }
+        error: NOT_FOUND
+
+  applySummaryOverride:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 単位の論点の ID ごとに、ロードマップの設定の要約の差し替えとロードマップのデータの要約を同じ値に書き換える
+    request:
+      type: object
+      required: [data, id, summary]
+      additionalProperties: false
+      properties:
+        data: { type: string, pattern: "^([A-Za-z0-9._-]+/)*[a-z]+$", description: 学びの置き場 }
+        id: { type: array, minItems: 1, description: 単位の論点の ID。summary と同じ順で組にする, items: { type: integer, minimum: 1 } }
+        summary: { type: array, minItems: 1, description: 新しい要約。id と同じ順で組にする, items: { type: string, minLength: 1 } }
+    response: { $ref: "#/schemas/Done" }
+    errors:
+      - code: INVALID_INPUT
+        when: 論点の ID と要約の数が合わない
+      - code: NOT_FOUND
+        when: 渡した論点の ID がロードマップのデータのどの単位にも無い
+    examples:
+      ok:
+        request: { data: data/itc, id: [16], summary: [総合系・IT系・戦略系・SIer系。何から始まった会社かで分ける] }
+        response: { exitCode: 0 }
+      countMismatch:
+        request: { data: data/itc, id: [16, 30], summary: [総合系・IT系・戦略系・SIer系。何から始まった会社かで分ける] }
+        error: INVALID_INPUT
+      unknownId:
+        request: { data: data/itc, id: [9999], summary: [存在しない単位の要約] }
+        error: NOT_FOUND
+      countMismatchBeforeUnknownId:
+        request: { data: data/itc, id: [9999, 9998], summary: [存在しない単位の要約] }
+        error: INVALID_INPUT
+
+  buildTargetDataset:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: ロードマップ型の学びのロードマップのデータと教材と確認問題から、投入の経路が読む投入データを組み立てる
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        data: { type: string, pattern: "^([A-Za-z0-9._-]+/)*[a-z]+$", description: 学びの置き場。省略すると data/itc }
+    response: { $ref: "#/schemas/Done" }
+    errors:
+      - code: INVALID_INPUT
+        when: 登録簿に無い学び
+      - code: NOT_FOUND
+        when: ロードマップのデータが無い
+      - code: NOT_FOUND
+        when: 教材の無い単位がある
+      - code: INVALID_INPUT
+        when: 確認問題の数が 1 単位あたりの数と違う単位がある
+      - code: INVALID_INPUT
+        when: 印を持つ学びで登録簿の段に無い印の単位がある
+      - code: INVALID_INPUT
+        when: 副題が空か文字列でない単位がある
+    examples:
+      ok:
+        request: { data: data/eng }
+        response: { exitCode: 0 }
+      unknownLearning:
+        request: { data: data/zzz }
+        error: INVALID_INPUT
+      roadmapMissing:
+        request: { data: tests/fixtures/roadmap-dataset-roadmap-missing/itc }
+        error: NOT_FOUND
+      materialMissing:
+        request: { data: tests/fixtures/roadmap-dataset-material-missing/itc }
+        error: NOT_FOUND
+      questionCount:
+        request: { data: tests/fixtures/roadmap-dataset-question-count/itc }
+        error: INVALID_INPUT
+      tierOutsideRegistry:
+        request: { data: tests/fixtures/roadmap-dataset-tier-outside/eng }
+        error: INVALID_INPUT
+      blankSubtitle:
+        request: { data: tests/fixtures/roadmap-dataset-blank-subtitle/eng }
+        error: INVALID_INPUT
+      materialMissingBeforeQuestionCount:
+        request: { data: tests/fixtures/roadmap-dataset-material-missing-and-question-count/itc }
+        error: NOT_FOUND

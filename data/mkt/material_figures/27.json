@@ -1,0 +1,67 @@
+{
+  "topic_id": 27,
+  "term": "マーケティング・ミックス（4P）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "真ん中の狙いに 4 つの打ち手を揃えて一組で決めます。1 つでも逆を向くと、顧客には高いだけに映ります。",
+      "nodes": [
+        {
+          "id": "aim",
+          "label": "狙い\n高くても選ばれる",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "prod",
+          "label": "製品\n導入の支援を標準で付ける",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "price",
+          "label": "価格\n競合の 1.5 倍で値引きしない",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "place",
+          "label": "流通\n値引きの多い売り場を避ける",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "promo",
+          "label": "販促\n値段の理由を語る",
+          "row": 2,
+          "col": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": "aim",
+          "to": "prod",
+          "label": "中身で裏付ける"
+        },
+        {
+          "from": "aim",
+          "to": "price",
+          "label": "値で示す"
+        },
+        {
+          "from": "aim",
+          "to": "place",
+          "label": "売り場で崩さない"
+        },
+        {
+          "from": "aim",
+          "to": "promo",
+          "label": "理由を伝える"
+        }
+      ]
+    }
+  ]
+}

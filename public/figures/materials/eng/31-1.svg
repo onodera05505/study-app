@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="316" viewBox="0 0 769.1 380">
+<rect x="0.5" y="0.5" width="768.1" height="379" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<polyline points="55,76 55,99 268,99 268,122" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="268,122 264.4,114 271.6,114" fill="#1f2937"/>
+<polygon points="55,76 58.6,84 51.4,84" fill="#1f2937"/>
+<polyline points="55,264 55,241 268,241 268,218" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="268,218 271.6,226 264.4,226" fill="#1f2937"/>
+<polygon points="55,264 51.4,256 58.6,256" fill="#1f2937"/>
+<polyline points="350,170 426,170" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polyline points="626.1,170 543.1,170" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="543.1,170 551.1,166.4 551.1,173.6" fill="#1f2937"/>
+<polygon points="626.1,170 618.1,173.6 618.1,166.4" fill="#1f2937"/>
+<rect x="7" y="0" width="96" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="55" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">プロセス A</text>
+<text x="55" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">スレッド 1</text>
+<text x="55" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">重い処理</text>
+<rect x="7" y="264" width="96" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="55" y="286.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">プロセス A</text>
+<text x="55" y="306.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">スレッド 2</text>
+<text x="55" y="326.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">画面の操作</text>
+<rect x="186" y="122" width="164" height="96" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="268" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">プロセス A の</text>
+<text x="268" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">メモリの区画</text>
+<text x="268" y="184.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">2 つで共有</text>
+<text x="268" y="204.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">同時に書くと取り合い</text>
+<rect x="426" y="142" width="117.1" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="484.55" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">プロセス B の</text>
+<text x="484.55" y="184.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">メモリの区画</text>
+<rect x="626.1" y="142" width="96" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="674.1" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">プロセス B</text>
+<text x="674.1" y="184.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">スレッド 1</text>
+<rect x="127.5" y="85" width="68" height="16" rx="3" fill="#ffffff"/>
+<text x="161.5" y="98.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">読む・書く</text>
+<rect x="127.5" y="227" width="68" height="16" rx="3" fill="#ffffff"/>
+<text x="161.5" y="240.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">読む・書く</text>
+<rect x="360" y="153" width="56" height="16" rx="3" fill="#ffffff"/>
+<text x="388" y="166.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">触れない</text>
+<rect x="550.6" y="153" width="68" height="16" rx="3" fill="#ffffff"/>
+<text x="584.6" y="166.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">読む・書く</text>
+</g>
+</svg>

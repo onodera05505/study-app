@@ -1,0 +1,57 @@
+{
+  "topic_id": 205,
+  "term": "RSS",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### 更新情報を配る仕組み",
+      "caption": "上から順に、誰が何を渡すかの流れです。利用者は一度登録すれば、サイトを見に行かなくても新着が手元にそろいます。",
+      "actors": [
+        {
+          "id": "s",
+          "label": "Web サイト",
+          "icon": "server"
+        },
+        {
+          "id": "r",
+          "label": "RSS リーダ",
+          "icon": "device"
+        },
+        {
+          "id": "u",
+          "label": "利用者",
+          "icon": "person"
+        }
+      ],
+      "steps": [
+        {
+          "from": "u",
+          "to": "r",
+          "label": "読みたいサイトを登録する（最初の 1 回だけ）"
+        },
+        {
+          "from": "s",
+          "to": "s",
+          "label": "記事を更新し RSS ファイル（XML）を公開"
+        },
+        {
+          "from": "r",
+          "to": "s",
+          "label": "RSS ファイルを自動で読み込む"
+        },
+        {
+          "from": "s",
+          "to": "r",
+          "label": "見出し・リンク・要約・日時が届く",
+          "note": "記事の全文は届かない"
+        },
+        {
+          "from": "r",
+          "to": "u",
+          "label": "新着を一覧に並べて見せる"
+        }
+      ]
+    }
+  ]
+}

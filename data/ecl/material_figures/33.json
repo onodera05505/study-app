@@ -1,0 +1,35 @@
+{
+  "topic_id": 33,
+  "term": "食べものの値段が上がる道すじ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "explanation",
+      "caption": "上流で起きた費用の上がりが、段を下るように順に移っていく道すじです。いちばん下の店の値札に届くのは最後なので、値札より先に上の段のニュースが来ます。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "原材料・燃料・運ぶ費用\n上流で値段が上がる",
+          "icon": "box",
+          "next_label": "仕入れの費用が上がる"
+        },
+        {
+          "label": "会社どうしの値段\n企業物価指数に先に出る",
+          "icon": "building",
+          "next_label": "移す割合は品物ごとに違う"
+        },
+        {
+          "label": "作る会社・卸す会社の売り値\n費用を売り値に移す",
+          "icon": "gear",
+          "next_label": "間をおいて届く"
+        },
+        {
+          "label": "店の値札\n遅れて上がる",
+          "icon": "money",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

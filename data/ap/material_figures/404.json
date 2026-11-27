@@ -1,0 +1,85 @@
+{
+  "topic_id": 404,
+  "term": "URL",
+  "figures": [
+    {
+      "id": 1,
+      "type": "parts",
+      "after": "explanation",
+      "caption": "1 本の URL を左から 5 つの部品に分け、それぞれの役割を引き出しています。部品は決まった順に並びます。",
+      "whole": {
+        "label": "https://shop.example.jp:8443/cart?item=3",
+        "icon": "network"
+      },
+      "parts": [
+        {
+          "label": "スキーム https\n使うプロトコル\n「://」で区切る"
+        },
+        {
+          "label": "ホスト名 shop.example.jp\n接続先のサーバ"
+        },
+        {
+          "label": "ポート番号 :8443\nサーバの中の窓口の番号\n省略すると既定の番号"
+        },
+        {
+          "label": "パス /cart\nサーバ内の資源の場所"
+        },
+        {
+          "label": "クエリ文字列 ?item=3\nサーバへ渡す名前=値"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "sequence",
+      "after": "### 部品が使われる順と名前解決",
+      "caption": "URL の部品が使われる順に、ブラウザのやり取りを上から並べています。ホスト名とポート番号は接続の前に、パスとクエリ文字列は接続の後に使われます。",
+      "actors": [
+        {
+          "id": "b",
+          "label": "ブラウザ",
+          "icon": "device"
+        },
+        {
+          "id": "d",
+          "label": "DNS サーバ",
+          "icon": "server"
+        },
+        {
+          "id": "w",
+          "label": "Web サーバ",
+          "icon": "server"
+        }
+      ],
+      "steps": [
+        {
+          "from": "b",
+          "to": "d",
+          "label": "ホスト名 shop.example.jp の IP アドレスを問い合わせる"
+        },
+        {
+          "from": "d",
+          "to": "b",
+          "label": "IP アドレスを返す"
+        },
+        {
+          "from": "b",
+          "to": "w",
+          "label": "IP アドレスとポート番号 8443 へ TCP 接続を張る",
+          "note": "ここまでが接続の前に要る情報"
+        },
+        {
+          "from": "b",
+          "to": "w",
+          "label": "HTTP リクエストでパスとクエリ文字列を送る",
+          "note": "/cart?item=3 は接続の後に渡す"
+        },
+        {
+          "from": "w",
+          "to": "b",
+          "label": "指定された資源を応答で返す"
+        }
+      ]
+    }
+  ]
+}

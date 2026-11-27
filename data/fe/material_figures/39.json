@@ -1,0 +1,61 @@
+{
+  "topic_id": 39,
+  "term": "デバイスドライバ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "layers",
+      "after": "### 階層の中での役割",
+      "caption": "入出力の要求は上の層から下へ渡ります。強調したデバイスドライバが、OS と周辺機器の間で機器の分かる信号に変えます。",
+      "shape": "stack",
+      "layers": [
+        {"label": "アプリケーション\n印刷や読み書きを頼む", "note": "文書作成ソフトなど"},
+        {"label": "OS の入出力管理\n共通の手順で受ける"},
+        {"label": "デバイスドライバ\n機器の信号に変換する", "emphasis": true, "note": "機器ごとに用意"},
+        {"label": "周辺機器\n信号を受けて動く", "note": "プリンター・ディスク"}
+      ],
+      "brackets": [
+        {"from": 0, "to": 2, "label": "PC の中の\nソフトウェア"},
+        {"from": 3, "to": 3, "label": "ハードウェア"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 階層の中での役割",
+      "caption": "アプリケーションと OS は同じ指示を出すだけで、機器ごとの違いは強調したドライバのところで分かれます。機器を替えてもドライバを替えれば済みます。",
+      "nodes": [
+        {"id": "app", "label": "アプリケーション\n機器の型番を知らない", "row": 1, "col": 0},
+        {"id": "os", "label": "OS\n共通の手順で受ける", "row": 1, "col": 1, "icon": "gear"},
+        {"id": "da", "label": "ドライバ A\n機器 A 用", "row": 0, "col": 2, "emphasis": true},
+        {"id": "db", "label": "ドライバ B\n機器 B 用", "row": 2, "col": 2, "emphasis": true},
+        {"id": "pa", "label": "プリンター A\n独自の信号で動く", "row": 0, "col": 3},
+        {"id": "pb", "label": "プリンター B\n別の信号で動く", "row": 2, "col": 3}
+      ],
+      "edges": [
+        {"from": "app", "to": "os", "label": "同じ印刷の指示"},
+        {"from": "os", "to": "da", "label": "共通の手順"},
+        {"from": "os", "to": "db", "label": "共通の手順"},
+        {"from": "da", "to": "pa", "label": "機器 A の信号"},
+        {"from": "db", "to": "pb", "label": "機器 B の信号"}
+      ]
+    },
+    {
+      "id": 3,
+      "type": "blocks",
+      "after": "### 混同しやすい用語",
+      "caption": "デバイスドライバは PC の中で動き、ファームウェアは機器の中で動きます。2 つは制御信号と応答をやり取りする間柄で、置き場所が違います。",
+      "nodes": [
+        {"id": "os", "label": "OS\nPC の中で動く", "row": 0, "col": 0, "icon": "device"},
+        {"id": "drv", "label": "デバイスドライバ\nPC の中で機器を制御", "row": 0, "col": 1, "icon": "device", "emphasis": true},
+        {"id": "fw", "label": "ファームウェア\n機器の中に組み込み", "row": 0, "col": 2, "icon": "box", "emphasis": true},
+        {"id": "hw", "label": "機器の部品\nモーターやヘッド", "row": 0, "col": 3, "icon": "gear"}
+      ],
+      "edges": [
+        {"from": "os", "to": "drv", "label": "入出力の要求"},
+        {"from": "drv", "to": "fw", "label": "制御信号と応答", "arrow": "both"},
+        {"from": "fw", "to": "hw", "label": "内部を直接動かす"}
+      ]
+    }
+  ]
+}

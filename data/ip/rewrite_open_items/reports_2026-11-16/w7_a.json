@@ -1,0 +1,80 @@
+{
+ "target": "ip",
+ "units": [
+  "15"
+ ],
+ "status": "done",
+ "items": [
+  {
+   "no": 292,
+   "topic_id": 432,
+   "type": "H",
+   "verdict": "fixed",
+   "rule": "rewrite_open_items.md「点の台帳の直し方」の H（where を今その点がある所へ書き換える。point と他の行は変えない）、rewrite_materials_by_group.md の fate の owner（受け持ち 169 は unit_plans/15.json の owners の DRAM と SRAM のしくみの行）",
+   "what": "432 の図の仕様は今は図 1（記憶階層）だけで、SRAM と DRAM の対比は 169 の図 2（行が速さとリフレッシュ・値段と容量・使われる所）と 169 の本文の ### 半導体メモリの種類と使われる所 にあることを現物で確かめた。432 の owner の 2 行の where の括弧を「対比は 169 の図 2 にも残る」に、aside の行の where を「対比そのものは 169 の本文と図 2 にある」に書き換えた（fate と point は変えない）。",
+   "questions_checked": []
+  }
+ ],
+ "edits": [],
+ "owners": [],
+ "figure_after": [],
+ "ledgers": [
+  {
+   "file": "data/ip/rewrite_ledgers/15-2.json",
+   "topic_id": 432,
+   "point": "SRAM は高速でリフレッシュ不要だが、回路が複雑で高価なので大容量にできずキャッシュに使う",
+   "before": {
+    "fate": "owner",
+    "where": "169（対比は 432 の図 2 にも残る）"
+   },
+   "after": {
+    "fate": "owner",
+    "where": "169（対比は 169 の図 2 にも残る）"
+   }
+  },
+  {
+   "file": "data/ip/rewrite_ledgers/15-2.json",
+   "topic_id": 432,
+   "point": "DRAM はリフレッシュが要り SRAM より遅いが、安く大容量にできるので主記憶に使う",
+   "before": {
+    "fate": "owner",
+    "where": "169（対比は 432 の図 2 にも残る）"
+   },
+   "after": {
+    "fate": "owner",
+    "where": "169（対比は 169 の図 2 にも残る）"
+   }
+  },
+  {
+   "file": "data/ip/rewrite_ledgers/15-2.json",
+   "topic_id": 432,
+   "point": "「並べて覚えると取り違えません」（覚え方の文）",
+   "before": {
+    "fate": "aside",
+    "where": "事実を持たない覚え方の助言。対比そのものは 432 の図 2 と 169 にある"
+   },
+   "after": {
+    "fate": "aside",
+    "where": "事実を持たない覚え方の助言。対比そのものは 169 の本文と図 2 にある"
+   }
+  }
+ ],
+ "returned": [],
+ "noticed": [
+  {
+   "topic_id": 432,
+   "what": "432 の本文の ### キャッシュメモリに SRAM を使う理由 の末尾に 432-2.svg の図の行が残る（図の仕様には図 2 が無い）。親の指示どおり触れていない（図の差し込みで合わせる）"
+  }
+ ],
+ "gates": {
+  "check_materials": 0,
+  "check_material_style": 0,
+  "render_check": 0,
+  "check_explanations": 0,
+  "check_unit_plans": null
+ },
+ "chars": {
+  "before": 819,
+  "after": 819
+ }
+}

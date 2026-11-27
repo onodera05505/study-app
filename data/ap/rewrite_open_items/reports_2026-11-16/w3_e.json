@@ -1,0 +1,41 @@
+{
+  "target": "ap",
+  "units": ["01", "12"],
+  "status": "done",
+  "items": [
+    {"no": 227, "topic_id": 66, "type": "E", "verdict": "fixed",
+     "rule": "rewrite_unit_crosscheck.md X11（本文が同じ論点の図と同じ点をなぞるときは本文を縮め、消した点の台帳の行き先を figure にする）、write_materials.md「1 つの点は 1 か所で言う」（図を残す）",
+     "what": "### 4つのセンサーの守備範囲 の「[[超音波センサー]]は音波の反射で数メートルの至近距離を測り、…」の「数メートルの至近距離」は、図 1 の超音波センサーの列（近距離向き／届く範囲が狭い・数メートル程度）と同じ点なので、「距離を測り」に縮めた。音波の反射・安価・駐車支援は図に無いので残した。台帳 01-10 の 66 の行「超音波センサーは数メートルの至近距離用で、数十メートル以上は測れない」を figure・66 の図 1 に書き換えた。2024r06a-q4（正解は可視光カメラ）は explanation の箇条と問題解説で解け、超音波の距離の点は図 1 と イ の note にある",
+     "questions_checked": ["2024r06a-q4"]},
+    {"no": 228, "topic_id": 63, "type": "H", "verdict": "by_rule",
+     "rule": "rewrite_open_items.md「点の台帳の直し方」（H が書き換えるのは行の where と removed_figures の kept だけ・台帳の他の行は変えない）、同所が合わせる rewrite_unit_crosscheck.md と rewrite_text_followup.md の「点の台帳の直し方」（shared は変えない）、rewrite_materials_by_group.md（shared は書き直しの手順 2 で決めた割り当ての記録）",
+     "what": "台帳 01-7 の shared の比較の行（holder 63・「63 の図 3 の比較表」）を現物で確かめた。比較は今 61 の図 2（### 割り算の向きと検出の範囲）にあり、shared の記述とは合わないが、shared は行き先（where）ではなく書き直しのときの割り当ての記録で、H の範囲の外・正本が変えないとしている。比較を指す points の行（63 の見分けの一言 → later 61、61 のパリティとの比較 → figure 61 の図 2、62 の方式の比較 → prior 63（1 方向のパリティの側は 63 の explanation、ハミング符号の側は 62 自身））は、どれも今点のある所を指しているので直す行は無い",
+     "questions_checked": []},
+    {"no": 229, "topic_id": 599, "type": "C", "verdict": "fixed",
+     "rule": "write_materials.md「書き方の約束」（写さない物: 選択肢・問題文の句をほぼそのままの言い回しで置くこと。句は教材の言葉で言い直す）、rewrite_open_items.md「C の直し方」",
+     "what": "### 設計とテストの工程の評価基準 の「テストの工程の観点には、作業標準と並んでテスト方法の適切性も入ります。」は、2019h31h-q50 の誤答の選択肢の句（テスト方法・作業標準・適切性）を並べ替えただけで、定義の文でも規格名の引用でもない説明の文なので、「テストの工程の観点には、選んだテストの手法と従った作業の決まりが妥当だったかも入ります。」と教材の言葉で言い直した。点（テストの工程の観点にテスト方法の適切性が入る）は同じ節に残るので台帳は変えない。2019h31h-q50（正解は取得ニーズとの一貫性）は表の一貫性の行と問題解説で解ける",
+     "questions_checked": ["2019h31h-q50"]}
+  ],
+  "edits": [
+    {"file": "data/ap/materials_v4/01-10.json", "topic_id": 66, "field": "detail",
+     "op": "replace", "heading": "### 4つのセンサーの守備範囲",
+     "before": "[[超音波センサー]]は音波の反射で数メートルの至近距離を測り、安価なので駐車支援に使われます。",
+     "after": "[[超音波センサー]]は音波の反射で距離を測り、安価なので駐車支援に使われます。"},
+    {"file": "data/ap/materials_v4/12-1.json", "topic_id": 599, "field": "detail",
+     "op": "replace", "heading": "### 設計とテストの工程の評価基準",
+     "before": "テストの工程の観点には、作業標準と並んでテスト方法の適切性も入ります。",
+     "after": "テストの工程の観点には、選んだテストの手法と従った作業の決まりが妥当だったかも入ります。"}
+  ],
+  "owners": [],
+  "figure_after": [],
+  "ledgers": [
+    {"file": "data/ap/rewrite_ledgers/01-10.json", "topic_id": 66,
+     "point": "超音波センサーは数メートルの至近距離用で、数十メートル以上は測れない",
+     "before": {"fate": "kept", "where": "### 4つのセンサーの守備範囲"},
+     "after": {"fate": "figure", "where": "66 の図 1（超音波センサーの列の「近距離向き」「届く範囲が狭い・数メートル程度」）"}}
+  ],
+  "returned": [],
+  "noticed": [],
+  "gates": {"check_materials": 0, "check_material_style": 0, "render_check": 0, "check_explanations": 0, "check_unit_plans": null},
+  "chars": {"before": 1986, "after": 1987}
+}

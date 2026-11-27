@@ -1,0 +1,89 @@
+{
+  "topic_id": 40,
+  "term": "セキュリティ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### しくみ",
+      "direction": "down",
+      "caption": "上の段から順に決め、前の段で決まったものを次の段へ渡します。手段を選ぶのは最後です。",
+      "stages": [
+        {
+          "label": "守る対象を決める\n顧客の情報か、止まると困る仕組みか",
+          "emphasis": true,
+          "next_label": "守るもの"
+        },
+        {
+          "label": "脅威を想定する\n盗まれる・止まる・書き換えられる",
+          "icon": "warning",
+          "next_label": "起こりうる被害"
+        },
+        {
+          "label": "責任の線引き\n誰がどこまで持つか",
+          "icon": "people",
+          "emphasis": true,
+          "next_label": "受け持つ範囲"
+        },
+        {
+          "label": "手段を選ぶ\n範囲の中で守りを重ねる",
+          "icon": "lock"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "攻撃は左から右へ進みます。1 つの守りをすり抜けても、性格の違う次の守りに当たる重ね方です。",
+      "nodes": [
+        {
+          "id": "ext",
+          "label": "社外\n攻撃の出どころ",
+          "row": 0,
+          "col": 0,
+          "shape": "cloud"
+        },
+        {
+          "id": "in",
+          "label": "入口\n境目で止める",
+          "row": 0,
+          "col": 1,
+          "icon": "lock"
+        },
+        {
+          "id": "mid",
+          "label": "中\nデータの置き場ごとに\n入る人を絞り記録する",
+          "row": 0,
+          "col": 2,
+          "icon": "key",
+          "emphasis": true
+        },
+        {
+          "id": "out",
+          "label": "出口\n社外への大量の\n持ち出しを止める",
+          "row": 0,
+          "col": 3,
+          "icon": "search"
+        }
+      ],
+      "edges": [
+        {
+          "from": "ext",
+          "to": "in",
+          "label": "怪しいメールや通信"
+        },
+        {
+          "from": "in",
+          "to": "mid",
+          "label": "すり抜けた攻撃"
+        },
+        {
+          "from": "mid",
+          "to": "out",
+          "label": "持ち出されかけたデータ"
+        }
+      ]
+    }
+  ]
+}

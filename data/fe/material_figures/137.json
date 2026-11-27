@@ -1,0 +1,61 @@
+{
+  "topic_id": 137,
+  "term": "CIO（Chief Information Officer：最高情報責任者）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 経営の役員として何をするか",
+      "caption": "CIO は経営戦略と各部門の間に立つ経営陣の一員です。上からの線で戦略との整合を確かめ、下への線で全社の投資を配って効果を測ります。",
+      "nodes": [
+        {
+          "id": "strategy",
+          "label": "経営戦略\n全社の目標を示す",
+          "row": 0,
+          "col": 1,
+          "icon": "building"
+        },
+        {
+          "id": "cio",
+          "label": "CIO（経営陣の一員）\n全社の情報化戦略を立てる",
+          "row": 1,
+          "col": 1,
+          "icon": "person",
+          "emphasis": true
+        },
+        {
+          "id": "is",
+          "label": "情報システム部門\n開発と運用を指揮する",
+          "row": 2,
+          "col": 0,
+          "icon": "server"
+        },
+        {
+          "id": "biz",
+          "label": "各業務部門\n情報化で業務を変える",
+          "row": 2,
+          "col": 2,
+          "icon": "people"
+        }
+      ],
+      "edges": [
+        {
+          "from": "strategy",
+          "to": "cio",
+          "label": "目標と整合するか確かめる"
+        },
+        {
+          "from": "cio",
+          "to": "is",
+          "label": "投資を配分する"
+        },
+        {
+          "from": "cio",
+          "to": "biz",
+          "label": "投資を配り、効果を測る",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "topic_id": 279,
+  "term": "PLC（電力線通信）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "PLC で電気とデータが流れる経路です。1 本の電力線に周波数の違う 2 つを重ね、受け取る側のフィルタで分けます。",
+      "nodes": [
+        {
+          "id": "pw",
+          "label": "電源\n50・60Hz の電気",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "tx",
+          "label": "通信機器\n高い周波数の信号",
+          "row": 1,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "line",
+          "label": "電力線\n電気と信号が同じ線に",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "flt",
+          "label": "フィルタ\n周波数で分ける",
+          "row": 0,
+          "col": 2,
+          "icon": "gear"
+        },
+        {
+          "id": "app",
+          "label": "家電\n電気で動く",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "rx",
+          "label": "通信機器\nデータを受け取る",
+          "row": 1,
+          "col": 3,
+          "icon": "device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "pw",
+          "to": "line",
+          "label": "電気"
+        },
+        {
+          "from": "tx",
+          "to": "line",
+          "label": "データ"
+        },
+        {
+          "from": "line",
+          "to": "flt",
+          "label": "電気＋データ"
+        },
+        {
+          "from": "flt",
+          "to": "app",
+          "label": "電気"
+        },
+        {
+          "from": "flt",
+          "to": "rx",
+          "label": "データ"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,196 @@
+{
+  "topic_id": 47,
+  "term": "NAND 回路",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### NAND だけで組み立てる",
+      "caption": "上から NOT・AND・OR を、NAND だけでつなぐ形です。線の名前で、反転がどこで付きどこで打ち消されるかをたどれます。",
+      "nodes": [
+        {
+          "id": "a0",
+          "label": "入力 A\n1 本",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "n0",
+          "label": "NAND\n2 本を束ねて A を入れる",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "o0",
+          "label": "NOT になる\nA の反転",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "a1",
+          "label": "入力 A と B\n2 本",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "n1",
+          "label": "NAND\nA と B を入れる",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "n2",
+          "label": "NAND（束ねる）\n反転を打ち消す",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "o1",
+          "label": "AND になる\nA と B の論理積",
+          "row": 1,
+          "col": 3
+        },
+        {
+          "id": "a2",
+          "label": "入力 A と B\n2 本",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "n3",
+          "label": "NAND 2 個（束ねる）\nA と B を別々に反転",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "n4",
+          "label": "NAND\n反転した 2 つを入れる",
+          "row": 2,
+          "col": 2
+        },
+        {
+          "id": "o2",
+          "label": "OR になる\nA と B の論理和",
+          "row": 2,
+          "col": 3
+        }
+      ],
+      "edges": [
+        {
+          "from": "a0",
+          "to": "n0",
+          "label": "A を 2 本に分ける"
+        },
+        {
+          "from": "n0",
+          "to": "o0",
+          "label": "A の反転"
+        },
+        {
+          "from": "a1",
+          "to": "n1",
+          "label": "A と B"
+        },
+        {
+          "from": "n1",
+          "to": "n2",
+          "label": "AB の反転"
+        },
+        {
+          "from": "n2",
+          "to": "o1",
+          "label": "AB"
+        },
+        {
+          "from": "a2",
+          "to": "n3",
+          "label": "A と B"
+        },
+        {
+          "from": "n3",
+          "to": "n4",
+          "label": "A の反転と B の反転"
+        },
+        {
+          "from": "n4",
+          "to": "o2",
+          "label": "A＋B"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 入力の多い NAND を組む",
+      "caption": "2 入力の NAND 5 個で 4 入力の NAND を組む形です。強調した 2 個が反転を戻す段で、これを省くと別の回路になります。",
+      "nodes": [
+        {
+          "id": "n1",
+          "label": "NAND ①\nA と B を入れる",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "n2",
+          "label": "NAND ②\nC と D を入れる",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "n3",
+          "label": "NAND ③（束ねる）\n反転を戻す",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "n4",
+          "label": "NAND ④（束ねる）\n反転を戻す",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "n5",
+          "label": "NAND ⑤\nAB と CD を入れる",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "out",
+          "label": "出力\nABCD の反転",
+          "row": 0,
+          "col": 3
+        }
+      ],
+      "edges": [
+        {
+          "from": "n1",
+          "to": "n3",
+          "label": "AB の反転"
+        },
+        {
+          "from": "n2",
+          "to": "n4",
+          "label": "CD の反転"
+        },
+        {
+          "from": "n3",
+          "to": "n5",
+          "label": "AB"
+        },
+        {
+          "from": "n4",
+          "to": "n5",
+          "label": "CD"
+        },
+        {
+          "from": "n5",
+          "to": "out",
+          "label": "4 入力 NAND の値"
+        }
+      ]
+    }
+  ]
+}

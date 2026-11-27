@@ -1,0 +1,87 @@
+{
+  "topic_id": 288,
+  "term": "セキュアブート",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 署名を確かめて実行を決めるしくみ",
+      "caption": "機器が検証鍵で署名を確かめ、結果で行き先が分かれます。確かめられないプログラムは実行されません。",
+      "nodes": [
+        {
+          "id": "pv",
+          "label": "提供者\nプログラムに署名する",
+          "row": 1,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "vf",
+          "label": "機器の検証\n検証鍵で署名を確かめる",
+          "row": 1,
+          "col": 1,
+          "icon": "key",
+          "emphasis": true
+        },
+        {
+          "id": "ok",
+          "label": "実行する\n改ざんなしと判断",
+          "row": 0,
+          "col": 2,
+          "icon": "check"
+        },
+        {
+          "id": "ng",
+          "label": "実行しない\n改ざんの疑い",
+          "row": 2,
+          "col": 2,
+          "icon": "warning"
+        }
+      ],
+      "edges": [
+        {
+          "from": "pv",
+          "to": "vf",
+          "label": "署名付きのプログラム"
+        },
+        {
+          "from": "vf",
+          "to": "ok",
+          "label": "署名が正しい"
+        },
+        {
+          "from": "vf",
+          "to": "ng",
+          "label": "確かめられない"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### なぜ起動時に確かめるのか",
+      "direction": "down",
+      "caption": "起動の順に、先に動く段が次の段の署名を確かめて渡します。ウイルス対策ソフトが動き出す前に検証が済んでいます。",
+      "stages": [
+        {
+          "label": "ファームウェア\n最初に動き検証を始める",
+          "icon": "gear",
+          "next_label": "署名を確かめて起動",
+          "emphasis": true
+        },
+        {
+          "label": "OS の起動部分\nOS を読み込む",
+          "next_label": "署名を確かめて起動"
+        },
+        {
+          "label": "OS\n本体が動き出す",
+          "next_label": "OS の上で起動"
+        },
+        {
+          "label": "ウイルス対策ソフト\nここで初めて働く",
+          "icon": "search"
+        }
+      ]
+    }
+  ]
+}

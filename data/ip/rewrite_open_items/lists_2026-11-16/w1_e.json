@@ -1,0 +1,72 @@
+{
+ "target": "ip",
+ "units": [
+  "05",
+  "07",
+  "09"
+ ],
+ "items": [
+  {
+   "no": 87,
+   "unit": "05",
+   "topic_id": 257,
+   "figure": 1,
+   "source": "figures_review",
+   "kind": "text_followup",
+   "what": "本文へ戻す申告: 「画像に写った文字を読み取るのも画像認識で、言葉の意味は扱わない（入口が画像なら画像認識）」という境界が、本文に無く問題解説（2023r05-q14 の correct_reason・イの note）にだけある。2023r05-q14 で事例 d を外す正解の根拠なので、本文（### 身近な使われ方 など）に戻す。台帳 data/ip/rewrite_ledgers/05-6.json の論点 257 の行「画像認識は写真や映像から物や文字を見つける技術で、言葉の意味には踏み込まない」（fate figure・257 の図 1）。止めた図の直し: 257 の図 1 の画像認識の例のセル「写真に写った物や\\n文字を見分ける」を、事例 d と重ならない「写真の顔を見分ける\\n部品の傷を見つける」などへ替える（本文に境界が入った後にこの段で直す）",
+   "related": [
+    14
+   ]
+  },
+  {
+   "no": 119,
+   "unit": "05",
+   "topic_id": 257,
+   "figure": null,
+   "source": "acceptance",
+   "kind": "other",
+   "what": "「この推定」が何を指すかが本文で決まらない",
+   "related": []
+  },
+  {
+   "no": 94,
+   "unit": "07",
+   "topic_id": 124,
+   "figure": 2,
+   "source": "figures_review",
+   "kind": "other",
+   "what": "caption を変えたので、教材（materials_v4 の 07-1 の論点 124 の detail）の図の行の代替文は旧い caption のまま。仕様書どおり担当は本文を書き換えておらず、親が図を差し込むときに caption から作り直す必要がある",
+   "related": []
+  },
+  {
+   "no": 95,
+   "unit": "07",
+   "topic_id": 125,
+   "figure": 1,
+   "source": "figures_review",
+   "kind": "other",
+   "what": "caption を変えたので、教材（materials_v4 の 07-1 の論点 125 の explanation）の図の行の代替文は旧い caption のまま。親が図を差し込むときに caption から作り直す必要がある",
+   "related": []
+  },
+  {
+   "no": 134,
+   "unit": "07",
+   "topic_id": 125,
+   "figure": null,
+   "source": "acceptance",
+   "kind": "ledger_where",
+   "what": "点の台帳の where が、今は点の無い所を指す行がある",
+   "related": []
+  },
+  {
+   "no": 120,
+   "unit": "09",
+   "topic_id": 134,
+   "figure": null,
+   "source": "acceptance",
+   "kind": "other",
+   "what": "5 回目の受入で見送った（申告の文は読み合わせの報告にあり、控えは名前だけ）",
+   "related": []
+  }
+ ]
+}

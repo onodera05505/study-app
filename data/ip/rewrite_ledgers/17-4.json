@@ -1,0 +1,54 @@
+{
+  "bundle": "17-4",
+  "shared": [
+    {"item": "著作権を開発者が持ったまま、ライセンスで利用の条件を決めること（受け持ち）", "count": 4, "holder": 2, "topics": [2, 181]},
+    {"item": "コピーレフト型は改変版を配るときに同じ条件（ソースコードの公開）を引き継がせること", "count": 3, "holder": 181, "topics": [2, 181]},
+    {"item": "OSS のライセンスは製品・型ごとに条件が違うこと", "count": 2, "holder": 2, "topics": [2, 181]}
+  ],
+  "topics": [
+    {
+      "topic_id": 2,
+      "points": [
+        {"point": "OSS はソースコードが公開され、誰でも自由に使い・改変し・再配布できるソフトウェア", "fate": "kept", "where": "explanation"},
+        {"point": "キーワード（ソースコード公開・改変自由・再配布自由）", "fate": "kept", "where": "explanation"},
+        {"point": "著作権は開発者が持ったままで、ライセンスで利用の条件が決められている", "fate": "kept", "where": "explanation"},
+        {"point": "無償とは限らず、有償で配ってもよく、有償サポート付きの製品もある", "fate": "kept", "where": "explanation"},
+        {"point": "使う人や利用分野を選り好みして提供を制限できない", "fate": "kept", "where": "explanation"},
+        {"point": "ソースコードが見られるだけでは OSS とは言わない", "fate": "kept", "where": "### OSS と言える条件"},
+        {"point": "目的を問わず自由に使える・特定の分野や人を差別しない（条件の列挙の言い直し）", "fate": "duplicate", "where": "explanation の箇条（利用分野を選り好みできない）"},
+        {"point": "改変できる・改変したものを再配布できる（条件の列挙の言い直し）", "fate": "duplicate", "where": "explanation の定義の 1 文と ### OSS と言える条件"},
+        {"point": "著作権は開発者が持ち続け、その著作権をもとに利用条件をライセンスとして定める（detail の言い直し）", "fate": "duplicate", "where": "explanation の箇条"},
+        {"point": "ライセンスは製品ごとに違う", "fate": "kept", "where": "### OSS と言える条件"},
+        {"point": "改変して配るなら同じ条件で公開を求めるコピーレフト型のライセンスもある", "fate": "kept", "where": "### OSS と言える条件（中身は 181 が持つので、[[コピーレフト]] を指す 1 文に）"},
+        {"point": "代表的な OSS の種類と名前の表（OS: Linux・Android・FreeBSD／Web サーバ: Apache HTTP Server／Web ブラウザ: Firefox／メールソフト: Thunderbird／DBMS: MySQL・PostgreSQL）", "fate": "kept", "where": "### 代表的な OSS"},
+        {"point": "名前と種類の組合せで問われるのでセットで覚える", "fate": "aside", "where": "問われ方・覚え方の文で、過去問を解くのにも定義・違いにも要らない"},
+        {"point": "ワープロや表計算を含むオフィスソフト一式も OSS として開発されている", "fate": "kept", "where": "### 代表的な OSS"},
+        {"point": "パブリックドメインソフトウェアは作者が著作権そのものを手放したもので、OSS は著作権が開発者に残る", "fate": "figure", "where": "2 の図 1（著作権の行）"},
+        {"point": "OSS の自由はライセンスが与える自由", "fate": "figure", "where": "2 の図 1（改変・再配布の行）"},
+        {"point": "フリーソフトウェアは無償の意味と自由の意味の両方で使われる", "fate": "kept", "where": "### 混同しやすい用語"},
+        {"point": "OSS の「自由」は値段ではなく使い方や改変・再配布の自由", "fate": "kept", "where": "### 混同しやすい用語"}
+      ]
+    },
+    {
+      "topic_id": 181,
+      "points": [
+        {"point": "コピーレフトは、改変した派生ソフトウェアを配るときに元と同じライセンスを引き継がせる条件", "fate": "kept", "where": "explanation"},
+        {"point": "OSS のライセンスで広く採られている考え方（定義の 2 文目）", "fate": "kept", "where": "explanation の箇条"},
+        {"point": "キーワード（派生ソフトウェア・同じライセンス）", "fate": "kept", "where": "explanation"},
+        {"point": "ねらいは誰でも自由に使える状態を後から手にする人にも残すこと", "fate": "kept", "where": "explanation"},
+        {"point": "著作権を持ったまま、その権利を使ってライセンスで条件を課す", "fate": "owner", "where": "2"},
+        {"point": "著作権者は本来、複製や改変を許すかを自分で決められる", "fate": "owner", "where": "2"},
+        {"point": "改変版を配るならソースコードを公開し同じ条件を引き継ぐ、と定める", "fate": "kept", "where": "### 著作権を手放さない理由"},
+        {"point": "著作権を放棄すると、改変版を非公開で配るのを止められず自由が失われる", "fate": "kept", "where": "### 著作権を手放さない理由"},
+        {"point": "自由を守るために著作権を使う発想", "fate": "kept", "where": "### 著作権を手放さない理由"},
+        {"point": "GPL は GNU General Public License の略で、コピーレフト型", "fate": "kept", "where": "### コピーレフト型と非コピーレフト型"},
+        {"point": "GPL は派生ソフトも同じライセンスにし、ソースコードの公開を求める", "fate": "figure", "where": "181 の図 2（コピーレフト型の列）"},
+        {"point": "非コピーレフト型（BSD・MIT）", "fate": "kept", "where": "### コピーレフト型と非コピーレフト型"},
+        {"point": "非コピーレフト型は改変した部分を非公開のまま配ってよい", "fate": "figure", "where": "181 の図 2（改変版のソースの行・非コピーレフト型の列）"},
+        {"point": "OSS のライセンスは型によって条件が違う", "fate": "figure", "where": "181 の図 2（列の比較）。製品ごとに違うことは 2 の ### OSS と言える条件"},
+        {"point": "使う前にライセンスの中身を確かめる必要がある", "fate": "aside", "where": "利用時の心得で、紐づく過去問にも定義・違いにも要らない"},
+        {"point": "改変して配るたびに同じ条件が受け継がれる流れ", "fate": "figure", "where": "181 の図 1"}
+      ]
+    }
+  ]
+}

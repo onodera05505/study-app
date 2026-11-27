@@ -1,0 +1,72 @@
+{
+  "topic_id": 76,
+  "term": "バックドア",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "上の経路は認証を通って内部へ入り、下の経路は裏口から認証を経ずに入ります。2 本を見比べると、裏口が飛ばしている所が読めます。",
+      "nodes": [
+        {
+          "id": "user",
+          "label": "利用者\n正規の ID とパスワード",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "auth",
+          "label": "認証（正面の入口）\n本人かを確かめる",
+          "row": 0,
+          "col": 1,
+          "icon": "key"
+        },
+        {
+          "id": "in",
+          "label": "システムの内部\n情報と機能",
+          "row": 1,
+          "col": 2,
+          "icon": "server"
+        },
+        {
+          "id": "atk",
+          "label": "攻撃者\n正規の資格を持たない",
+          "row": 2,
+          "col": 0,
+          "icon": "warning"
+        },
+        {
+          "id": "back",
+          "label": "裏口\n認証を経ずに通す",
+          "row": 2,
+          "col": 1,
+          "icon": "lock",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "user",
+          "to": "auth",
+          "label": "ログインする"
+        },
+        {
+          "from": "auth",
+          "to": "in",
+          "label": "確かめてから通す"
+        },
+        {
+          "from": "atk",
+          "to": "back",
+          "label": "裏口を使う"
+        },
+        {
+          "from": "back",
+          "to": "in",
+          "label": "認証なしで入る"
+        }
+      ]
+    }
+  ]
+}

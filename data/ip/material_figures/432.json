@@ -4,21 +4,36 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
-      "after": "### 記憶階層のしくみ",
-      "caption": "CPU は1次→2次→主記憶の順に探し、CPU に近いほど速くて容量が小さい。",
-      "nodes": [
-        {"id": "cpu", "label": "CPU", "row": 0, "col": 0},
-        {"id": "l1", "label": "1次キャッシュ\nSRAM・最も速い", "row": 0, "col": 1, "emphasis": true},
-        {"id": "l2", "label": "2次キャッシュ\nSRAM", "row": 0, "col": 2},
-        {"id": "main", "label": "主記憶\nDRAM", "row": 0, "col": 3},
-        {"id": "aux", "label": "補助記憶\nSSD・HDD", "row": 0, "col": 4, "shape": "cylinder"}
+      "type": "layers",
+      "after": "explanation",
+      "caption": "上ほど CPU に近く速く、幅の狭さが容量の小ささを表します。括弧でくくった上の 2 段がキャッシュメモリです。",
+      "shape": "pyramid",
+      "layers": [
+        {
+          "label": "1 次キャッシュ\n最も速く最も小さい",
+          "note": "CPU に最も近い",
+          "emphasis": true
+        },
+        {
+          "label": "2 次キャッシュ\n1 次より大きく少し遅い",
+          "note": "1 次の外側",
+          "emphasis": true
+        },
+        {
+          "label": "主記憶\nキャッシュより大きく遅い",
+          "note": "キャッシュの外側"
+        },
+        {
+          "label": "補助記憶\n最も遅く最も大きい",
+          "note": "CPU から最も遠い"
+        }
       ],
-      "edges": [
-        {"from": "cpu", "to": "l1", "label": "まず探す"},
-        {"from": "l1", "to": "l2", "label": "無ければ", "arrow": "both"},
-        {"from": "l2", "to": "main", "label": "無ければ", "arrow": "both"},
-        {"from": "main", "to": "aux", "label": "最も遅く大容量", "arrow": "both", "style": "dashed"}
+      "brackets": [
+        {
+          "from": 0,
+          "to": 1,
+          "label": "キャッシュ\nメモリ"
+        }
       ]
     }
   ]

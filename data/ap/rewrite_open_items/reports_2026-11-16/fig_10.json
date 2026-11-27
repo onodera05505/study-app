@@ -1,0 +1,29 @@
+{
+  "target": "ap",
+  "unit": "10",
+  "status": "fixed",
+  "blocked": [],
+  "items": [
+    {"no": 1, "figure": {"topic_id": 479, "figure_id": 2}, "kind": "body_rule", "verdict": "applies", "action": "remove", "what": "エニーキャストの列は本文 ### 宛先の種類と届く範囲 と重なる。列を外すと残るのはユニキャスト（その 1 台）とブロードキャスト（セグメントの全台）の 2 者の 1 点の違いで、どちらも同じ節の本文が言い、ブロードキャストの全台は図 1 も運ぶ。本文だけで一言で言える要点で、図にしか無い点も無い（台帳 10-1 の 479 に fate figure で図 2 を指す行は無い）ので、列だけでなく図 2 ごと外した（外すの 2）", "questions_checked": ["2021r03a-q31"]},
+    {"no": 2, "figure": {"topic_id": 676, "figure_id": 1}, "kind": "body_rule", "verdict": "applies", "action": "remove", "what": "IP アドレスの行は本文 ### SSID が果たす役割 に戻っている。行を外すと 1 行の matrix になり型の下限（2 行）を割る。残る SSID の点（管理者が自由に名付ける・つなぐ前に参加するネットワークを名前で選ぶ）は、同じ論点の図 2（ビーコンで名前が届き端末が office を選ぶ・同じ名前の AP 1 と AP 2 が 1 つのネットワーク）が運ぶので、同じ内容として図 1 を外し図 2 に寄せた（外すの 1）。図 2 は直していない", "questions_checked": ["2017h29a-q31"]}
+  ],
+  "changed_figures": [],
+  "moved": [],
+  "removed": [
+    {"topic_id": 479, "figure_id": 2, "caption": "列をたどると、宛先の書き方ごとに受け取る台数が違うと読めます。強調したブロードキャストでは、セグメントの全台が受け取ります。", "kept": null, "reason": "text_suffices"},
+    {"topic_id": 676, "figure_id": 1, "caption": "SSID と IP アドレスを、値を誰が決めるかと、どの場面で使うかで並べた表です。行を横にたどると、SSID はつなぐ前に参加するネットワークを選ぶ名前だと読めます。", "kept": {"topic_id": 676, "figure_id": 2}, "reason": "same_content"}
+  ],
+  "restored": [],
+  "ledgers": [
+    {"file": "data/ap/rewrite_ledgers/10-1.json", "changed_points": 0, "removed_figures_added": 1, "removed_figures_dropped": 0},
+    {"file": "data/ap/rewrite_ledgers/10-2.json", "changed_points": 0, "removed_figures_added": 1, "removed_figures_dropped": 0}
+  ],
+  "not_fixed": [],
+  "not_fixed_counts": {},
+  "counts": {"applies": 2, "not_applies": 0, "data_suspect": 0},
+  "gates": {
+    "render_check": {"stops": 0, "warnings_before": 0, "warnings_after": 0},
+    "unfixed_warnings": []
+  },
+  "written": ["data/ap/material_figures/479.json", "data/ap/material_figures/676.json", "data/ap/rewrite_ledgers/10-1.json", "data/ap/rewrite_ledgers/10-2.json"]
+}

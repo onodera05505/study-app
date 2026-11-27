@@ -4,23 +4,47 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
-      "after": "### KGI・CSF・KPI の並び順",
-      "caption": "設定例に数値と基準が付いていれば KPI、言葉だけなら CSF、出発点に置く数値目標が KGI。",
-      "nodes": [
-        {"id": "kgi", "label": "① KGI の設定\n最終目標", "row": 0, "col": 0},
-        {"id": "csf", "label": "② CSF の抽出\n鍵になる要因", "row": 0, "col": 1},
-        {"id": "kpi", "label": "③ KPI の設定\n進捗を測る数値", "row": 0, "col": 2, "emphasis": true},
-        {"id": "e1", "label": "例：物流コスト\n10% 削減", "row": 1, "col": 0, "shape": "round"},
-        {"id": "e2", "label": "例：在庫の削減\n誤出荷の削減", "row": 1, "col": 1, "shape": "round"},
-        {"id": "e3", "label": "例：在庫日数 7 日以内\n誤出荷率 3% 以内", "row": 1, "col": 2, "shape": "round", "emphasis": true}
+      "type": "matrix",
+      "after": "### KGI・CSF・KPI の違い",
+      "caption": "左から決める順に KGI・CSF・KPI を並べ、表すもの・表し方・例を行で比べています。数値と基準値で進み具合を測るのが KPI です。",
+      "x": {
+        "label": "決める順（左から）",
+        "values": [
+          "KGI",
+          "CSF",
+          "KPI"
+        ]
+      },
+      "y": {
+        "label": "観点",
+        "values": [
+          "表すもの",
+          "表し方",
+          "例"
+        ]
+      },
+      "cells": [
+        [
+          "最終目標\n到達点そのもの",
+          "鍵になる要因\n何を良くするか",
+          "中間指標\n鍵の進み具合"
+        ],
+        [
+          "数値の目標",
+          "数値なし\n方向性だけ",
+          "数値＋基準値\n日常的に計測"
+        ],
+        [
+          "不良による損失を\n年 3 割減らす",
+          "検査工程の見直し\n作業手順の標準化",
+          "工程内不良率 1% 以内\n手順の遵守率 95% 以上"
+        ]
       ],
-      "edges": [
-        {"from": "kgi", "to": "csf"},
-        {"from": "csf", "to": "kpi"},
-        {"from": "kgi", "to": "e1", "style": "dashed", "arrow": "none"},
-        {"from": "csf", "to": "e2", "style": "dashed", "arrow": "none"},
-        {"from": "kpi", "to": "e3", "style": "dashed", "arrow": "none"}
+      "emphasis": [
+        [
+          1,
+          2
+        ]
       ]
     }
   ]

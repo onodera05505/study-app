@@ -1,0 +1,39 @@
+{
+ "target": "ap",
+ "units": [
+  "11"
+ ],
+ "status": "done",
+ "items": [
+  {
+   "no": 1,
+   "topic_id": 624,
+   "type": "H",
+   "verdict": "fixed",
+   "rule": "rewrite_materials_by_group.md の fate（prior は同じ束の学ぶ順で前の論点、owner は他の束だけ）、rewrite_open_items.md「点の台帳の直し方」H",
+   "what": "11-5 の学ぶ順は 679→624→190→211→191 で同じ束。679 の今の本文の要点の箇条に「総数＝M の n 乗（M を n 回掛けた数）」、detail の ### なぜ M を n 回掛けるのか に文字種 M を文字数 n 回掛ける説明があり、図 2（matrix）も総数を文字種と文字数で示す。624 の点の行 2（JSON の 2 番目。指示の「行 1」は 0 始まりの数え方）を owner 679 から prior 679 にした。台帳の全行を見て、同じ束の論点（679・624・190・211・191）を owner で指す行はほかに無かった",
+   "questions_checked": []
+  }
+ ],
+ "edits": [],
+ "owners": [],
+ "figure_after": [],
+ "ledgers": [
+  {
+   "file": "data/ap/rewrite_ledgers/11-5.json",
+   "topic_id": 624,
+   "point": "試行の総数は文字種の数を桁数だけ掛けた値（要点の箇条と detail の m・n の文）",
+   "before": {
+    "fate": "owner",
+    "where": "679"
+   },
+   "after": {
+    "fate": "prior",
+    "where": "679"
+   }
+  }
+ ],
+ "gate": {
+  "check_materials": 0
+ }
+}

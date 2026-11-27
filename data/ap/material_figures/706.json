@@ -6,73 +6,98 @@
       "id": 1,
       "type": "blocks",
       "after": "### 並べ方の手順",
-      "caption": "ABCD1234 を AB・CD・12・34 の4バイトに区切り、リトルは最下位の 34 から順に置く（2桁の中は反転しない）。",
+      "caption": "上の値を 2 桁ずつのバイトに区切り、2 つの方式で番地に置いた例です。強調したリトルエンディアンの 0 番地には最下位バイトが入ります。",
       "nodes": [
         {
+          "id": "v",
+          "label": "元の値（16 進数）2A3B4C5D\n2 桁ずつが 1 バイト\n左の 2A が最上位、右の 5D が最下位",
+          "row": 1,
+          "col": 0
+        },
+        {
           "id": "lt",
-          "label": "リトル\nエンディアン",
+          "label": "リトルエンディアン\n最下位バイトから置く",
           "row": 0,
-          "col": 0,
-          "shape": "round"
+          "col": 1
         },
         {
           "id": "l0",
-          "label": "0 番地\n34",
+          "label": "0 番地\n5D",
           "row": 0,
-          "col": 1,
+          "col": 2,
           "emphasis": true
         },
         {
           "id": "l1",
-          "label": "+1\n12",
+          "label": "+1\n4C",
           "row": 0,
-          "col": 2
+          "col": 3
         },
         {
           "id": "l2",
-          "label": "+2\nCD",
+          "label": "+2\n3B",
           "row": 0,
-          "col": 3
+          "col": 4
         },
         {
           "id": "l3",
-          "label": "+3\nAB",
+          "label": "+3\n2A",
           "row": 0,
-          "col": 4
+          "col": 5
         },
         {
           "id": "bg",
-          "label": "ビッグ\nエンディアン",
-          "row": 1,
-          "col": 0,
-          "shape": "round"
-        },
-        {
-          "id": "b0",
-          "label": "0 番地\nAB",
-          "row": 1,
+          "label": "ビッグエンディアン\n最上位バイトから置く",
+          "row": 2,
           "col": 1
         },
         {
-          "id": "b1",
-          "label": "+1\nCD",
-          "row": 1,
+          "id": "b0",
+          "label": "0 番地\n2A",
+          "row": 2,
           "col": 2
         },
         {
-          "id": "b2",
-          "label": "+2\n12",
-          "row": 1,
+          "id": "b1",
+          "label": "+1\n3B",
+          "row": 2,
           "col": 3
         },
         {
-          "id": "b3",
-          "label": "+3\n34",
-          "row": 1,
+          "id": "b2",
+          "label": "+2\n4C",
+          "row": 2,
           "col": 4
+        },
+        {
+          "id": "b3",
+          "label": "+3\n5D",
+          "row": 2,
+          "col": 5
         }
       ],
-      "edges": []
+      "edges": [
+        {
+          "from": "v",
+          "to": "lt",
+          "label": "下位のバイトから置く"
+        },
+        {
+          "from": "lt",
+          "to": "l0",
+          "label": "最下位の 5D"
+        },
+        {
+          "from": "v",
+          "to": "bg",
+          "label": "書いた順のまま置く"
+        },
+        {
+          "from": "bg",
+          "to": "b0",
+          "label": "最上位の 2A"
+        }
+      ]
     }
   ]
 }

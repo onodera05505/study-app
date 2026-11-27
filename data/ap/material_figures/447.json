@@ -1,0 +1,96 @@
+{
+  "topic_id": 447,
+  "term": "NTP",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "explanation",
+      "caption": "4 つの時刻から往復時間を出し、サーバ内の処理時間を引いた半分を片道の遅延とみなして時刻を補正します。",
+      "actors": [
+        {
+          "id": "c",
+          "label": "クライアント",
+          "icon": "device"
+        },
+        {
+          "id": "s",
+          "label": "時刻サーバ",
+          "icon": "clock"
+        }
+      ],
+      "steps": [
+        {
+          "from": "c",
+          "to": "s",
+          "label": "問合せ（送った時刻 T1 を載せる）"
+        },
+        {
+          "from": "s",
+          "to": "s",
+          "label": "T2・T3 を記録",
+          "note": "T2 受けた時刻、T3 返す時刻"
+        },
+        {
+          "from": "s",
+          "to": "c",
+          "label": "応答（T1・T2・T3 を載せる）"
+        },
+        {
+          "from": "c",
+          "to": "c",
+          "label": "受けた時刻 T4 を記録"
+        },
+        {
+          "from": "c",
+          "to": "c",
+          "label": "片道の遅延を見積もる",
+          "note": "遅延 ＝ （往復 T4−T1 − 処理 T3−T2）÷ 2"
+        },
+        {
+          "from": "c",
+          "to": "c",
+          "label": "T3 ＋ 遅延 に自分の時計を合わせる",
+          "note": "T3 から届くまでの遅延の分だけ時刻が進んでいる"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "layers",
+      "after": "### 階層とログの突合せ",
+      "caption": "上の層から下の層へ時刻が配られます。社外と同期するのは社内の上位サーバ 1 台だけで、ほかの機器はそこに合わせます。",
+      "shape": "pyramid",
+      "layers": [
+        {
+          "label": "stratum 1\n原子時計や GPS に直結",
+          "note": "最上位。数が最も少ない",
+          "icon": "clock"
+        },
+        {
+          "label": "社内の上位サーバ\n外部と同期する 1 台だけ",
+          "note": "上の層に問い合わせる",
+          "emphasis": true,
+          "icon": "server"
+        },
+        {
+          "label": "社内の機器\n上位サーバに時刻を合わせる",
+          "note": "外部とは同期しない",
+          "icon": "device"
+        }
+      ],
+      "brackets": [
+        {
+          "from": 0,
+          "to": 0,
+          "label": "社外"
+        },
+        {
+          "from": 1,
+          "to": 2,
+          "label": "社内"
+        }
+      ]
+    }
+  ]
+}

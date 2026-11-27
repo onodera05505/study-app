@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="346" viewBox="0 0 640 346">
+<rect x="0.5" y="0.5" width="639" height="345" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(55.9 20)">
+<rect x="132" y="0" width="240.2" height="306" rx="10" fill="#ffffff" stroke="#1f2937" stroke-width="1.4"/>
+<g transform="translate(158 10) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3 H14 L19 8 V21 H6 Z"/><path d="M14 3 V8 H19"/><path d="M9 12 H16 M9 15 H16 M9 18 H13.5"/></g>
+<text x="267.1" y="25.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle" font-weight="600">UDP ヘッダ（8 バイト）</text>
+<rect x="146" y="38" width="212.2" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="252.1" y="70.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle" font-weight="600">送信元ポート番号</text>
+<line x1="102" y1="66" x2="146" y2="66" stroke="#1f2937" stroke-width="0.9"/>
+<circle cx="146" cy="66" r="2.6" fill="#1f2937"/>
+<text x="96" y="54.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="end" font-weight="600">送信元ポート番号</text>
+<text x="96" y="70.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="end">2 バイト</text>
+<text x="96" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="end">返す先のアプリ</text>
+<rect x="146" y="104" width="212.2" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="252.1" y="136.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle" font-weight="600">宛先ポート番号</text>
+<line x1="102" y1="132" x2="146" y2="132" stroke="#1f2937" stroke-width="0.9"/>
+<circle cx="146" cy="132" r="2.6" fill="#1f2937"/>
+<text x="96" y="120.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="end" font-weight="600">宛先ポート番号</text>
+<text x="96" y="136.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="end">2 バイト</text>
+<text x="96" y="152.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="end">届け先のアプリ</text>
+<rect x="146" y="170" width="212.2" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="252.1" y="202.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle" font-weight="600">データ長</text>
+<line x1="358.2" y1="198" x2="402.2" y2="198" stroke="#1f2937" stroke-width="0.9"/>
+<circle cx="358.2" cy="198" r="2.6" fill="#1f2937"/>
+<text x="408.2" y="186.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">データ長</text>
+<text x="408.2" y="202.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2 バイト</text>
+<text x="408.2" y="218.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">ヘッダとデータの長さ</text>
+<rect x="146" y="236" width="212.2" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="252.1" y="268.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle" font-weight="600">チェックサム</text>
+<line x1="358.2" y1="264" x2="402.2" y2="264" stroke="#1f2937" stroke-width="0.9"/>
+<circle cx="358.2" cy="264" r="2.6" fill="#1f2937"/>
+<text x="408.2" y="252.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start" font-weight="600">チェックサム</text>
+<text x="408.2" y="268.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2 バイト</text>
+<text x="408.2" y="284.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">壊れていないかを見る</text>
+</g>
+</svg>

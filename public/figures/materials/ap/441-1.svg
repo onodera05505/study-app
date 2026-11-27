@@ -1,37 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="328" viewBox="0 0 640 328" role="img">
-<title>索引やファイル編成は内部スキーマ、E-R モデルや正規化は概念スキーマ、ビューは外部スキーマの仕事。</title>
-<rect x="0.5" y="0.5" width="639" height="327" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(101 20)">
-<polyline points="199,28 288,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
-<polyline points="206,130 260,130" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
-<polyline points="185,232 246,232" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
-<polyline points="103,56 103,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="103,102 99.4,94 106.6,94" fill="#1f2937"/>
-<polygon points="103,56 106.6,64 99.4,64" fill="#1f2937"/>
-<polyline points="103,158 103,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="103,204 99.4,196 106.6,196" fill="#1f2937"/>
-<polygon points="103,158 106.6,166 99.4,166" fill="#1f2937"/>
-<rect x="7" y="0" width="192" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="103" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">外部スキーマ</text>
-<text x="103" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">利用者・アプリから見た姿</text>
-<rect x="288" y="5" width="108" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="342" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ビューの定義</text>
-<rect x="0" y="102" width="206" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="103" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">概念スキーマ</text>
-<text x="103" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">データベース全体の論理構造</text>
-<rect x="260" y="102" width="164" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="342" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">E-R モデル・正規化</text>
-<text x="342" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">一意性制約・参照制約</text>
-<rect x="21" y="204" width="164" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="103" y="226.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">内部スキーマ</text>
-<text x="103" y="246.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">記憶装置上の格納形式</text>
-<rect x="246" y="204" width="192" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="342" y="226.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">索引の定義・ファイル編成</text>
-<text x="342" y="246.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">レコードの物理配置</text>
-<rect x="51" y="70" width="104" height="16" rx="3" fill="#ffffff"/>
-<text x="103" y="83.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">論理データ独立性</text>
-<rect x="51" y="172" width="104" height="16" rx="3" fill="#ffffff"/>
-<text x="103" y="185.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">物理データ独立性</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="270" viewBox="0 0 640 270">
+<rect x="0.5" y="0.5" width="639" height="269" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(110 20)">
+<text x="268" y="18" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">観点</text>
+<text x="71" y="30" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">層</text>
+<text x="192" y="45.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">定めること</text>
+<text x="344" y="45.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">受け持つ定義の例</text>
+<text x="71" y="89.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">外部スキーマ</text>
+<text x="71" y="147.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">概念スキーマ</text>
+<text x="71" y="205.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">内部スキーマ</text>
+<rect x="116" y="56" width="152" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="192" y="81.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">利用者・アプリから</text>
+<text x="192" y="97.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">見たデータの姿（論理）</text>
+<rect x="268" y="56" width="152" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="344" y="81.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">ビューの定義</text>
+<text x="344" y="97.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">アプリごとの切り出し</text>
+<rect x="116" y="114" width="152" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="192" y="139.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">データベース全体の</text>
+<text x="192" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">論理構造（論理）</text>
+<rect x="268" y="114" width="152" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="344" y="139.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">表・列・データ型の</text>
+<text x="344" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">定義</text>
+<rect x="116" y="172" width="152" height="58" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="192" y="197.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">記憶装置上の</text>
+<text x="192" y="213.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">格納形式（物理）</text>
+<rect x="268" y="172" width="152" height="58" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="344" y="197.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">ファイル編成</text>
+<text x="344" y="213.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">レコードの格納位置</text>
 </g>
-<text x="320" y="308" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">索引やファイル編成は内部スキーマ、E-R モデルや正規化は概念スキーマ、ビューは外部スキーマの仕事。</text>
 </svg>

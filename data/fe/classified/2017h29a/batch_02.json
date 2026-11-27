@@ -1,0 +1,384 @@
+{
+ "exam": "2017h29a",
+ "range": "28-54",
+ "classifications": [
+  {
+   "number": 28,
+   "syllabus_item": 29,
+   "topic_term": "多重度",
+   "topic_is_new": true,
+   "related_terms": [
+    "汎化",
+    "クラス図",
+    "リレーションシップ",
+    "概念データモデル"
+   ],
+   "confidence": "high",
+   "notes": "FE 2019r01a 問25「UMLを用いて表した図の概念データモデルの解釈」と同型（多重度を読み取らせる問）なので、その分類（項目29・多重度）に合わせた。本問は汎化（白抜き三角）も読む必要があるため related_terms に入れた。"
+  },
+  {
+   "number": 29,
+   "syllabus_item": 28,
+   "topic_term": "ACID特性",
+   "topic_is_new": true,
+   "related_terms": [
+    "原子性",
+    "一貫性",
+    "独立性",
+    "耐久性"
+   ],
+   "confidence": "high",
+   "notes": "応用情報の 2019h31h 問30・2020r02o 問30・2022r04a 問30 がいずれも項目28・論点『ACID特性』で分類済みなので、項目と表記をそれに合わせた。ただし FE のシラバス用語例（項目28）に ACID特性 は無いため topic_is_new=true。"
+  },
+  {
+   "number": 30,
+   "syllabus_item": 31,
+   "topic_term": "バックワードリカバリ（ロールバック）",
+   "topic_is_new": false,
+   "related_terms": [
+    "ジャーナルファイル （ログファイル）",
+    "フォワードリカバリ （ロールフォワード）",
+    "チェックポイント",
+    "障害回復"
+   ],
+   "confidence": "high",
+   "notes": "ロールバックが使う更新前情報を問う。項目31の用語例をそのままコピーした。既存マスタの『ロールフォワード』（項目67・マネジメント系・サービスの運用）は分野も概念も別なので合流させない。"
+  },
+  {
+   "number": 31,
+   "syllabus_item": 26,
+   "topic_term": "ストリーミング",
+   "topic_is_new": false,
+   "related_terms": [
+    "符号化速度",
+    "転送速度",
+    "バッファリング",
+    "音声のデータ量"
+   ],
+   "confidence": "medium",
+   "notes": "ダウンロードしながら途切れずに再生するためのバッファリング時間を求める計算。符号化速度（再生で消費する速度）と通信速度の差を埋める仕組みが論点なので、項目26の用語例『ストリーミング』を採った。既存マスタの『バッファリング』（項目18・OS）は送信タスクと受信タスクの間のバッファという別概念なので合流させていない。項目を 26（情報メディア）と 33（ネットワーク方式）のどちらに置くか迷ったため medium。"
+  },
+  {
+   "number": 32,
+   "syllabus_item": 34,
+   "topic_term": "スイッチングハブ",
+   "topic_is_new": false,
+   "related_terms": [
+    "レイヤー2（L2）スイッチ",
+    "物理アドレス",
+    "ブリッジ",
+    "ハブ"
+   ],
+   "confidence": "high",
+   "notes": "応用情報も項目34・論点『スイッチングハブ』で3問を分類済みで、FE シラバスの項目34 にも同表記の用語例があるため合わせた。"
+  },
+  {
+   "number": 33,
+   "syllabus_item": 33,
+   "topic_term": "NAT（Network Address Translation：ネットワークアドレス変換）",
+   "topic_is_new": false,
+   "related_terms": [
+    "プライベート IP アドレス",
+    "グローバル IP アドレス",
+    "IP マスカレード（NAPT）",
+    "IPv4"
+   ],
+   "confidence": "high",
+   "notes": "プライベートとグローバルの相互変換そのものを問うので、項目33の用語例を丸ごとコピーした。既存マスタの『IP マスカレード（NAPT）』（項目33。FE 2019r01a 問33＝1個のグローバルIPを複数PCで共用）はポート番号まで変換する別概念なので合流させない。"
+  },
+  {
+   "number": 34,
+   "syllabus_item": 35,
+   "topic_term": "UDP",
+   "topic_is_new": true,
+   "related_terms": [
+    "TCP",
+    "ポート番号",
+    "トランスポート層",
+    "VoIP（Voice over Internet Protocol）"
+   ],
+   "confidence": "high",
+   "notes": "FE 2019h31h 問33 に同一問題があり、その分類（項目35・UDP・topic_is_new=true）にそのまま合わせた。"
+  },
+  {
+   "number": 35,
+   "syllabus_item": 35,
+   "topic_term": "サブネットマスク",
+   "topic_is_new": false,
+   "related_terms": [
+    "IP アドレス",
+    "サブネットアドレス",
+    "CIDR（Classless Inter Domain Routing）",
+    "ブロードキャスト"
+   ],
+   "confidence": "high",
+   "notes": "応用情報 2019h31h 問34 に同一問題があり項目35・サブネットマスクで分類済み。FE の既存マスタにも同表記（項目35）があるので合わせた。"
+  },
+  {
+   "number": 36,
+   "syllabus_item": 38,
+   "topic_term": "C&C サーバ",
+   "topic_is_new": true,
+   "related_terms": [
+    "ボット（ボットネット， 遠隔操作型ウイルス（RAT：Remote Access Trojan），C&C サーバ）",
+    "ボットネット",
+    "踏み台",
+    "遠隔操作型ウイルス（RAT：Remote Access Trojan）"
+   ],
+   "confidence": "high",
+   "notes": "項目38の用語例は括弧内に別概念を列挙しているので、設問の主題である C&C サーバ の1語だけを論点にした。応用情報の同名論点（項目38・『C&C サーバ』・topic_is_new=true、2問）と表記・項目・is_new をそろえた。"
+  },
+  {
+   "number": 37,
+   "syllabus_item": 38,
+   "topic_term": "DNS キャッシュポイズニング",
+   "topic_is_new": false,
+   "related_terms": [
+    "DNS",
+    "名前解決",
+    "ファーミング",
+    "DNSSEC"
+   ],
+   "confidence": "high",
+   "notes": "既存マスタ（FE 2019r01a 問35、項目38）の表記『DNS キャッシュポイズニング』をそのままコピーした。"
+  },
+  {
+   "number": 38,
+   "syllabus_item": 38,
+   "topic_term": "RSA 暗号",
+   "topic_is_new": false,
+   "related_terms": [
+    "公開鍵暗号方式",
+    "素因数分解",
+    "楕円曲線暗号",
+    "AES"
+   ],
+   "confidence": "high",
+   "notes": "項目38の用語例『RSA 暗号』をそのままコピーした（半角空白あり）。"
+  },
+  {
+   "number": 39,
+   "syllabus_item": 38,
+   "topic_term": "SQL インジェクション",
+   "topic_is_new": false,
+   "related_terms": [
+    "クロスサイトスクリプティング",
+    "クロスサイトリクエストフォージェリ",
+    "SQL インジェクション対策（プレースホルダほか）",
+    "改ざん"
+   ],
+   "confidence": "high",
+   "notes": "攻撃そのものの説明を問うので、対策側（項目42『SQL インジェクション対策（プレースホルダほか）』）ではなく項目38の用語例『SQL インジェクション』を採った。"
+  },
+  {
+   "number": 40,
+   "syllabus_item": 38,
+   "topic_term": "デジタル署名（署名鍵， 検証鍵）",
+   "topic_is_new": false,
+   "related_terms": [
+    "公開鍵暗号方式",
+    "メッセージダイジェスト",
+    "否認防止 （Non-Repudiation）",
+    "改ざん"
+   ],
+   "confidence": "high",
+   "notes": "既存マスタ（FE 2019 の回、項目38）の表記『デジタル署名（署名鍵， 検証鍵）』を1文字も変えずにコピーした。問題文は『ディジタル署名』だが表記を揺らさない。"
+  },
+  {
+   "number": 41,
+   "syllabus_item": 38,
+   "topic_term": "ワーム",
+   "topic_is_new": false,
+   "related_terms": [
+    "トロイの木馬",
+    "コンピュータウイルス",
+    "ランサムウェア",
+    "自己伝染"
+   ],
+   "confidence": "high",
+   "notes": "トロイの木馬と比較してワームの特徴を問う問題。主題のワーム（項目38の用語例）を論点にし、比較対象を related_terms に入れた。"
+  },
+  {
+   "number": 42,
+   "syllabus_item": 39,
+   "topic_term": "CSIRT",
+   "topic_is_new": true,
+   "related_terms": [
+    "情報セキュリティ関連組織（ CSIRT，SOC（Security Operation Center） ）",
+    "情報セキュリティインシデント",
+    "JPCERTコーディネーションセンター",
+    "IETF（Internet Engineering Task Force：インターネット技術タスクフォース）"
+   ],
+   "confidence": "high",
+   "notes": "項目39の用語例は括弧内に CSIRT と SOC を列挙しているので、主題の CSIRT の1語だけを論点にした。単独表記の用語例は無いため topic_is_new=true。応用情報の同名論点（項目39・『CSIRT』・topic_is_new=true）と一致させた。"
+  },
+  {
+   "number": 43,
+   "syllabus_item": 39,
+   "topic_term": "リスクアセスメントのプロセス（リスク特定，リスク分析，リスク評価）",
+   "topic_is_new": false,
+   "related_terms": [
+    "リスク対応計画",
+    "リスクレベル",
+    "リスク保有",
+    "リスクマネジメント（JIS Q 31000）"
+   ],
+   "confidence": "high",
+   "notes": "応用情報 2022r04a 問41 に同一問題があり、その分類（項目39・『リスクアセスメントのプロセス（リスク特定，リスク分析，リスク評価）』）に合わせた。FE シラバス項目39 にも同一表記の用語例がある。"
+  },
+  {
+   "number": 44,
+   "syllabus_item": 42,
+   "topic_term": "データベースのセキュリティ対策",
+   "topic_is_new": true,
+   "related_terms": [
+    "データベース暗号化",
+    "データベースアクセス制御",
+    "盗聴",
+    "SSL/TLS"
+   ],
+   "confidence": "medium",
+   "notes": "クライアントとサーバのデータベース接続プログラム間の盗聴を防ぐ対策（通信の暗号化）を選ばせる問題。項目42の用語例は『データベース暗号化』『データベースアクセス制御』『データベースバックアップ』と格納データ側に寄っていて、通信経路の暗号化を指す語が無い。データベース接続の保護という括りを論点にしたが、『SSL/TLS』や項目41の情報漏えい対策に寄せる選択もあり得るため medium。"
+  },
+  {
+   "number": 45,
+   "syllabus_item": 40,
+   "topic_term": "ペネトレーションテスト",
+   "topic_is_new": false,
+   "related_terms": [
+    "脆弱性",
+    "ウォークスルー",
+    "回帰テスト （リグレッションテスト）",
+    "ファジング"
+   ],
+   "confidence": "high",
+   "notes": "項目40（セキュリティ技術評価）の用語例をそのままコピーした。応用情報の『ペネトレーションテスト法』（項目69・マネジメント系）はシステム監査の技法を指す別概念・別分野なので合流させない。"
+  },
+  {
+   "number": 46,
+   "syllabus_item": 10,
+   "topic_term": "シーケンス図",
+   "topic_is_new": false,
+   "related_terms": [
+    "アクティビティ図",
+    "コンポーネント図",
+    "ステートマシン図",
+    "コミュニケーション図"
+   ],
+   "confidence": "high",
+   "notes": "UML の図の種類を特定させる問題。FE 2019h31h 問46（UML における振る舞い図の説明）が項目10・『アクティビティ図』で分類済みなので、同じ項目10 に置き、用語例『シーケンス図』をコピーした。"
+  },
+  {
+   "number": 47,
+   "syllabus_item": 44,
+   "topic_term": "クラス",
+   "topic_is_new": false,
+   "related_terms": [
+    "インスタンス",
+    "属性",
+    "メソッド",
+    "継承 （インヘリタンス）"
+   ],
+   "confidence": "high",
+   "notes": "クラスとオブジェクト（インスタンス）の関係を問う。応用情報 2016h28a 問47（オブジェクト指向言語のクラス）が項目44・『クラス』で分類済みなので、項目と表記をそれに合わせ、インスタンスは related_terms に入れた。"
+  },
+  {
+   "number": 48,
+   "syllabus_item": 44,
+   "topic_term": "モジュール結合度",
+   "topic_is_new": true,
+   "related_terms": [
+    "モジュール分割",
+    "独立性",
+    "データ結合",
+    "共通結合"
+   ],
+   "confidence": "high",
+   "notes": "FE 2019r01a 問46 に同一問題があり、その分類（項目44・モジュール結合度・topic_is_new=true）にそのまま合わせた。"
+  },
+  {
+   "number": 49,
+   "syllabus_item": 44,
+   "topic_term": "ブラックボックステスト",
+   "topic_is_new": false,
+   "related_terms": [
+    "ホワイトボックステスト",
+    "命令網羅",
+    "限界値分析法",
+    "同値分析法"
+   ],
+   "confidence": "high",
+   "notes": "FE 2019h31h 問47（ブラックボックステストに関する記述）と同型なので、その分類（項目44・ブラックボックステスト）に合わせた。"
+  },
+  {
+   "number": 50,
+   "syllabus_item": 48,
+   "topic_term": "リバースエンジニアリング",
+   "topic_is_new": false,
+   "related_terms": [
+    "リファクタリング",
+    "フォワードエンジニアリング",
+    "完全化保守",
+    "保守のための文書作成"
+   ],
+   "confidence": "high",
+   "notes": "項目48（保守・廃棄）の用語例をそのままコピーした。応用情報 2016h28a 問49 も項目48・『リバースエンジニアリング』で分類済み。"
+  },
+  {
+   "number": 51,
+   "syllabus_item": 59,
+   "topic_term": "ファンクションポイント法",
+   "topic_is_new": false,
+   "related_terms": [
+    "LOC（Lines of Code） 法",
+    "COCOMO（Constructive Cost Model）",
+    "類推見積り",
+    "ボトムアップ見積り"
+   ],
+   "confidence": "high",
+   "notes": "既存マスタ（FE 2019r01a 問53、項目59）と同じ表記・同じ項目に合流させた。"
+  },
+  {
+   "number": 52,
+   "syllabus_item": 59,
+   "topic_term": "工数見積り",
+   "topic_is_new": true,
+   "related_terms": [
+    "パラメトリック見積り",
+    "ボトムアップ見積り",
+    "人日",
+    "管理工数"
+   ],
+   "confidence": "high",
+   "notes": "規模と複雑度の表から画面作成工数を積算し、レビュー・修正と管理工数を足す問題。FE 2019h31h 問54（表から要員数を見積もる）と同型なので、既存マスタの『工数見積り』（項目59・topic_is_new=true）に合流させた。"
+  },
+  {
+   "number": 53,
+   "syllabus_item": 58,
+   "topic_term": "アローダイアグラム",
+   "topic_is_new": false,
+   "related_terms": [
+    "クリティカルパス",
+    "最早結合点時刻",
+    "PERT",
+    "CPM（Critical Path Method： クリティカルパス法）"
+   ],
+   "confidence": "high",
+   "notes": "FE 2019r01a 問52（アローダイアグラムのクリティカルパス）と同型なので、既存マスタの『アローダイアグラム』（項目58）に合流させた。"
+  },
+  {
+   "number": 54,
+   "syllabus_item": 61,
+   "topic_term": "パレート図",
+   "topic_is_new": true,
+   "related_terms": [
+    "管理図",
+    "散布図",
+    "特性要因図",
+    "QC 七つ道具"
+   ],
+   "confidence": "high",
+   "notes": "公式の分野がマネジメント系なので、プロジェクトの品質（項目61。用語例『プロジェクトにおける品質管理測定値の活用（データ表現技法の選択など）』）に置いた。応用情報の『パレート図』は項目90（業務分析・データ利活用、ストラテジ系）にあるが、分野をまたぐ合流は避けるため新設した。FE マスタの『特性要因図』も項目90・ストラテジ系なので合流させない。"
+  }
+ ]
+}

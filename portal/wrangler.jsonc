@@ -1,0 +1,16 @@
+{
+  // 入口「まなびば」（認証と権限の正本。要件 §15）。Workers 用の設定。
+  // Pages へ出すときは scripts/deploy_portal.sh がこれから Pages 用の設定を組む（学び側の deploy-pages.sh と同じ作法）。
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "manabiba",
+  "account_id": "6408e560f74d14fa46bd410ef28bf52b",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-01-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application" },
+  "d1_databases": [
+    { "binding": "DB", "database_name": "manabiba-db", "database_id": "fdaa53c4-47e0-4b6c-8138-90190dbd367b", "migrations_dir": "migrations" }
+  ],
+  "vars": { "APP_NAME": "manabiba" }
+  // SSO_SECRET は wrangler pages secret put で設定する。vars には置かない。
+}

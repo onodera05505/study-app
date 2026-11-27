@@ -1,28 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="296" viewBox="0 0 640 296" role="img">
-<title>1周ごとに値を書き出す。2周目まで合えば式は正しく、回数は繰返しの指定で決まる。</title>
-<rect x="0.5" y="0.5" width="639" height="295" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(158.73 20)">
-<line x1="67.95" y1="34" x2="67.95" y2="228" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="274.55" y1="34" x2="274.55" y2="228" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<rect x="0" y="0" width="135.9" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="67.95" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">繰返し i＝1,2,3</text>
-<rect x="226.55" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="274.55" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">変数 num</text>
-<polyline points="70.95,68 271.55,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="271.55,68 263.55,71.6 263.55,64.4" fill="#1f2937"/>
-<text x="171.25" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. i＝1　num ← 1 ＋ 2×1 ＝ 3</text>
-<rect x="111.45" y="73" width="119.6" height="16" rx="3" fill="#ffffff"/>
-<text x="171.25" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">num の初めの値は 1</text>
-<polyline points="70.95,124 271.55,124" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="271.55,124 263.55,127.6 263.55,120.4" fill="#1f2937"/>
-<text x="171.25" y="117" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. i＝2　num ← 3 ＋ 2×2 ＝ 7</text>
-<rect x="79.65" y="129" width="183.2" height="16" rx="3" fill="#ffffff"/>
-<text x="171.25" y="142.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">2×num ＋ i では 8 で合わない</text>
-<polyline points="70.95,180 271.55,180" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="271.55,180 263.55,183.6 263.55,176.4" fill="#1f2937"/>
-<text x="171.25" y="173" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. i＝3　num ← 7 ＋ 2×3 ＝ 13</text>
-<rect x="102.75" y="185" width="137" height="16" rx="3" fill="#ffffff"/>
-<text x="171.25" y="198.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">3回で終わり 13 が残る</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="270" viewBox="0 0 640 270">
+<rect x="0.5" y="0.5" width="639" height="269" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(79 20)">
+<text x="302" y="18" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">当てはめる周（i の初めの値は 1）</text>
+<text x="74" y="30" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">比べるもの</text>
+<text x="182" y="45.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">1 周目（k ＝ 1）</text>
+<text x="302" y="45.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">2 周目（k ＝ 2）</text>
+<text x="422" y="45.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">判定</text>
+<text x="74" y="89.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">書き出した i</text>
+<text x="74" y="139.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">候補の式</text>
+<text x="74" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">i ← i ＋ 3×k</text>
+<text x="74" y="197.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">候補の式</text>
+<text x="74" y="213.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">i ← 3×i ＋ k</text>
+<rect x="122" y="56" width="120" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="182" y="89.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">i ＝ 4</text>
+<rect x="242" y="56" width="120" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="302" y="89.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">i ＝ 10</text>
+<rect x="362" y="56" width="120" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="422" y="81.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1 → 4 → 10</text>
+<text x="422" y="97.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">この値と比べる</text>
+<rect x="122" y="114" width="120" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="182" y="139.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1 ＋ 3×1 ＝ 4</text>
+<text x="182" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">合う</text>
+<rect x="242" y="114" width="120" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="302" y="139.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4 ＋ 3×2 ＝ 10</text>
+<text x="302" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">合う</text>
+<rect x="362" y="114" width="120" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="422" y="139.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2 周とも合う</text>
+<text x="422" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">残す式</text>
+<rect x="122" y="172" width="120" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="182" y="197.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3×1 ＋ 1 ＝ 4</text>
+<text x="182" y="213.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">合う</text>
+<rect x="242" y="172" width="120" height="58" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="302" y="197.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">3×4 ＋ 2 ＝ 14</text>
+<text x="302" y="213.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">合わない</text>
+<rect x="362" y="172" width="120" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="422" y="197.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2 周目で外れる</text>
+<text x="422" y="213.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">外す式</text>
 </g>
-<text x="320" y="276" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">1周ごとに値を書き出す。2周目まで合えば式は正しく、回数は繰返しの指定で決まる。</text>
 </svg>

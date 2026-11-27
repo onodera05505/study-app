@@ -1,0 +1,104 @@
+{
+  "topic_id": 202,
+  "term": "セキュアブート（UEFI：Unified Extensible Firmware Interface）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 署名を 1 つずつ確かめる流れ",
+      "caption": "UEFI は起動するプログラムの署名を 1 つずつ確かめます。上の列は署名が有効で起動が進む道、下の列は署名が無効で止まる道です。",
+      "nodes": [
+        {
+          "id": "uefi",
+          "label": "UEFI\n登録済みの検証鍵で\n署名を確かめる",
+          "row": 0,
+          "col": 0,
+          "icon": "key",
+          "emphasis": true
+        },
+        {
+          "id": "bl",
+          "label": "ブートローダ\n署名が有効",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "os",
+          "label": "OS カーネル・ドライバ\n署名が有効",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "bad",
+          "label": "改ざんされたプログラム\n署名が一致しない",
+          "row": 1,
+          "col": 1,
+          "icon": "warning"
+        },
+        {
+          "id": "stop",
+          "label": "実行を拒否\nそこで起動が止まる",
+          "row": 1,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "uefi",
+          "to": "bl",
+          "label": "検証して有効→実行"
+        },
+        {
+          "from": "bl",
+          "to": "os",
+          "label": "検証して有効→実行"
+        },
+        {
+          "from": "uefi",
+          "to": "bad",
+          "label": "検証する"
+        },
+        {
+          "from": "bad",
+          "to": "stop",
+          "label": "無効→実行しない"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "timeline",
+      "after": "### 対策ソフトが動く前の時間帯",
+      "caption": "帯は起動の時間帯ごとに誰が守るかを表します。対策ソフトがまだ動いていない前の時間帯を、強調したセキュアブートが受け持ちます。",
+      "axis": {
+        "label": "電源を入れてからの起動の進み",
+        "ticks": [
+          "電源投入",
+          "UEFI",
+          "ブートローダ",
+          "OS 起動",
+          "対策ソフト起動",
+          "利用中"
+        ]
+      },
+      "events": [
+        {
+          "from": 0,
+          "to": 4,
+          "label": "対策ソフトはまだ動かない\nOS より先に動く物が見えない"
+        },
+        {
+          "from": 0,
+          "to": 4,
+          "label": "セキュアブートが守る\n署名の有効な物だけ実行",
+          "emphasis": true
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "label": "対策ソフトが守る\nOS の上で監視"
+        }
+      ]
+    }
+  ]
+}

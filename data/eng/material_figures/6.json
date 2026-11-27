@@ -1,0 +1,25 @@
+{
+  "topic_id": 6,
+  "term": "キャッシュメモリ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### しくみ",
+      "caption": "1 回目は手元に無いミスなので、メモリから隣の物ごと写します。次に隣を読むときは手元にあるヒットなので、メモリまで行きません。",
+      "actors": [
+        {"id": "cpu", "label": "CPU"},
+        {"id": "ca", "label": "キャッシュ\n速くて小さい"},
+        {"id": "mem", "label": "メモリ\n遅くて大きい"}
+      ],
+      "steps": [
+        {"from": "cpu", "to": "ca", "label": "A を読みたい"},
+        {"from": "ca", "to": "mem", "label": "手元に無い（ミス）ので取りに行く"},
+        {"from": "mem", "to": "ca", "label": "A と隣の B をまとめて写す", "note": "近くの物は続けて使われやすい"},
+        {"from": "ca", "to": "cpu", "label": "A を渡す"},
+        {"from": "cpu", "to": "ca", "label": "次に B を読みたい"},
+        {"from": "ca", "to": "cpu", "label": "手元にある（ヒット）のですぐ返す", "note": "メモリまで行かずに済む"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "topic_id": 406,
+  "term": "PEST 分析",
+  "figures": [
+    {
+      "id": 1,
+      "type": "venn",
+      "after": "### 3C 分析との違い",
+      "caption": "外側の輪ほど自社から遠い環境です。一番外の帯が PEST 分析の見る範囲で、業界の内側は 3C 分析が見ます。",
+      "layout": "nested",
+      "sets": [
+        {
+          "id": "mac",
+          "label": "マクロ環境"
+        },
+        {
+          "id": "ind",
+          "label": "業界（3C 分析が見る）"
+        },
+        {
+          "id": "me",
+          "label": "自社"
+        }
+      ],
+      "regions": [
+        {
+          "in": [
+            "mac"
+          ],
+          "label": "PEST 分析が見る\n自社では動かせない流れ",
+          "emphasis": true
+        },
+        {
+          "in": [
+            "mac",
+            "ind"
+          ],
+          "label": "業界の内側\n顧客・競合"
+        },
+        {
+          "in": [
+            "mac",
+            "ind",
+            "me"
+          ],
+          "label": "自社の持ち物\n技術・人材・資金"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "parts",
+      "after": "### 四つの観点が見ているもの",
+      "caption": "マクロ環境を四つの観点に分け、それぞれが見る中身の例を添えています。調べる変化がどの観点に入るかを見分けるのに使います。",
+      "whole": {
+        "label": "マクロ環境"
+      },
+      "parts": [
+        {
+          "label": "政治（P）\n法規制・税制・政策",
+          "icon": "document"
+        },
+        {
+          "label": "経済（E）\n景気・物価・為替・金利",
+          "icon": "money"
+        },
+        {
+          "label": "社会（S）\n人口構成・価値観・生活習慣",
+          "icon": "people"
+        },
+        {
+          "label": "技術（T）\n新しい技術の登場と広まり",
+          "icon": "gear"
+        }
+      ]
+    }
+  ]
+}

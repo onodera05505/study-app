@@ -35,10 +35,10 @@
  * 失敗したショットは manifest に error として残して先へ進む。1枚こけても採取は止めない。
  */
 import { chromium } from 'playwright'
-import { mkdirSync, readFileSync, writeFileSync, rmSync, existsSync } from 'node:fs'
-import { dirname, join, resolve } from 'node:path'
+import { mkdirSync, readFileSync, readdirSync, writeFileSync, rmSync, existsSync } from 'node:fs'
+import { basename, dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { buildFixtures, apiCall } from './audit_fixtures.mjs'
+import { buildFixtures, apiCall, fieldOf, toolErrorLine, UnreadableAnswer } from './audit_fixtures.mjs'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const AXE_PATH = join(ROOT, 'node_modules/axe-core/axe.min.js')
@@ -69,13 +69,14 @@ const SCHEMES = ['light', 'dark']
 
 // ---------------------------------------------------------------- 代表 ID の選定
 
-/** 論点を全件ぶん取る。API の limit は 500 までなので、単元ごとに分けて取る。 */
+/** 論点を全件ぶん取る。API の limit は 500 までなので、単元ごとに分けて取る。一覧が読めない答えは UnreadableAnswer で止まる。 */
 async function allTopics(token) {
-  const cats = (await apiCall(BASE, '/categories', { token })).categories
+  const listOf = async (path, key) => fieldOf(await apiCall(BASE, path, { token }), key, 'list', 'GET', path)
+  const cats = await listOf('/categories', 'categories')
   const seen = new Set()
   const out = []
   for (const c of cats) {
-    const rows = (await apiCall(BASE, `/topics?middleNo=${c.middleNo}&limit=500`, { token })).topics
+    const rows = await listOf(`/topics?middleNo=${c.middleNo}&limit=500`, 'topics')
     for (const t of rows) if (!seen.has(t.id)) (seen.add(t.id), out.push(t))
   }
   return out.sort((a, b) => b.questionCount - a.questionCount)
@@ -96,7 +97,9 @@ async function pickTopics(token) {
         const t = queue.shift()
         if (!t) return
         try {
-          details.push(await apiCall(BASE, `/topics/${t.id}`, { token }))
+          const d = await apiCall(BASE, `/topics/${t.id}`, { token })
+          // 中身の無い答え・論点や過去問の並びを持たない答えも、取れなかった 1 件として飛ばす
+          if (d && d.topic && Array.isArray(d.questions)) details.push(d)
         } catch {
           /* 1件くらい取れなくても選定は続ける */
         }
@@ -543,6 +546,7 @@ function buildSpecs(fx, reps, middleNo) {
       expectFailure: a.done === bogus,
     },
     { key: 'history', path: '/history' },
+    { key: 'feedback', path: '/feedback', note: 'フィードバック（要件 §5.5-4）。直前の画面を添えるチェックは /topics/:id の後に開くと出る' },
     { key: 'notfound', path: '/no-such-page-xyz', note: '存在しない URL（SPA のフォールバック）' },
   ]
 
@@ -616,12 +620,31 @@ function buildSpecs(fx, reps, middleNo) {
 
 // ---------------------------------------------------------------- 実行
 
+/**
+ * 出力先 out から、前の回の採取が書いた物（前の回の一覧 manifest.json が挙げる写しと、一覧そのもの）だけを消す。
+ * 出力先のほかのファイルは残す。一覧が無いか読めないときは、どの写しを前の回が書いたかを一覧から引けないので、
+ * 出力先の直下の PNG を前の回の写しとして消す。一覧が挙げる名前は出力先の直下のファイル名に限る（出力先の外は消さない）。
+ */
+function removePreviousShots(out) {
+  const listPath = join(out, 'manifest.json')
+  let listed = null
+  try {
+    const shots = JSON.parse(readFileSync(listPath, 'utf8')).shots
+    if (Array.isArray(shots)) listed = shots.map((x) => x?.file).filter((f) => typeof f === 'string' && f === basename(f))
+  } catch {
+    listed = null
+  }
+  const files = listed ?? readdirSync(out).filter((n) => n.endsWith('.png'))
+  for (const f of files) rmSync(join(out, f), { force: true })
+  rmSync(listPath, { force: true })
+}
+
 async function main() {
   console.log(`▶ L5 画面の検査 — exam=${EXAM} base=${BASE}`)
   console.log(`  出力先: ${OUT}`)
 
-  // 前回の PNG は消す（残っていると「今回撮れなかった」ものが撮れたように見える）
-  if (existsSync(OUT) && !has('--keep')) rmSync(OUT, { recursive: true, force: true })
+  // 前の回の写しと一覧は消す（残っていると「今回撮れなかった」ものが撮れたように見える）。--keep のときは残す
+  if (existsSync(OUT) && !has('--keep')) removePreviousShots(OUT)
   mkdirSync(OUT, { recursive: true })
 
   const fx = await buildFixtures(BASE, { log: (s) => console.log(s) })
@@ -755,6 +778,12 @@ async function main() {
 }
 
 main().catch((e) => {
+  if (e instanceof UnreadableAnswer) {
+    // 撮る前に止まった。読めなかった問い合わせを断りの形で標準出力の最後の行に出す（パイプへの書き出しを打ち切らないよう exit しない）
+    process.stdout.write(`${toolErrorLine(e)}\n`)
+    process.exitCode = 1
+    return
+  }
   console.error(e)
   process.exit(1)
 })

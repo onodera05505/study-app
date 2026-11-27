@@ -1,0 +1,48 @@
+{
+  "target": "ap",
+  "units": ["14", "15", "23"],
+  "status": "done",
+  "items": [
+    {"no": 240, "topic_id": 8, "type": "F", "verdict": "fixed",
+     "rule": "rewrite_unit_crosscheck.md ⑥「### 混同しやすい用語 と ### 計算の解き方 は、中身を言う名前に替えない」・write_materials.md「見出し」の表（### 計算の解き方）。点の台帳は rewrite_open_items.md「点の台帳の直し方」の H",
+     "what": "14-6 の論点 8 の detail に「### 計算の解き方（完成時総コスト見積り）」があり、図の after は「### 3つの値」「### 差異と効率指数」で、この見出しを指していないことを 8.json で確かめた。見出しを「### 計算の解き方」に戻し、台帳 14-6 の論点 8 で where が旧の見出しを指す 6 行を新しい見出しに書き換えた（point は変えていない）。",
+     "questions_checked": ["14-6 の束の論点 8 の questions（EAC・SV/CV・SPI/CPI を問う各問。節の中身は変えていないので解き方は変わらない）"]},
+    {"no": 241, "topic_id": 602, "type": "E", "verdict": "by_rule",
+     "rule": "write_materials.md「1 つの点は 1 か所で言う」（点は 1 つの対象についての定義・対応・違い・理由）、rewrite_unit_crosscheck.md ④（同じ説明の重複）",
+     "what": "### 速さと費用のつり合い の文は ITIL の復旧オプションの選び方（復旧に許される時間と平時の費用）を言い、### 待機系をどこまで起動しておくか の末尾の文はデュプレックスの待機系の状態と費用を言う。向きは同じだが対象が別で、後者の費用の点は表にも前の節にも無いので、同じ点の言い直しに当たらない。直さない。",
+     "questions_checked": []},
+    {"no": 242, "topic_id": 1, "type": "A", "verdict": "returned",
+     "rule": "unit_plan.md「受け持ち（owners）」（owners[].topics はその説明に触れる論点）と rewrite_open_items.md「A の直し方」5（owners は行を消すか subject を書き換えるだけで、他は変えない）",
+     "what": "単元 23 の owners の請負の行の topics に 1 が残ることを確かめた。論点 1 は今、指揮命令を [[労働者派遣契約]] で指し、請負には原始的帰属の表の行と「請負では…著作権は受注側に生じます」でだけ触れる。直し方が 1 つに決まらないので返す。",
+     "questions_checked": []}
+  ],
+  "edits": [
+    {"file": "data/ap/materials_v4/14-6.json", "topic_id": 8, "field": "detail",
+     "op": "replace", "heading": "### 計算の解き方（完成時総コスト見積り）",
+     "before": "### 計算の解き方（完成時総コスト見積り）", "after": "### 計算の解き方"}
+  ],
+  "owners": [],
+  "figure_after": [],
+  "ledgers": [
+    {"file": "data/ap/rewrite_ledgers/14-6.json", "topic_id": 8, "point": "計算例の資料（BAC 100・期間 10 日・5 日目・PV 50・EV 40・AC 60）",
+     "before": {"where": "### 計算の解き方（完成時総コスト見積り）"}, "after": {"where": "### 計算の解き方"}},
+    {"file": "data/ap/rewrite_ledgers/14-6.json", "topic_id": 8, "point": "CPI＝40÷60＝約 0.667、1 未満で予算より多く使っている",
+     "before": {"where": "### 計算の解き方（完成時総コスト見積り）"}, "after": {"where": "### 計算の解き方"}},
+    {"file": "data/ap/rewrite_ledgers/14-6.json", "topic_id": 8, "point": "EAC＝100÷0.667＝150 万円",
+     "before": {"where": "### 計算の解き方（完成時総コスト見積り）"}, "after": {"where": "### 計算の解き方"}},
+    {"file": "data/ap/rewrite_ledgers/14-6.json", "topic_id": 8, "point": "AC＋(BAC－EV)÷CPI＝60＋60÷0.667＝150 でも同じ",
+     "before": {"where": "### 計算の解き方（完成時総コスト見積り）"}, "after": {"where": "### 計算の解き方"}},
+    {"file": "data/ap/rewrite_ledgers/14-6.json", "topic_id": 8, "point": "SPI＝40÷50＝0.8 で進捗も遅れている。EAC で割るのはコスト効率の CPI",
+     "before": {"where": "### 計算の解き方（完成時総コスト見積り）"}, "after": {"where": "### 計算の解き方"}},
+    {"file": "data/ap/rewrite_ledgers/14-6.json", "topic_id": 8, "point": "どちらの効率を使う場面かを最初に確かめる（解き方の言い回し）",
+     "before": {"where": "### 計算の解き方（完成時総コスト見積り）（EAC を出すときに割るのはコスト効率の CPI、の 1 文）"},
+     "after": {"where": "### 計算の解き方（EAC を出すときに割るのはコスト効率の CPI、の 1 文）"}}
+  ],
+  "returned": [
+    {"no": 242, "topic_id": 1, "figure": null, "kind": "undetermined",
+     "what": "単元 23 の owners の行「請負では受注者が作業者に指揮命令し、発注者は作業者へ直接指示しないこと」（owner 428、topics [428, 50, 465, 1]）。①unit_plan.md の owners[].topics の決まり（その説明に触れる論点）を当てると、論点 1 は指揮命令に触れなくなったので topics から 1 を外して [428, 50, 465] にする（owner 428 は変わらない）。ただしこの段の owners の直しは A の 5（行を消す・subject を書き換える）に限られ、topics を変える直しは書いてよい範囲に無い。②論点 1 の原始的帰属の表の「請負・委託 → 受注した会社（作成したのは受注側）」と「請負では、発注元が要求仕様を出していても、著作権は受注側に生じます」を、作業者を指揮して作るのが受注側だという請負の前提に触れる物と読めば、topics は今のままでよい。①と②のどちらを取るか、①なら topics を誰が書き換えるかを親が決める。"}
+  ],
+  "noticed": [],
+  "gates": {"check_materials": 0, "check_material_style": 0, "render_check": 0, "check_explanations": 0, "check_unit_plans": null},
+  "chars": {"before": 4198, "after": 4186}
+}

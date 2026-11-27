@@ -1,0 +1,41 @@
+{
+  "topic_id": 273,
+  "term": "活性化関数",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "ニューロン 1 個の中で値が流れる順を示す図です。強調した活性化関数は、重みを掛けて足した合計から次へ渡す値を決めます。",
+      "nodes": [
+        {"id": "x1", "label": "入力 1\n前の層からの値", "row": 0, "col": 0},
+        {"id": "x2", "label": "入力 2\n前の層からの値", "row": 1, "col": 0},
+        {"id": "x3", "label": "入力 3\n前の層からの値", "row": 2, "col": 0},
+        {"id": "sum", "label": "合計\n重みを掛けて足す", "row": 1, "col": 1},
+        {"id": "act", "label": "活性化関数\n渡す値を決める", "row": 1, "col": 2, "emphasis": true},
+        {"id": "nx", "label": "次の層\nのニューロン", "row": 1, "col": 3}
+      ],
+      "edges": [
+        {"from": "x1", "to": "sum", "label": "入力×重み"},
+        {"from": "x2", "to": "sum", "label": "入力×重み"},
+        {"from": "x3", "to": "sum", "label": "入力×重み"},
+        {"from": "sum", "to": "act", "label": "合計値"},
+        {"from": "act", "to": "nx", "label": "計算した出力"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "chart",
+      "after": "### なぜ直線的でない関数を挟むのか",
+      "caption": "合計値をそのまま渡す直線と、0 で折れる関数の線を重ねた図です。折れる線は、しきい値を超えたときだけ値を出します。",
+      "kind": "line",
+      "x": {"label": "合計値", "values": [-3, -2, -1, 0, 1, 2, 3]},
+      "y": {"label": "次へ渡す値"},
+      "series": [
+        {"label": "そのまま渡す（直線）", "values": [-3, -2, -1, 0, 1, 2, 3]},
+        {"label": "0 で折れる関数（ReLU）", "values": [0, 0, 0, 0, 1, 2, 3], "emphasis": true}
+      ],
+      "vlines": [{"x": 0, "label": "しきい値"}]
+    }
+  ]
+}

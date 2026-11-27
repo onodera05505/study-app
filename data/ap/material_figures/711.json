@@ -1,0 +1,60 @@
+{
+  "topic_id": 711,
+  "term": "アクセス透過性",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 何を隠しているのか",
+      "caption": "プログラムは手元の資源にも遠隔地の資源にも同じ操作で頼みます。遠隔地との手順の違いは、強調したミドルウェアが間で引き受けます。",
+      "nodes": [
+        {
+          "id": "prog",
+          "label": "プログラム\n資源を使う側",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "local",
+          "label": "手元の資源\nこのホストの\nファイル・DB",
+          "row": 0,
+          "col": 1,
+          "icon": "database"
+        },
+        {
+          "id": "mw",
+          "label": "ミドルウェア（RPC など）\nアクセス方法の違いを吸収",
+          "row": 1,
+          "col": 0,
+          "icon": "gear",
+          "emphasis": true
+        },
+        {
+          "id": "remote",
+          "label": "遠隔地の資源\n別の OS・形式・手順",
+          "row": 1,
+          "col": 1,
+          "icon": "server"
+        }
+      ],
+      "edges": [
+        {
+          "from": "prog",
+          "to": "local",
+          "label": "いつもの操作"
+        },
+        {
+          "from": "prog",
+          "to": "mw",
+          "label": "同じいつもの操作"
+        },
+        {
+          "from": "mw",
+          "to": "remote",
+          "label": "その場所の手順に\n変換して届ける"
+        }
+      ]
+    }
+  ]
+}

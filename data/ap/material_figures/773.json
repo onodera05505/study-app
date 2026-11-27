@@ -1,0 +1,73 @@
+{
+  "topic_id": 773,
+  "term": "ソーシャルメディアガイドライン",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### なぜ私的な投稿まで会社が定めるのか",
+      "caption": "左の私的な投稿から矢印をたどると、会社の損に行き着く 2 つの道が見えます。強調した 2 つの箱が、会社が負う損です。",
+      "nodes": [
+        {
+          "id": "post",
+          "label": "社員の私的な投稿\n勤務時間外・個人の口座",
+          "row": 0,
+          "col": 0,
+          "icon": "phone"
+        },
+        {
+          "id": "guess",
+          "label": "所属が推測される\nプロフィールや内容から",
+          "row": 0,
+          "col": 1,
+          "icon": "search"
+        },
+        {
+          "id": "view",
+          "label": "企業の見解と受け取られる\n発言が会社に結び付く",
+          "row": 0,
+          "col": 2,
+          "icon": "building"
+        },
+        {
+          "id": "credit",
+          "label": "信用の低下\nレピュテーションリスク",
+          "row": 1,
+          "col": 2,
+          "icon": "warning",
+          "emphasis": true
+        },
+        {
+          "id": "leak",
+          "label": "秘密情報の漏えい\n顧客・取引先・製品の情報",
+          "row": 1,
+          "col": 0,
+          "icon": "warning",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "post",
+          "to": "guess",
+          "label": "公開される"
+        },
+        {
+          "from": "guess",
+          "to": "view",
+          "label": "会社名と結び付く"
+        },
+        {
+          "from": "view",
+          "to": "credit",
+          "label": "拡散して取り消せない"
+        },
+        {
+          "from": "post",
+          "to": "leak",
+          "label": "業務で知った情報が載る"
+        }
+      ]
+    }
+  ]
+}

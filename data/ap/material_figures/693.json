@@ -1,0 +1,59 @@
+{
+  "topic_id": 693,
+  "term": "IS（International Standards：国際規格）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "左から右へ、国際規格が政府の調達仕様を通じて入札の可否を分ける流れです。分かれ道は性能でなく規格への適合です。",
+      "nodes": [
+        {
+          "id": "is",
+          "label": "国際規格\nISO・IEC・ITU が制定",
+          "row": 0,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "gov",
+          "label": "加盟国政府の調達仕様\nWTO 政府調達協定で\n国際規格に基づく",
+          "row": 0,
+          "col": 1,
+          "icon": "building"
+        },
+        {
+          "id": "ok",
+          "label": "規格に適合した製品\n各国の入札に参加できる",
+          "row": 0,
+          "col": 2,
+          "icon": "check"
+        },
+        {
+          "id": "ng",
+          "label": "独自仕様の製品\n性能が良くても対象外",
+          "row": 1,
+          "col": 2,
+          "icon": "warning"
+        }
+      ],
+      "edges": [
+        {
+          "from": "is",
+          "to": "gov",
+          "label": "仕様の基にする"
+        },
+        {
+          "from": "gov",
+          "to": "ok",
+          "label": "適合する"
+        },
+        {
+          "from": "gov",
+          "to": "ng",
+          "label": "規格から外れる"
+        }
+      ]
+    }
+  ]
+}

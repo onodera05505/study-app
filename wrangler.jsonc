@@ -1,6 +1,8 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "study-app",
+  // 個人アカウント（2026-09-15 に社用アカウントから移した）。別アカウントのログインでは wrangler が明示的に止まる
+  "account_id": "6408e560f74d14fa46bd410ef28bf52b",
   "main": "src/server/index.ts",
   "compatibility_date": "2026-01-15",
   "compatibility_flags": ["nodejs_compat"],
@@ -14,7 +16,7 @@
     {
       "binding": "DB",
       "database_name": "study-app-db",
-      "database_id": "e3e81476-6afe-4144-a938-ce8e461a2ed4",
+      "database_id": "bcf31b51-d926-4aa9-9aaa-213868de2de3",
       "migrations_dir": "migrations"
     }
   ],
@@ -33,11 +35,11 @@
         {
           "binding": "DB",
           "database_name": "study-app-db",
-          "database_id": "e3e81476-6afe-4144-a938-ce8e461a2ed4",
+          "database_id": "bcf31b51-d926-4aa9-9aaa-213868de2de3",
           "migrations_dir": "migrations"
         }
       ],
-      "vars": { "APP_NAME": "study-app", "EXAM": "ip" },
+      "vars": { "APP_NAME": "study-app", "EXAM": "ip", "SSO_PORTAL_URL": "https://manabiba-5oz.pages.dev" },
       "assets": {
         "directory": "./dist",
         "binding": "ASSETS",
@@ -49,17 +51,82 @@
         {
           "binding": "DB",
           "database_name": "study-app-ap-db",
-          // 作成後に `npx wrangler d1 create study-app-ap-db` が出す ID を入れる
-          "database_id": "79eac147-5fa1-47d3-a0c8-2715aaebeaf7",
+                  "database_id": "0b515505-9177-43db-a65b-e742d08b6e11",
           "migrations_dir": "migrations"
         }
       ],
-      "vars": { "APP_NAME": "study-app-ap", "EXAM": "ap" },
+      "vars": { "APP_NAME": "study-app-ap", "EXAM": "ap", "SSO_PORTAL_URL": "https://manabiba-5oz.pages.dev" },
       "assets": {
         "directory": "./dist",
         "binding": "ASSETS",
         "not_found_handling": "single-page-application"
       }
+    },
+    // 3 つ目: IT コンサル就活ロードマップ（試作。要件定義書 §13）。資格ではないがコードは同じ。
+    "itc": {
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "study-app-itc-db",
+          "database_id": "3ce45c40-2a3a-48ac-b540-08f56c233cc1",
+          "migrations_dir": "migrations"
+        }
+      ],
+      "vars": { "APP_NAME": "study-app-itc", "EXAM": "itc", "SSO_PORTAL_URL": "https://manabiba-5oz.pages.dev" },
+      "assets": {
+        "directory": "./dist",
+        "binding": "ASSETS",
+        "not_found_handling": "single-page-application"
+      }
+    },
+    "mkt": {
+      "d1_databases": [
+        { "binding": "DB", "database_name": "study-app-mkt-db", "database_id": "91f01b79-ff9e-4b1f-a270-fc0bed98ff91", "migrations_dir": "migrations" }
+      ],
+      "vars": { "APP_NAME": "study-app-mkt", "EXAM": "mkt", "SSO_PORTAL_URL": "https://manabiba-5oz.pages.dev" },
+      "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application" }
+    },
+    "msg": {
+      "d1_databases": [
+        { "binding": "DB", "database_name": "study-app-msg-db", "database_id": "6723c3ad-9d86-4cb0-9c84-f22ccb01504b", "migrations_dir": "migrations" }
+      ],
+      "vars": { "APP_NAME": "study-app-msg", "EXAM": "msg", "SSO_PORTAL_URL": "https://manabiba-5oz.pages.dev" },
+      "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application" }
+    },
+    "ecl": {
+      "d1_databases": [
+        { "binding": "DB", "database_name": "study-app-ecl-db", "database_id": "cb509df6-8e38-4ebd-8c97-d2d485d3bb34", "migrations_dir": "migrations" }
+      ],
+      "vars": { "APP_NAME": "study-app-ecl", "EXAM": "ecl", "SSO_PORTAL_URL": "https://manabiba-5oz.pages.dev" },
+      "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application" }
+    },
+    "eca": {
+      "d1_databases": [
+        { "binding": "DB", "database_name": "study-app-eca-db", "database_id": "2cfbb7a7-a4b8-4769-9775-89296ee92a77", "migrations_dir": "migrations" }
+      ],
+      "vars": { "APP_NAME": "study-app-eca", "EXAM": "eca", "SSO_PORTAL_URL": "https://manabiba-5oz.pages.dev" },
+      "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application" }
+    },
+    "cnv": {
+      "d1_databases": [
+        { "binding": "DB", "database_name": "study-app-cnv-db", "database_id": "95c94231-6fec-4623-a7da-2b48e6eb7338", "migrations_dir": "migrations" }
+      ],
+      "vars": { "APP_NAME": "study-app-cnv", "EXAM": "cnv", "SSO_PORTAL_URL": "https://manabiba-5oz.pages.dev" },
+      "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application" }
+    },
+    "fe": {
+      "d1_databases": [
+        { "binding": "DB", "database_name": "study-app-fe-db", "database_id": "PLACEHOLDER-fe-run-scripts/bootstrap_personal.sh", "migrations_dir": "migrations" }
+      ],
+      "vars": { "APP_NAME": "study-app-fe", "EXAM": "fe", "SSO_PORTAL_URL": "https://manabiba-5oz.pages.dev" },
+      "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application" }
+    },
+    "eng": {
+      "d1_databases": [
+        { "binding": "DB", "database_name": "study-app-eng-db", "database_id": "3ad08e11-5c66-4680-9240-428b5d5b837e", "migrations_dir": "migrations" }
+      ],
+      "vars": { "APP_NAME": "study-app-eng", "EXAM": "eng", "SSO_PORTAL_URL": "https://manabiba-5oz.pages.dev" },
+      "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application" }
     }
   }
 }

@@ -1,0 +1,148 @@
+{
+  "topic_id": 680,
+  "term": "SIEM（Security Information and Event Management）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### ログを集めて突き合わせる",
+      "caption": "左の機器が出すログを SIEM が 1 か所に集め、突き合わせて見つけた兆候を担当者へ知らせます。SIEM は通信路の上に無く、通信を止めません。",
+      "nodes": [
+        {
+          "id": "fw",
+          "label": "ファイアウォール\n通信の許可と拒否",
+          "row": 0,
+          "col": 0,
+          "icon": "network"
+        },
+        {
+          "id": "au",
+          "label": "認証サーバ\nログインの成否",
+          "row": 1,
+          "col": 0,
+          "icon": "key"
+        },
+        {
+          "id": "web",
+          "label": "Web サーバ\nページへのアクセス",
+          "row": 2,
+          "col": 0,
+          "icon": "server"
+        },
+        {
+          "id": "siem",
+          "label": "SIEM\n形式をそろえ\n時刻と利用者で突き合わせる",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "search"
+        },
+        {
+          "id": "soc",
+          "label": "SOC の担当者\n調べて対処を決める",
+          "row": 1,
+          "col": 2,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "fw",
+          "to": "siem",
+          "label": "通信のログ"
+        },
+        {
+          "from": "au",
+          "to": "siem",
+          "label": "認証のログ"
+        },
+        {
+          "from": "web",
+          "to": "siem",
+          "label": "アクセスのログ"
+        },
+        {
+          "from": "siem",
+          "to": "soc",
+          "label": "攻撃の兆候の通知"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "timeline",
+      "after": "explanation",
+      "caption": "点は別々の機器のログに 1 件ずつ残った事象です。1 件ずつでは目立たない事象を、帯の範囲で時刻順につなぐと 1 つの攻撃の流れになります。",
+      "axis": {
+        "label": "時刻（例）",
+        "ticks": [
+          "2:00",
+          "2:10",
+          "2:20",
+          "2:30"
+        ]
+      },
+      "events": [
+        {
+          "from": 0.3,
+          "to": 2.7,
+          "label": "SIEM が拾う 1 つの流れ\n同じ端末・利用者でつなぐ",
+          "emphasis": true
+        },
+        {
+          "at": 0.5,
+          "label": "認証の失敗\n認証サーバのログ"
+        },
+        {
+          "at": 1.4,
+          "label": "別のサーバへログイン成功\nサーバのログ"
+        },
+        {
+          "at": 2.4,
+          "label": "普段と違う大量の通信\nファイアウォールのログ"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "matrix",
+      "after": "### 混同しやすい用語",
+      "caption": "3 つを見る物と役割で比べます。SIEM はログ、IDS／IPS はパケットを見る仕組みで、SOC はそれらを使う組織です。",
+      "x": {
+        "label": "観点",
+        "values": [
+          "見る物",
+          "役割"
+        ]
+      },
+      "y": {
+        "label": "名前",
+        "values": [
+          "SIEM",
+          "IDS／IPS",
+          "SOC"
+        ]
+      },
+      "cells": [
+        [
+          "各機器のログ\n集めて突き合わせる",
+          "検知と通知\n遮断はしない"
+        ],
+        [
+          "通信のパケット\n通信路の上で見る",
+          "IDS は検知\nIPS は遮断まで"
+        ],
+        [
+          "SIEM などの結果\n人が調べる",
+          "道具ではなく組織\n監視と対処の判断"
+        ]
+      ],
+      "emphasis": [
+        [
+          0,
+          0
+        ]
+      ]
+    }
+  ]
+}

@@ -1,27 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="144" viewBox="0 0 640 144" role="img">
-<title>バイトを8倍してビットにそろえ、速度に効率を掛けてから割る。この3手順を順に通せば解ける。</title>
-<rect x="0.5" y="0.5" width="639" height="143" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(44.25 20)">
-<polyline points="143,38 219,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="219,38 211,41.6 211,34.4" fill="#1f2937"/>
-<polyline points="365.5,38 448.5,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="448.5,38 440.5,41.6 440.5,34.4" fill="#1f2937"/>
-<rect x="0" y="0" width="143" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="71.5" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">① ビットに直す</text>
-<text x="71.5" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">1000M バイト × 8</text>
-<text x="71.5" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">＝ 8000M ビット</text>
-<rect x="219" y="0" width="146.5" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="292.25" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">② 実効速度を出す</text>
-<text x="292.25" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">20 × 0.8</text>
-<text x="292.25" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">＝ 16M ビット／秒</text>
-<rect x="448.5" y="0" width="96" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="496.5" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">③ 割る</text>
-<text x="496.5" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">8000 ÷ 16</text>
-<text x="496.5" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">＝ 500 秒</text>
-<rect x="153" y="21" width="56" height="16" rx="3" fill="#ffffff"/>
-<text x="181" y="34.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">データ量</text>
-<rect x="373" y="21" width="68" height="16" rx="3" fill="#ffffff"/>
-<text x="407" y="34.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">速さで割る</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="230" viewBox="0 0 835.1 300">
+<rect x="0.5" y="0.5" width="834.1" height="299" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<polyline points="114.65,28 308.2,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="308.2,28 300.2,31.6 300.2,24.4" fill="#1f2937"/>
+<polyline points="124.8,232 313.8,232" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="313.8,232 305.8,235.6 305.8,228.4" fill="#1f2937"/>
+<polyline points="376.2,56 376.2,79 711.35,79 711.35,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="711.35,102 707.75,94 714.95,94" fill="#1f2937"/>
+<polyline points="376.2,204 376.2,181 711.35,181 711.35,158" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="711.35,158 714.95,166 707.75,166" fill="#1f2937"/>
+<rect x="10.15" y="0" width="104.5" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="62.4" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">データ量</text>
+<text x="62.4" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">900M バイト</text>
+<rect x="308.2" y="0" width="136" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="376.2" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ビットに直した量</text>
+<text x="376.2" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">7200M ビット</text>
+<rect x="627.6" y="102" width="167.5" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="711.35" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">掛かる時間</text>
+<text x="711.35" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">7200 ÷ 45 ＝ 160 秒</text>
+<rect x="0" y="204" width="124.8" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="62.4" y="226.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">伝送速度</text>
+<text x="62.4" y="246.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">60M ビット／秒</text>
+<rect x="313.8" y="204" width="124.8" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="376.2" y="226.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">実効速度</text>
+<text x="376.2" y="246.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">45M ビット／秒</text>
+<rect x="123.73" y="11" width="175.4" height="16" rx="3" fill="#ffffff"/>
+<text x="211.43" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">× 8（1 バイト ＝ 8 ビット）</text>
+<rect x="143.6" y="215" width="151.4" height="16" rx="3" fill="#ffffff"/>
+<text x="219.3" y="228.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">× 0.75（伝送効率 75％）</text>
+<rect x="509.77" y="65" width="68" height="16" rx="3" fill="#ffffff"/>
+<text x="543.77" y="78.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">割られる数</text>
+<rect x="521.77" y="167" width="44" height="16" rx="3" fill="#ffffff"/>
+<text x="543.77" y="180.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">割る数</text>
 </g>
-<text x="320" y="124" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">バイトを8倍してビットにそろえ、速度に効率を掛けてから割る。この3手順を順に通せば解ける。</text>
 </svg>

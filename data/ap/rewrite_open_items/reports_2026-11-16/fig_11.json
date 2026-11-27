@@ -1,0 +1,166 @@
+{
+  "target": "ap",
+  "unit": "11",
+  "status": "fixed",
+  "blocked": [],
+  "items": [
+    {
+      "no": 1,
+      "figure": {
+        "topic_id": 406,
+        "figure_id": 2
+      },
+      "kind": "order",
+      "verdict": "applies",
+      "action": [
+        "move",
+        "edit",
+        "caption"
+      ],
+      "what": "3 組織の比較は学ぶ順で最後の 626 が持つので、図を 626 の図 2（after ### 設置母体と役割の見分け）へ移し、626 の節の文（3 つのうち政府の組織は NISC だけ）に合わせて NISC の列を足して 3×2 にした。JPCERT/CC の立場は 406 の本文（一般社団法人）に合わせ、強調を論点自身の NISC の立場のセルへ移し、caption を 3 組織の読み方に書き換えた",
+      "questions_checked": [
+        "2018h30a-q36",
+        "2022r04a-q39",
+        "2021r03h-q42"
+      ]
+    },
+    {
+      "no": 2,
+      "figure": {
+        "topic_id": 624,
+        "figure_id": 3
+      },
+      "kind": "order",
+      "verdict": "applies",
+      "action": [
+        "move",
+        "after"
+      ],
+      "what": "総当たりの仲間の攻撃の比較は学ぶ順で最後の 191 が持つので、図を 191 の図 3（after ### 総当たりの仲間の攻撃との違い）へ移した。中身・caption・強調は 191 の位置でも決まりに当たらないので変えていない（図の語はどれも 191 より前の論点か同じ節の箇条で出る）",
+      "questions_checked": [
+        "2018h30a-q42",
+        "2023r05a-q36",
+        "2022r04h-q42"
+      ]
+    },
+    {
+      "no": 3,
+      "figure": {
+        "topic_id": 407,
+        "figure_id": 2
+      },
+      "kind": "error",
+      "verdict": "applies",
+      "action": [
+        "edit",
+        "caption"
+      ],
+      "what": "本文 ### 載る情報の形 に戻った「脆弱性の種類には CWE の分類が添えられます」に合わせ、部位「脆弱性の種類 / CWE の分類で示す」を足し、caption を CVSS の深刻度と CWE の種類が添えられて 1 件になる読み方に書き換えた（CWE は受け持ち 199 で学ぶ順で前に出る語）",
+      "questions_checked": [
+        "2022r04a-q40"
+      ]
+    }
+  ],
+  "changed_figures": [
+    {
+      "topic_id": 626,
+      "figure_id": 2,
+      "png": "data/ap/rewrite_open_items/reports_2026-11-16/figures_png/ap-11/626-2.png",
+      "intended_point": "NISC・JPCERT/CC・IPA のうち政府の組織は内閣官房に置かれた NISC だけで、JPCERT/CC は独立した中立の組織としてインシデント報告の受付と調整を、IPA は独立行政法人としてウイルスや脆弱性の届出の受付を担う"
+    },
+    {
+      "topic_id": 191,
+      "figure_id": 3,
+      "png": "data/ap/rewrite_open_items/reports_2026-11-16/figures_png/ap-11/191-3.png",
+      "intended_point": "総当たりは 1 つの ID に固定してパスワードを次々に変え、リバースブルートフォースはパスワードを 1 つに固定して ID を次々に変えるので、1 つの ID あたりの失敗が少なくなる"
+    },
+    {
+      "topic_id": 407,
+      "figure_id": 2,
+      "png": "data/ap/rewrite_open_items/reports_2026-11-16/figures_png/ap-11/407-2.png",
+      "intended_point": "JVN の 1 件の脆弱性情報は、番号・対象の製品・内容と対策に、CVSS の深刻度と CWE の種類が添えられてできている"
+    }
+  ],
+  "moved": [
+    {
+      "from": {
+        "topic_id": 406,
+        "figure_id": 2
+      },
+      "to": {
+        "topic_id": 626,
+        "figure_id": 2
+      },
+      "after": "### 設置母体と役割の見分け"
+    },
+    {
+      "from": {
+        "topic_id": 624,
+        "figure_id": 3
+      },
+      "to": {
+        "topic_id": 191,
+        "figure_id": 3
+      },
+      "after": "### 総当たりの仲間の攻撃との違い"
+    }
+  ],
+  "removed": [],
+  "restored": [],
+  "ledgers": [
+    {
+      "file": "data/ap/rewrite_ledgers/11-19.json",
+      "changed_points": 3,
+      "removed_figures_added": 0,
+      "removed_figures_dropped": 0
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/11-5.json",
+      "changed_points": 2,
+      "removed_figures_added": 0,
+      "removed_figures_dropped": 0
+    }
+  ],
+  "not_fixed": [
+    {
+      "kind": "other",
+      "no": 1,
+      "topic_id": 626,
+      "figure_id": 2,
+      "what": "台帳 11-19 の 626 の removed_figures（外した旧 626 図 2・3 組織の表）の kept を {406,2} から移した先の {626,2} に書き換えた。移した図に NISC の列を足したので、旧 626 図 2 の要点は 626 図 2 が運ぶ。行を消す（戻した扱いにする）かは親の判断。同様に 11-5 の 190 の removed_figures の kept を {624,3} から {191,3} に書き換えた"
+    },
+    {
+      "kind": "text_followup",
+      "no": 1,
+      "topic_id": 406,
+      "figure_id": 2,
+      "what": "406 の ### 設置母体と役割の見分け は、図が 626 へ移ったので「JPCERT/CC は一般社団法人で、民間の法人です。」と 626 を指す 1 文だけの節になる。図の導入として置いた文が導入でなくなるので、本文の後追いで節の形（見出しを残すか）を見てほしい。624 の ### 総当たりの周りにある攻撃 も同じく図の導入 1 文と 191 を指す 1 文だけになる（図 3 の行が抜ける）"
+    }
+  ],
+  "not_fixed_counts": {
+    "other": 1,
+    "text_followup": 1
+  },
+  "counts": {
+    "applies": 3,
+    "not_applies": 0,
+    "data_suspect": 0
+  },
+  "gates": {
+    "render_check": {
+      "stops": 0,
+      "warnings_before": 0,
+      "warnings_after": 0
+    },
+    "unfixed_warnings": []
+  },
+  "written": [
+    "data/ap/material_figures/406.json",
+    "data/ap/material_figures/626.json",
+    "data/ap/material_figures/624.json",
+    "data/ap/material_figures/191.json",
+    "data/ap/material_figures/407.json",
+    "data/ap/rewrite_ledgers/11-19.json",
+    "data/ap/rewrite_ledgers/11-5.json"
+  ]
+}

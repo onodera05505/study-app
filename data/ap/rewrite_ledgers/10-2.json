@@ -1,0 +1,647 @@
+{
+  "bundle": "10-2",
+  "shared": [
+    {
+      "item": "5 GHz 帯の性格（重ならないチャネルが多い・電子レンジや Bluetooth の影響を受けにくい・障害物に弱く届く距離が短い・屋内限定と気象レーダの回避）",
+      "count": 2,
+      "holder": 525,
+      "topics": [
+        525,
+        526
+      ]
+    },
+    {
+      "item": "複数のアクセスポイントに同じ SSID をそろえ、移動しても接続を引き継げるようにする（図 525-2・676-2 と本文。676 は SSID の性質としての ESSID だけを言い、設計の理由は 525 が持つ）",
+      "count": 2,
+      "holder": 525,
+      "topics": [
+        525,
+        676
+      ]
+    },
+    {
+      "item": "同じ略語の PLC（Programmable Logic Controller）との見分け",
+      "count": 2,
+      "holder": 356,
+      "topics": [
+        356,
+        166
+      ]
+    },
+    {
+      "item": "PLC は電力線にデータを、PoE は通信線に電力を乗せる（向きが逆）",
+      "count": 2,
+      "holder": 166,
+      "topics": [
+        166
+      ]
+    }
+  ],
+  "topics": [
+    {
+      "topic_id": 525,
+      "points": [
+        {
+          "point": "無線 LAN アクセスポイントの定義（無線の端末を有線 LAN に中継し、周波数チャネルを機器ごとに割り当てる）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "キーワード（チャネル割当て・電波の干渉・2.4 GHz 帯）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "2.4 GHz 帯のチャネルは 5 MHz 間隔、1 チャネルは約 22 MHz を占め、番号を 5 つ以上離す",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "重ならない代表的な組合せは 1・6・11",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "隣り合う番号は周波数帯が最も大きく重なる（要点の箇条）",
+          "fate": "explanation",
+          "where": "question_explanations 2021r03h-q36 の エ の note"
+        },
+        {
+          "point": "複数台ではチャネルは台ごとに分け、SSID と認証情報はそろえる（要点の箇条）",
+          "fate": "kept",
+          "where": "### 複数台を並べるときの設計（「名前はそろえ、電波の通り道は分ける」の文。チャネルを隣どうし離す配置は 525 の図 2）"
+        },
+        {
+          "point": "2.4 GHz 帯は 1ch から 13ch まで",
+          "fate": "kept",
+          "where": "### チャネルが重なるしくみ"
+        },
+        {
+          "point": "5 MHz 間隔・約 22 MHz・隣どうしは大きく重なる（detail の言い直し）",
+          "fate": "duplicate",
+          "where": "explanation の箇条"
+        },
+        {
+          "point": "重なった範囲では電波が雑音として働き、再送が増えて実効速度が落ちる",
+          "fate": "kept",
+          "where": "### チャネルが重なるしくみ"
+        },
+        {
+          "point": "番号を 5 つ以上離す条件を満たす組合せが 1・6・11 の 3 つ（detail の言い直し）",
+          "fate": "duplicate",
+          "where": "explanation の箇条"
+        },
+        {
+          "point": "広い場所では隣接するアクセスポイントが 3 つの番号を繰り返すよう面的に配置する",
+          "fate": "kept",
+          "where": "### チャネルが重なるしくみ"
+        },
+        {
+          "point": "全台を同じ番号にそろえると同一チャネルで送信の順番待ちが起き実効速度が落ちる",
+          "fate": "explanation",
+          "where": "question_explanations 2021r03h-q36 の ア の note"
+        },
+        {
+          "point": "出荷時設定のままだと隣り合う番号や既定値の重複が起きやすいので、設置図を描いてから番号を決める",
+          "fate": "kept",
+          "where": "### 複数台を並べるときの設計"
+        },
+        {
+          "point": "SSID と認証情報を全台でそろえるのは、設定を変えずに近くの機器へ引き継ぐ（ローミング）ため",
+          "fate": "kept",
+          "where": "### 複数台を並べるときの設計"
+        },
+        {
+          "point": "名前はそろえ、電波の通り道は分けるのが複数台設置の基本",
+          "fate": "kept",
+          "where": "### 複数台を並べるときの設計"
+        },
+        {
+          "point": "名前を分けても使う周波数は変わらない",
+          "fate": "explanation",
+          "where": "question_explanations 2021r03h-q36 の ウ の note"
+        },
+        {
+          "point": "チャネルの設計は名前とは切り離して行う",
+          "fate": "kept",
+          "where": "### 複数台を並べるときの設計"
+        },
+        {
+          "point": "5 GHz 帯は 11a/ac が使う",
+          "fate": "kept",
+          "where": "### 5 GHz 帯との使い分け"
+        },
+        {
+          "point": "5 GHz 帯は重ならないチャネルを多く取れ、電子レンジや Bluetooth の影響を受けにくい",
+          "fate": "figure",
+          "where": "525 の図 3"
+        },
+        {
+          "point": "5 GHz 帯は台数を並べる環境で有利",
+          "fate": "kept",
+          "where": "### 5 GHz 帯との使い分け"
+        },
+        {
+          "point": "5 GHz 帯は障害物に弱く到達距離が短め",
+          "fate": "figure",
+          "where": "525 の図 3"
+        },
+        {
+          "point": "日本では W52・W53 が屋内利用に限られる",
+          "fate": "kept",
+          "where": "### 5 GHz 帯との使い分け"
+        },
+        {
+          "point": "W53・W56 では気象レーダを検出すると DFS でチャネルを切り替え、通信が一時途切れる",
+          "fate": "kept",
+          "where": "### 5 GHz 帯との使い分け"
+        }
+      ]
+    },
+    {
+      "topic_id": 676,
+      "points": [
+        {
+          "point": "SSID の定義（無線 LAN のネットワークに付ける名前、最長 32 オクテットの文字列）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "端末は SSID を見てどのアクセスポイントにつなぐかを選ぶ（定義の 2 文目）",
+          "fate": "figure",
+          "where": "676 の図 1"
+        },
+        {
+          "point": "キーワード（32 オクテット・ネットワーク識別子）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "識別する相手はネットワークで、機器 1 台を指すのは 48 ビットの MAC アドレスや BSSID",
+          "fate": "explanation",
+          "where": "2017h29a-q31 の note ア・イ（ネットワークを指すことは explanation の定義の 1 文）"
+        },
+        {
+          "point": "管理者が自由に決められ、同じ SSID を複数のアクセスポイントに設定して 1 つのネットワークとして扱える",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "一意になる保証は無い",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "接続後にホストを識別するのは IP アドレスで、SSID とは役割の層が違う",
+          "fate": "figure",
+          "where": "676 の図 1"
+        },
+        {
+          "point": "電波は空間を共有し、1 台の端末に複数のアクセスポイントの電波が届くので、ビーコンでネットワークの名前を知らせる",
+          "fate": "kept",
+          "where": "### SSID が果たす役割"
+        },
+        {
+          "point": "最長 32 オクテット（detail の言い直し）",
+          "fate": "duplicate",
+          "where": "explanation"
+        },
+        {
+          "point": "端末は受信した SSID の一覧から接続先を選び、同じ SSID のグループの中だけで通信する",
+          "fate": "kept",
+          "where": "### SSID が果たす役割"
+        },
+        {
+          "point": "隣接する別の組織が同じ名前を使うこともあり得る",
+          "fate": "kept",
+          "where": "### SSID が果たす役割"
+        },
+        {
+          "point": "ネットワーク上で一意であることは保証されていない（detail の言い直し）",
+          "fate": "duplicate",
+          "where": "explanation"
+        },
+        {
+          "point": "ビーコンの通知を止めても、接続時のやり取りから SSID は知られ、それだけでは安全対策にならない",
+          "fate": "kept",
+          "where": "### ビーコンを止めても守りにはならない"
+        },
+        {
+          "point": "暗号化方式の設定や利用者の認証と組み合わせて初めて守りになる",
+          "fate": "kept",
+          "where": "### ビーコンを止めても守りにはならない"
+        },
+        {
+          "point": "BSSID はアクセスポイントの無線インタフェースの識別子で、実体は 48 ビットの MAC アドレス、機器を指す",
+          "fate": "explanation",
+          "where": "2017h29a-q31 の note ア"
+        },
+        {
+          "point": "ESSID は複数のアクセスポイントに同じ名前を設定して 1 つのネットワークとして扱う SSID で、今は SSID とほぼ同義",
+          "fate": "kept",
+          "where": "### SSID が果たす役割"
+        },
+        {
+          "point": "値は管理者が自由に決める（要点の箇条の前半。explanation の直後の図 1 と同じ点）",
+          "fate": "figure",
+          "where": "676 の図 1"
+        }
+      ]
+    },
+    {
+      "topic_id": 526,
+      "points": [
+        {
+          "point": "IEEE 802.11a/b/g/n/ac/ax の定義（無線 LAN の規格群を末尾の記号で呼び分け、記号ごとに周波数帯と最大速度が決まる）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "キーワード（5 GHz 帯・最大通信速度・Wi-Fi の世代）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "11ac は 5 GHz 帯のみ",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "使う周波数帯が違う規格どうしは電波が届かず直接通信できない（要点の箇条と detail の 2 か所）",
+          "fate": "figure",
+          "where": "526 の図 1"
+        },
+        {
+          "point": "アクセス制御は CSMA/CA",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "無線では送信中に衝突を検出できないので、送信前に待って衝突を避ける（要点の箇条）",
+          "fate": "duplicate",
+          "where": "### CSMA/CA を使う理由"
+        },
+        {
+          "point": "最大速度 11g 54M・11n 600M・11ac 約 6.9G ビット／秒（要点の箇条）",
+          "fate": "duplicate",
+          "where": "### 規格ごとの周波数帯と速度 の表"
+        },
+        {
+          "point": "規格ごとの周波数帯（11b・11g は 2.4、11a・11ac は 5、11n・11ax は両方）（表の列）",
+          "fate": "figure",
+          "where": "526 の図 1"
+        },
+        {
+          "point": "規格ごとの最大速度（11b 11M・11a 54M・11g 54M・11n 600M・11ac 約 6.9G・11ax 約 9.6G）と世代（Wi-Fi 4・5・6）",
+          "fate": "kept",
+          "where": "### 規格ごとの周波数帯と速度"
+        },
+        {
+          "point": "11n は MIMO で速度を上げ、11ac はチャネル幅の拡大と多値変調で伸ばした",
+          "fate": "kept",
+          "where": "### 規格ごとの周波数帯と速度"
+        },
+        {
+          "point": "11ac のアクセスポイントの多くは 11n も併用して 2.4 GHz 帯を出すが、その通信は 11n として行われる",
+          "fate": "kept",
+          "where": "### 規格ごとの周波数帯と速度"
+        },
+        {
+          "point": "5 GHz 帯は電子レンジや Bluetooth の影響を受けず、重ならないチャネルが多い",
+          "fate": "owner",
+          "where": "525"
+        },
+        {
+          "point": "5 GHz 帯は障害物に弱く到達距離が短めで、帯域により屋内限定や気象レーダ回避の制約が付く",
+          "fate": "owner",
+          "where": "525"
+        },
+        {
+          "point": "古い端末を収容するにはアクセスポイント側で 2.4 GHz 帯の規格も有効にしておく",
+          "fate": "kept",
+          "where": "### 規格ごとの周波数帯と速度"
+        },
+        {
+          "point": "有線の CSMA/CD は送信しながら衝突を検出できることが前提",
+          "fate": "kept",
+          "where": "### CSMA/CA を使う理由"
+        },
+        {
+          "point": "無線では送信中に微弱な他局の電波を聞き分けられず衝突を検出できない",
+          "fate": "kept",
+          "where": "### CSMA/CA を使う理由"
+        },
+        {
+          "point": "送信前に一定時間電波の空きを確認し、さらにランダムな時間待ってから送る",
+          "fate": "figure",
+          "where": "526 の図 2"
+        },
+        {
+          "point": "受信側は ACK を返し、届かなければ送信側が再送する",
+          "fate": "figure",
+          "where": "526 の図 2"
+        }
+      ]
+    },
+    {
+      "topic_id": 359,
+      "points": [
+        {
+          "point": "ハンドオーバーの定義（移動中の端末が接続を維持したまま経由する基地局を切り替える）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "キーワード（接続を維持したまま・基地局の切替え）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "変わるのは経由する基地局だけで、通信相手との接続は保たれる",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "ローミングは契約する事業者のエリア外で他事業者の網を借りて通信する（要点の箇条）",
+          "fate": "duplicate",
+          "where": "### 混同しやすい用語"
+        },
+        {
+          "point": "1 つの基地局がカバーできる範囲（セル）が決まっている",
+          "fate": "kept",
+          "where": "### セルの境界で基地局を引き継ぐ"
+        },
+        {
+          "point": "セルの境界に近づくと、電波が弱くなる前に隣のセルの基地局へ接続を引き継ぐ",
+          "fate": "kept",
+          "where": "### セルの境界で基地局を引き継ぐ"
+        },
+        {
+          "point": "セッションを切らずに引き継ぐので利用者は切替えを意識せずに通信を続けられる",
+          "fate": "kept",
+          "where": "### セルの境界で基地局を引き継ぐ"
+        },
+        {
+          "point": "引き継ぐかどうかは端末が測る受信電波の強さなどで判断される",
+          "fate": "kept",
+          "where": "### セルの境界で基地局を引き継ぐ"
+        },
+        {
+          "point": "切替えの前後で経由する基地局は変わっても接続そのものは保たれる（detail の言い直し）",
+          "fate": "duplicate",
+          "where": "explanation"
+        },
+        {
+          "point": "無線 LAN で接続先のアクセスポイントを切り替える動作もハンドオーバーと呼ぶ",
+          "fate": "kept",
+          "where": "### セルの境界で基地局を引き継ぐ"
+        },
+        {
+          "point": "ローミングとの分かれ目はどの事業者の網を使うか",
+          "fate": "kept",
+          "where": "### 混同しやすい用語"
+        },
+        {
+          "point": "どちらも切り替える話で紛らわしい・同じ事業者の別の基地局にとどまるならハンドオーバー（見分けの言い直し）",
+          "fate": "duplicate",
+          "where": "### 混同しやすい用語"
+        }
+      ]
+    },
+    {
+      "topic_id": 677,
+      "points": [
+        {
+          "point": "LPWA の定義（消費電力が小さく、1 つの基地局で広い範囲をカバーできる無線通信方式の総称）と正式名 Low Power Wide Area",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "キーワード（低消費電力・広域・低速）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "通信速度は数百 bps〜数百 kbps と低速",
+          "fate": "figure",
+          "where": "677 の図 1"
+        },
+        {
+          "point": "小さなデータを多数の機器から少しずつ集める用途に向く",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "電池 1 本で数年動く・数 km から十数 km に届く",
+          "fate": "figure",
+          "where": "677 の図 1"
+        },
+        {
+          "point": "多数のセンサーを同時に収容できる",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "代表的な規格は LTE-M・NB-IoT・Wi-SUN・LoRaWAN（要点の箇条）",
+          "fate": "duplicate",
+          "where": "### 主な規格 の表"
+        },
+        {
+          "point": "携帯電話網を使うものと自前で基地局を立てられるものに分かれる",
+          "fate": "kept",
+          "where": "### 主な規格"
+        },
+        {
+          "point": "速度・到達距離・消費電力の 3 つは同時に良くできず、LPWA は速度を捨てて距離と電池寿命を稼ぐ",
+          "fate": "kept",
+          "where": "### 何を捨てて何を得た方式か"
+        },
+        {
+          "point": "変調を単純にし、狭い帯域を使い、送信頻度を落とすことで遠くまで届き待機電力を小さくする",
+          "fate": "kept",
+          "where": "### 何を捨てて何を得た方式か"
+        },
+        {
+          "point": "数十バイトのデータを 1 日に数回送れば足りる用途（温度・水道の使用量）に理にかなう",
+          "fate": "kept",
+          "where": "### 何を捨てて何を得た方式か"
+        },
+        {
+          "point": "基地局の数が少なくて済み、機器あたりの通信料も安い",
+          "fate": "kept",
+          "where": "### 何を捨てて何を得た方式か"
+        },
+        {
+          "point": "多数のセンサーを同時につなぐネットワークに適するのはこのため（detail の言い直し）",
+          "fate": "duplicate",
+          "where": "explanation"
+        },
+        {
+          "point": "規格の表（LTE-M・NB-IoT は携帯電話網、Wi-SUN は 920MHz 帯で中継、LoRaWAN は免許不要帯で自前の基地局）",
+          "fate": "kept",
+          "where": "### 主な規格"
+        },
+        {
+          "point": "BLE は低消費電力の Bluetooth で、省電力は共通するが広域性が無い",
+          "fate": "kept",
+          "where": "### 混同しやすい用語"
+        },
+        {
+          "point": "BLE の届く距離は数十メートル程度",
+          "fate": "figure",
+          "where": "677 の図 1"
+        },
+        {
+          "point": "LPWA を選ぶ理由は遠くまで届くと電池が長くもつの両方がそろうこと（まとめの言い直し）",
+          "fate": "duplicate",
+          "where": "explanation の定義"
+        }
+      ]
+    },
+    {
+      "topic_id": 356,
+      "points": [
+        {
+          "point": "電力線通信の定義（電力線を通信回線として利用してデータを伝送する技術）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "キーワード（電力線・コンセント・既存の配線）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "PLC は Power Line Communication",
+          "fate": "kept",
+          "where": "explanation の定義"
+        },
+        {
+          "point": "P が指すのは電力線（略語の手がかり）",
+          "fate": "duplicate",
+          "where": "explanation の定義の正式名"
+        },
+        {
+          "point": "新たに通信線を敷設せずに宅内ネットワークを作れる",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "配線に通信用の高周波信号を重ねて流す",
+          "fate": "kept",
+          "where": "### 電気の配線に信号を重ねるしくみ"
+        },
+        {
+          "point": "PLC アダプタをコンセントに挿すと、つながる配線がそのままネットワークになる",
+          "fate": "kept",
+          "where": "### 電気の配線に信号を重ねるしくみ"
+        },
+        {
+          "point": "LAN ケーブルを通しにくい建物でも部屋をまたいだ通信ができる",
+          "fate": "kept",
+          "where": "### 電気の配線に信号を重ねるしくみ"
+        },
+        {
+          "point": "分電盤やブレーカをまたぐと減衰しやすく、家電のノイズの影響も受ける",
+          "fate": "kept",
+          "where": "### 電気の配線に信号を重ねるしくみ"
+        },
+        {
+          "point": "速度や安定性は配線の状態に左右される",
+          "fate": "kept",
+          "where": "### 電気の配線に信号を重ねるしくみ"
+        },
+        {
+          "point": "同じ略語の PLC（Programmable Logic Controller）は制御機器で分野が違う",
+          "fate": "kept",
+          "where": "### 混同しやすい用語"
+        },
+        {
+          "point": "通信技術の話か制御機器の話かを見極め、通信回線の話なら電力線通信",
+          "fate": "kept",
+          "where": "### 混同しやすい用語"
+        }
+      ]
+    },
+    {
+      "topic_id": 166,
+      "points": [
+        {
+          "point": "PoE の定義（LAN ケーブルを使って通信と同時に電力も供給する）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "キーワード（LAN ケーブル・給電・アクセスポイント）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "無線 LAN アクセスポイント、IP 電話機、ネットワークカメラで使われる",
+          "fate": "kept",
+          "where": "### 規格と給電能力"
+        },
+        {
+          "point": "通信線に電力を乗せる PoE と電力線にデータを乗せる PLC は向きが逆",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "LAN ケーブルは複数対の銅線で、直流電力を重ねて流し通信と給電を 1 本でまかなう",
+          "fate": "kept",
+          "where": "### LAN ケーブルに電力を重ねるしくみ"
+        },
+        {
+          "point": "給電側は相手が PoE 対応かを確かめてから電力を送るので非対応機器も壊れない",
+          "fate": "kept",
+          "where": "### LAN ケーブルに電力を重ねるしくみ"
+        },
+        {
+          "point": "天井や壁のようにコンセントを増やしにくい場所へ機器を設置できる",
+          "fate": "figure",
+          "where": "166 の図 1（給電先の箱の 2 行目: 天井に埋め込める・扉の横に置ける・壁や軒下に置ける）"
+        },
+        {
+          "point": "給電元のスイッチを UPS につなぐと、先の機器すべてを一括して停電から守れる",
+          "fate": "kept",
+          "where": "### LAN ケーブルに電力を重ねるしくみ"
+        },
+        {
+          "point": "規格は 802.3af から始まり af・at・bt と進むほど供給電力が大きい",
+          "fate": "kept",
+          "where": "### 規格と給電能力"
+        },
+        {
+          "point": "機器の消費電力に対して給電側が足りるかを確かめて選ぶ",
+          "fate": "kept",
+          "where": "### 規格と給電能力"
+        },
+        {
+          "point": "802.3af（PoE）は十数ワット程度で IP 電話機やアクセスポイント",
+          "fate": "kept",
+          "where": "### 規格と給電能力"
+        },
+        {
+          "point": "802.3at（PoE+）は 30 ワット前後で可動式のカメラも動かせる",
+          "fate": "kept",
+          "where": "### 規格と給電能力"
+        },
+        {
+          "point": "802.3bt（PoE++）は数十ワット級の機器まで給電できる",
+          "fate": "kept",
+          "where": "### 規格と給電能力"
+        },
+        {
+          "point": "PLC（電力線通信）は電力線にデータを乗せ、PoE と逆で名前も似ている（混同の節）",
+          "fate": "duplicate",
+          "where": "explanation"
+        },
+        {
+          "point": "PLC（Programmable Logic Controller）は制御用の小型コンピュータで同じ略語",
+          "fate": "prior",
+          "where": "356"
+        }
+      ]
+    }
+  ]
+}

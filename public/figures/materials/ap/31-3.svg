@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="188" viewBox="0 0 921.6 270">
+<rect x="0.5" y="0.5" width="920.6" height="269" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<text x="544.7" y="18" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">/16 を 5 個以上に分けるときの観点</text>
+<text x="116.9" y="30" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">サブネット部 s</text>
+<text x="320.1" y="45.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">分けられる個数</text>
+<text x="544.7" y="45.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">マスク（/16 に s を足す）</text>
+<text x="769.3" y="37.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">1 サブネットのホスト数</text>
+<text x="769.3" y="53.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">（全 0 と全 1 の 2 個を除く）</text>
+<text x="116.9" y="89.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">s＝2 ビット</text>
+<text x="116.9" y="139.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">s＝3 ビット</text>
+<text x="116.9" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">（上の行より 1 ビット多い）</text>
+<text x="116.9" y="197.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">s＝4 ビット</text>
+<text x="116.9" y="213.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">（上の行より 1 ビット多い）</text>
+<rect x="207.8" y="56" width="224.6" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="320.1" y="81.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2 の 2 乗＝4 個</text>
+<text x="320.1" y="97.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5 個に足りない</text>
+<rect x="432.4" y="56" width="224.6" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="544.7" y="81.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">/18</text>
+<text x="544.7" y="97.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">255.255.192.0</text>
+<rect x="657" y="56" width="224.6" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="769.3" y="81.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2 の 14 乗 − 2</text>
+<text x="769.3" y="97.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">＝16,382 台</text>
+<rect x="207.8" y="114" width="224.6" height="58" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="320.1" y="139.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">2 の 3 乗＝8 個（上の行の 2 倍）</text>
+<text x="320.1" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">5 個を満たす最小</text>
+<rect x="432.4" y="114" width="224.6" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="544.7" y="139.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">/19</text>
+<text x="544.7" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">255.255.224.0</text>
+<rect x="657" y="114" width="224.6" height="58" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="769.3" y="139.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">2 の 13 乗 − 2＝8,190 台</text>
+<text x="769.3" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">上の行の約半分で最も多い</text>
+<rect x="207.8" y="172" width="224.6" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="320.1" y="197.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2 の 4 乗＝16 個（上の行の 2 倍）</text>
+<text x="320.1" y="213.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">満たすがホストが減る</text>
+<rect x="432.4" y="172" width="224.6" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="544.7" y="197.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">/20</text>
+<text x="544.7" y="213.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">255.255.240.0</text>
+<rect x="657" y="172" width="224.6" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="769.3" y="197.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2 の 12 乗 − 2＝4,094 台</text>
+<text x="769.3" y="213.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">上の行の約半分</text>
+</g>
+</svg>

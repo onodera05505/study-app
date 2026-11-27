@@ -1,0 +1,566 @@
+{
+  "cycle": 3,
+  "score": "84/84",
+  "rate": 1.0,
+  "by_goal": {
+    "1": "20/20",
+    "2": "8/8",
+    "3": "17/17",
+    "4": "6/6",
+    "5": "15/15",
+    "6": "18/18"
+  },
+  "by_field": {
+    "安全と進め方": "24/24",
+    "体の仕組みと痛み": "18/18",
+    "肩と首": "20/20",
+    "腰と背中": "22/22"
+  },
+  "shift_suspect": [],
+  "avg_understood": 2.55,
+  "stuck_units": [],
+  "overconfident_units": [],
+  "unknown_terms": [
+    "ハムストリング",
+    "リウマチ（言い換えはある）",
+    "中殿筋",
+    "仙骨",
+    "代謝（流れとは書いてあるが語としての説明は薄い）",
+    "僧帽筋",
+    "医業類似行為（言い換えはあるが長い）",
+    "坐骨結節",
+    "大転子",
+    "対価",
+    "小殿筋",
+    "後頭下筋群",
+    "斜角筋",
+    "既往（キーワード・ロードマップに説明無し）",
+    "梨状筋",
+    "椎間板（言い換えはある）",
+    "炎症（言い換えはある）",
+    "硬い部分（トリガーポイントの名は出ないが出典に出る）",
+    "肋軟骨（言い換えはある）",
+    "肩峰",
+    "肩甲挙筋",
+    "肩甲棘",
+    "胸郭",
+    "胸鎖乳突筋",
+    "脊髄（言い換えはある）",
+    "腫瘍",
+    "腰方形筋",
+    "腸腰筋",
+    "腸骨稜",
+    "菱形筋",
+    "限定列挙（ロードマップ）",
+    "靱帯（言い換えはある）",
+    "頚椎（言い換えはある）"
+  ],
+  "wrong": [],
+  "overall": {
+    "order_ok": true,
+    "order_issue": "法と言葉の単位（2〜5）が最初に四つ続き、体の話に入るまでが長かった。肩甲骨の目印（単位 9）の後、実際に肩甲骨の角や縁を使う単位（22〜27）まで間があき、目印を忘れて単位 9 に戻った。",
+    "too_long": [
+      14,
+      85
+    ],
+    "too_short": [
+      74
+    ],
+    "most_useful": [
+      10,
+      17,
+      66,
+      85,
+      6
+    ],
+    "least_useful": [
+      13,
+      14,
+      57
+    ],
+    "would_you_continue": true,
+    "comment": "1 日 3 単位なら 14 日続けられる。肩は『座ってもらい、肩の上に手のひら→肩の上の縁を指の腹で軽くつまむ→肩甲骨の面→肩甲骨と背骨の間→うなじの下の骨より下で長めに待つ→肩に手を置いて終える』と自分で言えるので、母の肩には手を当てられる気がする。腰は段取りが長く、横向きへの切り替えとわき腹寄りの扱いにまだ自信が無い。力の量（当てる・乗せる・つまむ）の差と、首の横との境目、薬を飲んでいる家族をどうするかが不安として残った。"
+  },
+  "per_unit": {
+    "2": {
+      "term": "医療へ回す合図（受診のサイン）",
+      "field": "安全と進め方",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "年齢の線（55 歳を超えて初めて）は分かったが、『首や肩の張りの裏に高血圧』とあり、高血圧の人をどう扱うかはこの単位では決まらない",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "12": {
+      "term": "業として行うには国家資格が要る",
+      "field": "安全と進め方",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "対価"
+      ],
+      "minutes": 4
+    },
+    "13": {
+      "term": "医業類似行為の禁止",
+      "field": "安全と進め方",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "首の後ろに手のひらを『軽く添えて支える』のは、座っている相手の何を支えるのか想像しにくい",
+      "unknown_terms": [
+        "医業類似行為（言い換えはあるが長い）"
+      ],
+      "minutes": 5
+    },
+    "14": {
+      "term": "広告と言葉の規制",
+      "field": "安全と進め方",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "法律の条文の列挙が長く、身内に手を当てる自分に何が関係するかは『人を集める形にしない』の一行だけだった",
+      "unknown_terms": [
+        "限定列挙（ロードマップ）"
+      ],
+      "minutes": 5
+    },
+    "15": {
+      "term": "「治す・治療・診断」と言わない言い方",
+      "field": "安全と進め方",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "1": {
+      "term": "やってはいけない相手（禁忌）",
+      "field": "安全と進め方",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "通院か薬があれば主治医に聞いてから、とあるが、年配の家族はたいてい何かの薬を飲んでいるので、実際は手を当てられる相手がかなり減りそう",
+      "unknown_terms": [
+        "リウマチ（言い換えはある）"
+      ],
+      "minutes": 5
+    },
+    "4": {
+      "term": "妊娠中の相手",
+      "field": "安全と進め方",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "25": {
+      "term": "骨格筋のつくりと働き",
+      "field": "体の仕組みと痛み",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "『肩の上の斜めの縁に沿って手のひら全体を置き』とあるが、後の単位ではそこだけ指の腹でつまむとなっている",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "26": {
+      "term": "骨の目印で位置を言う",
+      "field": "体の仕組みと痛み",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "肩甲棘を自分の肩でたどる説明は試したくなったが、文章だけでは『肩の後ろを背骨側から肩先へ』の高さが掴みにくい。絵がほしかった",
+      "unknown_terms": [
+        "肩甲棘",
+        "肩峰"
+      ],
+      "minutes": 8
+    },
+    "6": {
+      "term": "避ける部位の考え方",
+      "field": "安全と進め方",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "『膝の外側の骨の出っぱりのすぐ後ろ』がどこか分からない。肩の上の斜めの縁の『首に近い端』がどこで終わるのかも分からない",
+      "unknown_terms": [
+        "脊髄（言い換えはある）"
+      ],
+      "minutes": 7
+    },
+    "9": {
+      "term": "関節を急に動かす手技を扱わない",
+      "field": "安全と進め方",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "この単位では首に触らず肩の上に手のひらだけ、と読めたが、他の単位では首の後ろに手のひらを添えてよいとある",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "10": {
+      "term": "やめる合図（痛み・息の止まり・しびれ）",
+      "field": "安全と進め方",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "17": {
+      "term": "相手への確認（何を聞くか）",
+      "field": "安全と進め方",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "血圧の薬を飲んでいると言われたらその日は触らない、とあり、父母ともに当てはまりそうで困った",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "19": {
+      "term": "力加減の決め方",
+      "field": "安全と進め方",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "『力をゆっくり増していく』と『手のひらを当てて待つ』『押さずに乗せる』の違いがどれくらいの力の差なのか分からない。後ろに立つと眉は見えない",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "29": {
+      "term": "筋が張るとは何が起きているか",
+      "field": "体の仕組みと痛み",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "硬い部分（トリガーポイントの名は出ないが出典に出る）"
+      ],
+      "minutes": 5
+    },
+    "30": {
+      "term": "筋膜",
+      "field": "体の仕組みと痛み",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "『土手』がどのくらいの幅か、どこから外が『わき腹寄り』かが手で分かるか不安",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "31": {
+      "term": "血流と代謝",
+      "field": "体の仕組みと痛み",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "代謝（流れとは書いてあるが語としての説明は薄い）"
+      ],
+      "minutes": 4
+    },
+    "36": {
+      "term": "痛みの分類",
+      "field": "体の仕組みと痛み",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "三つ目の『傷が見つからない側』が、肩こり（検査で出にくい）とどう違うかの線が一度読んだだけでは揺れた",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "42": {
+      "term": "危険信号（レッドフラッグ）",
+      "field": "体の仕組みと痛み",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "単位 1 の五つのサインと単位 13 の問い 3 と、この単位の項目が少しずつ違い、結局何個覚えればよいか一瞬迷った",
+      "unknown_terms": [
+        "既往（キーワード・ロードマップに説明無し）",
+        "腫瘍"
+      ],
+      "minutes": 5
+    },
+    "28": {
+      "term": "抗重力筋と姿勢",
+      "field": "体の仕組みと痛み",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "33": {
+      "term": "揉み返し",
+      "field": "体の仕組みと痛み",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "炎症（言い換えはある）"
+      ],
+      "minutes": 4
+    },
+    "50": {
+      "term": "肩甲骨の動き",
+      "field": "肩と首",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "肩甲骨の『上の角』『内側の縁』がどこか、自分の体で想像しにくい",
+      "unknown_terms": [
+        "肋軟骨（言い換えはある）"
+      ],
+      "minutes": 6
+    },
+    "53": {
+      "term": "僧帽筋",
+      "field": "肩と首",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "肩の上の斜めの縁を『肩先から首に近い端の手前まで』つまむ、の『手前』がどこで止まるのか分からない。首の横との境目が怖い",
+      "unknown_terms": [
+        "僧帽筋"
+      ],
+      "minutes": 6
+    },
+    "61": {
+      "term": "肩こりとは何か",
+      "field": "肩と首",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "『首を回すと張りの場所が変わるので筋の側』という見分け方はこの単位で急に出てきた",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "57": {
+      "term": "斜角筋と胸郭出口",
+      "field": "肩と首",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "斜角筋の位置は結局触らない所なので名前は覚えられなかった",
+      "unknown_terms": [
+        "斜角筋",
+        "胸郭"
+      ],
+      "minutes": 5
+    },
+    "54": {
+      "term": "肩甲挙筋",
+      "field": "肩と首",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "首の骨の横の突起、がどこにあるか想像できない",
+      "unknown_terms": [
+        "肩甲挙筋"
+      ],
+      "minutes": 5
+    },
+    "55": {
+      "term": "菱形筋",
+      "field": "肩と首",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "菱形筋"
+      ],
+      "minutes": 4
+    },
+    "66": {
+      "term": "肩と首に手を当てる順序",
+      "field": "肩と首",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "(4) で後ろからは眉が見えないとあり、それなら力加減の単位の『眉を見る』はこの姿勢では使えない。つまむ場所の止め所がやはり分からない",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "49": {
+      "term": "頚椎と首の動き",
+      "field": "肩と首",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "頚椎（言い換えはある）"
+      ],
+      "minutes": 5
+    },
+    "58": {
+      "term": "後頭下筋群",
+      "field": "肩と首",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "仰向けで頭を手のひらに預けてもらう場面が出てきたが、それまでの肩の段取り（座って後ろから）には無い姿勢で戸惑った",
+      "unknown_terms": [
+        "後頭下筋群"
+      ],
+      "minutes": 5
+    },
+    "56": {
+      "term": "胸鎖乳突筋",
+      "field": "肩と首",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "耳の後ろの下のくぼみ、は位置の想像がつく",
+      "unknown_terms": [
+        "胸鎖乳突筋"
+      ],
+      "minutes": 4
+    },
+    "67": {
+      "term": "脊柱と腰椎のつくり",
+      "field": "腰と背中",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "椎間板（言い換えはある）",
+        "靱帯（言い換えはある）"
+      ],
+      "minutes": 5
+    },
+    "69": {
+      "term": "骨盤の目印",
+      "field": "腰と背中",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "骨の上は『なぞるだけ』なのに、次の段落で骨の上で眉に力が入ったら弱める合図、とあり、押していないのに何を弱めるのか分からない。うつ伏せでは眉も見えない",
+      "unknown_terms": [
+        "腸骨稜",
+        "大転子",
+        "坐骨結節",
+        "仙骨"
+      ],
+      "minutes": 6
+    },
+    "71": {
+      "term": "脊柱起立筋",
+      "field": "腰と背中",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "73": {
+      "term": "腰方形筋",
+      "field": "腰と背中",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "",
+      "unknown_terms": [
+        "腰方形筋"
+      ],
+      "minutes": 5
+    },
+    "74": {
+      "term": "胸腰筋膜",
+      "field": "腰と背中",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "単位 16 の筋膜と中身がほとんど同じに感じた",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "76": {
+      "term": "大殿筋",
+      "field": "腰と背中",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "77": {
+      "term": "中殿筋と小殿筋",
+      "field": "腰と背中",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "『腰の横』という言い方が、ここでは腸骨稜の下（殿部の上の外寄り）、単位 35 では腸骨稜の上（わき腹寄り）を指していて混乱した",
+      "unknown_terms": [
+        "中殿筋",
+        "小殿筋"
+      ],
+      "minutes": 5
+    },
+    "78": {
+      "term": "梨状筋",
+      "field": "腰と背中",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "脚にビリッと来たら『その日は殿部に触りません』とあり、単位 12 の『その回を終える』（全部やめる）と違うように読めた",
+      "unknown_terms": [
+        "梨状筋"
+      ],
+      "minutes": 5
+    },
+    "79": {
+      "term": "腸腰筋",
+      "field": "腰と背中",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "腸腰筋"
+      ],
+      "minutes": 4
+    },
+    "80": {
+      "term": "ハムストリングと腰の関係",
+      "field": "腰と背中",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "『膝の外側の骨の出っぱりのすぐ後ろ』の位置がやはり分からない。骨盤が後ろへ傾く流れは読めば分かるが自分の言葉では説明しにくい",
+      "unknown_terms": [
+        "ハムストリング"
+      ],
+      "minutes": 6
+    },
+    "85": {
+      "term": "腰と殿部に手を当てる順序",
+      "field": "腰と背中",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "うつ伏せから横向きへの切り替えまで入れると長く、全部を覚えて家族の前でやれる自信はまだ無い",
+      "unknown_terms": [],
+      "minutes": 7
+    }
+  },
+  "delta_rate": 0.048,
+  "delta_understood": -0.16
+}

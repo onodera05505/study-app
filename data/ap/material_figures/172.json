@@ -1,0 +1,155 @@
+{
+  "topic_id": 172,
+  "term": "VLAN",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 分けているのはブロードキャストドメイン",
+      "caption": "1 台のスイッチのポートを VLAN 10 と 20 に分けた例です。端末 A のブロードキャストは同じ VLAN の端末にだけ届き、点線の先には届きません。",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "端末 A（VLAN 10）\nARP 要求を出す",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "b",
+          "label": "端末 B（VLAN 10）\n要求を受け取る",
+          "row": 1,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "sw",
+          "label": "スイッチ\nポートを VLAN 10・20 に分ける",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "c",
+          "label": "端末 C（VLAN 20）\n要求が来ない",
+          "row": 0,
+          "col": 2,
+          "icon": "device"
+        },
+        {
+          "id": "d",
+          "label": "端末 D（VLAN 20）\n要求が来ない",
+          "row": 1,
+          "col": 2,
+          "icon": "device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "sw",
+          "label": "ARP 要求（ブロードキャスト）"
+        },
+        {
+          "from": "sw",
+          "to": "b",
+          "label": "同じ VLAN へは届く"
+        },
+        {
+          "from": "sw",
+          "to": "c",
+          "label": "別の VLAN へは届かない",
+          "style": "dashed",
+          "arrow": "none"
+        },
+        {
+          "from": "sw",
+          "to": "d",
+          "label": "別の VLAN へは届かない",
+          "style": "dashed",
+          "arrow": "none"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### タグ VLAN とセグメント間の通信",
+      "caption": "2 台のスイッチを結ぶ 1 本の回線に、VLAN 10 と 20 のフレームを識別子付きで相乗りさせます。VLAN をまたぐ通信は、強調したレイヤー 3 スイッチが仲介します。",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "端末 A（VLAN 10）\n送る側",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "s1",
+          "label": "スイッチ 1\nA をつなぐ",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "l3",
+          "label": "レイヤー 3 スイッチ\nVLAN の間を仲介",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "b",
+          "label": "端末 B（VLAN 10）\n同じ VLAN の相手",
+          "row": 1,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "s2",
+          "label": "スイッチ 2\nB と C をつなぐ",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "c",
+          "label": "端末 C（VLAN 20）\n別の VLAN の相手",
+          "row": 1,
+          "col": 2,
+          "icon": "device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "s1",
+          "label": "VLAN 10 のフレーム",
+          "arrow": "both"
+        },
+        {
+          "from": "s1",
+          "to": "s2",
+          "label": "1 本で VLAN 10 と 20（識別子付き）",
+          "arrow": "both"
+        },
+        {
+          "from": "s2",
+          "to": "b",
+          "label": "VLAN 10 のまま届く",
+          "arrow": "both"
+        },
+        {
+          "from": "s2",
+          "to": "c",
+          "label": "VLAN 20 のフレーム",
+          "arrow": "both"
+        },
+        {
+          "from": "s1",
+          "to": "l3",
+          "label": "VLAN をまたぐ通信はルーティング",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

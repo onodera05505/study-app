@@ -1,0 +1,144 @@
+{
+  "topic_id": 476,
+  "term": "半加算器",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "入力 A と B を 2 つの素子に分けて入れ、排他的論理和の出力が和 S、論理積の出力が桁上がり C です。",
+      "nodes": [
+        {
+          "id": "in",
+          "label": "入力 A と B\n1 桁の 2 進数",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "x",
+          "label": "排他的論理和\nXOR 素子",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "n",
+          "label": "論理積\nAND 素子",
+          "row": 2,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "s",
+          "label": "和 S\n1 桁目",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "c",
+          "label": "桁上がり C\n2 桁目",
+          "row": 2,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "in",
+          "to": "x",
+          "label": "A と B を分岐"
+        },
+        {
+          "from": "in",
+          "to": "n",
+          "label": "A と B を分岐"
+        },
+        {
+          "from": "x",
+          "to": "s",
+          "label": "一方だけ 1 なら 1"
+        },
+        {
+          "from": "n",
+          "to": "c",
+          "label": "両方 1 なら 1"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 全加算器との違い",
+      "caption": "下位からの桁上がりは半加算器 2 に入り、2 つの半加算器が出す桁上がりを論理和でまとめて上位への桁上がりにすることを表しています。",
+      "nodes": [
+        {
+          "id": "s",
+          "label": "和 S\nこの桁の答え",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "cin",
+          "label": "下位からの桁上がり\n1 つ下の桁から届く",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "h2",
+          "label": "半加算器 2\n途中の和と\n下位の桁上がりを足す",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "in",
+          "label": "入力 A と B\nこの桁の 2 数",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "h1",
+          "label": "半加算器 1\nA と B を足す",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "or",
+          "label": "論理和\n2 つの桁上がりをまとめ\n上位への桁上がり C に",
+          "row": 1,
+          "col": 3
+        }
+      ],
+      "edges": [
+        {
+          "from": "in",
+          "to": "h1",
+          "label": "A と B"
+        },
+        {
+          "from": "h1",
+          "to": "h2",
+          "label": "途中の和"
+        },
+        {
+          "from": "cin",
+          "to": "h2",
+          "label": "下位の桁上がり"
+        },
+        {
+          "from": "h2",
+          "to": "s",
+          "label": "和"
+        },
+        {
+          "from": "h1",
+          "to": "or",
+          "label": "桁上がり 1"
+        },
+        {
+          "from": "h2",
+          "to": "or",
+          "label": "桁上がり 2"
+        }
+      ]
+    }
+  ]
+}

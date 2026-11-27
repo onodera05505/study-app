@@ -5,20 +5,76 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 図の問題の見分け方",
-      "caption": "現実世界からデバイスへ入る側がセンサ、デバイスから現実世界へ働きかける側がアクチュエータ。",
+      "after": "### 信号の向きで役割が決まる",
+      "caption": "部屋の明るさを測ってブラインドを動かす IoT の流れです。矢印の向きをたどり、現実世界から入る側と現実世界へ出る側を見比べます。",
       "nodes": [
-        {"id": "lv", "label": "水田の水位\n（現実世界）", "row": 0, "col": 0, "shape": "round"},
-        {"id": "sen", "label": "センサ\n測って電気信号に", "row": 0, "col": 1},
-        {"id": "srv", "label": "IoT サーバ\n分析して判断", "row": 0, "col": 2},
-        {"id": "gate", "label": "水田の水門\n（現実世界）", "row": 1, "col": 0, "shape": "round"},
-        {"id": "act", "label": "アクチュエータ\n指示を受けて動かす", "row": 1, "col": 1, "emphasis": true}
+        {
+          "id": "lt",
+          "label": "部屋の明るさ\n（現実世界）",
+          "row": 0,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "sen",
+          "label": "センサー\n測って電気信号に",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "gw",
+          "label": "IoT ゲートウェイ\nデータを送り届ける",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "srv",
+          "label": "IoT サーバ\n分析して判断",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "bl",
+          "label": "ブラインド\n（現実世界）",
+          "row": 1,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "act",
+          "label": "アクチュエーター\n指示を受けて動かす",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "lv", "to": "sen", "label": "水位"},
-        {"from": "sen", "to": "srv", "label": "水位データ"},
-        {"from": "srv", "to": "act", "label": "開閉の指示"},
-        {"from": "act", "to": "gate", "label": "開ける・閉める"}
+        {
+          "from": "lt",
+          "to": "sen",
+          "label": "明るさ"
+        },
+        {
+          "from": "sen",
+          "to": "gw",
+          "label": "明るさのデータ"
+        },
+        {
+          "from": "gw",
+          "to": "srv",
+          "label": "データと指示",
+          "arrow": "both"
+        },
+        {
+          "from": "gw",
+          "to": "act",
+          "label": "上げ下げの指示"
+        },
+        {
+          "from": "act",
+          "to": "bl",
+          "label": "上げる・下げる"
+        }
       ]
     }
   ]

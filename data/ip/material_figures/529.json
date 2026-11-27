@@ -1,0 +1,65 @@
+{
+  "topic_id": 529,
+  "term": "ソフトウェア等の脆弱性関連情報に関する届出制度",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "explanation",
+      "caption": "届出は IPA が受け、JPCERT コーディネーションセンターが開発者と調整し、修正の準備が整ってから公表します。",
+      "actors": [
+        {
+          "id": "f",
+          "label": "発見者",
+          "icon": "person"
+        },
+        {
+          "id": "i",
+          "label": "IPA"
+        },
+        {
+          "id": "j",
+          "label": "JPCERT/CC"
+        },
+        {
+          "id": "d",
+          "label": "開発者",
+          "icon": "building"
+        }
+      ],
+      "steps": [
+        {
+          "from": "f",
+          "to": "i",
+          "label": "脆弱性を届け出る",
+          "note": "いきなり公表すると対策の前に悪用される"
+        },
+        {
+          "from": "i",
+          "to": "i",
+          "label": "受付と分析"
+        },
+        {
+          "from": "i",
+          "to": "j",
+          "label": "分析した内容を渡す"
+        },
+        {
+          "from": "j",
+          "to": "d",
+          "label": "連絡し修正の準備を促す"
+        },
+        {
+          "from": "d",
+          "to": "j",
+          "label": "修正の準備が整ったと伝える"
+        },
+        {
+          "from": "j",
+          "to": "j",
+          "label": "内容と対策を JVN で公表"
+        }
+      ]
+    }
+  ]
+}

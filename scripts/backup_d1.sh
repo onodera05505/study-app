@@ -19,6 +19,13 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
+case "${1:-all}" in
+  all) EXAMS=$(python3 scripts/targets.py keys) ;;
+  *) [ "$(python3 scripts/targets.py has "$1")" = yes ] || { echo "第1引数は対象の ID か all"; exit 1; }; EXAMS=$1 ;;
+esac
+# 保存先に触る前に、ログイン中のアカウントを決めたアカウントと照らす（違えば控えを書かずに失敗で終える）
+source scripts/lib/check_account.sh
+
 STAMP=$(date +%Y-%m-%d_%H%M)
 OUT=backups
 mkdir -p "$OUT"
@@ -37,12 +44,7 @@ backup_one () {
   fi
 }
 
-case "${1:-all}" in
-  ip)  backup_one ip study-app-db ;;
-  ap)  backup_one ap study-app-ap-db ;;
-  all) backup_one ip study-app-db; backup_one ap study-app-ap-db ;;
-  *)   echo "第1引数は ip か ap（省略で両方）"; exit 1 ;;
-esac
+for k in $EXAMS; do backup_one "$k" "$(python3 scripts/targets.py db "$k")"; done
 
 echo
 echo "完了。${OUT}/ は .gitignore 済み（git 管理外）。"

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="265" viewBox="0 0 645.2 267">
+<rect x="0.5" y="0.5" width="644.2" height="266" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<g transform="translate(22.6 0)">
+<line x1="0" y1="110" x2="0" y2="128" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="210" y1="110" x2="210" y2="128" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="140" y1="50" x2="140" y2="128" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="420" y1="50" x2="420" y2="128" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="350" y1="110" x2="350" y2="128" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="560" y1="110" x2="560" y2="128" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<rect x="0" y="96" width="210" height="14" rx="3" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<rect x="4.4" y="60" width="201.2" height="32" rx="3" fill="#ffffff"/>
+<text x="105" y="72.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">T1　チェックポイント前にコミット</text>
+<text x="105" y="88.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">反映済みなので何もしない</text>
+<rect x="140" y="36" width="280" height="14" rx="3" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<rect x="179.4" y="0" width="201.2" height="32" rx="3" fill="#ffffff"/>
+<text x="280" y="12.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">T2　チェックポイント後にコミット</text>
+<text x="280" y="28.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">更新後情報でやり直す（redo）</text>
+<rect x="350" y="96" width="210" height="14" rx="3" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<rect x="365.8" y="60" width="178.4" height="32" rx="3" fill="#ffffff"/>
+<text x="455" y="72.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">T3　障害の時点で未完了</text>
+<text x="455" y="88.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">更新前情報で取り消す（undo）</text>
+<line x1="0" y1="128" x2="560" y2="128" stroke="#1f2937" stroke-width="1.4"/>
+<line x1="0" y1="128" x2="0" y2="133" stroke="#1f2937" stroke-width="1.2"/>
+<text x="0" y="147" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">時刻 1</text>
+<line x1="140" y1="128" x2="140" y2="133" stroke="#1f2937" stroke-width="1.2"/>
+<text x="140" y="147" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">時刻 2</text>
+<line x1="280" y1="128" x2="280" y2="133" stroke="#1f2937" stroke-width="1.2"/>
+<text x="280" y="147" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">時刻 3</text>
+<line x1="420" y1="128" x2="420" y2="133" stroke="#1f2937" stroke-width="1.2"/>
+<text x="420" y="147" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">時刻 4</text>
+<line x1="560" y1="128" x2="560" y2="133" stroke="#1f2937" stroke-width="1.2"/>
+<text x="560" y="147" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">時刻 5</text>
+<line x1="280" y1="133" x2="280" y2="132" stroke="#6b7280" stroke-width="0.8"/>
+<line x1="280" y1="153" x2="280" y2="161" stroke="#6b7280" stroke-width="0.8"/>
+<line x1="560" y1="133" x2="560" y2="132" stroke="#6b7280" stroke-width="0.8"/>
+<line x1="560" y1="153" x2="560" y2="161" stroke="#6b7280" stroke-width="0.8"/>
+<circle cx="280" cy="128" r="4.5" fill="#ffffff" stroke="#1f2937" stroke-width="1.6"/>
+<rect x="216" y="163" width="128" height="32" rx="3" fill="#ffffff"/>
+<text x="280" y="175.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">チェックポイント</text>
+<text x="280" y="191.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">更新を書き出して同期</text>
+<circle cx="560" cy="128" r="4.5" fill="#ffffff" stroke="#1f2937" stroke-width="1.6"/>
+<rect x="432" y="163" width="128" height="32" rx="3" fill="#ffffff"/>
+<text x="496" y="175.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">障害</text>
+<text x="496" y="191.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">主記憶の内容が消える</text>
+<text x="280" y="223" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">時間の流れ（例）</text>
+</g>
+</g>
+</svg>

@@ -1,0 +1,529 @@
+{
+  "cycle": 1,
+  "score": "84/84",
+  "rate": 1.0,
+  "by_goal": {
+    "1": "13/13",
+    "2": "5/5",
+    "3": "16/16",
+    "4": "17/17",
+    "5": "19/19",
+    "6": "14/14"
+  },
+  "by_field": {
+    "市場と顧客の理解": "14/14",
+    "実務の判断と評価": "20/20",
+    "戦略と打ち手（STP・4P）": "16/16",
+    "デジタルと計測": "34/34"
+  },
+  "avg_understood": 2.83,
+  "stuck_units": [],
+  "overconfident_units": [],
+  "unknown_terms": [
+    "MQL／SQL（次の単位で出てくるが、B2B の話をする時点で欲しかった）",
+    "サンプルサイズ",
+    "セッション",
+    "タグ（説明はあるが、どこに何を置くのかは想像がつかない）",
+    "データドリブン（名前は出るが中身は分からない）",
+    "ユニットエコノミクス（出典にだけ出る）",
+    "リターゲティング（問題文に出るが教材に説明が無い）",
+    "二重計上の実例はもう少し欲しかった",
+    "入札",
+    "内部リンク",
+    "有意差",
+    "目標 CPA の「入札」の仕組み",
+    "粗利率"
+  ],
+  "wrong": [],
+  "overall": {
+    "order_ok": false,
+    "order_issue": "大きくは困らなかったが 3 つ引っかかった。(1) 単位 28「デジタルマーケティングの全体像」が、SEO・SNS・広告・メール（15〜18）より後の 10 日目に来る。全体像が先にあれば、個々の施策をどの段のものかと分かった状態で読めた。(2) 単位 13「価格設定」の混同用語に「継続課金では判断の軸が LTV に移る」とあるが、LTV は単位 26 でまだ 13 単位先。(3) CVR という語は単位 4 と 19 で使われるのに、定義は単位 21。単位 19 の LP の話を読んでいる間、割合の話が宙に浮いた。逆に CPA→CAC→リテンション→LTV→LTV:CAC（22〜27）の並びは前の単位が次の入力になっていて、ここが一番読みやすかった。",
+    "too_long": [
+      73,
+      32,
+      41,
+      46
+    ],
+    "too_short": [
+      43,
+      47,
+      49
+    ],
+    "most_useful": [
+      7,
+      42,
+      84,
+      87,
+      22
+    ],
+    "least_useful": [
+      1,
+      46
+    ],
+    "would_you_continue": true,
+    "comment": "14 日は続けられる。1 単位 5 分は概ね実感どおりで、3 単位で 15〜20 分なら通勤時間に収まる。確認問題が 1 単位 2 問で、1 問は定義、1 問は数字を変えた判断問題という形が固定されているので、読んだ直後に手が止まらない。ただし気になった点が 2 つある。1 つ目は、判断問題が教材の「現場で判断するなら」と同じ筋・同じ選択肢構成で数字だけ違うものが多く、教材を読んだ直後なら考えずに正解を選べてしまうこと。実際、単位 3・4・6・11・22・30・39 あたりは、教材の該当段落を思い出しただけで答えが出た。正解できたことと、自分の事業で同じ判断ができることは別だと思う。2 つ目は計算が絡む単位（13・23・25・26・27）で、式の解釈が一意に決まらない箇所があり、ここだけ自信が持てない。現場で判断できる気がするか、については分野で差がある。顧客のマーケ部門の施策の弱点を見立てる（計測が入っているか、単一指標で判断していないか、誰と比べられているかを押さえているか、リードの引き渡し基準が文章になっているか）は、明日からでも質問の形で出せる。一方、自分の事業で値付けを決める・予算配分を決めるは、まだ数字の作り方に自信が無い。全体としては、施策を思いつく力ではなく「その施策を何で評価するか」を揃えてくれる内容で、自分の欠けていたところに当たっていた。"
+  },
+  "per_unit": {
+    "1": {
+      "term": "マーケティングの定義",
+      "field": "市場と顧客の理解",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "12": {
+      "term": "消費者購買意思決定プロセス",
+      "field": "市場と顧客の理解",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "14": {
+      "term": "カスタマージャーニー",
+      "field": "市場と顧客の理解",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "15": {
+      "term": "ファネル（認知・比較検討・獲得）",
+      "field": "市場と顧客の理解",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "73": {
+      "term": "KGI から KPI への分解",
+      "field": "実務の判断と評価",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "1.15 倍を 3 乗して約 1.52 倍、という置き方は分かったが、掛け算の要素は 4 つ（訪問・請求率・商談化率・受注率）あるのに、なぜ受注率だけ据え置くのかが書かれていない。手を当てる先を 3 つに決めた理由が読み取れなかった",
+      "unknown_terms": [],
+      "minutes": 8
+    },
+    "5": {
+      "term": "市場環境分析（マクロ・ミクロ）",
+      "field": "市場と顧客の理解",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "21": {
+      "term": "STP",
+      "field": "戦略と打ち手（STP・4P）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "22": {
+      "term": "セグメンテーション",
+      "field": "戦略と打ち手（STP・4P）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "23": {
+      "term": "ターゲティング",
+      "field": "戦略と打ち手（STP・4P）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "16": {
+      "term": "ペルソナ",
+      "field": "市場と顧客の理解",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "24": {
+      "term": "ポジショニング",
+      "field": "戦略と打ち手（STP・4P）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "27": {
+      "term": "マーケティング・ミックス（4P）",
+      "field": "戦略と打ち手（STP・4P）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "32": {
+      "term": "価格設定の方法",
+      "field": "戦略と打ち手（STP・4P）",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "価値基準の例が「月 4,000 円の値打ち」なのに、売価は 4,800 円の一回売り。月あたりの値打ちと一回の売価をどう突き合わせて上限を出すのかが分からなかった。何か月分を上限とみなすのか",
+      "unknown_terms": [
+        "粗利率"
+      ],
+      "minutes": 8
+    },
+    "51": {
+      "term": "計測設計（何を成果とみなすか）",
+      "field": "デジタルと計測",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "タグ（説明はあるが、どこに何を置くのかは想像がつかない）",
+        "入札"
+      ],
+      "minutes": 5
+    },
+    "79": {
+      "term": "効果検証の運用（PDCA・定点観測）",
+      "field": "実務の判断と評価",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "セッション",
+        "内部リンク"
+      ],
+      "minutes": 5
+    },
+    "57": {
+      "term": "CVR（コンバージョン率）",
+      "field": "デジタルと計測",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "58": {
+      "term": "CPA（獲得単価）",
+      "field": "デジタルと計測",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "62": {
+      "term": "ROAS・ROI（費用対効果）",
+      "field": "デジタルと計測",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "59": {
+      "term": "CAC（顧客獲得コスト）",
+      "field": "デジタルと計測",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "66": {
+      "term": "リテンションと解約率（チャーン）",
+      "field": "デジタルと計測",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "60": {
+      "term": "LTV（顧客生涯価値）",
+      "field": "デジタルと計測",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "61": {
+      "term": "LTV:CAC と回収期間",
+      "field": "デジタルと計測",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "目標 CPA の「入札」の仕組み"
+      ],
+      "minutes": 5
+    },
+    "41": {
+      "term": "デジタルマーケティングの全体像",
+      "field": "デジタルと計測",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "ROI の式が「(利益 − 投資額) ÷ 投資額」と書いてあるのに、例では粗利 120,000 から広告費 100,000 を引いた 20,000 を投資額で割っている。式の『利益』が広告費を引く前の粗利なのか引いた後なのかが、式だけからは読み取れず、例で逆算してようやく分かった",
+      "unknown_terms": [],
+      "minutes": 8
+    },
+    "42": {
+      "term": "施策の向き不向き（即効性と資産型）",
+      "field": "デジタルと計測",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "49": {
+      "term": "LP と CTA の設計",
+      "field": "デジタルと計測",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "平均継続月数 ＝ 1 ÷ 解約率 という式が、なぜそうなるのかの説明が無い。覚えて使うことはできるが、人に理由を説明できない",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "47": {
+      "term": "メールマーケティング",
+      "field": "デジタルと計測",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "売上でなく粗利で数える、はよく分かった。ただしここでも 1 ÷ 解約率 をそのまま使っている",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "43": {
+      "term": "SEO（検索からの流入）",
+      "field": "デジタルと計測",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "比が大きすぎるのは「出せるのに出していないサイン」という一文だけ、根拠の説明が無かった。どれくらいなら大きすぎるのかも書かれていない",
+      "unknown_terms": [
+        "ユニットエコノミクス（出典にだけ出る）"
+      ],
+      "minutes": 4
+    },
+    "46": {
+      "term": "SNSマーケティング",
+      "field": "デジタルと計測",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "内容は分かったが、単位 15〜18 で個別の施策を先に読んだ後にこの全体像が来るので、順番が逆に感じた。ここを先に読んでいれば各施策がどの段のものか分かった状態で読めた",
+      "unknown_terms": [],
+      "minutes": 6
+    },
+    "38": {
+      "term": "広告",
+      "field": "戦略と打ち手（STP・4P）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "7": {
+      "term": "競合分析",
+      "field": "市場と顧客の理解",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "80": {
+      "term": "予算配分の優先順位",
+      "field": "実務の判断と評価",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "25": {
+      "term": "差別化と競争優位の言語化",
+      "field": "戦略と打ち手（STP・4P）",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "89": {
+      "term": "B2B と B2C の違い",
+      "field": "実務の判断と評価",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "MQL／SQL（次の単位で出てくるが、B2B の話をする時点で欲しかった）"
+      ],
+      "minutes": 4
+    },
+    "54": {
+      "term": "アトリビューション",
+      "field": "デジタルと計測",
+      "correct": 2,
+      "total": 2,
+      "understood": 2,
+      "confusing": "「件数が少ないと偶然の差が勝ちに見える」は分かったが、では何件あれば足りるのかが書かれていない。見分けワードに有意差・サンプルサイズと出るのに、本文にその説明が無く、自分で判断基準を持てなかった",
+      "unknown_terms": [
+        "有意差",
+        "サンプルサイズ"
+      ],
+      "minutes": 5
+    },
+    "75": {
+      "term": "A/Bテストの進め方",
+      "field": "実務の判断と評価",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "リターゲティング（問題文に出るが教材に説明が無い）",
+        "データドリブン（名前は出るが中身は分からない）"
+      ],
+      "minutes": 5
+    },
+    "68": {
+      "term": "アトリビューションの限界",
+      "field": "デジタルと計測",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [
+        "二重計上の実例はもう少し欲しかった"
+      ],
+      "minutes": 5
+    },
+    "71": {
+      "term": "季節性と外部要因の切り分け",
+      "field": "デジタルと計測",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "83": {
+      "term": "失敗の型: 計測なし・やりっぱなし",
+      "field": "実務の判断と評価",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "82": {
+      "term": "経営への説明（投資判断の言葉に翻訳）",
+      "field": "実務の判断と評価",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "84": {
+      "term": "失敗の型: ターゲット不在",
+      "field": "実務の判断と評価",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 4
+    },
+    "86": {
+      "term": "失敗の型: 単一指標での判断",
+      "field": "実務の判断と評価",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    },
+    "87": {
+      "term": "営業とマーケティングの連携",
+      "field": "実務の判断と評価",
+      "correct": 2,
+      "total": 2,
+      "understood": 3,
+      "confusing": "",
+      "unknown_terms": [],
+      "minutes": 5
+    }
+  },
+  "explain": {
+    "grades": {
+      "STP（セグメンテーション・ターゲティング・ポジショニング）": 2,
+      "ペルソナ": 2,
+      "4P（打ち手の組み立て）": 2,
+      "価格の決め方（コスト・競合・価値）": 2,
+      "CAC と LTV の関係": 2,
+      "CVR と CPA": 2,
+      "リテンション": 2,
+      "検索広告と SEO の向き不向き": 2,
+      "アトリビューション（帰属）の限界": 2,
+      "A/B テストで気をつけること": 2,
+      "予算配分の考え方（短期施策とブランド）": 2,
+      "顧客の施策の弱点を見立てる観点": 2
+    },
+    "rate": 1.0,
+    "can_explain": 12,
+    "n": 12
+  }
+}

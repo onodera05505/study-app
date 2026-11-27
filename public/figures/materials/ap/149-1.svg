@@ -1,8 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="226" viewBox="0 0 640 226" role="img">
-<title>1 対 ＊ の関連では外部キーを「＊」側の表に置き、そこから「1」側の表への参照制約を指定する。</title>
-<rect x="0.5" y="0.5" width="639" height="225" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="198" viewBox="0 0 640 198">
+<rect x="0.5" y="0.5" width="639" height="197" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(111.8 20)">
-<polyline points="136,28 259.4,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polyline points="136,28 273.4,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polyline points="75,56 75,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
 <polygon points="75,102 71.4,94 78.6,94" fill="#1f2937"/>
 <polyline points="334.4,56 334.4,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
@@ -10,21 +9,21 @@
 <polyline points="252.4,130 150,130" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="150,130 158,126.4 158,133.6" fill="#1f2937"/>
 <rect x="14" y="0" width="122" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="75" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">クラス「顧客」</text>
+<text x="75" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">クラス「学部」</text>
 <text x="75" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">多重度 1</text>
-<rect x="259.4" y="0" width="150" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="334.4" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">クラス「付加情報」</text>
+<rect x="273.4" y="0" width="122" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="334.4" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">クラス「学生」</text>
 <text x="334.4" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">多重度 ＊</text>
 <path d="M 0 111 A 75 9 0 0 0 150 111 L 150 149 A 75 9 0 0 1 0 149 Z" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
 <path d="M 0 111 A 75 9 0 0 1 150 111" fill="none" stroke="#1f2937" stroke-width="1"/>
-<text x="75" y="126.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">顧客 表</text>
-<text x="75" y="146.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">顧客番号（主キー）</text>
+<text x="75" y="126.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">学部 表</text>
+<text x="75" y="146.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">学部番号（主キー）</text>
 <path d="M 252.4 111 A 82 9 0 0 0 416.4 111 L 416.4 149 A 82 9 0 0 1 252.4 149 Z" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
 <path d="M 252.4 111 A 82 9 0 0 1 416.4 111" fill="none" stroke="#2563eb" stroke-width="1.8"/>
-<text x="334.4" y="126.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">付加情報 表</text>
-<text x="334.4" y="146.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">顧客番号（外部キー）</text>
-<rect x="150.5" y="11" width="94.4" height="16" rx="3" fill="#ffffff"/>
-<text x="197.7" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1 対 ＊ の関連</text>
+<text x="334.4" y="126.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">学生 表</text>
+<text x="334.4" y="146.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">学部番号（外部キー）</text>
+<rect x="157.5" y="11" width="94.4" height="16" rx="3" fill="#ffffff"/>
+<text x="204.7" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1 対 ＊ の関連</text>
 <rect x="47" y="70" width="56" height="16" rx="3" fill="#ffffff"/>
 <text x="75" y="83.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">表にする</text>
 <rect x="306.4" y="70" width="56" height="16" rx="3" fill="#ffffff"/>
@@ -32,5 +31,4 @@
 <rect x="173.2" y="113" width="56" height="16" rx="3" fill="#ffffff"/>
 <text x="201.2" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">参照制約</text>
 </g>
-<text x="320" y="206" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">1 対 ＊ の関連では外部キーを「＊」側の表に置き、そこから「1」側の表への参照制約を指定する。</text>
 </svg>

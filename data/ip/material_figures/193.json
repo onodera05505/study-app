@@ -1,0 +1,35 @@
+{
+  "topic_id": 193,
+  "term": "データ分析",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "explanation",
+      "direction": "down",
+      "caption": "データベースができるまでと、できた後の工程を上から順に並べています。強調したデータ分析は一番初めの、作る前の工程です。最後の活用は作った後の工程です。",
+      "stages": [
+        {
+          "label": "データ分析\n項目を洗い出し関連を整理する",
+          "icon": "search",
+          "emphasis": true,
+          "next_label": "項目と関連（E-R 図）"
+        },
+        {
+          "label": "設計\n関連をもとに表の形を決める",
+          "icon": "document",
+          "next_label": "表の設計"
+        },
+        {
+          "label": "構築\nデータベースを作る",
+          "icon": "database",
+          "next_label": "たまったデータ"
+        },
+        {
+          "label": "活用\nデータマイニングで傾向を掘る",
+          "icon": "chart"
+        }
+      ]
+    }
+  ]
+}

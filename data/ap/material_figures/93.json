@@ -1,0 +1,139 @@
+{
+  "topic_id": 93,
+  "term": "FC-SAN",
+  "figures": [
+    {
+      "id": 1,
+      "type": "matrix",
+      "after": "### DAS・NAS・SAN の切り分け",
+      "caption": "3 つのつなぎ方を、本文の 2 つの観点で比べます。強調した SAN の行を横に読み、ほかの 2 つと違う所を確かめます。",
+      "x": {
+        "label": "観点",
+        "values": [
+          "ストレージとの経路",
+          "アクセス単位"
+        ]
+      },
+      "y": {
+        "label": "形態",
+        "values": [
+          "DAS",
+          "NAS",
+          "SAN"
+        ]
+      },
+      "cells": [
+        [
+          "直結\nネットワークを通らない",
+          "ブロック\nファイルに組むのは\nサーバ側"
+        ],
+        [
+          "業務の LAN\n利用者の通信と同じ網",
+          "ファイル\nファイルに組むのは\nストレージ側"
+        ],
+        [
+          "専用のネットワーク\n業務の LAN と別",
+          "ブロック\nファイルに組むのは\nサーバ側"
+        ]
+      ],
+      "emphasis": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### FC-SAN の構成",
+      "caption": "上の業務用 LAN と下の FC の網は別の配線です。ストレージへの読み書きは下の網だけを通るので、LAN の混雑に巻き込まれません。",
+      "nodes": [
+        {
+          "id": "cl",
+          "label": "クライアント\n業務の利用者",
+          "row": 0,
+          "col": 1,
+          "icon": "device"
+        },
+        {
+          "id": "lan",
+          "label": "業務用 LAN\n利用者との通信",
+          "row": 1,
+          "col": 1,
+          "icon": "network"
+        },
+        {
+          "id": "s1",
+          "label": "サーバ A\n2 つの網につなぐ",
+          "row": 2,
+          "col": 0,
+          "icon": "server"
+        },
+        {
+          "id": "s2",
+          "label": "サーバ B\n2 つの網につなぐ",
+          "row": 2,
+          "col": 2,
+          "icon": "server"
+        },
+        {
+          "id": "sw",
+          "label": "FC スイッチ\nストレージ専用の網",
+          "row": 3,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "st",
+          "label": "ストレージ群\n全サーバで共有",
+          "row": 4,
+          "col": 1,
+          "icon": "database"
+        }
+      ],
+      "edges": [
+        {
+          "from": "cl",
+          "to": "lan",
+          "label": "業務の要求と応答",
+          "arrow": "both"
+        },
+        {
+          "from": "lan",
+          "to": "s1",
+          "label": "業務の通信",
+          "arrow": "both"
+        },
+        {
+          "from": "lan",
+          "to": "s2",
+          "label": "業務の通信",
+          "arrow": "both"
+        },
+        {
+          "from": "s1",
+          "to": "sw",
+          "label": "ブロックの読み書き",
+          "arrow": "both"
+        },
+        {
+          "from": "s2",
+          "to": "sw",
+          "label": "ブロックの読み書き",
+          "arrow": "both"
+        },
+        {
+          "from": "sw",
+          "to": "st",
+          "label": "ブロックの読み書き",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

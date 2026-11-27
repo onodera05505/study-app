@@ -1,0 +1,36 @@
+{
+  "topic_id": 52,
+  "term": "仮説思考",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "### しくみ",
+      "caption": "市の図書館の利用者が減った例で、候補を置いてから確かめるまでの輪を表しました。強調した確かめる段で当たれば、それが示唆になります。",
+      "center": "答えに\n近づく",
+      "stages": [
+        {
+          "label": "候補を置く\n「たぶん平日の昼の\n利用が減った」",
+          "icon": "person",
+          "next_label": "確かめたい一点"
+        },
+        {
+          "label": "材料を 1 つに絞る\n曜日と時間帯ごとの\n入館者数",
+          "icon": "search",
+          "next_label": "その数字だけを見る"
+        },
+        {
+          "label": "確かめる\n当たれば示唆が出る",
+          "icon": "check",
+          "emphasis": true,
+          "next_label": "外れた"
+        },
+        {
+          "label": "次の候補に移る\n外れても止まらない",
+          "icon": "arrow-cycle",
+          "next_label": "新しい候補"
+        }
+      ]
+    }
+  ]
+}

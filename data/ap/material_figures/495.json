@@ -1,0 +1,119 @@
+{
+  "topic_id": 495,
+  "term": "VDI（Virtual Desktop Infrastructure：デスクトップ仮想化）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "左が手元の端末、右がサーバ上の利用者ごとの仮想 PC です。端末とは操作と画面だけをやり取りし、処理とデータはサーバ側に残ります。",
+      "nodes": [
+        {
+          "id": "t1",
+          "label": "ノート PC\n入出力の窓口",
+          "icon": "device",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "t2",
+          "label": "スマートフォン\n種類を選ばない",
+          "icon": "phone",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "v1",
+          "label": "仮想 PC（A さん）\nOS とアプリが動く",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "v2",
+          "label": "仮想 PC（B さん）\nOS とアプリが動く",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "d",
+          "label": "データ\nサーバ側に残る",
+          "row": 0,
+          "col": 2,
+          "shape": "cylinder"
+        }
+      ],
+      "edges": [
+        {
+          "from": "t1",
+          "to": "v1",
+          "label": "キーとマウスの操作"
+        },
+        {
+          "from": "v1",
+          "to": "t1",
+          "label": "画面の描画結果"
+        },
+        {
+          "from": "t2",
+          "to": "v2",
+          "label": "操作 ⇄ 画面",
+          "arrow": "both"
+        },
+        {
+          "from": "v1",
+          "to": "d",
+          "label": "読み書き",
+          "arrow": "both"
+        },
+        {
+          "from": "v2",
+          "to": "d",
+          "label": "読み書き",
+          "arrow": "both"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### 混同しやすい用語",
+      "caption": "テレワークで使う 3 つの言葉を、指すものと PC 環境が動く場所で比べた表です。強調したセルが、VDI の要点である PC 環境の置き場所です。",
+      "x": {
+        "label": "観点",
+        "values": [
+          "指すもの",
+          "PC 環境が動く場所"
+        ]
+      },
+      "y": {
+        "label": "用語",
+        "values": [
+          "VDI",
+          "VPN",
+          "シンクライアント"
+        ]
+      },
+      "cells": [
+        [
+          "仕組み\nデスクトップを用意する側",
+          "サーバ上\n仮想 PC で動く"
+        ],
+        [
+          "通信路\n通信を暗号化して\n社外と社内をつなぐ",
+          "手元の端末\n経路だけを用意する"
+        ],
+        [
+          "端末\n記憶装置をほぼ持たない",
+          "接続先のサーバ\n端末は入出力だけ"
+        ]
+      ],
+      "emphasis": [
+        [
+          0,
+          1
+        ]
+      ]
+    }
+  ]
+}

@@ -1,23 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="114" viewBox="0 0 640 114" role="img">
-<title>みんなが使う公衆の通信網の上に暗号化した通信路を作り、専用線のように拠点をつなぐ。</title>
-<rect x="0.5" y="0.5" width="639" height="113" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(29 20)">
-<polyline points="103,23 234,23" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="234,23 226,26.6 226,19.4" fill="#1f2937"/>
-<polygon points="103,23 111,19.4 111,26.6" fill="#1f2937"/>
-<polyline points="348,23 479,23" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="479,23 471,26.6 471,19.4" fill="#1f2937"/>
-<polygon points="348,23 356,19.4 356,26.6" fill="#1f2937"/>
-<rect x="7" y="0" width="96" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="55" y="27.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">本社</text>
-<path d="M 252.24 46 C 227.16 46 229.44 18.4 254.52 19.32 C 254.52 -2.76 297.84 -5.52 302.4 13.8 C 325.2 4.6 354.84 13.8 342.3 28.52 C 354.84 43.24 341.16 46 327.48 46 Z" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="291" y="27.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">公衆の通信網</text>
-<rect x="479" y="0" width="96" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="527" y="27.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">支社</text>
-<rect x="122.5" y="6" width="92" height="16" rx="3" fill="#ffffff"/>
-<text x="168.5" y="19.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">暗号化して送る</text>
-<rect x="355.5" y="6" width="116" height="16" rx="3" fill="#ffffff"/>
-<text x="413.5" y="19.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">受け取って元に戻す</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="172" viewBox="0 0 738 198">
+<rect x="0.5" y="0.5" width="737" height="197" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<polyline points="164,28 302,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="302,28 294,31.6 294,24.4" fill="#1f2937"/>
+<polyline points="424,28 562,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="562,28 554,31.6 554,24.4" fill="#1f2937"/>
+<polyline points="363,102 363,56" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polygon points="363,56 366.6,64 359.4,64" fill="#1f2937"/>
+<rect x="0" y="0" width="164" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="82" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">本社</text>
+<text x="82" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">データを包んで暗号化</text>
+<rect x="302" y="0" width="122" height="56" rx="28" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="363" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">公衆の通信網</text>
+<text x="363" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">誰もが使う経路</text>
+<rect x="562" y="0" width="136" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="630" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">支社</text>
+<text x="630" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">包みを開けて復号</text>
+<rect x="288" y="102" width="150" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="363" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">第三者</text>
+<text x="363" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">途中の経路でのぞく</text>
+<rect x="175" y="11" width="116" height="16" rx="3" fill="#ffffff"/>
+<text x="233" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">暗号化したパケット</text>
+<rect x="435" y="11" width="116" height="16" rx="3" fill="#ffffff"/>
+<text x="493" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">暗号化したパケット</text>
+<rect x="299" y="70" width="128" height="16" rx="3" fill="#ffffff"/>
+<text x="363" y="83.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">見えるのは暗号文だけ</text>
 </g>
-<text x="320" y="94" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">みんなが使う公衆の通信網の上に暗号化した通信路を作り、専用線のように拠点をつなぐ。</text>
 </svg>

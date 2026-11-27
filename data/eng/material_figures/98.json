@@ -1,0 +1,23 @@
+{
+  "topic_id": 98,
+  "term": "Cookie とセッション",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### しくみ",
+      "caption": "ブラウザは番号の札だけを持ち、中身はサーバの記録に置きます。札が届くたびにサーバが記録を引いて同じ人だと分かります。",
+      "actors": [
+        {"id": "br", "label": "ブラウザ"},
+        {"id": "sv", "label": "サーバ"}
+      ],
+      "steps": [
+        {"from": "br", "to": "sv", "label": "ログインの頼み"},
+        {"from": "sv", "to": "sv", "label": "ID を作り記録を残す", "note": "記録＝A さんがログイン中"},
+        {"from": "sv", "to": "br", "label": "ID を Cookie として保存させる"},
+        {"from": "br", "to": "sv", "label": "次のリクエストに Cookie を自動で付ける"},
+        {"from": "sv", "to": "sv", "label": "番号で記録を引く", "note": "A さんがログイン中、かごに 2 品"}
+      ]
+    }
+  ]
+}

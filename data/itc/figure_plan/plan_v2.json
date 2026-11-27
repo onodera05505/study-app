@@ -1,0 +1,1400 @@
+[
+ {
+  "topic_id": 1,
+  "term": "ITコンサルタントの仕事",
+  "points": [
+   {
+    "point": "IT コンサルタントは、作り始める前に何を作るか・そもそも作るべきかを顧客と決める段（上流）を受け持つ職種である",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "「決める側に立つ職種」は本文の 1 文で言え、段の並びは案件の流れ（2）、作る側との違いは 11 の図が受け持つ",
+    "benefit": 1
+   },
+   {
+    "point": "専門分野は業界の事情から入る道と、業務のやり方から入る道の 2 通りに分かれる",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの名前を並べるだけで、本文の 1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 11,
+  "term": "ITコンサルとSIer・SEの違い",
+  "points": [
+   {
+    "point": "IT コンサルは何を作るかを決める側、SIer・SE は決まったものを作って納める側で、受け持つ工程も分かれる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "x に IT コンサル／SIer・SE、y に担う役／担当する工程を置き、決める側のセルを強調する（今の図のまま）",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "観点×対象の 2×2 で決める側と作る側の違いが表の中で閉じており、型も中身も基準に合う",
+    "benefit": 3
+   }
+  ]
+ },
+ {
+  "topic_id": 16,
+  "term": "コンサル業界地図",
+  "points": [
+   {
+    "point": "コンサル会社は何から始まったかで総合系・IT 系・戦略系・SIer 系の 4 つの束に分かれる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "x に何から始まったか、y に仕事の幅を置き、4 つのセルに束の名前＋一言（今の図のまま）",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "4 束が格子の中で比べられる。ただし本文は「1 つの軸」と書き、図は 2 軸なので、本文との言い方の揃えは別に見る",
+    "benefit": 3
+   },
+   {
+    "point": "SIer とは企画から開発・運用までを請け負って納める会社で、職種名は SE である",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "定義 1 つで、本文の 1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 37,
+  "term": "クラウド",
+  "points": [
+   {
+    "point": "クラウドにすると、持つか借りるかで、お金の出し方・増減の速さ・止まったときの責任の線が変わる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "x に自社で持つ／クラウドで借りる、y にお金の出し方・増やす減らす・止まったときの責任の 3 観点を置き、各セルに名前＋一言（先に大きな支出／使った分を毎月 など）。借りる側の列を強調",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "3 観点で 2 者を比べる要点で、表にすると行をたどって違いを自分で比べられる",
+    "benefit": 3
+   },
+   {
+    "point": "データセンターは借りる先の機器を置く、電源と冷却を絶やさない専用の建物である",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "名前 1 つの定義で、本文の 1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 44,
+  "term": "DXとは",
+  "points": [
+   {
+    "point": "DX は道具で手作業を置き換えるデジタル化ではなく、経営の目指す姿につながる変革である",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "x にデジタル化／DX、y に何を変えるか・何のためにを置き、DX の列を強調（今の図のまま）",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "2 観点の対比が表の中で閉じており、型も中身も基準に合う",
+    "benefit": 3
+   },
+   {
+    "point": "DX レポート・レポート 2・デジタルガバナンス・コードの順に、壁はシステムだけでなく企業文化にもあると踏み込んだ",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "文書名の並びで、要点（変革か効率化か）を運ばない",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 39,
+  "term": "データ活用とデータ基盤",
+  "points": [
+   {
+    "point": "データは部署ごとのシステムに分かれて入っているので、集めて同じ物差しにつないでから意思決定に使う",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "左に部署ごとのシステムの箱を 2〜3 個（名前＋「部署ごとの物差し」など一言）、中央にデータ基盤（集めて揃える）、右に意思決定（部署をまたいで比べる）。矢印は「集める」「同じ物差しのデータ」とラベルを付け、基盤を強調",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "分断した在りかから 1 か所に揃える動きは、箱と矢印で見ると集める・つなぐ・使うの順が手で追える",
+    "benefit": 2
+   },
+   {
+    "point": "ブラックボックス化した古いシステムのままでは全社でデータを使えない",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 つの因果で本文の 1 文で言え、詳しくは 2025年の崖（45）の図が受け持つ",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 68,
+  "term": "選考の全体像",
+  "points": [
+   {
+    "point": "選考は前半（ES・Web テスト・書類選考）が多くの社で共通で、書類のあとにコンサル系と SIer 系で道が分かれる",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "ES → Web テスト → 書類選考 の後に、コンサル系（GD・ケース面接）と SIer 系（面接）へ枝分かれする経路（今の図のまま）",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "枝分かれする経路が要点で、段が一方向に進む steps では分岐を描けないため blocks が合う",
+    "benefit": 3
+   }
+  ]
+ },
+ {
+  "topic_id": 87,
+  "term": "経験の棚卸し",
+  "points": [
+   {
+    "point": "経験を課題 → 打ち手 → 結果 → 学びの 4 段に並べ直すと、打ち手が自分の行動か・結果が測れているかを確かめられる",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "steps",
+    "idea": "direction down の 4 段（課題／打ち手／結果／学び、各段に答える中身と例）。段の間に「自分が動く」「変わったこと」「次に活かす」を渡し、打ち手の段を強調",
+    "existing_figure_id": 1,
+    "existing_action": "retype",
+    "reason": "一方向に進む 4 段を矢印だけの blocks で描いており、段が一方向に進む流れは steps が型の表に合う",
+    "benefit": 3
+   }
+  ]
+ },
+ {
+  "topic_id": 69,
+  "term": "エントリーシート（ES）",
+  "points": [
+   {
+    "point": "ES は選考の入口で、適性検査と合わせて書類選考に使われる",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "位置は選考の全体像（68）の図が受け持ち、本文の 1 文で言える",
+    "benefit": 1
+   },
+   {
+    "point": "面接官は ES を見て質問を作るので、ES は面接で聞かれることを自分で決める場である",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 つの因果で本文の 1 文で言える",
+    "benefit": 1
+   },
+   {
+    "point": "設問は 1 問あたり 400 字前後が多い",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "値 1 つで図にしない",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 40,
+  "term": "セキュリティ",
+  "points": [
+   {
+    "point": "セキュリティは、守る対象 → 脅威 → 責任の線引き → 手段の順で考える",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "steps",
+    "idea": "direction down の 4 段（守る対象／脅威を想定／責任の線引き／手段を選ぶ、各段に一言）。段の間に「守るもの」「起こりうる被害」「誰がどこまで持つか」を渡す",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "順序そのものが要点で、段が一方向に進むことと各段で決まる物が段の間の言葉で見える",
+    "benefit": 2
+   },
+   {
+    "point": "多層防御は、どれか 1 つの守りは破られる前提で、入口・中・出口に性格の違う守りを重ねる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "社外 → 入口（境目で止める）→ 中（サーバーごとに入れる人を絞り記録する）→ 出口（大量の持ち出しを見張る）→ 社外 の横の並び。矢印は「怪しいメール・不正な通信」「すり抜けた攻撃」「持ち出されるデータ」とラベル。中の箱を強調",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "守りの置き場所と、すり抜けた物が次の守りに当たる動きは箱と矢印で一目に分かる",
+    "benefit": 3
+   },
+   {
+    "point": "取引先が乗っ取られると、そこを入口に発注元まで入られるので、企業の連なりごと守りを考える",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "3 者の 1 本の因果で本文の例で足り、小さな blocks は警告に当たる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 49,
+  "term": "論理思考",
+  "points": [
+   {
+    "point": "論理思考は、問題を決める → 分ける → 仮説を置く → 示唆まで運ぶ順で、前の段が無いと次の段が決まらない",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "steps",
+    "idea": "direction down の 4 段（問題／分解／仮説／示唆、各段に一言）。段の間に「分け方が決まる」「手を打つ先の候補」「調べる先が絞れる」を渡し、示唆の段を強調",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "段の順と「なぜこの順か」を段の間の言葉で運べ、図だけで筋道の並びが言える",
+    "benefit": 3
+   },
+   {
+    "point": "事実・感想・示唆は違い、次に何をするかが決まる一言が示唆である",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "x に事実／感想／示唆、y に例（20 代の客が減っている／もったいない／20 代向けの品ぞろえを増やす）と次の行動が決まるかの 2 行。示唆の列を強調",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "3 者を同じ観点で並べると、示唆だけが次の行動を決めることが表の中で閉じる",
+    "benefit": 2
+   },
+   {
+    "point": "人に話すときは結論から先に言う",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言え、話す順は説明力（64）の図が受け持つ",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 55,
+  "term": "ケース面接とは",
+  "points": [
+   {
+    "point": "ケース面接で見られるのは答えの当否ではなく、問いの分け方（構造化）を先に宣言できるか",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言え、分け方の実例はロジックツリー（51）・売上分解（59）の図が受け持つ",
+    "benefit": 1
+   },
+   {
+    "point": "形式は社ごとに違う（数人での議論と並べる社、資料を作って発表まで含む社）ので採用ページで型を確かめる",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "社ごとの違いの一言で、比べる観点が 1 つしか立たない",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 73,
+  "term": "面接の段階と重心の変化",
+  "points": [
+   {
+    "point": "面接が進むと、見られるものが前半の考える力（ケース・GD）から後半の動機と人物へ移る",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "timeline",
+    "idea": "axis を選考の段（GD／ケース面接・個人面接／1 日の実務課題／最終選考）にし、前半の期間「考える力」と後半の期間「動機と人物」を帯で並べ、点の出来事に作業をさせる段・パートナー面接などを置く。後半の帯を強調",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "重心が時間に沿って移ることが要点で、帯の切り替わりで前半と後半が一目で分かる",
+    "benefit": 3
+   },
+   {
+    "point": "パートナーはファームの共同経営者にあたる最上位の職位である",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "名前 1 つの定義",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 70,
+  "term": "Webテスト・適性検査",
+  "points": [
+   {
+    "point": "適性検査の置き場所（ES の前か後か）と本数は社ごとに違うので、対策の入口は採用ページで形式と時期を確かめること",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "「社ごとに違う、まず採用ページ」の 1 文で言え、比べる観点が立たない",
+    "benefit": 1
+   },
+   {
+    "point": "Web テストは考える力の問題と性格検査の組み合わせである",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの名前を並べるだけ",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 38,
+  "term": "AI・生成AI",
+  "points": [
+   {
+    "point": "生成 AI はもっともらしい続きを出して下書きを速く作るが正しさは保証しないので、人は直す側と最後に判断する側に回る",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "登場人物を担当者（person）と生成 AI（gear）にし、条件を渡す → 下書きを返す（note: 正しさは保証されない）→ 確かめて直す → 最後に判断する の 4 手。直す手を強調",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "人と AI の受け渡しで役割の分かれ目が見え、図だけで誰が何を受け持つかが言える",
+    "benefit": 2
+   },
+   {
+    "point": "AI の話を聞いたら、何の業務の、どの手間が、どれだけ減る話かを問い返す",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "問い返しの型 1 文で、本文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 2,
+  "term": "案件の流れ",
+  "points": [
+   {
+    "point": "案件は提案 → 構想策定 → 要件定義 → 設計 → 導入 → 定着と進み、後の段は前の段で決めたことを前提に動く（要件定義までが上流）",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "steps",
+    "idea": "direction down の 6 段（提案／構想策定／要件定義／設計／導入／定着、各段に一言）。段の間に「採用された解き方」「やると決めたこと」「作るものの条件（ここから下流）」「作り方の図面」「動くシステム」を渡し、要件定義と定着を強調",
+    "existing_figure_id": 1,
+    "existing_action": "retype",
+    "reason": "一方向に進む工程の流れを折り返しの blocks で描いており、型の表では工程の流れは steps",
+    "benefit": 3
+   },
+   {
+    "point": "呼び名や段の数は社ごとに違うが、決める → 作る → 使ってもらうの並びは変わらない",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 3,
+  "term": "構想策定（グランドデザイン）",
+  "points": [
+   {
+    "point": "構想策定は、経営課題を掴む → あるべき姿を描く → 打ち手を並べる → 順番と費用を決める → 案件に分ける、の順に進む",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "steps",
+    "idea": "direction down の 5 段（各段に名前＋一言）。段の間に「解くべき課題」「目指す全体像」「打ち手の一覧」「順番と費用」を渡し、最後の段を「1 つずつの案件\n要件定義の範囲になる」として強調",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "5 段の流れと段ごとに渡す物は本文の 1 文では追いにくく、段階図で順が手で追える",
+    "benefit": 3
+   },
+   {
+    "point": "先に全体を描くのは、部署ごとに入れた物が会社全体で噛み合わなくなるのを防ぐためである",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 つの理由で本文の 1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 5,
+  "term": "要件定義",
+  "points": [
+   {
+    "point": "要件定義は関係者から要求を聞き取り、作れる形の条件（要件）に書き出して、これで作りますと合意を取る",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "登場人物を担当者（person）と顧客（people。窓口の職員と課長）にし、集まってもらい聞く → 1 日の人数と所要時間を答える → 条件の形に書き出す（自分への処理）→ これで作りますと確認を求める → 合意する、の手順（市役所の例）。合意の手を強調",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "相手との往き来がある手順で、要求が要件になり合意に至る流れが図だけで言える",
+    "benefit": 3
+   },
+   {
+    "point": "検証は書き方として正しいか（測れるか）を見て、妥当性確認は本当に目的に効くかを見る",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "x に検証／妥当性確認、y に何を確かめるか・「画面の応答は 3 秒以内」の場合の 2 行。妥当性確認の例のセルに「待ち時間の大半が手書きなら効かない」を置き強調",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "取り違えやすい 2 つを同じ例で並べると、違いが表の中で閉じる",
+    "benefit": 3
+   },
+   {
+    "point": "要件がどの要望から来たかを辿れるようにする",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 7,
+  "term": "システム設計",
+  "points": [
+   {
+    "point": "システム設計は、要件定義で決めたことを、外から見える形の基本設計 → 内側の詳細設計の 2 段で作れる図面に直す",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "steps",
+    "idea": "direction down の 4 段（要件定義／基本設計／詳細設計／開発・テスト、各段に一言）。段の間に「何をするか」「外側の形（内側の量が読める）」「作れる図面」を渡し、基本設計と詳細設計を強調",
+    "existing_figure_id": 1,
+    "existing_action": "retype",
+    "reason": "一方向に進む工程を blocks で描いている。戻りの点線は副次の要点なので外し、工程の流れは steps にする",
+    "benefit": 3
+   },
+   {
+    "point": "設計の精度は要件定義の精度で頭打ちになり、曖昧なまま図面を引くと作り直しになる",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 つの因果で本文の 1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 12,
+  "term": "戦略コンサルとITコンサルの違い",
+  "points": [
+   {
+    "point": "戦略コンサルと IT コンサルは上下ではなく受け持つ工程が違い、IT 側は方針を仕組みに落として定着まで付き合う",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "x に戦略コンサル／IT コンサル、y に答える問い・どこまで付き合うかを置き、IT 側の付き合う範囲を強調（今の図のまま）",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "2 観点の対比が表の中で閉じており、型も中身も基準に合う",
+    "benefit": 3
+   }
+  ]
+ },
+ {
+  "topic_id": 14,
+  "term": "ファーム内の職種区分",
+  "points": [
+   {
+    "point": "ファーム内の職種区分は、案件のどの工程か・どの領域かで切られ、名前と数は社ごとに違う",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "原則 1 つと「社ごとに違う」の 1 文で言える",
+    "benefit": 1
+   },
+   {
+    "point": "入る前に職種で分かれる社と、入ってから領域で分かれる社がある",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 者の 1 点だけの違いで、本文の 1 文で言える",
+    "benefit": 1
+   },
+   {
+    "point": "担当する業界の切り方（インダストリー）は職種の切り方とは別の軸である",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 15,
+  "term": "ビジネスアナリスト（BA）",
+  "points": [
+   {
+    "point": "BA の仕事は、要求を引き出す → 今と将来の差から進め方を決める → 要求を文書と図にする → 優先順位と変更を管理する → 効果を確かめる、の流れである",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "steps",
+    "idea": "direction down の 5 段（各段に名前＋一言）。段の間に「聞き出した要求」「進め方」「要求の文書」「変更を反映した要求」を渡す。新人が入る最初の段を強調",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "5 段の流れは本文の 1 文では追いにくく、段階図で仕事の範囲の始まりと終わりが見える",
+    "benefit": 2
+   },
+   {
+    "point": "新人は議事の整理・資料づくり・調査と集計から入り、まず聞いて整理して書く力が要る",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "作業の名前の列挙で、本文で言える",
+    "benefit": 1
+   },
+   {
+    "point": "BA は総合系で新卒の入社時の役職名に使う社があり、職種の入口の呼び名である",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 23,
+  "term": "コンサルのキャリアパスと職位",
+  "points": [
+   {
+    "point": "職位はアナリスト → コンサルタント → マネージャー → シニアマネージャー → パートナーと上がり、段が上がるほど任される範囲と人を動かす度合いが広がる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "steps",
+    "idea": "direction up の 5 段（各段に名前＋その段で任される範囲）。段の間に「担当をひとりでやりきる」「チームの一部を任される」など上がる条件を渡し、パートナーを強調",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "段が上がるほど広がることを上る階段の形で運べ、図だけで段の順と広がり方が言える",
+    "benefit": 3
+   },
+   {
+    "point": "IT スキル標準ではレベル 3 までは自分の担当、レベル 4 からは周りへの影響を見る",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 者の 1 点だけの違いで、本文の 1 文で言える",
+    "benefit": 1
+   },
+   {
+    "point": "段の名前と数は社ごとに違うので志望先の呼び方で覚え直す",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 82,
+  "term": "キャリアプラン",
+  "points": [
+   {
+    "point": "キャリアプランは、その社が公開している道から 1 つを選び、到達点と直近の行動を一組にして、志望動機と同じ筋で話す",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "答えの型は本文の例文で足り、図にすると名前だけの箱になる",
+    "benefit": 1
+   },
+   {
+    "point": "会社に無い道を語ると調べていないことが伝わる",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 75,
+  "term": "職種・コースの選択",
+  "points": [
+   {
+    "point": "職種・コースを選ぶ時期と分け方は社ごとに違う",
+    "content_type": "事実",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "x に NTT データ／野村総合研究所／フューチャー、y にいつ選ぶか・何で分けるかの 2 行。各セルに名前＋一言（応募の流れで SE かコンサル職／先に働く分野の枠を選んでから応募／職種は 1 つで入口の枠が分かれる など）",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "3 社を同じ 2 観点で並べると、いつ・何で分かれるかを行と列でたどって比べられる",
+    "benefit": 2
+   },
+   {
+    "point": "「なぜこの職種か」は業界・企業への志望動機とは別に用意する",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 8,
+  "term": "PMO・プロジェクトマネジメント",
+  "points": [
+   {
+    "point": "PM は 1 つの案件を決めて運び切る人、PMO は型を用意して複数の案件を同じ形で見張る決める人ではない裏方である",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "x に PM／PMO、y に立場・やることを置き、PMO の立場のセルを強調（今の図のまま）",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "2 観点の対比が表の中で閉じており、型も中身も基準に合う",
+    "benefit": 3
+   },
+   {
+    "point": "PMBOK は決まった手順を当てはめるのではなく、案件に合わせて手順を選び直す前提で書かれている",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 50,
+  "term": "MECE",
+  "points": [
+   {
+    "point": "切り口を 1 つに決めれば漏れも重なりも無く、別の切り口を混ぜると重なりが出る",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "x に漏れ／重なり、y に客の分け方 3 通りを置き、重なりが出るセルを強調（今の図のまま）",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "分け方ごとに漏れと重なりを格子で確かめられ、型も中身も基準に合う",
+    "benefit": 3
+   }
+  ]
+ },
+ {
+  "topic_id": 51,
+  "term": "ロジックツリー",
+  "points": [
+   {
+    "point": "大きな問いを掛け算・足し算の枝に分けて下ろし、数字が動いた枝をたどると手を付ける先が絞れる",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "売上 → 客数・単価（× 掛ける）→ 平日・休日（＋ 足す）の枝分かれに数字を入れ、動いた枝を強調（今の図のまま）",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "箱が名前＋数字、線が演算を運び、動いた枝を図だけでたどれる。名前だけの樹形図ではない",
+    "benefit": 3
+   },
+   {
+    "point": "枝が 2 つ以上動いたときは、減った幅と率が大きい方から手を付ける",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 52,
+  "term": "仮説思考",
+  "points": [
+   {
+    "point": "仮説思考は、答えの候補を先に置き → 確かめる材料を 1 つに絞り → 確かめ、外れたら次の候補に移って回る",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "cycle",
+    "idea": "3〜4 段の輪（候補を置く／材料を 1 つに絞る／数字で確かめる／外れたら次の候補）。段の間に「たぶん平日の昼が減った」「曜日と時間帯ごとの入館者数」「外れ」などを渡し、center に「答えに近づく」。当たったときは確かめる段の一言に「当たれば示唆」と書き、確かめる段を強調",
+    "existing_figure_id": 1,
+    "existing_action": "retype",
+    "reason": "今の sequence は「手元の数字」を相手に見立てた自分への処理が多く、外れたら戻って回る流れは cycle が型の表に合う",
+    "benefit": 3
+   },
+   {
+    "point": "示唆は答え合わせの結果として出る",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 56,
+  "term": "ケースの進め方と時間配分",
+  "points": [
+   {
+    "point": "持ち時間を前提確認・分解・数字・結論に割っておき、残り時間で深掘りをやめて結論へ戻る",
+    "content_type": "手順",
+    "function": "関係的",
+    "draw": true,
+    "type": "chart",
+    "idea": "bar で段ごとの持ち時間（15 分の一例: 2・5・5・3 分）と注記（今の図のまま）",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "配分の量の大小が要点で、棒の長さで割り振りが一目で分かる",
+    "benefit": 3
+   },
+   {
+    "point": "前提確認で聞くのは、誰の何を良くするか・いつまでか・何がどうなれば成功か、の 3 つである",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "3 つの問いの列挙で、本文の箇条で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 48,
+  "term": "デジタル人材の育成・確保",
+  "points": [
+   {
+    "point": "デジタル人材が足りないのは数だけでなく要る技能が言葉になっていないからで、技能を書き出して過不足を測り、育てるか採るかで埋める",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "steps",
+    "idea": "direction down の 4 段（要る技能が言葉になっていない／IT スキル標準で職種と段階ごとに書き出す／自社の過不足を測る／育てるか採るかで埋める）。段の間に「育てる的が無い」「技能の一覧」「足りない技能」を渡し、書き出す段を強調",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "原因から打ち手までの一方向の筋が段の間の言葉で見え、「精神論ではない」を図だけで言える",
+    "benefit": 2
+   },
+   {
+    "point": "顧客の社内に人が足りないから外の力（コンサル）を借りる",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 25,
+  "term": "求める人物像",
+  "points": [
+   {
+    "point": "各社の求める人物像の軸は、筋道を立てて考える力・変化を起こす力・人と組んで進める力の 3 つに寄る",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "名前 3 つの一覧で、図にすると名前だけの箱になる",
+    "benefit": 1
+   },
+   {
+    "point": "職種ごとに書き分けている社なら、志望する職種の欄だけを読む",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 24,
+  "term": "研修制度と資格支援",
+  "points": [
+   {
+    "point": "研修は共通の新人研修 → 領域ごとの研修 → 実務の 3 段で組まれることが多い",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "3 段の名前の並びで、本文の 1 文で言える",
+    "benefit": 1
+   },
+   {
+    "point": "資格は取得や講座の費用を会社が補助する形が多い",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 72,
+  "term": "ジョブ型選考・インターン選考",
+  "points": [
+   {
+    "point": "ジョブ型選考は、本選考の途中に組み込む形と、夏のインターンを入口にする形の 2 通りに置かれ、どちらも通過した人だけが次の選考に進む",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "上の行に本選考の途中に組み込む経路（書類・適性検査 → 議論・面接 → 1 日の実務課題 → 最終面接）、下の行に夏のインターンが入口の経路（書類・適性検査 → 夏のプログラム → 後続の選考）を並べ、矢印に「通過した人だけ」などのラベル。夏のプログラムを強調",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 通りの経路を並べると、どこにジョブが入り何が次へ繋がるかが図だけで比べられる",
+    "benefit": 2
+   },
+   {
+    "point": "見られるのは成果物の出来だけでなく、チームの中でどう動いたかである",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 46,
+  "term": "DX戦略と経営ビジョン",
+  "points": [
+   {
+    "point": "DX 戦略は、目指す姿 → 今との差 → 打ち手 → 成果指標で測る、の向きで並べ、道具から始めない",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "steps",
+    "idea": "direction down の 4 段（目指す姿／今との差を数字で掴む／打ち手／成果指標で測る、各段に一言）。段の間に「経営の狙い」「埋める差」「施策」を渡し、目指す姿を強調",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "順序の向きが要点で、段階図にすると打ち手が 3 段目に来ることが図だけで言える",
+    "benefit": 3
+   },
+   {
+    "point": "DX の話は、効率化か・今ある事業の値打ちを上げるか・新しい事業かを先に置く",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "3 つの名前の列挙で、比べる観点が立たない",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 65,
+  "term": "グループディスカッション",
+  "points": [
+   {
+    "point": "GD で見られるのは、議論の組み立てと人への接し方の両方である",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "x に議論の組み立て／人への接し方、y に見られること・効く動きの 2 行（最初に道筋を全員で合わせる／出た意見を整理して次の論点へ進める など）。人への接し方の効く動きを強調",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの見られどころと、それぞれに効く動きを表で並べると、発言の量で勝つのでないことが図だけで言える",
+    "benefit": 2
+   },
+   {
+    "point": "グループワークは議論に加えて発表用の資料まで作らせる形を指す",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 45,
+  "term": "2025年の崖とレガシーシステム",
+  "points": [
+   {
+    "point": "作った人がいなくなり、その場しのぎの追加が重なって中身が見えない箱になると、直すだけにお金と人が取られ新しいことに回せなくなる（2025 年の崖の構図）",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "steps",
+    "idea": "direction down の 5 段（作った人がいなくなる／その場しのぎの追加が重なる／中身が見えない箱になる／直すだけでお金と人が取られる／新しいことに回せない）。段の間に何が起きるか（資料が残らない・触るのが怖い 等）を渡し、最後の段を強調",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "直せなくなるまでの順番が要点で、段を下る形で行き詰まりの筋が図だけで言える",
+    "benefit": 3
+   },
+   {
+    "point": "古いのはシステムだけでなく、決め方や仕事のやり方も同じである",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 74,
+  "term": "最終面接・パートナー面接",
+  "points": [
+   {
+    "point": "最終面接では、考える力より入社の意思と会社との合い方を確かめる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "前半から後半への移り方は面接の段階（73）の図が受け持ち、ここは 1 文で言える",
+    "benefit": 1
+   },
+   {
+    "point": "最終の前には、これまで話した経験・志望・入社後を一本の線で並べ直して確かめる",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言え、図にすると名前だけの箱になる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 30,
+  "term": "ERP",
+  "points": [
+   {
+    "point": "ERP は部署ごとのソフトを 1 つにまとめて数字を 1 か所に集めるが、仕事のやり方は製品の型に合わせて決め直す",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "x に部署ごとに別のソフト／ERP、y に会計・人事・販売・在庫・数字・仕事のやり方の 3 行を置き、ERP の数字のセルを強調（今の図のまま）",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "3 観点の対比が表の中で閉じており、型も中身も基準に合う",
+    "benefit": 3
+   },
+   {
+    "point": "導入は要件定義 → 設計 → データの移し替え → 定着と長く続く",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "工程の名前の並びで、本文の 1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 57,
+  "term": "フェルミ推定",
+  "points": [
+   {
+    "point": "フェルミ推定は、式を宣言し、仮定で各項に数を置いて掛け合わせ、別の道筋で桁が合うかを検算する",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "人口 → 店舗数、来店 → 1 店 1 日 の箱に数を入れ、矢印に置いた仮定（÷ 1 店 2,000 人 など）、販売個数と検算を点線でつなぐ（今の図のまま）",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "矢印が仮定を、箱が数を運び、検算までが図だけでたどれる",
+    "benefit": 3
+   }
+  ]
+ },
+ {
+  "topic_id": 59,
+  "term": "売上分解と利益改善",
+  "points": [
+   {
+    "point": "売上は客数 × 客単価、客数は席数 × 回転数 × 稼働率と掛け算の要素に割れる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "売上を頂点に客数・客単価、客数の下に席数・回転数・稼働率を数字入りで並べる（今の図のまま）",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "掛け算の分解と各要素の数が図だけで読め、型も中身も基準に合う",
+    "benefit": 3
+   },
+   {
+    "point": "どの要素を 1 割上げても売上の伸びは同じなので、上げやすさと材料費で手を付ける要素を選ぶ",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "x に 1 割上げた売上・上げやすさ・材料費、y に稼働率／客単価（今の図のまま）",
+    "existing_figure_id": 2,
+    "existing_action": "keep",
+    "reason": "2 つの要素を 3 観点で並べると、選ぶ物差しが伸びでなく上げやすさだと表の中で閉じる",
+    "benefit": 3
+   }
+  ]
+ },
+ {
+  "topic_id": 77,
+  "term": "志望動機の組み立て",
+  "points": [
+   {
+    "point": "志望動機は業界 → 会社 → 職種と下へ行くほど範囲が狭くなり、下ほど公開情報を読み込まないと書けない",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "venn",
+    "idea": "layout nested で、外から業界（なぜコンサルか）・会社（他社でなくこの 1 社）・職種（社内の区分のどれか）の 3 つの範囲。領域の一言に答える問いと引く材料を書き、職種の領域を強調",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "範囲が入れ子で狭まることを形で運べ、3 つを 1 本に繋ぐ向きが図だけで言える",
+    "benefit": 3
+   },
+   {
+    "point": "根に自分の体験を 1 つ置くと、入れ替えのきかない文になる",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 17,
+  "term": "総合系ファームの特徴",
+  "points": [
+   {
+    "point": "総合系ファームは戦略の立案から IT の実行・運用までを一社で引き受け、入口は職種で分かれる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える",
+    "benefit": 1
+   },
+   {
+    "point": "担当は業界ごとの区分と機能ごとの区分の掛け合わせで決まる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "格子にしてもセルを出典で埋められず名前だけの格子になる。本文の 1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 18,
+  "term": "IT系・シンクタンク系の特徴",
+  "points": [
+   {
+    "point": "IT 系・シンクタンク系は、職種の切り方と入社時に決まることが社ごとに大きく違う",
+    "content_type": "事実",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "x に野村総合研究所／フューチャー／ベイカレント、y に職種の分け方・入社の時点で決まることの 2 行（経営コンサルとエンジニアに分ける／IT コンサル 1 職種に業務側と技術側を含む／ワンプール制で領域が決まらない など）",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "3 社を同じ 2 観点で並べると、入口で何が決まるかを行と列でたどって比べられる",
+    "benefit": 2
+   }
+  ]
+ },
+ {
+  "topic_id": 20,
+  "term": "インダストリー（業界別の担当領域）",
+  "points": [
+   {
+    "point": "インダストリーは顧客の業界で区切った担当領域で、業務の種類で区切るビジネスファンクションと組織の 2 軸になる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 者の 1 点だけの違いで、本文の 1 文で言える",
+    "benefit": 1
+   },
+   {
+    "point": "業界を固定せずに配属する社（ワンプール制）もあるので、志望先の組織の区分で確かめる",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 60,
+  "term": "新規事業・成長戦略のケース",
+  "points": [
+   {
+    "point": "伸ばし方は、客（今／新）× 商品（今／新）の 4 通りのうち、既存事業を除いた 3 つに漏れなく分けられる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "x に商品（今のもの／新しいもの）、y に客（今の客／新しい客）の 2×2。今×今のセルは「既存事業」、残り 3 つに伸ばし方の名前＋一言を置き、伸ばし方の 3 セルの読み方が分かるよう 1〜2 セルを強調",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 軸の組合せで選択肢が漏れなく出ることが格子の中で閉じる",
+    "benefit": 3
+   },
+   {
+    "point": "新規事業のケースは、前提確認 → 選択肢を並べる → 自社の持ち物で絞る → 規模を概算する → 危ないところと次に確かめることを置く、の順に進む",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "steps",
+    "idea": "direction down の 5 段（各段に名前＋一言）。段の間に「確かめた前提」「伸ばし方の 3 案」「選んだ 1 案」「見込みの規模」を渡し、絞る段を強調",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "5 段の流れと段ごとに渡す物は本文の 1 文では追いにくく、段階図で順が手で追える",
+    "benefit": 2
+   }
+  ]
+ },
+ {
+  "topic_id": 64,
+  "term": "説明力（結論ファースト）",
+  "points": [
+   {
+    "point": "説明は結論 → 理由（数を先に言う）→ 根拠 → 必要なら前提の順に並べ、途中で止められても最初の 1 文で要点が伝わる",
+    "content_type": "原理",
+    "function": "組織的",
+    "draw": true,
+    "type": "layers",
+    "idea": "shape pyramid で上から結論（1 文で答える）・理由（「理由は 2 つ」と数を先に言う）・根拠・前提（必要なら）の 4 層。結論の層を強調",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "上ほど少なく上位であることをピラミッドの形で運べ、どこで止められても上から伝わる並びが図だけで言える",
+    "benefit": 2
+   }
+  ]
+ }
+]

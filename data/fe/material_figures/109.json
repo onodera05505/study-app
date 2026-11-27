@@ -1,0 +1,21 @@
+{
+  "topic_id": 109,
+  "term": "システム監査人の権限と責任等",
+  "figures": [
+    {
+      "id": 1, "type": "blocks", "after": "### 勧告とフォローアップ",
+      "caption": "矢印の向きで持ち場を読みます。監査人は確かめて勧告するまでで、改善を決めて指示するのは強調した経営者です。",
+      "nodes": [
+        {"id": "aud", "label": "システム監査人\n確かめて勧告する\n命令はしない", "row": 1, "col": 0, "icon": "search"},
+        {"id": "mgr", "label": "経営者\n改善するかを決める", "row": 0, "col": 1, "icon": "person", "emphasis": true},
+        {"id": "dept", "label": "被監査部門\n規程を定め業務を動かす", "row": 1, "col": 2, "icon": "people"}
+      ],
+      "edges": [
+        {"from": "aud", "to": "dept", "label": "閲覧・質問・観察"},
+        {"from": "aud", "to": "mgr", "label": "報告と勧告"},
+        {"from": "mgr", "to": "dept", "label": "改善を指示する"},
+        {"from": "aud", "to": "dept", "label": "フォローアップ（改善の進み具合を確かめる）", "style": "dashed"}
+      ]
+    }
+  ]
+}

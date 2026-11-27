@@ -6,20 +6,66 @@
       "id": 1,
       "type": "blocks",
       "after": "### 見つけ方の手順",
-      "caption": "削除する節の位置に入れられるのは、大小順で隣の値だけ。左へ1つ進んで右へ下り切るか、右へ1つ進んで左へ下り切った先にある。",
+      "caption": "削除する節に入れられるのは大小順で隣の値です。左へ 1 つ進んで右へ下り切るか、右へ 1 つ進んで左へ下り切った先にあります。",
       "nodes": [
-        {"id": "n12", "label": "12\n削除する節", "row": 0, "col": 2, "emphasis": true},
-        {"id": "n10", "label": "10", "row": 1, "col": 0},
-        {"id": "n14", "label": "14", "row": 1, "col": 3},
-        {"id": "n11", "label": "11\n左部分木の最大\n（大小順で1つ前）", "row": 2, "col": 1},
-        {"id": "n13", "label": "13\n右部分木の最小\n（大小順で1つ後）", "row": 2, "col": 2}
+        {
+          "id": "n20",
+          "label": "20\n削除する節",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "n16",
+          "label": "16\n左の子",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "n24",
+          "label": "24\n右の子",
+          "row": 1,
+          "col": 3
+        },
+        {
+          "id": "n19",
+          "label": "19 左部分木の最大\n大小順で 1 つ前\n20 の位置へ移せる",
+          "row": 2,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "n21",
+          "label": "21 右部分木の最小\n大小順で 1 つ後\n20 の位置へ移せる",
+          "row": 2,
+          "col": 2,
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "n12", "to": "n10", "label": "左へ1つ", "arrow": "to"},
-        {"from": "n12", "to": "n14", "label": "右へ1つ", "arrow": "to"},
-        {"from": "n10", "to": "n11", "label": "右へ下り切る", "arrow": "to"},
-        {"from": "n14", "to": "n13", "label": "左へ下り切る", "arrow": "to"},
-        {"from": "n13", "to": "n12", "label": "この1つを移動", "style": "dashed", "arrow": "to"}
+        {
+          "from": "n20",
+          "to": "n16",
+          "label": "左へ1つ",
+          "arrow": "to"
+        },
+        {
+          "from": "n20",
+          "to": "n24",
+          "label": "右へ1つ",
+          "arrow": "to"
+        },
+        {
+          "from": "n16",
+          "to": "n19",
+          "label": "右へ下り切る",
+          "arrow": "to"
+        },
+        {
+          "from": "n24",
+          "to": "n21",
+          "label": "左へ下り切る",
+          "arrow": "to"
+        }
       ]
     }
   ]

@@ -1,0 +1,57 @@
+{
+  "topic_id": 232,
+  "term": "arp",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### ARP が何をしているか",
+      "caption": "送信側が LAN 全体へ尋ね、当てはまる 1 台だけが答えます。答えの組が、arp コマンドで見る対応表に入ります。",
+      "actors": [
+        {
+          "id": "s",
+          "label": "送信側",
+          "icon": "device"
+        },
+        {
+          "id": "o",
+          "label": "同じ LAN の他の機器",
+          "icon": "device"
+        },
+        {
+          "id": "d",
+          "label": "宛先の機器",
+          "icon": "device"
+        }
+      ],
+      "steps": [
+        {
+          "from": "s",
+          "to": "o",
+          "label": "ARP 要求：192.168.1.20 は誰？",
+          "note": "ブロードキャストで LAN 全体へ送る"
+        },
+        {
+          "from": "s",
+          "to": "d",
+          "label": "同じ ARP 要求が届く"
+        },
+        {
+          "from": "o",
+          "to": "o",
+          "label": "自分の IP アドレスでないので応えない"
+        },
+        {
+          "from": "d",
+          "to": "s",
+          "label": "ARP 応答：自分の MAC アドレス"
+        },
+        {
+          "from": "s",
+          "to": "s",
+          "label": "組を ARP キャッシュに記録（arp コマンドで見る表）"
+        }
+      ]
+    }
+  ]
+}

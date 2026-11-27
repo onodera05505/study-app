@@ -1,0 +1,311 @@
+{
+ "bundle": "05-8",
+ "shared": [
+  {
+   "item": "「コンテナ」の語（EJB コンテナと Docker のコンテナは別の意味。まとまりの説明の注意）",
+   "count": 2,
+   "holder": 351,
+   "topics": [
+    713,
+    351
+   ]
+  }
+ ],
+ "topics": [
+  {
+   "topic_id": 713,
+   "points": [
+    {
+     "point": "EJB の定義（サーバ側の業務アプリを部品として作る、Java によるオブジェクト指向のコンポーネント仕様）",
+     "fate": "kept",
+     "where": "explanation"
+    },
+    {
+     "point": "EJB が対象にするのはサーバ側で動く業務処理",
+     "fate": "kept",
+     "where": "explanation"
+    },
+    {
+     "point": "名前の似た JavaBeans と対になる（問われ方の文の形だった）",
+     "fate": "kept",
+     "where": "### 混同しやすい用語"
+    },
+    {
+     "point": "トランザクション制御やセキュリティはコンテナが肩代わりし、開発者は業務処理に専念できる",
+     "fate": "kept",
+     "where": "explanation"
+    },
+    {
+     "point": "Bean の 3 種類（セッション Bean＝業務処理の手続、エンティティ Bean＝データ、メッセージ駆動 Bean＝非同期メッセージで起動）",
+     "fate": "kept",
+     "where": "### 部品（Bean）の 3 つの種類"
+    },
+    {
+     "point": "どの業務にも要る共通処理（トランザクション制御・複数 DB にまたがる整合・同時実行の管理・認証と認可）",
+     "fate": "kept",
+     "where": "### コンテナが共通処理を引き受ける"
+    },
+    {
+     "point": "共通処理を業務ロジックと毎回書くと品質も生産性も上がらない（理由）",
+     "fate": "kept",
+     "where": "### コンテナが共通処理を引き受ける"
+    },
+    {
+     "point": "業務ロジックだけを Bean として書き EJB コンテナの上で動かす",
+     "fate": "figure",
+     "where": "713 の図 1"
+    },
+    {
+     "point": "コンテナが引き受ける物（トランザクションの開始と終了・インスタンスの生成と再利用・リモートからの呼出し・アクセス制御）",
+     "fate": "kept",
+     "where": "### コンテナが共通処理を引き受ける"
+    },
+    {
+     "point": "開発者は業務そのものに集中できる（detail での言い直し）",
+     "fate": "duplicate",
+     "where": "explanation の箇条"
+    },
+    {
+     "point": "出来上がった Bean は別のアプリケーションでも部品として再利用できる",
+     "fate": "kept",
+     "where": "### コンテナが共通処理を引き受ける"
+    },
+    {
+     "point": "EJB は仕様で、実体は各社のアプリケーションサーバが実装する",
+     "fate": "figure",
+     "where": "713 の図 1"
+    },
+    {
+     "point": "仕様に従って書いた Bean は実装をまたいで動かせる",
+     "fate": "kept",
+     "where": "explanation"
+    },
+    {
+     "point": "JavaBeans は命名規約に従ったプロパティとメソッドを持つクラス",
+     "fate": "kept",
+     "where": "### 混同しやすい用語"
+    },
+    {
+     "point": "JavaBeans は GUI 部品などにも使われ、コンテナによるトランザクション管理を伴わない",
+     "fate": "figure",
+     "where": "713 の図 2"
+    },
+    {
+     "point": "CORBA は OMG が定めた分散オブジェクトの仕様",
+     "fate": "kept",
+     "where": "### 混同しやすい用語"
+    },
+    {
+     "point": "CORBA は IDL でインタフェースを記述し ORB を介して呼び出す",
+     "fate": "figure",
+     "where": "713 の図 2"
+    },
+    {
+     "point": "CORBA は特定の言語に依存せず、Java を前提とする EJB と異なる",
+     "fate": "figure",
+     "where": "713 の図 2"
+    }
+   ]
+  },
+  {
+   "topic_id": 351,
+   "points": [
+    {
+     "point": "Docker の定義（コンテナ型仮想化でアプリの構築・実行・管理のプラットフォームを提供する OSS）",
+     "fate": "kept",
+     "where": "explanation"
+    },
+    {
+     "point": "コンテナ型はホスト OS のカーネルを共有し、ゲスト OS を起動しない",
+     "fate": "figure",
+     "where": "351 の図 1"
+    },
+    {
+     "point": "ゲスト OS の有無がハイパーバイザー型との違い",
+     "fate": "kept",
+     "where": "### 3つの仮想化方式"
+    },
+    {
+     "point": "ゲスト OS が無い分、起動が速く消費リソースも小さい",
+     "fate": "kept",
+     "where": "explanation"
+    },
+    {
+     "point": "イメージの構築・実行・配布・管理を一貫して行える",
+     "fate": "kept",
+     "where": "explanation"
+    },
+    {
+     "point": "コンテナはアプリと必要なライブラリだけを閉じ込めた独立した実行環境",
+     "fate": "figure",
+     "where": "351 の図 1"
+    },
+    {
+     "point": "OS を丸ごと動かさないため起動が速い（detail での言い直し）",
+     "fate": "duplicate",
+     "where": "explanation の箇条"
+    },
+    {
+     "point": "1 台の物理マシンに多数のコンテナを載せられる",
+     "fate": "figure",
+     "where": "351 の図 1"
+    },
+    {
+     "point": "Docker はイメージを構築し実行・配布・管理まで一貫して行い、OSS として公開（detail での言い直し）",
+     "fate": "duplicate",
+     "where": "explanation"
+    },
+    {
+     "point": "同じイメージからどの環境でも同じ実行環境が再現でき、開発から本番への移行が楽になる",
+     "fate": "kept",
+     "where": "### イメージから同じ環境を再現する"
+    },
+    {
+     "point": "3 つの仮想化方式（ホスト型・ハイパーバイザー型・コンテナ型）の動く土台とゲスト OS の表",
+     "fate": "kept",
+     "where": "### 3つの仮想化方式"
+    },
+    {
+     "point": "ゲスト OS を持つ方式は仮想マシンを立ち上げるたびに OS の起動時間とメモリが要る",
+     "fate": "figure",
+     "where": "351 の図 2"
+    },
+    {
+     "point": "コンテナ型がその分を省けるのはカーネルをホストと共有しているから",
+     "fate": "figure",
+     "where": "351 の図 1"
+    },
+    {
+     "point": "EJB のコンテナと Docker のコンテナは別の意味（まとまりの説明の注意。新しく受けた）",
+     "fate": "kept",
+     "where": "### 混同しやすい用語"
+    }
+   ]
+  },
+  {
+   "topic_id": 117,
+   "points": [
+    {
+     "point": "Swagger の定義（OpenAPI Specification に従って Web API を記述し、定義から文書・動作確認画面・コードを生成する OSS のツール群）",
+     "fate": "kept",
+     "where": "explanation"
+    },
+    {
+     "point": "定義から生成される物の列挙（定義の文の中の仕様書・動作確認画面・クライアントコード）",
+     "fate": "duplicate",
+     "where": "### 定義1つから何が生まれるか の表"
+    },
+    {
+     "point": "OpenAPI Specification と結び付くのは Swagger という対応（問われ方の文の形だった）",
+     "fate": "duplicate",
+     "where": "explanation の箇条"
+    },
+    {
+     "point": "仕様の名前が OpenAPI Specification、ツール群の名前が Swagger",
+     "fate": "kept",
+     "where": "explanation"
+    },
+    {
+     "point": "Web API はどの URL に何を送れば何が返るかを提供側と利用側で共有できないと使えない",
+     "fate": "kept",
+     "where": "### 仕様とツールの名前の関係"
+    },
+    {
+     "point": "OpenAPI Specification は YAML や JSON で API の入出力を書き表す",
+     "fate": "kept",
+     "where": "explanation"
+    },
+    {
+     "point": "Swagger 仕様が OpenAPI Initiative に寄贈されて仕様名が変わり、ツール側の名前として Swagger が残った",
+     "fate": "kept",
+     "where": "### 仕様とツールの名前の関係"
+    },
+    {
+     "point": "試験ではこの対応を知っていれば足りる（問われ方の文）",
+     "fate": "duplicate",
+     "where": "explanation の箇条"
+    },
+    {
+     "point": "定義を 1 つ書けば文書・動作確認・コードが揃い、仕様書と実装の食い違いを減らせる",
+     "fate": "kept",
+     "where": "### 定義1つから何が生まれるか"
+    },
+    {
+     "point": "Swagger Editor・Swagger UI・Swagger Codegen の働きの表",
+     "fate": "kept",
+     "where": "### 定義1つから何が生まれるか"
+    }
+   ]
+  },
+  {
+   "topic_id": 439,
+   "points": [
+    {
+     "point": "ホットスタンバイの定義（待機系を起動したまま待たせ、現用系が倒れたら即座に引き継ぐ二重化）",
+     "fate": "kept",
+     "where": "explanation"
+    },
+    {
+     "point": "切替えの契機はハートビート（生存確認メッセージ）の途絶",
+     "fate": "kept",
+     "where": "explanation"
+    },
+    {
+     "point": "検知から引き継ぎまで自動で進む",
+     "fate": "kept",
+     "where": "explanation"
+    },
+    {
+     "point": "異常を検知するのは待機系の側で、現用系から届く生存確認の途絶で判断する（explanation の箇条）",
+     "fate": "figure",
+     "where": "439 の図 1（手順 2 の向きと、手順 4 の待機系の検知）"
+    },
+    {
+     "point": "ウォーム・コールドとの違いは待機系をどこまで起動しているか",
+     "fate": "owner",
+     "where": "602"
+    },
+    {
+     "point": "準備が厚いほど切替えが速く費用もかかる",
+     "fate": "owner",
+     "where": "602"
+    },
+    {
+     "point": "現用系と待機系を用意する構成はデュプレックスシステム",
+     "fate": "kept",
+     "where": "### 待機系をどこまで起動しておくか"
+    },
+    {
+     "point": "ホット・ウォーム・コールドの待機系の状態と切替えの速さの表",
+     "fate": "owner",
+     "where": "602"
+    },
+    {
+     "point": "現用系が一定間隔で短いメッセージを送り、待機系が受け取り続け、届かなくなったら倒れたと判断して引き継ぐ",
+     "fate": "figure",
+     "where": "439 の図 1"
+    },
+    {
+     "point": "人の判断を挟まないから短い時間で切り替わる",
+     "fate": "kept",
+     "where": "explanation"
+    },
+    {
+     "point": "監視の向き（検知は待機系、判断材料は生存確認の途絶）の detail での言い直し",
+     "fate": "duplicate",
+     "where": "439 の図 1（手順 2 の向きと、手順 4 の待機系の検知。explanation の直後）"
+    },
+    {
+     "point": "デュアルシステムは 2 組が同じ処理を並行して行い結果を突き合わせる構成で、片方が待機するホットスタンバイと違う",
+     "fate": "kept",
+     "where": "### 混同しやすい用語"
+    },
+    {
+     "point": "切り替わる構成は並列とみなし、全体の稼働率は 1−(1−A)(1−B)（A・B は各系の稼働率）",
+     "fate": "kept",
+     "where": "### 二重化した全体の稼働率"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,71 @@
+{
+  "topic_id": 123,
+  "term": "PLC（Programmable Logic Controller）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### リレー盤からプログラムへ",
+      "caption": "上の段が入力から出力への流れで、論理は強調した PLC の中のプログラムにあります。下の段は、前身のリレー盤と、仕様変更の入り口を表します。",
+      "nodes": [
+        {
+          "id": "in",
+          "label": "センサー・スイッチ\n状態を知らせる",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "plc",
+          "label": "PLC\n書いた条件で判断する\n（シーケンスプログラム）",
+          "row": 0,
+          "col": 1,
+          "emphasis": true,
+          "icon": "gear"
+        },
+        {
+          "id": "out",
+          "label": "モーター・ランプ\n指令どおりに動く",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "relay",
+          "label": "リレー盤（前身）\n配線で論理を組む\n変更は配線のやり直し",
+          "row": 1,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "pc",
+          "label": "プログラムの書き換え\n仕様変更はここだけ",
+          "row": 1,
+          "col": 2,
+          "icon": "device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "in",
+          "to": "plc",
+          "label": "入力の信号"
+        },
+        {
+          "from": "plc",
+          "to": "out",
+          "label": "出力の指令"
+        },
+        {
+          "from": "relay",
+          "to": "plc",
+          "label": "論理を\nプログラムへ移す",
+          "style": "dashed"
+        },
+        {
+          "from": "pc",
+          "to": "plc",
+          "label": "新しい条件を書き込む"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "topic_id": 205,
+  "term": "ランサムウェア対策（データのバックアップ，3-2-1 ルール，WORM（Write Once Read Many）機能，イミュータブルバックアップ）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "感染した PC から書き換えられるかで、バックアップが残るかが分かれます。上は一緒に暗号化され、中と下は書き換えられずに残ります。",
+      "nodes": [
+        {
+          "id": "pc",
+          "label": "感染した PC\n書き込める所を\n片端から暗号化",
+          "row": 1,
+          "col": 0,
+          "icon": "warning"
+        },
+        {
+          "id": "share",
+          "label": "つないだままの\n外付けディスク\nPC から書き込める",
+          "row": 0,
+          "col": 1,
+          "shape": "cylinder"
+        },
+        {
+          "id": "worm",
+          "label": "WORM ストレージ\n上書き・削除を\nストレージが拒否",
+          "row": 1,
+          "col": 1,
+          "shape": "cylinder"
+        },
+        {
+          "id": "off",
+          "label": "オフラインの\nバックアップ\nネットワークから切り離す",
+          "row": 2,
+          "col": 1,
+          "shape": "cylinder"
+        },
+        {
+          "id": "lost",
+          "label": "復旧に使えない\n一緒に暗号化された",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "safe",
+          "label": "復旧に使える\n書いたままの元のデータ",
+          "row": 1,
+          "col": 2,
+          "icon": "check"
+        },
+        {
+          "id": "safe2",
+          "label": "復旧に使える\n切り離した時の控え",
+          "row": 2,
+          "col": 2,
+          "icon": "check"
+        }
+      ],
+      "edges": [
+        {
+          "from": "pc",
+          "to": "share",
+          "label": "書き込んで暗号化"
+        },
+        {
+          "from": "pc",
+          "to": "worm",
+          "label": "上書きは拒否される"
+        },
+        {
+          "from": "pc",
+          "to": "off",
+          "label": "つながらず届かない",
+          "style": "dashed",
+          "arrow": "none"
+        },
+        {
+          "from": "share",
+          "to": "lost",
+          "label": "暗号化後の中身"
+        },
+        {
+          "from": "worm",
+          "to": "safe",
+          "label": "被害の外に残る"
+        },
+        {
+          "from": "off",
+          "to": "safe2",
+          "label": "被害の外に残る"
+        }
+      ]
+    }
+  ]
+}

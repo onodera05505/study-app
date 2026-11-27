@@ -1,0 +1,130 @@
+{
+  "topic_id": 38,
+  "term": "ディスパッチ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "### タスクの 3 つの状態",
+      "caption": "タスクは 3 つの状態を矢印のきっかけで移ります。実行可能から実行へ移る矢印がディスパッチです。",
+      "center": "タスクの\n状態",
+      "stages": [
+        {
+          "label": "実行可能\n使用権が回るのを待つ",
+          "next_label": "ディスパッチ"
+        },
+        {
+          "label": "実行\n命令を処理中\n時間切れ・横取りで実行可能へ",
+          "emphasis": true,
+          "next_label": "入出力を要求"
+        },
+        {
+          "label": "待機\n入出力の完了を待つ",
+          "icon": "clock",
+          "next_label": "入出力が完了"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "sequence",
+      "after": "### 受け渡しで起きること",
+      "caption": "使用権を A から B へ渡す前に、OS が A の値を保存し B の値を戻します。この入れ替えの間はどちらの仕事も進みません。",
+      "actors": [
+        {
+          "id": "a",
+          "label": "タスク A",
+          "icon": "gear"
+        },
+        {
+          "id": "os",
+          "label": "OS（ディスパッチャ）",
+          "icon": "server"
+        },
+        {
+          "id": "b",
+          "label": "タスク B",
+          "icon": "gear"
+        }
+      ],
+      "steps": [
+        {
+          "from": "a",
+          "to": "os",
+          "label": "割り当て時間を使い切る"
+        },
+        {
+          "from": "os",
+          "to": "os",
+          "label": "A のレジスタとプログラムカウンタを保存",
+          "note": "本来の処理と関係のない時間"
+        },
+        {
+          "from": "os",
+          "to": "os",
+          "label": "B のレジスタとプログラムカウンタを復元",
+          "note": "本来の処理と関係のない時間"
+        },
+        {
+          "from": "os",
+          "to": "b",
+          "label": "使用権を渡す（B が続きから動く）"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "blocks",
+      "after": "### 混同しやすい用語",
+      "caption": "スケジューラが次に動かすタスクを選び、強調したディスパッチャがそのタスクにプロセッサの使用権を渡します。2 つは流れの中の持ち場が違います。",
+      "nodes": [
+        {
+          "id": "q",
+          "label": "実行可能の列\n待っているタスク",
+          "row": 0,
+          "col": 0,
+          "icon": "people"
+        },
+        {
+          "id": "sch",
+          "label": "スケジューラ\n順番を決める",
+          "row": 0,
+          "col": 1,
+          "icon": "search"
+        },
+        {
+          "id": "dsp",
+          "label": "ディスパッチャ\n使用権を渡す",
+          "row": 0,
+          "col": 2,
+          "icon": "key",
+          "emphasis": true
+        },
+        {
+          "id": "cpu",
+          "label": "プロセッサ\n渡されたタスクを実行",
+          "row": 0,
+          "col": 3,
+          "icon": "gear"
+        }
+      ],
+      "edges": [
+        {
+          "from": "q",
+          "to": "sch",
+          "label": "候補"
+        },
+        {
+          "from": "sch",
+          "to": "dsp",
+          "label": "選んだタスク"
+        },
+        {
+          "from": "dsp",
+          "to": "cpu",
+          "label": "使用権"
+        }
+      ]
+    }
+  ]
+}

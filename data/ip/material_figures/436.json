@@ -4,21 +4,40 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
-      "after": "### しくみ",
-      "caption": "OS と周辺装置の間をつなぐのがドライバ。装置の機種ごとに必要で、OS を入れ直すと消える。",
-      "nodes": [
-        {"id": "app", "label": "アプリ\n文書ソフトなど", "row": 0, "col": 0},
-        {"id": "os", "label": "OS", "row": 0, "col": 1},
-        {"id": "drv", "label": "デバイスドライバ\n機種ごとに\nメーカーが用意", "row": 0, "col": 2, "emphasis": true},
-        {"id": "dev", "label": "周辺装置\nプリンタなど", "row": 0, "col": 3},
-        {"id": "bios", "label": "BIOS\n電源投入の直後に働く", "row": 1, "col": 1}
+      "type": "layers",
+      "after": "### OS と周辺機器の間に入る理由",
+      "caption": "上の層は直下の層を通して装置を動かします。OS は共通の仕組みまでを持ち、強調したドライバが機種ごとの動かし方を受け持ちます。",
+      "shape": "stack",
+      "layers": [
+        {
+          "label": "アプリ\n印刷などを OS に頼む",
+          "note": "文書ソフトなど"
+        },
+        {
+          "label": "OS\n装置を扱う共通の仕組み",
+          "note": "どの機種にも同じ命令"
+        },
+        {
+          "label": "デバイスドライバ\n機種ごとの動かし方",
+          "note": "メーカーが用意して OS に追加",
+          "emphasis": true
+        },
+        {
+          "label": "周辺装置\n機種ごとに制御が違う",
+          "note": "プリンタなど"
+        }
       ],
-      "edges": [
-        {"from": "app", "to": "os", "label": "印刷して"},
-        {"from": "os", "to": "drv", "label": "共通の命令"},
-        {"from": "drv", "to": "dev", "label": "この機種向けの制御"},
-        {"from": "bios", "to": "os", "label": "起動を引き継ぐ", "style": "dashed"}
+      "brackets": [
+        {
+          "from": 0,
+          "to": 2,
+          "label": "ソフト\nウェア"
+        },
+        {
+          "from": 3,
+          "to": 3,
+          "label": "ハード\nウェア"
+        }
       ]
     }
   ]

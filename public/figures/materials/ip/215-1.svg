@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="156" viewBox="0 0 640 156">
+<rect x="0.5" y="0.5" width="639" height="155" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(36 20)">
+<rect x="96" y="0" width="240" height="56" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="216" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">隣の領域：処理の戻り先</text>
+<text x="216" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">次に実行する場所を指す</text>
+<text x="352" y="32.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="start">仕込んだ不正な命令の場所に書き換わる</text>
+<rect x="96" y="60" width="240" height="56" rx="4" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="216" y="82.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">バッファ</text>
+<text x="216" y="102.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">入力用・決まった大きさ</text>
+<text x="352" y="92.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="start">長さを検査せずに入力を受け入れる</text>
+<path d="M 92 2 H 86 V 114 H 92" fill="none" stroke="#1f2937" stroke-width="1.2"/>
+<text x="80" y="54.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="end">長すぎる入力</text>
+<text x="80" y="70.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="end">が届く範囲</text>
+</g>
+</svg>

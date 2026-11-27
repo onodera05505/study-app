@@ -1,6 +1,8 @@
 import { sql } from 'drizzle-orm'
-import { index, integer, primaryKey, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core'
+import { check, foreignKey, index, integer, primaryKey, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core'
 
+// 外部キー（参照する列・参照先・参照先を消したときの扱い）の値の SSOT はこの構造の宣言で、migrations/*.sql は同じ外部キーを作る
+// @implements BR-065
 const now = sql`(unixepoch())`
 
 /** シラバス Ver.6.5 の項目（1〜63）。分野・大分類・中分類はこの1テーブルに畳んである。
@@ -25,6 +27,8 @@ export const topics = sqliteTable(
   {
     id: integer('id').primaryKey({ autoIncrement: true }),
     term: text('term').notNull(),
+    /** ロードマップ型で単位の名前に添える副題。名前（term）とは分けて持ち、副題を持たない単位と資格版は NULL。 */
+    subtitle: text('subtitle'),
     syllabusItemId: integer('syllabus_item_id')
       .notNull()
       .references(() => syllabusItems.id),
@@ -36,13 +40,116 @@ export const topics = sqliteTable(
     detail: text('detail'),
     /** topic_questions の件数キャッシュ。並べ替えのたびに数えないための非正規化。 */
     questionCount: integer('question_count').notNull().default(0),
+    /** ロードマップ型の学ぶ順。資格版は NULL（出題頻度で並べる）。 */
+    sortOrder: integer('sort_order'),
+    /** ロードマップ型で論点が属する回の ID（past_questions.exam と同じ値。補足の論点は補足の回）。
+     *  学ぶ順を持たない非補足の論点と資格版は NULL。 */
+    round: text('round'),
+    /** 論点が属する回のラベル。章で束ねる学びでは章の名前。round が NULL なら NULL。 */
+    roundLabel: text('round_label'),
+    /** 印の段（登録簿の roadmapSpec.tiers の level）。印を持たない学びは NULL。 */
+    tier: integer('tier'),
     createdAt: integer('created_at').notNull().default(now),
     updatedAt: integer('updated_at').notNull().default(now),
   },
   (t) => [
     // 同じ論点が別レコードに割れると頻度が分散して重要度が壊れるので一意にする
+    // @implements BR-059
     uniqueIndex('uq_topic_term').on(t.syllabusItemId, t.term),
     index('idx_topic_freq').on(t.questionCount),
+  ],
+)
+
+/** 資格対策の単元の構成のうち、単元ごとの全体像。構成を持つ単元だけが 1 行を持つ。
+ *  単元はシラバスの middle_no で指す（学びごとに D1 が分かれるので学びの中で一意。
+ *  syllabus_items では middle_no が一意でないため FK は張らない）。
+ *  学びのデータとして投入で入り、利用者の操作では変わらない。ロードマップ型と構成を作っていない単元は行を持たない。
+ *  単元の構成の受け持ち（owners）は書き手のための物で、画面に出さないので持たない。 */
+export const unitPlans = sqliteTable(
+  'unit_plans',
+  {
+    /** 単元の番号（syllabus_items.middle_no）。 */
+    middleNo: integer('middle_no').primaryKey(),
+    /** 全体像。 */
+    overview: text('overview').notNull(),
+  },
+  // @implements BR-058
+  (t) => [check('ck_unit_plans_overview_not_empty', sql`${t.overview} <> ''`)],
+)
+
+/** 単元の構成のまとまり。group_no の順がまとまりの学ぶ順。 */
+export const unitGroups = sqliteTable(
+  'unit_groups',
+  {
+    middleNo: integer('middle_no')
+      .notNull()
+      .references(() => unitPlans.middleNo, { onDelete: 'cascade' }),
+    /** 単元の中のまとまりの番号（1 始まり）。並びがまとまりの学ぶ順。 */
+    groupNo: integer('group_no').notNull(),
+    name: text('name').notNull(),
+    /** まとまりの 1 行の説明。 */
+    description: text('description').notNull(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.middleNo, t.groupNo] }),
+    // @implements BR-057
+    check('ck_unit_groups_group_no_positive', sql`${t.groupNo} >= 1`),
+    // @implements BR-058
+    check('ck_unit_groups_name_not_empty', sql`${t.name} <> ''`),
+    // @implements BR-058
+    check('ck_unit_groups_description_not_empty', sql`${t.description} <> ''`),
+  ],
+)
+
+/** まとまりに入る論点と、まとまりの中の学ぶ順。
+ *  論点はどれか 1 つのまとまりにだけ入るので topic_id を主キーにする。
+ *  資格対策の学ぶ順はここだけが持ち、topics.sort_order（ロードマップ型の学び全体を通した順）には入れない。 */
+export const unitGroupTopics = sqliteTable(
+  'unit_group_topics',
+  {
+    topicId: integer('topic_id')
+      .primaryKey()
+      .references(() => topics.id, { onDelete: 'cascade' }),
+    middleNo: integer('middle_no').notNull(),
+    groupNo: integer('group_no').notNull(),
+    /** まとまりの中の学ぶ順（1 始まり）。 */
+    position: integer('position').notNull(),
+  },
+  (t) => [
+    foreignKey({
+      columns: [t.middleNo, t.groupNo],
+      foreignColumns: [unitGroups.middleNo, unitGroups.groupNo],
+    }).onDelete('cascade'),
+    // まとまりの論点を学ぶ順に引く問い合わせに使う
+    // @implements BR-057
+    uniqueIndex('uq_unit_group_topics_position').on(t.middleNo, t.groupNo, t.position),
+    // @implements BR-057
+    check('ck_unit_group_topics_position_positive', sql`${t.position} >= 1`),
+  ],
+)
+
+/** 単元の構成が論点ごとに決める前提の論点。position の順が示す順。
+ *  前提の論点は同じ学びの論点で、他の単元の論点でもよい。前提を持たない論点は行を持たない。 */
+export const topicPrerequisites = sqliteTable(
+  'topic_prerequisites',
+  {
+    topicId: integer('topic_id')
+      .notNull()
+      .references(() => topics.id, { onDelete: 'cascade' }),
+    prerequisiteTopicId: integer('prerequisite_topic_id')
+      .notNull()
+      .references(() => topics.id, { onDelete: 'cascade' }),
+    /** 前提の論点を示す順（1 始まり）。 */
+    position: integer('position').notNull(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.topicId, t.prerequisiteTopicId] }),
+    // @implements REQ-479
+    uniqueIndex('uq_topic_prerequisites_position').on(t.topicId, t.position),
+    // @implements REQ-479
+    check('ck_topic_prerequisites_position_positive', sql`${t.position} >= 1`),
+    // @implements BR-058
+    check('ck_topic_prerequisites_not_self', sql`${t.topicId} <> ${t.prerequisiteTopicId}`),
   ],
 )
 
@@ -75,6 +182,7 @@ export const pastQuestions = sqliteTable(
     contentKey: text('content_key'),
   },
   (t) => [
+    // @implements BR-060
     uniqueIndex('uq_question_exam_number').on(t.exam, t.number),
     index('idx_question_exam').on(t.exam, t.number),
     index('idx_question_content').on(t.contentKey),
@@ -111,6 +219,7 @@ export const users = sqliteTable(
     role: text('role').notNull().default('MEMBER'), // ADMIN | MEMBER
     createdAt: integer('created_at').notNull().default(now),
   },
+  // @implements REQ-192
   (t) => [uniqueIndex('uq_user_email').on(t.email)],
 )
 
@@ -159,11 +268,12 @@ export const sessions = sqliteTable(
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
     kind: text('kind').notNull(),
-    status: text('status').notNull(), // in_progress | completed | abandoned
+    status: text('status').notNull(), // in_progress | completed
     /** mock のとき、どの回を再現しているか。ランダム構成なら null。 */
     sourceExam: text('source_exam'),
-    /** 出題範囲の説明。「論点: RAID」「分野: テクノロジ系」など画面表示用。 */
-    scopeLabel: text('scope_label'),
+    /** 範囲の名前。「論点「RAID」」「分野「テクノロジ系」」など画面表示用。NULL も空の文字列も持たない。 */
+    // @implements BR-040
+    scopeLabel: text('scope_label').notNull(),
     /** 制限時間（秒）。無制限なら null。過去問実践は 7200。 */
     timeLimitSec: integer('time_limit_sec'),
     questionCount: integer('question_count').notNull(),
@@ -171,7 +281,11 @@ export const sessions = sqliteTable(
     startedAt: integer('started_at').notNull().default(now),
     finishedAt: integer('finished_at'),
   },
-  (t) => [index('idx_session_user_status').on(t.userId, t.status, t.startedAt)],
+  (t) => [
+    index('idx_session_user_status').on(t.userId, t.status, t.startedAt),
+    // @implements BR-040
+    check('ck_sessions_scope_label_not_empty', sql`${t.scopeLabel} <> ''`),
+  ],
 )
 
 /** 出題された1問。出題時点の内容をスナップショットとして固定する。
@@ -189,6 +303,7 @@ export const sessionQuestions = sqliteTable(
     /** 0 始まりの出題順。未回答の最小 index が「現在の問題」。 */
     idx: integer('idx').notNull(),
     /** { text, choices, answer, citation, hasFigure, figureDescription } の JSON。 */
+    // @implements BR-020
     snapshot: text('snapshot').notNull(),
     userAnswer: text('user_answer'),
     /** 0: 未回答 / 1: 正解 / 2: 不正解 */
@@ -196,6 +311,7 @@ export const sessionQuestions = sqliteTable(
     answeredAt: integer('answered_at'),
   },
   (t) => [
+    // @implements BR-022
     uniqueIndex('uq_sq_session_idx').on(t.sessionId, t.idx),
     // 未回答の最小 index を引く頻出クエリ
     index('idx_sq_progress').on(t.sessionId, t.result, t.idx),
@@ -203,8 +319,7 @@ export const sessionQuestions = sqliteTable(
 )
 
 /** アプリ全体設定。1行想定（id='default'）。
- *  前身アプリ では出題数や除外条件がコードに埋まっていて変えられなかったので、
- *  変えたくなるものは最初からここに置く。 */
+ *  出題数や除外条件など、運用で変えたくなる値をコードに埋めずにここに置く。 */
 export const appSettings = sqliteTable('app_settings', {
   id: text('id').primaryKey(),
   /** 練習テストの既定出題数 */
@@ -262,3 +377,30 @@ export const glossary = sqliteTable(
   },
   (t) => [index('idx_glossary_topic').on(t.topicId)],
 )
+
+/** 利用者からのフィードバック。
+ *  自由記述と 1 タップで選ぶ種類（kind）を同じ表に置く。
+ *  その場で AI は応答しない。開発側が scripts/feedback.py で取り出して改善フェーズを回し、status を進める。
+ *  seed の投入はこの表に触らないので消えない。 */
+export const feedback = sqliteTable(
+  'feedback',
+  {
+    id: text('id').primaryKey(),
+    userId: text('user_id')
+      .notNull()
+      .references(() => users.id),
+    kind: text('kind').notNull().default('text'), // 取りうる値は routes/feedback.ts の kind の列挙
+    /** 送ったときに開いていた画面のパス（/topics/57 など）。 */
+    page: text('page'),
+    topicId: integer('topic_id'),
+    questionId: text('question_id'),
+    body: text('body').notNull(),
+    status: text('status').notNull().default('new'), // new | triaged | done
+    /** 開発側のメモ（どう対応したか）。 */
+    note: text('note'),
+    createdAt: integer('created_at').notNull().default(now),
+    handledAt: integer('handled_at'),
+  },
+  (t) => [index('idx_feedback_status').on(t.status, t.createdAt)],
+)
+

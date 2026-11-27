@@ -1,0 +1,107 @@
+{
+  "topic_id": 676,
+  "term": "SSID",
+  "figures": [
+    {
+      "id": 1,
+      "type": "matrix",
+      "after": "explanation",
+      "caption": "SSID と IP アドレスを、値を誰が決めるかと、どの場面で使うかで並べた表です。強調した SSID の行を横にたどると、管理者が自由に付け、つなぐ前に参加するネットワークを選ぶ名前だと読めます。",
+      "x": {
+        "label": "観点",
+        "values": [
+          "値を誰が決めるか",
+          "どの場面で使うか"
+        ]
+      },
+      "y": {
+        "label": "識別子",
+        "values": [
+          "SSID",
+          "IP アドレス"
+        ]
+      },
+      "cells": [
+        [
+          "管理者\n名前を自由に付ける",
+          "つなぐ前\n参加するネットワークを\n名前で選ぶ"
+        ],
+        [
+          "ネットワークの管理側\nつないだ後に\n端末へ割り当てる",
+          "つないだ後\n通信の相手を\n番号で示す"
+        ]
+      ],
+      "emphasis": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### SSID が果たす役割",
+      "caption": "3 台の電波が 1 台の端末に届き、端末は知らされた名前で接続先を選びます。同じ名前を付けた AP 1 と AP 2 は 1 つのネットワークになります。",
+      "nodes": [
+        {
+          "id": "ap1",
+          "label": "AP 1\nSSID：office",
+          "row": 0,
+          "col": 0,
+          "icon": "network"
+        },
+        {
+          "id": "ap2",
+          "label": "AP 2\nSSID：office",
+          "row": 0,
+          "col": 1,
+          "icon": "network"
+        },
+        {
+          "id": "ap3",
+          "label": "AP 3\nSSID：guest",
+          "row": 0,
+          "col": 2,
+          "icon": "network"
+        },
+        {
+          "id": "t",
+          "label": "端末\noffice を選ぶと\nAP 1・2 の中で通信",
+          "row": 1,
+          "col": 1,
+          "icon": "device",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "ap1",
+          "to": "t",
+          "label": "ビーコンで office"
+        },
+        {
+          "from": "ap2",
+          "to": "t",
+          "label": "ビーコンで office"
+        },
+        {
+          "from": "ap3",
+          "to": "t",
+          "label": "ビーコンで guest"
+        },
+        {
+          "from": "ap1",
+          "to": "ap2",
+          "label": "同じ SSID で 1 つのネットワーク",
+          "arrow": "none",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

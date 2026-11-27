@@ -1,0 +1,261 @@
+{
+  "bundle": "03-8",
+  "shared": [],
+  "topics": [
+    {
+      "topic_id": 90,
+      "points": [
+        {
+          "point": "DMA 方式の定義（メモリと入出力装置の間、メモリとメモリの間の転送を MPU を介さずに行う）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "DMA の正式名と訳（Direct Memory Access：直接記憶アクセス）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "MPU はマイクロプロセッサのこと",
+          "fate": "kept",
+          "where": "### 転送を専用回路に任せる理由"
+        },
+        {
+          "point": "転送を代行するのは DMA コントローラという専用回路",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "MPU は転送元・転送先・語数を設定して起動するだけ（要点の箇条）",
+          "fate": "figure",
+          "where": "90 の図 1"
+        },
+        {
+          "point": "転送中に MPU が解放されるのが利点で、1 語ごとに MPU が動くプログラム制御方式との違い",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "転送の完了は割込みで MPU に知らされる（要点の箇条）",
+          "fate": "figure",
+          "where": "90 の図 1"
+        },
+        {
+          "point": "プログラム制御方式は 1 語ごとに MPU が命令を実行して運び、転送中ずっと MPU が占有され、大量のデータで処理能力が落ちる",
+          "fate": "kept",
+          "where": "### 転送を専用回路に任せる理由"
+        },
+        {
+          "point": "detail の文章での DMA コントローラの代行・転送元アドレス・転送先アドレス・転送語数の設定と起動・別の処理へ移る・完了の割込み",
+          "fate": "figure",
+          "where": "90 の図 1"
+        },
+        {
+          "point": "運ぶ相手はメモリとメモリの間でもよい（detail の言い直し）",
+          "fate": "duplicate",
+          "where": "explanation"
+        },
+        {
+          "point": "転送にメモリバスが要り、MPU との間でバスの取り合いが起きる",
+          "fate": "kept",
+          "where": "### バスの借り方（サイクルスチールとバースト転送）"
+        },
+        {
+          "point": "サイクルスチールは 1 語ずつバスを借りて MPU の隙間に転送し、MPU の処理をあまり止めないが転送効率は下がる",
+          "fate": "figure",
+          "where": "90 の図 2"
+        },
+        {
+          "point": "バースト転送はまとまった語数を転送し終わるまでバスを占有し、転送は速いがその間 MPU がメモリを使えない",
+          "fate": "figure",
+          "where": "90 の図 2"
+        },
+        {
+          "point": "混同しやすい用語のプログラム制御方式（転送そのものを MPU が命令で行い、転送中 MPU が拘束される）",
+          "fate": "duplicate",
+          "where": "### 転送を専用回路に任せる理由"
+        },
+        {
+          "point": "チャネル制御方式は専用のチャネル装置が入出力用のプログラムを解釈して実行し、DMA より自律的で複数の入出力動作を続けて処理できる",
+          "fate": "kept",
+          "where": "### 混同しやすい用語"
+        }
+      ]
+    },
+    {
+      "topic_id": 472,
+      "points": [
+        {
+          "point": "USB の定義（PC と周辺機器をつなぐシリアルインタフェース）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "規格の世代（USB 2.0・3.0）とコネクタの形状（Type-A・Type-C）は別の話（定義の 2 文目）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "Type-C は差し込む向きを選ばない形状",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "Type-C の断面は両端が丸い長円形（角が無く上下対称）",
+          "fate": "figure",
+          "where": "472 の図 2"
+        },
+        {
+          "point": "Type-C は内部中央の板状の部分の上面と下面の両方に同じ並びの端子列がある",
+          "fate": "kept",
+          "where": "### 断面の形で見分ける"
+        },
+        {
+          "point": "どちらの向きで挿しても一方の端子列が相手側と噛み合う",
+          "fate": "kept",
+          "where": "### 断面の形で見分ける"
+        },
+        {
+          "point": "Type-A は角の丸い横長の長方形で端子が片側に 4 本",
+          "fate": "figure",
+          "where": "472 の図 2（Type-A の列。平たい長方形・端子は片面だけ。角の丸さと端子 4 本は question_explanations の 2021r03a-q10 アの note）"
+        },
+        {
+          "point": "左右の角が斜めに落ちた台形に近い断面は micro-USB で、向きが決まっている",
+          "fate": "figure",
+          "where": "472 の図 2"
+        },
+        {
+          "point": "台形に近い断面は HDMI のコネクタにも見られ、向きが決まっている",
+          "fate": "kept",
+          "where": "### 断面の形で見分ける"
+        },
+        {
+          "point": "端子列が両面にあるかどうかで Type-C を見分ける",
+          "fate": "figure",
+          "where": "472 の図 2（端子列のある面の行と強調）"
+        },
+        {
+          "point": "要点の箇条での Type-C の長円形と上下両面の端子列の言い直し",
+          "fate": "duplicate",
+          "where": "### 断面の形で見分ける"
+        },
+        {
+          "point": "USB 3.0 の転送モードは Low・Full・High に SuperSpeed を加えた 4 つ",
+          "fate": "figure",
+          "where": "472 の図 1"
+        },
+        {
+          "point": "SuperSpeed は 5G ビット／秒で、外付け磁気ディスクなど大量のデータを運ぶ接続で使う",
+          "fate": "kept",
+          "where": "### USB 3.0 で変わったこと"
+        },
+        {
+          "point": "USB 3.0 は送信用と受信用の信号線を分けた全二重、USB 2.0 は 1 対の線を向きで切り替える半二重",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "全二重の理由は SuperSpeed 用に送信専用と受信専用の差動信号線を別々に持つこと",
+          "fate": "kept",
+          "where": "### USB 3.0 で変わったこと"
+        },
+        {
+          "point": "最大供給電流は 500 ミリアンペアから 900 ミリアンペアへ上がり、バスから電源を取れる機器の幅が広がった",
+          "fate": "kept",
+          "where": "### USB 3.0 で変わったこと"
+        },
+        {
+          "point": "要点の箇条での 900 ミリアンペアと互換性の言い直し",
+          "fate": "duplicate",
+          "where": "### USB 3.0 で変わったこと"
+        },
+        {
+          "point": "信号線が 9 本に増えても端子の形に互換性があり、USB 2.0 までのケーブルや機器はその世代の速度で動く",
+          "fate": "kept",
+          "where": "### USB 3.0 で変わったこと"
+        },
+        {
+          "point": "Type-C は形状の名前で、どの転送速度に対応するかは機器側の仕様で決まる",
+          "fate": "kept",
+          "where": "### 断面の形で見分ける"
+        }
+      ]
+    },
+    {
+      "topic_id": 91,
+      "points": [
+        {
+          "point": "FC の定義（サーバとストレージを結ぶ高速なシリアル伝送インタフェース）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "名前に反して伝送媒体は電気ケーブルと光ケーブルのどちらも使える",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "距離が短ければ電気ケーブルも使える",
+          "fate": "kept",
+          "where": "### 伝送媒体と階層"
+        },
+        {
+          "point": "detail での「伝送媒体は光ケーブルに限られない」の言い直し",
+          "fate": "duplicate",
+          "where": "explanation"
+        },
+        {
+          "point": "接続形態はポイントツーポイント・アービトレーテッドループ・ファブリックの 3 種類",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "ポイントツーポイントは 1 対 1 の直結、アービトレーテッドループはリング状で調停により 1 組ずつ、ファブリックは FC スイッチを介して多対多（番号付きの並び）",
+          "fate": "figure",
+          "where": "91 の図 1"
+        },
+        {
+          "point": "現在の FC-SAN はファブリックの形が中心",
+          "fate": "kept",
+          "where": "### 3つの接続形態"
+        },
+        {
+          "point": "FC-0 から FC-4 までの独自の階層をもち、TCP/IP とは別系統",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "FC-0 は物理、FC-4 は上位プロトコルの写像",
+          "fate": "kept",
+          "where": "### 伝送媒体と階層"
+        },
+        {
+          "point": "detail での独自の階層と TCP/IP と別系統の言い直し",
+          "fate": "duplicate",
+          "where": "explanation"
+        },
+        {
+          "point": "FC-4 で SCSI コマンドを運ぶため「SCSI を使う」と表現されるが、運ぶのはコマンドで物理層はシリアル伝送",
+          "fate": "kept",
+          "where": "### 伝送媒体と階層"
+        },
+        {
+          "point": "iSCSI は SCSI コマンドを TCP/IP に載せ、既存の IP ネットワークを前提とする",
+          "fate": "figure",
+          "where": "91 の図 2"
+        },
+        {
+          "point": "FCoE は FC のフレームをイーサネットに載せ、TCP/IP を経由せず、LAN と SAN の配線をまとめる",
+          "fate": "figure",
+          "where": "91 の図 2"
+        },
+        {
+          "point": "iSCSI と FCoE は FC と取り違えやすい（混同しやすい用語の見出しの役目）",
+          "fate": "kept",
+          "where": "### 混同しやすい用語"
+        }
+      ]
+    }
+  ]
+}

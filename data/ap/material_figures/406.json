@@ -1,0 +1,73 @@
+{
+  "topic_id": 406,
+  "term": "JPCERT コーディネーションセンター",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 名前にある「調整」と中立性",
+      "caption": "中央の JPCERT/CC が、当事者どうしの間に立って連絡を取り持つ形を表しています。線のラベルで、誰と何をやり取りするかを読みます。",
+      "nodes": [
+        {
+          "id": "rep",
+          "label": "被害者・報告者\nインシデントを届け出る",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "site",
+          "label": "サイトの管理者\n攻撃の踏み台や発信元",
+          "row": 0,
+          "col": 2,
+          "icon": "server"
+        },
+        {
+          "id": "jp",
+          "label": "JPCERT/CC\n中立の立場で取り持つ",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "dev",
+          "label": "製品の開発者\n脆弱性を直す",
+          "row": 2,
+          "col": 0,
+          "icon": "gear"
+        },
+        {
+          "id": "cert",
+          "label": "海外の CERT\n各国の対応の窓口",
+          "row": 2,
+          "col": 2,
+          "icon": "network"
+        }
+      ],
+      "edges": [
+        {
+          "from": "rep",
+          "to": "jp",
+          "label": "インシデントの報告"
+        },
+        {
+          "from": "jp",
+          "to": "site",
+          "label": "対応の依頼"
+        },
+        {
+          "from": "jp",
+          "to": "dev",
+          "label": "脆弱性情報と修正の調整",
+          "arrow": "both"
+        },
+        {
+          "from": "jp",
+          "to": "cert",
+          "label": "国をまたぐ攻撃の取次ぎ",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

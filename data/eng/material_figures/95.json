@@ -1,0 +1,79 @@
+{
+  "topic_id": 95,
+  "term": "ブラウザが画面を描く仕組み",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "HTML から組んだ部品の木に CSS の決まりを当て、置き場所を計算してから描きます。点線は、JavaScript が部品を書き換えて描き直しが起きる道です。",
+      "nodes": [
+        {
+          "id": "html",
+          "label": "HTML\n中身と骨組み",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "tree",
+          "label": "部品の木\nh1・p などの\nタグから組む",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "lay",
+          "label": "置き場所を計算\n部品に CSS を当てる",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "draw",
+          "label": "画面に描く\nレンダリング",
+          "row": 0,
+          "col": 3,
+          "emphasis": true
+        },
+        {
+          "id": "js",
+          "label": "JavaScript\n動き\n部品を足す・書き換える",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "css",
+          "label": "CSS\n見た目\n色・大きさ・並べ方",
+          "row": 1,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "html",
+          "to": "tree",
+          "label": "タグを読む"
+        },
+        {
+          "from": "tree",
+          "to": "lay",
+          "label": "部品"
+        },
+        {
+          "from": "css",
+          "to": "lay",
+          "label": "見た目の決まり"
+        },
+        {
+          "from": "lay",
+          "to": "draw",
+          "label": "置き場所の\n決まった部品"
+        },
+        {
+          "from": "js",
+          "to": "tree",
+          "label": "押したときなど\n書き換える",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

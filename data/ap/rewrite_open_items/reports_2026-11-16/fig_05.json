@@ -1,0 +1,31 @@
+{
+  "target": "ap",
+  "unit": "05",
+  "status": "fixed",
+  "blocked": [],
+  "items": [
+    {"no": 1, "figure": {"topic_id": 101, "figure_id": 2}, "kind": "order", "verdict": "applies", "action": ["move", "after"], "what": "前の論点 101 の図に後の論点名「リエントラント」が比較の相手として入っていたため、図ごと比較を持つ 440 へ移し（440 の図 3）、after を 440 に実在する「### 混同しやすい用語」にした。中身と caption は 440 の位置でも決まりに当たらないので変えていない", "questions_checked": ["2025r07a-q17", "2022r04h-q6", "2021r03a-q6", "2017h29h-q7", "2016h28h-q7"]}
+  ],
+  "changed_figures": [
+    {"topic_id": 440, "figure_id": 3, "png": "data/ap/rewrite_open_items/reports_2026-11-16/figures_png/ap-05/440-3.png", "intended_point": "排他制御で守ったコードはスレッドセーフにはなるが、途中で入り直されると待ちが起きるのでリエントラントになるとは限らない"}
+  ],
+  "moved": [
+    {"from": {"topic_id": 101, "figure_id": 2}, "to": {"topic_id": 440, "figure_id": 3}, "after": "### 混同しやすい用語"}
+  ],
+  "removed": [],
+  "restored": [],
+  "ledgers": [
+    {"file": "data/ap/rewrite_ledgers/05-2.json", "changed_points": 3, "removed_figures_added": 0, "removed_figures_dropped": 0}
+  ],
+  "not_fixed": [
+    {"kind": "text_followup", "no": 1, "topic_id": 101, "figure_id": null, "what": "101 の ### リエントラントとの違い は図が抜けて「違いは次の論点で説明します」の 1 文だけになった。見出しを消して 1 文を ### スレッドセーフにする手段 の後ろに残すかを本文の段で合わせる（一覧の what のとおり）"},
+    {"kind": "other", "no": 1, "topic_id": 101, "figure_id": 2, "what": "台帳 05-2 の shared の行「スレッドセーフとリエントラントの比較（101 の図 2。440 へ図を移せないため 101 に残す）holder 101」が移し替え後の現物と合わなくなった。仕様書が shared を変えないと決めているので触っていない（親の判断で holder 440・440 の図 3 に直すか決める）"}
+  ],
+  "not_fixed_counts": {"text_followup": 1, "other": 1},
+  "counts": {"applies": 1, "not_applies": 0, "data_suspect": 0},
+  "gates": {
+    "render_check": {"stops": 0, "warnings_before": 0, "warnings_after": 0},
+    "unfixed_warnings": []
+  },
+  "written": ["data/ap/material_figures/101.json", "data/ap/material_figures/440.json", "data/ap/rewrite_ledgers/05-2.json", "public/figures/materials/ap/101-1.svg", "public/figures/materials/ap/440-1.svg", "public/figures/materials/ap/440-2.svg", "public/figures/materials/ap/440-3.svg", "data/ap/rewrite_open_items/reports_2026-11-16/figures_png/ap-05/"]
+}

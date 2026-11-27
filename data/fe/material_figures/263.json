@@ -1,0 +1,19 @@
+{
+  "topic_id": 263,
+  "term": "WBS",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 次の工程へのつながり",
+      "caption": "左上の強調した段が WBS の受け持ちで、作業の洗い出しと分解までです。段の間の矢印は次の道具へ渡す物を表します。",
+      "direction": "down",
+      "stages": [
+        {"label": "WBS\n作業を洗い出して分解する", "emphasis": true, "next_label": "ワークパッケージ"},
+        {"label": "見積り\n所要期間と工数を出す", "next_label": "期間と工数の値"},
+        {"label": "ネットワーク図\n作業の前後関係を並べる", "next_label": "作業の順序"},
+        {"label": "ガントチャート\n日程に展開し進捗を見る"}
+      ]
+    }
+  ]
+}

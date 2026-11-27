@@ -2,51 +2,37 @@
 
 **このプロジェクトは個人。** トラブル時はまず `brain/INDEX.md`（このリポジトリ）と
 `~/.claude/brain/INDEX.md`（共通）を症状の言葉で grep する。解決したら報告書を1枚還す。
+作業の着手時は `brain/APPROACHES.md` と `~/.claude/brain/APPROACHES.md` を作業の言葉で grep し、
+`brain/PREMISES.md`（未決・本人の指示）を読む。
 
 IT パスポート試験の学習アプリ。**このディレクトリがプロジェクトのルート**で、
 以降のパスはすべてここからの相対パス。
 
-## まず読むもの
+このファイルは**地図**（固有の決まり・構成・層の向き・命名・規約からの逸脱・正本へのリンク。150 行以内）。
+決まりの全文と理由は、下の「場面から読む物を引く」の行き先が持つ。ここに写さない。
 
-| 目的 | ファイル |
-| --- | --- |
-| **トラブル・不具合・原因不明のエラーに当たったら、調査の前に必ずここ**（過去の全事例の索引。解決したら報告書を1枚還す） | [`brain/INDEX.md`](brain/INDEX.md) |
-| 何を作っているか・どう動かすか | [`README.md`](README.md) |
-| **過去問の回を追加する手順**（一番よく使う） | [`docs/回を追加する手順.md`](docs/回を追加する手順.md) |
-| **未修正のバグ**（着手前に必ず見る。今は空） | [`docs/未修正のバグ.md`](docs/未修正のバグ.md) |
-| **検証の穴と来週やるテスト**（データを直す前に見る） | [`docs/懸念_表示データに検証が無い.md`](docs/懸念_表示データに検証が無い.md) |
-| 設計判断とその理由 | [`docs/要件定義書_draft.md`](docs/要件定義書_draft.md) |
-| これまでの経緯・失敗の記録 | [`docs/作業ログ_2026-08-23.md`](docs/作業ログ_2026-08-23.md) |
-| 画面が遅いと言われたときの調べ方 | [`docs/作業ログ_2026-08-29_表示の遅さ.md`](docs/作業ログ_2026-08-29_表示の遅さ.md) |
-| 図の取り違え・管理者アカウント・バックアップ | [`docs/作業ログ_2026-08-31_図の取り違えと管理者アカウント.md`](docs/作業ログ_2026-08-31_図の取り違えと管理者アカウント.md) |
-| 応用情報の残り3回を同時に取り込み、10年分を達成した記録 | [`docs/作業ログ_2026-08-31_応用情報の残り3回.md`](docs/作業ログ_2026-08-31_応用情報の残り3回.md) |
-| 教材に図を足す仕組みと優先度付け | [`docs/作業ログ_2026-09-01_教材の図.md`](docs/作業ログ_2026-09-01_教材の図.md) |
-| **問題解説・用語ポップ・教材 v3（教材と解説の役割分担。教材を書くなら必読）** | [`docs/作業ログ_2026-09-01_問題解説と教材v3.md`](docs/作業ログ_2026-09-01_問題解説と教材v3.md) |
-| **検査の層と門（表示・API・画面・使いやすさ。何かを検査する前に見る）** | [`docs/検査観点カタログ.md`](docs/検査観点カタログ.md) |
-| 一斉検査で出た改善候補（大半は修正済み。UI を触る前に見る） | [`docs/改善候補_2026-09-02.md`](docs/改善候補_2026-09-02.md) |
-| 一斉検査→一括修正の経緯と落とし穴（audit と画面仕様の結合など） | [`docs/作業ログ_2026-09-02_一斉検査と修正.md`](docs/作業ログ_2026-09-02_一斉検査と修正.md) |
-| 教材を v2 に書き直したときの記録 | [`docs/作業ログ_2026-08-24_教材のv2書き直し.md`](docs/作業ログ_2026-08-24_教材のv2書き直し.md) |
+## 着手前に要求を3つに分ける（コードやデータを触る前に）
 
-## 現在地（2026-08-23 時点）
+要求を **質問 / バグ修正 / 仕様変更** のどれかに置いてから動く。判定軸はコードの行数ではなく
+「**決めてある意図が変わるか**」。意図は `docs/goals/`（UC・REQ・契約）・`docs/rules/`（BR）・「設計の中核」・
+`docs/不変条件と門.md` が持つ。
 
-- 公開されている **29回のうち11回・1,100問**を取り込み済み（38%）
-- 論点 532件、うち全件に教材（解説・周辺知識）あり。**全件が v2（2026-08-24 に書き直し済み）**
-- 本番稼働中: **https://itpass-study-c91.pages.dev**
-- 応用情報（午前）も同コード・別データ・別デプロイで稼働中: **https://ap-am-study.pages.dev**
-  （**18回・1,440問・論点772件**、全件教材あり。手順と落とし穴は `docs/応用情報を追加する.md`）
-  **直近10年分（2016h28h まで）の目標は 2026-08-31 に達成済み**
-- **未取込は18回**。新しい順に `2017h29h` → `2009h21a`
+- **質問**: 調べて答える。直さない
+- **バグ修正**: 意図は変えず、実装や データを意図に合わせる。観測できる挙動が変わってもバグ修正。
+  **データの修正は、原本の画像と照合してから**（[`docs/落とし穴.md`](docs/落とし穴.md)）
+- **仕様変更**: 意図そのものを変える／新設する。1行でも該当する。先に本人へ提示して合意し、
+  合意した内容を `docs/goals/` の UC・REQ（spec-author）か該当の手順書に書いてから着手する。
+  既存の文書と矛盾する要求は、実装で黙って上書きせず矛盾を提示して止まる
 
-`data/pdfs/` に全29回の PDF、`data/pages/` に全ページの画像、
-`data/answer_keys.json` に全2,900問の正解表が揃っている。前工程は済んでいるので、
-追加作業は「画像を読む → 分類 → 教材」だけ。
+分類と根拠（どの文書のどこか）を作業の最初に一言で書く。空回りしたら粘らない：
+検証が3回続けて落ちる、または同じ誤りを繰り返したら、新しいコンテキストでやり直す。
 
 ## 設計の中核（ここを壊さない）
 
 **論点に紐づく過去問の件数＝出題頻度＝重要度。** 頻出論点から潰すのが最短合格経路になる。
 この一点のためにデータ構造が組んである。
 
-- 論点 ID は `data/topic_ids.json` で固定。**並び順から採ってはいけない。**
+- 論点 ID は `data/<対象>/topic_ids.json`（対象ごとに 1 つ）で固定。**並び順から採ってはいけない。**
   回を追加すると頻度順が変わり、学習の進捗と教材が別の論点を指してしまう
 - 初期データ投入は UPSERT。DELETE すると進捗・受験履歴が外部キー制約で壊れる
 - **同一内容の過去問は DB に全問残し、学習側だけ `content_key` で1問にまとめる**（応用情報は 119 組）。
@@ -54,102 +40,97 @@ IT パスポート試験の学習アプリ。**このディレクトリがプロ
 - 分類は自前で行う（IPA の公開問題に分野タグは無い）。テーマ分けは IPA シラバスの階層に乗せる。
   **合否が分野単位の AND 条件なので、分類が分野に接続していないと最重要のフィードバックが出せない**
 
-## 作業を分担させるときの原則
+上の各項目と [`docs/落とし穴.md`](docs/落とし穴.md) の各項目を、**どのスクリプトが守っているか**まで含めて一覧にしたのが
+[`docs/不変条件と門.md`](docs/不変条件と門.md)。不変条件を足したら行を足す。門を作ったら状態を更新する。
 
-**担当エージェントは `.claude/agents/` の型を使い、モデルは Opus に固定してある。**
-メインの会話は Fable、実装・読み取り・分類・執筆・検証の実作業は Opus、という使い分け
-（コストと質のトレードオフとして本人が決めた方針。2026-08-31〜）。
-Agent ツールの `subagent_type` に型の名前を渡す。型に無い臨時の作業を任せるときも
-`model: opus` を明示し、既定（メインのモデル＝Fable）を継承させない。
+## 場面から読む物を引く
 
-| 型 | 工程 | 1体あたりの担当 |
+| 場面 | 読む物 |
+| --- | --- |
+| 着手する（毎回） | [`brain/PREMISES.md`](brain/PREMISES.md)（未決・本人の指示）、[`docs/未修正のバグ.md`](docs/未修正のバグ.md) |
+| トラブル・原因不明のエラー | [`brain/INDEX.md`](brain/INDEX.md)（調査の前に。解決したら報告書を 1 枚還す） |
+| 文書を探す・足す、作業ログを書く | [`docs/文書の索引.md`](docs/文書の索引.md)（点／線の区別、`docs/` の全ファイルの表、還元行の決まり） |
+| 仕様・実装・テストに触る、担当に任せる | [`docs/作業の進め方.md`](docs/作業の進め方.md)（`/develop` の運び、担当の型と仕様書、権限、環境の制約） |
+| データを直す、seed・配備・本番に触る | [`docs/落とし穴.md`](docs/落とし穴.md)、[`README.md`](README.md) の「本番」 |
+| 壊してはいけないことと、それを守る門 | [`docs/不変条件と門.md`](docs/不変条件と門.md)、[`docs/検査観点カタログ.md`](docs/検査観点カタログ.md) |
+| 回・対象を足す | [`docs/回を追加する手順.md`](docs/回を追加する手順.md)、[`docs/応用情報を追加する.md`](docs/応用情報を追加する.md)、[`docs/基本情報を追加する.md`](docs/基本情報を追加する.md)、[`docs/ロードマップ対象を追加する.md`](docs/ロードマップ対象を追加する.md)、Skill `learn-target` |
+| 今の数・本番の URL | [`docs/現在地.md`](docs/現在地.md) |
+| 利用者のフィードバック | Skill `improve-from-feedback`、[`brain/feedback/判断基準.md`](brain/feedback/判断基準.md) |
+
+## 作業の約束（1 行ずつ。全文は行き先）
+
+- 要求は Skill `/develop` の手順で運ぶ。親（この会話）は仕様も実装もテストも書かない。実装の前に REQ があるか確かめ、無ければ仕様が先（[`docs/作業の進め方.md`](docs/作業の進め方.md)）
+- 作業完了の条件は `npm test` が全部通ること。赤や欠けは上流（仕様の正本）から直し、実装に合わせて要件やテストを寄せない
+- 「仕様外」の印・除外の印は存在しない。検査の緩和・テストの skip は本人の許可なく行わない
+- 担当は `.claude/agents/` の型で、モデルは Opus。決まりは指示に直書きせず、先に仕様書（`scripts/prompts/`）へ書く。成果物は自己申告でなく機械で確かめ、受入は別コンテキスト（`qa-acceptance`）
+- 「データが壊れている」という報告は、原本の画像と照合してから判断する
+- seed は `bash scripts/seed_remote.sh`、配備は `bash scripts/deploy-pages.sh` を通す。wrangler を直に叩かない。破壊的な操作は毎回確認する
+- 仕様書の本文は現在形だけ。経緯は `## 改訂履歴` と作業ログ（点）へ
+
+## 構成
+
+同じコードを、対象（`ip`・`ap`・…）ごとに別のデータ・別の D1・別の Pages として配備する。対象の一覧は `src/shared/targets.json`、
+配備先は `scripts/pages_projects.json`、D1 の結び先は `wrangler.jsonc` の `env.<対象>`。
+
+| 置き場 | 中身 |
+| --- | --- |
+| `src/client/` | 学び側の画面（React + Vite の SPA。`pages/`・`components/`・`lib/`） |
+| `src/server/` | 学び側の API（Hono。`index.ts` が受け口、`routes/` → `lib/` → `db/`） |
+| `src/shared/` | 画面と API が共有する物（対象の登録簿など） |
+| `portal/` | 入口「まなびば」（認証と権限の正本。`src/index.ts`・`static/`・`migrations/`。学び側とは別の配備） |
+| `scripts/` | 作り手と運用の道具（取り込み・生成・門・seed・配備）。`scripts/prompts/` は担当が最初に読む仕様書 |
+| `data/<対象>/`・`public/figures/<対象>/` | 対象ごとの原本と生成物（論点 ID・教材・単元の構成・図の仕様）／図の画像 |
+| `migrations/`・`contracts/fixtures/` | 学び側の D1 の構造の変更／出荷済みの版が書いたデータの控え |
+| `tests/` | `client/`・`server/`・`portal/`・`scenario/`、入力の置き場 `fixtures/` |
+| `docs/` | 仕様の正本（`goals/`・`rules/`・`nfr/`・`adr/`・`_shared/`・`01-glossary.md`）と、手順書・記録 |
+| `brain/` | このプロジェクトの前提・トラブルの報告書・作業の型・手戻りの台帳 |
+| `.harness/`・`.claude/`・`apm_modules/` | 原本 harness の道具と展開物（APM が作る。手で直さない）。宣言は `harness.config.json`・`apm.yml` |
+
+## 層と命名
+
+- 層の向き（[`ADR-0005`](docs/adr/ADR-0005-layering.md)）: `src/client` と `src/server` は互いを import せず、共有するのは `src/shared` だけ。サーバーは `routes/` → `lib/` → `db/` の一方向
+- 仕様の置き場: `docs/goals/GOAL-nn-<slug>/UC-nnn-<slug>/` に `UC.md`（要件は `## 要件` の `### REQ-nnn`）・`contract.yaml`、横断の決まりは `docs/rules/BR-nnn.md`。次の番号は `node .harness/bin/harness.mjs next-id req`（`uc`・`br`・`adr` も同じ）
+- 注釈: 手で書く紐づきはテストの側だけ。テストは `it(` の直前の行に `@covers REQ-nnn#class`（1 テスト 1 クラス。DB で守る決まりは `@covers BR-nnn`）、シナリオは `@scenario UC-nnn`。ID だけを書く（[`.claude/rules/comments.md`](.claude/rules/comments.md)）
+- テストの名前: `tests/server/UC-nnn_<話題>.test.ts`、`tests/client/UC-nnn_<話題>.test.tsx`、`tests/scenario/UC-nnn-<slug>.test.tsx`（UC 1 本に 1 本）。土台は `UC-nnn_fixture.ts`。手元の物（macOS の囲い・手元の配備と保存先・追跡しないファイル）が要る土台は `UC-nnn_fixture.local.ts`、それを読み込むテストは `….local.test.ts(x)`（CI は回さず、手元の `npm test` が回す。名前と中身の食い違いは `classify_checks` が止める。UC-044）
+- 文書の名前: `作業ログ_<日付>_<題>`・`レビュー詳細_*`・`改善候補_*` は点（書き換えず追記）、それ以外は線。足したら [`docs/文書の索引.md`](docs/文書の索引.md) に行を足す
+- 図の画像は `public/figures/<対象>/` に分ける（試験 ID は対象をまたいで一意でない）
+
+## 操作 → 入口（R-1204）
+
+テストは、契約（`contract.yaml`）の操作名と `transport` から、次の規則で入口を導く。実装を読んで導かない。
+
+| 契約の transport | 入口 | 呼び方 |
 | --- | --- | --- |
-| `extract-questions` | 読み取り | 1チャンク（10〜12ページ） |
-| `verify-answers` | 解答検証 | 40問 |
-| `classify-questions` | 分類 | 1バッチ（26〜27問） |
-| `crop-figures` | 図の切り出し座標 | 1回分 |
-| `write-materials` | 教材執筆 | 1バンドル（最大8論点） |
-| `write-explanations` | 問題解説＋教材 v3 化 | 1バンドル（8論点、問題は畳んで 15〜25 件） |
+| `http`（学び側） | `src/server/index.ts` の default export（Hono の app。経路は `/api` の下） | 契約の `wire` から `Request` を組んで `app.request()` |
+| `http`（まなびば） | `portal/src/index.ts` の default export（同上） | 同上 |
+| `local-store`（画面の手元の保存） | `src/client/lib/` の export。名前は操作名の `read…` を `get…`、`save…` を `set…` に読み替え、ほかは操作名のまま | その関数を呼ぶ。契約の `errors` に当たる失敗は、投げられた値の `code` で名前を読む |
+| 道具を回す操作 | `scripts/<操作名を snake_case にした名前>.py`（または `.sh`・`.ts`。`.ts` は `npx tsx` で回す） | 子プロセスで回し、終了の状態・出力・書き出したファイルを見る。断りの名前は、標準出力の全体を JSON として読み（読めなければ最後の空でない行を読む）、その `error.code` で読む |
+| 道具の中の読み書き（`read…`・`write…`） | `scripts/` の Python の最上位の関数。名前は操作名を snake_case にした物。その UC の道具を回す操作のファイルを先に引き、無ければ `scripts/lib/` を引く（[`ADR-0013`](docs/adr/ADR-0013-tool-io-operations-as-functions.md)・[`ADR-0016`](docs/adr/ADR-0016-tool-io-functions-found-by-place-and-name.md)） | 契約の `request` の項目をその名前のままキーワード引数で渡して呼び、返り値を `response` として読む。契約の `errors` に当たる失敗は、投げられた値の `code` で名前を読む |
 
-不変の指示（仕様を最初に読む・正解表を読まない・検証コマンド等）は型に畳み込んである。
-**呼び出し時のプロンプトには回ごとの可変部分だけを書く**：試験ID、担当範囲、入出力パス、
-手本のパス、その回で判明している注意点。型と重複する指示を書き直さない。
+規則に従わない入口: `markSessionExpired` は `api`（`src/client/lib/api.ts`）、画面から出る `http` の `fetchVersionStamp` は `rememberBuild`・`checkForUpdate`（`src/client/lib/version.ts`）、
+まなびばの `listLearnings` は `createApp`（`portal/src/index.ts`。学びの登録簿の並びを受けて app を組む。default export はリポジトリの登録簿で組んだ物）。
+ファイル名と違う名前の操作・1 つのファイルが持つ複数の操作・直下でない入口の正本は `scripts/entry_names.json`（[`ADR-0014`](docs/adr/ADR-0014-entries-from-apps-and-tools.md)。ここに写さない）。
+本番の確かめの外向きの操作 4 つは `check_sso_prod.sh`。契約の実例の受け渡し役（`scripts/contract_adapter/main.ts`）は標準入力の 1 行が 1 例。
+契約の実例の確かめを回す入口は `npm run contract-run`（引数はそのまま原本の `harness run cases` に渡る）。
+実行の記録つきでテストを回す入口は `node tests/support/coverage/run.mjs`（= `npm run test:record`。ファイルを渡すとそれだけ回す。記録は `coverage/lcov.info`、生の記録は `coverage/.raw/`）。
+小さな置き場で回すときは `TEST_RECORD_ROOT=<置き場>` を渡す（置き場に `scripts/`・`tests/*.test.ts`・`node_modules` へのリンクを置く。記録は `<置き場>/coverage/lcov.info`）。
+Python の記録の環境の置き場は `TEST_RECORD_VENV`（既定はリポジトリの `.venv`）。子プロセスの生の記録の置き場は、子に渡る `NODE_V8_COVERAGE`（Node）と `TEST_RECORD_RAW`（その下の `py/`・`sh/`）。
 
-読み取り・分類・執筆はページや論点の範囲で分担するため、**担当ごとに流儀がずれる**。
-1件ずつ見ても気づけないので、仕様を文書に固定してある。**担当には必ず最初に読ませること**
-（型がそう指示している）。
+## スタックの規約からの逸脱
 
-- `scripts/prompts/extract_questions.md` — 画像から問題を読み取る
-- `scripts/prompts/classify_questions.md` — シラバス項目と論点に紐づける
-- `scripts/prompts/write_materials.md` — 教材を書く
+`.claude/rules/` のスタックの葉（Cloudflare / Hono / React）と違う所。葉とここが食い違ったら、ここが優先。
 
-1バッチの大きさを守る（教材は8論点まで）。超えると出力量オーバーで落ちる。
-**実行中の担当が読んでいるファイルを上書きしない。** やり直すときは新しい名前にする。
-担当には `scripts/build_material_bundles.py` を実行させない。入力バンドルが作り直され、
-並行して動いている他の担当の担当範囲がずれる。
+- 配置は機能単位（`apps/api/src/features/<feature>/`）でなく、上の「構成」。実現単位は `*.service.ts` でなく、`src/**`・`portal/src/**` と要件に結んだ `scripts/` の道具（区分は `harness.config.json` の `source`）
+- 画面の単体テスト（`tests/client/`）を持つ。葉は作らないと決めているが、ここでは要件のクラスを画面の部品で確かめる
+- シナリオテストは Playwright でなく、vitest + jsdom（`tests/scenario/`）と API を通す道具（`scripts/check_api.py`・`check_portal_api.py`）
+- `@covers` はテスト本文の先頭行でなく、`it(` の直前の行
+- 配信は Workers + Static Assets でなく Pages（[`ADR-0002`](docs/adr/ADR-0002-runtime-and-delivery.md)）。画面の経路は React Router、サーバーの状態の取得は自前（TanStack を使わない）
+- `layering` は宣言しない（型検査とビルドの入口の分離が見る。ADR-0005）
 
-**担当の自己申告は当てにならない。** 67体で書き直したとき、担当していない論点番号を
-report してきた例が複数あった（ファイルの中身は正しかった）。報告文ではなく
-**成果物を機械で検証する**こと。`check_materials.py` が担当バンドルと出力の論点を突き合わせる。
+## 正本へのリンク
 
-## 検証で「データが壊れている」と報告されたら
-
-**必ず原本の画像と照合してから判断すること。** これまで8回報告があり、**7回は誤報**だった。
-信じて直すと正しいデータを壊す。
-
-一方、8回目は**本物**だった（平成30年度春期 問5：選択肢に答えが漏れていた）。
-だから無視してよいという話ではなく、**毎回確認する**のが正しい。
-
-特に「IPA の図は通常こうなっている」のような**一般論を根拠にした指摘ほど原本に当たる価値がある**
-（PPM の軸の件がまさにそれで、その回だけ通例と違っていた）。
-
-## 忘れやすい落とし穴
-
-- **本番の DB を更新するには `--remote` が要る。** 付け忘れるとローカルだけ変わって本番は変わらない
-- **Pages の secret は更新しただけでは反映されない。** 稼働中のデプロイは古い値を持ち続けるので、
-  `wrangler pages secret put` のあとに必ず再デプロイする。合言葉を変えたのに通らない、はこれ
-- **Pages のデプロイには D1 のバインディングが要る。** 設定ファイル無しで
-  `wrangler pages deploy` すると `env.DB` が undefined になり、ログインも登録も 500 で落ちる
-  （2026-08-29 に応用情報側で発生）。`scripts/deploy-pages.sh` が wrangler.jsonc の
-  `env.<試験>` から Pages 用設定を組んで渡すので、**デプロイはこのスクリプト経由で行う**
-- Cloudflare Workers の **PBKDF2 は反復回数 100,000 が上限**。ローカルの miniflare は
-  上限を課さないので、超えると本番でだけログインが 500 になる
-- Cloudflare のボット対策が**素の HTTP クライアントを 403 で弾く**。API を叩いて確認するときは
-  ブラウザ相当の User-Agent を付ける
-- 公開先が Pages なのは、workers.dev の URL に**アカウント名（本名）が入る**から。
-  共通サブドメインを変えると同アカウントの他の Worker（稼働中の業務システム）の URL も
-  一斉に変わるため触れない
-- **投入が成功したことと、入った中身が正しいことは別。** `Executed N queries` は
-  SQL が通ったとしか言っていない。seed 投入後は件数と代表値を SELECT して確かめる。
-  出典が全880問おかしいまま数か月気づかなかった事故がある
-  （[`docs/懸念_表示データに検証が無い.md`](docs/懸念_表示データに検証が無い.md)）
-- **IT パスポートと応用情報には同じ試験 ID がある。** 令和2年度10月＝`2020r02o` が両方に
-  ある（コロナ禍で春期が中止になり10月に1回だけ実施された回）。図の画像を平置きにして
-  いたためファイル名がぶつかり、IT パスポートの画面に応用情報の図が出ていた。
-  画像は `public/figures/<試験>/` に分ける。**試験をまたぐ ID の一意性を仮定しないこと**
-- **seed を流す前に `scripts/backup_d1.sh` を実行する。** 進捗と受験履歴は本番 D1 にしか
-  無く、seed の投入は `DELETE FROM topics …` を含む（`progress` は CASCADE で消える）
-- **一覧を空配列で初期化しない。** 取得前と「結果が空」が区別できず、読み込み中に
-  「該当する論点がありません」と誤って出る。`null`＝未取得 / `[]`＝空、で分ける
-- **画面の確認は毎回やる。** スクリプト検証を素通りする不具合が実際に2件あった
-  （図が一瞬空欄になる、押せない選択肢にホバーが乗って正誤の色を隠す）。
-  2026-09-01 の用語ポップ全滅（`**[[用語]]**` が文字のまま）を機に、描画そのものは
-  `bash scripts/check_render.sh ip|ap` が門になった（deploy-pages.sh がビルド前に自動で回す。
-  実データ全件を jsdom で描いて DOM を見る）。**それでも人が見るのはログイン後の画面**
-  （出典・一部改変・模試結果・見た目の崩れ）
-
-## 権限プロンプトを減らす運用
-
-`.claude/settings.json` にプロジェクトのパイプライン（scripts/ 配下・デプロイ・バックアップ・
-curl 確認・sips）を許可済み。編集は `defaultMode: acceptEdits` で自動承認される。
-それでもプロンプトが出るのは**複合ワンライナー**（for/until ループ、`X=$(...)` 代入、
-`cat >` リダイレクト、mv/cp/rm）が主因。許可リストでは救えないので、
-**繰り返す処理はワンライナーにせず scripts/ のスクリプトに起こす**こと
-（`python3 scripts/*` は許可済みなのでプロンプトが出ない）。破壊的操作（rm、
-本番 DB の DELETE 等）は意図的に許可していない。毎回確認が正しい。
-
-## この環境の制約
-
-- `data/pdfs/`（181MB）と `data/pages/` は `.gitignore` 済み。スクリプトで再生成できる
-- git リポジトリではない
-- 前セッションで**サブエージェントの上限（200体）に達した**。1回分の取り込みに約15体使う
+- 規約: [`.claude/rules/docs.md`](.claude/rules/docs.md)（R-101〜R-1207）、[`.claude/rules/comments.md`](.claude/rules/comments.md)、手順は Skill `/develop`
+- 検査の宣言とコマンド: `harness.config.json`、`package.json` の `scripts`（入口は `node .harness/bin/harness.mjs`）
+- 仕様: [`docs/goals/`](docs/goals/)・[`docs/rules/`](docs/rules/)・[`docs/nfr/`](docs/nfr/)・[`docs/adr/`](docs/adr/)・[`docs/01-glossary.md`](docs/01-glossary.md)・[`docs/_shared/`](docs/_shared/)
+- 検証の台帳: [`docs/00-overview.md`](docs/00-overview.md) の「全体の方針」（検証しない範囲）・[`docs/verification/DEFERRED.md`](docs/verification/DEFERRED.md)（凍結済み）
+- 人の運用手順（動かし方・本番・secret）: [`README.md`](README.md)

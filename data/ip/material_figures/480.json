@@ -5,20 +5,53 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 既定の出口という意味",
-      "caption": "宛先が自分の LAN の外なら、まず同じ LAN にいるルータへ渡す。そのルータの IP アドレスを設定する。",
+      "after": "### なぜルーターの LAN 側の口なのか",
+      "caption": "PC と同じ LAN の側の口と、外のネットワークの側の口を左から並べました。強調した口が、PC から見た LAN の外への出口です。",
       "nodes": [
-        {"id": "pc", "label": "PC1", "row": 0, "col": 0},
-        {"id": "rt", "label": "ルータ\n（LAN 側の口）", "row": 0, "col": 1, "emphasis": true},
-        {"id": "fw", "label": "ファイア\nウォール", "row": 0, "col": 2},
-        {"id": "net", "label": "インターネット", "row": 0, "col": 3, "shape": "cloud"},
-        {"id": "dh", "label": "DHCP サーバ", "row": 1, "col": 0}
+        {
+          "id": "pc",
+          "label": "PC\nLAN の外宛てを渡す",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "in",
+          "label": "ルーターの LAN 側の口\nデフォルトゲートウェイ",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "out",
+          "label": "ルーターの外側の口\n別のネットワークのアドレス",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "net",
+          "label": "LAN の外\n宛先の相手がいる",
+          "row": 0,
+          "col": 3,
+          "shape": "cloud"
+        }
       ],
       "edges": [
-        {"from": "pc", "to": "rt", "label": "LAN の外へ"},
-        {"from": "rt", "to": "fw"},
-        {"from": "fw", "to": "net"},
-        {"from": "dh", "to": "pc", "label": "設定を配る", "style": "dashed"}
+        {
+          "from": "pc",
+          "to": "in",
+          "label": "宛先が LAN の外の通信"
+        },
+        {
+          "from": "in",
+          "to": "out",
+          "label": "ルーターの中で中継"
+        },
+        {
+          "from": "out",
+          "to": "net",
+          "label": "外のネットワークへ送る"
+        }
       ]
     }
   ]

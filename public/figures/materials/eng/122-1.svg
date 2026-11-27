@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="431" viewBox="0 0 802.1 540">
+<rect x="0.5" y="0.5" width="801.1" height="539" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<polyline points="239.5,38 267.5,38 267.5,106" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="267.5,106 263.9,98 271.1,98" fill="#1f2937"/>
+<polyline points="375.05,144 403.05,144 403.05,212" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="403.05,212 399.45,204 406.65,204" fill="#1f2937"/>
+<polyline points="507.8,250 535.8,250 535.8,318" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="535.8,318 532.2,310 539.4,310" fill="#1f2937"/>
+<polyline points="634.95,356 662.95,356 662.95,424" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="662.95,424 659.35,416 666.55,416" fill="#1f2937"/>
+<rect x="0" y="0" width="239.5" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<g transform="translate(12 27) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.5" rx="7" ry="2.6"/><path d="M5 5.5 V18.5 C5 21.2 19 21.2 19 18.5 V5.5"/><path d="M5 12 C5 14.7 19 14.7 19 12"/></g>
+<text x="134.75" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">FROM 注文（5 行）</text>
+<text x="134.75" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">A 100円・B 500円・A 300円</text>
+<text x="134.75" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">C 100円・A 200円（取消）</text>
+<rect x="159.95" y="106" width="215.1" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="267.5" y="138.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">WHERE 状態 = '済'</text>
+<text x="267.5" y="158.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">まとめる前の 1 行ずつを絞る</text>
+<rect x="298.3" y="212" width="209.5" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="403.05" y="234.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">GROUP BY 会員番号</text>
+<text x="403.05" y="254.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">会員ごとに 1 行へまとめる</text>
+<text x="403.05" y="274.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">A 400円・B 500円・C 100円</text>
+<rect x="436.65" y="318" width="198.3" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="535.8" y="350.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">HAVING SUM(金額) &gt;= 300</text>
+<text x="535.8" y="370.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">まとめた後の合計で絞る</text>
+<rect x="563.8" y="424" width="198.3" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="662.95" y="446.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ORDER BY SUM(金額) DESC</text>
+<text x="662.95" y="466.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">最後に多い順に並べる</text>
+<text x="662.95" y="486.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">B 500円 → A 400円</text>
+<text x="275.5" y="42.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5 行</text>
+<text x="411.05" y="148.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">取消を外した 4 行</text>
+<text x="543.8" y="254.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">3 行（1 会員 1 行）</text>
+<text x="670.95" y="360.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">A と B の 2 行</text>
+</g>
+</svg>

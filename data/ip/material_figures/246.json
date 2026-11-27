@@ -6,17 +6,39 @@
       "id": 1,
       "type": "blocks",
       "after": "### 計算の解き方",
-      "caption": "掛けると売上高が約分されて資本利益率になるので、4％ ÷ 2.0 回 ＝ 2.0％ と逆算できる。",
+      "caption": "例の値で、売上高利益率と総資本回転率を掛けると売上高が約分され、資本利益率になる関係を表した図です。",
       "nodes": [
-        {"id": "sr", "label": "売上高利益率\n利益 ÷ 売上高\n＝ 2.0％", "row": 0, "col": 0},
-        {"id": "mul", "label": "×", "row": 0, "col": 1, "shape": "round"},
-        {"id": "tr", "label": "総資本回転率\n売上高 ÷ 資本\n＝ 2.0 回", "row": 0, "col": 2, "emphasis": true},
-        {"id": "ri", "label": "資本利益率\n利益 ÷ 資本\n＝ 4％", "row": 1, "col": 1}
+        {
+          "id": "sr",
+          "label": "売上高利益率\n利益 ÷ 売上高\n＝ 3.0％",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "tr",
+          "label": "総資本回転率\n売上高 ÷ 総資本\n元手が何回売上になったか\n＝ 1.5 回",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "ri",
+          "label": "資本利益率\n利益 ÷ 資本\n3.0％ × 1.5 回 ＝ 4.5％",
+          "row": 1,
+          "col": 1
+        }
       ],
       "edges": [
-        {"from": "sr", "to": "mul", "arrow": "none"},
-        {"from": "mul", "to": "tr", "arrow": "none"},
-        {"from": "mul", "to": "ri", "label": "売上高が約分される"}
+        {
+          "from": "sr",
+          "to": "ri",
+          "label": "掛け合わせる"
+        },
+        {
+          "from": "tr",
+          "to": "ri",
+          "label": "売上高が約分される"
+        }
       ]
     }
   ]

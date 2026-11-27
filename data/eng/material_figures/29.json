@@ -1,0 +1,60 @@
+{
+  "topic_id": 29,
+  "term": "拡張子とファイル形式",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "上の段が元のファイル、下の段が名前の末尾だけを書き換えたファイルです。左の中身は同じまま、右の開くアプリだけが変わります。",
+      "nodes": [
+        {
+          "id": "png",
+          "label": "cat.png\n中身: 画像の並び",
+          "row": 0,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "img",
+          "label": "画像を見るアプリ\n絵として出る",
+          "row": 0,
+          "col": 1,
+          "icon": "device"
+        },
+        {
+          "id": "txt",
+          "label": "cat.txt\n中身: 同じ画像の並び",
+          "row": 1,
+          "col": 0,
+          "icon": "document",
+          "emphasis": true
+        },
+        {
+          "id": "tx",
+          "label": "文字を見るアプリ\n読めない文字が並ぶ",
+          "row": 1,
+          "col": 1,
+          "icon": "device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "png",
+          "to": "img",
+          "label": ".png なので選ばれる"
+        },
+        {
+          "from": "png",
+          "to": "txt",
+          "label": "名前の末尾だけ書き換える"
+        },
+        {
+          "from": "txt",
+          "to": "tx",
+          "label": ".txt なので選ばれる"
+        }
+      ]
+    }
+  ]
+}

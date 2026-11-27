@@ -1,0 +1,82 @@
+{
+  "topic_id": 133,
+  "term": "脅威・脆弱性・リスク",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "脅威が脆弱性を突いたときに初めて害が出ます。リスクはその見込みで、対策は脅威か脆弱性のどちらかに打ちます。",
+      "nodes": [
+        {
+          "id": "th",
+          "label": "脅威\n侵入・操作の誤り\n地震・停電",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "vu",
+          "label": "脆弱性\n直していない誤り\n推測しやすいパスワード",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "hm",
+          "label": "害が出る\n片方だけでは起きない",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "c1",
+          "label": "対策\n入口を絞る・見張る",
+          "row": 1,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "c2",
+          "label": "対策\n更新する・強いパスワード",
+          "row": 1,
+          "col": 1,
+          "shape": "round"
+        },
+        {
+          "id": "rk",
+          "label": "リスク\n起こりやすさ\n× 影響の大きさ",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "th",
+          "to": "vu",
+          "label": "突く"
+        },
+        {
+          "from": "vu",
+          "to": "hm",
+          "label": "重なると"
+        },
+        {
+          "from": "hm",
+          "to": "rk",
+          "label": "見込みを見積もる"
+        },
+        {
+          "from": "c1",
+          "to": "th",
+          "style": "dashed",
+          "label": "遠ざける"
+        },
+        {
+          "from": "c2",
+          "to": "vu",
+          "style": "dashed",
+          "label": "ふさぐ"
+        }
+      ]
+    }
+  ]
+}

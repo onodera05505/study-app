@@ -1,0 +1,248 @@
+{
+  "bundle": "bundle_23",
+  "topics": [
+    {
+      "topic_id": 177,
+      "term": "正規表現",
+      "field": "開発の進め方と仕事",
+      "middle": "手を動かす道具",
+      "summary": "「数字が 3 桁続く」のような文字の並びの型を記号で書き、まとめて探したり置き換えたりする書き方",
+      "goals": [
+        7
+      ],
+      "prereq": [
+        "ターミナルとコマンド",
+        "エディタと IDE"
+      ],
+      "sources": [
+        {
+          "name": "サイボウズ エンジニア新人研修 講義資料（2021 年公開分）",
+          "where": "正規表現"
+        },
+        {
+          "name": "情報科学基礎論（Introduction to Information Science）授業計画と内容（2026 前期）",
+          "where": "形式言語理論とオートマトン > 正規文法と有限オートマトン、文脈自由文法"
+        }
+      ],
+      "source_count": 2,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 178,
+      "term": "バージョン管理",
+      "field": "開発の進め方と仕事",
+      "middle": "Git で変更を記録して共有する",
+      "summary": "誰が・いつ・何を変えたかを記録し、前の状態に戻したり複数人の変更をまとめたりする仕組み",
+      "goals": [
+        7
+      ],
+      "prereq": [
+        "システム開発の工程",
+        "ファイルとディレクトリ"
+      ],
+      "sources": [
+        {
+          "name": "Pro Git 第 2 版（日本語版）章立て",
+          "where": "第1章 使い始める"
+        },
+        {
+          "name": "計算機教育で欠けている学期（The Missing Semester of Your CS Education, 2026）講義一覧",
+          "where": "バージョン管理と Git（Version Control and Git）"
+        },
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "ソフトウェア開発管理技術 > 構成管理・変更管理"
+        },
+        {
+          "name": "カリキュラム標準 J17-SE（ソフトウェアエンジニアリング領域）",
+          "where": "PRO > ソフトウェア構成管理"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "構成管理・変更管理"
+        },
+        {
+          "name": "選考解説記事の集計",
+          "where": "Git によるバージョン管理（ブランチ・マージ）"
+        }
+      ],
+      "source_count": 4,
+      "exam_weight": 0.55
+    },
+    {
+      "topic_id": 179,
+      "term": "Git の基本",
+      "field": "開発の進め方と仕事",
+      "middle": "Git で変更を記録して共有する",
+      "summary": "管理する置き場がリポジトリ。意味のあるまとまりごとに変更を区切って説明を付けて記録するのがコミット",
+      "goals": [
+        7
+      ],
+      "prereq": [
+        "バージョン管理",
+        "ターミナルとコマンド"
+      ],
+      "sources": [
+        {
+          "name": "Pro Git 第 2 版（日本語版）章立て",
+          "where": "第2章 Git の基本"
+        },
+        {
+          "name": "計算機教育で欠けている学期（The Missing Semester of Your CS Education, 2026）講義一覧",
+          "where": "バージョン管理と Git（Version Control and Git）"
+        },
+        {
+          "name": "選考解説記事の集計",
+          "where": "Git によるバージョン管理（ブランチ・マージ）"
+        }
+      ],
+      "source_count": 2,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 180,
+      "term": "ブランチとマージ",
+      "field": "開発の進め方と仕事",
+      "middle": "Git で変更を記録して共有する",
+      "summary": "本流を壊さないよう枝（ブランチ）を分けて作業し、できたら本流に合流（マージ）させる",
+      "goals": [
+        7
+      ],
+      "prereq": [
+        "Git の基本"
+      ],
+      "sources": [
+        {
+          "name": "Pro Git 第 2 版（日本語版）章立て",
+          "where": "第3章 Git のブランチ機能"
+        },
+        {
+          "name": "計算機教育で欠けている学期（The Missing Semester of Your CS Education, 2026）講義一覧",
+          "where": "バージョン管理と Git（Version Control and Git）"
+        },
+        {
+          "name": "選考解説記事の集計",
+          "where": "Git によるバージョン管理（ブランチ・マージ）"
+        }
+      ],
+      "source_count": 2,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 181,
+      "term": "リモートと共有",
+      "field": "開発の進め方と仕事",
+      "middle": "Git で変更を記録して共有する",
+      "summary": "手元の記録を共有の置き場に送り（push）、人の変更を取り込む（pull）。合流の前に読んでもらう依頼がプルリクエスト",
+      "goals": [
+        7
+      ],
+      "prereq": [
+        "ブランチとマージ"
+      ],
+      "sources": [
+        {
+          "name": "Pro Git 第 2 版（日本語版）章立て",
+          "where": "第6章 GitHub"
+        },
+        {
+          "name": "Pro Git 第 2 版（日本語版）章立て",
+          "where": "第5章 Git での分散作業"
+        },
+        {
+          "name": "Pro Git 第 2 版（日本語版）章立て",
+          "where": "第4章 Git サーバー"
+        }
+      ],
+      "source_count": 1,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 182,
+      "term": "コンフリクト（同じ所を別々に変えたときのぶつかり）の解き方",
+      "field": "開発の進め方と仕事",
+      "middle": "Git で変更を記録して共有する",
+      "summary": "2 人が同じ行を別々に変えて合流させると、どちらを残すか Git が決められず止まる。中身を読んで人が決める",
+      "goals": [
+        7
+      ],
+      "prereq": [
+        "ブランチとマージ",
+        "リモートと共有"
+      ],
+      "sources": [
+        {
+          "name": "Pro Git 第 2 版（日本語版）章立て",
+          "where": "第3章 Git のブランチ機能"
+        },
+        {
+          "name": "Pro Git 第 2 版（日本語版）章立て",
+          "where": "第7章 Git のさまざまなツール"
+        }
+      ],
+      "source_count": 1,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 183,
+      "term": "開発・検証・本番の環境",
+      "field": "開発の進め方と仕事",
+      "middle": "本番に届けて動かし続ける",
+      "summary": "作りながら試す環境、本番そっくりで確かめる環境、利用者が使う本番を分け、本番でいきなり試さない",
+      "goals": [
+        7
+      ],
+      "prereq": [
+        "システム開発の工程",
+        "環境変数と設定ファイル"
+      ],
+      "sources": [
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "ソフトウェア開発管理技術 > 開発環境管理"
+        },
+        {
+          "name": "iコンピテンシ ディクショナリ 2022 タスクディクショナリ",
+          "where": "DV05 アプリケーションシステム開発 > 開発環境構築"
+        },
+        {
+          "name": "iコンピテンシ ディクショナリ 2022 タスクディクショナリ",
+          "where": "DV11 移行・導入（システムリリース）"
+        }
+      ],
+      "source_count": 2,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 184,
+      "term": "CI/CD",
+      "field": "開発の進め方と仕事",
+      "middle": "本番に届けて動かし続ける",
+      "summary": "変更を共有するたびに自動でビルドとテストを回し（CI）、通った物を自動で環境に届ける（CD）仕組み",
+      "goals": [
+        7
+      ],
+      "prereq": [
+        "テストの自動化とテスト駆動開発",
+        "リモートと共有",
+        "開発・検証・本番の環境"
+      ],
+      "sources": [
+        {
+          "name": "サイボウズ エンジニア新人研修 講義資料（2021 年公開分）",
+          "where": "CI/CD"
+        },
+        {
+          "name": "計算機教育で欠けている学期（The Missing Semester of Your CS Education, 2026）講義一覧",
+          "where": "パッケージ化とコードの出荷（Packaging and Shipping Co…"
+        },
+        {
+          "name": "選考解説記事の集計",
+          "where": "CI/CD"
+        }
+      ],
+      "source_count": 2,
+      "exam_weight": 0.0
+    }
+  ]
+}

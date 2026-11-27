@@ -1,0 +1,124 @@
+# docs/_shared/components.yaml — 契約の共有語彙（$ref の行き先）
+# 2 つ以上の UC が使う物だけ（認証スキーム・エラーコード・共有の形）。1 UC だけの形はその契約に書く。
+# 書くのは orchestrator だけ。担当は足したい語彙を報告で返す。YAML は契約と同じ厳格な部分集合（anchor/alias・block scalar 禁止）。
+# 読み方の決まりは docs/adr/ADR-0001（境界の読み方）。
+
+authSchemes:
+  bearer:
+    kind: token
+    scheme: Bearer
+    storage: localStorage
+    note: 学び側の API。トークンは学び側が発行し端末が保存する（UC-013）
+  session:
+    kind: cookie
+    name: mb_session
+    note: まなびばの API。ログインで発行、ログアウトと管理者の再設定で失効（UC-011・013・014）
+  sharedSecret:
+    kind: body
+    field: secret
+    note: 学び側サーバがまなびばの交換を呼ぶときだけ。値は配備の秘密（BR-009）
+  cloudflareAccount:
+    kind: cli
+    note: 配備先（Cloudflare）にログイン中のアカウント。本番の検査が秘密の名前の一覧を読むときだけ（UC-015。値は読まない）
+
+errorCodes:
+  INVALID_INPUT: 入力が決められた形を満たさない、または要求に応えられる対象が無い（400。本文が決められた形を満たさない断りは、どの経路でもこの名前）
+  UNAUTHENTICATED: 本人と分からない要求（401。BR-001。認証を要するどの経路でもこの名前）
+  FORBIDDEN: 権限が無い、または共有秘密が合わない（403）
+  NOT_FOUND: 対象が無い、または本人の物でない（404。BR-018。受け持たない経路の断りもこの名前）
+  CONFLICT: 今の状態では受け付けない（409。進行中が既にある・終わったテスト・位置の食い違い・メールの重複）
+  RATE_LIMITED: 直近の受付が上限に達している（429）
+  UPSTREAM_UNAVAILABLE: 相手方（まなびば・外から叩いた配備・配備先の CLI）に届かないか、届いても成功の答えが読めない（HTTP では 502）
+  NOT_CONFIGURED: この配備にはその機能の設定が無い（SSO の場所や共有秘密、トークンの署名の秘密。404/503。設定が無い断りは、どの経路でもこの名前）
+  INTERNAL: サーバで処理できなかった（500。想定していない失敗はどの経路でもこの名前。操作が errors に挙げる、保存の途中の失敗にも使う）
+  STORAGE_UNAVAILABLE: 端末の記憶に書けない・読めない（local-store）
+
+schemas:
+  ErrorBody:
+    type: object
+    required: [error, code]
+    additionalProperties: false
+    properties:
+      error: { type: string, minLength: 1, description: 利用者に示す理由の文 }
+      code: { type: string, minLength: 1, description: 断りの種類の名前（errorCodes の名前のどれか。BR-064） }
+  Ok:
+    type: object
+    required: [ok]
+    properties:
+      ok: { type: boolean, const: true }
+  ToolError:
+    type: object
+    description: 作り手の道具が契約の errors に当たって止まるときに標準出力へ出す形の核（ADR-0012）。UC ごとの名前の絞り込みと追加の欄は各契約が持つ
+    required: [error]
+    properties:
+      error:
+        type: object
+        required: [code, reason]
+        properties:
+          code: { type: string, minLength: 1, description: 断りの種類の名前（errorCodes の名前のどれか。BR-064） }
+          reason: { type: string, minLength: 1, description: 止まった理由の文 }
+  QuestionSnapshot:
+    type: object
+    required: [idx, text, choices, citation, modified, hasFigure]
+    properties:
+      idx: { type: integer, minimum: 0 }
+      text: { type: string }
+      choices:
+        type: object
+        description: ア・イ・ウ・エ を鍵にした選択肢の文
+        propertyNames: { enum: ["ア", "イ", "ウ", "エ"] }
+        additionalProperties: { type: string }
+      citation: { type: string }
+      modified: { type: boolean }
+      hasFigure: { type: boolean }
+      figureDescription: { type: [string, "null"] }
+      figureImage: { type: [string, "null"] }
+      timesAsked: { type: integer, minimum: 1 }
+      otherCitations: { type: array, items: { type: string } }
+  SessionKind:
+    type: string
+    enum: [drill, field, middle, review, mock]
+    description: テストの種別（模試を含む 5 値）
+  AccountCore:
+    type: object
+    description: アカウントの核（本人に見せる 4 列）
+    required: [id, email, name, role]
+    properties:
+      id: { type: string }
+      email: { type: string }
+      name: { type: string, minLength: 1, maxLength: 50 }
+      role: { type: string, enum: [ADMIN, MEMBER] }
+  Explanation:
+    type: object
+    required: [correctReason, choices]
+    properties:
+      correctReason: { type: string }
+      choices:
+        type: array
+        items:
+          type: object
+          required: [label, term, note]
+          properties:
+            label: { type: string, enum: ["ア", "イ", "ウ", "エ"] }
+            term: { type: [string, "null"] }
+            note: { type: string }
+  FigureRenderTimeoutSeconds:
+    type: integer
+    const: 30
+    description: 1 つの図を描く待ち時間の上限（学習者役のパックと単元の読み物が使う同じ描き手）
+  MaterialFigureRefPrefix:
+    type: string
+    const: /figures/materials/
+    description: 配信の置き場の図の画像を指す前置き。本文の行がこれを含むなら、その行は MaterialFigureLine に合わなければならない（BR-054）
+  MaterialFigureLine:
+    type: string
+    pattern: "^[ \\t\\u3000]*!\\[(?:[^\\]\\n]|\\](?!\\())+\\]\\(/figures/materials/[a-z]+/(?:[a-z0-9_-]+/)*[a-z0-9_-]+\\.(?:svg|png)\\)[ \\t\\u3000]*$"
+    description: 図の行（BR-054）。行全体が 1 つの画像の記法で、図の説明文は空でなく `](` を含まず、指す先は MaterialFigureSrc と同じ形。行頭と行末の半角の空白・タブ・全角の空白は図の行に含む
+  MaterialFigureSrc:
+    type: string
+    pattern: "^/figures/materials/[a-z]+/(?:[a-z0-9_-]+/)*[a-z0-9_-]+\\.(?:svg|png)$"
+    description: 図の行の指す先（MaterialFigureLine の丸かっこの中と同じ形）。学びの key の段、0 個以上のサブパスの段、名前と拡張子。実体は置き場の根の public の下の同じパス
+  MaterialFigurePng:
+    type: string
+    pattern: "^figures/(?:[a-z0-9_-]+/)*[a-z0-9_-]+\\.png$"
+    description: 図を PNG に描いて出力先に置く先。MaterialFigureSrc の学びの key の段より下のサブパスと名前を保ち、拡張子だけを .png にする

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="316" viewBox="0 0 671.6 332">
+<rect x="0.5" y="0.5" width="670.6" height="331" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<g transform="translate(37 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7.5" r="3.6"/><path d="M4.5 21 C4.5 14.2 19.5 14.2 19.5 21"/></g>
+<g transform="translate(304.8 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7.5" r="3.6"/><path d="M4.5 21 C4.5 14.2 19.5 14.2 19.5 21"/></g>
+<g transform="translate(572.6 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 21 V3.5 H18.5 V21"/><path d="M3 21 H21"/><path d="M8.5 7 H10.5 M13.5 7 H15.5 M8.5 10.5 H10.5 M13.5 10.5 H15.5 M8.5 14 H10.5 M13.5 14 H15.5"/><path d="M10.5 21 V17.5 H13.5 V21"/></g>
+<g transform="translate(0 28)">
+<line x1="48" y1="34" x2="48" y2="264" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="315.8" y1="34" x2="315.8" y2="264" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="583.6" y1="34" x2="583.6" y2="264" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">送信者</text>
+<rect x="267.8" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="315.8" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">受信者</text>
+<rect x="535.6" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="583.6" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">認証局</text>
+<polyline points="580.6,68 318.8,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="318.8,68 326.8,64.4 326.8,71.6" fill="#1f2937"/>
+<text x="449.7" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 受信者の公開鍵にデジタル証明書を発行</text>
+<polyline points="312.8,108 51,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,108 59,104.4 59,111.6" fill="#1f2937"/>
+<text x="181.9" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. デジタル証明書（公開鍵入り）を渡す</text>
+<polyline points="48,140 74,140 74,154 50,154" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="50,154 58,150.4 58,157.6" fill="#1f2937"/>
+<text x="82" y="148" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">3. 証明書で、公開鍵が受信者本人の物か確かめる</text>
+<polyline points="51,182 312.8,182" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="312.8,182 304.8,185.6 304.8,178.4" fill="#1f2937"/>
+<text x="181.9" y="175" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 受信者の公開鍵で暗号化したメールを送る</text>
+<rect x="57.9" y="187" width="248" height="16" rx="3" fill="#ffffff"/>
+<text x="181.9" y="200.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">途中で盗まれても秘密鍵が無ければ読めない</text>
+<polyline points="315.8,230 341.8,230 341.8,244 317.8,244" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="317.8,244 325.8,240.4 325.8,247.6" fill="#1f2937"/>
+<text x="349.8" y="238" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. 受信者だけが持つ秘密鍵で復号する</text>
+</g>
+</g>
+</svg>

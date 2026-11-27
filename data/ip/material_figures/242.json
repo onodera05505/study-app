@@ -1,0 +1,36 @@
+{
+  "topic_id": 242,
+  "term": "第4次産業革命",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "explanation",
+      "caption": "現実から集めたデータを AI が解析し、その結果が現実へ戻る輪を表します。強調した段で輪が閉じる点が第3次までとの違いです。",
+      "center": "データの\n活用",
+      "stages": [
+        {
+          "label": "現実のモノと人\n工場や店、家庭で動く",
+          "icon": "device",
+          "next_label": "IoT でデータを集める"
+        },
+        {
+          "label": "データの集まり\n大量のデータを蓄える",
+          "icon": "database",
+          "next_label": "解析にかける"
+        },
+        {
+          "label": "AI の解析\n傾向を見つけ判断する",
+          "icon": "gear",
+          "next_label": "解析の結果を返す"
+        },
+        {
+          "label": "現実への反映\n機械や社会の動きが変わる",
+          "icon": "arrow-cycle",
+          "next_label": "変わった現実から\n次のデータ",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

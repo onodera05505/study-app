@@ -1,0 +1,25 @@
+{
+  "topic_id": 477,
+  "term": "CSS（Cascading Style Sheets）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 1 つの CSS を全ページで読み込む",
+      "caption": "全ページが1つの CSS ファイルを読み込んでいます。強調した CSS ファイルを1か所直すと、つながる全ページの見た目が一斉に変わります。",
+      "nodes": [
+        {"id": "fix", "label": "サイトの制作者\nデザインを変えたい", "row": 1, "col": 0, "icon": "person"},
+        {"id": "css", "label": "CSS ファイル\n文字の大きさ・色・配置", "row": 1, "col": 1, "icon": "document", "emphasis": true},
+        {"id": "p1", "label": "ページ 1（HTML）\n内容と構造だけ", "row": 0, "col": 2, "icon": "document"},
+        {"id": "p2", "label": "ページ 2（HTML）\n内容と構造だけ", "row": 1, "col": 2, "icon": "document"},
+        {"id": "p3", "label": "ページ 3（HTML）\n内容と構造だけ", "row": 2, "col": 2, "icon": "document"}
+      ],
+      "edges": [
+        {"from": "fix", "to": "css", "label": "CSS ファイルだけを書き換え"},
+        {"from": "css", "to": "p1", "label": "同じ見た目を読み込む"},
+        {"from": "css", "to": "p2", "label": "同じ見た目を読み込む"},
+        {"from": "css", "to": "p3", "label": "同じ見た目を読み込む"}
+      ]
+    }
+  ]
+}

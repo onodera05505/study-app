@@ -1,0 +1,37 @@
+{
+  "topic_id": 383,
+  "term": "サイバーレスキュー隊（J-CRAT）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 攻撃の連鎖を断つ",
+      "caption": "上の段が攻撃の連鎖の広がり方、下の段が J-CRAT の手の出し方です。侵入された組織だけでなく、連鎖の先にも線が伸びている所を見ます。",
+      "nodes": [
+        {"id": "atk", "label": "攻撃者\n標的の組織を狙う", "row": 0, "col": 0, "icon": "warning"},
+        {"id": "vic", "label": "侵入された組織\n踏み台にされる", "row": 0, "col": 1, "icon": "building"},
+        {"id": "next", "label": "取引先・関連団体\n連鎖の先で狙われる", "row": 0, "col": 2, "icon": "building"},
+        {"id": "jcrat", "label": "J-CRAT\n外から駆けつけて支援", "row": 1, "col": 1, "emphasis": true, "icon": "people"}
+      ],
+      "edges": [
+        {"from": "atk", "to": "vic", "label": "ウイルス付きメール"},
+        {"from": "vic", "to": "next", "label": "踏み台にした攻撃"},
+        {"from": "jcrat", "to": "vic", "label": "現地で分析・助言"},
+        {"from": "jcrat", "to": "next", "label": "注意を促す", "style": "dashed"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### J-CRAT・CSIRT・J-CSIP の違い",
+      "caption": "似た名前の 3 つを、置かれる所とすることで並べています。列ごとに、支援するのか、主体で動くのか、共有するのかを読み比べます。",
+      "x": {"label": "名前", "values": ["J-CRAT", "CSIRT", "J-CSIP"]},
+      "y": {"label": "観点", "values": ["置かれる所", "すること"]},
+      "cells": [
+        ["IPA の支援チーム\n組織の外", "その組織の内部\n自分たちのチーム", "IPA が運営\n参加組織の集まり"],
+        ["相談を受けて\n分析・助言で\n外から支援", "自分たちの事故に\n主体として対応", "攻撃情報を\n組織どうしで共有"]
+      ],
+      "emphasis": [[1, 0]]
+    }
+  ]
+}

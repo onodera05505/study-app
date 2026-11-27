@@ -1,0 +1,68 @@
+{
+  "topic_id": 404,
+  "term": "標準化",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "メーカーの違うソフトや機器どうしが、中央の共通の文書形式を通して文書を受け渡します。形式がそろっているので、作った会社を問わず開けます。",
+      "nodes": [
+        {
+          "id": "wa",
+          "label": "A 社の文書ソフト\n文書を書いて保存",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "wc",
+          "label": "C 社のタブレット\n文書を書いて保存",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "fmt",
+          "label": "共通の文書形式\n標準で決めた\n保存の形",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "document"
+        },
+        {
+          "id": "wb",
+          "label": "B 社の文書ソフト\n文書を開いて直す",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "pd",
+          "label": "D 社の PC\n文書を表示",
+          "row": 2,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "wa",
+          "to": "fmt",
+          "label": "形式に沿って保存"
+        },
+        {
+          "from": "wc",
+          "to": "fmt",
+          "label": "形式に沿って保存"
+        },
+        {
+          "from": "fmt",
+          "to": "wb",
+          "label": "メーカーを問わず読める"
+        },
+        {
+          "from": "fmt",
+          "to": "pd",
+          "label": "メーカーを問わず読める"
+        }
+      ]
+    }
+  ]
+}

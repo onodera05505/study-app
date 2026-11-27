@@ -1,0 +1,27 @@
+{
+  "topic_id": 97,
+  "term": "Web サーバとアプリケーションサーバ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "前の Web サーバが頼みをすべて受け、置いたファイルはそのまま返し、作る必要がある頼みだけを後ろへ回します。",
+      "nodes": [
+        {"id": "u", "label": "利用者の\nブラウザ", "row": 0, "col": 0},
+        {"id": "web", "label": "Web サーバ\n返す係", "row": 0, "col": 1},
+        {"id": "ap", "label": "アプリケーション\nサーバ\n作る係", "row": 0, "col": 2, "emphasis": true},
+        {"id": "db", "label": "データベース", "row": 0, "col": 3, "shape": "cylinder"},
+        {"id": "file", "label": "置いたファイル\n案内のページ・画像", "row": 1, "col": 1},
+        {"id": "made", "label": "作った中身\n検索結果・かご", "row": 1, "col": 2}
+      ],
+      "edges": [
+        {"from": "u", "to": "web", "label": "頼みと返事", "arrow": "both"},
+        {"from": "web", "to": "file", "label": "そのまま返す"},
+        {"from": "web", "to": "ap", "label": "作る頼みだけ"},
+        {"from": "ap", "to": "db", "label": "値を取り出す", "arrow": "both"},
+        {"from": "ap", "to": "made", "label": "頼みごとに作る"}
+      ]
+    }
+  ]
+}

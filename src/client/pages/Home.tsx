@@ -1,7 +1,9 @@
+import { exam } from '../exam'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { api, getLastTopic } from '../lib/api'
 import type { LastTopic } from '../lib/api'
+import { RESUME_LINK_STATE } from '../lib/resume'
 import { KIND_LABEL } from '../lib/labels'
 
 type Me = {
@@ -16,7 +18,7 @@ type Me = {
     correctCount: number | null
     finishedAt: number | null
   }[]
-  /** 「頻出なのに、まだ理解できていない」論点。最短合格の次の一手（server/index.ts）。 */
+  /** 次に学ぶの候補（BR-030）。候補が無いときは空の配列。 */
   nextTopics: {
     id: number
     term: string
@@ -80,13 +82,15 @@ function useCountUp(target: number, ms = 700): number {
   return n
 }
 
-/** ホーム。連続記録・次の一手・前回の続きへの導線。 */
+/** ホーム。連続記録・次に学ぶ・前回の続きへの導線。 */
+// @implements REQ-044
 export function Home() {
   const [me, setMe] = useState<Me | null>(null)
   const [error, setError] = useState('')
   const [last, setLast] = useState<LastTopic | null>(null)
   // 進行中のテスト。ここでは補助情報なので、取れなくても黙って出さない
   // （進行中の有無を正面から扱うのは /practice の役目）。
+  // @implements REQ-093
   const [current, setCurrent] = useState<CurrentSession['session']>(null)
 
   const load = useCallback(() => {
@@ -110,6 +114,7 @@ export function Home() {
   // 見出しとして出したい文字が無いので、読み上げ専用で置く。
   const heading = <h1 className="sr-only">ホーム</h1>
 
+  // @implements REQ-047, BR-014
   if (error)
     return (
       <>
@@ -135,8 +140,8 @@ export function Home() {
     <>
       {heading}
 
-      {/* 中断したテストへ戻る道は /practice にしかなかった。開いた最初の画面で
-          気づけるよう、いちばん上に出す。 */}
+      {/* 中断したテストへ戻る道を、開いた最初の画面のいちばん上で示す。 */}
+      {/* @implements REQ-083, REQ-086 */}
       {current && (
         <div className="notice">
           進行中のテストがあります（{current.scopeLabel}・回答 {current.answered}/
@@ -150,7 +155,7 @@ export function Home() {
       )}
 
       <div className="streak">
-        <p className="streak-label">連続学習記録</p>
+        <p className="streak-label">連続記録</p>
         <p className="streak-figure">
           <span className="streak-num">{shown}</span>
           <span className="streak-unit">日</span>
@@ -163,13 +168,14 @@ export function Home() {
         </p>
       </div>
 
-      {/* このアプリの設計の中核は「出題頻度＝重要度」。頻出なのに理解できて
-          いない論点こそが最短合格の次の一手なので、ホームの正面に出す。 */}
+      {/* 設計の中核は「出題頻度＝重要度」。頻出でまだ理解していない論点が最短合格の
+          経路なので、ホームの正面に出す。 */}
+      {/* @implements REQ-044, REQ-046, BR-015 */}
       {next.length > 0 && (
         <section className="next-up">
-          <h2>次の一手</h2>
+          <h2>次に学ぶ</h2>
           <p className="muted" style={{ fontSize: '0.82rem', margin: '-0.4rem 0 0.6rem' }}>
-            頻出なのにまだ理解できていない論点
+            {exam.words.nextUp}
           </p>
           <ul className="list">
             {next.slice(0, 5).map((t) => (
@@ -190,8 +196,9 @@ export function Home() {
         </section>
       )}
 
+      {/* @implements REQ-079, REQ-080, REQ-081, REQ-082 */}
       {last ? (
-        <Link to={`/topics/${last.id}`} className="resume">
+        <Link to={`/topics/${last.id}`} state={RESUME_LINK_STATE} className="resume">
           <span className="resume-label">前回の続き</span>
           <span className="resume-term">{last.term}</span>
           <span className="resume-meta">{last.middle}</span>

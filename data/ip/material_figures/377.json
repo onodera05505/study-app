@@ -1,0 +1,78 @@
+{
+  "topic_id": 377,
+  "term": "電子メールの形式（テキスト形式，HTML 形式）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### HTML 形式の危険",
+      "caption": "上の 2 段が HTML 形式で起こり得る 2 つの手口、下の段がテキスト形式です。文字だけのテキスト形式ではどちらも起こりません。",
+      "nodes": [
+        {
+          "id": "html",
+          "label": "HTML 形式のメール\nタグとスクリプトを書ける",
+          "row": 0,
+          "col": 0,
+          "icon": "mail"
+        },
+        {
+          "id": "sc",
+          "label": "仕込まれたスクリプト\n開いた瞬間に動く",
+          "row": 0,
+          "col": 1,
+          "icon": "warning"
+        },
+        {
+          "id": "lk",
+          "label": "見えている文言\n正しい URL に見える",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "fake",
+          "label": "実際のリンク先\n偽のサイト",
+          "row": 1,
+          "col": 2,
+          "icon": "warning",
+          "emphasis": true
+        },
+        {
+          "id": "txt",
+          "label": "テキスト形式のメール\n文字だけ",
+          "row": 2,
+          "col": 0,
+          "icon": "mail"
+        },
+        {
+          "id": "plain",
+          "label": "文字が出るだけ\n動く物も隠れた行き先も無い",
+          "row": 2,
+          "col": 1,
+          "icon": "check"
+        }
+      ],
+      "edges": [
+        {
+          "from": "html",
+          "to": "sc",
+          "label": "開く"
+        },
+        {
+          "from": "html",
+          "to": "lk",
+          "label": "本文に表示"
+        },
+        {
+          "from": "lk",
+          "to": "fake",
+          "label": "押すと別の所へ"
+        },
+        {
+          "from": "txt",
+          "to": "plain",
+          "label": "開く"
+        }
+      ]
+    }
+  ]
+}

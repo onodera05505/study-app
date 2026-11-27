@@ -55,6 +55,11 @@ def main() -> int:
     d = args.data
     args.out = args.out or (d / "material_bundles")
 
+    # 読む物が欠けたら、例外の跡でなく、無い物を 1 行で名指して止める
+    for name in ("topics.json", "answer_keys.json", "exam_labels.json",):
+        if not (d / name).is_file():
+            sys.exit(f"{d / name} がありません")
+
     topics = json.loads((d / "topics.json").read_text(encoding="utf-8"))["topics"]
     materials = load_materials(d)
 

@@ -1,0 +1,36 @@
+{
+  "topic_id": 7,
+  "term": "システム設計",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### しくみ",
+      "caption": "要件定義で決めたことを、基本設計と詳細設計の 2 段で作れる図面に直してから作ります。外側の形を先に決め、内側へ進みます。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "要件定義\n何をするかを決める",
+          "icon": "document",
+          "next_label": "何をするか"
+        },
+        {
+          "label": "基本設計\n外から見える形\n画面・帳票・データの持ち方",
+          "icon": "device",
+          "next_label": "外側の形\n（内側の量が読める）",
+          "emphasis": true
+        },
+        {
+          "label": "詳細設計\n内側の処理の手順\nデータの細かい形",
+          "icon": "gear",
+          "next_label": "作れる図面",
+          "emphasis": true
+        },
+        {
+          "label": "開発・テスト\n図面どおりに作る",
+          "icon": "check"
+        }
+      ]
+    }
+  ]
+}

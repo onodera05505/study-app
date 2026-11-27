@@ -1,0 +1,114 @@
+{
+  "topic_id": 727,
+  "term": "HTTP over TLS（HTTPS）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 平文に戻る両端と中身が見えない途中",
+      "caption": "左から右へ通信が進みます。強調した経路の途中の検査装置からは、暗号化された通信の中身が見えません。",
+      "nodes": [
+        {
+          "id": "cl",
+          "label": "社内の端末\nTLS を張る一方の端",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "fw",
+          "label": "ファイアウォール・IDS\n中身を見て判断できない",
+          "row": 0,
+          "col": 1,
+          "emphasis": true,
+          "icon": "search"
+        },
+        {
+          "id": "net",
+          "label": "インターネット\n経路の続き",
+          "row": 0,
+          "col": 2,
+          "shape": "cloud"
+        },
+        {
+          "id": "sv",
+          "label": "外部のサーバ\nTLS を張るもう一方の端",
+          "row": 0,
+          "col": 3,
+          "icon": "server"
+        }
+      ],
+      "edges": [
+        {
+          "from": "cl",
+          "to": "fw",
+          "label": "暗号化された通信"
+        },
+        {
+          "from": "fw",
+          "to": "net",
+          "label": "中身を見ずに通す"
+        },
+        {
+          "from": "net",
+          "to": "sv",
+          "label": "暗号化された通信"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 中身を見るための対策",
+      "caption": "出口のプロキシで TLS を 2 区間に分け、間で中身を検査します。端末に検査用の証明書を入れておくことで、この形が成り立ちます。",
+      "nodes": [
+        {
+          "id": "adm",
+          "label": "組織の管理者\n検査用の証明書を配る",
+          "row": 1,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "pc",
+          "label": "社内の端末\n証明書を信頼する",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "px",
+          "label": "出口のプロキシ\n復号→検査→再び暗号化",
+          "row": 0,
+          "col": 1,
+          "emphasis": true,
+          "icon": "search"
+        },
+        {
+          "id": "ext",
+          "label": "外部のサーバ\n本来の接続先",
+          "row": 0,
+          "col": 2,
+          "icon": "server"
+        }
+      ],
+      "edges": [
+        {
+          "from": "adm",
+          "to": "pc",
+          "label": "検査用の証明書を入れる"
+        },
+        {
+          "from": "pc",
+          "to": "px",
+          "label": "TLS（検査用の証明書）"
+        },
+        {
+          "from": "px",
+          "to": "ext",
+          "label": "TLS（あらためて暗号化）"
+        }
+      ]
+    }
+  ]
+}

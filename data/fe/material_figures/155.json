@@ -1,0 +1,20 @@
+{
+  "topic_id": 155,
+  "term": "コンパイラ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 翻訳の 5 つの段階",
+      "caption": "原始プログラムは上の段から順に翻訳され、各段の出力が次の段の入力になります。前の段の結果が無いと次の段は始められません。",
+      "direction": "down",
+      "stages": [
+        {"label": "字句解析\n文字の列を字句に切る", "next_label": "字句の列"},
+        {"label": "構文解析\n字句から構文木を組む", "next_label": "構文木"},
+        {"label": "意味解析\n型と宣言を調べる", "next_label": "検査済みの構文木"},
+        {"label": "最適化\n速く動くよう作り変える", "next_label": "作り変えた中間の形"},
+        {"label": "コード生成\n目的プログラムを出す", "icon": "document", "emphasis": true}
+      ]
+    }
+  ]
+}

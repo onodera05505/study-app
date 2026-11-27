@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="285" viewBox="0 0 744.4 332">
+<rect x="0.5" y="0.5" width="743.4" height="331" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<g transform="translate(73.4 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.5" rx="7" ry="2.6"/><path d="M5 5.5 V18.5 C5 21.2 19 21.2 19 18.5 V5.5"/><path d="M5 12 C5 14.7 19 14.7 19 12"/></g>
+<g transform="translate(377.6 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3.5" width="16" height="7" rx="1.2"/><rect x="4" y="13.5" width="16" height="7" rx="1.2"/><circle cx="7.5" cy="7" r="0.9" fill="#1f2937" stroke="none"/><circle cx="7.5" cy="17" r="0.9" fill="#1f2937" stroke="none"/><path d="M11 7 H17 M11 17 H17"/></g>
+<g transform="translate(645.4 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3.5" width="16" height="7" rx="1.2"/><rect x="4" y="13.5" width="16" height="7" rx="1.2"/><circle cx="7.5" cy="7" r="0.9" fill="#1f2937" stroke="none"/><circle cx="7.5" cy="17" r="0.9" fill="#1f2937" stroke="none"/><path d="M11 7 H17 M11 17 H17"/></g>
+<g transform="translate(0 28)">
+<line x1="84.4" y1="34" x2="84.4" y2="264" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="388.6" y1="34" x2="388.6" y2="264" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="656.4" y1="34" x2="656.4" y2="264" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="168.8" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="84.4" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">送信側ドメインの DNS</text>
+<rect x="340.6" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="388.6" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">受信サーバ</text>
+<rect x="608.4" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="656.4" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">送信サーバ</text>
+<polyline points="84.4,60 110.4,60 110.4,74 86.4,74" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="86.4,74 94.4,70.4 94.4,77.6" fill="#1f2937"/>
+<text x="118.4" y="68" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">1. 管理者が許可する IP を TXT レコードで公開</text>
+<polyline points="653.4,102 391.6,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="391.6,102 399.6,98.4 399.6,105.6" fill="#1f2937"/>
+<text x="522.5" y="95" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. メールを送る（封筒に送信元のドメイン）</text>
+<polyline points="385.6,142 87.4,142" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="87.4,142 95.4,138.4 95.4,145.6" fill="#1f2937"/>
+<text x="236.5" y="135" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. そのドメインの SPF レコードを問い合わせ</text>
+<polyline points="87.4,182 385.6,182" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="385.6,182 377.6,185.6 377.6,178.4" fill="#1f2937"/>
+<text x="236.5" y="175" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 許可した IP の一覧を返す</text>
+<polyline points="388.6,214 414.6,214 414.6,228 390.6,228" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="390.6,228 398.6,224.4 398.6,231.6" fill="#1f2937"/>
+<text x="422.6" y="222" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. 接続元の IP が一覧にあるか照合</text>
+<rect x="300.6" y="233" width="176" height="16" rx="3" fill="#ffffff"/>
+<text x="388.6" y="246.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">無ければ受信拒否や隔離にする</text>
+</g>
+</g>
+</svg>

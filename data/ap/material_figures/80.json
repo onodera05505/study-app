@@ -1,0 +1,89 @@
+{
+  "topic_id": 80,
+  "term": "オブジェクト図",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### クラス図との関係",
+      "caption": "左の列がクラス図の型、右の 2 列がオブジェクト図の実体です。型で 1 対多と決めた関連が、ある時点の実体では注文 1 件と明細 3 件として現れます。",
+      "nodes": [
+        {
+          "id": "co",
+          "label": "注文\nクラス（型）",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "cd",
+          "label": "明細\nクラス（型）",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "o1",
+          "label": "注文1：注文\n日付＝11 月 1 日",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "d1",
+          "label": "明細1：明細\n商品＝ペン",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "d2",
+          "label": "明細2：明細\n商品＝ノート",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "d3",
+          "label": "明細3：明細\n商品＝消しゴム",
+          "row": 2,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "co",
+          "to": "cd",
+          "label": "1 対 多",
+          "arrow": "none"
+        },
+        {
+          "from": "co",
+          "to": "o1",
+          "label": "具体化した例",
+          "style": "dashed"
+        },
+        {
+          "from": "cd",
+          "to": "d3",
+          "label": "具体化した例",
+          "style": "dashed"
+        },
+        {
+          "from": "o1",
+          "to": "d1",
+          "label": "つながり",
+          "arrow": "none"
+        },
+        {
+          "from": "o1",
+          "to": "d2",
+          "label": "つながり",
+          "arrow": "none"
+        },
+        {
+          "from": "o1",
+          "to": "d3",
+          "label": "つながり",
+          "arrow": "none"
+        }
+      ]
+    }
+  ]
+}

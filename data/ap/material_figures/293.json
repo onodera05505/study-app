@@ -5,21 +5,106 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 9つのブロック",
-      "caption": "中央の価値提案を挟んで、左が価値を生む側、右が価値を届ける側、下がお金の出入り。",
+      "after": "explanation",
+      "caption": "中央の価値提案を挟んで、左が価値を生む側、右が価値を届ける側、下がお金の出入りという配置です。",
       "nodes": [
-        {"id": "kp", "label": "KP 主要パートナー\n価値を生む協力先", "row": 0, "col": 0},
-        {"id": "ka", "label": "KA 主要活動\n価値を生む活動", "row": 0, "col": 1},
-        {"id": "cr", "label": "CR 顧客との関係\nCH チャネル\n関係の作り方と届ける経路", "row": 0, "col": 2},
-        {"id": "kr", "label": "KR 主要リソース\n設備・人・技術", "row": 1, "col": 0},
-        {"id": "vp", "label": "VP 価値提案\n顧客が対価を払う\nサービスそのもの", "row": 1, "col": 1, "emphasis": true},
-        {"id": "cs", "label": "CS 顧客セグメント\n価値を届ける相手の集団", "row": 1, "col": 2},
-        {"id": "cost", "label": "C＄ コスト構造\n何に費用が掛かるか", "row": 2, "col": 0},
-        {"id": "rev", "label": "R＄ 収益の流れ\n何で稼ぐか（会費・利用料）", "row": 2, "col": 2}
+        {
+          "id": "ka",
+          "label": "KA 主要活動\n生む側：価値を生む活動",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "cr",
+          "label": "CR 顧客との関係\n届ける側：関係の作り方",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "kp",
+          "label": "KP 主要パートナー\n生む側：協力先",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "vp",
+          "label": "VP 価値提案\n中央：顧客に届ける価値\n何が顧客の役に立つか",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "cs",
+          "label": "CS 顧客セグメント\n届ける側：届ける相手",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "kr",
+          "label": "KR 主要リソース\n生む側：設備・人・技術",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "ch",
+          "label": "CH チャネル\n届ける側：届ける経路",
+          "row": 2,
+          "col": 2
+        },
+        {
+          "id": "cost",
+          "label": "C＄ コスト構造\nお金の出：何に費用が掛かるか",
+          "row": 3,
+          "col": 0
+        },
+        {
+          "id": "rev",
+          "label": "R＄ 収益の流れ\nお金の入り：何で稼ぐか",
+          "row": 3,
+          "col": 2
+        }
       ],
       "edges": [
-        {"from": "ka", "to": "vp", "label": "価値を生む"},
-        {"from": "vp", "to": "cs", "label": "価値を届ける"}
+        {
+          "from": "ka",
+          "to": "vp",
+          "label": "活動で生む"
+        },
+        {
+          "from": "kp",
+          "to": "vp",
+          "label": "協力して生む"
+        },
+        {
+          "from": "kr",
+          "to": "vp",
+          "label": "資源で生む"
+        },
+        {
+          "from": "vp",
+          "to": "cs",
+          "label": "価値を届ける"
+        },
+        {
+          "from": "cr",
+          "to": "cs",
+          "label": "関係を保つ"
+        },
+        {
+          "from": "ch",
+          "to": "cs",
+          "label": "経路で届ける"
+        },
+        {
+          "from": "kr",
+          "to": "cost",
+          "label": "費用が掛かる"
+        },
+        {
+          "from": "ch",
+          "to": "rev",
+          "label": "届けた対価が入る"
+        }
       ]
     }
   ]

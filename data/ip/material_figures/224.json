@@ -1,0 +1,72 @@
+{
+  "topic_id": 224,
+  "term": "IoT機器のセキュリティ対策",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### なぜ IoT 機器が狙われるのか",
+      "caption": "左から右へ、攻撃がどこから入りどこへ広がるかを表した図です。強調した箱が攻撃の入口です。",
+      "nodes": [
+        {
+          "id": "pub",
+          "label": "初期 ID・パスワード\n説明書やネットで公開",
+          "row": 0,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "atk",
+          "label": "攻撃者\n機種の初期値を調べる",
+          "row": 0,
+          "col": 1,
+          "icon": "person"
+        },
+        {
+          "id": "dev",
+          "label": "IoT 機器の管理画面\n初期設定のまま\nネットから届く",
+          "row": 0,
+          "col": 2,
+          "emphasis": true,
+          "icon": "device"
+        },
+        {
+          "id": "spy",
+          "label": "持ち主の被害\n設定の書き換え・情報の抜き取り",
+          "row": 1,
+          "col": 2,
+          "icon": "warning"
+        },
+        {
+          "id": "step",
+          "label": "踏み台\n別の相手への攻撃",
+          "row": 1,
+          "col": 1,
+          "icon": "network"
+        }
+      ],
+      "edges": [
+        {
+          "from": "pub",
+          "to": "atk",
+          "label": "公開された値を調べる"
+        },
+        {
+          "from": "atk",
+          "to": "dev",
+          "label": "その値でそのままログイン"
+        },
+        {
+          "from": "dev",
+          "to": "spy",
+          "label": "設定を変える・情報を抜く"
+        },
+        {
+          "from": "dev",
+          "to": "step",
+          "label": "乗っ取った機器を使う"
+        }
+      ]
+    }
+  ]
+}

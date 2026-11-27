@@ -1,0 +1,71 @@
+{
+  "topic_id": 466,
+  "term": "CMS（コンテンツマネジメントシステム）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 中身と見た目を分けて持つしくみ",
+      "caption": "中身はデータベースに、見た目はテンプレートに分けて持ち、公開のときに組み合わせます。書き手は中身を入れるだけで済みます。",
+      "nodes": [
+        {
+          "id": "writer",
+          "label": "書き手\nHTML を書けなくてよい",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "input",
+          "label": "入力画面\n文章と画像を入れる",
+          "row": 0,
+          "col": 1,
+          "icon": "device"
+        },
+        {
+          "id": "db",
+          "label": "コンテンツの DB\n文章・画像・過去の版",
+          "row": 0,
+          "col": 2,
+          "icon": "database",
+          "emphasis": true
+        },
+        {
+          "id": "tpl",
+          "label": "テンプレート\nページの見た目のひな形\nデザインだけを持つ",
+          "row": 1,
+          "col": 1,
+          "icon": "document"
+        },
+        {
+          "id": "page",
+          "label": "公開される Web ページ\n中身にデザインが当たる",
+          "row": 1,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "writer",
+          "to": "input",
+          "label": "記事を入力"
+        },
+        {
+          "from": "input",
+          "to": "db",
+          "label": "中身を登録"
+        },
+        {
+          "from": "db",
+          "to": "page",
+          "label": "承認・予約の後に\n中身を流し込む"
+        },
+        {
+          "from": "tpl",
+          "to": "page",
+          "label": "見た目を当てる"
+        }
+      ]
+    }
+  ]
+}

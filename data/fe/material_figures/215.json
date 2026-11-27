@@ -1,0 +1,34 @@
+{
+  "topic_id": 215,
+  "term": "AR（Augmented Reality ：拡張現実）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 現実に情報を重ねるしくみ",
+      "caption": "AR が映像に情報を重ねるまでの段を上から順に並べています。強調した位置と姿勢を求める段の精度で、情報が対象に貼り付くかが決まります。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "カメラで撮る\n目の前の現実を映す",
+          "icon": "phone",
+          "next_label": "現実の映像"
+        },
+        {
+          "label": "手がかりを探す\nマーカー・特徴点・GPS",
+          "icon": "search",
+          "next_label": "手がかりの位置"
+        },
+        {
+          "label": "位置と姿勢を求める\n端末がどこからどう向くか",
+          "icon": "gear",
+          "next_label": "端末の位置と向き",
+          "emphasis": true
+        },
+        {
+          "label": "座標に合わせて描き足す\n文字や画像が対象に貼り付く"
+        }
+      ]
+    }
+  ]
+}

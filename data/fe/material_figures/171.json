@@ -1,0 +1,97 @@
+{
+  "topic_id": 171,
+  "term": "オートマトン",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 計算の解き方",
+      "caption": "丸が状態で、矢印のラベルは「読んだ入力／出す出力」です。出力が 1 になるのは強調した S3 へ入る矢印と S3 の自分への矢印だけで、0 を読むと S1 へ戻ります。",
+      "nodes": [
+        {
+          "id": "s1",
+          "label": "S1（初期）\n1 が続いていない",
+          "row": 0,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "s2",
+          "label": "S2\n直前に 1 を読んだ",
+          "row": 1,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "s3",
+          "label": "S3\n1 が 2 つ以上続く",
+          "row": 1,
+          "col": 1,
+          "shape": "round",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "s1",
+          "to": "s1",
+          "label": "0／0"
+        },
+        {
+          "from": "s1",
+          "to": "s2",
+          "label": "1／0"
+        },
+        {
+          "from": "s2",
+          "to": "s1",
+          "label": "0／0"
+        },
+        {
+          "from": "s2",
+          "to": "s3",
+          "label": "1／1"
+        },
+        {
+          "from": "s3",
+          "to": "s3",
+          "label": "1／1"
+        },
+        {
+          "from": "s3",
+          "to": "s1",
+          "label": "0／0"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 計算の解き方",
+      "caption": "上の図に 0011 を読ませたときの動きで、矢印に読んだ記号と出した出力を書いています。1 記号読むたびに出力が 1 つ出るので、出力の長さは入力と同じになります。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "S1（初期）\n指を置く",
+          "next_label": "0 を読む／出力 0"
+        },
+        {
+          "label": "S1\n0 で自分に戻る",
+          "next_label": "0 を読む／出力 0"
+        },
+        {
+          "label": "S1\nもう一度戻る",
+          "next_label": "1 を読む／出力 0"
+        },
+        {
+          "label": "S2\n1 を 1 つ読んだ",
+          "next_label": "1 を読む／出力 1"
+        },
+        {
+          "label": "S3\n1 が 2 つ続いた",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

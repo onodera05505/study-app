@@ -1,0 +1,26 @@
+{
+ "target": "ip",
+ "units": ["16"],
+ "status": "done",
+ "unit_mismatch": "一覧の units は [\"16\"] だが、論点 242（第4次産業革命）は単元 01 のまとまり「デジタルで変わる社会と企業」（束 01-5）にあり、単元 16 には無い。並行の n2_a（23）・n2_b（02）と単元 01 は重ならず、01-5 の直前の書き込み（17:42）は n1 の波のもので、その報告は出ていることを確かめてから、data/ip/materials_v4/01-5.json の 1 文だけを直した。退避が無いので、戻すときは edits の before を使う",
+ "items": [
+  {"no": 1, "topic_id": 242, "type": "C", "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのままの言い回しで置くこと）。rewrite_open_items.md「C の直し方」",
+   "what": "detail の「インダストリー4.0 から広がった取組」の 1 文は、2022r04-q18 の正解アの句（顧客ごとに異なる個別仕様の製品／多様な IT による／コスト低減と短納期）を、同じ並びのまま語を置き換えただけだった。explanation 冒頭の定義の文ではない。教材の言葉で言い直した。安さと速さは次の文（個別仕様なのに大量生産並みの安さと速さ）が持つので、点は落ちていない",
+   "questions_checked": ["2022r04-q18"]}
+ ],
+ "edits": [
+  {"file": "data/ip/materials_v4/01-5.json", "topic_id": 242, "field": "detail",
+   "op": "replace", "heading": "インダストリー4.0 から広がった取組",
+   "before": "マスカスタマイゼーションは、顧客ごとに違う仕様の製品を、IT の活用で安く短納期に届けることを指します。",
+   "after": "マスカスタマイゼーションは、注文した人ごとに中身を変えた製品を、IT を使って作り分けることを指します。"}
+ ],
+ "owners": [],
+ "figure_after": [],
+ "ledgers": [],
+ "returned": [],
+ "noticed": [],
+ "gates": {"check_materials": 0, "check_material_style": 0, "render_check": 0, "check_explanations": 0, "check_unit_plans": null},
+ "gates_note": "門の拾い方は単元 01（束 01-5・論点 242）で見た。check_materials と check_material_style の出力は直す前と後で同じ（01-5 の論点 242 の lostNumber「5.0」は直す前から出ている知らせで、この直しと関係しない）。render_check は --only 242。owners を直していないので check_unit_plans は回していない。台帳の行（point「マスカスタマイゼーション: 顧客ごとの個別仕様の製品を IT で安く短納期に届ける」、where 01-5 topic 242）は点が同じ所にあるので変えていない",
+ "chars": {"before": 31642, "after": 31642}
+}

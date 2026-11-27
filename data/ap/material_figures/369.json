@@ -4,20 +4,32 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "cycle",
       "after": "### スプリント内のイベントの流れ",
-      "caption": "計画 → 毎日 → 成果物の確認 → 進め方の反省。レビューが先、レトロスペクティブが最後。",
-      "nodes": [
-        {"id": "p", "label": "①\nスプリント\nプランニング", "row": 0, "col": 0},
-        {"id": "d", "label": "②\nデイリー\nスクラム", "row": 0, "col": 1},
-        {"id": "r", "label": "③\nスプリントレビュー\n成果物を確認", "row": 0, "col": 2},
-        {"id": "t", "label": "④\nレトロスペクティブ\n進め方を改善", "row": 0, "col": 3, "emphasis": true}
-      ],
-      "edges": [
-        {"from": "p", "to": "d", "label": "毎日繰り返す"},
-        {"from": "d", "to": "r"},
-        {"from": "r", "to": "t"},
-        {"from": "t", "to": "p", "label": "次のスプリントへ", "style": "dashed"}
+      "caption": "1 回のスプリントの中でイベントが進む順を輪で表しています。最後のふりかえりで決めた改善点を持って、次のスプリントの計画へ戻ります。",
+      "center": "スプリント\n1〜4 週間",
+      "stages": [
+        {
+          "label": "スプリントプランニング\n何を作るかを決める",
+          "icon": "document",
+          "next_label": "作業の計画"
+        },
+        {
+          "label": "デイリースクラム\n毎日 進捗と障害を共有",
+          "icon": "people",
+          "next_label": "期間中に作った成果物"
+        },
+        {
+          "label": "スプリントレビュー\n成果物を見せて確かめる",
+          "icon": "search",
+          "next_label": "確認の結果"
+        },
+        {
+          "label": "レトロスペクティブ\n進め方をふりかえる",
+          "icon": "arrow-cycle",
+          "next_label": "改善点を次のスプリントへ",
+          "emphasis": true
+        }
       ]
     }
   ]

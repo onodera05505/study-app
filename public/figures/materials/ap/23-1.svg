@@ -1,32 +1,34 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="130" viewBox="0 0 755.6 154" role="img">
-<title>CPU を横取りされたタスクは何も待っていないので、待ち状態ではなく実行可能状態へ戻る。</title>
-<rect x="0.5" y="0.5" width="754.6" height="153" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="303" viewBox="0 0 753.1 356">
+<rect x="0.5" y="0.5" width="752.1" height="355" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(20 20)">
-<polyline points="124.8,20 296.8,20" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="296.8,20 288.8,23.6 288.8,16.4" fill="#1f2937"/>
-<polyline points="296.8,36 124.8,36" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="124.8,36 132.8,32.4 132.8,39.6" fill="#1f2937"/>
-<polyline points="407.6,28 579.6,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="579.6,28 571.6,31.6 571.6,24.4" fill="#1f2937"/>
-<polyline points="647.6,56 647.6,78 62.4,78 62.4,56" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="62.4,56 66,64 58.8,64" fill="#1f2937"/>
-<rect x="0" y="0" width="124.8" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="62.4" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">実行可能状態</text>
-<text x="62.4" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">CPU の順番待ち</text>
-<rect x="296.8" y="0" width="110.8" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="352.2" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">実行状態</text>
-<text x="352.2" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">CPU を使用中</text>
-<rect x="579.6" y="0" width="136" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="647.6" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">待ち状態</text>
-<text x="647.6" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">入出力の完了待ち</text>
-<rect x="170.8" y="3" width="80" height="16" rx="3" fill="#ffffff"/>
-<text x="210.8" y="16.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">ディスパッチ</text>
-<rect x="128.8" y="19" width="164" height="16" rx="3" fill="#ffffff"/>
-<text x="210.8" y="32.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">プリエンプション（横取り）</text>
-<rect x="429.6" y="11" width="128" height="16" rx="3" fill="#ffffff"/>
-<text x="493.6" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">自分から入出力を待つ</text>
-<rect x="373.52" y="64" width="80" height="16" rx="3" fill="#ffffff"/>
-<text x="413.52" y="77.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">入出力が完了</text>
+<line x1="87.55" y1="34" x2="87.55" y2="316" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="356.55" y1="34" x2="356.55" y2="316" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="625.55" y1="34" x2="625.55" y2="316" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="175.1" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="87.55" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">タスク A（優先度 低）</text>
+<rect x="308.55" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="356.55" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">OS</text>
+<rect x="538" y="0" width="175.1" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="625.55" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">タスク B（優先度 高）</text>
+<polyline points="353.55,68 90.55,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="90.55,68 98.55,64.4 98.55,71.6" fill="#1f2937"/>
+<text x="222.05" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. ディスパッチ：A に CPU を渡す</text>
+<polyline points="622.55,108 359.55,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="359.55,108 367.55,104.4 367.55,111.6" fill="#1f2937"/>
+<text x="491.05" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. B が実行可能状態になる</text>
+<polyline points="353.55,148 90.55,148" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="90.55,148 98.55,144.4 98.55,151.6" fill="#1f2937"/>
+<text x="222.05" y="141" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 横取り：A を強制的に中断する</text>
+<rect x="104.95" y="153" width="234.2" height="16" rx="3" fill="#ffffff"/>
+<text x="222.05" y="166.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">A は中断した所を覚えたまま CPU を待つ</text>
+<polyline points="359.55,204 622.55,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="622.55,204 614.55,207.6 614.55,200.4" fill="#1f2937"/>
+<text x="491.05" y="197" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. ディスパッチ：B に CPU を渡す</text>
+<polyline points="622.55,244 359.55,244" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="359.55,244 367.55,240.4 367.55,247.6" fill="#1f2937"/>
+<text x="491.05" y="237" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. B が自分から入出力を待つ</text>
+<polyline points="353.55,284 90.55,284" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="90.55,284 98.55,280.4 98.55,287.6" fill="#1f2937"/>
+<text x="222.05" y="277" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">6. ディスパッチ：A が中断した所から続ける</text>
 </g>
-<text x="377.8" y="134" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">CPU を横取りされたタスクは何も待っていないので、待ち状態ではなく実行可能状態へ戻る。</text>
 </svg>

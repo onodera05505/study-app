@@ -1,0 +1,5 @@
+# 道具（scripts/）とテスト（tests/）が使う Python の部品のうち、標準ライブラリでない物。版を固定する。
+# 共有の置き場の検査（.github/workflows/test.yml）が入れる。実行の記録を取る道具（coverage）は requirements-dev.txt
+PyMuPDF==1.26.5
+PyYAML==6.0.3
+pypdf==6.16.1

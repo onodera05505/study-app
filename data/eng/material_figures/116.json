@@ -1,0 +1,21 @@
+{
+  "topic_id": 116,
+  "term": "表の定義と制約",
+  "figures": [
+    {
+      "id": 1,
+      "type": "parts",
+      "after": "### しくみ",
+      "caption": "表を作る命令を、表の名前・型・制約の部位に分けました。制約の部位の一言は、その決まりが入れさせない値です。",
+      "whole": {"label": "CREATE TABLE 社員 の命令", "icon": "database"},
+      "parts": [
+        {"label": "表の名前\n社員"},
+        {"label": "データ型\nINTEGER は整数\nVARCHAR は上限付きの文字列"},
+        {"label": "PRIMARY KEY\n主キーにする\n重なりと空を断る"},
+        {"label": "NOT NULL\n空を断る"},
+        {"label": "UNIQUE\n同じ値の 2 回目を断る"},
+        {"label": "REFERENCES\n外部キーにする\n部署の表に無い番号を断る", "emphasis": true}
+      ]
+    }
+  ]
+}

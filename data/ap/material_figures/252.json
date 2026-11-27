@@ -1,0 +1,30 @@
+{
+  "topic_id": 252,
+  "term": "CSF（Critical Success Factors：重要成功要因）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### CSF・KGI・KPI の関係",
+      "caption": "上から、成功の要因、最終の目標、途中の指標の順に落としていきます。数値を持つのは下の 2 段です。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "CSF（成功の要因）方向を決める\n例: 障害から迅速に復旧する",
+          "icon": "search",
+          "next_label": "要因に対応する目標を置く",
+          "emphasis": true
+        },
+        {
+          "label": "KGI（最終の目標）ゴールを定める\n例: 年間の平均復旧時間 2 時間以内",
+          "icon": "check",
+          "next_label": "途中経過を測る指標に落とす"
+        },
+        {
+          "label": "KPI（途中の指標）進み具合を測る\n例: 月次の平均復旧時間",
+          "icon": "chart"
+        }
+      ]
+    }
+  ]
+}

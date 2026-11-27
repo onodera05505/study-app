@@ -1,70 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="370" viewBox="0 0 640 370" role="img">
-<title>台数を増やしても r＝0.9 の高速化率は 1/(1－0.9)＝10 で頭打ちになり、n＝6 で 4.0 と 1.33、ちょうど3倍の差が付く。</title>
-<rect x="0.5" y="0.5" width="639" height="369" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="326" viewBox="0 0 640 326">
+<rect x="0.5" y="0.5" width="639" height="325" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(20 20)">
-<line x1="39.2" y1="216" x2="588" y2="216" stroke="#e5e7eb" stroke-width="1"/>
-<text x="31.2" y="220.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">0</text>
-<line x1="39.2" y1="174" x2="588" y2="174" stroke="#e5e7eb" stroke-width="1"/>
-<text x="31.2" y="178.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">2</text>
-<line x1="39.2" y1="132" x2="588" y2="132" stroke="#e5e7eb" stroke-width="1"/>
-<text x="31.2" y="136.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">4</text>
-<line x1="39.2" y1="90" x2="588" y2="90" stroke="#e5e7eb" stroke-width="1"/>
-<text x="31.2" y="94.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">6</text>
-<line x1="39.2" y1="48" x2="588" y2="48" stroke="#e5e7eb" stroke-width="1"/>
-<text x="31.2" y="52.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">8</text>
-<line x1="39.2" y1="6" x2="588" y2="6" stroke="#e5e7eb" stroke-width="1"/>
-<text x="31.2" y="10.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">10</text>
-<line x1="39.2" y1="6" x2="39.2" y2="216" stroke="#1f2937" stroke-width="1.2"/>
-<line x1="39.2" y1="216" x2="588" y2="216" stroke="#1f2937" stroke-width="1.2"/>
-<line x1="222.13" y1="6" x2="222.13" y2="216" stroke="#2563eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<rect x="224.13" y="5" width="31.2" height="17" rx="3" fill="#ffffff"/>
-<text x="227.13" y="18" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="start">n＝6</text>
-<path d="M 39.2 195 L 75.79 177.78 L 148.96 151.32 L 222.13 132 L 295.31 117.09 L 441.65 96.09 L 588 81.6" fill="none" stroke="#2563eb" stroke-width="1.8"/>
-<circle cx="39.2" cy="195" r="2.6" fill="#2563eb"/>
-<circle cx="75.79" cy="177.78" r="2.6" fill="#2563eb"/>
-<circle cx="148.96" cy="151.32" r="2.6" fill="#2563eb"/>
-<circle cx="222.13" cy="132" r="2.6" fill="#2563eb"/>
-<circle cx="295.31" cy="117.09" r="2.6" fill="#2563eb"/>
-<circle cx="441.65" cy="96.09" r="2.6" fill="#2563eb"/>
-<circle cx="588" cy="81.6" r="2.6" fill="#2563eb"/>
-<path d="M 39.2 195 L 75.79 191.22 L 148.96 188.91 L 222.13 188.07 L 295.31 187.44 L 441.65 187.02 L 588 186.81" fill="none" stroke="#1f2937" stroke-width="1.8"/>
-<circle cx="39.2" cy="195" r="2.6" fill="#1f2937"/>
-<circle cx="75.79" cy="191.22" r="2.6" fill="#1f2937"/>
-<circle cx="148.96" cy="188.91" r="2.6" fill="#1f2937"/>
-<circle cx="222.13" cy="188.07" r="2.6" fill="#1f2937"/>
-<circle cx="295.31" cy="187.44" r="2.6" fill="#1f2937"/>
-<circle cx="441.65" cy="187.02" r="2.6" fill="#1f2937"/>
-<circle cx="588" cy="186.81" r="2.6" fill="#1f2937"/>
-<path d="M 39.2 6 L 75.79 6 L 148.96 6 L 222.13 6 L 295.31 6 L 441.65 6 L 588 6" fill="none" stroke="#9ca3af" stroke-width="1.8"/>
-<circle cx="39.2" cy="6" r="2.6" fill="#9ca3af"/>
-<circle cx="75.79" cy="6" r="2.6" fill="#9ca3af"/>
-<circle cx="148.96" cy="6" r="2.6" fill="#9ca3af"/>
-<circle cx="222.13" cy="6" r="2.6" fill="#9ca3af"/>
-<circle cx="295.31" cy="6" r="2.6" fill="#9ca3af"/>
-<circle cx="441.65" cy="6" r="2.6" fill="#9ca3af"/>
-<circle cx="588" cy="6" r="2.6" fill="#9ca3af"/>
-<circle cx="222.13" cy="132" r="3.4" fill="#2563eb"/>
-<rect x="230.13" y="110" width="31.8" height="19" rx="4" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
-<text x="246.03" y="124" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle">4.0</text>
-<circle cx="222.13" cy="188.07" r="3.4" fill="#2563eb"/>
-<rect x="230.13" y="166.07" width="38.4" height="19" rx="4" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
-<text x="249.33" y="180.07" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle">1.33</text>
-<text x="39.2" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">1</text>
-<text x="75.79" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">2</text>
-<text x="148.96" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">4</text>
-<text x="222.13" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">6</text>
-<text x="295.31" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">8</text>
-<text x="441.65" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">12</text>
-<text x="588" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">16</text>
-<text x="313.6" y="256" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">プロセッサ台数 n</text>
+<line x1="32.6" y1="216" x2="588" y2="216" stroke="#e5e7eb" stroke-width="1"/>
+<text x="24.6" y="220.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">0</text>
+<line x1="32.6" y1="163.5" x2="588" y2="163.5" stroke="#e5e7eb" stroke-width="1"/>
+<text x="24.6" y="167.7" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">2</text>
+<line x1="32.6" y1="111" x2="588" y2="111" stroke="#e5e7eb" stroke-width="1"/>
+<text x="24.6" y="115.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">4</text>
+<line x1="32.6" y1="58.5" x2="588" y2="58.5" stroke="#e5e7eb" stroke-width="1"/>
+<text x="24.6" y="62.7" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">6</text>
+<line x1="32.6" y1="6" x2="588" y2="6" stroke="#e5e7eb" stroke-width="1"/>
+<text x="24.6" y="10.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="end">8</text>
+<line x1="32.6" y1="6" x2="32.6" y2="216" stroke="#1f2937" stroke-width="1.2"/>
+<line x1="32.6" y1="216" x2="588" y2="216" stroke="#1f2937" stroke-width="1.2"/>
+<path d="M 32.6 189.75 L 125.17 170.32 L 217.73 143.55 L 310.3 113.62 L 402.87 86.85 L 495.43 67.42 L 588 55.35" fill="none" stroke="#2563eb" stroke-width="1.8"/>
+<circle cx="32.6" cy="189.75" r="2.6" fill="#2563eb"/>
+<circle cx="125.17" cy="170.32" r="2.6" fill="#2563eb"/>
+<circle cx="217.73" cy="143.55" r="2.6" fill="#2563eb"/>
+<circle cx="310.3" cy="113.62" r="2.6" fill="#2563eb"/>
+<circle cx="402.87" cy="86.85" r="2.6" fill="#2563eb"/>
+<circle cx="495.43" cy="67.42" r="2.6" fill="#2563eb"/>
+<circle cx="588" cy="55.35" r="2.6" fill="#2563eb"/>
+<path d="M 32.6 189.75 L 125.17 181.09 L 217.73 174 L 310.3 169.28 L 402.87 166.65 L 495.43 165.07 L 588 164.29" fill="none" stroke="#1f2937" stroke-width="1.8"/>
+<circle cx="32.6" cy="189.75" r="2.6" fill="#1f2937"/>
+<circle cx="125.17" cy="181.09" r="2.6" fill="#1f2937"/>
+<circle cx="217.73" cy="174" r="2.6" fill="#1f2937"/>
+<circle cx="310.3" cy="169.28" r="2.6" fill="#1f2937"/>
+<circle cx="402.87" cy="166.65" r="2.6" fill="#1f2937"/>
+<circle cx="495.43" cy="165.07" r="2.6" fill="#1f2937"/>
+<circle cx="588" cy="164.29" r="2.6" fill="#1f2937"/>
+<path d="M 32.6 40.91 L 125.17 40.91 L 217.73 40.91 L 310.3 40.91 L 402.87 40.91 L 495.43 40.91 L 588 40.91" fill="none" stroke="#9ca3af" stroke-width="1.8"/>
+<circle cx="32.6" cy="40.91" r="2.6" fill="#9ca3af"/>
+<circle cx="125.17" cy="40.91" r="2.6" fill="#9ca3af"/>
+<circle cx="217.73" cy="40.91" r="2.6" fill="#9ca3af"/>
+<circle cx="310.3" cy="40.91" r="2.6" fill="#9ca3af"/>
+<circle cx="402.87" cy="40.91" r="2.6" fill="#9ca3af"/>
+<circle cx="495.43" cy="40.91" r="2.6" fill="#9ca3af"/>
+<circle cx="588" cy="40.91" r="2.6" fill="#9ca3af"/>
+<text x="32.6" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">1</text>
+<text x="125.17" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">2</text>
+<text x="217.73" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">4</text>
+<text x="310.3" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">8</text>
+<text x="402.87" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">16</text>
+<text x="495.43" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">32</text>
+<text x="588" y="234" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">64</text>
+<text x="310.3" y="256" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">プロセッサ台数 n（倍々）</text>
 <text x="16" y="-4" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="start" font-weight="600">高速化率 E（倍）</text>
-<line x1="157.9" y1="278" x2="177.9" y2="278" stroke="#2563eb" stroke-width="2.6"/>
-<text x="183.9" y="282.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">r＝0.9</text>
-<line x1="240.3" y1="278" x2="260.3" y2="278" stroke="#1f2937" stroke-width="2.6"/>
-<text x="266.3" y="282.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">r＝0.3</text>
-<line x1="322.7" y1="278" x2="342.7" y2="278" stroke="#9ca3af" stroke-width="2.6"/>
-<text x="348.7" y="282.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">上限 1/(1－0.9)＝10</text>
+<line x1="115.6" y1="278" x2="135.6" y2="278" stroke="#2563eb" stroke-width="2.6"/>
+<text x="141.6" y="282.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">r＝0.85</text>
+<line x1="204.6" y1="278" x2="224.6" y2="278" stroke="#1f2937" stroke-width="2.6"/>
+<text x="230.6" y="282.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">r＝0.5</text>
+<line x1="287" y1="278" x2="307" y2="278" stroke="#9ca3af" stroke-width="2.6"/>
+<text x="313" y="282.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">r＝0.85 の上限 1/(1－0.85)≒6.7</text>
 </g>
-<text x="320" y="334" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">台数を増やしても r＝0.9 の高速化率は 1/(1－0.9)＝10 で頭打ちになり、n＝6 で 4.0 と 1.33、ちょう</text>
-<text x="320" y="350" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ど3倍の差が付く。</text>
 </svg>

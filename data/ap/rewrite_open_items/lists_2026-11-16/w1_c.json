@@ -1,0 +1,102 @@
+{
+ "target": "ap",
+ "units": [
+  "09"
+ ],
+ "items": [
+  {
+   "no": 22,
+   "unit": "09",
+   "topic_id": 144,
+   "figure": 1,
+   "source": "figures_review",
+   "kind": "text_followup",
+   "what": "explanation の要点の箇条『大量の IoT 機器やログのように…』が 2025r07h-q24 の問題文の場面に近い（判定の担当の所見。本文の扱いは本文の担当が決める）",
+   "related": [
+    24
+   ]
+  },
+  {
+   "no": 24,
+   "unit": "09",
+   "topic_id": 144,
+   "figure": 1,
+   "source": "text_followup",
+   "kind": "example",
+   "what": "explanation の要点の箇条「大量の IoT 機器やログのように、行ごとに項目が変わるデータの受け皿になります」が 2025r07h-q24 の問題文の場面（大量の IoT デバイス・様々な形式のデータ）に近い。例を替える直しで、図の変更が原因でない",
+   "related": [
+    24
+   ]
+  },
+  {
+   "no": 19,
+   "unit": "09",
+   "topic_id": 152,
+   "figure": 1,
+   "source": "figures_review",
+   "kind": "other",
+   "what": "2018h30h-q28 の A 表・B 表×追加・削除の○△の組を図の 2 行×『行を増やす』『行を消す』が埋める形は、振り分けの線の 1 文目と『論点の定義が並べる物を教材の言葉で置くのはよい』の 2 通りに読める。explanation が定義として同じ 2 種類を言うので直さず残した（判定の担当も決め切れない点としている）。線の読み方を親が決める",
+   "related": [
+    30,
+    28
+   ]
+  },
+  {
+   "no": 20,
+   "unit": "09",
+   "topic_id": 153,
+   "figure": 1,
+   "source": "figures_review",
+   "kind": "text_followup",
+   "what": "K02 の注記『5,000 は「5,000 より大きい」に入らない』は過去問の境界の罠（在庫数 30 は「30 を超える」に入らない）を図へ移しており外したいが、その点（台帳 data/ap/rewrite_ledgers/09-3.json の論点 153 の point『比較の境界（「30 より大きい」に 30 は含まれない）で行数が変わる』と『在庫数 30 を超える在庫を持つ製品を除く条件では、ちょうど 30 の製品は除かれない』）は 2023r05a-q29 の正解の根拠で本文に無い。本文の ### 計算の解き方 へ戻したのち、図から K02 の境界の注記を外す（K02 の金額は境界でない値に替える）",
+   "related": [
+    30,
+    29
+   ]
+  },
+  {
+   "no": 23,
+   "unit": "09",
+   "topic_id": 154,
+   "figure": 1,
+   "source": "figures_review",
+   "kind": "text_followup",
+   "what": "explanation の要点の箇条『中心の式は R∩S＝R−(R−S) です』が 2025r07h-q28 の正解イの式そのもの（判定の担当の所見。論点の芯として残すかは本文の担当が決める）",
+   "related": [
+    28
+   ]
+  },
+  {
+   "no": 25,
+   "unit": "09",
+   "topic_id": 154,
+   "figure": 1,
+   "source": "text_followup",
+   "kind": "other",
+   "what": "explanation の箇条「中心の式は R∩S＝R−(R−S) です」が 2025r07h-q28 の正解の式そのもの。図を指す文でなく図の変更が原因でもない。write_materials.md の「計算の論点は中心の式を explanation の箇条に 1 回置く」と、答えと同じ式を本文に置くかの判断が要る（論点の芯として残すかは本人に諮る）",
+   "related": [
+    28
+   ]
+  },
+  {
+   "no": 21,
+   "unit": "09",
+   "topic_id": 354,
+   "figure": 2,
+   "source": "figures_review",
+   "kind": "text_followup",
+   "what": "detail の ### 数える向きと書く端 の導入文『「部門」と「社員」の関連で…図で確かめます』が、図の例（チーム ── 選手）と合わなくなった。導入文の例の名前を図に合わせるか、例を名指さない文にする",
+   "related": []
+  },
+  {
+   "no": 143,
+   "unit": "09",
+   "topic_id": 568,
+   "figure": null,
+   "source": "acceptance",
+   "kind": "ledger_where",
+   "what": "点の台帳の where が、今は点の無い所を指す行がある",
+   "related": []
+  }
+ ]
+}

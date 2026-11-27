@@ -1,0 +1,125 @@
+{
+  "topic_id": 160,
+  "term": "真正性（Authenticity）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### エンティティと真正性",
+      "caption": "真正性は情報ではなく相手について問う特性です。名乗りを確かめる手段に通し、本物は受け入れ、なりすましは弾きます。",
+      "nodes": [
+        {
+          "id": "real",
+          "label": "名乗る相手\n利用者・機器・サービス",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "fake",
+          "label": "なりすまし\n他人を装う相手",
+          "row": 1,
+          "col": 0,
+          "icon": "warning"
+        },
+        {
+          "id": "chk",
+          "label": "確かめる手段\n本人認証・サーバ証明書\nデジタル署名",
+          "row": 0,
+          "col": 1,
+          "icon": "key"
+        },
+        {
+          "id": "ok",
+          "label": "本物と分かる\n名乗ったとおりのもの",
+          "row": 0,
+          "col": 2,
+          "icon": "check",
+          "emphasis": true
+        },
+        {
+          "id": "ng",
+          "label": "接続を断る\n名乗りと合わない",
+          "row": 1,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "real",
+          "to": "chk",
+          "label": "名乗り"
+        },
+        {
+          "from": "fake",
+          "to": "chk",
+          "label": "偽の名乗り",
+          "style": "dashed"
+        },
+        {
+          "from": "chk",
+          "to": "ok",
+          "label": "確かめて通す"
+        },
+        {
+          "from": "chk",
+          "to": "ng",
+          "label": "見破って弾く",
+          "style": "dashed"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 真正性に近い二つの特性",
+      "caption": "矢印は前提と効き目の向きです。責任追跡性は真正性で相手を特定できて成り立ち、デジタル署名は真正性と否認防止の両方を支えます。",
+      "nodes": [
+        {
+          "id": "sig",
+          "label": "デジタル署名\n作成者を証明する手段",
+          "row": 1,
+          "col": 0,
+          "icon": "key",
+          "emphasis": true
+        },
+        {
+          "id": "auth",
+          "label": "真正性\n相手が本物と分かる",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "nr",
+          "label": "否認防止\n後から否定させない",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "acc",
+          "label": "責任追跡性\n誰の行為か後からたどれる",
+          "row": 0,
+          "col": 2,
+          "icon": "search"
+        }
+      ],
+      "edges": [
+        {
+          "from": "sig",
+          "to": "auth",
+          "label": "作成者を確かめる"
+        },
+        {
+          "from": "sig",
+          "to": "nr",
+          "label": "行為の証拠を残す"
+        },
+        {
+          "from": "auth",
+          "to": "acc",
+          "label": "相手を特定できて成り立つ"
+        }
+      ]
+    }
+  ]
+}

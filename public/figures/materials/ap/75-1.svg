@@ -1,33 +1,39 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="262" viewBox="0 0 640 262" role="img">
-<title>第1段の対象はブロックの個数 n/m 件で平均 n/(2m) 回、第2段の対象はブロック内の m 件で平均 m/2 回、足すと m/2＋n/(2m) 回。</title>
-<rect x="0.5" y="0.5" width="639" height="261" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(32.95 20)">
-<polyline points="103,38 214.8,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="214.8,38 206.8,41.6 206.8,34.4" fill="#1f2937"/>
-<polyline points="333.3,38 450.7,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="450.7,38 442.7,41.6 442.7,34.4" fill="#1f2937"/>
-<polyline points="506.1,66 506.1,122" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="506.1,122 502.5,114 509.7,114" fill="#1f2937"/>
-<rect x="7" y="10" width="96" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="55" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ブロック1</text>
-<text x="55" y="52.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">m 個</text>
-<rect x="214.8" y="0" width="118.5" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="274.05" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">…</text>
-<text x="274.05" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ブロックは</text>
-<text x="274.05" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">全部で n/m 個</text>
-<rect x="450.7" y="10" width="110.8" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="506.1" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ブロック n/m</text>
-<text x="506.1" y="52.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">m 個</text>
-<rect x="438.1" y="122" width="136" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="506.1" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">この中を線形探索</text>
-<text x="506.1" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">平均 m/2 回</text>
-<rect x="118.9" y="21" width="80" height="16" rx="3" fill="#ffffff"/>
-<text x="158.9" y="34.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">最後尾を比較</text>
-<rect x="343.6" y="21" width="96.8" height="16" rx="3" fill="#ffffff"/>
-<text x="392" y="34.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">平均 n/(2m) 回</text>
-<rect x="472.1" y="85" width="68" height="16" rx="3" fill="#ffffff"/>
-<text x="506.1" y="98.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">見つかった</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="168" viewBox="0 0 909.1 238">
+<rect x="0.5" y="0.5" width="908.1" height="237" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<polyline points="103.4,38 329.75,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="329.75,38 321.75,41.6 321.75,34.4" fill="#1f2937"/>
+<polyline points="440.55,38 689.35,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="689.35,38 681.35,41.6 681.35,34.4" fill="#1f2937"/>
+<polyline points="764.7,66 764.7,122" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="764.7,122 761.1,114 768.3,114" fill="#1f2937"/>
+<polyline points="660.3,160 445.1,160" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="445.1,160 453.1,156.4 453.1,163.6" fill="#1f2937"/>
+<rect x="6.6" y="10" width="96.8" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="55" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ブロック 1</text>
+<text x="55" y="52.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">1〜40 件目</text>
+<rect x="329.75" y="0" width="110.8" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="385.15" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">…</text>
+<text x="385.15" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ブロックは</text>
+<text x="385.15" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">全部で 30 個</text>
+<rect x="689.35" y="10" width="150.7" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="764.7" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ブロック 30</text>
+<text x="764.7" y="52.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">1,161〜1,200 件目</text>
+<rect x="660.3" y="122" width="208.8" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="764.7" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">第 2 段</text>
+<text x="764.7" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ブロックの中の 40 件を順に</text>
+<text x="764.7" y="184.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">平均 40÷2＝20 回</text>
+<rect x="325.2" y="132" width="119.9" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="385.15" y="154.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">合計</text>
+<text x="385.15" y="174.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">15＋20＝35 回</text>
+<rect x="124.67" y="21" width="183.8" height="16" rx="3" fill="#ffffff"/>
+<text x="216.57" y="34.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">第 1 段：最後尾だけを順に比較</text>
+<rect x="461.35" y="21" width="207.2" height="16" rx="3" fill="#ffffff"/>
+<text x="564.95" y="34.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">30 個の最後尾で
+平均 30÷2＝15 回</text>
+<rect x="694.7" y="85" width="140" height="16" rx="3" fill="#ffffff"/>
+<text x="764.7" y="98.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">目的のブロックが決まる</text>
+<rect x="500.1" y="143" width="105.2" height="16" rx="3" fill="#ffffff"/>
+<text x="552.7" y="156.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2 段の回数を足す</text>
 </g>
-<text x="320" y="226" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">第1段の対象はブロックの個数 n/m 件で平均 n/(2m) 回、第2段の対象はブロック内の m 件で平均 m/2 回、</text>
-<text x="320" y="242" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">足すと m/2＋n/(2m) 回。</text>
 </svg>

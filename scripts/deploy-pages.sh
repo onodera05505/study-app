@@ -12,46 +12,96 @@
 #   他に影響を出さずに済む。
 #
 # Pages は wrangler の設定ファイルにカスタムパスを指定できないため、
-# Workers 用の wrangler.jsonc を一時的に退避し、代わりに Pages 用の設定を置いてデプロイする。
+# Pages 用の設定と配信物を一時の場所に組み、そこを今いる場所にして wrangler を呼ぶ。
+# 作業ツリーの wrangler.jsonc（Workers 用）は動かさない（同じ作業ツリーで並行する検査が読む）。
 #
 # Pages 用の設定に D1 バインディングを書くのが要点:
 #   設定ファイル無しでデプロイすると、そのデプロイには D1 が bind されない。
-#   env.DB が undefined になり、ログインも登録も 500 で落ちる（2026-08-29 に応用情報側で発生）。
+#   env.DB が undefined になり、ログインも登録も 500 で落ちる。
 #   バインディングは wrangler.jsonc の env.<試験> から機械的に写すので、二重管理にはならない。
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
 EXAM="${1:-ip}"
-case "$EXAM" in
-  ip) PROJECT=itpass-study;  DB=study-app-db;    URL=https://itpass-study-c91.pages.dev ;;
-  ap) PROJECT=ap-am-study;   DB=study-app-ap-db; URL=https://ap-am-study.pages.dev ;;
-  *)  echo "第1引数は ip か ap"; exit 1 ;;
-esac
+# 登録簿に無い学びは、登録簿の学びの一覧を示し、門を回さず何も配信しないまま断る
+# @implements REQ-558
+[ "$(python3 scripts/targets.py has "$EXAM")" = yes ] || { echo "第1引数は対象の ID（$(python3 scripts/targets.py keys)）"; exit 1; }
+# Pages のプロジェクト名は scripts/pages_projects.json が正本（保存先は wrangler.jsonc の env.<学び>。ADR-0004）
+PROJECT=$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['$EXAM']['project'])")
+URL=$(python3 -c "import json;print(json.load(open('scripts/pages_projects.json'))['$EXAM'].get('url','https://${PROJECT}.pages.dev'))")
+
+# 配備の道具はプロジェクトが固定した版だけを使う（無ければ別の版に倒さず止まる）。
+# 入っているかは道具を呼ばずに確かめる（ここでは止まらない）
+source scripts/lib/pinned_wrangler.sh
+
+# アカウントの取り違えを止める門（同じ Mac で別アカウントのログインに差し替わることがある）。
+# 環境変数の向け先 → 固定した版の道具の有無 → ログイン中のアカウントの順に決めたアカウントと照らし、違うか確かめられなければ、
+# 食い違ったアカウントか確かめられないことを決めたアカウントとともに示して、その学びを配信しないまま失敗で終える。
+# 照らし方はほかの本番に触る道具と同じ部品（並びのどこかにあれば合う・環境変数の向け先が違えば止める）。
+# 照らす問い合わせは固定した版の道具で 1 回だけ行い、固定した版が無ければどの版の道具も呼ばない
+ACCOUNT_WRANGLER="$WRANGLER"
+ACCOUNT_WRANGLER_MISSING="$PINNED_WRANGLER_MISSING"
+source scripts/lib/check_account.sh
 
 # macOS 標準の bash 3.2 は $VAR 直後の全角文字を変数名に巻き込むので ${VAR} で区切る
-echo "▶ 対象: ${EXAM}（Pages: $PROJECT / D1: ${DB}）"
+echo "▶ 対象: ${EXAM}（Pages: ${PROJECT}）"
 
-echo "▶ 描画検査（実データ全件を jsdom で描いて見る。落ちたらデプロイしない）"
-# データ側の検査が通っても画面だけ壊れることがある（2026-09-01 の用語ポップ）。
-# 何を見ているかは scripts/check_render.tsx の先頭。
-bash scripts/check_render.sh "$EXAM"
+# 配信の前に門をすべて回す。どれかが止めたら set -e でここで終わり、その学びを配信しない。
+# 引数 before-build はビルドの前に回せる門、after-build は配信する dist（版の印を含む）を見る描画の検査
+# @implements REQ-560
+stop_unless_gates_pass() {
+  if [ "$1" = after-build ]; then
+    echo "▶ 描画検査（実データ全件を jsdom で描いて見る。配信する dist の版の印も見る。落ちたらデプロイしない）"
+    # データ側の検査が通っても画面だけ壊れることがある。何を見ているかは scripts/lib/check_render.tsx の先頭。
+    bash scripts/check_render.sh "$EXAM"
+    return
+  fi
+
+  echo "▶ D1 に migrations が全部当たっているか（未適用のまま出すと、新しい列を読む SQL が 500 になる）"
+  bash scripts/d1_migrations.sh "$EXAM" check
+
+  echo "▶ ロードマップ型なら、D1 の論点が回を持っているか（migrations だけ当てて seed が古いまま出さない。資格型は素通り）"
+  bash scripts/check_d1_rounds.sh "$EXAM"
+
+  echo "▶ ソースの静的な門（PBKDF2 の反復回数の上限・一覧の空配列初期化。不変条件 O5 / D11）"
+  python3 scripts/check_source.py
+
+  echo "▶ ロードマップ型の回の語・印の語が登録簿に揃っているか（BR-037。資格型は素通り）"
+  # @implements BR-037
+  python3 scripts/check_roadmap_registry.py "$EXAM"
+
+  echo "▶ 文書の索引と「不変条件と門」の対応表が現物と合っているか"
+  # 索引に無い文書は無いのと同じ。表が名指しするスクリプトが消えていたら表が嘘になる。
+  python3 scripts/check_docs.py
+}
+
+stop_unless_gates_pass before-build
 
 echo "▶ フロントをビルド"
 # 試験名とタイトルは .env / .env.ap から読ませる（--mode で切り替わる）
 npx vite build --mode "$EXAM"
+# 版の印。画面が一定の間隔で見比べ、違えば新しい版の知らせを出す。
+# 書き出しは配信より前で、失敗すれば set -e で止まり配信しない（保証点。ADR-0007）
+# @implements REQ-224, REQ-225, REQ-226
+printf '{"build": "%s", "at": "%s"}\n' "$(git rev-parse --short HEAD 2>/dev/null || echo unknown)" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > dist/version.json
+
+stop_unless_gates_pass after-build
 
 echo "▶ Worker を1ファイルにまとめる（Pages の advanced mode 用）"
 # --env で wrangler.jsonc の env ブロックを選ぶ。試験ごとに D1 の bind 先が違う。
-npx wrangler deploy --dry-run --outdir=".worker-build-$EXAM" --env "$EXAM" >/dev/null
+"$WRANGLER" deploy --dry-run --outdir=".worker-build-$EXAM" --env "$EXAM" >/dev/null
 cp ".worker-build-$EXAM/index.js" dist/_worker.js
 
 echo "▶ Pages へデプロイ"
-STASH=$(mktemp -d)/wrangler.jsonc
-mv wrangler.jsonc "$STASH"
-trap 'mv "$STASH" wrangler.jsonc' EXIT
+# Pages 用の設定と配信物を一時の場所に組む。作業ツリーの wrangler.jsonc は読むだけで動かさない
+PAGES_DIR=$(mktemp -d)
+trap 'rm -rf "$PAGES_DIR"' EXIT
+cp -R dist "$PAGES_DIR/dist"
 
-# Workers 用設定の env.<試験> から D1 と vars を写して、Pages 用の設定を組む
-python3 - "$STASH" "$EXAM" "$PROJECT" > wrangler.jsonc <<'PY'
+# Workers 用設定の env.<試験> から D1 と vars を写して、Pages 用の設定を組む。
+# D1 はその学びの key に結んだ保存先（env.<学び>.d1_databases。ADR-0004）だけを写し、最上位の既定や別の学びの保存先は結ばない
+# @implements REQ-524, BR-033
+python3 - wrangler.jsonc "$EXAM" "$PROJECT" > "$PAGES_DIR/wrangler.jsonc" <<'PY'
 import json, re, sys
 
 src, exam, project = sys.argv[1], sys.argv[2], sys.argv[3]
@@ -60,27 +110,38 @@ raw = open(src, encoding='utf-8').read()
 raw = re.sub(r'(?m)^\s*//.*$', '', raw)
 raw = re.sub(r'(?<!:)//(?![^\n"]*").*$', '', raw, flags=re.M)
 cfg = json.loads(raw)
-env = cfg['env'][exam]
+env = (cfg.get('env') or {}).get(exam) or {}
+
+# migrations_dir は Pages の設定では受け付けない
+bound = [{k: v for k, v in d.items() if k != 'migrations_dir'}
+         for d in (env.get('d1_databases') or [])]
+# その学びの key に保存先が結んでいなければ、Pages 用の設定を組まずに止まる（配信しない）
+# @implements REQ-543
+if not bound:
+    sys.exit(f"{exam} の保存先が wrangler.jsonc の env.{exam}.d1_databases に結んでいない。配信しない")
 
 print(json.dumps({
     'name': project,
     'compatibility_date': cfg['compatibility_date'],
     'compatibility_flags': cfg.get('compatibility_flags', []),
     'pages_build_output_dir': 'dist',
-    # migrations_dir は Pages の設定では受け付けない
-    'd1_databases': [{k: v for k, v in d.items() if k != 'migrations_dir'}
-                     for d in env['d1_databases']],
+    'd1_databases': bound,
     'vars': env['vars'],
 }, indent=2, ensure_ascii=False))
 PY
 
-echo "  D1: $(python3 -c "import json,sys; print(json.load(open('wrangler.jsonc'))['d1_databases'][0]['database_name'])")"
-npx wrangler pages deploy dist --project-name "$PROJECT" --branch main --commit-dirty=true
+echo "  D1: $(python3 -c "import json,sys; print(', '.join(d.get('database_name', '?') for d in json.load(open(sys.argv[1]))['d1_databases']))" "$PAGES_DIR/wrangler.jsonc")"
+# 一時の場所は git の外なので、配信に添える版の値（コミット）は作業ツリーで読んで渡す。読めなければ添えない
+COMMIT_ARGS=()
+COMMIT_HASH=$(git rev-parse HEAD 2>/dev/null || true)
+if [ -n "$COMMIT_HASH" ]; then
+  COMMIT_ARGS=(--commit-hash "$COMMIT_HASH" --commit-message "$(git log -1 --format=%s 2>/dev/null || true)")
+fi
+( cd "$PAGES_DIR" && "$WRANGLER" pages deploy dist --project-name "$PROJECT" --branch main --commit-dirty=true ${COMMIT_ARGS[@]+"${COMMIT_ARGS[@]}"} )
 
 echo
 echo "完了: ${URL}"
 echo "※ 描画検査だけ単独で回すなら: bash scripts/check_render.sh ${EXAM}"
 echo "※ D1 のデータを更新した場合は、別途これも実行する:"
 echo "   python3 scripts/build_seed.py --data data/${EXAM}"
-echo "   python3 scripts/check_seed.py --data data/${EXAM}   # 投入前に中身を見る"
-echo "   npx wrangler d1 execute ${DB} --env ${EXAM} --remote --file=data/${EXAM}/seed.sql"
+echo "   bash scripts/seed_remote.sh ${EXAM}   # check_seed → backup → --remote 投入 → 投入後の突き合わせ"

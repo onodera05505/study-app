@@ -1,0 +1,128 @@
+{
+  "topic_id": 161,
+  "term": "CSIRT",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 何をする体制か",
+      "direction": "down",
+      "caption": "インシデントの報告を一つの窓口で受けてから、関係者へ連絡するまでの流れです。段の間の矢印は次の段へ渡す物を表します。",
+      "stages": [
+        {
+          "label": "報告の受付\n社内外から一つの窓口で",
+          "icon": "mail",
+          "next_label": "報告の内容"
+        },
+        {
+          "label": "分析\n影響範囲を切り分ける",
+          "icon": "search",
+          "next_label": "切り分けた結果",
+          "emphasis": true
+        },
+        {
+          "label": "指示\n復旧と再発防止を指示する",
+          "icon": "gear",
+          "next_label": "対応の状況"
+        },
+        {
+          "label": "連絡\n関係者と外部機関へ伝える",
+          "icon": "people"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### CSIRT マテリアルの三つのフェーズ",
+      "direction": "up",
+      "caption": "CSIRT を立ち上げて回すまでの三つのフェーズで、前のフェーズで決めた物が次のフェーズの土台になります。",
+      "stages": [
+        {
+          "label": "構想\n経営層の合意と対象範囲",
+          "icon": "people",
+          "next_label": "決めた範囲と役務"
+        },
+        {
+          "label": "構築\n体制と手順・連絡経路",
+          "icon": "document",
+          "next_label": "整えた体制と文書"
+        },
+        {
+          "label": "運用\n報告の処理と訓練・見直し",
+          "icon": "arrow-cycle",
+          "emphasis": true
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "blocks",
+      "after": "### 外部の関係機関",
+      "caption": "組織内の CSIRT から外部の機関へつながる連絡経路です。線は機関の間で何が行き来するかを表し、この経路を平常時に作っておきます。",
+      "nodes": [
+        {
+          "id": "in",
+          "label": "組織内 CSIRT\n自組織の窓口",
+          "row": 0,
+          "col": 0,
+          "icon": "building",
+          "emphasis": true
+        },
+        {
+          "id": "jp",
+          "label": "JPCERT/CC\n国内の受付と調整",
+          "row": 0,
+          "col": 1,
+          "icon": "people"
+        },
+        {
+          "id": "ov",
+          "label": "海外の CSIRT\n他国の窓口",
+          "row": 0,
+          "col": 2,
+          "icon": "network"
+        },
+        {
+          "id": "ipa",
+          "label": "IPA\n脆弱性の届出受付",
+          "row": 1,
+          "col": 1,
+          "icon": "document"
+        },
+        {
+          "id": "dev",
+          "label": "製品開発者\n修正して公表する",
+          "row": 1,
+          "col": 2,
+          "icon": "box"
+        }
+      ],
+      "edges": [
+        {
+          "from": "in",
+          "to": "jp",
+          "label": "報告と注意喚起",
+          "arrow": "both"
+        },
+        {
+          "from": "jp",
+          "to": "ov",
+          "label": "海外との連携",
+          "arrow": "both"
+        },
+        {
+          "from": "ipa",
+          "to": "jp",
+          "label": "届出情報の連携",
+          "arrow": "both"
+        },
+        {
+          "from": "ipa",
+          "to": "dev",
+          "label": "連絡と公表の調整"
+        }
+      ]
+    }
+  ]
+}

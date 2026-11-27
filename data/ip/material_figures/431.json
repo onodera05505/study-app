@@ -4,19 +4,50 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
-      "after": "### LIFO のしくみ",
-      "caption": "PUSH も POP も一番上だけに効くので、下にある a を b より先に取り出すことはできない。",
-      "nodes": [
-        {"id": "op", "label": "PUSH（積む）\nPOP（取り出す）", "row": 0, "col": 1, "shape": "round"},
-        {"id": "c", "label": "c ← 最後に入れた", "row": 0, "col": 0, "emphasis": true},
-        {"id": "b", "label": "b", "row": 1, "col": 0},
-        {"id": "a", "label": "a ← 最初に入れた", "row": 2, "col": 0}
+      "type": "sequence",
+      "after": "explanation",
+      "caption": "上から順に読みます。POP で出るのは、いつもその時点で一番上にある、最後に積んだ物です。",
+      "actors": [
+        {
+          "id": "p",
+          "label": "プログラム"
+        },
+        {
+          "id": "s",
+          "label": "スタック（口は上だけ）"
+        }
       ],
-      "edges": [
-        {"from": "op", "to": "c", "label": "出し入れは上端だけ", "arrow": "both"},
-        {"from": "c", "to": "b", "arrow": "none"},
-        {"from": "b", "to": "a", "arrow": "none"}
+      "steps": [
+        {
+          "from": "p",
+          "to": "s",
+          "label": "PUSH X（X を積む）"
+        },
+        {
+          "from": "p",
+          "to": "s",
+          "label": "PUSH Y（X の上に積む）"
+        },
+        {
+          "from": "s",
+          "to": "p",
+          "label": "POP で Y が出る（一番上の物）"
+        },
+        {
+          "from": "p",
+          "to": "s",
+          "label": "PUSH Z（X の上に積む）"
+        },
+        {
+          "from": "s",
+          "to": "p",
+          "label": "POP で Z が出る（最後に積んだ物）"
+        },
+        {
+          "from": "s",
+          "to": "p",
+          "label": "POP で X が出る（残った物）"
+        }
       ]
     }
   ]

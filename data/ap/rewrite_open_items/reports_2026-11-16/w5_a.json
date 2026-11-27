@@ -1,0 +1,47 @@
+{
+ "target": "ap",
+ "units": [
+  "05"
+ ],
+ "status": "done",
+ "items": [
+  {
+   "no": 270,
+   "topic_id": 101,
+   "type": "I",
+   "verdict": "fixed",
+   "rule": "rewrite_open_items.md の種 I（図の after が指していない見出しは消す）、write_materials.md「1 つの点は 1 か所で言う」の見出しの下が図だけになるとき（導入も要らないなら見出しを立てない）と「他の論点との分担」（前の論点に残すのは比較を持つ後の論点を指す 1 文だけ）",
+   "what": "101 の ### リエントラントとの違い の下は、次の論点 440 を指す 1 文と、親が外す図 101-2 の行だけだった。101 の図の仕様は図 1（after ### 何が壊れるのか）だけで、この見出しを指す図は無いので見出しの行だけを消し、指す 1 文はその位置のまま ### スレッドセーフにする手段 の節の末尾に置いた（比較は 440 の図 3 と ### 混同しやすい用語 が持つ）。図 101-2 の行は触っていない。",
+   "questions_checked": [
+    "2025r07a-q17"
+   ]
+  }
+ ],
+ "edits": [
+  {
+   "file": "data/ap/materials_v4/05-2.json",
+   "topic_id": 101,
+   "field": "detail",
+   "op": "delete",
+   "heading": "### リエントラントとの違い",
+   "before": "### リエントラントとの違い\n[[リエントラント]]が成り立つ作りと、スレッドセーフとの違いは、次の論点で説明します。",
+   "after": "[[リエントラント]]が成り立つ作りと、スレッドセーフとの違いは、次の論点で説明します。"
+  }
+ ],
+ "owners": [],
+ "figure_after": [],
+ "ledgers": [],
+ "returned": [],
+ "noticed": [],
+ "gates": {
+  "check_materials": 0,
+  "check_material_style": 0,
+  "render_check": 0,
+  "check_explanations": 0,
+  "check_unit_plans": null
+ },
+ "chars": {
+  "before": 749,
+  "after": 733
+ }
+}

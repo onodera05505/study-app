@@ -1,0 +1,60 @@
+{
+  "topic_id": 190,
+  "term": "レスポンシブWeb デザイン",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 一つのページを画面幅で組み替える理由",
+      "caption": "左の HTML は一つだけで、CSS が画面幅を見て右の PC とスマートフォンの 2 通りのレイアウトに振り分けます。画面は 2 通りでも HTML の箱は 1 つで、端末ごとに別のサイトを作りません。",
+      "nodes": [
+        {
+          "id": "html",
+          "label": "HTML（一つだけ）\n内容を書く",
+          "row": 0,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "css",
+          "label": "CSS\n画面幅で決まりを切り替える",
+          "row": 0,
+          "col": 1,
+          "emphasis": true,
+          "icon": "gear"
+        },
+        {
+          "id": "pc",
+          "label": "PC の画面\n要素を横に並べる",
+          "row": 0,
+          "col": 2,
+          "icon": "device"
+        },
+        {
+          "id": "sp",
+          "label": "スマートフォンの画面\n要素を縦に積む\nメニューはボタン一つにまとめる",
+          "row": 1,
+          "col": 2,
+          "icon": "phone"
+        }
+      ],
+      "edges": [
+        {
+          "from": "html",
+          "to": "css",
+          "label": "同じ内容"
+        },
+        {
+          "from": "css",
+          "to": "pc",
+          "label": "幅が広いとき"
+        },
+        {
+          "from": "css",
+          "to": "sp",
+          "label": "幅が狭いとき"
+        }
+      ]
+    }
+  ]
+}

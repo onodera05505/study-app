@@ -1,0 +1,63 @@
+{
+  "topic_id": 223,
+  "term": "PWA（Progressive Web Apps：プログレッシブウェブアプリ）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### サービスワーカーが要求を横取りする",
+      "caption": "ページの要求はまずサービスワーカーが受け取ります。通信できればサーバへ中継し、圏外なら蓄えた資源を代わりに返すので、オフラインでも起動します。",
+      "nodes": [
+        {
+          "id": "page",
+          "label": "ページ\n画面を出したい",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "sw",
+          "label": "サービスワーカー\nブラウザの背後で動き\n要求を横取りする",
+          "row": 0,
+          "col": 1,
+          "emphasis": true,
+          "icon": "gear"
+        },
+        {
+          "id": "srv",
+          "label": "サーバ\n最新の資源を持つ",
+          "row": 0,
+          "col": 2,
+          "icon": "server"
+        },
+        {
+          "id": "cache",
+          "label": "キャッシュ\n前もって蓄えた資源",
+          "row": 1,
+          "col": 2,
+          "shape": "cylinder"
+        }
+      ],
+      "edges": [
+        {
+          "from": "page",
+          "to": "sw",
+          "label": "通信の要求と\n返ってくる資源",
+          "arrow": "both"
+        },
+        {
+          "from": "sw",
+          "to": "srv",
+          "label": "通信できるとき\n要求を中継",
+          "arrow": "both"
+        },
+        {
+          "from": "sw",
+          "to": "cache",
+          "label": "圏外のとき\n代わりに取り出す",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

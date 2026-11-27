@@ -1,0 +1,69 @@
+{
+  "topic_id": 366,
+  "term": "無線LANセキュリティ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 同じアクセスポイントの他人から守る",
+      "caption": "同じアクセスポイントにつながった端末同士の通信だけを止め、インターネットへの通信は通します。下の点線が遮断される経路です。",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "端末 A\n利用者の端末",
+          "row": 1,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "b",
+          "label": "端末 B\n同じ AP の\n他人の端末",
+          "row": 1,
+          "col": 2,
+          "icon": "device"
+        },
+        {
+          "id": "ap",
+          "label": "アクセスポイント\nプライバシー\nセパレーター有効",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "net",
+          "label": "インターネット\n外部のサービス",
+          "row": 0,
+          "col": 1,
+          "icon": "cloud"
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "b",
+          "label": "端末同士の通信は遮断",
+          "style": "dashed",
+          "arrow": "none"
+        },
+        {
+          "from": "a",
+          "to": "ap",
+          "label": "外部宛ては通す",
+          "arrow": "both"
+        },
+        {
+          "from": "b",
+          "to": "ap",
+          "label": "外部宛ては通す",
+          "arrow": "both"
+        },
+        {
+          "from": "ap",
+          "to": "net",
+          "label": "外部との通信",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

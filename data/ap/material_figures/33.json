@@ -5,19 +5,52 @@
     {
       "id": 1,
       "type": "sequence",
-      "after": "### ポートの状態の判定",
-      "caption": "TCP は SYN/ACK なら開・RST/ACK なら閉、UDP は ICMP port unreachable が返ったときだけ閉と判定する。",
+      "after": "explanation",
+      "caption": "応答の種類から、そのポートが開いているか閉じているかを判定する流れです。TCP と UDP で見分け方が変わります。",
       "actors": [
-        {"id": "s", "label": "検査側\n（スキャン）"},
-        {"id": "h", "label": "対象ホスト"}
+        {
+          "id": "s",
+          "label": "検査側\n（スキャン）"
+        },
+        {
+          "id": "h",
+          "label": "対象ホスト"
+        }
       ],
       "steps": [
-        {"from": "s", "to": "h", "label": "① ポート A へ TCP SYN"},
-        {"from": "h", "to": "s", "label": "② SYN/ACK が返る → 開いている", "note": "接続要求が許可された状態"},
-        {"from": "s", "to": "h", "label": "③ ポート B へ TCP SYN"},
-        {"from": "h", "to": "s", "label": "④ RST/ACK が返る → 閉じている", "note": "接続要求が中断または拒否された状態"},
-        {"from": "s", "to": "h", "label": "⑤ ポート C へ UDP パケット"},
-        {"from": "h", "to": "s", "label": "⑥ ICMP port unreachable → 閉じている", "note": "UDP は閉のときだけエラーが返る。無応答なら開いているかフィルタリングされている"}
+        {
+          "from": "s",
+          "to": "h",
+          "label": "① ポート A へ TCP SYN"
+        },
+        {
+          "from": "h",
+          "to": "s",
+          "label": "② SYN/ACK が返る → 開いている",
+          "note": "そのポートでサービスが待ち受けている"
+        },
+        {
+          "from": "s",
+          "to": "h",
+          "label": "③ ポート B へ TCP SYN"
+        },
+        {
+          "from": "h",
+          "to": "s",
+          "label": "④ RST/ACK が返る → 閉じている",
+          "note": "そのポートで待ち受けるサービスが無い"
+        },
+        {
+          "from": "s",
+          "to": "h",
+          "label": "⑤ ポート C へ UDP パケット"
+        },
+        {
+          "from": "h",
+          "to": "s",
+          "label": "⑥ ICMP port unreachable → 閉じている",
+          "note": "UDP は閉のときだけエラーが返る。無応答なら開いているかフィルタリングされている"
+        }
       ]
     }
   ]

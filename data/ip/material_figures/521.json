@@ -1,0 +1,105 @@
+{
+  "topic_id": 521,
+  "term": "ルーター",
+  "figures": [
+    {
+      "id": 1,
+      "type": "layers",
+      "after": "explanation",
+      "caption": "中継する機器は、扱う層によって見るアドレスが違います。L の後の数字は下から数えた層の番号で、左の括弧は TCP/IP の 4 階層での名前です。",
+      "shape": "stack",
+      "layers": [
+        {
+          "label": "L3（下から 3 層目）\nIP アドレスで経路を選ぶ",
+          "note": "ルーター",
+          "emphasis": true
+        },
+        {
+          "label": "L2（下から 2 層目）\nMAC アドレスで送り先の口を選ぶ"
+        },
+        {
+          "label": "L1（一番下の層）\nアドレスを見ず信号を流す"
+        }
+      ],
+      "brackets": [
+        {
+          "from": 0,
+          "to": 0,
+          "label": "インターネット層"
+        },
+        {
+          "from": 1,
+          "to": 2,
+          "label": "ネットワーク\nインタフェース層"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### なぜ違うネットワークをつなげるのか",
+      "caption": "ルーターは宛先 IP アドレスのネットワークの部分を経路表と照らし、渡す先を選びます。宛先のネットワークで矢印の行き先が分かれます。",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "ネットワーク A\n送り手がいる",
+          "row": 1,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "r",
+          "label": "ルーター\n渡す先を決める",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "gear"
+        },
+        {
+          "id": "t",
+          "label": "経路表\nネットワークごとの渡し先",
+          "row": 0,
+          "col": 1,
+          "icon": "document"
+        },
+        {
+          "id": "b",
+          "label": "ネットワーク B\n別のネットワーク",
+          "row": 1,
+          "col": 2,
+          "icon": "network"
+        },
+        {
+          "id": "c",
+          "label": "ネットワーク C\n別のネットワーク",
+          "row": 2,
+          "col": 2,
+          "icon": "network"
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "r",
+          "label": "宛先 IP アドレスつきのパケット"
+        },
+        {
+          "from": "r",
+          "to": "t",
+          "label": "ネットワークの部分で照らす",
+          "arrow": "both"
+        },
+        {
+          "from": "r",
+          "to": "b",
+          "label": "B 宛てならこちらへ"
+        },
+        {
+          "from": "r",
+          "to": "c",
+          "label": "C 宛てならこちらへ"
+        }
+      ]
+    }
+  ]
+}

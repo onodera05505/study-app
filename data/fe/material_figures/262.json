@@ -1,0 +1,23 @@
+{
+  "topic_id": 262,
+  "term": "リバースエンジニアリング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 向きで整理する",
+      "caption": "同じ箱の間を、普段の開発は下向きに、リバースエンジニアリングは上向きにたどります。起点は強調した動いているソースコードです。",
+      "nodes": [
+        {"id": "req", "label": "要件\n何をしたいか", "row": 0, "col": 0, "icon": "person"},
+        {"id": "des", "label": "設計情報\nデータ構造・呼び出し関係", "row": 1, "col": 0, "icon": "document"},
+        {"id": "src", "label": "ソースコード\n今動いている現物", "row": 2, "col": 0, "icon": "device", "emphasis": true}
+      ],
+      "edges": [
+        {"from": "req", "to": "des", "label": "フォワード：\n要件から設計する"},
+        {"from": "des", "to": "src", "label": "フォワード：\n設計からコードを作る"},
+        {"from": "src", "to": "des", "label": "リバース：\nコードから設計を起こす", "style": "dashed"},
+        {"from": "des", "to": "req", "label": "リバース：\n仕様を明らかにする", "style": "dashed"}
+      ]
+    }
+  ]
+}

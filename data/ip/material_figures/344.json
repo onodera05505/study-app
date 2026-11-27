@@ -5,20 +5,73 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 範囲の広さ",
-      "caption": "発注側も受注側も、直接の契約が無い協力会社も全部ステークホルダ。メンバーはその一部にすぎない。",
+      "after": "explanation",
+      "caption": "矢印がプロジェクトへ向かう人は影響を与え、プロジェクトから矢印を受ける人は影響を受けます。どちらも利害関係者です。",
       "nodes": [
-        {"id": "ceo", "label": "発注側の経営者", "row": 0, "col": 0},
-        {"id": "usr", "label": "発注側の利用部門", "row": 0, "col": 2},
-        {"id": "prj", "label": "プロジェクト", "row": 1, "col": 1, "emphasis": true},
-        {"id": "pm", "label": "受注側の PM\nメンバー", "row": 2, "col": 0},
-        {"id": "sub", "label": "受注側を支援する\n協力会社", "row": 2, "col": 2}
+        {
+          "id": "inv",
+          "label": "出資者\n費用を出し成果を求める",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "cus",
+          "label": "顧客\n完成した物を使う",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "prj",
+          "label": "プロジェクト\n周りの全員が\nステークホルダ",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "ext",
+          "label": "地域住民・監督官庁\nプロジェクトの外側",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "team",
+          "label": "プロジェクトチーム\n計画して作る",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "mnt",
+          "label": "保守会社\n完成後の手入れを担う",
+          "row": 2,
+          "col": 2
+        }
       ],
       "edges": [
-        {"from": "ceo", "to": "prj", "label": "費用を出す", "arrow": "both"},
-        {"from": "usr", "to": "prj", "label": "完成後に使う", "arrow": "both"},
-        {"from": "pm", "to": "prj", "label": "作る", "arrow": "both"},
-        {"from": "sub", "to": "prj", "label": "作業を手伝う", "arrow": "both"}
+        {
+          "from": "inv",
+          "to": "prj",
+          "label": "資金を出す（与える）"
+        },
+        {
+          "from": "prj",
+          "to": "cus",
+          "label": "成果物を使う（受ける）"
+        },
+        {
+          "from": "prj",
+          "to": "ext",
+          "label": "工事などの影響（受ける）"
+        },
+        {
+          "from": "team",
+          "to": "prj",
+          "label": "作る（与える）"
+        },
+        {
+          "from": "prj",
+          "to": "mnt",
+          "label": "完成後に引き継ぐ（受ける）"
+        }
       ]
     }
   ]

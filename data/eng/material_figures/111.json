@@ -1,0 +1,60 @@
+{
+  "topic_id": 111,
+  "term": "データベースと DBMS",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "アプリはどれも DBMS に頼むだけで、ストレージには直接触れません。DBMS が 3 つの役で同時の書き換えや失敗から中身を守ります。",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "アプリ A\n会員 7 の住所を\n書き換える",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "b",
+          "label": "アプリ B\n同じ時に会員 7 を\n書き換える",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "dbms",
+          "label": "DBMS\n一度に 1 人だけ書かせる\n失敗したら全部やらない\n誰に見せるかを決める",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "st",
+          "label": "ストレージ\nどこにどう置くかは\nDBMS だけが知る",
+          "row": 1,
+          "col": 2,
+          "shape": "cylinder"
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "dbms",
+          "label": "条件で頼む",
+          "arrow": "both"
+        },
+        {
+          "from": "b",
+          "to": "dbms",
+          "label": "条件で頼む",
+          "arrow": "both"
+        },
+        {
+          "from": "dbms",
+          "to": "st",
+          "label": "出し入れ",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

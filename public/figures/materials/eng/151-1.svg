@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="342" viewBox="0 0 654.8 350">
+<rect x="0.5" y="0.5" width="653.8" height="349" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<line x1="48" y1="34" x2="48" y2="310" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="293.4" y1="34" x2="293.4" y2="310" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="552.8" y1="34" x2="552.8" y2="310" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">攻撃者</text>
+<rect x="224.4" y="0" width="138" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="293.4" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">閲覧者のブラウザ</text>
+<rect x="490.8" y="0" width="124" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="552.8" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">掲示板のサーバ</text>
+<polyline points="51,68 549.8,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="549.8,68 541.8,71.6 541.8,64.4" fill="#1f2937"/>
+<text x="300.4" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. スクリプトを混ぜて書き込む</text>
+<polyline points="296.4,108 549.8,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="549.8,108 541.8,111.6 541.8,104.4" fill="#1f2937"/>
+<text x="423.1" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. ページを開く（セッションの番号つき）</text>
+<polyline points="549.8,148 296.4,148" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="296.4,148 304.4,144.4 304.4,151.6" fill="#1f2937"/>
+<text x="423.1" y="141" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 書き込みをそのまま HTML に埋めて返す</text>
+<rect x="347.1" y="153" width="152" height="16" rx="3" fill="#ffffff"/>
+<text x="423.1" y="166.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">出口のエスケープが要る所</text>
+<polyline points="293.4,196 319.4,196 319.4,210 295.4,210" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="295.4,210 303.4,206.4 303.4,213.6" fill="#1f2937"/>
+<text x="327.4" y="204" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. サイトの一部として命令を動かす</text>
+<polyline points="290.4,238 51,238" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,238 59,234.4 59,241.6" fill="#1f2937"/>
+<text x="170.7" y="231" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. セッションの番号を送ってしまう</text>
+<polyline points="51,278 549.8,278" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="549.8,278 541.8,281.6 541.8,274.4" fill="#1f2937"/>
+<text x="300.4" y="271" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">6. 番号を付けて本人として操作する</text>
+</g>
+</svg>

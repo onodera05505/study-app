@@ -1,0 +1,1406 @@
+[
+  {
+    "topic_id": 1,
+    "term": "「額面」と「手取り」",
+    "points": [
+      {
+        "point": "額面と手取りの差は、すべて税と社会保険料として引かれた分である。",
+        "content_type": "概念",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "棒グラフ（bar）で額面 30 万円と手取り 24 万円の 2 本を並べ、差の 6 万円に「税と社会保険料として引かれた分」と注記する。差が消えたのではなく引かれた分だと高さの差で読める。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "総額と口座の額が最初からずれ、その差が引かれた分だという入口が、例の数字の棒の高さで一目になる。",
+        "benefit": 2
+      },
+      {
+        "point": "家賃や貯める額を決める土台は額面ではなく手取りである。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "本文の 1 文で言える判断で、図にする構成や対比が無い。",
+        "benefit": 1
+      },
+      {
+        "point": "額面が上がると引かれるものも増えるので、手取りが同じ割合で増えるとは限らない。",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "後の単位で扱う話の予告で、この単位では 1 文の注意にとどまる。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 2,
+    "term": "給与明細の三つの欄",
+    "points": [
+      {
+        "point": "給与明細は、働いた記録（勤怠）・払われるお金（支給）・引かれるもの（控除）・差引支給額の並びで、支給の合計から控除の合計を引いた額が差引支給額になる。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": true,
+        "type": "parts",
+        "idea": "全体を「給与明細」とし、部位を「勤怠\n日数と残業の時間」「支給\n基本の給与と手当の合計」「控除\n税と社会保険料の合計」「差引支給額\n支給から控除を引いた額（手取り）」の 4 つにする。差引支給額を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "明細のどこに何が並ぶかは見た目の在りかの話で、部位を絵の上で指すと名前と場所が一度に結び付く。",
+        "benefit": 2
+      },
+      {
+        "point": "手取りが減った月は、下の差引支給額から上の欄へたどり、支給か控除のどちらが動いたかで原因の見当をつける。",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": true,
+        "type": "steps",
+        "idea": "direction は down。段を「差引支給額を見る\n先月より減っているか」→「支給の欄を見る\n残業や日数が減ったか」→「控除の欄を見る\n引かれるものが増えたか」とし、段の間に「減っていたら」「支給が変わっていなければ」を書く。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "結果から上の欄へさかのぼる読む順は、本文では 2 段落に分かれていて、段で見せると順番が一目になる。",
+        "benefit": 2
+      }
+    ]
+  },
+  {
+    "topic_id": 5,
+    "term": "引かれるものの五つ",
+    "points": [
+      {
+        "point": "引かれるものの欄の五つは、税が二つ（所得税・住民税）と社会保険料が三つ（健康保険・年金・雇用保険）で、性格が違う。",
+        "content_type": "概念",
+        "function": "表現的",
+        "draw": true,
+        "type": "parts",
+        "idea": "全体を「引かれるものの欄」とし、部位を「所得税\n国へ納める税」「住民税\n住んでいる所へ納める税」「健康保険\n病気やけがに備える」「年金\n老後などに備える」「雇用保険\n失業に備える」の 5 つにする。名前ごとに税か保険料かが一言で分かる。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "五つの名前を税と保険料の二つの塊に読み分ける話で、欄の部位ごとに一言を添えると性格の違いが図だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "欄に加わる時期が名前ごとに違い、所得税と社会保険料は働き始めた月から、住民税は前の年に所得が無ければ次の年の 6 月から、介護保険料はある年齢から並ぶ。",
+        "content_type": "事実",
+        "function": "変換的",
+        "draw": true,
+        "type": "timeline",
+        "idea": "軸を「働き始めてからの時間」、目盛りを「働き始めた月」「1 年目の 12 月」「2 年目の 6 月」「…」「ある年齢」とする。期間の帯で「所得税\nその年の所得にかかる」「社会保険料\n働き始めた月から」「住民税\n前の年の所得にかかる（2 年目の 6 月から）」「介護保険料\nある年齢から加わる」を並べ、住民税を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "加わる時期のずれは本文で 1 文に詰めてあり、帯の始まりの位置で見せると「1 年目の明細に住民税が無い」理由が図だけで読める。",
+        "benefit": 2
+      },
+      {
+        "point": "欄の五つは今並んでいる行の数で、社会保険の柱の四つは備える場面の数であり、数え方が違う。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "2 つの数の 1 点だけの違いで本文の 1 文で言え、柱の中身は単位「社会保険の柱」の図が受け持つ。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 6,
+    "term": "会社も同じだけ出している",
+    "points": [
+      {
+        "point": "社会保険料の柱の部分は働く人と勤め先が同じ額ずつ出し、雇用保険には勤め先だけが出す分もあるので、自分のための保険料の全体は明細の 2 倍より大きい。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x を「働く人の分（明細に出る）」「勤め先の分（明細に出ない）」、y を「健康保険・年金・介護保険」「雇用保険」とする 2×2。雇用保険×勤め先のマスに「半分ずつの分\n＋勤め先だけが出す分」と書いて強調し、2 倍が下限だと読めるようにする。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "同じ額を出し合う柱と勤め先だけが出す分の対比が格子で閉じ、「2 倍は下限」が図だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "勤め先を離れて自分で仕事をすると、勤め先が持っていた分も自分の側に回るので、額面の比べ合いだけでは判断できない。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "上の格子を自分の側に当てた 1 文の判断で、別の図にする構成が無い。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 11,
+    "term": "毎月はおよその額で引かれている",
+    "points": [
+      {
+        "point": "所得税は 1 年間の所得で決まるので、月々はその月の給与と家族の人数からおよその額を見積もって引く。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "月々は見積もり、正しい額は年の終わり、という二段構えは本文の 2 文で足りる。",
+        "benefit": 1
+      },
+      {
+        "point": "月々の額を 1 年分足しても正しい額とはふつうずれるので、年の終わりに精算が要る。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "精算の順序は単位「年の終わりに精算する」の図が受け持ち、ここは 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 12,
+    "term": "年の終わりに精算する",
+    "points": [
+      {
+        "point": "年末調整は、1 年分の給与を集計し、所得控除を差し引き、税率を当てて正しい税額を出し、すでに引いた合計と比べて戻すか足す、の順で進み、控除が税額より先に来る。",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": true,
+        "type": "steps",
+        "idea": "direction は down。段を「1 年分の給与を集計\n勤め先がまとめる」→「所得控除を差し引く\n申告書に書いた分だけ」→「正しい税額を出す\n残りに税率を当てる」→「引いた合計と比べる\n多ければ戻す・足りなければ足す」とし、段の間に「1 年分の給与の額」「課税の対象の額」「1 年分の正しい税額」を書く。所得控除の段を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "手順の順序と、控除が税額を出す前に来るという芯が、段の並びと段の間に渡す物で一目になる。本文だけでは順序を追いにくい。",
+        "benefit": 3
+      },
+      {
+        "point": "所得控除は自分で申告書に書いて出した分だけ精算に乗り、出し忘れると税が高いまま精算される。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "上の段の図の控除の段の一言が受け持ち、別の図にすると同じ中身を二度描くことになる。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 16,
+    "term": "手取りから始める家計の見取り図",
+    "points": [
+      {
+        "point": "家計の見取り図は、手取りを入り口に、同じ 1 か月に出ていくお金を、毎月決まって出るお金と月ごとに変わるお金に分けて並べたものである。",
+        "content_type": "概念",
+        "function": "表現的",
+        "draw": true,
+        "type": "parts",
+        "idea": "全体を「手取り（1 か月）」とし、部位を「毎月決まって出るお金\n家賃・通信・保険・積立」「月ごとに変わるお金\n食費・外食・買い物」「貯める分\n残りから回す」の 3 つにする。毎月決まって出るお金を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "一枚の見取り図そのものが単位の要点で、手取りの中がどの塊でできているかを部位で見せると図だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "毎月決まって出るお金は一度下げるとその差が毎月続くので、見直しは月ごとに変わるお金より先に見る。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x を「例」「一度見直したときの効き方」、y を「毎月決まって出るお金」「月ごとに変わるお金」とする 2×2。決まって出るお金の効き方のマス（「差が毎月続く」）を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "二つの出ていくお金を、例と見直しの効き方の 2 観点で並べると、先に見る側がどちらかを格子だけで言える。",
+        "benefit": 2
+      }
+    ]
+  },
+  {
+    "topic_id": 13,
+    "term": "申し出ないと戻らないお金",
+    "points": [
+      {
+        "point": "勤め先の年末の精算に乗るのは勤め先が知っている事情だけで、大きな治療費・寄付・途中で辞めたといった事情は、自分で申し出て（確定申告）初めて戻る。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x を「例」「どこで精算されるか」、y を「勤め先が知っている事情」「勤め先が知らない事情」とする 2×2。知らない事情×どこで精算されるかのマスに「自分で申し出る\n（確定申告）」と書いて強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "どの事情がどの精算に乗るかの切り分けが格子で閉じ、「黙っていれば戻らない」が図だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "給与以外の収入があるときは、自分で申し出て納める側になることがある。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "本文の 1 文で言える例外で、図にする対比が無い。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 19,
+    "term": "一つの値段と、全体の値段",
+    "points": [
+      {
+        "point": "物価は一つの品物の値段ではなく、いろいろな値段をまとめた全体の動きで、一品が大きく上がっても全体はわずかしか動かないことがある。",
+        "content_type": "概念",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "棒グラフ（bar）で、基準の時点を 100 としたときのキャベツ（200）・ほかのいくつかの品目（98〜103 の例の値）・全体の物価指数（101）を並べ、100 に補助線を引く。全体の棒を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "一品の大きな上がりと全体の小さな動きの差が、100 からの棒の高さで見え、一品と全体が別だと図だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "物価指数は基準の時点を 100 とし、105 なら 5％高い、98 なら 2％低いと読む、金額ではない数である。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "読み方は値 1 つの言い換えで本文の 1 文で言え、上の棒グラフの 100 の補助線でも読める。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 30,
+    "term": "名目と実質",
+    "points": [
+      {
+        "point": "実質は名目を物価の動き（倍の形）で割って出し、見た目が増えても物価が同じ割合で上がっていれば買える量で見た値打ちは変わらない。",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "棒グラフ（bar）で「去年の手取り 20 万円」「今年の見た目（名目）21 万円」「今年を 1.05 で割った値打ち（実質）約 20 万円」の 3 本を並べ、3 本目に「物価の動き 1.05 で割る」と注記して強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "名目と実質の差と、増えた分が値段の上がりに吸われたことが棒の高さで一目になり、割り算の向きも注記で読める。",
+        "benefit": 3
+      },
+      {
+        "point": "割る数は物価指数の 105 ではなく倍の形の 1.05 で、物価の側が分母になる。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "割り算の向きの注意 1 つで本文の 1 文で言え、上の図の注記にも出る。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 32,
+    "term": "置いてあるお金の値打ち",
+    "points": [
+      {
+        "point": "口座の残高が同じでも、値段が上がればそのお金で買える量（値打ち）は減っていく。",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "折れ線（line）で、横軸を年（0〜4 年）、口座の残高 100 万円（横ばい）と、物価が毎年少しずつ上がる（仮の数）ときのその残高で買える量で見た値打ち（下がっていく）の 2 本を並べ、値打ちの線を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "数字が動かないのに値打ちが下がる、という直感に反する点が、横ばいの線と下がる線の開きで図だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "使う時期が決まっている分は動かさず、置き場所を考えるのは時期がまだ遠い分だけにする。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "2 つの塊の 1 点だけの違いで、本文の例（60 万円と 40 万円）の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 20,
+    "term": "買物かごの費用を比べる",
+    "points": [
+      {
+        "point": "物価指数は品目ごとの値段の動きを、家計でその品目に使う金額の大きさ（ウエイト）で重みをつけて平均するので、支出の大きい品目の動きほど全体に強く効く。",
+        "content_type": "原理",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x を「値段の上がり方」「家計で使う金額の重み」「全体の数字への効き」、y を「牛乳」「家賃」とする 2×3。牛乳は「2 割上がる・重みは小さい・わずかに動く」、家賃は「2 割上がる・重みは大きい・大きく動く」と書き、家賃×全体への効きのマスを強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "同じ 2 割の上がりでも重みで効きが違うことが行どうしの比べで閉じ、ウエイトの意味が図だけで言える。本文だけでは重みの働きがつかみにくい。",
+        "benefit": 3
+      },
+      {
+        "point": "品目と重みは家計の買い方が変わるので定期的に見直される。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "本文の 1 文で言える事実で、図にする構成が無い。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 26,
+    "term": "数字と実感がずれる理由",
+    "points": [
+      {
+        "point": "物価指数と実感がずれる理由は、買う物の違い・目立つ値上がりの印象・品質の扱いの三つで、どちらかが誤りなのではない。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x を「指数の側では」「自分の実感の側では」、y を「買う物の違い」「目立つ値上がりの印象」「品質の扱い」とする 3×2。例えば品質の行は「良くなった分の値上がりは入れない」「払う額が増えた感覚だけが残る」と書く。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "三つの理由を、指数の側と実感の側の同じ 2 観点で並べると、ずれがどこで生まれるかが格子で閉じる。",
+        "benefit": 2
+      },
+      {
+        "point": "自分の側は、支出の大きい品目の動きを費目ごとの数字で確かめる。",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "確かめ方 1 つで本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 33,
+    "term": "食べものの値段が上がる道すじ",
+    "points": [
+      {
+        "point": "材料や燃料や運ぶ費用の上がりは、まず会社どうしの値段に出て、作る会社・卸す会社の売り値に移され、遅れて店の値札に届く。",
+        "content_type": "プロセス",
+        "function": "変換的",
+        "draw": true,
+        "type": "steps",
+        "idea": "direction は down。段を「原材料・燃料・運ぶ費用\n上流で値段が上がる」→「会社どうしの値段\n企業物価に先に出る」→「作る・卸す会社の売り値\n費用を売り値に移す」→「店の値札\n遅れて上がる」とし、段の間に「仕入れの費用が上がる」「移す割合は品物ごとに違う」「間をおいて届く」を書く。店の値札の段を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "上流から値札までの順序と遅れが段の並びで一目になり、値札が上がる前に上流の話が来ることが図だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "一品だけ上がったならその店や商品の事情、何品にも広がっていれば上流の事情とみて、家計の月ごとに変わるお金の側を見直す。",
+        "content_type": "概念",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "2 つの場合の見分け方で、本文の例（パン）の 2 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 31,
+    "term": "給料が上がっても値打ちが下がるとき",
+    "points": [
+      {
+        "point": "給料が上がっても値打ちが下がるかを決めるのは増えた金額ではなく上がり方の割合で、物価の上がり方の割合のほうが大きいと買える量は減る。",
+        "content_type": "原理",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x を「増えた金額」「上がり方の割合」、y を「給料（25→26 万円）」「いつもの買い物の費用（12→13 万円）」とする 2×2。金額の列はどちらも「1 万円」、割合の列は「4％」と「8％」と書き、割合の列の費用のマスを強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "同じ 1 万円でも割合では倍違うという取り違えやすい点が、列を見比べるだけで閉じる。本文の計算を追わずに向きが言える。",
+        "benefit": 3
+      },
+      {
+        "point": "額面が上がっても引かれるものが増える分、手取りの増え方はそれより小さい。",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "単位「額面と手取り」の話の確認で、本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 34,
+    "term": "電気やガスの料金の内わけ",
+    "points": [
+      {
+        "point": "電気やガスの請求は、使った量に応じた分と、量が同じでも動く三つ（毎月決まってかかる分・燃料の仕入れ値の変化が遅れて映る分・制度で決まった加算）の合わせて四つでできている。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": true,
+        "type": "parts",
+        "idea": "全体を「電気・ガスの請求」とし、部位を「使った量に応じた分\n節電で変えられる」「毎月決まってかかる分\n量に関係なくかかる」「燃料の仕入れ値の反映\n相場の後に遅れて映る」「制度で決まった加算\n量以外で決まる」の 4 つにする。使った量に応じた分を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "請求の内わけの構成そのものが要点で、部位ごとに「量で変わるか」の一言を添えると、量が同じでも請求が動く理由が図だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "請求が動いた月は検針票の使用量を先に見て、量が同じなら節電で戻せる幅は限られると見当をつける。",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "見る順 1 つの判断で、本文の例の 2 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 35,
+    "term": "利息は何の代金か",
+    "points": [
+      {
+        "point": "利息の大きさは元本×金利×期間で決まり、同じ元本と金利でも期間が倍になれば利息も倍になる。",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "折れ線（line）で、100 万円を年 3％（仮の数）で借りたときの利息の合計を、期間 1・2・3・4 年で 3・6・9・12 万円と並べ、2 年と 4 年の点に注記する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "期間が延びると利息が積み上がる関係が線の傾きで見え、案内の「％」だけでは出ていく額が分からないことが図だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "金利は割合、利息はその割合から生まれる金額で、入れ替えて言わない。",
+        "content_type": "概念",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "2 つの語の 1 点の違いで本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 40,
+    "term": "元金と利息に分けて返す",
+    "points": [
+      {
+        "point": "毎回の返済は元本の減る分と利息に分かれ、毎回同じ額で返す形（元利均等返済）では初めは利息の側が大きく、返済が進むと元本の減る側が大きくなる。",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "折れ線（line）で、300 万円を仮の金利で元利均等返済したときの毎回の返済の内わけを、回ごと（年ごとの代表の回）に「利息の分」と「元本の減る分」の 2 本で並べ、2 本が入れかわる回に補助線を引く。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "残りの元本に利息がかかるので内わけが途中で入れかわる、という本文だけでは思い描きにくい動きが、2 本の線の交わりで一目になる。",
+        "benefit": 3
+      },
+      {
+        "point": "毎回の元本の減る分を一定にする形（元金均等返済）は初めがいちばん重く進むほど軽くなり、借入額・金利・期間が同じなら利息の合計は元利均等返済より少ない。",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "折れ線（line）で、同じ 300 万円・仮の金利・同じ期間のときの毎回の返済額を、元利均等返済（横ばい）と元金均等返済（下がっていく）の 2 本で並べる。元金均等返済の線を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "二つの型の毎回の重さの違いが横ばいの線と下がる線で見え、初めが重い型を選ぶ意味が図だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "借入の案内を比べる軸は、利息の合計・期間・手数料の三つである。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "三つの名前の一覧で、本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 47,
+    "term": "返せなくなったときの相談先",
+    "points": [
+      {
+        "point": "返せなくなりそうなときは、まず借り先へ自分から連絡し、借入をすべて書き出し、消費者ホットライン 188 に電話して最寄りの窓口を案内してもらう、の順で動く。",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": true,
+        "type": "sequence",
+        "idea": "登場人物を「自分」「借り先」「消費者ホットライン 188」とし、手順を「自分→借り先: 遅れる見込みを連絡する」「自分→自分: 借入をすべて書き出す（残高・毎回の額・期間・借り先）」「自分→188: 電話で相談する」「188→自分: 最寄りの消費生活センター等を案内する」の 4 つにする。最初の手順の note に「別のところから借りてしのがない」を書く。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "相手ごとの往き来と順番が要点で、誰に何をするかが登場人物の間の矢印で図だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "支払いの遅れは信用情報に登録され、後のローンやカードの審査に響く。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "連絡を急ぐ理由 1 つで、本文の 1 文で言える。",
+        "benefit": 1
+      },
+      {
+        "point": "窓口は困り方で分かれ、金融サービスのことは金融庁の相談室、法律の手続きに及ぶときは法テラスである。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "窓口の名前の一覧で、本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 43,
+    "term": "変わる金利と変わらない金利",
+    "points": [
+      {
+        "point": "固定金利型は金利そのものも毎回の返済額も最後まで同じで、変動金利型は金利そのものが見直され、返済額ごと変わる型と、額は据え置いて利息にあたる分だけが変わる型がある。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x を「固定金利型」「変動金利型（返済額も変わる）」「変動金利型（返済額は据え置き）」、y を「金利そのもの」「毎回の返済額」「金利が上がったときに動く所」とする 3×3。据え置きの型×動く所のマスに「利息にあたる分が増え\n元本の減りが遅くなる」と書いて強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "「何が変わるのか」を型ごとに同じ観点で並べると、額が変わらないのに中身が変わる型の違いまで格子だけで言える。本文だけでは三つの型の違いを取り違えやすい。",
+        "benefit": 3
+      },
+      {
+        "point": "どちらが軽いかは先の金利で決まるので当てにいかず、金利が上がったときの増え分を毎月出し続けられるかで決める。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "判断の 1 つの問いで、本文の計算の例（8 千円）の 2 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 48,
+    "term": "金利が動くと何が先に変わるか",
+    "points": [
+      {
+        "point": "世の中の金利が動くと、これから借りる・預ける側にいちばん早く出て、見直しのある型で借りている側には次の見直しで出て、固定の型で借りている分と今預けてある分は満期や契約の終わりまで変わらない。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x を「いつ効くか」「何が動くか」、y を「これから借りる・預ける」「見直しのある型で借りている」「固定の型で借りている・今預けてある分」とする 3×2。いちばん早い「これから借りる・預ける」×いつ効くかのマスを強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "三つの立場を同じ 2 観点で並べると、自分がどの行にいるかで読み方が変わることが格子だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "効きが強く出るのは残高が大きい側で、借りている額が預けている額より大きければ返済の側を先に確かめる。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "比べ方 1 つの判断で、本文の例の 2 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 44,
+    "term": "残高に利息が乗り続ける払い方",
+    "points": [
+      {
+        "point": "毎月の支払いを小さな一定額にする払い方（リボ払い）では、残高に利息がかかり続けて残高が減りにくく、返し終わるまでの期間が伸びて払う合計が膨らむ。",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "折れ線（line）で、横軸を月、残高 20 万円・仮の月の金利のときに毎月 5000 円払う場合と毎月 2 万円払う場合の残高の減り方を 2 本並べ、5000 円の線を強調して完済までの月に注記する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "毎月が軽いことと払う合計が軽いことが別だという取り違えやすい点が、なかなか下がらない線の長さで図だけで言える。",
+        "benefit": 3
+      },
+      {
+        "point": "毎月の支払いのうち利息にあたる分が大きいと、元本はその残りしか減らない（5000 円のうち利息が 2000 円なら元本は 3000 円）。",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "例の引き算 1 つで本文の 1 文で言え、上の線の図が受け持つ動きの理由にとどまる。",
+        "benefit": 1
+      },
+      {
+        "point": "明細の「手数料」は中身が残高にかかる利息で、支払い方法の設定は自分で確かめる。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "注意の事実 1 つで本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 50,
+    "term": "生活費と分けておくお金",
+    "points": [
+      {
+        "point": "手取りのうち、毎月の生活費を先に確保し、次に急な出費への備えを数か月ぶんまで積み、そこに届いてから残りだけを増やす目的に回す、という順番で考える。",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": true,
+        "type": "steps",
+        "idea": "direction は down。段を「手取り\n口座に入る額」→「生活費を確保\n決まって出るお金と月ごとの支出」→「備えの分\nすぐ引き出せる形で数か月ぶん」→「余裕資金\n増やす目的に回せる」とし、段の間に「残りを回す」「残りを備えへ」「数か月ぶんに届いてから」を書く。備えの分の段を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "取り分ける順番と、次の段へ進む条件（数か月ぶんに届いてから）が段と段の間の言葉で一目になる。",
+        "benefit": 2
+      },
+      {
+        "point": "順番が逆で生活費や備えまで動かすと、置いた先が減っている時期に生活のために引き出すことになる。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "順番を守る理由 1 つで本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 51,
+    "term": "増える見込みと振れ幅はセット",
+    "points": [
+      {
+        "point": "お金の置く先では、増える見込みが大きいほど下に振れる幅も大きく、「大きく増えるのに減らない」という話は成り立たない。",
+        "content_type": "原理",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x を「増える見込みが小さい」「増える見込みが大きい」、y を「下に振れる幅が小さい」「下に振れる幅が大きい」とする 2×2。対角の 2 マスを「成り立つ組み合わせ」、見込み大×振れ幅小のマスを「成り立たない話\n疑って扱う」として強調し、残るマスは「選ぶ理由が薄い\n振れるのに増えにくい」とする。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "見込みと振れ幅が対になっていることと、勧誘が言う組み合わせがどこにあたるかが、マスの位置で図だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "動かせる額は、生活費と分けておくお金で取り分けた余裕資金の範囲までである。",
+        "content_type": "概念",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "前の単位の線引きの参照で、本文の 1 文で言える。",
+        "benefit": 1
+      },
+      {
+        "point": "見る順番は、額は範囲の中か・増える側と減る側の両方が示されているか・中身の説明を聞いて分かるか、である。",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "確かめることの一覧で、本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 53,
+    "term": "うまい話の見分け方と相談先",
+    "points": [
+      {
+        "point": "もうけ話を持ちかけられたら、振り込む前に、金融庁の一覧で登録の有無を見て、借り入れを勧めていないかを見て、どちらかが引っかかれば契約せず 188 に相談する。",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": true,
+        "type": "blocks",
+        "idea": "箱を「もうけ話の誘い\n振り込む前に判断する」「登録の有無を見る\n金融庁の一覧で」「借り入れを勧めるか\n借りて投資は止める」「契約しない\n理由を言わず断ってよい」「188 に相談\n最寄りの窓口を教わる」とし、線に「まず確かめる」「登録がある」「登録が無い」「勧めている」「その場で」を書く。「契約しない」の箱を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "確かめる順と、どこで引っかかれば断る側へ分かれるかが、箱と条件つきの線で図だけで言える。本文では分かれ道が文の中に埋もれる。",
+        "benefit": 2
+      },
+      {
+        "point": "窓口は困り方で分かれ、勧誘や契約の段階は消費生活センター（188）、だまされた・勧誘がやまないときは警察相談専用電話 #9110 である。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "窓口の名前の対応で、本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 45,
+    "term": "前払い・その場払い・後払い",
+    "points": [
+      {
+        "point": "払い方は代金が手元から出る時期で三つに分かれ、前払いは買う前、その場払いは買った時に出て、後払いは立て替えてもらって後で払うので、その間は借りていることになる。",
+        "content_type": "概念",
+        "function": "変換的",
+        "draw": true,
+        "type": "timeline",
+        "idea": "軸を「お金が手元から出る時期」、目盛りを「買う前」「買った時」「翌月」「決めた回数の終わり」とする。点の出来事を「前払い\n先に入れた範囲で使う」（買う前）、「その場払い\n口座の残高が上限」（買った時）、期間の出来事を「後払い\n立て替えてもらう（借りている）」（買った時から決めた回数の終わりまで）とし、後払いを強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "三つの型の違いが「いつ出るか」の位置で並び、後払いだけが期間を持つ帯になることで、借りている性質が図だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "後払いは回数と期間が契約のときに決まっていて、決まっていない残高に利息が乗り続ける払い方とは別物である。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "2 者の 1 点の違いで本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 49,
+    "term": "預ける側から見た金利",
+    "points": [
+      {
+        "point": "預ける側で並べて見るのは、新しい金利が付く時期・手数料・すぐ動かせるかの三つである。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "見る観点の一覧で、比べる対象が本文に無く、本文の 1 文で言える。",
+        "benefit": 1
+      },
+      {
+        "point": "今預けてある分は満期や預け替えのときまで同じ金利のままで、金利が上がってもその月から受け取りが増えるわけではない。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "時点のずれは単位「金利が動くと何が先に変わるか」の格子が受け持ち、ここは参照の 1 文で足りる。",
+        "benefit": 1
+      },
+      {
+        "point": "手数料が受け取る利息を上回れば、金利の高いほうを選んでも手元は増えない。",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "2 つの額の大小 1 つで本文の 1 文で言える。",
+        "benefit": 1
+      },
+      {
+        "point": "利息の付き方は、元本にだけつく単利と、受け取った利息も元本に加えて次の利息がかかる複利に分かれる。",
+        "content_type": "概念",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "本文では定義の 1 文だけの脇の話で、単位の要点ではない。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 56,
+    "term": "税は何に使われているか",
+    "points": [
+      {
+        "point": "税は国と住んでいる所が集めて皆で使う費用にあて、払った人に直接戻らない一方、社会保険料は備える場面が決まっていて起きたときに戻ってくる。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x を「納める先」「使い道」「払った人に戻るか」、y を「税」「社会保険料」とする 2×3。税×戻るかのマスに「直接は戻らない\n皆で使う費用の分担」と書いて強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "明細の税の行と保険料の行を同じ 3 観点で並べると、読み分け方が格子だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "住民税は前の年の 1 年の収入から額が決まり、給与からは 6 月から翌年 5 月までを 1 年ぶんとして引かれるので、去年の働き方が今年の明細に出る。",
+        "content_type": "事実",
+        "function": "変換的",
+        "draw": true,
+        "type": "timeline",
+        "idea": "軸を「時期」、目盛りを「前の年 1 月」「前の年 12 月」「今年 6 月」「今年 12 月」「翌年 5 月」とする。期間の出来事を「前の年の収入\n1 年分で額が決まる」（前の年 1 月〜12 月）と「住民税を引く\n今年 6 月から翌年 5 月」（今年 6 月〜翌年 5 月）、点の出来事を「明細の住民税が変わる\n6 月の給与から」（今年 6 月）とし、住民税を引く期間を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "額を決める期間と引かれる期間のずれが帯の位置で見え、転職や休職で明細の額が動く理由が図だけで言える。本文だけでは月の並びを追いにくい。",
+        "benefit": 2
+      }
+    ]
+  },
+  {
+    "topic_id": 77,
+    "term": "受け継ぐときにかかる税",
+    "points": [
+      {
+        "point": "生きている人からもらったときは贈与税、亡くなった人から引き継いだときは相続税で、名前も手続きも別である。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "2 者の 1 点の違いで本文の 1 文で言える。",
+        "benefit": 1
+      },
+      {
+        "point": "受け継ぐときの税は毎年の給料の税とは別の枠で、明細や年末の精算には出てこない。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "別の枠であるという事実 1 つで本文の 1 文で言える。",
+        "benefit": 1
+      },
+      {
+        "point": "手続きをするのは受け取った側で、申告に期限がある。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "事実 2 つの 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 65,
+    "term": "出し合って備える（保険の考え方）",
+    "points": [
+      {
+        "point": "保険は、多くの人が少しずつお金を出し合い、実際に起きた人にそこから渡す仕組みで、起きなかった人が出した分は起きた人に渡る。",
+        "content_type": "プロセス",
+        "function": "変換的",
+        "draw": true,
+        "type": "blocks",
+        "idea": "箱を「加入する多くの人\n少しずつ出す」「出し合ったお金\n皆の保険料の集まり」「起きた人\n払いきれない額を受け取る」「起きなかった人\n受け取らない」とし、線に「保険料を少しずつ」「起きた人にだけ渡す」「出した分は起きた人へ」を書く。起きた人の箱を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "お金がどこから集まり誰へ渡るかの流れが矢印のラベルで運ばれ、「起きなかった人の分が起きた人に渡る」が図だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "保険が向くのは、起きる確率は低いが起きたら自分では払いきれない出費で、よく起きて額の小さい出費は取り分けたお金で足りる。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x を「例」「備え方」、y を「起きる確率は低く、起きたら払いきれない」「よく起きて、額は小さい」とする 2×2。例は「人にけがをさせた賠償」「自転車のパンクの修理」、備え方は「出し合って備える（保険）」「取り分けたお金で足す」と書き、保険のマスを強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "何を保険で持ち何を手元で足すかの振り分けが、二つの出費の型を同じ観点で並べた格子で閉じる。",
+        "benefit": 2
+      },
+      {
+        "point": "公の備えも同じ考え方で作られているので、すでに入っている公の備えを確かめてから、足りない分だけを考える。",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "後の単位「公的な備えを先に確かめる」の図が受け持ち、ここは 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 66,
+    "term": "社会保険の柱",
+    "points": [
+      {
+        "point": "社会保険は健康保険・年金・雇用保険・介護保険の四つの柱に分かれ、柱ごとに備える場面（病気やけが／障害・遺族・老後／失業・育児や介護の休み／介護）が決まっている。",
+        "content_type": "概念",
+        "function": "表現的",
+        "draw": true,
+        "type": "parts",
+        "idea": "全体を「社会保険」とし、部位を「健康保険\n病気やけが・働けない間の手当」「年金\n障害・遺族・老後」「雇用保険\n失業・育児や介護で休む」「介護保険\n介護が要る（ある年齢から）」の 4 つにする。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "四つの柱がどの場面を受け持つかが部位ごとの一言で並び、場面を言い分けると当たる柱が図だけで決まる。本文では場面と柱の対応が長い段落に散っている。",
+        "benefit": 2
+      },
+      {
+        "point": "「働けなくなったとき」とひとまとめにせず、病気・障害・失業のどれかを言い分け、当ててから残った穴だけを自分で埋める。",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "上の分解図を使う手順 1 つで、本文の 2 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 69,
+    "term": "年金は三つの場面で受け取る",
+    "points": [
+      {
+        "point": "公的年金は、年をとったとき（老齢）、障害が残ったとき（障害）、家計を支えていた人が亡くなったとき（遺族）の三つの場面で受け取る。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "三つの名前と場面の一覧で、本文の 1 文で言える。",
+        "benefit": 1
+      },
+      {
+        "point": "納められない時期を黙って放置すると三つの場面すべてに響き、免除や猶予を申し出れば受け取れる道が残るので、記録を切らさない。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "放置と申し出の 2 者の 1 点の違いで、本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 76,
+    "term": "公的な備えを先に確かめる",
+    "points": [
+      {
+        "point": "民間の保険を考える前に、健康保険の窓口負担とひと月の上限、働けない間の手当、勤め先の上乗せを順に当て、それでも埋まらない残りだけを自分で埋める。",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": true,
+        "type": "steps",
+        "idea": "direction は down。段を「健康保険\n窓口は一部・上限を超えた分は戻る」→「働けない間の手当\n健康保険から出る」→「勤め先の上乗せ\n会社が独自に足す給付」→「残り\n個室の差額・食事・収入の落ち込み」とし、段の間に「埋まらない分」「まだ足りない分」「それでも残る分」を書く。残りの段を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "公的な分から順に当てて残りが小さくなっていく順番が段と段の間の言葉で一目になり、民間で埋めるのは最後の段だけだと図だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "受け取る額を大きくすれば払う保険料も上がるので、残りの大きさと払う保険料を比べる。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "比べ方 1 つで本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 70,
+    "term": "年金と貯金は何が違うか",
+    "points": [
+      {
+        "point": "貯金は自分でためて自分で取り崩す形で、公的年金は現役の人の保険料をその時に受け取る人へ渡す形で、生きている間ずっと受け取れ、障害や死亡の場面もあるので、置き換えではなく役割の違う二本である。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x を「貯金」「公的年金」、y を「誰が出したお金か」「いつまで受け取れるか」「障害や死亡のとき」とする 3×2。公的年金×いつまでのマス（「生きている間ずっと」）を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "二つの備えを同じ 3 観点で並べると、年金が何を引き受けているか（長生きと万一）が格子だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "自分の記録は毎年届く年金の記録の通知（ねんきん定期便）で確かめ、足りない分を貯金で埋めるかを考える。",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "手元でやること 1 つで本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 78,
+    "term": "円高と円安の向き",
+    "points": [
+      {
+        "point": "円高は円ひとつで交換できる相手のお金が前より多い状態、円安は少ない状態で、見出しの「1 ドル＝◯円」は 1 ドルの値段なので数字が大きいほど円安になる。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x を「見出しの数字」「1 ドルの品物に払う円」「円ひとつで交換できる相手のお金」、y を「円高」「円安」とする 2×3。円高は「1 ドル＝80 円・80 円で足りる・多い」、円安は「1 ドル＝120 円・120 円払う・少ない」と書き、円安×見出しの数字のマス（数字が大きい）を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "数字が大きいほど円安という直感に反する向きが、同じ観点を行どうしで比べるだけで閉じる。本文だけでは向きを取り違えやすい。",
+        "benefit": 3
+      },
+      {
+        "point": "為替の相場は誰かひとりが決めるものではなく、世界中の売り買いで日々動く。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "事実 1 つで本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 79,
+    "term": "円安が値段に届く道すじ",
+    "points": [
+      {
+        "point": "円安は、外から買う物の費用を円で見て上げ、それが売り値に移されて、間をおいて店の値札や料金に出てくる。",
+        "content_type": "プロセス",
+        "function": "変換的",
+        "draw": true,
+        "type": "steps",
+        "idea": "direction は down。段を「円安\n同じ物に多くの円が要る」→「輸入する物の費用\n材料・燃料が円で上がる」→「売り値\n店や会社が費用を移す」→「店の値札・料金\n間をおいて上がる」とし、段の間に「円で払う額が増える」「仕入れの費用が上がる」「移すまでに間がある」を書く。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "向きが決まった後に値札へ届くまでの順番と間が段の並びで一目になり、値札の手前に何があったかが図だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "すべての品目に同じだけ出るのではなく、外から買う割合が高い品目に先に大きく出る。",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "出方の差の見方 1 つで本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 83,
+    "term": "中央銀行は何をするところか",
+    "points": [
+      {
+        "point": "中央銀行（日本では日本銀行）はお札を発行し、物価が落ち着いた状態を保つ役目を持つ、銀行のための銀行である。",
+        "content_type": "概念",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "役目の定義で、本文の 1 文で言える。",
+        "benefit": 1
+      },
+      {
+        "point": "相手にしているのは個人ではなく銀行と市場なので、決定は銀行を経由して後から家計に効く。",
+        "content_type": "プロセス",
+        "function": "変換的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "届く道すじは単位「誰が決める金利か」「政策の金利が家計に届くまで」の図が受け持ち、ここは 1 文で言える。",
+        "benefit": 1
+      },
+      {
+        "point": "金利へ働きかける決定は金融政策決定会合で決まり、決めたこと・議事の要旨・見通しが公表される。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "事実 1 つで本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 84,
+    "term": "誰が決める金利か",
+    "points": [
+      {
+        "point": "中央銀行が直接働きかけるのは銀行同士が翌日返す約束で貸し借りする金利（政策金利）だけで、そこから銀行がお金を用意する費用を通って、預ける金利・貸す金利・長い期間の金利へ順に伝わる。",
+        "content_type": "プロセス",
+        "function": "変換的",
+        "draw": true,
+        "type": "steps",
+        "idea": "direction は down。段を「中央銀行\n銀行が置くお金の量を調整する」→「政策金利\n銀行同士の翌日の貸し借り」→「銀行がお金を用意する費用\n政策金利で上下する」→「預ける金利・貸す金利\n費用に合わせて動く」→「長い期間の金利\n後から伝わる」とし、段の間に「決めた水準に近づける」「費用として移る」「預金とローンの金利へ」「長い期間へ」を書く。政策金利の段を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "たくさんある金利のうち直接動かすのは一つで、ほかは順に伝わるという関係が段の並びで一目になり、見出しの「金利」がどの段かを図だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "公定歩合は、政策の中心の道具ではなくなった。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "事実 1 つで本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 86,
+    "term": "政策の金利が家計に届くまで",
+    "points": [
+      {
+        "point": "政策の金利が動いても家計に届くのは時間がずれ、これから借りる人の金利に先に出て、変動型の返済は次の見直しの時期に、今預けてある分は満期に、固定型は契約の間は変わらない。",
+        "content_type": "プロセス",
+        "function": "変換的",
+        "draw": true,
+        "type": "timeline",
+        "idea": "軸を「政策の金利が動いてからの時間（例）」、目盛りを「動いた日」「1 か月」「3 か月」「6 か月」「1 年」とする。点の出来事を「政策の金利が動く\n銀行の費用が先に動く」（動いた日）、「変動型の見直し\n返済の金利が変わる」（6 か月）、「定期の満期\n新しい金利で預け替え」（1 年）、期間の出来事を「これから借りる人\n新しい契約に早く出る」（動いた日〜1 か月）と「固定型で借りている\n契約の間は変わらない」（動いた日〜1 年）とする。変動型の見直しを強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "見出しの日と自分の家計が動く日のずれが軸の上の位置で見え、見るべきは自分の見直しや満期の時期だと図だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "見直しで金利が 1％分上がったときの利息の増え方は、元本×金利×期間で見当が付く（800 万円なら 1 年でおよそ 8 万円）。",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "例の掛け算 1 つで本文の 1 文で言え、単位「利息は何の代金か」の図が式の形を受け持つ。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 81,
+    "term": "旅行と燃料に出る為替",
+    "points": [
+      {
+        "point": "為替の動きが早く大きく出るのは、外国で払うお金と、物を運ぶ燃料（と、それが乗る運賃）の二つで、旅行の予算は円で先に払う分と現地で払う分に分けて見る。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x を「為替の出方」「予算で見ること」、y を「現地で払う分」「燃料と運賃が乗る分」「円で先に払った分」とする 3×2。現地で払う分×予算で見ることのマス（「幅を持たせる」）を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "予算の部分ごとに為替がどう出るかと何をするかを同じ観点で並べると、どこに幅を持たせるかが格子だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "燃料は外から買うので為替と原油の値段の両方が効き、運賃や配送の料金にも遅れて出やすい。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "上の格子の燃料の行の理由で、本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 80,
+    "term": "同じ円安で向きが逆になる人",
+    "points": [
+      {
+        "point": "同じ円安でも、外へ売って外国のお金を受け取る側は円での受け取りが増え、外から買って外国のお金で支払う側は円での支払いが増え、立場によって逆向きに効く。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x を「1 ドル＝100 円のとき」「1 ドル＝150 円のとき」、y を「外へ売る側（1,000 ドルを受け取る）」「外から買う側（1,000 ドルを支払う）」とする 2×2。受け取る側は「10 万円」「15 万円になる\n受け取りが増える」、支払う側は「10 万円」「15 万円が要る\n支払いが増える」と書き、150 円の列の 2 マスを強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "同じ動きで同じ 5 万円の差が、一方には追い風、他方には向かい風になることが行どうしの比べで閉じる。",
+        "benefit": 2
+      },
+      {
+        "point": "受け取りが増える側に勤めていても、それが給料に回るかは別で、値段の上がり方が大きければ買える量は増えない。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "前の単位の見方の参照で、本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 89,
+    "term": "景気がよい・悪いは何を見て言うのか",
+    "points": [
+      {
+        "point": "景気のよしあしは一つの数字ではなく、働く場の増減・給料・値段・売れ行きなど、いくつもの材料を並べて全体の向きで言う。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "材料の一覧と判断のしかたで、比べる観点が立たず、本文の 1 文で言える。",
+        "benefit": 1
+      },
+      {
+        "point": "材料は出てくる時期がそろわず、募集のように景気とほぼ同時に動くものと、失業率のように後から動くものがある。",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "量の動きの例が本文に無く、2 つの例の 1 点の違いとして本文の 1 文で言える。",
+        "benefit": 1
+      },
+      {
+        "point": "自分の側は、求人・残業や手当・勤め先の売れ行きの向きがそろっているかで見る。",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "見る所の一覧で本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  }
+]

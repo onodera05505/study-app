@@ -1,0 +1,65 @@
+{
+  "topic_id": 102,
+  "term": "準天頂衛星",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 真上の衛星だと谷間でも測れる理由",
+      "caption": "低い角度の衛星の電波はビルで止まります。強調したほぼ真上の準天頂衛星の電波は、谷間の受信機まで届きます。",
+      "nodes": [
+        {
+          "id": "qzs",
+          "label": "準天頂衛星\nほぼ真上にとどまる",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "high",
+          "label": "GPS 衛星（高い角度）\n空の高い所",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "low",
+          "label": "GPS 衛星（低い角度）\n地平線に近い",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "bld",
+          "label": "高いビル\n低い角度の電波を遮る",
+          "row": 2,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "rx",
+          "label": "受信機\nビルの谷間にいる",
+          "row": 2,
+          "col": 1,
+          "icon": "phone"
+        }
+      ],
+      "edges": [
+        {
+          "from": "qzs",
+          "to": "rx",
+          "label": "真上から届く"
+        },
+        {
+          "from": "high",
+          "to": "rx",
+          "label": "高い角度から届く"
+        },
+        {
+          "from": "low",
+          "to": "bld",
+          "label": "ビルに当たって止まる",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

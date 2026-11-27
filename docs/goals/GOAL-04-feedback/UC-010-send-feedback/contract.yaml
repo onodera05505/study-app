@@ -1,0 +1,216 @@
+# UC-010 開いていた画面を添えてフィードバックを送る — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-146〜161・242・349）
+# 読み方の決まりは docs/adr/ADR-0001（transport・direction・auth・operation 名の当て方）
+# 共有語彙（authSchemes・errorCodes・共有の形）は ../../../_shared/components.yaml
+x-uc: UC-010
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-18
+
+operations:
+  # ---- 学び側（この配備。フィードバックの受け口） ----
+
+  submitFeedback:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: bearer
+    summary: 本文・フィードバックの種類・添え先を受け取り、未処理のフィードバックとして残して受付の id だけを返す
+    wire: { method: POST, path: /api/feedback, success: 201 }
+    request:
+      type: object
+      required: [body, kind]
+      properties:
+        body:
+          type: string
+          minLength: 1
+          maxLength: 2000
+          description: 前後の空白を落としてから長さを見て、落とした形で残す
+        kind:
+          type: string
+          enum: [text, unclear, good, improve, other]
+          description: 画面が選ばせるのは good / improve / other。text・unclear は既に残っている行の値で、受け付けたままにする
+        page:
+          type: string
+          maxLength: 200
+          description: 添え先の場所
+        topicId:
+          type: integer
+          minimum: 1
+          description: 添え先の論点
+        questionId:
+          type: string
+          maxLength: 64
+          description: 添え先の問題（受験の id と問の位置をつないだ値）
+    response:
+      type: object
+      required: [id]
+      properties:
+        id: { type: string, description: 受け付けたフィードバックの id }
+    errors:
+      - code: UNAUTHENTICATED
+        when: Bearer トークンが無い・読めない
+        wire: { status: 401 }
+      - code: INVALID_INPUT
+        when: 本文が空（空白だけ）または長すぎる。利用者が直せるので具体の文を返す
+        wire: { status: 400 }
+      - code: INVALID_INPUT
+        when: 本文以外が決められた形でない（種類が無い・本文の型違い・本文ごと JSON でない場合も含む）。固定の文を返す
+        wire: { status: 400 }
+      - code: RATE_LIMITED
+        when: 同じ利用者の直近 1 日の受付が上限に達している
+        wire: { status: 429 }
+    examples:
+      ok:
+        request: { body: 単位「LTV」の 1÷解約率のところが分かりにくかった, kind: improve, page: /topics/412, topicId: 412 }
+        response: { id: 9c2f7a41-5d38-4b06-9e17-83a0c6d41b29 }
+      okWithQuestion:
+        request: { body: この問の選択肢に答えが無いように見える, kind: other, page: /sessions/51d0, questionId: "51d0e9b7-6a24-4c83-9f15-7b2e0d8a43c6#2" }
+        response: { id: 1d84b35e-7c90-4a21-8f63-ce95a2704d18 }
+      emptyBody:
+        request: { body: "   ", kind: improve }
+        error: INVALID_INPUT
+      badKind:
+        request: { body: 分かりにくかった, kind: zzz }
+        error: INVALID_INPUT
+      missingKind:
+        request: { body: 分かりにくかった }
+        error: INVALID_INPUT
+      noToken:
+        request: { body: 分かりにくかった, kind: improve }
+        error: UNAUTHENTICATED
+      noTokenAndEmptyBody:
+        request: { body: "", kind: improve }
+        error: UNAUTHENTICATED
+      overDailyLimit:
+        request: { body: 21 件目のフィードバック, kind: good }
+        error: RATE_LIMITED
+
+  # ---- 端末の記憶（この端末・このタブに残る。鍵の名前は operation 名が表し、値の形だけを書く） ----
+
+  setLastPage:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 利用者が移った学びの画面を、添え先として端末の記憶に 1 件だけ置く
+    request: { $ref: "#/schemas/LastPage" }
+    response:
+      type: object
+      required: [lastPage]
+      properties:
+        lastPage: { $ref: "#/schemas/LastPage", description: 書いたあとに読むと、書いた添え先 }
+    errors:
+      - code: STORAGE_UNAVAILABLE
+        when: 端末の記憶に書けない
+    examples:
+      ok: { request: { path: /topics/412, label: 学習の単位の詳細 }, response: { lastPage: { path: /topics/412, label: 学習の単位の詳細 } } }
+      unavailable: { request: { path: /topics/412, label: 学習の単位の詳細 }, error: STORAGE_UNAVAILABLE }
+
+  annotateLastPage:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 読み終えた論点・問題とその人が読む名前を、覚えている添え先に足す（場所は変えない）
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        label: { type: string, description: 人が読む名前。論点名や問の位置を含む }
+        topicId: { type: integer, minimum: 1 }
+        questionId: { type: string, maxLength: 64, description: 受験の id と問の位置をつないだ値 }
+    response:
+      type: object
+      required: [lastPage]
+      properties:
+        lastPage:
+          description: 足したあとに読むと、覚えていた添え先に名前と論点・問題を重ねた物。添え先を覚えていなければ null のまま
+          anyOf:
+            - { $ref: "#/schemas/LastPage" }
+            - { type: "null" }
+    errors:
+      - code: STORAGE_UNAVAILABLE
+        when: 端末の記憶が読めない・書けない
+    examples:
+      okTopic: { request: { label: 学習の単位「LTV」, topicId: 412 }, response: { lastPage: { label: 学習の単位「LTV」, topicId: 412 } } }
+      okQuestion: { request: { label: 分野別の演習 の 3 問目, questionId: "51d0e9b7-6a24-4c83-9f15-7b2e0d8a43c6#2" }, response: { lastPage: { label: 分野別の演習 の 3 問目, questionId: "51d0e9b7-6a24-4c83-9f15-7b2e0d8a43c6#2" } } }
+      noRecord: { request: { label: 学習の単位「LTV」, topicId: 412 }, response: { lastPage: null } }
+      unavailable: { request: { label: 学習の単位「LTV」, topicId: 412 }, error: STORAGE_UNAVAILABLE }
+
+  readLastPage:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 端末の記憶にある添え先を読む。覚えていないか、覚えた値が LastPage の形に合わなければ null
+    response:
+      type: object
+      required: [lastPage]
+      properties:
+        lastPage:
+          anyOf:
+            - { $ref: "#/schemas/LastPage" }
+            - { type: "null" }
+    errors:
+      - code: STORAGE_UNAVAILABLE
+        when: 端末の記憶が読めない
+    examples:
+      ok: { response: { lastPage: { path: /topics/412, label: 学習の単位「LTV」, topicId: 412 } } }
+      okTopicThenQuestion: { response: { lastPage: { path: /topics/412, label: 学習の単位「LTV」 の 3 問目, topicId: 412, questionId: "51d0e9b7-6a24-4c83-9f15-7b2e0d8a43c6#2" } } }
+      none: { response: { lastPage: null } }
+      broken: { response: { lastPage: null } }
+      unavailable: { error: STORAGE_UNAVAILABLE }
+
+  saveFeedbackDraft:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 書きかけの本文を下書きとして端末の記憶に置く。空の本文を渡すと下書きを捨てる
+    request:
+      type: object
+      required: [body]
+      properties:
+        body: { type: string, maxLength: 2000, description: 空文字のときは記憶から下書きを消す（受付後の片付けもこれ） }
+    response:
+      type: object
+      required: [body]
+      properties:
+        body: { type: string, maxLength: 2000, description: 書いたあとに読むと、書いた本文。消したあとは空文字 }
+    errors:
+      - code: STORAGE_UNAVAILABLE
+        when: 端末の記憶に書けない・消せない
+    examples:
+      ok: { request: { body: 単位「LTV」の 1÷解約率のところが分かりにく }, response: { body: 単位「LTV」の 1÷解約率のところが分かりにく } }
+      cleared: { request: { body: "" }, response: { body: "" } }
+      unavailable: { request: { body: 単位「LTV」の 1÷解約率のところが分かりにく }, error: STORAGE_UNAVAILABLE }
+
+  readFeedbackDraft:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 端末の記憶にある下書きを読む。無ければ空の本文
+    response:
+      type: object
+      required: [body]
+      properties:
+        body: { type: string, maxLength: 2000, description: 下書きが無いときは空文字 }
+    errors:
+      - code: STORAGE_UNAVAILABLE
+        when: 端末の記憶が読めない
+    examples:
+      ok: { response: { body: 単位「LTV」の 1÷解約率のところが分かりにく } }
+      none: { response: { body: "" } }
+      unavailable: { error: STORAGE_UNAVAILABLE }
+
+# この UC の 2 つ以上の operation が使う形（2 UC 以上で使う形は ../../../_shared/components.yaml）
+schemas:
+  LastPage:
+    type: object
+    required: [path, label]
+    properties:
+      path: { type: string, minLength: 1, description: 添え先の場所 }
+      label: { type: string, description: 人が読む名前 }
+      topicId: { type: integer, minimum: 1 }
+      questionId: { type: string, maxLength: 64, description: 受験の id と問の位置をつないだ値 }

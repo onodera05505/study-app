@@ -200,7 +200,7 @@ def main() -> int:
 
     merged = {
         "exam": args.exam,
-        "source": "IPA 公開問題（表示時の出典明記が必須。docs/要件定義書_draft.md §9 参照）",
+        "source": "IPA 公開問題（表示時の出典明記が必須。docs/rules/BR-027.md 参照）",
         "normalized": not args.no_normalize,
         "question_count": len(questions),
         "questions": [questions[n] for n in sorted(questions)],

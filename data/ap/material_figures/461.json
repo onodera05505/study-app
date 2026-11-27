@@ -1,0 +1,71 @@
+{
+  "topic_id": 461,
+  "term": "XBRL",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### XML に意味のタグを付けるしくみ",
+      "caption": "タクソノミのタグで意味を付けた数値が、そのまま受け手の分析まで流れます。途中に人が転記する箱はありません。",
+      "nodes": [
+        {
+          "id": "tax",
+          "label": "タクソノミ\n項目ごとのタグの定義集",
+          "row": 0,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "co",
+          "label": "提出する企業\n財務諸表の数値を持つ",
+          "row": 1,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "inst",
+          "label": "インスタンス文書\nタグ付きの財務の数値",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "ed",
+          "label": "EDINET\n提出を受けて公開する",
+          "row": 0,
+          "col": 2,
+          "shape": "cloud"
+        },
+        {
+          "id": "ana",
+          "label": "分析システム\n集計と企業間の比較",
+          "row": 1,
+          "col": 2,
+          "icon": "chart"
+        }
+      ],
+      "edges": [
+        {
+          "from": "tax",
+          "to": "inst",
+          "label": "使うタグを決める"
+        },
+        {
+          "from": "co",
+          "to": "inst",
+          "label": "数値を入れる"
+        },
+        {
+          "from": "inst",
+          "to": "ed",
+          "label": "タグ付きの数値を提出"
+        },
+        {
+          "from": "ed",
+          "to": "ana",
+          "label": "転記せず流し込む"
+        }
+      ]
+    }
+  ]
+}

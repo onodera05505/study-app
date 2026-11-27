@@ -1,0 +1,35 @@
+{
+  "topic_id": 203,
+  "term": "セキュリティクリアランス",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 人を評価して資格を与えるしくみ",
+      "caption": "評価の対象は人で、職務に就く前に調査から資格の付与まで段を踏みます。与えた資格の水準が、扱える情報の機密度を決めます。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "調査\n経歴・犯罪歴・経済状況\n対外的な関係",
+          "icon": "person",
+          "next_label": "調べた結果"
+        },
+        {
+          "label": "評価\n情報を任せてよい\n人物かを判断する",
+          "icon": "search",
+          "next_label": "合格"
+        },
+        {
+          "label": "資格の付与\n水準つきで本人に与える",
+          "icon": "key",
+          "next_label": "資格の水準",
+          "emphasis": true
+        },
+        {
+          "label": "職務に就く\n水準に合う機密度の\n情報だけを扱う",
+          "icon": "lock"
+        }
+      ]
+    }
+  ]
+}

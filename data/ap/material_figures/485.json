@@ -1,0 +1,114 @@
+{
+  "topic_id": 485,
+  "term": "DMZ（非武装地帯）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### なぜ中間の区画を作るのか",
+      "caption": "外側から内側へは直接通さず、上の DMZ を経由させます。片方の関門が破られても、もう一段が残る形です。",
+      "nodes": [
+        {
+          "id": "i",
+          "label": "外側のネットワーク\n外部とつながる",
+          "row": 1,
+          "col": 0,
+          "icon": "network"
+        },
+        {
+          "id": "z",
+          "label": "DMZ\n両側と通信が要る\n機器だけ置く",
+          "row": 0,
+          "col": 1,
+          "emphasis": true,
+          "icon": "server"
+        },
+        {
+          "id": "c",
+          "label": "内側のネットワーク\n守りたい機器がある",
+          "row": 1,
+          "col": 2,
+          "icon": "lock"
+        }
+      ],
+      "edges": [
+        {
+          "from": "i",
+          "to": "z",
+          "label": "関門 1：DMZ まで入れる"
+        },
+        {
+          "from": "z",
+          "to": "c",
+          "label": "関門 2：DMZ からだけ通す"
+        },
+        {
+          "from": "i",
+          "to": "c",
+          "label": "直通は通さない",
+          "style": "dashed"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 一般のネットワークでの DMZ",
+      "caption": "外部からの接続は、ファイアウォールで DMZ の公開サーバまでに止めます。内部ネットワークへは DMZ からの決めた通信だけを通すので、DMZ の機器が乗っ取られても内部へ通れる道は限られます。",
+      "nodes": [
+        {
+          "id": "n",
+          "label": "インターネット\n誰でも接続してくる",
+          "row": 0,
+          "col": 0,
+          "shape": "cloud"
+        },
+        {
+          "id": "f",
+          "label": "ファイアウォール\n通す通信を選ぶ",
+          "row": 0,
+          "col": 1,
+          "icon": "lock"
+        },
+        {
+          "id": "z",
+          "label": "DMZ\n公開 Web・外部向け DNS",
+          "row": 0,
+          "col": 2,
+          "emphasis": true,
+          "icon": "server"
+        },
+        {
+          "id": "l",
+          "label": "内部ネットワーク\n社員の PC・業務データ",
+          "row": 1,
+          "col": 2,
+          "icon": "device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "n",
+          "to": "f",
+          "label": "外部からの接続"
+        },
+        {
+          "from": "f",
+          "to": "z",
+          "label": "公開サービスへは通す"
+        },
+        {
+          "from": "f",
+          "to": "l",
+          "label": "外部から内部へは止める",
+          "style": "dashed"
+        },
+        {
+          "from": "z",
+          "to": "l",
+          "label": "決めた通信だけ通す"
+        }
+      ]
+    }
+  ]
+}

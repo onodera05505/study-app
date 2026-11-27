@@ -1,0 +1,58 @@
+{
+  "topic_id": 1,
+  "term": "ハッシュ表探索法",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### なぜ 1 回で届くのか",
+      "caption": "キーを関数に通した値が、そのまま配列の位置になります。他のデータと比べる段が無く、計算 1 回で読みに行く位置が決まります。",
+      "nodes": [
+        {"id": "key", "label": "キー 54321\n探したい値", "row": 0, "col": 0},
+        {"id": "fn", "label": "ハッシュ関数\n決まった計算", "row": 0, "col": 1, "icon": "gear", "emphasis": true},
+        {"id": "pos", "label": "配列の位置 2\n計算結果が添字", "row": 0, "col": 2},
+        {"id": "data", "label": "データ\nその位置に入っている", "row": 0, "col": 3, "shape": "cylinder"}
+      ],
+      "edges": [
+        {"from": "key", "to": "fn", "label": "キーを入れる"},
+        {"from": "fn", "to": "pos", "label": "位置が 1 つに決まる"},
+        {"from": "pos", "to": "data", "label": "比べずに直接読む"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "chart",
+      "after": "### なぜ 1 回で届くのか",
+      "caption": "件数が増えたときの比較の回数の伸び方です。先頭から順に照合する線形探索は件数に比例して伸び、ハッシュ表探索はほぼ 1 回のまま変わりません。",
+      "kind": "line",
+      "x": {"label": "格納した件数", "values": [100, 300, 500, 700, 900]},
+      "y": {"label": "探すときの比較の回数（平均）", "min": 0},
+      "series": [
+        {"label": "ハッシュ表探索", "values": [1, 1, 1, 1, 1], "emphasis": true},
+        {"label": "線形探索（件数の半分）", "values": [50, 150, 250, 350, 450]}
+      ],
+      "annotations": [
+        {"x": 900, "y": 1, "text": "件数によらずほぼ 1 回"}
+      ]
+    },
+    {
+      "id": 3,
+      "type": "blocks",
+      "after": "### 衝突への対処",
+      "caption": "異なる 2 つのキーが同じ位置に写るのが衝突です。連鎖法では、その位置から後に来たデータをリストでつないで逃がします。",
+      "nodes": [
+        {"id": "ka", "label": "キー A\n位置 2 に写る", "row": 0, "col": 0},
+        {"id": "kb", "label": "キー B\nこれも位置 2 に写る", "row": 1, "col": 0},
+        {"id": "pos", "label": "配列の位置 2\nリストの先頭を指す", "row": 0, "col": 1, "emphasis": true},
+        {"id": "da", "label": "データ A\n先に入った", "row": 0, "col": 2},
+        {"id": "db", "label": "データ B\n後から来た", "row": 0, "col": 3}
+      ],
+      "edges": [
+        {"from": "ka", "to": "pos", "label": "関数の値 2"},
+        {"from": "kb", "to": "pos", "label": "同じ 2（衝突）"},
+        {"from": "pos", "to": "da", "label": "リストの 1 件目"},
+        {"from": "da", "to": "db", "label": "同じ位置の後ろにつなぐ"}
+      ]
+    }
+  ]
+}

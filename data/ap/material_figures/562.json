@@ -1,0 +1,18 @@
+{
+  "topic_id": 562,
+  "term": "DRAM",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "### コンデンサで記憶するしくみ",
+      "caption": "DRAM の 1 ビットはコンデンサの電荷です。電荷は漏れて消えるので、消える前に一定時間ごとに読み出して書き戻す輪を回し続けます。",
+      "center": "DRAM の\n1 ビット",
+      "stages": [
+        {"label": "保持\nコンデンサに電荷がある", "icon": "database", "next_label": "時間が経つ"},
+        {"label": "漏れ\n電荷が少しずつ減る", "icon": "clock", "next_label": "0 と 1 が区別できなくなる前に"},
+        {"label": "リフレッシュ\n読み出して書き戻す", "icon": "arrow-cycle", "next_label": "元の量の電荷", "emphasis": true}
+      ]
+    }
+  ]
+}

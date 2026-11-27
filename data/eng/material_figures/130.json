@@ -1,0 +1,118 @@
+{
+  "topic_id": 130,
+  "term": "プログラムからデータベースを使う（ORM と N+1 問題）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "中央の ORM が間に立ち、表の行をプログラムの物に変えます。下の点線は、関連する表を頼まれた時に初めて取りに行くことを示します。",
+      "nodes": [
+        {
+          "id": "prog",
+          "label": "プログラム\nSQL を書かずに\n物に頼む",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "orm",
+          "label": "ORM\nSQL を組み立て\n行を物に変える",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "emp",
+          "label": "社員の表\n1 行＝名前 A、\n部署番号 3",
+          "row": 0,
+          "col": 2,
+          "shape": "cylinder"
+        },
+        {
+          "id": "obj",
+          "label": "物「A さん」\n名前や部署を\n頼めば値が返る",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "dept",
+          "label": "部署の表\n3 番＝営業部",
+          "row": 1,
+          "col": 2,
+          "shape": "cylinder"
+        }
+      ],
+      "edges": [
+        {
+          "from": "prog",
+          "to": "orm",
+          "label": "社員を取って"
+        },
+        {
+          "from": "orm",
+          "to": "emp",
+          "label": "SQL を送り\n行を受け取る",
+          "arrow": "both"
+        },
+        {
+          "from": "orm",
+          "to": "obj",
+          "label": "行を物にして渡す"
+        },
+        {
+          "from": "obj",
+          "to": "dept",
+          "label": "部署を頼まれた瞬間に\nORM が初めて取りに行く",
+          "style": "dashed"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "sequence",
+      "after": "### しくみ",
+      "caption": "矢印 1 本がデータベースとの往復 1 回です。1〜4 が行ごとに取りに行く取り方、5 がまとめて取る取り方なので、矢印の数を比べて読みます。",
+      "actors": [
+        {
+          "id": "app",
+          "label": "プログラム（ORM）"
+        },
+        {
+          "id": "db",
+          "label": "データベース"
+        }
+      ],
+      "steps": [
+        {
+          "from": "app",
+          "to": "db",
+          "label": "社員 100 人の一覧を取る（1 回）"
+        },
+        {
+          "from": "app",
+          "to": "db",
+          "label": "1 人目の部署を取る",
+          "note": "部署は頼まれた瞬間に ORM が取りに行く"
+        },
+        {
+          "from": "app",
+          "to": "db",
+          "label": "2 人目の部署を取る",
+          "note": "1 往復ごとに待ち時間がかかる"
+        },
+        {
+          "from": "app",
+          "to": "db",
+          "label": "… 100 人目の部署を取る",
+          "note": "合計 101 往復。行が増えるほど遅い"
+        },
+        {
+          "from": "app",
+          "to": "db",
+          "label": "直した後: 社員と部署をまとめて取る",
+          "note": "結合やまとめて読む指定で 1〜2 往復"
+        }
+      ]
+    }
+  ]
+}

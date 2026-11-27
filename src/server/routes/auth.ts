@@ -3,61 +3,62 @@ import { Hono } from 'hono'
 import { z } from 'zod'
 import { schema } from '../lib/db'
 import type { Bindings, Variables } from '../lib/db'
-import { getDb, getSecret } from '../lib/db'
-import { hashPassword, issueToken, verifyPassword } from '../lib/auth'
-
-const credentials = z.object({
-  email: z.string().email().max(200),
-  password: z.string().min(8).max(200),
-})
-
-const registration = credentials.extend({
-  name: z.string().min(1).max(50),
-  signupCode: z.string().max(100).optional(),
-})
+import { getDb } from '../lib/db'
+import { getSecret } from '../lib/secret'
+import { NOT_CONFIGURED, issueToken } from '../lib/auth'
+import { bodyErrorMessage } from '../lib/body-error'
+import { ErrorCode, refuse } from '../lib/refusal'
 
 export const authRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
-authRoutes.post('/register', async (c) => {
-  const parsed = registration.safeParse(await c.req.json().catch(() => null))
-  if (!parsed.success) return c.json({ error: '入力が正しくありません' }, 400)
-  const { email, password, name, signupCode } = parsed.data
+/** SSO（まなびば）が設定された環境か。判定はまなびばの場所の有無だけ。
+ *  学び側のパスワードでのログイン・登録の経路は持たず、どの配備でも受け持たない経路の断り（REQ-256）になる。 */
+const ssoOn = (env: Bindings) => !!env.SSO_PORTAL_URL
 
-  // 身内向けなので合言葉方式。未設定なら誰でも登録できる。
-  // 「入れ忘れた」と「間違えた」は直す手が違うので、文言を分ける
-  // （入力欄が「設定されている場合のみ」なので、空のまま送る人がいる）。
-  if (c.env.SIGNUP_CODE && signupCode !== c.env.SIGNUP_CODE) {
-    return c.json({ error: signupCode ? '合言葉が違います' : '合言葉を入力してください' }, 403)
+/** 画面がログインの形を決めるための設定（公開）。 */
+// @implements REQ-205
+// @operation UC-013#getAuthConfig
+authRoutes.get('/config', (c) => c.json({ sso: ssoOn(c.env), portal: c.env.SSO_PORTAL_URL ?? null, app: c.env.EXAM }))
+
+const ssoBody = z.object({ code: z.string().min(1).max(100) })
+
+/** まなびばから戻ってきた使い捨てコードを、まなびばのサーバでメールと名前に交換し、この学びのトークンを出す。 */
+// @implements REQ-191, REQ-192, REQ-193, REQ-206, REQ-207, REQ-208, REQ-274, BR-002
+// @operation UC-013#signInWithCode
+authRoutes.post('/sso', async (c) => {
+  const secret = getSecret(c.env)
+  if (!secret) return refuse(c, ErrorCode.NOT_CONFIGURED, NOT_CONFIGURED)
+  if (!ssoOn(c.env)) return refuse(c, ErrorCode.NOT_CONFIGURED, { error: 'この環境では SSO が設定されていません', status: 404 })
+  if (!c.env.SSO_SECRET) return refuse(c, ErrorCode.NOT_CONFIGURED, NOT_CONFIGURED)
+  const raw = await c.req.json().catch(() => null)
+  const parsed = ssoBody.safeParse(raw)
+  if (!parsed.success) return refuse(c, ErrorCode.INVALID_INPUT, { error: bodyErrorMessage(parsed.error, raw, { code: 'コード' }), status: 400 })
+  const body = parsed.data
+  let res: Response
+  try {
+    res = await fetch(`${c.env.SSO_PORTAL_URL!.replace(/\/$/, '')}/api/sso/exchange`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: body.code, app: c.env.EXAM, secret: c.env.SSO_SECRET }),
+    })
+  } catch {
+    return refuse(c, ErrorCode.UPSTREAM_UNAVAILABLE, { error: 'まなびばに繋がりませんでした。もう一度お試しください', status: 502 })
+  }
+  const data = (await res.json().catch(() => null)) as { email?: string; name?: string; error?: string } | null
+  if (!res.ok || !data?.email) {
+    const error = data?.error ?? 'ログインに失敗しました。まなびばからやり直してください'
+    if (res.status === 403) return refuse(c, ErrorCode.FORBIDDEN, { error, status: 403 })
+    return refuse(c, ErrorCode.UNAUTHENTICATED, { error, status: 401 })
   }
 
   const db = getDb(c.env)
-  const existing = await db.query.users.findFirst({ where: eq(schema.users.email, email) })
-  if (existing) return c.json({ error: 'このメールアドレスは登録済みです' }, 409)
-
-  const user = {
-    id: crypto.randomUUID(),
-    email,
-    name,
-    passwordHash: await hashPassword(password),
-    role: 'MEMBER',
+  const email = data.email.trim().toLowerCase()
+  let user = await db.query.users.findFirst({ where: eq(schema.users.email, email) })
+  if (!user) {
+    // この学びでは初めての人。パスワード列は使わない印（sso）。進捗・受験履歴はこの行に付く
+    user = { id: crypto.randomUUID(), email, name: (data.name ?? email).slice(0, 50), passwordHash: 'sso', role: 'MEMBER', createdAt: Math.floor(Date.now() / 1000) }
+    await db.insert(schema.users).values(user)
   }
-  await db.insert(schema.users).values(user)
-  const token = await issueToken(getSecret(c.env), user)
-  return c.json({ token, user: { id: user.id, name: user.name, role: user.role } }, 201)
-})
-
-authRoutes.post('/login', async (c) => {
-  const parsed = credentials.safeParse(await c.req.json().catch(() => null))
-  if (!parsed.success) return c.json({ error: '入力が正しくありません' }, 400)
-
-  const db = getDb(c.env)
-  const user = await db.query.users.findFirst({
-    where: eq(schema.users.email, parsed.data.email),
-  })
-  // メールの存在有無を答えで漏らさないよう、失敗時のメッセージは共通にする
-  const ok = user && (await verifyPassword(parsed.data.password, user.passwordHash))
-  if (!user || !ok) return c.json({ error: 'メールアドレスまたはパスワードが違います' }, 401)
-
-  const token = await issueToken(getSecret(c.env), user)
+  const token = await issueToken(secret, user)
   return c.json({ token, user: { id: user.id, name: user.name, role: user.role } })
 })

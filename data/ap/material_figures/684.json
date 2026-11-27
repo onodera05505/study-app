@@ -1,0 +1,40 @@
+{
+  "topic_id": 684,
+  "term": "CMMI",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 成熟度を5段階で測る",
+      "caption": "段が上がるほど、やり方が個人から組織へ、勘から数値へと定着します。段の間の矢印は、次の段へ上がるのに足りない物です。",
+      "direction": "up",
+      "stages": [
+        {
+          "label": "1 初期\n個人の力量に頼る",
+          "icon": "person",
+          "next_label": "計画と実績を管理する"
+        },
+        {
+          "label": "2 管理された\nプロジェクトで管理",
+          "icon": "document",
+          "next_label": "組織の標準手順を定める"
+        },
+        {
+          "label": "3 定義された\n組織の標準を適用",
+          "icon": "people",
+          "next_label": "実績を数値で測る"
+        },
+        {
+          "label": "4 定量的に管理された\n数値で統計的に管理",
+          "icon": "chart",
+          "next_label": "測った結果で改善する"
+        },
+        {
+          "label": "5 最適化している\nプロセスを改善し続ける",
+          "icon": "arrow-cycle",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

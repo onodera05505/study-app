@@ -1,19 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="352" viewBox="0 0 640 352" role="img">
-<title>署名は送信者の秘密鍵で作り公開鍵で検証するので、分かるのは作った本人と改ざんの有無だけ。</title>
-<rect x="0.5" y="0.5" width="639" height="351" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="374" viewBox="0 0 640 374">
+<rect x="0.5" y="0.5" width="639" height="373" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(188.2 20)">
-<line x1="48" y1="34" x2="48" y2="284" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="215.6" y1="34" x2="215.6" y2="284" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="48" y1="34" x2="48" y2="334" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="215.6" y1="34" x2="215.6" y2="334" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
 <rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
 <text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">送信者</text>
 <rect x="167.6" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
 <text x="215.6" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">受信者</text>
 <polyline points="48,60 74,60 74,74 50,74" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="50,74 58,70.4 58,77.6" fill="#1f2937"/>
-<text x="82" y="68" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">1. データからハッシュ値を作る</text>
+<text x="82" y="68" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">1. データからハッシュ値 A を計算する</text>
 <polyline points="48,94 74,94 74,108 50,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="50,108 58,104.4 58,111.6" fill="#1f2937"/>
-<text x="82" y="102" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2. ハッシュ値を秘密鍵（署名鍵）で暗号化 ＝ 署名</text>
+<text x="82" y="102" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2. ハッシュ値 A を秘密鍵（署名鍵）で暗号化 ＝ 署名</text>
 <polyline points="51,136 212.6,136" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="212.6,136 204.6,139.6 204.6,132.4" fill="#1f2937"/>
 <text x="131.8" y="129" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. データ ＋ 署名 を送る</text>
@@ -21,14 +20,18 @@
 <text x="131.8" y="154.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">データは暗号化しないので中身は隠れない</text>
 <polyline points="215.6,184 241.6,184 241.6,198 217.6,198" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="217.6,198 225.6,194.4 225.6,201.6" fill="#1f2937"/>
-<text x="249.6" y="192" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. 検証鍵で署名を戻す</text>
-<rect x="145.6" y="203" width="140" height="16" rx="3" fill="#ffffff"/>
-<text x="215.6" y="216.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">検証鍵＝送信者の公開鍵</text>
+<text x="249.6" y="192" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. データからハッシュ値 B を計算</text>
+<rect x="121.6" y="203" width="188" height="16" rx="3" fill="#ffffff"/>
+<text x="215.6" y="216.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">送信者と同じハッシュ関数を使う</text>
 <polyline points="215.6,234 241.6,234 241.6,248 217.6,248" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="217.6,248 225.6,244.4 225.6,251.6" fill="#1f2937"/>
-<text x="249.6" y="242" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. ハッシュ値を比べる</text>
-<rect x="85.6" y="253" width="260" height="16" rx="3" fill="#ffffff"/>
-<text x="215.6" y="266.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">一致すれば本人が作り、改ざんも無いと分かる</text>
+<text x="249.6" y="242" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. 署名を送信者の公開鍵で戻す</text>
+<rect x="81.7" y="253" width="267.8" height="16" rx="3" fill="#ffffff"/>
+<text x="215.6" y="266.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">戻すとハッシュ値 A が出る（公開鍵＝検証鍵）</text>
+<polyline points="215.6,284 241.6,284 241.6,298 217.6,298" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="217.6,298 225.6,294.4 225.6,301.6" fill="#1f2937"/>
+<text x="249.6" y="292" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">6. ハッシュ値 A と B を比べる</text>
+<rect x="79.6" y="303" width="272" height="16" rx="3" fill="#ffffff"/>
+<text x="215.6" y="316.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">一致すれば改ざん無し、署名したのは送信者本人</text>
 </g>
-<text x="320" y="332" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">署名は送信者の秘密鍵で作り公開鍵で検証するので、分かるのは作った本人と改ざんの有無だけ。</text>
 </svg>

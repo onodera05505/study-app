@@ -1,0 +1,106 @@
+{
+  "topic_id": 410,
+  "term": "インバウンドマーケティング",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "上の段がインバウンド、下の段がアウトバウンドです。矢印の向きを比べると、相手から来てもらうか相手へ出向くかが逆になっています。",
+      "nodes": [
+        {
+          "id": "c1",
+          "label": "企業\n見つけてもらう",
+          "row": 0,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "in",
+          "label": "インバウンド\nブログ・SNS・検索",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "p1",
+          "label": "見込み客\n自分で調べる",
+          "row": 0,
+          "col": 2,
+          "icon": "person"
+        },
+        {
+          "id": "c2",
+          "label": "企業\n相手を探す",
+          "row": 1,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "out",
+          "label": "アウトバウンド\nテレビ CM・電話営業",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "p2",
+          "label": "相手\n関心はまだ無い",
+          "row": 1,
+          "col": 2,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "p1",
+          "to": "in",
+          "label": "検索してたどり着く"
+        },
+        {
+          "from": "in",
+          "to": "c1",
+          "label": "資料請求・登録"
+        },
+        {
+          "from": "c2",
+          "to": "out",
+          "label": "広告・電話をかける"
+        },
+        {
+          "from": "out",
+          "to": "p2",
+          "label": "売り込みが届く"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 引き寄せる発想",
+      "caption": "情報の発信から購入までの段を上から順に並べています。強調した段で、訪れた人を見込み客として把握します。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "情報を発信\nブログ・SNS・動画",
+          "icon": "document",
+          "next_label": "検索で見つけてもらう"
+        },
+        {
+          "label": "サイトに訪れる\n関心のある人がたどり着く",
+          "icon": "search",
+          "next_label": "興味を持つ"
+        },
+        {
+          "label": "資料請求・会員登録\n見込み客として把握",
+          "icon": "person",
+          "next_label": "さらに情報を届ける",
+          "emphasis": true
+        },
+        {
+          "label": "購入\n顧客に変わる",
+          "icon": "money"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,328 @@
+# UC-018 の境界: 作り手が手元で呼ぶ資格対策の教材の門の入口 1 つと、門が読むファイル（教材の世代・論点・過去問・束の割り当て・登録簿の学びの種類・図）の形。
+# 読み方は docs/adr/ADR-0008（手元の道具の境界を local-store で読む）。パスは相対ならコマンドを呼んだ作業ディレクトリが起点。
+# 入口の response は、人が読む結果の行のあとに標準出力の最後の行として出す機械向けの 1 行（JSON）の形。人が読む行の形は契約に持たない。
+# 「見出しを持つ教材」は詳しい解説が「### 」で始まる行を持つ教材、「役割分担後の世代」は materials_v に続く番号が limits.roleSplitFrom 以上の世代。
+x-uc: UC-018
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-19
+
+schemas:
+  Finding:
+    type: object
+    required: [kind, where, reason]
+    properties:
+      kind: { type: string, minLength: 1 }
+      where: { type: string, minLength: 1, description: ファイル・論点・箇所のどれか }
+      reason: { type: string, minLength: 1 }
+
+operations:
+  checkMaterials:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 資格対策の学びの教材の世代を教材の門にかけ、通すか止めるかと理由を返す
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        data: { type: string, pattern: "^([A-Za-z0-9._-]+/)*[a-z]+$", description: 学びの置き場。最後の段が登録簿の学びの key。省略すると data/ip }
+        dir:
+          type: array
+          minItems: 1
+          description: 見る教材の世代の置き場のパスの並び（学びの置き場の直下）。並びの後ろの世代の教材が勝つ。省略すると学びの置き場の直下の materials と、materials_v に番号を続けた名前の置き場を番号の小さい順に全部
+          items: { type: string, minLength: 1 }
+        public: { type: string, minLength: 1, description: 図の画像の配信の置き場。省略すると public }
+        all: { type: boolean, description: 受け取るだけで結果を変えない（止める理由と警告は件数で打ち切らずに常にすべて出す） }
+    response:
+      type: object
+      required: [exitCode, topics, missingTopics, stops, warnings, limits]
+      properties:
+        exitCode: { type: integer, enum: [0, 1], description: 0 は通した、1 は stops が 1 件以上 }
+        topics: { type: integer, minimum: 0, description: 門が見た教材の論点の数（学びに無い論点の教材も数える） }
+        missingTopics: { type: array, description: 教材の無い学びの論点の ID のすべて。exitCode を変えない, items: { type: integer, minimum: 1 } }
+        stops:
+          type: array
+          description: 当たった物を件数で打ち切らずにすべて持つ
+          items:
+            allOf:
+              - { $ref: "#/schemas/Finding" }
+              - properties:
+                  kind:
+                    enum: [unreadableOutput, termMismatch, orphanMaterial, bundleMismatch, missingElement, brokenTable, tableTooShort, tableTooWide, tableTooLong, figureMissing, pastQuestionQuote]
+        warnings:
+          type: array
+          description: exitCode を変えない。当たった物を件数で打ち切らずにすべて持つ。情報の量（字数・文数・見出しの数・箇条書きや比較の項目の数）の種類は無い。sourcePunctuation と duplicate を除き、markupInPlainText は見出しを持たない教材に、ほかは見出しを持つ教材に当たる
+          items:
+            allOf:
+              - { $ref: "#/schemas/Finding" }
+              - properties:
+                  kind:
+                    enum: [duplicate, sourcePunctuation, markupInPlainText, notationOutside, unclosedEmphasis, explanationHeading, choiceSymbol, calcWithoutFormula, indentedLine, patternHeadingMissing, patternHeadingLeft, keywordLineMissing, solvingHint, firstSentenceNotTerm, plainListEnding, termMarkupMixed, tableCellLong]
+        limits:
+          type: object
+          description: 門が使った閾値と表示の制約
+          required: [quoteLength, quoteStep, requiredExplanationLine, tableColumns, tableRows, tableCellLength, roleSplitFrom, bundleGeneration]
+          properties:
+            quoteLength: { type: integer, const: 30, description: 過去問の本文とこの字数の部分が一致したら止める }
+            quoteStep: { type: integer, const: 10, description: 過去問の本文から部分を取る位置の間隔 }
+            requiredExplanationLine: { type: string, const: "**キーワード**", description: 役割分担後の世代の説明が含む行の語。無ければ警告 }
+            tableColumns: { type: object, properties: { min: { const: 2 }, max: { const: 4 } }, description: 超えたら止める。セルが 1 つの行は表の行に数えないので下回る表は無い }
+            tableRows: { type: object, description: ヘッダを含み区切りの行を数えない。下回っても超えても止める, properties: { min: { const: 2 }, max: { const: 8 } } }
+            tableCellLength: { type: integer, const: 40, description: 超えたら警告 }
+            roleSplitFrom: { type: integer, const: 3, description: 役割分担後の世代の最初の番号 }
+            bundleGeneration: { type: string, const: materials_v2, description: 束のファイルを束の割り当てと突き合わせる世代 }
+    errors:
+      - code: INVALID_INPUT
+        when: 知らない名前の引数か、値の無い引数がある
+      - code: INVALID_INPUT
+        when: 登録簿に無い学び
+      - code: INVALID_INPUT
+        when: 資格対策でない学び
+      - code: INVALID_INPUT
+        when: 学びの置き場の外の教材の世代の置き場を指定した
+      - code: NOT_FOUND
+        when: 学びの置き場か、指定した教材の世代の置き場が無い
+    examples:
+      badArguments:
+        request: { data: data/ip, unknownArgument: x }
+        error: INVALID_INPUT
+      pass:
+        request: { data: data/fe }
+        response:
+          exitCode: 0
+          topics: 315
+          missingTopics: []
+          stops: []
+          warnings: []
+          limits: { quoteLength: 30, quoteStep: 10, requiredExplanationLine: "**キーワード**", tableColumns: { min: 2, max: 4 }, tableRows: { min: 2, max: 8 }, tableCellLength: 40, roleSplitFrom: 3, bundleGeneration: materials_v2 }
+      unknownLearning:
+        request: { data: data/zzz }
+        error: INVALID_INPUT
+      notQualification:
+        request: { data: data/itc }
+        error: INVALID_INPUT
+      dirOutsideLearning:
+        request: { data: data/ip, dir: [data/ap/materials_v3] }
+        error: INVALID_INPUT
+      outsideBeforeMissing:
+        request: { data: data/ip, dir: [data/ap/materials_v9] }
+        error: INVALID_INPUT
+      dirMissing:
+        request: { data: data/ip, dir: [data/ip/materials_v9] }
+        error: NOT_FOUND
+      notQualificationBeforeDirMissing:
+        request: { data: data/itc, dir: [data/itc/materials_v9] }
+        error: INVALID_INPUT
+
+  readLearningKind:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 登録簿（src/shared/targets.json）から、その学びの種類を読む
+    request:
+      type: object
+      required: [learning]
+      properties:
+        learning: { type: string, pattern: "^[a-z]+$", description: 登録簿の学びの key }
+    response:
+      type: object
+      description: 登録簿のその学びの項のうち門が読む欄
+      required: [kind]
+      properties:
+        kind: { type: string, enum: [exam, roadmap], description: exam が資格対策 }
+    errors:
+      - code: NOT_FOUND
+        when: 登録簿に無い学び
+    examples:
+      ok:
+        request: { learning: ip }
+        response: { kind: exam }
+      unknown:
+        request: { learning: zzz }
+        error: NOT_FOUND
+
+  readTopics:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 学びの論点の一覧を読む
+    request:
+      type: object
+      required: [path]
+      properties:
+        path: { type: string, pattern: "^([A-Za-z0-9._-]+/)*topics\\.json$" }
+    response:
+      type: object
+      required: [topics]
+      properties:
+        topics:
+          type: array
+          items:
+            type: object
+            required: [id, term]
+            properties:
+              id: { type: integer, minimum: 1 }
+              term: { type: string, minLength: 1 }
+    errors:
+      - code: NOT_FOUND
+        when: ファイルが無い
+      - code: INVALID_INPUT
+        when: 形として読めない
+    examples:
+      ok:
+        request: { path: data/ip/topics.json }
+        response: { topics: [{ id: 9, term: ITガバナンス }] }
+      missing:
+        request: { path: data/zzz/topics.json }
+        error: NOT_FOUND
+      unreadable:
+        request: { path: data/ip/topics.json }
+        error: INVALID_INPUT
+
+  readPastQuestions:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 1 回分の過去問の本文を読む（引用の一致を見るため）
+    request:
+      type: object
+      required: [path]
+      properties:
+        path: { type: string, pattern: "^([A-Za-z0-9._-]+/)*questions/[0-9a-z]+\\.json$" }
+    response:
+      type: object
+      required: [questions]
+      properties:
+        questions:
+          type: array
+          items:
+            type: object
+            required: [text]
+            properties:
+              text: { type: string }
+    errors:
+      - code: NOT_FOUND
+        when: ファイルが無い
+      - code: INVALID_INPUT
+        when: 形として読めない
+    examples:
+      ok:
+        request: { path: data/ip/questions/2018h30h.json }
+        response: { questions: [{ text: "…" }] }
+      missing:
+        request: { path: data/ip/questions/1999h11h.json }
+        error: NOT_FOUND
+      unreadable:
+        request: { path: data/ip/questions/2018h30a.json }
+        error: INVALID_INPUT
+
+  readMaterialFile:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 教材の世代の置き場にある 1 つのファイルの教材を読む
+    request:
+      type: object
+      required: [path]
+      properties:
+        path: { type: string, pattern: "^([A-Za-z0-9._-]+/)*materials(_v[0-9]+)?/[A-Za-z0-9_-]+\\.json$" }
+    response:
+      type: object
+      description: materials の無いファイルは教材を持たないファイル
+      properties:
+        materials:
+          type: array
+          items:
+            type: object
+            required: [topic_id]
+            properties:
+              topic_id: { type: integer, minimum: 1 }
+              term: { type: string }
+              explanation: { type: string }
+              detail: { type: string }
+    errors:
+      - code: NOT_FOUND
+        when: ファイルが無い
+      - code: INVALID_INPUT
+        when: JSON として読めないか、論点の ID を持たない教材がある
+    examples:
+      ok:
+        request: { path: data/ip/materials_v4/01-1.json }
+        response: { materials: [{ topic_id: 395, term: 経営理念（企業理念）, explanation: "**経営理念**（企業理念）とは…", detail: "### …" }] }
+      missing:
+        request: { path: data/ip/materials_v4/99-9.json }
+        error: NOT_FOUND
+      unreadable:
+        request: { path: data/ip/materials_v4/01-2.json }
+        error: INVALID_INPUT
+
+  readMaterialBundle:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 束の割り当て（書き手に渡した論点）を読む。束を突き合わせる世代の束のファイルと同じ名前の物だけを読む（無ければ突き合わせず、読めなければ門が unreadableOutput で止める）
+    request:
+      type: object
+      required: [path]
+      properties:
+        path: { type: string, pattern: "^([A-Za-z0-9._-]+/)*material_bundles/[A-Za-z0-9_-]+\\.json$" }
+    response:
+      type: object
+      required: [topics]
+      properties:
+        topics:
+          type: array
+          items:
+            type: object
+            required: [topic_id]
+            properties:
+              topic_id: { type: integer, minimum: 1 }
+    errors:
+      - code: NOT_FOUND
+        when: 割り当てが無い（突き合わせない）
+      - code: INVALID_INPUT
+        when: 形として読めない
+    examples:
+      ok:
+        request: { path: data/ip/material_bundles/bundle_01.json }
+        response: { topics: [{ topic_id: 10 }] }
+      missing:
+        request: { path: data/ip/material_bundles/bundle_99.json }
+        error: NOT_FOUND
+      unreadable:
+        request: { path: data/ip/material_bundles/bundle_02.json }
+        error: INVALID_INPUT
+
+  readFigure:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 教材の図の行（説明か詳しい解説の 1 行が「![説明](src)」だけの行）が指す画像を、配信の置き場から読む
+    request:
+      type: object
+      required: [src]
+      properties:
+        src: { type: string, pattern: "^/figures/materials/[a-z]+/[^)\\s]+\\.svg$", description: 図の行の参照先。途中の学びの key は門にかけた学び。実体は配信の置き場の下の同じパス }
+    response:
+      type: object
+      required: [file]
+      properties:
+        file: { type: string, pattern: "^.+/figures/materials/[a-z]+/[^)\\s]+\\.svg$" }
+    errors:
+      - code: NOT_FOUND
+        when: 画像が置き場所に無い
+    examples:
+      ok:
+        request: { src: /figures/materials/fe/1-1.svg }
+        response: { file: public/figures/materials/fe/1-1.svg }
+      missing:
+        request: { src: /figures/materials/fe/999-1.svg }
+        error: NOT_FOUND

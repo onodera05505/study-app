@@ -1,0 +1,57 @@
+{
+  "topic_id": 355,
+  "term": "レジスタ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "主記憶から CPU の中へ値が移る道筋を表した図です。矢印をたどると、計算に使う値は強調したレジスタに置いてから処理されると分かります。",
+      "nodes": [
+        {
+          "id": "mm",
+          "label": "主記憶\nCPU の外で大きく遅い",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "ca",
+          "label": "キャッシュメモリ\n主記憶との速さの差を埋める",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "rg",
+          "label": "レジスタ（CPU の内部）\n最も速く最も小さい",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "al",
+          "label": "演算\nレジスタの値で計算する",
+          "row": 1,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "mm",
+          "to": "ca",
+          "label": "使う値を写す"
+        },
+        {
+          "from": "ca",
+          "to": "rg",
+          "label": "計算に使う値を移す"
+        },
+        {
+          "from": "rg",
+          "to": "al",
+          "label": "値と計算の結果",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

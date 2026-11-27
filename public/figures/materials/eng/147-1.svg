@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="324" viewBox="0 0 640 324">
+<rect x="0.5" y="0.5" width="639" height="323" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(186.1 20)">
+<line x1="48" y1="34" x2="48" y2="284" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="219.8" y1="34" x2="219.8" y2="284" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">送り主</text>
+<rect x="171.8" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="219.8" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">受け手</text>
+<polyline points="48,60 74,60 74,74 50,74" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="50,74 58,70.4 58,77.6" fill="#1f2937"/>
+<text x="82" y="68" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">1. 本文のハッシュ値を作る</text>
+<polyline points="48,94 74,94 74,108 50,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="50,108 58,104.4 58,111.6" fill="#1f2937"/>
+<text x="82" y="102" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2. その値を自分の秘密鍵で閉めて署名にする</text>
+<rect x="-100" y="113" width="296" height="16" rx="3" fill="#ffffff"/>
+<text x="48" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">暗号化とは鍵の向きが逆（暗号化は公開鍵で閉める）</text>
+<polyline points="51,152 216.8,152" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="216.8,152 208.8,155.6 208.8,148.4" fill="#1f2937"/>
+<text x="133.9" y="145" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 本文と署名を一緒に送る</text>
+<polyline points="219.8,184 245.8,184 245.8,198 221.8,198" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="221.8,198 229.8,194.4 229.8,201.6" fill="#1f2937"/>
+<text x="253.8" y="192" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. 送り主の公開鍵で署名を開ける</text>
+<rect x="137.8" y="203" width="164" height="16" rx="3" fill="#ffffff"/>
+<text x="219.8" y="216.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">中からハッシュ値が出てくる</text>
+<polyline points="219.8,234 245.8,234 245.8,248 221.8,248" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="221.8,248 229.8,244.4 229.8,251.6" fill="#1f2937"/>
+<text x="253.8" y="242" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. 届いた本文のハッシュ値と比べる</text>
+<rect x="53.8" y="253" width="332" height="16" rx="3" fill="#ffffff"/>
+<text x="219.8" y="266.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">一致すれば、本人が署名し、その後に本文は変わっていない</text>
+</g>
+</svg>

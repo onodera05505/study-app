@@ -1,0 +1,66 @@
+{
+  "topic_id": 117,
+  "term": "IoT（Internet of Things）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "IoT のデータは、モノに付けたセンサーが状態を測るところから始まります。輪の右回りが集める流れ、点線が離れた場所からの制御です。",
+      "nodes": [
+        {
+          "id": "thing",
+          "label": "モノとセンサー\n温度・振動・位置を測る",
+          "row": 0,
+          "col": 0,
+          "icon": "box",
+          "emphasis": true
+        },
+        {
+          "id": "net",
+          "label": "インターネット\n測った値を運ぶ",
+          "row": 0,
+          "col": 1,
+          "shape": "cloud"
+        },
+        {
+          "id": "srv",
+          "label": "サーバ\n集めて分析する",
+          "row": 1,
+          "col": 1,
+          "icon": "server"
+        },
+        {
+          "id": "person",
+          "label": "離れた場所の人\n結果を見て判断する",
+          "row": 1,
+          "col": 0,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "thing",
+          "to": "net",
+          "label": "測った値"
+        },
+        {
+          "from": "net",
+          "to": "srv",
+          "label": "集めたデータ"
+        },
+        {
+          "from": "srv",
+          "to": "person",
+          "label": "分析した結果"
+        },
+        {
+          "from": "person",
+          "to": "thing",
+          "label": "遠隔で制御する",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

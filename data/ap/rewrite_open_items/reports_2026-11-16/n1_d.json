@@ -1,0 +1,332 @@
+{
+  "target": "ap",
+  "units": [
+    "09"
+  ],
+  "status": "done",
+  "items": [
+    {
+      "no": 1,
+      "topic_id": 26,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）。rewrite_open_items.md「C の直し方」",
+      "what": "要点の箇条「ビューの列名は…基の表と違う名前を付けられます」が正解の句とほぼ同じだった。定義のときに並べた名前が付き実表の列名に合わせなくてよい、と言い直した。",
+      "questions_checked": [
+        "2025r07a-q28",
+        "2023r05a-q28",
+        "2016h28a-q28"
+      ]
+    },
+    {
+      "no": 2,
+      "topic_id": 143,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）。rewrite_open_items.md「C の直し方」",
+      "what": "要点の箇条のキーバリュー型の文が正解ウの句とほぼ同じだった。キーと値を1対1の組にして持ち、値の形式は決めない、と言い直した。",
+      "questions_checked": [
+        "2024r06h-q29",
+        "2018h30h-q30"
+      ]
+    },
+    {
+      "no": 3,
+      "topic_id": 143,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）。rewrite_open_items.md「C の直し方」",
+      "what": "要点の箇条の「ビッグデータの基盤技術として使われます」が問題文の句とほぼ同じだった。「ビッグデータを支える仕組みとして広く採られています」と言い直した。キーワードの行「ビッグデータの基盤」は問題文に出たらこの論点と決まる語なので変えていない。",
+      "questions_checked": [
+        "2024r06h-q29",
+        "2018h30h-q30"
+      ]
+    },
+    {
+      "no": 4,
+      "topic_id": 144,
+      "type": "C",
+      "verdict": "by_rule",
+      "rule": "rewrite_open_items.md「C の直し方」の定義の文の行（用語を答えさせる問題の問題文が定義を言う形）と、write_materials.md「書き方の約束」のキーワードの行（「問題文にこの語が出たらこの論点」と決まる語だけ）",
+      "what": "2025r07h-q24 は問題文がワイドカラムを定義し用語を答えさせる形。定義の文の重なりは直さない物に当たる。キーワードの行は、問題文に出たらこの論点と決まる語を置く行と決まっており、問題文の語と重なるのはその決まりどおり。",
+      "questions_checked": [
+        "2025r07h-q24"
+      ]
+    },
+    {
+      "no": 5,
+      "topic_id": 146,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）。rewrite_open_items.md「C の直し方」",
+      "what": "要点の箇条が正解イ「候補キー以外の属性間に関数従属性がある場合，その関係を分解する」をほぼそのまま置いていた。「第3正規形へ上るときに取り除くのは、キーでない属性のあいだの関数従属です」と言い直した（分けることは detail の第1節が言う）。",
+      "questions_checked": [
+        "2025r07h-q26"
+      ]
+    },
+    {
+      "no": 6,
+      "topic_id": 148,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）。rewrite_open_items.md「C の直し方」",
+      "what": "手順1の例「代理店ごとの購入者数を日別に」が正解ウの句とほぼ同じだった。事例は借りたまま「日ごとに、各代理店で何人が買ったかを比べたいなら」と言い直した。",
+      "questions_checked": [
+        "2024r06a-q28"
+      ]
+    },
+    {
+      "no": 7,
+      "topic_id": 148,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）。rewrite_open_items.md「C の直し方」",
+      "what": "例の節が問題文の図の3つの表名と項目名をそのままの並びで置いていた。場面は借りたまま、表の中身を文で言い直し（顧客の表・日別販売の表・購入の表）、同じ節の次の段落の表名を新しい呼び名に合わせた。図148-1は別の例なので食い違わない。",
+      "questions_checked": [
+        "2024r06a-q28"
+      ]
+    },
+    {
+      "no": 8,
+      "topic_id": 151,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）。rewrite_open_items.md「C の直し方」",
+      "what": "要点の箇条が選択肢イ「クライアント側の CALL 文によって実行される」の句をほぼそのまま置いていた。「呼び出す側が CALL 文にプロシージャ名と引数を書いて呼んだときに、初めて動きます」と言い直した。",
+      "questions_checked": [
+        "2023r05h-q27",
+        "2024r06h-q25"
+      ]
+    },
+    {
+      "no": 9,
+      "topic_id": 151,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）。rewrite_open_items.md「C の直し方」",
+      "what": "要点の箇条が2023r05h-q27アと2024r06h-q25アの句をつないでいた。「SQL 文を 1 本ごとにやり取りする往復が要らなくなり、ネットワークを流れる通信量が減ります」と言い直した（アプリケーションと DBMS の間の量だと detail 第1節が言う）。",
+      "questions_checked": [
+        "2024r06h-q25",
+        "2023r05h-q27"
+      ]
+    },
+    {
+      "no": 10,
+      "topic_id": 158,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）。rewrite_open_items.md「C の直し方」",
+      "what": "要点の箇条が2021r03a-q27イ・2024r06a-q31イの句をほぼそのまま置いていた。「コミットを終えたトランザクションは、更新がすでにディスクにあるので、回復の際に手を付けずに済みます」と言い直した。キーワードの行は変えていない。",
+      "questions_checked": [
+        "2021r03a-q27",
+        "2024r06a-q31"
+      ]
+    },
+    {
+      "no": 11,
+      "topic_id": 159,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）。rewrite_open_items.md「C の直し方」",
+      "what": "要点の箇条が正解イの句をほぼそのまま置いていた。「止まったノードが無ければ、やがてどのノードの値も最新にそろいます」と言い直した。",
+      "questions_checked": [
+        "2025r07a-q26"
+      ]
+    },
+    {
+      "no": 12,
+      "topic_id": 159,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）。rewrite_open_items.md「C の直し方」",
+      "what": "要点の箇条が誤答エの句を否定だけ返して置いていた。「ノードどうしの通信が途切れても、各ノードは応答を止めずに処理を続けます」と言い直した。",
+      "questions_checked": [
+        "2025r07a-q26"
+      ]
+    },
+    {
+      "no": 13,
+      "topic_id": 353,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）。rewrite_open_items.md「C の直し方」",
+      "what": "detail の理由の文が正解ウ「項目構成の違いを区別せず」の句をそのまま置いていた。「項目の組み立てがデータごとに違っていても、1件ずつ元の形のまま入れられるからです」と言い直した。",
+      "questions_checked": [
+        "2023r05h-q26"
+      ]
+    },
+    {
+      "no": 14,
+      "topic_id": 353,
+      "type": "C",
+      "verdict": "by_rule",
+      "rule": "write_materials.md「書き方の約束」の借りてよい物（紐づく過去問の場面・題材を教材の言葉で言い直す）",
+      "what": "問題文の条件「検索時に使用するキーにはあらかじめ制限を設けない」は場面の条件で、本文は述語を「固定しなくても格納できます」と言い直しており、句をほぼそのまま置いていない。",
+      "questions_checked": [
+        "2023r05h-q26"
+      ]
+    },
+    {
+      "no": 15,
+      "topic_id": 399,
+      "type": "C",
+      "verdict": "fixed",
+      "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのままの言い回しで置く）。rewrite_open_items.md「C の直し方」",
+      "what": "表の独立性の欄が選択肢エ（この問では誤答。正解と重なる定義には当たらない）の句「順番に実行した場合」をそのまま置いていた。表の形は変えず「並行して動かしても、1 件ずつ処理したときと結果が変わらない」と言い直した。",
+      "questions_checked": [
+        "2020r02o-q30",
+        "2019h31h-q30",
+        "2022r04a-q30"
+      ]
+    }
+  ],
+  "edits": [
+    {
+      "file": "data/ap/materials_v4/09-5.json",
+      "topic_id": 26,
+      "field": "explanation",
+      "op": "replace",
+      "heading": "explanation",
+      "before": "- ビューの列名は、定義のときに並べた名前になります。基の表と**違う名前**を付けられます",
+      "after": "- ビューの各列には、定義のときに並べた名前が付き、実表の列名に**合わせなくてかまいません**"
+    },
+    {
+      "file": "data/ap/materials_v4/09-9.json",
+      "topic_id": 143,
+      "field": "explanation",
+      "op": "replace",
+      "heading": "explanation",
+      "before": "- 列の構成を先に決めなくてよいので、形式のそろわないデータを大量に扱うのに向き、ビッグデータの基盤技術として使われます",
+      "after": "- 列の構成を先に決めなくてよいので、形式のそろわないデータを大量に扱うのに向き、ビッグデータを支える仕組みとして広く採られています"
+    },
+    {
+      "file": "data/ap/materials_v4/09-9.json",
+      "topic_id": 143,
+      "field": "explanation",
+      "op": "replace",
+      "heading": "explanation",
+      "before": "- **キーバリュー型**は、形式を問わない値を1つのキーに対応付けて管理する最も単純な型です",
+      "after": "- **キーバリュー型**は、キーと値を1対1の組にして持つ最も単純な型で、値の中身の形式は決めません"
+    },
+    {
+      "file": "data/ap/materials_v4/09-2.json",
+      "topic_id": 146,
+      "field": "explanation",
+      "op": "replace",
+      "heading": "explanation",
+      "before": "- [[第2正規形]]から第3正規形へは、**候補キー以外の属性どうし**の関数従属（ある属性の値が決まると別の属性の値が 1 つに決まる関係）を切り出して、関係を分けます",
+      "after": "- [[第2正規形]]から第3正規形へ上るときに取り除くのは、**キーでない属性のあいだ**の関数従属（ある属性の値が決まると別の属性の値が 1 つに決まる関係）です"
+    },
+    {
+      "file": "data/ap/materials_v4/09-1.json",
+      "topic_id": 148,
+      "field": "detail",
+      "op": "replace",
+      "heading": "### 必要な属性がそろうかを確かめる手順",
+      "before": "代理店ごとの購入者数を日別に見たいなら、軸は代理店と日付、値は購入者数です",
+      "after": "日ごとに、各代理店で何人が買ったかを比べたいなら、軸は代理店と日付、値は購入者数です"
+    },
+    {
+      "file": "data/ap/materials_v4/09-1.json",
+      "topic_id": 148,
+      "field": "detail",
+      "op": "replace",
+      "heading": "### 日付と顧客が同じ表にそろわない例",
+      "before": "顧客（顧客 ID、氏名、性別、生年月日）、販売代理店別日別販売（販売代理店 ID、日付、商品 ID、販売数量）、商品購入（顧客 ID、販売代理店 ID、商品 ID、購入数量）の 3 つの表で考えます。",
+      "after": "顧客 ID ごとに氏名・性別・生年月日を持つ顧客の表、代理店・日付・商品ごとの販売数量を持つ日別販売の表、どの顧客がどの代理店でどの商品をいくつ買ったかを持つ購入の表、の 3 つで考えます。"
+    },
+    {
+      "file": "data/ap/materials_v4/09-1.json",
+      "topic_id": 148,
+      "field": "detail",
+      "op": "replace",
+      "heading": "### 日付と顧客が同じ表にそろわない例",
+      "before": "日付があるのは販売代理店別日別販売の表だけですが、顧客 ID を持ちません。購入者を数えられる商品購入の表には日付がありません。",
+      "after": "日付があるのは日別販売の表だけですが、顧客 ID を持ちません。購入者を数えられる購入の表には日付がありません。"
+    },
+    {
+      "file": "data/ap/materials_v4/09-5.json",
+      "topic_id": 151,
+      "field": "explanation",
+      "op": "replace",
+      "heading": "explanation",
+      "before": "- SQL 文を 1 つずつ送らずに済むので、アプリケーションと DBMS の間の**通信量**が減ります。これが最大の利点です",
+      "after": "- SQL 文を 1 本ごとにやり取りする往復が要らなくなり、ネットワークを流れる**通信量**が減ります。これが最大の利点です"
+    },
+    {
+      "file": "data/ap/materials_v4/09-5.json",
+      "topic_id": 151,
+      "field": "explanation",
+      "op": "replace",
+      "heading": "explanation",
+      "before": "- クライアント側の **CALL 文**でプロシージャ名と引数を渡し、呼び出されて初めて実行されます",
+      "after": "- 呼び出す側が **CALL 文**にプロシージャ名と引数を書いて呼んだときに、初めて動きます"
+    },
+    {
+      "file": "data/ap/materials_v4/09-7.json",
+      "topic_id": 158,
+      "field": "explanation",
+      "op": "replace",
+      "heading": "explanation",
+      "before": "- チェックポイントより前にコミット済みのトランザクションは、更新が二次記憶へ反映済みなので**回復作業が不要**です",
+      "after": "- チェックポイントより前にコミットを終えたトランザクションは、更新がすでにディスクにあるので、回復の際に**手を付けずに済みます**"
+    },
+    {
+      "file": "data/ap/materials_v4/09-8.json",
+      "topic_id": 159,
+      "field": "explanation",
+      "op": "replace",
+      "heading": "explanation",
+      "before": "- 更新は即座に全ノードへは届きませんが、**障害がなければいつかは全ノードに反映**されます",
+      "after": "- 更新は即座に全ノードへは届きませんが、止まったノードが無ければ、やがて**どのノードの値も最新にそろいます**"
+    },
+    {
+      "file": "data/ap/materials_v4/09-8.json",
+      "topic_id": 159,
+      "field": "explanation",
+      "op": "replace",
+      "heading": "explanation",
+      "before": "- ネットワークが分断されても、要求を**受け付け続けます**",
+      "after": "- ノードどうしの通信が途切れても、各ノードは**応答を止めずに処理を続けます**"
+    },
+    {
+      "file": "data/ap/materials_v4/09-9.json",
+      "topic_id": 353,
+      "field": "detail",
+      "op": "replace",
+      "heading": "### スキーマレスが効く場面",
+      "before": "項目構成の違いを区別せず、データ1件をそのまま格納できるからです。",
+      "after": "項目の組み立てがデータごとに違っていても、1件ずつ元の形のまま入れられるからです。"
+    },
+    {
+      "file": "data/ap/materials_v4/09-6.json",
+      "topic_id": 399,
+      "field": "detail",
+      "op": "replace",
+      "heading": "### 4つの性質の意味",
+      "before": "| **独立性** | 順番に実行した場合と同じ結果 |",
+      "after": "| **独立性** | 並行して動かしても、1 件ずつ処理したときと結果が変わらない |"
+    }
+  ],
+  "owners": [],
+  "figure_after": [],
+  "ledgers": [],
+  "returned": [],
+  "noticed": [
+    {
+      "topic_id": 0,
+      "what": "一覧の \"target\" が \"ip\" だったが、パス・論点・依頼文はいずれも ap の単元 09 なので ap として扱った。"
+    }
+  ],
+  "gates": {
+    "check_materials": 0,
+    "check_material_style": 0,
+    "render_check": 0,
+    "check_explanations": 0,
+    "check_unit_plans": 0
+  },
+  "chars": {
+    "before": 37907,
+    "after": 37957
+  }
+}

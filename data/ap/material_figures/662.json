@@ -6,20 +6,78 @@
       "id": 1,
       "type": "blocks",
       "after": "### ソフトウェア実装プロセスの並び",
-      "caption": "方式設計が決めるのは部品の境界まで。中を割るのは詳細設計、結合のテスト要求事項はここで定義する。",
+      "caption": "左から工程の順です。方式設計は部品の境界までを決め、点線は方式設計で定義して結合で使うテスト要求事項を表します。",
       "nodes": [
-        {"id": "req", "label": "①要件定義", "row": 0, "col": 0},
-        {"id": "arc", "label": "②方式設計\n最上位レベルの\n構造とインタフェース", "row": 0, "col": 1, "emphasis": true},
-        {"id": "det", "label": "③詳細設計\nユニットに分割", "row": 0, "col": 2},
-        {"id": "bld", "label": "④構築\nコード作成", "row": 0, "col": 3},
-        {"id": "int", "label": "⑤結合", "row": 0, "col": 4}
+        {
+          "id": "req",
+          "label": "①要件定義\n満たす要件を\n定める",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "arc",
+          "label": "②方式設計\n最上位レベルの\n構造とインタフェース",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "det",
+          "label": "③詳細設計\nコンポーネントを\nユニットに分割",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "bld",
+          "label": "④構築\nユニットを作り\n単体でテスト",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "int",
+          "label": "⑤結合\nつないで\n確かめる",
+          "row": 0,
+          "col": 4
+        },
+        {
+          "id": "qt",
+          "label": "⑥適格性確認テスト\n要件を満たすか\n確かめる",
+          "row": 0,
+          "col": 5
+        }
       ],
       "edges": [
-        {"from": "req", "to": "arc"},
-        {"from": "arc", "to": "det"},
-        {"from": "det", "to": "bld"},
-        {"from": "bld", "to": "int"},
-        {"from": "arc", "to": "int", "label": "暫定的なテスト要求事項を定義", "style": "dashed"}
+        {
+          "from": "req",
+          "to": "arc",
+          "label": "要件"
+        },
+        {
+          "from": "arc",
+          "to": "det",
+          "label": "部品と境界"
+        },
+        {
+          "from": "det",
+          "to": "bld",
+          "label": "ユニット設計"
+        },
+        {
+          "from": "bld",
+          "to": "int",
+          "label": "ユニット"
+        },
+        {
+          "from": "int",
+          "to": "qt",
+          "label": "結合した\nソフトウェア"
+        },
+        {
+          "from": "arc",
+          "to": "int",
+          "label": "暫定的なテスト要求事項を定義",
+          "style": "dashed"
+        }
       ]
     }
   ]

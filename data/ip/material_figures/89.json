@@ -1,0 +1,73 @@
+{
+  "topic_id": 89,
+  "term": "ERP（Enterprise Resource Planning：企業資源計画）パッケージ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 一元管理が効く理由",
+      "caption": "全部門が中央の一つのデータベースを使います。販売が受注を 1 回入れるだけで、在庫と経理の数字も同じデータで変わります。",
+      "nodes": [
+        {
+          "id": "hr",
+          "label": "人事\n要員と人件費",
+          "row": 0,
+          "col": 1,
+          "icon": "people"
+        },
+        {
+          "id": "sales",
+          "label": "販売\n受注を入力する",
+          "row": 1,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "db",
+          "label": "一つのデータベース\n全部門の業務データ",
+          "row": 1,
+          "col": 1,
+          "icon": "database",
+          "emphasis": true
+        },
+        {
+          "id": "stock",
+          "label": "生産・在庫\n在庫を引き当てる",
+          "row": 1,
+          "col": 2,
+          "icon": "box"
+        },
+        {
+          "id": "acc",
+          "label": "経理\n売上と原価を計上",
+          "row": 2,
+          "col": 1,
+          "icon": "money"
+        }
+      ],
+      "edges": [
+        {
+          "from": "sales",
+          "to": "db",
+          "label": "受注を 1 回入力"
+        },
+        {
+          "from": "db",
+          "to": "stock",
+          "label": "同じデータで\n在庫が減る"
+        },
+        {
+          "from": "db",
+          "to": "acc",
+          "label": "同じデータで売上に反映"
+        },
+        {
+          "from": "hr",
+          "to": "db",
+          "label": "人件費のデータ",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

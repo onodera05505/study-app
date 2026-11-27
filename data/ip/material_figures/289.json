@@ -1,0 +1,38 @@
+{
+  "topic_id": 289,
+  "term": "セキュリティバイデザイン",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 後付けにしない理由",
+      "direction": "down",
+      "caption": "開発の工程を上から順に並べた図です。強調した企画と設計で守りを決めておくので、後の工程で作り直しが生まれません。",
+      "stages": [
+        {
+          "label": "企画\nどんな攻撃があるかを考える",
+          "icon": "lock",
+          "next_label": "守りを含めた要件",
+          "emphasis": true
+        },
+        {
+          "label": "設計\nどう守るかを決める",
+          "icon": "lock",
+          "next_label": "守りを含めた設計書",
+          "emphasis": true
+        },
+        {
+          "label": "実装\n設計どおりに作る",
+          "next_label": "プログラム"
+        },
+        {
+          "label": "テスト\n守りが働くか確かめる",
+          "next_label": "確かめた製品"
+        },
+        {
+          "label": "運用\n作り直さずに使い続ける"
+        }
+      ]
+    }
+  ]
+}

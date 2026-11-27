@@ -1,0 +1,35 @@
+{
+  "topic_id": 284,
+  "term": "オートラン",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 便利さがそのまま危険になる",
+      "caption": "USB メモリを使った感染の流れです。利用者の操作は挿すところで終わり、その先は止める場面が無いまま感染に進みます。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "攻撃者が仕込む\nマルウェア入りの USB を置く",
+          "icon": "person",
+          "next_label": "拾われる USB メモリ"
+        },
+        {
+          "label": "利用者が拾って挿す\n中身を見ようとする",
+          "icon": "person",
+          "next_label": "媒体の接続"
+        },
+        {
+          "label": "オートランが動く\n操作なしで実行する",
+          "icon": "gear",
+          "emphasis": true,
+          "next_label": "中のプログラムが起動"
+        },
+        {
+          "label": "感染する\nネットワークと切り離した PC でも",
+          "icon": "warning"
+        }
+      ]
+    }
+  ]
+}

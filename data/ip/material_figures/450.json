@@ -5,20 +5,59 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### どのサーバをどちらに置くか",
-      "caption": "外部と通信するサーバだけを DMZ に置き、社外秘のファイルサーバは企業内 LAN に置く。",
+      "after": "explanation",
+      "caption": "ファイアウォールで 3 つの区域に分け、外から接続を受けるサーバだけを DMZ に置きます。破線の通信は通さないので、公開サーバが乗っ取られても企業内 LAN には届きません。",
       "nodes": [
-        {"id": "net", "label": "インターネット", "row": 0, "col": 0, "shape": "cloud"},
-        {"id": "dmz", "label": "DMZ", "row": 0, "col": 1, "emphasis": true},
-        {"id": "lan", "label": "企業内 LAN", "row": 0, "col": 2},
-        {"id": "srv", "label": "Web サーバ\nメールサーバ\n外部向け DNS", "row": 1, "col": 1},
-        {"id": "fs", "label": "社外秘の\nファイルサーバ", "row": 1, "col": 2, "shape": "cylinder"}
+        {
+          "id": "net",
+          "label": "インターネット\n攻撃者もいる",
+          "row": 0,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "fw",
+          "label": "ファイアウォール\n区域ごとに通信を仕分け",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "dmz",
+          "label": "DMZ\n外から接続を受ける\n公開サーバを置く",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "lan",
+          "label": "企業内 LAN\n社内の人だけが使う\nサーバと PC",
+          "row": 1,
+          "col": 2
+        }
       ],
       "edges": [
-        {"from": "net", "to": "dmz", "label": "必要な通信だけ許可", "arrow": "both"},
-        {"from": "dmz", "to": "lan", "label": "社内へは通さない", "style": "dashed", "arrow": "none"},
-        {"from": "dmz", "to": "srv", "arrow": "none"},
-        {"from": "lan", "to": "fs", "arrow": "none"}
+        {
+          "from": "net",
+          "to": "fw",
+          "label": "外からの接続"
+        },
+        {
+          "from": "fw",
+          "to": "dmz",
+          "label": "公開サーバ宛てだけ許可"
+        },
+        {
+          "from": "fw",
+          "to": "lan",
+          "label": "社内へ直接は通さない",
+          "style": "dashed"
+        },
+        {
+          "from": "dmz",
+          "to": "lan",
+          "label": "乗っ取られても通さない",
+          "style": "dashed"
+        }
       ]
     }
   ]

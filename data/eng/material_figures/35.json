@@ -1,0 +1,136 @@
+{
+  "topic_id": 35,
+  "term": "アドレス（メモリの番地）と割り当て",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "上の段がメモリの番地の並びで、下の段がそれを使うプロセスと OS です。範囲の外を触った A だけが止められます。",
+      "nodes": [
+        {
+          "id": "r1",
+          "label": "1〜3 番地\nA に貸した範囲",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "r2",
+          "label": "4〜5 番地\nまだ誰にも貸していない",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "r3",
+          "label": "6〜8 番地\nC に貸した範囲",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "pa",
+          "label": "プロセス A\n自分の範囲だけ使える",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "os",
+          "label": "OS\n範囲を割り当てて見張る",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "pc",
+          "label": "プロセス C\n自分の範囲だけ使える",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "stop",
+          "label": "A だけ止まる\nC と OS は無事",
+          "row": 2,
+          "col": 1,
+          "shape": "round"
+        }
+      ],
+      "edges": [
+        {
+          "from": "pa",
+          "to": "r1",
+          "label": "読み書きできる"
+        },
+        {
+          "from": "pc",
+          "to": "r3",
+          "label": "読み書きできる"
+        },
+        {
+          "from": "pa",
+          "to": "os",
+          "label": "6 番地に書こうとする",
+          "style": "dashed"
+        },
+        {
+          "from": "os",
+          "to": "stop",
+          "label": "範囲の外なので止める"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "青い 2 つの空きは合わせて 4 個ですが、飛び飛びなので 3 個ひと続きの頼みには応えられません。",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "1〜3 番\nA が使用中",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "e1",
+          "label": "4〜5 番\n空き（2 個）",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "c",
+          "label": "6〜8 番\nC が使用中",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "e2",
+          "label": "9〜10 番\n空き（2 個）",
+          "row": 0,
+          "col": 3,
+          "emphasis": true
+        },
+        {
+          "id": "d",
+          "label": "D の頼み\n3 個ひと続き\n取れない＝断片化",
+          "row": 1,
+          "col": 2,
+          "shape": "round"
+        }
+      ],
+      "edges": [
+        {
+          "from": "d",
+          "to": "e1",
+          "label": "1 個足りない",
+          "style": "dashed"
+        },
+        {
+          "from": "d",
+          "to": "e2",
+          "label": "1 個足りない",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

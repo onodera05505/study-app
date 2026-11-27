@@ -1,31 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="123" viewBox="0 0 750 144" role="img">
-<title>処理時間の短い順に選ぶと実行順は A→C→E→D→B となり、時刻12に終わる B のターンアラウンドタイムは 12－1＝11 秒になる。</title>
-<rect x="0.5" y="0.5" width="749" height="143" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(20 20)">
-<polyline points="103,38 157,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="157,38 149,41.6 149,34.4" fill="#1f2937"/>
-<polyline points="253,38 307,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="307,38 299,41.6 299,34.4" fill="#1f2937"/>
-<polyline points="403,38 457,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="457,38 449,41.6 449,34.4" fill="#1f2937"/>
-<polyline points="553,38 607,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="607,38 599,41.6 599,34.4" fill="#1f2937"/>
-<rect x="7" y="10" width="96" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="55" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">A</text>
-<text x="55" y="52.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">0→2</text>
-<rect x="157" y="10" width="96" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="205" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">C</text>
-<text x="205" y="52.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">2→5</text>
-<rect x="307" y="10" width="96" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="355" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">E</text>
-<text x="355" y="52.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">5→6</text>
-<rect x="457" y="10" width="96" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="505" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">D</text>
-<text x="505" y="52.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">6→8</text>
-<rect x="607" y="0" width="96" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="655" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">B</text>
-<text x="655" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">8→12</text>
-<text x="655" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">到着 1</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="218" viewBox="0 0 640 218">
+<rect x="0.5" y="0.5" width="639" height="217" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(54.35 20)">
+<polyline points="183.25,28 398.8,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="398.8,28 390.8,31.6 390.8,24.4" fill="#1f2937"/>
+<polyline points="465.05,56 465.05,112" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="465.05,112 461.45,104 468.65,104" fill="#1f2937"/>
+<polyline points="398.8,140 234,140" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="234,140 242,136.4 242,143.6" fill="#1f2937"/>
+<rect x="50.75" y="0" width="132.5" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="117" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">P　4 秒・到着 0</text>
+<text x="117" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">時刻 0→4</text>
+<rect x="398.8" y="0" width="132.5" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="465.05" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">R　2 秒・到着 3</text>
+<text x="465.05" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">時刻 4→6</text>
+<rect x="398.8" y="112" width="132.5" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="465.05" y="134.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">S　1 秒・到着 5</text>
+<text x="465.05" y="154.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">時刻 6→7</text>
+<rect x="0" y="102" width="234" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="117" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">Q　8 秒・到着 2</text>
+<text x="117" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">時刻 7→15</text>
+<text x="117" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">到着が早くても追い越され続けた</text>
+<rect x="212.62" y="11" width="156.8" height="16" rx="3" fill="#ffffff"/>
+<text x="291.02" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">Q と R が待つ、短い R へ</text>
+<rect x="386.65" y="75" width="156.8" height="16" rx="3" fill="#ffffff"/>
+<text x="465.05" y="88.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">Q と S が待つ、短い S へ</text>
+<rect x="266.5" y="123" width="99.8" height="16" rx="3" fill="#ffffff"/>
+<text x="316.4" y="136.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">残るのは Q だけ</text>
 </g>
-<text x="375" y="124" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">処理時間の短い順に選ぶと実行順は A→C→E→D→B となり、時刻12に終わる B のターンアラウンドタイムは 12－1＝11 秒になる。</text>
 </svg>

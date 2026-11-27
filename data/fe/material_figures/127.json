@@ -1,0 +1,35 @@
+{
+  "topic_id": 127,
+  "term": "BSC（Balanced Scorecard：バランススコアカード）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 視点のつながり",
+      "caption": "左下の学習と成長から右上の財務へ、矢印の順に下の視点が上の視点を押し上げます。財務は鎖の最後に表れる結果です。",
+      "direction": "up",
+      "stages": [
+        {
+          "label": "学習と成長\n人と組織の能力が育つ\n例: 研修の受講時間",
+          "icon": "people",
+          "next_label": "育った人が業務を良くする"
+        },
+        {
+          "label": "内部ビジネスプロセス\n業務の質と速さが上がる\n例: 不良率",
+          "icon": "gear",
+          "next_label": "良い業務が顧客を満足させる"
+        },
+        {
+          "label": "顧客\n満足と評価が高まる\n例: 市場シェア",
+          "icon": "person",
+          "next_label": "満足した顧客が売上を生む"
+        },
+        {
+          "label": "財務\n売上と利益に結び付く\n例: 営業利益率",
+          "icon": "money",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

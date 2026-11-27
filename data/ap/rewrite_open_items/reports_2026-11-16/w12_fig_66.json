@@ -1,0 +1,35 @@
+{
+  "target": "ap",
+  "unit": "01",
+  "status": "none",
+  "blocked": [],
+  "items": [
+    {
+      "no": 1,
+      "figure": {"topic_id": 66, "figure_id": 1},
+      "kind": "heading",
+      "verdict": "not_applies",
+      "reason": "rule_allows",
+      "action": "none",
+      "what": "図 66-1 の要点は caption と強調（ミリ波レーダーの『悪天候に強い』と LiDAR の『悪天候に弱い』）が示すとおり『飛ばす波の波長の違いが天候への強さを分ける』で、その要点を述べているのは ### 天候に強い・弱いの理由 の節。write_materials.md の「図の置き場」（図はその図が支えるブロックの見出しの節の末尾）と material_figures_spec.md の after の行・近接の決まり（after はその要点を述べている段落の位置）どおりで、今の置き場が決まりどおり。### 4つのセンサーの守備範囲 へ寄せると、図の強調と caption（天候への強さ）が節の要点（何を読み取れるか）と合わなくなる。同じ節の本文は表の後の文で LiDAR（受け持ちの論点への [[ ]] の 1 文）と超音波センサー（駐車支援の 1 文）にも触れており、4 つのうち 2 つが図にしか無い状態ではないので、図を指す文も足さない。図の要素・caption・after・本文・台帳は変えていない",
+      "questions_checked": []
+    }
+  ],
+  "changed_figures": [],
+  "moved": [],
+  "removed": [],
+  "restored": [],
+  "ledgers": [
+    {"file": "data/ap/rewrite_ledgers/01-10.json", "changed_points": 0, "removed_figures_added": 0, "removed_figures_dropped": 0}
+  ],
+  "not_fixed": [],
+  "not_fixed_counts": {},
+  "counts": {"applies": 0, "not_applies": 1, "data_suspect": 0},
+  "gates": {
+    "check_materials": 0,
+    "check_material_style": 0,
+    "render_check": null,
+    "unfixed_warnings": []
+  },
+  "written": ["data/ap/rewrite_open_items/reports_2026-11-16/w12_fig_66.json"]
+}

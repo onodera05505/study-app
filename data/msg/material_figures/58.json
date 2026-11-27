@@ -1,0 +1,60 @@
+{
+  "topic_id": 58,
+  "term": "後頭下筋群",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "上の段を左から読むと、くぼみの奥に何が通るかが分かります。くぼみに入らない代わりに、下の段の後頭部の丸みを手のひらで受けます。",
+      "nodes": [
+        {
+          "id": "edge",
+          "label": "後頭部の骨の下の縁\n頭の丸みの下の端",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "hollow",
+          "label": "骨の下のくぼみ\n奥に小さな筋の集まり\n指も手のひらの縁も入れない",
+          "row": 0,
+          "col": 1,
+          "emphasis": true,
+          "icon": "warning"
+        },
+        {
+          "id": "pass",
+          "label": "脳へ向かう動脈\n後頭部へ行く神経\n指を入れると力が届く",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "instead",
+          "label": "後頭部の丸み\n手のひらで受けて待つ",
+          "row": 1,
+          "col": 1,
+          "shape": "round",
+          "emphasis": true,
+          "icon": "hand"
+        }
+      ],
+      "edges": [
+        {
+          "from": "edge",
+          "to": "hollow",
+          "label": "すぐ下にある"
+        },
+        {
+          "from": "hollow",
+          "to": "pass",
+          "label": "奥を通る"
+        },
+        {
+          "from": "hollow",
+          "to": "instead",
+          "label": "入らず、代わりに"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "target": "ap", "units": ["15"], "status": "done",
+  "items": [
+    {"no": 1, "topic_id": 635, "type": "C", "verdict": "fixed",
+     "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）。rewrite_open_items.md「C の直し方」",
+     "what": "detail の箇条 4 の 2 文目「顧客と提供者の双方にとっての価値を実際に生む段階です」は、2018h30a-q55 の問題文の図の d「顧客とサービス提供者にとっての価値を確保できるように」の句をほぼそのまま置いていた（定義の文・キーワードではない説明の箇条）。双方に役立つという点は残し、教材の言葉で言い直した。箇条 4 の 1 文目（毎日無駄なく確実に届け、利用者を支える）で d が提供の段階と分かり、問題解説の正解の根拠と合わせて今も解ける。",
+     "questions_checked": ["2018h30a-q55"]}
+  ],
+  "edits": [
+    {"file": "data/ap/materials_v4/15-2.json", "topic_id": 635, "field": "detail",
+     "op": "replace", "heading": "4 つの段階が受け持つ仕事",
+     "before": "顧客と提供者の双方にとっての価値を実際に生む段階です",
+     "after": "使う側にも提供する側にも役立つ成果が出るのは、この段階で動き出してからです"}
+  ],
+  "owners": [],
+  "figure_after": [],
+  "ledgers": [],
+  "returned": [],
+  "noticed": [],
+  "gates": {"check_materials": 0, "check_material_style": 0, "render_check": 0, "check_explanations": 0, "check_unit_plans": null},
+  "chars": {"before": 932, "after": 943}
+}

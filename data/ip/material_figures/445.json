@@ -1,0 +1,101 @@
+{
+  "topic_id": 445,
+  "term": "DDoS 攻撃",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### DoS 攻撃との違い",
+      "caption": "上の段が 1 台から送る DoS 攻撃、下の段が多数のボットから一斉に送る DDoS 攻撃です。発信元の数の違いが、遮断で止められるかを分けます。",
+      "nodes": [
+        {
+          "id": "a1",
+          "label": "DoS の攻撃者\n1 台から直接送る",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "t1",
+          "label": "標的のサーバ\n発信元を遮断すれば止まる",
+          "row": 0,
+          "col": 2,
+          "icon": "server"
+        },
+        {
+          "id": "a2",
+          "label": "DDoS の攻撃者\nボットに指示だけ出す",
+          "row": 1,
+          "col": 1,
+          "icon": "person"
+        },
+        {
+          "id": "b1",
+          "label": "ボット\n感染した PC",
+          "row": 2,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "b2",
+          "label": "ボット\n感染した IoT 機器",
+          "row": 2,
+          "col": 1,
+          "icon": "device"
+        },
+        {
+          "id": "b3",
+          "label": "ボット\n感染したサーバ",
+          "row": 2,
+          "col": 2,
+          "icon": "device"
+        },
+        {
+          "id": "t2",
+          "label": "標的のサーバ\n発信元が多く遮断しにくい",
+          "row": 3,
+          "col": 1,
+          "icon": "server",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "a1",
+          "to": "t1",
+          "label": "大量の要求"
+        },
+        {
+          "from": "a2",
+          "to": "b1",
+          "label": "遠隔で指示"
+        },
+        {
+          "from": "a2",
+          "to": "b2",
+          "label": "遠隔で指示"
+        },
+        {
+          "from": "a2",
+          "to": "b3",
+          "label": "遠隔で指示"
+        },
+        {
+          "from": "b1",
+          "to": "t2",
+          "label": "一斉に要求"
+        },
+        {
+          "from": "b2",
+          "to": "t2",
+          "label": "一斉に要求"
+        },
+        {
+          "from": "b3",
+          "to": "t2",
+          "label": "一斉に要求"
+        }
+      ]
+    }
+  ]
+}

@@ -4,118 +4,95 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
-      "after": "### 3つの方式の違い",
-      "caption": "1台500Gバイトの4台構成でも使える容量は方式で変わり、RAID5 はパリティ1台分を引いて500G×3＝1.5Tバイト。",
-      "nodes": [
-        {
-          "id": "r0",
-          "label": "RAID0\nストライピング\n使える容量 2T",
-          "row": 0,
-          "col": 0,
-          "shape": "round"
-        },
-        {
-          "id": "r0a",
-          "label": "A",
-          "row": 0,
-          "col": 1,
-          "shape": "cylinder"
-        },
-        {
-          "id": "r0b",
-          "label": "B",
-          "row": 0,
-          "col": 2,
-          "shape": "cylinder"
-        },
-        {
-          "id": "r0c",
-          "label": "C",
-          "row": 0,
-          "col": 3,
-          "shape": "cylinder"
-        },
-        {
-          "id": "r0d",
-          "label": "D",
-          "row": 0,
-          "col": 4,
-          "shape": "cylinder"
-        },
-        {
-          "id": "r1",
-          "label": "RAID1\nミラーリング\n使える容量 1T",
-          "row": 1,
-          "col": 0,
-          "shape": "round"
-        },
-        {
-          "id": "r1a",
-          "label": "A",
-          "row": 1,
-          "col": 1,
-          "shape": "cylinder"
-        },
-        {
-          "id": "r1b",
-          "label": "A",
-          "row": 1,
-          "col": 2,
-          "shape": "cylinder"
-        },
-        {
-          "id": "r1c",
-          "label": "B",
-          "row": 1,
-          "col": 3,
-          "shape": "cylinder"
-        },
-        {
-          "id": "r1d",
-          "label": "B",
-          "row": 1,
-          "col": 4,
-          "shape": "cylinder"
-        },
-        {
-          "id": "r5",
-          "label": "RAID5\nパリティを分散\n使える容量 1.5T",
-          "row": 2,
-          "col": 0,
-          "shape": "round"
-        },
-        {
-          "id": "r5a",
-          "label": "A",
-          "row": 2,
-          "col": 1,
-          "shape": "cylinder"
-        },
-        {
-          "id": "r5b",
-          "label": "B",
-          "row": 2,
-          "col": 2,
-          "shape": "cylinder"
-        },
-        {
-          "id": "r5c",
-          "label": "C",
-          "row": 2,
-          "col": 3,
-          "shape": "cylinder"
-        },
-        {
-          "id": "r5d",
-          "label": "パリティ",
-          "row": 2,
-          "col": 4,
-          "shape": "cylinder",
-          "emphasis": true
-        }
+      "type": "matrix",
+      "after": "explanation",
+      "caption": "2T バイトのディスク 6 台を 3 つの方式でまとめたときの、使える容量と 1 台壊れたときの結果を並べた表です。列ごとに上下の段を見比べて読みます。",
+      "x": {
+        "label": "方式（2T バイト × 6 台）",
+        "values": [
+          "RAID0\nストライピング",
+          "RAID1\nミラーリング",
+          "RAID5\nパリティを分散"
+        ]
+      },
+      "y": {
+        "label": "観点",
+        "values": [
+          "使える容量",
+          "1 台壊れると"
+        ]
+      },
+      "cells": [
+        [
+          "12T バイト\n全台の合計",
+          "6T バイト\n2 台ずつ同じ内容を書く",
+          "10T バイト\n1 台分がパリティ"
+        ],
+        [
+          "全体が読めない\n予備が無い",
+          "使い続けられる\n組の残りの 1 台で読む",
+          "使い続けられる\nパリティで復元"
+        ]
       ],
-      "edges": []
+      "emphasis": [
+        [
+          0,
+          2
+        ]
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### 3 つの方式のしくみ",
+      "caption": "3 台構成の RAID5 で、データとパリティがどのディスクのどの段に記録されるかを示した表です。強調したパリティの位置は段ごとに隣のディスクへずれ、合計するとちょうど 1 台分になります。",
+      "x": {
+        "label": "ディスク 3 台（パリティは合計 1 台分）",
+        "values": [
+          "ディスク 1",
+          "ディスク 2",
+          "ディスク 3"
+        ]
+      },
+      "y": {
+        "label": "段（全台へ横に並べて書く 1 回分）",
+        "values": [
+          "段 1",
+          "段 2",
+          "段 3"
+        ]
+      },
+      "cells": [
+        [
+          "データ A1",
+          "データ A2",
+          "パリティ\nA1・A2 から計算\n壊れた側を作り直す"
+        ],
+        [
+          "データ B1",
+          "パリティ\nB1・B2 から計算\n壊れた側を作り直す",
+          "データ B2"
+        ],
+        [
+          "パリティ\nC1・C2 から計算\n壊れた側を作り直す",
+          "データ C1",
+          "データ C2"
+        ]
+      ],
+      "emphasis": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ]
+      ]
     }
   ]
 }

@@ -1,0 +1,70 @@
+{
+  "topic_id": 396,
+  "term": "BI（Business Intelligence）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "左の基幹システムのデータを、BI ツールがまとめて集計して経営者に見せます。BI は流れの使う側にあたります。",
+      "nodes": [
+        {
+          "id": "inv",
+          "label": "在庫管理\n日々の入出庫を記録",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "prod",
+          "label": "生産管理\n日々の生産量を記録",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "ship",
+          "label": "物流\n日々の配送を記録",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "bi",
+          "label": "BI ツール\nシステムをまたいで\n集計し画面に表示",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "chart"
+        },
+        {
+          "id": "mgr",
+          "label": "経営者\n数字で判断する",
+          "row": 1,
+          "col": 2,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "inv",
+          "to": "bi",
+          "label": "在庫データ"
+        },
+        {
+          "from": "prod",
+          "to": "bi",
+          "label": "生産データ"
+        },
+        {
+          "from": "ship",
+          "to": "bi",
+          "label": "配送データ"
+        },
+        {
+          "from": "bi",
+          "to": "mgr",
+          "label": "ダッシュボード\n切り口を変えて見る",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

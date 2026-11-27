@@ -1,0 +1,25 @@
+{
+  "topic_id": 411,
+  "term": "デジタルサイネージ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 電子看板にする利点",
+      "caption": "左の配信の管理から、ネットワーク越しに右の各地のディスプレイへ表示内容を届けます。線のとおり、現地へ行かずに一斉に書き換えたり時間帯で出し分けたりできます。",
+      "nodes": [
+        {"id": "mgr", "label": "配信の管理\n表示内容を作って\n配る先を選ぶ", "row": 1, "col": 0, "icon": "device", "emphasis": true},
+        {"id": "net", "label": "ネットワーク\n離れた場所へ届ける", "row": 1, "col": 1, "shape": "cloud"},
+        {"id": "st", "label": "駅の案内表示\n運行の情報を出す", "row": 0, "col": 2},
+        {"id": "sh", "label": "店頭の広告\n商品を映像で見せる", "row": 1, "col": 2},
+        {"id": "fa", "label": "施設の館内案内\n催しの場所を出す", "row": 2, "col": 2}
+      ],
+      "edges": [
+        {"from": "mgr", "to": "net", "label": "新しい表示内容"},
+        {"from": "net", "to": "st", "label": "一斉に書き換え"},
+        {"from": "net", "to": "sh", "label": "朝と夜で出し分け"},
+        {"from": "net", "to": "fa", "label": "一斉に書き換え"}
+      ]
+    }
+  ]
+}

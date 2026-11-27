@@ -1,38 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="154" viewBox="0 0 900 216" role="img">
-<title>配列は最大個数分をまとめて確保するので未使用領域が生じ、ポインタは次を指す領域が要素ごとに要る。</title>
-<rect x="0.5" y="0.5" width="899" height="215" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(20 20)">
-<polyline points="361,28 511,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polyline points="607,28 757,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
-<polyline points="361,125 511,125" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="511,125 503,128.6 503,121.4" fill="#1f2937"/>
-<polyline points="607,125 757,125" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="757,125 749,128.6 749,121.4" fill="#1f2937"/>
-<rect x="13" y="5" width="96" height="46" rx="23" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="61" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">配列で実現</text>
-<rect x="265" y="5" width="96" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="313" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">[0] A</text>
-<rect x="511" y="5" width="96" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="559" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">[1] B</text>
-<rect x="757" y="0" width="96" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="805" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">未使用</text>
-<text x="805" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">未使用</text>
-<rect x="0" y="102" width="122" height="46" rx="23" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="61" y="129.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ポインタで実現</text>
-<rect x="265" y="102" width="96" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="313" y="129.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">A ｜次</text>
-<rect x="511" y="102" width="96" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="559" y="129.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">B ｜次</text>
-<rect x="757" y="102" width="96" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="805" y="129.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">C ｜なし</text>
-<rect x="384" y="11" width="104" height="16" rx="3" fill="#ffffff"/>
-<text x="436" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">添字で位置を計算</text>
-<rect x="618" y="11" width="128" height="16" rx="3" fill="#ffffff"/>
-<text x="682" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">最大個数分を先に確保</text>
-<rect x="408" y="108" width="56" height="16" rx="3" fill="#ffffff"/>
-<text x="436" y="121.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">次を指す</text>
-<rect x="618" y="108" width="128" height="16" rx="3" fill="#ffffff"/>
-<text x="682" y="121.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">つなぎ替えだけで挿入</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="270" viewBox="0 0 640 270">
+<rect x="0.5" y="0.5" width="639" height="269" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(80 20)">
+<text x="292" y="18" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">実現方法</text>
+<text x="65" y="30" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">観点</text>
+<text x="198" y="45.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">配列</text>
+<text x="386" y="45.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">ポインタ</text>
+<text x="65" y="89.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">参照</text>
+<text x="65" y="147.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">挿入・削除</text>
+<text x="65" y="205.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">領域</text>
+<rect x="104" y="56" width="188" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="198" y="81.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">添字から位置を計算</text>
+<text x="198" y="97.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">一定時間</text>
+<rect x="292" y="56" width="188" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="386" y="81.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">先頭から順にたどる</text>
+<text x="386" y="97.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">要素数に比例</text>
+<rect x="104" y="114" width="188" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="198" y="139.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">後ろの要素をずらす</text>
+<text x="198" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">要素数に比例</text>
+<rect x="292" y="114" width="188" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="386" y="139.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">つなぎ替えだけ</text>
+<text x="386" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">一定時間</text>
+<rect x="104" y="172" width="188" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="198" y="197.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">最大個数分を先に確保</text>
+<text x="198" y="213.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">未使用の領域が生じる</text>
+<rect x="292" y="172" width="188" height="58" rx="4" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+<text x="386" y="197.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">必要な分だけ確保</text>
+<text x="386" y="213.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">次を指す領域が要素ごとに要る</text>
 </g>
-<text x="450" y="196" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">配列は最大個数分をまとめて確保するので未使用領域が生じ、ポインタは次を指す領域が要素ごとに要る。</text>
 </svg>

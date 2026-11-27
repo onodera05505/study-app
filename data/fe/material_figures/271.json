@@ -1,0 +1,49 @@
+{
+  "topic_id": 271,
+  "term": "サービスデスク",
+  "figures": [
+    {
+      "id": 1, "type": "blocks", "after": "explanation",
+      "caption": "どの利用者の連絡も、強調したサービスデスクの 1 か所に集まります。デスクが記録し、手に負えない物だけを専門の担当へ渡して、結果を利用者へ返します。",
+      "nodes": [
+        {"id": "u1", "label": "利用者 A\n営業部", "row": 0, "col": 0, "icon": "person"},
+        {"id": "u2", "label": "利用者 B\n経理部", "row": 1, "col": 0, "icon": "person"},
+        {"id": "u3", "label": "利用者 C\n店舗", "row": 2, "col": 0, "icon": "person"},
+        {"id": "sd", "label": "サービスデスク\n単一の窓口\n記録して振り分ける", "row": 1, "col": 1, "icon": "people", "emphasis": true},
+        {"id": "s1", "label": "専門の担当\nネットワーク", "row": 0, "col": 2, "icon": "network"},
+        {"id": "s2", "label": "専門の担当\nアプリケーション", "row": 2, "col": 2, "icon": "server"}
+      ],
+      "edges": [
+        {"from": "u1", "to": "sd", "label": "問合せと結果の返答", "arrow": "both"},
+        {"from": "u2", "to": "sd", "label": "問合せと結果の返答", "arrow": "both"},
+        {"from": "u3", "to": "sd", "label": "問合せと結果の返答", "arrow": "both"},
+        {"from": "sd", "to": "s1", "label": "手順書を超える物を引き継ぐ"},
+        {"from": "sd", "to": "s2", "label": "手順書を超える物を引き継ぐ"}
+      ]
+    },
+    {
+      "id": 2, "type": "timeline", "after": "### 4 つの構造",
+      "caption": "3 つの地域のデスクが、それぞれ現地の日中の 8 時間だけを受け持ちます。帯が隙間なく続くので、夜勤なしで 1 日中受け付けられます。",
+      "axis": {"label": "1 日の時刻（世界で共通の時計。地域は例）", "ticks": ["0 時", "4 時", "8 時", "12 時", "16 時", "20 時", "24 時"]},
+      "events": [
+        {"from": 0, "to": 2, "label": "地域 A のデスク\n現地の日中に受け付ける"},
+        {"from": 2, "to": 4, "label": "地域 B のデスク\n現地の日中に受け付ける"},
+        {"from": 4, "to": 6, "label": "地域 C のデスク\n現地の日中に受け付ける"},
+        {"at": 2, "label": "引き継ぎ\n受付中の案件を次の地域へ"},
+        {"at": 4, "label": "引き継ぎ\n受付中の案件を次の地域へ"}
+      ]
+    },
+    {
+      "id": 3, "type": "steps", "after": "### 窓口が担う仕事の流れ",
+      "caption": "窓口の仕事は上の段から順に進みます。強調した段で、自分で解決するか専門の担当へ引き継ぐかが分かれます。",
+      "direction": "down",
+      "stages": [
+        {"label": "受け付ける\n電話・メール・画面で", "icon": "phone", "next_label": "問合せの内容"},
+        {"label": "記録する\n利用者や機器と対応づける", "icon": "document", "next_label": "記録"},
+        {"label": "優先度と分類\n影響と緊急度で決める", "icon": "search", "next_label": "優先度の付いた記録"},
+        {"label": "解決か引き継ぎ\n手順書の範囲なら自分で", "icon": "gear", "next_label": "解決の結果", "emphasis": true},
+        {"label": "結果を返して閉じる\n利用者へ伝え記録を閉じる", "icon": "check"}
+      ]
+    }
+  ]
+}

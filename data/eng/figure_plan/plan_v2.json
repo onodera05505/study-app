@@ -1,0 +1,7070 @@
+[
+ {
+  "topic_id": 1,
+  "term": "コンピュータの 5 つの働き",
+  "points": [
+   {
+    "point": "コンピュータは入力・記憶・演算・制御・出力の 5 つの働きの組み合わせで動く",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "写真を撮って送る場面で、入力→記憶→出力のデータの流れ、記憶と演算の往き来、制御から各働きへの点線の指図を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "5 つの働きの間で何が流れ誰が指図するかが図だけで言え、単位の芯を運んでいる。",
+    "benefit": 3
+   },
+   {
+    "point": "初めて見る機器（自動販売機など）も 5 つの働きに分けて見られる",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "自販機の例は本文の 1 文で対応が言え、図を足すと 1 図目と要点が重なる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 2,
+  "term": "CPU",
+  "points": [
+   {
+    "point": "CPU はメモリから命令を 1 つずつ取り出して読み解き、計算（演算）とほかの部品への指図（制御）を受け持つ",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "メモリ（命令の並び・データ）から CPU の中の『制御（命令を読み解き次を決める）』へ「命令を 1 つ」の矢印、制御から『演算（足し算・大小の比べ）』と入出力の機器へ「指図」、演算とメモリの間に「値と結果」の往き来を並べる。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "CPU が何を受け取り何を出す部品かは、命令とデータの流れを矢印で見せると単位の芯が図だけで言える。",
+    "benefit": 2
+   },
+   {
+    "point": "CPU が速くてもメモリとの受け渡しが遅いと全体は速くならない",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "因果が 1 つで本文の 1 文で言え、図にすると 1 図目の往き来の矢印と重なる。",
+    "benefit": 1
+   },
+   {
+    "point": "CPU の使用率 100% は計算の中心が手いっぱいでほかの処理が順番待ちの状態",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "状態の言い換え 1 つで本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 3,
+  "term": "メモリ",
+  "points": [
+   {
+    "point": "アプリを開くとストレージのプログラムとデータがメモリに写され、CPU はメモリから読み書きする（メモリは作業机）",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "ストレージ（しまう棚・遅い・残る）→「開くと写す」→ メモリ（作業机・速い）⇔「読み書き」⇔ CPU、メモリ →「保存する」→ ストレージ、メモリの横に「電源を切ると消える」の点線を並べ、作業はメモリ・保存はストレージの役割分担が矢印で見えるようにする。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "作業机と棚の行き来は流れで見せると、メモリとストレージの役割の違いが図だけで言える。",
+    "benefit": 2
+   },
+   {
+    "point": "メモリは電気で中身を保つので電源を切ると消える",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言え、比べは単位 4 の表がすでに受け持つ。",
+    "benefit": 1
+   },
+   {
+    "point": "メモリが少ないと同時に開けるアプリが減り重くなる",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "因果が 1 つで本文の机のたとえで足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 4,
+  "term": "ストレージ",
+  "points": [
+   {
+    "point": "ストレージはメモリより遅いが大きく、電源を切っても中身が残る",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "メモリ・SSD・HDD を「速さ・電源を切ると・動く部分」の 3 観点で並べた表。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "仕様の手本そのもので、観点をたどれば違いが表の中で閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "HDD は円盤を回す待ちの分だけ遅いので、遅いときは HDD かを確かめる",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "判断 1 つで本文で足り、表の「動く部分」の行にも出ている。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 5,
+  "term": "記憶の階層",
+  "points": [
+   {
+    "point": "記憶する部品は CPU に近いほど速くて小さく、遠いほど遅くて大きく、使い分けて全体を速く保つ",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "layers",
+    "idea": "上から レジスタ（CPU の中・最も速い）・キャッシュ（よく使う物の写し）・メモリ（作業中の記憶）・ストレージ（長くしまう・最も大きい）をピラミッドに積み、note に速さ、左の括弧で「CPU に近い・速い／遠い・大きい」を示す。",
+    "existing_figure_id": 1,
+    "existing_action": "retype",
+    "reason": "今の図は 4 つの箱が横一列で、大きさの違いが箱の中の文字でしか読めない。ピラミッドにすると上ほど狭い形そのものが「速いほど小さい」を運び、記憶の階層の芯が形で見える（探す順は本文の 1 文で足りる）。",
+    "benefit": 3
+   }
+  ]
+ },
+ {
+  "topic_id": 6,
+  "term": "キャッシュメモリ",
+  "points": [
+   {
+    "point": "さっき使った物とその近くを速い手元に写しておき、次はメモリまで行かずに済ませる（局所性があるから効く）",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "CPU・キャッシュ・メモリの 3 者で、1 回目のミスで隣ごと写し、次の隣の読み出しがヒットしてメモリまで行かない往き来を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "ミスとヒットの往き来の差が、局所性が効く理由ごと図だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "手元がいっぱいになったら LRU などで入れ替える",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "決め方 1 つの名前で本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 7,
+  "term": "部品をつなぐ通り道と差し込み口（バス・USB）",
+  "points": [
+   {
+    "point": "CPU・メモリ・周辺の機器は、みんなで順番に使う 1 つの線の束（バス）でつながり、外の機器は USB の口から加わる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "横長の箱『バス（みんなで使う線の束・一度に運べる量に上限）』に CPU・メモリ・ストレージ・USB の口を線でつなぎ、各線に運ぶ物（命令・データ）、USB の口の先に「後から抜き差し」で外の機器を並べる。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "部品ごとの専用線でなく 1 本を共有する形は、つながり方を見せると図だけで言える。",
+    "benefit": 2
+   },
+   {
+    "point": "USB は口の形と電気の送り方まで決めた通り道の決まり",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 者の 1 点だけの違いで本文の 1 文で言える。",
+    "benefit": 1
+   },
+   {
+    "point": "バスが一度に運べる量が足りないと CPU が速くても待つ",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "因果 1 つで本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 8,
+  "term": "プログラムは命令の並び（機械語とプログラム内蔵方式）",
+  "points": [
+   {
+    "point": "プログラムはメモリに置いた命令の並びで、命令もデータも同じメモリに置き、CPU が 1 つずつ取り出して実行する",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "ストレージ →「開くと写す」→ メモリ（中に 命令 1・命令 2・命令 3 とデータが同じ所に並ぶ）→「1 つ取り出す」→ CPU →「次の命令へ」でメモリへ戻る矢印を並べ、命令とデータが同じ箱にあることを強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "命令とデータが同じメモリにあり順に取り出される作りは、置き場と流れを見せると図だけで言える。",
+    "benefit": 2
+   },
+   {
+    "point": "メモリの中身を入れ替えるだけで、機械はそのままで別の仕事をさせられる",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 図目の帰結で本文の 1 文で言える。",
+    "benefit": 1
+   },
+   {
+    "point": "コードは機械語に直してから実行する",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "後の単位で扱う話の予告で、本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 9,
+  "term": "命令の実行サイクルとレジスタ",
+  "points": [
+   {
+    "point": "CPU は命令を取り出し（フェッチ）・読み解き（デコード）・実行する段を、プログラムカウンタを進めながら繰り返す",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "cycle",
+    "idea": "輪に フェッチ（PC が指す命令をメモリから取り出す）→ デコード（何をする命令か読み解く）→ 実行（計算して答えをレジスタに置く）→ PC を次へ進める を並べ、next_label に渡す物（命令・意味・答え）、中央に「1 命令ずつ繰り返す」。",
+    "existing_figure_id": 1,
+    "existing_action": "retype",
+    "reason": "今の sequence は 5 本のうち 3 本が CPU から CPU への自分宛てで、繰り返すことは最後の注記「1 に戻って繰り返す」でしか読めない。cycle にすると 3 段が輪で戻ることが形で見え、単位の芯の「繰り返す」が図だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "レジスタは CPU の中の数の少ないとても速い記憶で、計算の途中の値をまず置く",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 者の 1 点の違い（容量と速さ）で本文で言え、輪の実行の段にも置き場として出る。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 10,
+  "term": "クロックと CPU の速さの測り方",
+  "points": [
+   {
+    "point": "CPU の速さは 1 秒の拍の数（周波数）と 1 命令に要る拍の数（CPI）の両方で決まり、周波数だけでは比べられない",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "chart",
+    "idea": "2GHz・CPI 4 の A と 1GHz・CPI 1 の B の 1 秒あたりの命令数を並べ、周波数の高い A が遅いことを示している。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "量の関係が図だけで言え、単位の芯を運んでいる。",
+    "benefit": 3
+   },
+   {
+    "point": "1GHz は 1 秒に 10 億回の拍",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "値 1 つ。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 11,
+  "term": "マルチコアと GPU",
+  "points": [
+   {
+    "point": "マルチコアは何でもこなす芯を数個並べ、GPU は単純で同じ形の計算を大量の小さな芯で一度に片付ける",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "列に マルチコア・GPU、行に 芯の数と種類・得意な仕事・向く例（別々のアプリを同時に／画面の点の色・AI の大量の掛け算）を並べる。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの作りを同じ観点で比べると違いが表の中で閉じる。",
+    "benefit": 2
+   },
+   {
+    "point": "前の結果を待たないと進めない仕事は、芯を増やしても速くならない",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "上段に 分けられる仕事（仕事 1〜4 が芯 1〜4 へ「同時に」）、下段に 前の結果を待つ仕事（仕事 1 →「結果を待つ」→ 仕事 2 → 仕事 3 が芯 1 だけで順に進み、芯 2〜4 は「空き」）を並べる。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "芯の数が効くかの分かれ目は、仕事の割り振りを並べると図だけで言える。",
+    "benefit": 2
+   },
+   {
+    "point": "拍を上げると熱と電力が増えるので、芯を増やす方向に進んだ",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "経緯の因果 1 つで本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 12,
+  "term": "割り込み",
+  "points": [
+   {
+    "point": "急ぎの知らせが来ると CPU は途中の値を取っておいて急ぎの処理に移り、終わったら値を戻して続きから再開する",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "キーボード・CPU・割り込みの処理の 3 者で、知らせ→値を取っておく→処理→値を戻して続きへ、の往き来を上から並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "中断と再開の往き来が図だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "CPU が機器を見張り続けなくて済み、待ちの時間を別の計算に使える",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "利点 1 つで本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 13,
+  "term": "ビットとバイト",
+  "points": [
+   {
+    "point": "8 ビットで 1 バイト、そこから KB・MB・GB と 1,000 倍ずつ大きくなる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "1 ビット→1 バイト→1KB→1MB→1GB を小さい順に並べ、矢印に「8 個まとめる」「×1,000」の倍率を書いている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "単位の並びと倍率が図だけで言える。",
+    "benefit": 2
+   },
+   {
+    "point": "容量はバイト、回線の速さはビットで数えるので 8 倍の違いに気を付ける",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 者の 1 点の違いで本文で足りる。",
+    "benefit": 1
+   },
+   {
+    "point": "PC の画面では 1,024 倍ずつで数える場面がある",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "値 1 つ。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 14,
+  "term": "2 進数と 16 進数",
+  "points": [
+   {
+    "point": "2 進数を右から 4 桁ずつ区切ると 16 進数の 1 桁ずつになり、長い並びを短く書ける",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "00101111 を 4 桁ずつ 0010 と 1111 に区切り、重み 8・4・2・1 で 2 と 15 に読み、16 進数 2F と 10 進数 47 に直す流れを並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "変換の段が図だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "どの書き方も表す値は同じで、変わるのは見せ方だけ（基数が違う）",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 15,
+  "term": "小数の表し方と計算の誤差（浮動小数点数）",
+  "points": [
+   {
+    "point": "0.1 のように 2 進数で終わらない小数は、決まった桁で切った近い値として持つので誤差が出る",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "10 進数で終わる小数を、2 進数で書いたとき・コンピュータが持つ値の列で行ごとに比べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "10 進数では終わるのに 2 進数で終わらないことが表の中で閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "小さな差が足し算を重ねるとたまるので、お金は整数で数える",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "因果と判断 1 つで本文で足りる。",
+    "benefit": 1
+   },
+   {
+    "point": "浮動小数点数は数字の並びと小数点をずらす桁数の組で持つ",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "本文の 10 進数のたとえ 1 文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 16,
+  "term": "文字コード",
+  "points": [
+   {
+    "point": "文字は対応表で番号になりバイトの並びに直されるので、保存と読む側の文字コードが違うと文字化けする",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "「あ」→ Unicode の番号 → UTF-8 の 3 バイト → UTF-8 として読むと「あ」に戻り、Shift_JIS として読むと区切りがずれて文字化け、の分かれ道を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "変換の流れと分かれ道で文字化けの理由が図だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "ASCII は英字と数字だけなので 1 文字 1 バイトに収まる",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "値 1 つで本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 17,
+  "term": "負の数の表し方（2 の補数）",
+  "points": [
+   {
+    "point": "0 と 1 を入れ替えて 1 を足すと負の数になり、引き算を足し算の回路で済ませられる",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "上の段で 5 から −5（11111011）を作り、下の段で 7＋(−5) を足してはみ出した 9 桁目を捨て 2 になる流れを並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "作り方と使い方の段が図だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "8 ビットの枠では 127 を超えると左端が 1 になり負の数に折り返す",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "126→127→10000000（−128）→10000001（−127）と 1 ずつ足した並びを置き、左端が 1 に変わる所を示している。",
+    "existing_figure_id": 2,
+    "existing_action": "keep",
+    "reason": "急に負になるバグの原因が並びだけで言える。",
+    "benefit": 2
+   }
+  ]
+ },
+ {
+  "topic_id": 18,
+  "term": "画像と音をデジタルにする（標本化・量子化・データ量）",
+  "points": [
+   {
+    "point": "細かく区切るほど質は上がり、データ量は読み取る回数×1 回の大きさの掛け算で増える",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "chart",
+    "idea": "横軸に 1 秒の読み取り回数、線ごとに 1 回の段階の細かさを取り、データ量が掛け算で伸びる様子を描いている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "量の関係が図だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "切れ目なく変わる音を一定の間隔で読み取り（標本化）、決まった段数に丸め（量子化）、0 と 1 の並びにする",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "steps",
+    "idea": "段を 連続した音（切れ目なく変わる）→ 標本化（1 秒に何回か読み取る）→ 量子化（256 段のどれかに丸める）→ 0 と 1 の並び（1 回 8 ビット）と下り、next_label に「点の並び」「段の番号」を書く。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "標本化と量子化の順と役割の違いは、一方向の段で見せると図だけで言える（chart は量の関係だけを運ぶ）。",
+    "benefit": 2
+   }
+  ]
+ },
+ {
+  "topic_id": 19,
+  "term": "圧縮",
+  "points": [
+   {
+    "point": "元にそっくり戻せる可逆と、少し捨てて大きく縮める非可逆があり、中身がどこまで変わってよいかで選ぶ",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "可逆と非可逆を、縮め方・戻せるか・向く物の 3 観点で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "2 方式の違いが表の中で閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "偏りの少ないデータや圧縮済みのデータはほとんど小さくならない",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 20,
+  "term": "論理演算（AND・OR・NOT）と真理値表",
+  "points": [
+   {
+    "point": "AND は両方が真、OR はどちらかが真、NOT は反転で、組み合わせを全部並べたのが真理値表",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "本文に真理値表がそのまま載っており、図を足すと表と重なる。",
+    "benefit": 1
+   },
+   {
+    "point": "OR は両方が真のときも真になる（日常の「または」と違う）",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "venn",
+    "idea": "全体の枠「客」に 学生・65 歳以上 の 2 つの円を重ね、学生だけ・65 歳以上だけ・両方（OR も真、AND だけが真）・どちらでもない の 4 領域に割引になるかを書き、両方の領域を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "「両方に当たる人も入る」は重なりの領域で見せると図だけで言え、取り違えやすい点が形で閉じる。",
+    "benefit": 2
+   }
+  ]
+ },
+ {
+  "topic_id": 21,
+  "term": "条件の否定の言い換え（ド・モルガンの法則）",
+  "points": [
+   {
+    "point": "「A かつ B ではない」は「A でない または B でない」と同じで、否定を中へ配るときは かつ と または を入れ替える",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "学生か否か×会員か否かの 4 マスで、割引に当たらない 3 マスと、「かつ」で書いたときに漏れる 2 マスを色で示している。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "どのマスが対象かを表の中でたどれ、取り違えが図だけで言える。",
+    "benefit": 3
+   }
+  ]
+ },
+ {
+  "topic_id": 22,
+  "term": "論理回路と XOR",
+  "points": [
+   {
+    "point": "1 桁の足し算の下の桁は XOR、桁上がりは AND で作れ、この組が半加算器",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "1 桁どうしの足し算 4 通りを、下の桁と桁上がりに分け、XOR と AND の出力と並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "足し算とゲートの対応が表の中で閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "半加算器 2 つと OR で 1 桁分の全加算器ができ、並べると何桁でも足せる",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "A・B と下からの桁上がり C が半加算器 1・2 と OR を通って、この桁の答えと上の桁への桁上がりになる組み立てを並べている。",
+    "existing_figure_id": 2,
+    "existing_action": "keep",
+    "reason": "部品のつなぎ方と流れが図だけで言える。",
+    "benefit": 2
+   },
+   {
+    "point": "XOR は違う桁だけを 1 にするのでデータの違う桁探しにも使う",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "用途 1 つで本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 23,
+  "term": "ソフトウェアの種類",
+  "points": [
+   {
+    "point": "ソフトウェアは土台の OS、どのアプリも使う働きを受け持つミドルウェア、目的のためのアプリの層に分かれ、上の層は下の層に頼んで動く",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "layers",
+    "idea": "上から アプリ（利用者の目的のために動く・note: 通販・在庫・勤怠）・ミドルウェア（どのアプリも同じ物を使う・note: データを預かる）・OS（機械を動かす土台・note: Windows・Linux）・機械（ストレージなど）を積み、ミドルウェアを強調、括弧で「利用者に見える／見えない」を示す。",
+    "existing_figure_id": 1,
+    "existing_action": "retype",
+    "reason": "今の図は層の話なのに箱を縦に並べて線でつないだ blocks で、どこからどこまでが 1 つの層かが読みにくい。layers にすると「下が上を支える 3 層」が積み上がりの形で見え、単位の芯（層に分かれて下に頼る）が図だけで言える。3 つのアプリが同じミドルウェアを使う点は note に残す。",
+    "benefit": 3
+   },
+   {
+    "point": "動かないときはどの層の話かを先に決めると調べる場所が絞れる",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "判断 1 つで本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 24,
+  "term": "OS の役割",
+  "points": [
+   {
+    "point": "OS は CPU の時間・メモリ・ファイル・機器を管理し、同時に動くアプリが取り合わずに使えるよう仲立ちする",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "アプリ A・B・C が OS に頼み、OS が CPU の時間を交代に・メモリを区画に分けて・機器を代わりに動かす、の配り方を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "誰が資源を直接触り、どう配るかが図だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "PC・スマホ・サーバの機械では使う OS が違う",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "例の列挙で本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 25,
+  "term": "カーネルとシステムコール",
+  "points": [
+   {
+    "point": "アプリは機器を自分で触らず、システムコールという窓口でカーネルに頼み、カーネルがドライバを通して機器を動かす",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "アプリ・カーネル・デバイスドライバ・ストレージの 4 者で、保存の頼みが窓口から機器へ届き結果が戻る往き来と、印がカーネルの方になる区間を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "頼みの通り道と各役の違いが図だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "CPU の印がアプリの方のときは機器を動かす命令が止められるので、1 つのアプリのバグが他を壊さない",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "仕組みの理由 1 つで本文で足り、印の区間は 1 図目に出ている。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 26,
+  "term": "ファイルとディレクトリ",
+  "points": [
+   {
+    "point": "ファイルはディレクトリの入れ子に置き、全体はルートから枝分かれする木の形になる（入れ物が違えば同じ名前でも別の物）",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "ルートから 仕事・家・資料 のディレクトリが「中に置く」「入れ子にする」の線で枝分かれし、別の入れ物に同じ名前のメモ.txt を 2 つ置いて強調している。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "樹形の形だが、箱に役割の一言があり、同じ名前が別の物として置ける点を図だけで運んでいるので残す。",
+    "benefit": 2
+   }
+  ]
+ },
+ {
+  "topic_id": 27,
+  "term": "パス（絶対パス・相対パス）と今いる場所",
+  "points": [
+   {
+    "point": "絶対パスはルートからたどり、相対パスは今いる場所からたどるので、起点が変わると相対パスの指す先も変わる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "/home/a/photo/cat.png へ、ルートから下りる道と今いる docs から .. で上がって下りる道を同じ木の上で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "2 つの道順の起点の違いが図だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "pwd で今いる場所を出し、cd .. で 1 つ上へ移る",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "3 行の操作が本文の番号付きの手順に書かれている。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 29,
+  "term": "拡張子とファイル形式",
+  "points": [
+   {
+    "point": "拡張子は名前の一部の目印で、変えても中身の並びは変わらず、開くアプリが変わるだけ",
+    "content_type": "概念",
+    "function": "解釈的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "cat.png（中身: 画像の並び）→「名前の末尾だけ変える」→ cat.txt（中身: 同じ画像の並び）→「文字を見るアプリで開く」→ 読めない文字が並ぶ、を並べ、中身の箱が同じことを強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "名前と中身が別物であることは、名前を変えても中身の箱が同じまま残る様子を見せると図だけで言える。",
+    "benefit": 2
+   },
+   {
+    "point": "拡張子を隠していると「請求書.pdf.exe」が文書に見え、悪意のあるソフトを動かしかねない",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "例 1 つと判断で本文で足りる。",
+    "benefit": 1
+   },
+   {
+    "point": "ファイル形式にはテキスト形式とバイナリ形式がある",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 者の 1 点の違いで本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 30,
+  "term": "プロセス",
+  "points": [
+   {
+    "point": "プログラムを起動すると OS がメモリの区画を割り当てて動かし、その動いている 1 つ分がプロセスで、区画は互いに分かれる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "ストレージの止まっている命令の並びを OS が区画を割り当てて動かし、プロセス 1・2 がそれぞれ自分の区画だけを使う形を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "プログラムとプロセスの違いと区画の分かれ方が図だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "CPU より多くのプロセスが同時に動いて見えるのは OS が CPU を短い時間ずつ回すから",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言え、単位 34 の図が受け持つ。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 31,
+  "term": "スレッド（プロセスの中の処理の流れ）とプロセスとの違い",
+  "points": [
+   {
+    "point": "スレッドは 1 つのプロセスの中で並んで進む流れで、メモリを共有するので軽いが取り合いに注意が要る",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "プロセス A の 2 つのスレッドが同じ区画を読み書きし、プロセス B の区画は分かれて触れない形を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "共有と分離の違いが図だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "速さを取るならスレッド、失敗を広げたくないなら別のプロセスと選ぶ",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "判断 1 つで本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 32,
+  "term": "同期処理と非同期処理",
+  "points": [
+   {
+    "point": "同期は結果が返るまで待ち、非同期は頼んだら先へ進んで終わったら知らせを受ける",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "同期と非同期を、頼んだ後・待つ間の画面・結果の受け取りの 3 観点で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "画面が固まるかの違いが表の中で閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "流れが 1 本でも、待つ仕事は向こうの機械がしているので画面は固まらず、続き（コールバック）は知らせの後に動く",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "利用者・画面の流れ・取り寄せ先の 3 者で、頼んだ後もボタンの操作を受け、知らせの後に続きが動く往き来を並べている。",
+    "existing_figure_id": 2,
+    "existing_action": "keep",
+    "reason": "1 本の流れが止まらない理由が往き来で図だけで言える。",
+    "benefit": 2
+   },
+   {
+    "point": "1 秒の取り寄せを 3 つ頼むと、同期は 3 秒、非同期は約 1 秒でそろう",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "数の例 1 つで本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 33,
+  "term": "排他制御とデッドロック",
+  "points": [
+   {
+    "point": "2 つの処理が同じデータを同時に読み書きすると更新が消えるので、書き換えの間だけロックを取り一度に 1 つにする",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "処理 A・残高・処理 B の 3 者で、A が 100 を読む → B が 100 を読む → A が 110 を書く → B が 110 を書く（正しくは 120）と並べ、最後の書き込みを強調し、note に「A がロック中は B は待つ」と添える。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "取り合いで更新が消える順番は、往き来を時刻の順に並べると図だけで言え、単位の前半の芯を運ぶ。",
+    "benefit": 3
+   },
+   {
+    "point": "札を持ったまま互いの札を待ち合うと、待ちが輪になってどちらも止まる（デッドロック）",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "処理 A・札 Y・処理 B・札 X を輪に置き、「持っている」の実線と「返るのを待つ」の点線で待ちが元に戻る輪を示している。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "輪の形の blocks だが、持つ・待つの 2 種の線を実線と点線で分けているのが要点で、cycle にすると線が 1 種になり見分けが消えるので残す。",
+    "benefit": 3
+   },
+   {
+    "point": "札を取る順番を全員でそろえれば待ちの輪はできない",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "防ぎ方 1 つで本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 34,
+  "term": "スケジューリングとコンテキストスイッチ",
+  "points": [
+   {
+    "point": "OS は待ちの列から順に短い持ち時間ずつ CPU を渡し、切れたらレジスタの中身を入れ替えて（コンテキストスイッチ）次へ回す",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "cycle",
+    "idea": "輪に 待ちの列（B・C・A の順）→ スケジューリング（次は B に 10 ミリ秒）→ CPU（10 ミリ秒計算）→ コンテキストスイッチ（レジスタの中身をしまって次の分を戻す）を時計回りに並べ、next_label に「先頭を選ぶ」「持ち時間を渡す」「持ち時間切れ」「列の後ろへ」、中央に「ラウンドロビン」。",
+    "existing_figure_id": 1,
+    "existing_action": "retype",
+    "reason": "今の図は 4 つの箱を 2×2 に置いた輪で、矢印をたどらないと回る順が分からない。cycle にすると時計回りの輪の形で「順番に回し、切れたら後ろへ戻す」が見え、3 つの語の役割が輪の段として図だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "切り替えの間は誰の計算も進まないので、持ち時間を短くしすぎると手間が目立つ",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "因果 1 つで本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 35,
+  "term": "アドレス（メモリの番地）と割り当て",
+  "points": [
+   {
+    "point": "メモリは番地の付いた箱の並びで、OS はプロセスごとに使ってよい範囲を割り当て、範囲の外を触ったプロセスを止める",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "上の段に番地の範囲（A に貸した・空き・C に貸した）、下の段にプロセス A・OS・プロセス C を置き、範囲の外を触った A だけが止まる様子を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "割り当てと守りが図だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "借りては返すを繰り返すと空きが細切れになり、合計は足りるのにひと続きの塊を取れなくなる（断片化）",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "番地の並びに使用中と飛び飛びの空き 2 個ずつを置き、3 個ひと続きを頼む D が取れない様子を並べている。",
+    "existing_figure_id": 2,
+    "existing_action": "keep",
+    "reason": "合計と並びの違いが図だけで言える。",
+    "benefit": 2
+   }
+  ]
+ },
+ {
+  "topic_id": 38,
+  "term": "仮想記憶",
+  "points": [
+   {
+    "point": "OS はプロセスに見せかけの番地を渡し、対応表で本物の置き場へ結び、入りきらない分はストレージに逃がす",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "プロセス A・B の同じ 100 番地がそれぞれの対応表を通って別のメモリの置き場へ結び付き、メモリとストレージの間の出し入れの 2 本を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "見せかけの番地と本物の置き場の対応、ストレージへの逃がし先が図だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "出し入れがくり返されると極端に遅くなる（スラッシング）",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "因果 1 つで本文で足り、1 図目の出し入れの線が受け持つ。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 39,
+  "term": "コンパイラとインタプリタ",
+  "points": [
+   {
+    "point": "コンパイラは動かす前に全体を機械語に直し、インタプリタは 1 行ずつ直しながら動かす",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "コンパイラとインタプリタを、直すとき・誤りが見つかる時・動かす速さの 3 観点で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "違いが表の中で閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "C はコンパイラ、Python はインタプリタで動かすのが基本の形",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "例 1 つで本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 40,
+  "term": "ビルドとライブラリ",
+  "points": [
+   {
+    "point": "ビルドはコンパイラが直した自分の機械語に、リンカがライブラリの部品の置き場を埋めて 1 つの実行ファイルにまとめる作業",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "呼び先が空欄の自分の機械語とライブラリの一覧をリンカが引いて 101 番地を書き込み、実行ファイルができる流れと、一覧に無ければ止まる分かれ道を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "つなぐ係の仕事が図だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "ライブラリに頼る（依存）ので、使うバージョンを書き残すと別の PC でも同じ物を組み立てられる",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "判断 1 つで本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 41,
+  "term": "ライブラリとフレームワークの違い",
+  "points": [
+   {
+    "point": "ライブラリは自分のコードから呼ぶ部品で、フレームワークは骨組みが自分の中身を呼ぶ（制御の反転）",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "上段で自分のコードが道具箱の部品を呼び、下段で骨組みが押されたことに気づいて自分の中身を呼ぶ、呼ぶ矢印の向きの逆転を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "呼ぶ向きの違いが図だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "小さな処理はライブラリ、チームで大きく作るならフレームワークと選ぶ",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "判断 1 つで本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 42,
+  "term": "オープンソースソフトウェア",
+  "points": [
+   {
+    "point": "OSS は無料という意味ではなく、中身を見て直して配り直せることが芯で、有料で売ることもできる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "行に 中身を公開・非公開、列に 無料・有料 の 2×2 を置き、公開×無料（例 Linux）と公開×有料（保守を付けて売る）が OSS、非公開×無料は無料でも OSS ではない、と各マスに書く。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "「無料かどうか」と「中身が公開か」が別の軸であることは、2 軸の表で見せると取り違えが表の中で閉じる。",
+    "benefit": 2
+   },
+   {
+    "point": "選ぶときは使う条件・直され続けているか・自分たちで直せるかの 3 点で判断する",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "判断の観点が本文に 3 つ並んでおり本文で足りる。",
+    "benefit": 1
+   },
+   {
+    "point": "誰かが動くことを保証してくれるとは限らない",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 43,
+  "term": "クライアントとサーバ",
+  "points": [
+   {
+    "point": "サービスを頼む側（クライアント）と応える側（サーバ）に役割を分けて作り、Web もメールもこの形",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "クライアントとサーバを、頼むか応えるか・データの置き場・止まったときに誰まで困るかの観点で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "役割の違いが表の中で閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "クライアントとサーバは役割の名前で、1 台の機械がどちらにもなれる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 44,
+  "term": "性能の指標",
+  "points": [
+   {
+    "point": "応答時間は 1 人が感じる速さ、スループットは全体がさばく量で、頼みがさばける量を超えると列に並んで応答時間が延びる",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "1 件 0.1 秒の機械 1 台に 1 秒 20 件が来た場面と、台数を増やした場面を、さばける量と 1 件の時間で比べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "2 つの指標の違いが表の中で閉じる。",
+    "benefit": 3
+   }
+  ]
+ },
+ {
+  "topic_id": 45,
+  "term": "稼働率と冗長化",
+  "points": [
+   {
+    "point": "部品を一列につなぐと稼働率は 1 台より下がり、並べて冗長化すると 1 台より上がる",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "稼働率 90% の 2 台を一列と並べる形で、全体が止まる条件と計算した稼働率を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "2 つの形の数え方と結果が表の中で閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "予備には費用がかかるので止まると困る所から二重にする",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "判断 1 つで本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 46,
+  "term": "RAID",
+  "points": [
+   {
+    "point": "RAID0 は分けて書いて速く、RAID1 は同じ物を 2 台に書いて壊れにくく、RAID5 はパリティを散らして 1 台分を戻せる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "RAID0・1・5 を、書き方・1 台壊れたとき・使える容量の観点で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "3 方式の違いが表の中で閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "パリティは桁ごとに 1 が偶数個になるよう決めるので、壊れた 1 台を残りから埋め直せる",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "2 台目 0110 とパリティ 1100 から、桁ごとに 1 を偶数個にする決まりで壊れた 1 台目の 1010 を戻す流れを並べている。",
+    "existing_figure_id": 2,
+    "existing_action": "keep",
+    "reason": "埋め直しの手順が図だけで言える。",
+    "benefit": 2
+   },
+   {
+    "point": "どの方式でも誤って消したデータは全台から消えるのでバックアップの代わりにならない",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 47,
+  "term": "壊れても安全側に倒す設計（フェールセーフ・フールプルーフ）",
+  "points": [
+   {
+    "point": "フェールセーフは壊れたときに危なくない方へ止め、フールプルーフは間違えようのない形にしておく",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "列に フェールセーフ・フールプルーフ、行に 何に備えるか（部品の故障／人の間違い）・どう倒すか（危なくない方へ止める／間違えた操作を受け付けない）・例（故障で赤になる信号機／ドアを閉めないと動かない電子レンジ・数字の欄に文字が入らない画面）を並べる。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの考え方の違いは備える相手と倒し方の観点で並べると表の中で閉じる。",
+    "benefit": 2
+   },
+   {
+    "point": "どちらも起きないようにするのでなく、起きても被害を小さくする点が共通",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 48,
+  "term": "変数と代入",
+  "points": [
+   {
+    "point": "代入は右側を先に計算し、その結果で名前の中身を上書きするので、前の値は残らない",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "steps",
+    "idea": "段を 点数 ← 70（中身は 70）→ 点数 ← 点数 ＋ 10（右の 70＋10＝80 を先に計算して上書き）→ 点数 を表示（80 が出る。70 は残らない）と下り、next_label に「中身 70」「中身 80」を書き、2 段目を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "「点数 ← 点数 + 10」の読み方は、中身が段ごとに変わる様子を見せると図だけで言え、初学者がつまずく所を運ぶ。",
+    "benefit": 2
+   },
+   {
+    "point": "← や = は等しいでなく右の値を左の名前に入れる意味",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   },
+   {
+    "point": "名前は中身の分かる語にしておく",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "心得 1 つで本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 49,
+  "term": "データ型と式",
+  "points": [
+   {
+    "point": "値には数・文字列・真偽値などの型があり、同じ演算子でも型によって働きが変わる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "同じ「＋」を、数どうし・文字列どうし・混ぜたときで並べ、働きの違いを示している。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "型ごとの違いが表の中で閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "比べる式の値は真偽値になり、条件分岐で使う",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 50,
+  "term": "条件分岐",
+  "points": [
+   {
+    "point": "条件が真か偽かで 2 つの道のどちらか一方だけを実行する",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "点数から「60 以上か」の分かれ道を通り、真なら「合格」、偽なら「不合格」の一方だけを実行する道を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "分かれ道が図だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "境目の値（59 と 60）で両側を確かめると以上とより大きいの書き間違いに気づける",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "確かめ方 1 つで本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 51,
+  "term": "繰り返し",
+  "points": [
+   {
+    "point": "条件が真の間同じ処理を繰り返し、終わる条件に向かって値を変える行が無いと止まらない",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "合計と数の始めの値から「数が 5 以下？」の分かれ道を通り、真なら足して数を増やして戻り、偽で合計 15 で出る輪を並べ、数を増やす行を強調している。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "輪から出る分岐の矢印が要点を運ぶので cycle にせず残す。",
+    "benefit": 3
+   },
+   {
+    "point": "回数が 1 回ずれるバグは始めの値と終わりの比べ方から起きる",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "見る所 2 か所を本文の 1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 52,
+  "term": "プログラムを読んで追う（トレースと流れ図）",
+  "points": [
+   {
+    "point": "変数の値が 1 回進むごとにどう変わるかを表の 1 行に書いて追うのがトレース",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "トレースの表そのものが本文に載っており、図を足すと重なる。",
+    "benefit": 1
+   },
+   {
+    "point": "流れ図は長方形が処理、ひし形が条件、角を落とした長方形の組が繰り返しを表す",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "記号の形そのものを見せる要点だが 10 型では記号の形を描けず、繰り返しの流れは単位 51 の図が受け持つので本文で足りる。",
+    "benefit": 1
+   },
+   {
+    "point": "思っていた値と表がずれた最初の行がバグを探す出発点",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 53,
+  "term": "関数",
+  "points": [
+   {
+    "point": "ひとまとまりの処理に名前を付け、引数を渡して戻り値を受け取り、中身は 1 か所だけで何度でも呼べる",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "税込み(100) と 税込み(200) の 2 つの呼び出しが同じ中身に引数を渡し、110 と 220 が返る流れを並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "引数と戻り値と中身 1 か所が図だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "関数の中で作った変数はその関数の中でしか見えない（スコープ）",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 54,
+  "term": "値渡しと参照渡し",
+  "points": [
+   {
+    "point": "値渡しは写しを渡すので元は変わらず、参照渡しは同じ置き場所を渡すので中での書き換えが元に残る",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "点数 50 を渡して中で 10 を足した場面を上下に並べ、値渡しは写しだけが 60、参照渡しは同じ置き場所が 60 になる様子を示している。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "2 つの渡し方の結果の違いが図だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "大きなまとまりは置き場所で渡す言語が多い（写すと時間とメモリがかかる）",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 36,
+  "term": "スタック領域とヒープ領域",
+  "points": [
+   {
+    "point": "スタック領域は呼び出しごとに積んで自動で外れ小さく溢れ得る、ヒープ領域は借りて返すまで残り大きいが返し忘れで減る、という違い",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "2 つの置き場を「取る時・外れる時・大きさと溢れ方」の 3 観点で並べた格子。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "2 つの置き場を同じ観点で比べるのが単位の芯で、行をたどれば違いが表だけで言える",
+    "benefit": 3
+   },
+   {
+    "point": "すぐ要らない小さな値はスタック、大きいか長く使う値はヒープと見分ける",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "使い分けの一言で本文だけで言える",
+    "benefit": 1
+   },
+   {
+    "point": "止まった知らせの名前（スタックオーバーフローかメモリ不足か）で調べる所を決める",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの知らせと調べ先の対応 1 点だけで本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 37,
+  "term": "ガベージコレクションとメモリリーク",
+  "points": [
+   {
+    "point": "回収されないメモリが日ごとに積み上がり上限に届くと止まるのがメモリリークで、回収されれば横ばいになる",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "chart",
+    "idea": "日数を横軸に、リークありの増え続ける線・回収されて横ばいの線・使える上限の線を並べた折れ線。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "じわじわ増えて上限で止まるという量の動きが単位の芯で、本文だけでは時間の伸び方がつかみにくい",
+    "benefit": 3
+   },
+   {
+    "point": "ガベージコレクションはどこからもたどれなくなったデータを回収するので、一覧に入れたままだと回収されない",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "たどれるかどうかの 1 点で本文で言える",
+    "benefit": 1
+   },
+   {
+    "point": "回収の作業中は処理が一瞬止まることがある",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "値 1 つの事実で本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 55,
+  "term": "再帰",
+  "points": [
+   {
+    "point": "再帰は n を小さくしながら自分を呼び、止める条件に着くと答えを返しながら待っていた計算を外していく",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "階乗（3）・階乗（2）・階乗（1）を登場人物にして、呼ぶ向きの矢印と、止める条件で 1 を返し 2 を返す戻りの矢印を並べたやり取り。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "呼び出しが降りて答えが戻る往き来が単位の芯で、図が無いと戻りの順がつかみにくい",
+    "benefit": 3
+   },
+   {
+    "point": "止める条件は、引数の減る向きを見て、計算せずに答えが言える値で自分を呼ばずに返すと決める",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "3 段の決め方は本文の箇条書きで足り、図にすると一覧になる",
+    "benefit": 1
+   },
+   {
+    "point": "止める条件が無いと呼び出しが積み続きスタック領域が溢れて止まる",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "因果 1 つで本文で言える",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 56,
+  "term": "例外処理",
+  "points": [
+   {
+    "point": "例外が起きると残りの行を飛ばして受け止める所（catch）へ移り、受け止める所が無ければ全体が止まる",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "試す所から「読めた」なら続きの行へ、「ファイルが無い例外」なら catch へ、catch が無ければ全体が止まる、と条件ごとに分かれる矢印。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "条件で道が分かれる流れが単位の芯で、分岐の矢印が要点を運ぶので blocks のままがよい",
+    "benefit": 3
+   },
+   {
+    "point": "受け止めて黙って続けると原因が記録に残らず、後で調べにくくなる",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "やってはいけないこと 1 点で本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "試す所を try、受け止める所を catch と書く",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "名前 2 つで本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 57,
+  "term": "部品の分け方の良し悪し（モジュールの結合度と凝集度）",
+  "points": [
+   {
+    "point": "結合度は部品どうしの間、凝集度は 1 つの部品の内側を測り、どちらも 1 つの直しで開く箱が少ない向き（結合度は低く・凝集度は高く）が良い",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "結合度と凝集度の 2 つの物差しを列に、良い形と悪い形を行にして、各セルにその形の例と開く箱の数を書いた格子。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "2 つの物差しの向きを同じ観点で比べるのが単位の芯で、表で良い向きが読める",
+    "benefit": 3
+   },
+   {
+    "point": "迷ったら「役目を一言で言えるか」「直すときに他の部品まで開くか」で判断する",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの問いで本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 58,
+  "term": "配列とリスト",
+  "points": [
+   {
+    "point": "配列は番号で何番目でもすぐ読めるが、途中に足すと後ろの値を 1 つずつずらす",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "足す前の 0〜2 番目と足した後の 0〜3 番目を上下に並べ、後ろの値が 1 つずつずれる矢印を引いた図。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "途中に足すと後ろがずれる動きが単位の芯で、本文だけではずれ方が見えにくい",
+    "benefit": 3
+   },
+   {
+    "point": "多くの言語では番号を 0 から数える",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "値 1 つの事実で本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "言語によっては長さを後から変えられる配列をリストと呼ぶ",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "呼び名 1 つで本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 59,
+  "term": "スタックとキュー",
+  "points": [
+   {
+    "point": "同じ 1・2・3 を入れて出しても、スタックは新しい物から、キューは古い物から出し、向く場面が違う",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "スタックとキューを列に、出し入れの決まり・1・2・3 を入れて 2 回出した結果・向く場面を行にした格子。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "2 つの形を同じ観点で比べるのが単位の芯で、同じ入力での出方の差が表で閉じる",
+    "benefit": 3
+   },
+   {
+    "point": "関数の戻り先を覚える仕組みもスタックの形である",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "使われ方の例 1 つで本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 60,
+  "term": "辞書とハッシュ表",
+  "points": [
+   {
+    "point": "置くときも引くときもハッシュ関数で同じ番号を出してその箱へ直接行くので、件数が増えても他の箱を見ずに済む",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "使う側・ハッシュ関数・中身の配列を登場人物に、1234 を置くときと引くときの両方で同じ余り 4 を出して 4 番の箱へ行くやり取り。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "置くと引くが同じ計算でつながる流れが単位の芯で、図が無いと直接届く理由がつかみにくい",
+    "benefit": 3
+   },
+   {
+    "point": "違うキーでも余りが同じだと 1 つの箱を取り合う（衝突）、逃がし方は同じ箱に並べるか隣に置くかの 2 つ",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "1234 と 5674 がどちらもハッシュ関数で余り 4 になって 4 番の箱へ向かい、衝突から 2 つの逃がし方へ分かれる矢印。",
+    "existing_figure_id": 2,
+    "existing_action": "keep",
+    "reason": "衝突と 2 つの逃がし方への分かれ道を矢印が運び、本文だけでは取り合う様子が見えにくい",
+    "benefit": 2
+   },
+   {
+    "point": "辞書は使う側の呼び名、ハッシュ表は中の作り方の名前",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 者の 1 点の違いで本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "置き場所が計算で決まるので小さい順に取り出すのは苦手",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "因果 1 つで本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 61,
+  "term": "木構造と二分探索木",
+  "points": [
+   {
+    "point": "二分探索木はどの要素でも左に小さい値・右に大きい値が付くので、比べるたびに片側を丸ごと飛ばせる",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "根 4 から 5 を探す道で、比べるたびに「小さいなら左・大きいなら右」の矢印をたどり、飛ばす側の 2 を「丸ごと見ない」と書いた木。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "比べて片側を飛ばすたどり方が単位の芯で、矢印のラベルが条件を運ぶ",
+    "benefit": 3
+   },
+   {
+    "point": "1・2・3 の順に足すと一直線に偏り、真ん中の 2 を上げて付け直すと左右の段がそろう",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "偏った 1→2→3 の木に左右の段数を書き、「真ん中の 2 を一番上に上げる」矢印で付け直した後の山の形へつないだ図。",
+    "existing_figure_id": 2,
+    "existing_action": "keep",
+    "reason": "偏りと付け直しの前後を見比べる要点で、本文の言葉だけでは木の形が思い浮かびにくい",
+    "benefit": 2
+   },
+   {
+    "point": "根・親・子・葉という呼び名",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "名前の並びで、樹形図にすると名前だけの箱になるので図にしない",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 62,
+  "term": "連結リスト",
+  "points": [
+   {
+    "point": "連結リストは途中に入れるとき指す先を 2 か所付け替えるだけで、後ろの要素はずらさない",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "番地つきの A・X・B・C の箱を並べ、①X が B を指す・② A の指す先を X に、の 2 本の付け替えと、そのままの B→C を描いた図。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "付け替えだけで済む動きが単位の芯で、図が無いと配列のずらしとの違いがつかみにくい",
+    "benefit": 3
+   },
+   {
+    "point": "番号で取り出すには先頭から番地を順にたどるので配列より遅い",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "因果 1 つで本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "出し入れが多いなら連結リスト、番号で読むなら配列と選ぶ",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "使い分けの一言で本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 63,
+  "term": "グラフと探索の順番",
+  "points": [
+   {
+    "point": "幅優先は近い点から全部見てから先へ、深さ優先は 1 つの道を奥まで進んでから戻り、順番を決めるのは次に見る点をしまう入れ物（キューかスタック）",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "幅優先と深さ優先を列に、同じグラフで A から見る順・次に見る点をしまう入れ物・向く場面を行にした格子。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "2 つのたどり方を同じ観点で比べるのが単位の芯で、順と入れ物の対応が表で閉じる",
+    "benefit": 3
+   },
+   {
+    "point": "輪があるので一度訪ねた点に印を付けて同じ点を回らない",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "手順 1 つで本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 64,
+  "term": "アルゴリズム",
+  "points": [
+   {
+    "point": "アルゴリズムは迷う所が無く、どんな入力でも必ず終わって答えを出す手順",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "定義の言い換えで本文の一言で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "1 から 100 の和のように、同じ答えでも順に足すか公式を使うかで手間が桁で違う",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "「1 つずつ足す」と「（1＋100）×100÷2」を列に、やり方・計算の回数（99 回／3 回）・件数を 1,000 に増やすと（999 回／3 回のまま）を行にした格子。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "同じ問題に速い手順と遅い手順があるという単位の芯を、2 つの手順を同じ観点で並べると手間の差が表だけで言える",
+    "benefit": 2
+   },
+   {
+    "point": "プログラムはアルゴリズムを言語の文に書き直した物",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 者の 1 点の関係で本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 65,
+  "term": "線形探索と二分探索",
+  "points": [
+   {
+    "point": "二分探索は並んだデータの真ん中と比べるたびに候補が半分になり、少ない回数で見つかる",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "並んだ 8 件から 31 を探すのに、真ん中の 18 と比べて後半に絞り、次の真ん中の 31 で見つかるやり取り。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "半分ずつ絞る進み方が単位の芯で、図で比べる回数が 2 回と見える",
+    "benefit": 3
+   },
+   {
+    "point": "二分探索は小さい順に並んでいることが前提で、1 回しか探さないなら線形探索で足りる",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "前提と使い分けの一言で本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "1,000 件でも 10 回、1,000,000 件でも 20 回で届く",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "値 2 つで本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 66,
+  "term": "整列（ソート）の考え方",
+  "points": [
+   {
+    "point": "整列の手順ごとに進め方と大小を比べる時期が違い、全部を比べ合わない手順ほど比べる回数が桁で減る",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "選択・クイック・マージの 3 手順を列に、進め方・大小を比べる時期・1,000 件で比べる回数を行にした格子。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "手順を同じ観点で比べて速さの差を見るのが単位の芯で、表で回数の桁の違いが読める",
+    "benefit": 3
+   },
+   {
+    "point": "挿入ソートはほぼ並んだデータなら速い",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "向き不向きの一言で本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "マージソートは半分に切ると約 10 段、各段の合わせ直しが約 1,000 回で約 1 万回になる",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "計算の内訳は本文の数の文で追え、既存の格子の回数の行が結論を受け持つ",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 67,
+  "term": "計算量",
+  "points": [
+   {
+    "point": "件数を増やすと O(n)・O(n log n)・O(n の 2 乗) で手間の伸び方が違い、上に反る線ほど急に重くなる",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "chart",
+    "idea": "件数 n を横軸に、3 つの計算量の手間を折れ線で並べたグラフ。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "伸び方という量の関係が単位の芯で、本文の数だけでは伸び方の差がつかみにくい",
+    "benefit": 3
+   },
+   {
+    "point": "log n は n を 1 になるまで半分にし続ける回数",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "定義 1 つと例で本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "計算量は機械を替えても変わらない手順の性質なので、将来の件数を見込んで選ぶ",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "判断の一言で本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 68,
+  "term": "オブジェクト指向",
+  "points": [
+   {
+    "point": "1 つのクラスから作ったインスタンスは同じメソッドを使いながらデータは別々に持つ",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "クラス「口座」から 2 つのインスタンスを作る矢印を引き、A さんは残高 1,000 円・B さんは 0 円と別々の残高を書いた図。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "設計図と実物の関係とデータが別々である点が単位の芯で、図で 1 つの型から別々の実物ができると見える",
+    "benefit": 3
+   },
+   {
+    "point": "データとそれを変える処理が同じクラスにあるので、おかしいときに探す範囲を 1 つのクラスに絞れる",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "利点の一言で本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 69,
+  "term": "カプセル化・継承・ポリモーフィズム",
+  "points": [
+   {
+    "point": "継承で子が親の持ち物を受け継ぎ、オーバーライドで書き直すと、呼ぶ側は種類を調べずに同じ 1 行で物ごとに違う動きをさせられる（ポリモーフィズム）",
+    "content_type": "概念",
+    "function": "解釈的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "親「図形」から子「円」「四角」への継承の矢印と、呼ぶ側の「面積を出す」1 行から円の式・四角の式へ分かれる矢印。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "作る側と呼ぶ側の 2 方向の関係を矢印が運び、本文だけでは誰から見た話かがつかみにくい",
+    "benefit": 3
+   },
+   {
+    "point": "カプセル化は外のコードに直接書き換えさせず、窓口のメソッドを通してだけ変えさせて決まりを確かめる",
+    "content_type": "概念",
+    "function": "解釈的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "外のコードから窓口「引き出す」を通る道と、残高への直接の書き換えが通らない道を並べた図。",
+    "existing_figure_id": 2,
+    "existing_action": "keep",
+    "reason": "通る道と通らない道の対比を矢印のラベルが運ぶ",
+    "benefit": 2
+   },
+   {
+    "point": "継承を何段も重ねると親の変更が広く響くので、同じ意味の共通部分だけを親に置く",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "判断の一言で本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 70,
+  "term": "関数型の考え方",
+  "points": [
+   {
+    "point": "関数を括弧なしで手渡すと、受け取った側（集める）が 1 つずつ呼んで結果から新しい配列を作り、元の配列は変わらない",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "自分のコード・集める・60 以上か を登場人物に、集めるが 45・80・62 で 60 以上かを呼び、偽・真・真から新しい配列 80・62 を返すやり取り。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "関数を渡して相手に呼ばせる往き来が単位の芯で、本文だけでは誰が呼ぶかがつかみにくい",
+    "benefit": 3
+   },
+   {
+    "point": "副作用が無く同じ引数に同じ戻り値を返す関数は、単独でテストでき同時に動かしても壊れにくい",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "因果 1 つで本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 71,
+  "term": "設計の定石（デザインパターンと MVC）",
+  "points": [
+   {
+    "point": "MVC では操作をコントローラが受け、計算はモデル、画面はビューが受け持つ",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "利用者・コントローラ・モデル・ビューを登場人物に、「カートに入れる」から在庫と合計の計算、画面に描くまでの頼み合い。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "3 つの役の分担が 1 つの操作の流れで見え、本文だけでは誰が何を受け持つかがつかみにくい",
+    "benefit": 3
+   },
+   {
+    "point": "シングルトンは 1 つだけあればよい物を 1 つのインスタンスしか作らせない定石",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "定石 1 つの説明で本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "オブザーバは変わったら登録済みの相手へ一斉に知らせる定石",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "定石 1 つの説明で本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "定石は悩みに名前が合うときだけ使う",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "判断の一言で本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 72,
+  "term": "静的型付けと動的型付け",
+  "points": [
+   {
+    "point": "型を確かめる時期が動かす前か実行中かの違いが、誤りに気づく時期と向く場面の違いになる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "静的型付けと動的型付けを列に、確かめる時期・「70」＋10 の誤りがどうなるか・向く場面を行にした格子。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "2 つを同じ観点で比べるのが単位の芯で、表で時期と結果の対応が閉じる",
+    "benefit": 3
+   },
+   {
+    "point": "TypeScript は動的型付けの言語に型を書き足せるようにした言語",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "例 1 つで本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 73,
+  "term": "平均・中央値・ばらつき",
+  "points": [
+   {
+    "point": "平均は飛び抜けた値に引っ張られ、中央値は真ん中の順位を見るので動かない",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "chart",
+    "idea": "少ない順に並べた 5 人の読んだ本の冊数を棒で並べ、42 冊の 1 人と平均 10 冊・中央値 2 冊を見比べるグラフ。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "外れ値で平均だけが動く量の関係が単位の芯で、棒の高さで一目になる",
+    "benefit": 3
+   },
+   {
+    "point": "標準偏差は平均からの散らばりの目安で、差を 2 乗して平均した分散を元の単位に戻した値",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "計算の手順は本文の数の例で追え、図にすると数の一覧になる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 74,
+  "term": "AI と機械学習",
+  "points": [
+   {
+    "point": "ふつうのプログラムは人が決まりを書き、機械学習は答え付きの例からコンピュータが決まり（モデル）を作るので、正解率は 100% にならない",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "ふつうのプログラムと機械学習を列に、決まりを作るのは・材料・新しいメールへの答えを行にした格子。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "2 つの作り方を同じ観点で比べるのが単位の芯で、表で誰が決まりを作るかの違いが読める",
+    "benefit": 3
+   },
+   {
+    "point": "AI は技術全体の呼び名で、機械学習はその中の 1 つの方法であり、AI には人が決まりを書き込む方式も入る",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "venn",
+    "idea": "入れ子で外側を AI、内側を機械学習にし、外側だけの領域に「人が決まりを書き込む方式」、内側に「データから決まりを作る」と書いた図。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "範囲の違いが本文のひとことの芯で、入れ子の形で AI と機械学習の包含が一目になる",
+    "benefit": 2
+   }
+  ]
+ },
+ {
+  "topic_id": 75,
+  "term": "生成 AI と大規模言語モデル",
+  "points": [
+   {
+    "point": "大規模言語モデルはそれまでの並びから次に来やすいトークンを選んで付け足し、伸びた並びでまた次を選ぶ、を繰り返して文を作る",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "cycle",
+    "idea": "それまでの並び→大規模言語モデルが次に来やすいトークンを選ぶ（事実は調べない）→付け足した並び、の 3 段を輪にし、段の間に「並びを渡す」「「天気」を選ぶ」「伸びた並びでまた次を選ぶ」を書いた輪。",
+    "existing_figure_id": 1,
+    "existing_action": "retype",
+    "reason": "今の blocks は 3 つの箱を戻りの矢印で輪にしており箱の配置で輪に見えにくいが、cycle にすると 1 周ごとに文が伸びる繰り返しが輪の形で一目になる",
+    "benefit": 3
+   },
+   {
+    "point": "調べて答えるのではなく傾向で続きを選ぶので、もっともらしい誤り（ハルシネーション）が出る",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "因果 1 つで本文で足り、既存の図の「事実かどうかは調べない」も受け持つ",
+    "benefit": 1
+   },
+   {
+    "point": "学んだ時点より後の出来事は会話で渡さない限り知らない",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "事実 1 つで本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "生成 AI は文・画像・音を作る AI 全体、大規模言語モデルはそのうち文を作る部分",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "範囲の 1 点の違いで本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 76,
+  "term": "学習の種類",
+  "points": [
+   {
+    "point": "学習の 3 つの型は、正解つきの例を渡すか・データだけを渡すか・行動に得点を返すかで分かれ、使う例と選ぶときが違う",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "教師あり・教師なし・強化学習を列に、渡す物・使う例・選ぶときを行にした格子。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "3 つの型を同じ観点で比べるのが単位の芯で、表で材料の違いと選び方が読める",
+    "benefit": 3
+   },
+   {
+    "point": "教師あり学習のうち種類を当てるのが分類、数を当てるのが回帰",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの名前の 1 点の違いで本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 77,
+  "term": "ディープラーニング",
+  "points": [
+   {
+    "point": "層を重ねると手前の層は線や濃淡、奥の層はその組み合わせを手がかりにし、答えのずれから手がかりの重みを学習が直す（人が決めない）",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "入力の層→手前の層（線や濃淡）→奥の層（耳や目の形）→答えの層と進み、答えのずれから重みを直す戻りの矢印を描いた図。",
+    "existing_figure_id": 2,
+    "existing_action": "keep",
+    "reason": "層ごとの手がかりと学習の戻りが単位の芯で、戻りの矢印が要点を運ぶので blocks のままがよい",
+    "benefit": 3
+   },
+   {
+    "point": "重みは層と層のつながりごとの数で、答えのずれから掛ける相手が正か負かを見て、直す向きを手前へ 1 段ずつ伝える（誤差逆伝播法）",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "入力 1・中間 0.5・答え 1 の前向きの計算に矢印の重みを書き、下の段で「相手が正なので増やす」を手前へ伝える箱を並べた図。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "直す向きが手前へ伝わる因果を矢印が運び、本文の言葉だけでは重みの在りかと向きがつかみにくい",
+    "benefit": 2
+   },
+   {
+    "point": "大量のデータと計算が要り、答えの理由を人が追いにくい",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "代わりに要る物の一言で本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "従来は特徴を人が決め、ディープラーニングは特徴もデータから学ぶ",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 者の 1 点の違いで本文で足り、既存の図 2 の「手がかりは人が決めない」も受け持つ",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 78,
+  "term": "学習の落とし穴",
+  "points": [
+   {
+    "point": "過学習は手元の例への合わせすぎで評価用のデータで見つかり、偏りは集めた例そのものの片寄りでデータの集め方まで戻らないと見つからない",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "過学習と偏り（バイアス）を列に、原因・学習用のデータでの正解率と新しいデータでの外れ方・見つけ方と直し方を行にした格子。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの落とし穴を同じ観点で比べて見つけ方の違いをつかむのが単位の芯で、本文だけでは 2 つの対応が混ざりやすい",
+    "benefit": 3
+   },
+   {
+    "point": "気づくには手元のデータを学習用と評価用に分け、学習に使っていないデータで正解率を測る",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "手順 1 つで本文で足り、新規の格子の見つけ方の行も受け持つ",
+    "benefit": 1
+   },
+   {
+    "point": "過学習は過去問の丸暗記に似ている",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "たとえ 1 つで本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 79,
+  "term": "確率の入口",
+  "points": [
+   {
+    "point": "条件付き確率は、数える全体を条件に合う物に絞ってから数えるので、分母は全部ではなく絞った数になる",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "venn",
+    "idea": "入れ子で全体を全部の 100 通、外側を「当選」を含む 15 通、内側をその中の迷惑メール 12 通にし、内側の領域に 12÷15＝0.8 と書いた図。",
+    "existing_figure_id": 1,
+    "existing_action": "retype",
+    "reason": "今の blocks は 100 通→15 通→12 通→0.8 を矢印の鎖で並べ、絞った範囲が全体の中のどこかが見えないが、venn の入れ子にすると分母が 15 通の範囲に縮むことが形で見える",
+    "benefit": 3
+   },
+   {
+    "point": "互いに影響しない 2 つが両方起こる確率は積で、0.9×0.9＝0.81 と 1 台より下がる",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "計算 1 つで本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "確率は条件に合う場合の数÷全部の場合の数",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "式 1 つで本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 80,
+  "term": "ネットワークとインターネット",
+  "points": [
+   {
+    "point": "建物の中の LAN はルータから外へ出てインターネットにつながり、離れた事務所どうしは通信会社の回線（WAN）で結ばれる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "家・東京・大阪の LAN をそれぞれのルータからインターネットへつなぎ、東京と大阪のルータを WAN の線で結んだ図。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "LAN・WAN・インターネットの範囲の関係が単位の芯で、本文だけではどこが何かつかみにくい",
+    "benefit": 3
+   },
+   {
+    "point": "つながらないときは LAN の中の別の機器に届くか、外へ出る所で止まるかを分ける",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "切り分けの一言で本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 81,
+  "term": "パケット",
+  "points": [
+   {
+    "point": "データを番号と宛先の荷札つきの小包に分けると、他の人の小包と交互に同じ回線を流れ、受ける側は番号で並べ直す",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "大きなファイルを小包に分ける→回線に他の人の小包と交互に流れる→受ける側が番号で並べ直す、の流れの図。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "小分けと回線の分け合いが単位の芯で、図が無いと交互に流れる様子がつかみにくい",
+    "benefit": 3
+   },
+   {
+    "point": "失われた小包をどう扱うかは通信の決まりで決まり、その小包だけを送り直せる",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "因果 1 つで本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 82,
+  "term": "プロトコルと階層",
+  "points": [
+   {
+    "point": "TCP/IP の 4 層は上から用途ごとの会話・どのアプリ宛てか・遠くの相手の住所・隣の機器まで、の役割に分かれ、OSI 参照モデルの 7 層と対応する",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "layers",
+    "idea": "TCP/IP の 4 層を上から積み、各層に名前と役割の一言、右の注記に対応する OSI の層番号を書いた層の図。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "層ごとの役割と OSI との対応が単位の芯だが既存の図は荷札の付け外しを運んでおり、層の積み上げと役割を 1 枚で見せると層の番号と役割が結べる",
+    "benefit": 3
+   },
+   {
+    "point": "送る側は上の層から順に荷札を足し、受ける側は下の層から順に外し、各層はすぐ上とすぐ下とだけやり取りする",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "送る側の 4 層を上から「荷札を足す」で下り、信号で受ける側へ渡して下から「荷札を外す」で上る図。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "送りと受けで荷札を足し外しする往復が矢印で運ばれ、層の図とは別の要点を受け持つ",
+    "benefit": 2
+   },
+   {
+    "point": "層に分けると無線を有線に替えても上の層の決まりはそのまま使える",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "利点の一言で本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 83,
+  "term": "ルータとスイッチ",
+  "points": [
+   {
+    "point": "スイッチは MAC アドレスを見て同じネットワークの中へ、ルータは IP アドレスを見て別のネットワークへ渡す",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "スイッチとルータを列に、見る番号・渡す範囲・届かないときを行にした格子。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "2 つの機器を同じ観点で比べるのが単位の芯で、表で見る番号と範囲の違いが読める",
+    "benefit": 3
+   },
+   {
+    "point": "家の Wi-Fi ルータはスイッチとルータの働きを 1 台にまとめた物",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "事実 1 つで本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 84,
+  "term": "IP アドレス",
+  "points": [
+   {
+    "point": "小包の荷札に宛先と差出人の IP アドレスが書かれ、途中のルータは宛先の前半でネットワークを見て向きを決める",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "あなたの PC が差出人を書いた荷札→途中のルータが宛先の前半を読む→後半で相手のサーバに届く、の流れの図。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "住所が荷札に書かれて中継される仕組みが単位の芯で、図で宛先と差出人の使われ方が見える",
+    "benefit": 3
+   },
+   {
+    "point": "IPv4 は 32 ビットで足りなくなり、128 ビットの IPv6 が作られ、書き方で見分けられる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "IPv4 と IPv6 を列に、長さ・書き方・例を行にした格子。",
+    "existing_figure_id": 2,
+    "existing_action": "keep",
+    "reason": "2 つを同じ観点で比べ、書き方の行で見分け方が表で閉じる",
+    "benefit": 2
+   }
+  ]
+ },
+ {
+  "topic_id": 85,
+  "term": "ポート番号",
+  "points": [
+   {
+    "point": "IP アドレスで機器まで届いたあと、ポート番号で機器の中のどのアプリに渡すかが決まり、返事は頼む側が借りた番号へ戻る",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "ブラウザから 443 番宛ての小包がサーバの機械に届き、番号ごとに 80 番・443 番・ほかのアプリへ分かれる矢印。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "機器の中で番号ごとに渡し先が分かれる様子が単位の芯で、分かれ道の矢印が要点を運ぶ",
+    "benefit": 3
+   },
+   {
+    "point": "同じ機械で 2 つのアプリを動かすときは待ち受けの番号が重ならないように決める",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "判断の一言で本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 86,
+  "term": "TCP と UDP の違い",
+  "points": [
+   {
+    "point": "TCP は確かめる手間をかけて欠けと順番を直し、UDP は手間を省いて流し続けるので、欠けて困るか遅れて困るかで選ぶ",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "TCP と UDP を列に、送る前の準備・返事と送り直し・向く用途を行にした格子。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "2 つの決まりを同じ観点で比べるのが単位の芯で、表で選び方まで読める",
+    "benefit": 3
+   },
+   {
+    "point": "欠けを補う必要があれば UDP を使うアプリの側で受け持つ",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "一言で本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 87,
+  "term": "TCP の接続のはじめ方（3 ウェイハンドシェイク）",
+  "points": [
+   {
+    "point": "SYN と ACK を 3 回やり取りして、両方の向きに届くことを双方が確かめてから本番のデータを送る",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "頼む側と応える側の間で SYN・ACK＋SYN・ACK の 3 回の往き来と、その後の本番のデータを並べたやり取り。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "往き来の順番が単位の芯で、本文だけでは 4 つの合図が 3 回にまとまる様子がつかみにくい",
+    "benefit": 3
+   },
+   {
+    "point": "1 回目に返事が無いなら相手まで届いていないか待ち受けていないと切り分ける",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "切り分けの一言で本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 88,
+  "term": "ルーティング",
+  "points": [
+   {
+    "point": "ルータは宛先を経路表と見比べて次の渡し先だけを決め、どの行にも当たらない宛先はデフォルトルートへ渡すバケツリレーで遠くまで届く",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "東京の PC→東京のルータ（経路表）→大阪のルータ→大阪のサーバの実線の道と、表に無い宛先がネット側のルータへ逃げる点線を描いた図。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "1 歩ずつ渡す中継と条件で分かれる道が単位の芯で、分岐の矢印が要点を運ぶ",
+    "benefit": 3
+   },
+   {
+    "point": "経路表は人が書く方法と、ルータどうしが教え合って自動で作る方法がある",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの作り方の名前で本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 89,
+  "term": "グローバルとプライベートの IP アドレスと NAT",
+  "points": [
+   {
+    "point": "出入り口のルータが中の番号を外の 1 つの番号に書き換え、機器ごとに外のポート番号を変えて表に書き、返事はその番号で表を引いて中へ戻す",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "A・B・ルータ・外の相手を登場人物に、A と B の 50000 番がそれぞれ 61001・61002 に書き換わり、返事の 61002 が B の 50000 に戻るやり取り。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "行きと帰りの書き換えの往き来が単位の芯で、本文の表だけでは流れがつかみにくい",
+    "benefit": 3
+   },
+   {
+    "point": "プライベート IP は建物の中だけで通じ、グローバル IP は世界で重ならないように配られる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 者の 1 点の違いで本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "表の行は中から始めた通信でしか作られないので、中のサーバを外に見せるには別の設定が要る",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "因果 1 つで本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 90,
+  "term": "サブネットマスクと CIDR",
+  "points": [
+   {
+    "point": "/26 は先頭 26 ビットがネットワークの名前、残り 6 ビットが機器の番号という区切りである",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "192.0.2.70/26 をネットワークの名前と機器の番号の 2 列に分け、ビット数・アドレスでは・役目を行にした格子。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "どこまでが名前かという区切りが単位の芯で、表で左右を比べて区切りが読める",
+    "benefit": 3
+   },
+   {
+    "point": "機器の部分のビット数で 4 つ目の区切りを幅の決まった帯に分け、同じ帯どうしなら名前が同じで直接届ける",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "/26 の 4 つ目の区切りを幅 64 の 4 つの帯に分け、70 と 100 が同じ 64〜127 の帯に入るので直接届ける、とつないだ図。",
+    "existing_figure_id": 2,
+    "existing_action": "keep",
+    "reason": "帯で名前が同じかを見分ける判断が矢印で運ばれ、本文の計算だけでは帯の形がつかみにくい",
+    "benefit": 2
+   },
+   {
+    "point": "配れる台数は機器の部分の 2 を n 回掛けた数から 2 を引いた数",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "式 1 つで本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "CIDR は同じ区切りを /26 のように 1 の個数で短く書く書き方",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "書き方 1 つで本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 91,
+  "term": "URL とドメイン名",
+  "points": [
+   {
+    "point": "URL は方式・サーバ・サーバの中の場所の 3 つに分けて読み、サーバのうち組織の名前から右がドメイン名である",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "1 つの URL を方式・サーバ・場所の 3 列に分け、URL の中の文字・表すこと・読む向きを行にした格子。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "URL を部分に分けて読むのが単位の芯で、表で各部分の役目と読む向きが読める",
+    "benefit": 3
+   },
+   {
+    "point": "ドメイン名は右端まで読むと似せた偽の住所を見分けられる",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "判断の一言で本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "通信には IP アドレスが要るので、名前から番号を引く DNS が間に入る",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "事実 1 つで本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 92,
+  "term": "DNS",
+  "points": [
+   {
+    "point": "近くの DNS サーバが知らない名前を区分ごとの担当へたどって引き、得た答えは写しを残して次は担当に尋ねない",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "ブラウザ・近くの DNS サーバ・区分ごとの担当を登場人物に、1 回目は担当へたどって 192.0.2.10 を返し、2 回目は写しから答えるやり取り。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "たどる往き来と写しで省く 2 回目の差が単位の芯で、図が無いと誰が誰に尋ねるかがつかみにくい",
+    "benefit": 3
+   },
+   {
+    "point": "写しが残る間はサーバの番号を変えても前のサーバが開くことがある",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "因果 1 つで本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "名前が引けないなら DNS を、引けるのに開けないならその先を疑う",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "切り分けの一言で本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 93,
+  "term": "HTTP",
+  "points": [
+   {
+    "point": "HTTP はブラウザの頼みにサーバが返す 1 往復で話が終わり、サーバは前の往復を覚えない（ステートレス）",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "ブラウザとサーバの間でリクエストとレスポンスの 1 往復を 2 回並べ、次の頼みにはログインの目印も毎回付けるやり取り。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "1 往復ずつ完結する会話の形が単位の芯で、図で往復の区切りが見える",
+    "benefit": 3
+   },
+   {
+    "point": "覚えないので台数を増やしやすい",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "利点の一言で本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 94,
+  "term": "HTTP のメソッドとステータスコード",
+  "points": [
+   {
+    "point": "ステータスコードは頭の数字で組に分かれ、2 は成功・4 は頼んだ側の誤り・5 はサーバ側の失敗で、直す場所が分かる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "頭の数字 2・4・5 を列に、意味・代表の番号（200・404・500）・直す場所（直さない／頼む側／サーバ側）を行にした格子。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "番号から直す場所を決める判断が単位の芯で、組ごとに同じ観点で並べると表だけで見分け方が言える",
+    "benefit": 2
+   },
+   {
+    "point": "GET は取り出すだけで何度送っても変わらず、POST は 2 回送ると 2 件できることがある",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 者の 1 点の違いで本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "3 で始まる番号は別の場所へ移ったという案内",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "事実 1 つで本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 95,
+  "term": "ブラウザが画面を描く仕組み",
+  "points": [
+   {
+    "point": "ブラウザは HTML から部品の木を組み、CSS を当てて置き場所を計算してから描き、JavaScript が部品を書き換えると描き直しが起きる",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "HTML→部品の木→置き場所の計算→画面に描く、の流れに CSS が見た目の決まりを渡し、JavaScript が部品の木を書き換える点線を描いた図。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "3 つの文がどの段に効くかが単位の芯で、矢印で入り方の違いが見える",
+    "benefit": 3
+   },
+   {
+    "point": "HTML が届いているのに真っ白なら JavaScript を、配置だけ崩れるなら CSS を疑う",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "切り分けの一言で本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 96,
+  "term": "URL を開いてから画面が出るまでの全体の流れ",
+  "points": [
+   {
+    "point": "名前を引く・つなぐ・頼む・返す・描くの 5 段を順に進み、前の段の結果を次の段へ渡す",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "ブラウザ・DNS・Web サーバを登場人物に、ドメイン名を尋ねて IP アドレスを受け、その番号へ TCP でつなぎ、HTTP で頼んで HTML を受けて描くやり取り。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "段と段の間で何が渡るかが単位の芯で、図で 5 段の順と相手が一目になる",
+    "benefit": 3
+   },
+   {
+    "point": "https なら、つなぐと頼むの間に暗号にする準備が入る",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "事実 1 つで本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "どの段で止まったかで調べる段を決める",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "切り分けの一言で本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 97,
+  "term": "Web サーバとアプリケーションサーバ",
+  "points": [
+   {
+    "point": "前の Web サーバが頼みを全部受け、置いたファイルはそのまま返し、作る必要がある頼みだけを後ろのアプリケーションサーバへ回す",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "ブラウザ→Web サーバから置いたファイルへ「そのまま返す」、アプリケーションサーバへ「作る頼みだけ」と分かれ、アプリケーションサーバがデータベースから値を取って作る図。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "返すだけの係と作る係への振り分けが単位の芯で、分かれ道の矢印が要点を運ぶ",
+    "benefit": 3
+   },
+   {
+    "point": "作る仕事は重いので分けておくと重い側だけを増やせる",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "利点の一言で本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 98,
+  "term": "Cookie とセッション",
+  "points": [
+   {
+    "point": "ブラウザは番号の札（Cookie）だけを持ち、中身はサーバの記録（セッション）に置き、札が届くたびにサーバが記録を引いて同じ人だと分かる",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "ブラウザとサーバの間でログイン→ID を作り記録を残す→ID を Cookie として保存させる→次の頼みに自動で付ける→番号で記録を引く、のやり取り。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "札と記録の往き来が単位の芯で、図が無いと何がどちらに置かれるかがつかみにくい",
+    "benefit": 3
+   },
+   {
+    "point": "札を番号だけにするのはブラウザ側の値を利用者が書き換えられるから",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "理由 1 つで本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "札を盗まれると本人のふりをされるので有効期限を付け、ログアウトで記録を消す",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "守り方の一言で本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 99,
+  "term": "API と REST",
+  "points": [
+   {
+    "point": "REST では扱う物を URL で、したいことをメソッドで表し、URL とメソッドの組で窓口が決まる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "/会員 と /会員/3 を行に、見る・変える を列にして、各セルに GET・POST・DELETE と URL の組を書いた格子。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "URL とメソッドの組み合わせで窓口ができる形が単位の芯で、格子で組の作り方が読める",
+    "benefit": 3
+   },
+   {
+    "point": "API は頼み方と返る形を決めて公開した窓口で、中身を知らなくても使える",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "定義の一言で本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "URL に「消す」のような動きの語が入っていたら REST から外れている",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "判断の一言で本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 100,
+  "term": "JSON",
+  "points": [
+   {
+    "point": "JSON の形は、名前と値の組を波括弧で囲んだ物（辞書と同じ考え方）と、値を角括弧で並べた物（配列と同じ考え方）の 2 つだけで、値の中にまた置いて入れ子にできる",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "波括弧と角括弧を列に、中に並べる物・A さんの情報での例・プログラムの中では何と同じ考え方かを行にした格子。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの形を同じ観点で比べて入れ子の作りをつかむのが単位の芯で、本文の 1 行の例だけでは括弧の役目が見分けにくい",
+    "benefit": 2
+   },
+   {
+    "point": "最後の余計なカンマや引用符の付け忘れでも読み込みは失敗するので、括弧の対応と引用符・カンマを確かめる",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "確かめ方の一言で本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "文字だけなので言語の違うプログラムどうしでも読み書きでき、人も読める",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "利点の一言で本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 101,
+  "term": "アクセシビリティ",
+  "points": [
+   {
+    "point": "使い方が違う人ごとに、同じ情報が 2 つ以上の手段で届くように作る（読み上げには代替テキスト、キーボードだけでも押せる、色だけでなく文字でも示す）",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "読み上げソフトで聞く人・キーボードだけで操作する人・色の見分けがつきにくい人を列に、困ること・作り方を行にした格子。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "人ごとの使い方と作り方の対応が単位の芯で、同じ観点で並べると「2 つ以上の手段で届ける」が表で言える",
+    "benefit": 2
+   },
+   {
+    "point": "HTML の部品を意味どおりに使うと、読み上げソフトが正しく伝えられる",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "因果 1 つで本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "作ったらマウスを置いてキーボードだけで最後まで操作できるかを試す",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "確かめ方の一言で本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 102,
+  "term": "同じ出どころの決まりと CORS",
+  "points": [
+   {
+    "point": "ブラウザは別の出どころへの頼みは送るが、返事の印と今のページの出どころが合わなければ JavaScript に読ませない",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "悪いページの JavaScript・ブラウザ・通販サイトの API を登場人物に、札を付けて送る→注文履歴と印が返る→印と出どころを比べて読ませない、のやり取り。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "送るのは止めず読むのを止めるという単位の芯が往き来で見え、本文だけではどこで止まるかがつかみにくい",
+    "benefit": 3
+   },
+   {
+    "point": "簡単な形でない頼み（DELETE や JSON の中身）は、ブラウザが本物の前に下見の頼みで許しを確かめる",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "画面の JavaScript・ブラウザ・API のサーバを登場人物に、下見の頼み→許す出どころとメソッドが返る→許しの中なら本物の DELETE を送るやり取り。",
+    "existing_figure_id": 2,
+    "existing_action": "keep",
+    "reason": "下見から本物までの往き来の順番が要点で、本文だけでは 2 段の頼みがつかみにくい",
+    "benefit": 2
+   },
+   {
+    "point": "出どころは通信の決まり・ドメイン名・ポート番号の 3 つの組で、どれかが違えば別",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "3 つの名前の組で本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "CORS のエラーは画面のコードではなく API のサーバが返す印（Access-Control-Allow-Origin）で直す",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "直す場所の一言で本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "送ることは止めないので、勝手な操作は CSRF への守りとしてサーバ側で別に防ぐ",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "因果 1 つで本文で足りる",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 103,
+  "term": "キャッシュと CDN",
+  "points": [
+   {
+    "point": "初めての頼みだけが遠いオリジンまで届き、途中の拠点とブラウザが写しを残すので、次からは近くの写しで速く返る",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "ブラウザ・近くの拠点（CDN）・オリジンを登場人物に、初めての頼みが拠点からオリジンへ取りに行き、中身と有効期限が返り、次はブラウザの写しを使うやり取り。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "写しで遠くまで行く回数が減る流れが単位の芯で、図で 1 回目と次の違いが見える",
+    "benefit": 3
+   },
+   {
+    "point": "元を直しても期限が切れるまで古い写しが返ることがあるので、人ごとに変わる中身や秘密は写しに残さない",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "判断の一言で本文で足りる",
+    "benefit": 1
+   },
+   {
+    "point": "キャッシュはブラウザや途中に置く写し全般、CDN は各地の拠点に置いて近くから返す",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "置き場所の 1 点の違いで本文で足り、既存の図の登場人物も受け持つ",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 104,
+  "term": "ロードバランサとリバースプロキシ",
+  "points": [
+   {
+    "point": "ロードバランサは受付で届いた頼みを同じ働きの複数のサーバに配り、死活監視で止まった 1 台を外すのでサービスが続く。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "利用者→受付 1 つ→サーバ A・B に 150 件ずつ、止まったサーバ C には死活監視で配らない形を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。振り分けと止まった台を外す経路が矢印の件数で読める。",
+    "benefit": 3
+   },
+   {
+    "point": "ロードバランサとリバースプロキシは目的で呼び分け、前者は負荷を分けるため、後者はサーバの代わりに受けて後ろを隠し共通の仕事を受付で済ませるために置く。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "列にロードバランサ・リバースプロキシ、行に「置く目的」「後ろのサーバに起きること」「受付で済ませる仕事」を置き、負荷を分ける／後ろを隠して画像の写しや記録を 1 回で済ませる、を格子で比べる。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "既存の図は振り分けの流れだけを運び、2 つの呼び分けの観点は本文にしか無いので、観点で並べると違いが図の中で閉じる。",
+    "benefit": 2
+   },
+   {
+    "point": "普通のプロキシは社内の PC に代わって外へ出て行き、リバースプロキシはその逆向きに外からの頼みをサーバに代わって受ける。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "向きの 1 点だけの違いで、本文の 1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 105,
+  "term": "スケールアップとスケールアウト",
+  "points": [
+   {
+    "point": "スケールアップは 1 台の性能を上げて 1 台の上限で止まり、スケールアウトは台数を足して分けられる処理なら台数ほど伸びる。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "2 つの増やし方を「何を増やすか・伸ばせる限り・向く処理」の 3 観点で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。伸ばせる限りの行で違いが表だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "混雑が去って台数を減らすことをスケールインと呼ぶ。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "名前 1 つで、本文の 1 文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 106,
+  "term": "クラウド（サーバを持たずに借りて使う）とオンプレミス",
+  "points": [
+   {
+    "point": "クラウドは事業者の設備を借りて使った分だけ払い、すぐ使える代わりに障害は自社で直せず、オンプレミスはその逆になる。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "オンプレミスとクラウドを「始めるまで・払い方・障害のとき」の 3 観点で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。持ち主と責任の違いが格子で比べられる。",
+    "benefit": 3
+   },
+   {
+    "point": "量の読みやすさ・データを社外に置けるかの決まり・自社で直したいかの 3 つで選び分ける。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "選ぶ観点の列挙で、既存の表の行と重なり、本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 107,
+  "term": "IaaS・PaaS・SaaS と責任の分担",
+  "points": [
+   {
+    "point": "IaaS・PaaS・SaaS は事業者が受け持つ段の範囲の違いで、データと使わせる設定はどの任せ方でも自分の責任に残る。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "任せ方 3 列×段（OS とミドルウェア・アプリ・データと設定）の格子に、自分／事業者の受け持ちを書き分けている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。任せ方ごとに誰の受け持ちかが行と列で読め、最下段が全部「自分」で共有責任が閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "システムは下から機械・OS・ミドルウェア・アプリ・データの順に積み重なる。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "既存の表の行がこの段を受け持っており、別の図にすると要点が重なる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 108,
+  "term": "コンテナ",
+  "points": [
+   {
+    "point": "コンテナは Dockerfile からイメージを作って同じ箱をいくつも起こし、箱は OS を持たず機械の OS の中心部分を共有するので軽い。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "Dockerfile→イメージ→コンテナ 3 つ→共有する OS の中心部分、の経路を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。1 つの型から同じ箱が起き、OS を共有する所が強調で読める。",
+    "benefit": 3
+   },
+   {
+    "point": "コンテナは OS を共有して軽く、違う種類の OS 用のアプリには仮想マシンを選ぶ。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "仮想マシンとの比べは次の単位（仮想化）の図が受け持つので、ここでは本文の 1 文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 109,
+  "term": "仮想化",
+  "points": [
+   {
+    "point": "仮想化は物理的な機械 1 台の上でハイパーバイザが CPU とメモリを区切り、仮想マシンがそれぞれ OS を丸ごと持つので違う OS が同時に動く。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "layers",
+    "idea": "上から「仮想マシン 2 台\\nゲスト OS は Windows と Linux」「ハイパーバイザ\\nCPU の時間とメモリを分ける」「物理的な機械 1 台\\nCPU・メモリ・ストレージ」を積み、ハイパーバイザを強調する。",
+    "existing_figure_id": 1,
+    "existing_action": "retype",
+    "reason": "今の blocks は箱を縦に置いて「上で動く」「割り当て」の弱い矢印でつないだだけで、下が上を支える積み上がりを矢印から読み取らせているため、layers にすると土台の上にハイパーバイザ、その上に OS ごとの仮想マシンが載る形が形そのもので見える。",
+    "benefit": 3
+   },
+   {
+    "point": "仮想マシンは OS ごと分けるので重い代わりに違う OS を動かせて隔たりが強く、コンテナは OS を共有して軽い。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "列に仮想マシン・コンテナ、行に「OS の持ち方」「起動と重さ」「違う種類の OS」「隔たり」を置いて比べる。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "仮想マシンとコンテナの選び分けは観点が 3 つ以上あり、本文では前後の単位に散っているので、表で並べると違いが図の中で閉じる。",
+    "benefit": 2
+   },
+   {
+    "point": "性能の 1 割しか使っていないサーバ 4 台を仮想マシンにして 1 台にまとめると合わせて 4 割ほどで収まる。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "足し算 1 つの例で、本文の 1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 110,
+  "term": "インフラをコードで書く（IaC）とサーバレス",
+  "points": [
+   {
+    "point": "IaC の道具はファイルに書いたあるべき姿と今の姿を比べ、差だけを事業者に頼むので、同じ環境を何度でも作り直せる。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "あるべき姿のファイル・今の姿→道具が比べる→差の 1 台だけを窓口に頼む→次は何もしない、を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。差だけを埋める動きが矢印のラベルで読める。",
+    "benefit": 3
+   },
+   {
+    "point": "サーバレスは頼みが来たときだけコードを動かして動いた分だけ払い、しばらく呼ばれないと消されて次の 1 回は読み込みからやり直す分だけ遅れる。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "timeline",
+    "idea": "横軸に時刻（例: 9:00〜10:00）を取り、頼みの点（動く・払う）、呼ばれない 15 分の期間、消された後の 1 回目（読み込みで応答が延びる）を並べ、延びる 1 回を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "サーバレスの動き方と料金・応答の延びは時間に沿って起きるので、本文の言葉だけより軸の上に置くとまばらな処理に向く理由が見える。",
+    "benefit": 2
+   },
+   {
+    "point": "IaC は同じ環境を確実に作り直すため、サーバレスは機械の管理を手放すため、と狙いが違う。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの狙いの違いは 1 点で、本文の 1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 111,
+  "term": "データベースと DBMS",
+  "points": [
+   {
+    "point": "DBMS はアプリとストレージの間に立ち、同時の書き換え・途中の失敗・見せる相手を引き受けて中身を守る。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "アプリ A・B が同時に同じ会員を書き換えに来て、DBMS が 3 つの役で受け、ストレージには DBMS だけが触る形を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。アプリが直接ストレージに触れない構成が矢印で読める。",
+    "benefit": 3
+   },
+   {
+    "point": "データベースは預けた中身、DBMS は出し入れを受け持つソフトウェアで、MySQL や PostgreSQL がある。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "名前と例の区別で、本文の 1 文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 112,
+  "term": "関係データベース",
+  "points": [
+   {
+    "point": "関係データベースは 1 行 1 件・1 列 1 項目の表で持ち、表どうしを共通の項目の値でつなぐので同じ情報を 1 か所に置ける。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "注文の行 3 つが会員番号の値で会員の表の行をたどり、住所は会員の表の 1 か所だけにある形を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。値でたどる線と住所の置き場が図だけで読める。",
+    "benefit": 3
+   },
+   {
+    "point": "行の並び順には意味がなく、欲しい行は値の条件で探す。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "本文の 1 文で言える性質。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 113,
+  "term": "主キーと外部キー",
+  "points": [
+   {
+    "point": "主キーは重複も空も許さず 1 行を決める列、外部キーは別の表の主キーを指す列で、指す先の無い値はデータベースが断る。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "社員の表の外部キーが部署の表の主キーを指す上の段と、指す先の無い部署番号 30 を入れようとして断られる下の段を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。主キー・外部キーの役と参照整合性が 2 段で読める。",
+    "benefit": 3
+   }
+  ]
+ },
+ {
+  "topic_id": 114,
+  "term": "正規化",
+  "points": [
+   {
+    "point": "正規化は 1 つの事実を 1 か所に置くよう表を分けることで、単価は商品の表の 1 か所だけを直せば済む。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "分ける前／分けた後を「書き方」「単価を変えるとき」の 2 観点で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。直し漏れが起きる理由と分けた後の 1 か所が格子で比べられる。",
+    "benefit": 3
+   },
+   {
+    "point": "分けすぎると取り出すたびに表をつなぐ手間が増え、整え方の段階には第 1 正規形・第 3 正規形の名がある。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "注意と名前の補足で、本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 115,
+  "term": "E-R 図",
+  "points": [
+   {
+    "point": "E-R 図はエンティティを箱、つながりを線で描き、箱 1 つが表 1 つになり 1 対多の線は多の側の外部キーになる。",
+    "content_type": "概念",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "左に E-R 図（顧客・注文とつながり）、右にそこから作る表を置き、箱→表、1 対多の線→外部キーへの写り方を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。図から表への変換が矢印で読める。",
+    "benefit": 3
+   },
+   {
+    "point": "E-R 図が表すのはデータの形で、処理の順番や流れは別の図で描く。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "範囲の注意 1 点で、本文の 1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 116,
+  "term": "表の定義と制約",
+  "points": [
+   {
+    "point": "CREATE TABLE の文は、表の名前・列ごとの型・入れてよい値の制約（PRIMARY KEY・NOT NULL・UNIQUE・REFERENCES）でできている。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": true,
+    "type": "parts",
+    "idea": "whole を「CREATE TABLE 社員」とし、部位に「表の名前」「型 INTEGER・VARCHAR」「PRIMARY KEY\\n重ならず空でない」「NOT NULL\\n空を断る」「UNIQUE\\n同じ値を断る」「REFERENCES\\n部署の表に無い番号を断る」を置き、各部位の一言で何を断るかを示す。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "5 行の命令のどの部分が何の決まりかを本文は行番号で順に追わせるので、部位ごとに名前と断る物を引き出すと命令の構成が一目で分かる。",
+    "benefit": 2
+   },
+   {
+    "point": "制約をデータベースに持たせると、アプリの側で確かめ忘れてもどこから書き込まれても同じ決まりが効く。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "理由 1 つで、本文の 1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 117,
+  "term": "1 対多と多対多",
+  "points": [
+   {
+    "point": "1 対多は多の側に外部キーを置けば済み、多対多は間に表を作って 2 つの 1 対多に分ける。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "1 対多と多対多を「例・つなぎ方・表の数」で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。多対多だけ間の表が要ることが列をたどって読める。",
+    "benefit": 3
+   },
+   {
+    "point": "線の端に書くいくつ対応するかの数を多重度、複数の列の組で作る主キーを複合主キーと呼ぶ。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "名前 2 つの補足で、本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 118,
+  "term": "SQL",
+  "points": [
+   {
+    "point": "SQL は欲しい結果の条件だけを書き、どの順に行を調べるかはデータベースが決める（宣言的）。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "普通のプログラムとの 1 点の違いで、本文の 1 文と例の 1 文で言える。",
+    "benefit": 1
+   },
+   {
+    "point": "SQL の命令は、表を作る・変えるデータ定義と、行を取り出す・足す・変える・消すデータ操作に分かれる。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つに分けた一覧で、樹形図にしかならないので図にしない。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 119,
+  "term": "SELECT と WHERE",
+  "points": [
+   {
+    "point": "SELECT は結果に出す列を、WHERE は残す行を選び、結果はその重なりになる。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "社員の表を列（氏名・部署・入社年）×行（A・B・C さん）の格子にし、選ばない列と外れる行に理由を書いている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。列と行の重なりだけが結果に出ることが表だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "AND は両方を満たす行を、OR はどちらかを満たす行を残し、WHERE が無ければ全部の行が返る。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "本文の 1 文で言える決まり。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 120,
+  "term": "INSERT・UPDATE・DELETE",
+  "points": [
+   {
+    "point": "UPDATE と DELETE は WHERE を付け忘れると全部の行に効くので、同じ条件の SELECT で件数を確かめ、ひとまとまりの中で流してから確定する。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "steps",
+    "idea": "direction down で「同じ条件で SELECT\\n対象の行と件数を見る」→「ひとまとまりを始める」→「UPDATE／DELETE を流す\\nWHERE 付き」→「変わった件数を見比べる」→「確定する／違えば取り消す」を並べ、件数を見比べる段を強調し、段の間に渡す物（対象 3 行、など）を書く。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "summary の芯は実行前の確かめ方という人がやる順で、本文では文の中に散っているので、段に並べると流す前に止まれる所が見える。",
+    "benefit": 2
+   },
+   {
+    "point": "INSERT は行を足し、UPDATE は今ある行の値を変え、DELETE は行を消す。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "3 つの命令の名前と働きの一覧で、本文と例で足りる。",
+    "benefit": 1
+   },
+   {
+    "point": "退会のように、行を消さずに UPDATE で印を付ける作りもある。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "選び方の補足 1 つで、本文の 1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 121,
+  "term": "表の結合",
+  "points": [
+   {
+    "point": "表の結合は番号が等しい行どうしをつなぎ、内部結合は相手の無い行を落とし、外部結合は片側の行を全部残す。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "内部結合／外部結合×注文がある会員／注文が 1 件も無い会員の格子に、結果に出るか落ちるかを書いている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。違いが出るのが注文の無い会員の行だけだと表で言える。",
+    "benefit": 3
+   },
+   {
+    "point": "RIGHT JOIN は表を書く順を入れ替えた LEFT JOIN と同じ結果になる。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 点の言い換えで、本文の 1 文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 122,
+  "term": "並べ替えと集計",
+  "points": [
+   {
+    "point": "SQL は WHERE で 1 行ずつ絞ってから GROUP BY でまとめ、まとめた後を HAVING で絞り、最後に ORDER BY で並べる。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "steps",
+    "idea": "direction down で「注文 3 行\\nA 100円・B 500円・A 300円」→「WHERE\\nまとめる前の 1 行ずつを絞る」→「GROUP BY 会員番号\\nA 400円・B 500円」→「HAVING SUM >= 450\\nB だけ残る」→「ORDER BY DESC\\n多い順に並べる」を並べ、HAVING を強調し、段の間に渡す行の数（3 行→2 行→1 行）を書く。",
+    "existing_figure_id": 1,
+    "existing_action": "retype",
+    "reason": "今の blocks は WHERE を下の段に離して点線の「ここで効く」で戻し、ORDER BY を GROUP BY から枝分かれさせているため、効く順（まとめる前か後か）を読み手が矢印を逆にたどって組み立てねばならず、steps にすると WHERE が GROUP BY の前、HAVING が後という芯が段の順そのもので見える。",
+    "benefit": 3
+   },
+   {
+    "point": "SUM・COUNT・AVG を集約関数と呼び、ORDER BY を省くと返る順は決まらない。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "名前と注意の補足で、本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 123,
+  "term": "副問合せとビュー",
+  "points": [
+   {
+    "point": "副問合せはその 1 回限りの取り出し方、ビューは名前を付けて残した取り出し方で写しを持たず、写して作った表だけが古い値のままになる。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "副問合せ・ビュー・写した表を「持つ物・残り方・元の表を直した後」で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。写しを持つかの違いが下の行の値で読める。",
+    "benefit": 3
+   },
+   {
+    "point": "中の結果が複数なら IN で「どれかに一致」を表す。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "書き方 1 つで、本文の例で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 124,
+  "term": "トランザクションと ACID",
+  "points": [
+   {
+    "point": "振込の 2 つの更新を 1 つのトランザクションにすると、確定前に止まれば振込の前に戻り（原子性）、確定後は止まっても消えない（耐久性）。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "引き落とし→入金→確定の流れと、確定前に止まって戻る枝・確定後に止まっても残る枝を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。止まる時点で分かれる 2 つの枝が要点で、steps にはできない。",
+    "benefit": 3
+   },
+   {
+    "point": "ACID の 4 つは見る時点が違い、原子性は全部か無し、一貫性は終わった後に決まりを守る、独立性は途中を他から隠す、耐久性は確定後に消えない。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "列に原子性 A・一貫性 C・独立性 I・耐久性 D、行に「いつを見るか（途中・終わった後・確定後）」「振込の例（5,000円に戻る・合計 7,000円のまま・4,000円と 2,000円の一瞬を隠す・確定後も残る）」を置く。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "既存の図は A と D だけを運び、C と I は本文にしか無いので、4 つを同じ観点で並べると性質の違いが図の中で閉じる。",
+    "benefit": 2
+   }
+  ]
+ },
+ {
+  "topic_id": 125,
+  "term": "バックアップと復元",
+  "points": [
+   {
+    "point": "写しを別の場所に何日分も残すと、ストレージの故障にも数日後に気づいた削除にも戻せる。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "写しの持ち方 3 段×壊れ方 2 つの格子に、戻せるか戻せないかと理由を書いている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。下の段ほど備えが厚いことが表だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "フルは毎回全部、差分は前回のフルからの変化、増分は前回の写しからの変化を写し、増分は写しが小さい代わりに戻すとき全部を重ねる。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "列にフル・差分・増分、行に「毎回写す範囲」「毎回の大きさ」「水曜に戻すとき使う写し（日曜のフル＋…）」を置いて比べる。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "3 つの取り方は写す範囲と戻す手間が引き換えで観点が 2 つ以上あり、本文の文だけでは取り違えやすいので格子にすると選び方が閉じる。",
+    "benefit": 2
+   },
+   {
+    "point": "復元を定期的に試し、何時間で戻せるかを確かめておく。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 つの心得で、本文の 1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 126,
+  "term": "同時の読み書きで起きるずれの種類（ダーティリード・ノンリピータブルリード・ファントムリード）",
+  "points": [
+   {
+    "point": "同時の読み書きのずれは 3 つで、確定前の値を読む・同じ行の値が変わる・当たる行の数が変わる、に分かれる。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "ずれ 3 つ×「その間に B がしたこと・A に見えたこと」の格子に、口座 X と Z の例を書いている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。B が何をしたかで 3 つに分かれることが表で読める。",
+    "benefit": 3
+   },
+   {
+    "point": "3 つのずれはどれも独立性が破れて起きる。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "原因 1 つで、本文の 1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 201,
+  "term": "ロックと分離レベル",
+  "points": [
+   {
+    "point": "分離レベルは厳しい段ほど札を広く長く持ち、ずれは減るが待つ場面が増える。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "段階 3 つ×場面 3 つの格子に、誰が待つか・書けるかと理由を書いている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。下の段ほど待つ場面が 1 つずつ増えることが表で言える。",
+    "benefit": 3
+   },
+   {
+    "point": "4 つの段階が防ぐずれを ○ と × で示す対応は本文の表で示す。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "本文に対応の表があり、図にすると重なる。",
+    "benefit": 1
+   },
+   {
+    "point": "札を行ごとにかけるか表ごとにかけるかの粗さで、防げる広さと待ちが引き換えになる。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの粗さの 1 点の違いで、本文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 127,
+  "term": "障害からの回復",
+  "points": [
+   {
+    "point": "ログを当てるとき、確定した変更は古い順に当て直して進め、確定していない変更は新しい順に打ち消して戻す。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "ロールフォワード／ロールバックを「当てる変更・使う値と順・例の結果」で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。向きと順の違いが残高の例の行で言える。",
+    "benefit": 3
+   },
+   {
+    "point": "夜のバックアップに別の場所に置いたログを重ねると、昼の故障の直前まで戻せ、チェックポイントより後のログだけを読めばよい。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "timeline",
+    "idea": "横軸に 0 時〜12 時の目盛りを取り、0 時のバックアップ（点）、ログを書き続ける期間、チェックポイント（点）、12 時の故障（点）を並べ、戻せる所が故障の直前までであることを強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "バックアップの時点・ログの期間・故障の時点の関係は時間に沿うので、軸に置くとバックアップだけなら 0 時まで、ログを重ねると直前まで、の差が見える。",
+    "benefit": 2
+   }
+  ]
+ },
+ {
+  "topic_id": 128,
+  "term": "インデックス",
+  "points": [
+   {
+    "point": "インデックスは探すのを速くする代わりに書き込むたびに直す手間が増える引き換えで、検索が多く値がばらける列に付ける。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "100 万行の表でインデックス無し／有りを「探し方・比べる回数・行を足すとき」で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。探す速さと書き込みの手間の引き換えが表で言える。",
+    "benefit": 3
+   },
+   {
+    "point": "値の種類が少ない列では絞り込みが効きにくく、使われているかは実行計画で確かめる。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "注意の補足で、本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 129,
+  "term": "関係データベースと NoSQL の違い",
+  "points": [
+   {
+    "point": "関係データベースは表と SQL で食い違いなく保ち、NoSQL は形を柔らかくして大量の速い出し入れを取るので、食い違いが許されるかで選ぶ。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "2 つのデータベースを「データの形・得意なこと・書いた直後に読むと」の 3 観点で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。選び分けの観点が行ごとに比べられる。",
+    "benefit": 3
+   },
+   {
+    "point": "ドキュメント型は項目の違う件を同じ所に入れられる。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "本文の JSON の例で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 130,
+  "term": "プログラムからデータベースを使う（ORM と N+1 問題）",
+  "points": [
+   {
+    "point": "ORM は表の行をプログラムの物に変え、つながった表の行は頼まれた瞬間に初めて取りに行く（遅延読み込み）。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "プログラム→ORM→社員の表、行を物「A さん」にして渡し、部署を頼まれた瞬間に部署の表へ取りに行く点線を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。ORM の間の立ち方と遅延読み込みの点線が図で読める。",
+    "benefit": 3
+   },
+   {
+    "point": "行ごとに関連データを取りに行くと問い合わせが 1＋N 回に膨らみ、まとめて取る指定で 1〜2 回に減る。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "プログラムとデータベースの間の往復を矢印 1 本 1 回で描き、行ごとの取り方 1〜4 とまとめて取る 5 を並べている。",
+    "existing_figure_id": 2,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。矢印の本数で回数の違いが比べられる。",
+    "benefit": 3
+   }
+  ]
+ },
+ {
+  "topic_id": 131,
+  "term": "レプリケーションとシャーディング",
+  "points": [
+   {
+    "point": "レプリケーションは同じ写しを全台に持って読みを分け、シャーディングは台ごとに別の行を持って書き込みも分ける。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "2 つのやり方を「各台が持つ中身・分担できる頼み・苦手なこと」で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。同じ物を増やすか分けるかが 1 行目で言える。",
+    "benefit": 3
+   },
+   {
+    "point": "レプリケーションは誤った削除もすぐ写しに届くので、バックアップの代わりにならない。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "注意 1 点で、本文の 1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 132,
+  "term": "情報セキュリティの 3 要素",
+  "points": [
+   {
+    "point": "情報セキュリティの 3 要素は機密性・完全性・可用性で、どれが崩れた事故かで効く守りが決まる。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "3 つの性質×「守ること・崩れた事故の例・効く守り」の格子を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。性質ごとに事故と守りが縦に読める。",
+    "benefit": 3
+   },
+   {
+    "point": "3 つは引っ張り合い、機密性を上げる手順を増やすほど可用性が下がる。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの引き換え 1 点で、本文の 1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 133,
+  "term": "脅威・脆弱性・リスク",
+  "points": [
+   {
+    "point": "脅威が脆弱性を突いたときに初めて害が出て、リスクは起こりやすさと影響の大きさで見積もり、対策は脅威か脆弱性のどちらかに打つ。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "脅威→突く→脆弱性→重なると害→リスクの見積もり、と、脅威を遠ざける対策・脆弱性をふさぐ対策の点線を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。矢印のラベルが因果を運び、片方だけでは害が出ないことが読める。",
+    "benefit": 3
+   }
+  ]
+ },
+ {
+  "topic_id": 134,
+  "term": "マルウェア",
+  "points": [
+   {
+    "point": "マルウェアは働き方で呼び名が分かれ、ほかのファイルに取り付いて広がるウイルス、単独で広がるワーム、ファイルを暗号にして身代金を求めるランサムウェアがある。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "列にウイルス・ワーム・ランサムウェア、行に「どう広がるか・入るか」「起きる害」「特に効く守り（更新・見つけるソフト・書き換えられない場所のバックアップ）」を置く。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "種類の違いは広がり方・害・効く守りの 3 観点で分かれ、本文の文だけでは混ざりやすいので、格子にすると種類ごとの違いが図で閉じる。",
+    "benefit": 2
+   },
+   {
+    "point": "マルウェアの入り口はメールの添付やリンク、改ざんされたサイト、直していない脆弱性である。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "入り口の一覧で、本文の箇条で足りる。",
+    "benefit": 1
+   },
+   {
+    "point": "感染に気づいたら、まずネットワークから切り離して広がりを止める。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "手の 1 つで、本文の 1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 135,
+  "term": "人をだます攻撃（ソーシャルエンジニアリングと標的型メール）",
+  "points": [
+   {
+    "point": "人をだます攻撃は電話・のぞき見・捨てた書類・標的型メールなど手口が違っても焦らせ・上の立場を装う点が共通で、守りは人と手順の側に置く。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "列に「管理者を名乗る電話」「のぞき見」「捨てた書類」「標的型メール」、行に「何を狙うか」「突く油断」「効く守り（知っている番号にかけ直す・画面を隠す・裁断する・開く前に相談）」を置く。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "手口ごとに狙いと守りが違い、共通点（焦らせる）も行で並べると見えるので、本文の列挙より格子の方が手口と守りの対応が早く読める。",
+    "benefit": 2
+   },
+   {
+    "point": "正しいパスワードを人が渡してしまえば、仕組みの側では本人の操作と見分けられない。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "理由 1 つで、本文の 1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 136,
+  "term": "リスクへの向き合い方",
+  "points": [
+   {
+    "point": "リスクは大きさを見積もり、大きい物から問いに答えて回避・低減・移転・保有のどれかで扱う。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "見積もり→続けるか→十分に減らせるか→自分で負えるか、の問いと分かれ先 4 つを並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。問いの分岐が要点を運ぶので steps に置き換えない。",
+    "benefit": 3
+   },
+   {
+    "point": "どれを選んでもリスクは 0 にならないので、残ったリスクを見張り定期的に見積もり直す。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "心得 1 つで、本文の 1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 137,
+  "term": "認証と認可の違い",
+  "points": [
+   {
+    "point": "認証は最初に本人かを確かめ、認可はその結果を前提に操作のたびにしてよいかを決める。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "社員とシステムのやり取りで、最初の認証と、操作ごとの認可の確かめを並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。順番と役目の違いがやり取りの順で読める。",
+    "benefit": 3
+   }
+  ]
+ },
+ {
+  "topic_id": 138,
+  "term": "パスワードを狙う攻撃と守り",
+  "points": [
+   {
+    "point": "総当たりには長さと失敗回数の制限、よそで漏れた組を試すパスワードリスト攻撃には使い回しをやめて別の証拠を足すことが効く。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "2 つの攻撃を「やり方・効く守り」で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。攻撃の型ごとに効く守りが表で選べる。",
+    "benefit": 3
+   }
+  ]
+ },
+ {
+  "topic_id": 139,
+  "term": "多要素認証",
+  "points": [
+   {
+    "point": "多要素認証は種類の違う証拠を組み合わせ、パスワードと秘密の質問は知っている物 1 種類のままなので漏れれば入られる。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "組み合わせ 3 つ×「証拠の種類・パスワードが漏れたら」の格子を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。種類の数え方と漏れたときの差が右の列で比べられる。",
+    "benefit": 3
+   }
+  ]
+ },
+ {
+  "topic_id": 140,
+  "term": "アクセス制御と最小権限",
+  "points": [
+   {
+    "point": "最小権限は仕事に要る分だけ許す考え方で、与えた権限の広さが乗っ取られたときの被害の広さになる。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "とりあえず管理者／要る分だけ、を営業の人・表示の機能・乗っ取られたら、で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。被害の広さの差が下の行で言える。",
+    "benefit": 3
+   },
+   {
+    "point": "権限は人ごとでなく役割（ロール）ごとに付け、異動したら役割を付け替える。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "やり方 1 つで、本文の 1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 141,
+  "term": "OAuth",
+  "points": [
+   {
+    "point": "OAuth は利用者がデータを持つ側にだけパスワードを打って同意し、範囲と期限の付いた札を使いたい側に貸す。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "A さん・印刷サービス・写真のサービスの 3 者のやり取りで、同意と札の受け渡しを並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。パスワードが写真のサービスにしか渡らないことがやり取りで読める。",
+    "benefit": 3
+   }
+  ]
+ },
+ {
+  "topic_id": 142,
+  "term": "暗号化",
+  "points": [
+   {
+    "point": "暗号化は方式を公開し鍵だけを秘密にして、鍵の無い人は暗号文を盗んでも平文に戻せない。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "平文→鍵で暗号化→暗号文→同じ鍵で復号→平文、と途中で盗んでも読めない人を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。秘密にするのが鍵だけであることが強調で読める。",
+    "benefit": 3
+   },
+   {
+    "point": "暗号化が守るのは機密性で、消されることや使えないことは防げない。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "範囲の注意 1 点で、本文の 1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 143,
+  "term": "共通鍵暗号と公開鍵暗号",
+  "points": [
+   {
+    "point": "共通鍵暗号は速いが鍵を渡す悩みがあり、公開鍵暗号は鍵を渡しやすいが重い。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "2 方式を「鍵・計算・鍵の渡し方」で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。速さと渡しやすさの引き換えが表で言える。",
+    "benefit": 3
+   },
+   {
+    "point": "データは速い共通鍵暗号で閉め、その共通鍵だけを相手の公開鍵で閉めて届ける組み合わせで、両方の弱みを補う。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "送る側に「大きなファイル」と「共通鍵」、共通鍵で閉めた暗号文と、相手の公開鍵で閉めた共通鍵の 2 本を受け手へ送り、受け手が秘密鍵で共通鍵を開け、その共通鍵でファイルを開ける経路を、線に何を閉めて送るかのラベルを付けて並べる。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "既存の表は 2 方式の比べで止まり、組み合わせの手順は本文の 1 文だけなので、どの鍵で何を閉めて送るかを矢印で見せると組み合わせる理由が図で閉じる。",
+    "benefit": 2
+   }
+  ]
+ },
+ {
+  "topic_id": 144,
+  "term": "ハッシュ関数",
+  "points": [
+   {
+    "point": "ハッシュ関数はどんな長さからも決まった長さの値を作り、1 字違えば全く違う値になり、値から元へは戻せない。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "短い文・1 字違う文・大きなファイル×「入れるデータ・ハッシュ値・値から元へ」の格子を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。3 つの性質が行の見比べで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "配布されたファイルの値は別の経路で受け取って手元の計算と比べ、一致で分かるのは中身が同じことだけである。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "確かめ方の注意で、本文の 2 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 145,
+  "term": "パスワードの保存の仕方",
+  "points": [
+   {
+    "point": "サービスはパスワードを持たず、利用者ごとのソルトを足したハッシュ値だけを保存し、ログインでは同じ計算の結果が一致するかで本人と見分ける。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "上の段に登録（パスワード＋ソルト→ハッシュ関数→ソルトとハッシュ値を保存）、下の段にログイン（入力＋保存したソルト→同じ計算→一致を比べる）を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。保存する物と比べ方が 2 段で読める。",
+    "benefit": 3
+   },
+   {
+    "point": "ソルトが無いと同じパスワードは同じハッシュ値になり対応表 1 つで全員を照らせるが、利用者ごとのソルトがあると 1 人ずつ計算し直すので手間が人数倍になる。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "列にソルト無し・ソルト有り、行に「同じパスワード 123456 の 2 人のハッシュ値」「対応表で照らせるか」「10,000 人分が漏れたときの手間」を置いて比べる。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "ソルトが効く理由は既存の図に無く、同じ入力が同じ値になることと手間の差を並べると「漏れても使いにくい」の芯が格子で閉じる。",
+    "benefit": 2
+   },
+   {
+    "point": "計算をわざと何度も重ねて 1 回の確かめを遅くする（ストレッチング）。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "名前と働き 1 つで、本文の 1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 146,
+  "term": "HTTPS と TLS",
+  "points": [
+   {
+    "point": "HTTPS は HTTP を TLS で包み、盗み見・書き換え・偽のサーバの 3 つを防ぐが、守るのは通信の途中だけである。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "HTTP／HTTPS を「盗み見・書き換え・偽のサーバ」の 3 行で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。防げる物の違いが表で言える。",
+    "benefit": 3
+   },
+   {
+    "point": "鍵交換では両者が見せてよい値だけを送り合い、自分の秘密の値と組み合わせて同じ共通鍵を作るので、鍵そのものは送らない。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "ブラウザとサーバが 3 と 6 だけを送り合い、秘密の 4 と 5 を外に出さずに同じ 9 にたどり着くやり取りを並べている。",
+    "existing_figure_id": 2,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。送る値と出さない値がやり取りで追える。",
+    "benefit": 3
+   },
+   {
+    "point": "ブラウザは証明書について、発行元が信頼の一覧にあるか・名前が合うか・期限の内かの 3 つを見る。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "確かめる 3 点の一覧で、本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 147,
+  "term": "デジタル署名",
+  "points": [
+   {
+    "point": "デジタル署名は送り主が本文のハッシュ値を秘密鍵で閉め、受け手が公開鍵で開けて届いた本文の値と比べ、送り主と書き換えの無さを確かめる。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "送り主と受け手のやり取りで、秘密鍵で閉める・公開鍵で開ける・値を比べるの順を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。どちらの鍵で閉めて開けるかがやり取りで読める。",
+    "benefit": 3
+   },
+   {
+    "point": "暗号化と署名は鍵の向きが逆で、暗号化は誰でも閉められ本人だけ開けられるので中身を隠し、署名は本人だけ閉められ誰でも開けられるので誰が作ったかの証拠になる。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "列に暗号化・デジタル署名、行に「閉める鍵」「開ける鍵」「誰が閉められ誰が開けられるか」「守る物（中身を隠す／送り主を示す）」を置いて比べる。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "鍵の向きの違いは本文で混同しやすく単位の芯の前提なので、同じ観点で並べると目的の違いが格子で閉じる。",
+    "benefit": 2
+   },
+   {
+    "point": "掛け算はすぐ出るが元の 2 つの数を探すのは難しいので、公開鍵から秘密鍵を割り出せない。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "7×13＝91 の例 1 つで、本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 148,
+  "term": "証明書と認証局",
+  "points": [
+   {
+    "point": "サイトの証明書から 1 段ずつ上の段の公開鍵で署名を確かめ、手元のルート証明書に行き着けば本物と判断する。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "サイト→中間の認証局→ルートの認証局→手元のルート証明書、の連なりを、各矢印に何の鍵で確かめるかを付けて並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。確かめの向きと行き着く先が矢印のラベルで読める。",
+    "benefit": 3
+   },
+   {
+    "point": "ブラウザの警告を見たら、期限切れ・名前の食い違い・発行元のどれが原因かを確かめる。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "確かめる 3 点の一覧で、本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 202,
+  "term": "JWT",
+  "points": [
+   {
+    "point": "JWT は中身と秘密の値から印を計算するので、中身を書き換えても秘密の値を知らなければ印を作り直せず、受け取る側の計算と合わない。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "中身＋秘密の値→計算→札、途中で書き換えた札→受け取るサーバが計算し直す→印が合わない、を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。書き換えが見破られる理由が数の印で読める。",
+    "benefit": 3
+   },
+   {
+    "point": "JWT はサーバが記録を引かず印を計算し直して中身を信じる点がセッションと違い、中身は誰でも読めるので秘密を書かず期限を短くする。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "セッションとの 1 点の違いと注意で、本文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 149,
+  "term": "外から来た値を信じない",
+  "points": [
+   {
+    "point": "外から来た値は入口のサーバで形を確かめ、出口では出す先（画面か SQL か）に合わせて記号を無害にする。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "外から来た値→入口のバリデーション→サーバの処理→画面へのエスケープ／SQL へは分けて渡す、の 2 か所の守りを並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。守りが入口と出口の 2 か所にあることが強調で読める。",
+    "benefit": 3
+   },
+   {
+    "point": "画面での確かめは、画面を通さず直接送られると飛ばされるので守りにならない。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "理由 1 つで、本文の 1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 150,
+  "term": "SQL インジェクション（入力で SQL を書き換える攻撃）とプリペアドステートメント",
+  "points": [
+   {
+    "point": "入力を文字列でつなぐと入力が SQL の文の一部になって条件が常に真になり、プリペアドステートメントでは値のまま渡るので形が変わらない。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "2 つの作り方×「作り方・入力 ' OR '1'='1 は・結果」の格子を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。同じ入力の行き先の違いが列で比べられる。",
+    "benefit": 3
+   }
+  ]
+ },
+ {
+  "topic_id": 151,
+  "term": "クロスサイトスクリプティング",
+  "points": [
+   {
+    "point": "XSS は入力をそのまま埋めるページで、仕込んだ命令が閲覧者のブラウザで動き、セッションの番号が攻撃者へ渡る攻撃である。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "攻撃者・閲覧者のブラウザ・掲示板のサーバの 3 者で、書き込み→そのまま埋まる→命令が動く→番号が渡る、のやり取りを並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "今日の基準で描き直したばかりで、図だけで要点が言えるので保つ。被害が他の利用者のブラウザで起きることがやり取りで読める。",
+    "benefit": 3
+   },
+   {
+    "point": "HTML に出す直前に「<」を「&lt;」に置き換えると、ブラウザは部品の始まりと受け取らずただの字として表示する。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "置き換え 1 つで、本文の 1 文で言える。",
+    "benefit": 1
+   },
+   {
+    "point": "Cookie に JavaScript から読めない印を付けると、動いてしまったときの被害を小さくできる。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "補足の守り 1 つで、本文の 1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 152,
+  "term": "脆弱性と更新",
+  "points": [
+   {
+    "point": "脆弱性が公表されてから更新を当てるまでの間は、攻撃者にも弱点を知られたまま守れていない期間になるので、更新を早く当てる。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "timeline",
+    "idea": "横軸に「見つかる・公表（CVE）・攻撃が出回る・更新を当てる」を点で置き、公表から更新までを「弱点を知られたまま守れない」期間の帯として強調する。サポート切れ以降を「更新が出ずふさげない」期間の帯で並べる。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "公表と更新の間が危ない期間であることは時間の上の位置関係なので、軸に帯で置くと『早く当てるほど短くなる』が図だけで言える。",
+    "benefit": 2
+   },
+   {
+    "point": "知らせを見たら、使っているか・深刻さ・攻撃が出回っているかの 3 点で急ぐ度合いを決める。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "3 つの観点の列挙で、比べる対象が無く本文の箇条で足りる。",
+    "benefit": 1
+   },
+   {
+    "point": "影響を判断するには、使っている部品とバージョンを記録しておく。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える前提。",
+    "benefit": 1
+   },
+   {
+    "point": "更新で動きが変わることがあるので、本番の前に別の場所で動くか確かめる。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 段の順で、本文の 1 文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 153,
+  "term": "CSRF",
+  "points": [
+   {
+    "point": "ログイン中のブラウザは罠のページが送らせた送信にも Cookie を自動で付けるので本人の操作に見え、推測できない CSRF トークンの有無で止める。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "本人のブラウザ・罠のページ・サイト A の 3 者のやり取りで、ログインから Cookie の自動付与、トークンが無いので断るまでを上から並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "攻撃の芯（Cookie の自動付与）と守り（トークン）を 1 つのやり取りで運んでいる。",
+    "benefit": 3
+   },
+   {
+    "point": "XSS は相手のページで命令を動かすが、CSRF は送らせるだけで返事は読めない。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 者の 1 点だけの違いで、本文の 1 文で足りる。",
+    "benefit": 1
+   },
+   {
+    "point": "SameSite の設定で、別のサイトからの送信には Cookie を付けさせない守りもある。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "守りの名前 1 つと働き 1 つ。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 154,
+  "term": "ファイアウォール",
+  "points": [
+   {
+    "point": "ファイアウォールは届いた通信の宛先の IP アドレスとポート番号を規則の表と上から照らし、許した物だけを通して中身は見ない。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "インターネット・ファイアウォール・規則の表・Web サーバ・止める先を並べ、443 番は規則①で通り管理の入口宛ては②で止まる線を引いている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "規則の表と通る・止まるの分かれが要点そのもの。",
+    "benefit": 3
+   },
+   {
+    "point": "ルータは道を選び、ファイアウォールは通してよいかを決める。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 者の 1 点だけの違い。",
+    "benefit": 1
+   },
+   {
+    "point": "社内の機器が入られていると、内側から外への通信は止めにくい。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える限界。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 155,
+  "term": "DMZ と WAF",
+  "points": [
+   {
+    "point": "公開する Web サーバを外とも社内とも分けた DMZ に置き、2 つの門で区切ると、乗っ取られても社内まで進みにくい。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "外・DMZ・社内の 3 区画を左から並べ、境ごとの門が何を通すかを線のラベルにしている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "区画の並びと門の役割が要点。",
+    "benefit": 3
+   },
+   {
+    "point": "ファイアウォールは宛先と番号だけを見るが、WAF はリクエストの中身を見て攻撃の形を止め、どちらも止められない物がある。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "ファイアウォールと WAF を見る所・止める物・止められない物の 3 観点で並べている。",
+    "existing_figure_id": 2,
+    "existing_action": "keep",
+    "reason": "観点×対象で違いが表の中で閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "WAF はコードの弱点を直す代わりにはならない。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "matrix の「止められない物」と本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 156,
+  "term": "VPN",
+  "points": [
+   {
+    "point": "VPN は社内宛てのパケットを暗号化して包み、インターネットの中を通して会社の入口で開けるので、途中の回線からは読めない。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "在宅の PC・インターネット・会社の入口の VPN 機器・社内を並べ、トンネルと、途中の回線からのぞいても読めないことを線のラベルにしている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "包む・通す・開けるの経路が要点。",
+    "benefit": 3
+   },
+   {
+    "point": "HTTPS は 1 つのサイトとの通信を、VPN は社内宛ての通信をまとめて守る。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 者の 1 点だけの違い。",
+    "benefit": 1
+   },
+   {
+    "point": "つないだ PC が入られていれば社内まで被害が届き、入口の機器も更新の対象になる。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1〜2 文で言える注意。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 157,
+  "term": "著作権",
+  "points": [
+   {
+    "point": "著作権が守るのは書かれた表現そのもので、アイデアや処理の手順は守られないので、他人のコードを写して手直しすれば侵害になりうるが、一から自分で書けば問題にならない。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "行に「表現（書かれたコード・文章）」と「アイデア・処理の手順・言語の決まり」、列に「守られるか」「他人の物を使うと（写して手直し／一から自分で書く）」を置き、写して手直しした表現のセルを強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "守られる物と守られない物の境が判断の芯で、行と列でたどると『写したら侵害、同じ働きを自分で書くのは可』が表の中で閉じる。",
+    "benefit": 2
+   },
+   {
+    "point": "著作権は登録しなくても作った時点で自動で生まれる。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える事実。",
+    "benefit": 1
+   },
+   {
+    "point": "会社の仕事で書いたコードは会社の物（職務著作）、受けた開発は契約で移さなければ作った側に残る。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの場合の持ち主で、本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 158,
+  "term": "OSS のライセンス",
+  "points": [
+   {
+    "point": "GPL は組み込んで配ると全体の公開を求め、緩い条件の物は表示を残せば公開を求めない。条件は手元で使うより配るときに効く。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "ライセンスの種類（GPL・MIT など）×使い方（手元で使うだけ・組み込んで配る）で守る条件を並べ、右上の GPL だけがコードの公開を求めている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "観点×対象の手本どおりの比べ。",
+    "benefit": 3
+   },
+   {
+    "point": "どこまでが GPL の全体かはつなぎ方で決まり、読み込んで 1 つになればアプリのコードも渡すが、別のプログラムとして動かせば渡さずに済む。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "上の行に読み込んで 1 つのプログラムになる道、下の行に別に起動してファイルを渡す道を並べ、配るときに渡す物の違いを線のラベルにしている。",
+    "existing_figure_id": 2,
+    "existing_action": "keep",
+    "reason": "つなぎ方で結果が分かれる因果を運ぶ。",
+    "benefit": 3
+   },
+   {
+    "point": "ライブラリが連れてくる別のライブラリの条件も確かめる。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える注意。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 159,
+  "term": "個人情報の扱い",
+  "points": [
+   {
+    "point": "個人情報は、使う目的を決めて知らせてから集め、その目的の中だけで使い、ほかの会社へは原則として本人の同意を取って渡す。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "本人・自社（集める／使う）・ほかの会社・作業を任せる先を箱にし、線に「目的を知らせて集める」「目的の中で使う（外なら同意を取り直す）」「本人の同意があれば渡す」「任せた側が扱いを見張る」を書いて、同意の線を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "集める・使う・渡すのどの線にどの条件が付くかが決まりの芯で、線のラベルで条件を運ぶと図だけで 3 つの決まりが言える。",
+    "benefit": 2
+   },
+   {
+    "point": "作る側では、本番のデータをテストに写さない・記録に書き出さない・見られる人を絞る。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "3 つの守り方の列挙で、本文の箇条で足りる。",
+    "benefit": 1
+   },
+   {
+    "point": "病歴のような情報は集めること自体に同意が要る。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える例外。",
+    "benefit": 1
+   },
+   {
+    "point": "漏れていなくても目的の外に使えば違反になる点が、セキュリティの 3 要素と違う。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 者の 1 点だけの違い。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 160,
+  "term": "不正アクセス禁止法とウイルス作成の罪",
+  "points": [
+   {
+    "point": "不正アクセス禁止法はログインの仕組みを破って入る行為を、ウイルス作成の罪は悪意のあるプログラムを作った段階を罰する。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "列に不正アクセス禁止法とウイルス作成の罪、行に「守る物」「禁じる行為（他人の ID で入る・弱点を突く・ID を教える／作る・渡す・動かす・持つ）」「成り立つ時点（入った時点／作った時点）」を置く。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの決まりを同じ観点で並べると、何をした時点で罪になるかの違いが表の中で閉じる。",
+    "benefit": 2
+   },
+   {
+    "point": "自分が管理していないシステムに許可なく試さず、確かめは自分の環境か書面で許可された範囲でだけ行う。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える線。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 161,
+  "term": "システム開発の工程",
+  "points": [
+   {
+    "point": "開発は要件定義・設計・実装・テスト・リリースの順に前の成果を受けて進み、上流の決め違いに下流で気づくほど手戻りが広がる。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "5 つの工程を左から並べて受け渡す成果を線のラベルにし、テストから要件定義へ戻る点線で手戻りを示している。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "戻りの矢印が手戻りの要点を運ぶので steps に置き換えない。",
+    "benefit": 3
+   },
+   {
+    "point": "前の段階を上流、後を下流と呼ぶ。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "呼び名 1 組。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 162,
+  "term": "要件定義",
+  "points": [
+   {
+    "point": "要件は、何ができるかの機能要件と、どれくらいの質で動くかの非機能要件に分けて書き、非機能は測れる数で決める。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "機能要件と非機能要件を、何を書くか・例・聞き漏らすとの 3 観点で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "2 種類を同じ観点で比べる表で閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "決めた要件は作る範囲の線になり、追加の頼みが範囲の内か外かを判断できる。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 163,
+  "term": "設計",
+  "points": [
+   {
+    "point": "外部設計で利用者から見える振る舞いを先に決め、内部設計でそれを実現する中の作りを決める。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "外部設計と内部設計を、決める順・決める物・読む相手の 3 観点で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "観点×対象で違いが閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "見える形を先に固めると、中の作りを後で変えても使い方が変わらない。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える理由。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 164,
+  "term": "ウォーターフォールとアジャイル",
+  "points": [
+   {
+    "point": "ウォーターフォールは決めてから順に 1 回通し、アジャイルは短く作って見せて直すを繰り返すので、予定の立てやすさと変更の取り込みやすさが逆になる。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "2 つの進め方を、進め方・動く物を見る時期・強みの 3 観点で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "観点×対象で違いが閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "要件が固まっていればウォーターフォール、使ってみないと分からなければアジャイルが目安。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える目安。",
+    "benefit": 1
+   },
+   {
+    "point": "アジャイルは文書を書かない意味ではない。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える誤解の訂正。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 165,
+  "term": "スクラム",
+  "points": [
+   {
+    "point": "スクラムは 1〜4 週のスプリントごとに、計画・毎日の共有・成果の披露・振り返りの 4 つの集まりを回し、振り返りで決めた変え方を次の計画に持ち込む。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "cycle",
+    "idea": "輪の段を「スプリント計画（一覧の上から今回の分を選ぶ）→デイリー（毎日 15 分くり返す）→スプリントレビュー（できた物を見せる）→レトロスペクティブ（進め方を見直す）」の 4 つにし、レトロから計画へ戻る矢印に「決めた変え方を持って次の区切りへ」、中央に「スプリント 1〜4 週」を置く。",
+    "existing_figure_id": 1,
+    "existing_action": "retype",
+    "reason": "今の blocks は 4 つの集まりに加えて「次のスプリント」の箱と計画へ戻る線を足して輪を作っており、輪であることが線をたどらないと見えない。cycle にすると 4 つが 1 周して次の区切りへ戻る形が一目で見え、余計な箱も消える。",
+    "benefit": 3
+   },
+   {
+    "point": "計画で選ぶ元は、作りたい物を優先度順に並べた一覧。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 166,
+  "term": "業務の流れを図にする（業務フローと DFD）",
+  "points": [
+   {
+    "point": "業務フローは誰がどの順に何をするかを、DFD は順番を描かずデータがどこから来てどこで加工されどこに溜まるかを描く。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "業務フローと DFD を、描く物・順番・見つかる所の 3 観点で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "2 つの図の違いが観点×対象で閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "業務フローは担当ごとの帯に仕事を置き、帯をまたぐ矢印が人から人への受け渡しになる。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "上の行に「利用者の帯：注文する」、下の行に「店の帯：受け付ける→台帳に書く」を左から順に置き、帯をまたぐ線に「注文を渡す」、帯の中の線に「受けた注文を書き写す」を書く。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "帯と矢印の見た目そのものが要点で、本文の 5 段の描き方を読むより、描いた形を見るほうが早い。",
+    "benefit": 2
+   },
+   {
+    "point": "DFD は外の相手（□）・加工する所（○）・データを溜める所（＝）とデータの流れ（矢印）の 4 つの記号だけで描く。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "左に四角の「利用者（外の相手）」、中に丸の「受付（加工する所）」、右に円柱の「注文の台帳（溜める所）」を置き、線に「注文の情報」「受けた注文を書き込む」を書く。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "4 つの記号の見分けは形を写さないと伝わりにくく、例を 1 枚描くと記号の意味が図だけで言える。",
+    "benefit": 2
+   }
+  ]
+ },
+ {
+  "topic_id": 167,
+  "term": "設計を図で共有する（UML のクラス図とシーケンス図）",
+  "points": [
+   {
+    "point": "クラス図は部品の形と関係という構造を、シーケンス図は呼び出しの順番という時間の流れを描くので、伝えたいことで選ぶ。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "クラス図とシーケンス図を、描く物・描き方・例（Web のお店）の 3 観点で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "2 つの図の違いが観点×対象で閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "クラス図は箱を 3 段（名前・持つデータ・頼める動作）に区切り、箱どうしの線で関係を描くので、コードを読む前に「会員の決まらない注文は保存できない」と分かる。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "「会員／氏名・住所／住所を変える」と「注文／商品・個数／取り消す」の 2 つの箱を 3 行で書き、線に「注文は 1 人の会員に属し、会員は注文を何件でも持てる」を書く。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "箱の 3 段と線の意味は見た目の約束事なので、1 枚の例で図だけから読み方が言える。箱 2 つの小さな図になるが、描き方を写すのが目的なので付ける。",
+    "benefit": 2
+   },
+   {
+    "point": "シーケンス図は相手を左から並べ、呼び出しと返事を上から順に矢印で描く。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "matrix の描き方の行と本文の 1 文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 168,
+  "term": "テストの段階",
+  "points": [
+   {
+    "point": "テストは単体・結合・システム・受入と範囲を広げて進み、各段階が前の工程で決めたことと対になる。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "左に要件定義・設計・実装を上から、右に単体から受入を下から並べ、点線で各テストがどの工程の決め事を確かめるかを結んでいる。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "対の線が要点を運ぶ V の形で、steps では対が描けない。",
+    "benefit": 3
+   },
+   {
+    "point": "小さい範囲から確かめるのは、バグの原因の場所を狭められるから。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える理由。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 169,
+  "term": "テストケースの作り方",
+  "points": [
+   {
+    "point": "入力を同じ扱いになるまとまりに分けて代表を 1 つずつ試し、境目の両側の値を足すと、少ない件数で漏れを減らせる。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "0〜100 点で 60 点以上合格の例で、4 つのまとまりと各代表を並べ、まとまりの間の線に境目の両側の値を書いて計 10 件にしている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "まとまりと境目の位置関係が要点。",
+    "benefit": 3
+   },
+   {
+    "point": "「60 以上」を「60 より大きい」と書き間違えても、真ん中の値では見つからず境目でしか見つからない。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文の例で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 170,
+  "term": "テストの自動化とテスト駆動開発",
+  "points": [
+   {
+    "point": "テストをコードにして自動で回すと、直すたびに前の機能が壊れていないか（回帰テスト）を毎回確かめられる。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "手で確かめるのとテストをコードで書くのを、誰が回すか・直すたびに・前の機能が壊れたらの 3 観点で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "2 つを同じ観点で比べる表で閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "テスト駆動開発は、失敗するテストを先に書き、通るだけの最小のコードを書き、動きを変えずに整えて、次のテストへ進む輪を回す。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "cycle",
+    "idea": "輪の段を「失敗するテストを書く（先に失敗を見る）→通るだけの最小のコードを書く→動きを変えずに整える（リファクタリング）」の 3 つにし、段の間に「失敗を確かめたテスト」「通ったテスト」「次に決める動き」を書く。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "書く順番が輪になって戻ることが要点で、輪で描くと『テストが先』と繰り返しが図だけで言える。",
+    "benefit": 2
+   },
+   {
+    "point": "先に失敗を見るのは、何もしなくても通る的外れなテストでないと確かめるため。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える理由。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 171,
+  "term": "ブラックボックステストとホワイトボックステスト",
+  "points": [
+   {
+    "point": "ブラックボックスは入力と結果だけで仕様どおりかを、ホワイトボックスはコードを読んで道を全部通すので、気づけない物が逆になる。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "2 つの方法を、手がかり・行う人・気づけない物の 3 観点で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "観点×対象で違いが閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "仕様との食い違いは外から、通っていない道は中から探して組み合わせる。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える使い分け。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 172,
+  "term": "テストの網羅の度合い",
+  "points": [
+   {
+    "point": "判定が真の人だけが割引の行を通り、偽の人はそこを飛ばすので、テストの人によって通る道が変わる。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "20 歳以上の会員だけ 100 円引きにする処理の 4 行を箱にし、判定の真と偽で分かれて合流する線を描いている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "網羅を数える元になる道の分かれを運ぶ。",
+    "benefit": 2
+   },
+   {
+    "point": "同じテストでも、命令・分かれ道・条件のどれを単位に数えるかで通った割合が変わり、条件で 100% でも割引の行を通らないことがある。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "網羅の単位（命令・分かれ道・条件）×テストの組み合わせで通った割合を並べている。",
+    "existing_figure_id": 2,
+    "existing_action": "keep",
+    "reason": "単位ごとの違いが表の中で閉じる単位の芯。",
+    "benefit": 3
+   },
+   {
+    "point": "100% でも作り忘れは見つからないので、数字は通っていない道を探す手がかりにする。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える使い方。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 173,
+  "term": "ターミナルとコマンド",
+  "points": [
+   {
+    "point": "ターミナルでは 1 行に 1 つのコマンドを打つと、OS がそれに当たるプログラムを動かして結果を文字で返す。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "自分（ターミナル）と OS の 2 者で、「pwd」→「/home/a」、「mkdir work」→置き場ができる、「cd work」→今いる場所が移る、「ls」→空の一覧、の打つ・返るを上から並べる。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "打つと返るの往復が操作の芯で、やり取りで描くとマウスと違う使い方が図だけで言える。",
+    "benefit": 2
+   },
+   {
+    "point": "打った文字が手順として残るので、同じ作業を誰でも何度でも再現でき、自動で流せる。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える利点。",
+    "benefit": 1
+   },
+   {
+    "point": "すぐ消えるコマンドもあるので、打つ前に今いる場所を確かめる。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える注意。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 28,
+  "term": "ファイルの権限",
+  "points": [
+   {
+    "point": "同じ r・w・x でも、ファイルでは中身への許し、ディレクトリでは中の名前の一覧と中のファイルへの許しになる。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "r・w・x の 3 行×ファイルとディレクトリの 2 列で、それぞれ何を許すかを並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "観点×対象で意味の違いが閉じる。",
+    "benefit": 2
+   },
+   {
+    "point": "ls -l の権限の 10 文字は、種類の印と、持ち主・グループ・その他の 3 文字ずつに区切って読み、chmod u+x で持ち主に x が足される。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "「-rw-r--r--」を種類・持ち主・グループ・その他の 4 つの箱に区切り、持ち主の箱から chmod u+x 後の「rwx」へ線を引いている。",
+    "existing_figure_id": 2,
+    "existing_action": "keep",
+    "reason": "区切りと変更後を 1 枚で運ぶ。parts にすると chmod の前後が描けないので blocks のまま。",
+    "benefit": 3
+   },
+   {
+    "point": "仕事に要る分だけ許すと、誤った操作や乗っ取りの被害が広がりにくい。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える考え方。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 174,
+  "term": "エディタと IDE",
+  "points": [
+   {
+    "point": "エディタは色分けや補完でコードを書くのを助け、IDE はそれに動かす働きとデバッガをまとめて、書く・動かす・止めて調べるを 1 つの画面で済ませる。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "列にメモ帳・エディタ・IDE、行に「色分けと補完」「コードを動かす」「止めて変数の中身を見る（デバッガ）」を置き、できる・できないを一言で書き、IDE の列を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "3 つの道具を同じ観点で並べると、どこまでできるかの違いが表の中で閉じる。",
+    "benefit": 2
+   },
+   {
+    "point": "IDE は動かす前にコンパイラなどを中で呼び出す。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   },
+   {
+    "point": "エディタも拡張機能で IDE に近づき、境目ははっきりしない。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 175,
+  "term": "パッケージ管理",
+  "points": [
+   {
+    "point": "設定ファイルには頼んだ名前と幅だけを書き、入った全部の実際のバージョンをロックファイルに残して共有すると、別の PC でも同じ組み合わせになる。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "設定ファイル・道具の install・公開の置き場・入った部品 40 個・ロックファイル・別の PC を並べ、何を読み何を書き留めるかを線のラベルにしている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "幅と実際の版の違いを経路で運ぶ。",
+    "benefit": 3
+   },
+   {
+    "point": "入れたパッケージの脆弱性は自分のアプリにも残るので、増やしすぎず更新する。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える注意。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 176,
+  "term": "環境変数と設定ファイル",
+  "points": [
+   {
+    "point": "コードは同じまま、環境変数の値だけを環境ごとに替えるので、つながる先が替わる。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "手元の PC と本番の環境を、コード・環境変数「接続先」の値・つながる先の 3 観点で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "同じ観点で並べて違いが値だけと分かる。",
+    "benefit": 3
+   },
+   {
+    "point": "秘密をコードに書くと共有した全員に読まれるので、秘密の設定ファイルは履歴に入れない。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1〜2 文で言える注意。",
+    "benefit": 1
+   },
+   {
+    "point": "「$」は名前を値に置き換える印。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "記号 1 つの意味。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 177,
+  "term": "正規表現",
+  "points": [
+   {
+    "point": "探したい形を言葉で区切り、区切りごとに記号に置き換えてつなぐと 1 つの型になり、型に合う所だけを拾える。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "数字 3 桁・ハイフン・数字 4 桁を言葉の段から記号の段へ置き換え、つないだ型を合う例と合わない例に当てている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "言葉から記号への置き換えと当てはめを運ぶ。",
+    "benefit": 3
+   },
+   {
+    "point": "よく使う記号は [ ]・{n}・. の 3 つ。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "記号の一覧で本文で足りる。",
+    "benefit": 1
+   },
+   {
+    "point": "型は短く保ち、合うべき例と合ってはいけない例で確かめてから使う。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 178,
+  "term": "バージョン管理",
+  "points": [
+   {
+    "point": "バージョン管理は、変えたまとまりごとに誰が・いつ・何のためにを添えて時間の順に記録を積むので、バグが入る前の時点に戻せ、どの変更で入ったかを探せる。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "timeline",
+    "idea": "横軸に日付を取り、点の出来事として「記録 1：A さん 画面を追加」「記録 2：B さん 文言を修正」「記録 3：A さん 計算を変更（ここでバグが入る）」を置き、記録 3 を強調して、その手前の記録 2 の時点に「ここへ戻せる」の注記を置く。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "記録が時間に沿って積み上がり、手前の時点へ戻れることは時間の上の位置関係なので、軸に並べると図だけで言える。",
+    "benefit": 2
+   },
+   {
+    "point": "ファイル名を変えて残すやり方では、どれが新しいか・どこを変えたかが分からなくなる。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える対比。",
+    "benefit": 1
+   },
+   {
+    "point": "バックアップは丸ごとの写しで、誰がなぜ変えたかの記録は持たない。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 者の 1 点だけの違い。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 179,
+  "term": "Git の基本",
+  "points": [
+   {
+    "point": "git add で次に記録する変更を選び、git commit で説明と一緒に残す 2 段に分けるので、同時にいじった変更を目的ごとに分けて記録できる。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "作業中の 2 つの変更が、それぞれ git add と git commit を通って目的ごとの記録としてリポジトリに積まれる 2 本の道を並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "変更が 2 本に分かれる形が要点で、一方向の steps では分かれを描けない。",
+    "benefit": 3
+   },
+   {
+    "point": "説明の文には何を・なぜ変えたかを書き、1 つのコミットに別の目的を混ぜない。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える作法。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 180,
+  "term": "ブランチとマージ",
+  "points": [
+   {
+    "point": "本流から枝を分けて作業すると作りかけは本流に入らず、できた物だけを git merge で本流に合わせる。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "中段の本流と、上下の A さん・B さんの枝を並べ、枝でコミットを重ねて右でマージする線を描いている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "分ける・作る・合わせるの経路が要点。",
+    "benefit": 3
+   },
+   {
+    "point": "同じ所を別々に変えているとぶつかって止まり、人が決める。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "後の単位（コンフリクト）で図にしている。",
+    "benefit": 1
+   },
+   {
+    "point": "作業の前に枝を作り、1 つの枝に 1 つの目的だけを入れる。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える作法。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 181,
+  "term": "リモートと共有",
+  "points": [
+   {
+    "point": "手元のコミットは push で共有の置き場に送って初めて人から見え、プルリクエストで読んでもらってから本流に入り、人の変更は pull で取り込む。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "A さんの手元・共有の置き場・B さんの手元の 3 者で、枝のコミットから push・プルリクエスト・了承・マージ・pull までを上から並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "3 者の行き来と向きが要点。",
+    "benefit": 3
+   },
+   {
+    "point": "送る前に手元でテストを通し、プルリクエストには何を・なぜ変えたかを書く。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える作法。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 182,
+  "term": "コンフリクト（同じ所を別々に変えたときのぶつかり）の解き方",
+  "points": [
+   {
+    "point": "2 人が同じ行を別々に変えると Git は決められず印で挟んで止まり、人が中身を読んで書き直し、印を消してコミットし直す。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "A さん・B さんの変更が同じ行で合流し、Git が印で挟んだ状態、人が書き直す、コミットし直すまでを左から並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "2 つの変更がぶつかる合流と印の見た目を運ぶので steps にしない。",
+    "benefit": 3
+   },
+   {
+    "point": "小さな枝を早めにマージし、作業の前に pull すると起きにくい。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 183,
+  "term": "開発・検証・本番の環境",
+  "points": [
+   {
+    "point": "同じコードを開発・検証・本番の順に流し、環境ごとに違う接続先やパスワードは外から渡す。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "開発・検証・本番の 3 つの環境を並べて同じコードが流れる線を引き、各環境に接続先を外から渡す線を足している。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "同じコードと違う値の組み合わせを運ぶ。",
+    "benefit": 3
+   },
+   {
+    "point": "検証の環境が本番と違うほど、検証で動いても本番で動かない物が出る。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 184,
+  "term": "CI/CD",
+  "points": [
+   {
+    "point": "変更を共有するたびにビルドとテストが自動で回り、落ちればすぐ知らせ、通った物が環境へ届く。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "開発者・CI/CD の仕組み・検証の環境・本番の環境の 4 者で、push から自動のビルドとテスト、落ちたら知らせる、デプロイまでを上から並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "どの順に誰へ渡るかが要点。",
+    "benefit": 3
+   },
+   {
+    "point": "自動で確かめられるのは書いたテストの範囲だけ。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える限界。",
+    "benefit": 1
+   },
+   {
+    "point": "ビルドはコードを機械語に直してライブラリとつなぎ、1 つの実行ファイルにまとめる。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "別の単位（ビルドとライブラリ）で扱う。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 185,
+  "term": "リリースと切り戻し",
+  "points": [
+   {
+    "point": "新しいバージョンは一部の利用者から広げ、見張ってエラーが増えたら、残しておいた前のバージョンへすぐ戻す。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "上の段に新版→一部に公開→見張る→全員に公開、下の段に前のバージョン→切り戻しを並べ、見張った結果で分かれる線を描いている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "条件で分かれる線が要点なので steps にしない。",
+    "benefit": 3
+   },
+   {
+    "point": "データベースの形を変えるリリースは戻せないことがあるので、特に慎重に組む。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える注意。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 186,
+  "term": "監視とログ",
+  "points": [
+   {
+    "point": "監視は今の調子を数で見続けて異常に気づき、ログは起きたことを後から順にたどる記録になる。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "監視とログを、扱うもの・使う時・答える問いの 3 観点で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "役割の違いが観点×対象で閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "知らせる線は利用者が困る兆しに絞り、ログに秘密や個人情報を書かない。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1〜2 文で言える注意。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 187,
+  "term": "障害対応の進め方",
+  "points": [
+   {
+    "point": "障害は、切り分け・暫定の手で使える状態に戻す・原因の調査・恒久の手の順に進め、原因が分からなくても戻すのを先にする。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "steps",
+    "idea": "段を「切り分け（どの機能・誰に・いつから）→暫定の手（前のバージョンへ戻す）→原因の調査（ログを読み、したことを記録）→恒久の手（テストを足す・監視の線を見直す）」の 4 つにし、暫定の手を強調して、その次の矢印に「利用者が使える状態に戻ってから」を書く。",
+    "existing_figure_id": 1,
+    "existing_action": "retype",
+    "reason": "今の sequence はエンジニア・本番のサービス・利用者の 3 列を立てているが、やり取りの往き来は無く一方向の 4 段の手順で、列の間の矢印が順番の意味を運んでいない。steps にすると段が一方向に進む形と『戻してから調べる』の順が段の並びと矢印のラベルだけで見える。",
+    "benefit": 3
+   },
+   {
+    "point": "振り返りでは人を責めずに仕組みを直す。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える作法。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 188,
+  "term": "SLA（サービスの約束）",
+  "points": [
+   {
+    "point": "使う側と提供する側が稼働率や復旧までの時間を数で約束し、監視の数字と比べて守れたかを確かめる。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "使う側・提供する側・監視の 3 者で、目標を示す・約束する・測る・比べるを上から並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "約束と確かめの流れを運ぶ。",
+    "benefit": 2
+   },
+   {
+    "point": "稼働率の約束を上げるほど止まってよい時間は 10 分の 1 ずつ縮み、備えの費用がかさむ。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "chart",
+    "idea": "約束する稼働率ごとに 30 日で止まってよい分数を棒で並べている。",
+    "existing_figure_id": 2,
+    "existing_action": "keep",
+    "reason": "量の関係が棒の長さで見える。",
+    "benefit": 3
+   }
+  ]
+ },
+ {
+  "topic_id": 189,
+  "term": "プロジェクトと WBS",
+  "points": [
+   {
+    "point": "WBS は作る物から作業を段ごとに細かく分け、一番下を担当を決められる作業にして抜けなく見積もれるようにする。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "WBS の 3 つの段を、例（会員登録）・分け方・この段で決めることの 3 観点で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "樹形図にせず、段ごとの違いを観点で並べている。",
+    "benefit": 3
+   },
+   {
+    "point": "プロジェクトは目的と期限があって終わりの来る仕事で、続く運用と違う。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 者の 1 点だけの違い。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 190,
+  "term": "見積り",
+  "points": [
+   {
+    "point": "手間は似た過去の仕事から類推するか、WBS の作業ごとに足し上げて人日で見込み、幅と前提を添えて伝える。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "似た過去の仕事と WBS の作業ごとの 2 つの根拠から見積り 10 人日へ線を引き、そこから幅つきの伝える形へ進めている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "2 つの見込み方と伝える形を運ぶ。",
+    "benefit": 3
+   },
+   {
+    "point": "人を増やしても日数は人数に比例して縮まない。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   },
+   {
+    "point": "ずれに備えた余裕の日数をバッファと呼ぶ。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "名前 1 つ。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 191,
+  "term": "スケジュールと進み具合の管理",
+  "points": [
+   {
+    "point": "作業の順番の縛りを矢印でつなぎ、日数の合計が一番長い列（クリティカルパス）の作業が 1 日遅れると全体も 1 日遅れる。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "設計・画面・データベース・テスト・終わりを順番の縛りの線でつなぎ、画面を通る列を一番長い道筋として強調している。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "順番の縛りと合流の待ちが要点。",
+    "benefit": 3
+   },
+   {
+    "point": "予定はガントチャートで、作業ごとの期間を日付の軸の上に横棒で並べ、いつ何をする予定かを一目で見られるようにする。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": true,
+    "type": "timeline",
+    "idea": "横軸に 0〜9 日目を取り、期間の帯として「設計 0〜3 日」「画面 3〜7 日（遅れられない）」「データベース 3〜5 日（2 日の余裕）」「テスト 7〜9 日」を並べ、画面の帯を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "期間の重なりと余裕は時間の軸の上で見ると分かり、矢印の図と同じ例を帯で描くとガントチャートが図だけで言える。",
+    "benefit": 2
+   },
+   {
+    "point": "進み具合は経った日数ではなく、終わった作業の量を予定の量で割って見る。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 192,
+  "term": "コードレビュー",
+  "points": [
+   {
+    "point": "テストは決めた動きを機械で確かめ、コードレビューは別の人が読んで意図・読みやすさ・危うさまで見て、読む側も知識を得る。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "列にテストとコードレビュー、行に「誰が確かめるか」「見る物」「見つかる物（決めた動きとの違い／テストの外の誤り・確かめていない入力・読みにくさ）」を置く。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの確かめを同じ観点で並べると、レビューにしか見つけられない物が表の中で閉じる。",
+    "benefit": 2
+   },
+   {
+    "point": "書いた本人は意図を知っているので、意図と違う動きに気づきにくい。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える理由。",
+    "benefit": 1
+   },
+   {
+    "point": "指摘はコードに向けて書き、1 回に出す変更は小さく区切る。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "作法の列挙で本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 193,
+  "term": "読みやすいコードとリファクタリング",
+  "points": [
+   {
+    "point": "リファクタリングは外から見た動きを変えない整理なので、小さく整えては前のテストを全部流して確かめ、機能の追加とは同時に行わない。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "cycle",
+    "idea": "輪の段を「1 か所を小さく整える（名前・分け方）→前に通ったテストを全部流す→全部通ったら残す」の 3 つにし、段の間に「整えたコード」「全部通った」「次の 1 か所へ」を書き、中央に「動きは変えない」を置く。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "小さく変えては確かめる繰り返しが進め方の芯で、輪で描くとテストが整理の安全の前提であることが図だけで言える。",
+    "benefit": 2
+   },
+   {
+    "point": "読みやすいコードは、名前で役割が分かり、1 つの関数が 1 つの仕事だけをする。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える定義。",
+    "benefit": 1
+   },
+   {
+    "point": "急いで分かりにくいまま残した所は、後で直す手間が膨らむので技術的負債と呼ぶ。",
+    "content_type": "概念",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "たとえ 1 つで本文で足りる（量の実データが無く chart にしない）。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 194,
+  "term": "ドキュメントを書く",
+  "points": [
+   {
+    "point": "ドキュメントには、使い方と動かし方（README）・繰り返す作業の手順・決めたことと比べた案と理由の 3 つを残し、とくに理由はコードからは読めない。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "行に README・作業の手順・決めたことと理由、列に「書くこと」「無いと後の人が困ること（動かせない／人に聞く／変えてよいか分からず前提を壊す）」を置き、決めたことと理由の行を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "3 つを同じ観点で並べると、理由の記録が無いと何が起きるかが表の中で閉じ、『なぜを残す』が言える。",
+    "benefit": 2
+   },
+   {
+    "point": "コードを変えたら同じ作業でドキュメントも直す。古いままの物は無いより迷わせる。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1〜2 文で言える。",
+    "benefit": 1
+   },
+   {
+    "point": "迷ったら半年後の自分が人に聞かずに済むかで判断する。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える目安。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 195,
+  "term": "質問と報告の仕方",
+  "points": [
+   {
+    "point": "質問は、何をしようとして何をしたか・何が起きたか（出た文をそのまま）・何を試して何が分かったかの 3 つを 1 回で渡すと、相手が聞き返さずに答えられる。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": true,
+    "type": "parts",
+    "idea": "whole を「質問の文」にし、部位を「何をしたか／目指したことと打った操作」「何が起きたか／出た文をそのまま貼る」「何を試したか／相手が同じ確かめをせずに済む」の 3 つにして、何が起きたかを強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "質問という 1 つの物がどの部位でできているかが要点で、部位に分けて描くと欠けた部位が聞き返しになることが図だけで言える。",
+    "benefit": 2
+   },
+   {
+    "point": "報告は結論を先に、理由を後に言う。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   },
+   {
+    "point": "15 分調べて進まなければ聞くのように、聞く時機を前もって決める。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える目安。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 196,
+  "term": "エラーを自分で調べる手順",
+  "points": [
+   {
+    "point": "エラーメッセージを最後まで読んで自分のコードの行を探し、同じ操作で起こし直し、途中の値を見て原因の行まで絞ってから直す。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "自分とプログラムの 2 者で、メッセージを受け取る・読む・起こし直す・途中の値を見る・直して動かすを上から往復で並べている。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "自分の操作とプログラムの返事の往き来が要点。",
+    "benefit": 3
+   },
+   {
+    "point": "Web の画面ならブラウザの開発者ツールで、意味が分からなければ公式の資料で確かめる。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "道具の名前の列挙。",
+    "benefit": 1
+   },
+   {
+    "point": "たまにしか起きないなら、入力や時刻の違いを書き留めて条件を探す。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 197,
+  "term": "技術を選ぶ理由を説明する",
+  "points": [
+   {
+    "point": "技術は、目的に合うか・チームの慣れ・保守と費用まで含めて続けられるかの観点で候補を表にして比べ、優先した観点と諦めた点を言葉にする。",
+    "content_type": "原理",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "列に候補 A（チームが慣れた技術）と候補 B（新しい技術）、行に「目的に合うか」「チームの慣れ」「保守と費用」を置き、一言で評価を書いて、優先した観点の行と勝った候補のセルを強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "単位の芯が『観点を並べて比べる』そのもので、表にすると重く見る観点で勝つ候補が変わるトレードオフが図だけで言える。",
+    "benefit": 3
+   },
+   {
+    "point": "どの場面でも一番良い技術は無い。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える前提。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 198,
+  "term": "生成 AI でコードを書く・調べる",
+  "points": [
+   {
+    "point": "生成 AI への頼み（プロンプト）には、目的・前提・制約と、できれば入力と出力の例を書く。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": true,
+    "type": "parts",
+    "idea": "whole を「プロンプト」にし、部位を「目的／何を作りたいか」「前提／どんな環境で動かすか」「制約／使ってはいけない物・守る形」「例／入力と出力を 1 つ」の 4 つにして、前提を強調する（書かないと勝手に補われる）。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "頼みの文がどの部位でできているかが要点で、部位に分けて描くと欠けた部位を見つけられ図だけで言える。",
+    "benefit": 2
+   },
+   {
+    "point": "任せる範囲は、自分で読んで正しいか判断できる大きさにとどめる。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える目安。",
+    "benefit": 1
+   },
+   {
+    "point": "出てきたコードを使えば責任は使った自分にある。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 199,
+  "term": "AI の出力を確かめる",
+  "points": [
+   {
+    "point": "生成 AI の出力は、動かしてテストを通す・公式の資料に名前があるか当たる・人が読んで意図に合うか見る、の 3 つで、それぞれ別の誤りを見つける。",
+    "content_type": "手順",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "行に 3 つの確かめ方、列に「何をするか」「見つかる誤り（決めた結果にならない／存在しない関数や設定／入力の確かめ漏れなどの脆弱性）」を置く。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "3 つの確かめ方が見つける誤りの違いを並べると、どれか 1 つでは足りない理由が表の中で閉じる。",
+    "benefit": 2
+   },
+   {
+    "point": "ハルシネーションは見た目では正しい答えと区別できない。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 200,
+  "term": "AI に渡してはいけない情報",
+  "points": [
+   {
+    "point": "社外の生成 AI に入れた文は外に送られ保存や学習に使われうるので秘密・個人情報・鍵を入れず、出てきた物は他人の著作物に似ていないか確かめる。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "自分・社外の AI サービス・出てきた物を箱にし、入れる線に「依頼主のコード・個人情報・鍵は入れない（伏せるか会社が認めたサービス）」、サービスの一言に「保存や学習に使われうる」、返る線に「他人の作品に似ていないか確かめる」を書く。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "入れる側と出る側の 2 方向に別の注意がある構図で、線のラベルで運ぶと 2 つの確かめが図だけで言える。",
+    "benefit": 2
+   },
+   {
+    "point": "迷ったら会社の決まりを読み、法務や上司に確かめる。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": "",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ }
+]

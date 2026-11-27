@@ -1,0 +1,96 @@
+{
+  "topic_id": 35,
+  "term": "RAID1",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### ミラーリングのしくみ",
+      "caption": "上の 3 本が書き込みで、1 回の要求が 2 台へ同じ内容で入ります。下の 2 本が読み出しで、どちらか 1 台から読めば足ります。",
+      "actors": [
+        {
+          "id": "os",
+          "label": "OS・アプリ",
+          "icon": "device"
+        },
+        {
+          "id": "ctl",
+          "label": "RAID 制御",
+          "icon": "gear"
+        },
+        {
+          "id": "d1",
+          "label": "ディスク 1",
+          "icon": "database"
+        },
+        {
+          "id": "d2",
+          "label": "ディスク 2",
+          "icon": "database"
+        }
+      ],
+      "steps": [
+        {
+          "from": "os",
+          "to": "ctl",
+          "label": "書き込み要求（1 回）"
+        },
+        {
+          "from": "ctl",
+          "to": "d1",
+          "label": "同じ内容を書く"
+        },
+        {
+          "from": "ctl",
+          "to": "d2",
+          "label": "同じ内容を書く",
+          "note": "2 台が常に同じ内容になる"
+        },
+        {
+          "from": "os",
+          "to": "ctl",
+          "label": "読み出し要求"
+        },
+        {
+          "from": "ctl",
+          "to": "d1",
+          "label": "どちらか 1 台から読む",
+          "note": "ディスク 2 から読んでもよい"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### ミラーリングのしくみ",
+      "caption": "1 台が壊れてから二重化へ戻るまでの順です。強調した段でも残った 1 台で読み書きを続けるので、業務は止まりません。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "二重化\n2 台に同じ内容",
+          "next_label": "1 台が故障"
+        },
+        {
+          "label": "片方で運用\n残った 1 台で読み書き",
+          "icon": "warning",
+          "emphasis": true,
+          "next_label": "交換用のディスク"
+        },
+        {
+          "label": "交換\n故障した台を新品に",
+          "icon": "box",
+          "next_label": "空のディスク"
+        },
+        {
+          "label": "複製\n残った側から丸ごと写す",
+          "icon": "arrow-cycle",
+          "next_label": "写し終わる"
+        },
+        {
+          "label": "二重化に戻る\n再び 2 台に同じ内容",
+          "icon": "check"
+        }
+      ]
+    }
+  ]
+}

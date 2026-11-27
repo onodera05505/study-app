@@ -1,0 +1,40 @@
+{
+  "topic_id": 25,
+  "term": "Ajax",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### なぜ画面が切り替わらないのか",
+      "caption": "要求は裏側で出るので、応答を待つ間も利用者は操作を続けられます。返ってきたデータで、画面の一部だけが書き換わります。",
+      "actors": [
+        {"id": "u", "label": "利用者", "icon": "person"},
+        {"id": "b", "label": "ブラウザ（JavaScript）", "icon": "device"},
+        {"id": "s", "label": "サーバ", "icon": "server"}
+      ],
+      "steps": [
+        {"from": "u", "to": "b", "label": "入力欄に文字を打つ"},
+        {"from": "b", "to": "s", "label": "裏側で要求を出す", "note": "ページの読み直しは起きない"},
+        {"from": "u", "to": "b", "label": "応答を待たずに操作を続ける"},
+        {"from": "s", "to": "b", "label": "表示に要るデータだけを返す（JSON）"},
+        {"from": "b", "to": "b", "label": "DOM の一部だけを書き換える"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "sequence",
+      "after": "### 使うときの注意",
+      "caption": "応答は要求を出した順に届くとは限りません。後から届いた古い応答が、新しい表示を上書きすることがあります。",
+      "actors": [
+        {"id": "b", "label": "ブラウザ", "icon": "device"},
+        {"id": "s", "label": "サーバ", "icon": "server"}
+      ],
+      "steps": [
+        {"from": "b", "to": "s", "label": "要求 1（検索語 a）"},
+        {"from": "b", "to": "s", "label": "要求 2（検索語 ab）を続けて出す"},
+        {"from": "s", "to": "b", "label": "応答 2（ab の候補）が先に届く"},
+        {"from": "s", "to": "b", "label": "応答 1（a の候補）が後から届く", "note": "古い a の候補で ab の候補を上書きする恐れ"}
+      ]
+    }
+  ]
+}

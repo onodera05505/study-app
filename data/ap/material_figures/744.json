@@ -1,0 +1,64 @@
+{
+  "topic_id": 744,
+  "term": "経営戦略との整合性",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 経営戦略から計画へ落とす段",
+      "caption": "経営戦略から目標・投資計画・案件の計画へと順に落とします。案件の見積りが枠に収まらないときは破線で目標へ戻るので、検証は計画を更新するたびに行います。",
+      "nodes": [
+        {
+          "id": "st",
+          "label": "経営戦略\n方向性・数値目標\n財務の見通し",
+          "row": 0,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "goal",
+          "label": "全体最適化目標\nIT 全体で\n何を達成するか",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "inv",
+          "label": "情報化投資計画\nいつ・どの案件に\nいくら投じるか",
+          "row": 0,
+          "col": 2,
+          "icon": "money"
+        },
+        {
+          "id": "case",
+          "label": "個別の案件の計画\n範囲・体制・進め方",
+          "row": 1,
+          "col": 2,
+          "icon": "document"
+        }
+      ],
+      "edges": [
+        {
+          "from": "st",
+          "to": "goal",
+          "label": "目標を引き出す"
+        },
+        {
+          "from": "goal",
+          "to": "inv",
+          "label": "実現する案件を並べる"
+        },
+        {
+          "from": "inv",
+          "to": "case",
+          "label": "投資の枠"
+        },
+        {
+          "from": "case",
+          "to": "goal",
+          "label": "枠に収まらなければ見直す",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,8 @@
 import { sql } from 'drizzle-orm'
+import { roundScopeNameOf, type RoadmapSpec } from '../../shared/exam'
 import type { Db } from './db'
+import { allTopicRounds, orderedRounds } from './rounds'
+import { countedAnswers, joinStatus, latestFirst } from './understanding'
 
 export type QuestionRow = {
   id: string
@@ -26,19 +29,26 @@ export type QuestionRow = {
 
 /** 本番の分野別出題数は試験ごとに違う。src/shared/exam.ts の fieldRatio を使う。 */
 
-/** 回の新旧。exam ID（2016h28h / 2020r02o / 2025r07a）を古い→新しいの順で比べる。
- *
- *  先頭4桁が西暦、末尾1文字が実施時期（h=春 < o=10月 < a=秋）。IT パスポートは
- *  通年 CBT なので末尾が無い回がある（2024r06）ので、その場合は年内で最後に置く。
+/** 回の実施時期の順位。exam ID の末尾の季節の記号 → 同じ年度の中での古い→新しいの順位。
+ *  h=春期 < tokubetsu=特別（夏） < o=10 月 < a=秋期。末尾に季節の記号が無い回
+ *  （IT パスポートの通年 CBT。例 2024r06）は SEASON_RANK_YEAR_ROUND で年度内の最後に置く。 */
+// @implements BR-038
+export const SEASON_RANK: Readonly<Record<string, number>> = { h: 0, tokubetsu: 1, o: 2, a: 3 }
+const SEASON_RANK_YEAR_ROUND = 4
+const SEASON_SUFFIX = new RegExp(`(${Object.keys(SEASON_RANK).join('|')})$`)
+
+/** 回の新旧。exam ID（2016h28h / 2011h23tokubetsu / 2020r02o / 2025r07a / 2024r06）を
+ *  古い→新しいの順で比べる。先頭4桁が西暦、末尾が季節の記号（SEASON_RANK）。
  *
  *  **文字列の大小では比べられない。** 2016h28a（秋）と 2016h28h（春）は
  *  辞書順だと a < h で秋のほうが古いことになってしまう。 */
-const SEASON_RANK: Record<string, number> = { h: 0, o: 1, a: 2 }
-
+// @implements BR-038
 export function compareExam(a: string, b: string): number {
   const year = (x: string) => Number(x.slice(0, 4)) || 0
-  // 末尾が h/o/a ならその時期。無ければ通年（年内で最後）。
-  const season = (x: string) => SEASON_RANK[x.slice(-1)] ?? 3
+  const season = (x: string) => {
+    const m = SEASON_SUFFIX.exec(x)
+    return m ? SEASON_RANK[m[1]] : SEASON_RANK_YEAR_ROUND
+  }
   return year(a) - year(b) || season(a) - season(b)
 }
 
@@ -56,6 +66,7 @@ type Dedupable = { id: string; exam: string; contentKey: string | null; citation
  *
  *  グループの並びは元の並びのまま（最初に現れた位置に代表を置く）。呼び出し側が
  *  付けた順序（新しい回が先、など）を壊さないため。 */
+// @implements REQ-053, BR-028
 export function dedupe<T extends Dedupable>(
   rows: T[],
 ): (T & { timesAsked: number; otherCitations: string[] })[] {
@@ -85,9 +96,9 @@ export function dedupe<T extends Dedupable>(
 
 /** 定着した問題を除く。直近 streak 回の解答がすべて正解なら、当面は出題しない。
  *
- *  前身アプリ では「直近3セッション」を基準にしていたが、セッション単位だと
- *  1セッションに同じ問題が出ない前提に依存する。ここでは**その問題に対する
- *  直近 streak 回の解答**を見る形にした。ドリルと模試が混在しても筋が通る。
+ *  見るのはセッションではなく**その問題に対する直近 streak 回の解答**。
+ *  セッション単位の基準は 1 セッションに同じ問題が出ない前提に依存するので、
+ *  ドリルと模試が混在する場では筋が通らない。
  *
  *  数える単位は問題 ID ではなく content_key（無ければ ID）。同一内容の問題は
  *  学習側では1問として出しているので、別の回で解いて定着していれば代表も
@@ -150,6 +161,8 @@ export type BuildInput = {
   masteredStreak: number
   /** ランダム構成の模試で寄せる分野別出題数。試験ごとに違う（src/shared/exam.ts） */
   fieldRatio: Record<string, number>
+  /** ロードマップ型の学びのときだけ渡す。exam はその学びの回の ID として読む */
+  roadmap?: { key: string; spec: RoadmapSpec | undefined }
 }
 
 export type BuildResult = {
@@ -158,7 +171,37 @@ export type BuildResult = {
   sourceExam: string | null
 }
 
+/** ロードマップ型の回ごとの確認。範囲はその回に属する単位の確認問題だけで、日でも章でも同じ決め方。
+ *  範囲の名前は回の語で作る。 */
+// @implements REQ-281, REQ-286
+async function buildRoundCheck(
+  db: Db,
+  round: string,
+  roadmap: { key: string; spec: RoadmapSpec | undefined },
+): Promise<BuildResult> {
+  const topics = await allTopicRounds(db)
+  const ids = topics.filter((t) => t.round === round).map((t) => t.id)
+  // 単位の数が多い回でもバインド変数の上限に当たらないよう、ID の列は JSON 1 つで渡す
+  const rows = ids.length
+    ? await fetchQuestions(db, sql`WHERE tq.topic_id IN (SELECT value FROM json_each(${JSON.stringify(ids)}))`)
+    : []
+  const byId = new Map<string, QuestionRow>()
+  for (const r of rows) byId.set(r.id, r)
+  const ordered = [...byId.values()].sort((a, b) => (a.exam < b.exam ? -1 : a.exam > b.exam ? 1 : 0) || a.number - b.number)
+  const at = orderedRounds(topics, roadmap.spec).get(round)
+  return {
+    questions: ordered,
+    scopeLabel: roundScopeNameOf(roadmap.spec, {
+      extra: round === roadmap.spec?.extraRoundId,
+      day: at?.day ?? 0,
+      label: at?.label ?? null,
+    }),
+    sourceExam: round,
+  }
+}
+
 /** セッションの出題内容を組み立てる。 */
+// @implements REQ-051, REQ-052, BR-019
 export async function buildQuestions(
   db: Db,
   userId: string,
@@ -171,7 +214,9 @@ export async function buildQuestions(
     return kept.length > 0 ? kept : rows
   }
 
+  // @implements REQ-106, REQ-107, REQ-108, REQ-345
   if (input.kind === 'mock') {
+    if (input.exam && input.roadmap) return buildRoundCheck(db, input.exam, input.roadmap)
     if (input.exam) {
       // 公開回をそのまま1セットとして解く。本番の追体験。順序も原文どおり。
       // **ここでは同一内容をまとめない。** 原本に2度出ているものは2度出す。
@@ -186,17 +231,20 @@ export async function buildQuestions(
       }
     }
     // ランダム構成。分野比率を本番の目安に寄せる。
+    // 定着済みは**範囲（全範囲）から先に**外す。分野ごとに外すと、埋める側の経路や
+    // 分野の一つが全部定着済みのときに定着済みが混ざる。
     const pool = dedupe(await fetchQuestions(db, sql``))
+    const avail = drop(pool)
     const picked: QuestionRow[] = []
     for (const [field, count] of Object.entries(input.fieldRatio)) {
-      const inField = shuffle(drop(pool.filter((q) => q.field === field)))
+      const inField = shuffle(avail.filter((q) => q.field === field))
       picked.push(...inField.slice(0, count))
     }
     // 分野が付いていない問題（論点未紐付け）で不足分を埋める
     if (picked.length < input.size) {
       const chosen = new Set(picked.map((q) => q.id))
       picked.push(
-        ...shuffle(pool.filter((q) => !chosen.has(q.id))).slice(0, input.size - picked.length),
+        ...shuffle(avail.filter((q) => !chosen.has(q.id))).slice(0, input.size - picked.length),
       )
     }
     return {
@@ -212,13 +260,13 @@ export async function buildQuestions(
       sql`SELECT term FROM topics WHERE id = ${input.topicId}`,
     )
     return {
-      questions: shuffle(dedupe(rows)).slice(0, input.size),
+      questions: shuffle(drop(dedupe(rows))).slice(0, input.size),
       scopeLabel: `論点「${term?.term ?? ''}」`,
       sourceExam: null,
     }
   }
 
-  // 中分類は「体系」画面の箱と対応する。読む（論点）と解く（演習）を
+  // 単元は学習の画面の単元の一覧と対応する。読む（論点）と解く（演習）を
   // 同じまとまりの中で完結させるための範囲。
   if (input.kind === 'middle' && input.middleNo !== undefined) {
     const rows = await fetchQuestions(db, sql`WHERE s.middle_no = ${input.middleNo}`)
@@ -227,7 +275,7 @@ export async function buildQuestions(
     )
     return {
       questions: shuffle(drop(dedupe(rows))).slice(0, input.size),
-      scopeLabel: `中分類「${middle?.middle ?? ''}」`,
+      scopeLabel: `単元「${middle?.middle ?? ''}」`,
       sourceExam: null,
     }
   }
@@ -241,11 +289,18 @@ export async function buildQuestions(
     }
   }
 
-  // review: 過去に間違えた問題を優先。直近の誤答から。
-  // 同一内容は content_key でまとめる。代表は**直近に間違えた回**（最新の回ではない）。
-  // 復習で見たいのは「自分がつまずいた現物」なので、そのときの回のまま出す。
-  // GROUP BY と MAX() を組むと、SQLite は MAX に一致する行の値を返す。
-  const rows = await db.all<QuestionRow>(sql`
+  // review: 間違えた過去問を先に、最後に間違えた順で。そのあと理解度の低い論点の過去問で詰める。
+  // 回答とその時刻と前後は理解度の判定と同じ数える回答と順序（lib/understanding の countedAnswers・latestFirst）から読む。
+  // 同一内容は content_key でまとめ、代表は最後に間違えた回（復習で見たいのは自分がつまずいた現物）。
+  // @implements REQ-054
+  const wrong = await db.all<QuestionRow>(sql`
+    WITH ans AS (${countedAnswers(userId)}),
+    w AS (
+      SELECT a.question_id AS question_id, a.at AS at, a.session_id AS session_id, a.idx AS idx,
+             ROW_NUMBER() OVER (PARTITION BY a.qkey ORDER BY ${latestFirst('a')}) AS rn
+        FROM ans a
+       WHERE a.result = 2
+    )
     SELECT q.id AS id, q.text AS text, q.choices AS choices, q.answer AS answer,
            q.has_figure AS hasFigure, q.figure_description AS figureDescription,
            q.figure_image AS figureImage,
@@ -253,17 +308,42 @@ export async function buildQuestions(
            q.exam_label AS examLabel, q.number AS number,
            q.content_key AS contentKey, q.exam AS exam,
            NULL AS field,
-           MAX(sq.answered_at) AS lastAnsweredAt
-      FROM session_questions sq
-      JOIN sessions s ON s.id = sq.session_id
-      JOIN past_questions q ON q.id = sq.question_id
-     WHERE s.user_id = ${userId} AND sq.result = 2
-     GROUP BY COALESCE(q.content_key, q.id)
-     ORDER BY MAX(sq.answered_at) DESC
+           w.at AS lastAnsweredAt
+      FROM w
+      JOIN past_questions q ON q.id = w.question_id
+     WHERE w.rn = 1
+     ORDER BY ${latestFirst('w')}
      LIMIT ${input.size}
   `)
+
+  // 誤答だけでは弱点を覆えない（まだ解いていない論点は誤答に現れない）ので、
+  // 理解度が未理解・やや理解の論点に紐づく過去問も足す。理解度は lib/understanding が求め、
+  // 資格対策の未とロードマップ型の記録の無い論点は理解度の表に行を持たないので入らない。
+  // 出題頻度の高い論点から並べる（頻出論点から潰すのが最短経路）。
+  // @implements REQ-054, BR-049, BR-050
+  const weakRows = await db.all<QuestionRow>(sql`
+    SELECT q.id AS id, q.text AS text, q.choices AS choices, q.answer AS answer,
+           q.has_figure AS hasFigure, q.figure_description AS figureDescription,
+           q.figure_image AS figureImage,
+           q.citation AS citation, q.modified AS modified,
+           q.exam_label AS examLabel, q.number AS number,
+           q.content_key AS contentKey, q.exam AS exam,
+           si.field AS field
+      FROM topics t
+      ${joinStatus(userId, !!input.roadmap)}
+      JOIN topic_questions tq ON tq.topic_id = t.id
+      JOIN past_questions q ON q.id = tq.question_id
+      LEFT JOIN syllabus_items si ON si.id = t.syllabus_item_id
+     WHERE ts.status IN (1, 2)
+     ORDER BY t.question_count DESC, t.id
+     LIMIT ${input.size * 5}
+  `)
+  // 誤答で既に入っている問題は同一内容ごと省く。誤答が先、理解度の低い論点が後。
+  const already = new Set(wrong.map((r) => r.contentKey ?? r.id))
+  const weak = dedupe(weakRows).filter((r) => !already.has(r.contentKey ?? r.id))
+  const picked = drop([...wrong, ...weak]).slice(0, input.size)
   return {
-    questions: await annotateTimesAsked(db, rows),
+    questions: await annotateTimesAsked(db, picked),
     scopeLabel: '間違えた問題の復習',
     sourceExam: null,
   }
@@ -273,6 +353,7 @@ export async function buildQuestions(
  *
  *  復習は「間違えた問題」しか集めないので、その中で数えると回数が過少になる
  *  （2回出題されていても、間違えたのが1回なら1と出てしまう）。過去問全体から数え直す。 */
+// @implements REQ-053
 async function annotateTimesAsked(db: Db, rows: QuestionRow[]): Promise<QuestionRow[]> {
   const keys = rows.map((r) => r.contentKey).filter((k): k is string => !!k)
   if (keys.length === 0) return rows.map((r) => ({ ...r, timesAsked: 1, otherCitations: [] }))
@@ -299,6 +380,7 @@ async function annotateTimesAsked(db: Db, rows: QuestionRow[]): Promise<Question
 }
 
 /** 出題時スナップショット。教材を後から直しても当時の内容で採点・表示するため。 */
+// @implements REQ-058
 export function snapshotOf(q: QuestionRow) {
   return {
     text: q.text,

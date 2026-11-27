@@ -4,25 +4,74 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "cycle",
+      "after": "explanation",
+      "caption": "ジョブが生起されてから終わるまでの輪で、真上から時計回りに読みます。生起は待ち行列に並ぶことで、実行が始まるのは多重度の枠が空いてからです。",
+      "center": "ジョブ\nスケジューラー",
+      "stages": [
+        {
+          "label": "後続ジョブの生起\n先行がすべて終わると",
+          "icon": "gear",
+          "next_label": "待ち行列に追加するだけ"
+        },
+        {
+          "label": "実行待ち行列\n生起した順に並ぶ",
+          "icon": "people",
+          "next_label": "枠が空いた順に先頭から投入",
+          "emphasis": true
+        },
+        {
+          "label": "実行中の枠\n多重度 2 なら同時に 2 つまで",
+          "icon": "server",
+          "next_label": "処理が終わる"
+        },
+        {
+          "label": "ジョブの終了\n枠が 1 つ空く",
+          "icon": "check",
+          "next_label": "終了を後続に伝える"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "timeline",
       "after": "### 計算の解き方",
-      "caption": "多重度 2 で回を追うと、3 回目に B・C の一時ファイルが残ったまま D・E が始まり同時に 4 個。50M ×4 ＝ 200M バイト。",
-      "nodes": [
-        {"id": "a", "label": "A\n1 回目", "row": 1, "col": 0, "shape": "round"},
-        {"id": "b", "label": "B\n2 回目", "row": 0, "col": 1, "shape": "round"},
-        {"id": "c", "label": "C\n2 回目", "row": 2, "col": 1, "shape": "round"},
-        {"id": "d", "label": "D\n3 回目", "row": 0, "col": 2, "shape": "round", "emphasis": true},
-        {"id": "e", "label": "E\n3 回目", "row": 2, "col": 2, "shape": "round", "emphasis": true},
-        {"id": "f", "label": "F\n4 回目", "row": 1, "col": 3, "shape": "round"}
-      ],
-      "edges": [
-        {"from": "a", "to": "b"},
-        {"from": "a", "to": "c"},
-        {"from": "b", "to": "d"},
-        {"from": "b", "to": "e"},
-        {"from": "c", "to": "e"},
-        {"from": "d", "to": "f"},
-        {"from": "e", "to": "f"}
+      "caption": "P→Q と進み、Q の後に R と S が同じ回で動く例です。帯は一時ファイルが作られてから消えるまでの期間で、最も多く重なる回の数に 1 個の容量を掛けます。",
+      "axis": {
+        "label": "多重度 2 で進む回（例）",
+        "ticks": [
+          "開始",
+          "回 1 の終わり",
+          "回 2 の終わり",
+          "回 3 の終わり"
+        ]
+      },
+      "events": [
+        {
+          "from": 0,
+          "to": 2,
+          "label": "P の一時ファイル\n回 2 で Q が読み、Q の終了で消える"
+        },
+        {
+          "from": 1,
+          "to": 3,
+          "label": "Q の一時ファイル\n回 3 で先に生起した R が読む"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "label": "R の一時ファイル\n回 3 の開始時に作る"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "label": "S の一時ファイル\n回 3 の開始時に作る"
+        },
+        {
+          "at": 2.5,
+          "label": "回 3 が最も多い\n3 個が同時に残る",
+          "emphasis": true
+        }
       ]
     }
   ]

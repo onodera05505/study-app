@@ -6,59 +6,142 @@
       "id": 1,
       "type": "blocks",
       "after": "### 誤り位置が分かるしくみ",
-      "caption": "検査式を 1・2・4 の重みで足した値がそのまま誤りビットの位置になる（すべて 0 なら誤り無し）。",
+      "caption": "どの検査式が 1 になったかを重み付きで足すと、その値が誤ったビットの位置になります。",
       "nodes": [
         {
           "id": "c0",
-          "label": "c0 ＝ x1+x3+x5+x7\n（mod 2）",
+          "label": "検査式 c0\n崩れたら 1",
           "row": 0,
           "col": 0
         },
         {
           "id": "c1",
-          "label": "c1 ＝ x2+x3+x6+x7\n（mod 2）",
+          "label": "検査式 c1\n崩れたら 1",
           "row": 0,
           "col": 1
         },
         {
           "id": "c2",
-          "label": "c2 ＝ x4+x5+x6+x7\n（mod 2）",
+          "label": "検査式 c2\n崩れたら 1",
           "row": 0,
           "col": 2
         },
         {
           "id": "pos",
-          "label": "誤り位置 i\n＝ c0＋2c1＋4c2",
+          "label": "誤り位置 i\n＝ 1 になった式の重みの和",
           "row": 1,
           "col": 1
         },
         {
           "id": "fix",
-          "label": "左から i 番目のビットを反転\n＝ 訂正完了",
+          "label": "その位置のビットを反転\n＝ 訂正完了",
           "row": 2,
           "col": 1,
           "emphasis": true
+        },
+        {
+          "id": "ok",
+          "label": "誤りなし\nそのまま使う",
+          "row": 2,
+          "col": 2
         }
       ],
       "edges": [
         {
           "from": "c0",
           "to": "pos",
-          "label": "1 の位"
+          "label": "重み 1"
         },
         {
           "from": "c1",
           "to": "pos",
-          "label": "2 の位"
+          "label": "重み 2"
         },
         {
           "from": "c2",
           "to": "pos",
-          "label": "4 の位"
+          "label": "重み 4"
         },
         {
           "from": "pos",
-          "to": "fix"
+          "to": "fix",
+          "label": "i が 0 でない"
+        },
+        {
+          "from": "pos",
+          "to": "ok",
+          "label": "i が 0（全部 0）"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "venn",
+      "after": "### 検査式が連立の形で与えられたとき",
+      "layout": "overlap",
+      "caption": "円は各検査式に現れるビットの範囲です。崩れた式の円すべての内側で、崩れていない式の円の外にある領域のビットが誤りです。",
+      "sets": [
+        {
+          "id": "A",
+          "label": "検査式 A に現れる"
+        },
+        {
+          "id": "B",
+          "label": "検査式 B に現れる"
+        },
+        {
+          "id": "C",
+          "label": "検査式 C に現れる"
+        }
+      ],
+      "regions": [
+        {
+          "in": [
+            "A"
+          ],
+          "label": "p1\nA だけ崩れる"
+        },
+        {
+          "in": [
+            "B"
+          ],
+          "label": "p2\nB だけ崩れる"
+        },
+        {
+          "in": [
+            "C"
+          ],
+          "label": "p3\nC だけ崩れる"
+        },
+        {
+          "in": [
+            "A",
+            "B"
+          ],
+          "label": "d1\nA と B が崩れる"
+        },
+        {
+          "in": [
+            "A",
+            "C"
+          ],
+          "label": "d2\nA と C が崩れる"
+        },
+        {
+          "in": [
+            "B",
+            "C"
+          ],
+          "label": "d3\nB と C が崩れる",
+          "emphasis": true
+        },
+        {
+          "in": [
+            "A",
+            "B",
+            "C"
+          ],
+          "label": "d4\n3 式とも崩れる"
         }
       ]
     }

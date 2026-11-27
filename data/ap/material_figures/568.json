@@ -5,17 +5,48 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 列や行を絞りたいときはビューと組み合わせる",
-      "caption": "GRANT は表の単位でしか効かないので、見せる範囲を絞りたいときはビューを作ってそのビューに権限を与える。",
+      "after": "### 行や列を絞るにはビューに権限を与える",
+      "caption": "利用者には実表ではなくビューに権限を与えます。ビューが取り出す行と列だけが、利用者に見える範囲になります。",
       "nodes": [
-        {"id": "u", "label": "利用者", "row": 0, "col": 0},
-        {"id": "v", "label": "ビュー\n必要な行と列だけ", "row": 0, "col": 1, "emphasis": true},
-        {"id": "t", "label": "社員表（実表）", "row": 0, "col": 2, "shape": "cylinder"}
+        {
+          "id": "u",
+          "label": "利用者\nビューの権限だけを持つ",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "v",
+          "label": "ビュー\n必要な行と列だけを定義",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "t",
+          "label": "社員表（実表）\n利用者には権限を与えない",
+          "row": 0,
+          "col": 2,
+          "shape": "cylinder"
+        }
       ],
       "edges": [
-        {"from": "u", "to": "v", "label": "GRANT で操作を許可"},
-        {"from": "v", "to": "t", "label": "定義した範囲だけ参照"},
-        {"from": "u", "to": "t", "label": "実表への権限は与えない", "style": "dashed", "arrow": "none"}
+        {
+          "from": "u",
+          "to": "v",
+          "label": "GRANT SELECT で許可"
+        },
+        {
+          "from": "v",
+          "to": "t",
+          "label": "定義した範囲だけ取り出す"
+        },
+        {
+          "from": "u",
+          "to": "t",
+          "label": "権限が無く直接は読めない",
+          "style": "dashed",
+          "arrow": "none"
+        }
       ]
     }
   ]

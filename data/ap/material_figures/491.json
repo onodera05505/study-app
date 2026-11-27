@@ -4,19 +4,31 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "steps",
       "after": "### リスクマネジメントの流れの中での位置",
-      "caption": "数量的に分析するのは③だけ。優先順位付けは②、洗い出しは①、対応処置の合意は④。",
-      "nodes": [
-        {"id": "s1", "label": "① 特定\n要因を洗い出す", "row": 0, "col": 0},
-        {"id": "s2", "label": "② 定性的分析\n優先順位を付ける", "row": 0, "col": 1},
-        {"id": "s3", "label": "③ 定量的分析\n数量的に分析する", "row": 0, "col": 2, "emphasis": true},
-        {"id": "s4", "label": "④ 対応\n処置を合意する", "row": 0, "col": 3}
-      ],
-      "edges": [
-        {"from": "s1", "to": "s2"},
-        {"from": "s2", "to": "s3"},
-        {"from": "s3", "to": "s4"}
+      "caption": "リスクマネジメントは上から順に 4 つの段を進み、矢印の上は次の段へ渡す物です。強調した段が、この論点の技法を使う所です。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "① リスクの特定\n起こり得る事象を\n一覧にする",
+          "icon": "search",
+          "next_label": "洗い出したリスクの一覧"
+        },
+        {
+          "label": "② 定性的分析\nどれから手を付けるか\n順番を決める",
+          "icon": "document",
+          "next_label": "上位に絞ったリスク"
+        },
+        {
+          "label": "③ 定量的分析\n全部合わせた危なさを\n金額や日数で出す",
+          "icon": "chart",
+          "next_label": "工期・費用の確率分布",
+          "emphasis": true
+        },
+        {
+          "label": "④ 対応の計画\nリスクごとに\n打つ手を選ぶ",
+          "icon": "gear"
+        }
       ]
     }
   ]

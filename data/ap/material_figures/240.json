@@ -3,22 +3,84 @@
   "term": "クラッシング",
   "figures": [
     {
-      "id": 1,
+      "id": 2,
       "type": "blocks",
-      "after": "### 混同しやすい技法",
-      "caption": "資源を追加して作業自体を速くするのがクラッシング、順番の作業を重ねるのがファストトラッキング。",
+      "after": "### なぜクリティカルパスに投入するのか",
+      "caption": "開始から終了まで長さの違う 2 本の経路があります。資源を足して縮める効き目があるのは強調した経路の作業だけです。",
       "nodes": [
-        {"id": "base", "label": "作業 A → B → C\nクリティカルパス 計 10 日", "row": 0, "col": 1},
-        {"id": "cr", "label": "クラッシング\nB に要員を追加\n5 日 → 3 日", "row": 1, "col": 0, "emphasis": true},
-        {"id": "ft", "label": "ファストトラッキング\nB と C を並行実施", "row": 1, "col": 2},
-        {"id": "cro", "label": "計 8 日\nコストが増える", "row": 2, "col": 0},
-        {"id": "fto", "label": "計 7 日\n手戻りリスク", "row": 2, "col": 2}
+        {
+          "id": "s",
+          "label": "開始\n2 本の経路に分かれる",
+          "row": 1,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "a",
+          "label": "作業 A（6 日）\nクリティカルパス上",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "b",
+          "label": "作業 B（4 日）\nクリティカルパス上",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "c",
+          "label": "作業 C（3 日）\n余裕が 4 日ある",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "d",
+          "label": "作業 D（3 日）\n余裕が 4 日ある",
+          "row": 2,
+          "col": 2
+        },
+        {
+          "id": "e",
+          "label": "終了\n全体は 10 日",
+          "row": 1,
+          "col": 3,
+          "shape": "round"
+        }
       ],
       "edges": [
-        {"from": "base", "to": "cr", "label": "資源を追加"},
-        {"from": "base", "to": "ft", "label": "並行化"},
-        {"from": "cr", "to": "cro"},
-        {"from": "ft", "to": "fto"}
+        {
+          "from": "s",
+          "to": "a",
+          "label": "長い経路 10 日"
+        },
+        {
+          "from": "a",
+          "to": "b",
+          "label": "資源を足すと全体も縮む"
+        },
+        {
+          "from": "b",
+          "to": "e",
+          "label": "縮めた分だけ早く終わる"
+        },
+        {
+          "from": "s",
+          "to": "c",
+          "label": "短い経路 6 日"
+        },
+        {
+          "from": "c",
+          "to": "d",
+          "label": "資源を足しても全体は 10 日",
+          "style": "dashed"
+        },
+        {
+          "from": "d",
+          "to": "e",
+          "label": "余裕を残して合流"
+        }
       ]
     }
   ]

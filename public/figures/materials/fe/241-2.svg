@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="338" viewBox="0 0 640 338">
+<rect x="0.5" y="0.5" width="639" height="337" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(170.6 20)">
+<g transform="translate(37 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.2"/><path d="M12 16 V20 M8.5 20 H15.5"/></g>
+<g transform="translate(232.8 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3.5" width="16" height="7" rx="1.2"/><rect x="4" y="13.5" width="16" height="7" rx="1.2"/><circle cx="7.5" cy="7" r="0.9" fill="#1f2937" stroke="none"/><circle cx="7.5" cy="17" r="0.9" fill="#1f2937" stroke="none"/><path d="M11 7 H17 M11 17 H17"/></g>
+<g transform="translate(0 28)">
+<line x1="48" y1="34" x2="48" y2="270" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="243.8" y1="34" x2="243.8" y2="270" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">調べる側</text>
+<rect x="188.8" y="0" width="110" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="243.8" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">対象のサーバ</text>
+<polyline points="51,68 240.8,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="240.8,68 232.8,71.6 232.8,64.4" fill="#1f2937"/>
+<text x="145.9" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 21 番へ接続を試す</text>
+<polyline points="240.8,108 51,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,108 59,104.4 59,111.6" fill="#1f2937"/>
+<text x="145.9" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 接続を断る（閉じている）</text>
+<polyline points="51,148 240.8,148" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="240.8,148 232.8,151.6 232.8,144.4" fill="#1f2937"/>
+<text x="145.9" y="141" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 22 番へ接続を試す</text>
+<polyline points="240.8,188 51,188" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,188 59,184.4 59,191.6" fill="#1f2937"/>
+<text x="145.9" y="181" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 接続に応じる（開いている）</text>
+<polyline points="48,220 74,220 74,234 50,234" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="50,234 58,230.4 58,237.6" fill="#1f2937"/>
+<text x="82" y="228" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">5. 22 番＝SSH が動いていると推測</text>
+<rect x="-76" y="239" width="248" height="16" rx="3" fill="#ffffff"/>
+<text x="48" y="252.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">版まで分かれば既知の脆弱性を探しに行ける</text>
+</g>
+</g>
+</svg>

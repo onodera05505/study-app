@@ -1,0 +1,39 @@
+{
+  "topic_id": 402,
+  "term": "コンプライアンス",
+  "figures": [
+    {
+      "id": 1,
+      "type": "venn",
+      "after": "explanation",
+      "caption": "法律は守る対象の一部で、その外側に法律ではない決まりや規範が広がっていると読みます。",
+      "layout": "nested",
+      "sets": [
+        {
+          "id": "a",
+          "label": "コンプライアンスで守る対象"
+        },
+        {
+          "id": "b",
+          "label": "法律"
+        }
+      ],
+      "regions": [
+        {
+          "in": [
+            "a"
+          ],
+          "label": "法律の外の決まり\n社内の規則\n社会の規範・倫理",
+          "emphasis": true
+        },
+        {
+          "in": [
+            "a",
+            "b"
+          ],
+          "label": "法律\n国が定めた決まり"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,315 @@
+{
+  "bundle": "bundle_08",
+  "topics": [
+    {
+      "topic_id": 57,
+      "term": "部品の分け方の良し悪し（モジュールの結合度と凝集度）",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "処理を部品に分ける",
+      "summary": "部品どうしの依存は少なく、1 つの部品の中身はまとまっているほど直しやすい。その度合いの見方",
+      "goals": [
+        3,
+        7
+      ],
+      "prereq": [
+        "関数",
+        "例外処理"
+      ],
+      "sources": [
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "アルゴリズムとプログラミング"
+        },
+        {
+          "name": "カリキュラム標準 J17-SE（ソフトウェアエンジニアリング領域）",
+          "where": "DES > 設計に用いられる概念"
+        },
+        {
+          "name": "カリキュラム標準 J17-SE（ソフトウェアエンジニアリング領域）",
+          "where": "知識項目 > DES ソフトウェア設計"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "モジュール結合度"
+        }
+      ],
+      "source_count": 2,
+      "exam_weight": 1.1
+    },
+    {
+      "topic_id": 58,
+      "term": "配列とリスト",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "データのまとまりを持つ形",
+      "summary": "同じ種類の値を順に並べ、番号（添え字）で取り出す入れ物。多くのデータ構造の土台",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "変数と代入",
+        "繰り返し"
+      ],
+      "sources": [
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "アルゴリズムとプログラミング > データ構造"
+        },
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "アルゴリズムとプログラミング > データ構造"
+        },
+        {
+          "name": "CS50x 2026 コンピュータサイエンス入門（CS50's Introduction to Computer Science）週ごとの講義一覧",
+          "where": "第2週 配列（Arrays）"
+        },
+        {
+          "name": "6.100L コンピュータサイエンスとプログラミング入門（Introduction to CS and Programming Using Python, Fall 2022）講義一覧",
+          "where": "第9回 ラムダ式・タプル・リスト（Lambda Functions, Tupl…"
+        },
+        {
+          "name": "カリキュラム標準 J17-SE（ソフトウェアエンジニアリング領域）",
+          "where": "情報科学基礎科目 > プログラミング基礎"
+        },
+        {
+          "name": "選考解説記事の集計",
+          "where": "配列と連結リストの違い"
+        }
+      ],
+      "source_count": 5,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 59,
+      "term": "スタックとキュー",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "データのまとまりを持つ形",
+      "summary": "積み重ねて上から取るのがスタック、並んだ順に取り出すのがキュー。処理の順番を管理する基本の形",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "配列とリスト"
+      ],
+      "sources": [
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "アルゴリズムとプログラミング > データ構造"
+        },
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "アルゴリズムとプログラミング > データ構造"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "SDF > 基本データ構造（Tier1 12h）"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第14回 データ構造（Data Structures）"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "スタック（LIFO）"
+        },
+        {
+          "name": "選考解説記事の集計",
+          "where": "スタックとキュー"
+        }
+      ],
+      "source_count": 4,
+      "exam_weight": 1.21
+    },
+    {
+      "topic_id": 60,
+      "term": "辞書とハッシュ表",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "データのまとまりを持つ形",
+      "summary": "名前（キー）と値を組で持ち、キーから値をすぐ引ける入れ物。中ではキーを計算で番地に変えている",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "配列とリスト"
+      ],
+      "sources": [
+        {
+          "name": "6.100L コンピュータサイエンスとプログラミング入門（Introduction to CS and Programming Using Python, Fall 2022）講義一覧",
+          "where": "第14回 辞書（Dictionaries）"
+        },
+        {
+          "name": "6.100L コンピュータサイエンスとプログラミング入門（Introduction to CS and Programming Using Python, Fall 2022）講義一覧",
+          "where": "第26回 リストの参照・ハッシュ・シミュレーション（List Access, …"
+        },
+        {
+          "name": "CS50x 2026 コンピュータサイエンス入門（CS50's Introduction to Computer Science）週ごとの講義一覧",
+          "where": "第5週 データ構造（Data Structures）"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "SDF > 基本データ構造（Tier1 12h）"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "ハッシュ表探索法"
+        },
+        {
+          "name": "選考解説記事の集計",
+          "where": "ハッシュテーブル"
+        }
+      ],
+      "source_count": 3,
+      "exam_weight": 1.03
+    },
+    {
+      "topic_id": 61,
+      "term": "木構造と二分探索木",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "データのまとまりを持つ形",
+      "summary": "根から枝分かれしてつながる形。左は小さく右は大きく並べた二分探索木なら、探す範囲を半分ずつ絞れる",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "配列とリスト"
+      ],
+      "sources": [
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "アルゴリズムとプログラミング > データ構造"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "AL > 基本的なデータ構造とアルゴリズム（Fundamental Data …"
+        },
+        {
+          "name": "情報科学基礎論（Introduction to Information Science）授業計画と内容（2026 前期）",
+          "where": "アルゴリズムとデータ構造 > さまざまなデータ構造と探索アルゴリズム"
+        },
+        {
+          "name": "選考解説記事の集計",
+          "where": "木構造・二分探索木・グラフ"
+        }
+      ],
+      "source_count": 3,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 62,
+      "term": "連結リスト",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "データのまとまりを持つ形",
+      "summary": "各要素が次の要素の場所を持ってつながる形。途中への追加は速いが、番号で取り出すのは遅い。配列との違い",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "配列とリスト",
+        "アドレス（メモリの番地）と割り当て"
+      ],
+      "sources": [
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "アルゴリズムとプログラミング > データ構造"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "SDF > 基本データ構造（Tier1 12h）"
+        },
+        {
+          "name": "CS50x 2026 コンピュータサイエンス入門（CS50's Introduction to Computer Science）週ごとの講義一覧",
+          "where": "第5週 データ構造（Data Structures）"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "線形リスト"
+        },
+        {
+          "name": "選考解説記事の集計",
+          "where": "配列と連結リストの違い"
+        }
+      ],
+      "source_count": 3,
+      "exam_weight": 0.39
+    },
+    {
+      "topic_id": 63,
+      "term": "グラフと探索の順番",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "データのまとまりを持つ形",
+      "summary": "点と線のつながり（路線図や SNS の友達関係）をグラフと呼ぶ。近い順に広げるか、行けるところまで進むかで探し方が違う",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "木構造と二分探索木",
+        "スタックとキュー"
+      ],
+      "sources": [
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "AL > 基本的なデータ構造とアルゴリズム（Fundamental Data …"
+        },
+        {
+          "name": "情報科学基礎論（Introduction to Information Science）授業計画と内容（2026 前期）",
+          "where": "アルゴリズムとデータ構造 > さまざまなデータ構造と探索アルゴリズム"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "無向グラフ"
+        },
+        {
+          "name": "選考解説記事の集計",
+          "where": "探索（幅優先・深さ優先）・木構造・二分探索木・グラフ"
+        }
+      ],
+      "source_count": 2,
+      "exam_weight": 0.39
+    },
+    {
+      "topic_id": 64,
+      "term": "アルゴリズム",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "探す・並べる・速さを比べる",
+      "summary": "誰がやっても同じ結果になるよう、問題を解く手順を一つずつ決めた物。同じ問題にも速い手順と遅い手順がある",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "繰り返し",
+        "関数"
+      ],
+      "sources": [
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "アルゴリズムとプログラミング"
+        },
+        {
+          "name": "一般情報教育の知識体系 GEBOK2017.1（J17-GE）",
+          "where": "エリア一覧 > GE-ALP アルゴリズムとプログラミング"
+        },
+        {
+          "name": "CS50x 2026 コンピュータサイエンス入門（CS50's Introduction to Computer Science）週ごとの講義一覧",
+          "where": "第3週 アルゴリズム（Algorithms）"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第13回 アルゴリズム入門（Intro to Algorithms）"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "SDF ソフトウェア開発基礎 > アルゴリズムと設計（Tier1 11h）"
+        },
+        {
+          "name": "高等学校学習指導要領（平成30年告示）解説 情報編 — 情報Ⅰの内容",
+          "where": "(3) 知識・技能 > アルゴリズムの表現手段とプログラミングでコンピュータ・…"
+        },
+        {
+          "name": "選考解説記事の集計",
+          "where": "素数判定などの基本アルゴリズムを組む"
+        }
+      ],
+      "source_count": 6,
+      "exam_weight": 0.0
+    }
+  ]
+}

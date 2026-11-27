@@ -4,25 +4,56 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "steps",
       "after": "### 計算の解き方",
-      "caption": "演算子が来たら頂上の2つを下ろし、下にあった方を左辺にして計算する。ABCD－×＋は 16＋8×(4－2)＝32 になる。",
-      "nodes": [
-        {"id": "a0", "label": "2 ← 頂上", "row": 0, "col": 0},
-        {"id": "a1", "label": "4", "row": 1, "col": 0},
-        {"id": "a2", "label": "8", "row": 2, "col": 0},
-        {"id": "a3", "label": "16", "row": 3, "col": 0},
-        {"id": "b1", "label": "2\n＝4－2", "row": 1, "col": 1, "emphasis": true},
-        {"id": "b2", "label": "8", "row": 2, "col": 1},
-        {"id": "b3", "label": "16", "row": 3, "col": 1},
-        {"id": "c2", "label": "16\n＝8×2", "row": 2, "col": 2},
-        {"id": "c3", "label": "16", "row": 3, "col": 2},
-        {"id": "d3", "label": "32\n＝16＋16", "row": 3, "col": 3, "emphasis": true}
-      ],
-      "edges": [
-        {"from": "a0", "to": "b1", "label": "－"},
-        {"from": "b1", "to": "c2", "label": "×"},
-        {"from": "c2", "to": "d3", "label": "＋"}
+      "direction": "down",
+      "caption": "中置の式を括弧なしの後置の式に書き換え、左から読んで演算子が来るたびに直前の 2 つの値をその並び順で計算し、1 つに置き換えていく様子です。",
+      "stages": [
+        {
+          "label": "20 － 6 ÷ (5 － 2)\n中置の式は括弧が要る",
+          "next_label": "括弧なしの後置に書き換える"
+        },
+        {
+          "label": "20 6 5 2 － ÷ －\n左から読む",
+          "emphasis": true,
+          "next_label": "－ で直前の 5 と 2 → 5－2＝3"
+        },
+        {
+          "label": "20 6 3 ÷ －\n5 2 － が 3 になった",
+          "next_label": "÷ で直前の 6 と 3 → 6÷3＝2"
+        },
+        {
+          "label": "20 2 －\n6 3 ÷ が 2 になった",
+          "next_label": "－ で直前の 20 と 2 → 20－2＝18"
+        },
+        {
+          "label": "18\n値が 1 つ残って終わり"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 中置記法から変換する",
+      "direction": "down",
+      "caption": "内側の括弧から順に演算子を閉じ括弧の位置へ移します。A・B・C・D の並びは変わらず、演算子だけが後ろへ移ります。",
+      "stages": [
+        {
+          "label": "A×B＋C÷D\n中置の式",
+          "next_label": "優先順位どおりに括弧を補う"
+        },
+        {
+          "label": "((A×B)＋(C÷D))\n完全に括弧付きにした",
+          "next_label": "内側の A×B と C÷D を AB× と CD÷ に"
+        },
+        {
+          "label": "(AB×＋CD÷)\n内側が後置になった",
+          "next_label": "外側の AB× と CD÷ を ＋ でつなぐ"
+        },
+        {
+          "label": "AB×CD÷＋\n被演算子の並びは元のまま",
+          "emphasis": true
+        }
       ]
     }
   ]

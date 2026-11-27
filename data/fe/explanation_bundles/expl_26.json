@@ -1,0 +1,245 @@
+{
+  "bundle": "expl_26",
+  "topics": [
+    {
+      "topic_id": 199,
+      "term": "コンパクション",
+      "field": "テクノロジ系",
+      "middle": "ソフトウェア",
+      "syllabus_item_name": "オペレーティングシステム",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2017h29a-q19",
+          "content_key": "ada7901f76519d44",
+          "exam_label": "平成29年度 秋期",
+          "number": 19,
+          "stem": "図のメモリマップで，セグメント 2 が解放されたとき，セグメントを移動（動的再配置）し，分散する空き領域を集めて一つの連続領域にしたい。1 回のメモリアクセスは 4 バイト単位で行い，読取り，書込みがそれぞれ 30 ナノ秒とすると，動的再配置をするために必要なメモリアクセス時間は合計何ミリ秒か。ここで，1k バイトは 1,000 バイトとし，動的再配置に要する時間以外のオーバヘッドは考慮しないものとする。",
+          "choices": {
+            "ア": "1.5",
+            "イ": "6.0",
+            "ウ": "7.5",
+            "エ": "12.0"
+          },
+          "answer": "エ",
+          "has_figure": true,
+          "figure_description": "メモリマップの図。横長の長方形が左から4つの区画に分かれ，それぞれの中に名称が，枠の下にそれぞれの大きさが書かれている。\n\n| セグメント 1 | セグメント 2 | セグメント 3 | 空き |\n| --- | --- | --- | --- |\n| 500k バイト | 100k バイト | 800k バイト | 800k バイト |\n\n区画の幅は大きさにおおむね比例して描かれている。",
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 200,
+      "term": "スプーリング",
+      "field": "テクノロジ系",
+      "middle": "ソフトウェア",
+      "syllabus_item_name": "オペレーティングシステム",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30a-q17",
+          "content_key": "29f037c26fceb4bf",
+          "exam_label": "平成30年度 秋期",
+          "number": 17,
+          "stem": "スプーリング機能の説明として，適切なものはどれか。",
+          "choices": {
+            "ア": "あるタスクを実行しているときに，入出力命令の実行によって CPU が遊休（アイドル）状態になると，他のタスクに CPU を割り当てる。",
+            "イ": "実行中のプログラムを一時中断して，制御プログラムに制御を移す。",
+            "ウ": "主記憶装置と低速の入出力装置との間のデータ転送を，補助記憶装置を介して行うことによって，システム全体の処理能力を高める。",
+            "エ": "多数のバッファから成るバッファプールを用意し，主記憶装置にあるバッファにアクセスする確率を上げることによって，補助記憶装置のアクセス時間を短縮する。"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 201,
+      "term": "ページフォールト",
+      "field": "テクノロジ系",
+      "middle": "ソフトウェア",
+      "syllabus_item_name": "オペレーティングシステム",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2017h29a-q20",
+          "content_key": "00ab1118ff8a24d6",
+          "exam_label": "平成29年度 秋期",
+          "number": 20,
+          "stem": "ページング方式の仮想記憶において，ページフォールトの発生回数を増加させる要因はどれか。",
+          "choices": {
+            "ア": "主記憶に存在しないページへのアクセスが増加すること",
+            "イ": "主記憶に存在するページへのアクセスが増加すること",
+            "ウ": "主記憶のページのうち，更新されたページの比率が高くなること",
+            "エ": "長時間アクセスしなかった主記憶のページをアクセスすること"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 202,
+      "term": "ポーリング制御",
+      "field": "テクノロジ系",
+      "middle": "ソフトウェア",
+      "syllabus_item_name": "オペレーティングシステム",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2017h29a-q17",
+          "content_key": "b7e2657e8d4f1dab",
+          "exam_label": "平成29年度 秋期",
+          "number": 17,
+          "stem": "ソフトウェア制御における，ポーリング制御はどれか。",
+          "choices": {
+            "ア": "CPU が状態レジスタ又はビジー信号などを読み出して，入出力装置の状態を監視する。",
+            "イ": "実行中の処理を一時的に中断して，緊急度の高い別の処理を実行する。",
+            "ウ": "送信側のタスクがメモリにデータを格納し，受信側のタスクにそのアドレスを伝える。",
+            "エ": "複数のタスクが利用する共有資源を，一つのタスクが占有できるようにする。"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 203,
+      "term": "メモリリーク",
+      "field": "テクノロジ系",
+      "middle": "ソフトウェア",
+      "syllabus_item_name": "オペレーティングシステム",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2017h29a-q16",
+          "content_key": "a38f768feadab899",
+          "exam_label": "平成29年度 秋期",
+          "number": 16,
+          "stem": "メモリリークの説明として，適切なものはどれか。",
+          "choices": {
+            "ア": "OS やアプリケーションのバグなどが原因で，動作中に確保した主記憶が解放されないことであり，これが発生すると主記憶中の利用可能な部分が減少する。",
+            "イ": "アプリケーションの同時実行数を増やした場合に，主記憶容量が不足し，処理時間のほとんどがページングに費やされ，スループットの極端な低下を招くことである。",
+            "ウ": "実行時のプログラム領域の大きさに制限があるときに，必要になったモジュールを主記憶に取り込む手法である。",
+            "エ": "主記憶で利用可能な空き領域の総量は足りているのに，主記憶中に不連続で散在しているので，大きなプログラムをロードする領域が確保できないことである。"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 204,
+      "term": "ラウンドロビン",
+      "field": "テクノロジ系",
+      "middle": "ソフトウェア",
+      "syllabus_item_name": "オペレーティングシステム",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30a-q18",
+          "content_key": "7cb53532555dc4d0",
+          "exam_label": "平成30年度 秋期",
+          "number": 18,
+          "stem": "スケジューリングに関する記述のうち，ラウンドロビン方式の説明として，適切なものはどれか。",
+          "choices": {
+            "ア": "各タスクに，均等に CPU 時間を割り当てて実行させる方式である。",
+            "イ": "各タスクに，ターンアラウンドタイムに比例した CPU 時間を割り当てて実行させる方式である。",
+            "ウ": "各タスクの実行イベント発生に応じて，リアルタイムに実行させる方式である。",
+            "エ": "各タスクを，優先度の高い順に実行させる方式である。"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 205,
+      "term": "多重（マルチ）プログラミング",
+      "field": "テクノロジ系",
+      "middle": "ソフトウェア",
+      "syllabus_item_name": "オペレーティングシステム",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30a-q16",
+          "content_key": "54fcb75b8cf7574a",
+          "exam_label": "平成30年度 秋期",
+          "number": 16,
+          "stem": "三つのタスクの優先度と，各タスクを単独で実行した場合の CPU と入出力（I/O）装置の動作順序と処理時間は，表のとおりである。優先度方式のタスクスケジューリングを行う OS の下で，三つのタスクが同時に実行可能状態になってから，全てのタスクの実行が終了するまでの，CPU の遊休時間は何ミリ秒か。ここで，CPU は 1 個であり，1CPU は 1 コアで構成され，I/O は競合せず，OS のオーバヘッドは考慮しないものとする。また，表中の（ ）内の数字は処理時間を示すものとする。",
+          "choices": {
+            "ア": "2",
+            "イ": "3",
+            "ウ": "4",
+            "エ": "5"
+          },
+          "answer": "イ",
+          "has_figure": true,
+          "figure_description": "タスクの優先度と単独実行時の動作順序の表。\n\n| 優先度 | 単独実行時の動作順序と処理時間（ミリ秒） |\n| --- | --- |\n| 高 | CPU(3) → I/O(5) → CPU(2) |\n| 中 | CPU(2) → I/O(6) → CPU(2) |\n| 低 | CPU(1) → I/O(5) → CPU(1) |",
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 206,
+      "term": "絶対パス名",
+      "field": "テクノロジ系",
+      "middle": "ソフトウェア",
+      "syllabus_item_name": "ファイルシステム",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30h-q17",
+          "content_key": "4ffb3169e2035f5f",
+          "exam_label": "平成30年度 春期",
+          "number": 17,
+          "stem": "ファイルシステムの絶対パス名を説明したものはどれか。",
+          "choices": {
+            "ア": "あるディレクトリから対象ファイルに至る幾つかのパス名のうち，最短のパス名",
+            "イ": "カレントディレクトリから対象ファイルに至るパス名",
+            "ウ": "ホームディレクトリから対象ファイルに至るパス名",
+            "エ": "ルートディレクトリから対象ファイルに至るパス名"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    }
+  ]
+}

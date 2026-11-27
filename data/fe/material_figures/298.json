@@ -1,0 +1,114 @@
+{
+  "topic_id": 298,
+  "term": "OtoO（Online toOffline）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "客をネットから店舗へ、店舗からネットへと両方向に送ります。下の会員 ID が両方の履歴をつなぎ、どちらで買っても同じ客として扱えます。",
+      "nodes": [
+        {
+          "id": "net",
+          "label": "ネット側\nアプリ・メール・通販",
+          "row": 0,
+          "col": 0,
+          "icon": "phone"
+        },
+        {
+          "id": "cust",
+          "label": "客\n両方を行き来する",
+          "row": 0,
+          "col": 1,
+          "icon": "person"
+        },
+        {
+          "id": "shop",
+          "label": "実店舗\n手に取って確かめる",
+          "row": 0,
+          "col": 2,
+          "icon": "building"
+        },
+        {
+          "id": "id",
+          "label": "会員 ID\n両方の履歴を 1 人に結ぶ",
+          "row": 1,
+          "col": 1,
+          "shape": "cylinder",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "net",
+          "to": "cust",
+          "label": "クーポン・在庫の情報"
+        },
+        {
+          "from": "cust",
+          "to": "shop",
+          "label": "来店して買う"
+        },
+        {
+          "from": "shop",
+          "to": "cust",
+          "label": "会員登録・二次元コード"
+        },
+        {
+          "from": "cust",
+          "to": "net",
+          "label": "ネットで買う・再訪"
+        },
+        {
+          "from": "net",
+          "to": "id",
+          "label": "閲覧の履歴"
+        },
+        {
+          "from": "shop",
+          "to": "id",
+          "label": "購買の履歴"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### 混同しやすい用語",
+      "caption": "3 つの考え方を、つなぐ範囲と顧客の情報の 2 観点で比べています。左から右へ進むほど、つなぐ範囲が広がります。",
+      "x": {
+        "label": "考え方",
+        "values": [
+          "マルチチャネル",
+          "OtoO",
+          "オムニチャネル"
+        ]
+      },
+      "y": {
+        "label": "観点",
+        "values": [
+          "つなぐ範囲",
+          "顧客の情報"
+        ]
+      },
+      "cells": [
+        [
+          "つながない\n販路を複数持つだけ",
+          "ネットと実店舗\n互いに客を送り合う",
+          "全ての接点\n1 つの売場に統合する"
+        ],
+        [
+          "販路ごとに別々\n同じ客と分からない",
+          "会員 ID でつなぐ\nネットと店舗の履歴",
+          "全接点で共有\nどこで買っても同じ客"
+        ]
+      ],
+      "emphasis": [
+        [
+          0,
+          1
+        ]
+      ]
+    }
+  ]
+}

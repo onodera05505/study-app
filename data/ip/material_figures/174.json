@@ -1,0 +1,64 @@
+{
+  "topic_id": 174,
+  "term": "レプリケーション",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### なぜ複製し続けるのか",
+      "caption": "本番 DB の更新を複製 DB へ反映し続けるので、複製はいつも最新です。参照の振り分けも障害時の切り替えも、この最新の複製に乗っています。",
+      "nodes": [
+        {
+          "id": "upd",
+          "label": "更新の処理\n登録や変更をする",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "main",
+          "label": "本番 DB\n更新を受け付ける",
+          "row": 1,
+          "col": 1,
+          "icon": "database"
+        },
+        {
+          "id": "rep",
+          "label": "複製 DB\n本番と同じ内容\n遠隔地にも置ける",
+          "row": 1,
+          "col": 2,
+          "emphasis": true,
+          "icon": "database"
+        },
+        {
+          "id": "ref",
+          "label": "参照だけの処理\n検索や集計をする",
+          "row": 0,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "upd",
+          "to": "main",
+          "label": "更新"
+        },
+        {
+          "from": "main",
+          "to": "rep",
+          "label": "更新のたびに反映"
+        },
+        {
+          "from": "ref",
+          "to": "rep",
+          "label": "読み取りを回す"
+        },
+        {
+          "from": "upd",
+          "to": "rep",
+          "label": "本番が止まったら\n切り替えて続ける",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

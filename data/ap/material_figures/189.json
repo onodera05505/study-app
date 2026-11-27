@@ -1,0 +1,35 @@
+{
+  "topic_id": 189,
+  "term": "ディープフェイク",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "explanation",
+      "caption": "本人の素材から、なりすましに使うまでの流れを示す図です。強調した合成の段で、偽物が本人の声や顔そのものになります。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "素材を集める\n本人の音声や映像",
+          "icon": "database",
+          "next_label": "大量の声と映像"
+        },
+        {
+          "label": "AI が学習する\n話し方や表情の特徴を覚える",
+          "icon": "gear",
+          "next_label": "本人の特徴を覚えたモデル"
+        },
+        {
+          "label": "偽物を合成する\n本人そっくりの声や顔",
+          "icon": "person",
+          "emphasis": true,
+          "next_label": "本人に見える音声・映像"
+        },
+        {
+          "label": "なりすましに使う\n声や顔の本人確認を破る",
+          "icon": "warning"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "topic_id": 486,
+  "term": "PDCA（Plan-Do-Check-Act）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "explanation",
+      "center": "継続的改善",
+      "caption": "輪は Plan から時計回りに進み、矢印のラベルは次の段へ渡す物です。Act の後は次の Plan へ戻り、回すたびに業務が良くなります。",
+      "stages": [
+        {
+          "label": "Plan 計画\n目標と KPI・手順を決める",
+          "icon": "document",
+          "next_label": "計画"
+        },
+        {
+          "label": "Do 実行\n計画どおり行い記録する",
+          "icon": "person",
+          "next_label": "実績の記録"
+        },
+        {
+          "label": "Check 評価\n実績を測り計画との差を出す",
+          "icon": "chart",
+          "next_label": "計画との差"
+        },
+        {
+          "label": "Act 改善\n差の原因を取り除く",
+          "icon": "gear",
+          "next_label": "見直した手順と\n次の計画"
+        }
+      ]
+    }
+  ]
+}

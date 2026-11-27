@@ -1,0 +1,39 @@
+{
+  "topic_id": 269,
+  "term": "SI接頭語",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "explanation",
+      "caption": "接頭語を小さい順に下から並べた階段です。どの段の間も同じ 1000 倍で、上がるたびに 10 の指数が 3 ずつ増えます。",
+      "direction": "up",
+      "stages": [
+        {
+          "label": "m（ミリ）\n10 のマイナス 3 乗",
+          "next_label": "1000 倍\n指数が 3 増える"
+        },
+        {
+          "label": "基準の 1\n10 の 0 乗",
+          "next_label": "1000 倍\n指数が 3 増える",
+          "emphasis": true
+        },
+        {
+          "label": "k（キロ）\n10 の 3 乗",
+          "next_label": "1000 倍\n指数が 3 増える"
+        },
+        {
+          "label": "M（メガ）\n10 の 6 乗",
+          "next_label": "1000 倍\n指数が 3 増える"
+        },
+        {
+          "label": "G（ギガ）\n10 の 9 乗",
+          "next_label": "1000 倍\n指数が 3 増える"
+        },
+        {
+          "label": "T（テラ）\n10 の 12 乗"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,716 @@
+{
+  "bundle": "06-4",
+  "unit_no": 6,
+  "unit": "ハードウェア",
+  "overview": "0 と 1 で動く論理回路から、それを載せる素子とチップ、モーターや電源を扱う回路までを学びます。組合せ回路、状態を覚える順序回路とクロック、半導体素子、集積回路の作り方、制御と駆動、省電力の順に進みます。電力変換のインバータと否定（NOT）回路は別物です。",
+  "group": {
+    "index": 4,
+    "name": "集積回路を作る",
+    "description": "回路を 1 個のチップにまとめる方法と、書き換えられる回路の設計の流れを扱います。"
+  },
+  "groups_in_unit": [
+    {
+      "index": 1,
+      "name": "論理回路と論理式",
+      "topics": [
+        {
+          "topic_id": 133,
+          "term": "真理値表"
+        },
+        {
+          "topic_id": 134,
+          "term": "論理式"
+        },
+        {
+          "topic_id": 126,
+          "term": "タイミングチャート"
+        },
+        {
+          "topic_id": 25,
+          "term": "NAND 回路"
+        },
+        {
+          "topic_id": 675,
+          "term": "XOR 回路"
+        },
+        {
+          "topic_id": 476,
+          "term": "半加算器"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "name": "状態を覚える回路とクロック",
+      "topics": [
+        {
+          "topic_id": 130,
+          "term": "フリップフロップ"
+        },
+        {
+          "topic_id": 652,
+          "term": "シフトレジスタ"
+        },
+        {
+          "topic_id": 653,
+          "term": "分周器"
+        },
+        {
+          "topic_id": 128,
+          "term": "ハードウェアタイマー"
+        },
+        {
+          "topic_id": 475,
+          "term": "ウォッチドッグタイマー"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "name": "電子部品と半導体素子",
+      "topics": [
+        {
+          "topic_id": 518,
+          "term": "コンデンサ"
+        },
+        {
+          "topic_id": 352,
+          "term": "ダイオード"
+        },
+        {
+          "topic_id": 122,
+          "term": "LED"
+        },
+        {
+          "topic_id": 127,
+          "term": "トランジスタ"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "name": "集積回路を作る",
+      "topics": [
+        {
+          "topic_id": 124,
+          "term": "SoC（System on a Chip）"
+        },
+        {
+          "topic_id": 120,
+          "term": "FPGA（Field Programmable Gate Array）"
+        },
+        {
+          "topic_id": 121,
+          "term": "HDL（Hardware Description Language：ハードウェア記述言語）"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "name": "制御と駆動",
+      "topics": [
+        {
+          "topic_id": 125,
+          "term": "アクチュエーター"
+        },
+        {
+          "topic_id": 123,
+          "term": "PLC（Programmable Logic Controller）"
+        },
+        {
+          "topic_id": 119,
+          "term": "D/A コンバータ"
+        },
+        {
+          "topic_id": 566,
+          "term": "PWM（Pulse Width Modulation：パルス幅変調）制御"
+        },
+        {
+          "topic_id": 129,
+          "term": "パワー半導体"
+        },
+        {
+          "topic_id": 517,
+          "term": "Hブリッジ回路"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "name": "電力を抑える",
+      "topics": [
+        {
+          "topic_id": 131,
+          "term": "低消費電力化"
+        },
+        {
+          "topic_id": 694,
+          "term": "パワーゲーティング"
+        },
+        {
+          "topic_id": 716,
+          "term": "エネルギーハーベスティング（ハードウェア）"
+        },
+        {
+          "topic_id": 132,
+          "term": "直流給電"
+        }
+      ]
+    }
+  ],
+  "owners": [
+    {
+      "subject": "HDL で記述し論理合成した構成データを FPGA に書き込む流れ",
+      "owner": {
+        "topic_id": 120,
+        "term": "FPGA（Field Programmable Gate Array）"
+      },
+      "topics": [
+        120,
+        121
+      ]
+    }
+  ],
+  "topics": [
+    {
+      "topic_id": 124,
+      "term": "SoC（System on a Chip）",
+      "field": "テクノロジ系",
+      "major": "コンピュータシステム",
+      "middle": "ハードウェア",
+      "syllabus_item_name": "ハードウェア",
+      "question_count": 4,
+      "related_terms": [
+        "LSI",
+        "ASIC（Application Specific IC）",
+        "マイクロコントローラー",
+        "FPGA（Field Programmable Gate Array）",
+        "IC"
+      ],
+      "prerequisites": [],
+      "current": {
+        "generation": "materials_v3",
+        "explanation": "**SoC**（System on a Chip）とは、CPU・メモリ・周辺回路など、以前は複数のチップに分かれていたシステム一式を、1個の LSI（大規模集積回路）にまとめたものです。\n\n- **キーワード**: 一つのチップ・集積・LSI\n- 判定の軸は**チップが1個に集約されているか**。基板やパッケージの中にまとめただけでは SoC になりません\n- 狙いは**小型化・低消費電力・高速化**。チップ間の配線が短くなるぶん、遅延と消費電力が下がります",
+        "detail": "### 1チップに載せる狙い\n![1 個の LSI チップの中を、システムの部品ごとの区画に分けて示します。別々のチップだった部品が同じチップの区画に収まる点を見ます。](/figures/materials/ap/124-1.svg)\n\nスマートフォンのように小型で電池駆動の機器では、CPU・GPU・メモリ制御・無線・画像処理を別々のチップで並べると、基板が大きくなり、チップ間の配線が遅延と消費電力の負担になります。SoC はこれらを1枚のシリコン上に作り込むことで、**小型化・低消費電力・高速化**をまとめて狙います。\n\n引き換えに、設計と製造をやり直しにくく開発費が大きいという弱点があります。書き換えで直せる [[FPGA（Field Programmable Gate Array）]] と対になる性質です。多くは特定用途向けに設計する ASIC（特定用途向け IC）として作られますが、ASIC が「専用に設計したか」を指すのに対し、SoC は「システム一式が1チップに載っているか」を指す言葉で、着目点が違います。\n### 混同しやすい用語\n![3 つの用語を、チップの数と中身の 2 観点で比べた表です。チップの数の列が SoC かどうかの分かれ目です。](/figures/materials/ap/124-2.svg)\n\n- **SiP（System in a Package）** — 複数のチップを1つのパッケージに封入したもの。個々の機能を最適な製造工程で作ってから1つの入れ物に収める方式で、**チップの数は複数のまま**です\n- **MCU（マイコン）** — CPU に最小限のメモリと入出力を載せた制御用チップ。基板に何個並べても、システム一式が1チップに集積されたことにはなりません"
+      },
+      "questions": [
+        {
+          "question_id": "2024r06a-q22",
+          "content_key": "aa7ced665a91cc9d",
+          "exam_label": "令和6年度 秋期",
+          "stem": "SoC の説明として，適切なものはどれか。",
+          "choices": {
+            "ア": "システム LSI に内蔵されたソフトウェア",
+            "イ": "複数の MCU を搭載したボード",
+            "ウ": "複数のチップで構成していたコンピュータシステムを，一つのチップで実現した LSI",
+            "エ": "複数のチップを単一のパッケージに封入してシステム化したデバイス"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2016h28h-q24",
+          "content_key": "20d63e5e1e3ecd24",
+          "exam_label": "平成28年度 春期",
+          "stem": "SoC の説明として，適切なものはどれか。",
+          "choices": {
+            "ア": "CPU，チップセット，ビデオチップ，メモリなどコンピュータを構成するデバイスを実装した電子回路基板",
+            "イ": "CPU，メモリ，周辺装置などの間で発生するデータの受渡しを管理する一連の回路群を搭載した半導体チップ",
+            "ウ": "各機能を個別に最適化されたプロセスで製造し，パッケージ内でそれぞれのチップを適切に配線した半導体チップ",
+            "エ": "必要とされる全ての機能（システム）を集積した 1 個の半導体チップ"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null
+        }
+      ],
+      "question_explanations": [
+        {
+          "question_id": "2024r06a-q22",
+          "content_key": "aa7ced665a91cc9d",
+          "correct_reason": "SoC は、それまで複数のチップに分かれていたシステム一式を**1個のチップ（LSI）に集積**したものです。判定の軸は「チップが1個になっているか」で、パッケージや基板にまとめただけのものは該当しません。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "ファームウェア",
+              "note": "機器に組み込まれ、ハードウェアを直接制御するソフトウェアです。SoC はハードウェアそのものを指します"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "複数の制御用チップを基板の上に並べて構成したものの説明です。チップは複数のままで、1個への集約には届きません"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "エ",
+              "term": "SiP（System in a Package）",
+              "note": "複数のチップを1つのパッケージに封入してシステム化したものです。チップの数は複数のままです"
+            }
+          ]
+        },
+        {
+          "question_id": "2016h28h-q24",
+          "content_key": "20d63e5e1e3ecd24",
+          "correct_reason": "必要な機能一式を**1個の半導体チップに集積**したものが SoC です。基板に載せた回路群でも、パッケージ内で複数チップを配線したものでもなく、シリコン1枚に作り込んである点が決め手になります。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "マザーボード",
+              "note": "CPU やメモリなど、コンピュータを構成する部品を実装した主基板です。チップではなく基板です"
+            },
+            {
+              "label": "イ",
+              "term": "チップセット",
+              "note": "CPU とメモリや周辺装置との間のデータの受渡しを仲介する回路群のチップです。機能一式は載りません"
+            },
+            {
+              "label": "ウ",
+              "term": "SiP（System in a Package）",
+              "note": "複数のチップを1つのパッケージに封入してシステム化したものです。チップの数は複数のままです"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "正解。"
+            }
+          ]
+        }
+      ],
+      "figure_file": "data/ap/material_figures/124.json",
+      "figures": [
+        {
+          "id": 1,
+          "type": "parts",
+          "after": "### 1チップに載せる狙い",
+          "caption": "1 個の LSI チップの中を、システムの部品ごとの区画に分けて示します。別々のチップだった部品が同じチップの区画に収まる点を見ます。",
+          "whole": {
+            "label": "SoC：1 個の LSI チップ",
+            "icon": "device"
+          },
+          "parts": [
+            {
+              "label": "CPU\n命令を実行する",
+              "emphasis": true
+            },
+            {
+              "label": "GPU\n画面の描画を受け持つ"
+            },
+            {
+              "label": "メモリ制御\nメモリとの読み書きを仲立ち"
+            },
+            {
+              "label": "無線\n通信の電波を扱う"
+            },
+            {
+              "label": "画像処理\nカメラの画像を整える"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "type": "matrix",
+          "after": "### 混同しやすい用語",
+          "caption": "3 つの用語を、チップの数と中身の 2 観点で比べた表です。チップの数の列が SoC かどうかの分かれ目です。",
+          "x": {
+            "label": "観点",
+            "values": [
+              "チップの数",
+              "入っているもの"
+            ]
+          },
+          "y": {
+            "label": "用語",
+            "values": [
+              "SoC",
+              "SiP",
+              "MCU（マイコン）"
+            ]
+          },
+          "cells": [
+            [
+              "1 個\nシステム一式を\n1 チップに作り込む",
+              "CPU・GPU・無線など\nシステム一式"
+            ],
+            [
+              "複数のまま\n1 つのパッケージに\n封入する",
+              "別々に作った\n複数のチップ"
+            ],
+            [
+              "1 個\nただし制御用の\n最小限だけ",
+              "CPU と最小限の\nメモリ・入出力"
+            ]
+          ],
+          "emphasis": [
+            [
+              0,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "topic_id": 120,
+      "term": "FPGA（Field Programmable Gate Array）",
+      "field": "テクノロジ系",
+      "major": "コンピュータシステム",
+      "middle": "ハードウェア",
+      "syllabus_item_name": "ハードウェア",
+      "question_count": 2,
+      "related_terms": [
+        "ASIC（Application Specific IC）",
+        "HDL（Hardware Description Language：ハードウェア記述言語）",
+        "EEPROM（ Electrically Erasable Programmable Read Only Memory ）",
+        "FPU"
+      ],
+      "prerequisites": [],
+      "current": {
+        "generation": "materials_v3",
+        "explanation": "**FPGA**とは、製造後、基板に実装した後でも内部の論理回路を何度でも書き換えられる集積回路です。\n\n- **キーワード**: 実装後に再プログラム・書換え可能な論理回路・論理合成\n- 問われるのは「実装した後から再プログラムできる」という一点です\n- 回路は HDL（ハードウェア記述言語）で設計し、合成した構成データを FPGA に書き込みます\n- 書き換わるのは記憶内容ではなく**論理回路そのもの**です",
+        "detail": "### 書き換えられる回路\n![中央の FPGA は同じ 1 つのチップです。左から入れる構成データ次第で、右のどちらの回路として動くかが決まります。](/figures/materials/ap/120-1.svg)\n\n通常の集積回路は、製造時に配線が固定されるので後から回路を変えられません。FPGA は内部に多数の論理ブロックとそれをつなぐ配線が用意されていて、**どうつなぐかを構成データで指定する**ことで任意の論理回路を実現します。構成データを入れ替えれば、同じチップが別の回路として動きます。\nこのため、仕様が固まりきらない段階の試作や、少量生産の装置、出荷後に機能を追加したい機器に向きます。一方で、同じ機能を専用に作り込んだ回路に比べると動作速度や消費電力、量産時の単価では不利です。設計は HDL（VHDL や Verilog HDL）で回路の動作を記述し、合成ツールで構成データに変換して書き込む流れになります。\n「書き換えられる」という言葉だけでは記憶素子と区別が付きません。**書き換わるのが回路か記憶内容か**が境目になります。\n### 混同しやすい用語\n![3 つの集積回路を同じ観点で並べています。2 行目の書き換わる物で、回路か記憶内容かの境目を読みます。](/figures/materials/ap/120-2.svg)\n\n- **[[ASIC]]** — 特定用途向けに製造時点で回路を作り込んだ集積回路です。後から回路は変えられませんが、量産すれば高性能で安価になります\n- **[[EEPROM]]** — 電気的に内容を書き換えられる不揮発性メモリです。書き換わるのは記憶内容で、回路の構成は固定されたままです"
+      },
+      "questions": [
+        {
+          "question_id": "2023r05a-q20",
+          "content_key": "d85dee7f425f5b2d",
+          "exam_label": "令和5年度 秋期",
+          "stem": "FPGA の説明として，適切なものはどれか。",
+          "choices": {
+            "ア": "電気的に記憶内容の書換えを行うことができる不揮発性メモリ",
+            "イ": "特定の分野及びアプリケーション用に限定した特定用途向け汎用集積回路",
+            "ウ": "浮動小数点数の演算を高速に実行する演算ユニット",
+            "エ": "論理回路を基板上に実装した後で再プログラムできる集積回路"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null
+        }
+      ],
+      "question_explanations": [
+        {
+          "question_id": "2023r05a-q20",
+          "content_key": "d85dee7f425f5b2d",
+          "correct_reason": "FPGA は内部の論理ブロックと配線のつなぎ方を構成データで指定する集積回路で、基板に実装した後でも構成データを入れ替えれば別の回路として動きます。**書き換わるのが記憶内容ではなく論理回路そのもの**である点が決め手です。回路は HDL（ハードウェア記述言語）で記述し、合成した構成データを書き込みます。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "EEPROM",
+              "note": "電気的に記憶内容を書き換えられる不揮発性メモリ。書き換わるのは中身であって回路ではありません"
+            },
+            {
+              "label": "イ",
+              "term": "ASIC",
+              "note": "特定の用途向けに製造時点で回路を作り込んだ集積回路。量産に強い一方、後から回路を変えられません"
+            },
+            {
+              "label": "ウ",
+              "term": "FPU（浮動小数点演算ユニット）",
+              "note": "浮動小数点数の演算を高速に行う専用の演算器。回路構成を変える働きはありません"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "正解。"
+            }
+          ]
+        }
+      ],
+      "figure_file": "data/ap/material_figures/120.json",
+      "figures": [
+        {
+          "id": 1,
+          "type": "blocks",
+          "after": "### 書き換えられる回路",
+          "caption": "中央の FPGA は同じ 1 つのチップです。左から入れる構成データ次第で、右のどちらの回路として動くかが決まります。",
+          "nodes": [
+            {
+              "id": "ca",
+              "label": "構成データ A\n回路 A のつなぎ方",
+              "row": 0,
+              "col": 0,
+              "icon": "document"
+            },
+            {
+              "id": "cb",
+              "label": "構成データ B\n回路 B のつなぎ方",
+              "row": 2,
+              "col": 0,
+              "icon": "document"
+            },
+            {
+              "id": "f",
+              "label": "FPGA（同じチップ）\n論理ブロックと配線",
+              "row": 1,
+              "col": 1,
+              "emphasis": true
+            },
+            {
+              "id": "oa",
+              "label": "回路 A として動く\nA の配線でつながる",
+              "row": 0,
+              "col": 2
+            },
+            {
+              "id": "ob",
+              "label": "回路 B として動く\nB の配線でつながる",
+              "row": 2,
+              "col": 2
+            }
+          ],
+          "edges": [
+            {
+              "from": "ca",
+              "to": "f",
+              "label": "書き込む"
+            },
+            {
+              "from": "cb",
+              "to": "f",
+              "label": "入れ替えて書き込む"
+            },
+            {
+              "from": "f",
+              "to": "oa",
+              "label": "A を入れたとき"
+            },
+            {
+              "from": "f",
+              "to": "ob",
+              "label": "B を入れたとき"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "type": "matrix",
+          "after": "### 混同しやすい用語",
+          "caption": "3 つの集積回路を同じ観点で並べています。2 行目の書き換わる物で、回路か記憶内容かの境目を読みます。",
+          "x": {
+            "label": "集積回路",
+            "values": [
+              "FPGA",
+              "ASIC",
+              "EEPROM"
+            ]
+          },
+          "y": {
+            "label": "観点",
+            "values": [
+              "後から書き換え",
+              "書き換わる物",
+              "向く場面"
+            ]
+          },
+          "cells": [
+            [
+              "できる\n実装後も何度でも",
+              "できない\n製造時に固定",
+              "できる\n電気的に"
+            ],
+            [
+              "論理回路\nそのもの",
+              "無い\n回路を作り込み済み",
+              "記憶内容\n回路は固定のまま"
+            ],
+            [
+              "試作・少量生産\n出荷後の機能追加",
+              "量産\n高性能で安価",
+              "電源を切っても\n残すデータ"
+            ]
+          ],
+          "emphasis": [
+            [
+              1,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "topic_id": 121,
+      "term": "HDL（Hardware Description Language：ハードウェア記述言語）",
+      "field": "テクノロジ系",
+      "major": "コンピュータシステム",
+      "middle": "ハードウェア",
+      "syllabus_item_name": "ハードウェア",
+      "question_count": 2,
+      "related_terms": [
+        "FPGA（Field Programmable Gate Array）",
+        "論理合成",
+        "ASIC（Application Specific IC）",
+        "DDL（Data Definition Language：データ定義言語）"
+      ],
+      "prerequisites": [
+        {
+          "topic_id": 120,
+          "term": "FPGA（Field Programmable Gate Array）"
+        }
+      ],
+      "current": {
+        "generation": "materials_v3",
+        "explanation": "**HDL**（ハードウェア記述言語）とは、デジタル回路の動作や構造をテキストで書き表し、論理合成によって実際の回路に変換するための言語です。\n\n- **キーワード**: 論理合成・回路を記述・FPGA に実装\n- **論理合成**という語が出たら HDL です。FPGA や ASIC の回路設計に使います\n- 代表例は **VHDL** と **Verilog HDL** の2つで、どちらも HDL の一種です",
+        "detail": "### 記述から回路になるまで\n![左の HDL の記述から右へ進み、論理合成で論理素子の組合せになります。最後に合成先が FPGA か ASIC かで、できる物が分かれます。](/figures/materials/ap/121-1.svg)\n\n1. HDL で回路の動作（どの入力のときに出力がどうなるか）を記述します\n2. 論理合成ツールが、その記述を AND・OR・[[フリップフロップ]]などの論理素子の組合せに変換します\n3. 配置配線を経て、FPGA なら書き込むデータに、ASIC なら製造用のマスクデータになります\n### 実行される言語との違い\nつまり HDL は「書いたものが実行される」言語ではなく、**回路そのものを生成する**言語です。同じ記述でも、合成先が書き換え可能な FPGA か専用に製造する ASIC かで、出来上がる物が変わります。この「論理合成の入力になる」という位置づけが、他の記述言語との決定的な違いです。代表例の VHDL と Verilog HDL は、どちらもこの位置づけの言語です。"
+      },
+      "questions": [
+        {
+          "question_id": "2025r07h-q20",
+          "content_key": "e92f52f3dd3c4ade",
+          "exam_label": "令和7年度 春期",
+          "stem": "FPGA などに実装するデジタル回路を記述し，論理合成するために使用される言語はどれか。",
+          "choices": {
+            "ア": "DDL",
+            "イ": "HDL",
+            "ウ": "UML",
+            "エ": "XML"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2020r02o-q21",
+          "content_key": "9e6ce51a57e0930f",
+          "exam_label": "令和2年度 10月",
+          "stem": "FPGA などに実装するディジタル回路を記述して，直接論理合成するために使用されるものはどれか。",
+          "choices": {
+            "ア": "DDL",
+            "イ": "HDL",
+            "ウ": "UML",
+            "エ": "XML"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null
+        }
+      ],
+      "question_explanations": [
+        {
+          "question_id": "2025r07h-q20",
+          "content_key": "e92f52f3dd3c4ade",
+          "correct_reason": "デジタル回路の動作をテキストで書き表し、論理合成ツールで論理素子の組合せへ変換できるのは HDL（ハードウェア記述言語）です。**論理合成の入力になる言語**という手がかりが決め手で、代表例は VHDL と Verilog HDL の2つです。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "DDL",
+              "note": "データベースの表や項目を定義するデータ定義言語。回路の記述には使いません"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "ウ",
+              "term": "UML",
+              "note": "ソフトウェアの構造や振る舞いを図で表す統一モデリング言語。設計を図にするもので、論理合成に掛けて回路にすることはできません"
+            },
+            {
+              "label": "エ",
+              "term": "XML",
+              "note": "タグで意味を持たせてデータを記述するマークアップ言語。回路の動作は表せません"
+            }
+          ]
+        },
+        {
+          "question_id": "2020r02o-q21",
+          "content_key": "9e6ce51a57e0930f",
+          "correct_reason": "FPGA に実装する回路を書き表し、そのまま論理合成に掛けられる言語が HDL です。合成ツールが記述を論理積・論理和・[[フリップフロップ]]などの素子の組合せへ変換し、FPGA に書き込む構成データになります。**回路そのものを生成する言語**である点が他と違います。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "DDL",
+              "note": "データベースの表や項目を定義するデータ定義言語。回路の記述には使いません"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "ウ",
+              "term": "UML",
+              "note": "ソフトウェアの構造や振る舞いを図で表す統一モデリング言語。設計を図にするもので、論理合成に掛けて回路にすることはできません"
+            },
+            {
+              "label": "エ",
+              "term": "XML",
+              "note": "タグで意味を持たせてデータを記述するマークアップ言語。回路の動作は表せません"
+            }
+          ]
+        }
+      ],
+      "figure_file": "data/ap/material_figures/121.json",
+      "figures": [
+        {
+          "id": 1,
+          "type": "blocks",
+          "after": "### 記述から回路になるまで",
+          "caption": "左の HDL の記述から右へ進み、論理合成で論理素子の組合せになります。最後に合成先が FPGA か ASIC かで、できる物が分かれます。",
+          "nodes": [
+            {
+              "id": "hdl",
+              "label": "HDL の記述\n回路の動作を書く",
+              "row": 1,
+              "col": 0,
+              "icon": "document"
+            },
+            {
+              "id": "syn",
+              "label": "論理合成\n記述を論理素子に変換",
+              "row": 1,
+              "col": 1,
+              "icon": "gear",
+              "emphasis": true
+            },
+            {
+              "id": "pr",
+              "label": "配置配線\n素子の置き場とつなぎ方",
+              "row": 1,
+              "col": 2
+            },
+            {
+              "id": "fp",
+              "label": "FPGA の書込みデータ\nチップに書き込んで使う",
+              "row": 0,
+              "col": 3
+            },
+            {
+              "id": "as",
+              "label": "ASIC のマスクデータ\n製造して作り込む",
+              "row": 2,
+              "col": 3
+            }
+          ],
+          "edges": [
+            {
+              "from": "hdl",
+              "to": "syn",
+              "label": "入力ごとの\n出力の決まり"
+            },
+            {
+              "from": "syn",
+              "to": "pr",
+              "label": "AND・OR・\nフリップフロップ"
+            },
+            {
+              "from": "pr",
+              "to": "fp",
+              "label": "FPGA 向けなら"
+            },
+            {
+              "from": "pr",
+              "to": "as",
+              "label": "ASIC 向けなら"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

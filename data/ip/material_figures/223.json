@@ -5,20 +5,65 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### ファイアウォールとの役割分担",
-      "caption": "ファイアウォールが通した通信を IDS が見張り、不審なら管理者に知らせる（遮断まで行うのは IPS）。",
+      "after": "### ファイアウォールの後ろに置く理由",
+      "caption": "ファイアウォールと IDS の位置関係を表した図です。ファイアウォールが通した通信を IDS が見張り、不審なら管理者に知らせます。",
       "nodes": [
-        {"id": "net", "label": "インターネット", "row": 0, "col": 0, "shape": "cloud"},
-        {"id": "fw", "label": "ファイアウォール\nルールで通す・止める", "row": 0, "col": 1},
-        {"id": "lan", "label": "社内ネットワーク", "row": 0, "col": 2},
-        {"id": "ids", "label": "IDS\n監視して検知", "row": 1, "col": 2, "emphasis": true},
-        {"id": "adm", "label": "管理者", "row": 2, "col": 2}
+        {
+          "id": "net",
+          "label": "インターネット\n外からの通信",
+          "row": 0,
+          "col": 0,
+          "shape": "cloud"
+        },
+        {
+          "id": "fw",
+          "label": "ファイアウォール\nルールで通す・止める",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "lan",
+          "label": "社内ネットワーク\nサーバや PC",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "ids",
+          "label": "IDS\n見張って検知する\n通信は止めない",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "adm",
+          "label": "管理者\n対処を決める",
+          "row": 2,
+          "col": 2
+        }
       ],
       "edges": [
-        {"from": "net", "to": "fw", "label": "通信"},
-        {"from": "fw", "to": "lan", "label": "許可した通信"},
-        {"from": "lan", "to": "ids", "label": "通信を監視", "style": "dashed", "arrow": "none"},
-        {"from": "ids", "to": "adm", "label": "通知"}
+        {
+          "from": "net",
+          "to": "fw",
+          "label": "通信"
+        },
+        {
+          "from": "fw",
+          "to": "lan",
+          "label": "ルールで許可した通信"
+        },
+        {
+          "from": "lan",
+          "to": "ids",
+          "label": "中身を監視",
+          "style": "dashed",
+          "arrow": "none"
+        },
+        {
+          "from": "ids",
+          "to": "adm",
+          "label": "不審なら通知"
+        }
       ]
     }
   ]

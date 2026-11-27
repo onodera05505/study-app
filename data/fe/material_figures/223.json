@@ -1,0 +1,90 @@
+{
+  "topic_id": 223,
+  "term": "参照制約",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 制約の種類と役割",
+      "caption": "注文表の外部キーは顧客表の主キーを指します。顧客表に実在する番号の注文だけが入り、破線の注文は拒まれます。",
+      "nodes": [
+        {
+          "id": "ok",
+          "label": "登録済みの番号の注文\n顧客表に番号がある",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "ng",
+          "label": "登録の無い番号の注文\n顧客表に番号が無い",
+          "row": 1,
+          "col": 0,
+          "icon": "warning"
+        },
+        {
+          "id": "order",
+          "label": "注文表\n顧客番号＝外部キー",
+          "row": 0,
+          "col": 1,
+          "shape": "cylinder"
+        },
+        {
+          "id": "cust",
+          "label": "顧客表\n顧客番号＝主キー",
+          "row": 0,
+          "col": 2,
+          "shape": "cylinder",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "ok",
+          "to": "order",
+          "label": "追加できる"
+        },
+        {
+          "from": "ng",
+          "to": "order",
+          "label": "追加を拒む",
+          "style": "dashed"
+        },
+        {
+          "from": "order",
+          "to": "cust",
+          "label": "番号の実在を確かめる"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### 参照されている行を消すとき",
+      "caption": "行は親の表への操作、列は参照動作です。CASCADE は子も親に合わせて変わり、RESTRICT は親の操作そのものが止まります。",
+      "x": {
+        "label": "参照動作",
+        "values": [
+          "CASCADE",
+          "RESTRICT"
+        ]
+      },
+      "y": {
+        "label": "親の表への操作",
+        "values": [
+          "親の行を削除",
+          "親の主キーを変更"
+        ]
+      },
+      "cells": [
+        [
+          "子の行も削除\n親と一緒に消える",
+          "削除を拒む\n子の行が残る間は\n消せない"
+        ],
+        [
+          "子の値も変更\n新しい主キーに揃う",
+          "変更を拒む\n子の行が残る間は\n変えられない"
+        ]
+      ]
+    }
+  ]
+}

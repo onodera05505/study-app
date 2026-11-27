@@ -11,9 +11,13 @@ data/*/seed.sql
 backups/
 
 node_modules/
+# テストのコマンドが書き出す実行の記録（tests/support/coverage/run.mjs。ADR-0015）。根の置き場だけ（足場 tests/support/coverage/ は追跡する）
+/coverage/
 dist/
 .wrangler/
 .dev.vars
+.dev.vars.*
+!.dev.vars.example
 .env
 .venv/
 venv/
@@ -26,3 +30,24 @@ __pycache__/
 # Claude Code の個人設定
 .claude/settings.local.json
 
+
+# 本人が確認用に置くスクリーンショット（個人情報を含みうる。追跡しない）
+docs/Screenshot*.png
+portal/dist/
+portal/.worker-build/
+.sso_secret.local
+portal/.migrate_accounts.sql
+
+# Stop フック（trace の門）の状態と記録
+.trace-gate/
+.trace-reservations.json
+
+# 原本 harness の別 checkout（tools/templates。APM の依存とは別。apm.lock.yaml の resolved_commit と同じコミットで取得する）
+.harness/
+# 版を上げる間だけ置く、次の版の checkout（切り替えたら消す）
+.harness-next/
+.harness-gate/
+
+# apm_modules は追跡する。apm install が下の除外行を無ければ足すので残し、直後の否定で打ち消す
+apm_modules/
+!apm_modules/

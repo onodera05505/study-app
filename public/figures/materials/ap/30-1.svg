@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="258" viewBox="0 0 640 258">
+<rect x="0.5" y="0.5" width="639" height="257" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(56.4 20)">
+<g transform="translate(44 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.2"/><path d="M12 16 V20 M8.5 20 H15.5"/></g>
+<g transform="translate(259.6 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.3"/><circle cx="5" cy="18.5" r="2.3"/><circle cx="19" cy="18.5" r="2.3"/><path d="M10.9 7.1 L6.1 16.4 M13.1 7.1 L17.9 16.4 M7.3 18.5 H16.7"/></g>
+<g transform="translate(468.2 0) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.2"/><path d="M12 16 V20 M8.5 20 H15.5"/></g>
+<g transform="translate(0 28)">
+<line x1="55" y1="34" x2="55" y2="190" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="270.6" y1="34" x2="270.6" y2="190" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="479.2" y1="34" x2="479.2" y2="190" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="110" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="55" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">送信元ホスト</text>
+<rect x="222.6" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="270.6" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ルータ</text>
+<rect x="431.2" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="479.2" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">宛先ホスト</text>
+<polyline points="58,68 267.6,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="267.6,68 259.6,71.6 259.6,64.4" fill="#1f2937"/>
+<text x="162.8" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. IP パケット（宛先ホスト行き）</text>
+<polyline points="270.6,100 296.6,100 296.6,114 272.6,114" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="272.6,114 280.6,110.4 280.6,117.6" fill="#1f2937"/>
+<text x="304.6" y="108" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2. 宛先へ届けられないと分かり破棄する</text>
+<polyline points="267.6,142 58,142" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="58,142 66,138.4 66,145.6" fill="#1f2937"/>
+<text x="162.8" y="135" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. ICMP 到達不能</text>
+<rect x="-7.1" y="147" width="339.8" height="16" rx="3" fill="#ffffff"/>
+<text x="162.8" y="160.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">通知先は送信元ホスト。IP だけなら送信元は失敗を知らない</text>
+</g>
+</g>
+</svg>

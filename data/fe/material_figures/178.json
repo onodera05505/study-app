@@ -1,0 +1,21 @@
+{
+  "topic_id": 178,
+  "term": "FIFO",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 操作の列を追う手順",
+      "caption": "段は操作ごとの列の中身で、左端が先頭、右端が末尾です。入れた値は右に足され、取り出すと左端から消えるので、A・B の順に入れた順のまま出ます。",
+      "direction": "down",
+      "stages": [
+        {"label": "列: 空\nまだ何も無い", "next_label": "末尾へ A を入れる"},
+        {"label": "列: A\n先頭も末尾も A", "next_label": "末尾へ B を入れる"},
+        {"label": "列: A B\n先頭は A のまま", "next_label": "末尾へ C を入れる"},
+        {"label": "列: A B C\n先頭 A・末尾 C", "next_label": "先頭から取り出す → A"},
+        {"label": "列: B C\n最初に入れた A が出た", "next_label": "先頭から取り出す → B", "emphasis": true},
+        {"label": "列: C\n次に入れた B が出た"}
+      ]
+    }
+  ]
+}

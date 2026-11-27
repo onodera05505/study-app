@@ -1,19 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="430" viewBox="0 0 640 430" role="img">
-<title>トランスポート層は TCP と UDP の2つだけ。HTTP・SMTP は上の層、ICMP は IP と同じ下の層。</title>
-<rect x="0.5" y="0.5" width="639" height="429" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(203.35 20)">
-<rect x="29.75" y="0" width="173.8" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="116.65" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">アプリケーション層</text>
-<text x="116.65" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">HTTP／SMTP／FTP／DNS</text>
-<rect x="4.55" y="102" width="224.2" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="116.65" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">トランスポート層</text>
-<text x="116.65" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">TCP／UDP（ポート番号で識別）</text>
-<rect x="0" y="204" width="233.3" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="116.65" y="226.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ネットワーク層</text>
-<text x="116.65" y="246.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">IP／ICMP（IP アドレスで識別）</text>
-<rect x="48.65" y="306" width="136" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="116.65" y="328.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">データリンク層</text>
-<text x="116.65" y="348.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">イーサネットなど</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="276" viewBox="0 0 640 276">
+<rect x="0.5" y="0.5" width="639" height="275" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(124.8 20)">
+<rect x="0" y="0" width="240" height="56" rx="4" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="120" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">アプリケーション層</text>
+<text x="120" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">用途ごとの通信規約</text>
+<text x="256" y="32.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="start">DNS・DHCP・FTP</text>
+<rect x="0" y="60" width="240" height="56" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="120" y="82.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">トランスポート層</text>
+<text x="120" y="102.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">ポート番号でアプリを識別</text>
+<text x="256" y="92.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="start">TCP・UDP</text>
+<rect x="0" y="120" width="240" height="56" rx="4" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="120" y="142.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ネットワーク層</text>
+<text x="120" y="162.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">IP アドレスで宛先へ経路制御</text>
+<text x="256" y="152.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="start">IP・ICMP</text>
+<rect x="0" y="180" width="240" height="56" rx="4" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="120" y="202.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">データリンク層</text>
+<text x="120" y="222.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">隣の機器との間を伝送</text>
+<text x="256" y="212.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="start">イーサネット・無線 LAN</text>
 </g>
-<text x="320" y="410" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">トランスポート層は TCP と UDP の2つだけ。HTTP・SMTP は上の層、ICMP は IP と同じ下の層。</text>
 </svg>

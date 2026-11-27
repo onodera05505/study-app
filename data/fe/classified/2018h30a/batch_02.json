@@ -1,0 +1,384 @@
+{
+ "exam": "2018h30a",
+ "range": "28-54",
+ "classifications": [
+  {
+   "number": 28,
+   "syllabus_item": 30,
+   "topic_term": "関係代数",
+   "topic_is_new": false,
+   "related_terms": [
+    "射影",
+    "選択",
+    "結合",
+    "関係モデル"
+   ],
+   "confidence": "high",
+   "notes": "自然結合の結果から Z を得るのに必要な演算（選択と射影）を問う。既存の論点「関係代数」（項目30、2019h31h 問28・2019r01a 問27）に合流。"
+  },
+  {
+   "number": 29,
+   "syllabus_item": 31,
+   "topic_term": "ロック粒度",
+   "topic_is_new": false,
+   "related_terms": [
+    "専有ロック",
+    "共有ロック",
+    "デッドロック",
+    "同時実行制御（排他制御）"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 30,
+   "syllabus_item": 31,
+   "topic_term": "フォワードリカバリ （ロールフォワード）",
+   "topic_is_new": false,
+   "related_terms": [
+    "ジャーナルファイル （ログファイル）",
+    "バックワードリカバリ（ロールバック）",
+    "チェックポイント",
+    "障害回復"
+   ],
+   "confidence": "high",
+   "notes": "2019h31h 問57（フルバックアップ＋ログで回復する方法）と同型だが、同問の公式の分野はマネジメント系で項目67「ロールフォワード」に付いている。本問の公式の分野はテクノロジ系なので分野をまたいで合流させず、項目31の用語例「フォワードリカバリ （ロールフォワード）」をそのまま採った。"
+  },
+  {
+   "number": 31,
+   "syllabus_item": 33,
+   "topic_term": "転送速度",
+   "topic_is_new": false,
+   "related_terms": [
+    "bps（bit per second：ビット／秒）",
+    "回線容量",
+    "伝送効率",
+    "スループット"
+   ],
+   "confidence": "high",
+   "notes": "伝送効率を考慮した伝送時間の計算。既存の項目33の論点「回線利用率」は回線容量に対する実効転送量の割合を求める別の計算なので合流させず、用語例「転送速度」を採った。"
+  },
+  {
+   "number": 32,
+   "syllabus_item": 34,
+   "topic_term": "リピータ",
+   "topic_is_new": false,
+   "related_terms": [
+    "ゲートウェイ",
+    "ブリッジ",
+    "ルータ",
+    "OSI 基本参照モデル"
+   ],
+   "confidence": "high",
+   "notes": "LAN 間接続装置の比較問題。正解の装置を論点にする既存の運用（2019h31h 問31 はゲートウェイ、2019r01a 問32 はレイヤー3（L3）スイッチ）に合わせ、正解の「リピータ」を採った。"
+  },
+  {
+   "number": 33,
+   "syllabus_item": 33,
+   "topic_term": "DNS",
+   "topic_is_new": false,
+   "related_terms": [
+    "ドメイン",
+    "TLD",
+    "DHCP",
+    "NAT（Network Address Translation：ネットワークアドレス変換）"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 34,
+   "syllabus_item": 37,
+   "topic_term": "MIME",
+   "topic_is_new": false,
+   "related_terms": [
+    "SMTP",
+    "HTML メール（MHTML）",
+    "ヘッダー",
+    "Base64"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 35,
+   "syllabus_item": 37,
+   "topic_term": "LTE",
+   "topic_is_new": false,
+   "related_terms": [
+    "MIMO",
+    "パケット交換サービス",
+    "5G（第 5 世代移動通信システム）",
+    "VoIP（Voice over Internet Protocol）"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 36,
+   "syllabus_item": 38,
+   "topic_term": "デジタル署名（署名鍵， 検証鍵）",
+   "topic_is_new": false,
+   "related_terms": [
+    "改ざん",
+    "メッセージダイジェスト",
+    "公開鍵暗号方式",
+    "完全性（Integrity）"
+   ],
+   "confidence": "high",
+   "notes": "既存の論点「デジタル署名（署名鍵， 検証鍵）」（項目38、2019r01a 問38）に合流。"
+  },
+  {
+   "number": 37,
+   "syllabus_item": 38,
+   "topic_term": "総当たり （ブルートフォース）攻撃",
+   "topic_is_new": false,
+   "related_terms": [
+    "ブロック暗号（AES（Advanced Encryption Standard） ほか）",
+    "鍵管理",
+    "・辞書攻撃",
+    "共通鍵暗号方式"
+   ],
+   "confidence": "high",
+   "notes": "AES-256 の鍵空間 2^256 を総当たりする試行回数の最大値を問う。"
+  },
+  {
+   "number": 38,
+   "syllabus_item": 38,
+   "topic_term": "共通鍵暗号方式",
+   "topic_is_new": true,
+   "related_terms": [
+    "公開鍵暗号方式",
+    "鍵管理",
+    "ハイブリッド暗号",
+    "ブロック暗号（AES（Advanced Encryption Standard） ほか）"
+   ],
+   "confidence": "high",
+   "notes": "項目38の用語例は「暗号方式（暗号化（暗号鍵） ，復号（復号鍵） ，共通鍵暗号方式（共通鍵） ，公開鍵暗号方式（公開鍵，秘密鍵） ）」と括弧内に別概念を列挙する形で、共通鍵暗号方式を単独で載せた用語例が他項目にも無いため新設。応用情報の論点マスタも同じ表記「共通鍵暗号方式」で新設している。"
+  },
+  {
+   "number": 39,
+   "syllabus_item": 38,
+   "topic_term": "真正性（Authenticity）",
+   "topic_is_new": false,
+   "related_terms": [
+    "信頼性 （Reliability）",
+    "可用性（Availability）",
+    "機密性（Confidentiality）",
+    "完全性（Integrity）"
+   ],
+   "confidence": "high",
+   "notes": "応用情報 2025r07a 問41 がほぼ同一問題（JIS Q 27000 の真正性・信頼性の定義）で、その分類（項目38・真正性（Authenticity））に合わせた。信頼性は related_terms に回した。"
+  },
+  {
+   "number": 40,
+   "syllabus_item": 39,
+   "topic_term": "CSIRT",
+   "topic_is_new": true,
+   "related_terms": [
+    "JPCERTコーディネーションセンター",
+    "情報セキュリティインシデント",
+    "ISMS ユーザーズガイド",
+    "組織における内部不正防止ガイドライン"
+   ],
+   "confidence": "high",
+   "notes": "項目39の用語例は「情報セキュリティ関連組織（ CSIRT，SOC（Security Operation Center） ）」と括弧内に別概念を列挙する形。設問の主題は CSIRT 1 語で、単独の用語例が他項目にも無いため新設。応用情報の論点マスタも同じ表記「CSIRT」で新設している。"
+  },
+  {
+   "number": 41,
+   "syllabus_item": 38,
+   "topic_term": "C&C サーバ",
+   "topic_is_new": true,
+   "related_terms": [
+    "ボット（ボットネット， 遠隔操作型ウイルス（RAT：Remote Access Trojan），C&C サーバ）",
+    "踏み台",
+    "DDoS 攻撃",
+    "バックドア"
+   ],
+   "confidence": "high",
+   "notes": "項目38の用語例「ボット（ボットネット， 遠隔操作型ウイルス（RAT：Remote Access Trojan），C&C サーバ）」の括弧内は別概念の列挙で、設問の主題は C&C サーバ 1 語。単独の用語例が無いため新設し、応用情報の論点マスタと同じ表記「C&C サーバ」にした。"
+  },
+  {
+   "number": 42,
+   "syllabus_item": 41,
+   "topic_term": "IDS（Intrusion Detection System：侵入検知システム）",
+   "topic_is_new": false,
+   "related_terms": [
+    "IPS（Intrusion Prevention System：侵入防止システム）",
+    "侵入検知",
+    "ネットワーク監視",
+    "ファジング"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 43,
+   "syllabus_item": 41,
+   "topic_term": "セキュアブート",
+   "topic_is_new": true,
+   "related_terms": [
+    "デジタル署名（署名鍵， 検証鍵）",
+    "マルウェア・不正プログラム対策（マルウェア対策ソフトの導入，マルウェア定義ファイルの更新ほか）",
+    "ルートキット",
+    "BIOS"
+   ],
+   "confidence": "medium",
+   "notes": "応用情報 2023r05a 問42 が同一問題で、分野・項目は同じ項目41（情報セキュリティ対策）に合わせた。ただし応用情報のシラバスにある用語例「セキュアブート（UEFI：Unified Extensible Firmware Interface）」は基本情報のシラバスには無いため、基本情報では「セキュアブート」として新設した。表記が応用情報側と異なる点で medium。"
+  },
+  {
+   "number": 44,
+   "syllabus_item": 42,
+   "topic_term": "無線LANセキュリティ",
+   "topic_is_new": true,
+   "related_terms": [
+    "MAC アドレス（Media Access Control address）フィルタリング",
+    "SSID",
+    "WPA3",
+    "無線LAN アクセスポイント"
+   ],
+   "confidence": "medium",
+   "notes": "公衆無線 LAN のアクセスポイントで採る対策と効果の組合せを問う。正解は端末間通信の遮断（プライバシーセパレータ）だが、設問は無線 LAN の対策全般を比較させる形なので総称を論点にした。用語例に総称が無いため新設し、応用情報の論点マスタと同じ表記「無線LANセキュリティ」にした。"
+  },
+  {
+   "number": 45,
+   "syllabus_item": 38,
+   "topic_term": "第三者中継（オープンリレー）",
+   "topic_is_new": false,
+   "related_terms": [
+    "SMTP",
+    "迷惑メール（スパム）",
+    "ログの取得",
+    "SMTP-AUTH"
+   ],
+   "confidence": "high",
+   "notes": "応用情報 2023r05a 問38 が同一問題で、その分類（項目38・第三者中継（オープンリレー））に合わせた。"
+  },
+  {
+   "number": 46,
+   "syllabus_item": 10,
+   "topic_term": "シーケンス図",
+   "topic_is_new": false,
+   "related_terms": [
+    "コミュニケーション図",
+    "ステートマシン図",
+    "タイミング図",
+    "オブジェクト図"
+   ],
+   "confidence": "medium",
+   "notes": "シーケンス図とコミュニケーション図のどちらにも表現されるもの（メッセージ）を問う。主題が2つの図にまたがるため、より中心的なシーケンス図を論点にしコミュニケーション図を related_terms に回した。項目は既存の UML 図の論点「アクティビティ図」（項目10）に合わせた。"
+  },
+  {
+   "number": 47,
+   "syllabus_item": 44,
+   "topic_term": "クラス",
+   "topic_is_new": false,
+   "related_terms": [
+    "インスタンス",
+    "属性",
+    "メソッド",
+    "カプセル化"
+   ],
+   "confidence": "high",
+   "notes": "クラスとインスタンスの関係を問う。応用情報の論点マスタもこの型の問いを項目44の「クラス」に付けている。"
+  },
+  {
+   "number": 48,
+   "syllabus_item": 44,
+   "topic_term": "モジュール結合度",
+   "topic_is_new": true,
+   "related_terms": [
+    "モジュール分割",
+    "独立性",
+    "データ結合",
+    "共通結合"
+   ],
+   "confidence": "high",
+   "notes": "2019r01a 問46（モジュール結合度が最も弱くなるもの＝データ結合）と同型。既存の論点「モジュール結合度」（項目44、topic_is_new=true）にそのまま合流させた。"
+  },
+  {
+   "number": 49,
+   "syllabus_item": 44,
+   "topic_term": "委譲",
+   "topic_is_new": true,
+   "related_terms": [
+    "クラス",
+    "継承 （インヘリタンス）",
+    "集約",
+    "カプセル化"
+   ],
+   "confidence": "high",
+   "notes": "オブジェクト指向の「委譲」の意味を問う。項目44の用語例には継承・汎化・集約はあるが委譲が無いため新設。"
+  },
+  {
+   "number": 50,
+   "syllabus_item": 49,
+   "topic_term": "XP（エクストリームプログラミング）",
+   "topic_is_new": false,
+   "related_terms": [
+    "継続的インテグレーション （CI）",
+    "テスト駆動開発（TDD）",
+    "ペアプログラミング",
+    "リファクタリング"
+   ],
+   "confidence": "high",
+   "notes": "既存の論点「XP（エクストリームプログラミング）」（項目49、2019r01a 問50）に合流。応用情報 2025r07h 問48 も同じ論点に付いている。"
+  },
+  {
+   "number": 51,
+   "syllabus_item": 56,
+   "topic_term": "WBS",
+   "topic_is_new": false,
+   "related_terms": [
+    "ワークパッケージ",
+    "WBS 辞書",
+    "スコープ（作業及び成果物）",
+    "ガントチャート"
+   ],
+   "confidence": "high",
+   "notes": "WBS を使う目的（作業を階層的に詳細化して管理可能な大きさに細分化する）を問う。既存の項目56の論点「スコープ（作業及び成果物）」は JIS Q 21500 の対象群を問う別の論点なので合流させず、用語例「WBS」を採った。"
+  },
+  {
+   "number": 52,
+   "syllabus_item": 58,
+   "topic_term": "アローダイアグラム",
+   "topic_is_new": false,
+   "related_terms": [
+    "ダミー作業",
+    "クリティカルパス",
+    "最早結合点時刻",
+    "CPM（Critical Path Method： クリティカルパス法）"
+   ],
+   "confidence": "high",
+   "notes": "既存の論点「アローダイアグラム」（項目58、2019h31h 問53・2019r01a 問52）に合流。所要日数を求める形も同じ。"
+  },
+  {
+   "number": 53,
+   "syllabus_item": 58,
+   "topic_term": "進捗率の算出",
+   "topic_is_new": true,
+   "related_terms": [
+    "進捗報告",
+    "小日程計画表（週間作業計画）",
+    "ガントチャート",
+    "人日"
+   ],
+   "confidence": "medium",
+   "notes": "計画作業量（人日）と完了状況から残作業量の割合を求める進捗把握の計算。用語例に進捗率・残作業量を表す語が無いため新設。項目は、計画表と完了予定日に基づく進捗把握なので時間（項目58）を採ったが、作業量（人日）の集計という面ではコスト（項目59）とも読めるため medium。"
+  },
+  {
+   "number": 54,
+   "syllabus_item": 59,
+   "topic_term": "工数見積り",
+   "topic_is_new": true,
+   "related_terms": [
+    "ファンクションポイント法",
+    "人月",
+    "生産性",
+    "ボトムアップ見積り"
+   ],
+   "confidence": "medium",
+   "notes": "FP は規模として与えられているだけで、問われているのは開発・導入教育・管理工数の積み上げ計算。2019h31h 問54（要員数の算出）と同じ既存の論点「工数見積り」（項目59）に合流させた。ファンクションポイント法そのものの説明を問う 2019r01a 問53 の論点とは分けたが、FP が設問に現れるため medium。"
+  }
+ ]
+}

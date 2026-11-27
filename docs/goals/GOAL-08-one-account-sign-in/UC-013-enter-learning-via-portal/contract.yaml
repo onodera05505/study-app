@@ -1,0 +1,312 @@
+# UC-013 まなびばから権限のある学びに入る — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-181〜208・263・274・289・406・407）
+# 読み方の決まりは docs/adr/ADR-0001（transport・direction・auth・operation 名の当て方）
+# 共有語彙（authSchemes・errorCodes・共有の形）は ../../../_shared/components.yaml
+# 学び側のパスワードでのログインと登録の経路は受け持たない経路で、この契約に operation を持たない（断りの形は UC-017 の x-no-boundary が名指す受け持たない経路の断り。本番で閉じていることを叩く形は UC-015 の probeRetiredPasswordRoute）
+# 学び側の operation の形は、与えられた学びの key が登録簿にある配備の形。key を解決できない配備の断りは UC-017 の x-no-boundary が名指す全経路の最終段の断りで、各 operation の errors に持たない
+x-uc: UC-013
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-18
+
+operations:
+  # ---- まなびば（認証と権限の正本。学びとは別の配備・別の DB） ----
+
+  signIn:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: none
+    summary: まなびばがメールとパスワードを受け取り、この端末にセッションを開いてアカウントと権限を返す
+    wire: { method: POST, path: /api/login, success: 200 }
+    request:
+      type: object
+      required: [email, password]
+      properties:
+        email: { type: string, pattern: '^[^\s@]+@[^\s@]+\.[^\s@]+$', description: 前後の空白を落とし小文字に畳んでから照合する }
+        password: { type: string, minLength: 1 }
+    response: { $ref: "#/schemas/AccountWithGrants" }
+    errors:
+      - code: INVALID_INPUT
+        when: メールが形を満たさない、またはパスワードが空
+        wire: { status: 400 }
+      - code: UNAUTHENTICATED
+        when: メールかパスワードが合わない（200 文字を超えるパスワードも同じ扱い）
+        wire: { status: 401 }
+    examples:
+      ok: { request: { email: yudai@example.com, password: harunokaze8 }, response: { account: { id: 8a0f1d62-3c47-4b10-9f85-d2e6a1c70b33, email: yudai@example.com, name: 山田 太郎, role: MEMBER }, grants: [ap, ip] } }
+      badEmail: { request: { email: yudai-example.com, password: harunokaze8 }, error: INVALID_INPUT }
+      wrongPassword: { request: { email: yudai@example.com, password: chigaupass9 }, error: UNAUTHENTICATED }
+
+  getMe:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: session
+    summary: セッションの本人のアカウントと、権限のある学びの key の一覧を返す
+    wire: { method: GET, path: /api/me, success: 200 }
+    response: { $ref: "#/schemas/AccountWithGrants" }
+    errors:
+      - code: UNAUTHENTICATED
+        when: セッションが無い、または期限が過ぎている
+        wire: { status: 401 }
+    examples:
+      ok: { response: { account: { id: 8a0f1d62-3c47-4b10-9f85-d2e6a1c70b33, email: yudai@example.com, name: 山田 太郎, role: MEMBER }, grants: [ap, ip] } }
+      noSession: { error: UNAUTHENTICATED }
+
+  signOut:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: session
+    summary: この端末のまなびばのセッションだけを終わらせ、セッションの Cookie を消す
+    wire: { method: POST, path: /api/logout, success: 200 }
+    response: { $ref: "../../../_shared/components.yaml#/schemas/Ok" }
+    errors:
+      - code: UNAUTHENTICATED
+        when: セッションが無い、または期限が過ぎている
+        wire: { status: 401 }
+    examples:
+      ok: { response: { ok: true } }
+      noSession: { error: UNAUTHENTICATED }
+
+  listLearnings:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 登録簿にある学びの一覧を返す（学びの URL や秘密は含めない）
+    wire: { method: GET, path: /api/learnings, success: 200 }
+    response:
+      type: object
+      required: [learnings]
+      properties:
+        learnings:
+          type: array
+          items:
+            type: object
+            required: [key, brand, kind, desc]
+            properties:
+              key: { type: string, minLength: 1 }
+              brand: { type: string }
+              kind: { type: string }
+              desc: { type: string }
+    errors: []
+    examples:
+      ok:
+        response: { learnings: [ { key: ip, brand: IT パスポート 最短合格, kind: 資格対策, desc: 過去問の出題頻度＝重要度の順に、最短で合格ラインへ } ] }
+
+  startSso:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: session
+    summary: 権限を確かめて使い捨てコードを発行し、その学びの入口へブラウザを戻す
+    wire: { method: GET, path: /sso/start, success: 302 }
+    request:
+      type: object
+      required: [app]
+      properties:
+        app: { type: string, minLength: 1, description: クエリの app。登録簿にある学びの key }
+    response: { type: object, required: [location], properties: { location: { type: string, description: Location ヘッダ。成功時はその学びの入口の /sso/callback に使い捨てコードを付けた絶対 URL } } }
+    errors:
+      - code: INVALID_INPUT
+        when: app が登録簿に無い（本文は JSON でなく平文の 1 文。名前は応答のヘッダ X-Error-Code）
+        wire: { status: 400 }
+      - code: UNAUTHENTICATED
+        when: セッションが無い（まなびばの中のログイン画面へ戻す 302。名前は応答のヘッダ X-Error-Code）
+        wire: { status: 302 }
+      - code: FORBIDDEN
+        when: その学びの権限が無い（まなびばの中の一覧へ戻す 302。名前は応答のヘッダ X-Error-Code）
+        wire: { status: 302 }
+    examples:
+      ok: { request: { app: ip }, response: { location: https://itpass-study-d02.pages.dev/sso/callback?code=3f1c9a52-7b0e-4a1d-9c3e-2f5b8d6a1e40 } }
+      unknownLearning: { request: { app: zzz }, error: INVALID_INPUT }
+      noSession: { request: { app: ip }, error: UNAUTHENTICATED }
+      noGrant: { request: { app: itc }, error: FORBIDDEN }
+
+  exchangeCode:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: sharedSecret
+    summary: 学び側サーバの呼び出しで使い捨てコードを本人のメールと名前に換え、そのコードを使用済みにする
+    wire: { method: POST, path: /api/sso/exchange, success: 200 }
+    request:
+      type: object
+      required: [code, app]
+      properties:
+        code: { type: string, minLength: 1, description: まなびばが発行した使い捨てコード }
+        app: { type: string, minLength: 1, description: 登録簿にある学びの key }
+    response: { type: object, required: [email, name], properties: { email: { type: string }, name: { type: string, maxLength: 50 } } }
+    errors:
+      - code: FORBIDDEN
+        when: 共有秘密が合わない・添えられていない・この配備に秘密が無い
+        wire: { status: 403 }
+      - code: INVALID_INPUT
+        when: code か app が空、または app が登録簿に無い
+        wire: { status: 400 }
+      - code: UNAUTHENTICATED
+        when: コードが無い・使用済み・期限切れ・別の学びに宛てて発行された
+        wire: { status: 401 }
+      - code: FORBIDDEN
+        when: 発行のあとでその学びの権限が外れている
+        wire: { status: 403 }
+    examples:
+      ok: { request: { code: 3f1c9a52-7b0e-4a1d-9c3e-2f5b8d6a1e40, app: ip }, response: { email: yudai@example.com, name: 山田 太郎 } }
+      badSecret: { request: { code: 3f1c9a52-7b0e-4a1d-9c3e-2f5b8d6a1e40, app: ip, secret: chigau-aikotoba }, error: FORBIDDEN }
+      unknownLearning: { request: { code: 3f1c9a52-7b0e-4a1d-9c3e-2f5b8d6a1e40, app: zzz }, error: INVALID_INPUT }
+      usedCode: { request: { code: 5b7e0c14-2a93-4de6-8f21-0c4ab9e35d77, app: ip }, error: UNAUTHENTICATED }
+      revokedGrant: { request: { code: c90d4e71-6f58-4a22-b1d3-7e8f05ac2461, app: itc }, error: FORBIDDEN }
+      badSecretBeforeUsedCode: { request: { code: 5b7e0c14-2a93-4de6-8f21-0c4ab9e35d77, app: ip, secret: chigau-aikotoba }, error: FORBIDDEN }
+
+  # ---- 学び側（この配備。まなびばから戻ってきた端末を受ける） ----
+
+  getAuthConfig:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 画面がログインの形を決めるために、まなびばの場所の有無とその場所、受け持つ学びを返す
+    wire: { method: GET, path: /api/auth/config, success: 200 }
+    response:
+      type: object
+      required: [sso, portal, app]
+      properties:
+        sso: { type: boolean, description: まなびばの場所が与えられているか。共有秘密の有無は答えない }
+        portal: { type: [string, "null"], description: まなびばの入口の URL。与えられていなければ null }
+        app: { type: string, description: この配備が受け持つ学びの key }
+    errors: []
+    examples:
+      ok: { response: { sso: true, portal: https://manabiba-5oz.pages.dev, app: ip } }
+      noPortal: { response: { sso: false, portal: null, app: ip } }
+
+  signInWithCode:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: none
+    summary: まなびばから戻った使い捨てコードを学び側サーバが換え、この学びのトークンを発行する
+    wire: { method: POST, path: /api/auth/sso, success: 200 }
+    request:
+      type: object
+      required: [code]
+      properties:
+        code: { type: string, minLength: 1, maxLength: 100 }
+    response:
+      type: object
+      required: [token, user]
+      properties:
+        token: { type: string, minLength: 1 }
+        user:
+          type: object
+          required: [id, name, role]
+          properties:
+            id: { type: string }
+            name: { type: string, minLength: 1, maxLength: 50 }
+            role: { type: string, enum: [ADMIN, MEMBER] }
+    errors:
+      - code: NOT_CONFIGURED
+        when: トークンの署名の秘密が配備に無い
+        wire: { status: 503 }
+      - code: NOT_CONFIGURED
+        when: この配備にまなびばの場所が無い
+        wire: { status: 404 }
+      - code: NOT_CONFIGURED
+        when: まなびばの場所はあるが共有秘密が無い
+        wire: { status: 503 }
+      - code: INVALID_INPUT
+        when: code が無い・文字列でない・100 文字を超える
+        wire: { status: 400 }
+      - code: UPSTREAM_UNAVAILABLE
+        when: まなびばへの呼び出しが届かない
+        wire: { status: 502 }
+      - code: FORBIDDEN
+        when: まなびばが権限無しとして断った
+        wire: { status: 403 }
+      - code: UNAUTHENTICATED
+        when: まなびばが換えず、断りが権限無し以外
+        wire: { status: 401 }
+    examples:
+      ok: { request: { code: 3f1c9a52-7b0e-4a1d-9c3e-2f5b8d6a1e40 }, response: { user: { id: 4d2b8a10-9c61-4f03-8a7d-15b2e6c94f88, name: 山田 太郎, role: MEMBER } } }
+      noSigningSecret: { request: { code: 7d4a2e09-8b16-4c53-ae72-0f93b5c81d24 }, error: NOT_CONFIGURED }
+      notConfigured: { request: { code: 3f1c9a52-7b0e-4a1d-9c3e-2f5b8d6a1e40 }, error: NOT_CONFIGURED }
+      emptyCode: { request: { code: "" }, error: INVALID_INPUT }
+      portalUnreachable: { request: { code: 3f1c9a52-7b0e-4a1d-9c3e-2f5b8d6a1e40 }, error: UPSTREAM_UNAVAILABLE }
+      noGrant: { request: { code: c90d4e71-6f58-4a22-b1d3-7e8f05ac2461 }, error: FORBIDDEN }
+      usedCode: { request: { code: 5b7e0c14-2a93-4de6-8f21-0c4ab9e35d77 }, error: UNAUTHENTICATED }
+
+  # ---- 端末の記憶（この端末に残る。鍵の名前は operation 名が表し、値の形だけを書く） ----
+
+  saveToken:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 学び側が発行したトークンを端末の記憶に保存する
+    request: { type: object, required: [token], properties: { token: { type: string, minLength: 1, description: 学び側が発行した JWT の文字列 } } }
+    response: { type: object, required: [token], properties: { token: { type: string, minLength: 1, description: 書いたあとに読むと、書いたトークン } } }
+    errors:
+      - code: STORAGE_UNAVAILABLE
+        when: 端末の記憶に書けない
+    examples:
+      ok: { request: { token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0ZDJiOGExMCIsIm5hbWUiOiJ0YXJvIiwicm9sZSI6Ik1FTUJFUiIsImV4cCI6MTc5OTk5OTk5OX0.c2lnbmF0dXJlLXNhbXBsZQ }, response: { token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0ZDJiOGExMCIsIm5hbWUiOiJ0YXJvIiwicm9sZSI6Ik1FTUJFUiIsImV4cCI6MTc5OTk5OTk5OX0.c2lnbmF0dXJlLXNhbXBsZQ } }
+      storageUnavailable: { request: { token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0ZDJiOGExMCIsIm5hbWUiOiJ0YXJvIiwicm9sZSI6Ik1FTUJFUiIsImV4cCI6MTc5OTk5OTk5OX0.c2lnbmF0dXJlLXNhbXBsZQ }, error: STORAGE_UNAVAILABLE }
+
+  readToken:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 端末の記憶にあるトークンを読む。無いか、端末の記憶が使えず読めなければ null
+    response: { type: object, required: [token], properties: { token: { type: [string, "null"] } } }
+    errors: []
+    examples:
+      ok: { response: { token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0ZDJiOGExMCIsIm5hbWUiOiJ0YXJvIiwicm9sZSI6Ik1FTUJFUiIsImV4cCI6MTc5OTk5OTk5OX0.c2lnbmF0dXJlLXNhbXBsZQ } }
+      none: { response: { token: null } }
+      unreadable: { response: { token: null } }
+
+  clearToken:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: この端末の記憶からトークンを捨てる。他の端末の記憶には触れず、端末の記憶が使えず捨てられなければ何もしない
+    response: { type: object, required: [token], properties: { token: { type: "null", description: 捨てたあとに読むと null } } }
+    errors: []
+    examples:
+      ok: { response: { token: null } }
+
+  markSessionExpired:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: ログインの期限が切れて締め出されたことの印を、このタブを閉じるまで残す
+    request: { type: object, required: [expired], properties: { expired: { type: string, const: "1" } } }
+    response: { type: object, required: [expired], properties: { expired: { type: boolean, description: 残したあとに期限切れの印を読むと true、端末の記憶が使えず残せなかったときは false（takeSessionExpired の expired と同じ読み） } } }
+    errors: []
+    examples:
+      ok: { request: { expired: "1" }, response: { expired: true } }
+
+  takeSessionExpired:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 期限切れの印を読み、同時に消す。知らせるのは一度だけ
+    response: { type: object, required: [expired], properties: { expired: { type: boolean } } }
+    errors: []
+    examples:
+      ok: { response: { expired: true } }
+      none: { response: { expired: false } }
+
+# この UC の 2 つ以上の operation が使う形（2 UC 以上で使う形は ../../../_shared/components.yaml）
+schemas:
+  AccountWithGrants:
+    type: object
+    required: [account, grants]
+    properties:
+      account: { $ref: "../../../_shared/components.yaml#/schemas/AccountCore" }
+      grants:
+        type: array
+        items: { type: string, minLength: 1, description: 権限のある学びの key。learning の昇順 }

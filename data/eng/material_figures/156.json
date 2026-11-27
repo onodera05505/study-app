@@ -1,0 +1,70 @@
+{
+  "topic_id": 156,
+  "term": "VPN",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "PC が暗号化して包んだパケットは途中の回線では読めず、会社の入口の機器で開けてから社内へ流れます。",
+      "nodes": [
+        {
+          "id": "pc",
+          "label": "在宅の PC\nVPN のアプリが\n暗号化して包む",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "net",
+          "label": "インターネット",
+          "row": 0,
+          "col": 1,
+          "shape": "cloud"
+        },
+        {
+          "id": "gw",
+          "label": "会社の入口の\nVPN の機器\n開けて復号する",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "lan",
+          "label": "社内の\nネットワーク",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "eye",
+          "label": "カフェの無線 LAN など\n途中の回線からは\n中身も本当の宛先も読めない",
+          "row": 1,
+          "col": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": "pc",
+          "to": "net",
+          "label": "トンネル"
+        },
+        {
+          "from": "net",
+          "to": "gw",
+          "label": "トンネル"
+        },
+        {
+          "from": "gw",
+          "to": "lan",
+          "label": "元のパケット"
+        },
+        {
+          "from": "eye",
+          "to": "net",
+          "style": "dashed",
+          "arrow": "none",
+          "label": "のぞいても暗号で読めない"
+        }
+      ]
+    }
+  ]
+}

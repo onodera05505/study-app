@@ -1,0 +1,75 @@
+{
+  "topic_id": 689,
+  "term": "CRM（Customer Relationship Management：顧客関係管理）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 顧客の情報を一か所に束ねる",
+      "caption": "窓口ごとに分かれていた記録を顧客ごとに 1 か所へ束ねます。どの窓口も同じ顧客像を見るので、応対が揃い顧客ごとの提案ができます。",
+      "nodes": [
+        {
+          "id": "shop",
+          "label": "店頭\n対面で買う・相談する",
+          "row": 0,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "call",
+          "label": "コールセンター\n電話で問い合わせる",
+          "row": 1,
+          "col": 0,
+          "icon": "phone"
+        },
+        {
+          "id": "web",
+          "label": "Web サイト\n画面で買う・調べる",
+          "row": 2,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "db",
+          "label": "統合記録\n顧客 1 人を 1 つの像に",
+          "row": 1,
+          "col": 1,
+          "shape": "cylinder",
+          "emphasis": true
+        },
+        {
+          "id": "act",
+          "label": "顧客ごとの扱い\n優良顧客を保つ・離反を防ぐ",
+          "row": 1,
+          "col": 2,
+          "icon": "people"
+        }
+      ],
+      "edges": [
+        {
+          "from": "shop",
+          "to": "db",
+          "label": "履歴を書く／同じ像を見る",
+          "arrow": "both"
+        },
+        {
+          "from": "call",
+          "to": "db",
+          "label": "履歴を書く／同じ像を見る",
+          "arrow": "both"
+        },
+        {
+          "from": "web",
+          "to": "db",
+          "label": "履歴を書く／同じ像を見る",
+          "arrow": "both"
+        },
+        {
+          "from": "db",
+          "to": "act",
+          "label": "購買・問合せ・対応の経緯"
+        }
+      ]
+    }
+  ]
+}

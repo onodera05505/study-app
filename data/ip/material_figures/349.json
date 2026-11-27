@@ -1,0 +1,65 @@
+{
+  "topic_id": 349,
+  "term": "代表的なシステム監査技法",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 証拠がなければ結論は書けない",
+      "caption": "予備調査からも本調査からも、監査技法で集めた監査証拠へ矢印が入ります。強調した監査証拠が結論を裏付けます。",
+      "nodes": [
+        {
+          "id": "pre",
+          "label": "予備調査\n全体像とリスクの所在をつかむ",
+          "row": 0,
+          "col": 0,
+          "icon": "search"
+        },
+        {
+          "id": "main",
+          "label": "本調査\nリスクの高い所を重点的に調べる",
+          "row": 0,
+          "col": 1,
+          "icon": "search"
+        },
+        {
+          "id": "ev",
+          "label": "監査証拠\n技法で確かめた事実",
+          "row": 1,
+          "col": 1,
+          "icon": "document",
+          "emphasis": true
+        },
+        {
+          "id": "con",
+          "label": "結論\n主観でなく証拠で書く",
+          "row": 1,
+          "col": 2,
+          "icon": "check"
+        }
+      ],
+      "edges": [
+        {
+          "from": "pre",
+          "to": "main",
+          "label": "リスクの高い所"
+        },
+        {
+          "from": "pre",
+          "to": "ev",
+          "label": "監査技法で集める"
+        },
+        {
+          "from": "main",
+          "to": "ev",
+          "label": "監査技法で集める"
+        },
+        {
+          "from": "ev",
+          "to": "con",
+          "label": "結論を裏付ける"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "target": "ip",
+  "unit": "04",
+  "status": "fixed",
+  "blocked": [],
+  "items": [
+    {
+      "no": 1,
+      "figure": {"topic_id": 16, "figure_id": 1},
+      "kind": "drawing",
+      "verdict": "applies",
+      "action": "after",
+      "what": "after を「### 導入の段階の中での位置」から「### 何のために行うのか」へ移した。図の段（着想→PoC→本格的な開発）は、本格的に作る前に小さく試すという目的の節の内容と一致するが、本文の 3 段階（計画策定・先行導入・本格導入）の箇条の直後では段の区切りが違って読めた。段を本文の 3 段階に描き直す案は採らなかった。3 段階の枠組みは 2024r06-q23 が問題文で作った振り分け先で、段ごとの役割はその問題の a〜c とほぼ同じ文になり、振り分けの線に当たるため。図の中身と caption は変えていない（現物を今の決まりに照らし、答え合わせ・写し・後の論点の語は見当たらなかった）",
+      "questions_checked": ["2025r07-q7", "2024r06-q23", "2022r04-q35", "2020r02o-q28"]
+    }
+  ],
+  "changed_figures": [
+    {
+      "topic_id": 16,
+      "figure_id": 1,
+      "png": "data/ip/rewrite_open_items/reports_2026-11-16/figures_png/ip-04/16-1.png",
+      "intended_point": "PoC は、本格的な開発にお金と時間をかける前に、一部で小さく試して実現できるかを確かめる段である"
+    }
+  ],
+  "moved": [],
+  "removed": [],
+  "restored": [],
+  "ledgers": [
+    {"file": "data/ip/rewrite_ledgers/04-3.json", "changed_points": 0, "removed_figures_added": 0, "removed_figures_dropped": 0}
+  ],
+  "not_fixed": [],
+  "not_fixed_counts": {},
+  "counts": {"applies": 1, "not_applies": 0, "data_suspect": 0},
+  "gates": {
+    "render_check": {"stops": 0, "warnings_before": 0, "warnings_after": 0},
+    "unfixed_warnings": []
+  },
+  "written": [
+    "data/ip/material_figures/16.json",
+    "public/figures/materials/ip/16-1.svg",
+    "data/ip/rewrite_open_items/reports_2026-11-16/figures_png/ip-04/16-1.png",
+    "data/ip/rewrite_open_items/reports_2026-11-16/figures_png/ip-04/16-1.svg",
+    "data/ip/rewrite_open_items/reports_2026-11-16/fig_04.json"
+  ]
+}

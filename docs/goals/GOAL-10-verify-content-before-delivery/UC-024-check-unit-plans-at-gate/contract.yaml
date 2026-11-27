@@ -1,0 +1,308 @@
+# UC-024 の境界: 作り手が手元で呼ぶ単元の構成の門の入口 1 つと、門が読むファイル（単元の構成・シラバス）の形。
+# 読み方は docs/adr/ADR-0008（手元の道具の境界を local-store で読む）。パスは相対ならコマンドを呼んだ作業ディレクトリが起点。
+# 読み書きの操作（direction: outbound）は ADR-0013 の読み: 操作ごとの関数が入口で、request の欄をキーワード引数で受け、response の形を返し、errors に当たる失敗は名前を code に持つ失敗として渡す。
+# 入口は scripts/check_unit_plans.py（--data）。単元の構成の形の正本はこのファイルの schemas.UnitPlan。
+x-uc: UC-024
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-19
+
+schemas:
+  Finding:
+    type: object
+    required: [kind, where, reason]
+    properties:
+      kind: { type: string, minLength: 1 }
+      where: { type: string, minLength: 1, description: ファイル・単元・まとまり・論点のどれか。まとまりは「まとまり n」で、n は学ぶ順の 1 始まり（束の名前と同じ数え方） }
+      reason: { type: string, minLength: 1 }
+  ToolError:
+    description: 入口が断ったときに標準出力へ 1 つだけ出す形。終了コードは 2（止める理由ありの 1 と分ける）。核（error の code と reason）は共有の形の ToolError、ここは名前の絞り込みと追加の欄
+    allOf:
+      - { $ref: "../../../_shared/components.yaml#/schemas/ToolError" }
+      - properties:
+          error:
+            properties:
+              code: { type: string, enum: [INVALID_INPUT, NOT_FOUND] }
+  UnitPlanFields:
+    type: object
+    description: 単元の構成の欄の名前と型。JSON でないか、これと合わないファイルの止める理由は unreadablePlan。最上位の欄とまとまりの欄は、無い・空でも読めた側（形の外にしない）。受け持ちの項目は subject・owner・topics のどれかが無いか subject が空なら読めない側
+    additionalProperties: false
+    properties:
+      unit_no: { type: integer, minimum: 1, description: シラバスの単元の番号。ファイル名の番号と同じ }
+      unit: { type: string }
+      overview: { type: string }
+      groups:
+        type: array
+        description: 並びが学ぶ順
+        items:
+          type: object
+          additionalProperties: false
+          properties:
+            name: { type: string }
+            description: { type: string }
+            topics:
+              type: array
+              description: 論点 ID の並び。並びがまとまりの中の学ぶ順。上限は limits.groupTopicsMax
+              items: { type: integer, minimum: 1 }
+      owners:
+        type: array
+        items:
+          type: object
+          required: [subject, owner, topics]
+          additionalProperties: false
+          properties:
+            subject: { type: string, minLength: 1 }
+            owner: { type: integer, minimum: 1 }
+            topics: { type: array, items: { type: integer, minimum: 1 } }
+      prerequisites:
+        type: object
+        description: キーは論点 ID の文字列。値の本数の上限は limits.prerequisitesMax
+        propertyNames: { pattern: "^[1-9][0-9]*$" }
+        additionalProperties:
+          type: array
+          items: { type: integer, minimum: 1 }
+  UnitPlan:
+    description: 門の止める理由のうち要素の欠け（missingElement）と受け持ちの論点の不足（ownerTooFewTopics）に当たらない単元の構成の形。欄の名前と型は UnitPlanFields
+    allOf:
+      - { $ref: "#/schemas/UnitPlanFields" }
+      - required: [unit_no, unit, overview, groups, owners]
+        properties:
+          unit: { minLength: 1 }
+          overview: { minLength: 1 }
+          groups:
+            minItems: 1
+            items:
+              required: [name, description, topics]
+              properties:
+                name: { minLength: 1 }
+                description: { minLength: 1 }
+                topics: { minItems: 1 }
+          owners:
+            items:
+              properties:
+                topics: { minItems: 2 }
+
+operations:
+  checkUnitPlans:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 資格対策の学びの単元の構成を教材の門にかけ、通すか止めるかと理由を返す
+    request:
+      type: object
+      required: [data]
+      additionalProperties: false
+      properties:
+        data: { type: string, pattern: "^data/[a-z]+$", description: 学びの置き場。末尾が登録簿の学びの key }
+    response:
+      type: object
+      required: [exitCode, units, topics, stops, warnings, limits]
+      properties:
+        exitCode: { type: integer, enum: [0, 1], description: プロセスの終了コードと同じ。0 は通した、1 は stops が 1 件以上。断ったときは終了コード 2 で ToolError を返す }
+        units: { type: integer, minimum: 0, description: 門が見た単元の構成の数 }
+        topics: { type: integer, minimum: 0, description: 門が見た単元の構成にある論点の数 }
+        stops:
+          type: array
+          description: 当たった物を件数で打ち切らずにすべて持つ
+          items:
+            allOf:
+              - { $ref: "#/schemas/Finding" }
+              - properties:
+                  kind:
+                    enum: [unreadablePlan, missingElement, unitNoMismatch, unknownUnit, unitNameMismatch, duplicateGroupName, topicNotGrouped, topicInManyGroups, topicRepeatedInGroup, foreignTopic, unknownTopic, groupTooLarge, prerequisiteKeyUnknown, prerequisiteKeyForeign, prerequisiteUnknown, prerequisiteSelf, prerequisiteDuplicate, prerequisiteTooMany, prerequisiteAfter, prerequisiteCycle, ownerTooFewTopics, ownerNotFirst, ownerNotInTopics, ownerTopicOutside]
+        warnings:
+          type: array
+          description: exitCode を変えない
+          items:
+            allOf:
+              - { $ref: "#/schemas/Finding" }
+              - properties:
+                  kind: { enum: [groupTooSmall] }
+        limits:
+          type: object
+          description: 門が使った値
+          required: [groupTopicsMax, groupTopicsMinWarn, prerequisitesMax]
+          properties:
+            groupTopicsMax: { type: integer, const: 8, description: まとまりの論点がこれを超えたら止める }
+            groupTopicsMinWarn: { type: integer, const: 3, description: まとまりの論点がこれに届かなければ警告 }
+            prerequisitesMax: { type: integer, const: 2, description: 1 論点の前提がこれを超えたら止める }
+    errors:
+      - code: INVALID_INPUT
+        when: 登録簿に無い学び
+      - code: INVALID_INPUT
+        when: 資格対策でない学び
+      - code: NOT_FOUND
+        when: シラバスか論点の一覧が無い
+      - code: INVALID_INPUT
+        when: シラバスか論点の一覧が読めない
+    examples:
+      pass:
+        request: { data: data/ip }
+        response:
+          exitCode: 0
+          units: 2
+          topics: 104
+          stops: []
+          warnings: []
+          limits: { groupTopicsMax: 8, groupTopicsMinWarn: 3, prerequisitesMax: 2 }
+      passWithoutPlans:
+        request: { data: data/fe }
+        response:
+          exitCode: 0
+          units: 0
+          topics: 0
+          stops: []
+          warnings: []
+          limits: { groupTopicsMax: 8, groupTopicsMinWarn: 3, prerequisitesMax: 2 }
+      stopped:
+        request: { data: data/ap }
+        response:
+          exitCode: 1
+          units: 1
+          topics: 41
+          stops:
+            - { kind: groupTooLarge, where: "unit_plans/09.json まとまり 3", reason: "まとまりの論点が 9 で上限 8 を超える" }
+          warnings:
+            - { kind: groupTooSmall, where: "unit_plans/09.json まとまり 6", reason: "まとまりの論点が 2 で 3 に届かない" }
+          limits: { groupTopicsMax: 8, groupTopicsMinWarn: 3, prerequisitesMax: 2 }
+      stoppedDuplicatePrerequisite:
+        request: { data: data/ap }
+        response:
+          exitCode: 1
+          units: 1
+          topics: 41
+          stops:
+            - { kind: prerequisiteDuplicate, where: "unit_plans/09.json 論点 12", reason: "前提に論点 5 が 2 回並ぶ" }
+          warnings: []
+          limits: { groupTopicsMax: 8, groupTopicsMinWarn: 3, prerequisitesMax: 2 }
+      unknownLearning:
+        request: { data: data/zzz }
+        error: INVALID_INPUT
+      notQualification:
+        request: { data: data/itc }
+        error: INVALID_INPUT
+      syllabusMissing:
+        request: { data: data/fe }
+        error: NOT_FOUND
+      syllabusUnreadable:
+        request: { data: data/ap }
+        error: INVALID_INPUT
+
+  readUnitPlan:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 1 単元の単元の構成を読む
+    request:
+      type: object
+      required: [path]
+      additionalProperties: false
+      properties:
+        path: { type: string, pattern: "^data/[a-z]+/unit_plans/[0-9]{2}\\.json$" }
+    response: { $ref: "#/schemas/UnitPlanFields" }
+    errors:
+      - code: NOT_FOUND
+        when: ファイルが無い
+      - code: INVALID_INPUT
+        when: JSON でないか欄の型か欄の名前が UnitPlanFields と合わない
+    examples:
+      ok:
+        request: { path: data/ip/unit_plans/21.json }
+        response:
+          unit_no: 21
+          unit: データベース
+          overview: 表の形でデータを持ち、キーで表どうしをつなぐ仕組みを学びます。
+          groups:
+            - { name: 表とキー, description: データを表で持ち、行をキーで見分けてつなぐ土台です。, topics: [214, 220, 205, 203] }
+          owners: []
+          prerequisites: { "205": [203] }
+      missing:
+        request: { path: data/ip/unit_plans/99.json }
+        error: NOT_FOUND
+      unreadable:
+        request: { path: data/ip/unit_plans/23.json }
+        error: INVALID_INPUT
+
+  readSyllabusUnits:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 学びのシラバスから単元の番号と名前と小項目の番号を読む
+    request:
+      type: object
+      required: [path]
+      additionalProperties: false
+      properties:
+        path: { type: string, pattern: "^data/[a-z]+/syllabus\\.json$" }
+    response:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            required: [number, middle_no, middle]
+            properties:
+              number: { type: integer, minimum: 1, description: 小項目の番号。論点の syllabus_item が指す }
+              middle_no: { type: integer, minimum: 1 }
+              middle: { type: string, minLength: 1 }
+    errors:
+      - code: NOT_FOUND
+        when: ファイルが無い
+      - code: INVALID_INPUT
+        when: 形として読めない
+    examples:
+      ok:
+        request: { path: data/ip/syllabus.json }
+        response: { items: [{ number: 1, middle_no: 1, middle: 企業活動 }] }
+      missing:
+        request: { path: data/zzz/syllabus.json }
+        error: NOT_FOUND
+      unreadable:
+        request: { path: data/ip/syllabus.json }
+        error: INVALID_INPUT
+
+  readTopicUnits:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 学びの論点の一覧から論点の番号と名前と小項目を読む
+    request:
+      type: object
+      required: [path]
+      additionalProperties: false
+      properties:
+        path: { type: string, pattern: "^data/[a-z]+/topics\\.json$" }
+    response:
+      type: object
+      required: [topics]
+      properties:
+        topics:
+          type: array
+          items:
+            type: object
+            required: [id, term, syllabus_item]
+            properties:
+              id: { type: integer, minimum: 1 }
+              term: { type: string, minLength: 1 }
+              syllabus_item: { type: integer, minimum: 1 }
+    errors:
+      - code: NOT_FOUND
+        when: ファイルが無い
+      - code: INVALID_INPUT
+        when: 形として読めない
+    examples:
+      ok:
+        request: { path: data/ip/topics.json }
+        response: { topics: [{ id: 9, term: ITガバナンス, syllabus_item: 32 }] }
+      missing:
+        request: { path: data/zzz/topics.json }
+        error: NOT_FOUND
+      unreadable:
+        request: { path: data/ip/topics.json }
+        error: INVALID_INPUT

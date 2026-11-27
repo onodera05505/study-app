@@ -4,19 +4,43 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "matrix",
       "after": "### 目的と手段の関係",
-      "caption": "目的として書かれた成約件数が KGI、そのために始めた活動を数えた提案件数が KPI。",
-      "nodes": [
-        {"id": "kgi", "label": "KGI（目標）\n成約件数", "row": 0, "col": 0, "emphasis": true},
-        {"id": "uri", "label": "売上高\nどちらでもない", "row": 0, "col": 1, "shape": "round"},
-        {"id": "kpi", "label": "KPI（過程）\n提案件数", "row": 1, "col": 0},
-        {"id": "act", "label": "始めた活動\n顧客に企画を提案", "row": 2, "col": 0}
+      "caption": "KGI と KPI を、測るもの・例・決める順番の 3 つの観点で並べた図です。行ごとに左右を見比べて読みます。",
+      "x": {
+        "label": "指標",
+        "values": [
+          "KGI",
+          "KPI"
+        ]
+      },
+      "y": {
+        "label": "観点",
+        "values": [
+          "測るもの",
+          "例",
+          "決める順番"
+        ]
+      },
+      "cells": [
+        [
+          "最終の目標に\n届いたか",
+          "目標へ向かう\n途中の活動の進み"
+        ],
+        [
+          "年間の来店者数",
+          "チラシの配布枚数"
+        ],
+        [
+          "先に決める\n目的",
+          "後で決める\n手段"
+        ]
       ],
-      "edges": [
-        {"from": "act", "to": "kpi", "label": "件数を数える"},
-        {"from": "kpi", "to": "kgi", "label": "積み上げると達成"},
-        {"from": "kgi", "to": "uri", "label": "目的に書かれていない", "style": "dashed", "arrow": "none"}
+      "emphasis": [
+        [
+          0,
+          0
+        ]
       ]
     }
   ]

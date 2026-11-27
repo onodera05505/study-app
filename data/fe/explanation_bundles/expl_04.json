@@ -1,0 +1,389 @@
+{
+  "bundle": "expl_04",
+  "topics": [
+    {
+      "topic_id": 6,
+      "term": "集約関数",
+      "field": "テクノロジ系",
+      "middle": "データベース",
+      "syllabus_item_name": "データ操作",
+      "question_count": 2,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q26",
+          "content_key": "186823670e14e3dc",
+          "exam_label": "令和元年度 秋期",
+          "number": 26,
+          "stem": "“得点”表から，学生ごとに全科目の点数の平均を算出し，平均が80点以上の学生の学生番号とその平均点を求める。aに入れる適切な字句はどれか。ここで，実線の下線は主キーを表す。",
+          "choices": {
+            "ア": "科目 HAVING AVG(点数) >= 80",
+            "イ": "科目 WHERE 点数 >= 80",
+            "ウ": "学生番号 HAVING AVG(点数) >= 80",
+            "エ": "学生番号 WHERE 点数 >= 80"
+          },
+          "answer": "ウ",
+          "has_figure": true,
+          "figure_description": "関係“得点”のスキーマと，その下に置かれた〔SQL文〕のブロック。\n\n得点（学生番号, 科目, 点数）\n\n（“学生番号”と“科目”の2つに実線の下線が引かれている。“点数”には下線はない。）\n\n〔SQL文〕\n\nSELECT 学生番号, AVG(点数)\nFROM 得点\nGROUP BY ［ a ］\n\n（［ a ］の位置は長方形の枠で囲まれた空欄で，枠の中央に a と書かれている。）",
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2019h31h-q27",
+          "content_key": "f11d424a6777caeb",
+          "exam_label": "平成31年度 春期",
+          "number": 27,
+          "stem": "“中間テスト”表からクラスごと，教科ごとの平均点を求め，クラス名，教科名の昇順に表示する SQL 文中の a に入れる字句はどれか。",
+          "choices": {
+            "ア": "GROUP BY クラス名, 教科名 ORDER BY クラス名, AVG(点数)",
+            "イ": "GROUP BY クラス名, 教科名 ORDER BY クラス名, 教科名",
+            "ウ": "GROUP BY クラス名, 教科名, 学生番号 ORDER BY クラス名, 教科名, 平均点",
+            "エ": "GROUP BY クラス名, 平均点 ORDER BY クラス名, 教科名"
+          },
+          "answer": "イ",
+          "has_figure": true,
+          "figure_description": "表定義と〔SQL 文〕が示されている。\n\n中間テスト（クラス名，教科名，学生番号，名前，点数）\n\n〔SQL 文〕\nSELECT クラス名, 教科名, AVG(点数) AS 平均点\n    FROM 中間テスト\n    ［ a ］\n\n（［ a ］の位置は空欄の長方形の枠で示されている）",
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 7,
+      "term": "ポート番号",
+      "field": "テクノロジ系",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "通信プロトコル",
+      "question_count": 2,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q34",
+          "content_key": "a6fa63f96806b477",
+          "exam_label": "令和元年度 秋期",
+          "number": 34,
+          "stem": "クライアントAがポート番号8080のHTTPプロキシサーバBを経由してポート番号80のWebサーバCにアクセスしているとき，宛先ポート番号が常に8080になるTCPパケットはどれか。",
+          "choices": {
+            "ア": "AからBへのHTTP要求及びCからBへのHTTP応答",
+            "イ": "AからBへのHTTP要求だけ",
+            "ウ": "BからAへのHTTP応答だけ",
+            "エ": "BからCへのHTTP要求及びCからBへのHTTP応答"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2019h31h-q34",
+          "content_key": "cd0012701d0f3e15",
+          "exam_label": "平成31年度 春期",
+          "number": 34,
+          "stem": "PC と Web サーバが HTTP で通信している。PC から Web サーバ宛てのパケットでは，送信元ポート番号は PC 側で割り当てた 50001，宛先ポート番号は 80 であった。Web サーバから PC への戻りのパケットでのポート番号の組合せはどれか。",
+          "choices": {
+            "ア": "送信元（Web サーバ）のポート番号：80 ，宛先（PC）のポート番号：50001",
+            "イ": "送信元（Web サーバ）のポート番号：50001 ，宛先（PC）のポート番号：80",
+            "ウ": "送信元（Web サーバ）のポート番号：80 と 50001 以外からサーバ側で割り当てた番号 ，宛先（PC）のポート番号：80",
+            "エ": "送信元（Web サーバ）のポート番号：80 と 50001 以外からサーバ側で割り当てた番号 ，宛先（PC）のポート番号：50001"
+          },
+          "answer": "ア",
+          "has_figure": true,
+          "figure_description": "選択肢が組合せの表になっている。\n\n| | 送信元（Web サーバ）のポート番号 | 宛先（PC）のポート番号 |\n| --- | --- | --- |\n| ア | 80 | 50001 |\n| イ | 50001 | 80 |\n| ウ | 80 と 50001 以外からサーバ側で割り当てた番号 | 80 |\n| エ | 80 と 50001 以外からサーバ側で割り当てた番号 | 50001 |",
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 8,
+      "term": "PDM（Precedence Diagramming Method：プレシデンスダイアグラム法）",
+      "field": "マネジメント系",
+      "middle": "プロジェクトマネジメント",
+      "syllabus_item_name": "プロジェクトの時間",
+      "question_count": 2,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q51",
+          "content_key": "173805f52958f170",
+          "exam_label": "令和元年度 秋期",
+          "number": 51,
+          "stem": "二つのアクティビティが次の関係にあるとき，論理的な依存関係はどれか。\n“システム要件定義プロセス”が完了すれば，“システム方式設計プロセス”が開始できる。",
+          "choices": {
+            "ア": "FF 関係（Finish-to-Finish）",
+            "イ": "FS 関係（Finish-to-Start）",
+            "ウ": "SF 関係（Start-to-Finish）",
+            "エ": "SS 関係（Start-to-Start）"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2019h31h-q52",
+          "content_key": "e41d06d85eacf722",
+          "exam_label": "平成31年度 春期",
+          "number": 52,
+          "stem": "ある会場で資格試験を実施する際のアクティビティである“受付”と“試験”の依存関係のうち，プレシデンスダイアグラム法（PDM）の開始-終了関係はどれか。",
+          "choices": {
+            "ア": "受付の開始から 30 分経過したら，試験を開始する。",
+            "イ": "受付の終了から 10 分経過したら，試験を開始する。",
+            "ウ": "受付の終了から 45 分経過したら，試験を終了する。",
+            "エ": "試験の開始から 20 分経過したら，受付を終了する。"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 11,
+      "term": "ROI（Return On Investment：投資利益率）",
+      "field": "ストラテジ系",
+      "middle": "システム企画",
+      "syllabus_item_name": "システム化計画",
+      "question_count": 2,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q77",
+          "content_key": "d3c9d580bde85a44",
+          "exam_label": "令和元年度 秋期",
+          "number": 77,
+          "stem": "ROI を説明したものはどれか。",
+          "choices": {
+            "ア": "一定期間におけるキャッシュフロー（インフロー，アウトフロー含む）に対して，現在価値でのキャッシュフローの合計値を求めるものである。",
+            "イ": "一定期間におけるキャッシュフロー（インフロー，アウトフロー含む）に対して，合計値がゼロとなるような，割引率を求めるものである。",
+            "ウ": "投資額に見合うリターンが得られるかどうかを，利益額を分子に，投資額を分母にして算出するものである。",
+            "エ": "投資による実現効果によって，投資額をどれだけの期間で回収可能かを定量的に算定するものである。"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2019h31h-q65",
+          "content_key": "ae566fc02f9fadba",
+          "exam_label": "平成31年度 春期",
+          "number": 65,
+          "stem": "投資案件において，5 年間の投資効果を ROI（Return On Investment）で評価した場合，四つの案件 a〜d のうち，最も ROI が高いものはどれか。ここで，割引率は考慮しなくてもよいものとする。",
+          "choices": {
+            "ア": "a",
+            "イ": "b",
+            "ウ": "c",
+            "エ": "d"
+          },
+          "answer": "ア",
+          "has_figure": true,
+          "figure_description": "案件 a〜d ごとに，年目・利益・投資額を示した 4 つの表。各表とも 1 列目は項目名，2 列目は投資額の欄，3 列目以降が 1〜5 年目の欄。\n\n案件 a\n\n| 項目 | （投資額の欄） | 1 | 2 | 3 | 4 | 5 |\n| --- | --- | --- | --- | --- | --- | --- |\n| 年目 | （空欄の枠） | 1 | 2 | 3 | 4 | 5 |\n| 利益 | （空欄の枠） | 15 | 30 | 45 | 30 | 15 |\n| 投資額 | 100 | （空欄の枠） | （空欄の枠） | （空欄の枠） | （空欄の枠） | （空欄の枠） |\n\n案件 b\n\n| 項目 | （投資額の欄） | 1 | 2 | 3 | 4 | 5 |\n| --- | --- | --- | --- | --- | --- | --- |\n| 年目 | （空欄の枠） | 1 | 2 | 3 | 4 | 5 |\n| 利益 | （空欄の枠） | 105 | 75 | 45 | 15 | 0 |\n| 投資額 | 200 | （空欄の枠） | （空欄の枠） | （空欄の枠） | （空欄の枠） | （空欄の枠） |\n\n案件 c\n\n| 項目 | （投資額の欄） | 1 | 2 | 3 | 4 | 5 |\n| --- | --- | --- | --- | --- | --- | --- |\n| 年目 | （空欄の枠） | 1 | 2 | 3 | 4 | 5 |\n| 利益 | （空欄の枠） | 60 | 75 | 90 | 75 | 60 |\n| 投資額 | 300 | （空欄の枠） | （空欄の枠） | （空欄の枠） | （空欄の枠） | （空欄の枠） |\n\n案件 d\n\n| 項目 | （投資額の欄） | 1 | 2 | 3 | 4 | 5 |\n| --- | --- | --- | --- | --- | --- | --- |\n| 年目 | （空欄の枠） | 1 | 2 | 3 | 4 | 5 |\n| 利益 | （空欄の枠） | 105 | 105 | 105 | 105 | 105 |\n| 投資額 | 400 | （空欄の枠） | （空欄の枠） | （空欄の枠） | （空欄の枠） | （空欄の枠） |",
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 14,
+      "term": "基数",
+      "field": "テクノロジ系",
+      "middle": "基礎理論",
+      "syllabus_item_name": "離散数学",
+      "question_count": 2,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q1",
+          "content_key": "8a424acd91f2beec",
+          "exam_label": "平成31年度 春期",
+          "number": 1,
+          "stem": "10 進数の演算式 7÷32 の結果を 2 進数で表したものはどれか。",
+          "choices": {
+            "ア": "0.001011",
+            "イ": "0.001101",
+            "ウ": "0.00111",
+            "エ": "0.0111"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2018h30a-q1",
+          "content_key": "c65f22a57701709f",
+          "exam_label": "平成30年度 秋期",
+          "number": 1,
+          "stem": "16 進数の小数 0.248 を 10 進数の分数で表したものはどれか。",
+          "choices": {
+            "ア": "31/32",
+            "イ": "31/125",
+            "ウ": "31/512",
+            "エ": "73/512"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 16,
+      "term": "論理積",
+      "field": "テクノロジ系",
+      "middle": "基礎理論",
+      "syllabus_item_name": "離散数学",
+      "question_count": 2,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q2",
+          "content_key": "a98562e59e8c97e8",
+          "exam_label": "平成31年度 春期",
+          "number": 2,
+          "stem": "最上位をパリティビットとする 8 ビット符号において，パリティビット以外の下位 7 ビットを得るためのビット演算はどれか。",
+          "choices": {
+            "ア": "16 進数 0F との AND をとる。",
+            "イ": "16 進数 0F との OR をとる。",
+            "ウ": "16 進数 7F との AND をとる。",
+            "エ": "16 進数 FF との XOR（排他的論理和）をとる。"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2018h30a-q2",
+          "content_key": "dba1e7faf233c14c",
+          "exam_label": "平成30年度 秋期",
+          "number": 2,
+          "stem": "次に示す手順は，列中の少なくとも一つは 1 であるビット列が与えられたとき，最も右にある 1 を残し，他のビットを全て 0 にするアルゴリズムである。例えば，00101000 が与えられたとき，00001000 が求まる。a に入る論理演算はどれか。\n手順1 与えられたビット列 A を符号なしの 2 進数と見なし，A から 1 を引き，結果を B とする。\n手順2 A と B の排他的論理和（XOR）を求め，結果を C とする。\n手順3 A と C の ［ a ］ を求め，結果を A とする。",
+          "choices": {
+            "ア": "排他的論理和（XOR）",
+            "イ": "否定論理積（NAND）",
+            "ウ": "論理積（AND）",
+            "エ": "論理和（OR）"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 29,
+      "term": "外部割込み",
+      "field": "テクノロジ系",
+      "middle": "コンピュータ構成要素",
+      "syllabus_item_name": "プロセッサ",
+      "question_count": 2,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q9",
+          "content_key": "46ba3980d7efd5e9",
+          "exam_label": "平成31年度 春期",
+          "number": 9,
+          "stem": "外部割込みの原因となるものはどれか。",
+          "choices": {
+            "ア": "ゼロによる除算命令の実行",
+            "イ": "存在しない命令コードの実行",
+            "ウ": "タイマによる時間経過の通知",
+            "エ": "ページフォールトの発生"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2017h29a-q10",
+          "content_key": "a44977b14a94be86",
+          "exam_label": "平成29年度 秋期",
+          "number": 10,
+          "stem": "外部割込みに分類されるものはどれか。",
+          "choices": {
+            "ア": "インターバルタイマによって，指定時間が経過したときに生じる割込み",
+            "イ": "演算結果のオーバフローやゼロによる除算で生じる割込み",
+            "ウ": "仮想記憶管理において，存在しないページへのアクセスによって生じる割込み",
+            "エ": "ソフトウェア割込み命令の実行によって生じる割込み"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 32,
+      "term": "キャッシュメモリ",
+      "field": "テクノロジ系",
+      "middle": "コンピュータ構成要素",
+      "syllabus_item_name": "メモリ",
+      "question_count": 2,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q10",
+          "content_key": "34d632c0b73349b3",
+          "exam_label": "平成31年度 春期",
+          "number": 10,
+          "stem": "A 〜 D を，主記憶の実効アクセス時間が短い順に並べたものはどれか。",
+          "choices": {
+            "ア": "A, B, C, D",
+            "イ": "A, D, B, C",
+            "ウ": "C, D, A, B",
+            "エ": "D, C, A, B"
+          },
+          "answer": "イ",
+          "has_figure": true,
+          "figure_description": "A 〜 D の構成を示す表。\n\n| | キャッシュメモリ 有無 | キャッシュメモリ アクセス時間（ナノ秒） | キャッシュメモリ ヒット率（％） | 主記憶 アクセス時間（ナノ秒） |\n| --- | --- | --- | --- | --- |\n| A | なし | － | － | 15 |\n| B | なし | － | － | 30 |\n| C | あり | 20 | 60 | 70 |\n| D | あり | 10 | 90 | 80 |",
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2018h30h-q11",
+          "content_key": "5ce7210d50a71c50",
+          "exam_label": "平成30年度 春期",
+          "number": 11,
+          "stem": "キャッシュメモリに関する記述のうち，適切なものはどれか。",
+          "choices": {
+            "ア": "キャッシュメモリにヒットしない場合に割込みが生じ，プログラムによって主記憶からキャッシュメモリにデータが転送される。",
+            "イ": "キャッシュメモリは，実記憶と仮想記憶とのメモリ容量の差を埋めるために採用される。",
+            "ウ": "データ書込み命令を実行したときに，キャッシュメモリと主記憶の両方を書き換える方式と，キャッシュメモリだけを書き換えておき，主記憶の書換えはキャッシュメモリから当該データが追い出されるときに行う方式とがある。",
+            "エ": "半導体メモリのアクセス速度の向上が著しいので，キャッシュメモリの必要性は減っている。"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    }
+  ]
+}

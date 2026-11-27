@@ -1,0 +1,312 @@
+# UC-027 の境界: 作り手が手元で呼ぶ道具の入口 7 つ（投入の組み立て・図の差し込み・図の仕様の検査・実データの描画の検査・流す前の投入の検査・投入後の突き合わせ・配る本文の教材の一覧）の形。
+# 読み方は docs/adr/ADR-0008（手元の道具の境界を local-store で読む）。パスは相対ならコマンドを呼んだ作業ディレクトリが起点。
+# 入口は scripts/build_seed.py・scripts/attach_material_figures.py・scripts/render_material_figures.py（--check）・scripts/check_render.sh・scripts/check_seed.py・scripts/verify_seed_remote.py・scripts/material_generations.py。
+# request の各欄は同じ名前の引数（examName は --exam-name、dryRun は --dry-run のように、大文字の前に - を入れた小文字）。checkRender の learning だけは第 1 引数。
+# 単元の構成の形と判定は UC-024 の契約が持つ。投入の表の形の正本は DB のスキーマ。教材の世代の選び方の正本は scripts/material_generations.py。
+x-uc: UC-027
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-19
+
+schemas:
+  GenerationCounts:
+    type: object
+    description: 論点ごとに選んだ世代（最も新しい世代、同じ世代の中では後のファイル）で 1 論点を 1 回だけ数えた、世代の名前ごとの論点の数。選んだ論点が 0 の世代は持たない
+    propertyNames: { pattern: "^materials(_v[0-9]+)?$" }
+    additionalProperties: { type: integer, minimum: 1 }
+  ToolError:
+    description: 入口が断ったときに標準出力へ 1 つだけ出す形。終了コードは 0 でない。核（error の code と reason）は共有の形の ToolError、ここは名前の絞り込みと追加の欄
+    allOf:
+      - { $ref: "../../../_shared/components.yaml#/schemas/ToolError" }
+      - properties:
+          error:
+            properties:
+              code: { type: string, enum: [INVALID_INPUT, NOT_FOUND, CONFLICT] }
+
+operations:
+  buildSeed:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 資格対策の学びの投入を、教材の世代と単元の構成から組み立てる
+    request:
+      type: object
+      required: [data]
+      additionalProperties: false
+      properties:
+        data: { type: string, pattern: "^data/[a-z]+$", description: 学びの置き場。末尾が登録簿の学びの key }
+        out: { type: string, minLength: 1, description: 投入の書き出し先。省略すると学びの置き場の seed.sql }
+        examName: { type: string, minLength: 1, description: 出典に入れる試験名。省略すると登録簿の学びの名前。渡しても登録簿に無い学びは断る }
+        figures: { type: string, minLength: 1, description: 道具の --figures にそのまま渡す値 }
+    response:
+      type: object
+      required: [exitCode, output, topicsByGeneration, units]
+      properties:
+        exitCode: { type: integer, const: 0 }
+        output: { type: string, minLength: 1, description: 書き出した投入のパス }
+        topicsByGeneration: { $ref: "#/schemas/GenerationCounts" }
+        units: { type: integer, minimum: 0, description: 投入に含めた単元の構成の数 }
+    errors:
+      - code: INVALID_INPUT
+        when: 登録簿に無い学び
+      - code: CONFLICT
+        when: 単元の構成が単元の構成の門の止める理由に当たる
+    examples:
+      ok:
+        request: { data: data/ip }
+        response: { exitCode: 0, output: data/ip/seed.sql }
+      unchanged:
+        request: { data: data/fe }
+        response: { exitCode: 0, output: data/fe/seed.sql, topicsByGeneration: { materials_v3: 315 }, units: 0 }
+      unknownLearning:
+        request: { data: data/zzz, examName: 架空の試験 }
+        error: INVALID_INPUT
+      planStops:
+        request: { data: data/ap }
+        error: CONFLICT
+      unknownLearningBeforePlanStops:
+        request: { data: data/zzz }
+        error: INVALID_INPUT
+
+  attachMaterialFigures:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 論点ごとに配る本文と同じ選び方で選んだ教材の世代に、図の仕様の図を差し込む
+    request:
+      type: object
+      required: [data]
+      additionalProperties: false
+      properties:
+        data: { type: string, pattern: "^data/[a-z]+$" }
+        public: { type: string, minLength: 1, description: 図の画像の配信の置き場。省略すると public }
+        only:
+          type: array
+          minItems: 1
+          description: 絞る論点の番号
+          items: { type: integer, minimum: 1 }
+        dryRun: { type: boolean, description: true なら教材を書き換えず、結果だけを返す }
+        allToExplanation: { type: boolean, description: true なら前の世代から選んだ論点の図を、差し込み位置を見ずに短い説明の末尾に置く。書き直した世代から選んだ論点には効かない }
+    response:
+      type: object
+      required: [exitCode, figures, topicsByGeneration, problems]
+      properties:
+        exitCode: { type: integer, enum: [0, 1], description: プロセスの終了コードと同じ。1 は problems が 1 件以上 }
+        figures: { type: integer, minimum: 0, description: 差し込んだ図の数 }
+        topicsByGeneration: { $ref: "#/schemas/GenerationCounts" }
+        problems:
+          type: array
+          description: 差し込まなかった図ごとに 1 件。画像が置き場に無い図と、書き直した世代から選んだ論点で差し込み位置の見出しが教材に無い図。形は図の仕様書の門の表と同じ「{where}: 理由」
+          items: { type: string, minLength: 1 }
+    errors:
+      - code: NOT_FOUND
+        when: 学びの置き場が無い
+    examples:
+      ok:
+        request: { data: data/ip }
+        response: { exitCode: 0, problems: [] }
+      withProblems:
+        request: { data: data/ip, only: [205], dryRun: true }
+        response: { exitCode: 1, figures: 0, topicsByGeneration: { materials_v4: 1 }, problems: ["[205.json] 論点 205 図 1: after '### しくみ' が教材に無い"] }
+      missing:
+        request: { data: data/zzz }
+        error: NOT_FOUND
+
+  checkFigureSpecs:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 図の仕様を検査し、差し込み位置の見出しが配る本文と同じ選び方の教材に実在するかを確かめる
+    request:
+      type: object
+      required: [data, check]
+      additionalProperties: false
+      properties:
+        data: { type: string, pattern: "^data/[a-z]+$" }
+        check: { type: boolean, const: true, description: 描かずに検証だけをする（--check） }
+        only:
+          type: array
+          minItems: 1
+          description: 絞る論点の番号
+          items: { type: integer, minimum: 1 }
+    response:
+      type: object
+      required: [exitCode, findings]
+      properties:
+        exitCode: { type: integer, enum: [0, 1], description: 1 はエラーが 1 件以上 }
+        findings:
+          type: array
+          description: 判定の文言の正本は図の仕様書の門の表
+          items: { type: string, minLength: 1 }
+    errors:
+      - code: NOT_FOUND
+        when: 学びの置き場が無い
+    examples:
+      ok:
+        request: { data: data/ip, check: true, only: [1] }
+        response: { exitCode: 0, findings: [] }
+      afterMissing:
+        request: { data: data/ip, check: true, only: [205] }
+        response: { exitCode: 1, findings: ["[205.json] 論点 205 図 1: after '### しくみ' が教材に無い"] }
+      missing:
+        request: { data: data/zzz, check: true }
+        error: NOT_FOUND
+
+  checkRender:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 配る本文と同じ選び方で選んだ教材の全件を描き、決めた記法だけが解釈されているかを確かめる
+    request:
+      type: object
+      properties:
+        learning: { type: string, pattern: "^[a-z]+$", description: 第 1 引数。登録簿の学びの key。省略すると ip。学びの置き場は呼んだ作業ディレクトリの data/<learning> }
+    response:
+      type: object
+      required: [exitCode, topics, topicsByGeneration]
+      properties:
+        exitCode: { type: integer, enum: [0, 1], description: 1 は描画の誤りが 1 件以上 }
+        topics: { type: integer, minimum: 0 }
+        topicsByGeneration: { $ref: "#/schemas/GenerationCounts" }
+    errors:
+      - code: INVALID_INPUT
+        when: 登録簿に無い学び
+    examples:
+      ok:
+        request: { learning: ip }
+        response: { exitCode: 0 }
+      unknownLearning:
+        request: { learning: zzz }
+        error: INVALID_INPUT
+
+  checkSeed:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 流す前の投入の中身を検査し、問題があれば示して失敗で終える
+    request:
+      type: object
+      required: [data]
+      additionalProperties: false
+      properties:
+        data: { type: string, pattern: "^data/[a-z]+$", description: 学びの置き場。末尾が登録簿の学びの key }
+        sql: { type: string, minLength: 1, description: 検査する投入。省略すると学びの置き場の seed.sql }
+        figures: { type: string, minLength: 1, description: 過去問の図の画像の置き場。省略すると public/figures の下の、学びの key と同じ名前のディレクトリ }
+        public: { type: string, minLength: 1, description: 教材の図の画像の配信の置き場。省略すると public }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1], description: プロセスの終了コードと同じ。1 は問題が 1 件以上 }
+    errors:
+      - code: NOT_FOUND
+        when: 検査する投入が無い
+      - code: INVALID_INPUT
+        when: 登録簿に無い学び
+    examples:
+      ok:
+        request: { data: data/ip }
+        response: { exitCode: 0 }
+      withProblems:
+        request: { data: data/ap, sql: data/ap/seed_wrong_citation.sql }
+        response: { exitCode: 1 }
+      seedMissing:
+        request: { data: data/ip, sql: data/ip/no_such_seed.sql }
+        error: NOT_FOUND
+      unknownLearning:
+        request: { data: data/zzz, sql: data/ip/seed.sql }
+        error: INVALID_INPUT
+      seedMissingBeforeUnknownLearning:
+        request: { data: data/zzz }
+        error: NOT_FOUND
+
+  verifySeedRemote:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 流したあとの DB の中身を、流した投入と突き合わせる
+    request:
+      type: object
+      required: [data, exam]
+      additionalProperties: false
+      properties:
+        data: { type: string, pattern: "^data/[a-z]+$" }
+        exam: { type: string, pattern: "^[a-z]+$", description: 登録簿の学びの key }
+        sql: { type: string, minLength: 1, description: 突き合わせる投入。省略すると学びの置き場の seed.sql }
+        local: { type: boolean, description: true なら本番でなく手元の DB を見る }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1], description: 1 は食い違いが 1 件以上。単元の構成を持つ表は、投入がその表を書くときだけ行の数を一致で見る }
+    errors:
+      - code: INVALID_INPUT
+        when: 登録簿に無い学び
+      - code: NOT_FOUND
+        when: 突き合わせる投入が無い
+    examples:
+      ok:
+        request: { data: data/ip, exam: ip, local: true }
+        response: { exitCode: 0 }
+      mismatch:
+        request: { data: data/ip, exam: ip }
+        response: { exitCode: 1 }
+      unknownLearning:
+        request: { data: data/zzz, exam: zzz }
+        error: INVALID_INPUT
+      seedMissing:
+        request: { data: data/ip, exam: ip, sql: data/ip/no_such_seed.sql, local: true }
+        error: NOT_FOUND
+
+  listDeliveredMaterials:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 論点ごとに配る本文と同じ選び方で選んだ教材を、選んだ世代の名前とファイルの名前を添えて出す
+    request:
+      type: object
+      required: [data]
+      additionalProperties: false
+      properties:
+        data: { type: string, minLength: 1, description: 学びの置き場 }
+        registered: { type: boolean, description: true なら登録簿に無い学びを断る }
+        refusalOnly: { type: boolean, description: true なら断るかどうかだけを見て、通れば materials と topicsByGeneration を出さない }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, const: 0, description: プロセスの終了コードと同じ }
+        topicsByGeneration: { $ref: "#/schemas/GenerationCounts" }
+        materials:
+          type: array
+          description: 論点の番号の順。選んだ教材の欄をそのまま持つ
+          items:
+            type: object
+            required: [topic_id, term, explanation, detail, _generation, _file]
+            properties:
+              topic_id: { type: integer, minimum: 1 }
+              term: { type: string, minLength: 1 }
+              explanation: { type: string }
+              detail: { type: string }
+              _generation: { type: string, pattern: "^materials(_v[0-9]+)?$", description: 選んだ世代のディレクトリの名前 }
+              _file: { type: string, pattern: "\\.json$", description: 選んだ教材があったファイルの名前 }
+    errors:
+      - code: INVALID_INPUT
+        when: registered を渡した、登録簿に無い学び
+    examples:
+      ok:
+        request: { data: data/ip }
+        response: { exitCode: 0, topicsByGeneration: {} }
+      refusalOnlyPasses:
+        request: { data: data/ip, registered: true, refusalOnly: true }
+        response: { exitCode: 0 }
+      unknownLearning:
+        request: { data: data/zzz, registered: true }
+        error: INVALID_INPUT

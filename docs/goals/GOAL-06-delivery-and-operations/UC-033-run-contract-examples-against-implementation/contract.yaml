@@ -1,0 +1,70 @@
+# UC-033 の境界: 契約の実例の確かめ（harness の run cases）が、実例を 1 行ずつ渡して実装の応えを受け取る受け渡し役の入口 1 つの形。振る舞いは ./UC.md と同じ場所の REQ が持つ。
+# 読み方は ../../../adr/ADR-0008-local-tool-boundary.md（手元の道具の境界を local-store で読む）。request の lines は標準入力の 1 行ずつ、response の replies は標準出力の 1 行ずつ。
+# 行の形は harness が決めるので owned: false（写し）。このため確かめ自身はこの操作の実例を回さない（既定は owned: true の操作だけ）。
+# 断ったとき（errors）は理由を標準エラーに出して（標準出力は受け渡しの行だけの経路）終了の状態が 0 でなく、確かめはそれを受け渡し役の異常として失敗で終える。
+x-uc: UC-033
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-18
+
+schemas:
+  ExampleLine:
+    type: object
+    required: [id, uc, operation, transport, direction, owned, auth, wire, entry, request, case]
+    properties:
+      id: { type: integer, minimum: 1 }
+      uc: { type: string, pattern: "^UC-[0-9]{3}$" }
+      operation: { type: string, minLength: 1 }
+      transport: { type: string, enum: [http, sdk, local-store, deeplink, push, device, internal] }
+      direction: { type: string, enum: [inbound, outbound] }
+      owned: { type: boolean }
+      auth: { type: string, minLength: 1, description: 契約の auth の名前（none か authSchemes の名前） }
+      wire: { type: [object, "null"] }
+      entry: { type: [string, "null"] }
+      request: { type: [object, "null"] }
+      case: { type: string, minLength: 1, description: 実例の名前 }
+  Reply:
+    type: object
+    required: [id]
+    description: response と error のどちらか 1 つだけを持つ（skip は返さない）
+    properties:
+      id: { type: integer, minimum: 1 }
+      response: { type: object }
+      error: { type: string, minLength: 1, description: 実装が出した断りの種類の名前 }
+
+operations:
+  answerContractExamples:
+    transport: local-store
+    direction: inbound
+    owned: false
+    source: .harness/tools/run-cases/README.md の「アダプターの契約」
+    auth: none
+    summary: 契約の実例の行を受け取り、各実例を実装に渡して、応答か断りの種類の名前を行ごとに返す
+    request:
+      type: object
+      required: [lines]
+      properties:
+        lines: { type: array, items: { $ref: "#/schemas/ExampleLine" } }
+    response:
+      type: object
+      required: [replies]
+      properties:
+        replies: { type: array, items: { $ref: "#/schemas/Reply" } }
+    errors:
+      - code: INVALID_INPUT
+        when: JSON として読めない行か、当たる入口の無い UC・操作の行がある
+    examples:
+      ok:
+        request:
+          lines:
+            - { id: 1, uc: UC-032, operation: checkSource, transport: local-store, direction: inbound, owned: true, auth: none, wire: null, entry: null, request: {}, case: ok }
+            - { id: 2, uc: UC-032, operation: checkSource, transport: local-store, direction: inbound, owned: true, auth: none, wire: null, entry: null, request: { verbose: true }, case: unknownArgument }
+        response:
+          replies:
+            - { id: 1, response: { exitCode: 0 } }
+            - { id: 2, error: INVALID_INPUT }
+      unknownOperation:
+        request:
+          lines:
+            - { id: 1, uc: UC-032, operation: zzz, transport: local-store, direction: inbound, owned: true, auth: none, wire: null, entry: null, request: {}, case: ok }
+        error: INVALID_INPUT

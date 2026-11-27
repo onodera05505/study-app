@@ -4,45 +4,109 @@
   "figures": [
     {
       "id": 1,
+      "type": "sequence",
+      "after": "### ハンドシェイクの流れ",
+      "caption": "上から順にやり取りが進みます。サーバ証明書が先に届き、クライアント証明書はサーバが求めたときだけ後から送り、受け取った側が検証します。",
+      "actors": [
+        {
+          "id": "c",
+          "label": "クライアント"
+        },
+        {
+          "id": "s",
+          "label": "サーバ"
+        }
+      ],
+      "steps": [
+        {
+          "from": "c",
+          "to": "s",
+          "label": "接続要求（使える暗号方式の一覧）"
+        },
+        {
+          "from": "s",
+          "to": "c",
+          "label": "暗号方式の決定 ＋ サーバ証明書",
+          "note": "クライアント認証をするときは、ここで証明書を要求する"
+        },
+        {
+          "from": "c",
+          "to": "c",
+          "label": "サーバ証明書を認証局の公開鍵で検証"
+        },
+        {
+          "from": "c",
+          "to": "s",
+          "label": "クライアント証明書 ＋ 秘密鍵で署名したデータ",
+          "note": "要求されたときだけ。サーバが証明書の公開鍵で検証する"
+        },
+        {
+          "from": "c",
+          "to": "s",
+          "label": "共通鍵の素（サーバの公開鍵で暗号化）"
+        },
+        {
+          "from": "c",
+          "to": "s",
+          "label": "以降は共通鍵で暗号化して通信"
+        }
+      ]
+    },
+    {
+      "id": 2,
       "type": "blocks",
-      "after": "### 押さえどころ",
-      "caption": "TLS が守るのは PC と Web サーバの間だけ。利用者の証明書で認証されるのも利用者であって DB サーバではない。",
+      "after": "### 暗号化される区間",
+      "caption": "左から右へ通信がつながります。実線が TLS で暗号化される区間で、点線の送信サーバから先は TLS の外なので別に守ります。",
       "nodes": [
         {
-          "id": "pc",
-          "label": "利用者の PC\nクライアント証明書",
+          "id": "cl",
+          "label": "メールソフト\nTLS を張る一方の端",
           "row": 0,
           "col": 0,
-          "emphasis": true
+          "icon": "device"
         },
         {
-          "id": "web",
-          "label": "Web サーバ（DMZ）\nサーバ証明書",
+          "id": "net",
+          "label": "インターネット\n途中では読めない",
           "row": 0,
           "col": 1,
+          "shape": "cloud"
+        },
+        {
+          "id": "sv",
+          "label": "送信メールサーバ\nTLS の終点・ここで復号",
+          "row": 0,
+          "col": 2,
+          "icon": "server",
           "emphasis": true
         },
         {
-          "id": "db",
-          "label": "DB サーバ\n内部ネットワーク",
-          "row": 0,
+          "id": "dst",
+          "label": "宛先のメールサーバ\n次の区間の相手",
+          "row": 1,
           "col": 2,
-          "shape": "cylinder"
+          "icon": "mail"
         }
       ],
       "edges": [
         {
-          "from": "pc",
-          "to": "web",
-          "label": "TLS で暗号化・認証",
+          "from": "cl",
+          "to": "net",
+          "label": "TLS で暗号化",
           "arrow": "both"
         },
         {
-          "from": "web",
-          "to": "db",
-          "label": "TLS の対象外",
-          "arrow": "both",
-          "style": "dashed"
+          "from": "net",
+          "to": "sv",
+          "label": "TLS で暗号化",
+          "arrow": "both"
+        },
+        {
+          "from": "sv",
+          "to": "dst",
+          "label": "TLS の外・別に守る",
+          "style": "dashed",
+          "arrow": "both"
         }
       ]
     }

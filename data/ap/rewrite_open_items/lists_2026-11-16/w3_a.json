@@ -1,0 +1,168 @@
+{
+ "target": "ap",
+ "units": [
+  "03",
+  "10",
+  "11",
+  "16",
+  "23"
+ ],
+ "items": [
+  {
+   "no": 201,
+   "unit": "03",
+   "topic_id": 395,
+   "figure": null,
+   "source": "open_items",
+   "kind": "noticed",
+   "what": "台帳 03-5 の EPROM の行は fate figure だが、where の括弧に「基板から外して ROM ライターで書く点は question_explanations の note」と問題解説の行き先も書いてあり、1 行に 2 つの行き先が混ざる（点は図 3 と note にあり、消えてはいない）",
+   "related": []
+  },
+  {
+   "no": 202,
+   "unit": "10",
+   "topic_id": 357,
+   "figure": null,
+   "source": "open_items",
+   "kind": "noticed",
+   "what": "要点の箇条「確認応答・順序制御・再送を行わない点での [[TCP]] との違いは、[[TCP]] の比較表で説明しました」が、学ぶ順で前の 171 に比較を持たせている（比べる 2 つは後の 357 が持つ決まり）。単元 10 の owners の行「TCP と UDP の違い（確認応答・順序制御・再送の有無と、UDP が向く用途）」（owner 171）も比較を受け持ちに置いている",
+   "related": []
+  },
+  {
+   "no": 203,
+   "unit": "10",
+   "topic_id": 163,
+   "figure": null,
+   "source": "open_items",
+   "kind": "noticed",
+   "what": "163 の detail「1 対 1 のユニキャストにはクラス A〜C を使い、グループ宛ての [[マルチキャスト]] にはクラス D を使います」が、学ぶ順で後の 175 の語を持つ（クラス D の範囲は 163 が持ち、175 はクラス D がグループの識別子であることを言う）",
+   "related": []
+  },
+  {
+   "no": 204,
+   "unit": "23",
+   "topic_id": 428,
+   "figure": null,
+   "source": "open_items",
+   "kind": "noticed",
+   "what": "単元 23 の中で、428（学ぶ順で前）の ### 3つの契約形態の違い の表が、学ぶ順で後の 50 の語（労働者派遣契約・派遣先）を並べた請負・準委任・派遣の比較を持つ。write_materials.md の「他の論点との分担」では 3 つ以上の比較は学ぶ順で最後の論点が持つ（A の種）。この比較を 50 へ移すときは、741 の ### 契約の種類を先に確かめる理由 の指す先（[[請負契約]]）も合わせて直す必要がある",
+   "related": []
+  },
+  {
+   "no": 205,
+   "unit": "23",
+   "topic_id": 428,
+   "figure": null,
+   "source": "open_items",
+   "kind": "noticed",
+   "what": "単元 23 の owners の行「請負と派遣で誰が作業者に指揮命令するか」（owner 428、topics 428・50・465・1）は比較・使い分けを書いた行で、unit_plan.md の owners の決まり（共通の前提の説明だけ）に合わない",
+   "related": []
+  },
+  {
+   "no": 206,
+   "unit": "16",
+   "topic_id": 741,
+   "figure": null,
+   "source": "open_items",
+   "kind": "noticed",
+   "what": "741 の台帳の行の where を見出しの名前の直しに合わせて書き換えた（### 請負契約と派遣契約の違い → ### 契約の種類を先に確かめる理由 の 2 行）。今は無い見出しを指す行を残さないため（H と同じ扱い）",
+   "related": []
+  },
+  {
+   "no": 207,
+   "unit": "03",
+   "topic_id": 513,
+   "figure": null,
+   "source": "seam",
+   "kind": "compare_cross_unit",
+   "what": "513 の ### 混同しやすい用語 の項目（先頭の語「LPWA」）が、後の単元 10 の論点 677 を指す。前の論点が後の論点の語との比較を持っていないかを現物で確かめる",
+   "related": [
+    677
+   ]
+  },
+  {
+   "no": 208,
+   "unit": "10",
+   "topic_id": 172,
+   "figure": null,
+   "source": "seam",
+   "kind": "compare_cross_unit",
+   "what": "172 の ### 混同しやすい用語 の項目（先頭の語「パケットフィルタリング」）が、後の単元 11 の論点 598 を指す。前の論点が後の論点の語との比較を持っていないかを現物で確かめる",
+   "related": [
+    598
+   ]
+  },
+  {
+   "no": 209,
+   "unit": "10",
+   "topic_id": 172,
+   "figure": null,
+   "source": "seam",
+   "kind": "compare_cross_unit",
+   "what": "172 の ### 混同しやすい用語 の項目（先頭の語「認証 VLAN」）が、後の単元 11 の論点 367 を指す。前の論点が後の論点の語との比較を持っていないかを現物で確かめる",
+   "related": [
+    367
+   ]
+  },
+  {
+   "no": 210,
+   "unit": "10",
+   "topic_id": 168,
+   "figure": null,
+   "source": "seam",
+   "kind": "compare_cross_unit",
+   "what": "168 の ### 混同しやすい用語 の項目（先頭の語「DMZ（非武装地帯）」）が、後の単元 11 の論点 485 を指す。前の論点が後の論点の語との比較を持っていないかを現物で確かめる",
+   "related": [
+    485
+   ]
+  },
+  {
+   "no": 211,
+   "unit": "11",
+   "topic_id": 186,
+   "figure": null,
+   "source": "seam",
+   "kind": "compare_cross_unit",
+   "what": "186 の ### 混同しやすい用語 の項目（先頭の語「ペネトレーションテスト法」）が、後の単元 16 の論点 637 を指す。前の論点が後の論点の語との比較を持っていないかを現物で確かめる",
+   "related": [
+    637
+   ]
+  },
+  {
+   "no": 212,
+   "unit": "11",
+   "topic_id": 570,
+   "figure": null,
+   "source": "seam",
+   "kind": "compare_in_unit",
+   "what": "570 の ### 混同しやすい用語 の項目（先頭の語「クロスサイトスクリプティング」）が、同じ単元の中で学ぶ順で後の論点 658 を指す。前の論点が後の論点の語との比較を持っていないかを現物で確かめる",
+   "related": [
+    658
+   ]
+  },
+  {
+   "no": 213,
+   "unit": "11",
+   "topic_id": 480,
+   "figure": null,
+   "source": "seam",
+   "kind": "compare_in_unit",
+   "what": "480 の ### 混同しやすい用語 の項目（先頭の語「第三者中継（オープンリレー）」）が、同じ単元の中で学ぶ順で後の論点 196 を指す。前の論点が後の論点の語との比較を持っていないかを現物で確かめる",
+   "related": [
+    196
+   ]
+  },
+  {
+   "no": 214,
+   "unit": "11",
+   "topic_id": 529,
+   "figure": null,
+   "source": "seam",
+   "kind": "compare_in_unit",
+   "what": "529 の ### 盗まれ方と効く対策 の項目（先頭の語「クロスサイトスクリプティング」）が、同じ単元の中で学ぶ順で後の論点 658 を指す。前の論点が後の論点の語との比較を持っていないかを現物で確かめる",
+   "related": [
+    658
+   ]
+  }
+ ]
+}

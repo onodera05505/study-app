@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="198" viewBox="0 0 640 198">
+<rect x="0.5" y="0.5" width="639" height="197" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(65.6 20)">
+<polyline points="138.8,20 364.4,20" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="364.4,20 356.4,23.6 356.4,16.4" fill="#1f2937"/>
+<polyline points="364.4,36 138.8,36" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="138.8,36 146.8,32.4 146.8,39.6" fill="#1f2937"/>
+<polyline points="433.8,56 433.8,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="433.8,102 430.2,94 437.4,94" fill="#1f2937"/>
+<polyline points="433.8,102 433.8,79 69.4,79 69.4,56" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="69.4,56 73,64 65.8,64" fill="#1f2937"/>
+<rect x="0" y="0" width="138.8" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="69.4" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">実行可能状態</text>
+<text x="69.4" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">CPU の順番を待つ</text>
+<rect x="364.4" y="0" width="138.8" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="433.8" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">実行状態</text>
+<text x="433.8" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">CPU を使っている</text>
+<rect x="358.8" y="102" width="150" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="433.8" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">待ち状態</text>
+<text x="433.8" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">入出力の完了を待つ</text>
+<rect x="150.4" y="3" width="202.4" height="16" rx="3" fill="#ffffff"/>
+<text x="251.6" y="16.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">ディスパッチ（CPU を割り当てる）</text>
+<rect x="145.6" y="19" width="212" height="16" rx="3" fill="#ffffff"/>
+<text x="251.6" y="32.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">横取り（優先度の高いタスクが来た）</text>
+<rect x="369.8" y="70" width="128" height="16" rx="3" fill="#ffffff"/>
+<text x="433.8" y="83.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">自分から入出力を待つ</text>
+<rect x="211.6" y="65" width="80" height="16" rx="3" fill="#ffffff"/>
+<text x="251.6" y="78.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">入出力の完了</text>
+</g>
+</svg>

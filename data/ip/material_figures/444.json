@@ -4,43 +4,43 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
-      "after": "### しくみ",
-      "caption": "ルーターが LAN 側のプライベート IP アドレスをインターネット側のグローバル IP に書き換える。",
-      "nodes": [
+      "type": "sequence",
+      "after": "### 行きと帰りの書き換え",
+      "caption": "ルーターが、外へ出る通信の送信元をグローバル IP アドレスに書き換え、戻ってきた通信は元のプライベート IP アドレスに戻して届けます。",
+      "actors": [
         {
           "id": "pc",
-          "label": "社内の PC\n192.168.0.2",
-          "row": 0,
-          "col": 0
+          "label": "社内の PC\n192.168.0.2"
         },
         {
           "id": "rt",
-          "label": "ルーター\n（NAT）",
-          "row": 0,
-          "col": 1,
-          "emphasis": true
+          "label": "ルーター（NAT）"
         },
         {
-          "id": "net",
-          "label": "インターネット\n203.0.113.5",
-          "row": 0,
-          "col": 2,
-          "shape": "cloud"
+          "id": "sv",
+          "label": "インターネットの\nサーバ"
         }
       ],
-      "edges": [
+      "steps": [
         {
           "from": "pc",
           "to": "rt",
-          "label": "プライベート IP",
-          "arrow": "both"
+          "label": "送信元 192.168.0.2（プライベート）"
         },
         {
           "from": "rt",
-          "to": "net",
-          "label": "グローバル IP",
-          "arrow": "both"
+          "to": "sv",
+          "label": "送信元を 203.0.113.5（グローバル）に書き換え"
+        },
+        {
+          "from": "sv",
+          "to": "rt",
+          "label": "宛先 203.0.113.5 へ返信"
+        },
+        {
+          "from": "rt",
+          "to": "pc",
+          "label": "宛先を 192.168.0.2 に戻して届ける"
         }
       ]
     }

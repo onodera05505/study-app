@@ -6,25 +6,138 @@
       "id": 1,
       "type": "blocks",
       "after": "### HDFS と MapReduce",
-      "caption": "ファイルをブロックに分けて複製し、データのある各ノードで Map、その結果を Reduce で集約する。",
+      "caption": "上から順に、ファイルを HDFS で分けて複製し、ブロックのあるノードで Map、Reduce で集約する流れです。処理がデータの置き場所へ出向くことを表しています。",
       "nodes": [
-        {"id": "f", "label": "大きなファイル", "row": 0, "col": 0},
-        {"id": "hd", "label": "HDFS\nブロックに分割し\n3 か所へ複製", "row": 0, "col": 1, "shape": "cylinder", "emphasis": true},
-        {"id": "n1", "label": "ノード1\nMap", "row": 1, "col": 0},
-        {"id": "n2", "label": "ノード2\nMap", "row": 1, "col": 1},
-        {"id": "n3", "label": "ノード3\nMap", "row": 1, "col": 2},
-        {"id": "rd", "label": "Reduce\n結果を集約", "row": 2, "col": 1, "emphasis": true},
-        {"id": "ot", "label": "集計結果", "row": 2, "col": 2, "shape": "round"}
+        {
+          "id": "f",
+          "label": "大きなファイル\n1 台に収まらない",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "hd",
+          "label": "HDFS\nブロックに分割し\n3 か所へ複製",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "n1",
+          "label": "ノード1\n手元のブロックを\nMap で加工",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "n2",
+          "label": "ノード2\n手元のブロックを\nMap で加工",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "n3",
+          "label": "ノード3\n手元のブロックを\nMap で加工",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "rd",
+          "label": "Reduce\n各ノードの結果を\n集約する",
+          "row": 2,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "ot",
+          "label": "集計結果\n1 つにまとまる",
+          "row": 2,
+          "col": 2,
+          "shape": "round"
+        }
       ],
       "edges": [
-        {"from": "f", "to": "hd"},
-        {"from": "hd", "to": "n1"},
-        {"from": "hd", "to": "n2", "label": "データのある場所で処理"},
-        {"from": "hd", "to": "n3"},
-        {"from": "n1", "to": "rd"},
-        {"from": "n2", "to": "rd"},
-        {"from": "n3", "to": "rd"},
-        {"from": "rd", "to": "ot"}
+        {
+          "from": "f",
+          "to": "hd",
+          "label": "格納"
+        },
+        {
+          "from": "hd",
+          "to": "n1",
+          "label": "ブロック A"
+        },
+        {
+          "from": "hd",
+          "to": "n2",
+          "label": "ブロック B"
+        },
+        {
+          "from": "hd",
+          "to": "n3",
+          "label": "ブロック C"
+        },
+        {
+          "from": "n1",
+          "to": "rd",
+          "label": "中間結果"
+        },
+        {
+          "from": "n2",
+          "to": "rd",
+          "label": "中間結果"
+        },
+        {
+          "from": "n3",
+          "to": "rd",
+          "label": "中間結果"
+        },
+        {
+          "from": "rd",
+          "to": "ot",
+          "label": "出力"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### 蓄積と処理の分担",
+      "caption": "ビッグデータの周辺の用語を、蓄積と処理のどちらを担うかで並べています。両方の行に「担う」が入るのは強調した Hadoop の列だけです。",
+      "x": {
+        "label": "用語",
+        "values": [
+          "Apache Hadoop",
+          "Apache Spark",
+          "NoSQL\nデータベース"
+        ]
+      },
+      "y": {
+        "label": "担う役割",
+        "values": [
+          "蓄積",
+          "処理"
+        ]
+      },
+      "cells": [
+        [
+          "担う\nHDFS でブロックに\n分けて複製を置く",
+          "担わない\n処理側の基盤",
+          "担う\n大量データの\n蓄積と参照"
+        ],
+        [
+          "担う\nMapReduce で\n各ノードが加工",
+          "担う\n中間結果を\nメモリに保持",
+          "担わない\n分散処理の\n枠組みは持たない"
+        ]
+      ],
+      "emphasis": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
       ]
     }
   ]

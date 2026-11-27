@@ -1,0 +1,96 @@
+{
+  "topic_id": 172,
+  "term": "NAS",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### LAN につないで共有するしくみ",
+      "caption": "上は PC にケーブルで直結する外付けハードディスク、下は LAN につなぐ NAS です。NAS は LAN の先の機器すべてから同じ保存領域を使えます。",
+      "nodes": [
+        {
+          "id": "hdd",
+          "label": "外付けハードディスク\nケーブルの先の 1 台専用",
+          "row": 0,
+          "col": 0,
+          "icon": "database"
+        },
+        {
+          "id": "pc0",
+          "label": "PC\nこの 1 台だけが使える",
+          "row": 0,
+          "col": 1,
+          "icon": "device"
+        },
+        {
+          "id": "nas",
+          "label": "NAS\nファイル共有をする\n小さなサーバ",
+          "row": 2,
+          "col": 0,
+          "emphasis": true,
+          "icon": "database"
+        },
+        {
+          "id": "lan",
+          "label": "LAN\n家や部署のネットワーク",
+          "row": 2,
+          "col": 1,
+          "shape": "cloud"
+        },
+        {
+          "id": "pc1",
+          "label": "タブレット\n同じ領域の写真を見る",
+          "row": 1,
+          "col": 2,
+          "icon": "device"
+        },
+        {
+          "id": "ph",
+          "label": "テレビ\n同じ領域の録画を見る",
+          "row": 2,
+          "col": 2,
+          "icon": "device"
+        },
+        {
+          "id": "tb",
+          "label": "複合機\n同じ領域へスキャンを保存",
+          "row": 3,
+          "col": 2,
+          "icon": "document"
+        }
+      ],
+      "edges": [
+        {
+          "from": "hdd",
+          "to": "pc0",
+          "label": "ケーブルで直結",
+          "arrow": "both"
+        },
+        {
+          "from": "nas",
+          "to": "lan",
+          "label": "LAN のケーブル 1 本",
+          "arrow": "both"
+        },
+        {
+          "from": "lan",
+          "to": "pc1",
+          "label": "共有フォルダを開く",
+          "arrow": "both"
+        },
+        {
+          "from": "lan",
+          "to": "ph",
+          "label": "共有フォルダを開く",
+          "arrow": "both"
+        },
+        {
+          "from": "lan",
+          "to": "tb",
+          "label": "共有フォルダを開く",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

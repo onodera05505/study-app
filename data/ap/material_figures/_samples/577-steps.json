@@ -1,0 +1,40 @@
+{
+  "topic_id": 577,
+  "term": "SLCP-JCF（共通フレーム）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "explanation",
+      "caption": "工程は上から順に一方向へ進み、前の工程の成果物が次の工程の入力になります。後から前の工程へ戻りにくいのはこのためです。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "要件定義\n何を作るかを決める",
+          "icon": "person",
+          "next_label": "要件定義書"
+        },
+        {
+          "label": "設計\n作り方を決める",
+          "icon": "document",
+          "next_label": "設計書"
+        },
+        {
+          "label": "実装\nプログラムを書く",
+          "icon": "device",
+          "next_label": "プログラム"
+        },
+        {
+          "label": "テスト\n要件どおりか確かめる",
+          "icon": "check",
+          "next_label": "確かめた製品",
+          "emphasis": true
+        },
+        {
+          "label": "運用\n使いながら直す",
+          "icon": "gear"
+        }
+      ]
+    }
+  ]
+}

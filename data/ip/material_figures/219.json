@@ -1,0 +1,65 @@
+{
+  "topic_id": 219,
+  "term": "サイバーセキュリティ経営ガイドライン",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 三原則と重要10項目",
+      "caption": "経営者と責任者の間の指示と報告の往復を表します。責任者を任命した後も、経営者が報告を受けて確かめ続ける所が要です。",
+      "nodes": [
+        {
+          "id": "ceo",
+          "label": "経営者\n先頭に立ち\n関わり続ける",
+          "row": 0,
+          "col": 0,
+          "icon": "person",
+          "emphasis": true
+        },
+        {
+          "id": "ciso",
+          "label": "セキュリティの責任者\n指示を受けて進める",
+          "row": 0,
+          "col": 1,
+          "icon": "person"
+        },
+        {
+          "id": "csirt",
+          "label": "体制・CSIRT\n攻撃に対応する組織",
+          "row": 0,
+          "col": 2,
+          "icon": "people"
+        },
+        {
+          "id": "vendor",
+          "label": "委託先・取引先\n取引の流れの相手",
+          "row": 1,
+          "col": 2,
+          "icon": "building"
+        }
+      ],
+      "edges": [
+        {
+          "from": "ceo",
+          "to": "ciso",
+          "label": "方針・予算・人材を示し指示する"
+        },
+        {
+          "from": "ciso",
+          "to": "ceo",
+          "label": "実施の状況を報告する"
+        },
+        {
+          "from": "ciso",
+          "to": "csirt",
+          "label": "体制・計画・演習を整える"
+        },
+        {
+          "from": "ciso",
+          "to": "vendor",
+          "label": "対策の状況を把握する"
+        }
+      ]
+    }
+  ]
+}

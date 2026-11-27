@@ -1,0 +1,370 @@
+{
+ "exam": "2017h29a",
+ "range": "55-80",
+ "classifications": [
+  {
+   "number": 55,
+   "syllabus_item": 65,
+   "topic_term": "サービスレベル管理",
+   "topic_is_new": false,
+   "related_terms": [
+    "SLA",
+    "サービスカタログ",
+    "サービスレベル目標",
+    "サービス可用性"
+   ],
+   "confidence": "high",
+   "notes": "JIS Q 20000 のサービスレベル管理の要求事項（SLA の作成と顧客との合意）。ap も同型の問を項目65の『サービスレベル管理』に付けている（2024r06h 問56・2016h28h 問56・2018h30a 問56）。"
+  },
+  {
+   "number": 56,
+   "syllabus_item": 67,
+   "topic_term": "バックアップ",
+   "topic_is_new": false,
+   "related_terms": [
+    "差分バックアップ",
+    "ジョブスケジューリング",
+    "復旧",
+    "世代管理"
+   ],
+   "confidence": "high",
+   "notes": "ap も同型の問を項目67の『バックアップ』に寄せている（6 問）。公式の分野はマネジメント系で項目67はサービスの運用なので矛盾しない。"
+  },
+  {
+   "number": 57,
+   "syllabus_item": 68,
+   "topic_term": "サージ防護デバイス",
+   "topic_is_new": true,
+   "related_terms": [
+    "アレスタ",
+    "落雷",
+    "UPS",
+    "自家発電設備"
+   ],
+   "confidence": "medium",
+   "notes": "項目68の用語例は『建物管理 （免震装置， アレスタなどのサージ防護デバイス， 防災防犯設備，安全管理関連知識ほか）』で括弧内に別概念が並ぶ形。仕様どおり主題の1語だけを採ったが、その語が単独で載っている項目は無いため topic_is_new=true。ip は同じ概念を『サージ防護』（ip 項目30）としているが、設問が『サージ防護デバイス（SPD）』と書いているのでこの表記にした。"
+  },
+  {
+   "number": 58,
+   "syllabus_item": 69,
+   "topic_term": "指摘事項",
+   "topic_is_new": false,
+   "related_terms": [
+    "職務分掌",
+    "承認",
+    "システム運用管理",
+    "運用オペレーション"
+   ],
+   "confidence": "medium",
+   "notes": "『監査で判明した状況のうち指摘事項として報告すべきものはどれか』型。ap 2018h30h 問58（アクセス権の管理状況）を項目69の『指摘事項』に付けているので合わせた。fe 2019h31h 問60 は同型だが『情報セキュリティ管理基準（平成28年）』に照らす問なのでそちらの論点になっている。この問は基準名が無く、正解は職務分掌の不備なので『指摘事項』を採った。"
+  },
+  {
+   "number": 59,
+   "syllabus_item": 69,
+   "topic_term": "監査証拠の入手と評価",
+   "topic_is_new": false,
+   "related_terms": [
+    "代表的なシステム監査技法",
+    "監査手続の適用",
+    "監査の独立性と客観性の保持",
+    "監査調書の作成と保管"
+   ],
+   "confidence": "high",
+   "notes": "fe 2019h31h 問58（システム監査人がインタビュー実施時にすべきこと）と選択肢の順序だけが違う同一問題。既存回に合わせて項目69・『監査証拠の入手と評価』にした（ap は『インタビュー法（質問書・調査票）』という論点も持つが、fe 側の既存の割り当てを崩さない）。"
+  },
+  {
+   "number": 60,
+   "syllabus_item": 69,
+   "topic_term": "監査調書の作成と保管",
+   "topic_is_new": false,
+   "related_terms": [
+    "監査証拠の入手と評価",
+    "監査報告書の作成と報告",
+    "監査手続の適用",
+    "監査の結論の形成"
+   ],
+   "confidence": "high",
+   "notes": "監査調書の定義を問う。ap も監査調書の問を項目69の『監査調書の作成と保管』に付けている（3 問）。"
+  },
+  {
+   "number": 61,
+   "syllabus_item": 90,
+   "topic_term": "作業分析",
+   "topic_is_new": false,
+   "related_terms": [
+    "稼働分析",
+    "営業支援システム",
+    "業務プロセス",
+    "SFA"
+   ],
+   "confidence": "medium",
+   "notes": "1 日の業務活動の時間分析表から必要な時間削減量を求める計算問題。公式の分野はストラテジ系で、中心の知識は業務（作業）時間の分析なので項目90を採った。同項目の『稼働分析』、または営業支援システムの導入効果と見て項目84（ビジネスシステム）とする読み方もあり得るので confidence を下げた。"
+  },
+  {
+   "number": 62,
+   "syllabus_item": 73,
+   "topic_term": "SOA（Service Oriented Architecture：サービス指向アーキテクチャ）",
+   "topic_is_new": false,
+   "related_terms": [
+    "BPR（Business Process Reengineering ）",
+    "ERP（Enterprise Resource Planning：企業資源計画）",
+    "SLA",
+    "サービス"
+   ],
+   "confidence": "high",
+   "notes": "ap 2023r05a 問63・2016h28h 問63 と同一問題で、いずれも項目73の『SOA（Service Oriented Architecture：サービス指向アーキテクチャ）』。用語例の表記をそのままコピーした。"
+  },
+  {
+   "number": 63,
+   "syllabus_item": 90,
+   "topic_term": "ビッグデータ",
+   "topic_is_new": false,
+   "related_terms": [
+    "ソーシャルメディアデータ",
+    "非構造化データ",
+    "テキストマイニング",
+    "データマイニング"
+   ],
+   "confidence": "high",
+   "notes": "fe 2019h31h 問64・2019r01a 問63 と同じ論点（ビッグデータの活用事例）。既存回と同じ項目90・同じ表記に合流させた。『ビッグデータ』は項目32（データベース応用＝テクノロジ系）にもあるが、公式の分野がストラテジ系なので項目90。"
+  },
+  {
+   "number": 64,
+   "syllabus_item": 95,
+   "topic_term": "グリーン調達",
+   "topic_is_new": true,
+   "related_terms": [
+    "グリーン IT",
+    "カーボンフットプリント",
+    "環境表示",
+    "リサイクル法"
+   ],
+   "confidence": "medium",
+   "notes": "環境負荷の小さい製品・サービスを環境負荷低減に努める事業者から優先して購入する、が正解。基本情報シラバス Ver.9.2 の用語例に『グリーン調達』『グリーン購入』は無いため新設。環境関連の法律・ガイドラインが集まる項目95に置いた（ap も同概念の『グリーン購入』を項目95に置いている）。設問が定義しているのは『グリーン調達』なのでこの表記にした。今後 fe でグリーン購入の問が出たらこの論点に合流させる。"
+  },
+  {
+   "number": 65,
+   "syllabus_item": 90,
+   "topic_term": "BI（Business Intelligence）",
+   "topic_is_new": false,
+   "related_terms": [
+    "データウェアハウス",
+    "BPR（Business Process Reengineering ）",
+    "データマイニング",
+    "意思決定"
+   ],
+   "confidence": "high",
+   "notes": "fe 2019h31h 問63（BI の活用事例）と同じ論点。既存回と同じ項目90・同じ表記『BI（Business Intelligence）』に合流させた（ap も同じ）。"
+  },
+  {
+   "number": 66,
+   "syllabus_item": 77,
+   "topic_term": "内外作基準",
+   "topic_is_new": false,
+   "related_terms": [
+    "開発投資対効果",
+    "委託費",
+    "ソフトウェア開発委託モデル契約",
+    "人月"
+   ],
+   "confidence": "medium",
+   "notes": "購入・社内改造・社内新規作成・社外一括委託のコストを比べて選ぶ問。計算そのものより内外作（自製か購入か委託か）の判断が論点なので項目77を採った。公式の分野はストラテジ系で、人月見積りの項目59（プロジェクトのコスト＝マネジメント系）は分野が合わないため採らない。"
+  },
+  {
+   "number": 67,
+   "syllabus_item": 78,
+   "topic_term": "SWOT（Strength，Weakness，Opportunity，Threat：強み，弱み，機会，脅威）分析",
+   "topic_is_new": false,
+   "related_terms": [
+    "競争優位",
+    "バリューチェーン分析",
+    "3C（Customer，Competitor，Company） 分析",
+    "経営環境"
+   ],
+   "confidence": "high",
+   "notes": "用語例の表記をそのままコピーした（短縮して『SWOT 分析』としない）。"
+  },
+  {
+   "number": 68,
+   "syllabus_item": 78,
+   "topic_term": "リーダ戦略",
+   "topic_is_new": true,
+   "related_terms": [
+    "チャレンジャ戦略",
+    "フォロワ戦略",
+    "ニッチ戦略",
+    "基本戦略（コストリーダーシップ戦略，差別化戦略，集中戦略）"
+   ],
+   "confidence": "high",
+   "notes": "コトラーの競争地位別戦略のうちリーダ戦略（全方位戦略）を問う。用語例に無いため新設。ap が『チャレンジャ戦略』『フォロワ戦略』をそれぞれ項目78の新設論点として独立させているので、同じ流儀で『リーダ戦略』を立てた（fe 既存の『ニッチ戦略』＝2019h31h 問68 も同じ系列の別論点）。"
+  },
+  {
+   "number": 69,
+   "syllabus_item": 81,
+   "topic_term": "SCM",
+   "topic_is_new": false,
+   "related_terms": [
+    "CRM",
+    "KM（Knowledge Management：ナレッジマネジメント）",
+    "ERP",
+    "在庫管理"
+   ],
+   "confidence": "high",
+   "notes": "ap 2017h29h 問67（SCM の目的）ほか 3 問を項目81の『SCM』に付けているので合わせた。『SCM』は項目71（情報システム戦略）の用語例にもあるが、経営管理システムの比較（CRM・ナレッジマネジメント・人材管理と並べる形）なので項目81を採った。"
+  },
+  {
+   "number": 70,
+   "syllabus_item": 82,
+   "topic_term": "コア技術",
+   "topic_is_new": false,
+   "related_terms": [
+    "MOT（Management of Technology ：技術経営）",
+    "標準化戦略",
+    "アライアンス",
+    "技術提携"
+   ],
+   "confidence": "high",
+   "notes": "用語例『コア技術』をそのまま採用。"
+  },
+  {
+   "number": 71,
+   "syllabus_item": 84,
+   "topic_term": "IoT（Internet of Things）",
+   "topic_is_new": false,
+   "related_terms": [
+    "センサー",
+    "エッジコンピューティング",
+    "データの収集",
+    "データの活用"
+   ],
+   "confidence": "medium",
+   "notes": "IoT 活用の基本要素（収集・伝送・解析・活用）とデバイス例の対応を問う。ap は『IoT がもたらす効果（監視，制御，最適化，自律化）』という別の 4 段階の問を項目84に置いており、この問は要素の切り口が違うため総称の『IoT（Internet of Things）』を採った。同じ語は項目87（民生機器）の用語例にもあり、工場が舞台なので項目88（産業機器）も候補になるので confidence を下げた。"
+  },
+  {
+   "number": 72,
+   "syllabus_item": 85,
+   "topic_term": "MRP",
+   "topic_is_new": false,
+   "related_terms": [
+    "基準生産計画",
+    "かんばん方式",
+    "コンカレントエンジニアリング",
+    "受注生産"
+   ],
+   "confidence": "high",
+   "notes": "ap も MRP の問（6 問）を項目85の『MRP』に付けている。用語例の表記をそのままコピーした。"
+  },
+  {
+   "number": 73,
+   "syllabus_item": 87,
+   "topic_term": "HEMS（Home Energy Management System）",
+   "topic_is_new": false,
+   "related_terms": [
+    "情報家電",
+    "ホームネットワーク",
+    "スマートグリッド",
+    "EMS（Energy Management System： エネルギーマネジメントシステム）"
+   ],
+   "confidence": "high",
+   "notes": "fe 2019h31h 問71（IoT の応用事例のうち HEMS の説明）と同じ論点。既存回と同じ項目87・同じ表記に合流させた。"
+  },
+  {
+   "number": 74,
+   "syllabus_item": 84,
+   "topic_term": "ディープラーニング",
+   "topic_is_new": true,
+   "related_terms": [
+    "機械学習",
+    "AI による認識",
+    "AI による自動化",
+    "ニューラルネットワーク"
+   ],
+   "confidence": "medium",
+   "notes": "大量の画像から歩行者と車を見分けられるようになった、が正解。基本情報シラバス Ver.9.2 の用語例に『ディープラーニング』が無いため新設。ap・ip はこの論点を項目3／35（テクノロジ系）に置いているが、この問の公式の分野はストラテジ系なので採れず、AI 関連の用語例がまとまる項目84に置いた。fe 既存の『機械学習』（項目84、2019r01a 問73）とは主題の語が違うので統合しない（ap・ip も機械学習とディープラーニングを別論点にしている）。"
+  },
+  {
+   "number": 75,
+   "syllabus_item": 89,
+   "topic_term": "CIO（Chief Information Officer：最高情報責任者）",
+   "topic_is_new": false,
+   "related_terms": [
+    "CEO（Chief Executive Officer：最高経営責任者）",
+    "情報システム戦略",
+    "IT 投資マネジメント",
+    "システム監査"
+   ],
+   "confidence": "high",
+   "notes": "fe 2019r01a 問75（CIO の役割）と同じ論点。既存回と同じ項目89・同じ表記に合流させた。項目71の用語例には『CIO』が単独であるが、既存回に合わせる。"
+  },
+  {
+   "number": 76,
+   "syllabus_item": 89,
+   "topic_term": "OJT",
+   "topic_is_new": true,
+   "related_terms": [
+    "e-ラーニング",
+    "ジョブローテーション",
+    "コーチング",
+    "人材育成計画"
+   ],
+   "confidence": "high",
+   "notes": "基本情報シラバス Ver.9.2 の用語例に『OJT』が無いため新設。人材育成の用語（コーチング・メンタリング・ケーススタディ・e-ラーニング）が集まる項目89に置いた。"
+  },
+  {
+   "number": 77,
+   "syllabus_item": 91,
+   "topic_term": "貸借対照表",
+   "topic_is_new": false,
+   "related_terms": [
+    "損益計算書",
+    "財務諸表",
+    "純資産",
+    "キャッシュフロー計算書"
+   ],
+   "confidence": "high",
+   "notes": "用語例『貸借対照表』をそのまま採用。"
+  },
+  {
+   "number": 78,
+   "syllabus_item": 91,
+   "topic_term": "先入先出法",
+   "topic_is_new": false,
+   "related_terms": [
+    "棚卸資産評価",
+    "総平均法",
+    "移動平均法",
+    "期末在庫"
+   ],
+   "confidence": "high",
+   "notes": "用語例『先入先出法』をそのまま採用。期末在庫12個を後から仕入れた分（9月4個@14、7月3個@13、6月2個@12、4月1個@11、期首2個@10）で評価する計算。"
+  },
+  {
+   "number": 79,
+   "syllabus_item": 94,
+   "topic_term": "労働者派遣契約",
+   "topic_is_new": false,
+   "related_terms": [
+    "指揮命令",
+    "雇用契約",
+    "請負契約",
+    "偽装請負"
+   ],
+   "confidence": "high",
+   "notes": "ap 2023r05a 問80 と同一問題（図・選択肢まで同じ）。ap と同じ項目94・同じ論点名『労働者派遣契約』に合わせた。正解は出向時の指揮命令関係だが、問われているのは派遣・請負・出向の指揮命令関係の区別なのでこの論点に寄せる。"
+  },
+  {
+   "number": 80,
+   "syllabus_item": 94,
+   "topic_term": "特定商取引法",
+   "topic_is_new": false,
+   "related_terms": [
+    "クーリングオフ",
+    "電子消費者契約法",
+    "消費者保護",
+    "通信販売"
+   ],
+   "confidence": "high",
+   "notes": "用語例『特定商取引法』をそのまま採用。"
+  }
+ ]
+}

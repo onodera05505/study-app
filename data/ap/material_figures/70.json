@@ -6,17 +6,120 @@
       "id": 1,
       "type": "blocks",
       "after": "### 挿入で書き換える4か所",
-      "caption": "新要素の next は挿入位置の元の次、prev は挿入位置そのもの。前後の要素からの2本も書き換える。",
+      "caption": "新要素の next は挿入位置の元の次、prev は挿入位置そのものです。前後の要素からの 2 本もつなぎ替えます。",
       "nodes": [
-        {"id": "d", "label": "要素番号 3\n値 D", "row": 0, "col": 0},
-        {"id": "c", "label": "要素番号 6\n新要素 C", "row": 0, "col": 1, "emphasis": true},
-        {"id": "e", "label": "要素番号 5\n値 E", "row": 0, "col": 2}
+        {
+          "id": "q",
+          "label": "要素番号 4\n値 Q",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "t",
+          "label": "要素番号 5\n新要素 T",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "r",
+          "label": "要素番号 1\n値 R",
+          "row": 0,
+          "col": 2
+        }
       ],
       "edges": [
-        {"from": "d", "to": "c", "label": "next[3]＝6"},
-        {"from": "c", "to": "d", "label": "prev[6]＝3"},
-        {"from": "c", "to": "e", "label": "next[6]＝5"},
-        {"from": "e", "to": "c", "label": "prev[5]＝6"}
+        {
+          "from": "q",
+          "to": "t",
+          "label": "next[4]＝5"
+        },
+        {
+          "from": "t",
+          "to": "q",
+          "label": "prev[5]＝4"
+        },
+        {
+          "from": "t",
+          "to": "r",
+          "label": "next[5]＝1"
+        },
+        {
+          "from": "r",
+          "to": "t",
+          "label": "prev[1]＝5"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 配列で表した形の読み方",
+      "caption": "箱の左右の位置は配列の要素番号の順、上から下がたどる順です。矢印が左右に行き来するので、たどる順と要素番号の順は一致しません。",
+      "nodes": [
+        {
+          "id": "h",
+          "label": "Head\n先頭の要素番号を持つ",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "n2",
+          "label": "要素番号 2・値 P\nたどって 1 番目",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "n4",
+          "label": "要素番号 4・値 Q\nたどって 2 番目",
+          "row": 2,
+          "col": 3
+        },
+        {
+          "id": "n1",
+          "label": "要素番号 1・値 R\nたどって 3 番目",
+          "row": 3,
+          "col": 0
+        },
+        {
+          "id": "n3",
+          "label": "要素番号 3・値 S\nたどって 4 番目",
+          "row": 4,
+          "col": 2
+        },
+        {
+          "id": "z",
+          "label": "next が 0\nここが末尾",
+          "row": 4,
+          "col": 3
+        }
+      ],
+      "edges": [
+        {
+          "from": "h",
+          "to": "n2",
+          "label": "Head＝2"
+        },
+        {
+          "from": "n2",
+          "to": "n4",
+          "label": "next[2]＝4"
+        },
+        {
+          "from": "n4",
+          "to": "n1",
+          "label": "next[4]＝1"
+        },
+        {
+          "from": "n1",
+          "to": "n3",
+          "label": "next[1]＝3"
+        },
+        {
+          "from": "n3",
+          "to": "z",
+          "label": "next[3]＝0"
+        }
       ]
     }
   ]

@@ -1,0 +1,62 @@
+{
+  "topic_id": 45,
+  "term": "データ消去",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 削除やフォーマットでは消えない理由",
+      "caption": "削除や論理フォーマットの矢印は管理情報にしか届かず、実データの箱は手つかずのまま残ります。下の矢印が、そこを復元ソフトが読み出す経路です。",
+      "nodes": [
+        {
+          "id": "del",
+          "label": "削除・論理フォーマット\nOS の機能で消す",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "mgmt",
+          "label": "管理情報\nどこに何があるかの目録",
+          "row": 0,
+          "col": 1,
+          "icon": "document"
+        },
+        {
+          "id": "data",
+          "label": "実データ\nファイルの中身そのもの\n上書きされるまで残る",
+          "row": 1,
+          "col": 1,
+          "shape": "cylinder",
+          "emphasis": true
+        },
+        {
+          "id": "rec",
+          "label": "復元ソフト\n記憶装置の中身を直接読む",
+          "row": 1,
+          "col": 0,
+          "icon": "search"
+        }
+      ],
+      "edges": [
+        {
+          "from": "del",
+          "to": "mgmt",
+          "label": "目録だけを消す"
+        },
+        {
+          "from": "mgmt",
+          "to": "data",
+          "label": "場所の記録が消え\n「再利用してよい」の印だけ",
+          "style": "dashed",
+          "arrow": "none"
+        },
+        {
+          "from": "rec",
+          "to": "data",
+          "label": "中身を読み出せる"
+        }
+      ]
+    }
+  ]
+}

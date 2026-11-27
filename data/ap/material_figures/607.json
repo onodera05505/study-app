@@ -1,0 +1,84 @@
+{
+  "topic_id": 607,
+  "term": "PDM（Product Data Management）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 設計情報を一元管理する理由",
+      "caption": "左の設計情報を中央の PDM に集め、右の各段階へは PDM から最新の版を渡します。古い図面で手配するといった食い違いが起きにくくなります。",
+      "nodes": [
+        {
+          "id": "cad",
+          "label": "CAD の図面\n形と寸法",
+          "row": 0,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "bom",
+          "label": "部品構成表\n製品の部品の一覧",
+          "row": 1,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "spec",
+          "label": "仕様書・変更履歴\n何をいつ変えたか",
+          "row": 2,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "pdm",
+          "label": "PDM\n版と変更履歴を\n一元管理",
+          "row": 1,
+          "col": 1,
+          "shape": "cylinder",
+          "emphasis": true
+        },
+        {
+          "id": "des",
+          "label": "設計\n既存の設計を再利用",
+          "row": 0,
+          "col": 2,
+          "icon": "person"
+        },
+        {
+          "id": "pro",
+          "label": "試作・評価\n最新の版で部品を手配",
+          "row": 2,
+          "col": 2,
+          "icon": "box"
+        }
+      ],
+      "edges": [
+        {
+          "from": "cad",
+          "to": "pdm",
+          "label": "版を付けて登録"
+        },
+        {
+          "from": "bom",
+          "to": "pdm",
+          "label": "版を付けて登録"
+        },
+        {
+          "from": "spec",
+          "to": "pdm",
+          "label": "変更を記録"
+        },
+        {
+          "from": "pdm",
+          "to": "des",
+          "label": "最新の版"
+        },
+        {
+          "from": "pdm",
+          "to": "pro",
+          "label": "最新の版"
+        }
+      ]
+    }
+  ]
+}

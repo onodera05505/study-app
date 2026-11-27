@@ -1,0 +1,46 @@
+{
+  "topic_id": 2,
+  "term": "案件の流れ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### しくみ",
+      "caption": "案件は左上の提案から右下の定着へ一方向に進みます。矢印の文字は、次の段が前提にする決めごとです。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "提案\nどう解くかを示す",
+          "icon": "document",
+          "next_label": "採用された解き方"
+        },
+        {
+          "label": "構想策定\nそもそも何をやるか",
+          "icon": "building",
+          "next_label": "やると決めたこと"
+        },
+        {
+          "label": "要件定義\n何を作るかを決める",
+          "icon": "people",
+          "next_label": "作るものの条件\n（ここから下流）",
+          "emphasis": true
+        },
+        {
+          "label": "設計\nどう作るかを決める",
+          "icon": "gear",
+          "next_label": "作り方の図面"
+        },
+        {
+          "label": "導入\n作って動かす",
+          "icon": "device",
+          "next_label": "動くシステム"
+        },
+        {
+          "label": "定着\n使われ続ける状態に",
+          "icon": "arrow-cycle",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

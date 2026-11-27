@@ -1,6 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="343" viewBox="0 0 671.6 360" role="img">
-<title>速い経路と遅い経路を確率で重み付けした期待値が平均応答時間。平均が与えられればヒット率を逆算できる。</title>
-<rect x="0.5" y="0.5" width="670.6" height="359" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="316" viewBox="0 0 671.6 332">
+<rect x="0.5" y="0.5" width="670.6" height="331" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(20 20)">
 <line x1="48" y1="34" x2="48" y2="292" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
 <line x1="315.8" y1="34" x2="315.8" y2="292" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
@@ -16,7 +15,7 @@
 <text x="181.9" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 検索を依頼（ここから計測開始）</text>
 <polyline points="312.8,108 51,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="51,108 59,104.4 59,111.6" fill="#1f2937"/>
-<text x="181.9" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. ヒットしたのでそのまま応答（0.2 秒）</text>
+<text x="181.9" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. ヒットしたのでそのまま応答（0.1 秒）</text>
 <rect x="87.3" y="113" width="189.2" height="16" rx="3" fill="#ffffff"/>
 <text x="181.9" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">この経路を通る割合がヒット率 h</text>
 <polyline points="318.8,164 580.6,164" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
@@ -27,9 +26,8 @@
 <text x="449.7" y="197" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. データを返す</text>
 <polyline points="312.8,244 51,244" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="51,244 59,240.4 59,247.6" fill="#1f2937"/>
-<text x="181.9" y="237" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. ヒットしなかった場合の応答（2.2 秒）</text>
+<text x="181.9" y="237" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. ヒットしなかった場合の応答（2.1 秒）</text>
 <rect x="-3.3" y="249" width="370.4" height="16" rx="3" fill="#ffffff"/>
-<text x="181.9" y="262.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">割合は 1－h。平均＝0.2h＋2.2(1－h)＝1.0 から h＝0.6 が出る</text>
+<text x="181.9" y="262.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">割合は 1－h。平均＝0.1h＋2.1(1－h)＝0.5 から h＝0.8 が出る</text>
 </g>
-<text x="335.8" y="340" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">速い経路と遅い経路を確率で重み付けした期待値が平均応答時間。平均が与えられればヒット率を逆算できる。</text>
 </svg>

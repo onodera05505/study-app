@@ -1,10 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="277" viewBox="0 0 689.6 298" role="img">
-<title>受信側が DNS の SPF レコードと実際の送信元 IP アドレスを突き合わせて詐称を見抜く。</title>
-<rect x="0.5" y="0.5" width="688.6" height="297" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="236" viewBox="0 0 689.6 254">
+<rect x="0.5" y="0.5" width="688.6" height="253" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(20 20)">
-<line x1="48" y1="34" x2="48" y2="230" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="324.8" y1="34" x2="324.8" y2="230" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="601.6" y1="34" x2="601.6" y2="230" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="48" y1="34" x2="48" y2="214" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="324.8" y1="34" x2="324.8" y2="214" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="601.6" y1="34" x2="601.6" y2="214" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
 <rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
 <text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">送信サーバ</text>
 <rect x="255.8" y="0" width="138" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
@@ -23,8 +22,5 @@
 <polyline points="324.8,180 350.8,180 350.8,194 326.8,194" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="326.8,194 334.8,190.4 334.8,197.6" fill="#1f2937"/>
 <text x="358.8" y="188" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. 実際の送信元 IP と照合し、無ければ詐称</text>
-<rect x="152.5" y="199" width="344.6" height="16" rx="3" fill="#ffffff"/>
-<text x="324.8" y="212.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">署名で確かめるのは DKIM、失敗時の扱いを決めるのは DMARC</text>
 </g>
-<text x="344.8" y="278" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">受信側が DNS の SPF レコードと実際の送信元 IP アドレスを突き合わせて詐称を見抜く。</text>
 </svg>

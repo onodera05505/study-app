@@ -1,0 +1,148 @@
+# UC-003 の境界契約。境界の形だけを持つ（振る舞いと規則の正本は ./UC.md と REQ-034〜047）
+# 理解度を示す形（status・statusSource）は、論点の一覧と論点の画面の経路を持つ UC-002 の契約（listTopics / getTopicDetail）にある（ADR-0001 決め 1）
+# 読み方の決まりは ../../../adr/ADR-0001-boundary-reading.md（transport / direction / auth / operation 名の当て方）
+# 共有語彙（authSchemes・errorCodes・共有の形）は ../../../_shared/components.yaml
+# おすすめ順の一覧（GET /api/topics の sort=recommended）と論点の画面の次に学ぶ（GET /api/topics/{id} の nextTopic）は、
+# 同じ経路の operation が UC-002 の契約（listTopics / getTopicDetail）にあるため、ここには書かない（ADR-0001 決め 1）
+x-uc: UC-003
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-15
+
+operations:
+  recordUnderstanding:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: bearer
+    summary: 論点 1 件の理解度の記録を、要求した本人のその論点の記録として残す
+    wire:
+      method: PUT
+      path: /api/topics/{id}/progress
+      success: 200
+    request:
+      type: object
+      required: [id, status]
+      properties:
+        id: { type: integer, description: "経路の id。整数として読めることだけを見る" }
+        status: { type: integer, enum: [1, 2, 3], description: "1=未理解 / 2=やや理解 / 3=理解" }
+    response:
+      type: object
+      required: [ok, status]
+      properties:
+        ok: { type: boolean, const: true }
+        status: { type: integer, enum: [1, 2, 3] }
+    errors:
+      - code: UNAUTHENTICATED
+        when: トークンが無い、または読めない
+        wire: { status: 401 }
+      - code: INVALID_INPUT
+        when: 論点の ID が整数として読めない、または本文が決められた形を満たさない
+        wire: { status: 400 }
+      - code: NOT_FOUND
+        when: その ID の論点が無い
+        wire: { status: 404 }
+    examples:
+      ok:
+        request: { id: 418, status: 3 }
+        response: { ok: true, status: 3 }
+      invalidStatus:
+        request: { id: 418, status: 4 }
+        error: INVALID_INPUT
+      notFound:
+        request: { id: 999999, status: 3 }
+        error: NOT_FOUND
+      invalidIdBeforeNotFound:
+        request: { id: "abc", status: 3 }
+        error: INVALID_INPUT
+      unauthenticatedBeforeInvalidStatus:
+        request: { authorization: "", id: 418, status: 4 }
+        error: UNAUTHENTICATED
+
+  getHomeSummary:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: bearer
+    summary: ホームに出す本人の集計（理解度の件数・直近の完了したテスト・次に学ぶの候補・日々の記録）を返す
+    wire:
+      method: GET
+      path: /api/me
+      success: 200
+    response:
+      type: object
+      required: [user, topics, recentSessions, nextTopics, visits]
+      properties:
+        user:
+          type: object
+          required: [id, name, role]
+          properties:
+            id: { type: string }
+            name: { type: string }
+            role: { type: string }
+        topics:
+          type: object
+          required: [total, understood, partly]
+          description: "理解・やや理解の論点の数。段階は論点の一覧と同じ決まりで求める"
+          properties:
+            total: { type: integer, minimum: 0 }
+            understood: { type: integer, minimum: 0 }
+            partly: { type: integer, minimum: 0 }
+        recentSessions:
+          type: array
+          maxItems: 5
+          items:
+            type: object
+            required: [id, kind, scopeLabel, questionCount, correctCount, finishedAt]
+            properties:
+              id: { type: string }
+              kind: { type: string }
+              scopeLabel: { type: string, minLength: 1 }
+              questionCount: { type: integer, minimum: 0 }
+              correctCount: { type: [integer, "null"], minimum: 0 }
+              finishedAt: { type: [integer, "null"], description: "終えた時刻（epoch 秒）" }
+        nextTopics:
+          type: array
+          maxItems: 10
+          description: "候補が無いときは空の配列"
+          items:
+            type: object
+            required: [id, term, questionCount, field]
+            properties:
+              id: { type: integer }
+              term: { type: string }
+              questionCount: { type: integer, minimum: 1 }
+              field: { type: string }
+        visits:
+          type: object
+          required: [today, streak, longest, total]
+          properties:
+            today: { type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "日本時間の暦日" }
+            streak: { type: integer, minimum: 0 }
+            longest: { type: integer, minimum: 0 }
+            total: { type: integer, minimum: 0 }
+    errors:
+      - code: UNAUTHENTICATED
+        when: トークンが無い、または読めない
+        wire: { status: 401 }
+    examples:
+      ok:
+        response:
+          user: { id: "8a0f1d62-3c47-4b10-9f85-d2e6a1c70b33", name: "山田 太郎", role: "MEMBER" }
+          topics: { total: 532, understood: 48, partly: 16 }
+          recentSessions:
+            - { id: "6b2c91f4-10ad-4e7b-8d53-0c7f9a4e2b18", kind: "drill", scopeLabel: "論点: 公開鍵暗号方式", questionCount: 9, correctCount: 7, finishedAt: 1759276800 }
+          nextTopics:
+            - { id: 418, term: "公開鍵暗号方式", questionCount: 9, field: "テクノロジ系" }
+            - { id: 419, term: "共通鍵暗号方式", questionCount: 7, field: "テクノロジ系" }
+          visits: { today: "2026-10-01", streak: 4, longest: 11, total: 37 }
+      okNoNextTopics:
+        response:
+          user: { id: "8a0f1d62-3c47-4b10-9f85-d2e6a1c70b33", name: "山田 太郎", role: "MEMBER" }
+          topics: { total: 532, understood: 532, partly: 0 }
+          recentSessions: []
+          nextTopics: []
+          visits: { today: "2026-10-01", streak: 1, longest: 11, total: 38 }
+      unauthenticated:
+        request: { authorization: "" }
+        error: UNAUTHENTICATED

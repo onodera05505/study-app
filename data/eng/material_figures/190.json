@@ -1,0 +1,56 @@
+{
+  "topic_id": 190,
+  "term": "見積り",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "左の 2 つが見込みの根拠、右端が人に伝える形です。矢印の文字が見込み方の名前です。",
+      "nodes": [
+        {
+          "id": "past",
+          "label": "似た過去の仕事\n実績の人日を元にする",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "wbs",
+          "label": "WBS の作業ごと\n画面 2 人日 × 4 つ\nテスト 2 人日",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "est",
+          "label": "見積り 10 人日\n1 人日＝\n1 人が 1 日働く量",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "say",
+          "label": "伝える形\n10 人日\nずれても 8〜13 人日",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "past",
+          "to": "est",
+          "label": "類推する"
+        },
+        {
+          "from": "wbs",
+          "to": "est",
+          "label": "足し上げる"
+        },
+        {
+          "from": "est",
+          "to": "say",
+          "label": "幅と前提を添える"
+        }
+      ]
+    }
+  ]
+}

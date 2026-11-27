@@ -1,38 +1,55 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="338" viewBox="0 0 640 338" role="img">
-<title>入れるデータの長さが違っても、出てくる値の長さは同じ。値から元のデータには戻せない。</title>
-<rect x="0.5" y="0.5" width="639" height="337" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(96.35 20)">
-<polyline points="66.25,46 66.25,69 227.5,69 227.5,92" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="227.5,92 223.9,84 231.1,84" fill="#1f2937"/>
-<polyline points="132.5,120 173.5,120" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="173.5,120 165.5,123.6 165.5,116.4" fill="#1f2937"/>
-<polyline points="66.25,194 66.25,171 227.5,171 227.5,148" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="227.5,148 231.1,156 223.9,156" fill="#1f2937"/>
-<polyline points="227.5,92 227.5,69 384.9,69 384.9,46" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="384.9,46 388.5,54 381.3,54" fill="#1f2937"/>
-<polyline points="281.5,120 322.5,120" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="322.5,120 314.5,123.6 314.5,116.4" fill="#1f2937"/>
-<polyline points="227.5,148 227.5,171 384.9,171 384.9,194" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="384.9,194 381.3,186 388.5,186" fill="#1f2937"/>
-<polyline points="384.9,240 384.9,262 66.25,262 66.25,240" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
-<polygon points="66.25,240 69.85,248 62.65,248" fill="#1f2937"/>
-<rect x="18.25" y="0" width="96" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="66.25" y="27.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">メモ 1 行</text>
-<rect x="0" y="97" width="132.5" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="66.25" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">文書 100 ページ</text>
-<rect x="0" y="194" width="132.5" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="66.25" y="221.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">動画 1 G バイト</text>
-<rect x="173.5" y="92" width="108" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="227.5" y="114.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">ハッシュ関数</text>
-<text x="227.5" y="134.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">SHA-256</text>
-<rect x="322.5" y="0" width="124.8" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="384.9" y="27.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">256 ビットの値</text>
-<rect x="322.5" y="97" width="124.8" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="384.9" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">256 ビットの値</text>
-<rect x="322.5" y="194" width="124.8" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="384.9" y="221.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">256 ビットの値</text>
-<rect x="199.44" y="248" width="116" height="16" rx="3" fill="#ffffff"/>
-<text x="257.44" y="261.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">戻せない（一方向）</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="350" viewBox="0 0 640 350">
+<rect x="0.5" y="0.5" width="639" height="349" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(59.75 20)">
+<polyline points="66.25,56 66.25,79 271.5,79 271.5,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="271.5,102 267.9,94 275.1,94" fill="#1f2937"/>
+<polyline points="132.5,140 196.5,140" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="196.5,140 188.5,143.6 188.5,136.4" fill="#1f2937"/>
+<polyline points="66.25,224 66.25,201 271.5,201 271.5,178" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="271.5,178 275.1,186 267.9,186" fill="#1f2937"/>
+<polyline points="271.5,102 271.5,79 465.5,79 465.5,56" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="465.5,56 469.1,64 461.9,64" fill="#1f2937"/>
+<polyline points="346.5,140 417.1,140" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="417.1,140 409.1,143.6 409.1,136.4" fill="#1f2937"/>
+<polyline points="271.5,178 271.5,201 465.5,201 465.5,224" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="465.5,224 461.9,216 469.1,216" fill="#1f2937"/>
+<polyline points="465.5,280 465.5,302 66.25,302 66.25,280" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polygon points="66.25,280 69.85,288 62.65,288" fill="#1f2937"/>
+<rect x="18.25" y="0" width="96" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="66.25" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">メモ 1 行</text>
+<text x="66.25" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">数十バイト</text>
+<rect x="0" y="112" width="132.5" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="66.25" y="134.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">文書 100 ページ</text>
+<text x="66.25" y="154.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">数百 K バイト</text>
+<rect x="17.85" y="224" width="96.8" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="66.25" y="246.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">動画</text>
+<text x="66.25" y="266.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">1 G バイト</text>
+<rect x="196.5" y="102" width="150" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="271.5" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">ハッシュ関数</text>
+<text x="271.5" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">SHA-256</text>
+<text x="271.5" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">決まった手順で計算</text>
+<rect x="417.1" y="0" width="96.8" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="465.5" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ハッシュ値</text>
+<text x="465.5" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">256 ビット</text>
+<rect x="417.1" y="112" width="96.8" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="465.5" y="134.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ハッシュ値</text>
+<text x="465.5" y="154.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">256 ビット</text>
+<rect x="417.1" y="224" width="96.8" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="465.5" y="246.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ハッシュ値</text>
+<text x="465.5" y="266.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">256 ビット</text>
+<rect x="152.88" y="65" width="32" height="16" rx="3" fill="#ffffff"/>
+<text x="168.88" y="78.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">入力</text>
+<rect x="148.5" y="123" width="32" height="16" rx="3" fill="#ffffff"/>
+<text x="164.5" y="136.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">入力</text>
+<rect x="152.88" y="187" width="32" height="16" rx="3" fill="#ffffff"/>
+<text x="168.88" y="200.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">入力</text>
+<rect x="340.5" y="65" width="56" height="16" rx="3" fill="#ffffff"/>
+<text x="368.5" y="78.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">同じ長さ</text>
+<rect x="353.8" y="123" width="56" height="16" rx="3" fill="#ffffff"/>
+<text x="381.8" y="136.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">同じ長さ</text>
+<rect x="340.5" y="187" width="56" height="16" rx="3" fill="#ffffff"/>
+<text x="368.5" y="200.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">同じ長さ</text>
+<rect x="247.8" y="288" width="116" height="16" rx="3" fill="#ffffff"/>
+<text x="305.8" y="301.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">戻せない（一方向）</text>
 </g>
-<text x="320" y="318" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">入れるデータの長さが違っても、出てくる値の長さは同じ。値から元のデータには戻せない。</text>
 </svg>

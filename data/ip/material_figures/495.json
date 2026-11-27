@@ -1,0 +1,90 @@
+{
+  "topic_id": 495,
+  "term": "ロジスティクス",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "調達から配送、返品・回収までを 1 本の流れとして見る図です。輸送の区間だけを安くすると、隣の在庫や納品にしわ寄せが出ます。",
+      "nodes": [
+        {
+          "id": "buy",
+          "label": "調達\n原材料を仕入れる",
+          "row": 0,
+          "col": 0,
+          "icon": "box"
+        },
+        {
+          "id": "make",
+          "label": "生産\n工場で作る",
+          "row": 0,
+          "col": 1,
+          "icon": "gear"
+        },
+        {
+          "id": "stock",
+          "label": "在庫\nどこに何個置くか",
+          "row": 0,
+          "col": 2,
+          "icon": "database"
+        },
+        {
+          "id": "ship",
+          "label": "配送\n店舗へ届ける",
+          "row": 1,
+          "col": 2,
+          "icon": "building"
+        },
+        {
+          "id": "ret",
+          "label": "返品・回収\n店から戻る流れ",
+          "row": 1,
+          "col": 0,
+          "icon": "arrow-cycle"
+        },
+        {
+          "id": "bad",
+          "label": "輸送だけ安くすると\n在庫が増え納品が遅れ\n全体では損をする",
+          "row": 1,
+          "col": 3,
+          "icon": "warning",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "buy",
+          "to": "make",
+          "label": "原材料"
+        },
+        {
+          "from": "make",
+          "to": "stock",
+          "label": "製品"
+        },
+        {
+          "from": "stock",
+          "to": "ship",
+          "label": "出荷する品"
+        },
+        {
+          "from": "ship",
+          "to": "ret",
+          "label": "返品・回収品"
+        },
+        {
+          "from": "ret",
+          "to": "buy",
+          "label": "戻りも流れに入れる"
+        },
+        {
+          "from": "ship",
+          "to": "bad",
+          "label": "一区間だけの効率化",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

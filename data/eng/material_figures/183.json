@@ -1,0 +1,81 @@
+{
+  "topic_id": 183,
+  "term": "開発・検証・本番の環境",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "同じコードを開発・検証・本番の順に流し、環境ごとに違う接続先やパスワードは外から渡します。",
+      "nodes": [
+        {
+          "id": "dev",
+          "label": "開発の環境\n各自の PC\n壊してよい仮のデータ",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "stg",
+          "label": "検証の環境\n本番に近い組み合わせ\nと設定・データの量",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "prd",
+          "label": "本番の環境\n利用者が使う\n本物のデータ",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "cd",
+          "label": "開発用の\n接続先",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "cs",
+          "label": "検証用の\n接続先",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "cp",
+          "label": "本番用の接続先\nとパスワード",
+          "row": 1,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "dev",
+          "to": "stg",
+          "label": "同じコード"
+        },
+        {
+          "from": "stg",
+          "to": "prd",
+          "label": "同じコード"
+        },
+        {
+          "from": "cd",
+          "to": "dev",
+          "style": "dashed",
+          "label": "外から渡す"
+        },
+        {
+          "from": "cs",
+          "to": "stg",
+          "style": "dashed",
+          "label": "外から渡す"
+        },
+        {
+          "from": "cp",
+          "to": "prd",
+          "style": "dashed",
+          "label": "外から渡す"
+        }
+      ]
+    }
+  ]
+}

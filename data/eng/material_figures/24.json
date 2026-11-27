@@ -1,0 +1,89 @@
+{
+  "topic_id": 24,
+  "term": "OS の役割",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "アプリは CPU・メモリ・機器を直接触らず OS に頼みます。OS が時間と区画を割り振り、機器を代わりに動かすので、同時に動いても取り合いません。",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "アプリ A\n計算する",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "b",
+          "label": "アプリ B\n大きな表を開く",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "c",
+          "label": "アプリ C\n印刷する",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "os",
+          "label": "OS\n頼みを受けて配る",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "cpu",
+          "label": "CPU の時間\nA・B・C で\n交代に使う",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "mem",
+          "label": "メモリ\nアプリごとに\n区画が分かれる",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "dev",
+          "label": "ファイル・機器\nOS だけが\n直接動かす",
+          "row": 2,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "os",
+          "label": "CPU を使いたい"
+        },
+        {
+          "from": "b",
+          "to": "os",
+          "label": "メモリが欲しい"
+        },
+        {
+          "from": "c",
+          "to": "os",
+          "label": "印刷したい"
+        },
+        {
+          "from": "os",
+          "to": "cpu",
+          "label": "時間を割り振る"
+        },
+        {
+          "from": "os",
+          "to": "mem",
+          "label": "区画を割り当てる"
+        },
+        {
+          "from": "os",
+          "to": "dev",
+          "label": "代わりに動かす"
+        }
+      ]
+    }
+  ]
+}

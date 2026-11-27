@@ -1,0 +1,56 @@
+{
+  "topic_id": 439,
+  "term": "ホットスタンバイシステム",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "explanation",
+      "caption": "上から順に、ふだんの処理から、現用系の停止を経て待機系が引き継ぐまでを読みます。",
+      "actors": [
+        {
+          "id": "a",
+          "label": "現用系",
+          "icon": "server"
+        },
+        {
+          "id": "s",
+          "label": "待機系（起動済み）",
+          "icon": "server"
+        },
+        {
+          "id": "u",
+          "label": "利用者",
+          "icon": "person"
+        }
+      ],
+      "steps": [
+        {
+          "from": "u",
+          "to": "a",
+          "label": "業務の要求"
+        },
+        {
+          "from": "a",
+          "to": "s",
+          "label": "ハートビート（一定間隔で「動いている」）"
+        },
+        {
+          "from": "a",
+          "to": "a",
+          "label": "障害で停止（ハートビートも止まる）"
+        },
+        {
+          "from": "s",
+          "to": "s",
+          "label": "途絶を検知し、障害と判断"
+        },
+        {
+          "from": "u",
+          "to": "s",
+          "label": "業務の要求（待機系が引き継いで処理）"
+        }
+      ]
+    }
+  ]
+}

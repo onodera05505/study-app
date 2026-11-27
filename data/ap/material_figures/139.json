@@ -1,0 +1,72 @@
+{
+  "topic_id": 139,
+  "term": "レスポンシブ Web デザイン",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "左から右へ、1 つの HTML が画面幅で振り分けられる流れです。文書は 1 つのまま、分かれるのは当てる CSS の指定だけです。",
+      "nodes": [
+        {
+          "id": "html",
+          "label": "1 つの HTML\n同じ URL を\nどの端末にも返す",
+          "row": 1,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "mq",
+          "label": "CSS の切り替え\n画面幅の条件を\nブレークポイントで判定",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "gear"
+        },
+        {
+          "id": "sp",
+          "label": "スマートフォン向けの指定\n1 列に縦積み",
+          "row": 0,
+          "col": 2,
+          "icon": "phone"
+        },
+        {
+          "id": "tb",
+          "label": "タブレット向けの指定\n2 列の段組み",
+          "row": 1,
+          "col": 2,
+          "icon": "device"
+        },
+        {
+          "id": "pc",
+          "label": "PC 向けの指定\n3 列の段組み",
+          "row": 2,
+          "col": 2,
+          "icon": "device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "html",
+          "to": "mq",
+          "label": "どの端末にも同じ文書"
+        },
+        {
+          "from": "mq",
+          "to": "sp",
+          "label": "幅が狭い（例 600px まで）"
+        },
+        {
+          "from": "mq",
+          "to": "tb",
+          "label": "中くらい（例 1024px まで）"
+        },
+        {
+          "from": "mq",
+          "to": "pc",
+          "label": "広い（例 1025px から）"
+        }
+      ]
+    }
+  ]
+}

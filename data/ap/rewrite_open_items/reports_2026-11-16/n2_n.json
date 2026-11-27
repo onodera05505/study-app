@@ -1,0 +1,48 @@
+{
+ "target": "ap",
+ "units": [
+  "12"
+ ],
+ "status": "done",
+ "items": [
+  {
+   "no": 1,
+   "topic_id": 662,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（問題文の句をほぼそのまま置く）。rewrite_open_items.md「C の直し方」の、説明の文が句をほぼそのまま置くときは写さない物として直す行",
+   "what": "detail の ### 最上位レベルとはどこまでか の説明の文「テスト要求事項を暫定的に定義するのは」が〔タスク〕3 行目「暫定的なテスト要求事項…を定義する」の句をほぼそのまま置いていた。定義の文ではないので、explanation の箇条（仮に決めて）と揃えて「テスト要求事項を仮に決めておくのは」に言い直した。語「テスト要求事項」は図・詳細設計の箇条と同じ語なので残した。",
+   "questions_checked": [
+    "2018h30h-q46",
+    "2016h28a-q48"
+   ]
+  }
+ ],
+ "edits": [
+  {
+   "file": "data/ap/materials_v4/12-4.json",
+   "topic_id": 662,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 最上位レベルとはどこまでか",
+   "before": "テスト要求事項を暫定的に定義するのは、部品の境界がここで決まるからです。",
+   "after": "テスト要求事項を仮に決めておくのは、部品の境界がここで決まるからです。"
+  }
+ ],
+ "owners": [],
+ "figure_after": [],
+ "ledgers": [],
+ "returned": [],
+ "noticed": [],
+ "gates": {
+  "check_materials": 0,
+  "check_material_style": 0,
+  "render_check": 0,
+  "check_explanations": 0,
+  "check_unit_plans": null
+ },
+ "chars": {
+  "before": 918,
+  "after": 917
+ }
+}

@@ -4,50 +4,31 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
-      "after": "### 4つのアーキテクチャ",
-      "caption": "4 つの体系で積み上げ全体最適化する。抜けを問われたらデータアーキテクチャ。",
-      "nodes": [
-        {
-          "id": "ba",
-          "label": "ビジネスアーキテクチャ（BA）\n業務プロセス・組織",
-          "row": 0,
-          "col": 0
-        },
-        {
-          "id": "da",
-          "label": "データアーキテクチャ（DA）\n業務で使う情報の構造",
-          "row": 1,
-          "col": 0,
-          "emphasis": true
-        },
-        {
-          "id": "aa",
-          "label": "アプリケーションアーキテクチャ（AA）\nシステムの機能構成",
-          "row": 2,
-          "col": 0
-        },
-        {
-          "id": "ta",
-          "label": "テクノロジアーキテクチャ（TA）\n技術基盤",
-          "row": 3,
-          "col": 0
-        }
+      "type": "layers",
+      "after": "explanation",
+      "caption": "組織全体を整理する 4 つの体系を、上の業務から下の技術基盤へ積んだ図です。右の注記で、各体系が上の体系から何を受けて決まるかを読みます。",
+      "shape": "stack",
+      "layers": [
+        {"label": "ビジネスアーキテクチャ（BA）\n業務プロセス・組織", "icon": "people", "note": "出発点になる業務の姿"},
+        {"label": "データアーキテクチャ（DA）\n業務で使う情報の構造", "icon": "database", "note": "BA の業務が使う情報を整理する"},
+        {"label": "アプリケーションアーキテクチャ（AA）\nシステムの機能構成", "icon": "gear", "note": "DA の情報を扱う機能を決める"},
+        {"label": "テクノロジアーキテクチャ（TA）\n技術基盤", "icon": "server", "note": "AA の機能を動かす基盤を決める"}
       ],
-      "edges": [
-        {
-          "from": "ba",
-          "to": "da",
-          "label": "順に具体化する"
-        },
-        {
-          "from": "da",
-          "to": "aa"
-        },
-        {
-          "from": "aa",
-          "to": "ta"
-        }
+      "brackets": [
+        {"from": 0, "to": 3, "label": "上から順に\n具体化する"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 現状（As-Is）と理想（To-Be）",
+      "caption": "EA で組織の姿を作り直す順を下から上へ並べた図です。現状と理想の 2 つを描いてから、その差を埋める計画へ進みます。",
+      "direction": "up",
+      "stages": [
+        {"label": "As-Is モデル\n現在の姿を描く", "icon": "document", "next_label": "現状の姿"},
+        {"label": "To-Be モデル\nあるべき理想の姿を描く", "icon": "document", "next_label": "比べる 2 つの姿"},
+        {"label": "ギャップ分析\n現状と理想の差を洗い出す", "icon": "search", "next_label": "埋めるべき差", "emphasis": true},
+        {"label": "移行計画\n差を埋める順と手段を決める\n部分最適を全体最適へ", "icon": "check"}
       ]
     }
   ]

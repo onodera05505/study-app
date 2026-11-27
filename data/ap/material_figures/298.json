@@ -4,20 +4,32 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
-      "after": "### しくみ",
-      "caption": "現実のデータを吸い上げ、仮想側で試した結果を現実に戻すループがあるかが CPS の判断基準。",
-      "nodes": [
-        {"id": "ph", "label": "フィジカル空間\n現実の都市・工場", "row": 0, "col": 0},
-        {"id": "cy", "label": "サイバー空間\n現実と同等の仮想モデル", "row": 0, "col": 1, "emphasis": true},
-        {"id": "sim", "label": "シミュレーション\n災害や時間軸を操作", "row": 1, "col": 1},
-        {"id": "fb", "label": "フィードバック\n制御・意思決定に反映", "row": 1, "col": 0}
-      ],
-      "edges": [
-        {"from": "ph", "to": "cy", "label": "センサーでデータ収集"},
-        {"from": "cy", "to": "sim", "label": "分析"},
-        {"from": "sim", "to": "fb", "label": "現実では試せない結果"},
-        {"from": "fb", "to": "ph", "label": "付加価値を生む"}
+      "type": "cycle",
+      "after": "### 現実と仮想を往復するループ",
+      "caption": "現実のデータを集め、仮想側で分析した結果を現実に戻すループを示します。この往復が CPS のしくみです。",
+      "center": "CPS の\nループ",
+      "stages": [
+        {
+          "label": "フィジカル空間\n現実の工場・設備",
+          "icon": "building",
+          "next_label": "センサーで集めたデータ"
+        },
+        {
+          "label": "サイバー空間\n現実と同等の仮想モデル",
+          "icon": "cloud",
+          "next_label": "分析した現実の写し",
+          "emphasis": true
+        },
+        {
+          "label": "シミュレーション\n条件を変えて結果を予測する",
+          "icon": "gear",
+          "next_label": "試した結果"
+        },
+        {
+          "label": "フィードバック\n制御・意思決定に反映",
+          "icon": "arrow-cycle",
+          "next_label": "現実の制御を変える"
+        }
       ]
     }
   ]

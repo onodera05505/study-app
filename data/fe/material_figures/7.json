@@ -1,0 +1,153 @@
+{
+  "topic_id": 7,
+  "term": "ポート番号",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "IP アドレスで機器まで届き、その先は宛先ポート番号で中のプログラムへ振り分けられます。左から右へ 2 段で宛先が絞られる様子を表しています。",
+      "nodes": [
+        {
+          "id": "pc",
+          "label": "PC\n通信を始める側",
+          "row": 1,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "sv",
+          "label": "サーバ\nIP アドレスで指す機器",
+          "row": 1,
+          "col": 1,
+          "icon": "server",
+          "emphasis": true
+        },
+        {
+          "id": "web",
+          "label": "Web のプログラム\nポート 80 で待つ",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "mail",
+          "label": "メールのプログラム\nポート 25 で待つ",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "ssh",
+          "label": "SSH のプログラム\nポート 22 で待つ",
+          "row": 2,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "pc",
+          "to": "sv",
+          "label": "宛先 IP アドレスで届く"
+        },
+        {
+          "from": "sv",
+          "to": "web",
+          "label": "宛先ポート 80"
+        },
+        {
+          "from": "sv",
+          "to": "mail",
+          "label": "宛先ポート 25"
+        },
+        {
+          "from": "sv",
+          "to": "ssh",
+          "label": "宛先ポート 22"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "sequence",
+      "after": "### しくみ",
+      "caption": "行きと戻りで送信元と宛先の番号が入れ替わります。戻りの宛先は、PC が最初に借りた一時的な番号です。",
+      "actors": [
+        {
+          "id": "pc",
+          "label": "PC（ブラウザ）",
+          "icon": "device"
+        },
+        {
+          "id": "sv",
+          "label": "Web サーバ",
+          "icon": "server"
+        }
+      ],
+      "steps": [
+        {
+          "from": "pc",
+          "to": "pc",
+          "label": "空いている番号 50000 を借りる"
+        },
+        {
+          "from": "pc",
+          "to": "sv",
+          "label": "行き: 送信元 50000 → 宛先 80",
+          "note": "宛先はサーバが待ち受ける番号"
+        },
+        {
+          "from": "sv",
+          "to": "pc",
+          "label": "戻り: 送信元 80 → 宛先 50000",
+          "note": "要求側が借りた番号へ戻る"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "sequence",
+      "after": "### 中継があると区間が分かれる",
+      "caption": "プロキシを挟むと通信は 2 区間に分かれ、区間ごとに宛先の番号が変わります。どの区間のどちら向きかを矢印でたどって読みます。",
+      "actors": [
+        {
+          "id": "pc",
+          "label": "PC",
+          "icon": "device"
+        },
+        {
+          "id": "px",
+          "label": "プロキシ",
+          "icon": "server"
+        },
+        {
+          "id": "sv",
+          "label": "Web サーバ",
+          "icon": "server"
+        }
+      ],
+      "steps": [
+        {
+          "from": "pc",
+          "to": "px",
+          "label": "送信元 50000 → 宛先 8080",
+          "note": "宛先はプロキシが待ち受ける番号"
+        },
+        {
+          "from": "px",
+          "to": "sv",
+          "label": "送信元 60000 → 宛先 80",
+          "note": "送信元はプロキシが新しく借りた番号"
+        },
+        {
+          "from": "sv",
+          "to": "px",
+          "label": "送信元 80 → 宛先 60000"
+        },
+        {
+          "from": "px",
+          "to": "pc",
+          "label": "送信元 8080 → 宛先 50000"
+        }
+      ]
+    }
+  ]
+}

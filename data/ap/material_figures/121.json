@@ -1,0 +1,69 @@
+{
+  "topic_id": 121,
+  "term": "HDL（Hardware Description Language：ハードウェア記述言語）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 記述から回路になるまで",
+      "caption": "左の HDL の記述から右へ進み、論理合成で論理素子の組合せになります。最後に合成先が FPGA か ASIC かで、できる物が分かれます。",
+      "nodes": [
+        {
+          "id": "hdl",
+          "label": "HDL の記述\n回路の動作を書く",
+          "row": 1,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "syn",
+          "label": "論理合成\n記述を論理素子に変換",
+          "row": 1,
+          "col": 1,
+          "icon": "gear",
+          "emphasis": true
+        },
+        {
+          "id": "pr",
+          "label": "配置配線\nチップ上の素子の置き場と\n配線の道筋を決める",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "fp",
+          "label": "FPGA の書込みデータ\nチップに書き込んで使う",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "as",
+          "label": "ASIC のマスクデータ\nチップを製造する型の図面\n製造後は回路を変えない",
+          "row": 2,
+          "col": 3
+        }
+      ],
+      "edges": [
+        {
+          "from": "hdl",
+          "to": "syn",
+          "label": "入力ごとの\n出力の決まり"
+        },
+        {
+          "from": "syn",
+          "to": "pr",
+          "label": "AND・OR・\nフリップフロップ"
+        },
+        {
+          "from": "pr",
+          "to": "fp",
+          "label": "FPGA 向けなら"
+        },
+        {
+          "from": "pr",
+          "to": "as",
+          "label": "ASIC 向けなら"
+        }
+      ]
+    }
+  ]
+}

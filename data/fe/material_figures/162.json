@@ -1,0 +1,148 @@
+{
+  "topic_id": 162,
+  "term": "クラス",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 型と実体",
+      "caption": "1 つのクラスから生成したインスタンスは、属性の値をそれぞれ別に持ちます。操作の定義はクラスの側に 1 つだけあります。",
+      "nodes": [
+        {
+          "id": "cls",
+          "label": "クラス「社員」\n属性名と操作を定義\n値は持たない",
+          "row": 1,
+          "col": 0,
+          "icon": "document",
+          "emphasis": true
+        },
+        {
+          "id": "i1",
+          "label": "インスタンス 1\n氏名＝佐藤",
+          "row": 0,
+          "col": 1,
+          "icon": "person"
+        },
+        {
+          "id": "i2",
+          "label": "インスタンス 2\n氏名＝鈴木",
+          "row": 1,
+          "col": 1,
+          "icon": "person"
+        },
+        {
+          "id": "i3",
+          "label": "インスタンス 3\n氏名＝高橋",
+          "row": 2,
+          "col": 1,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "cls",
+          "to": "i1",
+          "label": "生成"
+        },
+        {
+          "from": "cls",
+          "to": "i2",
+          "label": "生成"
+        },
+        {
+          "from": "cls",
+          "to": "i3",
+          "label": "生成"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### クラス同士の関係",
+      "caption": "実線はクラスとクラスの関係、破線はクラスとインスタンスの関係です。型と実体の関係になるのは破線の 1 本だけです。",
+      "nodes": [
+        {
+          "id": "veh",
+          "label": "乗り物\n上位のクラス",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "drv",
+          "label": "運転者\nクラス",
+          "row": 1,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "car",
+          "label": "自動車\n下位のクラス",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "eng",
+          "label": "エンジン\n部分のクラス",
+          "row": 1,
+          "col": 2,
+          "icon": "gear"
+        },
+        {
+          "id": "obj",
+          "label": "品川の 1 台\nインスタンス（実体）",
+          "row": 2,
+          "col": 1,
+          "icon": "box",
+          "shape": "round",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "car",
+          "to": "veh",
+          "label": "汎化 性質を受け継ぐ"
+        },
+        {
+          "from": "car",
+          "to": "eng",
+          "label": "集約 部分として含む"
+        },
+        {
+          "from": "drv",
+          "to": "car",
+          "label": "関連 互いを参照する",
+          "arrow": "none"
+        },
+        {
+          "from": "car",
+          "to": "obj",
+          "label": "生成 型と実体",
+          "style": "dashed"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "parts",
+      "after": "### クラスとインスタンスの対応",
+      "caption": "クラス図の長方形は三段に分かれ、上から名前・属性・操作の順に書きます。",
+      "whole": {
+        "label": "クラス図の長方形",
+        "icon": "document"
+      },
+      "parts": [
+        {
+          "label": "名前\nクラスの名前を書く"
+        },
+        {
+          "label": "属性\n持つデータを並べる"
+        },
+        {
+          "label": "操作\nできる手続を並べる"
+        }
+      ]
+    }
+  ]
+}

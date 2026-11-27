@@ -1,0 +1,60 @@
+{
+  "topic_id": 273,
+  "term": "可用性（システム監査の判断尺度）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 判断尺度という考え方",
+      "caption": "監査人は自分の感覚でなく、強調した判断尺度と現状の記録を照らし合わせて結論を出します。尺度が定まっていないこと自体も結論になります。",
+      "nodes": [
+        {
+          "id": "std",
+          "label": "判断尺度\nSLA の中断時間の目標",
+          "row": 0,
+          "col": 0,
+          "icon": "document",
+          "emphasis": true
+        },
+        {
+          "id": "now",
+          "label": "現状\n実績の停止時間の記録",
+          "row": 1,
+          "col": 0,
+          "icon": "chart"
+        },
+        {
+          "id": "aud",
+          "label": "監査人\n感覚でなく尺度で判断",
+          "row": 0,
+          "col": 1,
+          "icon": "person"
+        },
+        {
+          "id": "res",
+          "label": "監査の結論\n尺度との差を示す",
+          "row": 0,
+          "col": 2,
+          "icon": "check"
+        }
+      ],
+      "edges": [
+        {
+          "from": "std",
+          "to": "aud",
+          "label": "合意した目標値"
+        },
+        {
+          "from": "now",
+          "to": "aud",
+          "label": "記録した実績"
+        },
+        {
+          "from": "aud",
+          "to": "res",
+          "label": "差を示す（尺度の欠けも）"
+        }
+      ]
+    }
+  ]
+}

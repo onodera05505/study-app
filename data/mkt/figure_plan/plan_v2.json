@@ -1,0 +1,1586 @@
+[
+ {
+  "topic_id": 1,
+  "term": "マーケティングの定義",
+  "points": [
+   {
+    "point": "買い手は受け取る値打ちが払う額より大きいと思えたときに対価を払うので、売り手の仕事は渡す値打ちを決めて伝わる形にすることです。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "箱は「売り手＋渡す値打ちを決める」「買い手＋値打ちが対価を上回れば払う」「価格・売り方・広告＋値打ちを伝える手段」。矢印は売り手→買い手「値打ち（中身と伝え方）」、買い手→売り手「対価（値打ちが上回ると思えたら）」、手段→売り手「決めた値打ちの下で選ぶ」。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "交換が続く条件（値打ち＞対価）と、手段がその下にある関係は、2 者の往き来と矢印のラベルで閉じて見せられる。",
+    "benefit": 2
+   },
+   {
+    "point": "価格・売り方・広告は、渡す値打ちが決まってから決める下の手段です。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "上の交換の図の手段の箱が運び、本文 1 文で言える。",
+    "benefit": 1
+   },
+   {
+    "point": "値引きは渡す値打ちを変えずに対価だけを下げる手なので、交換の条件が自分の側だけ悪くなります。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える因果で、図にする量の関係が無い。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 12,
+  "term": "消費者購買意思決定プロセス",
+  "points": [
+   {
+    "point": "人が買うまでを、困りごとに気づく→調べる→比べる→買う→買った後に評価する、の 5 段で見ます。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "steps",
+    "idea": "段は 5 つ（気づく・調べる・比べる・買う・評価する）を down で並べ、各段の一言は顧客がやっていること。段の間には次の段へ移るきっかけ（課題が言葉になる・候補が出そろう・決め手が見つかる・使い始める）を書く。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "一方向に進む段とその順が要点で、段の間に渡すものが書ける。",
+    "benefit": 3
+   },
+   {
+    "point": "段ごとに効く材料が違うので、施策は「どの段の人向けか」で仕分け、効かない理由を段のずれとして説明します。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y は本文が材料を挙げる 3 段（困りごとに気づく・調べる・買った後）、x は「顧客がやっていること」「効く材料」「外したときに起きること」。3×3。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "段×効く材料の対応は行と列で比べて読め、段のずれが格子の中で閉じる。",
+    "benefit": 2
+   },
+   {
+    "point": "買った直後の迷い（認知的不協和）を放っておくと解約と良くない評判につながります。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "名前 1 つと 1 文の因果で、本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 14,
+  "term": "カスタマージャーニー",
+  "points": [
+   {
+    "point": "接点を時間の順に実物の名前で並べると、人が落ちている接点を名指しできます。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "sequence",
+    "idea": "登場人物は自社の接点と顧客。メールが届く→本文のリンクを押す→LP を見る→フォームを送る→初回の連絡の往き来を上から並べ、落ちている段（本文のリンク）に率と注記を置く。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "既存の図 1 が接点の往き来と落ちる所をそのまま運んでいる。",
+    "benefit": 3
+   },
+   {
+    "point": "接点ごとに顧客の状態・やること・詰まる理由を書き出すと、持ち主の部署が変わる継ぎ目が見えます。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y は接点 3 つ（広告・入力フォーム・初回の連絡）、x は「持ち主」「顧客がやること」「詰まる理由」。持ち主の列が宣伝・開発・営業と変わる所を読ませる。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "継ぎ目は接点×持ち主を並べて初めて見え、既存の図の注記だけでは比べられない。",
+    "benefit": 2
+   }
+  ]
+ },
+ {
+  "topic_id": 15,
+  "term": "ファネル",
+  "points": [
+   {
+    "point": "段ごとに実績の通過率を相場と並べ、相場を下回る段を詰まりと見ます。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y は段（訪問→資料請求・資料請求→商談・商談→受注）、x は「実績の通過率」「相場」「見立て」。相場の半分の段だけを強調する。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "既存の図 1 が要点（率の小ささではなく相場との比較）を格子で閉じている。",
+    "benefit": 3
+   },
+   {
+    "point": "ファネルは段ごとに人数を数え、次の段へ進んだ割合（通過率）で上から下へ絞り込まれる形を見ます。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "steps",
+    "idea": "段は訪問 10,000・資料請求 200・商談 40・受注 8 を down で並べ、段の間の矢印に通過率（2%・20%・20%）を書く。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "人数が段を下るごとに絞られる形と、割合が段の間の量であることは、段と段の間のラベルで見せられる。",
+    "benefit": 2
+   },
+   {
+    "point": "どの段も相場並みで上げる余地が薄いときだけ、入口の人数を増やします。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "既存の図 1 の読み方の裏返しで、本文 1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 73,
+  "term": "KGI から KPI への分解",
+  "points": [
+   {
+    "point": "KGI（最終の数字）を、掛け合わせるとそこに届く中間の数字（KPI）へ割り直します。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "箱は訪問数・資料請求・商談・KGI 受注を名前＋月の値で横に並べ、矢印に「× 請求率 2%」「× 商談化率 20%」「× 受注率 20%」。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "既存の図 1 が、矢印のラベルの掛け算で KGI に届く構成を運んでいる。",
+    "benefit": 3
+   },
+   {
+    "point": "KPI に置けるのは、掛け合わせると KGI になり、かつ自分の打ち手で動く数字だけです。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y は候補の数字 3 つ（資料請求率・閲覧数・受注率（営業が決める））、x は「掛け合わせると KGI になるか」「自分の打ち手で動くか」と「置くか」。3×3。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの条件で候補を比べると、置く・置かないが格子の中で決まる。",
+    "benefit": 2
+   },
+   {
+    "point": "目標の倍率は掛け算で分け、1 つの数字に背負わせずに少しずつ上げます。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y は置き方 2 つ（1 つの数字に 1.5 倍・3 つを 1.15 倍ずつ）、x は「掛け合わせた結果」「その数字が動かなかったとき」。3 つを 1.15 倍ずつの行を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "置き方を同じ観点で比べると、止まりにくさと掛け算で届くことが表だけで言える。",
+    "benefit": 2
+   }
+  ]
+ },
+ {
+  "topic_id": 5,
+  "term": "市場環境分析",
+  "points": [
+   {
+    "point": "事業の条件を、自社では変えられない外の流れ（マクロ）と、関係を持てる相手の動き（ミクロ）に分け、前者は前提に織り込み後者は施策で動かします。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y はマクロ・ミクロ、x は「例（人口・景気・法律・技術／顧客・競合・仕入先・売り先）」「自社が動かせるか」「打ち手の置き場所（計画の前提に織り込む／施策で動かす）」。2×3。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つを同じ観点で比べる要点で、打ち手の置き場所の違いが行をたどると閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "未達の幅から市場全体の分を引き、残った自社固有の分に手を当てます。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "chart",
+    "idea": "bar。カテゴリは「自社の売上の変化 −12%」「市場全体の変化 −10%」「自社固有の分 −2 ポイント」。自社固有の分の棒だけを強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "引き算で残る幅は棒の長さの差で見せると一目で分かる。",
+    "benefit": 2
+   }
+  ]
+ },
+ {
+  "topic_id": 21,
+  "term": "STP",
+  "points": [
+   {
+    "point": "STP は、分ける→選ぶ→位置を決めるの 3 手順で、前の手順で決めたことが次の材料になり、打ち手は位置が決まってから決めます。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "steps",
+    "idea": "段は S 分ける（市場を切り口で分ける）・T 選ぶ（狙う 1 マスを決める）・P 位置を決める（顧客が比べる軸で位置取り）・打ち手（価格・売り方・広告文）を down で並べ、段の間に「分けた区画」「狙う相手」「顧客の頭の中の位置」。",
+    "existing_figure_id": 1,
+    "existing_action": "retype",
+    "reason": "既存の図 1 は一方向の手順を矢印だけの blocks で描いており、段が順に進む要点は steps の型が運ぶ。",
+    "benefit": 3
+   },
+   {
+    "point": "位置を決める軸は、自社が言いたいことではなく顧客が比べるときに見る軸を使います。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "ポジショニングの単位の図が受け持ち、ここでは 1 文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 22,
+  "term": "セグメンテーション",
+  "points": [
+   {
+    "point": "切り口は、分けた先で反応（受注率）が変わり、別の打ち手が要るかで選びます。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y は切り口 2 つ（業種・導入を担当する人の有無）、x は「分けた先の受注率（18〜22%／31% と 12%）」「打ち手が分かれるか」「使い道（資料の見出し／打ち手を分ける軸）」。2×3。担当者の行を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの切り口を同じ観点で比べると、反応が割れる側だけが切り口として働くことが表で閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "分けた結果は、測れる・届く接点がある・狙う大きさがある・別の打ち手が要るほど違う、の 4 条件を満たします。",
+    "content_type": "事実",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "条件の一覧で、比べる対象が立たない（一覧は図にしない）。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 23,
+  "term": "ターゲティング",
+  "points": [
+   {
+    "point": "候補を規模・届きやすさ・勝ちやすさの 3 基準で並べ、人と金を当てる相手を選び切ります。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y は候補 A（中小企業の総務）・B（大企業の情報システム部門）、x は「規模（売上の見込み 288 万円／300 万円）」「届きやすさ（自社の営業で会えるか）」「勝ちやすさ」。2×3。選んだ A の届きやすさのセルを強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "候補を同じ基準で比べる要点で、見込みが並ぶとき届きやすさで決まることが格子で読める。",
+    "benefit": 3
+   },
+   {
+    "point": "3 基準は見る順を決め、規模で並べ、見込みが近ければ届きやすさ、次に勝ちやすさで決めます。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "steps",
+    "idea": "段は「規模で候補を並べる」「届きやすさで比べる」「勝ちやすさで決める」「捨てた基準を言える形にする」を down で並べ、段の間に「見込みが近いとき」「なお並ぶとき」「選んだ相手」。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "判断の順と、次の段へ進む条件は段の間のラベルで運べる。",
+    "benefit": 2
+   },
+   {
+    "point": "規模に大きな差があるときは、届く道があることを確かめたうえで大きい側を採ります。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "手順の例外の 1 文で、本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 24,
+  "term": "ポジショニング",
+  "points": [
+   {
+    "point": "顧客が比べる 2 つの軸の上に自社と競合を置き、空いている場所を取ります。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "x は導入の手間（かかる・要らない）、y は機能の数（多い・絞る）の 2×2。各セルに置かれる相手（機能が多く手間がかかる＝競合 4 社が埋めている／手間が要らず機能を絞る＝空き、ここを取る）。空きのセルを強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "位置取りの地図そのもので、埋まった所と空いた所が格子の中で見える。",
+    "benefit": 3
+   },
+   {
+    "point": "社内で誇りたい軸を選ぶと、顧客の比較の場に無い軸で勝ったことになり売上は動きません。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える因果。",
+    "benefit": 1
+   },
+   {
+    "point": "最安は翌月に追随され、粗利率 30% なら 1 割の値下げで粗利が 3 分の 1 減ります。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "値の計算 1 つで本文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 16,
+  "term": "ペルソナ",
+  "points": [
+   {
+    "point": "ペルソナは、属性だけでなく課題・買う動機・何と比べるかまで書いた一人の人物像です。",
+    "content_type": "概念",
+    "function": "表現的",
+    "draw": true,
+    "type": "parts",
+    "idea": "whole はペルソナ（人の絵記号）。部位は「属性（年齢・業種・会社の規模）」「抱えている課題」「買う動機」「何と比べるか」「材料（既存顧客の言葉）」。属性だけでは足りないことを示すため課題を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 つの像がどの部位でできているかが要点で、属性の外に要る部位を並べて見せられる。",
+    "benefit": 2
+   },
+   {
+    "point": "人物像が決まると、どの言葉で書くか・どの媒体に出すか・いつ接触するかが絞れます。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える因果。",
+    "benefit": 1
+   },
+   {
+    "point": "材料は想像ではなく、既存顧客への聞き取りと実際の問い合わせの文面です。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 27,
+  "term": "マーケティング・ミックス（4P）",
+  "points": [
+   {
+    "point": "製品・価格・流通・販促の 4 つを、1 つの狙いに揃えて一組で設計します。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "中央に狙い（高くても選ばれる）、上下左右に製品・価格・流通・販促の箱（名前＋その狙いでの打ち手）。狙いから各箱への矢印に「中身で裏付ける」「値で示す」「売り場で崩さない」「理由を伝える」。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "既存の図 1 が、4 つが 1 つの狙いに向く構成を矢印のラベルで運んでいる。",
+    "benefit": 3
+   },
+   {
+    "point": "1 つでも逆を向くと（高い価格なのに毎月の値引き）、顧客には高いだけに映ります。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "既存の図の読み方の裏返しで、本文 1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 32,
+  "term": "価格設定の方法",
+  "points": [
+   {
+    "point": "原価が下限、競合が目安、顧客が感じる価値が上限で、3 つを当てて出た幅の中に値段を置きます。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "chart",
+    "idea": "bar。カテゴリは原価と経費（下限 3,000）・競合の売価（目安 4,500）・決めた値段（4,800）・省ける手間（上限 6,000）。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "既存の図 1 が、3 基準の役割と幅を棒の大小で運んでいる。",
+    "benefit": 3
+   },
+   {
+    "point": "幅が狭ければ値引きの余地は無く、広ければ価値を伝える言葉に投資する余地があります。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "既存の図の読み方で、本文 1 文で言える。",
+    "benefit": 1
+   },
+   {
+    "point": "比べるときは、一回売りなら 1 回あたり、毎月払いなら月あたりに単位を揃えます。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 51,
+  "term": "計測設計",
+  "points": [
+   {
+    "point": "どの行動を成果 1 件と数えるかで件数と意味が変わり、月内に件数が出る中で売上に一番近い行動を選びます。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y は成果と数える行動（資料ページの表示・問い合わせの送信・受注）、x は「月の件数」「売上との近さ」「判断できるまで」。問い合わせの行を強調する。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "既存の図 1 が 3 つの数え方を同じ観点で比べ、選ぶ理由が格子で閉じている。",
+    "benefit": 3
+   },
+   {
+    "point": "決めるのは、タグを貼る場所・到達を 1 件と数える宛先・何日以内まで含めるか（計測期間）の 3 つです。",
+    "content_type": "事実",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "決める項目の一覧で、比べる観点が立たない。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 79,
+  "term": "効果検証の運用",
+  "points": [
+   {
+    "point": "見る日・見る人・見る項目を決め、計画・実行・確認・改善を会議の予定として止めずに回します。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "cycle",
+    "idea": "段は計画（数字と打ち手を決める）・実行（施策を出す）・確認（週 1 回 30 分、決めた項目だけ見る）・改善（止める・続ける・広げるを決める）。段の間に「出す施策」「たまった数字」「次の一手」「直した計画」。中央に「見る場を予定に固定」。確認を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "輪になって戻る運用で、輪を回す仕掛け（見る場）が中央と強調の段で見える。",
+    "benefit": 3
+   },
+   {
+    "point": "見直しの頻度は、効かない費用を払い切らず、数字が動く前に集まらない間隔に置きます。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y は頻度 3 つ（四半期末にまとめて・毎日全員で・週 1 回 30 分）、x は「効かない出稿に払う費用」「集まる手間」「選ぶか」。3×3。週 1 回の行を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "3 つの頻度を同じ観点で比べると、週 1 回が両方の無駄を避ける理由が格子で読める。",
+    "benefit": 2
+   },
+   {
+    "point": "定点で見る項目は固定し、その都度の追加分析とは分けます。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 57,
+  "term": "CVR（コンバージョン率）",
+  "points": [
+   {
+    "point": "CVR は、成果の件数 ÷ 訪問数 × 100 で出す、訪問のうち成果に至った割合です。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "式 1 つで本文で言える。",
+    "benefit": 1
+   },
+   {
+    "point": "CVR は割り算なので、分子と分母のどちらが動いたかで意味が変わり、必ず件数と並べて見ます。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y は月（先月・今月）、x は訪問・成果・CVR。今月の成果（先月の 2 倍）と CVR（下がった）を並べ、成果のセルを強調する。",
+    "existing_figure_id": 2,
+    "existing_action": "keep",
+    "reason": "既存の図 2 が、率が下がっても件数が増えた形を行と列で閉じている。",
+    "benefit": 3
+   },
+   {
+    "point": "何を成果と数えるかで値が変わるので、資料請求の CVR と購入の CVR は比べられません。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "計測設計の単位の図が受け持ち、ここでは 1 文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 58,
+  "term": "CPA（獲得単価）",
+  "points": [
+   {
+    "point": "CPA は、広告費 ÷ 成果の件数で出す、成果 1 件を取るのにかかった広告費です。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "式 1 つで本文で言える。",
+    "benefit": 1
+   },
+   {
+    "point": "CPA を下げる道は、同じ訪問から多く成果を出す（CVR を上げる）か、同じ成果を安い流入で取る（クリック単価を下げる）かの 2 つです。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "箱は「広告費＋出した金額」「クリック（訪問）＋1 回あたりの単価で買う」「成果＋訪問のうち進んだ件数」「CPA＋成果 1 件の費用」。矢印は「÷ クリック単価」「× CVR」「広告費 ÷ 成果」、CVR とクリック単価の矢印を 2 つの道として強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "CPA が CVR とクリック単価のどこから決まるかは矢印のラベルで運ぶと、下げる道が図の中で閉じる。",
+    "benefit": 2
+   },
+   {
+    "point": "成果 1 件の粗利より CPA が高い出稿は、取るほど損が増えるので止めます。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "chart",
+    "idea": "bar。カテゴリは広告 A・広告 B、系列は CPA（2,000・4,000）と成果 1 件の粗利（3,000・3,000）。粗利を超える B の CPA を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "粗利の線を超えるかどうかは棒の大小で一目で分かる。",
+    "benefit": 3
+   },
+   {
+    "point": "目標 CPA を下げすぎると買える枠が減り、配信量そのものが細ります。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える因果。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 62,
+  "term": "ROAS・ROI（費用対効果）",
+  "points": [
+   {
+    "point": "ROAS と ROI は分母がどちらも広告費で、分子が売上か、粗利から広告費を引いた額かだけが違います。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "箱は広告費 100,000 円・売上 400,000 円・粗利 120,000 円（粗利率 30%）・利益 20,000 円・ROAS 400%・ROI 20%。矢印は「× 粗利率 30%」「− 広告費」「÷ 広告費」を 2 本の道に分けて結ぶ。ROI を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "同じ広告費から 2 つの指標へ分かれる計算の道筋は、矢印のラベルで運ぶと分子の違いが閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "ROAS が高くても粗利率が低いと利益は減るので、続けるかは ROI で決めます。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "chart",
+    "idea": "bar。カテゴリは媒体 X（粗利率 10%）・媒体 Y（粗利率 50%）、系列は ROAS（500%・300%）と ROI（−50%・50%）。ROI の系列を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "ROAS と ROI の順位が逆転する形は棒を並べると一目で分かる。",
+    "benefit": 3
+   },
+   {
+    "point": "世間で言う ROI は制作費や人件費まで投資に含めることが多く、外と比べるときは相手の定義に寄せます。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "定義の断りの 1 文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 59,
+  "term": "CAC（顧客獲得コスト）",
+  "points": [
+   {
+    "point": "CAC は広告費に人件費・代理店費まで足した総額を新規顧客の件数で割るので、CPA より大きく出ます。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "箱は広告費・人件費・代理店費・獲得の費用の総額・CPA・CAC・1 件の粗利。矢印は「＋」「÷ 新規 40 件」、CAC と粗利の間に「1 件ごとに赤字」。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "既存の図 1 が、分子の違いで CPA と CAC が分かれる計算を矢印のラベルで運んでいる。",
+    "benefit": 3
+   },
+   {
+    "point": "CPA と CAC は分子（広告費だけか総額か）も分母（途中の行動か顧客になった件数か）も違い、事業の採算には CAC を使います。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y は CPA・CAC、x は「分子に入れる費用」「分母に数える件数」「使い道（広告の運用／事業の採算）」。2×3。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの指標を同じ観点で比べる要点で、取り違えの元が格子の中で見える。",
+    "benefit": 2
+   }
+  ]
+ },
+ {
+  "topic_id": 66,
+  "term": "リテンションと解約率（チャーン）",
+  "points": [
+   {
+    "point": "月次の解約率が 5% なら、1 人が続く月数は 1 ÷ 0.05 ＝ 20 か月と見積もれます。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "式 1 つで本文で言える。",
+    "benefit": 1
+   },
+   {
+    "point": "解約という穴が同じままなら、獲得を増やしても顧客数は頭打ちになるので、入口を広げるか穴を塞ぐかで費用の置き先を決めます。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "chart",
+    "idea": "line。x は月（0・6・12・18・24・36）、y は顧客数。系列は「獲得 月 100 人・解約 8%」「獲得 月 150 人・解約 8%」「獲得 月 100 人・解約 5%」（毎月の顧客数＝前月×（1−解約率）＋獲得で計算し、頭打ちは 1,250・1,875・2,000 人）。解約 5% の系列を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "顧客数が頭打ちになる形と、穴を塞ぐ側が上に伸びることは線の動きで見せると一目で分かる。",
+    "benefit": 3
+   },
+   {
+    "point": "継続率 95% と解約率 5% は同じ事実の裏表です。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 60,
+  "term": "LTV（顧客生涯価値）",
+  "points": [
+   {
+    "point": "LTV は 1 か月の粗利 × 続く月数（1 ÷ 月次解約率）で、売上のまま掛けると払える獲得費を見誤ります。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "箱は月額・月の粗利・月次解約率・続く月数・LTV・売上で数えた値。矢印は「原価 2,000 円を引く」「1 ÷ 解約率」「× 続く月数」「× 月額のまま」。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "既存の図 1 が、LTV の組み立てと売上で数えた誤りを矢印のラベルで運んでいる。",
+    "benefit": 3
+   },
+   {
+    "point": "値上げで月の粗利が増えても、解約が増えて続く月数が縮むと LTV は下がります。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y は今・値上げ案（月額 6,000 円）、x は「月の粗利」「続く月数」「LTV」。2×3。値上げ案の LTV（約 57,000 円）を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの案を同じ 3 観点で比べると、掛け合わせで下がることが行をたどって閉じる。",
+    "benefit": 2
+   },
+   {
+    "point": "買い切りの商品なら、1 回の粗利 × 平均の購入回数で数えます。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 61,
+  "term": "LTV:CAC と回収期間",
+  "points": [
+   {
+    "point": "LTV が同じでも CAC が倍になると、比は 3 から 1.5 に下がり回収期間は延びるので、比と回収期間を対で見ます。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "chart",
+    "idea": "bar。カテゴリは広告 A・広告 B、系列は LTV（60,000・60,000）と CAC（20,000・40,000）。棒に比と回収の月数を注記する。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "既存の図 1 が、比と回収期間の対を棒の大小と注記で運んでいる。",
+    "benefit": 3
+   },
+   {
+    "point": "獲得にどこまで出せるかは、回収期間が先払いできる月数（余裕資金 ÷ 月の広告費）に収まるかで決めます。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "timeline",
+    "idea": "軸は獲得してからの月（目盛りは 0・2・4・6・8・10・12・14 か月の 8 個）。期間は「先払いできる月数（0〜12 か月）」「広告 A の回収（0〜6.7 か月）」「広告 B の回収（0〜13.3 か月）」、点は 12 か月に「資金が尽きる」。B の回収を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "回収が先払いできる期間に収まるかは、期間の帯の長さを並べると一目で分かる。",
+    "benefit": 2
+   },
+   {
+    "point": "比が大きいときは獲得費を出し切らず、取れた顧客を取り逃している可能性があります。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える読み方。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 41,
+  "term": "デジタルマーケティングの全体像",
+  "points": [
+   {
+    "point": "オンラインの施策を、知られる・選ばれる・続けてもらうの 3 段に並べ、段ごとに数字を並べて薄い段を厚くします。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y は 3 段（知られる・選ばれる・続けてもらう）、x は「顧客のいる所（探す前／探している最中／買った後）」「効く手段（SEO・SNS／LP と CTA・比較の材料／メール・解約を減らす手）」「見る数字」。3×3。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "手段を段に割り当てた地図は段×観点の格子にすると、薄い段を行で見つけられる。",
+    "benefit": 3
+   },
+   {
+    "point": "広告は媒体と狙う語で段が変わり、動画なら知られる段、検討中の語の検索広告なら選ばれる段です。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える例外。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 42,
+  "term": "施策の向き不向き",
+  "points": [
+   {
+    "point": "施策を速さと残るかの 2 軸で分け、期限のある売上には即効型、続く流入には資産型を当てます。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "x は効き始めるまで（すぐ・数か月かかる）、y は止めたときに残るか（残らない・残る）の 2×2。即効型（検索広告）と資産型（記事・検索対策）のセルを強調する。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "既存の図 1 が 2 軸の分類を格子で閉じている。",
+    "benefit": 3
+   },
+   {
+    "point": "即効型は止めた日に流入が消え、資産型は効き始めまで月単位かかる代わりに積み上がって残ります。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "chart",
+    "idea": "line。x は月（0〜12）、y は月の流入。系列は「検索広告（0〜6 か月だけ出して止める）」と「記事（4 か月目から伸びて残る）」。止めた月に縦の補助線「広告を止める」。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "時間に沿った効き方の違いは線の動きで見せると一目で分かり、2 軸の格子では運べない。",
+    "benefit": 2
+   },
+   {
+    "point": "ブランドも資産型で、名前で検索された件数と直接の訪問数の推移で測ります。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 43,
+  "term": "SEO",
+  "points": [
+   {
+    "point": "SEO は、見つけてもらう・整理する・中身を良くする・見え方を整えるの 4 段で、土台の段が欠けると上の段の手間は効かないので、土台から直します。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "layers",
+    "idea": "layers を上から「見え方を整える（タイトル・説明文・代替テキスト）」「中身を良くする（読者が打つ言葉で書く・内部リンク）」「整理する（分かりやすい URL・重複をまとめる）」「見つけてもらう（検索の側が読み取れる）」。一番下を強調し、注記に「ここが欠けると上は効かない」。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "下の段が上を支え、直す順が土台からになる要点は層の積み上がりで見せられる。",
+    "benefit": 3
+   },
+   {
+    "point": "検索に見つけられている既存のページは、掲載順位が 1 つ上がるだけで全体の流入が動きます。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える判断。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 46,
+  "term": "SNSマーケティング",
+  "points": [
+   {
+    "point": "検索は需要がすでにある人に当たり、SNS は需要に気づいていない人へ話題として流れるので、SNS は認知と想起の役割に合う数字で見ます。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y は検索・SNS、x は「届く相手」「効くこと（申し込みの即効／名前を知る・思い出す）」「見る数字（成果の件数／社名での検索数・知ったきっかけ）」。2×3。SNS の見る数字を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの場を同じ観点で比べる要点で、見る数字が役割から決まることが格子で閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "SNS で見てから検索して申し込む人は最後の接点だけで別の施策に数えられ、SNS は過小に見えます。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "アトリビューションの単位の図が受け持ち、ここでは 1 文で足りる。",
+    "benefit": 1
+   },
+   {
+    "point": "続けるには投稿の頻度と人手が要り、止めれば関係も止まります。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 38,
+  "term": "広告",
+  "points": [
+   {
+    "point": "広告は媒体の枠を費用で買う取引なので、出せば届き、止めればその日から届かなくなります。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言え、時間に沿った効き方は施策の向き不向きの単位の図が受け持つ。",
+    "benefit": 1
+   },
+   {
+    "point": "広告は媒体次第で押し出す売り方（プッシュ）にも引き寄せる売り方（プル）にもなり、枠を買わない広報は載るかを自分で決められません。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y は検索広告・交通広告やテレビ・広報（取材記事）、x は「当てる相手（探している人／知らない人）」「押すか引くか」「載るかを自分で決められるか」。3×3。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "3 つの手段を同じ観点で比べると、媒体でプッシュとプルが分かれることと広報の違いが格子で読める。",
+    "benefit": 2
+   },
+   {
+    "point": "今月中に申込が要るなら、載るまで時間のかかる記事や開催日に縛られる展示会より検索広告を選びます。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "判断の 1 文で、比べる観点は施策の向き不向きの図が受け持つ。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 47,
+  "term": "メールマーケティング",
+  "points": [
+   {
+    "point": "メールの効き方は開封とクリックの 2 段に分かれ、件名は開封に、本文の誘導（CTA）はクリックに効きます。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "steps",
+    "idea": "段は「配信 5,000 通」「開封 1,000 通（件名を見て開く）」「クリック 50（本文の誘導を押す）」「LP へ（次の行動）」を down で並べ、段の間に「件名で開く（5 通に 1 通）」「本文の誘導で押す（20 通に 1 通）」「クリックの先で受け止める」。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "段が一方向に進み、段の間で何が効くかがラベルで運べる。",
+    "benefit": 2
+   },
+   {
+    "point": "落ちている数字で直す所を選びます（開封が落ちれば件名、クリックが落ちれば本文の誘導、配信停止が増えれば名簿の分け方）。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y は症状 3 つ（開封が落ちている・クリックが落ちている・読まれず配信停止が増えている）、x は「直す所」「なぜそこか」。3×2。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "症状と直す所の対応は行をたどると閉じ、配信数を増やしても直らないことも読める。",
+    "benefit": 3
+   },
+   {
+    "point": "全員へ同じ内容を高い頻度で送ると読まれなくなり、配信停止が増えます（メール疲れ）。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える因果。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 49,
+  "term": "LP と CTA の設計",
+  "points": [
+   {
+    "point": "来た人の数は広告や検索の側で、進んだ割合（CVR）はページの側で決まるので、流入を増やす打ち手とページを直す打ち手は別に数えます。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y は打ち手 2 つ（流入を増やす・ページを直す）、x は「動く数字（来た人の数／CVR）」「決まる所（広告・検索の側／LP と CTA の作り）」「成果 1 件あたりの費用」。2×3。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 種類の打ち手を同じ観点で比べると、広告費を倍にしても 1 件あたりの費用が変わらないことが格子で閉じる。",
+    "benefit": 2
+   },
+   {
+    "point": "CTA は 1 ページで 1 つの行動に絞るほど進みやすくなります。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で足りる。",
+    "benefit": 1
+   },
+   {
+    "point": "一から作り直すと変えた要素が多すぎて、何が効いたのか分からなくなります。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "A/B テストの単位が受け持ち、ここでは 1 文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 7,
+  "term": "競合分析",
+  "points": [
+   {
+    "point": "比べる相手を決めるのは顧客で、同業の他社だけでなく、手作業や外注、何もしない（現状維持）も相手に入ります。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "venn",
+    "idea": "layout は nested。外の範囲が「顧客が比べる相手」、内側が「同業の他社」。領域は外だけ（表計算での手作業・税理士に任せる・何もしない）と内側（他社のソフト）。外だけの領域を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "同業が比べる相手の一部でしかないことは入れ子の範囲で見せると一目で分かる。",
+    "benefit": 2
+   },
+   {
+    "point": "失注の理由で一番多い比べる相手に効く手へ投資します。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "chart",
+    "idea": "bar。カテゴリは失注の相手（現状維持 6・大手のパッケージ 3・価格 1）、系列は件数。現状維持の棒を強調し、注記に「効くのは始めやすさ」。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "どの相手に当たる件数が多いかは棒の大小で一目で分かる。",
+    "benefit": 2
+   },
+   {
+    "point": "調べる中身は価格と機能の比較表で止めず、顧客が最後に何を決め手にしたかまで聞きます。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 80,
+  "term": "予算配分の優先順位",
+  "points": [
+   {
+    "point": "同じ予算でも、今期に要る獲得の分だけを広告に置き、残りを資産型と検証に回すと、獲得の一部と引き換えに来期の土台が手に入ります。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "chart",
+    "idea": "bar。カテゴリは検索広告・記事の制作・新しい入口の検証、系列は案 A（全額を広告へ）と案 B（3 つに分ける）。注記に「獲得 30 人 → 24 人」「止めても残る」。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "既存の図 1 が 2 つの配分案を棒の並びで比べている。",
+    "benefit": 3
+   },
+   {
+    "point": "配分は、今期に最低限要る獲得数を決める→その分を広告に置く→残りを資産型と検証に分ける、の 3 手で作ります。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "steps",
+    "idea": "段は「最低限の獲得数を決める（売上目標と期限から月 24 人）」「広告に置く（24 × 20,000 ＝ 480,000 円）」「残りを分ける（記事 80,000・検証 40,000）」を down で並べ、段の間に「月 24 人」「残り 120,000 円」。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "順に進む作り方で、段の間に渡す数字が書ける。",
+    "benefit": 2
+   },
+   {
+    "point": "いつまでに成果が要るか・回収が読めるか・止めたら消える施策への依存、の 3 つの問いで配分が決まります。",
+    "content_type": "事実",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "問いの一覧で、比べる対象が立たない。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 25,
+  "term": "差別化と競争優位の言語化",
+  "points": [
+   {
+    "point": "選ばれる理由は、顧客が価値を感じる・競合が同じ文を言えない・自社が続けられる、の 3 つを同時に満たす 1 行です。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y は 1 行の候補 2 つ（誰でも使える高機能なツール／担当が 1 人の会社でも 2 週間で動かせるツール）、x は「顧客が価値を感じるか」「競合が同じ文を言えないか」「自社が続けられるか」。2×3。後者の行を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "候補を 3 条件で比べると、どこで差別化が成り立たないかが格子の中で閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "1 行の裏で何を捨てたか（誰に売らないか）を言えなければ、まだ願望です。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える確かめ方。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 89,
+  "term": "B2B と B2C の違い",
+  "points": [
+   {
+    "point": "B2B と B2C は、決める人の数と検討の期間が違うので、効く打ち手と見る指標が変わります。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y は B2C・B2B、x は「決める人（使う人と払う人がほぼ同じ／使う部署・集める担当・承認する役職者）」「検討の期間」「効く打ち手と見る指標」。2×3。B2B の見る指標（商談化率）を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 つの型を同じ観点で比べる要点で、行をたどると打ち手が変わる理由が閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "関わる人が増えるほど失敗しない理由が求められ、安さより導入実績や運用の支えが効きます。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える因果。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 75,
+  "term": "A/Bテストの進め方",
+  "points": [
+   {
+    "point": "A/B テストは、測る指標と仮説を決め、変える箇所を 1 つに絞り、要る件数を先に決めてから 2 案を出し、決めた件数に届くまで打ち切りません。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "steps",
+    "idea": "段は「指標と仮説を決める」「変える箇所を 1 つに絞る」「要る件数と期間を決める」「同じ期間・条件で 2 案を出す」「決めた件数で比べる」を down で並べ、段の間に「測る指標」「1 か所だけ違う 2 案」「打ち切らない件数」「たまった成果」。最後の段を強調する。",
+    "existing_figure_id": 1,
+    "existing_action": "retype",
+    "reason": "既存の図 1 は自分への矢印が半分を占める sequence で、相手との往き来の無い一方向の手順は steps の型が運ぶ。",
+    "benefit": 3
+   },
+   {
+    "point": "件数が少ないと偶然の差が勝ちに見えるので、要る件数に届かない比較は始めません。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "chart",
+    "idea": "bar。カテゴリは「1 か月で集まる 1 案あたりの訪問（2,000）」「差（2.0%→2.5%）を言うのに要る 1 案あたりの件数（約 14,000）」。要る件数の棒を強調し、注記に「届くまで 7 か月」。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "集まる件数と要る件数の開きは棒の大小で一目で分かる。",
+    "benefit": 2
+   }
+  ]
+ },
+ {
+  "topic_id": 54,
+  "term": "アトリビューション",
+  "points": [
+   {
+    "point": "同じ成果でも、最後のクリックだけを手柄にするか、経路の記録から配るかで、接点ごとの帰属先が変わります。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "chart",
+    "idea": "bar。カテゴリは検索広告・SNS、系列は「最後のクリックで数える」（70・5）と「経路から配る」（45・20）。SNS の変化を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "数え方で配分が動く量の関係は棒を並べると一目で分かる。",
+    "benefit": 3
+   },
+   {
+    "point": "人は 1 回では買わず複数の接点をたどるので、最後のクリックだけを手柄にすると前半の接点が 0 件になります。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "steps",
+    "idea": "段は「SNS で知る」「検索で調べる」「追いかけて出る広告から申し込む」を down で並べ、段の間に「名前を覚えて探す」「比べたうえで戻る」。最後の段を強調し、一言に「最後のクリックではここが全部の手柄」、前の 2 段の一言に「数えると 0 件」。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "経路の順と、どの段が手柄から外れるかは段の並びで見せられる。",
+    "benefit": 2
+   },
+   {
+    "point": "何日前までの接点を数えるか（振り返り期間）の設定でも数字が動きます。",
+    "content_type": "事実",
+    "function": "表現的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 68,
+  "term": "アトリビューションの限界",
+  "points": [
+   {
+    "point": "媒体ごとの成果を足すと、同じ 1 件の二重計上と経路に乗らない接点のせいで、社内の受注と合いません。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "venn",
+    "idea": "layout は overlap、universe は「社内の受注 80 件」。範囲は媒体 A が数えた成果（60）・媒体 B が数えた成果（50）。領域は A だけ・B だけ・両方（同じ 1 件を両方が数える＝二重計上）・どちらでもない（紹介・展示会など経路に乗らない）。両方の領域を強調する。",
+    "existing_figure_id": 1,
+    "existing_action": "retype",
+    "reason": "既存の図 1 は足し算と差を矢印で描く blocks で、二重計上の要点である重なりは venn の型が範囲で運ぶ。",
+    "benefit": 3
+   },
+   {
+    "point": "配分の数字は役割を見る材料で、投資の判断は全体の広告費と全体の売上で回収できているかと並べて決めます。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える読み方。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 71,
+  "term": "季節性と外部要因の切り分け",
+  "points": [
+   {
+    "point": "前月比は季節の差を含むので、前年の同じ月や施策を出していない地域を比べる相手に置き、残った幅を成果と見ます。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y は比べる相手 3 つ（前月・広告を出していない地域・前年の同じ月）、x は「比べた差（+20%／差 5 ポイント／+3%）」「差に含まれてしまうもの」「効果として読めるか」。3×3。地域と前年の行を強調し、効果は 3〜5 ポイントと読ませる。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "比べる相手ごとに差と混じる物を並べると、残った幅の取り方が格子で閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "売上は、施策で動いた分と時期や天候で動いた分の足し算です。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 83,
+  "term": "失敗の型: 計測なし・やりっぱなし",
+  "points": [
+   {
+    "point": "成果の件数が出ない・完了の計測タグが無い・見直す場が無い・指標の出どころが人で違う、のどれかが出たら該当します。",
+    "content_type": "事実",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "見分け方の一覧で、比べる対象が立たない。",
+    "benefit": 1
+   },
+   {
+    "point": "計測は施策を出す前にしか仕込めず、過去にさかのぼって取り直せないので、出すことが締切になると判断材料が残りません。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "timeline",
+    "idea": "軸は準備・公開・1 か月・2 か月・3 か月・4 か月。期間は「計測を仕込める（準備〜公開）」「計測なしで出した 3 か月（内訳は取り直せない）」「計測を入れて延長（内訳が見える）」、点は公開に「出すことが締切になる」、3 か月に「計測を入れる」。取り直せない期間を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "仕込める時期と取り直せない期間の関係は時間の軸の上で見せると一目で分かる。",
+    "benefit": 2
+   },
+   {
+    "point": "最初に直すのは、成果の定義を 1 つに決めてその 1 点の計測を入れることで、指標を増やすのは後です。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 84,
+  "term": "失敗の型: ターゲット不在",
+  "points": [
+   {
+    "point": "訴求文に「幅広い」「どなたでも」が入る、断り文句を言えない、人物像が属性だけ、のどれかで見分けます。",
+    "content_type": "事実",
+    "function": "組織的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "見分け方の一覧で、比べる対象が立たない。",
+    "benefit": 1
+   },
+   {
+    "point": "直近で買ってくれた顧客を並べて共通の困りごとと決め手を書き出し、訴求の 1 行を作り直して 1 媒体で比べます。",
+    "content_type": "手順",
+    "function": "変換的",
+    "draw": true,
+    "type": "steps",
+    "idea": "段は「受注 10 件を並べる」「共通の困りごとと決め手を書き出す」「訴求の 1 行を作り直す」「まず 1 媒体で比べる」を down で並べ、段の間に「並んだ声」「共通点（10 件中 7 件が同じ困りごと）」「書き換えた 1 行」。2 段目の一言に「共通点が出なければ聞き取りを広げる」。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "直す順が一方向の段で、段の間に渡すものが書ける。",
+    "benefit": 2
+   },
+   {
+    "point": "誰にでも向けた文はどの人の課題にも触れず、比較の土俵にすら乗りません。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える因果。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 86,
+  "term": "失敗の型: 単一指標での判断",
+  "points": [
+   {
+    "point": "1 つの数字が良く見えても裏で他の数字が悪くなっていることがあるので、量・率・単価・質を同じ期間で並べてから判断します。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y は指標 3 つ（媒体側の費用対効果・獲得単価・問い合わせからの受注率）、x は「前」「後」「見立て」（600% で良く見える／8,000→12,000 円で悪化／20%→8% で質が落ちた）。3×3。受注率の見立てを強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "指標を並べたときにだけ逆に動く数字が見え、格子の中で単一指標の見落としが閉じる。",
+    "benefit": 3
+   },
+   {
+    "point": "媒体は自社の貢献を自社の基準で数えるので、管理画面の数字は良く出やすい面があります。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言え、二重計上はアトリビューションの限界の図が受け持つ。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 87,
+  "term": "営業とマーケティングの連携",
+  "points": [
+   {
+    "point": "見込み客を営業へ渡す基準と、受注・失注の理由をマーケへ戻す経路を 1 つに決めて回します。",
+    "content_type": "プロセス",
+    "function": "変換的",
+    "draw": true,
+    "type": "cycle",
+    "idea": "段は「マーケ 見込み客を集める（MQL）」「渡す基準で判定する（業種・規模・検討時期・決裁者か）」「営業 商談にする（SQL）」「結果を戻す（受注と失注の理由）」。段の間に「見込み客」「基準を満たした相手」「受注・失注」「次に集める相手」。渡す基準を強調する。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "渡して戻す輪が要点で、輪の段と段の間のラベルで基準と戻す経路が運べる。",
+    "benefit": 3
+   },
+   {
+    "point": "マーケは見込み客の件数と獲得単価、営業は受注額で評価されるので、同じ見込み客 100 件が別の物に見えます。",
+    "content_type": "概念",
+    "function": "組織的",
+    "draw": true,
+    "type": "matrix",
+    "idea": "y はマーケ・営業、x は「評価される数字」「見込み客 100 件の見え方（達成／失注の山）」。2×2。",
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "2 部門を同じ観点で比べると、ずれの元が格子の中で見える。",
+    "benefit": 2
+   },
+   {
+    "point": "基準を絞ると件数は減っても商談になる割合が上がるかを確かめてから、出稿を増やすかを決めます。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "現場の判断の 1 文で足りる。",
+    "benefit": 1
+   }
+  ]
+ },
+ {
+  "topic_id": 82,
+  "term": "経営への説明",
+  "points": [
+   {
+    "point": "施策の指標を、増えた件数 × 1 件の粗利で月ごとに増えた粗利に、一度きりの費用 ÷ その粗利で回収期間に、2 段で投資の言葉に置き換えます。",
+    "content_type": "原理",
+    "function": "関係的",
+    "draw": true,
+    "type": "blocks",
+    "idea": "箱は施策の言葉（CVR 1.0%→1.5%）・増えた件数・増えた粗利・一度きりの費用・回収期間。矢印は「× 流入 月 1 万件」「× 1 件の粗利 2 万円」「400 万 ÷ 月 100 万」「割る数」。",
+    "existing_figure_id": 1,
+    "existing_action": "keep",
+    "reason": "既存の図 1 が 2 段の翻訳を矢印のラベルの計算で運んでいる。",
+    "benefit": 3
+   },
+   {
+    "point": "毎月出続ける広告費は割る側に入れず、増えた粗利が毎月の費用の増分を上回っているかで見ます。",
+    "content_type": "原理",
+    "function": "解釈的",
+    "draw": false,
+    "type": null,
+    "idea": null,
+    "existing_figure_id": null,
+    "existing_action": null,
+    "reason": "1 文で言える決まりで、共通の決まりの回収期間の定義が受け持つ。",
+    "benefit": 1
+   }
+  ]
+ }
+]

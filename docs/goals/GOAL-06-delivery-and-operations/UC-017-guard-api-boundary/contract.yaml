@@ -1,0 +1,28 @@
+# UC-017 学びとまなびばの要求の受け口を一様に守る — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-255〜262・275・353・354）
+# 読み方の決まりは docs/adr/ADR-0001（境界の読み方）、共有語彙は ../../../_shared/components.yaml
+# この UC が足す経路は死活確認の受け口 getHealth だけ。ほかに横切る境界の形は各 UC の operation が正本で、ここに再掲しない（R-101）:
+#   通るトークンまたはセッションが無い要求の断りは各 UC の auth が bearer か session の operation の UNAUTHENTICATED、
+#   決められた形を満たさない本文の断りは同じ operation の INVALID_INPUT、
+#   配備にトークンの署名の秘密が無いときの発行の断りは UC-013 の signInWithCode の NOT_CONFIGURED、
+#   まなびばのセッションを要する経路は UC-011・UC-013・UC-014 の operation、
+#   検査が死活確認を外から叩く側の形は UC-015 の checkDeploymentHealth。
+# どの経路にも同じ形で立つ断りは getHealth の errors にも挙げない（docs/adr/ADR-0011）。
+# どの応答にも載るセキュリティヘッダも 1 つの operation に属さない全経路の最終段なので、getHealth の形に挙げない。
+# 画面が失敗を受け取る形は各 operation の errors がそのまま持つ。
+x-uc: UC-017
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-17
+
+operations:
+  getHealth:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: none
+    summary: まなびばと学び側の配備が、死活確認に生きている印を返す
+    wire: { method: GET, path: /api/health, success: 200 }
+    response: { $ref: "../../../_shared/components.yaml#/schemas/Ok" }
+    errors: []
+    examples:
+      ok: { response: { ok: true } }

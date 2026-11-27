@@ -1,0 +1,672 @@
+{
+  "bundle": "22-5",
+  "unit_no": 22,
+  "unit": "ネットワーク",
+  "overview": "機器どうしが住所と番号で相手を決めてデータを届ける仕組みと、その上で動くサービスを学びます。ネットワークの形と範囲から始め、IP アドレスと中継の機器、名前と Web、用途ごとのプロトコルとメール、無線 LAN、IoT の省電力の通信、携帯電話の通信へと進みます。NAT は IP アドレスどうしを、DNS は名前と IP アドレスを対応づけるもので、別の仕組みです。",
+  "group": {
+    "index": 5,
+    "name": "用途ごとのプロトコル",
+    "description": "1 台の中のアプリケーションを指す番号と、ファイル転送・時刻合わせのプロトコルを扱います。"
+  },
+  "groups_in_unit": [
+    {
+      "index": 1,
+      "name": "ネットワークの形と範囲",
+      "topics": [
+        {
+          "topic_id": 520,
+          "term": "ネットワークトポロジ"
+        },
+        {
+          "topic_id": 519,
+          "term": "WAN"
+        },
+        {
+          "topic_id": 442,
+          "term": "伝送速度（bps：bits per second（ビット／秒））"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "name": "IP アドレスと TCP/IP、接続の事業者",
+      "topics": [
+        {
+          "topic_id": 374,
+          "term": "IP アドレス（IPv6，IPv4，グローバル，プライベート）"
+        },
+        {
+          "topic_id": 281,
+          "term": "TCP/IP"
+        },
+        {
+          "topic_id": 525,
+          "term": "インターネット接続サービス事業者（ISP：Internet Service Provider）"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "name": "LAN の外へ出る中継",
+      "topics": [
+        {
+          "topic_id": 521,
+          "term": "ルーター"
+        },
+        {
+          "topic_id": 283,
+          "term": "サブネットマスク"
+        },
+        {
+          "topic_id": 480,
+          "term": "デフォルトゲートウェイ"
+        },
+        {
+          "topic_id": 444,
+          "term": "NAT"
+        },
+        {
+          "topic_id": 36,
+          "term": "プロキシ"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "name": "名前と Web のしくみ",
+      "topics": [
+        {
+          "topic_id": 208,
+          "term": "ドメイン名"
+        },
+        {
+          "topic_id": 37,
+          "term": "DNS"
+        },
+        {
+          "topic_id": 523,
+          "term": "URL"
+        },
+        {
+          "topic_id": 206,
+          "term": "cookie"
+        },
+        {
+          "topic_id": 205,
+          "term": "RSS"
+        },
+        {
+          "topic_id": 482,
+          "term": "オンラインストレージ"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "name": "用途ごとのプロトコル",
+      "topics": [
+        {
+          "topic_id": 203,
+          "term": "ポート番号"
+        },
+        {
+          "topic_id": 202,
+          "term": "FTP"
+        },
+        {
+          "topic_id": 443,
+          "term": "NTP（Network Time Protocol）"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "name": "電子メールの送受信",
+      "topics": [
+        {
+          "topic_id": 204,
+          "term": "電子メールのプロトコル"
+        },
+        {
+          "topic_id": 524,
+          "term": "Web メール"
+        },
+        {
+          "topic_id": 38,
+          "term": "Bcc"
+        },
+        {
+          "topic_id": 377,
+          "term": "電子メールの形式（テキスト形式，HTML 形式）"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "name": "無線 LAN と端末どうしの通信",
+      "topics": [
+        {
+          "topic_id": 394,
+          "term": "無線LAN"
+        },
+        {
+          "topic_id": 199,
+          "term": "ESSID（Extended Service Set Identifier）"
+        },
+        {
+          "topic_id": 201,
+          "term": "マルチホップ"
+        },
+        {
+          "topic_id": 373,
+          "term": "アドホックネットワーク"
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "name": "IoT をつなぐ省電力の通信",
+      "topics": [
+        {
+          "topic_id": 441,
+          "term": "IoT エリアネットワーク"
+        },
+        {
+          "topic_id": 35,
+          "term": "BLE（Bluetooth Low Energy）"
+        },
+        {
+          "topic_id": 279,
+          "term": "PLC（電力線通信）"
+        },
+        {
+          "topic_id": 479,
+          "term": "PoE（Power over Ethernet）"
+        },
+        {
+          "topic_id": 200,
+          "term": "LPWA（Low Power Wide Area）"
+        },
+        {
+          "topic_id": 280,
+          "term": "エッジコンピューティング"
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "name": "携帯電話の通信と事業者",
+      "topics": [
+        {
+          "topic_id": 481,
+          "term": "移動体通信規格（LTE，5G など）"
+        },
+        {
+          "topic_id": 209,
+          "term": "プラチナバンド"
+        },
+        {
+          "topic_id": 207,
+          "term": "キャリアアグリゲーション"
+        },
+        {
+          "topic_id": 522,
+          "term": "SIMカード"
+        },
+        {
+          "topic_id": 376,
+          "term": "仮想移動体通信事業者（MVNO：Mobile Virtual Network Operator）"
+        },
+        {
+          "topic_id": 282,
+          "term": "IP電話"
+        },
+        {
+          "topic_id": 375,
+          "term": "テレマティクス"
+        }
+      ]
+    }
+  ],
+  "owners": [],
+  "topics": [
+    {
+      "topic_id": 203,
+      "term": "ポート番号",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "通信プロトコル",
+      "question_count": 2,
+      "related_terms": [
+        "TCP/IP",
+        "IP アドレス（IPv6，IPv4，グローバル，プライベート）",
+        "MAC アドレス",
+        "ESSID（Extended Service Set Identifier）",
+        "HTTP",
+        "SMTP"
+      ],
+      "prerequisites": [
+        {
+          "topic_id": 374,
+          "term": "IP アドレス（IPv6，IPv4，グローバル，プライベート）"
+        }
+      ],
+      "current": {
+        "generation": "materials_v3",
+        "explanation": "**ポート番号**とは、1台のコンピュータの中で動いている複数のアプリケーションのうち、どれと通信するのかを指定するための番号です。\n\n- **キーワード**: 通信アプリケーションの識別・1台のサーバの中\n- 識別するのは**動作中の通信アプリケーション**です。同じサーバの中でも、番号ごとに別のプログラムへつながります\n- IP アドレスやホスト名は「どのコンピュータか」、ポート番号は「その中のどの機能か」を表します\n\n![1台のサーバに届いた通信が、ポート番号ごとに別のアプリケーションへ振り分けられることを表した図です。左の線が機械を、右の線が機械の中の機能を決めます。](/figures/materials/ip/203-1.svg)",
+        "detail": "### しくみ\n\n郵便にたとえると分かりやすくなります。IP アドレスがビルの住所だとすると、ポート番号は**部屋番号**にあたります。1台のサーバがメールの送受信と Web の公開を同時に行っている場合、住所である IP アドレスだけでは、届いたデータをどのプログラムに渡せばよいかが決まりません。そこで TCP/IP では、IP アドレスとポート番号の組合せで、通信相手のアプリケーションまで特定します。\n### 代表的なポート番号\nよく使われるサービスには、あらかじめ番号が割り当てられています。これを**ウェルノウンポート**と呼びます。\n- Web ページを取りに行く HTTP は80番、それを暗号化した HTTPS は443番\n- メールを送る SMTP は25番、受信箱から取り出す POP3 は110番、サーバに置いたまま読む IMAP4 は143番\n- ドメイン名から IP アドレスを調べる DNS は53番\n\n電子メールのプロトコルと一緒に覚えておくと効率的です。"
+      },
+      "questions": [
+        {
+          "question_id": "2024r06-q92",
+          "content_key": "9b4375fad2b7337f",
+          "exam_label": "令和6年度",
+          "stem": "インターネットに接続されているサーバが，1台でメール送受信機能と Web アクセス機能の両方を提供しているとき，端末のアプリケーションプログラムがそのどちらの機能を利用するかをサーバに指定するために用いるものはどれか。",
+          "choices": {
+            "ア": "IP アドレス",
+            "イ": "ドメイン",
+            "ウ": "ポート番号",
+            "エ": "ホスト名"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2020r02o-q67",
+          "content_key": "c36fff53d54fb499",
+          "exam_label": "令和2年度 10月",
+          "stem": "TCP/IP におけるポート番号によって識別されるものはどれか。",
+          "choices": {
+            "ア": "LAN に接続されたコンピュータや通信機器の LAN インタフェース",
+            "イ": "インターネットなどの IP ネットワークに接続したコンピュータや通信機器",
+            "ウ": "コンピュータ上で動作している通信アプリケーション",
+            "エ": "無線 LAN のネットワーク"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null
+        }
+      ],
+      "question_explanations": [
+        {
+          "question_id": "2024r06-q92",
+          "content_key": "9b4375fad2b7337f",
+          "correct_reason": "IP アドレスだけでは、どのコンピュータかまでしか決まりません。1台のサーバの中の**どのアプリケーションと通信するか**を指定するのがポート番号で、Web なら80番、メール送信なら25番のように決まっています。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "IP アドレス（IPv6，IPv4，グローバル，プライベート）",
+              "note": "IP ネットワークにつないだコンピュータや通信機器そのものを識別する番号です"
+            },
+            {
+              "label": "イ",
+              "term": "ドメイン名",
+              "note": "インターネット上の組織やネットワークを表す文字列です。指すのは場所で、機能は指しません"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "エ",
+              "term": "ホスト名",
+              "note": "ネットワーク上のコンピュータに付けた名前です。どの機器かを表すもので、機能は指しません"
+            }
+          ]
+        },
+        {
+          "question_id": "2020r02o-q67",
+          "content_key": "c36fff53d54fb499",
+          "correct_reason": "ポート番号は、1台のコンピュータの中で**動作中の通信アプリケーション**を見分けるための番号です。住所にあたるのが IP アドレス、その中の部屋番号にあたるのがポート番号だと考えると整理できます。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "MAC アドレス",
+              "note": "LAN につながる機器の LAN インタフェースごとに割り当てられた固有の番号です"
+            },
+            {
+              "label": "イ",
+              "term": "IP アドレス（IPv6，IPv4，グローバル，プライベート）",
+              "note": "IP ネットワークにつないだコンピュータや通信機器そのものを識別する番号です"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "エ",
+              "term": "ESSID（Extended Service Set Identifier）",
+              "note": "無線 LAN のネットワークに付ける識別名です。アクセスポイントと端末で同じ値をそろえます"
+            }
+          ]
+        }
+      ],
+      "figure_file": "data/ip/material_figures/203.json",
+      "figures": [
+        {
+          "id": 1,
+          "type": "blocks",
+          "after": "### しくみ",
+          "caption": "1台のサーバに届いた通信が、ポート番号ごとに別のアプリケーションへ振り分けられることを表した図です。左の線が機械を、右の線が機械の中の機能を決めます。",
+          "nodes": [
+            {
+              "id": "pc",
+              "label": "端末\n宛先を指定して送る",
+              "row": 1,
+              "col": 0
+            },
+            {
+              "id": "sv",
+              "label": "サーバ（1 台）\nIP アドレスは 1 つ",
+              "row": 1,
+              "col": 1,
+              "emphasis": true
+            },
+            {
+              "id": "web",
+              "label": "Web の機能\nHTTP で応える",
+              "row": 0,
+              "col": 2
+            },
+            {
+              "id": "smtp",
+              "label": "メール送信の機能\nSMTP で受け取る",
+              "row": 1,
+              "col": 2
+            },
+            {
+              "id": "pop",
+              "label": "メール受信の機能\nPOP3 で渡す",
+              "row": 2,
+              "col": 2
+            }
+          ],
+          "edges": [
+            {
+              "from": "pc",
+              "to": "sv",
+              "label": "IP アドレスで\nどの機械か"
+            },
+            {
+              "from": "sv",
+              "to": "web",
+              "label": "ポート 80"
+            },
+            {
+              "from": "sv",
+              "to": "smtp",
+              "label": "ポート 25"
+            },
+            {
+              "from": "sv",
+              "to": "pop",
+              "label": "ポート 110"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "topic_id": 202,
+      "term": "FTP",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "通信プロトコル",
+      "question_count": 1,
+      "related_terms": [
+        "NTP（Network Time Protocol）",
+        "SMTP",
+        "DHCP"
+      ],
+      "prerequisites": [],
+      "current": {
+        "generation": "materials_v3",
+        "explanation": "**FTP** とは、ネットワークを通じてコンピュータ間でファイルを転送するためのプロトコルです。File Transfer Protocol の略です。\n\n- **キーワード**: ファイル・転送\n- 略語を展開すれば役割がそのまま読み取れます\n- 名前から役割、役割から名前と、どちらの向きでも答えられるようにしておきます",
+        "detail": "### 名前が役割を表している\nFTP は File（ファイル）の Transfer（転送）です。プロトコルは名前が役割をそのまま表しているものが多いので、略語を展開するのが最短の覚え方になります。この習慣を付けておくと、初めて見る略語でも見当が付けられます。\n### 使われ方\nWeb サイトを公開するときに、作った HTML や画像のファイルをまとめてサーバへ送る、サーバ上のファイルを手元の PC に取り寄せる、といった場面で使われてきました。ただし FTP は利用者名やパスワードをそのまま流してしまうため、現在は通信を暗号化した方式への置き換えが進んでいます。"
+      },
+      "questions": [
+        {
+          "question_id": "2025r07-q60",
+          "content_key": "65e41f7fd89a0372",
+          "exam_label": "令和7年度",
+          "stem": "TCP/IPネットワークで用いられるプロトコルであるFTPの役割として，適切なものはどれか。",
+          "choices": {
+            "ア": "正確な現在時刻を取得する。",
+            "イ": "電子メールを転送する。",
+            "ウ": "ネットワーク接続に必要なIPアドレスなどの情報を自動的に割り当てる。",
+            "エ": "ファイルをPC間で転送する。"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null
+        }
+      ],
+      "question_explanations": [
+        {
+          "question_id": "2025r07-q60",
+          "content_key": "65e41f7fd89a0372",
+          "correct_reason": "FTP は File Transfer Protocol の略で、名前のとおり**ファイルを転送する**ためのプロトコルです。プロトコルの問題は略語を展開すると役割がそのまま読み取れます。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "NTP（Network Time Protocol）",
+              "note": "ネットワーク上の機器の時刻を、正確な現在時刻に合わせるためのプロトコルです"
+            },
+            {
+              "label": "イ",
+              "term": "SMTP",
+              "note": "電子メールを送信し、メールサーバ間で転送するためのプロトコルです"
+            },
+            {
+              "label": "ウ",
+              "term": "DHCP",
+              "note": "接続した機器へ IP アドレスなどの設定情報を自動的に割り当てるプロトコルです"
+            },
+            {
+              "label": "エ",
+              "term": null,
+              "note": "正解。"
+            }
+          ]
+        }
+      ],
+      "figure_file": null,
+      "figures": []
+    },
+    {
+      "topic_id": 443,
+      "term": "NTP（Network Time Protocol）",
+      "field": "テクノロジ系",
+      "major": "技術要素",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "通信プロトコル",
+      "question_count": 2,
+      "related_terms": [
+        "FTP",
+        "POP",
+        "SMTP",
+        "TCP/IP",
+        "DHCP",
+        "時刻同期"
+      ],
+      "prerequisites": [],
+      "current": {
+        "generation": "materials_v3",
+        "explanation": "**NTP** とは、正確な時刻をもつサーバに問い合わせて、コンピュータの内部時計を正しい時刻に合わせるためのプロトコルです。\n\n- **キーワード**: 時刻合わせ・時刻の同期・基準の時刻サーバ\n- 名前に入っている **Time**、つまり時刻がそのまま答えになります\n- 社内の機器が同じ NTP サーバを見ることで、機器どうしの時刻がそろいます\n\n![どの機器も同じ NTP サーバの時刻に合わせるので、機器どうしの時刻がそろいます。そろった時刻でログを突き合わせられます。](/figures/materials/ip/443-1.svg)",
+        "detail": "### なぜ時刻を合わせるのか\nPC やサーバの内蔵時計は、放っておくと少しずつずれていきます。時刻がずれると、複数の機器のログを突き合わせても障害や不正アクセスの経緯をたどれません。有効期限を見て判断する [[デジタル証明書]] の検証にも支障が出ます。そこで、基準となる時刻をもつサーバに問い合わせて自分の時計を合わせます。これを担うのが NTP です。\n### 役割で覚えるプロトコル\n略語は「何を運ぶためのものか」を1対1で覚えると、並べて出されても迷いません。NTP は時刻、FTP はファイル、SMTP は送るメール、POP は受け取るメール、DNS は名前と IP アドレスの対応を運びます。"
+      },
+      "questions": [
+        {
+          "question_id": "2019r01a-q94",
+          "content_key": "cde4758b03a7359b",
+          "exam_label": "令和元年度 秋期",
+          "stem": "NTP の利用によって実現できることとして，適切なものはどれか。",
+          "choices": {
+            "ア": "OS の自動バージョンアップ",
+            "イ": "PC の BIOS の設定",
+            "ウ": "PC やサーバなどの時刻合わせ",
+            "エ": "ネットワークに接続された PC の遠隔起動"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null
+        },
+        {
+          "question_id": "2018h30a-q88",
+          "content_key": "91214afa85f15fa3",
+          "exam_label": "平成30年度 秋期",
+          "stem": "コンピュータの内部時計を，基準になる時刻情報をもつサーバとネットワークを介して同期させるときに用いられるプロトコルはどれか。",
+          "choices": {
+            "ア": "FTP",
+            "イ": "NTP",
+            "ウ": "POP",
+            "エ": "SMTP"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null
+        }
+      ],
+      "question_explanations": [
+        {
+          "question_id": "2019r01a-q94",
+          "content_key": "cde4758b03a7359b",
+          "correct_reason": "NTP は名前のとおり時刻（Time）を扱うプロトコルで、基準の時刻をもつサーバに問い合わせて自分の内部時計を合わせるために使います。**時刻**という言葉が出ている選択肢を選べば決まります。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": null,
+              "note": "OS の更新を自動で行う機能の話。時刻を扱う仕組みではありません"
+            },
+            {
+              "label": "イ",
+              "term": "BIOS",
+              "note": "PC の電源を入れたとき最初に動き、ハードウェアを初期化して OS を起動させるプログラムのことです"
+            },
+            {
+              "label": "ウ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "エ",
+              "term": "Wake on LAN",
+              "note": "ネットワーク越しに信号を送って離れた PC の電源を入れる機能のことです"
+            }
+          ]
+        },
+        {
+          "question_id": "2018h30a-q88",
+          "content_key": "91214afa85f15fa3",
+          "correct_reason": "コンピュータの内部時計を、基準となる時刻をもつサーバに合わせるプロトコルが **NTP** です。並んでいる略語は役割で切り分けられ、時刻を扱うのは NTP だけです。",
+          "choices": [
+            {
+              "label": "ア",
+              "term": "FTP",
+              "note": "コンピュータ間でファイルを転送するためのプロトコルのこと。時刻は扱いません"
+            },
+            {
+              "label": "イ",
+              "term": null,
+              "note": "正解。"
+            },
+            {
+              "label": "ウ",
+              "term": "POP",
+              "note": "メールサーバに届いたメールを受信者の PC が受け取るためのプロトコルのことです"
+            },
+            {
+              "label": "エ",
+              "term": "SMTP",
+              "note": "メールを送信したり、メールサーバ間で転送したりするためのプロトコルのことです"
+            }
+          ]
+        }
+      ],
+      "figure_file": "data/ip/material_figures/443.json",
+      "figures": [
+        {
+          "id": 1,
+          "type": "blocks",
+          "after": "### なぜ時刻を合わせるのか",
+          "caption": "どの機器も同じ NTP サーバの時刻に合わせるので、機器どうしの時刻がそろいます。そろった時刻でログを突き合わせられます。",
+          "nodes": [
+            {
+              "id": "ntp",
+              "label": "NTP サーバ\n基準の時刻を持つ",
+              "row": 1,
+              "col": 0,
+              "emphasis": true,
+              "icon": "clock"
+            },
+            {
+              "id": "pc",
+              "label": "PC\n内蔵時計がずれていく",
+              "row": 0,
+              "col": 1,
+              "icon": "device"
+            },
+            {
+              "id": "sv",
+              "label": "業務サーバ\n内蔵時計がずれていく",
+              "row": 1,
+              "col": 1,
+              "icon": "server"
+            },
+            {
+              "id": "nw",
+              "label": "ネットワーク機器\n内蔵時計がずれていく",
+              "row": 2,
+              "col": 1,
+              "icon": "network"
+            },
+            {
+              "id": "log",
+              "label": "ログの突き合わせ\n同じ時刻の物差しで\n経緯をたどれる",
+              "row": 1,
+              "col": 2,
+              "icon": "search"
+            }
+          ],
+          "edges": [
+            {
+              "from": "ntp",
+              "to": "pc",
+              "label": "正しい時刻を返す"
+            },
+            {
+              "from": "ntp",
+              "to": "sv",
+              "label": "正しい時刻を返す"
+            },
+            {
+              "from": "ntp",
+              "to": "nw",
+              "label": "正しい時刻を返す"
+            },
+            {
+              "from": "pc",
+              "to": "log",
+              "label": "そろった時刻のログ"
+            },
+            {
+              "from": "sv",
+              "to": "log",
+              "label": "そろった時刻のログ"
+            },
+            {
+              "from": "nw",
+              "to": "log",
+              "label": "そろった時刻のログ"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

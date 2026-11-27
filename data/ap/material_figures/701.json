@@ -5,18 +5,53 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 渡るのは値か、置き場所か",
-      "caption": "値呼出しの仮引数は別の箱なので手続の中の 4 は戻らず、参照呼出しの仮引数は同じ箱なので 6 がそのまま残る。",
+      "after": "### 計算の解き方",
+      "caption": "値呼出しの仮引数は別の箱なので手続の中の書き換えは戻らず、参照呼出しの仮引数は同じ箱なので呼出し側にも残ります。",
       "nodes": [
-        {"id": "mx", "label": "メイン側 X\n2 のまま", "row": 0, "col": 0},
-        {"id": "my", "label": "メイン側 Y\n2 → 6", "row": 0, "col": 1, "emphasis": true},
-        {"id": "px", "label": "手続側 X\n値呼出し＝別の箱\n2 → 4", "row": 1, "col": 0},
-        {"id": "py", "label": "手続側 Y\n参照呼出し＝同じ箱", "row": 1, "col": 1}
+        {
+          "id": "mx",
+          "label": "呼出し側 A\n3 のまま",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "my",
+          "label": "呼出し側 B\n5 → 13",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "px",
+          "label": "手続側 A\n値呼出し＝別の箱\n3 → 13",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "py",
+          "label": "手続側 B\n参照呼出し＝同じ箱",
+          "row": 1,
+          "col": 1
+        }
       ],
       "edges": [
-        {"from": "mx", "to": "px", "label": "値をコピー"},
-        {"from": "py", "to": "my", "label": "同じ箱を指す", "arrow": "both"},
-        {"from": "px", "to": "py", "label": "更新後の X で Y＝X＋Y", "style": "dashed"}
+        {
+          "from": "mx",
+          "to": "px",
+          "label": "値をコピー"
+        },
+        {
+          "from": "py",
+          "to": "my",
+          "label": "同じ箱を指す",
+          "arrow": "both"
+        },
+        {
+          "from": "px",
+          "to": "py",
+          "label": "A＝A＋10 の後に B＝A",
+          "style": "dashed"
+        }
       ]
     }
   ]

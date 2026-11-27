@@ -1,0 +1,42 @@
+{
+  "topic_id": 81,
+  "term": "金融政策はどこを通って届くか",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "政策金利から出る三本の線が、名前をつけて数える経路です。三本とも右の支出に合流し、物価はその先で動きます。",
+      "nodes": [
+        {"id": "rate", "label": "政策金利\n短い金利を動かす", "row": 1, "col": 0, "emphasis": true},
+        {"id": "cost", "label": "借入・社債の金利\n借りる費用が変わる", "row": 0, "col": 1},
+        {"id": "lend", "label": "銀行の貸出\n貸せる量と貸す姿勢", "row": 1, "col": 1},
+        {"id": "exp", "label": "先の物価と金利の予想\n今の値付けが変わる", "row": 2, "col": 1},
+        {"id": "spend", "label": "支出\n設備・住宅の購入", "row": 1, "col": 2},
+        {"id": "price", "label": "物価\n最後に動く", "row": 1, "col": 3}
+      ],
+      "edges": [
+        {"from": "rate", "to": "cost", "label": "〈金利の経路〉"},
+        {"from": "rate", "to": "lend", "label": "〈貸出の経路〉"},
+        {"from": "rate", "to": "exp", "label": "〈期待の経路〉"},
+        {"from": "cost", "to": "spend", "label": "借りやすさ"},
+        {"from": "lend", "to": "spend", "label": "借りられる量"},
+        {"from": "exp", "to": "spend", "label": "値付けと借入"},
+        {"from": "spend", "to": "price", "label": "需要の増減"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "timeline",
+      "after": "### しくみ",
+      "caption": "方針を変えてから、左のものほど先に動きます。目盛りは順番だけで、月数は表していません。",
+      "axis": {"label": "方針を変えてからの時間（順番だけ）", "ticks": ["方針の変更", "直後", "しばらく後", "さらに後", "最後"]},
+      "events": [
+        {"at": 1, "label": "短い金利\n方針の直後に動く"},
+        {"from": 1, "to": 2.5, "label": "貸出金利\n契約の切り替えに沿って"},
+        {"from": 2, "to": 3.5, "label": "設備や住宅\nさらに遅れて動く"},
+        {"at": 4, "label": "物価\n最後に動く", "emphasis": true}
+      ]
+    }
+  ]
+}

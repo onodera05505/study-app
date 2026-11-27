@@ -6,19 +6,107 @@
       "id": 1,
       "type": "blocks",
       "after": "### アクティビティ図で表せるもの",
-      "caption": "スイムレーンで分けた区画が表すのは担当する人の役割で、時間・コスト・品質指標は表せない。",
+      "caption": "行ごとに担当者の区画（スイムレーン）を分けたアクティビティ図の例です（記号の形は箱で代えています）。左端の区画の名前から行を横にたどると、各作業を誰が受け持つかが分かります。",
       "nodes": [
-        {"id": "lx", "label": "レーン\n申込担当", "row": 0, "col": 0, "emphasis": true},
-        {"id": "a1", "label": "申込を\n受け付ける", "row": 0, "col": 1, "shape": "round"},
-        {"id": "a2", "label": "内容を\n入力する", "row": 0, "col": 2, "shape": "round"},
-        {"id": "ly", "label": "レーン\n課長", "row": 1, "col": 0, "emphasis": true},
-        {"id": "a3", "label": "内容を\n承認する", "row": 1, "col": 2, "shape": "round"},
-        {"id": "a4", "label": "完了", "row": 1, "col": 3, "shape": "round"}
+        {
+          "id": "lx",
+          "label": "申込担当\nスイムレーン：\nこの行の作業の担当",
+          "row": 0,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "st",
+          "label": "開始\n流れの始まり",
+          "row": 0,
+          "col": 1,
+          "shape": "round"
+        },
+        {
+          "id": "w",
+          "label": "申込書を作る\n申込担当が行う",
+          "row": 0,
+          "col": 2,
+          "shape": "round"
+        },
+        {
+          "id": "a1",
+          "label": "課長へ回す\n申込担当が行う",
+          "row": 0,
+          "col": 3,
+          "shape": "round"
+        },
+        {
+          "id": "ly",
+          "label": "課長\nスイムレーン：\nこの行の作業の担当",
+          "row": 1,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "a2",
+          "label": "差し戻しを伝える\n課長が行う",
+          "row": 1,
+          "col": 2,
+          "shape": "round"
+        },
+        {
+          "id": "dc",
+          "label": "承認するか\n分岐：課長が決める",
+          "row": 1,
+          "col": 3
+        },
+        {
+          "id": "a3",
+          "label": "承認を記録する\n課長が行う",
+          "row": 1,
+          "col": 4,
+          "shape": "round"
+        },
+        {
+          "id": "ed",
+          "label": "終了\n流れの終わり",
+          "row": 0,
+          "col": 4,
+          "shape": "round"
+        }
       ],
       "edges": [
-        {"from": "a1", "to": "a2"},
-        {"from": "a2", "to": "a3", "label": "承認へ回す"},
-        {"from": "a3", "to": "a4"}
+        {
+          "from": "st",
+          "to": "w",
+          "label": "始める"
+        },
+        {
+          "from": "w",
+          "to": "a1",
+          "label": "申込書"
+        },
+        {
+          "from": "a1",
+          "to": "dc",
+          "label": "回した申込書"
+        },
+        {
+          "from": "dc",
+          "to": "a3",
+          "label": "承認する"
+        },
+        {
+          "from": "a3",
+          "to": "ed",
+          "label": "記録を終える"
+        },
+        {
+          "from": "dc",
+          "to": "a2",
+          "label": "差し戻す"
+        },
+        {
+          "from": "a2",
+          "to": "w",
+          "label": "直してほしい点"
+        }
       ]
     }
   ]

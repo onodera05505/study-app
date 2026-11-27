@@ -1,0 +1,41 @@
+{
+  "topic_id": 82,
+  "term": "ISO/IEC 27000（情報セキュリティマネジメントシステム）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "### ISMS とは何か",
+      "caption": "ISMS は 5 つの段を輪で回す組織の仕組みです。見直しで見つけた直す点を次の洗い出しへ戻し、繰り返して守りを保ちます。",
+      "center": "ISMS\n組織で回す",
+      "stages": [
+        {
+          "label": "洗い出す\n守るべき情報を挙げる",
+          "icon": "search",
+          "next_label": "情報資産の一覧"
+        },
+        {
+          "label": "評価する\n危険度を測る",
+          "icon": "chart",
+          "next_label": "リスクの大きさ"
+        },
+        {
+          "label": "決める\n対策を選ぶ",
+          "icon": "document",
+          "next_label": "対策の計画"
+        },
+        {
+          "label": "実行する\n対策を運用する",
+          "icon": "gear",
+          "next_label": "運用の結果"
+        },
+        {
+          "label": "見直す\n効き目を確かめる",
+          "icon": "check",
+          "next_label": "直す点",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

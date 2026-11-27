@@ -6,19 +6,112 @@
       "id": 1,
       "type": "blocks",
       "after": "### 葉が値の順に並ぶ構造",
-      "caption": "葉は値の順に並んでつながるので、4001 以上 4003 以下は下端の葉を見つけて横にたどるだけで集まる。",
+      "caption": "根から値の大小で枝を選んで範囲の下端の葉を見つけ、そこから葉を横にたどって範囲内の値を集める様子を表します。",
       "nodes": [
-        {"id": "root", "label": "根\n値の範囲で枝を選ぶ", "row": 0, "col": 1},
-        {"id": "l1", "label": "葉\n1001〜3999", "row": 1, "col": 0},
-        {"id": "l2", "label": "葉\n4001〜4003", "row": 1, "col": 1, "emphasis": true},
-        {"id": "l3", "label": "葉\n4004〜5000", "row": 1, "col": 2}
+        {
+          "id": "q",
+          "label": "範囲検索\n20 以上 40 以下",
+          "row": 0,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "root",
+          "label": "根\n値の大小で\n枝を選ぶ",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "l1",
+          "label": "葉\n10・20",
+          "row": 1,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "l2",
+          "label": "葉\n30・40",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "l3",
+          "label": "葉\n50・60",
+          "row": 1,
+          "col": 2
+        }
       ],
       "edges": [
-        {"from": "root", "to": "l1"},
-        {"from": "root", "to": "l2"},
-        {"from": "root", "to": "l3"},
-        {"from": "l1", "to": "l2", "arrow": "both"},
-        {"from": "l2", "to": "l3", "arrow": "both", "label": "値の順につながる"}
+        {
+          "from": "q",
+          "to": "root",
+          "label": "下端の 20 で探す"
+        },
+        {
+          "from": "root",
+          "to": "l1",
+          "label": "30 未満"
+        },
+        {
+          "from": "root",
+          "to": "l2",
+          "label": "30〜49"
+        },
+        {
+          "from": "root",
+          "to": "l3",
+          "label": "50 以上"
+        },
+        {
+          "from": "l1",
+          "to": "l2",
+          "label": "横にたどる"
+        },
+        {
+          "from": "l2",
+          "to": "l3",
+          "label": "値の順につながる"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "chart",
+      "after": "### ノードの分割と探索回数",
+      "caption": "件数を 100 倍ずつ増やしても、B+木で読むノードの数は 1 段ずつしか増えません。高さが件数の対数で伸びるからです。",
+      "kind": "bar",
+      "x": {
+        "label": "データの件数",
+        "values": [
+          "100 件",
+          "1 万件",
+          "100 万件",
+          "1 億件"
+        ]
+      },
+      "y": {
+        "label": "1 件の検索で読むノードの数",
+        "min": 0
+      },
+      "series": [
+        {
+          "label": "B+木（1 ノードに子 100 個の例）",
+          "values": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "emphasis": true
+        }
+      ],
+      "annotations": [
+        {
+          "x": "1 億件",
+          "y": 4,
+          "text": "4 回（線形探索なら 1 億回）"
+        }
       ]
     }
   ]

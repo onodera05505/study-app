@@ -1,0 +1,68 @@
+{
+  "topic_id": 159,
+  "term": "バックプロパゲーション",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "出力と答えの誤差を、出力層から入力側へ層を 1 つずつさかのぼって伝える向きを表した図です。さかのぼる途中で各層の重みを直します。",
+      "nodes": [
+        {
+          "id": "out",
+          "label": "出力層\n答えを出す",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "err",
+          "label": "答えと比べる\n差が誤差になる",
+          "row": 1,
+          "col": 3,
+          "icon": "search"
+        },
+        {
+          "id": "fixout",
+          "label": "出力層の重みを直す\n誤差が減る向きへ",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "fixmid",
+          "label": "中間層の重みを直す\n直接は測れない所",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "fixin",
+          "label": "入力側の重みを直す\n入口までさかのぼる",
+          "row": 1,
+          "col": 0
+        }
+      ],
+      "edges": [
+        {
+          "from": "out",
+          "to": "err",
+          "label": "出力"
+        },
+        {
+          "from": "err",
+          "to": "fixout",
+          "label": "誤差を逆向きに伝える"
+        },
+        {
+          "from": "fixout",
+          "to": "fixmid",
+          "label": "誤差を逆向きに伝える"
+        },
+        {
+          "from": "fixmid",
+          "to": "fixin",
+          "label": "誤差を逆向きに伝える"
+        }
+      ]
+    }
+  ]
+}

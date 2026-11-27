@@ -1,0 +1,48 @@
+{
+  "topic_id": 28,
+  "term": "CPI（Cycles Per Instruction）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "timeline",
+      "after": "### クロックと命令の関係",
+      "caption": "CPI が 2 の例です。1 命令が 2 クロック分の帯を占めるので、クロック数を CPI で割った数だけ命令が終わります。",
+      "axis": {"label": "クロック（CPI 2 の例）", "ticks": ["0", "1", "2", "3", "4", "5", "6", "7", "8"]},
+      "events": [
+        {"from": 0, "to": 2, "label": "命令 1\n2 クロックで 1 命令", "emphasis": true},
+        {"from": 2, "to": 4, "label": "命令 2\n2 クロックかかる"},
+        {"from": 4, "to": 6, "label": "命令 3\n2 クロックかかる"},
+        {"from": 6, "to": 8, "label": "命令 4\n2 クロックかかる"},
+        {"at": 8, "label": "8 クロックで 4 命令\n8÷2＝4"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 計算の解き方",
+      "caption": "単位をそろえてから CPI で割り、最後に問われた単位へ桁を直します。最後の段を飛ばすと、単位の違う値になります。",
+      "direction": "down",
+      "stages": [
+        {"label": "周波数を直す\n1 秒間のクロック数へ", "icon": "clock", "next_label": "1 GHz＝10 億回\n1 MHz＝100 万回"},
+        {"label": "CPI で割る\n1 命令あたりのクロック数で", "icon": "gear", "next_label": "1 秒間の命令数"},
+        {"label": "桁を直す\n万命令や MIPS へ", "icon": "check", "emphasis": true}
+      ]
+    },
+    {
+      "id": 3,
+      "type": "timeline",
+      "after": "### MIPS との関係",
+      "caption": "どの命令も 2 クロックかかりますが、2 本ずつずらして重ねて流す例です。2 クロック目からは 1 クロックに 2 命令が終わるので、CPI は 1 を下回ります。",
+      "axis": {"label": "クロック（2 本ずつ重ねて流す例）", "ticks": ["0", "1", "2", "3", "4"]},
+      "events": [
+        {"from": 0, "to": 2, "label": "命令 1\n2 クロックかかる"},
+        {"from": 0, "to": 2, "label": "命令 2\n命令 1 と同時に進む"},
+        {"from": 1, "to": 3, "label": "命令 3\n1 クロック遅れて始まる"},
+        {"from": 1, "to": 3, "label": "命令 4\n命令 3 と同時に進む"},
+        {"from": 2, "to": 4, "label": "命令 5\nさらに 1 クロック遅れる"},
+        {"from": 2, "to": 4, "label": "命令 6\n命令 5 と同時に進む"},
+        {"at": 3, "label": "1 クロックに 2 命令が終わる\nCPI は 0.5 に近づく", "emphasis": true}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "topic_id": 260,
+  "term": "AML・CFT（Anti-Money Laundering・Countering the Financing of Terrorism：マネーロンダリング・テロ資金供与対策）ソリューション",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "explanation",
+      "caption": "金融機関の取組を、口座開設時の本人確認から順に並べています。入口で確かめた顧客の取引を見張り続け、不自然な動きを届け出ます。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "本人確認\n口座開設のときに確かめる",
+          "icon": "person",
+          "next_label": "確かめた顧客",
+          "emphasis": true
+        },
+        {
+          "label": "取引目的の確認\n何に使う口座かを聞く",
+          "icon": "document",
+          "next_label": "申告された目的"
+        },
+        {
+          "label": "継続的な確認\n目的に合わない動きを見張る",
+          "icon": "search",
+          "next_label": "不自然な動き"
+        },
+        {
+          "label": "疑わしい取引の届出\n当局へ知らせる",
+          "icon": "mail"
+        }
+      ]
+    }
+  ]
+}

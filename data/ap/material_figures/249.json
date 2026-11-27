@@ -1,0 +1,41 @@
+{
+  "topic_id": 249,
+  "term": "サービスレベル管理",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "explanation",
+      "caption": "サービスレベル管理の活動を、SLA を中心に回る輪で示します。報告と改善のあとも次の目標の見直しへ戻り、合意で終わらない点を見ます。",
+      "center": "SLA",
+      "stages": [
+        {
+          "label": "目標を決める\nサービスと測れる目標",
+          "icon": "document",
+          "next_label": "サービスレベル目標"
+        },
+        {
+          "label": "顧客と合意\nSLA を交わす",
+          "icon": "person",
+          "next_label": "合意した SLA"
+        },
+        {
+          "label": "実績を監視\n目標に照らして測る",
+          "icon": "chart",
+          "next_label": "測った実績"
+        },
+        {
+          "label": "レビューと報告\n定めた間隔で顧客へ",
+          "icon": "clock",
+          "next_label": "未達の傾向",
+          "emphasis": true
+        },
+        {
+          "label": "改善\n未達の原因を直す",
+          "icon": "gear",
+          "next_label": "見直した目標と手順"
+        }
+      ]
+    }
+  ]
+}

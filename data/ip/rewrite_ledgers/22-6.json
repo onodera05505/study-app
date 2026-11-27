@@ -1,0 +1,95 @@
+{
+  "bundle": "22-6",
+  "shared": [
+    {"item": "送信は SMTP、受信は POP3（取り込む）と IMAP（サーバに置いたまま読む）の使い分け（文章と図）", "count": 2, "holder": 204, "topics": [204, 524]},
+    {"item": "SMTP で送り POP3／IMAP で受け取る経路の図（204 の図 1・524 の図 2）", "count": 2, "holder": 204, "topics": [204, 524]},
+    {"item": "添付や日本語を扱う MIME の説明", "count": 2, "holder": 377, "topics": [204, 377]}
+  ],
+  "topics": [
+    {
+      "topic_id": 204,
+      "points": [
+        {"point": "電子メールのプロトコルはメールを送るとき・受け取るときの通信の決まりごと（定義）", "fate": "kept", "where": "explanation"},
+        {"point": "送信には SMTP、受信には POP3 か IMAP4（定義の後半とキーワード）", "fate": "kept", "where": "explanation の箇条とキーワードの行"},
+        {"point": "端末からサーバへも、サーバからサーバへも SMTP。POP3／IMAP4 は受信者が取り出す最後の区間だけ（要点の箇条）", "fate": "figure", "where": "204 の図 1（手順の SMTP（送信）・SMTP（転送）・POP3 / IMAP4（受信））"},
+        {"point": "メールソフトを新しく入れたときに設定するのは送信用と受信用のプロトコル", "fate": "kept", "where": "explanation"},
+        {"point": "送信者のソフトが自分のサーバへ SMTP で渡し、サーバどうしも SMTP で転送する流れ（detail の文章）", "fate": "figure", "where": "204 の図 1"},
+        {"point": "相手のサーバに着いたメールは受信箱に置かれ、受信者が取り出す", "fate": "kept", "where": "### SMTP の名前が示す役"},
+        {"point": "SMTP は「送る・運ぶ」、POP3 と IMAP4 は「取り出す」専用（detail の言い直し）", "fate": "duplicate", "where": "explanation の箇条（送信には SMTP、受信には POP3 か IMAP4）"},
+        {"point": "SMTP は Simple Mail Transfer Protocol の略で、Transfer は転送。名前が送って運ぶ役を示す", "fate": "kept", "where": "### SMTP の名前が示す役"},
+        {"point": "添付ファイルや日本語を扱う取り決めは MIME で、接続のプロトコルとは別（「なお、」の付け足し）", "fate": "explanation", "where": "2021r03-q84 の選択肢ウ（MIME）の note"},
+        {"point": "POP3 は端末に取り込んで手元で管理し、原則サーバに残らない", "fate": "figure", "where": "204 の図 2（POP3 の列）"},
+        {"point": "IMAP4 はサーバ上に置いたまま読み、フォルダや既読の状態もサーバ側で管理", "fate": "figure", "where": "204 の図 2（IMAP4 の列）"},
+        {"point": "IMAP4 は IMAP とも書く", "fate": "kept", "where": "### POP3 と IMAP4 の違い"},
+        {"point": "IMAP4 なら PC とスマートフォンなど複数の端末から同じ状態で見られる", "fate": "figure", "where": "204 の図 2（複数の端末で見ると の行）"},
+        {"point": "今は IMAP4 が使われる場面が多い（複数の端末で同じ状態に見られるため）", "fate": "kept", "where": "### POP3 と IMAP4 の違い"}
+      ]
+    },
+    {
+      "topic_id": 524,
+      "points": [
+        {"point": "Web メールは専用のメールソフトを入れずに Web ブラウザだけで送受信できるサービス（定義）", "fate": "kept", "where": "explanation"},
+        {"point": "キーワード: ブラウザだけ・ダウンロード不要", "fate": "kept", "where": "explanation"},
+        {"point": "キーワードの「サーバに置いたまま」", "fate": "duplicate", "where": "explanation の箇条（サーバに置いたまま読み書き）"},
+        {"point": "メールをサーバに置いたまま読む", "fate": "kept", "where": "explanation"},
+        {"point": "どの端末からでも同じ受信箱が見える（要点の箇条と detail の「出先の端末からでも」）", "fate": "figure", "where": "524 の図 1（別の端末から見ると の列）"},
+        {"point": "送ったメールの中身は普通の電子メールで、相手はメールソフトでも読める", "fate": "kept", "where": "explanation"},
+        {"point": "普通のメールソフトは届いたメールを PC に取り込んでから表示する", "fate": "figure", "where": "524 の図 1（メールソフトの行の「取り込んだ PC にしか残っていない」）"},
+        {"point": "Web メールは取り込まず、サーバに置いたままブラウザの画面で読み書きする（detail の言い直し）", "fate": "duplicate", "where": "explanation の箇条"},
+        {"point": "PC を買い替えても過去のメールは残る", "fate": "kept", "where": "### サーバに置いたまま読むと変わること"},
+        {"point": "インターネットにつながっていないと基本的に読めない", "fate": "figure", "where": "524 の図 1（回線が無いとき の列）"},
+        {"point": "POP3 はダウンロードして保存、IMAP はサーバに置いたまま読み書き、送信は SMTP（### メールの決まりごと）", "fate": "owner", "where": "204"},
+        {"point": "Web メールの動きは IMAP に近い形", "fate": "kept", "where": "### サーバに置いたまま読むと変わること"}
+      ],
+      "removed_figures": [
+        {"figure_id": 2, "caption": "送信と受信で決まりごとが分かれます。受信は、手元に取り込むか、サーバに置いたまま読むかの 2 通りです。", "kept": {"topic_id": 204, "figure_id": 1}}
+      ]
+    },
+    {
+      "topic_id": 38,
+      "points": [
+        {"point": "Bcc は電子メールの宛先欄の一つで、入れたアドレスが他の受信者に知られない欄（定義）", "fate": "kept", "where": "explanation"},
+        {"point": "キーワード: 知られたくない・宛先を隠す", "fate": "kept", "where": "explanation"},
+        {"point": "To と Cc のアドレスは受信者全員に表示され、Bcc のアドレスは誰にも表示されない（要点の箇条）", "fate": "figure", "where": "38 の図 1（after を explanation に移した。To・Cc の列の ○、Bcc の列の ×）"},
+        {"point": "見え方は一方通行で、Bcc の人からは To と Cc が見え、逆は見えない", "fate": "figure", "where": "38 の図 1（Bcc の人の行と Bcc の列）と ### 見え方が一方通行になるしくみ の見出し"},
+        {"point": "同じ Bcc 欄に入れた人どうしも互いのアドレスは分からない", "fate": "kept", "where": "### 見え方が一方通行になるしくみ（Bcc のアドレスは配達に使われるだけで届いたメールには残らない）"},
+        {"point": "Bcc はブラインドカーボンコピーの略", "fate": "kept", "where": "explanation（定義の 1 文）"},
+        {"point": "blind は「他からは見えない」という意味", "fate": "kept", "where": "### 見え方が一方通行になるしくみ"},
+        {"point": "To と Cc のアドレスはメールと一緒に受信者全員へ届くので、誰でも同じ宛先の一覧を見られる", "fate": "kept", "where": "### 見え方が一方通行になるしくみ"},
+        {"point": "Bcc のアドレスは配達に使われるだけで届いたメールには残らない", "fate": "kept", "where": "### 見え方が一方通行になるしくみ"},
+        {"point": "To と Cc は全員に配られる名簿、Bcc は配られない、と覚えれば導ける（覚え方の文）", "fate": "duplicate", "where": "### 見え方が一方通行になるしくみ（届く・残らないの 2 文）"},
+        {"point": "To は返信や対応をしてほしい相手", "fate": "kept", "where": "explanation"},
+        {"point": "Cc は内容を知っておいてほしい相手", "fate": "kept", "where": "explanation"},
+        {"point": "Bcc は送ったことを知られたくない相手", "fate": "kept", "where": "explanation"},
+        {"point": "3 つの欄のアドレスの見え方（表の列: 全員に見える・誰にも見えない）", "fate": "figure", "where": "38 の図 1"},
+        {"point": "互いに面識のない大勢へ同じ内容を送るときは Bcc を使う", "fate": "kept", "where": "### 面識のない大勢へ送るとき"},
+        {"point": "全員を To や Cc に入れると関係のない人にアドレスを見せ、個人情報の漏えいになる", "fate": "kept", "where": "### 面識のない大勢へ送るとき"}
+      ]
+    },
+    {
+      "topic_id": 377,
+      "points": [
+        {"point": "電子メールの形式はメール本文の書き方の種類で、テキスト形式と HTML 形式の 2 つ（定義）", "fate": "kept", "where": "explanation"},
+        {"point": "テキスト形式は文字だけ、HTML 形式は色・大きさの指定・リンク・画像の埋め込みができる（定義の 2 文目）", "fate": "duplicate", "where": "### 2つの形式でできること の表と explanation の箇条"},
+        {"point": "キーワード: 書式・リンク・スクリプト", "fate": "kept", "where": "explanation"},
+        {"point": "装飾・リンク・スクリプトができるのは HTML 形式（要点の箇条）", "fate": "duplicate", "where": "### 2つの形式でできること の表（スクリプトは 377 の図 1）"},
+        {"point": "ファイルの添付やデジタル署名はどちらの形式でもできる（要点の箇条）", "fate": "duplicate", "where": "### 2つの形式でできること の表"},
+        {"point": "開いた瞬間にスクリプトが動く危険があるのは HTML 形式（要点の箇条）", "fate": "figure", "where": "377 の図 1（仕込まれたスクリプト 開いた瞬間に動く）"},
+        {"point": "テキスト形式は本文を文字の並びとして送り、装飾は一切できない", "fate": "kept", "where": "explanation の箇条と ### 2つの形式でできること の表"},
+        {"point": "HTML 形式は Web ページと同じタグを本文に使える", "fate": "kept", "where": "explanation"},
+        {"point": "文字を大きく・色を付ける・好きな文言にリンク・画像を本文に表示（detail の文章）", "fate": "duplicate", "where": "### 2つの形式でできること の表"},
+        {"point": "広告メールが見栄えよく作られているのは HTML 形式が使われているから（例）", "fate": "kept", "where": "### 2つの形式でできること"},
+        {"point": "比較表（装飾・リンク・画像・添付・署名）", "fate": "kept", "where": "### 2つの形式でできること"},
+        {"point": "比較表のスクリプトの実行の行（テキストは起こらない・HTML は起こり得る）", "fate": "figure", "where": "377 の図 1（HTML 形式の上の段とテキスト形式の下の段）"},
+        {"point": "HTML はスクリプトを書けるので、仕込まれたスクリプトが開いた瞬間に動くおそれ", "fate": "figure", "where": "377 の図 1"},
+        {"point": "見えている文言と実際のリンク先を別にでき、正しい URL に見せかけて偽のサイトへ誘導する手口に使われる", "fate": "figure", "where": "377 の図 1（見えている文言→実際のリンク先 偽のサイト）"},
+        {"point": "テキスト形式にはこうした危険が無い", "fate": "figure", "where": "377 の図 1（テキスト形式の段）"},
+        {"point": "どちらの手口もタグとスクリプトを書けることから生まれる（理由）", "fate": "kept", "where": "### HTML 形式の危険"},
+        {"point": "業務ではテキスト形式を標準にしたり、受信側で画像やスクリプトを無効にして表示したりする", "fate": "kept", "where": "### HTML 形式の危険"},
+        {"point": "ファイルの添付は MIME という拡張の仕組みが担い、どちらの形式でも行える", "fate": "kept", "where": "### 2つの形式でできること"},
+        {"point": "MIME は英数字しか扱えなかったメールで日本語や画像・文書ファイルを送れるようにする", "fate": "kept", "where": "### 2つの形式でできること"},
+        {"point": "デジタル署名の付与も形式に関係なく利用できる（detail の文章）", "fate": "duplicate", "where": "### 2つの形式でできること の表（デジタル署名の付与の行）"}
+      ]
+    }
+  ]
+}

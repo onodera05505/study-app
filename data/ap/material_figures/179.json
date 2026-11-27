@@ -1,0 +1,19 @@
+{
+  "topic_id": 179,
+  "term": "base64",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "explanation",
+      "caption": "3 バイトを 6 ビットずつに区切り直すと 4 つになり、それぞれが 1 文字になります。上から順にたどると、大きさが 4/3 倍になる理由が分かります。",
+      "direction": "down",
+      "stages": [
+        {"label": "元のデータ 3 バイト\n8 ビット × 3", "next_label": "そのままつなげる"},
+        {"label": "24 ビット\n1 列に並べる", "next_label": "6 ビットごとに区切る"},
+        {"label": "6 ビット × 4\nどれも 0〜63 の 64 通り", "next_label": "1 区切りを 1 文字に置き換える"},
+        {"label": "4 文字（4 バイト）\n元の 4/3 倍の大きさ", "emphasis": true}
+      ]
+    }
+  ]
+}

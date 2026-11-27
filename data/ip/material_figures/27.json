@@ -4,18 +4,27 @@
   "figures": [
     {
       "id": 1,
-      "type": "sequence",
-      "after": "### 流れ図をたどる例",
-      "caption": "大きいほうから小さいほうを引くのを繰り返し、x と y が等しくなったら終了。残った 14 が答え。",
-      "actors": [
-        {"id": "x", "label": "変数 x"},
-        {"id": "y", "label": "変数 y"}
-      ],
-      "steps": [
-        {"from": "y", "to": "x", "label": "x＞y なので x ← 98 － 42 ＝ 56", "note": "はじめは x が 98、y が 42"},
-        {"from": "y", "to": "x", "label": "x＞y なので x ← 56 － 42 ＝ 14"},
-        {"from": "x", "to": "y", "label": "x≦y なので y ← 42 － 14 ＝ 28"},
-        {"from": "x", "to": "y", "label": "x≦y なので y ← 28 － 14 ＝ 14", "note": "x＝y になり終了条件を満たす。x の値は 14"}
+      "type": "steps",
+      "after": "### 計算の解き方",
+      "caption": "段は繰返しの回ごとの変数の値で、段の間の矢印にその回の条件と操作を書いています。2 つの値が等しくなった強調の段で繰返しを抜けます。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "はじめ\nx＝40、y＝24",
+          "next_label": "x＞y なので\nx を 40 − 24 に"
+        },
+        {
+          "label": "1 回目の後\nx＝16、y＝24",
+          "next_label": "x＞y でないので\ny を 24 − 16 に"
+        },
+        {
+          "label": "2 回目の後\nx＝16、y＝8",
+          "next_label": "x＞y なので\nx を 16 − 8 に"
+        },
+        {
+          "label": "3 回目の後\nx＝8、y＝8\n等しいので終了",
+          "emphasis": true
+        }
       ]
     }
   ]

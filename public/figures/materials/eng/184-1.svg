@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="293" viewBox="0 0 746.9 342">
+<rect x="0.5" y="0.5" width="745.9" height="341" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<line x1="48" y1="34" x2="48" y2="302" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="257" y1="34" x2="257" y2="302" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="466" y1="34" x2="466" y2="302" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="658.9" y1="34" x2="658.9" y2="302" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">開発者</text>
+<rect x="192.9" y="0" width="128.2" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="257" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">CI/CD の仕組み</text>
+<rect x="418" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="466" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">検証の環境</text>
+<rect x="610.9" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="658.9" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">本番の環境</text>
+<polyline points="51,68 254,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="254,68 246,71.6 246,64.4" fill="#1f2937"/>
+<text x="152.5" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. push やプルリクエスト</text>
+<polyline points="257,100 283,100 283,114 259,114" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="259,114 267,110.4 267,117.6" fill="#1f2937"/>
+<text x="291" y="108" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">2. ビルドとテストを決めた順で自動で回す（CI）</text>
+<rect x="139" y="119" width="236" height="16" rx="3" fill="#ffffff"/>
+<text x="257" y="132.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">確かめられるのは書いたテストの範囲だけ</text>
+<polyline points="254,158 51,158" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,158 59,154.4 59,161.6" fill="#1f2937"/>
+<text x="152.5" y="151" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 1 つでも落ちたらすぐ知らせる</text>
+<rect x="88.5" y="163" width="128" height="16" rx="3" fill="#ffffff"/>
+<text x="152.5" y="176.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">次の変更より先に直す</text>
+<polyline points="260,214 463,214" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="463,214 455,217.6 455,210.4" fill="#1f2937"/>
+<text x="361.5" y="207" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 通った物をデプロイ（CD）</text>
+<polyline points="260,254 655.9,254" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="655.9,254 647.9,257.6 647.9,250.4" fill="#1f2937"/>
+<text x="457.95" y="247" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. 本番へデプロイ</text>
+<rect x="369.95" y="259" width="176" height="16" rx="3" fill="#ffffff"/>
+<text x="457.95" y="272.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">人が承認してから流す形もある</text>
+</g>
+</svg>

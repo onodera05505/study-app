@@ -1,0 +1,67 @@
+{
+  "topic_id": 13,
+  "term": "ビットとバイト",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "情報の量の単位を、小さい順に左上から並べています。矢印の上の数が、1 つ上の単位にまとめる倍率です。",
+      "nodes": [
+        {
+          "id": "bit",
+          "label": "1 ビット\n0 か 1 の 1 桁\n2 通り",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "byte",
+          "label": "1 バイト（B）\n8 ビット\n256 通り",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "kb",
+          "label": "1KB\n1,000 バイト",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "mb",
+          "label": "1MB\n1,000KB",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "gb",
+          "label": "1GB\n1,000MB\n10 億バイト",
+          "row": 1,
+          "col": 3
+        }
+      ],
+      "edges": [
+        {
+          "from": "bit",
+          "to": "byte",
+          "label": "8 個まとめる"
+        },
+        {
+          "from": "byte",
+          "to": "kb",
+          "label": "×1,000"
+        },
+        {
+          "from": "kb",
+          "to": "mb",
+          "label": "×1,000"
+        },
+        {
+          "from": "mb",
+          "to": "gb",
+          "label": "×1,000"
+        }
+      ]
+    }
+  ]
+}

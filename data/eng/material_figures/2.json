@@ -1,0 +1,63 @@
+{
+  "topic_id": 2,
+  "term": "CPU",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "左のメモリから命令を 1 つ受け取り、強調した制御が読み解いて、右の演算と上のほかの部品へ指図します。矢印のラベルが、部品の間を何が動くかを表します。",
+      "nodes": [
+        {
+          "id": "mem",
+          "label": "メモリ\n命令の並びとデータ",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "ctl",
+          "label": "CPU の制御\n命令を読み解き\n次にやることを決める",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "gear"
+        },
+        {
+          "id": "io",
+          "label": "ほかの部品\n画面・ストレージなど",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "alu",
+          "label": "CPU の演算\n足し算や大小の比べ",
+          "row": 1,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "mem",
+          "to": "ctl",
+          "label": "命令を 1 つ"
+        },
+        {
+          "from": "ctl",
+          "to": "io",
+          "label": "動かす指図"
+        },
+        {
+          "from": "ctl",
+          "to": "alu",
+          "label": "何を計算するか"
+        },
+        {
+          "from": "mem",
+          "to": "alu",
+          "label": "データと計算の結果",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

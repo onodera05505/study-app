@@ -1,0 +1,60 @@
+{
+  "topic_id": 237,
+  "term": "RSA 暗号",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 素因数分解の難しさに支えられるしくみ",
+      "caption": "p と q から n への掛け算はすぐ終わり、攻撃者が n から戻る破線の素因数分解は終わりません。だから n を公開しても、強調した秘密鍵には届きません。",
+      "nodes": [
+        {
+          "id": "sk",
+          "label": "秘密鍵\np と q が無いと作れない",
+          "row": 0,
+          "col": 0,
+          "icon": "key",
+          "emphasis": true
+        },
+        {
+          "id": "pq",
+          "label": "素数 p と q\n秘密にしておく",
+          "row": 0,
+          "col": 1,
+          "icon": "lock"
+        },
+        {
+          "id": "n",
+          "label": "積 n\n公開鍵の一部として公開",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "atk",
+          "label": "攻撃者\n公開された n だけを持つ",
+          "row": 1,
+          "col": 1,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "pq",
+          "to": "sk",
+          "label": "導く"
+        },
+        {
+          "from": "pq",
+          "to": "n",
+          "label": "掛け算：すぐ終わる"
+        },
+        {
+          "from": "atk",
+          "to": "pq",
+          "label": "n を素因数分解：桁が増えると終わらない",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

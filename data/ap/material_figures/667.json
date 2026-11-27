@@ -4,20 +4,31 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
-      "after": "### 四つの段階が何をする段階か",
-      "caption": "動詞で見分ける。導入・運用が実行、監視・測定・報告が点検、改善の処置が処置。",
-      "nodes": [
-        {"id": "p", "label": "計画 Plan\nSMS を確立し\n文書化して合意する", "row": 0, "col": 0},
-        {"id": "d", "label": "実行 Do\nSMS を導入し\n運用する", "row": 0, "col": 1, "emphasis": true},
-        {"id": "c", "label": "点検 Check\n監視・測定・レビューし\n結果を報告する", "row": 1, "col": 1},
-        {"id": "a", "label": "処置 Act\n継続的な改善のための\n処置を実施する", "row": 1, "col": 0}
-      ],
-      "edges": [
-        {"from": "p", "to": "d"},
-        {"from": "d", "to": "c"},
-        {"from": "c", "to": "a"},
-        {"from": "a", "to": "p"}
+      "type": "cycle",
+      "after": "explanation",
+      "caption": "SMS とサービスの両方に回す PDCA の輪です。真上の計画から時計回りに進み、処置の結果を次の計画へ渡して一周を繰り返します。",
+      "center": "SMS とサービスの\n継続的改善",
+      "stages": [
+        {
+          "label": "計画 Plan\n目的と進め方を決める",
+          "icon": "document",
+          "next_label": "取り決めた計画"
+        },
+        {
+          "label": "実行 Do\n決めたとおりに動かす",
+          "icon": "gear",
+          "next_label": "動かした実績"
+        },
+        {
+          "label": "点検 Check\n目的と比べて確かめる",
+          "icon": "search",
+          "next_label": "測った結果"
+        },
+        {
+          "label": "処置 Act\n見つけた差を埋める",
+          "icon": "arrow-cycle",
+          "next_label": "改善を次の計画へ"
+        }
       ]
     }
   ]

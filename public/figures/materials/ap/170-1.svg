@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="457" viewBox="0 0 640 457.4">
+<rect x="0.5" y="0.5" width="639" height="456.4" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(115.8 20)">
+<g transform="translate(204.2 417.4)">
+<circle cx="0" cy="-204.2" r="204.2" fill="none" stroke="#1f2937" stroke-width="1.2"/>
+<circle cx="0" cy="-144.2" r="144.2" fill="none" stroke="#1f2937" stroke-width="1.2"/>
+<circle cx="0" cy="-84.2" r="84.2" fill="none" stroke="#1f2937" stroke-width="1.2"/>
+<rect x="-106.2" y="-370.4" width="214" height="54" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.4"/>
+<text x="0.8" y="-355.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">イーサネットのヘッダーとトレーラー</text>
+<text x="0.8" y="-339.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">パケットを前後から包む枠</text>
+<text x="0.8" y="-323.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">MTU に数えない</text>
+<text x="0.8" y="-232.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">IP ヘッダーと TCP ヘッダー</text>
+<text x="0.8" y="-216.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">MTU に数える</text>
+<text x="0.8" y="-87.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">TCP で運ぶデータ</text>
+<text x="0.8" y="-71.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">MTU に数える</text>
+<rect x="-95" y="-417.4" width="190" height="18" rx="3" fill="#ffffff"/>
+<text x="0" y="-404.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">外の円＝イーサネットのフレーム</text>
+<rect x="-106.1" y="-297.4" width="212.2" height="18" rx="3" fill="#ffffff"/>
+<text x="0" y="-284.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">中の円＝IP パケット（上限が MTU）</text>
+<rect x="-53" y="-177.4" width="106" height="18" rx="3" fill="#ffffff"/>
+<text x="0" y="-164.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="600">内の円＝データ部</text>
+</g>
+</g>
+</svg>

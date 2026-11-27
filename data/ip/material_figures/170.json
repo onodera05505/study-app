@@ -1,0 +1,44 @@
+{
+  "topic_id": 170,
+  "term": "揮発性メモリ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "venn",
+      "after": "explanation",
+      "caption": "電源を切ると消えるのは強調した内側の円だけです。その外側は、半導体メモリでも他の方式の記憶媒体でも内容が残ります。",
+      "layout": "nested",
+      "universe": "記憶媒体",
+      "sets": [
+        {
+          "id": "semi",
+          "label": "半導体メモリ"
+        },
+        {
+          "id": "vol",
+          "label": "揮発性メモリ（RAM の仲間）"
+        }
+      ],
+      "regions": [
+        {
+          "in": [
+            "semi",
+            "vol"
+          ],
+          "label": "DRAM・SRAM\n電源を切ると消える",
+          "emphasis": true
+        },
+        {
+          "in": [
+            "semi"
+          ],
+          "label": "ROM・フラッシュメモリ\n電源を切っても残る"
+        },
+        {
+          "in": [],
+          "label": "HDD・光ディスク\n磁気や光で記録し残る"
+        }
+      ]
+    }
+  ]
+}

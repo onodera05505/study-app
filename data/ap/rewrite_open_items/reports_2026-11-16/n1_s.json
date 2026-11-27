@@ -1,0 +1,374 @@
+{
+ "target": "ap",
+ "units": [
+  "02",
+  "06"
+ ],
+ "status": "done",
+ "items": [
+  {
+   "no": 1,
+   "topic_id": 74,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのまま置く）。rewrite_open_items.md「C の直し方」の写さない物の行（句は教材の言葉で言い直す）",
+   "what": "要点の箇条「ループ端の繰返し指定は変数名：初期値、増分、終値の順です」が問題文の注記の句ほぼそのまま。「ループ端には、変数名の後に初期値・増分・終値を並べて書きます」に言い直した（例の n：M、－1、1 の文は残す）。",
+   "questions_checked": [
+    "2024r06h-q5"
+   ]
+  },
+  {
+   "no": 2,
+   "topic_id": 74,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのまま置く）。rewrite_open_items.md「C の直し方」の写さない物の行（句は教材の言葉で言い直す）",
+   "what": "detail の「二重線は並列処理の同期を表します」が問題文の句ほぼそのまま。「二重線は、並列に動く処理どうしを待ち合わせる（同期させる）記号です」に言い直した。見出しとキーワードは変えていない。",
+   "questions_checked": [
+    "2016h28h-q6"
+   ]
+  },
+  {
+   "no": 3,
+   "topic_id": 76,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのまま置く）。rewrite_open_items.md「C の直し方」の写さない物の行（句は教材の言葉で言い直す）。要点の箇条で定義の文ではない",
+   "what": "要点の箇条が〔特徴〕の 3 つ目をほぼそのまま置いていた。「型を持つのは変数ではなく中に入れた値の側で、型は実行するときに決まります（動的型付け）」に言い直した。",
+   "questions_checked": [
+    "2024r06a-q7"
+   ]
+  },
+  {
+   "no": 4,
+   "topic_id": 76,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのまま置く）。rewrite_open_items.md「C の直し方」の写さない物の行（句は教材の言葉で言い直す）",
+   "what": "要点の箇条が〔特徴〕の 1・2 つ目の句を並べていた。「向いている仕事は、統計解析を中心にしたデータの分析と、機械学習です」に言い直した（統計解析の語は残す）。",
+   "questions_checked": [
+    "2024r06a-q7"
+   ]
+  },
+  {
+   "no": 5,
+   "topic_id": 79,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのまま置く）。rewrite_open_items.md「C の直し方」の写さない物の行（句は教材の言葉で言い直す）",
+   "what": "要点の箇条の「矩形・円・直線・文字列などの図形」が問題文の並びのまま。「絵を、四角形や円、線、文字といった図形の組合せとして、座標や大きさの数値で表します」に言い直した。",
+   "questions_checked": [
+    "2025r07h-q23"
+   ]
+  },
+  {
+   "no": 6,
+   "topic_id": 79,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのまま置く）。rewrite_open_items.md「C の直し方」の写さない物の行（句は教材の言葉で言い直す）",
+   "what": "要点の箇条の「Web ページの図形描画にも使えます」が問題文の句ほぼそのまま。「HTML に埋め込めばブラウザの画面にそのまま図を描けます」に言い直した。",
+   "questions_checked": [
+    "2025r07h-q23"
+   ]
+  },
+  {
+   "no": 7,
+   "topic_id": 431,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのまま置く）。rewrite_open_items.md「C の直し方」の写さない物の行（句は教材の言葉で言い直す）（説明の文で定義の文ではない）",
+   "what": "detail「つなぎ替えの手順」の文が正解の句ほぼそのまま。「リストが何要素あっても、どこに入れても、手間はポインタ 2 つの書き換えのままで変わりません（計算量が一定）」に言い直した。",
+   "questions_checked": [
+    "2020r02o-q5"
+   ]
+  },
+  {
+   "no": 8,
+   "topic_id": 613,
+   "type": "C",
+   "verdict": "by_rule",
+   "rule": "rewrite_open_items.md「C の直し方」の定義の文の行（定義の文の句が、問題文がその用語の定義を言う形と重なる物は直さない）と「直してよい文」（定義の文は変えない）。write_materials.md「書き方の約束」の、論点の定義が正解と重なるのはよい",
+   "what": "申告が指すのは explanation の 1 文目（定義の文）。過去問 2018h30a-q6 の問題文は、論点の用語（完全2分木）の定義そのものを前提として言う形で、教材の定義の文がそれと重なっている。定義の文はこの段で変えない文なので直さない。",
+   "questions_checked": [
+    "2018h30a-q6"
+   ]
+  },
+  {
+   "no": 9,
+   "topic_id": 615,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのまま置く）。rewrite_open_items.md「C の直し方」の写さない物の行（句は教材の言葉で言い直す）。借りてよい物（事例）も教材の言葉で言い直すこと。表・箇条の形は変えない",
+   "what": "「### 記法の読み方」の BNF 3 行が問題の図の定義をそのまま置いていた（事例として借りるのはよいが言い直しが無い）。非終端記号の名前を ＜パラメタ指定＞→＜組＞、＜パラメタ＞→＜名前＞ に替え、構造（左側だけ再帰・括弧とカンマ）と箇条の形はそのまま。読み下しの文・「再帰の位置」の文・手順 1・2 の記号名も同じ名前に揃えた。図 615-1・615-2（＜並び＞・＜語＞）は触れていない。",
+   "questions_checked": [
+    "2018h30a-q4"
+   ]
+  },
+  {
+   "no": 10,
+   "topic_id": 125,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのまま置く）。rewrite_open_items.md「C の直し方」の写さない物の行（句は教材の言葉で言い直す）（列挙の句）",
+   "what": "detail の文が誤答イの列挙と句をそのまま置いていた。「センサーが受け持つのは測る役目で、温度や力、物の位置と角度、動きの速度と加速度といった量を読み取って電気の情報にします」に言い直した（物理量の 6 つは残す）。",
+   "questions_checked": [
+    "2024r06a-q23",
+    "2022r04a-q20"
+   ]
+  },
+  {
+   "no": 11,
+   "topic_id": 125,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのまま置く）。rewrite_open_items.md「C の直し方」の写さない物の行（句は教材の言葉で言い直す）",
+   "what": "要点の箇条が誤答アの句ほぼそのまま。「どれだけ動かすか（操作量）を決めるのはコントローラーで、アクチュエーターはその指示を受けて動く側です」に言い直した。目標値と現在値を比べる点は detail の「制御系の中での位置」にある。",
+   "questions_checked": [
+    "2024r06a-q23"
+   ]
+  },
+  {
+   "no": 12,
+   "topic_id": 125,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのまま置く）。rewrite_open_items.md「C の直し方」の写さない物の行（句は教材の言葉で言い直す）。要点の箇条で、他の用語（センサー）の説明なので論点の定義の文の除外に当たらない",
+   "what": "要点の箇条の「センサーは物理量を電気信号に変えます」が誤答エ「物理量を検出して，電気信号に変える」の句ほぼそのまま。「センサーは測った量を電気の信号にして送り出します」に言い直した（測る量の中身は detail の文が持つ）。",
+   "questions_checked": [
+    "2022r04a-q20",
+    "2024r06a-q23"
+   ]
+  },
+  {
+   "no": 13,
+   "topic_id": 134,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのまま置く）。rewrite_open_items.md「C の直し方」の写さない物の行（句は教材の言葉で言い直す）。式 a・¬b は正解と重なるが、しくみ・式が正解と重なるのはよいので式は残す",
+   "what": "要点の箇条が問題文の句（今回の値・前回の値・放された状態から押された状態に変化）をそのまま置いていた。「0 から 1 に上がった瞬間は「今回が 1 かつ前回が 0」の組なので、今回を a、前回を b と置くと a・¬b です」に言い直した。",
+   "questions_checked": [
+    "2025r07a-q21"
+   ]
+  },
+  {
+   "no": 14,
+   "topic_id": 566,
+   "type": "C",
+   "verdict": "by_rule",
+   "rule": "write_materials.md「書き方の約束」の、論点のしくみが紐づく過去問の正解と重なるのはよい。写さない物は選択肢・問題文の句の言い回しで、この句は選択肢の文に無い",
+   "what": "「高さが一定の2値の矩形波」はデータの figure_description（自前の書き起こし）にだけある句で、選択肢イの文は「最低値の基線と一定の高さとの2値だけを取る矩形波で，高さは全て同じ…」と言い回しが違う。原本の選択肢は図。内容は PWM のしくみで正解と重なる物なので直さない。",
+   "questions_checked": [
+    "2020r02o-q22"
+   ]
+  },
+  {
+   "no": 15,
+   "topic_id": 566,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのまま置く）。rewrite_open_items.md「C の直し方」の写さない物の行（句は教材の言葉で言い直す）。PAM は他の用語でしくみが正解と重なる除外に当たらない（誤答ア）",
+   "what": "混同しやすい用語の PAM の項目「パルスごとに高さがまちまちになります」が、データの選択肢アの文「高さがパルスごとにまちまち」とほぼ同じ。「並んだパルスの高さが信号に合わせて上下します」に言い直した。",
+   "questions_checked": [
+    "2020r02o-q22"
+   ]
+  },
+  {
+   "no": 16,
+   "topic_id": 652,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の、写さない物（選択肢・問題文の句をほぼそのまま置く）。rewrite_open_items.md「C の直し方」の写さない物の行（句は教材の言葉で言い直す）",
+   "what": "detail の「最下位ビットに取り込んで上位方向へシフトする作りなら」が問題文の句ほぼそのまま。「新しいビットを最下位の端から入れ、すでにある値を上の桁へ送る作りなら」に言い直した。8D を導く読み方（手順 4・5）は変えていない。",
+   "questions_checked": [
+    "2018h30h-q22"
+   ]
+  }
+ ],
+ "edits": [
+  {
+   "file": "data/ap/materials_v4/02-1.json",
+   "topic_id": 74,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "explanation",
+   "before": "ループ端の繰返し指定は**変数名：初期値、増分、終値**の順です。",
+   "after": "ループ端には、変数名の後に**初期値・増分・終値**を並べて書きます。"
+  },
+  {
+   "file": "data/ap/materials_v4/02-1.json",
+   "topic_id": 74,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 並列処理の同期（二重線）",
+   "before": "横向きの**二重線は並列処理の同期**を表します。",
+   "after": "横向きの**二重線**は、並列に動く処理どうしを待ち合わせる（同期させる）記号です。"
+  },
+  {
+   "file": "data/ap/materials_v4/02-7.json",
+   "topic_id": 76,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "explanation",
+   "before": "- 統計解析や機械学習、データ分析の用途で使われます",
+   "after": "- 向いている仕事は、統計解析を中心にしたデータの分析と、機械学習です"
+  },
+  {
+   "file": "data/ap/materials_v4/02-7.json",
+   "topic_id": 76,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "explanation",
+   "before": "- 変数自体には型がなく、代入されたオブジェクトの型が実行時に決まる**動的型付け**です",
+   "after": "- 型を持つのは変数ではなく中に入れた値の側で、型は実行するときに決まります（**動的型付け**）"
+  },
+  {
+   "file": "data/ap/materials_v4/02-8.json",
+   "topic_id": 79,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "explanation",
+   "before": "- 矩形・円・直線・文字列などの図形を、座標や大きさで表します",
+   "after": "- 絵を、四角形や円、線、文字といった図形の組合せとして、座標や大きさの数値で表します"
+  },
+  {
+   "file": "data/ap/materials_v4/02-8.json",
+   "topic_id": 79,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "explanation",
+   "before": "HTML に埋め込んで Web ページの図形描画にも使えます",
+   "after": "HTML に埋め込めばブラウザの画面にそのまま図を描けます"
+  },
+  {
+   "file": "data/ap/materials_v4/02-2.json",
+   "topic_id": 431,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### つなぎ替えの手順",
+   "before": "計算量は要素の個数にも挿入する位置にも左右されず一定です。",
+   "after": "リストが何要素あっても、どこに入れても、手間はポインタ 2 つの書き換えのままで変わりません（計算量が一定）。"
+  },
+  {
+   "file": "data/ap/materials_v4/02-7.json",
+   "topic_id": 615,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 記法の読み方",
+   "before": "- ＜パラメタ指定＞ ::= ＜パラメタ＞ | （＜パラメタ指定＞、＜パラメタ＞）\n- ＜パラメタ＞ ::= ＜英字＞ | ＜パラメタ＞＜英字＞",
+   "after": "- ＜組＞ ::= ＜名前＞ | （＜組＞、＜名前＞）\n- ＜名前＞ ::= ＜英字＞ | ＜名前＞＜英字＞"
+  },
+  {
+   "file": "data/ap/materials_v4/02-7.json",
+   "topic_id": 615,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 記法の読み方",
+   "before": "1 行目は「パラメタ指定とは、パラメタ 1 個か、丸括弧の中にパラメタ指定とパラメタをカンマで並べた形のどちらかである」と読みます。2 行目は「パラメタとは、英字 1 文字か、パラメタの後ろに英字を並べた形である」という意味です。",
+   "after": "1 行目は「組とは、名前 1 個か、丸括弧の中に組と名前をカンマで並べた形のどちらかである」と読みます。2 行目は「名前とは、英字 1 文字か、名前の後ろに英字を並べた形である」という意味です。"
+  },
+  {
+   "file": "data/ap/materials_v4/02-7.json",
+   "topic_id": 615,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 再帰の位置で作れる形が決まる",
+   "before": "丸括弧の中の**左側だけが再びパラメタ指定**になれて、右側は必ずパラメタ（英字の並び）です。",
+   "after": "丸括弧の中の**左側だけが再び組**になれて、右側は必ず名前（英字の並び）です。"
+  },
+  {
+   "file": "data/ap/materials_v4/02-7.json",
+   "topic_id": 615,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 導出できるかを確かめる手順",
+   "before": "英字 1 文字はパラメタになり、パラメタはそのままパラメタ指定になれます",
+   "after": "英字 1 文字は名前になり、名前はそのまま組になれます"
+  },
+  {
+   "file": "data/ap/materials_v4/02-7.json",
+   "topic_id": 615,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 導出できるかを確かめる手順",
+   "before": "丸括弧は「（パラメタ指定、パラメタ）」の形でしか現れないので",
+   "after": "丸括弧は「（組、名前）」の形でしか現れないので"
+  },
+  {
+   "file": "data/ap/materials_v4/06-5.json",
+   "topic_id": 125,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "explanation",
+   "before": "センサーは物理量を電気信号に変えます",
+   "after": "センサーは測った量を電気の信号にして送り出します"
+  },
+  {
+   "file": "data/ap/materials_v4/06-5.json",
+   "topic_id": 125,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "explanation",
+   "before": "- 目標値と制御量を比べて操作量を出すのは[[コントローラー]]の役目で、アクチュエーターは指示されて動く側です",
+   "after": "- どれだけ動かすか（操作量）を決めるのは[[コントローラー]]で、アクチュエーターはその指示を受けて動く側です"
+  },
+  {
+   "file": "data/ap/materials_v4/06-5.json",
+   "topic_id": 125,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 制御系の中での位置",
+   "before": "[[センサー]]が電気的な情報に変える物理量は、位置・角度・速度・加速度・力・温度などです。",
+   "after": "[[センサー]]が受け持つのは測る役目で、温度や力、物の位置と角度、動きの速度と加速度といった量を読み取って電気の情報にします。"
+  },
+  {
+   "file": "data/ap/materials_v4/06-1.json",
+   "topic_id": 134,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "explanation",
+   "before": "- 今回の値を a、前回の値を b とすると、放された状態から押された状態への変化は **a・¬b** で検出します",
+   "after": "- 0 から 1 に上がった瞬間は「今回が 1 かつ前回が 0」の組なので、今回を a、前回を b と置くと **a・¬b** です"
+  },
+  {
+   "file": "data/ap/materials_v4/06-5.json",
+   "topic_id": 566,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 混同しやすい用語",
+   "before": "パルスごとに高さがまちまちになります",
+   "after": "並んだパルスの高さが信号に合わせて上下します"
+  },
+  {
+   "file": "data/ap/materials_v4/06-2.json",
+   "topic_id": 652,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### シリアルをパラレルに直すしくみ",
+   "before": "**最下位ビットに取り込んで上位方向へシフト**する作りなら",
+   "after": "**新しいビットを最下位の端から入れ、すでにある値を上の桁へ送る**作りなら"
+  }
+ ],
+ "owners": [],
+ "figure_after": [],
+ "ledgers": [],
+ "returned": [],
+ "noticed": [
+  {
+   "topic_id": 0,
+   "what": "一覧の JSON の target が \"ip\" になっているが、パス（data/ap/…）と論点 ID・単元は ap の物なので ap として処理した"
+  }
+ ],
+ "gates": {
+  "check_materials": 0,
+  "check_material_style": 0,
+  "render_check": 0,
+  "check_explanations": 0,
+  "check_unit_plans": 0
+ },
+ "chars": {
+  "before": 59355,
+  "after": 59409
+ },
+ "chars_note": "単元 02・06 の全論点の explanation＋detail の合計。言い直しで句を教材の言葉に開いた分だけ +54 字。点の追加・消去は無く、台帳は言い換えなので書いていない。門の知らせは直す前後で単元 02・06 の論点に増減なし（差分は他の単元の並行作業の分）"
+}

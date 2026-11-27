@@ -1,0 +1,63 @@
+{
+  "topic_id": 228,
+  "term": "WPA2",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### PSK から暗号鍵を作るしくみ",
+      "caption": "アクセスポイントと各 PC に同じ PSK を設定し、そこから PC ごとの鍵を作って通信を暗号化する図です。破線は、電波を拾っても読めないことを表します。",
+      "nodes": [
+        {
+          "id": "ap",
+          "label": "アクセスポイント\nPSK を設定",
+          "row": 0,
+          "col": 1,
+          "icon": "network",
+          "emphasis": true
+        },
+        {
+          "id": "p1",
+          "label": "PC 1\n同じ PSK から\nPC 1 用の鍵を作る",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "p2",
+          "label": "PC 2\n同じ PSK から\nPC 2 用の鍵を作る",
+          "row": 0,
+          "col": 2,
+          "icon": "device"
+        },
+        {
+          "id": "ev",
+          "label": "電波を拾う第三者\n暗号文しか見えない",
+          "row": 1,
+          "col": 1,
+          "icon": "warning"
+        }
+      ],
+      "edges": [
+        {
+          "from": "ap",
+          "to": "p1",
+          "label": "PC 1 用の鍵で\n暗号化した通信",
+          "arrow": "both"
+        },
+        {
+          "from": "ap",
+          "to": "p2",
+          "label": "PC 2 用の鍵で\n暗号化した通信",
+          "arrow": "both"
+        },
+        {
+          "from": "ap",
+          "to": "ev",
+          "label": "電波を拾われても読めない",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

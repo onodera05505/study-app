@@ -1,0 +1,36 @@
+{
+  "topic_id": 530,
+  "term": "情報資産の管理",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "explanation",
+      "caption": "保護レベルの分類は一度で終わらず、見直しから洗い出しへ戻ります。強調した見直しが輪を回します。",
+      "center": "保護レベルの\n管理",
+      "stages": [
+        {
+          "label": "洗い出す\n守るべき情報と媒体・機器",
+          "icon": "search",
+          "next_label": "情報資産の一覧"
+        },
+        {
+          "label": "保護レベルに分ける\n重要度や漏れたときの影響で",
+          "icon": "lock",
+          "next_label": "レベルの付いた一覧"
+        },
+        {
+          "label": "取扱いを決める\n保管・持ち出し・廃棄",
+          "icon": "document",
+          "next_label": "レベルごとの手順"
+        },
+        {
+          "label": "見直す\n公表や事業の変化で\n価値が変わる",
+          "icon": "arrow-cycle",
+          "next_label": "分け直す情報",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "topic_id": 180,
+  "term": "ブランチとマージ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "上と下の段が本流から分けた枝、中段が本流です。枝の作りかけは本流に入らず、できた物だけが右でマージされます。",
+      "nodes": [
+        {
+          "id": "main",
+          "label": "本流（main）\nいつでも動く状態",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "a1",
+          "label": "A さんの枝\n検索の機能",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "a2",
+          "label": "コミットを重ねる\n作りかけは枝の中だけ",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "b1",
+          "label": "B さんの枝\nログインのバグ直し",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "b2",
+          "label": "コミットを重ねる\n作りかけは枝の中だけ",
+          "row": 2,
+          "col": 2
+        },
+        {
+          "id": "keep",
+          "label": "本流のまま\n作りかけは入らず\n動く状態を保つ",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "merged",
+          "label": "本流にマージ\n両方の変更を\n合わせた状態",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "main",
+          "to": "a1",
+          "label": "git branch で分ける"
+        },
+        {
+          "from": "a1",
+          "to": "a2",
+          "label": "作業する"
+        },
+        {
+          "from": "a2",
+          "to": "merged",
+          "label": "できたら git merge"
+        },
+        {
+          "from": "main",
+          "to": "keep",
+          "label": "枝の作業中も"
+        },
+        {
+          "from": "keep",
+          "to": "merged",
+          "label": "合流先"
+        },
+        {
+          "from": "main",
+          "to": "b1",
+          "label": "git branch で分ける"
+        },
+        {
+          "from": "b1",
+          "to": "b2",
+          "label": "作業する"
+        },
+        {
+          "from": "b2",
+          "to": "merged",
+          "label": "できたら git merge"
+        }
+      ]
+    }
+  ]
+}

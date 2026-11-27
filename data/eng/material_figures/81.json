@@ -1,0 +1,68 @@
+{
+  "topic_id": 81,
+  "term": "パケット",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "データを番号つきの小包に分けると、他の人の小包と交互に回線を流れます。受ける側は荷札の番号で並べ直して元に戻します。",
+      "nodes": [
+        {
+          "id": "file",
+          "label": "大きなファイル\n1 本のデータ",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "pkt",
+          "label": "小包 1・2・3\n荷札（ヘッダ）\n宛先・差出人・何番目\n＋ データの一部",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "line",
+          "label": "回線\n小包が交互に流れる",
+          "row": 0,
+          "col": 2,
+          "shape": "cloud"
+        },
+        {
+          "id": "recv",
+          "label": "受ける側\n番号で並べ直して\n組み立てる",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "other",
+          "label": "他の人の小包\n別の送り主の通信",
+          "row": 1,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "file",
+          "to": "pkt",
+          "label": "小分けにする"
+        },
+        {
+          "from": "pkt",
+          "to": "line",
+          "label": "1 個ずつ送り出す"
+        },
+        {
+          "from": "other",
+          "to": "line",
+          "label": "同じ回線を使う"
+        },
+        {
+          "from": "line",
+          "to": "recv",
+          "label": "届く順はばらばら"
+        }
+      ]
+    }
+  ]
+}

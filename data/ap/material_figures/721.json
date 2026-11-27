@@ -1,0 +1,134 @@
+{
+  "topic_id": 721,
+  "term": "SOAP",
+  "figures": [
+    {
+      "id": 1,
+      "type": "layers",
+      "after": "explanation",
+      "caption": "1 通の SOAP メッセージは、左の括弧のエンベロープがヘッダとボディを包む形です。強調したボディに呼び出しの中身が入ります。",
+      "shape": "stack",
+      "layers": [
+        {
+          "label": "ヘッダ\n認証・トランザクション制御"
+        },
+        {
+          "label": "ボディ\nメソッド名・引数・戻り値",
+          "emphasis": true
+        }
+      ],
+      "brackets": [
+        {
+          "from": 0,
+          "to": 1,
+          "label": "エンベロープ\n全体を包む外枠"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### Web サービスの中での受け持ち",
+      "caption": "番号の順に、探す・呼び方を読む・呼び出す、と進みます。強調した SOAP はこのうち呼び出しのメッセージだけを受け持ちます。",
+      "nodes": [
+        {
+          "id": "u",
+          "label": "利用者のプログラム\nサービスを呼び出す側",
+          "row": 1,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "uddi",
+          "label": "UDDI\nサービスを登録・検索する名簿",
+          "row": 0,
+          "col": 1,
+          "shape": "cylinder"
+        },
+        {
+          "id": "soap",
+          "label": "SOAP メッセージ\n呼出しを XML の封筒で運ぶ",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "mail"
+        },
+        {
+          "id": "wsdl",
+          "label": "WSDL\nメソッド・引数・戻り値の定義",
+          "row": 2,
+          "col": 1,
+          "icon": "document"
+        },
+        {
+          "id": "s",
+          "label": "Web サービス\n処理を受け持つ",
+          "row": 1,
+          "col": 2,
+          "icon": "server"
+        }
+      ],
+      "edges": [
+        {
+          "from": "u",
+          "to": "uddi",
+          "label": "① サービスを探す"
+        },
+        {
+          "from": "u",
+          "to": "wsdl",
+          "label": "② 呼び方を読む"
+        },
+        {
+          "from": "u",
+          "to": "soap",
+          "label": "③ 呼出しを包む"
+        },
+        {
+          "from": "soap",
+          "to": "s",
+          "label": "HTTP などで届ける"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "matrix",
+      "after": "### REST・CORBA との違い",
+      "caption": "遠隔の処理を呼び出す 3 つの方式を、同じ観点で並べます。行をたどると、方式ごとのメッセージの形と呼び方の記述の違いが分かります。",
+      "x": {
+        "label": "観点",
+        "values": [
+          "メッセージの形式",
+          "呼び方の記述",
+          "呼び出し方"
+        ]
+      },
+      "y": {
+        "label": "方式",
+        "values": [
+          "SOAP",
+          "REST",
+          "CORBA"
+        ]
+      },
+      "cells": [
+        [
+          "XML\nエンベロープに\nヘッダとボディ",
+          "WSDL\n（XML で書く）",
+          "HTTP などに\nXML 文書を載せる"
+        ],
+        [
+          "多くは JSON\n封筒構造は無い",
+          "厳密な記述は\n持たない",
+          "HTTP のメソッドで\nURI の資源を操作"
+        ],
+        [
+          "バイナリの\n独自形式",
+          "IDL\n言語に依らない\nインタフェース定義",
+          "仲介役の ORB を\n通して遠隔の\nオブジェクトを呼ぶ"
+        ]
+      ]
+    }
+  ]
+}

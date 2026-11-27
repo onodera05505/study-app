@@ -1,0 +1,84 @@
+{
+  "topic_id": 38,
+  "term": "仮想記憶",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "左のプロセスが見る番地は、対応表を通して本物の置き場に結び付きます。下の 2 本の出し入れが増えるほど遅くなります。",
+      "nodes": [
+        {
+          "id": "pa",
+          "label": "プロセス A\n100 番地を読む",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "ta",
+          "label": "A の対応表",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "mem",
+          "label": "メモリ（8GB）\n本物の置き場",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "pb",
+          "label": "プロセス B\n100 番地を読む",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "tb",
+          "label": "B の対応表",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "st",
+          "label": "ストレージ\n入りきらない分\nずっと遅い",
+          "row": 2,
+          "col": 2,
+          "shape": "cylinder"
+        }
+      ],
+      "edges": [
+        {
+          "from": "pa",
+          "to": "ta",
+          "label": "見せかけの番地"
+        },
+        {
+          "from": "ta",
+          "to": "mem",
+          "label": "5,100 番地"
+        },
+        {
+          "from": "pb",
+          "to": "tb",
+          "label": "見せかけの番地"
+        },
+        {
+          "from": "tb",
+          "to": "mem",
+          "label": "8,100 番地"
+        },
+        {
+          "from": "st",
+          "to": "mem",
+          "label": "ページフォールトで読み込む"
+        },
+        {
+          "from": "mem",
+          "to": "st",
+          "label": "スワップ"
+        }
+      ]
+    }
+  ]
+}

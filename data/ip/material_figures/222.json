@@ -1,0 +1,67 @@
+{
+  "topic_id": 222,
+  "term": "CRL（Certificate Revocation List：証明書失効リスト）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "timeline",
+      "after": "explanation",
+      "caption": "1 枚の証明書の発行から満了までを横に並べた図です。強調した帯が、CA が失効させた証明書が CRL に載っている間です。",
+      "axis": {
+        "label": "証明書の時間（例）",
+        "ticks": [
+          "発行",
+          "3 か月",
+          "6 か月",
+          "9 か月",
+          "1 年"
+        ]
+      },
+      "events": [
+        {
+          "from": 0,
+          "to": 4,
+          "label": "有効期間\n発行時に決めた期限"
+        },
+        {
+          "at": 1.5,
+          "label": "秘密鍵の漏えい\nCA が失効させる"
+        },
+        {
+          "from": 1.5,
+          "to": 4,
+          "label": "CRL に載る\n失効させた証明書",
+          "emphasis": true
+        },
+        {
+          "at": 4,
+          "label": "有効期間の満了\n決めた期限が来る"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 証明書を確かめる 2 つの手順",
+      "direction": "down",
+      "caption": "証明書を信用するまでの確認の順を表した図です。日付だけでは分からない失効を、2 段目で CRL を見て確かめます。",
+      "stages": [
+        {
+          "label": "日付を見る\n有効期間内か確かめる",
+          "icon": "clock",
+          "next_label": "期間内なら次へ"
+        },
+        {
+          "label": "CRL を見る\n失効の一覧に無いか確かめる",
+          "icon": "search",
+          "next_label": "載っていなければ次へ",
+          "emphasis": true
+        },
+        {
+          "label": "信用する\nその公開鍵を使ってよい",
+          "icon": "check"
+        }
+      ]
+    }
+  ]
+}

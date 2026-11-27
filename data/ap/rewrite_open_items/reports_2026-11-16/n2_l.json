@@ -1,0 +1,112 @@
+{
+ "target": "ap",
+ "units": [
+  "19"
+ ],
+ "status": "done",
+ "items": [
+  {
+   "no": 1,
+   "topic_id": 751,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」写さない物（選択肢の句をほぼそのまま置く）。rewrite_open_items.md C の直し方",
+   "what": "detail「入口が詰まったときの施策」の例が正解イ「無料サンプルの配布やお試し価格による提供などのセールスプロモーション」の句をほぼそのまま置いていた。例の中身（試供品・初回の値引き・返金保証）は残し、教材の言葉に言い直した。",
+   "questions_checked": [
+    "2016h28h-q69"
+   ]
+  },
+  {
+   "no": 2,
+   "topic_id": 751,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」写さない物（問題文の句をほぼそのまま置く）。定義の文の例外は explanation 冒頭の論点の定義の文だけで、この括弧は要点の箇条にある対の指標の説明なので当たらない",
+   "what": "要点の箇条のリテンション率の括弧「購入した消費者のうち固定客になる割合」が問題文の表の定義の句とほぼ同じだった。「買った人のうち固定客として残る割合」に言い直した（意味は同じ）。冒頭の定義の文（コンバージョン率）は定義の文なので触れていない。",
+   "questions_checked": [
+    "2016h28h-q69"
+   ]
+  },
+  {
+   "no": 3,
+   "topic_id": 751,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」写さない物（選択肢の句をほぼそのまま置く）。振り分け（定着が低い→製品を見直す）は借りてよい物なので残す",
+   "what": "detail「定着が詰まったとき、両方が低いとき」の文が誤答ウの句の骨組み（機能や性能・期待との差・見直す）を置いていた。振り分けは残し「製品の働きが、宣伝で膨らんだ期待に届いているかを見直します」に言い直した。",
+   "questions_checked": [
+    "2016h28h-q69"
+   ]
+  },
+  {
+   "no": 4,
+   "topic_id": 753,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」写さない物。rewrite_open_items.md C の直し方「要点の箇条が選択肢の句をほぼそのまま置くときは写さない物として直す」",
+   "what": "要点の箇条「低価格に積極的なプロモーションを組み合わせて使います」が正解エの句をほぼそのまま置いていた。「安い価格と合わせて、広告や販促にも大きく力を注ぎます」に言い直した。定義の文（低価格で売り出してシェアを獲得）で正解は今も選べる。",
+   "questions_checked": [
+    "2017h29h-q68"
+   ]
+  }
+ ],
+ "edits": [
+  {
+   "file": "data/ap/materials_v4/19-7.json",
+   "topic_id": 751,
+   "field": "detail",
+   "op": "replace",
+   "heading": "入口が詰まったときの施策",
+   "before": "無料サンプルの配布、初回限定のお試し価格、返金保証といった[[セールスプロモーション]]は、すべてこの型です。",
+   "after": "試供品、初回だけの値引き、返金保証といった[[セールスプロモーション]]は、すべてこの型です。"
+  },
+  {
+   "file": "data/ap/materials_v4/19-7.json",
+   "topic_id": 751,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "",
+   "before": "（購入した消費者のうち固定客になる割合）",
+   "after": "（買った人のうち固定客として残る割合）"
+  },
+  {
+   "file": "data/ap/materials_v4/19-7.json",
+   "topic_id": 751,
+   "field": "detail",
+   "op": "replace",
+   "heading": "定着が詰まったとき、両方が低いとき",
+   "before": "製品の機能・性能や、広告で作った期待と実際との差を見直します。",
+   "after": "製品の働きが、宣伝で膨らんだ期待に届いているかを見直します。"
+  },
+  {
+   "file": "data/ap/materials_v4/19-5.json",
+   "topic_id": 753,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "",
+   "before": "- 低価格に**積極的なプロモーション**を組み合わせて使います",
+   "after": "- 安い価格と合わせて、広告や販促にも**大きく力を注ぎ**ます"
+  }
+ ],
+ "owners": [],
+ "figure_after": [],
+ "ledgers": [],
+ "returned": [],
+ "noticed": [
+  {
+   "topic_id": 0,
+   "what": "check_materials の警告が 16→17 件に増えたが、増えたのは materials_v4/17-1.json id=42（表のセルが 40 字超）で単元 19 の外（並行の担当の直しと見られる）。単元 19 の論点の指摘の増減は無し"
+  }
+ ],
+ "gates": {
+  "check_materials": 0,
+  "check_material_style": 0,
+  "render_check": 0,
+  "check_explanations": 0,
+  "check_unit_plans": null
+ },
+ "chars": {
+  "before": 30542,
+  "after": 30532
+ }
+}

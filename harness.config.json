@@ -1,0 +1,128 @@
+{
+  "_comment": "原本 harness（tsay-dev/harness）の設定。harness の lint・run cases・verify・guard が読む。キーの意味は .harness/tools/lint-refs/README.md と lint-config/README.md。変更は人間が承認する。",
+  "id_patterns": {
+    "goal": "\\bGOAL-\\d{2}\\b",
+    "uc": "\\bUC-\\d{3}\\b",
+    "req": "\\bREQ-\\d{3}\\b",
+    "br": "\\bBR-\\d{3}\\b",
+    "nfr": "\\bNFR-\\d{3}\\b",
+    "adr": "\\bADR-\\d{4}\\b"
+  },
+  "covers_pattern": "@covers\\s+(REQ-\\d{3})(?!\\d)(?:#([\\w-]+))?",
+  "scenario_pattern": "@scenario\\s+(UC-\\d{3})(?!\\d)",
+  "nfr_pattern": "@covers\\s+(NFR-\\d{3})(?!\\d)",
+  "docs": {
+    "goals_dir": "docs/goals",
+    "rules_dir": "docs/rules",
+    "nfr_dir": "docs/nfr",
+    "adr_dir": "docs/adr",
+    "verification_deferred": "docs/verification/DEFERRED.md",
+    "shared": "docs/_shared/components.yaml",
+    "glossary": "docs/01-glossary.md",
+    "overview": "docs/00-overview.md"
+  },
+  "policy": {
+    "_comment": "組織とプロジェクトで変わる方針の値（ADR-0050）。develop-core と rules-* はここをキー名で読み、未宣言なら記した既定値を使う。方法論そのもの（人間ゲート、作成者 ≠ 判定者、成果物の型）はここに置かない。language は会話と成果物（docs、契約の説明文、ADR、コミットメッセージ、コード内コメント、テストのタイトル、利用者向けの文言）の言語で、BCP 47 の言語タグ。未宣言なら ja。harness 自身のプロンプト正本の言語（ADR-0043）とは別。",
+    "language": "ja"
+  },
+  "commands": {
+    "typecheck": "npm run typecheck",
+    "lint": "python3 scripts/check_source.py && python3 scripts/check_docs.py",
+    "test": "node tests/support/coverage/run.mjs",
+    "list_entries": "npx tsx scripts/list_entries.ts",
+    "contract_adapter": "npx tsx scripts/contract_adapter/main.ts",
+    "system": {
+      "none": "シナリオのうち vitest で走る物は test に含まれる。API に当てる物（scripts/check_api.sh）はローカルに wrangler dev を立てるので、終了ごとには回さず配備の門（deploy-pages.sh）で回す"
+    }
+  },
+  "coverage": {
+    "report": "coverage/lcov.info",
+    "scope": [
+      "src",
+      "portal/src",
+      "portal/static",
+      "scripts"
+    ],
+    "not_run": [
+      {
+        "path": "scripts/audit_screens.mjs#MEASURE",
+        "reason": "ブラウザのページの中で評価される関数で、Node の実行の記録には原理的に載らない（本人の承認 2026-11-20。ADR-0015）"
+      },
+      {
+        "path": "scripts/audit_screens.mjs#p.waitForFunction.timeout",
+        "reason": "ブラウザのページの中で評価される関数で、Node の実行の記録には原理的に載らない（本人の承認 2026-11-20。ADR-0015）"
+      }
+    ]
+  },
+  "git": {
+    "exempt_branches": [
+      "dependabot/**"
+    ]
+  },
+  "source": {
+    "dirs": [
+      "src",
+      "portal/src",
+      "scripts",
+      "portal/static",
+      "!scripts/check_api.py",
+      "!scripts/check_portal_api.py"
+    ],
+    "extensions": [
+      ".ts",
+      ".tsx",
+      ".py",
+      ".sh",
+      ".js",
+      ".mjs"
+    ],
+    "comment_pattern": "^\\s*(?:\\/\\/|\\/\\*|\\*|#|--|<!--)"
+  },
+  "tests": {
+    "dirs": [
+      "tests/client",
+      "tests/server",
+      "tests/portal"
+    ],
+    "extensions": [
+      ".ts",
+      ".tsx"
+    ],
+    "test_pattern": "^\\s*x?(?:it|test)(?:\\.(?:skip|only|fixme|todo|concurrent|each\\(.*?\\)|for\\(.*?\\)))*\\(\\s*[\"'`](.+?)[\"'`]|^\\s*x?(?:it|test)(?:\\.\\w+)*\\.(?:each|for)(?:<.*>)?[(`]\\s*\\[?\\s*$|^\\s*x?(?:it|test)(?:\\.(?:skip|only|fixme|todo|concurrent))*\\(\\s*$",
+    "pending_pattern": "^\\s*(?:it|test|describe)(?:\\.describe)?\\.(?:skip|fixme|todo|skipIf|runIf)\\b|^\\s*x(?:it|test|describe)\\(|^\\s*x?(?:it|test)(?:\\.\\w+)*\\(\\s*[\"'`].*?[\"'`]\\s*,\\s*\\{[^}]*\\b(?:skip|todo):\\s*true",
+    "covers_placement": "before",
+    "system": {
+      "dirs": [
+        "tests/scenario",
+        "scripts/check_api.py",
+        "scripts/check_portal_api.py"
+      ],
+      "extensions": [
+        ".tsx",
+        ".py"
+      ],
+      "test_pattern": "^\\s*x?(?:it|test)(?:\\.(?:skip|only|fixme|todo|concurrent|each\\(.*?\\)|for\\(.*?\\)))*\\(\\s*[\"'`](.+?)[\"'`]|^\\s*x?(?:it|test)(?:\\.\\w+)*\\.(?:each|for)(?:<.*>)?[(`]\\s*\\[?\\s*$|^\\s*x?(?:it|test)(?:\\.(?:skip|only|fixme|todo|concurrent))*\\(\\s*$|^def\\s+(check_scenario_[\\p{L}\\p{N}_]+)\\s*\\(",
+      "pending_pattern": "^\\s*(?:it|test|describe)(?:\\.describe)?\\.(?:skip|fixme|todo|skipIf|runIf)\\b|^\\s*x(?:it|test|describe)\\(|^\\s*x?(?:it|test)(?:\\.\\w+)*\\(\\s*[\"'`].*?[\"'`]\\s*,\\s*\\{[^}]*\\b(?:skip|todo):\\s*true",
+      "scenario_placement": "before",
+      "comment_pattern": "^\\s*(?:\\/\\/|\\/\\*|\\*|#|--|<!--)"
+    }
+  },
+  "schema": {
+    "files": [
+      "src/server/db/schema.ts",
+      "portal/migrations/0001_init.sql"
+    ],
+    "extensions": [
+      ".ts",
+      ".sql"
+    ]
+  },
+  "contract": {
+    "error_source": "src/shared/error-codes.json",
+    "error_code_pattern": "\"([A-Z][A-Z_]*)\"\\s*:"
+  },
+  "br_pattern": "@covers\\s+(BR-\\d{3})(?!\\d)",
+  "entry": {
+    "none": "テストは 2 つの app の default export（src/server/index.ts・portal/src/index.ts）をそのまま呼ぶ。組み立ての入口とテスト用の入口を分けていない"
+  }
+}

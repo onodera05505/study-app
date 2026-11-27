@@ -1,0 +1,54 @@
+{
+  "topic_id": 739,
+  "term": "システム監査人の権限と責任等",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "監査人から出る線は報告・勧告と資料の要請だけで、被監査部門へ改善を命じる線は経営者から出ます。",
+      "nodes": [
+        {
+          "id": "mg",
+          "label": "経営者\n改善を決めて命じる",
+          "row": 0,
+          "col": 1,
+          "icon": "person"
+        },
+        {
+          "id": "au",
+          "label": "システム監査人\n調べ・評価し・勧告する",
+          "row": 1,
+          "col": 0,
+          "icon": "search",
+          "emphasis": true
+        },
+        {
+          "id": "dp",
+          "label": "被監査部門\n改善を実行する",
+          "row": 1,
+          "col": 2,
+          "icon": "people"
+        }
+      ],
+      "edges": [
+        {
+          "from": "au",
+          "to": "mg",
+          "label": "報告・助言・勧告"
+        },
+        {
+          "from": "mg",
+          "to": "dp",
+          "label": "改善を命じる"
+        },
+        {
+          "from": "au",
+          "to": "dp",
+          "label": "資料の要請と提出",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

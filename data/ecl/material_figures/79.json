@@ -1,0 +1,19 @@
+{
+  "topic_id": 79,
+  "term": "円安が値段に届く道すじ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### しくみ",
+      "caption": "円安から店の値札までを上から順にたどる図です。値札が上がる手前で、輸入する物の費用が先に上がっています。",
+      "direction": "down",
+      "stages": [
+        {"label": "円安\n同じ物に多くの円が要る", "icon": "money", "next_label": "円で払う額が増える"},
+        {"label": "輸入する物の費用\n材料・燃料が円で上がる", "icon": "box", "next_label": "仕入れの費用が上がる", "emphasis": true},
+        {"label": "売り値\n店や会社が費用を移す", "icon": "building", "next_label": "移すまでに間がある"},
+        {"label": "店の値札・料金\n間をおいて上がる\n同じお金で買える量が減る"}
+      ]
+    }
+  ]
+}

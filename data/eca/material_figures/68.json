@@ -1,0 +1,19 @@
+{
+  "topic_id": 68,
+  "term": "皆が使う量から所得が決まる筋",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "### しくみ",
+      "caption": "使う量が減ったところから始まる縮みの輪です。所得が減ると次に使う量がまた減るので、輪は一周で止まりません。",
+      "center": "縮みが\n一巡で終わらない",
+      "stages": [
+        {"label": "使う量が減る\n注文が細る", "icon": "people", "next_label": "作った分が売れ残る", "emphasis": true},
+        {"label": "在庫が積み上がる\n倉庫に品が残る", "icon": "box", "next_label": "作る量を絞る"},
+        {"label": "作る量を減らす\n工場や人を休ませる", "icon": "building", "next_label": "払う賃金と利益が減る"},
+        {"label": "所得が減る\n家計と企業の入りが細る", "icon": "money", "next_label": "減った入りに合わせて使う"}
+      ]
+    }
+  ]
+}

@@ -1,44 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="325" viewBox="0 0 788.4 400" role="img">
-<title>パスワードは社内にとどまり、クラウドへ渡るのは署名付きの認証結果だけ。</title>
-<rect x="0.5" y="0.5" width="787.4" height="399" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="335" viewBox="0 0 669.6 350">
+<rect x="0.5" y="0.5" width="668.6" height="349" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(20 20)">
-<line x1="48" y1="34" x2="48" y2="332" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="267.8" y1="34" x2="267.8" y2="332" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="487.6" y1="34" x2="487.6" y2="332" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="693.4" y1="34" x2="693.4" y2="332" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="48" y1="34" x2="48" y2="310" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="279.8" y1="34" x2="279.8" y2="310" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="546.6" y1="34" x2="546.6" y2="310" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
 <rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
 <text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ブラウザ</text>
-<rect x="198.8" y="0" width="138" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="267.8" y="11.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">クラウドサービス</text>
-<text x="267.8" y="31.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">（SP）</text>
-<rect x="439.6" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="487.6" y="11.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">認証サーバ</text>
-<text x="487.6" y="31.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">（IdP）</text>
-<rect x="638.4" y="0" width="110" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="693.4" y="11.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ディレクトリ</text>
-<text x="693.4" y="31.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">サービス</text>
-<polyline points="51,68 264.8,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="264.8,68 256.8,71.6 256.8,64.4" fill="#1f2937"/>
-<text x="157.9" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. サービスへアクセス（未認証）</text>
-<polyline points="264.8,108 51,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<rect x="224.8" y="0" width="110" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="279.8" y="11.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">IdP</text>
+<text x="279.8" y="31.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">認証を行う側</text>
+<rect x="463.6" y="0" width="166" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="546.6" y="11.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">SP</text>
+<text x="546.6" y="31.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">サービスを提供する側</text>
+<polyline points="51,68 543.6,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="543.6,68 535.6,71.6 535.6,64.4" fill="#1f2937"/>
+<text x="297.3" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. サービスへアクセス（未認証）</text>
+<polyline points="543.6,108 51,108" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="51,108 59,104.4 59,111.6" fill="#1f2937"/>
-<text x="157.9" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 認証サーバへリダイレクト</text>
-<polyline points="51,148 484.6,148" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="484.6,148 476.6,151.6 476.6,144.4" fill="#1f2937"/>
-<text x="267.8" y="141" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 利用者 ID とパスワードを入力</text>
-<polyline points="490.6,188 690.4,188" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="690.4,188 682.4,191.6 682.4,184.4" fill="#1f2937"/>
-<text x="590.5" y="181" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. ID とパスワードを照合</text>
-<rect x="496.5" y="193" width="188" height="16" rx="3" fill="#ffffff"/>
-<text x="590.5" y="206.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">パスワードはここから外へ出ない</text>
-<polyline points="484.6,244 51,244" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="51,244 59,240.4 59,247.6" fill="#1f2937"/>
-<text x="267.8" y="237" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. 署名付きアサーション（認証結果）</text>
-<polyline points="51,284 264.8,284" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="264.8,284 256.8,287.6 256.8,280.4" fill="#1f2937"/>
-<text x="157.9" y="277" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">6. アサーションを転送し署名を検証</text>
-<rect x="21.9" y="289" width="272" height="16" rx="3" fill="#ffffff"/>
-<text x="157.9" y="302.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">クラウド側が直接問い合わせる動きは起こらない</text>
+<text x="297.3" y="101" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. IdP へリダイレクト</text>
+<polyline points="51,148 276.8,148" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="276.8,148 268.8,151.6 268.8,144.4" fill="#1f2937"/>
+<text x="163.9" y="141" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 利用者 ID とパスワードを入力</text>
+<polyline points="279.8,180 305.8,180 305.8,194 281.8,194" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="281.8,194 289.8,190.4 289.8,197.6" fill="#1f2937"/>
+<text x="313.8" y="188" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. ID とパスワードを確かめる</text>
+<rect x="181.3" y="199" width="197" height="16" rx="3" fill="#ffffff"/>
+<text x="279.8" y="212.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">パスワードは IdP から外へ出ない</text>
+<polyline points="276.8,238 51,238" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,238 59,234.4 59,241.6" fill="#1f2937"/>
+<text x="163.9" y="231" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. 署名付きアサーション（認証結果）</text>
+<polyline points="51,278 543.6,278" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="543.6,278 535.6,281.6 535.6,274.4" fill="#1f2937"/>
+<text x="297.3" y="271" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">6. アサーションを転送し SP が署名を検証</text>
 </g>
-<text x="394.2" y="380" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">パスワードは社内にとどまり、クラウドへ渡るのは署名付きの認証結果だけ。</text>
 </svg>

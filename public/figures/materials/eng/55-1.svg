@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="374" viewBox="0 0 640 374">
+<rect x="0.5" y="0.5" width="639" height="373" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(120 20)">
+<line x1="48" y1="34" x2="48" y2="334" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="200" y1="34" x2="200" y2="334" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="352" y1="34" x2="352" y2="334" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">階乗（3）</text>
+<rect x="152" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="200" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">階乗（2）</text>
+<rect x="304" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="352" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">階乗（1）</text>
+<polyline points="51,68 197,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="197,68 189,71.6 189,64.4" fill="#1f2937"/>
+<text x="124" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 階乗（2）を呼ぶ</text>
+<rect x="55.5" y="73" width="137" height="16" rx="3" fill="#ffffff"/>
+<text x="124" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">3 × 答え を積んで待つ</text>
+<polyline points="203,124 349,124" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="349,124 341,127.6 341,120.4" fill="#1f2937"/>
+<text x="276" y="117" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 階乗（1）を呼ぶ</text>
+<rect x="207.5" y="129" width="137" height="16" rx="3" fill="#ffffff"/>
+<text x="276" y="142.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">2 × 答え を積んで待つ</text>
+<polyline points="352,172 378,172 378,186 354,186" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="354,186 362,182.4 362,189.6" fill="#1f2937"/>
+<text x="386" y="180" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">3. 止める条件に着く</text>
+<rect x="253.5" y="191" width="197" height="16" rx="3" fill="#ffffff"/>
+<text x="352" y="204.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">n が 1 以下なので自分を呼ばない</text>
+<polyline points="349,230 203,230" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="203,230 211,226.4 211,233.6" fill="#1f2937"/>
+<text x="276" y="223" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 1 を返す</text>
+<rect x="239.6" y="235" width="72.8" height="16" rx="3" fill="#ffffff"/>
+<text x="276" y="248.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">2 × 1 ＝ 2</text>
+<polyline points="197,286 51,286" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,286 59,282.4 59,289.6" fill="#1f2937"/>
+<text x="124" y="279" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. 2 を返す</text>
+<rect x="87.6" y="291" width="72.8" height="16" rx="3" fill="#ffffff"/>
+<text x="124" y="304.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">3 × 2 ＝ 6</text>
+</g>
+</svg>

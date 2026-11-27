@@ -1,0 +1,73 @@
+{
+  "topic_id": 250,
+  "term": "問題管理",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### インシデント管理との分業",
+      "caption": "上の段は復旧と原因の除去の分業で、問題管理が根本原因を特定して変更管理に直させます。すぐ直せない原因は下の段の既知の誤りに残し、再発時の対処に使います。",
+      "nodes": [
+        {
+          "id": "inc",
+          "label": "インシデント管理\n暫定対応ですぐ復旧",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "prb",
+          "label": "問題管理\n根本原因を特定",
+          "row": 0,
+          "col": 1,
+          "emphasis": true,
+          "icon": "search"
+        },
+        {
+          "id": "chg",
+          "label": "変更管理\n恒久的な対策を実施",
+          "row": 0,
+          "col": 2,
+          "icon": "gear"
+        },
+        {
+          "id": "kne",
+          "label": "既知の誤り\n直せない原因を記録",
+          "row": 1,
+          "col": 1,
+          "icon": "document",
+          "shape": "cylinder"
+        },
+        {
+          "id": "sd",
+          "label": "サービスデスク\n再発時に素早く対処",
+          "row": 1,
+          "col": 0,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "inc",
+          "to": "prb",
+          "label": "インシデントの記録と傾向"
+        },
+        {
+          "from": "prb",
+          "to": "chg",
+          "label": "修正の変更要求"
+        },
+        {
+          "from": "prb",
+          "to": "kne",
+          "label": "すぐ直せない原因"
+        },
+        {
+          "from": "sd",
+          "to": "kne",
+          "label": "再発時に記録を引く",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

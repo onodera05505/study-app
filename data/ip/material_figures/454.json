@@ -1,0 +1,30 @@
+{
+  "topic_id": 454,
+  "term": "アクセス制御",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "explanation",
+      "direction": "down",
+      "caption": "利用者は 3 つの段を順に通ります。強調した認可で、本人と分かった人にも許す範囲を絞ります。",
+      "stages": [
+        {
+          "label": "認証\n本人かどうかを確かめる",
+          "icon": "key",
+          "next_label": "本人と確かめた利用者"
+        },
+        {
+          "label": "認可\n役割に応じて範囲を絞る",
+          "icon": "lock",
+          "next_label": "許した範囲での操作",
+          "emphasis": true
+        },
+        {
+          "label": "記録\n誰がいつ何をしたかを残す",
+          "icon": "document"
+        }
+      ]
+    }
+  ]
+}

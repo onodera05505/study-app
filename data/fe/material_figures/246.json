@@ -1,0 +1,72 @@
+{
+  "topic_id": 246,
+  "term": "第三者中継（オープンリレー）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### なぜ放置できないのか",
+      "caption": "中継の穴があるサーバが踏み台にされ、被害が自組織へ返ってくるまでの連なりです。矢印を順にたどると、最後に自組織の正当なメールが止まります。",
+      "nodes": [
+        {
+          "id": "sp",
+          "label": "迷惑メールの送信者\n送信元を隠したい",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "sv",
+          "label": "自組織のメールサーバ\n第三者中継ができる",
+          "row": 0,
+          "col": 1,
+          "icon": "server",
+          "emphasis": true
+        },
+        {
+          "id": "to",
+          "label": "多数の宛先\n迷惑メールが届く",
+          "row": 0,
+          "col": 2,
+          "icon": "people"
+        },
+        {
+          "id": "bl",
+          "label": "ブラックリスト\n自組織を発信元と記録",
+          "row": 1,
+          "col": 2,
+          "icon": "document"
+        },
+        {
+          "id": "ok",
+          "label": "自組織の正当なメール\n相手に届かない",
+          "row": 1,
+          "col": 1,
+          "icon": "mail"
+        }
+      ],
+      "edges": [
+        {
+          "from": "sp",
+          "to": "sv",
+          "label": "中継を頼む"
+        },
+        {
+          "from": "sv",
+          "to": "to",
+          "label": "大量に送る"
+        },
+        {
+          "from": "to",
+          "to": "bl",
+          "label": "苦情・発信元の登録"
+        },
+        {
+          "from": "bl",
+          "to": "ok",
+          "label": "受信を拒否される"
+        }
+      ]
+    }
+  ]
+}

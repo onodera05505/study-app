@@ -6,19 +6,50 @@
       "id": 1,
       "type": "blocks",
       "after": "### 計算の解き方",
-      "caption": "処理時間の短い順に選ぶと実行順は A→C→E→D→B となり、時刻12に終わる B のターンアラウンドタイムは 12－1＝11 秒になる。",
+      "caption": "矢印の順にジョブを実行し、矢印には 1 つ終わった時点で待っているジョブと選んだ理由を書いています。",
       "nodes": [
-        {"id": "a", "label": "A\n0→2", "row": 0, "col": 0},
-        {"id": "c", "label": "C\n2→5", "row": 0, "col": 1},
-        {"id": "e", "label": "E\n5→6", "row": 0, "col": 2},
-        {"id": "d", "label": "D\n6→8", "row": 0, "col": 3},
-        {"id": "b", "label": "B\n8→12\n到着 1", "row": 0, "col": 4, "emphasis": true}
+        {
+          "id": "p",
+          "label": "P　4 秒・到着 0\n時刻 0→4",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "r",
+          "label": "R　2 秒・到着 3\n時刻 4→6",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "s",
+          "label": "S　1 秒・到着 5\n時刻 6→7",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "q",
+          "label": "Q　8 秒・到着 2\n時刻 7→15\n到着が早くても追い越され続けた",
+          "row": 1,
+          "col": 0,
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "a", "to": "c"},
-        {"from": "c", "to": "e"},
-        {"from": "e", "to": "d"},
-        {"from": "d", "to": "b"}
+        {
+          "from": "p",
+          "to": "r",
+          "label": "Q と R が待つ、短い R へ"
+        },
+        {
+          "from": "r",
+          "to": "s",
+          "label": "Q と S が待つ、短い S へ"
+        },
+        {
+          "from": "s",
+          "to": "q",
+          "label": "残るのは Q だけ"
+        }
       ]
     }
   ]

@@ -1,0 +1,48 @@
+{
+  "topic_id": 178,
+  "term": "arp",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### 直前に通信した相手が載る理由",
+      "caption": "相手 A と通信すると対応が ARP キャッシュに残り、arp はその残りを見せます。上から順に、一覧に載る相手と載らない相手が分かれる理由をたどれます。",
+      "actors": [
+        {
+          "id": "a",
+          "label": "相手 A（直前に通信した）",
+          "icon": "device"
+        },
+        {
+          "id": "me",
+          "label": "自分の端末",
+          "icon": "device"
+        },
+        {
+          "id": "b",
+          "label": "相手 B（まだ通信していない）",
+          "icon": "device"
+        }
+      ],
+      "steps": [
+        {
+          "from": "me",
+          "to": "a",
+          "label": "A と通信する（直前に MAC を解決）"
+        },
+        {
+          "from": "me",
+          "to": "me",
+          "label": "A の IP と MAC の対応が ARP キャッシュに残る",
+          "note": "動的な項目は数分で消える"
+        },
+        {
+          "from": "me",
+          "to": "me",
+          "label": "arp -a でキャッシュの一覧を見る",
+          "note": "A の対応は載り、通信していない B は載らない"
+        }
+      ]
+    }
+  ]
+}

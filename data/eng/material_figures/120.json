@@ -1,0 +1,20 @@
+{
+  "topic_id": 120,
+  "term": "INSERT・UPDATE・DELETE",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### しくみ",
+      "caption": "UPDATE と DELETE を流す前後に、対象の行を確かめる順です。強調した段で件数が SELECT と違えば、確定せずに取り消します。",
+      "direction": "down",
+      "stages": [
+        {"label": "同じ条件で SELECT\n対象の行と件数を見る", "icon": "search", "next_label": "対象の件数（例えば 3 行）"},
+        {"label": "ひとまとまりを始める\n確定までは取り消せる", "next_label": "取り消せる状態"},
+        {"label": "UPDATE／DELETE を流す\nWHERE は SELECT と同じ条件", "next_label": "変わった件数"},
+        {"label": "件数を見比べる\nSELECT の件数と同じか", "icon": "check", "next_label": "同じなら確定へ", "emphasis": true},
+        {"label": "確定する\n違えば取り消して戻す"}
+      ]
+    }
+  ]
+}

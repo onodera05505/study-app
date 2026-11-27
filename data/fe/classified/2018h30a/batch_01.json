@@ -1,0 +1,384 @@
+{
+ "exam": "2018h30a",
+ "range": "1-27",
+ "classifications": [
+  {
+   "number": 1,
+   "syllabus_item": 1,
+   "topic_term": "基数",
+   "topic_is_new": true,
+   "related_terms": [
+    "基数変換",
+    "固定小数点数",
+    "16 進数",
+    "2 進数"
+   ],
+   "confidence": "high",
+   "notes": "16 進小数を 10 進の分数で表す問題。基数と重み付けの知識そのもの。既存マスタの『基数』（項目1、2019h31h 問1 の 10 進→2 進小数の変換）と同じ論点なので表記・topic_is_new を合わせた。"
+  },
+  {
+   "number": 2,
+   "syllabus_item": 1,
+   "topic_term": "論理積",
+   "topic_is_new": false,
+   "related_terms": [
+    "排他的論理和",
+    "論理和",
+    "否定論理積",
+    "ビット演算"
+   ],
+   "confidence": "high",
+   "notes": "A と C の論理積（AND）でマスクをかけ最右の 1 だけを残す。既存マスタの『論理積』（項目1、2019h31h 問2 のパリティビットのマスク）と同じ論点なので合流させた。"
+  },
+  {
+   "number": 3,
+   "syllabus_item": 3,
+   "topic_term": "機械学習（AI 技術）",
+   "topic_is_new": true,
+   "related_terms": [
+    "教師あり学習 （回帰， 分類など）",
+    "エキスパートシステム",
+    "知識ベース",
+    "推論エンジン"
+   ],
+   "confidence": "medium",
+   "notes": "AI における機械学習の定義を問う。既存マスタの『機械学習』は項目84（ビジネスシステム＝ストラテジ系。2019r01a 問73 の生産現場での活用事例）にあり、本問の公式の分野はテクノロジ系なので分野をまたいで合流させられない。項目3の用語例には個別の学習方式（教師あり／なし／強化）しか無く総称が無いため、区別できる補足を付けて新設した。"
+  },
+  {
+   "number": 4,
+   "syllabus_item": 3,
+   "topic_term": "ハフマン符号",
+   "topic_is_new": false,
+   "related_terms": [
+    "情報源符号化（データ圧縮）",
+    "出現頻度",
+    "可逆圧縮",
+    "符号表"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 5,
+   "syllabus_item": 6,
+   "topic_term": "FIFO",
+   "topic_is_new": false,
+   "related_terms": [
+    "待ち行列（キュー）",
+    "LIFO",
+    "プッシュ",
+    "ポップ"
+   ],
+   "confidence": "high",
+   "notes": "待ち行列への ENQ／DEQ を追跡させる問題。既存マスタの『LIFO』（項目6、2019r01a 問8 のスタック）と対になる位置づけで、項目6の用語例の『FIFO』をそのまま採った。"
+  },
+  {
+   "number": 6,
+   "syllabus_item": 7,
+   "topic_term": "クイックソート",
+   "topic_is_new": false,
+   "related_terms": [
+    "挿入ソート",
+    "選択ソート",
+    "バブルソート",
+    "分割統治法"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 7,
+   "syllabus_item": 8,
+   "topic_term": "コーディング規約",
+   "topic_is_new": true,
+   "related_terms": [
+    "命名規則",
+    "局所変数",
+    "使用禁止命令",
+    "プログラムの機能適合性・性能効率性・使用性・保守性の向上"
+   ],
+   "confidence": "medium",
+   "notes": "コーディング規約に規定すべき事項を選ばせる問題。項目8の用語例は『命名規則』『使用禁止命令』『字下げ（インデンテーション）』など規約の個別項目を挙げるだけで総称が無く、応用情報の論点マスタにも該当語が無いため新設した。"
+  },
+  {
+   "number": 8,
+   "syllabus_item": 9,
+   "topic_term": "Java",
+   "topic_is_new": false,
+   "related_terms": [
+    "オブジェクト指向言語",
+    "ガベージコレクション",
+    "多重継承",
+    "C++"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 9,
+   "syllabus_item": 11,
+   "topic_term": "命令ミックス",
+   "topic_is_new": false,
+   "related_terms": [
+    "CPI（Cycles Per Instruction）",
+    "サイクルタイム",
+    "FLOPS",
+    "クロック周波数"
+   ],
+   "confidence": "medium",
+   "notes": "命令種別ごとのクロック数と出現率から MIPS を求める問題。既存マスタの『CPI（Cycles Per Instruction）』（項目11、2019r01a 問12）は平均クロック数が与えられる型で、本問は出現率で重み付けする点が中心なので、応用情報の論点マスタ（『命令ミックス』項目11、2021r03h 問9 が同型）に合わせて項目11の用語例『命令ミックス』を採った。CPI へ寄せるか迷ったため medium。"
+  },
+  {
+   "number": 10,
+   "syllabus_item": 11,
+   "topic_term": "命令アドレスレジスタ （命令カウンター， プログラムカウンター，逐次制御カウンター）",
+   "topic_is_new": false,
+   "related_terms": [
+    "割込み",
+    "命令レジスタ",
+    "インデックスレジスタ（指標レジスタ）",
+    "汎用レジスタ"
+   ],
+   "confidence": "high",
+   "notes": "割込み時に退避するのはプログラムカウンタ。項目11の用語例は括弧内が同一概念の言い換えなので丸ごとコピーした（応用情報も項目11の同じ用語例で起こしている）。"
+  },
+  {
+   "number": 11,
+   "syllabus_item": 4,
+   "topic_term": "ECC",
+   "topic_is_new": false,
+   "related_terms": [
+    "ハミング符号",
+    "パリティチェック",
+    "誤り検出訂正",
+    "冗長ビット"
+   ],
+   "confidence": "medium",
+   "notes": "メモリの誤り検出訂正に使う ECC の冗長ビット数を求める問題。『ECC』は項目4（通信に関する理論＝通信路符号化／誤り検出訂正）の用語例にしか無いため項目4に置いた。メモリの話なので項目12 とも迷ったため medium。"
+  },
+  {
+   "number": 12,
+   "syllabus_item": 14,
+   "topic_term": "USB",
+   "topic_is_new": false,
+   "related_terms": [
+    "シリアルATA",
+    "アイソクロナス転送",
+    "Thunderbolt",
+    "シリアルバス"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 13,
+   "syllabus_item": 16,
+   "topic_term": "3 層クライアントサーバシステム",
+   "topic_is_new": true,
+   "related_terms": [
+    "プレゼンテーション層",
+    "ファンクション層",
+    "データベースアクセス層",
+    "Web サーバ"
+   ],
+   "confidence": "high",
+   "notes": "Web サーバと AP サーバを分ける利点を問う 3 層構成の問題。項目16の用語例には層の名前（プレゼンテーション層ほか）しか無く総称が無いため新設だが、応用情報の論点マスタの『3 層クライアントサーバシステム』（項目16）と同じ表記に合わせた。"
+  },
+  {
+   "number": 14,
+   "syllabus_item": 17,
+   "topic_term": "キャパシティプランニング",
+   "topic_is_new": true,
+   "related_terms": [
+    "サイジング",
+    "モニタリング",
+    "スケールアウト",
+    "プロビジョニング"
+   ],
+   "confidence": "medium",
+   "notes": "キャパシティプランニングの作業順序。項目17の用語例『容量・能力管理』を採ると、同じ回の問55（項目65＝マネジメント系）の『容量 ・ 能力管理』と正規化後に同名になり、build_topics が分野をまたいで 1 論点に統合してしまう。分野単位の合否判定を壊さないため、設問の語そのものである『キャパシティプランニング』を項目17（テクノロジ系）の別論点として新設した。項目17の用語例に該当語が無いため medium。"
+  },
+  {
+   "number": 15,
+   "syllabus_item": 17,
+   "topic_term": "稼働率",
+   "topic_is_new": true,
+   "related_terms": [
+    "直列システム",
+    "並列システム",
+    "信頼性",
+    "冗長構成"
+   ],
+   "confidence": "high",
+   "notes": "迂回回線を足した系の稼働率計算。既存マスタの『稼働率』（項目17。2019h31h 問14・2019r01a 問16）に合流させた。"
+  },
+  {
+   "number": 16,
+   "syllabus_item": 18,
+   "topic_term": "多重（マルチ）プログラミング",
+   "topic_is_new": false,
+   "related_terms": [
+    "優先順",
+    "プリエンプティブ方式",
+    "実行可能状態",
+    "入出力割込み"
+   ],
+   "confidence": "high",
+   "notes": "優先度方式の下で 3 タスクを重ねたときの CPU 遊休時間。応用情報の 2016h28a 問17 がほぼ同型（表の形式も同じ）で『多重（マルチ）プログラミング』（項目18）に付いているので、それに合わせた。"
+  },
+  {
+   "number": 17,
+   "syllabus_item": 18,
+   "topic_term": "スプーリング",
+   "topic_is_new": true,
+   "related_terms": [
+    "補助記憶",
+    "多重（マルチ）プログラミング",
+    "バッファリング",
+    "ジョブスケジューラー"
+   ],
+   "confidence": "high",
+   "notes": "スプーリングは基本情報・応用情報どちらのシラバスの用語例にも無いため新設。低速な入出力装置と主記憶の間を補助記憶で中継する OS の機能なので項目18。"
+  },
+  {
+   "number": 18,
+   "syllabus_item": 18,
+   "topic_term": "ラウンドロビン",
+   "topic_is_new": false,
+   "related_terms": [
+    "タイムスライス方式",
+    "タイムクウォンタム",
+    "優先順",
+    "プリエンプティブ方式"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 19,
+   "syllabus_item": 21,
+   "topic_term": "コンパイラ",
+   "topic_is_new": false,
+   "related_terms": [
+    "構文解析",
+    "意味解析",
+    "目的プログラム",
+    "原始プログラム（ソースプログラム）"
+   ],
+   "confidence": "high",
+   "notes": "コンパイラの処理の順序（最初は字句解析）を問う。『字句解析』はどの項目の用語例にも無いので、項目21の用語例『コンパイラ』を主題に採った（応用情報も項目21の『コンパイラ』）。"
+  },
+  {
+   "number": 20,
+   "syllabus_item": 21,
+   "topic_term": "リンカ",
+   "topic_is_new": false,
+   "related_terms": [
+    "ローダ",
+    "目的プログラム",
+    "ロードモジュール",
+    "オブジェクトライブラリ"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 21,
+   "syllabus_item": 12,
+   "topic_term": "DRAM",
+   "topic_is_new": false,
+   "related_terms": [
+    "SRAM",
+    "フラッシュメモリ",
+    "リフレッシュ",
+    "ROM"
+   ],
+   "confidence": "high",
+   "notes": "既存マスタの『DRAM』（項目12、2019r01a 問20「DRAM の特徴はどれか」）と同型の設問なので同じ論点に合わせた。"
+  },
+  {
+   "number": 22,
+   "syllabus_item": 23,
+   "topic_term": "NAND 回路",
+   "topic_is_new": false,
+   "related_terms": [
+    "論理式",
+    "真理値表",
+    "論理積",
+    "否定"
+   ],
+   "confidence": "high",
+   "notes": "2 入力 NAND 素子で 4 入力 NAND を組む問題。既存マスタの『NAND 回路』（項目23、2019h31h 問22）に合流させた。"
+  },
+  {
+   "number": 23,
+   "syllabus_item": 23,
+   "topic_term": "二次電池",
+   "topic_is_new": true,
+   "related_terms": [
+    "リチウムイオン電池",
+    "燃料電池",
+    "一次電池",
+    "充電"
+   ],
+   "confidence": "medium",
+   "notes": "二次電池（充電式電池）を選ばせる問題。電池は基本情報・応用情報どちらのシラバスの用語例にも無いため新設。電子部品を扱う項目23（ハードウェア）に置いたが、該当する用語例が無いため medium。"
+  },
+  {
+   "number": 24,
+   "syllabus_item": 24,
+   "topic_term": "自然言語インタフェース",
+   "topic_is_new": false,
+   "related_terms": [
+    "VUI（Voice User Interface）",
+    "ノンバーバルインタフェース",
+    "音声認識",
+    "NUI（Natural User Interface）"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 25,
+   "syllabus_item": 27,
+   "topic_term": "アンチエイリアシング",
+   "topic_is_new": true,
+   "related_terms": [
+    "シェーディング",
+    "テクスチャマッピング",
+    "バンプマッピング",
+    "CG"
+   ],
+   "confidence": "high",
+   "notes": "アンチエイリアシングは基本情報・応用情報どちらのシラバスの用語例にも無いため新設。選択肢が CG の手法（シェーディング・マッピング）で揃っているので項目27（マルチメディア応用）。"
+  },
+  {
+   "number": 26,
+   "syllabus_item": 29,
+   "topic_term": "多重度",
+   "topic_is_new": true,
+   "related_terms": [
+    "エンティティ",
+    "リレーションシップ",
+    "クラス図",
+    "概念データモデル"
+   ],
+   "confidence": "high",
+   "notes": "UML のデータモデルの多重度を埋める問題。既存マスタの『多重度』（項目29、2019r01a 問25 の概念データモデルの解釈）と同じ論点なので合流させた。"
+  },
+  {
+   "number": 27,
+   "syllabus_item": 29,
+   "topic_term": "データ項目の命名規約",
+   "topic_is_new": true,
+   "related_terms": [
+    "データディクショナリ",
+    "定義域（ドメイン）",
+    "メタデータ",
+    "異音同義語"
+   ],
+   "confidence": "medium",
+   "notes": "データ項目の命名規約だけでは回避できない事象（値の範囲＝ドメインの不統一）を選ばせる問題。項目8の『命名規則』はプログラムのコーディング規約の文脈なので採らず、データ項目の標準化としてデータベース設計（項目29）に置いて新設した。項目29の用語例に該当語が無く、項目8 とも迷ったため medium。"
+  }
+ ]
+}

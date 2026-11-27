@@ -1,0 +1,133 @@
+{
+  "topic_id": 86,
+  "term": "財政とは何か",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "上が入る側、下が出る側で、真ん中の予算が両方を結びます。破線は、今年借りた分が後の年の国債費として出る側に戻る流れです。",
+      "nodes": [
+        {
+          "id": "tax",
+          "label": "税\n所得税・消費税・法人税",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "loan",
+          "label": "借入（公債金）\n足りない分を埋める",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "budget",
+          "label": "予算\n1 年ごとに国会で議決",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "ss",
+          "label": "社会保障\n年金・医療・介護・子育て",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "local",
+          "label": "地方へ配る分\n交付税等",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "debt",
+          "label": "国債費\n過去の借入の元本と利払い",
+          "row": 2,
+          "col": 3
+        },
+        {
+          "id": "gen",
+          "label": "一般歳出\n防衛・公共事業・教育",
+          "row": 2,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "tax",
+          "to": "budget",
+          "label": "集める"
+        },
+        {
+          "from": "loan",
+          "to": "budget",
+          "label": "借りて埋める"
+        },
+        {
+          "from": "budget",
+          "to": "ss",
+          "label": "配る"
+        },
+        {
+          "from": "budget",
+          "to": "local",
+          "label": "配る"
+        },
+        {
+          "from": "budget",
+          "to": "debt",
+          "label": "配る"
+        },
+        {
+          "from": "budget",
+          "to": "gen",
+          "label": "配る"
+        },
+        {
+          "from": "loan",
+          "to": "debt",
+          "label": "後の年に返す",
+          "style": "dashed"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "layers",
+      "after": "### しくみ",
+      "caption": "例えば歳出を 100 と置いた仮の数で、出る側を 4 つに分けて積みます。左の括弧が、削りにくい塊と調整が寄る所の境目です。",
+      "shape": "stack",
+      "layers": [
+        {
+          "label": "社会保障\n高齢化で毎年増える",
+          "note": "歳出 100 のうち例えば 30"
+        },
+        {
+          "label": "国債費\n借りた分の返済は止められない",
+          "note": "例えば 20"
+        },
+        {
+          "label": "地方へ配る分\n決まった割合で地方に渡す",
+          "note": "例えば 15"
+        },
+        {
+          "label": "一般歳出\n毎年の予算で増減を決める",
+          "note": "例えば 35",
+          "emphasis": true
+        }
+      ],
+      "brackets": [
+        {
+          "from": 0,
+          "to": 2,
+          "label": "削りにくい塊\n3 つで 65"
+        },
+        {
+          "from": 3,
+          "to": 3,
+          "label": "調整が寄る\n残りの 35"
+        }
+      ]
+    }
+  ]
+}

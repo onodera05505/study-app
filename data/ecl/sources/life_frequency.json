@@ -1,0 +1,428 @@
+{
+ "collected_at": "2026-09-18",
+ "collector": "life_frequency",
+ "method": [
+  "1) 数える母集団は「公的機関・公共放送相当・公益法人・大学・図書館・消費生活センターが一般向けに出している解説／よくある質問」に限り、77 本の資料単位を作った。1 ページ 1 本を基本とし、同じ発行元の同じシリーズで内容が連続するもの（CPI のしくみと見方の各章、住宅ローンの金利タイプ 2 ページ、国税庁の相続税・贈与税タックスアンサー群など）は 1 本にまとめた。",
+  "2) 1 本の資料が 1 票。下の 39 テーマのうち、その資料が読者に向けて説明していたテーマすべてに票を入れた（1 資料が複数テーマに票を入れる）。扱いの深さでは重みを付けず、触れていれば 1 票、統計表や制度の条文だけで読者向けの説明がないものは票を入れなかった。",
+  "3) 検索は allowed_domains を go.jp / lg.jp / or.jp / ac.jp / ndl.go.jp に絞って行った。除外したもの（個別商品の宣伝、投資勧誘、アフィリエイト、個別の金融機関・不動産業者・税理士事務所・保険代理店の集客記事）は excluded に理由を書いた。nhk.or.jp はクローラが拒否されて本文が取れず、公共放送は母集団に入っていない。"
+ ],
+ "themes": [
+  {
+   "name": "手取りが額面より少ない理由（税と社会保険料が天引きされている）",
+   "count": 7,
+   "examples": [
+    {"name": "東京都主税局「給与明細の見方｜新社会人の皆さんへ」", "url": "https://www.tax.metro.tokyo.lg.jp/scene/agenda/newemployees/meisai"},
+    {"name": "金融経済教育推進機構（J-FLEC）標準講義資料「生活設計・家計管理」（手取り収入を把握する）", "url": "https://www.j-flec.go.jp/wpimages/uploads/60min_model_2.pdf"},
+    {"name": "金融庁「基礎から学べる金融ガイド」（家計管理）", "url": "https://www.fsa.go.jp/teach/kou4.pdf"},
+    {"name": "厚生労働省 社会保険適用拡大特設サイト「手取り額の変化について」", "url": "https://www.mhlw.go.jp/tekiyoukakudai/jugyouin/henka/"}
+   ],
+   "note": "最も本数が多いテーマ。公的資料も新社会人向けの導入として必ず最初に置いている。J-FLEC は総支給 27 万円・控除 5.5 万円という具体例で、都税局は控除欄の項目名で説明していた。"
+  },
+  {
+   "name": "住民税は前の年の所得にかかる（だから 2 年目から増える）",
+   "count": 4,
+   "examples": [
+    {"name": "東京都主税局「給与明細の見方」（住民税は社会人 2 年目から控除）", "url": "https://www.tax.metro.tokyo.lg.jp/scene/agenda/newemployees/meisai"},
+    {"name": "国税庁「給与所得者と税」（暮らしの税情報）", "url": "https://www.nta.go.jp/publication/pamph/koho/kurashi/html/02_1.htm"},
+    {"name": "日本FP協会「若手社会人ハンドブック」給与明細の見方", "url": "https://www.jafp.or.jp/personal_finance/fresh/young_handbook/files/p6-9.pdf"}
+   ],
+   "note": "所得税（その年の所得）と住民税（前年の所得）の課税時期の違いを、どの資料も「2 年目から手取りが減って驚く」という読者の体験の形で書いている。"
+  },
+  {
+   "name": "年末調整と確定申告はどう違うのか（自分でしないと戻らないお金がある）",
+   "count": 4,
+   "examples": [
+    {"name": "国税庁「No.2662 年末調整のしかた」", "url": "https://www.nta.go.jp/taxes/shiraberu/taxanswer/gensen/2662.htm"},
+    {"name": "国税庁「給与所得者の確定申告」", "url": "https://www.nta.go.jp/publication/pamph/koho/campaign/r6/Jan/03.htm"},
+    {"name": "日本FP協会 高校生向けテキスト Lesson8「税金と社会保険」", "url": "https://www.jafp.or.jp/personal_finance/high/personal_text/files/Lesson08.pdf"}
+   ],
+   "note": "年末調整は「源泉徴収した額と年税額を一致させる精算」、確定申告は医療費控除・寄附金控除などで還付を受ける手続として説明されていた。ふるさと納税のワンストップ特例の説明もここに票を入れた。"
+  },
+  {
+   "name": "「年収の壁」で働く時間を抑える／超えると手取りが減る",
+   "count": 4,
+   "examples": [
+    {"name": "厚生労働省「年収の壁」への対応", "url": "https://www.mhlw.go.jp/stf/taiou_001_00002.html"},
+    {"name": "政府広報オンライン「年収の壁」対策がスタート！パートやアルバイトはどうなる？", "url": "https://www.gov-online.go.jp/article/202312/entry-5288.html"},
+    {"name": "首相官邸 いわゆる「年収の壁」対策", "url": "https://www.kantei.go.jp/jp/headline/nennsyuunokabe/index.html"}
+   ],
+   "note": "106 万円・130 万円を超えると社会保険料が年 16 万円・27 万円発生する、という金額の形で説明されている。2025 年改正で月額 8.8 万円要件の撤廃が予定されており、数字が動くテーマ。"
+  },
+  {
+   "name": "値上げの実感と物価指数がずれる（体感物価）",
+   "count": 4,
+   "examples": [
+    {"name": "総務省統計局「消費者物価指数のしくみと見方」", "url": "https://www.stat.go.jp/data/cpi/2020/mikata/index.html"},
+    {"name": "総務省統計局「消費者物価指数に関するQ&A」", "url": "https://www.stat.go.jp/data/cpi/4-1.html"},
+    {"name": "経済産業省「消費者の購買心理や体感物価を捉える新たな指標を開発しました」", "url": "https://www.meti.go.jp/statistics/bigdata-statistics/bigdata_pj_2019/pdf/20191227_dashboard_press.pdf"}
+   ],
+   "note": "統計局自身が「公表される指数の動きが生活実感と合わないという声」を正面から扱っている。ずれの理由は消費構造を固定していること、と説明されていた。"
+  },
+  {
+   "name": "物価が上がると貯金の値打ちが下がる（名目と実質）",
+   "count": 7,
+   "examples": [
+    {"name": "日本銀行「日本銀行の『物価の安定』についての考え方および『物価安定の目標』について」", "url": "https://www.boj.or.jp/announcements/education/oshiete/seisaku/b29.htm/"},
+    {"name": "J-FLEC 標準講義資料（国民負担率と消費者物価指数の上昇＝生活費の増加への備え）", "url": "https://www.j-flec.go.jp/wpimages/uploads/60min_model_2.pdf"},
+    {"name": "厚生労働省「毎月勤労統計調査における賃金の伸び率について」", "url": "https://www.mhlw.go.jp/toukei/itiran/roudou/monthly/dl/maikin-chinginnobiritsu.pdf"},
+    {"name": "内閣府 令和4年度 経済財政白書「我が国の物価動向」", "url": "https://www5.cao.go.jp/keizai3/2022/0203nk/n22_1_2.html"}
+   ],
+   "note": "「実質＝名目÷物価」という同じ 1 つの考え方が、賃金・貯蓄・年金の 3 か所で別々に出てくる。暮らしの側から見ると同じテーマなので 1 つに束ねた。"
+  },
+  {
+   "name": "賃金が上がっても実質賃金は下がることがある",
+   "count": 4,
+   "examples": [
+    {"name": "労働政策研究・研修機構（JILPT）「2025年の実質賃金指数の前年比はマイナス1.3％で、4年連続のマイナスに」", "url": "https://www.jil.go.jp/kokunai/blt/backnumber/2026/04/kokunai_01.html"},
+    {"name": "厚生労働省「毎月勤労統計調査における賃金の伸び率について」", "url": "https://www.mhlw.go.jp/toukei/itiran/roudou/monthly/dl/maikin-chinginnobiritsu.pdf"},
+    {"name": "内閣府 月次経済トピックス「食料品物価と為替」", "url": "https://www5.cao.go.jp/keizai3/monthly_topics/2026/0224/topics_079.pdf"}
+   ],
+   "note": "ニュースで最頻出の数字の組（名目＋2.3%／実質−1.3%）。実質賃金は現金給与総額指数を CPI（持家の帰属家賃を除く総合）で割る、と算出式まで書かれている。"
+  },
+  {
+   "name": "金利が上がる・下がると暮らしの何が変わるか",
+   "count": 7,
+   "examples": [
+    {"name": "日本銀行「金融政策は景気や物価にどのように影響を及ぼすのですか？」", "url": "https://www.boj.or.jp/announcements/education/oshiete/seisaku/b28.htm/"},
+    {"name": "日本銀行「教えて！にちぎん」質問一覧（公定歩合・長短プライムレート等）", "url": "https://www.boj.or.jp/about/education/oshiete/list.htm"},
+    {"name": "国土交通省「住宅ローンの金利リスクの普及啓発について」", "url": "https://www.mlit.go.jp/jutakukentiku/house/mortgage-rate-risk.html"},
+    {"name": "金融庁「基礎から学べる金融ガイド」（預貯金・クレジット／ローン）", "url": "https://www.fsa.go.jp/teach/kou4.pdf"}
+   ],
+   "note": "借りる側（ローン）と預ける側（預金）の両方に効くことを説明した資料を数えた。日銀は「貸出金利が下がると借りやすくなる」という経路で説明している。"
+  },
+  {
+   "name": "変動金利と固定金利の違い（住宅ローンの金利タイプ）",
+   "count": 4,
+   "examples": [
+    {"name": "国土交通省「住宅ローンの金利リスクの普及啓発について」", "url": "https://www.mlit.go.jp/jutakukentiku/house/mortgage-rate-risk.html"},
+    {"name": "全国銀行協会「変動で返す？固定で返す？住宅ローンの金利タイプ」", "url": "https://www.zenginkyo.or.jp/article/tag-d/5212/"},
+    {"name": "全国銀行協会「Q. 住宅ローン、変動金利と固定金利のどちらを選ぶべきか悩んでいます」", "url": "https://www.zenginkyo.or.jp/article/life/myhome/4379/"}
+   ],
+   "note": "検索上位はほぼ銀行・労金・住宅会社の商品ページで、母集団に入れられたのは国交省と全国銀行協会だけだった。5 年ルール・125% ルール・未払利息という、暮らしの側では知られていない仕掛けがここに集まっている。"
+  },
+  {
+   "name": "借りたお金は元金と利息に分かれて返す（返済方式と総返済額）",
+   "count": 5,
+   "examples": [
+    {"name": "金融庁「基礎から学べる金融ガイド」（クレジット／ローン：一言でいえば借金）", "url": "https://www.fsa.go.jp/teach/kou4.pdf"},
+    {"name": "全国銀行協会「変動で返す？固定で返す？住宅ローンの金利タイプ」（返済額に占める元本の割合で調整）", "url": "https://www.zenginkyo.or.jp/article/tag-d/5212/"},
+    {"name": "日本学生支援機構（JASSO）「奨学金貸与・返還シミュレーション」", "url": "https://www.jasso.go.jp/shogakukin/oyakudachi/document/simulation.html"}
+   ],
+   "note": "「毎月の返済額が同じでも、元金がどれだけ減っているかは別」という点に触れた資料を数えた。貸金業法の「利息を含めた返済総額を明示させる」規制もここに入れた。"
+  },
+  {
+   "name": "リボ払い・分割払いで支払総額が増える（意図せぬリボにも注意）",
+   "count": 8,
+   "examples": [
+    {"name": "国民生活センター 見守り新鮮情報「意図せぬリボ払い 利用明細は必ず確認」", "url": "https://www.kokusen.go.jp/mimamori/mj_mailmag/mj-shinsen427.html"},
+    {"name": "消費者庁 消費者教育ポータルサイト「知っておこう！リボ払いの特徴と利用上の注意」", "url": "https://www.kportal.caa.go.jp/flyer/001067/"},
+    {"name": "経済産業省 九州経済産業局「意図せぬ『リボ払い』にご注意下さい！」", "url": "https://www.kyushu.meti.go.jp/seisaku/shohisya/oshirase/250924_1.html"},
+    {"name": "経済産業省「クレジットカードの不正利用や後払いの支払遅延から身を守るために」", "url": "https://www.meti.go.jp/policy/economy/consumer/consumer/2404note.pdf"}
+   ],
+   "note": "公的な注意喚起の本数が多い＝実際に相談が多いテーマ。「毎月の支払額は一定だが手数料が高く返済期間が延びる」という同じ一文が複数の資料に現れる。"
+  },
+  {
+   "name": "返せなくなったときどこに相談するか（多重債務）",
+   "count": 9,
+   "examples": [
+    {"name": "国民生活センター「多重債務（各種相談の件数や傾向）」", "url": "https://www.kokusen.go.jp/soudan_topics/data/saimu.html"},
+    {"name": "政府広報オンライン「キャッシングやローン返済でお困りのかたへ 借金問題は解決できます」", "url": "https://www.gov-online.go.jp/article/202012/entry-8310.html"},
+    {"name": "財務省 関東財務局「多重債務相談窓口のご案内」", "url": "https://lfb.mof.go.jp/kantou/yokohama/pagekt_cnt_20220610001.html"},
+    {"name": "日本学生支援機構（JASSO）「返還が難しくなった場合」（減額返還・返還期限猶予）", "url": "https://www.jasso.go.jp/shogakukin/henkan_konnan/index.html"}
+   ],
+   "note": "最多票。公的資料は原因の説明より「窓口に行けば制度がある」ことに紙幅を割く。年収の 1/3 を超える貸付の禁止（総量規制）、上限金利 15〜20%、ヤミ金融もここに集まる。"
+  },
+  {
+   "name": "円安になると輸入するものの値段が上がる",
+   "count": 7,
+   "examples": [
+    {"name": "日本銀行 展望レポート BOX「為替変動がわが国実体経済に与える影響」", "url": "https://www.boj.or.jp/mopo/outlook/box/2201box1a.pdf"},
+    {"name": "内閣府 月次経済トピックス（食料品物価と為替の関係）", "url": "https://www5.cao.go.jp/keizai3/monthly_topics/2026/0224/topics_079.pdf"},
+    {"name": "甲南大学 KONAN-PLANET「知ってるようで知らない！『円安』の真実。」", "url": "https://www.konan-u.ac.jp/konan-planet/academic/enyasu/"},
+    {"name": "日本銀行「教えて！にちぎん」（円高・円安とは、為替介入）", "url": "https://www.boj.or.jp/about/education/oshiete/list.htm"}
+   ],
+   "note": "「輸入品の 7 割以上が外貨建て」「輸入物価は時差を伴って消費者物価に反映される」という、値上げが遅れて来る話が暮らしの側の関心。大学が一般向けに書いた解説を 1 本だけ拾えた。"
+  },
+  {
+   "name": "電気・ガス料金の内訳（基本料金・燃料費調整・再エネ賦課金）",
+   "count": 5,
+   "examples": [
+    {"name": "資源エネルギー庁「月々の電気料金の内訳」", "url": "https://www.enecho.meti.go.jp/category/electricity_and_gas/electric/fee/stracture/spec.html"},
+    {"name": "資源エネルギー庁「燃料費調整制度について」", "url": "https://www.enecho.meti.go.jp/category/electricity_and_gas/electric/fee/fuel_cost_adjustment_001/"},
+    {"name": "資源エネルギー庁「なっとく！再生可能エネルギー（再エネ賦課金）」", "url": "https://www.enecho.meti.go.jp/category/saving_and_new/saiene/kaitori/surcharge.html"}
+   ],
+   "note": "毎月手元に来る紙（検針票）の項目がそのまま論点になっている珍しいテーマ。賦課金の単価は毎年度大臣が決める、燃料費調整には上限がある、など「自分で選べない値上げ」の構造が説明されている。"
+  },
+  {
+   "name": "食料品の値上げは何を通じて起きるか（原材料・輸入・価格転嫁）",
+   "count": 6,
+   "examples": [
+    {"name": "内閣府 令和4年度 経済財政白書「我が国の物価動向」", "url": "https://www5.cao.go.jp/keizai3/2022/0203nk/n22_1_2.html"},
+    {"name": "資源エネルギー庁 エネこれ「2023年6月の電気料金、なぜ値上がりするの？いくらになるの？」", "url": "https://www.enecho.meti.go.jp/about/special/johoteikyo/denkidai_kaitei.html"},
+    {"name": "物価問題に関する関係閣僚会議「電力会社7社の規制料金の改定について」", "url": "https://www.kantei.go.jp/jp/singi/index/bukka/pdf/siryou1-1.pdf"}
+   ],
+   "note": "「最終消費向けの輸入食品の値上がり」と「輸入原料を使う国内製造コストの上昇」の 2 経路、さらに企業がどこまで価格転嫁したかという 3 つ目の論点に分かれて説明されていた。"
+  },
+  {
+   "name": "年金は何に対して払う保険なのか（老齢・障害・遺族）",
+   "count": 6,
+   "examples": [
+    {"name": "厚生労働省「教えて！公的年金制度 なぜ公的年金は必要なの？」", "url": "https://www.mhlw.go.jp/topics/nenkin/zaisei/01/01-01.html"},
+    {"name": "厚生労働省「年金制度の仕組みと考え方 第1 公的年金制度の意義、役割」", "url": "https://www.mhlw.go.jp/stf/nenkin_shikumi_01.html"},
+    {"name": "厚生労働省「QuizKnockと一緒に年金を知ろう！」", "url": "https://www.mhlw.go.jp/korosho_kyozai/1st/index.html"},
+    {"name": "生命保険文化センター「万一の際に必要な保障額の算出方法と具体例」（遺族厚生年金を差し引いて考える）", "url": "https://www.jili.or.jp/lifeplan/lifesecurity/1218.html"}
+   ],
+   "note": "厚労省は「貯蓄ではなく保険」「積立方式ではなく賦課方式」「何歳まで生きるか分からないことへの備え」という 3 点で説明する。民間保険の必要保障額の計算が公的年金を前提にしている点が、暮らしの側では抜けやすい。"
+  },
+  {
+   "name": "医療費の自己負担には上限がある（高額療養費）",
+   "count": 4,
+   "examples": [
+    {"name": "厚生労働省「高額療養費制度を利用される皆さまへ」", "url": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/iryouhoken/juuyou/kougakuiryou/index.html"},
+    {"name": "金融庁「基礎から学べる金融ガイド」（保険の前にまず公的制度を確認）", "url": "https://www.fsa.go.jp/teach/kou4.pdf"},
+    {"name": "J-FLEC 標準講義資料（社会保険と民間保険）", "url": "https://www.j-flec.go.jp/wpimages/uploads/60min_model_2.pdf"}
+   ],
+   "note": "医療費 100 万円でも自己負担は約 9.3 万円（年収約 370〜510 万円・70 歳未満）という代表例が繰り返し出てくる。世帯合算・多数回該当という「さらに下がる仕組み」は 1 本にしか書かれていなかった。"
+  },
+  {
+   "name": "仕事を失ったときのお金（雇用保険の基本手当）",
+   "count": 4,
+   "examples": [
+    {"name": "ハローワークインターネットサービス「基本手当について」", "url": "https://www.hellowork.mhlw.go.jp/insurance/insurance_basicbenefit.html"},
+    {"name": "厚生労働省「基本手当について」", "url": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000135026.html"},
+    {"name": "群馬労働局「教えて！？ 雇用保険受給の基本」", "url": "https://jsite.mhlw.go.jp/gunma-roudoukyoku/content/contents/000815123.pdf"}
+   ],
+   "note": "給与明細の「雇用保険」欄が何の保険料かという問いと直結する。離職前 6 か月の賃金の 80〜45%、90〜360 日という水準が、生活防衛資金をいくら持つかの判断材料になる。"
+  },
+  {
+   "name": "公的な備えと民間保険の役割分担（どこまで保険で備えるか）",
+   "count": 5,
+   "examples": [
+    {"name": "生命保険文化センター「生命保険とは（知っておきたい生命保険の基礎知識）」", "url": "https://www.jili.or.jp/knows_learns/basic/whatis.html"},
+    {"name": "金融庁「基礎から学べる金融ガイド」（生命保険／損害保険：公的制度で足りない部分への備え）", "url": "https://www.fsa.go.jp/teach/kou4.pdf"},
+    {"name": "生命保険文化センター「万一の際に必要な保障額の算出方法と具体例」", "url": "https://www.jili.or.jp/lifeplan/lifesecurity/1218.html"}
+   ],
+   "note": "「支出見込額−収入見込額＝必要保障額」という引き算の形が中立的な資料の共通の型。保険料を高くすれば保障は増える、まず公的制度を確認、という順序も共通していた。投資の『リスク』と保険の『リスク』は意味が違うという注意（J-FLEC）もここに入れた。"
+  },
+  {
+   "name": "ふるさと納税の仕組みと控除の上限",
+   "count": 4,
+   "examples": [
+    {"name": "総務省「ふるさと納税のしくみ｜税金の控除について」", "url": "https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/mechanism/deduction.html"},
+    {"name": "国税庁「No.1155 ふるさと納税（寄附金控除）」", "url": "https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1155.htm"},
+    {"name": "大津市「個人市民税・県民税 ふるさと納税にかかる控除および上限金額の目安について」", "url": "https://www.city.otsu.lg.jp/soshiki/005/1215/g/shimin/koujo/28359.html"}
+   ],
+   "note": "「2,000 円を超える部分が全額控除」だけが知られていて、所得税・住民税基本分・住民税特例分の 3 段構えと、所得割額の 20% という頭打ちは自治体のページでしか説明されていない。自治体側の解説が多い（上限額の目安表を各市が出している）ため、代表 1 本のみ数えた。"
+  },
+  {
+   "name": "消費税はだれが納めているのか（軽減税率・インボイス）",
+   "count": 4,
+   "examples": [
+    {"name": "国税庁「消費税のしくみ」（暮らしの税情報）", "url": "https://www.nta.go.jp/publication/pamph/koho/kurashi/html/01_3.htm"},
+    {"name": "国税庁「軽減税率制度の概要」", "url": "https://www.nta.go.jp/taxes/shiraberu/zeimokubetsu/shohi/keigenzeiritsu/01.htm"},
+    {"name": "国税庁 インボイス制度 導入編「消費税の基本的な仕組みから知りたい方へ」", "url": "https://www.nta.go.jp/taxes/shiraberu/zeimokubetsu/shohi/keigenzeiritsu/pdf/0023011-048_01.pdf"}
+   ],
+   "note": "「負担するのは消費者、納めるのは事業者」「各段階で二重三重にかからない仕組み（仕入税額控除）」という 2 点が核。8% と 10% が同じレシートに並ぶ理由が軽減税率、というのが暮らしの入口。"
+  },
+  {
+   "name": "税金は何に使われているか（財政と国の借金）",
+   "count": 4,
+   "examples": [
+    {"name": "財務省「これからの日本のために財政を考える」", "url": "https://www.mof.go.jp/zaisei/financial-situation/financial-situation-01.html"},
+    {"name": "国税庁 税の学習コーナー「財政のしくみと役割」", "url": "https://www.nta.go.jp/taxes/kids/hatten/page03.htm"},
+    {"name": "財務省「財政はどのくらい借金に依存しているのか」", "url": "https://www.mof.go.jp/zaisei/financial-structure/financial-structure-03.html"}
+   ],
+   "note": "社会保障・国債費・地方交付税交付金で歳出の 3/4、という 1 つの数字に集約される。自分が払った税と受け取る年金・医療が同じ表の上にあることが、暮らしの側から見た接続点。"
+  },
+  {
+   "name": "積立と複利で増える（長期・積立・分散という考え方）",
+   "count": 4,
+   "examples": [
+    {"name": "J-FLEC 標準講義資料（単利と複利、72の法則、長期・積立・分散）", "url": "https://www.j-flec.go.jp/wpimages/uploads/60min_model_2.pdf"},
+    {"name": "金融庁「基礎から学べる金融ガイド」（分散投資の効果・積立投資の効果）", "url": "https://www.fsa.go.jp/teach/kou4.pdf"},
+    {"name": "金融庁「金融経済教育について」（高校向け指導教材・基礎から学べる金融ガイド）", "url": "https://www.fsa.go.jp/teach/kyouiku.html"}
+   ],
+   "note": "「72÷利率＝2 倍になる年数」「1 つのカゴに卵を盛るな」という 2 つの言い回しが定番。金利のテーマ（借りる側の複利）と表裏なのに、別の章に置かれているのが公的資料の共通の構成。"
+  },
+  {
+   "name": "NISA・iDeCo の税の優遇と、引き出せる時期の違い",
+   "count": 4,
+   "examples": [
+    {"name": "J-FLEC 標準講義資料（NISAとiDeCoの比較表）", "url": "https://www.j-flec.go.jp/wpimages/uploads/60min_model_2.pdf"},
+    {"name": "金融庁「基礎から学べる金融ガイド」（NISAで資産形成）", "url": "https://www.fsa.go.jp/teach/kou4.pdf"},
+    {"name": "国民生活センター『2026年版 くらしの豆知識』特集「今こそ身につけたい！お金の基本」", "url": "https://www.kokusen.go.jp/book/data/mame.html"}
+   ],
+   "note": "中立的な資料は「利益の約 20% の税がかからない」という一点と、iDeCo は原則 60 歳まで引き出せないという一点に絞って書く。商品の選び方には踏み込まない。"
+  },
+  {
+   "name": "リスクとリターンはセット（絶対もうかる話はない）",
+   "count": 5,
+   "examples": [
+    {"name": "J-FLEC 標準講義資料（リスクは『運用成果の振れ幅』、ローリスク・ハイリターンは存在しない）", "url": "https://www.j-flec.go.jp/wpimages/uploads/60min_model_2.pdf"},
+    {"name": "金融庁「基礎から学べる金融ガイド」（リスクとリターンの関係／安全性・収益性・流動性）", "url": "https://www.fsa.go.jp/teach/kou4.pdf"},
+    {"name": "金融庁「貸金等に関する相談事例等及びアドバイス等」", "url": "https://www.fsa.go.jp/receipt/soudansitu/advice04.html"}
+   ],
+   "note": "「リスク＝危険」ではなく「振れ幅」だという言い換えを、暮らしの言葉に直す作業が要る。安全性・収益性・流動性の 3 つとも◎の商品はない、という表が共通の道具。"
+  },
+  {
+   "name": "もうけ話・投資詐欺の見分け方と相談先（188 / #9110）",
+   "count": 5,
+   "examples": [
+    {"name": "金融庁「基礎から学べる金融ガイド」（トラブルに注意：SNS勧誘・高レバレッジFX・ヤミ金融・特殊詐欺）", "url": "https://www.fsa.go.jp/teach/kou4.pdf"},
+    {"name": "J-FLEC 標準講義資料（悪質商法や金融トラブルを防止するための鉄則）", "url": "https://www.j-flec.go.jp/wpimages/uploads/60min_model_2.pdf"},
+    {"name": "国民生活センター『2026年版 くらしの豆知識』（怪しい投資話にだまされないための注意点）", "url": "https://www.kokusen.go.jp/book/data/mame.html"}
+   ],
+   "note": "「投資は借金をして行うものではない」「あなただけに特別な話は疑う」という行動の規則として書かれ、商品の知識としては書かれていない。相談先の番号（188、#9110、金融サービス利用者相談室）が必ずセットで載る。"
+  },
+  {
+   "name": "家計の把握と固定費の見直し（ニーズとウォンツ）",
+   "count": 6,
+   "examples": [
+    {"name": "J-FLEC 標準講義資料（固定費と変動費、固定費から圧縮、天引きで仕組み化）", "url": "https://www.j-flec.go.jp/wpimages/uploads/60min_model_2.pdf"},
+    {"name": "金融庁「基礎から学べる金融ガイド」（適切な収支管理の習慣化）", "url": "https://www.fsa.go.jp/teach/kou4.pdf"},
+    {"name": "東京都消費生活総合センター「わたしは消費者｜キャッシュレス決済の基礎知識」", "url": "https://www.shouhiseikatu.metro.tokyo.lg.jp/manabitai/shouhisha/175/01.html"}
+   ],
+   "note": "「余ったら貯める」ではなく「先に差し引く」、固定費（通信・住居・サブスク）から手を付ける、という順序が共通。キャッシュレスの解説が「支出の実感が持ちにくい」と書くのも同じ論点なので票を入れた。"
+  },
+  {
+   "name": "ライフイベントにいくらかかるのか（教育・住宅・老後）",
+   "count": 4,
+   "examples": [
+    {"name": "J-FLEC 標準講義資料（教育費 800〜2,500万円、住宅 3,500〜5,000万円などの目安）", "url": "https://www.j-flec.go.jp/wpimages/uploads/60min_model_2.pdf"},
+    {"name": "金融庁「基礎から学べる金融ガイド」（生活設計：人生に必要な資金を計画的に考える）", "url": "https://www.fsa.go.jp/teach/kou4.pdf"},
+    {"name": "生命保険文化センター「リスクに備えるための生活設計」", "url": "https://www.jili.or.jp/lifeplan/lifesecurity/index.html"}
+   ],
+   "note": "金額の幅が広く（公立か私立かで教育費が 3 倍違う）、平均値そのものより「幅があること」が読者の学びになる。長寿化（2070 年推計で女性 91.94 歳）を前提に置く資料が増えている。"
+  },
+  {
+   "name": "契約はいつ成立し、いつなら解約できるのか（クーリング・オフ）",
+   "count": 5,
+   "examples": [
+    {"name": "大阪市「クーリング・オフについて - 契約のきほん」", "url": "https://www.city.osaka.lg.jp/lnet/page/0000002303.html"},
+    {"name": "国民生活センター 見守り新鮮情報「通信販売はクーリング・オフできません」", "url": "https://www.kokusen.go.jp/mimamori/mj_mailmag/mj-shinsen471.html"},
+    {"name": "消費者庁 クーリング・オフ制度のパンフレット", "url": "https://www.caa.go.jp/publication/pamphlet/assets/consumer_transaction_cms101_230608_01.pdf"}
+   ],
+   "note": "誤解の訂正が中心のテーマ。「どんな買い物でも 8 日間は返せる」と思われているが、通販には制度がない（不意打ち的な勧誘ではないため）という説明が最も強調されていた。"
+  },
+  {
+   "name": "サブスク・定期購入の解約でつまずく",
+   "count": 5,
+   "examples": [
+    {"name": "消費者庁「インターネット通販の定期購入トラブルには御注意を!」", "url": "https://www.caa.go.jp/policies/policy/consumer_transaction/amendment/2021/notice03/"},
+    {"name": "政府広報オンライン「ネット通販での『定期購入トラブル』 契約時に確認すべきポイントは？」", "url": "https://www.gov-online.go.jp/article/202012/entry-9175.html"},
+    {"name": "埼玉県「ネット通販の定期購入トラブル」", "url": "https://www.pref.saitama.lg.jp/b0304/soudanjirei/tsuhan-teiki.html"}
+   ],
+   "note": "2022年6月の改正特商法で「最終確認画面に総額・解約方法の表示義務」が入り、誤認したら取り消せるようになった、という制度側の変化が新しい。前項と資料が重なるが、読者の困り方（1回だけのつもりが毎月来る）が別なので分けた。"
+  },
+  {
+   "name": "キャッシュレスは前払い・即時払い・後払いで性質が違う",
+   "count": 5,
+   "examples": [
+    {"name": "政府広報オンライン「キャッシュレス決済とは？種類や活用のメリットを解説！」", "url": "https://www.gov-online.go.jp/article/202309/entry-7678.html"},
+    {"name": "経済産業省 キャッシュレス推進室「キャッシュレス決済の“いろは”」", "url": "https://www.meti.go.jp/policy/mono_info_service/cashless/image_pdf_movie/cashless_iroha.pdf"},
+    {"name": "東京都消費生活総合センター「わたしは消費者｜キャッシュレス決済の基礎知識」", "url": "https://www.shouhiseikatu.metro.tokyo.lg.jp/manabitai/shouhisha/175/01.html"}
+   ],
+   "note": "3 分類そのものより「後払いだけは手持ちを超えて使える＝家計管理が難しい」という差が本題。『100円でも1万円でもピッと押すだけなので実感がない』という書き方が読者の言葉に近い。"
+  },
+  {
+   "name": "奨学金は借金（返還と、返せないときの制度）",
+   "count": 4,
+   "examples": [
+    {"name": "日本学生支援機構（JASSO）「返還が難しくなった場合」", "url": "https://www.jasso.go.jp/shogakukin/henkan_konnan/index.html"},
+    {"name": "埼玉県「Ⅴ．奨学金返還などの相談窓口」", "url": "https://www.pref.saitama.lg.jp/documents/68404/5syougakukinnhennkannnadonotetuduki.pdf"},
+    {"name": "J-FLEC 標準講義資料（ローン・クレジット、奨学金／『奨学金って今後自分にどう影響するの？』）", "url": "https://www.j-flec.go.jp/wpimages/uploads/60min_model_2.pdf"}
+   ],
+   "note": "延滞金 年5%、3か月以上の延滞で個人信用情報機関に登録（完済後 5 年間残る）という、後から効く不利益が核。減額返還・返還期限猶予（通算10年）という出口もここ。"
+  },
+  {
+   "name": "アルバイト・残業代・最低賃金の決まり",
+   "count": 3,
+   "examples": [
+    {"name": "厚生労働省「アルバイトをする前に知っておきたいポイント」（確かめよう労働条件）", "url": "https://www.check-roudou.mhlw.go.jp/parttime/"},
+    {"name": "厚生労働省「最低賃金制度 対象となる賃金」", "url": "https://saiteichingin.mhlw.go.jp/point/page_point_targetwages.html"},
+    {"name": "日本FP協会 高校生向けテキスト Lesson8「税金と社会保険」", "url": "https://www.jafp.or.jp/personal_finance/high/personal_text/files/Lesson08.pdf"}
+   ],
+   "note": "本数は少ないが、収入の側の入口。25% 以上の割増、月 60 時間超で 50%、22 時以降は深夜割増、最低賃金の対象に残業代とボーナスは含まれない、という数字が具体的。"
+  },
+  {
+   "name": "景気がよい・悪いとは何を見て言うのか（GDP・景気動向指数）",
+   "count": 5,
+   "examples": [
+    {"name": "内閣府 経済社会総合研究所「景気動向指数の利用の手引」", "url": "https://www.esri.cao.go.jp/jp/stat/di/di3.html"},
+    {"name": "内閣府 経済社会総合研究所「用語の解説（景気動向指数）」", "url": "https://www.esri.cao.go.jp/jp/stat/di/yogo.html"},
+    {"name": "日本銀行「日本銀行は、物価をみるときに、何を判断材料にしていますか？」", "url": "https://www.boj.or.jp/announcements/education/oshiete/seisaku/b45.htm/"}
+   ],
+   "note": "先行・一致・遅行という 3 つの指数、CI（量感）と DI（波及度）の違いが公的な説明の骨。日銀の『物価は景気の体温計』という比喩が、暮らしの言葉に一番近かった。"
+  },
+  {
+   "name": "失業率・有効求人倍率のニュースの読み方",
+   "count": 3,
+   "examples": [
+    {"name": "総務省統計局 統計FAQ「完全失業者数及び完全失業率」", "url": "https://www.stat.go.jp/library/faq/faq16/faq16a01.html"},
+    {"name": "総務省統計局 統計FAQ「有効求人倍率」", "url": "https://www.stat.go.jp/library/faq/faq16/faq16b01.html"},
+    {"name": "労働政策研究・研修機構（JILPT）「図1 完全失業率、有効求人倍率」", "url": "https://www.jil.go.jp/kokunai/statistics/timeseries/html/g0301.html"}
+   ],
+   "note": "「完全失業者」の定義（仕事を探していた人だけ）を知らないと数字を読み間違える。求人倍率は景気に一致、失業率は遅行、という並びも暮らしの実感（景気が戻っても採用が増えない）と直結する。"
+  },
+  {
+   "name": "家や土地を持ち続けるのにかかるお金（固定資産税・空き家）",
+   "count": 4,
+   "examples": [
+    {"name": "国土交通省 住宅：空き家対策 特設サイト", "url": "https://www.mlit.go.jp/jutakukentiku/house/akiya-taisaku/index.html"},
+    {"name": "東京都主税局「『特定空家等』または『管理不全空家等』に該当すると土地に対する固定資産税・都市計画税の税額が高くなる場合があります」", "url": "https://www.tax.metro.tokyo.lg.jp/kazei/real_estate/kotei_tosi/tokuteiakiya"},
+    {"name": "神戸市「空き家の敷地にかかる固定資産税」", "url": "https://www.city.kobe.lg.jp/a87426/kurashi/tax/kotei/akiya.html"}
+   ],
+   "note": "住宅用地の特例（200㎡以下は課税標準 1/6）が外れると土地の固定資産税が 3 倍程度になる、という「持っているだけで増える負担」が核。空き家の発生原因の半分以上が相続。"
+  },
+  {
+   "name": "相続と贈与でかかる税と、家族で先に話しておくこと",
+   "count": 6,
+   "examples": [
+    {"name": "財務省「もっと知りたい税のこと 4『相続税』と『贈与税』を知ろう」", "url": "https://www.mof.go.jp/tax_policy/publication/brochure/zeisei0606/04.htm"},
+    {"name": "政府広報オンライン「相続税はいくらから？基礎控除とは？相続税の基本を確認！」", "url": "https://www.gov-online.go.jp/article/202407/entry-6250.html"},
+    {"name": "国税庁「No.4402 贈与税がかかる場合」", "url": "https://www.nta.go.jp/taxes/shiraberu/taxanswer/zoyo/4402.htm"},
+    {"name": "政府広報オンライン「空き家の活用や適切な管理などに向けた対策が強化」（相続後に誰が住むか話し合う）", "url": "https://www.gov-online.go.jp/article/202403/entry-5949.html"}
+   ],
+   "note": "3,000万円＋600万円×法定相続人数、年110万円という 2 つの数字で「かかるかどうか」がほぼ決まる。空き家の資料が「相続の前に話し合う」と書いていたので票を入れた。"
+  },
+  {
+   "name": "値段は競争で決まる（カルテル・独占が家計に及ぶ）",
+   "count": 2,
+   "examples": [
+    {"name": "公正取引委員会「こんなコトが起こると暮らしがあぶない！ 企業の違反行為」", "url": "https://www.jftc.go.jp/ippan/part2/act_02.html"},
+    {"name": "公正取引委員会「独占禁止法の規制内容」", "url": "https://www.jftc.go.jp/dk/dkgaiyo/kisei.html"}
+   ],
+   "note": "本数が最少（2 本）。公正取引委員会は一般向けページを持っているが、他の機関の暮らし向け解説がこの論点に触れていないため票が伸びない。値上げのニュースを『燃料と為替』だけで説明する資料が多く、競争の側は空白になっている。"
+  },
+  {
+   "name": "物価や家計の数字を自分で調べる（政府統計・図書館の調べ方案内）",
+   "count": 4,
+   "examples": [
+    {"name": "国立国会図書館 リサーチ・ナビ「物価に関する統計」", "url": "https://ndlsearch.ndl.go.jp/rnavi/business/post_102125"},
+    {"name": "国立国会図書館 リサーチ・ナビ「統計の調べ方:基礎編」", "url": "https://ndlsearch.ndl.go.jp/rnavi/business/post_102849"},
+    {"name": "神奈川大学図書館 パスファインダー「物価」", "url": "https://www.kanagawa-u.ac.jp/library/publication/pathfinder/file/07_prices.pdf"}
+   ],
+   "note": "図書館側は「どの統計を引けばよいか」の地図を用意している（小売物価統計調査、家計調査、全国家計構造調査）。暮らしの側では『ニュースの数字の出どころを自分で確かめる』という使い方になる。"
+  }
+ ],
+ "source_pool": {
+  "total": 77,
+  "breakdown": "国の機関 47（金融庁 4・国税庁 8・財務省と財務局 4・総務省と統計局 8・厚生労働省とハローワーク・労働局 9・経済産業省と資源エネルギー庁 7・国土交通省 2・消費者庁 3・公正取引委員会 2・内閣府 3・首相官邸と閣僚会議 2、うち政府広報オンライン 6 は発行元ごとに数えず政府広報として 6 本）、認可法人・独立行政法人 8（J-FLEC 1・国民生活センター 5・JASSO 2）、日本銀行 4、研究機関 3（JILPT 2・内閣府ESRI は国の機関に計上）、国立国会図書館 2、自治体 6（東京都主税局 2・東京都消費生活総合センター 1・大阪市 1・神戸市 1・埼玉県 2・大津市 1 のうち代表 6）、公益法人・業界団体の中立的な教育コンテンツ 5（生命保険文化センター 2・全国銀行協会 2・日本FP協会 2 のうち 5）、大学 2（甲南大学の一般向け解説・神奈川大学図書館のパスファインダー）"
+ },
+ "excluded": [
+  "個別の金融機関（銀行・労金・JAバンク・証券会社）の住宅ローン／投資商品ページ — 自社商品の申込みに導く宣伝。住宅ローンの検索では上位のほぼ全部がこれで、国交省と全国銀行協会だけが残った",
+  "個別の保険会社・保険代理店・保険比較サイトの解説 — 見積りと契約への誘導が本体。保険は生命保険文化センター（公益財団法人）と金融庁・J-FLEC の中立資料だけを数えた",
+  "投資・資産運用の勧誘記事、暗号資産やFXの解説を装った集客ページ — 除外。『絶対もうかる』系はそれ自体が公的資料側の注意喚起の対象",
+  "税理士事務所・社会保険労務士事務所・不動産会社・人材サービス会社のブログ（年収別手取り早見表、相続税の節税、空き家の売却など） — 相談・仲介の受注が目的で、or.jp ドメインでも数に入れていない",
+  "ふるさと納税・電力比較・クレジットカードのポータルサイトとアフィリエイト記事 — 紹介報酬が絡むため全部除外。ふるさと納税は総務省・国税庁・自治体のページだけを数えた",
+  "家計簿アプリ・資産管理サービスの解説記事 — 自社サービスへの登録が目的",
+  "統計表・時系列データそのもの（e-Stat のデータセット、毎月勤労統計の月次公表資料など） — 読者向けの説明がなく、数える単位にしていない。同じ機関の解説ページがあるときはそちらを 1 本として数えた"
+ ],
+ "not_obtained": [
+  "NHK（公共放送）の家計・物価・金利の解説 — nhk.or.jp はクローラを拒否しており本文が取得できなかった。母集団に公共放送は 1 本も入っていない",
+  "国民生活センター「消費者トラブル解説集」 https://www.kokusen.go.jp/t_box/t_box-faq.html — 2026年9月7日でコーナーが終了し、索引が取得できない。個別の設問ページ（リボ払い・定期購入など）は URL 直指定で残っていたのでそちらを数えた",
+  "国民生活センター『2026年版 くらしの豆知識』の本文 — 有償の冊子で、紹介ページから特集名と章立てだけを取った（お金の基本・契約・セカンドライフ・お役立ちマネー情報）。取得できたのは最新版（2027年版）の章立てで、2026年版の特集名は紹介ページの記述から採った",
+  "金融庁「高校向け 金融経済教育指導教材」の読み物本体 — 「基礎から学べる金融ガイド」と内容が重なるため未読（同じ発行元の同趣旨の資料を二重に数えないため）",
+  "J-FLEC の他の年齢層向け標準講義資料 — 若年層社会人向けの 60 分モデル 1 本で足りたため未読"
+ ]
+}

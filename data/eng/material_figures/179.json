@@ -1,0 +1,84 @@
+{
+  "topic_id": 179,
+  "term": "Git の基本",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "左の作業中の変更が、git add と git commit の 2 段を通って、右のリポジトリに目的ごとの記録として積まれます。",
+      "nodes": [
+        {
+          "id": "work",
+          "label": "作業中の変更 2 つ\nログイン処理のバグ直し\n画面の文言",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "add1",
+          "label": "git add\nバグ直しの\nファイルだけ選ぶ",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "c1",
+          "label": "git commit\n記録 1\nバグ直し",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "add2",
+          "label": "git add\n文言のファイル\nだけ選ぶ",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "c2",
+          "label": "git commit\n記録 2\n文言の変更",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "repo",
+          "label": "リポジトリ\n記録を積む置き場\n記録 1 だけ戻せる",
+          "row": 0,
+          "col": 3,
+          "shape": "cylinder"
+        }
+      ],
+      "edges": [
+        {
+          "from": "work",
+          "to": "add1",
+          "label": "目的 1 つ目"
+        },
+        {
+          "from": "add1",
+          "to": "c1",
+          "label": "説明を付ける"
+        },
+        {
+          "from": "work",
+          "to": "add2",
+          "label": "目的 2 つ目"
+        },
+        {
+          "from": "add2",
+          "to": "c2",
+          "label": "説明を付ける"
+        },
+        {
+          "from": "c1",
+          "to": "repo",
+          "label": "積む"
+        },
+        {
+          "from": "c2",
+          "to": "repo",
+          "label": "積む"
+        }
+      ]
+    }
+  ]
+}

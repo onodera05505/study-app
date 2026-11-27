@@ -1,0 +1,31 @@
+{
+ "target": "ip",
+ "units": [
+  "05",
+  "15"
+ ],
+ "items": [
+  {
+   "no": 205,
+   "unit": "15",
+   "topic_id": 169,
+   "figure": null,
+   "source": "open_items",
+   "kind": "noticed",
+   "what": "単元 15 の受け持ちの行「DRAM と SRAM の違い（リフレッシュの要否と、主記憶・キャッシュメモリへの使い分け）」は比較・使い分けを書いた行で、unit_plan.md の受け持ちの決まり（共通の前提の説明だけ）に合わない。一覧に無いので直していない",
+   "related": []
+  },
+  {
+   "no": 206,
+   "unit": "05",
+   "topic_id": 256,
+   "figure": null,
+   "source": "seam",
+   "kind": "compare_cross_unit",
+   "what": "256 の ### 混同しやすい用語 の項目（先頭の語「NFC」）が、後の単元 15 の論点 475 を指す。前の論点が後の論点の語との比較を持っていないかを現物で確かめる",
+   "related": [
+    475
+   ]
+  }
+ ]
+}

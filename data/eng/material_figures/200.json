@@ -1,0 +1,60 @@
+{
+  "topic_id": 200,
+  "term": "AI に渡してはいけない情報",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "社外の生成 AI に入れる側と、出てきた物を使う側の 2 か所で確かめることを、矢印の言葉で示した図です。",
+      "nodes": [
+        {
+          "id": "me",
+          "label": "自分\n生成 AI に頼む",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "ai",
+          "label": "社外の AI サービス\n入れた文が保存や\n学習に使われうる",
+          "row": 0,
+          "col": 1,
+          "emphasis": true,
+          "icon": "cloud"
+        },
+        {
+          "id": "out",
+          "label": "出てきた物\n生成されたコードや文章",
+          "row": 1,
+          "col": 1,
+          "icon": "document"
+        },
+        {
+          "id": "use",
+          "label": "自分の作業\n納品や公開に使う",
+          "row": 1,
+          "col": 0,
+          "icon": "box"
+        }
+      ],
+      "edges": [
+        {
+          "from": "me",
+          "to": "ai",
+          "label": "秘密・個人情報・鍵は入れない（伏せて書く）"
+        },
+        {
+          "from": "ai",
+          "to": "out",
+          "label": "生成して返す"
+        },
+        {
+          "from": "out",
+          "to": "use",
+          "label": "他人の作品に似ていないか確かめてから使う"
+        }
+      ]
+    }
+  ]
+}

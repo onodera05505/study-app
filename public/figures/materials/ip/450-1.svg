@@ -1,31 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="233" viewBox="0 0 648.8 236" role="img">
-<title>外部と通信するサーバだけを DMZ に置き、社外秘のファイルサーバは企業内 LAN に置く。</title>
-<rect x="0.5" y="0.5" width="647.8" height="235" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="194" viewBox="0 0 786 238">
+<rect x="0.5" y="0.5" width="785" height="237" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(20 20)">
-<polyline points="128,23 259.4,23" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="259.4,23 251.4,26.6 251.4,19.4" fill="#1f2937"/>
-<polygon points="128,23 136,19.4 136,26.6" fill="#1f2937"/>
-<polyline points="355.4,23 499.4,23" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
-<polyline points="307.4,46 307.4,92" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polyline points="547.8,46 547.8,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<path d="M 20.48 46 C -7.68 46 -5.12 18.4 23.04 19.32 C 23.04 -2.76 71.68 -5.52 76.8 13.8 C 102.4 4.6 135.68 13.8 121.6 28.52 C 135.68 43.24 120.32 46 104.96 46 Z" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="64" y="27.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">インターネット</text>
-<rect x="259.4" y="0" width="96" height="46" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="307.4" y="27.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">DMZ</text>
-<rect x="499.4" y="0" width="96.8" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="547.8" y="27.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">企業内 LAN</text>
-<rect x="252" y="92" width="110.8" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="307.4" y="114.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">Web サーバ</text>
-<text x="307.4" y="134.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">メールサーバ</text>
-<text x="307.4" y="154.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">外部向け DNS</text>
-<path d="M 486.8 111 A 61 9 0 0 0 608.8 111 L 608.8 149 A 61 9 0 0 1 486.8 149 Z" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<path d="M 486.8 111 A 61 9 0 0 1 608.8 111" fill="none" stroke="#1f2937" stroke-width="1"/>
-<text x="547.8" y="126.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">社外秘の</text>
-<text x="547.8" y="146.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ファイルサーバ</text>
-<rect x="135.7" y="6" width="116" height="16" rx="3" fill="#ffffff"/>
-<text x="193.7" y="19.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">必要な通信だけ許可</text>
-<rect x="375.4" y="6" width="104" height="16" rx="3" fill="#ffffff"/>
-<text x="427.4" y="19.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">社内へは通さない</text>
+<polyline points="122,38 270,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="270,38 262,41.6 262,34.4" fill="#1f2937"/>
+<polyline points="448,38 596,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="596,38 588,41.6 588,34.4" fill="#1f2937"/>
+<polyline points="359,66 359,94 671,94 671,122" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polygon points="671,122 667.4,114 674.6,114" fill="#1f2937"/>
+<polyline points="671,76 671,122" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polygon points="671,122 667.4,114 674.6,114" fill="#1f2937"/>
+<rect x="0" y="10" width="122" height="56" rx="28" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="61" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">インターネット</text>
+<text x="61" y="52.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">攻撃者もいる</text>
+<rect x="270" y="10" width="178" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="359" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ファイアウォール</text>
+<text x="359" y="52.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">区域ごとに通信を仕分け</text>
+<rect x="596" y="0" width="150" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="671" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">DMZ</text>
+<text x="671" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">外から接続を受ける</text>
+<text x="671" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">公開サーバを置く</text>
+<rect x="596" y="122" width="150" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="671" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">企業内 LAN</text>
+<text x="671" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">社内の人だけが使う</text>
+<text x="671" y="184.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">サーバと PC</text>
+<rect x="156" y="21" width="80" height="16" rx="3" fill="#ffffff"/>
+<text x="196" y="34.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">外からの接続</text>
+<rect x="452" y="21" width="140" height="16" rx="3" fill="#ffffff"/>
+<text x="522" y="34.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">公開サーバ宛てだけ許可</text>
+<rect x="451" y="80" width="128" height="16" rx="3" fill="#ffffff"/>
+<text x="515" y="93.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">社内へ直接は通さない</text>
+<rect x="601" y="90" width="140" height="16" rx="3" fill="#ffffff"/>
+<text x="671" y="103.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">乗っ取られても通さない</text>
 </g>
-<text x="324.4" y="216" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">外部と通信するサーバだけを DMZ に置き、社外秘のファイルサーバは企業内 LAN に置く。</text>
 </svg>

@@ -1,0 +1,55 @@
+{
+  "topic_id": 551,
+  "term": "オープンAPI",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 何が公開されるのか",
+      "caption": "提供企業が接続仕様を公開し、利用企業のシステムがその仕様どおりに呼び出す流れです。矢印をたどると、相手の内部を知らずに機能とデータを取り込めることが分かります。",
+      "nodes": [
+        {
+          "id": "spec",
+          "label": "公開された接続仕様\nアドレス・パラメタ・認証\n返すデータの形式",
+          "row": 0,
+          "col": 1,
+          "icon": "document",
+          "emphasis": true
+        },
+        {
+          "id": "prov",
+          "label": "提供企業の機能\n例: 銀行の残高照会",
+          "row": 0,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "user",
+          "label": "利用企業のシステム\n例: 家計簿サービス",
+          "row": 0,
+          "col": 2,
+          "icon": "device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "prov",
+          "to": "spec",
+          "label": "仕様を公開する"
+        },
+        {
+          "from": "spec",
+          "to": "user",
+          "label": "仕様どおりに組み込む",
+          "style": "dashed"
+        },
+        {
+          "from": "user",
+          "to": "prov",
+          "label": "キーを付けて呼び出し、データを受け取る",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

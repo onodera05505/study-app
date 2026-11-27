@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>まなびば</title>
+<meta name="description" content="特化した学びのロードマップ。学びを選んで開く。">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main id="app">
+  <header class="top">
+    <div>
+      <h1>まなびば</h1>
+      <p class="sub">特化した学びのロードマップ</p>
+    </div>
+    <div id="who" class="who" hidden></div>
+  </header>
+  <div id="notice" class="notice" hidden></div>
+
+  <section id="login" hidden>
+    <form id="login-form" class="card form">
+      <h2>ログイン</h2>
+      <label><span>メールアドレス</span><input name="email" type="email" autocomplete="username" required></label>
+      <label><span>パスワード</span><input name="password" type="password" autocomplete="current-password" required></label>
+      <p id="login-error" class="error" hidden></p>
+      <button type="submit" class="btn btn-primary">ログイン</button>
+      <p class="muted small">アカウントは管理者が作ります。パスワードを忘れたら管理者に再設定を頼んでください。</p>
+    </form>
+  </section>
+
+  <section id="home" hidden>
+    <h2>学び</h2>
+    <div id="grid" class="grid"></div>
+    <details id="account" class="card account" hidden>
+      <summary>アカウント</summary>
+      <form id="pw-form" class="form">
+        <label><span>現在のパスワード</span><input name="current" type="password" autocomplete="current-password" required></label>
+        <label><span>新しいパスワード（8 文字以上）</span><input name="next" type="password" autocomplete="new-password" minlength="8" required></label>
+        <p id="pw-msg" class="small" hidden></p>
+        <div class="row"><button type="submit" class="btn">パスワードを変える</button><button type="button" id="logout" class="btn">ログアウト</button></div>
+      </form>
+    </details>
+  </section>
+
+  <section id="admin" hidden>
+    <h2>管理（アカウントと権限）</h2>
+    <form id="new-form" class="card form">
+      <h3>アカウントを作る</h3>
+      <label><span>メールアドレス</span><input name="email" type="email" required></label>
+      <label><span>名前</span><input name="name" type="text" maxlength="50" required></label>
+      <label><span>初期パスワード（8 文字以上。本人に伝えて、変えてもらう）</span><input name="password" type="text" minlength="8" required></label>
+      <fieldset id="new-grants"><legend>開ける学び</legend></fieldset>
+      <p id="new-msg" class="small" hidden></p>
+      <button type="submit" class="btn btn-primary">作る</button>
+    </form>
+    <p class="muted small">列のチェックが「その学びを開ける」。変えるとすぐ保存されます。</p>
+    <div class="table-wrap"><table id="acc-table" class="table"><thead></thead><tbody></tbody></table></div>
+  </section>
+
+  <p class="note">意見や不具合は各学びの「フィードバック」から。</p>
+</main>
+<script src="/app.js"></script>
+</body>
+</html>

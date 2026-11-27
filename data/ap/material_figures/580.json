@@ -5,37 +5,37 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 交渉の窓口を1つにまとめる",
-      "caption": "各社の必須特許を1か所に持ち寄るので、実装する側は1回の契約でまとめて許諾を受けられる。",
+      "after": "explanation",
+      "caption": "各社の必須特許を 1 か所に持ち寄るので、実装する側は 1 回の契約でまとめて許諾を受けられます。",
       "nodes": [
         {
           "id": "a",
-          "label": "A 社の\n必須特許",
+          "label": "A 社\n必須特許を持つ",
           "row": 0,
           "col": 0
         },
         {
           "id": "b",
-          "label": "B 社の\n必須特許",
+          "label": "B 社\n必須特許を持つ",
           "row": 1,
           "col": 0
         },
         {
           "id": "c",
-          "label": "C 社の\n必須特許",
+          "label": "C 社\n必須特許を持つ",
           "row": 2,
           "col": 0
         },
         {
           "id": "pool",
-          "label": "パテントプール\n管理団体が一括管理",
+          "label": "パテントプール\n管理団体が\n一括して管理",
           "row": 1,
           "col": 1,
           "emphasis": true
         },
         {
           "id": "impl",
-          "label": "規格を実装する\n企業",
+          "label": "規格を実装する企業\n実施料を払って使う",
           "row": 1,
           "col": 2
         }
@@ -43,21 +43,23 @@
       "edges": [
         {
           "from": "a",
-          "to": "pool"
+          "to": "pool",
+          "label": "持ち寄る"
         },
         {
           "from": "b",
           "to": "pool",
-          "label": "権利を持ち寄る"
+          "label": "持ち寄る"
         },
         {
           "from": "c",
-          "to": "pool"
+          "to": "pool",
+          "label": "持ち寄る"
         },
         {
           "from": "pool",
           "to": "impl",
-          "label": "一括で許諾"
+          "label": "1 回の契約で一括許諾"
         }
       ]
     }

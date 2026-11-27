@@ -1,0 +1,27 @@
+{
+  "topic_id": 443,
+  "term": "NTP（Network Time Protocol）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### なぜ時刻を合わせるのか",
+      "caption": "どの機器も同じ NTP サーバの時刻に合わせるので、機器どうしの時刻がそろいます。そろった時刻でログを突き合わせられます。",
+      "nodes": [
+        {"id": "ntp", "label": "NTP サーバ\n基準の時刻を持つ", "row": 1, "col": 0, "emphasis": true, "icon": "clock"},
+        {"id": "pc", "label": "PC\n内蔵時計がずれていく", "row": 0, "col": 1, "icon": "device"},
+        {"id": "sv", "label": "業務サーバ\n内蔵時計がずれていく", "row": 1, "col": 1, "icon": "server"},
+        {"id": "nw", "label": "ネットワーク機器\n内蔵時計がずれていく", "row": 2, "col": 1, "icon": "network"},
+        {"id": "log", "label": "ログの突き合わせ\n同じ時刻の物差しで\n経緯をたどれる", "row": 1, "col": 2, "icon": "search"}
+      ],
+      "edges": [
+        {"from": "ntp", "to": "pc", "label": "正しい時刻を返す"},
+        {"from": "ntp", "to": "sv", "label": "正しい時刻を返す"},
+        {"from": "ntp", "to": "nw", "label": "正しい時刻を返す"},
+        {"from": "pc", "to": "log", "label": "そろった時刻のログ"},
+        {"from": "sv", "to": "log", "label": "そろった時刻のログ"},
+        {"from": "nw", "to": "log", "label": "そろった時刻のログ"}
+      ]
+    }
+  ]
+}

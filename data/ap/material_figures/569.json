@@ -6,34 +6,52 @@
       "id": 1,
       "type": "blocks",
       "after": "### アドレスを学習して転送先を絞る",
-      "caption": "MAC アドレスと受信ポートの対応を学習し、宛先がつながるポートにだけ流す。",
+      "caption": "MAC アドレスと受信ポートの対応を学習し、宛先がつながるポートにだけ流します。",
       "nodes": [
-        {"id": "pa", "label": "PC A\nMAC アドレス a", "row": 0, "col": 0},
-        {"id": "sw", "label": "スイッチングハブ\nアドレステーブル\na→ポート1 b→ポート2", "row": 0, "col": 1, "emphasis": true},
-        {"id": "pb", "label": "PC B\nMAC アドレス b", "row": 0, "col": 2},
-        {"id": "pc", "label": "PC C\nMAC アドレス c", "row": 1, "col": 1}
+        {
+          "id": "pa",
+          "label": "PC A\nMAC アドレス a",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "sw",
+          "label": "スイッチングハブ\nアドレステーブル\na→ポート1 b→ポート2",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "pb",
+          "label": "PC B\nMAC アドレス b",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "pc",
+          "label": "PC C\nMAC アドレス c",
+          "row": 1,
+          "col": 1
+        }
       ],
       "edges": [
-        {"from": "pa", "to": "sw", "label": "宛先 b へ"},
-        {"from": "sw", "to": "pb", "label": "ポート 2 だけ"},
-        {"from": "sw", "to": "pc", "label": "流れない", "style": "dashed", "arrow": "none"}
-      ]
-    },
-    {
-      "id": 2,
-      "type": "blocks",
-      "after": "### 層で中継装置を見分ける",
-      "caption": "どの層のアドレスを見るかで装置が決まり、スイッチングハブと同じ層で同じ働きをするのがブリッジ。",
-      "nodes": [
-        {"id": "gw", "label": "ゲートウェイ\nトランスポート層以上\nプロトコルを変換する", "row": 0, "col": 0},
-        {"id": "rt", "label": "ルータ／レイヤ 3 スイッチ\nネットワーク層\nIP アドレスで中継か破棄か", "row": 1, "col": 0},
-        {"id": "sw2", "label": "スイッチングハブ＝ブリッジ\nデータリンク層\nMAC アドレスでポートを選ぶ", "row": 2, "col": 0, "emphasis": true},
-        {"id": "rp", "label": "リピータ／リピータハブ\n物理層\n信号を増幅・整形するだけ", "row": 3, "col": 0}
-      ],
-      "edges": [
-        {"from": "gw", "to": "rt", "arrow": "none"},
-        {"from": "rt", "to": "sw2", "arrow": "none"},
-        {"from": "sw2", "to": "rp", "arrow": "none"}
+        {
+          "from": "pa",
+          "to": "sw",
+          "label": "宛先 b へ"
+        },
+        {
+          "from": "sw",
+          "to": "pb",
+          "label": "ポート 2 だけ"
+        },
+        {
+          "from": "sw",
+          "to": "pc",
+          "label": "流れない",
+          "style": "dashed",
+          "arrow": "none"
+        }
       ]
     }
   ]

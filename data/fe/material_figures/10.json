@@ -1,0 +1,22 @@
+{
+  "topic_id": 10,
+  "term": "監査の独立性と客観性の保持",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 避けるべき体制",
+      "caption": "経営者が内部監査部門を業務部門と並べて直属に置く体制です。監査する側が監査される側の指揮下に入らないことが、外から見て分かります。",
+      "nodes": [
+        {"id": "ceo", "label": "経営者\n組織の配置を決める", "row": 0, "col": 1, "icon": "person"},
+        {"id": "audit", "label": "内部監査部門\n業務部門から独立", "row": 1, "col": 0, "icon": "search", "emphasis": true},
+        {"id": "biz", "label": "業務部門\n監査される側", "row": 1, "col": 2, "icon": "people"}
+      ],
+      "edges": [
+        {"from": "ceo", "to": "audit", "label": "直属で置く"},
+        {"from": "ceo", "to": "biz", "label": "業務を指揮する"},
+        {"from": "audit", "to": "biz", "label": "監査する\n（指揮は受けない）"}
+      ]
+    }
+  ]
+}

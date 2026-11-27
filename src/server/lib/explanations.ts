@@ -22,6 +22,7 @@ export type ExplanationColumns = {
  *
  *  壊れた JSON で画面ごと落とさない。解説が出ないだけにする（解説はまだ全問には
  *  無く、途中状態でも画面が壊れないことが要件）。 */
+// @implements REQ-062, REQ-065
 export function explanationOf(row: ExplanationColumns): Explanation | null {
   if (!row.explCorrectReason || !row.explChoicesJson) return null
   try {

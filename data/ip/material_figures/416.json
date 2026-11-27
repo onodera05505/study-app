@@ -1,0 +1,28 @@
+{
+  "topic_id": 416,
+  "term": "EDI（Electronic Data Interchange：電子データ交換）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### なぜ書式と通信手順をそろえるのか",
+      "caption": "上の紙の経路では受け手が人の手で入力し直し、下の EDI の経路ではデータのまま相手のシステムに入ります。強調した取り決めがあるから自動で読み込めます。",
+      "nodes": [
+        {"id": "buy", "label": "発注企業の\nシステム", "row": 1, "col": 0, "icon": "device"},
+        {"id": "paper", "label": "紙・ファクス\n注文書を送る", "row": 0, "col": 1, "icon": "document"},
+        {"id": "hand", "label": "受注側の担当者\n画面に打ち直す", "row": 0, "col": 2, "icon": "person"},
+        {"id": "std", "label": "標準の書式と通信手順\n双方で先に取り決める", "row": 2, "col": 1, "emphasis": true},
+        {"id": "read", "label": "自動の読み込み\n人の手を通さない", "row": 2, "col": 2, "icon": "gear"},
+        {"id": "sell", "label": "受注企業の\nシステム", "row": 1, "col": 3, "icon": "device"}
+      ],
+      "edges": [
+        {"from": "buy", "to": "paper", "label": "印刷して送る"},
+        {"from": "paper", "to": "hand", "label": "紙を読む"},
+        {"from": "hand", "to": "sell", "label": "入力し直す（転記ミス）", "style": "dashed"},
+        {"from": "buy", "to": "std", "label": "データのまま送る"},
+        {"from": "std", "to": "read", "label": "決めた形のデータ"},
+        {"from": "read", "to": "sell", "label": "そのまま登録する"}
+      ]
+    }
+  ]
+}

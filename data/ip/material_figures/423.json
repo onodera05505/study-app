@@ -1,0 +1,23 @@
+{
+  "topic_id": 423,
+  "term": "共通フレーム",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 共通の物差しが要る理由",
+      "caption": "発注側と受注側が同じ作業項目の一覧を挟んで範囲を決めるので、言葉の意味がそろい、見積りや契約の食い違いが減ります。",
+      "nodes": [
+        {"id": "acq", "label": "取得者（発注側）\nどこまで頼むかを決める", "row": 0, "col": 0, "icon": "building"},
+        {"id": "jcf", "label": "共通フレーム\n企画〜保守の作業項目の一覧", "row": 0, "col": 1, "icon": "document", "emphasis": true},
+        {"id": "sup", "label": "供給者（受注側）\n引き受ける範囲を確かめる", "row": 0, "col": 2, "icon": "people"},
+        {"id": "deal", "label": "見積り・契約\n範囲の食い違いが減る", "row": 1, "col": 1, "icon": "money"}
+      ],
+      "edges": [
+        {"from": "acq", "to": "jcf", "label": "頼む作業項目を選ぶ"},
+        {"from": "sup", "to": "jcf", "label": "引き受ける項目を確かめる"},
+        {"from": "jcf", "to": "deal", "label": "同じ意味でそろった範囲"}
+      ]
+    }
+  ]
+}

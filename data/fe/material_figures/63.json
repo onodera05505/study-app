@@ -1,0 +1,19 @@
+{
+  "topic_id": 63,
+  "term": "回線利用率",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 計算の解き方",
+      "caption": "左上の段から順に下り、段の間の矢印がそこで求まる量です。強調した段で制御情報の分を掛けて上乗せします。",
+      "direction": "down",
+      "stages": [
+        {"label": "ビットに直す\nファイルの大きさ（バイト）× 8", "icon": "document", "next_label": "ビット数"},
+        {"label": "制御情報を上乗せ\n20％ 付加なら × 1.2", "icon": "gear", "next_label": "1 回の転送量", "emphasis": true},
+        {"label": "転送の間隔で割る\n÷ 間隔（秒）", "icon": "clock", "next_label": "1 秒あたりの量"},
+        {"label": "回線速度で割る\n÷ 回線速度（ビット／秒）\n＝ 回線利用率", "icon": "network"}
+      ]
+    }
+  ]
+}

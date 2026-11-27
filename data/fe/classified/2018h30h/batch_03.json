@@ -1,0 +1,370 @@
+{
+ "exam": "2018h30h",
+ "range": "55-80",
+ "classifications": [
+  {
+   "number": 55,
+   "syllabus_item": 65,
+   "topic_term": "問題管理",
+   "topic_is_new": false,
+   "related_terms": [
+    "インシデント管理",
+    "根本原因",
+    "予防処置",
+    "既知の誤り"
+   ],
+   "confidence": "high",
+   "notes": "問題管理の事前予防的な活動（インシデントの発生傾向分析）を問う。ap も同型の問（2017h29h 問57・2019h31h 問54 ほか）を項目65の『問題管理』に寄せているので表記を揃えた。"
+  },
+  {
+   "number": 56,
+   "syllabus_item": 67,
+   "topic_term": "サービスデスク",
+   "topic_is_new": false,
+   "related_terms": [
+    "ローカルサービスデスク",
+    "中央サービスデスク",
+    "バーチャルサービスデスク",
+    "SPOC（Single Point Of Contact）"
+   ],
+   "confidence": "high",
+   "notes": "サービスデスク組織の構造（ローカル／中央／バーチャル／フォロー・ザ・サン）の識別。ap も項目67の『サービスデスク』に寄せている。"
+  },
+  {
+   "number": 57,
+   "syllabus_item": 67,
+   "topic_term": "バックアップ",
+   "topic_is_new": false,
+   "related_terms": [
+    "フルバックアップ",
+    "差分バックアップ",
+    "世代管理",
+    "データ管理"
+   ],
+   "confidence": "high",
+   "notes": "公式の分野はマネジメント系。ap も運用のバックアップの問（2017h29a 問56・2021r03h 問57 ほか計6問）を項目67の『バックアップ』に寄せているので表記を揃えた。"
+  },
+  {
+   "number": 58,
+   "syllabus_item": 69,
+   "topic_term": "システム監査人の権限と責任等",
+   "topic_is_new": false,
+   "related_terms": [
+    "改善提案",
+    "指摘事項",
+    "助言を目的としたシステム監査",
+    "監査報告書の作成と報告"
+   ],
+   "confidence": "high",
+   "notes": "監査人は改善を『命令』できず『指摘・提案』にとどまるという権限の範囲を問う。fe 2019r01a 問58 と同型（既存回ではこの論点に付けている）。ap も 2016h28a 問58 を同じ論点名に寄せている。"
+  },
+  {
+   "number": 59,
+   "syllabus_item": 69,
+   "topic_term": "監査の独立性と客観性の保持",
+   "topic_is_new": false,
+   "related_terms": [
+    "外観上の独立性",
+    "精神上の独立性",
+    "内部監査",
+    "監査部"
+   ],
+   "confidence": "high",
+   "notes": "既存回に同型の問が2件あり（fe 2019h31h 問59・2019r01a 問59。いずれも監査人の独立性の観点で避けるべき体制を選ぶ型）、同じ論点に合わせた。"
+  },
+  {
+   "number": 60,
+   "syllabus_item": 69,
+   "topic_term": "可用性（システム監査の判断尺度）",
+   "topic_is_new": true,
+   "related_terms": [
+    "情報セキュリティ監査",
+    "システム監査上の判断尺度",
+    "機密性",
+    "完全性"
+  ],
+   "confidence": "high",
+   "notes": "監査のチェック項目が機密性・完全性・可用性のどれに当たるかを判定する型。ap が同型の問（2018h30h 問60・2021r03h 問59『マスタファイル管理に関するシステム監査項目のうち可用性に該当するもの』）をこの論点名に寄せているので表記を揃えた。基本情報シラバス Ver.9.2 の項目69の用語例には『システム監査上の判断尺度』しか無いため topic_is_new=true。"
+  },
+  {
+   "number": 61,
+   "syllabus_item": 84,
+   "topic_term": "機械学習",
+   "topic_is_new": true,
+   "related_terms": [
+    "パターン認識",
+    "AI の活用",
+    "コールセンタ",
+    "ナレッジベース"
+   ],
+   "confidence": "medium",
+   "notes": "機械学習・パターン認識の活用事例の識別。fe 2019r01a 問73（生産現場における機械学習の活用事例）が項目84の『機械学習』（topic_is_new=true）に付いているので同じ論点・同じ is_new に合わせた。題材がコールセンタ業務なので項目67（サービスの運用：コールセンター，AI の活用）にも寄せたくなるが、公式の分野がストラテジ系なので採らない。"
+  },
+  {
+   "number": 62,
+   "syllabus_item": 73,
+   "topic_term": "SOA（Service Oriented Architecture：サービス指向アーキテクチャ）",
+   "topic_is_new": false,
+   "related_terms": [
+    "SFA",
+    "BPO （ Business Process Outsourcing）",
+    "BPR（Business Process Reengineering ）",
+    "サービス"
+   ],
+   "confidence": "high",
+   "notes": "用語の意味を問う型。ap も SOA の問7件をこの表記（項目73）に寄せている。誤答の選択肢は SFA・アウトソーシング・BPR。"
+  },
+  {
+   "number": 63,
+   "syllabus_item": 90,
+   "topic_term": "ビッグデータ",
+   "topic_is_new": false,
+   "related_terms": [
+    "データマイニング",
+    "シミュレーション",
+    "BI（Business Intelligence）",
+    "データサイエンスのサイクル （課題抽出と定式化， データの取得・管理・加工， 探索的データ解析， データ解析と推論， 結果の共有・伝達， 課題解決に向けた提案）"
+   ],
+   "confidence": "high",
+   "notes": "ビッグデータ活用の発展段階（確認→解釈→予測→施策）の分類。既存回の fe 2019h31h 問64・2019r01a 問63 がいずれも『ビッグデータの活用事例』型で項目90の『ビッグデータ』に付いているので合わせた。"
+  },
+  {
+   "number": 64,
+   "syllabus_item": 76,
+   "topic_term": "UML",
+   "topic_is_new": false,
+   "related_terms": [
+    "アクティビティ図",
+    "クラス図",
+    "オブジェクト図",
+    "コンポーネント図"
+   ],
+   "confidence": "medium",
+   "notes": "UML のどの図がワークフロー（分岐・並行・同期）を表せるかを問う型。ap が同型の問（2016h28h 問66・2017h29h 問64・2022r04h 問66・2024r06a 問66 ほか計6問）を項目76の『UML』に寄せているので揃えた。題材が『ビジネスモデリング』なので項目71（情報システム戦略：業務モデル，UML）とも迷ったが、問われているのは図法の選択なので要件定義側を採る。"
+  },
+  {
+   "number": 65,
+   "syllabus_item": 95,
+   "topic_term": "グリーン購入",
+   "topic_is_new": true,
+   "related_terms": [
+    "グリーン購入法",
+    "エコマーク",
+    "環境アセスメント",
+    "CSR（Corporate Social Responsibility：企業の社会的責任）"
+   ],
+   "confidence": "medium",
+   "notes": "国・地方公共団体が環境配慮型の製品・サービスを選ぶ取組み。ap も 2020r02o 問65・2021r03h 問65 をこの論点名（項目95、topic_is_new=true）に寄せているので揃えた。項目89（経営・組織論：グリーン IT，カーボンフットプリント）にも寄せられるが、グリーン購入法という法令の知識なので法務側を採る。基本情報シラバス Ver.9.2 の項目95の用語例には無いため topic_is_new=true。"
+  },
+  {
+   "number": 66,
+   "syllabus_item": 78,
+   "topic_term": "ニッチ戦略",
+   "topic_is_new": true,
+   "related_terms": [
+    "市場の特定化",
+    "チャレンジャ戦略",
+    "フォロワ戦略",
+    "集中戦略"
+   ],
+   "confidence": "high",
+   "notes": "既存回に同型の問があり（fe 2019h31h 問68『特定顧客，特定製品のセグメントに資源を集中し，専門化を図る戦略』）、その論点『ニッチ戦略』（項目78、topic_is_new=true）に合わせた。"
+  },
+  {
+   "number": 67,
+   "syllabus_item": 78,
+   "topic_term": "シナジー効果",
+   "topic_is_new": false,
+   "related_terms": [
+    "規模の経済",
+    "範囲の経済",
+    "スケールメリット",
+    "多角化"
+   ],
+   "confidence": "high",
+   "notes": "ap 2021r03a 問68 とほぼ同一の問題（ビールと清涼飲料水の6ケースのコスト表からスケールメリットとシナジー効果を判定）。ap はこれを項目78の『シナジー効果』に付けているので合わせた。スケールメリット側は『規模の経済』として related_terms に入れた。"
+  },
+  {
+   "number": 68,
+   "syllabus_item": 79,
+   "topic_term": "成熟期",
+   "topic_is_new": false,
+   "related_terms": [
+    "導入期",
+    "成長期",
+    "衰退期",
+    "ライフサイクルエクステンション"
+   ],
+   "confidence": "medium",
+   "notes": "プロダクトライフサイクルの成熟期の特徴を問う。基本情報シラバスの項目79は導入期・成長期・成熟期・衰退期を別々の用語例として挙げているため、設問が主題にしている『成熟期』をそのままコピーした。『プロダクトライフサイクル』という総称の論点は既存マスタ（fe/ap/ip）に無いので新設せず、段階名を採る方針にした。"
+  },
+  {
+   "number": 69,
+   "syllabus_item": 79,
+   "topic_term": "コストプラス法",
+   "topic_is_new": true,
+   "related_terms": [
+    "バリュープライシング",
+    "ターゲットリターン価格設定",
+    "スキミングプライシング",
+    "ペネトレーションプライシング"
+   ],
+   "confidence": "high",
+   "notes": "価格設定方法のうち『製造原価・仕入原価に一定のマージンを乗せる』方法。項目79の用語例は『その他の価格設定方法（コストプラス法ほか）』という括弧内の列挙なので、仕様どおり主題の1語だけを採り topic_is_new=true にした（ap も個別の方法名で論点を立てている：ターゲットリターン価格設定ほか）。選択肢エは ap の『ターゲットリターン価格設定』に当たる別概念。"
+  },
+  {
+   "number": 70,
+   "syllabus_item": 81,
+   "topic_term": "KM（Knowledge Management：ナレッジマネジメント）",
+   "topic_is_new": false,
+   "related_terms": [
+    "SECI モデル",
+    "コアコンピタンス",
+    "ベンチマーキング",
+    "企業内情報ポータル（EIP）"
+   ],
+   "confidence": "high",
+   "notes": "用語の意味を問う型。項目81の用語例の表記をそのままコピーした（括弧内はその語自身の英語表記・言い換えなので丸ごと採る）。誤答はフラット型組織・ベンチマーキング・コアコンピタンス。"
+  },
+  {
+   "number": 71,
+   "syllabus_item": 84,
+   "topic_term": "IoT（Internet of Things）",
+   "topic_is_new": false,
+   "related_terms": [
+    "センサー",
+    "M2M（Machine to Machine ）",
+    "スマートメータ",
+    "ITS（Intelligent Transport Systems：高度道路交通システム）"
+   ],
+   "confidence": "medium",
+   "notes": "IoT の実用例として適切でないものを選ぶ型。事例が産業機械の遠隔監視・電力メータ・路車間通信なので、民生機器（項目87。同じ『IoT（Internet of Things）』の用語例がある）ではなくビジネスシステム（項目84）を採った。ap も工場の IoT の問を項目84に寄せている。"
+  },
+  {
+   "number": 72,
+   "syllabus_item": 84,
+   "topic_term": "POS システム",
+   "topic_is_new": false,
+   "related_terms": [
+    "顧客管理",
+    "店頭販売管理",
+    "パーソナルデータ",
+    "販売管理"
+   ],
+   "confidence": "medium",
+   "notes": "顧客 ID 付き POS データから何が分かるか（同一商品の購入頻度）。項目84の用語例『POS システム』の表記をそのままコピーした。データ分析の側面から項目90（業務分析・データ利活用）にも寄せられるが、問われているのは POS システムが取得できる情報の範囲なのでビジネスシステム側を採る。"
+  },
+  {
+   "number": 73,
+   "syllabus_item": 85,
+   "topic_term": "セル生産方式",
+   "topic_is_new": true,
+   "related_terms": [
+    "かんばん方式",
+    "リーン生産方式",
+    "ライン生産方式",
+    "FMS（Flexible Manufacturing System）"
+   ],
+   "confidence": "high",
+   "notes": "項目85の用語例は『生産方式（かんばん方式，リーン生産方式，セル生産方式）』という括弧内の別概念の列挙なので、仕様どおり主題の『セル生産方式』だけを採り topic_is_new=true にした。fe 既存マスタの『かんばん方式』（項目85、topic_is_new=true）と同じ扱い。ap も『セル生産方式』で論点を立てている。"
+  },
+  {
+   "number": 74,
+   "syllabus_item": 86,
+   "topic_term": "ロングテール",
+   "topic_is_new": false,
+   "related_terms": [
+    "オンラインショッピング",
+    "アフィリエイト",
+    "ドロップシッピング",
+    "e マーケットプレイス"
+   ],
+   "confidence": "high",
+   "notes": "用語の意味を問う型。ap（2018h30h 問73）・ip も同じ『ロングテール』で論点を立てている。"
+  },
+  {
+   "number": 75,
+   "syllabus_item": 90,
+   "topic_term": "ABC分析",
+   "topic_is_new": true,
+   "related_terms": [
+    "パレート分析",
+    "パレート図",
+    "累積比率",
+    "重点管理"
+   ],
+   "confidence": "high",
+   "notes": "販売金額などの高い順に並べ累積比率で階層分けする手法。ap も 2020r02o 問74 を『ABC分析』に寄せているので表記を揃えた。基本情報シラバス Ver.9.2 の項目90の用語例には『パレート分析』しか無いため topic_is_new=true。項目91の『ABC（Activity Based Costing：活動基準原価計算）』は綴りが近いが別概念なので統合しない。"
+  },
+  {
+   "number": 76,
+   "syllabus_item": 90,
+   "topic_term": "検査特性曲線",
+   "topic_is_new": true,
+   "related_terms": [
+    "OC 曲線",
+    "抜取り検査",
+    "不良率",
+    "故障率曲線（バスタブ曲線）"
+   ],
+   "confidence": "high",
+   "notes": "OC 曲線（検査特性曲線）＝ロットの不良率と合格率の関係を表す曲線。ap が同型の問（2018h30a 問75・2018h30h 問74）を『検査特性曲線』に寄せているので表記を揃えた。基本情報シラバス Ver.9.2 の項目90の用語例には無いため topic_is_new=true。"
+  },
+  {
+   "number": 77,
+   "syllabus_item": 91,
+   "topic_term": "貸借対照表",
+   "topic_is_new": false,
+   "related_terms": [
+    "純資産",
+    "株主資本",
+    "流動負債",
+    "固定資産"
+   ],
+   "confidence": "high",
+   "notes": "純資産の部に表示される項目（資本金）を選ぶ。誤答の売掛金は流動資産、社債は固定負債、投資有価証券は固定資産。"
+  },
+  {
+   "number": 78,
+   "syllabus_item": 91,
+   "topic_term": "先入先出法",
+   "topic_is_new": false,
+   "related_terms": [
+    "棚卸資産評価",
+    "総平均法",
+    "移動平均法",
+    "在庫評価額"
+   ],
+   "confidence": "high",
+   "notes": "受払表から月末在庫の評価額を計算する型。計算手法そのもの（先入先出法）が論点。"
+  },
+  {
+   "number": 79,
+   "syllabus_item": 92,
+   "topic_term": "著作権",
+   "topic_is_new": false,
+   "related_terms": [
+    "職務著作",
+    "請負契約",
+    "著作財産権（複製権，公衆送信権， 頒布権， 譲渡権， 貸与権）",
+    "プログラムの著作物"
+   ],
+   "confidence": "high",
+   "notes": "ap 2022r04h 問77 とほぼ同一の問題（取決めの無い委託開発でのプログラム著作権の原始的帰属）。ap はプログラム著作権の帰属の問を項目92の『著作権』に寄せているので合わせた。"
+  },
+  {
+   "number": 80,
+   "syllabus_item": 94,
+   "topic_term": "労働者派遣契約",
+   "topic_is_new": false,
+   "related_terms": [
+    "指揮命令",
+    "雇用契約",
+    "請負契約",
+    "二重派遣の禁止"
+   ],
+   "confidence": "high",
+   "notes": "派遣元・派遣先・労働者の三者関係の図で、派遣先と労働者の間が指揮命令関係であることを問う。ap 2023r05a 問80（同じ三者関係の図）を項目94の『労働者派遣契約』に寄せているので合わせた。主題の『指揮命令』は related_terms に入れ、派遣の論点を分散させない。"
+  }
+ ]
+}

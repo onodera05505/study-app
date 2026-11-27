@@ -1,0 +1,59 @@
+{
+  "topic_id": 33,
+  "term": "デイジーチェーン接続",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 数珠つなぎのしくみ",
+      "caption": "機器が一列に連なり、信号は手前の機器を通り抜けて先の機器へ届きます。PC が使う接続口は左端の 1 つだけです。",
+      "nodes": [
+        {"id": "pc", "label": "PC\n接続口は 1 つだけ使う", "row": 0, "col": 0, "icon": "device", "emphasis": true},
+        {"id": "d1", "label": "機器 1\n次へ渡す口を持つ", "row": 0, "col": 1},
+        {"id": "d2", "label": "機器 2\n次へ渡す口を持つ", "row": 0, "col": 2},
+        {"id": "d3", "label": "機器 3\n列の最後（端）", "row": 0, "col": 3}
+      ],
+      "edges": [
+        {"from": "pc", "to": "d1", "label": "ケーブル 1 本"},
+        {"from": "d1", "to": "d2", "label": "通り抜けて先へ"},
+        {"from": "d2", "to": "d3", "label": "通り抜けて先へ"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 利点と弱点",
+      "caption": "途中の機器 2 が止まった場合です。破線より先には信号が届かず、機器 3 は壊れていなくても使えなくなります。",
+      "nodes": [
+        {"id": "pc", "label": "PC\n信号を送り出す", "row": 0, "col": 0, "icon": "device"},
+        {"id": "d1", "label": "機器 1\n使える", "row": 0, "col": 1, "icon": "check"},
+        {"id": "d2", "label": "機器 2\n電源が落ちた", "row": 0, "col": 2, "icon": "warning", "emphasis": true},
+        {"id": "d3", "label": "機器 3\n無事なのに使えない", "row": 0, "col": 3}
+      ],
+      "edges": [
+        {"from": "pc", "to": "d1", "label": "届く"},
+        {"from": "d1", "to": "d2", "label": "ここまで届く"},
+        {"from": "d2", "to": "d3", "label": "届かない", "style": "dashed"}
+      ]
+    },
+    {
+      "id": 3,
+      "type": "blocks",
+      "after": "### 混同しやすい用語",
+      "caption": "USB ハブやスター型は、中継の 1 か所から各機器へ枝分かれする形です。機器どうしを経由せず、それぞれが中継機器と直接つながります。",
+      "nodes": [
+        {"id": "pc", "label": "PC\n接続口を 1 つ使う", "row": 1, "col": 0, "icon": "device"},
+        {"id": "hub", "label": "USB ハブ\n1 か所で枝分かれ", "row": 1, "col": 1, "emphasis": true},
+        {"id": "a", "label": "機器 A\nハブと直接つながる", "row": 0, "col": 2},
+        {"id": "b", "label": "機器 B\nハブと直接つながる", "row": 1, "col": 2},
+        {"id": "c", "label": "機器 C\nハブと直接つながる", "row": 2, "col": 2}
+      ],
+      "edges": [
+        {"from": "pc", "to": "hub", "label": "ケーブル 1 本"},
+        {"from": "hub", "to": "a", "label": "直接"},
+        {"from": "hub", "to": "b", "label": "直接"},
+        {"from": "hub", "to": "c", "label": "直接"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,196 @@
+{
+  "topic_id": 75,
+  "term": "ハッシュ関数 （SHA-256（SHA-2）ほか）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "入力の長さが違っても、出てくるハッシュ値はどちらも 256 ビットです。破線は、値から入力へ戻れないことを表します。",
+      "nodes": [
+        {
+          "id": "in1",
+          "label": "短い文\n数文字の入力",
+          "row": 0,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "fn1",
+          "label": "ハッシュ関数\nSHA-256",
+          "row": 0,
+          "col": 1,
+          "icon": "gear"
+        },
+        {
+          "id": "out1",
+          "label": "ハッシュ値 A\n256 ビット",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "in2",
+          "label": "大きなファイル\n数 GB の入力",
+          "row": 1,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "fn2",
+          "label": "ハッシュ関数\n同じ SHA-256",
+          "row": 1,
+          "col": 1,
+          "icon": "gear"
+        },
+        {
+          "id": "out2",
+          "label": "ハッシュ値 B\n256 ビット",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "in1",
+          "to": "fn1",
+          "label": "入力する"
+        },
+        {
+          "from": "fn1",
+          "to": "out1",
+          "label": "計算する"
+        },
+        {
+          "from": "in2",
+          "to": "fn2",
+          "label": "入力する"
+        },
+        {
+          "from": "fn2",
+          "to": "out2",
+          "label": "計算する"
+        },
+        {
+          "from": "out2",
+          "to": "in2",
+          "label": "値から入力へは戻せない",
+          "style": "dashed"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### 3 つの性質",
+      "caption": "3 つの性質は、何が与えられ、何を探すのが難しいかで分かれます。強調した弱衝突耐性が改ざんの検知を支えます。",
+      "x": {
+        "label": "観点",
+        "values": [
+          "与えられるもの",
+          "見つけるのが難しいもの"
+        ]
+      },
+      "y": {
+        "label": "性質",
+        "values": [
+          "一方向性",
+          "弱衝突耐性",
+          "強衝突耐性"
+        ]
+      },
+      "cells": [
+        [
+          "ハッシュ値 1 つ\n元の入力は隠れている",
+          "元の入力\n値から逆にたどる"
+        ],
+        [
+          "入力 1 つとその値\nどちらも分かっている",
+          "別の入力\n同じ値になるもの"
+        ],
+        [
+          "何も無い\n入力は自由に選べる",
+          "入力の組\n同じ値になる 2 つ"
+        ]
+      ],
+      "emphasis": [
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "id": 3,
+      "type": "blocks",
+      "after": "### 何が確かめられるのか",
+      "caption": "ファイルとハッシュ値を別の経路で受け取ると、攻撃者は両方を書き換えられません。利用者は 2 つの経路で届いた物を突き合わせます。",
+      "nodes": [
+        {
+          "id": "atk",
+          "label": "攻撃者\n通る経路の中身を書き換える",
+          "row": 0,
+          "col": 1,
+          "icon": "warning"
+        },
+        {
+          "id": "r1",
+          "label": "通常の経路\nWeb からのダウンロード",
+          "row": 1,
+          "col": 1,
+          "icon": "network"
+        },
+        {
+          "id": "dist",
+          "label": "配布元\nファイルと値を用意",
+          "row": 1,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "user",
+          "label": "利用者\nファイルの値を計算して比べる\n不一致なら改ざん",
+          "row": 1,
+          "col": 2,
+          "icon": "person"
+        },
+        {
+          "id": "r2",
+          "label": "別の経路\n電話や別のサイト",
+          "row": 2,
+          "col": 1,
+          "icon": "lock",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "atk",
+          "to": "r1",
+          "label": "ファイルを書き換える"
+        },
+        {
+          "from": "dist",
+          "to": "r1",
+          "label": "ファイル"
+        },
+        {
+          "from": "r1",
+          "to": "user",
+          "label": "書き換えられうるファイル"
+        },
+        {
+          "from": "dist",
+          "to": "r2",
+          "label": "ハッシュ値"
+        },
+        {
+          "from": "r2",
+          "to": "user",
+          "label": "書き換えられていない値"
+        }
+      ]
+    }
+  ]
+}

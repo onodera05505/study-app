@@ -16,7 +16,7 @@ export type GlossaryEntry = {
  *
  *  **null ＝未取得 / Map ＝取得済み。** 空の Map で初期化しない。未取得と
  *  「用語集が空」を区別できないと、読み込み中に「その用語は無い」と判断して
- *  色を付けそこねる（CLAUDE.md の一覧の落とし穴と同じ理由）。
+ *  色を付けそこねる（docs/落とし穴.md の一覧の項と同じ理由）。
  *
  *  リロードすれば消える。データを入れ替えたあとは再読み込みで最新になる。 */
 let cache: Map<string, GlossaryEntry> | null = null
@@ -39,6 +39,7 @@ function snapshot() {
 }
 
 /** まだ取っていなければ取りにいく。何度呼んでも1回しか飛ばない。 */
+// @implements REQ-001, REQ-012, BR-015
 export function ensureGlossary() {
   if (cache || inflight) return
   inflight = true
@@ -57,6 +58,7 @@ export function ensureGlossary() {
 }
 
 /** 用語集。未取得なら null。 */
+// @implements REQ-005, REQ-264
 export function useGlossary(): Map<string, GlossaryEntry> | null {
   const g = useSyncExternalStore(subscribe, snapshot)
   useEffect(ensureGlossary, [])

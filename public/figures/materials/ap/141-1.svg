@@ -1,31 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="430" viewBox="0 0 640 430" role="img">
-<title>画素数→1フレームのビット数→1秒あたり、と掛けていく。バイトではなくビットで数えるのが要点。</title>
-<rect x="0.5" y="0.5" width="639" height="429" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(221.55 20)">
-<polyline points="98.45,56 98.45,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="98.45,102 94.85,94 102.05,94" fill="#1f2937"/>
-<polyline points="98.45,158 98.45,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="98.45,204 94.85,196 102.05,196" fill="#1f2937"/>
-<polyline points="98.45,260 98.45,306" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="98.45,306 94.85,298 102.05,298" fill="#1f2937"/>
-<rect x="0" y="0" width="196.9" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="98.45" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">1フレームの画素数</text>
-<text x="98.45" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">800×600 ＝ 480,000 画素</text>
-<rect x="19.6" y="102" width="157.7" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="98.45" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">1フレームのデータ量</text>
-<text x="98.45" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">11,520,000 ビット</text>
-<rect x="19.25" y="204" width="158.4" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="98.45" y="226.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">1秒あたりのデータ量</text>
-<text x="98.45" y="246.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">345,600,000 ビット</text>
-<rect x="21.35" y="306" width="154.2" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="98.45" y="328.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">必要な帯域幅</text>
-<text x="98.45" y="348.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">約 350M ビット／秒</text>
-<rect x="45.25" y="70" width="106.4" height="16" rx="3" fill="#ffffff"/>
-<text x="98.45" y="83.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">×24 ビット／画素</text>
-<rect x="45.25" y="172" width="106.4" height="16" rx="3" fill="#ffffff"/>
-<text x="98.45" y="185.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">×30 フレーム／秒</text>
-<rect x="42.85" y="274" width="111.2" height="16" rx="3" fill="#ffffff"/>
-<text x="98.45" y="287.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">÷ 1,000,000（M）</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="354" viewBox="0 0 640 354">
+<rect x="0.5" y="0.5" width="639" height="353" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(47.35 20)">
+<polyline points="212.3,28 240.3,28 240.3,86" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="240.3,86 236.7,78 243.9,78" fill="#1f2937"/>
+<polyline points="323,114 351,114 351,172" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="351,172 347.4,164 354.6,164" fill="#1f2937"/>
+<polyline points="433.7,200 461.7,200 461.7,258" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="461.7,258 458.1,250 465.3,250" fill="#1f2937"/>
+<rect x="0" y="0" width="212.3" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="106.15" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">1 フレームの画素数</text>
+<text x="106.15" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">1,280×720 ＝ 921,600 画素</text>
+<rect x="157.6" y="86" width="165.4" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="240.3" y="108.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">1 フレームのビット数</text>
+<text x="240.3" y="128.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">14,745,600 ビット</text>
+<rect x="268.3" y="172" width="165.4" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="351" y="194.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">1 秒あたりのビット数</text>
+<text x="351" y="214.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">884,736,000 ビット</text>
+<rect x="384.6" y="258" width="154.2" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="461.7" y="280.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">必要な帯域幅</text>
+<text x="461.7" y="300.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">約 885M ビット／秒</text>
+<text x="248.3" y="32.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">×16 ビット／画素</text>
+<text x="359" y="118.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">×60 フレーム／秒</text>
+<text x="469.7" y="204.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">÷100 万（M）</text>
 </g>
-<text x="320" y="410" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">画素数→1フレームのビット数→1秒あたり、と掛けていく。バイトではなくビットで数えるのが要点。</text>
 </svg>

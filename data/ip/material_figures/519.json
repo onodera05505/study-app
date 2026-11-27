@@ -1,0 +1,115 @@
+{
+  "topic_id": 519,
+  "term": "WAN",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "建物の中は自前の機器でつなぐ LAN、拠点の間は通信事業者の網を借りてつなぐ WAN です。強調した網が借りて使う部分です。",
+      "nodes": [
+        {
+          "id": "hq",
+          "label": "東京の事務所の LAN\n自前の機器とケーブル",
+          "row": 0,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "net",
+          "label": "通信事業者の網\n借りて使う",
+          "row": 0,
+          "col": 1,
+          "shape": "cloud",
+          "emphasis": true
+        },
+        {
+          "id": "br",
+          "label": "大阪の事務所の LAN\n自前の機器とケーブル",
+          "row": 0,
+          "col": 2,
+          "icon": "building"
+        },
+        {
+          "id": "pc1",
+          "label": "東京の事務所の PC\n建物の中にある",
+          "row": 1,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "pc2",
+          "label": "大阪の事務所の PC\n建物の中にある",
+          "row": 1,
+          "col": 2,
+          "icon": "device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "pc1",
+          "to": "hq",
+          "label": "建物の中の通信",
+          "arrow": "both"
+        },
+        {
+          "from": "pc2",
+          "to": "br",
+          "label": "建物の中の通信",
+          "arrow": "both"
+        },
+        {
+          "from": "hq",
+          "to": "net",
+          "label": "借りた回線で拠点の間を通信",
+          "arrow": "both"
+        },
+        {
+          "from": "br",
+          "to": "net",
+          "label": "借りた回線で拠点の間を通信",
+          "arrow": "both"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### WAN を実現する 2 つの手段",
+      "caption": "WAN を実現する 2 つの手段を、回線・料金・安全性の作り方で比べます。VPN は共用の回線の上で、通信の中身を他者に読めない形にして専用線のように使います。",
+      "x": {
+        "label": "観点",
+        "values": [
+          "使う回線",
+          "料金",
+          "安全性の作り方"
+        ]
+      },
+      "y": {
+        "label": "手段",
+        "values": [
+          "専用線",
+          "VPN"
+        ]
+      },
+      "cells": [
+        [
+          "占有する回線\n拠点の間だけで\n使う",
+          "高い\n回線を\n占有するため",
+          "他者が通らない\n回線そのものが\n分かれている"
+        ],
+        [
+          "共用の回線\nインターネット\nなど",
+          "安い\n回線を\n共用するため",
+          "中身を読めなくする\n共用の回線に\n仮想の専用線"
+        ]
+      ],
+      "emphasis": [
+        [
+          1,
+          2
+        ]
+      ]
+    }
+  ]
+}

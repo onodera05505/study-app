@@ -1,0 +1,370 @@
+{
+ "exam": "2018h30a",
+ "range": "55-80",
+ "classifications": [
+  {
+   "number": 55,
+   "syllabus_item": 65,
+   "topic_term": "容量 ・ 能力管理",
+   "topic_is_new": false,
+   "related_terms": [
+    "容量 ・ 能力計画",
+    "需要予測",
+    "傾向情報",
+    "しきい （閾）値"
+   ],
+   "confidence": "high",
+   "notes": "キャパシティ管理の予測活動（傾向分析・分析的モデリング・シミュレーション・ベースラインモデル）の区別を問う。論点名は基本情報シラバス Ver.9.2 の項目65の用語例『容量 ・ 能力管理』をそのままコピーした（ap は同型の問（2020r02o 問57）を『容量・能力管理（サービスマネジメント）』に付けているが、基本情報は用語例の表記で統一する）。"
+  },
+  {
+   "number": 56,
+   "syllabus_item": 67,
+   "topic_term": "コールドスタート",
+   "topic_is_new": true,
+   "related_terms": [
+    "ウォームスタート",
+    "ロールバック （切り戻し）",
+    "ロールフォワード",
+    "ジョブの復旧と再実行"
+   ],
+   "confidence": "high",
+   "notes": "初期プログラムロード（IPL）を伴うシステム再開＝コールドスタート。fe 2019h31h 問57（ロールフォワード）が同じ再開・回復の系列で項目67に置かれているので、項目を合わせた。用語例に『コールドスタート』は無いため topic_is_new=true（項目65の『コールドスタンバイ』は待機系の構成で別概念）。"
+  },
+  {
+   "number": 57,
+   "syllabus_item": 65,
+   "topic_term": "サービス可用性管理",
+   "topic_is_new": false,
+   "related_terms": [
+    "サービス可用性",
+    "SLA",
+    "サービス時間",
+    "サービスレベル目標"
+   ],
+   "confidence": "high",
+   "notes": "サービス時間帯（営業日14時間×30日＝420時間）と可用性99.5％から許容停止時間を求める問。ap は同型の問を項目65『サービス可用性管理』に付けている（2017h29a 問55、2020r02o 問56）ので合わせた。"
+  },
+  {
+   "number": 58,
+   "syllabus_item": 69,
+   "topic_term": "情報セキュリティ監査",
+   "topic_is_new": false,
+   "related_terms": [
+    "指摘事項",
+    "内部監査",
+    "監査報告書の作成と報告",
+    "リスクの評価に基づく監査計画の策定（リスクアプローチ）"
+   ],
+   "confidence": "high",
+   "notes": "ap 2022r04a 問58 と同一問題。同じ項目69・同じ論点名『情報セキュリティ監査』に合わせた（正解はリスクアセスメントの後にリスク受容基準を決めていた、という手順の逆転）。"
+  },
+  {
+   "number": 59,
+   "syllabus_item": 69,
+   "topic_term": "情報セキュリティ監査",
+   "topic_is_new": false,
+   "related_terms": [
+    "指摘事項",
+    "監査証拠の入手と評価",
+    "情報セキュリティ管理基準",
+    "システム監査上の判断尺度"
+   ],
+   "confidence": "medium",
+   "notes": "『情報セキュリティ監査を実施した結果の状況から指摘事項を選ぶ』型で、ap 2019h31h 問60 と同じ論点名に合わせた（同じ回の問58も同型のためこの論点が2件になる）。外部保管業者への委託という切り口では ap 2016h28h 問60 の『外部委託管理の監査』も候補なので confidence は medium。"
+  },
+  {
+   "number": 60,
+   "syllabus_item": 70,
+   "topic_term": "内部統制報告制度",
+   "topic_is_new": false,
+   "related_terms": [
+    "内部統制の限界",
+    "金融商品取引法",
+    "コーポレートガバナンス",
+    "監査役"
+   ],
+   "confidence": "medium",
+   "notes": "上場企業で内部統制の整備及び運用に最終的な責任を負うのは経営者。金融商品取引法に基づく内部統制報告制度の枠組みを問うので、項目70の用語例『内部統制報告制度』を採った。ap は同種の問（内部統制に関係を有する者の役割と責任。2023r05h 問60）を項目70『財務報告に係る内部統制の評価及び監査の基準』に付けているが、この問は基準を名指ししていないため合流させなかった。"
+  },
+  {
+   "number": 61,
+   "syllabus_item": 71,
+   "topic_term": "IT 投資マネジメント",
+   "topic_is_new": false,
+   "related_terms": [
+    "情報システム戦略評価",
+    "差異分析",
+    "モニタリング指標",
+    "開発投資対効果"
+   ],
+   "confidence": "high",
+   "notes": "ap 2016h28h 問61 と同一問題。同じ項目71・同じ論点名『IT 投資マネジメント』に合わせた。"
+  },
+  {
+   "number": 62,
+   "syllabus_item": 72,
+   "topic_term": "BPO （ Business Process Outsourcing）",
+   "topic_is_new": false,
+   "related_terms": [
+    "オフショア",
+    "アウトソーシングサービス",
+    "ホスティングサービス",
+    "ASP"
+   ],
+   "confidence": "high",
+   "notes": "論点名は項目72の用語例の表記（全角空白を含む）をそのままコピーした。ap は項目73『BPO（Business Process Outsourcing：ビジネスプロセスアウトソーシング）』に付けているが、基本情報シラバス Ver.9.2 では項目72の用語例なのでこちらを採る。"
+  },
+  {
+   "number": 63,
+   "syllabus_item": 73,
+   "topic_term": "SOA（Service Oriented Architecture：サービス指向アーキテクチャ）",
+   "topic_is_new": false,
+   "related_terms": [
+    "ソリューション",
+    "クラウドサービス（SaaS，PaaS，IaaS など）",
+    "エンタープライズアーキテクチャ",
+    "DFD"
+   ],
+   "confidence": "high",
+   "notes": "ap も同じ論点名で項目73に付けている（2016h28h 問63 ほか）。誤りの選択肢はエンタープライズアーキテクチャ（ア）・DFD（ウ）・構造化設計（エ）。"
+  },
+  {
+   "number": 64,
+   "syllabus_item": 75,
+   "topic_term": "全体システム化計画",
+   "topic_is_new": false,
+   "related_terms": [
+    "プロジェクト推進体制",
+    "開発投資対効果",
+    "全体開発スケジュール",
+    "個別システム化計画"
+   ],
+   "confidence": "medium",
+   "notes": "システム化計画の立案で決めること（組織体制と役割分担、開発・運用・保守の費用の算出基礎）を問い、誤りの選択肢は要件定義（ア）・運用（ウ）・保守（エ）。項目名そのままの『システム化計画』は広すぎるため、計画書の内容を指す用語例『全体システム化計画』に当てた。『個別システム化計画』『プロジェクト推進体制』も候補なので medium。"
+  },
+  {
+   "number": 65,
+   "syllabus_item": 76,
+   "topic_term": "ステークホルダ",
+   "topic_is_new": false,
+   "related_terms": [
+    "ユーザーニーズ調査",
+    "課題定義",
+    "要求仕様書",
+    "SLCP-JCF（共通フレーム）"
+   ],
+   "confidence": "medium",
+   "notes": "要件定義プロセスで行うのは利害関係者の識別とニーズ・制約条件の識別。ap は『共通フレーム 2013 によれば要件定義プロセスで行うことはどれか』（2017h29a 問64）を項目75『SLCP-JCF（共通フレーム）』に付けているが、この問は共通フレームを名指ししておらず、要件定義の中身を問うので項目76の用語例『ステークホルダ』に当てた。項目75へ寄せる判断もあり得るので medium。"
+  },
+  {
+   "number": 66,
+   "syllabus_item": 77,
+   "topic_term": "RFP",
+   "topic_is_new": true,
+   "related_terms": [
+    "RFI",
+    "情報システム・モデル取引・契約書",
+    "企画競争入札",
+    "内外作基準"
+   ],
+   "confidence": "high",
+   "notes": "調達手順 a:RFI → b:RFP → c:供給者の選定 → d:契約の締結 の b。基本情報シラバス Ver.9.2 の項目77の用語例に RFI も RFP も無いため topic_is_new=true（ap も『RFI』を新設の論点として項目77に立てている）。"
+  },
+  {
+   "number": 67,
+   "syllabus_item": 79,
+   "topic_term": "成長期",
+   "topic_is_new": false,
+   "related_terms": [
+    "導入期",
+    "成熟期",
+    "衰退期",
+    "製品ライン"
+   ],
+   "confidence": "high",
+   "notes": "プロダクトライフサイクルの各期の特徴を区別する問。項目79の用語例『成長期』をそのまま採った（選択肢イが成長期、ア＝導入期から成長期への入口、ウ＝衰退期、エ＝導入期）。"
+  },
+  {
+   "number": 68,
+   "syllabus_item": 90,
+   "topic_term": "モデル化（確定モデル，確率モデル）",
+   "topic_is_new": false,
+   "related_terms": [
+    "最小二乗法",
+    "相関係数",
+    "時系列分析",
+    "バリュープライシング"
+   ],
+   "confidence": "medium",
+   "notes": "価格と需要の関係を1次式（確定モデル）とおいて内挿する問。用語例に『需要曲線』は無く、ap は設定価格と予測需要の表から最大利益を求める問（2022r04h 問76）を項目91『限界利益』に付けているが、この問には費用も利益も出てこないので、確定モデルの扱いを問う項目90に置いた。項目79（価格設定）も候補なので medium。"
+  },
+  {
+   "number": 69,
+   "syllabus_item": 90,
+   "topic_term": "クロス集計表",
+   "topic_is_new": false,
+   "related_terms": [
+    "調査データ",
+    "分割表",
+    "量的データ",
+    "顧客管理"
+   ],
+   "confidence": "medium",
+   "notes": "旧商品×新商品の乗り換え割合と新規顧客数の表を正しく読む問。特定の分析手法ではなく表の読み取りを問うので、項目90の用語例『クロス集計表』に当てた。『分割表』も候補なので medium。"
+  },
+  {
+   "number": 70,
+   "syllabus_item": 82,
+   "topic_term": "技術の Sカーブ",
+   "topic_is_new": true,
+   "related_terms": [
+    "イノベーション",
+    "MOT（Management of Technology ：技術経営）",
+    "キャズム",
+    "経験曲線"
+   ],
+   "confidence": "high",
+   "notes": "ap 2016h28h 問70 と同一問題。同じ項目82・同じ論点名『技術の Sカーブ』に合わせた（表記の空白位置も ap のままコピー）。基本情報シラバス Ver.9.2 の項目82の用語例に無いため topic_is_new=true。"
+  },
+  {
+   "number": 71,
+   "syllabus_item": 84,
+   "topic_term": "IoT（Internet of Things）",
+   "topic_is_new": false,
+   "related_terms": [
+    "ユビキタスコンピューティング",
+    "センサー",
+    "M2M（Machine to Machine ）",
+    "デジタルツイン"
+   ],
+   "confidence": "medium",
+   "notes": "IoT の対象範囲（インターネット又は閉域網に接続できる全てのもの）を問う。同じ用語は項目87（民生機器）の用語例にもあるが、IoT の一般概念なので IoT・AI 関連がまとまっている項目84に置いた。"
+  },
+  {
+   "number": 72,
+   "syllabus_item": 86,
+   "topic_term": "IC カード・RFID 応用システム",
+   "topic_is_new": false,
+   "related_terms": [
+    "スマートカード",
+    "電子マネー",
+    "キャッシュレス決済（スマートフォンのキャリア決済，非接触IC 決済，QR コード決済ほか）",
+    "QR コード"
+   ],
+   "confidence": "medium",
+   "notes": "IC タグ（RFID）の特徴（汚れに強く梱包の外から読める）を問う。ap は RFID の問を項目14（コンピュータ構成要素＝テクノロジ系）の『RFID』に付けているが、この問の公式の分野はストラテジ系なので合流できない。項目86の用語例『IC カード・RFID 応用システム』に当てた。"
+  },
+  {
+   "number": 73,
+   "syllabus_item": 86,
+   "topic_term": "OtoO（Online toOffline）",
+   "topic_is_new": false,
+   "related_terms": [
+    "OMO（Online Merges with Offline）",
+    "オムニチャネル",
+    "インターネットビジネス",
+    "e マーケットプレイス"
+   ],
+   "confidence": "high",
+   "notes": "論点名は項目86の用語例の表記（『Online toOffline』の空白位置を含む）をそのままコピーした。誤りの選択肢はフリーミアム（ア）・受注生産（イ）・エスクローサービス（ウ）。"
+  },
+  {
+   "number": 74,
+   "syllabus_item": 89,
+   "topic_term": "CIO（Chief Information Officer：最高情報責任者）",
+   "topic_is_new": false,
+   "related_terms": [
+    "CEO（Chief Executive Officer：最高経営責任者）",
+    "CFO（Chief Financial Officer：最高財務責任者）",
+    "CDO（Chief Digital Officer ：最高デジタル責任者）",
+    "情報システム部門"
+   ],
+   "confidence": "high",
+   "notes": "fe 2019r01a 問75（CIO の果たすべき役割）と同じ論点。既存の論点マスタの項目89・論点名に合わせた。"
+  },
+  {
+   "number": 75,
+   "syllabus_item": 90,
+   "topic_term": "デシジョンツリー",
+   "topic_is_new": false,
+   "related_terms": [
+    "モデル化（確定モデル，確率モデル）",
+    "マクシミン原理",
+    "機会損失",
+    "デルファイ法"
+   ],
+   "confidence": "medium",
+   "notes": "仕入個数ごとに販売個数の確率を掛けて利益（廃棄ロスを含む）の期待値を比べる問。用語例に『期待値』が無く、ap も期待値で案を選ぶ問を項目90『デシジョンツリー』に付けているので、頻度を分散させないようこの論点に寄せた。『マクシミン原理』と並ぶ意思決定基準の問とも読めるので medium。"
+  },
+  {
+   "number": 76,
+   "syllabus_item": 90,
+   "topic_term": "連関図法",
+   "topic_is_new": true,
+   "related_terms": [
+    "特性要因図",
+    "ブレーンストーミング",
+    "ロジックツリー",
+    "パレート分析"
+   ],
+   "confidence": "high",
+   "notes": "新 QC 七つ道具の連関図法（事象間の因果関係を明らかにする）。誤りの選択肢は PDPC 法（ア）・親和図法（イ）・系統図法（エ）。ap は同じ論点名『連関図法』で項目90に付けている（2020r02o 問76 ほか）ので名前を揃えた。基本情報シラバス Ver.9.2 の項目90の用語例に無いため topic_is_new=true。"
+  },
+  {
+   "number": 77,
+   "syllabus_item": 91,
+   "topic_term": "先入先出法",
+   "topic_is_new": false,
+   "related_terms": [
+    "棚卸資産評価",
+    "総平均法",
+    "移動平均法",
+    "費用"
+   ],
+   "confidence": "high",
+   "notes": "先に仕入れた分から払い出したものとして当月度の売上原価を求める問（70個＝200円×70、60個＝200円×30＋215円×30）。"
+  },
+  {
+   "number": 78,
+   "syllabus_item": 93,
+   "topic_term": "不正指令電磁的記録に関する罪（ウイルス作成罪）",
+   "topic_is_new": false,
+   "related_terms": [
+    "刑法",
+    "不正アクセス行為",
+    "電子計算機損壊等業務妨害罪",
+    "不正競争防止法"
+   ],
+   "confidence": "high",
+   "notes": "ap 2017h29h 問79 と同一問題。同じ項目93・同じ論点名『不正指令電磁的記録に関する罪（ウイルス作成罪）』に合わせた（ウイルス作成罪は刑法に規定されている）。"
+  },
+  {
+   "number": 79,
+   "syllabus_item": 93,
+   "topic_term": "個人情報保護法",
+   "topic_is_new": true,
+   "related_terms": [
+    "匿名加工情報",
+    "要配慮個人情報",
+    "個人情報保護に関するガイドライン",
+    "個人情報取扱事業者"
+   ],
+   "confidence": "medium",
+   "notes": "個人情報に該当する／しないの線引きを問う（匿名加工情報は該当しない）。ap 2016h28h 問79『個人情報保護法で保護される個人情報の条件はどれか』と同型なので ap の論点名に合わせた。基本情報シラバス Ver.9.2 の項目93の用語例に『個人情報保護法』が無いため topic_is_new=true。用語例の『個人情報保護に関するガイドライン』に当てる判断もあり得るので medium。"
+  },
+  {
+   "number": 80,
+   "syllabus_item": 94,
+   "topic_term": "偽装請負",
+   "topic_is_new": false,
+   "related_terms": [
+    "請負契約",
+    "労働者派遣契約",
+    "指揮命令",
+    "二重派遣の禁止"
+   ],
+   "confidence": "high",
+   "notes": "休暇取得の承認を発注者側の指示に従って行うのは発注者の指揮命令に当たり、労働者派遣とみなされる。ap も『偽装請負』を項目94に付けている（2020r02o 問80、2022r04h 問79）。"
+  }
+ ]
+}

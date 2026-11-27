@@ -1,0 +1,73 @@
+{
+  "topic_id": 4,
+  "term": "RPA（Robotic Process Automation）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "ロボットは画面の中のソフトウェアで、2 つのシステムの画面から項目を読み取り、集計表へ書き込みます。人は手順を決めて任せるだけです。",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "勤怠システムの画面\n出勤の記録",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "b",
+          "label": "人事システムの画面\n社員の名簿",
+          "row": 2,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "r",
+          "label": "ソフトウェアロボット\n決まった手順で操作",
+          "row": 1,
+          "col": 1,
+          "icon": "gear",
+          "emphasis": true
+        },
+        {
+          "id": "d",
+          "label": "月次の集計表\n1 枚にまとめた結果",
+          "row": 1,
+          "col": 2,
+          "icon": "document"
+        },
+        {
+          "id": "p",
+          "label": "担当者\n手順を決めて任せる",
+          "row": 0,
+          "col": 2,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "r",
+          "label": "項目を読み取る"
+        },
+        {
+          "from": "b",
+          "to": "r",
+          "label": "項目を読み取る"
+        },
+        {
+          "from": "r",
+          "to": "d",
+          "label": "表に書き込んでまとめる"
+        },
+        {
+          "from": "p",
+          "to": "r",
+          "label": "毎回同じ手順を登録",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

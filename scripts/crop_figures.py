@@ -87,8 +87,10 @@ def main() -> int:
             continue
         exam = qid.split("-q")[0]
         if exam not in docs:
-            # IT パスポートと応用情報でファイル名が違う
-            for name in (f"{exam}_ip_qs.pdf", f"{exam}_ap_am_qs.pdf"):
+            # 試験ごとにファイル名が違う（ip は `_ip_qs`、応用情報と基本情報は `_<試験>_am_qs`）。
+            # 試験コードは PDF 置き場の親（データ置き場）の名前から取る
+            code = args.pdf_dir.parent.name
+            for name in (f"{exam}_{code}_qs.pdf", f"{exam}_{code}_am_qs.pdf"):
                 path = args.pdf_dir / name
                 if path.exists():
                     break

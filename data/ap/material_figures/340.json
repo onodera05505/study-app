@@ -1,0 +1,32 @@
+{
+  "topic_id": 340,
+  "term": "LiDAR（Light Detection And Ranging：レーザーレーダー）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 走査で形を捉えるしくみ",
+      "caption": "LiDAR が形を捉えるまでの流れで、左上の段から順に進みます。強調した走査の段で 1 点の測距を向きを変えて繰り返すので、点群から立体の形が分かります。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "パルスを照射\n戻る時間で 1 点の距離",
+          "icon": "device",
+          "next_label": "1 点の方向と距離"
+        },
+        {
+          "label": "向きを変える\nレーザーを走査する",
+          "emphasis": true,
+          "next_label": "多数の点を測る"
+        },
+        {
+          "label": "点群\n方向と距離の点の集まり",
+          "next_label": "点を立体に並べる"
+        },
+        {
+          "label": "立体の形\n歩行者や障害物の輪郭"
+        }
+      ]
+    }
+  ]
+}

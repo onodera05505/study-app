@@ -1,0 +1,74 @@
+{
+  "topic_id": 263,
+  "term": "監査証拠の入手と評価",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 監査手続と監査証拠の関係",
+      "caption": "監査手続で入手した監査証拠を、量の十分さと質の適切さの 2 つで評価します。両方を満たした証拠が、指摘や結論を裏付けます。",
+      "nodes": [
+        {
+          "id": "proc",
+          "label": "監査手続\n閲覧・質問・観察\n突合・テストデータ",
+          "row": 0,
+          "col": 0,
+          "icon": "search"
+        },
+        {
+          "id": "evi",
+          "label": "監査証拠\n手続で得た事実",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "suf",
+          "label": "十分さ\n結論を支える量",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "app",
+          "label": "適切さ\n関連性と信頼性（証拠力）",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "con",
+          "label": "指摘・結論\n改善提案",
+          "row": 0,
+          "col": 3
+        }
+      ],
+      "edges": [
+        {
+          "from": "proc",
+          "to": "evi",
+          "label": "入手する"
+        },
+        {
+          "from": "evi",
+          "to": "suf",
+          "label": "量を評価"
+        },
+        {
+          "from": "evi",
+          "to": "app",
+          "label": "質を評価"
+        },
+        {
+          "from": "suf",
+          "to": "con",
+          "label": "量が足りる"
+        },
+        {
+          "from": "app",
+          "to": "con",
+          "label": "質が足りる"
+        }
+      ]
+    }
+  ]
+}

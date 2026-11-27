@@ -5,17 +5,95 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 守る区間の違い",
-      "caption": "WPA2 が守るのは無線区間だけで、SSL/TLS はブラウザと Web サーバの間を通しで守る。",
+      "after": "explanation",
+      "caption": "SSL/TLS が暗号化で守る範囲を表した図です。両端のブラウザと Web サーバの間で暗号化するので、途中の機器と回線では中身を読めません。",
       "nodes": [
-        {"id": "pc", "label": "端末のブラウザ\nPC・スマホ", "row": 0, "col": 0, "emphasis": true},
-        {"id": "ap", "label": "無線 LAN\nアクセスポイント", "row": 0, "col": 1},
-        {"id": "web", "label": "Web サーバ\nサーバ証明書", "row": 0, "col": 2, "emphasis": true}
+        {
+          "id": "b",
+          "label": "ブラウザ\n通信の片方の端",
+          "row": 0,
+          "col": 0,
+          "emphasis": true
+        },
+        {
+          "id": "mid",
+          "label": "途中の機器と回線\n無線・ルータ・プロバイダ",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "web",
+          "label": "Web サーバ\nサーバ証明書",
+          "row": 0,
+          "col": 2,
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "pc", "to": "ap", "label": "WPA2 が守るのはここだけ", "arrow": "both"},
-        {"from": "ap", "to": "web", "label": "インターネット（WPA2 の対象外）", "arrow": "both", "style": "dashed"},
-        {"from": "pc", "to": "web", "label": "SSL/TLS が守る区間", "arrow": "both"}
+        {
+          "from": "b",
+          "to": "mid",
+          "label": "暗号文のまま通る",
+          "arrow": "both"
+        },
+        {
+          "from": "mid",
+          "to": "web",
+          "label": "暗号文のまま通る",
+          "arrow": "both"
+        },
+        {
+          "from": "b",
+          "to": "web",
+          "label": "SSL/TLS が守る区間（両端の間）",
+          "arrow": "both"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "sequence",
+      "after": "### サーバ証明書で接続先を確かめる",
+      "caption": "上から順に進みます。暗号化の鍵を共有する前に、サーバ証明書で接続先が本物かを確かめます。",
+      "actors": [
+        {
+          "id": "b",
+          "label": "ブラウザ",
+          "icon": "device"
+        },
+        {
+          "id": "s",
+          "label": "Web サーバ",
+          "icon": "server"
+        }
+      ],
+      "steps": [
+        {
+          "from": "b",
+          "to": "s",
+          "label": "接続を申し込む"
+        },
+        {
+          "from": "s",
+          "to": "b",
+          "label": "サーバ証明書を送る"
+        },
+        {
+          "from": "b",
+          "to": "b",
+          "label": "証明書で接続先が本物かを確かめる",
+          "note": "偽のサイトならここで分かる"
+        },
+        {
+          "from": "b",
+          "to": "s",
+          "label": "暗号化に使う鍵を安全に共有する"
+        },
+        {
+          "from": "b",
+          "to": "s",
+          "label": "以降の通信は暗号化して送る"
+        }
       ]
     }
   ]

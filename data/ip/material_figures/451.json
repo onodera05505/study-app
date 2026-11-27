@@ -1,0 +1,62 @@
+{
+  "topic_id": 451,
+  "term": "MDM（Mobile Device Management）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### できること",
+      "caption": "管理サーバから各端末へきまりを配って状態を集め、紛失した端末には遠隔でロックと消去をかけます。矢印の相手はどれも端末そのものです。",
+      "nodes": [
+        {
+          "id": "srv",
+          "label": "管理サーバ\n会社のきまりを持つ",
+          "row": 1,
+          "col": 0,
+          "icon": "server"
+        },
+        {
+          "id": "a",
+          "label": "業務用スマホ\n専用ソフトを入れる",
+          "row": 0,
+          "col": 1,
+          "icon": "phone"
+        },
+        {
+          "id": "b",
+          "label": "業務用タブレット\n専用ソフトを入れる",
+          "row": 1,
+          "col": 1,
+          "icon": "device"
+        },
+        {
+          "id": "lost",
+          "label": "紛失した端末\n手元に戻らない",
+          "row": 2,
+          "col": 1,
+          "icon": "warning",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "srv",
+          "to": "a",
+          "label": "設定ときまりを配る／状態を報告",
+          "arrow": "both"
+        },
+        {
+          "from": "srv",
+          "to": "b",
+          "label": "設定ときまりを配る／状態を報告",
+          "arrow": "both"
+        },
+        {
+          "from": "srv",
+          "to": "lost",
+          "label": "遠隔でロック・データ消去"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "topic_id": 557,
+  "term": "グリーン購入",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 需要から市場を動かす理由",
+      "caption": "左の買い手から右へ矢印をたどります。作る側を縛るのではなく、大口の買い手が先に買うことで需要をつくり、市場を動かします。",
+      "nodes": [
+        {"id": "g", "label": "国・独立行政法人など\n調達方針を定めて公表", "row": 0, "col": 0, "icon": "building", "emphasis": true},
+        {"id": "d", "label": "環境配慮型の需要\n大口の注文が生まれる", "row": 0, "col": 1, "icon": "money"},
+        {"id": "m", "label": "作る側\n環境配慮型を増やす", "row": 1, "col": 1, "icon": "gear"},
+        {"id": "k", "label": "市場全体\n環境配慮型へ移る", "row": 1, "col": 2, "icon": "people"},
+        {"id": "o", "label": "自治体・事業者・国民\n努力義務で選んで買う", "row": 0, "col": 2, "icon": "person"}
+      ],
+      "edges": [
+        {"from": "g", "to": "d", "label": "優先して買う"},
+        {"from": "o", "to": "d", "label": "後に続いて買う", "style": "dashed"},
+        {"from": "d", "to": "m", "label": "売れるので作る"},
+        {"from": "m", "to": "k", "label": "製品が広く出回る"}
+      ]
+    }
+  ]
+}

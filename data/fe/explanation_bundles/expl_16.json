@@ -1,0 +1,245 @@
+{
+  "bundle": "expl_16",
+  "topics": [
+    {
+      "topic_id": 90,
+      "term": "DFD",
+      "field": "テクノロジ系",
+      "middle": "システム開発技術",
+      "syllabus_item_name": "システム要件定義・ソフトウェア要件定義",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q45",
+          "content_key": "fea8ee1713a5c721",
+          "exam_label": "令和元年度 秋期",
+          "number": 45,
+          "stem": "図は，構造化分析法で用いられる DFD の例である。図中の“○”が表しているものはどれか。",
+          "choices": {
+            "ア": "アクティビティ",
+            "イ": "データストア",
+            "ウ": "データフロー",
+            "エ": "プロセス"
+          },
+          "answer": "エ",
+          "has_figure": true,
+          "figure_description": "左から右へ流れる図。図中のどの要素にも文字のラベルは書かれていない。要素の位置関係は次のとおり。\n\n- 左端に長方形（中は空白）があり，そこから右向きの矢印が出て，円① に入る。\n- 円① から右下向きの矢印が出て，上下に平行に引かれた 2 本の横線（線の間は空白）に入る。\n- その 2 本の横線の下側から右下向きの矢印が出て，円② に入る。\n- 円② から右上向きの矢印が出て，円③ に入る。\n- 円③ から右向きの矢印が出て，右端の長方形（中は空白）に入る。",
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 93,
+      "term": "エラー埋込法",
+      "field": "テクノロジ系",
+      "middle": "システム開発技術",
+      "syllabus_item_name": "実装・構築",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q47",
+          "content_key": "288262927472e5ea",
+          "exam_label": "令和元年度 秋期",
+          "number": 47,
+          "stem": "エラー埋込法において，埋め込まれたエラー数を S，埋め込まれたエラーのうち発見されたエラー数を m，埋め込まれたエラーを含まないテスト開始前の潜在エラー数を T，発見された総エラー数を n としたとき，S，T，m，n の関係を表す式はどれか。",
+          "choices": {
+            "ア": "m/S ＝ (n－m)/T",
+            "イ": "m/S ＝ T/(n－m)",
+            "ウ": "m/S ＝ n/T",
+            "エ": "m/S ＝ T/n"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 94,
+      "term": "判定条件網羅（decision coverage）",
+      "field": "テクノロジ系",
+      "middle": "システム開発技術",
+      "syllabus_item_name": "実装・構築",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q49",
+          "content_key": "95ea56a2337435ca",
+          "exam_label": "令和元年度 秋期",
+          "number": 49,
+          "stem": "単一の入り口をもち，入力項目を用いた複数の判断を含むプログラムのテストケースを設計する。命令網羅と判定条件網羅の関係のうち，適切なものはどれか。",
+          "choices": {
+            "ア": "判定条件網羅を満足しても，命令網羅を満足しない場合がある。",
+            "イ": "判定条件網羅を満足するならば，命令網羅も満足する。",
+            "ウ": "命令網羅を満足しなくても，判定条件網羅を満足する場合がある。",
+            "エ": "命令網羅を満足するならば，判定条件網羅も満足する。"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 95,
+      "term": "静的解析",
+      "field": "テクノロジ系",
+      "middle": "システム開発技術",
+      "syllabus_item_name": "実装・構築",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q48",
+          "content_key": "8853b3beb03afc68",
+          "exam_label": "平成31年度 春期",
+          "number": 48,
+          "stem": "ソフトウェアのテストツールの説明のうち，静的テストを支援する静的解析ツールのものはどれか。",
+          "choices": {
+            "ア": "指定された条件のテストデータや，プログラムの入力ファイルを自動的に生成する。",
+            "イ": "テストの実行結果を基に，命令の網羅率や分岐の網羅率を自動的に計測し，分析する。",
+            "ウ": "プログラム中に文法上の誤りや論理的な誤りなどがあるかどうかを，ソースコードを分析して調べる。",
+            "エ": "モジュールの呼出し回数や実行時間，実行文の実行回数などの，プログラム実行時の動作特性に関するデータを計測する。"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 96,
+      "term": "スタブ",
+      "field": "テクノロジ系",
+      "middle": "システム開発技術",
+      "syllabus_item_name": "統合・テスト",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q48",
+          "content_key": "4e94e656837d4f72",
+          "exam_label": "令和元年度 秋期",
+          "number": 48,
+          "stem": "テストで使用するスタブ又はドライバの説明のうち，適切なものはどれか。",
+          "choices": {
+            "ア": "スタブは，テスト対象モジュールからの戻り値の表示・印刷を行う。",
+            "イ": "スタブは，テスト対象モジュールを呼び出すモジュールである。",
+            "ウ": "ドライバは，テスト対象モジュールから呼び出されるモジュールである。",
+            "エ": "ドライバは，引数を渡してテスト対象モジュールを呼び出す。"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 97,
+      "term": "保守費用の見積り",
+      "field": "テクノロジ系",
+      "middle": "システム開発技術",
+      "syllabus_item_name": "保守・廃棄",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q49",
+          "content_key": "9dddf94af73a8f0e",
+          "exam_label": "平成31年度 春期",
+          "number": 49,
+          "stem": "条件に従うとき，アプリケーションプログラムの初年度の修正費用の期待値は，何万円か。\n〔条件〕\n(1) プログラム規模： 2,000k ステップ\n(2) プログラムの潜在不良率： 0.04 件／k ステップ\n(3) 潜在不良の年間発見率： 20％／年\n(4) 発見した不良の分類\n影響度大の不良： 20％，影響度小の不良： 80％\n(5) 不良 1 件当たりの修正費用\n影響度大の不良： 200 万円，影響度小の不良： 50 万円\n(6) 初年度は影響度大の不良だけを修正する",
+          "choices": {
+            "ア": "640",
+            "イ": "1,280",
+            "ウ": "1,600",
+            "エ": "6,400"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 99,
+      "term": "スコープ（作業及び成果物）",
+      "field": "マネジメント系",
+      "middle": "プロジェクトマネジメント",
+      "syllabus_item_name": "プロジェクトのスコープ",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q51",
+          "content_key": "30c0a849fc035745",
+          "exam_label": "平成31年度 春期",
+          "number": 51,
+          "stem": "プロジェクトマネジメントにおいて，目的 1 をもつプロセスと目的 2 をもつプロセスとが含まれる対象群はどれか。\n〔目的〕\n目的 1： プロジェクトの目標，成果物，要求事項及び境界を明確にする。\n目的 2： プロジェクトの目標や成果物などの変更によって生じる，プロジェクトの機会となる影響を最大化し，脅威となる影響を最小化する。",
+          "choices": {
+            "ア": "コミュニケーション",
+            "イ": "スコープ",
+            "ウ": "調達",
+            "エ": "リスク"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 102,
+      "term": "コミュニケーションチャネル",
+      "field": "マネジメント系",
+      "middle": "プロジェクトマネジメント",
+      "syllabus_item_name": "プロジェクトのコミュニケーション",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q54",
+          "content_key": "7144b5046c4e0073",
+          "exam_label": "令和元年度 秋期",
+          "number": 54,
+          "stem": "10 人のメンバで構成されているプロジェクトチームにメンバ 2 人を増員する。次の条件でメンバ同士が打合せを行う場合，打合せの回数は何回増えるか。\n〔条件〕\n・打合せは 1 対 1 で行う。\n・各メンバが，他の全てのメンバと 1 回ずつ打合せを行う。",
+          "choices": {
+            "ア": "12",
+            "イ": "21",
+            "ウ": "22",
+            "エ": "42"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    }
+  ]
+}

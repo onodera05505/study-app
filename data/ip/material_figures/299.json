@@ -1,0 +1,69 @@
+{
+  "topic_id": 299,
+  "term": "HR テック（HRTech）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### データに基づく人事",
+      "caption": "人事のデータを集めて AI で分析し、その結果を採用・配置・離職の予兆に使う流れです。判断の根拠が主観からデータに変わります。",
+      "nodes": [
+        {
+          "id": "data",
+          "label": "人事のデータ\n勤怠・スキル\n評価・応募者",
+          "row": 1,
+          "col": 0,
+          "icon": "database"
+        },
+        {
+          "id": "ai",
+          "label": "AI で分析\n傾向と予兆を見つける",
+          "row": 1,
+          "col": 1,
+          "icon": "gear",
+          "emphasis": true
+        },
+        {
+          "id": "hire",
+          "label": "採用\n合う人を見極める",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "place",
+          "label": "配置\n適材適所に置く",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "leave",
+          "label": "離職の予兆\n早めに手を打つ",
+          "row": 2,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "data",
+          "to": "ai",
+          "label": "集めたデータ"
+        },
+        {
+          "from": "ai",
+          "to": "hire",
+          "label": "活躍する人の傾向"
+        },
+        {
+          "from": "ai",
+          "to": "place",
+          "label": "能力と仕事の相性"
+        },
+        {
+          "from": "ai",
+          "to": "leave",
+          "label": "辞めそうな兆し"
+        }
+      ]
+    }
+  ]
+}

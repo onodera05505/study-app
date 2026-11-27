@@ -6,43 +6,37 @@
       "id": 1,
       "type": "blocks",
       "after": "### 相対パスの組み立て方",
-      "caption": "d1 から .. でルートへ上がって d2 へ下るので ../d2/f2.html となり、節はディレクトリ、葉はファイル又は空ディレクトリ（d3）になる。",
+      "caption": "今いる memo から .. で 2 階層上がって共通の親に着き、img へ下ってファイルを指す道順です。番号の順につないだものが相対パスになります。",
       "nodes": [
         {
           "id": "rt",
-          "label": "ルートディレクトリ\n（根）",
+          "label": "ルートディレクトリ\ndocs と img の共通の親",
           "row": 0,
           "col": 1,
           "shape": "round"
         },
         {
-          "id": "d1",
-          "label": "d1\nカレント（節）",
+          "id": "docs",
+          "label": "docs\nmemo の 1 つ上",
           "row": 1,
-          "col": 0,
-          "emphasis": true
+          "col": 0
         },
         {
-          "id": "d3",
-          "label": "d3\n空なので葉",
-          "row": 1,
-          "col": 3
-        },
-        {
-          "id": "d2",
-          "label": "d2\n（節）",
+          "id": "img",
+          "label": "img\n目的のファイルの親",
           "row": 1,
           "col": 2
         },
         {
-          "id": "f1",
-          "label": "f1.html\n（葉）",
+          "id": "memo",
+          "label": "memo\nカレント（今いる位置）",
           "row": 2,
-          "col": 0
+          "col": 0,
+          "emphasis": true
         },
         {
-          "id": "f2",
-          "label": "f2.html\n目的のファイル（葉）",
+          "id": "logo",
+          "label": "logo.png（目的のファイル）\n相対パスは ../../img/logo.png",
           "row": 2,
           "col": 2,
           "emphasis": true
@@ -50,29 +44,24 @@
       ],
       "edges": [
         {
-          "from": "d1",
+          "from": "memo",
+          "to": "docs",
+          "label": "① .. で 1 階層上へ"
+        },
+        {
+          "from": "docs",
           "to": "rt",
-          "label": "①  .. で1階層上へ"
+          "label": "② .. でもう 1 階層上へ"
         },
         {
           "from": "rt",
-          "to": "d2",
-          "label": "②  d2 へ下る"
+          "to": "img",
+          "label": "③ img へ下る"
         },
         {
-          "from": "d2",
-          "to": "f2",
-          "label": "③  f2.html"
-        },
-        {
-          "from": "rt",
-          "to": "d3",
-          "arrow": "none"
-        },
-        {
-          "from": "d1",
-          "to": "f1",
-          "arrow": "none"
+          "from": "img",
+          "to": "logo",
+          "label": "④ logo.png を指す"
         }
       ]
     }

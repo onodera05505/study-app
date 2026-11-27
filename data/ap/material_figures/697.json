@@ -5,79 +5,59 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 解き方",
-      "caption": "初期状態 a から 110 を 1 文字ずつ読むと a→b→d→c と移るので、受理状態は c になる。",
+      "after": "### 計算の解き方",
+      "caption": "矢印は、その記号を読んだときに移る先です。初期状態から入力を 1 文字ずつたどり、読み終わりに立っている状態が受理状態かどうかで判定します。",
       "nodes": [
         {
-          "id": "a",
-          "label": "a\n初期状態",
-          "row": 0,
-          "col": 0,
-          "shape": "round"
-        },
-        {
-          "id": "b",
-          "label": "b\n末尾が 1",
-          "row": 0,
-          "col": 1,
-          "shape": "round"
-        },
-        {
-          "id": "d",
-          "label": "d\n末尾が 11",
-          "row": 0,
-          "col": 2,
-          "shape": "round"
-        },
-        {
-          "id": "c",
-          "label": "c\n末尾が 10",
+          "id": "p",
+          "label": "p（初期状態）\n末尾が 0 でも\n01 でもない",
           "row": 1,
+          "col": 0
+        },
+        {
+          "id": "q",
+          "label": "q\n末尾が 0",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "r",
+          "label": "r（受理状態）\n末尾が 01",
+          "row": 2,
           "col": 2,
-          "shape": "round",
           "emphasis": true
         }
       ],
       "edges": [
         {
-          "from": "a",
-          "to": "a",
-          "label": "0"
+          "from": "p",
+          "to": "p",
+          "label": "1 を読む"
         },
         {
-          "from": "a",
-          "to": "b",
-          "label": "1"
+          "from": "p",
+          "to": "q",
+          "label": "0 を読む"
         },
         {
-          "from": "b",
-          "to": "d",
-          "label": "1"
+          "from": "q",
+          "to": "q",
+          "label": "0 を読む"
         },
         {
-          "from": "b",
-          "to": "c",
-          "label": "0"
+          "from": "q",
+          "to": "r",
+          "label": "1 を読む"
         },
         {
-          "from": "d",
-          "to": "d",
-          "label": "1"
+          "from": "r",
+          "to": "q",
+          "label": "0 を読む"
         },
         {
-          "from": "d",
-          "to": "c",
-          "label": "0"
-        },
-        {
-          "from": "c",
-          "to": "b",
-          "label": "1"
-        },
-        {
-          "from": "c",
-          "to": "a",
-          "label": "0"
+          "from": "r",
+          "to": "p",
+          "label": "1 を読む"
         }
       ]
     }

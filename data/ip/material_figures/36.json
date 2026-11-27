@@ -4,21 +4,86 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
-      "after": "### 代理で外につなぐしくみ",
-      "caption": "PC は直接外へ出ず、プロキシが代わりに取りに行く。Web サーバから見える相手はプロキシだけ。",
-      "nodes": [
-        {"id": "pc", "label": "社内の PC", "row": 0, "col": 0},
-        {"id": "px", "label": "プロキシサーバ", "row": 0, "col": 1, "emphasis": true},
-        {"id": "net", "label": "インターネット", "row": 0, "col": 2, "shape": "cloud"},
-        {"id": "web", "label": "Web サーバ", "row": 0, "col": 3},
-        {"id": "log", "label": "アクセス先の記録\n業務外サイトの遮断", "row": 1, "col": 1}
+      "type": "sequence",
+      "after": "### 外向きの通信を一か所に集める理由",
+      "caption": "PC は外へ直接出ず、プロキシが代わりに Web サーバへ接続します。通信が一か所を通るので、記録と遮断もここで行えます。",
+      "actors": [
+        {
+          "id": "pc",
+          "label": "社内の PC"
+        },
+        {
+          "id": "px",
+          "label": "プロキシサーバ"
+        },
+        {
+          "id": "web",
+          "label": "Web サーバ"
+        }
       ],
-      "edges": [
-        {"from": "pc", "to": "px", "label": "ページを頼む", "arrow": "both"},
-        {"from": "px", "to": "net", "label": "PC に代わって接続", "arrow": "both"},
-        {"from": "net", "to": "web", "arrow": "both"},
-        {"from": "px", "to": "log", "style": "dashed", "arrow": "none"}
+      "steps": [
+        {
+          "from": "pc",
+          "to": "px",
+          "label": "欲しいページを頼む"
+        },
+        {
+          "from": "px",
+          "to": "px",
+          "label": "アクセス先を記録し、業務外なら遮断"
+        },
+        {
+          "from": "px",
+          "to": "web",
+          "label": "PC に代わって自分が接続する",
+          "note": "Web サーバから見える相手はプロキシだけ"
+        },
+        {
+          "from": "web",
+          "to": "px",
+          "label": "ページを返す"
+        },
+        {
+          "from": "px",
+          "to": "pc",
+          "label": "受け取ったページを PC に渡す"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "matrix",
+      "after": "### 混同しやすい用語",
+      "caption": "境界で通信に関わる 2 つを同じ観点で並べます。上の行をたどると、Web サーバの相手が自分になるのはプロキシのほうです。",
+      "x": {
+        "label": "仕組み",
+        "values": [
+          "プロキシ",
+          "NAT"
+        ]
+      },
+      "y": {
+        "label": "観点",
+        "values": [
+          "Web サーバと\nやり取りする相手",
+          "境界で\nしていること"
+        ]
+      },
+      "cells": [
+        [
+          "プロキシ自身\nPC は表に出ない",
+          "PC 自身\n送信元のアドレスだけ変わる"
+        ],
+        [
+          "代わりに接続する\n受け取って PC に渡す",
+          "アドレスを書き換える\nそのまま通す"
+        ]
+      ],
+      "emphasis": [
+        [
+          0,
+          0
+        ]
       ]
     }
   ]

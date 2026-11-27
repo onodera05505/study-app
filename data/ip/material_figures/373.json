@@ -1,0 +1,69 @@
+{
+  "topic_id": 373,
+  "term": "アドホックネットワーク",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### アクセスポイントを置かないつなぎ方",
+      "caption": "上の段は AP が間に入る一般的なつなぎ方、下の段は AP を置かないアドホックネットワークです。真ん中に中継の機器があるかを比べます。",
+      "nodes": [
+        {
+          "id": "t1",
+          "label": "端末\nAP を経由する",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "ap",
+          "label": "アクセスポイント\nすべての通信を中継",
+          "row": 0,
+          "col": 1,
+          "icon": "network"
+        },
+        {
+          "id": "t2",
+          "label": "端末\nAP を経由する",
+          "row": 0,
+          "col": 2,
+          "icon": "device"
+        },
+        {
+          "id": "a1",
+          "label": "端末\n相手と直接つながる",
+          "row": 1,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "a2",
+          "label": "端末\n相手と直接つながる",
+          "row": 1,
+          "col": 2,
+          "icon": "device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "t1",
+          "to": "ap",
+          "label": "AP 経由",
+          "arrow": "both"
+        },
+        {
+          "from": "ap",
+          "to": "t2",
+          "label": "AP 経由",
+          "arrow": "both"
+        },
+        {
+          "from": "a1",
+          "to": "a2",
+          "label": "AP を置かず直接の電波",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

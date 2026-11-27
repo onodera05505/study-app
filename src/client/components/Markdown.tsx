@@ -41,8 +41,10 @@ type Block =
 const HEADING = /^###\s+(.*\S)\s*$/
 const BULLET = /^[-*]\s+(.*\S)\s*$/
 const NUMBER = /^\d+[.)]\s+(.*\S)\s*$/
-/** 行全体が画像1つ。前後に文字があるものは画像として扱わない。 */
-const IMAGE = /^!\[([^\]]*)\]\(([^)\s]+)\)$/
+/** 行全体が画像1つ。前後に文字があるものは画像として扱わない。
+ *  キャプションには角かっこ（`A[1]` など）が入ってよい。`](` だけは入らないので、
+ *  1 行に画像が 2 つ並ぶ行やキャプションに `](` がある行は画像にならない。 */
+const IMAGE = /^!\[((?:[^\]]|\](?!\())*)\]\(([^)\s]+)\)$/
 /** 通してよい画像の置き場所。ここだけ。 */
 const FIGURE_PREFIX = '/figures/materials/'
 /** 区切り行のセル（`---` / `:---` / `---:`）。 */
@@ -70,6 +72,7 @@ function isDelimiter(row: string[]): boolean {
   return row.length >= 2 && row.every((c) => DELIM_CELL.test(c))
 }
 
+// @implements REQ-003, BR-025
 function parse(src: string): Block[] {
   const blocks: Block[] = []
   const lines = src.split('\n')
@@ -84,6 +87,7 @@ function parse(src: string): Block[] {
     }
 
     // 図の画像行。置き場所が違うものは画像にせず、そのまま段落として出す。
+    // @implements REQ-004
     const image = IMAGE.exec(line)
     if (image && image[2].startsWith(FIGURE_PREFIX)) {
       blocks.push({ kind: 'image', src: image[2], caption: image[1] })
@@ -129,6 +133,7 @@ function parse(src: string): Block[] {
  *  閉じていない `**` や `[[` はそのまま文字として残す（本文が消えないほうが大事）。 */
 const INLINE = /\*\*(.+?)\*\*|\[\[([^\[\]\n]+)\]\]/g
 
+// @implements REQ-007
 function inline(text: string): ReactNode {
   const out: ReactNode[] = []
   let last = 0
@@ -139,7 +144,7 @@ function inline(text: string): ReactNode {
     if (mo.index > last) {
       out.push(<Fragment key={out.length}>{text.slice(last, mo.index)}</Fragment>)
     }
-    // 太字の中にも `[[用語]]` が来る（教材の「混同しやすい用語」は `- **[[用語]]** — 説明` の形）。
+    // 太字の中にも `[[用語]]` が来る（教材の「関連用語」（資格版は「混同しやすい用語」）は `- **[[用語]]** — 説明` の形）。
     // 中身をもう一度この関数に通さないと、太字の中では [[…]] が文字のまま出てしまう。
     // INLINE は共有の正規表現なので、再帰から戻ったあとに lastIndex を戻す。
     if (mo[1] !== undefined) {
@@ -156,6 +161,7 @@ function inline(text: string): ReactNode {
 }
 
 /** 段落を作らずに行の中の記法だけを描く。問題の解説の1行に使う。 */
+// @implements REQ-007
 export function Inline({ text }: { text: string }) {
   return <>{inline(text)}</>
 }
@@ -198,7 +204,12 @@ function Table({ head, rows }: { head: string[] | null; rows: string[][] }) {
 /** 教材の図。過去問の図（Figure.tsx）と同じくタップで原寸に切り替える。
  *
  *  スマホでは幅に合わせて縮むと文字が読めなくなる図がある。過去問側にだけ
- *  拡大があって教材側に無いのは、同じ絵なのに扱いが違って見える。 */
+ *  拡大があって教材側に無いのは、同じ絵なのに扱いが違って見える。
+ *
+ *  図の説明文は figure の唯一の figcaption として 1 回だけ示し、図と結び付けて読ませる。
+ *  画像の代替文は空にして説明文を重ねて読ませない。拡大の案内は figcaption にせず、
+ *  ボタンの名前と重なるので読み上げから外す。 */
+// @implements REQ-006, REQ-427, BR-035
 function MdFigure({ src, caption }: { src: string; caption: string }) {
   const [zoomed, setZoomed] = useState(false)
   return (
@@ -210,16 +221,17 @@ function MdFigure({ src, caption }: { src: string; caption: string }) {
         aria-label={zoomed ? '図を画面幅に合わせる' : '図を原寸で表示する'}
       >
         {/* 教材の図は本文を読む助けなので、画面に来てから読み込めばよい */}
-        <img src={src} alt={caption} loading="lazy" />
+        <img src={src} alt="" loading="lazy" />
       </button>
       {caption && <figcaption>{caption}</figcaption>}
-      <figcaption className="figure-hint">
+      <p className="figure-hint" aria-hidden="true">
         {zoomed ? 'タップで画面幅に戻す（横にスクロールできます）' : 'タップで拡大'}
-      </figcaption>
+      </p>
     </figure>
   )
 }
 
+// @implements REQ-003
 export function Markdown({ source, className }: { source: string; className?: string }) {
   const blocks = parse(source)
   return (

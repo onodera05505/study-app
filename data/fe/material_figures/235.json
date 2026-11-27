@@ -1,0 +1,52 @@
+{
+  "topic_id": 235,
+  "term": "MIME",
+  "figures": [
+    {
+      "id": 1,
+      "type": "parts",
+      "after": "### ヘッダで中身を宣言するしくみ",
+      "caption": "multipart のメール 1 通が、どの部品でできているかを示します。本文と添付はそれぞれ自分のヘッダで中身の種類と符号化の方式を宣言します。",
+      "whole": {
+        "label": "1 通のメール（multipart）",
+        "icon": "mail"
+      },
+      "parts": [
+        {
+          "label": "メールのヘッダ\nmultipart と区切り文字を宣言"
+        },
+        {
+          "label": "区切り文字\n部品と部品の境目を示す"
+        },
+        {
+          "label": "本文の部品\ntext/plain・charset"
+        },
+        {
+          "label": "添付の部品\nimage/jpeg・Base64",
+          "emphasis": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### Base64 による変換",
+      "caption": "Base64 でビットの割り方が段ごとに変わる様子を示します。最後の段で 3 バイトが 4 文字になるので、大きさは約 1.33 倍になります。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "元のデータ\n3 バイト＝24 ビット",
+          "next_label": "24 ビットを並べる"
+        },
+        {
+          "label": "6 ビットずつ 4 つに割る\n1 つは 0〜63 の値",
+          "next_label": "4 つの値"
+        },
+        {
+          "label": "64 種類の文字に置き換える\n3 バイトが 4 文字（約 1.33 倍）",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

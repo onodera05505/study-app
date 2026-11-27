@@ -1,0 +1,26 @@
+{
+  "topic_id": 51,
+  "term": "繰り返し",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "1 から 5 までを足す輪です。数が 6 になると条件が偽になり、合計 15 で輪を出ます。数を増やす行が無いと輪から出られません。",
+      "nodes": [
+        {"id": "init", "label": "合計 ← 0\n数 ← 1", "row": 1, "col": 0},
+        {"id": "cond", "label": "数 が\n5 以下？", "row": 1, "col": 1},
+        {"id": "end", "label": "終わり\n合計 は 15", "row": 0, "col": 1, "shape": "round"},
+        {"id": "add", "label": "合計 ←\n合計 ＋ 数", "row": 1, "col": 2},
+        {"id": "inc", "label": "数 ← 数 ＋ 1\n無いと止まらない", "row": 1, "col": 3, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "init", "to": "cond", "label": "始める"},
+        {"from": "cond", "to": "end", "label": "偽（数が 6）"},
+        {"from": "cond", "to": "add", "label": "真"},
+        {"from": "add", "to": "inc", "label": "次に"},
+        {"from": "inc", "to": "cond", "label": "戻る"}
+      ]
+    }
+  ]
+}

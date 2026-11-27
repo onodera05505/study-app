@@ -1,37 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="352" viewBox="0 0 640 352" role="img">
-<title>PC-B が読んだ時点で PC-A の書込みがまだ済んでいないため、最後の17が5を上書きして n は17になる。</title>
-<rect x="0.5" y="0.5" width="639" height="351" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(63.6 20)">
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="324" viewBox="0 0 640 324">
+<rect x="0.5" y="0.5" width="639" height="323" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(54 20)">
 <line x1="48" y1="34" x2="48" y2="284" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="256.4" y1="34" x2="256.4" y2="284" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="464.8" y1="34" x2="464.8" y2="284" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="266" y1="34" x2="266" y2="284" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="484" y1="34" x2="484" y2="284" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
 <rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">PC-A</text>
-<rect x="168.15" y="0" width="176.5" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="256.4" y="11.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ファイル</text>
-<text x="256.4" y="31.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">データ n（初期値 10）</text>
-<rect x="416.8" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="464.8" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">PC-B</text>
-<polyline points="51,68 253.4,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="253.4,68 245.4,71.6 245.4,64.4" fill="#1f2937"/>
-<text x="152.2" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. ① n を読む → 10 を受け取る</text>
-<rect x="78.3" y="73" width="147.8" height="16" rx="3" fill="#ffffff"/>
-<text x="152.2" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">5を引いて手元の結果は 5</text>
-<polyline points="461.8,124 259.4,124" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="259.4,124 267.4,120.4 267.4,127.6" fill="#1f2937"/>
-<text x="360.6" y="117" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. ② n を読む → まだ 10 のまま</text>
-<rect x="283.4" y="129" width="154.4" height="16" rx="3" fill="#ffffff"/>
-<text x="360.6" y="142.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">7を足して手元の結果は 17</text>
-<polyline points="51,180 253.4,180" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="253.4,180 245.4,183.6 245.4,176.4" fill="#1f2937"/>
-<text x="152.2" y="173" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. ③ 結果の 5 を書き込む</text>
-<rect x="95.7" y="185" width="113" height="16" rx="3" fill="#ffffff"/>
-<text x="152.2" y="198.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">この時点で n は 5</text>
-<polyline points="461.8,236 259.4,236" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="259.4,236 267.4,232.4 267.4,239.6" fill="#1f2937"/>
-<text x="360.6" y="229" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. ④ 結果の 17 を書き込む</text>
-<rect x="256.1" y="241" width="209" height="16" rx="3" fill="#ffffff"/>
-<text x="360.6" y="254.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">PC-A の更新が消える（更新の喪失）</text>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">端末 A</text>
+<rect x="185.45" y="0" width="161.1" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="266" y="11.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">在庫データ</text>
+<text x="266" y="31.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">在庫数（初期値 30）</text>
+<rect x="436" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="484" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">端末 B</text>
+<polyline points="51,68 263,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="263,68 255,71.6 255,64.4" fill="#1f2937"/>
+<text x="157" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. 在庫数を読む → 30 を受け取る</text>
+<rect x="30.6" y="73" width="252.8" height="16" rx="3" fill="#ffffff"/>
+<text x="157" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">8 個売れたので 8 を引き、手元の結果は 22</text>
+<polyline points="481,124 269,124" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="269,124 277,120.4 277,127.6" fill="#1f2937"/>
+<text x="375" y="117" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 在庫数を読む → まだ 30 のまま</text>
+<rect x="242.6" y="129" width="264.8" height="16" rx="3" fill="#ffffff"/>
+<text x="375" y="142.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">5 個入荷したので 5 を足し、手元の結果は 35</text>
+<polyline points="51,180 263,180" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="263,180 255,183.6 255,176.4" fill="#1f2937"/>
+<text x="157" y="173" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 結果の 22 を書き込む</text>
+<rect x="89.1" y="185" width="135.8" height="16" rx="3" fill="#ffffff"/>
+<text x="157" y="198.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">この時点で在庫数は 22</text>
+<polyline points="481,236 269,236" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="269,236 277,232.4 277,239.6" fill="#1f2937"/>
+<text x="375" y="229" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 結果の 35 を書き込む</text>
+<rect x="265.1" y="241" width="219.8" height="16" rx="3" fill="#ffffff"/>
+<text x="375" y="254.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">端末 A の更新が消える（更新の喪失）</text>
 </g>
-<text x="320" y="332" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">PC-B が読んだ時点で PC-A の書込みがまだ済んでいないため、最後の17が5を上書きして n は17になる。</text>
 </svg>

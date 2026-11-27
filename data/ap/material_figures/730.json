@@ -1,0 +1,46 @@
+{
+  "topic_id": 730,
+  "term": "状態遷移図",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 事象駆動をなぜ状態で表すのか",
+      "caption": "丸が状態、矢印が「事象／動作」です。同じスタート信号でも、停止中なら運転を始め、強調した運転中では何もせず同じ状態にとどまります。",
+      "nodes": [
+        {
+          "id": "stop",
+          "label": "停止中\nモーターが止まっている",
+          "row": 0,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "run",
+          "label": "運転中\nモーターが回っている",
+          "row": 1,
+          "col": 0,
+          "shape": "round",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "stop",
+          "to": "run",
+          "label": "スタート信号／運転を始める"
+        },
+        {
+          "from": "run",
+          "to": "run",
+          "label": "スタート信号／何もしない"
+        },
+        {
+          "from": "run",
+          "to": "stop",
+          "label": "停止信号／止める"
+        }
+      ]
+    }
+  ]
+}

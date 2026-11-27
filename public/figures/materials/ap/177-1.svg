@@ -1,27 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="226" viewBox="0 0 640 226" role="img">
-<title>従来は1台の機器に同居していた制御機能をソフトウェアへ分離し、転送機器を集中制御するのが SDN。</title>
-<rect x="0.5" y="0.5" width="639" height="225" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(41 20)">
-<polyline points="279,56 279,79 68,79 68,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="68,102 64.4,94 71.6,94" fill="#1f2937"/>
-<polyline points="279,56 279,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="279,102 275.4,94 282.6,94" fill="#1f2937"/>
-<polyline points="279,56 279,79 490,79 490,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="490,102 486.4,94 493.6,94" fill="#1f2937"/>
-<rect x="176" y="0" width="206" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="279" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">SDN コントローラー</text>
-<text x="279" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">（制御機能＝経路を決める）</text>
-<rect x="0" y="102" width="136" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="68" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ルータ／スイッチ</text>
-<text x="68" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">（転送機能だけ）</text>
-<rect x="211" y="102" width="136" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="279" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ルータ／スイッチ</text>
-<text x="279" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">（転送機能だけ）</text>
-<rect x="422" y="102" width="136" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="490" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ルータ／スイッチ</text>
-<text x="490" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">（転送機能だけ）</text>
-<rect x="143.1" y="65" width="60.8" height="16" rx="3" fill="#ffffff"/>
-<text x="173.5" y="78.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">OpenFlow</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="218" viewBox="0 0 640 218">
+<rect x="0.5" y="0.5" width="639" height="217" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(31 20)">
+<polyline points="289,76 289,99 68,99 68,122" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="68,122 64.4,114 71.6,114" fill="#1f2937"/>
+<polyline points="289,76 289,122" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="289,122 285.4,114 292.6,114" fill="#1f2937"/>
+<polyline points="289,76 289,99 510,99 510,122" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="510,122 506.4,114 513.6,114" fill="#1f2937"/>
+<polyline points="136,150 221,150" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="221,150 213,153.6 213,146.4" fill="#1f2937"/>
+<polyline points="357,150 442,150" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="442,150 434,153.6 434,146.4" fill="#1f2937"/>
+<rect x="200" y="0" width="178" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="289" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">SDN コントローラー</text>
+<text x="289" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">制御機能＝経路を決める</text>
+<text x="289" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">OpenFlow で規則を配る</text>
+<rect x="0" y="122" width="136" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="68" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ルータ／スイッチ</text>
+<text x="68" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">転送機能だけ</text>
+<rect x="221" y="122" width="136" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="289" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ルータ／スイッチ</text>
+<text x="289" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">転送機能だけ</text>
+<rect x="442" y="122" width="136" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="510" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ルータ／スイッチ</text>
+<text x="510" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">転送機能だけ</text>
+<rect x="150.5" y="85" width="56" height="16" rx="3" fill="#ffffff"/>
+<text x="178.5" y="98.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">転送規則</text>
+<rect x="261" y="90" width="56" height="16" rx="3" fill="#ffffff"/>
+<text x="289" y="103.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">転送規則</text>
+<rect x="371.5" y="85" width="56" height="16" rx="3" fill="#ffffff"/>
+<text x="399.5" y="98.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">転送規則</text>
+<rect x="150.5" y="133" width="56" height="16" rx="3" fill="#ffffff"/>
+<text x="178.5" y="146.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">パケット</text>
+<rect x="371.5" y="133" width="56" height="16" rx="3" fill="#ffffff"/>
+<text x="399.5" y="146.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">パケット</text>
 </g>
-<text x="320" y="206" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">従来は1台の機器に同居していた制御機能をソフトウェアへ分離し、転送機器を集中制御するのが SDN。</text>
 </svg>

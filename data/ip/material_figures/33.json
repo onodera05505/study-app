@@ -6,16 +6,44 @@
       "id": 1,
       "type": "blocks",
       "after": "### 列をどちらの表に置くか",
-      "caption": "商品番号で決まる商品名と単価だけを別の表に出す。個数は受注ごとに違うので受注側に残す。",
+      "caption": "1つの表から、講座番号で決まる列だけを別の表に分け、外部キーでつなぎ直す様子を表します。",
       "nodes": [
-        {"id": "one", "label": "分割前の1つの表\n受注番号・発注者名・商品番号\n商品名・個数・単価", "row": 0, "col": 0},
-        {"id": "juchu", "label": "受注表\n受注番号・発注者名\n商品番号・個数", "row": 1, "col": 0},
-        {"id": "shohin", "label": "商品表\n商品番号（主キー）\n商品名・単価", "row": 1, "col": 1, "emphasis": true}
+        {
+          "id": "one",
+          "label": "分割前の1つの表\n申込番号・申込者名・講座番号\n講座名・受講料・申込日\n同じ講座名・受講料が何度も並ぶ",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "mosikomi",
+          "label": "申込表\n申込番号・申込者名\n講座番号・申込日",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "koza",
+          "label": "講座表\n講座番号（主キー）\n講座名・受講料",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "one", "to": "juchu", "label": "正規化"},
-        {"from": "one", "to": "shohin"},
-        {"from": "juchu", "to": "shohin", "label": "外部キー"}
+        {
+          "from": "one",
+          "to": "mosikomi",
+          "label": "申込ごとに変わる列"
+        },
+        {
+          "from": "one",
+          "to": "koza",
+          "label": "講座番号で決まる列を分ける"
+        },
+        {
+          "from": "mosikomi",
+          "to": "koza",
+          "label": "講座番号（外部キー）でたどる"
+        }
       ]
     }
   ]

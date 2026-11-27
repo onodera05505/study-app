@@ -1,0 +1,311 @@
+{
+  "bundle": "bundle_03",
+  "topics": [
+    {
+      "topic_id": 17,
+      "term": "負の数の表し方（2 の補数）",
+      "field": "コンピュータの仕組み",
+      "middle": "0 と 1 で数と文字を表す",
+      "summary": "決まった桁数の 2 進数で負の数を表す方法。引き算を足し算の回路で済ませられる",
+      "goals": [
+        1
+      ],
+      "prereq": [
+        "2 進数と 16 進数"
+      ],
+      "sources": [
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "基礎理論 > 離散数学"
+        },
+        {
+          "name": "Nand2Tetris コンピュータシステムの理論と実装（From Nand to Tetris）プロジェクト一覧",
+          "where": "プロジェクト2 ブール算術（Boolean Arithmetic）"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "2 進数と基数変換（2 の補数）"
+        }
+      ],
+      "source_count": 2,
+      "exam_weight": 1.12
+    },
+    {
+      "topic_id": 18,
+      "term": "画像と音をデジタルにする（標本化・量子化・データ量）",
+      "field": "コンピュータの仕組み",
+      "middle": "0 と 1 で数と文字を表す",
+      "summary": "連続した音や光を一定の間隔で区切って数にする。細かく区切るほど質は上がり、データ量も増える",
+      "goals": [
+        1
+      ],
+      "prereq": [
+        "ビットとバイト",
+        "2 進数と 16 進数"
+      ],
+      "sources": [
+        {
+          "name": "一般情報教育の知識体系 GEBOK2017.1（J17-GE）",
+          "where": "GE-DIG3 アナログ情報からディジタル情報へ（必修）"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "MR メディア表現 > 標本化、量子化、圧縮（Tier2）"
+        },
+        {
+          "name": "高等学校情報科「情報Ⅰ」教員研修用教材（本編）",
+          "where": "第2章の項目 > 数値・文字・画像・音声・動画のデジタル化"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第23回 画面と 2D グラフィックス（Screens & 2D Graphi…"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "音声のデータ量・画素へのメモリ割当て"
+        }
+      ],
+      "source_count": 4,
+      "exam_weight": 0.74
+    },
+    {
+      "topic_id": 19,
+      "term": "圧縮",
+      "field": "コンピュータの仕組み",
+      "middle": "0 と 1 で数と文字を表す",
+      "summary": "同じ並びをまとめるなどしてデータを小さくする。元に戻せる方式と、少し捨てて大きく縮める方式がある",
+      "goals": [
+        1
+      ],
+      "prereq": [
+        "ビットとバイト",
+        "文字コード"
+      ],
+      "sources": [
+        {
+          "name": "一般情報教育の知識体系 GEBOK2017.1（J17-GE）",
+          "where": "GE-DIG4 符号圧縮と誤り検出・誤り訂正符号（選択）"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第21回 圧縮（Compression）"
+        },
+        {
+          "name": "高等学校情報科「情報Ⅰ」教員研修用教材（本編）",
+          "where": "第2章の項目 > ファイルの圧縮・展開"
+        },
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "基礎理論 > 情報に関する理論"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "ハフマン符号・誤り検出・訂正（パリティ・ハミング符号・CRC）"
+        }
+      ],
+      "source_count": 4,
+      "exam_weight": 1.65
+    },
+    {
+      "topic_id": 20,
+      "term": "論理演算（AND・OR・NOT）と真理値表",
+      "field": "コンピュータの仕組み",
+      "middle": "論理演算と回路",
+      "summary": "真か偽の 2 つの値を組み合わせる計算。条件分岐の条件もこの形で書く。全部の組み合わせを表にしたのが真理値表",
+      "goals": [
+        1,
+        3
+      ],
+      "prereq": [
+        "ビットとバイト"
+      ],
+      "sources": [
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "ハードウェア"
+        },
+        {
+          "name": "高等学校情報科「情報Ⅰ」教員研修用教材（本編）",
+          "where": "第3章の項目 > コンピュータの構成（制御・演算・記憶・入力・出力）/ 演算の…"
+        },
+        {
+          "name": "一般情報教育の知識体系 GEBOK2017.1（J17-GE）",
+          "where": "GE-CEO2 論理回路と論理演算（必修）"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第3回 ブール論理と論理ゲート（Boolean Logic & Logic G…"
+        },
+        {
+          "name": "Nand2Tetris コンピュータシステムの理論と実装（From Nand to Tetris）プロジェクト一覧",
+          "where": "プロジェクト1 ブール論理（Boolean Logic）"
+        },
+        {
+          "name": "情報科学基礎論（Introduction to Information Science）授業計画と内容（2026 前期）",
+          "where": "計算機工学 > 論理演算子と電子回路による実現"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "論理演算と真理値表"
+        }
+      ],
+      "source_count": 6,
+      "exam_weight": 2.88
+    },
+    {
+      "topic_id": 21,
+      "term": "条件の否定の言い換え（ド・モルガンの法則）",
+      "field": "コンピュータの仕組み",
+      "middle": "論理演算と回路",
+      "summary": "「A かつ B ではない」は「A でないか、B でない」と同じ。条件を書き換えるときに間違えないための決まり",
+      "goals": [
+        1,
+        3
+      ],
+      "prereq": [
+        "論理演算（AND・OR・NOT）と真理値表"
+      ],
+      "sources": [
+        {
+          "name": "一般情報教育の知識体系 GEBOK2017.1（J17-GE）",
+          "where": "GE-CEO5 論理代数と論理回路（選択）"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "知識エリア一覧 > DS 離散構造"
+        },
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "基礎理論 > 離散数学"
+        }
+      ],
+      "source_count": 3,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 22,
+      "term": "論理回路と XOR",
+      "field": "コンピュータの仕組み",
+      "middle": "論理演算と回路",
+      "summary": "AND・OR・NOT などの部品（ゲート）を組み合わせると足し算の回路ができる。XOR は 2 つが違うときだけ真",
+      "goals": [
+        1
+      ],
+      "prereq": [
+        "論理演算（AND・OR・NOT）と真理値表",
+        "条件の否定の言い換え（ド・モルガンの法則）"
+      ],
+      "sources": [
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "ハードウェア"
+        },
+        {
+          "name": "Nand2Tetris コンピュータシステムの理論と実装（From Nand to Tetris）プロジェクト一覧",
+          "where": "プロジェクト2 ブール算術（Boolean Arithmetic）"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第5回 計算の仕組み"
+        },
+        {
+          "name": "情報科学基礎論（Introduction to Information Science）授業計画と内容（2026 前期）",
+          "where": "計算機工学 > 組み合わせ論理回路と順序回路"
+        },
+        {
+          "name": "一般情報教育の知識体系 GEBOK2017.1（J17-GE）",
+          "where": "GE-CEO5 論理代数と論理回路（選択）"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "論理回路（NAND・XOR・加算器）"
+        }
+      ],
+      "source_count": 5,
+      "exam_weight": 1.26
+    },
+    {
+      "topic_id": 23,
+      "term": "ソフトウェアの種類",
+      "field": "OS とソフトウェア",
+      "middle": "OS とアプリの役割分担",
+      "summary": "ソフトウェアは土台の OS、共通の部品役のミドルウェア、利用者が使うアプリに分かれ、下の層に頼って動く",
+      "goals": [
+        2
+      ],
+      "prereq": [
+        "コンピュータの 5 つの働き"
+      ],
+      "sources": [
+        {
+          "name": "ITスキル標準モデルカリキュラム −レベル１を目指して−（ITSS V3 以降対応）",
+          "where": "IT入門コマ > ソフトウェアの種類と役割"
+        },
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "ソフトウェア > ミドルウェア"
+        },
+        {
+          "name": "一般情報教育の知識体系 GEBOK2017.1（J17-GE）",
+          "where": "GE-CEO3 ソフトウェアの構成要素（必修）"
+        },
+        {
+          "name": "コンピュータサイエンスと情報技術入門（Introduction to Computer Science and Information Technology）授業計画（2023 春）",
+          "where": "第3回 OS とアプリケーションソフトウェア（The Operating Sy…"
+        },
+        {
+          "name": "iコンピテンシ ディクショナリ 2022 スキルディクショナリ",
+          "where": "（システム） プラットフォームの基礎技術"
+        }
+      ],
+      "source_count": 5,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 24,
+      "term": "OS の役割",
+      "field": "OS とソフトウェア",
+      "middle": "OS とアプリの役割分担",
+      "summary": "OS は CPU の時間・メモリ・ファイル・機器を管理し、複数のアプリが取り合わずに使えるよう仲立ちする。PC・スマホ・サーバで使う OS が違う",
+      "goals": [
+        2
+      ],
+      "prereq": [
+        "ソフトウェアの種類",
+        "メモリ"
+      ],
+      "sources": [
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "ソフトウェア > オペレーティングシステム"
+        },
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "ソフトウェア > オペレーティングシステム"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "OS オペレーティングシステム > OS の概要（Tier1）"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第18回 オペレーティングシステム（Operating Systems）"
+        },
+        {
+          "name": "Nand2Tetris コンピュータシステムの理論と実装（From Nand to Tetris）プロジェクト一覧",
+          "where": "プロジェクト12 オペレーティングシステム（Operating System）"
+        },
+        {
+          "name": "一般情報教育の知識体系 GEBOK2017.1（J17-GE）",
+          "where": "GE-CEO6 オペレーティングシステム（選択）"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "多重プログラミング"
+        }
+      ],
+      "source_count": 6,
+      "exam_weight": 0.46
+    }
+  ]
+}

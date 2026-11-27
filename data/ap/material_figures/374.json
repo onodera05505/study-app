@@ -1,0 +1,72 @@
+{
+  "topic_id": 374,
+  "term": "財務報告に係る内部統制の評価及び監査の基準",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 関係者ごとの役割と責任",
+      "caption": "矢印は、誰が内部統制や他の関係者にどう働きかけるかを表します。強調した経営者が整備と運用の最終的な責任を負います。",
+      "nodes": [
+        {
+          "id": "bd",
+          "label": "取締役会\n基本方針を決定",
+          "row": 0,
+          "col": 0,
+          "icon": "people"
+        },
+        {
+          "id": "ceo",
+          "label": "経営者\n最終的な責任",
+          "row": 0,
+          "col": 1,
+          "icon": "person",
+          "emphasis": true
+        },
+        {
+          "id": "kansa",
+          "label": "監査役\n独立した立場から\n取締役の職務を監査",
+          "row": 1,
+          "col": 2,
+          "icon": "search"
+        },
+        {
+          "id": "ia",
+          "label": "内部監査人\nモニタリングの一環",
+          "row": 1,
+          "col": 0,
+          "icon": "check"
+        },
+        {
+          "id": "ic",
+          "label": "内部統制\n整備と運用",
+          "row": 1,
+          "col": 1,
+          "icon": "gear"
+        }
+      ],
+      "edges": [
+        {
+          "from": "bd",
+          "to": "ceo",
+          "label": "基本方針・監督"
+        },
+        {
+          "from": "ceo",
+          "to": "ic",
+          "label": "整備・運用する"
+        },
+        {
+          "from": "kansa",
+          "to": "ic",
+          "label": "監視・検証"
+        },
+        {
+          "from": "ia",
+          "to": "ic",
+          "label": "検討・評価し改善を促す"
+        }
+      ]
+    }
+  ]
+}

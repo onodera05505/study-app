@@ -1,16 +1,20 @@
 #!/usr/bin/env python3
-"""応用情報技術者試験のシラバス PDF を構造化して JSON に落とす。
+"""応用情報・基本情報のシラバス PDF を構造化して JSON に落とす。
 
-    python3 scripts/parse_syllabus_ap.py
+    python3 scripts/parse_syllabus_ap.py                 # 応用情報（data/ap）
+    python3 scripts/parse_syllabus_ap.py --data data/fe   # 基本情報 科目A
 
-入力: data/ap/syllabus_ap_ver7_2.pdf
-出力: data/ap/syllabus.json
+入力: `<data>/syllabus_*.pdf`（例 data/ap/syllabus_ap_ver7_2.pdf、data/fe/syllabus_fe_ver9_2.pdf）
+出力: `<data>/syllabus.json` と `<data>/syllabus_index.json`
+
+索引（`syllabus_index.json`）は分類のバンドル（`build_classify_bundles.py`）が読む形で、
+小分類 1 件が 1 項目。分類の担当に渡すのに要らない階層の番号（`small_no`・`major_no`）を落とす。
 
 IT パスポートの `parse_syllabus.py` と出力の形は揃えてあるが、**階層の深さが違う**
 ので別スクリプトにしている。
 
-    IT パスポート … 分野 → 大分類 → 中分類 → 項目（全63）。用語例は項目に付く
-    応用情報      … 分野 → 大分類 → 中分類 → 小分類 →（n）→ ①。用語例は最深部に付く
+    IT パスポート      … 分野 → 大分類 → 中分類 → 項目（全63）。用語例は項目に付く
+    応用情報・基本情報 … 分野 → 大分類 → 中分類 → 小分類 →（n）→ ①。用語例は最深部に付く
 
 アプリ側で「単元」として見せるのは中分類、論点を紐づける受け皿は小分類にする。
 そこで**小分類より深い階層（（n）と①）の用語例は、すべてその小分類にまとめる**。
@@ -32,14 +36,17 @@ try:
 except ImportError:
     sys.exit("pypdf が必要です:  pip install pypdf")
 
+# 版はファイル名から読む（`syllabus_fe_ver9_2.pdf` → `FE Ver.9.2`）
+RE_PDF_VERSION = re.compile(r"syllabus_([a-z]+)_ver(\d+)_(\d+)", re.I)
 RE_HEADER = re.compile(r"大分類\s*(\d+)\s*[：:]\s*(\S+)\s+中分類\s*(\d+)\s*[：:]\s*(\S+)")
 RE_FIELD = re.compile(r"◆(ストラテジ系|マネジメント系|テクノロジ系)◆")
 # 「3. プログラミング」。行頭の番号＋ドット＋名前
 RE_SMALL = re.compile(r"^(\d{1,2})\s*[.．]\s*(\S.*)$")
 RE_TERMS = re.compile(r"^用語例\s*(.*)$")
 RE_FOOTER = re.compile(r"^[-－]\s*\d+\s*[-－]$|^Copyright|^\s*$")
-# 用語例ブロックの終わり
-RE_BLOCK_END = re.compile(r"^(【目標】|（\d+）|\(\d+\)|[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮]|\d{1,2}\s*[.．]|大分類|中分類|◆)")
+# 用語例ブロックの終わり。分野が変わるページの頭に出る分野の見出しだけの行（「マネジメント系」）も終わりに数える。
+# 数えないと、前のページの最後の用語に見出しの字がつながる（「保管期間マネジメント系」）
+RE_BLOCK_END = re.compile(r"^(【目標】|（\d+）|\(\d+\)|（[a-zａ-ｚ]）|\([a-z]\)|[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮]|\d{1,2}\s*[.．]|大分類|中分類|◆|(?:ストラテジ系|マネジメント系|テクノロジ系)$)")
 
 # 中分類がどの分野に属するかは、大分類の番号で決まる（共通キャリア・スキルフレームワーク）
 FIELD_BY_MAJOR = {
@@ -70,6 +77,38 @@ CAMEL_OK = {
     "SuperVisor",  # SVC の展開。シラバスの原文が SuperVisor Call
 }
 RE_CAMEL = re.compile(r"[A-Za-z]+")
+
+# 索引に載せる項目の鍵と並び（分類のバンドルが読む形）
+INDEX_KEYS = ("number", "name", "field", "major", "middle", "middle_no", "terms")
+
+# 抽出の崩れを直す表。左が PDF から出てくる形、右が正しい形。
+#
+# 1. ルビ: シラバスは表外漢字にルビを振っており、抽出すると読みが本文の中に入る
+#    （「歪度」のルビ「わい」が「歪わい度」になる）。
+# 2. 落ちた空白: fix_lost_spaces の「小文字3つ+大文字+小文字2つ」の規則では割れない
+#    英語の語境目（小文字どうしの連結）。
+#
+# 用語例はそのまま論点名としてコピーされるので、崩れたままだと論点名が崩れる。
+# 部分一致で置くため、**語の一部だけを指す短い鍵は置かない**（「歪わい」のように読みまで含める）。
+TEXT_FIXES = {
+    "楕だ円": "楕円",
+    "虹こう彩": "虹彩",
+    "歪わい度": "歪度",
+    "尖せん度": "尖度",
+    "伝播ぱ": "伝播",
+    "脆ぜい弱": "脆弱",
+    "危殆たい": "危殆",
+    "秘匿とく": "秘匿",
+    "decisioncoverage": "decision coverage",
+    "Systemsof": "Systems of",
+}
+
+
+def fix_known(text: str) -> str:
+    """TEXT_FIXES の表で、ルビの混入と落ちた空白を直す。"""
+    for wrong, right in TEXT_FIXES.items():
+        text = text.replace(wrong, right)
+    return text
 
 
 def fix_lost_spaces(text: str) -> str:
@@ -126,14 +165,34 @@ def split_terms(blob: str) -> list[str]:
     if buf.strip():
         out.append(buf.strip())
     # 行末で割れた語をつないだ結果の空白を詰めてから、落ちた空白を補う
-    return [fix_lost_spaces(re.sub(r"\s+", " ", t).strip()) for t in out if t.strip()]
+    return [fix_known(fix_lost_spaces(re.sub(r"\s+", " ", t).strip())) for t in out if t.strip()]
+
+
+def find_pdf(data: Path) -> Path:
+    """データ置き場のシラバス PDF を 1 つ選ぶ。版が複数あるときは名前の降順で新しい方。"""
+    found = sorted(data.glob("syllabus_*.pdf"), reverse=True)
+    if not found:
+        sys.exit(f"{data} に syllabus_*.pdf がありません（IPA のシラバス PDF を置く）")
+    return found[0]
+
+
+def version_label(pdf: Path) -> str:
+    """`syllabus_fe_ver9_2.pdf` → `FE Ver.9.2`。読めなければファイル名をそのまま使う。"""
+    m = RE_PDF_VERSION.search(pdf.name)
+    return f"{m.group(1).upper()} Ver.{m.group(2)}.{m.group(3)}" if m else pdf.stem
 
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--pdf", default="data/ap/syllabus_ap_ver7_2.pdf", type=Path)
-    ap.add_argument("--out", default="data/ap/syllabus.json", type=Path)
+    ap.add_argument("--data", default="data/ap", type=Path, help="対象のデータ置き場。基本情報は data/fe")
+    ap.add_argument("--pdf", default=None, type=Path, help="既定は <data>/syllabus_*.pdf")
+    ap.add_argument("--out", default=None, type=Path, help="既定は <data>/syllabus.json")
+    ap.add_argument("--index-out", default=None, type=Path, help="既定は <data>/syllabus_index.json")
+    ap.add_argument("--version", default=None, help="出力に載せる版。既定は PDF の名前から組む")
     args = ap.parse_args()
+    args.pdf = args.pdf or find_pdf(args.data)
+    args.out = args.out or args.data / "syllabus.json"
+    args.index_out = args.index_out or args.data / "syllabus_index.json"
 
     reader = pypdf.PdfReader(args.pdf)
     # 目次を読み飛ばす。本文は最初の「大分類 N：… 中分類 N：…」ヘッダから始まる
@@ -215,7 +274,7 @@ def main() -> int:
         it["terms"] = list(dict.fromkeys(it["terms"]))
 
     out = {
-        "version": "AP Ver.7.2",
+        "version": args.version or version_label(args.pdf),
         "source": str(args.pdf),
         "item_count": len(items),
         "term_count": sum(len(i["terms"]) for i in items),
@@ -223,8 +282,12 @@ def main() -> int:
     }
     args.out.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    index = {"items": [{k: it[k] for k in INDEX_KEYS} for it in items]}
+    args.index_out.write_text(json.dumps(index, ensure_ascii=False, indent=1), encoding="utf-8")
+
     middles = {(i["major_no"], i["middle_no"], i["middle"]) for i in items}
     print(f"→ {args.out}")
+    print(f"→ {args.index_out}（小分類 {len(index['items'])} 件。分類のバンドルが読む）")
     print(f"  分野     : {len({i['field'] for i in items})}")
     print(f"  大分類   : {len({i['major_no'] for i in items})}")
     print(f"  中分類   : {len(middles)}")

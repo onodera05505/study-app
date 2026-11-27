@@ -1,6 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="432" viewBox="0 0 640 432" role="img">
-<title>従来は SQL 文と中間結果が何度も往復するが、プロシージャなら名前と引数を送って最終結果を受け取る1往復で済む。</title>
-<rect x="0.5" y="0.5" width="639" height="431" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="388" viewBox="0 0 640 388">
+<rect x="0.5" y="0.5" width="639" height="387" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(150.2 20)">
 <line x1="69" y1="34" x2="69" y2="348" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
 <line x1="276.2" y1="34" x2="276.2" y2="348" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
@@ -30,9 +29,7 @@
 <polyline points="273.2,300 72,300" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="72,300 80,296.4 80,303.6" fill="#1f2937"/>
 <text x="172.6" y="293" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">6. 最終結果だけを返す</text>
-<rect x="23.4" y="305" width="298.4" height="16" rx="3" fill="#ffffff"/>
-<text x="172.6" y="318.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">減るのは通信量。I/O 回数やバッファ数は変わらない</text>
+<rect x="126.6" y="305" width="92" height="16" rx="3" fill="#ffffff"/>
+<text x="172.6" y="318.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">減るのは通信量</text>
 </g>
-<text x="320" y="396" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">従来は SQL 文と中間結果が何度も往復するが、プロシージャなら名前と引数を送って最終結果を受け取る1往</text>
-<text x="320" y="412" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">復で済む。</text>
 </svg>

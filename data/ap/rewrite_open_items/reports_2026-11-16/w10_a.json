@@ -1,0 +1,307 @@
+{
+ "target": "ap",
+ "units": [
+  "04",
+  "05",
+  "11",
+  "17",
+  "18",
+  "19"
+ ],
+ "status": "done",
+ "items": [
+  {
+   "no": 1,
+   "topic_id": 101,
+   "type": "H",
+   "verdict": "fixed",
+   "rule": "rewrite_open_items.md「点の台帳の直し方」H（親の指示で shared の holder を今の持ち主へ）・rewrite_materials_by_group.md の shared の定義",
+   "what": "05-2 の shared「スレッドセーフとリエントラントの比較」の holder が 101 のまま。101 の図は 1 枚（### 何が壊れるのか）だけで、比較は 440 の図 3 と ### 混同しやすい用語 にある。holder を 440、topics を [101,440] にした。点の行（101 の 13〜16）は既に 440 を指していて変えていない",
+   "questions_checked": []
+  },
+  {
+   "no": 2,
+   "topic_id": 278,
+   "type": "H",
+   "verdict": "fixed",
+   "rule": "rewrite_open_items.md「点の台帳の直し方」H",
+   "what": "18-5 の 277 の行（発注側と受託側の配置）の where が「278 の図 1・図 2」。278 の図 2 は外してあり（278 の removed_figures）、今の 278 は図 1 だけなので「278 の図 1」にした。278 の removed_figures の kept null は、3 形態の表が図でなく 424（21-4）の ### 設計と工場の有無で並べる形態 の表に残り、行 12 が owner 424 で受けるので正しく、変えていない",
+   "questions_checked": []
+  },
+  {
+   "no": 3,
+   "topic_id": 498,
+   "type": "H",
+   "verdict": "already",
+   "rule": "rewrite_materials_by_group.md の fate figure（図を別の値に替え、事柄が図に残って例の値だけが消えた行は事柄で確かめる）",
+   "what": "19-9 の 498 の行を全部現物と照合した。図 498-1 は例の題材が物流から不良の削減に替わったが、KGI・CSF・KPI の例の行はあり、行 3 の where は既に「例を別の題材で並べる」と書いている。他の行（8・9・11・12 など）の見出しと explanation の箇条も今の本文にある。直す行は見つからなかった",
+   "questions_checked": []
+  },
+  {
+   "no": 4,
+   "topic_id": 626,
+   "type": "H",
+   "verdict": "fixed",
+   "rule": "rewrite_open_items.md「点の台帳の直し方」H、rewrite_materials_by_group.md の fate（owner は他の束・prior は同じ束の前の論点）",
+   "what": "11-19 の shared 2 行（3 組織の比較・IPA の所管）の holder 406 を、今それを持つ 626（図 2 と ### 設置母体と役割の見分け）にした。626 の「IPA は経済産業省所管の独立行政法人」は 406 の本文に無く 626 の図 2 の IPA の列にあるので figure・626 の図 2 に、661 の同じ点は prior 626 にした。同じ束の前の論点 406 を owner で指していた 3 行（626 の 2 行・661 の 1 行。点は 406 の本文・図 1 に今もある）は prior 406 にした。626 の removed_figures の kept {626,2} は図を 406 から移した結果として合っているので変えていない",
+   "questions_checked": []
+  },
+  {
+   "no": 5,
+   "topic_id": 190,
+   "type": "H",
+   "verdict": "fixed",
+   "rule": "rewrite_open_items.md「点の台帳の直し方」H",
+   "what": "11-5 の 190 の removed_figures の kept は既に {191,3}（今ある図）で合っていた。同じ比較を指す shared「総当たり・リバースブルートフォース・パスワードリスト攻撃を…比較の図（624 図 3 と 190 図 2）」の holder 624 は、624 に図 3 が無いので、今の図を持つ 191 にし topics に 191 を足した",
+   "questions_checked": []
+  },
+  {
+   "no": 6,
+   "topic_id": 375,
+   "type": "H",
+   "verdict": "returned",
+   "rule": "",
+   "what": "17-2 の単元またぎの owner（375・743 の行が 18-2 の 419 を owner で指す）は、時間内に 419 の今の本文と照合し切れなかった。owner は他の束（単元をまたぐ先を含む）に使える fate なので、形の上では直す行に当たらない可能性がある",
+   "questions_checked": []
+  },
+  {
+   "no": 7,
+   "topic_id": 346,
+   "type": "H",
+   "verdict": "fixed",
+   "rule": "rewrite_open_items.md「点の台帳の直し方」H、rewrite_materials_by_group.md の fate（kept・later）",
+   "what": "04-4 で外した 346 の図 2 を指す 3 行を直した。346 の「アボイダンス＝起こさせない」の where から「図 2 の…手がかり」の括弧を外した。592 の「フォールトアボイダンス＝故障の前・部品の品質」は 95 の図 1 のフォールトアボイダンスの列にあるので later 95 に、「一段目の軸は時点」は 592 自身の explanation の fail/fault の箇条にあるので kept にした",
+   "questions_checked": []
+  },
+  {
+   "no": 8,
+   "topic_id": 66,
+   "type": "D",
+   "verdict": "returned",
+   "rule": "",
+   "what": "### 4つのセンサーの守備範囲 の表が 2 行の件は、時間内に旧版（束の current と図）との照合が終わらず、直していない",
+   "questions_checked": []
+  }
+ ],
+ "edits": [],
+ "owners": [],
+ "figure_after": [],
+ "ledgers": [
+  {
+   "file": "data/ap/rewrite_ledgers/05-2.json",
+   "topic_id": 440,
+   "point": "shared: スレッドセーフとリエントラントの比較（101 の図 2。440 へ図を移せないため 101 に残す）",
+   "before": {
+    "holder": 101,
+    "topics": [
+     101
+    ]
+   },
+   "after": {
+    "holder": 440,
+    "topics": [
+     101,
+     440
+    ]
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/18-5.json",
+   "topic_id": 277,
+   "point": "発注側（工場をもたない）と受託側（工場をもつ）の配置、図面を渡して製造を委託するか設計から委託するか",
+   "before": {
+    "where": "…工場をもたない発注側との分業は 278 の図 1・図 2"
+   },
+   "after": {
+    "where": "…工場をもたない発注側との分業は 278 の図 1"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/11-19.json",
+   "topic_id": 626,
+   "point": "shared: JPCERT/CC・NISC・IPA を立場（設置母体）と主な役割で並べる 3 組織の比較",
+   "before": {
+    "holder": 406
+   },
+   "after": {
+    "holder": 626
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/11-19.json",
+   "topic_id": 626,
+   "point": "shared: IPA は経済産業省所管の独立行政法人で、ウイルス・脆弱性の届出受付などを担うこと",
+   "before": {
+    "holder": 406
+   },
+   "after": {
+    "holder": 626
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/11-19.json",
+   "topic_id": 626,
+   "point": "IPA は経済産業省が所管する独立行政法人",
+   "before": {
+    "fate": "owner",
+    "where": "406"
+   },
+   "after": {
+    "fate": "figure",
+    "where": "626 の図 2（立場の行の IPA の列「独立行政法人 経済産業省が所管」）"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/11-19.json",
+   "topic_id": 626,
+   "point": "JPCERT/CC は一般社団法人で、政府の組織ではなく民間の法人",
+   "before": {
+    "fate": "owner",
+    "where": "406"
+   },
+   "after": {
+    "fate": "prior",
+    "where": "406"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/11-19.json",
+   "topic_id": 626,
+   "point": "JPCERT/CC はインシデントの報告を受けて関係者間の対応を調整し、国内外の窓口組織と連携する",
+   "before": {
+    "fate": "owner",
+    "where": "406（定義の 1 文と図 1）"
+   },
+   "after": {
+    "fate": "prior",
+    "where": "406（定義の 1 文と図 1）"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/11-19.json",
+   "topic_id": 661,
+   "point": "設置母体の IPA は経済産業省が所管する独立行政法人で、脆弱性やウイルスの届出受付も担う",
+   "before": {
+    "fate": "owner",
+    "where": "406"
+   },
+   "after": {
+    "fate": "prior",
+    "where": "626（図 2 の IPA の列: 経済産業省が所管する独立行政法人・届出の受付）"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/11-19.json",
+   "topic_id": 661,
+   "point": "JPCERT/CC は一般社団法人で、インシデントの報告を受けて関係者間の対応調整を行い、海外の窓口組織と連携する",
+   "before": {
+    "fate": "owner",
+    "where": "406"
+   },
+   "after": {
+    "fate": "prior",
+    "where": "406"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/11-5.json",
+   "topic_id": 191,
+   "point": "shared: 総当たり・リバースブルートフォース・パスワードリスト攻撃を、固定する物と変える物で並べた比較の図（624 図 3 と 190 図 2）",
+   "before": {
+    "holder": 624,
+    "topics": [
+     624,
+     190
+    ]
+   },
+   "after": {
+    "holder": 191,
+    "topics": [
+     624,
+     190,
+     191
+    ]
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/04-4.json",
+   "topic_id": 346,
+   "point": "アボイダンス（avoidance＝回避）＝起こさせない",
+   "before": {
+    "fate": "kept",
+    "where": "### 語の成り立ちで分ける故障への構え（図 2 の語を読む手がかりとして）"
+   },
+   "after": {
+    "fate": "kept",
+    "where": "### 語の成り立ちで分ける故障への構え"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/04-4.json",
+   "topic_id": 592,
+   "point": "分類の表: フォールトアボイダンス＝故障の前・故障を起こしにくくする・部品の品質を高める",
+   "before": {
+    "fate": "prior",
+    "where": "346（図 2 の「フォールトアボイダンス 高品質な部品で起こさせない」と語の成り立ちの節）"
+   },
+   "after": {
+    "fate": "later",
+    "where": "95 の ### 故障を防ぐか、起きても耐えるか（図 1 のフォールトアボイダンスの列）。語の意味は 346 の ### 語の成り立ちで分ける故障への構え"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/04-4.json",
+   "topic_id": 592,
+   "point": "表を分ける一段目の軸は時点（故障の前に手を打つか後か）",
+   "before": {
+    "fate": "prior",
+    "where": "346（図 2 の語頭の軸）"
+   },
+   "after": {
+    "fate": "kept",
+    "where": "explanation（fail／fault の箇条）"
+   }
+  }
+ ],
+ "returned": [
+  {
+   "no": 6,
+   "topic_id": 375,
+   "figure": null,
+   "kind": "undetermined",
+   "what": "17-2 の 375・743 の行が 18-2 の 419 を owner で指す件。時間切れで 419 の今の本文（### 投資評価の 4 つの手法の比較 の表と式）と照合していない。owner は単元をまたぐ先に使える fate なので、点が 419 にあれば直す行は無い。375 の removed_figures（図 1、kept null）も同じく未照合"
+  },
+  {
+   "no": 8,
+   "topic_id": 66,
+   "figure": null,
+   "kind": "undetermined",
+   "what": "66 の ### 4つのセンサーの守備範囲 の表が 2 行の件。時間切れで旧版（束 current の 4 行の表と図 66-1）との照合と D の戻し方の判定をしていない。本文は変えていない"
+  }
+ ],
+ "noticed": [
+  {
+   "topic_id": 440,
+   "what": "05-2 の shared の item の括弧「101 の図 2。440 へ図を移せないため 101 に残す」は今の現物と合わないが、item は割り当ての名前なので変えず holder と topics だけ直した"
+  },
+  {
+   "topic_id": 190,
+   "what": "11-5 で同じ束の前の論点 624・211 を owner で指す行（190 の 15・16、211 の 4・13〜15、191 の 11〜13）は定義上 prior に当たる。点が今もそこにあるかを確かめていないので変えていない"
+  },
+  {
+   "topic_id": 626,
+   "what": "11-19 の 406 の本文に「IPA は経済産業省所管の独立行政法人」は無い。shared の IPA の行は holder 626 にしたが、topics に 406 が残る（item が出た論点の記録なので変えていない）"
+  }
+ ],
+ "gates": {
+  "check_materials": 0,
+  "check_material_style": 0,
+  "render_check": null,
+  "check_explanations": null,
+  "check_unit_plans": null
+ },
+ "chars": {
+  "before": 0,
+  "after": 0
+ }
+}

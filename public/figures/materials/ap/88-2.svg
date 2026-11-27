@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="150" viewBox="0 0 932.7 218">
+<rect x="0.5" y="0.5" width="931.7" height="217" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<polyline points="136,38 351.8,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="351.8,38 343.8,41.6 343.8,34.4" fill="#1f2937"/>
+<polyline points="553.5,38 769.3,38" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="769.3,38 761.3,41.6 761.3,34.4" fill="#1f2937"/>
+<polyline points="452.65,76 452.65,122" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polygon points="452.65,122 449.05,114 456.25,114" fill="#1f2937"/>
+<rect x="0" y="0" width="136" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="68" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ファイルシステム</text>
+<text x="68" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">同じ論理位置を</text>
+<text x="68" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">何度も書き換える</text>
+<rect x="351.8" y="0" width="201.7" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<g transform="translate(363.8 27) scale(0.9167)" fill="none" stroke="#2563eb" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6.6"/><circle cx="12" cy="12" r="2.4"/><path d="M 18.6 12 L 21.6 12 M 16.67 16.67 L 18.79 18.79 M 12 18.6 L 12 21.6 M 7.33 16.67 L 5.21 18.79 M 5.4 12 L 2.4 12 M 7.33 7.33 L 5.21 5.21 M 12 5.4 L 12 2.4 M 16.67 7.33 L 18.79 5.21" stroke-width="3" stroke-linecap="butt"/></g>
+<text x="467.65" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">制御側の対応表</text>
+<text x="467.65" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">論理位置→物理ブロック</text>
+<text x="467.65" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">と書換え回数を持つ</text>
+<rect x="769.3" y="10" width="123.4" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="831" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">物理ブロック B</text>
+<text x="831" y="52.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">書換え 20 回</text>
+<rect x="390.95" y="122" width="123.4" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="452.65" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">物理ブロック A</text>
+<text x="452.65" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">書換え 950 回</text>
+<rect x="191.9" y="21" width="104" height="16" rx="3" fill="#ffffff"/>
+<text x="243.9" y="34.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">論理位置へ書込み</text>
+<rect x="557.5" y="21" width="207.8" height="16" rx="3" fill="#ffffff"/>
+<text x="661.4" y="34.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">回数の少ない B へ書いて付け替える</text>
+<rect x="388.65" y="90" width="128" height="16" rx="3" fill="#ffffff"/>
+<text x="452.65" y="103.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">回数が多いので避ける</text>
+</g>
+</svg>

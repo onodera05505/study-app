@@ -1,0 +1,25 @@
+{
+  "topic_id": 82,
+  "term": "経営への説明",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 現場で判断するなら",
+      "caption": "上の段で施策の指標を増えた粗利まで置き換え、一度きりの改修費をその粗利で割ると、経営が見る回収期間になります。",
+      "nodes": [
+        {"id": "kpi", "label": "施策の言葉\nCVR 1.0% → 1.5%", "row": 0, "col": 0},
+        {"id": "cnt", "label": "増えた件数\n申込 月 ＋50 件", "row": 0, "col": 1},
+        {"id": "profit", "label": "増えた粗利\n月 100 万円", "row": 0, "col": 2},
+        {"id": "cost", "label": "一度きりの費用\n改修 400 万円", "row": 1, "col": 0},
+        {"id": "payback", "label": "回収期間\n4 か月で戻る", "row": 1, "col": 2, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "kpi", "to": "cnt", "label": "× 流入 月 1 万件"},
+        {"from": "cnt", "to": "profit", "label": "× 1 件の粗利 2 万円"},
+        {"from": "cost", "to": "payback", "label": "400 万 ÷ 月 100 万"},
+        {"from": "profit", "to": "payback", "label": "割る数"}
+      ]
+    }
+  ]
+}

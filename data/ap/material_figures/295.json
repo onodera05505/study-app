@@ -1,0 +1,23 @@
+{
+  "topic_id": 295,
+  "term": "オープンイノベーション",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "知識は自社の外から入るだけでなく、自社から外へも出ます。向きの違う 2 本の線が組織の壁を越えています。",
+      "nodes": [
+        {"id": "in", "label": "外部組織\n大学・他社・\nスタートアップ", "row": 0, "col": 0, "icon": "people"},
+        {"id": "me", "label": "自社\n内と外の技術を\n組み合わせる", "row": 0, "col": 1, "icon": "building", "emphasis": true},
+        {"id": "out", "label": "外部の企業・市場\n自社の技術を\n使って価値を生む", "row": 0, "col": 2, "icon": "people"},
+        {"id": "prod", "label": "新しい製品・サービス\n組み合わせから\n生まれた価値", "row": 1, "col": 1, "icon": "box"}
+      ],
+      "edges": [
+        {"from": "in", "to": "me", "label": "技術やアイディアを\n取り込む"},
+        {"from": "me", "to": "out", "label": "ライセンス供与・\nAPI 公開で出す"},
+        {"from": "me", "to": "prod", "label": "内外の知識を\n組み合わせる"}
+      ]
+    }
+  ]
+}

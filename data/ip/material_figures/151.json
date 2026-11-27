@@ -1,0 +1,23 @@
+{
+  "topic_id": 151,
+  "term": "システム管理基準",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 混同しやすい用語",
+      "caption": "2 つの基準が、監査する側と監査される側のどちらに当たるかを表します。強調したシステム管理基準は、監査される情報システムを測るものさしです。",
+      "nodes": [
+        {"id": "audstd", "label": "システム監査基準\n監査人の行動のルール", "row": 0, "col": 0, "icon": "document"},
+        {"id": "auditor", "label": "監査人\n監査する側", "row": 1, "col": 0, "icon": "person"},
+        {"id": "sys", "label": "情報システム\n監査される側", "row": 1, "col": 1, "icon": "server"},
+        {"id": "mgmtstd", "label": "システム管理基準\nあるべき姿のものさし", "row": 0, "col": 1, "icon": "document", "emphasis": true}
+      ],
+      "edges": [
+        {"from": "audstd", "to": "auditor", "label": "独立性・手続・報告を縛る"},
+        {"from": "auditor", "to": "sys", "label": "監査する"},
+        {"from": "mgmtstd", "to": "sys", "label": "あるべき姿と比べる"}
+      ]
+    }
+  ]
+}

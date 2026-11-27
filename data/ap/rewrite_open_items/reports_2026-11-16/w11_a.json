@@ -1,0 +1,175 @@
+{
+ "target": "ap",
+ "units": [
+  "11",
+  "17",
+  "18"
+ ],
+ "status": "done",
+ "items": [
+  {
+   "no": 1,
+   "topic_id": 375,
+   "type": "H",
+   "verdict": "by_rule",
+   "rule": "rewrite_materials_by_group.md の fate owner（他の束の論点が言う点に使える。単元をまたぐ先は owner：rewrite_unit_crosscheck.md「点の台帳の直し方」）、removed_figures の kept は残る図が無いとき null",
+   "what": "17-2 の 375 の 13・15・16・17 と 743 の 18 が owner 419 を指す。419（18-2）の今の本文に、explanation の NPV の式（回収額の現在価値の合計−投資額）と ### 投資評価の 4 つの手法の比較 の表（PBP＝年数・NPV＝金額・IRR＝NPV が 0 になる割引率・ROI＝利益÷投資額の割合、時間的価値の考慮する／しない）があり、どの行の点も今そこにある。375 の ### 似た投資評価の指標 と 743 の ### 効果を測る段取り も 419 を 1 文で指している。375 の removed_figures（図 1、4 指標の表）は、内容が図でなく 419 の本文の表に移り、点の行 13〜17 が owner 419 で受けるので kept null のままで合う。直していない",
+   "questions_checked": []
+  },
+  {
+   "no": 2,
+   "topic_id": 190,
+   "type": "H",
+   "verdict": "fixed",
+   "rule": "rewrite_materials_by_group.md の fate（prior・later は同じ束の前後の論点、owner は他の束だけ）、rewrite_open_items.md「点の台帳の直し方」H",
+   "what": "11-5 の学ぶ順は 679→624→190→211→191 で同じ束。624 の今の本文（要点の箇条・### 対策と効き目の対応・図 2）にアカウントロック・試行の間隔・オンライン型とオフライン型の分かれ方・全組合せを試すことがあり、211 の ### ソルトのしくみ と図 1 に利用者ごとのソルトでハッシュ値が変わり 1 人分ずつ解読し直すことがある。190 の 15、211 の 4・13〜15、191 の 11 を prior 624、191 の 12・13 を prior 211 にした。190 の 16（リバースブルートフォース）は 624 に無く、学ぶ順で後の 191 の ### 総当たりの仲間の攻撃との違い の箇条と図 3 にあるので later 191 にした",
+   "questions_checked": []
+  },
+  {
+   "no": 3,
+   "topic_id": 406,
+   "type": "H",
+   "verdict": "by_rule",
+   "rule": "rewrite_materials_by_group.md の shared の定義（topics はそれが出た論点 ID。手順の 2 で書く前の current を数えて決める）、rewrite_unit_crosscheck.md「点の台帳の直し方」（shared は変えない）",
+   "what": "11-19 の shared「IPA は経済産業省所管の独立行政法人…」の topics [406,626,661] は count 3 と合う。書き直しの束 11-19 の 406 の current（混同しやすい用語の IPA の箇条と図 2 の IPA の列）にその点があり、406 の点の行 14 も旧版の点として受けている。topics は旧版で出た所の記録なので 406 を残すのが決まりどおり。holder は今その点を持つ 626 で合っている。直していない",
+   "questions_checked": []
+  }
+ ],
+ "edits": [],
+ "owners": [],
+ "figure_after": [],
+ "ledgers": [
+  {
+   "file": "data/ap/rewrite_ledgers/11-5.json",
+   "topic_id": 190,
+   "point": "総当たり攻撃は使われ得る文字列を全部試し、出発点が推測なので試行回数が多くアカウントロックで止めやすい（混同しやすい用語）",
+   "before": {
+    "fate": "owner",
+    "where": "624"
+   },
+   "after": {
+    "fate": "prior",
+    "where": "624"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/11-5.json",
+   "topic_id": 190,
+   "point": "リバースブルートフォース攻撃はパスワードを固定し ID を変え、1 アカウントあたりの失敗が増えずロックで止まらない（混同しやすい用語）",
+   "before": {
+    "fate": "owner",
+    "where": "624"
+   },
+   "after": {
+    "fate": "later",
+    "where": "191 の ### 総当たりの仲間の攻撃との違い（本文の箇条と図 3）"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/11-5.json",
+   "topic_id": 211,
+   "point": "ログイン画面への総当たりには別系統の対策が要る（要点の箇条）",
+   "before": {
+    "fate": "owner",
+    "where": "624"
+   },
+   "after": {
+    "fate": "prior",
+    "where": "624"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/11-5.json",
+   "topic_id": 211,
+   "point": "ログイン画面への入力にはアカウントロック（一定回数失敗で試行を止める）が対策",
+   "before": {
+    "fate": "owner",
+    "where": "624"
+   },
+   "after": {
+    "fate": "prior",
+    "where": "624"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/11-5.json",
+   "topic_id": 211,
+   "point": "試行の間隔を空けさせる仕組みも対策",
+   "before": {
+    "fate": "owner",
+    "where": "624"
+   },
+   "after": {
+    "fate": "prior",
+    "where": "624"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/11-5.json",
+   "topic_id": 211,
+   "point": "どこで解読が行われるか（サーバのログイン処理か攻撃者の手元か）で対策が分かれる",
+   "before": {
+    "fate": "owner",
+    "where": "624"
+   },
+   "after": {
+    "fate": "prior",
+    "where": "624"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/11-5.json",
+   "topic_id": 191,
+   "point": "ログイン画面に何度も試行する手口とは性質が違う",
+   "before": {
+    "fate": "owner",
+    "where": "624"
+   },
+   "after": {
+    "fate": "prior",
+    "where": "624"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/11-5.json",
+   "topic_id": 191,
+   "point": "利用者ごとに異なるソルトで保存されるハッシュ値が人ごとに変わる",
+   "before": {
+    "fate": "owner",
+    "where": "211"
+   },
+   "after": {
+    "fate": "prior",
+    "where": "211"
+   }
+  },
+  {
+   "file": "data/ap/rewrite_ledgers/11-5.json",
+   "topic_id": 191,
+   "point": "攻撃者は利用者ごとに表を作り直す必要があり、事前計算の利点が失われる",
+   "before": {
+    "fate": "owner",
+    "where": "211"
+   },
+   "after": {
+    "fate": "prior",
+    "where": "211"
+   }
+  }
+ ],
+ "returned": [],
+ "noticed": [
+  {
+   "topic_id": 624,
+   "what": "11-5 の 624 の点の行 1（試行の総数は文字種の数を桁数だけ掛けた値）が owner 679 を指すが、679 は同じ束の学ぶ順で前の論点なので、定義では prior 679 に当たる。一覧に無いので直していない"
+  }
+ ],
+ "gates": {
+  "check_materials": 0,
+  "check_material_style": 0
+ },
+ "chars": {
+  "before": 0,
+  "after": 0
+ }
+}

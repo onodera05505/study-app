@@ -1,0 +1,19 @@
+{
+  "topic_id": 84,
+  "term": "失敗の型: ターゲット不在",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "explanation",
+      "caption": "対象は、既に買った顧客の側から上の段から順に絞り直します。矢印は次の段へ渡す物で、件数は例です。",
+      "direction": "down",
+      "stages": [
+        {"label": "受注を並べる\n直近で買った 10 件", "icon": "people", "next_label": "並んだ 10 件の声"},
+        {"label": "共通点を書き出す\n困りごとと決め手", "icon": "search", "next_label": "10 件中 7 件が同じ困りごと", "emphasis": true},
+        {"label": "訴求の 1 行を作り直す\nその困りごとに絞る", "icon": "document", "next_label": "書き換えた 1 行"},
+        {"label": "まず 1 媒体で比べる\n前の文と反応を比べる", "icon": "chart"}
+      ]
+    }
+  ]
+}

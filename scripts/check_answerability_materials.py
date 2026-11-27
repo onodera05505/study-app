@@ -69,6 +69,15 @@ def main() -> int:
         if is_wrong and is_insuf:
             both.append(a)
 
+    if scored == 0:
+        # 回だけを挙げると、問番号が無いだけの問題でもその回が正解表に無いと読めるので、問題ごとに理由を添えて示す
+        print("照合できる結果がありません。正解表で引けなかった問題:")
+        for qid in sorted({a["question_id"] for a in rows}):
+            exam = qid.rpartition("-q")[0]
+            reason = "正解表にその回の問番号が無い" if exam in keys else "正解表にその回が無い"
+            print(f"  - {qid}（{reason}）")
+        return 1
+
     print(f"照合: {scored} 問")
     print(f"  正答          : {scored - len(wrong)} / {scored}（{(scored - len(wrong)) / scored:.0%}）")
     print(f"  教材不足の申告: {len(insufficient)} 問（{len(insufficient) / scored:.0%}）")

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="246" viewBox="0 0 646 248">
+<rect x="0.5" y="0.5" width="645" height="247" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<polyline points="90,122 90,99 303,99 303,76" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="303,76 306.6,84 299.4,84" fill="#1f2937"/>
+<polyline points="303,76 303,99 516,99 516,122" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="516,122 512.4,114 519.6,114" fill="#1f2937"/>
+<polyline points="90,178 90,200 516,200 516,178" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polygon points="516,178 519.6,186 512.4,186" fill="#1f2937"/>
+<rect x="0" y="122" width="180" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<g transform="translate(12 139) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.3"/><circle cx="5" cy="18.5" r="2.3"/><circle cx="19" cy="18.5" r="2.3"/><path d="M10.9 7.1 L6.1 16.4 M13.1 7.1 L17.9 16.4 M7.3 18.5 H16.7"/></g>
+<text x="105" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">外側のネットワーク</text>
+<text x="105" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">外部とつながる</text>
+<rect x="220" y="0" width="166" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<g transform="translate(232 27) scale(0.9167)" fill="none" stroke="#2563eb" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3.5" width="16" height="7" rx="1.2"/><rect x="4" y="13.5" width="16" height="7" rx="1.2"/><circle cx="7.5" cy="7" r="0.9" fill="#2563eb" stroke="none"/><circle cx="7.5" cy="17" r="0.9" fill="#2563eb" stroke="none"/><path d="M11 7 H17 M11 17 H17"/></g>
+<text x="318" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">DMZ</text>
+<text x="318" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">両側と通信が要る</text>
+<text x="318" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">機器だけ置く</text>
+<rect x="426" y="122" width="180" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<g transform="translate(438 139) scale(0.9167)" fill="none" stroke="#1f2937" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10.5" rx="1.6"/><path d="M8 10.5 V7.5 A4 4 0 0 1 16 7.5 V10.5"/><circle cx="12" cy="15" r="1.3"/><path d="M12 16.3 V18"/></g>
+<text x="531" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">内側のネットワーク</text>
+<text x="531" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">守りたい機器がある</text>
+<rect x="124.7" y="85" width="143.6" height="16" rx="3" fill="#ffffff"/>
+<text x="196.5" y="98.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">関門 1：DMZ まで入れる</text>
+<rect x="331.7" y="85" width="155.6" height="16" rx="3" fill="#ffffff"/>
+<text x="409.5" y="98.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">関門 2：DMZ からだけ通す</text>
+<rect x="214.4" y="186" width="92" height="16" rx="3" fill="#ffffff"/>
+<text x="260.4" y="199.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">直通は通さない</text>
+</g>
+</svg>

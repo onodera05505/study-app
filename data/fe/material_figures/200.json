@@ -1,0 +1,21 @@
+{
+  "topic_id": 200,
+  "term": "スプーリング",
+  "figures": [
+    {
+      "id": 1, "type": "blocks", "after": "### しくみ",
+      "caption": "左の高速な側と右の低速な側の間に補助記憶を挟みます。プログラムは書き出した時点で手が空き、遅い装置を待つのはスプーラです。",
+      "nodes": [
+        {"id": "prog", "label": "プログラム（CPU）\n書いたらすぐ次の仕事へ", "row": 0, "col": 0, "icon": "gear", "emphasis": true},
+        {"id": "spool", "label": "スプールファイル\n補助記憶に預けて並べる", "row": 0, "col": 1, "shape": "cylinder"},
+        {"id": "spooler", "label": "スプーラ\n装置の速さで送り出す", "row": 0, "col": 2, "icon": "clock"},
+        {"id": "printer", "label": "プリンタ\n桁違いに遅い装置", "row": 0, "col": 3, "icon": "document"}
+      ],
+      "edges": [
+        {"from": "prog", "to": "spool", "label": "出力を高速に\n書いて終わる"},
+        {"from": "spool", "to": "spooler", "label": "装置の速さで\n取り出す"},
+        {"from": "spooler", "to": "printer", "label": "印刷データを\n少しずつ渡す"}
+      ]
+    }
+  ]
+}

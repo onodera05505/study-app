@@ -1,0 +1,35 @@
+{
+  "topic_id": 34,
+  "term": "スケジューリングとコンテキストスイッチ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "### しくみ",
+      "center": "ラウンドロビン\n順番に回す",
+      "caption": "例えば持ち時間を 10 ミリ秒とした輪で、1 周ごとに列の先頭の処理が少し進みます。強調した入れ替えの間は、誰の計算も進みません。",
+      "stages": [
+        {
+          "label": "待ちの列\nB・C・A の順に並ぶ",
+          "icon": "people",
+          "next_label": "先頭の B を選ぶ"
+        },
+        {
+          "label": "スケジューリング\n次は B に 10 ミリ秒と決める",
+          "icon": "clock",
+          "next_label": "持ち時間を渡す"
+        },
+        {
+          "label": "CPU\nB を 10 ミリ秒だけ計算",
+          "icon": "gear",
+          "next_label": "持ち時間切れ"
+        },
+        {
+          "label": "コンテキストスイッチ\nB のレジスタの中身をしまい\n次の C の分を戻す",
+          "emphasis": true,
+          "next_label": "B を列の後ろへ"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="308" viewBox="0 0 640 308">
+<rect x="0.5" y="0.5" width="639" height="307" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(180.1 20)">
+<line x1="48" y1="34" x2="48" y2="268" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="231.8" y1="34" x2="231.8" y2="268" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">頼む側</text>
+<rect x="183.8" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="231.8" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">応える側</text>
+<polyline points="51,68 228.8,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="228.8,68 220.8,71.6 220.8,64.4" fill="#1f2937"/>
+<text x="139.9" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. SYN（接続したい）</text>
+<rect x="63.9" y="73" width="152" height="16" rx="3" fill="#ffffff"/>
+<text x="139.9" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">通し番号の始まりも伝える</text>
+<polyline points="228.8,124 51,124" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="51,124 59,120.4 59,127.6" fill="#1f2937"/>
+<text x="139.9" y="117" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. ACK ＋ 自分からの SYN</text>
+<rect x="23.4" y="129" width="233" height="16" rx="3" fill="#ffffff"/>
+<text x="139.9" y="142.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">2 つの合図を 1 つの小包にまとめて返す</text>
+<polyline points="51,180 228.8,180" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="228.8,180 220.8,183.6 220.8,176.4" fill="#1f2937"/>
+<text x="139.9" y="173" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. ACK（受け取った）</text>
+<rect x="15.9" y="185" width="248" height="16" rx="3" fill="#ffffff"/>
+<text x="139.9" y="198.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ここで応える側も自分の返事が届いたと知る</text>
+<polyline points="51,236 228.8,236" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="228.8,236 220.8,239.6 220.8,232.4" fill="#1f2937"/>
+<text x="139.9" y="229" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 本番のデータを送り始める</text>
+</g>
+</svg>

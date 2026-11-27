@@ -1,0 +1,238 @@
+{
+  "topic_id": 64,
+  "term": "CSMA/CD",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 送信の手順",
+      "caption": "上の段は衝突しなかったときの流れ、下の段は衝突したときの流れで、待ったあと感知に戻ります。線の文字が次へ移る条件です。",
+      "nodes": [
+        {
+          "id": "sense",
+          "label": "伝送路を感知\n信号が流れていないか調べる",
+          "row": 0,
+          "col": 0,
+          "icon": "search"
+        },
+        {
+          "id": "send",
+          "label": "フレームを送信\n送りながら監視を続ける",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "done",
+          "label": "送信完了\n次のフレームへ",
+          "row": 0,
+          "col": 2,
+          "icon": "check"
+        },
+        {
+          "id": "wait",
+          "label": "ランダムな時間待つ\n長さは装置ごとに違う",
+          "row": 1,
+          "col": 0,
+          "icon": "clock"
+        },
+        {
+          "id": "jam",
+          "label": "ジャム信号を流す\n衝突を全員に知らせる",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "detect",
+          "label": "衝突を検出\n送信を止める",
+          "row": 1,
+          "col": 2,
+          "icon": "warning",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "sense",
+          "to": "send",
+          "label": "空いていれば送る"
+        },
+        {
+          "from": "send",
+          "to": "done",
+          "label": "衝突なく送り終えた"
+        },
+        {
+          "from": "send",
+          "to": "detect",
+          "label": "他の信号と重なった"
+        },
+        {
+          "from": "detect",
+          "to": "jam",
+          "label": "送信を中断"
+        },
+        {
+          "from": "jam",
+          "to": "wait",
+          "label": "知らせ終えた"
+        },
+        {
+          "from": "wait",
+          "to": "sense",
+          "label": "待ち時間が過ぎた"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "timeline",
+      "after": "### 送信の手順",
+      "caption": "衝突した 2 台の待ち時間の帯の長さが違うので、送り直す時点がずれます。後から感知した B は A の送信が終わるのを待ちます。",
+      "axis": {
+        "label": "衝突してからの時間（例）",
+        "ticks": [
+          "衝突",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ]
+      },
+      "events": [
+        {
+          "at": 0,
+          "label": "A と B が同時に送信\nぶつかって両方止める"
+        },
+        {
+          "from": 0,
+          "to": 1.5,
+          "label": "A の待ち\nたまたま短い",
+          "emphasis": true
+        },
+        {
+          "from": 0,
+          "to": 3,
+          "label": "B の待ち\nたまたま長い",
+          "emphasis": true
+        },
+        {
+          "from": 1.5,
+          "to": 4.5,
+          "label": "A が送り直す\n伝送路は空いている"
+        },
+        {
+          "at": 3,
+          "label": "B が伝送路を感知\nA が送信中なので待つ"
+        },
+        {
+          "from": 4.5,
+          "to": 6,
+          "label": "B が送り直す\nぶつからずに届く"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "blocks",
+      "after": "### 共有型の名残",
+      "caption": "左はリピータハブで 1 本の伝送路を分け合う形、右はスイッチングハブで装置ごとに線が分かれる形です。線の文字で衝突が起きるかを比べます。",
+      "nodes": [
+        {
+          "id": "a1",
+          "label": "端末 A\n空くまで送れない",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "a2",
+          "label": "端末 B\n空くまで送れない",
+          "row": 1,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "a3",
+          "label": "端末 C\n空くまで送れない",
+          "row": 2,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "rh",
+          "label": "リピータハブ\n全員で 1 本を共有",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "sw",
+          "label": "スイッチングハブ\n装置ごとに線が分かれる",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "b1",
+          "label": "端末 D\nいつでも送受信できる",
+          "row": 0,
+          "col": 3,
+          "icon": "device"
+        },
+        {
+          "id": "b2",
+          "label": "端末 E\nいつでも送受信できる",
+          "row": 1,
+          "col": 3,
+          "icon": "device"
+        },
+        {
+          "id": "b3",
+          "label": "端末 F\nいつでも送受信できる",
+          "row": 2,
+          "col": 3,
+          "icon": "device"
+        }
+      ],
+      "edges": [
+        {
+          "from": "a1",
+          "to": "rh",
+          "label": "共有（衝突あり）",
+          "arrow": "both"
+        },
+        {
+          "from": "a2",
+          "to": "rh",
+          "label": "共有（衝突あり）",
+          "arrow": "both"
+        },
+        {
+          "from": "a3",
+          "to": "rh",
+          "label": "共有（衝突あり）",
+          "arrow": "both"
+        },
+        {
+          "from": "sw",
+          "to": "b1",
+          "label": "専用・全二重（衝突なし）",
+          "arrow": "both"
+        },
+        {
+          "from": "sw",
+          "to": "b2",
+          "label": "専用・全二重（衝突なし）",
+          "arrow": "both"
+        },
+        {
+          "from": "sw",
+          "to": "b3",
+          "label": "専用・全二重（衝突なし）",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

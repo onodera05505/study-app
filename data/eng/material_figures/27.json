@@ -1,0 +1,80 @@
+{
+  "topic_id": 27,
+  "term": "パス（絶対パス・相対パス）と今いる場所",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "同じ cat.png へ、絶対パスはルートから、相対パスは今いる docs から .. で上がってたどります。今いる場所が変わると、相対パスの道順も変わります。",
+      "nodes": [
+        {
+          "id": "root",
+          "label": "/\nルート\n絶対パスの起点",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "home",
+          "label": "home\n/home",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "a",
+          "label": "a\n/home/a",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "photo",
+          "label": "photo\n/home/a/photo",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "docs",
+          "label": "docs\n今いる場所\n相対パスの起点",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "cat",
+          "label": "cat.png\n絶対 /home/a/photo/cat.png\n相対 ../photo/cat.png",
+          "row": 1,
+          "col": 3,
+          "shape": "round",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "root",
+          "to": "home",
+          "label": "絶対は / から"
+        },
+        {
+          "from": "home",
+          "to": "a",
+          "label": "a へ下る"
+        },
+        {
+          "from": "docs",
+          "to": "a",
+          "label": "相対は .. で上へ"
+        },
+        {
+          "from": "a",
+          "to": "photo",
+          "label": "photo へ下る"
+        },
+        {
+          "from": "photo",
+          "to": "cat",
+          "label": "cat.png へ"
+        }
+      ]
+    }
+  ]
+}

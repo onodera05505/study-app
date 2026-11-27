@@ -1,0 +1,41 @@
+{
+  "topic_id": 141,
+  "term": "特性要因図",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 図の形と読み方",
+      "caption": "矢印はすべて原因の側から右端の結果へ向かいます。枝の先にある事柄が、つながった先の事柄の原因だと読みます。",
+      "nodes": [
+        {"id": "man", "label": "大骨: 人\n作業者の技能や慣れ", "row": 0, "col": 0, "icon": "person"},
+        {"id": "machine", "label": "大骨: 設備\n機械や道具の状態", "row": 0, "col": 1, "icon": "gear"},
+        {"id": "spine", "label": "背骨\n原因を結果へ束ねる", "row": 1, "col": 2},
+        {"id": "effect", "label": "特性（結果）\n取り上げる問題を 1 つ", "row": 1, "col": 3, "emphasis": true, "icon": "warning"},
+        {"id": "material", "label": "大骨: 材料\n部品や原料の質", "row": 2, "col": 0, "icon": "box"},
+        {"id": "method", "label": "大骨: 方法\n作業の手順や条件", "row": 2, "col": 1, "icon": "document"},
+        {"id": "sub", "label": "中骨\n方法の中の具体的な原因", "row": 3, "col": 1}
+      ],
+      "edges": [
+        {"from": "man", "to": "spine", "label": "原因として効く"},
+        {"from": "machine", "to": "spine", "label": "原因として効く"},
+        {"from": "material", "to": "spine", "label": "原因として効く"},
+        {"from": "method", "to": "spine", "label": "原因として効く"},
+        {"from": "sub", "to": "method", "label": "なぜを問うて分かれる"},
+        {"from": "spine", "to": "effect", "label": "結果を引き起こす"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### QC 七つ道具の中での役割",
+      "caption": "3 つの道具は左上から順に使い、段の間の矢印が次の道具へ渡すものです。特性要因図は原因の候補を挙げる段を受け持ちます。",
+      "direction": "down",
+      "stages": [
+        {"label": "パレート図\n件数の多い不具合を絞る", "icon": "chart", "next_label": "取り組む不具合"},
+        {"label": "特性要因図\n原因の候補を言葉で挙げる", "icon": "search", "next_label": "確かめる原因の候補", "emphasis": true},
+        {"label": "散布図・管理図\n原因かをデータで確かめる", "icon": "check"}
+      ]
+    }
+  ]
+}

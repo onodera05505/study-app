@@ -1,0 +1,36 @@
+{
+  "topic_id": 651,
+  "term": "クロス開発",
+  "figures": [
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 作る道具と確かめる道具",
+      "direction": "down",
+      "caption": "作ってから確かめるまでの段を上から順に並べます。確かめる道具は、実機ができる前はエミュレーター、できた後は ICE に替わります。",
+      "stages": [
+        {
+          "label": "ソースを書く\nホストの PC で",
+          "icon": "device",
+          "next_label": "ソースコード"
+        },
+        {
+          "label": "クロスコンパイル\nターゲット向けに翻訳",
+          "icon": "gear",
+          "next_label": "実行コード"
+        },
+        {
+          "label": "エミュレーターで確かめる\n実機ができる前に模擬",
+          "icon": "search",
+          "next_label": "確かめたコード",
+          "emphasis": true
+        },
+        {
+          "label": "ICE でデバッグ\n実機を動かしながら",
+          "icon": "search",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

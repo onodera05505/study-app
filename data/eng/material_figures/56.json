@@ -1,0 +1,26 @@
+{
+  "topic_id": 56,
+  "term": "例外処理",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "ファイルが無い例外が起きると残りの行を飛ばして catch へ移り、初めの設定で続けます。受け止める所が無ければ全体が止まります。",
+      "nodes": [
+        {"id": "stop", "label": "受け止める所が無い\nプログラム全体が\n止まる", "row": 0, "col": 0},
+        {"id": "t", "label": "試す所（try）\n設定のファイルを読む", "row": 0, "col": 1},
+        {"id": "n", "label": "続きの行\n読めたときだけ進む", "row": 0, "col": 2},
+        {"id": "c", "label": "受け止める所（catch）\n初めの設定を使い\n記録に残す", "row": 1, "col": 1, "emphasis": true},
+        {"id": "go", "label": "処理を続ける", "row": 1, "col": 2, "shape": "round"}
+      ],
+      "edges": [
+        {"from": "t", "to": "n", "label": "読めた"},
+        {"from": "t", "to": "c", "label": "ファイルが無い例外"},
+        {"from": "t", "to": "stop", "label": "catch が無いとき", "style": "dashed"},
+        {"from": "n", "to": "go", "label": "読めた中身で続ける"},
+        {"from": "c", "to": "go", "label": "初めの設定で続ける"}
+      ]
+    }
+  ]
+}

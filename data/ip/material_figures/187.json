@@ -1,0 +1,30 @@
+{
+  "topic_id": 187,
+  "term": "構造化シナリオ法",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "explanation",
+      "caption": "上の段ほど抽象的で、下へ進むほど具体的になります。段の間の矢印は、前のシナリオを次のシナリオへどう落とし込むかを表しています。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "バリューシナリオ\n届けたい価値（抽象）",
+          "icon": "people",
+          "next_label": "その価値を得る\n行動を場面に"
+        },
+        {
+          "label": "アクティビティシナリオ\n価値を得る行動の流れ",
+          "icon": "person",
+          "next_label": "その行動を\n操作の手順に"
+        },
+        {
+          "label": "インタラクションシナリオ\n行動を実現する操作（具体）",
+          "icon": "device",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

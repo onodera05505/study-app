@@ -1,0 +1,74 @@
+{
+  "target": "ap",
+  "units": ["10"],
+  "status": "done",
+  "items": [
+    {
+      "no": 295,
+      "topic_id": 676,
+      "type": "E",
+      "verdict": "fixed",
+      "rule": "rewrite_open_items.md の E（rewrite_unit_crosscheck.md X11）、write_materials.md「1 つの点は 1 か所で言う」（図を残す・要点の箇条から外すのは explanation の直後の図と同じ点だけ）、write_materials.md「explanation」の 3（箇条が 1 つだけなら文にする）",
+      "what": "(a) ### SSID が果たす役割 の「接続が済んだ後にホストを識別するのは IP アドレスで、SSID とは役割の層が違います。」は、図 1 の SSID の行（つなぐ前）と IP アドレスの行（つないだ後・通信の相手を番号で示す）と同じ点なので、文を外し、台帳の行を figure（676 の図 1）にした。(b) 要点の箇条 1（一覧から接続先を選ぶ）と箇条 2 の前半（値は管理者が自由に決める）は explanation の直後の図 1 の SSID の行（管理者が名前を自由に付ける・つなぐ前に参加するネットワークを名前で選ぶ）と同じ点なので外した。図 1 に無い後半（同じ SSID で 1 つのネットワーク・一意の保証が無い）は残し、箇条が 1 つになるので文にした。2017h29a-q31 の正解は、定義の 1 文（ネットワークに付ける名前・最長 32 オクテット）とキーワード（ネットワーク識別子）、図 1（つなぐ前に参加するネットワークを選ぶ）、図 2 の caption（知らされた名前で接続先を選ぶ）、問題解説で選べる",
+      "questions_checked": ["2017h29a-q31"]
+    }
+  ],
+  "edits": [
+    {
+      "file": "data/ap/materials_v4/10-2.json",
+      "topic_id": 676,
+      "field": "explanation",
+      "op": "replace",
+      "heading": "explanation",
+      "before": "- 端末は、アクセスポイントが知らせる SSID の一覧から、どこにつなぐかを選びます\n- 値は管理者が自由に決めるので、複数のアクセスポイントに同じ SSID を付けて 1 つのネットワークとして扱えます。ネットワーク上で一意になる保証はありません",
+      "after": "複数のアクセスポイントに同じ SSID を付けて 1 つのネットワークとして扱えます。ネットワーク上で一意になる保証はありません。"
+    },
+    {
+      "file": "data/ap/materials_v4/10-2.json",
+      "topic_id": 676,
+      "field": "detail",
+      "op": "delete",
+      "heading": "### SSID が果たす役割",
+      "before": "接続が済んだ後にホストを識別するのは IP アドレスで、SSID とは役割の層が違います。",
+      "after": ""
+    }
+  ],
+  "owners": [],
+  "figure_after": [],
+  "ledgers": [
+    {
+      "file": "data/ap/rewrite_ledgers/10-2.json",
+      "topic_id": 676,
+      "point": "端末は SSID を見てどのアクセスポイントにつなぐかを選ぶ（定義の 2 文目）",
+      "before": {"fate": "kept", "where": "explanation"},
+      "after": {"fate": "figure", "where": "676 の図 1"}
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/10-2.json",
+      "topic_id": 676,
+      "point": "接続後にホストを識別するのは IP アドレスで、SSID とは役割の層が違う",
+      "before": {"fate": "kept", "where": "### SSID が果たす役割"},
+      "after": {"fate": "figure", "where": "676 の図 1"}
+    },
+    {
+      "file": "data/ap/rewrite_ledgers/10-2.json",
+      "topic_id": 676,
+      "point": "値は管理者が自由に決める（要点の箇条の前半。explanation の直後の図 1 と同じ点）",
+      "before": {},
+      "after": {"fate": "figure", "where": "676 の図 1"}
+    }
+  ],
+  "returned": [],
+  "noticed": [
+    {
+      "topic_id": 676,
+      "what": "台帳の行「管理者が自由に決められ、同じ SSID を複数のアクセスポイントに設定して 1 つのネットワークとして扱える」（kept・explanation）は、前半が図 1 へ移り後半だけが explanation に残る。point を変えない決まりのため行は変えず、前半を figure の行として 1 行足した"
+    },
+    {
+      "topic_id": 676,
+      "what": "explanation の図の行の代替文は図 1 の今の caption（「強調した SSID の行を…管理者が自由に付け、」）と違う。指示どおり触れていない（親の図の差し込みで合わせる）"
+    }
+  ],
+  "gates": {"check_materials": 0, "check_material_style": 0, "render_check": 0, "check_explanations": 0, "check_unit_plans": null},
+  "chars": {"before": 924, "after": 819}
+}

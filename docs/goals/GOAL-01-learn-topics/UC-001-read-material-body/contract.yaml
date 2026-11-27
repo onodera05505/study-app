@@ -1,0 +1,54 @@
+# UC-001 の境界契約。境界の形だけを持つ（振る舞いと規則の正本は ./UC.md と REQ-001〜013）
+# 読み方の決まりは ../../../adr/ADR-0001-boundary-reading.md（transport / direction / auth / operation 名の当て方）
+# 共有語彙（authSchemes・errorCodes・共有の形）は ../../../_shared/components.yaml
+# 本文そのもの（論点の教材・問題解説・図の画像行を含む文字列）は、同じ経路の operation が
+# UC-002 の契約（getTopicDetail）にあるため、ここには書かない（ADR-0001 決め 1）
+# 用語集のメモリ上の保持（開いている間に取得は 1 度だけ・失敗時は空の用語集）は同じプロセスの中なので
+# operation にしない（ADR-0001 決め 3）。図の画像は <img> がブラウザで配信物を取る経路で、
+# ADR-0001 決め 4 が名指すのは版の印だけなので operation にしない。端末の記憶はこの UC では横切らない
+x-uc: UC-001
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-10-02
+
+operations:
+  getGlossary:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: bearer
+    summary: 用語集の全語（用語・1 行の説明・紐づく論点）を用語の順に返す（キャッシュ可）
+    wire:
+      method: GET
+      path: /api/glossary
+      success: 200
+    response:
+      type: object
+      required: [glossary]
+      properties:
+        glossary:
+          type: array
+          description: "用語の昇順。1 語も無いときは空の配列"
+          items:
+            type: object
+            required: [term, brief, topicId]
+            properties:
+              term: { type: string, minLength: 1, description: "用語集の正式な表記（末尾の括弧書きを含む）" }
+              brief: { type: string, minLength: 1, description: "1 行の説明" }
+              topicId: { type: [integer, "null"], minimum: 1, description: "紐づく論点の ID。無ければ null" }
+    errors:
+      - code: UNAUTHENTICATED
+        when: トークンが無い、または読めない
+        wire: { status: 401 }
+    examples:
+      ok:
+        response:
+          glossary:
+            - { term: "ARP（アドレス解決プロトコル）", brief: "IP アドレスから MAC アドレスを調べる仕組み。", topicId: 418 }
+            - { term: "アローダイアグラム", brief: "作業の順序と所要日数を矢印で表した図。", topicId: null }
+      okEmpty:
+        response:
+          glossary: []
+      unauthenticated:
+        request: { authorization: "" }
+        error: UNAUTHENTICATED

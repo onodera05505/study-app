@@ -1,0 +1,90 @@
+{
+  "topic_id": 690,
+  "term": "3PL（3rd Party Logistics）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "layers",
+      "after": "explanation",
+      "caption": "3PL が引き受ける 4 つの仕事を、運ぶ・預かるを土台に積んでいます。左の括弧が 3PL ならではの上の 3 層で、強調した一番上が物流企画の代行です。",
+      "shape": "stack",
+      "layers": [
+        {
+          "label": "物流企画の代行\n拠点の配置や輸送手段を設計する",
+          "emphasis": true
+        },
+        {
+          "label": "在庫管理と情報提供\n在庫と配送の状況を荷主に見せる"
+        },
+        {
+          "label": "流通加工\n値札付けや詰合せなど出荷前の作業"
+        },
+        {
+          "label": "輸配送・保管\n運ぶ・預かる",
+          "note": "運送業者・倉庫業者もできる仕事"
+        }
+      ],
+      "brackets": [
+        {
+          "from": 0,
+          "to": 2,
+          "label": "3PL ならでは\nの仕事"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### なぜ第三者に任せるのか",
+      "caption": "矢印は仕事を任せる向きです。荷主でも運送業者でもない第三者が荷主の物流を丸ごと引き受け、運ぶ・預かるは手配します。",
+      "nodes": [
+        {
+          "id": "shipper",
+          "label": "荷主\n自社の物流を任せる",
+          "row": 0,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "tpl",
+          "label": "3PL 事業者（第三者）\n物流の設計と運営\n車両や倉庫は持たなくてよい",
+          "row": 0,
+          "col": 1,
+          "emphasis": true,
+          "icon": "people"
+        },
+        {
+          "id": "truck",
+          "label": "運送業者\n荷物を運ぶ",
+          "row": 0,
+          "col": 2,
+          "icon": "box"
+        },
+        {
+          "id": "wh",
+          "label": "倉庫業者\n荷物を預かる",
+          "row": 1,
+          "col": 2,
+          "icon": "building"
+        }
+      ],
+      "edges": [
+        {
+          "from": "shipper",
+          "to": "tpl",
+          "label": "物流業務を包括して委託"
+        },
+        {
+          "from": "tpl",
+          "to": "truck",
+          "label": "輸送を手配"
+        },
+        {
+          "from": "tpl",
+          "to": "wh",
+          "label": "保管を手配"
+        }
+      ]
+    }
+  ]
+}

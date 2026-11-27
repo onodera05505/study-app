@@ -1,0 +1,39 @@
+{
+  "topic_id": 216,
+  "term": "CSIRT",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 事故の後の対応を一手に担う",
+      "direction": "down",
+      "caption": "事故が起きてから CSIRT が舵を取って進める対応の段です。矢印の名前は、前の段で得て次の段へ渡す物です。",
+      "stages": [
+        {
+          "label": "通報の受付\n社内の窓口として受ける",
+          "icon": "mail",
+          "next_label": "通報の内容"
+        },
+        {
+          "label": "事実の確認\n本当に事故かを確かめる",
+          "icon": "search",
+          "next_label": "確かめた事実"
+        },
+        {
+          "label": "影響範囲の調査\nどこまで及んだかを調べる",
+          "icon": "network",
+          "next_label": "影響の範囲"
+        },
+        {
+          "label": "封じ込め\n端末を切り離して食い止める",
+          "icon": "warning",
+          "next_label": "広がりを止めた状態"
+        },
+        {
+          "label": "復旧と再発防止\n元に戻し次に備える",
+          "icon": "check"
+        }
+      ]
+    }
+  ]
+}

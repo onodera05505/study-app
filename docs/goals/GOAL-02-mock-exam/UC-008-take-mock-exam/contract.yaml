@@ -1,0 +1,40 @@
+# UC-008 模試（通し受験）の境界。読み方の決まりは docs/adr/ADR-0001、共有語彙は ../../../_shared/components.yaml。
+# 振る舞いと規則は ./UC.md と同じディレクトリの REQ が持つ。ここは形だけ。
+# テストの経路（作る・現在の問題・回答・締め・結果）は演習と同じなので UC-004 の契約が正本（startSession・getCurrentQuestion・answerQuestion・finishSession・getSessionResult）。ここには模試に固有の経路だけを置く。
+x-uc: UC-008
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-06
+
+operations:
+  listExams:
+    transport: http
+    direction: inbound
+    owned: true
+    auth: bearer
+    summary: 公開回の一覧を、回ごとの問題数・その利用者の受験回数・最高正答数つきで返す
+    wire: { method: GET, path: /api/exams, success: 200 }
+    response:
+      type: object
+      required: [exams]
+      properties:
+        exams:
+          type: array
+          items:
+            type: object
+            required: [exam, examLabel, questions, attempts, bestScore]
+            properties:
+              exam: { type: string, minLength: 1 }
+              examLabel: { type: string, minLength: 1 }
+              questions: { type: integer, minimum: 1 }
+              attempts: { type: integer, minimum: 0 }
+              bestScore: { type: [integer, "null"] }
+    errors:
+      - { code: UNAUTHENTICATED, when: Bearer トークンが無いか読めない, wire: { status: 401 } }
+    examples:
+      ok:
+        response:
+          exams:
+            - { exam: 2024r06, examLabel: 令和6年度, questions: 100, attempts: 2, bestScore: 78 }
+            - { exam: 2023r05, examLabel: 令和5年度, questions: 100, attempts: 0, bestScore: null }
+      unauthenticated: { error: UNAUTHENTICATED }

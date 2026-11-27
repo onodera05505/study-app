@@ -1,0 +1,212 @@
+{
+ "target": "ip",
+ "units": [
+  "04",
+  "06",
+  "17"
+ ],
+ "status": "done",
+ "items": [
+  {
+   "no": 230,
+   "topic_id": 326,
+   "type": "D",
+   "verdict": "fixed",
+   "rule": "rewrite_open_items.md「D の直し方」3 → rewrite_text_followup.md「直し方」3「判断材料で、今の教材のどこにも無い」の戻し方（置く所 1）",
+   "what": "旧版の detail「交渉力を得る — 提携を組むとき、有力な特許を持つ側は有利な条件を出せます」（旧版の図 1 の箱「交渉力 提携で有利な条件を出せる」にもあった）が、今の本文にも図にも無かった。2022r04-q6 の a の正解の根拠なので、### 特許が与える独占権 の効果を並べた文の続き（クロスライセンスの文の前）に 1 文で戻した。台帳の行は既に kept・同じ見出しなので変えていない",
+   "questions_checked": [
+    "2022r04-q6"
+   ]
+  },
+  {
+   "no": 231,
+   "topic_id": 16,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢の句をほぼそのまま置く・過去問が振り分けさせる先に項目を 1 つずつ置く形）と rewrite_open_items.md「C の直し方」",
+   "what": "### 導入の段階の中での位置 の 3 つの箇条が、2024r06-q23 の a〜c（適用可能性を見極める概念検証／部門・業務を絞り込んで導入し効果を実測／全社展開の導入と運用の手順書）をほぼ同じ句で、問題が振り分けさせる 3 段階へ 1 つずつ置いていた。段の名前は残し、段ごとの性質（まだ導入していない見極めの段で PoC はここ／範囲を限って実際に入れ結果を確かめる段／全社に広げ運用に乗せる段）を言う形に言い直した。この本文と問題解説で 2024r06-q23 は解ける",
+   "questions_checked": [
+    "2024r06-q23",
+    "2025r07-q7",
+    "2022r04-q35",
+    "2020r02o-q28"
+   ]
+  },
+  {
+   "no": 232,
+   "topic_id": 262,
+   "type": "A",
+   "verdict": "fixed",
+   "rule": "rewrite_open_items.md「A の直し方」1〜6、write_materials.md「他の論点との分担」（3 つ以上を並べる比較は学ぶ順で最後の論点）、unit_plan.md の owners（比較・使い分けは書かない）",
+   "what": "BPR・BPM・BPMN の比較は、並べる論点のうち学ぶ順で最後の 498（BPR。BPM は論点でない）が持つ。262 の ### BPR・BPM との違い の比較の文を 498 の ### 混同しやすい用語 へ移し（主語を BPR 側に直し、比べる相手の BPMN の側を 1 文で添えた）、262 には見出しと 498 を指す 1 文を残した。498 の「違いは BPMN で説明します」を消し、468 の指す先を 498 に直した。owners の比較だけの行（owner 262）を消した。262 の図 1 は after がこの見出しなので触らず figure_followup に挙げた",
+   "questions_checked": [
+    "2023r05-q23",
+    "2018h30a-q13",
+    "2019h31h-q2"
+   ]
+  },
+  {
+   "no": 233,
+   "topic_id": 498,
+   "type": "G",
+   "verdict": "fixed",
+   "rule": "write_materials.md「共通の決まり」（比較の項目が 3 つ以上になるときは表か文章に移す）と「1 つの点は 1 か所で言う」（BCM との違いは図 2 が持つので表にしない）",
+   "what": "### 混同しやすい用語 の比べる相手が、ベンチマーキング・BCM に no 232 で移した BPM・BPMN が加わって 3 つ以上になった。表にすると図 2（BPR と BCM）・262 の図 1（3 つの比較）と同じ点を 2 か所で言うので、箇条と文が混ざっていた節を、相手ごとに 1 段落の文章にそろえた（ベンチマーキングの箇条を文にし、BPM・BPMN、BCM の段落に分けた）",
+   "questions_checked": [
+    "2018h30a-q13"
+   ]
+  },
+  {
+   "no": 234,
+   "topic_id": 361,
+   "type": "B",
+   "verdict": "returned",
+   "rule": "rewrite_open_items.md「B の直し方」1・2、「書いてよいファイル」",
+   "what": "361 の ### 圧縮・バックアップとの違い の文と図 1 のバックアップの列が、後の単元 21 の 198 との比較を持つのは現物で確かめた。B では 198 に比較が無ければ移すが、198 は今アーカイブを「長期保管の場所へデータを移す」意味で使っていて「まとめる操作と複製の違い」は無く、198 は一覧の units（04・06・17）の外で書けない。361 側だけ外すと点の行き先（owner 198）が成り立たないので直さず返した",
+   "questions_checked": [
+    "2021r03-q83"
+   ]
+  },
+  {
+   "no": 235,
+   "topic_id": 361,
+   "type": "G",
+   "verdict": "already",
+   "rule": "rewrite_open_items.md「G の直し方」",
+   "what": "今の 361 の本文には [[アーカイブ]] のポップが無く、361 の本文で定義と違う 1 行が出る所は無い。用語集の アーカイブ の 1 行（2025r07-q82 の note「当面使わないデータを長期保存用に別の場所へ移して残すこと」）と同じ意味で [[アーカイブ]] を使っているのは単元 21 の 198 の本文で、noticed に挙げた",
+   "questions_checked": [
+    "2021r03-q83"
+   ]
+  }
+ ],
+ "edits": [
+  {
+   "file": "data/ip/materials_v4/04-5.json",
+   "topic_id": 326,
+   "field": "detail",
+   "op": "insert",
+   "heading": "### 特許が与える独占権",
+   "before": null,
+   "after": "提携を組むときは、有力な特許を持つ側が有利な条件を出せます。"
+  },
+  {
+   "file": "data/ip/materials_v4/04-3.json",
+   "topic_id": 16,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 導入の段階の中での位置",
+   "before": "- **計画策定**の段階で、適用できそうかを見極める概念検証を行います。ここが PoC です\n- **先行導入**の段階では、部門や業務を絞り込んで実際に導入し、効果を実測します\n- **本格導入**の段階では、全社に広げるための導入と運用の手順書を整えます",
+   "after": "- **計画策定**は、まだ導入していない段階です。自社で使えそうかを見極めるので、PoC はこの段階で行います\n- **先行導入**は、範囲を限って実際に入れ、使った結果を確かめる段階です\n- **本格導入**は、全社に広げ、日常の業務として運用に乗せる段階です"
+  },
+  {
+   "file": "data/ip/materials_v4/06-2.json",
+   "topic_id": 262,
+   "field": "detail",
+   "op": "move",
+   "heading": "### BPR・BPM との違い",
+   "before": "262 ### BPR・BPM との違い: 名前の似た [[BPR（Business Process Reengineering）]] と [[BPM]] は、業務をどう変えるか・どう回すかという活動の名前です。",
+   "after": "498 ### 混同しやすい用語: BPR と、名前の似た [[BPM]] は、業務をどう変えるか・どう回すかという活動の名前です。[[BPMN（Business Process Model and Notation）]] は、業務の流れを図に描くときの表記法です。"
+  },
+  {
+   "file": "data/ip/materials_v4/06-2.json",
+   "topic_id": 262,
+   "field": "detail",
+   "op": "insert",
+   "heading": "### BPR・BPM との違い",
+   "before": null,
+   "after": "BPR・BPM との違いは [[BPR（Business Process Reengineering）]] で説明します。"
+  },
+  {
+   "file": "data/ip/materials_v4/06-3.json",
+   "topic_id": 498,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 混同しやすい用語",
+   "before": "- **[[ベンチマーキング]]** — 優れた他社と測って比べ、差を見つける活動です。BPR は見えた差を埋める手段として使うことがありますが、測って比べる活動とは別です\nBPR・BPM・BPMN の違いは [[BPMN（Business Process Model and Notation）]] で説明します。[[BCM（事業継続管理）]] は頭文字が似ていて紛れますが、継続の C と再設計の R で覚え分けます。",
+   "after": "[[ベンチマーキング]] は、優れた他社と測って比べ、差を見つける活動です。BPR は見えた差を埋める手段として使うことがありますが、測って比べる活動とは別です。\nBPR と、名前の似た [[BPM]] は、業務をどう変えるか・どう回すかという活動の名前です。[[BPMN（Business Process Model and Notation）]] は、業務の流れを図に描くときの表記法です。\n[[BCM（事業継続管理）]] は頭文字が似ていて紛れますが、継続の C と再設計の R で覚え分けます。"
+  },
+  {
+   "file": "data/ip/materials_v4/06-4.json",
+   "topic_id": 468,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 混同しやすい用語",
+   "before": "BPR・BPMN との違いは [[BPMN（Business Process Model and Notation）]] で説明します",
+   "after": "BPR・BPMN との違いは [[BPR（Business Process Reengineering）]] で説明します"
+  }
+ ],
+ "owners": [
+  {
+   "unit": "06",
+   "op": "delete",
+   "before": {
+    "subject": "BPR・BPM・BPMN の違い（改革・継続的な管理・図の記法）",
+    "owner": 262,
+    "topics": [
+     262,
+     498,
+     119,
+     468
+    ]
+   },
+   "after": null
+  }
+ ],
+ "figure_after": [],
+ "ledgers": [
+  {
+   "file": "data/ip/rewrite_ledgers/06-2.json",
+   "topic_id": 262,
+   "point": "BPR や BPM が改革や管理という活動を指すのに対し、BPMN だけが図の描き方の名前（要点の箇条）",
+   "before": {
+    "fate": "figure",
+    "where": "262 の図 1（行「指すもの」と caption の「描き方の名前は BPMN だけ」）"
+   },
+   "after": {
+    "fate": "owner",
+    "where": "498"
+   }
+  }
+ ],
+ "returned": [
+  {
+   "no": 232,
+   "topic_id": 262,
+   "figure": 1,
+   "kind": "figure_followup",
+   "what": "262 の図 1（matrix。BPMN・BPR・BPM を指すもの・何をするかで比べる）を、比較を持つ 498 へ移す。262 の ### BPR・BPM との違い には見出しと 498 を指す 1 文だけが残っている（after がこの見出しなので見出しは消していない）。移したあと 262 の見出しの扱い（図が無くなれば節ごと消す）と、262・498・468 の台帳の BPR・BPM の行（figure 262 の図 1 / owner 262）を 498 に合わせる"
+  },
+  {
+   "no": 234,
+   "topic_id": 361,
+   "figure": null,
+   "kind": "undetermined",
+   "what": "B の決まりでは、361 からバックアップとの比較（### 圧縮・バックアップとの違い の文の「復旧に備えて写しを取るバックアップとも別の操作」と図 1 のバックアップの列）を外し、比較を単元 21 の 198 へ移す。ただし (1) 198 は一覧の units の外で書けない (2) 198 は今アーカイブを「長期保管の場所へデータを移す」意味で使い（用語集の アーカイブ の 1 行も同じ意味）、361 の定義「複数のファイルを一つにまとめること」と違う。比較を 198 へ移すには、198 の中でアーカイブをどちらの意味に合わせるか（198 のレプリケーションとの文を 361 の意味に合わせて書き直す／198 で 2 つの意味を書き分ける）を先に決める必要があり、決まりからは 1 つに決まらない。決めたあと units に 17 と 21 を持つ一覧で起こし、361 の図 1 のバックアップの列は figure_followup で 198 の図へ移す"
+  }
+ ],
+ "noticed": [
+  {
+   "topic_id": 361,
+   "what": "用語集の アーカイブ の 1 行（build_seed.py は最も新しい回の note を代表にする。2025r07-q82 の note「当面使わないデータを長期保存用に別の場所へ移して残すことです」）が、361 の定義「複数のファイルを一つにまとめること」と別の意味。198（単元 21）の ### 混同しやすい用語 の [[アーカイブ]] もこの意味で使っている。直すなら glossary_overrides.json（親）か 198 の側"
+  },
+  {
+   "topic_id": 498,
+   "what": "台帳 06-3 の 498 の行「BPM は流れを見張って改善を回し続ける管理の枠組みで、一度きりの BPR と時間軸が違う」は owner・262 のまま（点は今 262 の図 1 にある）。図 1 を 498 へ移したら 498 の図に書き換える行"
+  },
+  {
+   "topic_id": 16,
+   "what": "materials_v4/04-3.json の 16 の本文の図の行（16-1.svg）が detail の末尾（### 導入の段階の中での位置 の節）にあるが、図の仕様の after は ### 何のために行うのか。図の行は親の差し込みで作り直す物なので触れていない"
+  }
+ ],
+ "gates": {
+  "check_materials": 0,
+  "check_material_style": 0,
+  "render_check": 0,
+  "check_explanations": 0,
+  "check_unit_plans": 0
+ },
+ "chars": {
+  "before": 3685,
+  "after": 3728
+ }
+}

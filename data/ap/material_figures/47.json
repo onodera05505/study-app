@@ -1,0 +1,71 @@
+{
+  "topic_id": 47,
+  "term": "マシンビジョン",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### スマートファクトリーでの位置づけ",
+      "caption": "撮った画像をラインのそばの機器で判定し、結果をロボットと上位システムへ渡す経路です。矢印は流れる物を表します。",
+      "nodes": [
+        {
+          "id": "w",
+          "label": "ラインの製品\n検査する対象",
+          "row": 0,
+          "col": 0,
+          "icon": "box"
+        },
+        {
+          "id": "cam",
+          "label": "カメラと照明\n条件をそろえて撮る",
+          "row": 0,
+          "col": 1,
+          "icon": "search"
+        },
+        {
+          "id": "e",
+          "label": "エッジの機器\nAI が画像で良否を判定",
+          "row": 0,
+          "col": 2,
+          "icon": "gear",
+          "emphasis": true
+        },
+        {
+          "id": "r",
+          "label": "産業用ロボット\n不良品を取り除く",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "u",
+          "label": "上位システム\n判定を記録・分析",
+          "row": 1,
+          "col": 3,
+          "icon": "server"
+        }
+      ],
+      "edges": [
+        {
+          "from": "w",
+          "to": "cam",
+          "label": "見た目"
+        },
+        {
+          "from": "cam",
+          "to": "e",
+          "label": "画像"
+        },
+        {
+          "from": "e",
+          "to": "r",
+          "label": "良否の結果"
+        },
+        {
+          "from": "e",
+          "to": "u",
+          "label": "判定結果だけ"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+ "target": "ap",
+ "units": [
+  "11"
+ ],
+ "items": [
+  {
+   "no": 138,
+   "unit": "11",
+   "topic_id": 6,
+   "figure": null,
+   "source": "acceptance",
+   "kind": "ledger_where",
+   "what": "点の台帳の where が、今は点の無い所を指す行がある",
+   "related": []
+  },
+  {
+   "no": 144,
+   "unit": "11",
+   "topic_id": 190,
+   "figure": null,
+   "source": "acceptance",
+   "kind": "ledger_where",
+   "what": "点の台帳の行が「624 の図 3」を指したまま",
+   "related": [
+    624
+   ]
+  },
+  {
+   "no": 40,
+   "unit": "11",
+   "topic_id": 198,
+   "figure": 1,
+   "source": "figures_review",
+   "kind": "text_followup",
+   "what": "本文 ### リスクアセスメントの3段階 の「図の各段が、その段で考慮する材料と、次の段へ渡す物です。」が、段の役割に替えた図と合わなくなった。「図の各段が、その段の役割と、次の段へ渡す物です。」のように本文の文を合わせる（台帳 data/ap/rewrite_ledgers/11-21.json の「どの段階で何を考慮するかが問われる」の行の where もこの文を指す）",
+   "related": []
+  },
+  {
+   "no": 41,
+   "unit": "11",
+   "topic_id": 406,
+   "figure": 2,
+   "source": "figures_review",
+   "kind": "text_followup",
+   "what": "406 の本文 ### 設置母体と役割の見分け が「3 つのうち政府の組織は NISC だけ」と、学ぶ順で後の論点 626 を含む 3 組織の比較を持つ。比較を 626 へ移すかは本文の側の判断（626 の explanation は「見分けは JPCERT コーディネーションセンターで説明」と指している）",
+   "related": [
+    626
+   ]
+  },
+  {
+   "no": 42,
+   "unit": "11",
+   "topic_id": 406,
+   "figure": 2,
+   "source": "figures_review",
+   "kind": "unit_plan",
+   "what": "単元の構成 11 の owners に「NISC・JPCERT/CC・IPA（J-CRAT・J-CSIP）の設置母体と役割の見分け」の持ち主 406 とあるが、これは比較で、write_materials.md の「他の論点との分担」では学ぶ順で後の論点（626）が持つ。図からは NISC の列を外した。台帳 11-19 の shared の 3 組織の比較（holder 406・406 の図 2）も今は 2 組織の図を指す",
+   "related": [
+    11,
+    626
+   ]
+  },
+  {
+   "no": 44,
+   "unit": "11",
+   "topic_id": 406,
+   "figure": 2,
+   "source": "text_followup",
+   "kind": "unit_plan",
+   "what": "406 の ### 設置母体と役割の見分け が「3 つのうち政府の組織は NISC だけ」と、学ぶ順で後の論点 626（NISC）を含む 3 組織の比較を持つ。比較は学ぶ順で後の論点が持つ決まりとの関係で 626 へ移すか（626 の explanation は 406 を指している）は単元の構成と受け持ちの判断。移すなら「3 つのうち」の文も一緒に動く",
+   "related": [
+    626
+   ]
+  },
+  {
+   "no": 39,
+   "unit": "11",
+   "topic_id": 407,
+   "figure": 2,
+   "source": "figures_review",
+   "kind": "other",
+   "what": "台帳 11-20 の点「JVN はものさしや分類を添えて情報を届ける側」は fate を figure のまま where を「407 の図 2（全体の箱と深刻度の欄）」にした。分類（CWE）は図から外れ、CVE・CVSS・CWE の役割分担は前の論点 199 の表にある（同じ台帳の別の 2 行は prior 199 にした）",
+   "related": [
+    199
+   ]
+  },
+  {
+   "no": 43,
+   "unit": "11",
+   "topic_id": 624,
+   "figure": 3,
+   "source": "figures_review",
+   "kind": "unit_plan",
+   "what": "単元の構成 11 の owners に「総当たり・リバースブルートフォース・パスワードリスト・レインボーテーブル・辞書攻撃の見分け」の持ち主 624 とあるが比較で、学ぶ順で後の論点 190・191 の語を含む。図からはパスワードリスト攻撃の列を外した。624 の本文 ### 総当たりの周りにある攻撃 は後の論点を [[ ]] で並べている",
+   "related": [
+    11,
+    190,
+    191
+   ]
+  }
+ ]
+}

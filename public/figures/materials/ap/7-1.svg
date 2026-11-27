@@ -1,6 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="331" viewBox="0 0 714.4 370" role="img">
-<title>権威DNSサーバが秘密鍵で署名し、キャッシュサーバが公開鍵で検証する。守れるのは出所と改ざんの検知だけで、通信は暗号化しない。</title>
-<rect x="0.5" y="0.5" width="713.4" height="369" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="292" viewBox="0 0 714.4 326">
+<rect x="0.5" y="0.5" width="713.4" height="325" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(20 20)">
 <line x1="55" y1="34" x2="55" y2="286" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
 <line x1="332.65" y1="34" x2="332.65" y2="286" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
@@ -20,8 +19,8 @@
 <polyline points="611.85,148 335.65,148" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="335.65,148 343.65,144.4 343.65,151.6" fill="#1f2937"/>
 <text x="473.75" y="141" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. レコード ＋ 秘密鍵で付けた署名 ＋ 公開鍵</text>
-<rect x="315.25" y="153" width="317" height="16" rx="3" fill="#ffffff"/>
-<text x="473.75" y="166.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">署名する対象はリソースレコード（DKIM は電子メール）</text>
+<rect x="379.75" y="153" width="188" height="16" rx="3" fill="#ffffff"/>
+<text x="473.75" y="166.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">署名する対象はリソースレコード</text>
 <polyline points="332.65,196 358.65,196 358.65,210 334.65,210" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="334.65,210 342.65,206.4 342.65,213.6" fill="#1f2937"/>
 <text x="366.65" y="204" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">4. 公開鍵で署名を検証</text>
@@ -29,8 +28,6 @@
 <text x="332.65" y="228.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">通らなければ偽の応答として捨てる＝キャッシュポイズニングを防ぐ</text>
 <polyline points="329.65,254 58,254" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
 <polygon points="58,254 66,250.4 66,257.6" fill="#1f2937"/>
-<text x="193.82" y="247" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. 検証済みの応答（中身は暗号化されない）</text>
+<text x="193.82" y="247" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. 検証済みの応答</text>
 </g>
-<text x="357.2" y="334" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">権威DNSサーバが秘密鍵で署名し、キャッシュサーバが公開鍵で検証する。守れるのは出所と改ざんの検知だけで、通信は暗</text>
-<text x="357.2" y="350" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">号化しない。</text>
 </svg>

@@ -1,0 +1,39 @@
+{
+  "topic_id": 100,
+  "term": "営業支援システム（SFA：Sales Force Automation）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "venn",
+      "after": "### CRM との違い",
+      "caption": "外の円が CRM、内の円が SFA です。SFA は CRM の中で営業部門の活動を受け持つ部分にあたります。",
+      "layout": "nested",
+      "sets": [
+        {
+          "id": "crm",
+          "label": "CRM（顧客と長く良い関係を築く取組全体）"
+        },
+        {
+          "id": "sfa",
+          "label": "SFA（営業部門の活動）"
+        }
+      ],
+      "regions": [
+        {
+          "in": [
+            "crm"
+          ],
+          "label": "CRM だけ\n営業以外も含めた\n顧客との関係づくり"
+        },
+        {
+          "in": [
+            "crm",
+            "sfa"
+          ],
+          "label": "SFA\n商談・訪問・交渉の\n履歴を蓄えて共有",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

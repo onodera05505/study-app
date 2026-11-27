@@ -1,32 +1,49 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="303" viewBox="0 0 650 308" role="img">
-<title>脆弱性が判明してから修正プログラムが届くまでの無防備な期間を狙うのがゼロデイ攻撃。</title>
-<rect x="0.5" y="0.5" width="649" height="307" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="232" viewBox="0 0 680 247">
+<rect x="0.5" y="0.5" width="679" height="246" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(20 20)">
-<line x1="48" y1="34" x2="48" y2="240" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="305" y1="34" x2="305" y2="240" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<line x1="562" y1="34" x2="562" y2="240" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
-<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">開発元</text>
-<rect x="236" y="0" width="138" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="305" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">利用者のシステム</text>
-<rect x="514" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="562" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">攻撃者</text>
-<polyline points="48,60 74,60 74,74 50,74" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="50,74 58,70.4 58,77.6" fill="#1f2937"/>
-<text x="82" y="68" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">1. 脆弱性が判明（修正プログラムはまだ無い）</text>
-<polyline points="559,102 308,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="308,102 316,98.4 316,105.6" fill="#1f2937"/>
-<text x="433.5" y="95" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 脆弱性を突いて攻撃</text>
-<rect x="273.5" y="107" width="320" height="16" rx="3" fill="#ffffff"/>
-<text x="433.5" y="120.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">パッチが無いので当てる対策が効かない。ここがゼロデイ</text>
-<polyline points="305,150 331,150 331,164 307,164" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="307,164 315,160.4 315,167.6" fill="#1f2937"/>
-<text x="339" y="158" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="start">3. 機能停止や通信制限で回避</text>
-<rect x="217" y="169" width="176" height="16" rx="3" fill="#ffffff"/>
-<text x="305" y="182.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">この期間にできるのは回避だけ</text>
-<polyline points="51,208 302,208" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="302,208 294,211.6 294,204.4" fill="#1f2937"/>
-<text x="176.5" y="201" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. 修正プログラムを公開し適用（1 日目）</text>
+<g transform="translate(40 0)">
+<line x1="140" y1="50" x2="140" y2="68" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="420" y1="50" x2="420" y2="68" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="420" y1="50" x2="420" y2="68" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="560" y1="50" x2="560" y2="68" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<rect x="140" y="36" width="280" height="14" rx="3" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<rect x="204" y="0" width="152" height="32" rx="3" fill="#ffffff"/>
+<text x="280" y="12.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">無防備な期間</text>
+<text x="280" y="28.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">パッチが無く当てられない</text>
+<rect x="420" y="36" width="140" height="14" rx="3" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<rect x="426" y="0" width="128" height="32" rx="3" fill="#ffffff"/>
+<text x="490" y="12.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">パッチで防げる期間</text>
+<text x="490" y="28.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">当てれば穴がふさがる</text>
+<line x1="0" y1="68" x2="560" y2="68" stroke="#1f2937" stroke-width="1.4"/>
+<line x1="0" y1="68" x2="0" y2="73" stroke="#1f2937" stroke-width="1.2"/>
+<text x="0" y="87" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">判明の前</text>
+<line x1="140" y1="68" x2="140" y2="73" stroke="#1f2937" stroke-width="1.2"/>
+<text x="140" y="87" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">脆弱性の判明</text>
+<line x1="280" y1="68" x2="280" y2="73" stroke="#1f2937" stroke-width="1.2"/>
+<text x="280" y="87" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">修正を作る間</text>
+<line x1="420" y1="68" x2="420" y2="73" stroke="#1f2937" stroke-width="1.2"/>
+<text x="420" y="87" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">修正の公開</text>
+<line x1="560" y1="68" x2="560" y2="73" stroke="#1f2937" stroke-width="1.2"/>
+<text x="560" y="87" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">公開の後</text>
+<line x1="140" y1="73" x2="140" y2="72" stroke="#6b7280" stroke-width="0.8"/>
+<line x1="140" y1="93" x2="140" y2="101" stroke="#6b7280" stroke-width="0.8"/>
+<line x1="280" y1="73" x2="280" y2="72" stroke="#6b7280" stroke-width="0.8"/>
+<line x1="280" y1="93" x2="280" y2="141" stroke="#6b7280" stroke-width="0.8"/>
+<line x1="420" y1="73" x2="420" y2="72" stroke="#6b7280" stroke-width="0.8"/>
+<line x1="420" y1="93" x2="420" y2="101" stroke="#6b7280" stroke-width="0.8"/>
+<circle cx="140" cy="68" r="4.5" fill="#ffffff" stroke="#1f2937" stroke-width="1.6"/>
+<rect x="64" y="103" width="152" height="32" rx="3" fill="#ffffff"/>
+<text x="140" y="115.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">脆弱性が判明</text>
+<text x="140" y="131.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">修正プログラムはまだ無い</text>
+<circle cx="280" cy="68" r="4.5" fill="#ffffff" stroke="#1f2937" stroke-width="1.6"/>
+<rect x="222" y="143" width="116" height="32" rx="3" fill="#ffffff"/>
+<text x="280" y="155.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">ゼロデイ攻撃</text>
+<text x="280" y="171.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">この期間に穴を突く</text>
+<circle cx="420" cy="68" r="4.5" fill="#ffffff" stroke="#1f2937" stroke-width="1.6"/>
+<rect x="338" y="103" width="164" height="32" rx="3" fill="#ffffff"/>
+<text x="420" y="115.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">修正プログラムの公開</text>
+<text x="420" y="131.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">ここからパッチを当てられる</text>
+<text x="280" y="203" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">時間の流れ（例）</text>
 </g>
-<text x="325" y="288" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">脆弱性が判明してから修正プログラムが届くまでの無防備な期間を狙うのがゼロデイ攻撃。</text>
+</g>
 </svg>

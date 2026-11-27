@@ -1,0 +1,41 @@
+{
+  "target": "ap",
+  "units": ["12"],
+  "status": "done",
+  "items": [
+    {"no": 45, "topic_id": 599, "type": "D", "verdict": "already",
+     "rule": "rewrite_open_items.md「D の直し方」の 2、rewrite_text_followup.md「直し方」の 3（応用情報の周辺知識で行き先が fate のどれにも当たらない点は本文へ戻す）",
+     "what": "今の図 1 は申告の案どおり 2×2 の matrix（確かめる向き×見る先）に描き替え済みで、after は「### なぜこの4つなのか」、設計・テストの列と「要求事項より上にあるのはこれだけ」の注記は無い。止めた理由の台帳の行（0 始まりの行 19「比べる相手は時点で決まる」・行 25「設計ではテストの実現可能性が加わる」）は、どちらも今は kept で「### 設計とテストの工程の評価基準」の本文にあり、行 23・26 は explanation（2019h31h-q50 のイ・ア・エの note）に送られている。節を残すかの点は no.49 のとおり決まりどおり残す",
+     "questions_checked": ["2019h31h-q50"]},
+    {"no": 46, "topic_id": 599, "type": "F", "verdict": "already",
+     "rule": "rewrite_text_followup.md「直し方」の 1（図を指す句を外す）",
+     "what": "今の本文の「### 設計とテストの工程の評価基準」は「設計は、システム方式設計やソフトウェア設計の工程です。」で、旧図の列を指す「図の「設計」は」の句は既に無い。節を残すかの点は no.49 のとおり決まりどおり残す（台帳の該当行はどれもこの節に点がある）",
+     "questions_checked": ["2019h31h-q50"]},
+    {"no": 47, "topic_id": 599, "type": "F", "verdict": "already",
+     "rule": "rewrite_text_followup.md「直し方」の 1",
+     "what": "図 1 の直しは済み、本文の節は図を指していない（「図の「設計」は」の句が無い）。図の直しの後の後追いで要るとされた直しは、今の現物に残っていない。誤答ア・イ・エの説明に近いという点は no.49 で判定",
+     "questions_checked": ["2019h31h-q50"]},
+    {"no": 48, "topic_id": 599, "type": "F", "verdict": "already",
+     "rule": "rewrite_text_followup.md「直し方」の 1",
+     "what": "no.47 と同じ申告。今の図は描き替え済みで after は「### なぜこの4つなのか」、本文の節に図の列を指す句は無い",
+     "questions_checked": ["2019h31h-q50"]},
+    {"no": 49, "topic_id": 599, "type": "C", "verdict": "by_rule",
+     "rule": "write_materials.md「応用情報 — 情報量は削らない」（紐づく過去問の周辺知識は残す。削るのは言い直し・誤答のケア・受け持ちの繰り返しだけ）と「書き直し」の「情報を落とさない」、rewrite_materials_by_group.md の explanation の定義（誤答のケア＝誤答を打ち消すだけで正解を選ぶのに要らない物）",
+     "what": "節の文を 2019h31h-q50 と問題解説に並べた。「比べる相手はその工程の時点で何が存在するかで決まる」は correct_reason（この段階で存在するのは取得ニーズだけ）の根で判断材料。外部・内部一貫性とテストの実現可能性はどの選択肢・note にも無い周辺知識。選択肢の note とほぼ同じ点（要求事項へ向けてたどる・網羅性）は既に explanation に送られて本文に無い。残る文は事実を言う形で選択肢を打ち消す形でないので、誤答のケアに当たらず、応用情報では節を残す",
+     "questions_checked": ["2019h31h-q50"]},
+    {"no": 50, "topic_id": 599, "type": "D", "verdict": "already",
+     "rule": "rewrite_text_followup.md「直し方」の 3 の表（図の直しを止めた点で、判断材料でなく問題解説にも無い応用情報の周辺知識は本文へ戻す。2026-11-15 の改訂 X68）",
+     "what": "台帳 12-1 の 599 の行「設計ではテストの実現可能性が加わる」は今 fate kept・where「### 設計とテストの工程の評価基準」で、本文の同じ節に「設計の工程では、テストの実現可能性も評価の観点に加わります。」がある。行き先は改訂後の決まりで 1 つに決まり、既に戻っている",
+     "questions_checked": ["2019h31h-q50"]}
+  ],
+  "edits": [],
+  "owners": [],
+  "figure_after": [],
+  "ledgers": [],
+  "returned": [],
+  "noticed": [
+    {"topic_id": 599, "what": "「### 設計とテストの工程の評価基準」の「テストの工程の観点には、作業標準と並んでテスト方法の適切性も入ります。」は、2019h31h-q50 の選択肢エ「使用されたテスト方法及び作業標準の適切性」の句に近い（共通フレームが定める基準の名前でもある）。一覧に無いので直していない"}
+  ],
+  "gates": {"check_materials": 0, "check_material_style": 0, "render_check": 0, "check_explanations": 0, "check_unit_plans": null},
+  "chars": {"before": 1018, "after": 1018}
+}

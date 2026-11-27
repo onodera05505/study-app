@@ -1,0 +1,50 @@
+{
+  "topic_id": 303,
+  "term": "PLM（Product Lifecycle Management）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "timeline",
+      "after": "explanation",
+      "caption": "帯は製品が売れる時期の移り変わりで、時期ごとに打つ手が変わります。強調した成長期に投資を集めます。",
+      "axis": {
+        "label": "発売からの時間（例）",
+        "ticks": [
+          "発売",
+          "1 年",
+          "2 年",
+          "3 年",
+          "4 年",
+          "5 年"
+        ]
+      },
+      "events": [
+        {
+          "from": 0,
+          "to": 1,
+          "label": "導入期\n知られておらず売上は小さい"
+        },
+        {
+          "from": 1,
+          "to": 2.5,
+          "label": "成長期\n売上が急に伸びる",
+          "emphasis": true
+        },
+        {
+          "from": 2.5,
+          "to": 4,
+          "label": "成熟期\n売上が頭打ちで価格を競う"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "label": "衰退期\n売上が落ち撤退を考える"
+        },
+        {
+          "at": 1.5,
+          "label": "競合の参入\n差別化が要りだす"
+        }
+      ]
+    }
+  ]
+}

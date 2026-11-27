@@ -1,0 +1,107 @@
+{
+  "topic_id": 21,
+  "term": "教師あり学習 （回帰， 分類など）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "### 3 つの学び方",
+      "caption": "学習の輪を時計回りに読みます。ラベル（正しい答え）は比べる段で使われ、輪を回すたびに予測とラベルの食い違いが小さくなります。",
+      "center": "学習",
+      "stages": [
+        {
+          "label": "予測する\n今の重みで答えを出す",
+          "next_label": "予測した値"
+        },
+        {
+          "label": "ラベルと比べる\n正しい答えとの食い違いを測る",
+          "icon": "search",
+          "next_label": "食い違いの大きさ",
+          "emphasis": true
+        },
+        {
+          "label": "重みを直す\n食い違いが減る向きへ",
+          "icon": "gear",
+          "next_label": "直した重み"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 学習と推論の 2 段",
+      "caption": "上の段が学習、中の段が推論です。ラベル付きのデータは学習にだけ使い、推論ではラベルの無い新しいデータに学習済みモデルを当てはめます。",
+      "nodes": [
+        {
+          "id": "train",
+          "label": "ラベル付きのデータ\n入力とラベル（正しい答え）の組",
+          "row": 0,
+          "col": 0,
+          "icon": "database"
+        },
+        {
+          "id": "learn",
+          "label": "学習の段\n誤りを小さくしていく",
+          "row": 0,
+          "col": 1,
+          "icon": "gear"
+        },
+        {
+          "id": "new",
+          "label": "新しいデータ\nラベルが付いていない",
+          "row": 1,
+          "col": 0,
+          "icon": "database"
+        },
+        {
+          "id": "model",
+          "label": "学習済みモデル\n推論の段で使う",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "pred",
+          "label": "予測\n数値か種類を答える",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "test",
+          "label": "学習に使っていないデータ\nラベル付きで取っておく",
+          "row": 2,
+          "col": 1,
+          "icon": "database"
+        }
+      ],
+      "edges": [
+        {
+          "from": "train",
+          "to": "learn",
+          "label": "入力とラベル"
+        },
+        {
+          "from": "learn",
+          "to": "model",
+          "label": "決まった重み"
+        },
+        {
+          "from": "new",
+          "to": "model",
+          "label": "入力だけ"
+        },
+        {
+          "from": "model",
+          "to": "pred",
+          "label": "予測した答え"
+        },
+        {
+          "from": "test",
+          "to": "model",
+          "label": "当たり具合を確かめる",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

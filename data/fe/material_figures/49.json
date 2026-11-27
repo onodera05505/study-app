@@ -1,0 +1,49 @@
+{
+  "topic_id": 49,
+  "term": "直流給電",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### 交流給電で電力が失われる場所",
+      "caption": "交流給電で受電から LSI に届くまでの流れです。段の 3 行目が変換で電力が失われる所で、交流と直流の行き来が 3 回挟まります。",
+      "direction": "down",
+      "stages": [
+        {"label": "受電\n交流で受け取る", "icon": "building", "next_label": "交流"},
+        {"label": "UPS で直流に\n蓄電池を充電する\n変換で損失", "next_label": "直流"},
+        {"label": "UPS で交流に戻す\n機器へ送り出す\n変換で損失", "next_label": "交流", "emphasis": true},
+        {"label": "電源部で直流に\n機器の中で変換\n変換で損失", "next_label": "直流"},
+        {"label": "基板で降圧\nLSI の低い電圧へ\n降圧で損失", "icon": "device"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 直流給電と交流給電の比較",
+      "caption": "直流給電で受電から LSI に届くまでの流れです。段の 3 行目が損失の出る所で、交流と直流の変換は 1 回だけです。",
+      "direction": "down",
+      "stages": [
+        {"label": "受電\n交流で受け取る", "icon": "building", "next_label": "交流"},
+        {"label": "直流に変換\n高電圧直流で配る\n変換で損失", "next_label": "直流のまま", "emphasis": true},
+        {"label": "機器で降圧\nLSI の低い電圧へ\n降圧で損失", "icon": "device"}
+      ]
+    },
+    {
+      "id": 3,
+      "type": "blocks",
+      "after": "### 停電に備える仕組み",
+      "caption": "直流給電の系統に蓄電池をつないだ配線です。商用電源が止まっても、強調した蓄電池から変換を挟まずに電力が流れ続けます。",
+      "nodes": [
+        {"id": "grid", "label": "商用電源\n交流を直流に変換", "row": 0, "col": 0, "icon": "building"},
+        {"id": "bus", "label": "直流の系統\n直流のまま配る", "row": 0, "col": 1},
+        {"id": "dev", "label": "機器\n直流で動く", "row": 0, "col": 2, "icon": "server"},
+        {"id": "bat", "label": "蓄電池\n直流をためる", "row": 1, "col": 1, "emphasis": true}
+      ],
+      "edges": [
+        {"from": "grid", "to": "bus", "label": "普段の電力 停電で途切れる", "style": "dashed"},
+        {"from": "bat", "to": "bus", "label": "変換なしで直結", "arrow": "both"},
+        {"from": "bus", "to": "dev", "label": "途切れずに届く"}
+      ]
+    }
+  ]
+}

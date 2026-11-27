@@ -1,0 +1,79 @@
+{
+  "bundle": "06-4",
+  "shared": [
+    {"item": "HDL で記述し論理合成した構成データを FPGA に書き込む流れ（単元の構成の受け持ち。流れの図は 121 の図 1 だけが持ち、外せる同じ内容の図が束に無いので 121 に残す）", "count": 5, "holder": 120, "topics": [120, 121]},
+    {"item": "作り込んだチップ（SoC）と書き換えられる FPGA が対になる性質（比べる 2 つは学ぶ順で後の 120 が持つ）", "count": 2, "holder": 120, "topics": [124, 120]},
+    {"item": "代表例の VHDL と Verilog HDL", "count": 3, "holder": 121, "topics": [120, 121]},
+    {"item": "書き換わるのは回路か記憶内容か（120 の中で要点の箇条・detail の文・図 2 の 2 行目と caption に出る）", "count": 3, "holder": 120, "topics": [120]}
+  ],
+  "topics": [
+    {
+      "topic_id": 124,
+      "points": [
+        {"point": "SoC＝以前は複数のチップに分かれていた CPU・メモリ・周辺回路などのシステム一式を 1 個の LSI（大規模集積回路）にまとめた物（定義）", "fate": "kept", "where": "explanation"},
+        {"point": "キーワード: 一つのチップ・集積・LSI", "fate": "kept", "where": "explanation"},
+        {"point": "判定の軸はチップが 1 個に集約されているか", "fate": "kept", "where": "explanation の箇条 1"},
+        {"point": "基板やパッケージの中にまとめただけでは SoC にならない", "fate": "kept", "where": "explanation の箇条 1（チップが複数のまま、の事実の文に）"},
+        {"point": "狙いは小型化・低消費電力・高速化。チップ間の配線が短くなるぶん遅延と消費電力が下がる", "fate": "kept", "where": "explanation の箇条 2"},
+        {"point": "部品が同じチップの区画に収まる（図 1）", "fate": "figure", "where": "124 の図 1"},
+        {"point": "スマートフォンのような小型で電池駆動の機器で部品を別々のチップで並べると基板が大きくなり、チップ間の配線が遅延と消費電力の負担になる", "fate": "kept", "where": "### 1チップに載せる狙い"},
+        {"point": "CPU・GPU・メモリ制御・無線・画像処理の列挙", "fate": "figure", "where": "124 の図 1（部位の名前）"},
+        {"point": "1 枚のシリコン上に作り込む", "fate": "kept", "where": "### 1チップに載せる狙い"},
+        {"point": "小型化・低消費電力・高速化をまとめて狙う（detail での言い直し）", "fate": "duplicate", "where": "explanation の箇条 2"},
+        {"point": "弱点は設計と製造をやり直しにくく開発費が大きい", "fate": "kept", "where": "### 1チップに載せる狙い"},
+        {"point": "書き換えで直せる FPGA と対になる性質", "fate": "kept", "where": "120 の ### 向く場面と不利な点（比べる 2 つは学ぶ順で後の論点が持つ。同じ束の後の論点へ移す行き先が 7 つに無いので kept とし、報告の spec_gaps に書いた）"},
+        {"point": "多くは特定用途向けに設計する ASIC として作られる", "fate": "kept", "where": "### 1チップに載せる狙い"},
+        {"point": "ASIC は「専用に設計したか」、SoC は「システム一式が 1 チップに載っているか」で着目点が違う", "fate": "kept", "where": "### 1チップに載せる狙い"},
+        {"point": "SoC・SiP・MCU をチップの数と中身で比べた表（図 2）", "fate": "figure", "where": "124 の図 2"},
+        {"point": "SiP は複数のチップを 1 つのパッケージに封入した物でチップの数は複数のまま", "fate": "figure", "where": "124 の図 2（SiP の行）"},
+        {"point": "SiP は個々の機能を最適な製造工程で作ってから 1 つの入れ物に収める", "fate": "kept", "where": "### 混同しやすい用語"},
+        {"point": "MCU（マイコン）は CPU に最小限のメモリと入出力を載せた制御用チップ", "fate": "figure", "where": "124 の図 2（MCU の行）"},
+        {"point": "MCU を基板に何個並べてもシステム一式が 1 チップに集積されたことにはならない", "fate": "kept", "where": "### 混同しやすい用語"}
+      ]
+    },
+    {
+      "topic_id": 120,
+      "points": [
+        {"point": "FPGA＝製造後、基板に実装した後でも内部の論理回路を何度でも書き換えられる集積回路（定義）", "fate": "kept", "where": "explanation（正式名を定義の 1 文に 1 回だけ足した）"},
+        {"point": "キーワード: 実装後に再プログラム・書換え可能な論理回路", "fate": "kept", "where": "explanation"},
+        {"point": "キーワードの「論理合成」", "fate": "kept", "where": "explanation の箇条 2（キーワードの行からは外した。論理合成が問題文に出て問われたのは HDL で、121 のキーワードに残る）"},
+        {"point": "問われるのは実装した後から再プログラムできるという一点（問われ方の文）", "fate": "duplicate", "where": "explanation の定義の 1 文"},
+        {"point": "回路は HDL（ハードウェア記述言語）で設計し、合成した構成データを FPGA に書き込む（受け持ちの流れ）", "fate": "kept", "where": "explanation の箇条 2"},
+        {"point": "書き換わるのは記憶内容ではなく論理回路そのもの", "fate": "kept", "where": "explanation の箇条 1"},
+        {"point": "構成データ次第で同じチップがどちらの回路として動くか決まる（図 1）", "fate": "figure", "where": "120 の図 1"},
+        {"point": "通常の集積回路は製造時に配線が固定されるので後から回路を変えられない", "fate": "kept", "where": "### 書き換えられる回路"},
+        {"point": "内部に多数の論理ブロックと配線があり、どうつなぐかを構成データで指定して任意の論理回路を実現する", "fate": "kept", "where": "### 書き換えられる回路"},
+        {"point": "構成データを入れ替えれば同じチップが別の回路として動く", "fate": "figure", "where": "120 の図 1（構成データ A・B と回路 A・B）"},
+        {"point": "仕様が固まりきらない段階の試作・少量生産の装置・出荷後に機能を追加したい機器に向く", "fate": "kept", "where": "### 向く場面と不利な点"},
+        {"point": "専用に作り込んだ回路に比べて動作速度・消費電力・量産時の単価で不利", "fate": "kept", "where": "### 向く場面と不利な点"},
+        {"point": "設計は HDL で回路の動作を記述し、合成ツールで構成データに変換して書き込む流れ（detail での言い直し）", "fate": "duplicate", "where": "explanation の箇条 2"},
+        {"point": "HDL の例は VHDL や Verilog HDL", "fate": "kept", "where": "explanation の箇条 2"},
+        {"point": "「書き換えられる」だけでは記憶素子と区別が付かず、書き換わるのが回路か記憶内容かが境目", "fate": "duplicate", "where": "explanation の箇条 1（図 2 の 2 行目と caption にもある）"},
+        {"point": "FPGA・ASIC・EEPROM を後から書き換え・書き換わる物・向く場面で並べた表（図 2）", "fate": "figure", "where": "120 の図 2"},
+        {"point": "ASIC は特定用途向けに製造時点で回路を作り込んだ集積回路", "fate": "kept", "where": "### 混同しやすい用語"},
+        {"point": "ASIC は後から回路を変えられないが、量産すれば高性能で安価", "fate": "figure", "where": "120 の図 2（ASIC の列）"},
+        {"point": "EEPROM は電気的に内容を書き換えられる不揮発性メモリ", "fate": "kept", "where": "### 混同しやすい用語"},
+        {"point": "EEPROM で書き換わるのは記憶内容で、回路の構成は固定されたまま", "fate": "figure", "where": "120 の図 2（EEPROM の列）"}
+      ]
+    },
+    {
+      "topic_id": 121,
+      "points": [
+        {"point": "HDL＝デジタル回路の動作や構造をテキストで書き表し、論理合成によって実際の回路に変換するための言語（定義）", "fate": "kept", "where": "explanation（正式名を定義の 1 文に 1 回だけ足した）"},
+        {"point": "キーワード: 論理合成・回路を記述・FPGA に実装", "fate": "kept", "where": "explanation"},
+        {"point": "論理合成という語が出たら HDL（問われ方の文）", "fate": "duplicate", "where": "explanation のキーワードの行"},
+        {"point": "FPGA や ASIC の回路設計に使う", "fate": "kept", "where": "explanation の箇条 1"},
+        {"point": "代表例は VHDL と Verilog HDL の 2 つで、どちらも HDL の一種", "fate": "kept", "where": "explanation の箇条 2"},
+        {"point": "HDL の記述が論理合成で論理素子の組合せになり、合成先が FPGA か ASIC かで分かれる（図 1）", "fate": "figure", "where": "121 の図 1"},
+        {"point": "手順 1: HDL で回路の動作（どの入力のときに出力がどうなるか）を記述する", "fate": "figure", "where": "121 の図 1（HDL の記述の箱と線の「入力ごとの出力の決まり」）"},
+        {"point": "手順 2: 論理合成ツールが記述を AND・OR・フリップフロップなどの論理素子の組合せに変換する", "fate": "figure", "where": "121 の図 1（論理合成の箱と線の「AND・OR・フリップフロップ」）"},
+        {"point": "手順 3: 配置配線を経て、FPGA なら書き込むデータ、ASIC なら製造用のマスクデータになる", "fate": "figure", "where": "121 の図 1（配置配線・FPGA の書込みデータ・ASIC のマスクデータの箱）"},
+        {"point": "構成データを FPGA に書き込む流れ", "fate": "owner", "where": "120"},
+        {"point": "HDL は書いたものが実行される言語ではなく回路そのものを生成する言語", "fate": "kept", "where": "### 実行される言語との違い"},
+        {"point": "同じ記述でも合成先が書き換え可能な FPGA か専用に製造する ASIC かで出来上がる物が変わる", "fate": "figure", "where": "121 の図 1（caption と FPGA・ASIC への分かれ）"},
+        {"point": "論理合成の入力になるという位置づけが他の記述言語との決定的な違い", "fate": "kept", "where": "### 実行される言語との違い"},
+        {"point": "代表例の VHDL と Verilog HDL もこの位置づけの言語（言い直し）", "fate": "duplicate", "where": "explanation の箇条 2"}
+      ]
+    }
+  ]
+}

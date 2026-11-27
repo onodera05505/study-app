@@ -1,0 +1,35 @@
+{
+  "topic_id": 710,
+  "term": "Webサーバ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "explanation",
+      "caption": "Web サーバが DB を使うリクエストを処理する流れです。段の間の矢印は、次の段が前の段から受け取る物です。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "リクエストの受信と解読\n何をすべきか判断する",
+          "icon": "network",
+          "next_label": "必要な処理"
+        },
+        {
+          "label": "DB を使う処理\n入力値で問合せを作り\n実行する",
+          "icon": "database",
+          "next_label": "得た結果",
+          "emphasis": true
+        },
+        {
+          "label": "応答の組立て\n結果を画面の形に整える",
+          "icon": "document",
+          "next_label": "組み上がった HTML"
+        },
+        {
+          "label": "ブラウザへの返送\nHTML を返す",
+          "icon": "network"
+        }
+      ]
+    }
+  ]
+}

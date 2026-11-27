@@ -1,0 +1,111 @@
+{
+  "topic_id": 286,
+  "term": "バックドア",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "正規の利用者は認証を通って入りますが、攻撃者は強調した裏口から認証を通らずに入ります。弱点をふさいでも裏口が残る限り入り直せます。",
+      "nodes": [
+        {
+          "id": "user",
+          "label": "正規の利用者\nID とパスワードを持つ",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "auth",
+          "label": "認証\n本人かを確かめる",
+          "row": 0,
+          "col": 1,
+          "icon": "key"
+        },
+        {
+          "id": "weak",
+          "label": "ふさいだ弱点\n最初の侵入口",
+          "row": 2,
+          "col": 1,
+          "icon": "lock"
+        },
+        {
+          "id": "sys",
+          "label": "システム\n情報と機能がある",
+          "row": 1,
+          "col": 2,
+          "icon": "server"
+        },
+        {
+          "id": "atk",
+          "label": "攻撃者\n一度侵入した人",
+          "row": 1,
+          "col": 0,
+          "icon": "warning"
+        },
+        {
+          "id": "bd",
+          "label": "バックドア\n認証を通らない裏口",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "user",
+          "to": "auth",
+          "label": "ID とパスワード"
+        },
+        {
+          "from": "auth",
+          "to": "sys",
+          "label": "確かめてから通す"
+        },
+        {
+          "from": "atk",
+          "to": "weak",
+          "label": "入れない",
+          "style": "dashed"
+        },
+        {
+          "from": "atk",
+          "to": "bd",
+          "label": "再侵入"
+        },
+        {
+          "from": "bd",
+          "to": "sys",
+          "label": "認証なしで入る"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 入り直したあとの悪用",
+      "direction": "down",
+      "caption": "攻撃は左上から順に段を進みます。強調したバックドアの設置は、侵入のあと、悪用の前に入る段です。",
+      "stages": [
+        {
+          "label": "偵察\n標的の情報を集める",
+          "icon": "search",
+          "next_label": "見つけた弱点"
+        },
+        {
+          "label": "侵入\n弱点を突いて入り込む",
+          "next_label": "入り込んだ権限"
+        },
+        {
+          "label": "バックドアの設置\n入り直すための細工",
+          "icon": "warning",
+          "next_label": "いつでも使える裏口",
+          "emphasis": true
+        },
+        {
+          "label": "悪用\n裏口から入り直して行う"
+        }
+      ]
+    }
+  ]
+}

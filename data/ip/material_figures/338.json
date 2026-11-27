@@ -4,21 +4,37 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
-      "after": "### 保守に含まれる範囲",
-      "caption": "境目は本番稼働。稼働後の修正や改良が保守で、開発期間中の修正は保守ではない。",
-      "nodes": [
-        {"id": "dev", "label": "開発\n設計・製造・テスト", "row": 0, "col": 0},
-        {"id": "uat", "label": "受入れテスト\n本番へ移行", "row": 0, "col": 1},
-        {"id": "run", "label": "本番稼働", "row": 0, "col": 2},
-        {"id": "no", "label": "開発中の修正は\n保守ではない", "row": 1, "col": 0},
-        {"id": "mnt", "label": "ソフトウェア保守\n是正・適応\n完全化・予防", "row": 1, "col": 2, "emphasis": true}
-      ],
-      "edges": [
-        {"from": "dev", "to": "uat"},
-        {"from": "uat", "to": "run"},
-        {"from": "dev", "to": "no", "style": "dashed", "arrow": "none"},
-        {"from": "run", "to": "mnt", "label": "稼働後の修正・改良"}
+      "type": "timeline",
+      "after": "explanation",
+      "caption": "帯は開発と保守の期間で、強調した本番稼働の点で分かれます。点より後の帯に入る手入れは、直す理由にかかわらず保守と読みます。",
+      "axis": {
+        "label": "システムの一生（例）",
+        "ticks": [
+          "設計",
+          "製造",
+          "テスト",
+          "引渡し",
+          "本番稼働",
+          "稼働 1 年",
+          "稼働 2 年"
+        ]
+      },
+      "events": [
+        {
+          "from": 0,
+          "to": 4,
+          "label": "開発\n作って確かめる期間"
+        },
+        {
+          "from": 4,
+          "to": 6,
+          "label": "ソフトウェア保守\n動いている物への手入れ\n直す理由は問わない"
+        },
+        {
+          "at": 4,
+          "label": "本番稼働\nここが境目",
+          "emphasis": true
+        }
       ]
     }
   ]

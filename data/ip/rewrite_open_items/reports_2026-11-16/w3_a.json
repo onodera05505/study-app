@@ -1,0 +1,56 @@
+{
+  "target": "ip",
+  "units": ["01", "13"],
+  "status": "done",
+  "items": [
+    {
+      "no": 201,
+      "topic_id": 300,
+      "type": "B",
+      "verdict": "fixed",
+      "rule": "write_materials.md「他の論点との分担」の単元をまたぐ行（前の単元の論点は後の単元の論点の語との比較を持たず、自分の側と指す 1 文だけ）、rewrite_open_items.md「B の直し方」1・2",
+      "what": "今の 300（単元 01）の ### 混同しやすい用語 は、後の単元 13 の [[ディープラーニング]]（26）の 1 項目だけを持っていた。26 の今の本文と図にアダプティブラーニングとの比較は無かったので、300 の節ごと外して 26 の detail 末尾に ### 混同しやすい用語 を立てて移し（主語を 26 の側に合わせ、相手を [[アダプティブラーニング]] にした）、300 には ### 個別最適化のしくみ の段落の末尾に 26 を指す 1 文を置いた。300 の自分の側（教材の側が学習者に合わせて変わる）は explanation の箇条が言い切っている。単元 01 の owners に 26 との比較の行は無く、owners は直していない",
+      "questions_checked": ["2022r04-q4", "2025r07-q86", "2024r06-q95", "2022r04-q67", "2019r01a-q21"]
+    }
+  ],
+  "edits": [
+    {
+      "file": "data/ip/materials_v4/01-4.json", "topic_id": 300, "field": "detail", "op": "move",
+      "heading": "### 混同しやすい用語",
+      "before": "300 ### 混同しやすい用語: - **[[ディープラーニング]]** — 多層の[[ニューラルネットワーク]]で、大量のデータから特徴を自動的に学ぶ機械学習の手法です。学ぶ主体がコンピュータの側である点が違います",
+      "after": "26 ### 混同しやすい用語（detail の末尾に新設）: - **[[アダプティブラーニング]]** — 学習者に合わせて教材や問題を出し分ける仕組みで、学ぶ主体は学習者の側です。ディープラーニングは、学ぶ主体がコンピュータの側である点が違います"
+    },
+    {
+      "file": "data/ip/materials_v4/01-4.json", "topic_id": 300, "field": "detail", "op": "delete",
+      "heading": "### 混同しやすい用語",
+      "before": "### 混同しやすい用語（項目が移って空になった節）",
+      "after": null
+    },
+    {
+      "file": "data/ip/materials_v4/01-4.json", "topic_id": 300, "field": "detail", "op": "insert",
+      "heading": "### 個別最適化のしくみ",
+      "before": "学習履歴の解析で次に出す内容を変えるのは、学習の効率と効果を高めるためです。",
+      "after": "学習履歴の解析で次に出す内容を変えるのは、学習の効率と効果を高めるためです。名前の似た[[ディープラーニング]]との違いは、そちらの論点で説明しています。"
+    },
+    {
+      "file": "data/ip/materials_v4/13-4.json", "topic_id": 26, "field": "detail", "op": "insert",
+      "heading": "### 混同しやすい用語",
+      "before": "",
+      "after": "### 混同しやすい用語\n- **[[アダプティブラーニング]]** — 学習者に合わせて教材や問題を出し分ける仕組みで、学ぶ主体は学習者の側です。ディープラーニングは、学ぶ主体がコンピュータの側である点が違います"
+    }
+  ],
+  "owners": [],
+  "figure_after": [],
+  "ledgers": [
+    {
+      "file": "data/ip/rewrite_ledgers/01-4.json", "topic_id": 300,
+      "point": "ディープラーニングは多層のニューラルネットワークで大量のデータから特徴を学ぶ手法で、学ぶ主体がコンピュータの側",
+      "before": {"fate": "kept", "where": "### 混同しやすい用語"},
+      "after": {"fate": "owner", "where": "26"}
+    }
+  ],
+  "returned": [],
+  "noticed": [],
+  "gates": {"check_materials": 0, "check_material_style": 0, "render_check": 0, "check_explanations": 0, "check_unit_plans": null},
+  "chars": {"before": 970, "after": 1012}
+}

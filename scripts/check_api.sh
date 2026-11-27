@@ -9,34 +9,76 @@
 #
 # ポートは 8788 に固定してある。開発用の wrangler dev（8787）と衝突させないため。
 # 既に 8788 で動いていればそれを使い、無ければここで起動して、終わったら落とす。
+# check_api.py が起こす手元の SSO の偽物（偽のまなびば）は 8792（番号の出所は check_api.py の SSO_FAKE_PORT）。
+# 8791 は check_portal_api のまなびば、8790 は check_sso_flow のまなびばが使うので、同時に回してもぶつからない。
 #
 # 本番には当てない。ローカルの D1 だけを見る。
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
 EXAM="${1:-ip}"
-case "$EXAM" in
-  ip|ap) ;;
-  *) echo "第1引数は ip か ap"; exit 1 ;;
-esac
+[ "$(python3 scripts/targets.py has "$EXAM")" = yes ] || { echo "第1引数は対象の ID（$(python3 scripts/targets.py keys)）"; exit 1; }
 
 PORT=8788
+# 手元の SSO の偽物の口（check_api.py の SSO_FAKE_PORT から読む）
+SSO_FAKE_PORT="$(sed -n 's/^SSO_FAKE_PORT = \([0-9][0-9]*\)$/\1/p' scripts/check_api.py)"
+[ -n "$SSO_FAKE_PORT" ] || { echo "scripts/check_api.py に SSO_FAKE_PORT が無い"; exit 1; }
 BASE="http://127.0.0.1:${PORT}"
-# ログはプロジェクト直下に残さない（このディレクトリは git 管理外なので掃除されない）
-LOG="$(mktemp -t "check_api_${EXAM}")"
+# この回の記録（wrangler dev のログ）は、回す環境の一時の置き場（TMPDIR）に作る。プロジェクト直下には残さない。
+# 成功で終えたら消し、失敗で終えたら残してその場所を標準エラーに示す
+TMP_ROOT="${TMPDIR:-/tmp}"
+LOG="$(mktemp "${TMP_ROOT%/}/check_api_${EXAM}.XXXXXX")"
 PID=""
 
+# その回に起こした配備（npx とその子・孫。npx が shim なら npm exec・node wrangler・workerd が下に連なる）だけを止める。
+# 道具が起こしていないプロセスは、配備に使う口を掴んでいても止めない。
+# 起こした連なりは、起きた時刻と組にして起動を待つあいだから控えておく（先頭が先に終えて子が親を失っても控えから止められ、
+# 番号が別のプロセスに使い回されていれば時刻が違うので止めない）。
+# 片付けのできる止め方（SIGTERM）を送り、どれもいなくなるまで待つ（wrangler が手元の一時の置き場を片付けられる）。
+# 待っても残る物だけを最後に SIGKILL で止める
+STARTED=""
+descendants_of() {
+  local p
+  for p in $(pgrep -P "$1" 2>/dev/null); do echo "$p"; descendants_of "$p"; done
+}
+started_at() {
+  { ps -o lstart= -p "$1" 2>/dev/null || true; } | tr -s ' ' '_'
+}
+remember_started() {
+  local p t
+  for p in "$1" $(descendants_of "$1"); do
+    case " $STARTED " in *" $p@"*) continue ;; esac
+    t="$(started_at "$p")"
+    if [ -n "$t" ]; then STARTED="$STARTED $p@$t"; fi
+  done
+}
+stop_started() {
+  local top="$1" tree="" entry p st alive=""
+  remember_started "$top"
+  for entry in $STARTED; do
+    p="${entry%%@*}"
+    if [ "$(started_at "$p")" = "${entry#*@}" ]; then tree="$tree $p"; fi
+  done
+  if [ -n "$tree" ]; then kill -TERM $tree 2>/dev/null || true; fi
+  for _ in $(seq 1 150); do
+    alive=""
+    for p in $tree; do
+      st="$(ps -o stat= -p "$p" 2>/dev/null || true)"
+      if [ -n "$st" ] && [ "${st#Z}" = "$st" ]; then alive="$alive $p"; fi
+    done
+    [ -z "$alive" ] && break
+    sleep 0.2
+  done
+  if [ -n "$alive" ]; then kill -KILL $alive 2>/dev/null || true; fi
+  wait "$top" 2>/dev/null || true
+}
+
 cleanup() {
+  local status=$?
   if [ -n "$PID" ]; then
-    kill "$PID" 2>/dev/null || true
-    wait "$PID" 2>/dev/null || true
-    # wrangler は workerd を孫プロセスで持つ。npx 経由なので kill だけでは
-    # 取り残され、次回の起動がポートで詰まる。8788 はこの検査専用なので
-    # 掴んでいるものを掃除してよい。
-    sleep 1
-    LEFT=$(lsof -ti "tcp:${PORT}" 2>/dev/null || true)
-    if [ -n "$LEFT" ]; then kill $LEFT 2>/dev/null || true; fi
+    stop_started "$PID"
   fi
+  if [ "$status" -eq 0 ]; then rm -f "$LOG"; else echo "▶ この回の記録を残した: $LOG" >&2; fi
 }
 trap cleanup EXIT
 
@@ -44,7 +86,7 @@ trap cleanup EXIT
 # 中身の一致は check_api.py の「件数の整合」（API と ローカル D1 の突き合わせ）で
 # 落ちる。ip の dev を ap の D1 と突き合わせれば件数が合わずエラーになる。
 if curl -fsS --max-time 3 "${BASE}/api/health" >/dev/null 2>&1; then
-  echo "▶ すでに ${PORT} で動いているのでそれを使う（試験の取り違えは件数の整合で落ちる）"
+  echo "▶ すでに ${PORT} で動いているのでそれを使う（試験の取り違えは件数の整合で、まなびばの場所の違いは認証の形の検査で落ちる）"
 else
   # wrangler dev は dist を assets として bind する。無いとそもそも起動しない。
   if [ ! -f dist/index.html ]; then
@@ -53,11 +95,18 @@ else
   fi
 
   echo "▶ wrangler dev を起動（--env ${EXAM} / port ${PORT}）"
+  # まなびばの場所と共有秘密は、check_api.py が起こす手元の SSO の偽物（SSO_FAKE_PORT・SSO_FAKE_SECRET と同じ値）。
+  # 検査の本人はその偽物が換えた使い捨てコードからだけ作る（学び側のパスワードの経路はどの配備にも無い）。
+  # JWT_SECRET はローカルのこの検査専用の固定値（本番の値ではない）。渡さない配備ではトークンを発行も検証もしない。
   npx wrangler dev --env "$EXAM" --port "$PORT" --ip 127.0.0.1 \
+    --var "SSO_PORTAL_URL:http://127.0.0.1:${SSO_FAKE_PORT}" \
+    --var "SSO_SECRET:check-api-local-shared-not-a-secret" \
+    --var "JWT_SECRET:check-api-local-only-not-a-secret" \
     --show-interactive-dev-session=false >"$LOG" 2>&1 &
   PID=$!
 
   for _ in $(seq 1 90); do
+    remember_started "$PID"
     if curl -fsS --max-time 2 "${BASE}/api/health" >/dev/null 2>&1; then break; fi
     if ! kill -0 "$PID" 2>/dev/null; then
       echo "wrangler dev が起動せずに終了した。$LOG を見ること"; tail -20 "$LOG"; exit 1
@@ -67,6 +116,7 @@ else
   if ! curl -fsS --max-time 2 "${BASE}/api/health" >/dev/null 2>&1; then
     echo "90 秒待っても ${BASE} が応答しない。$LOG を見ること"; tail -20 "$LOG"; exit 1
   fi
+  remember_started "$PID"
 fi
 
 python3 scripts/check_api.py --exam "$EXAM" --base "$BASE"

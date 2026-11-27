@@ -1,0 +1,69 @@
+{
+  "topic_id": 39,
+  "term": "データ活用とデータ基盤",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "左の部署ごとのデータを、中央の基盤で同じ物差しに揃えてから右で使います。矢印の向きが手当ての順です。",
+      "nodes": [
+        {
+          "id": "s1",
+          "label": "営業のシステム\n顧客を営業の区分で持つ",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "s2",
+          "label": "経理のシステム\n売上を経理の締めで持つ",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "s3",
+          "label": "製造のシステム\n在庫を工場の単位で持つ",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "base",
+          "label": "データ基盤\n物差しを揃えてつなぐ",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "database"
+        },
+        {
+          "id": "dec",
+          "label": "意思決定\n部署をまたいで比べる",
+          "row": 1,
+          "col": 2,
+          "icon": "people"
+        }
+      ],
+      "edges": [
+        {
+          "from": "s1",
+          "to": "base",
+          "label": "集める"
+        },
+        {
+          "from": "s2",
+          "to": "base",
+          "label": "集める"
+        },
+        {
+          "from": "s3",
+          "to": "base",
+          "label": "集める"
+        },
+        {
+          "from": "base",
+          "to": "dec",
+          "label": "同じ物差しのデータ"
+        }
+      ]
+    }
+  ]
+}

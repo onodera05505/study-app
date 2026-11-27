@@ -4,14 +4,28 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "layers",
       "after": "### 主要プロトコルの層の対応",
-      "caption": "トランスポート層は TCP と UDP の2つだけ。HTTP・SMTP は上の層、ICMP は IP と同じ下の層。",
-      "nodes": [
-        {"id": "app", "label": "アプリケーション層\nHTTP／SMTP／FTP／DNS", "row": 0, "col": 0},
-        {"id": "tra", "label": "トランスポート層\nTCP／UDP（ポート番号で識別）", "row": 1, "col": 0, "emphasis": true},
-        {"id": "net", "label": "ネットワーク層\nIP／ICMP（IP アドレスで識別）", "row": 2, "col": 0},
-        {"id": "lnk", "label": "データリンク層\nイーサネットなど", "row": 3, "col": 0}
+      "caption": "上ほどアプリケーションに近い層で、右の注記が各層の代表のプロトコルです。強調したトランスポート層に TCP と UDP が属し、ポート番号でアプリを識別します。",
+      "shape": "stack",
+      "layers": [
+        {
+          "label": "アプリケーション層\n用途ごとの通信規約",
+          "note": "DNS・DHCP・FTP"
+        },
+        {
+          "label": "トランスポート層\nポート番号でアプリを識別",
+          "note": "TCP・UDP",
+          "emphasis": true
+        },
+        {
+          "label": "ネットワーク層\nIP アドレスで宛先へ経路制御",
+          "note": "IP・ICMP"
+        },
+        {
+          "label": "データリンク層\n隣の機器との間を伝送",
+          "note": "イーサネット・無線 LAN"
+        }
       ]
     }
   ]

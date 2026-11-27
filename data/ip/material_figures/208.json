@@ -3,23 +3,24 @@
   "term": "ドメイン名",
   "figures": [
     {
-      "id": 1,
-      "type": "blocks",
-      "after": "### どこで使われるか",
-      "caption": "上の URL にも下の電子メールアドレスにも同じ example.co.jp が現れ、これがドメイン名（IP アドレスの代わりに機器やネットワークを表す名前）。",
-      "nodes": [
-        {"id": "u1", "label": "https://\nプロトコル", "row": 0, "col": 0},
-        {"id": "u2", "label": "www\nホスト名", "row": 0, "col": 1},
-        {"id": "u3", "label": "example.co.jp\nドメイン名", "row": 0, "col": 2, "emphasis": true},
-        {"id": "m1", "label": "taro\n利用者名", "row": 1, "col": 0},
-        {"id": "m2", "label": "@", "row": 1, "col": 1},
-        {"id": "m3", "label": "example.co.jp\nドメイン名", "row": 1, "col": 2, "emphasis": true}
-      ],
-      "edges": [
-        {"from": "u1", "to": "u2", "arrow": "none"},
-        {"from": "u2", "to": "u3", "arrow": "none"},
-        {"from": "m1", "to": "m2", "arrow": "none"},
-        {"from": "m2", "to": "m3", "arrow": "none"}
+      "id": 2,
+      "type": "parts",
+      "after": "### 点で区切った部分の意味",
+      "caption": "1 つのドメイン名を点で区切った部分ごとに、何を表すかを示した図です。右の部分ほど大きな区分を表します。",
+      "whole": {
+        "label": "example.co.jp（右ほど大きな区分）"
+      },
+      "parts": [
+        {
+          "label": "example\n組織そのものの名前"
+        },
+        {
+          "label": "co\n組織の種類（企業）"
+        },
+        {
+          "label": "jp\n国（日本。一番大きい）",
+          "emphasis": true
+        }
       ]
     }
   ]

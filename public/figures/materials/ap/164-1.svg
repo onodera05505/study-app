@@ -1,47 +1,65 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="410" viewBox="0 0 640 410" role="img">
-<title>上から順に除外していき、どれにも当てはまらなければグローバルアドレスと判断する。</title>
-<rect x="0.5" y="0.5" width="639" height="409" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(124.45 20)">
-<polyline points="195.5,23 262.1,23" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="262.1,23 254.1,26.6 254.1,19.4" fill="#1f2937"/>
-<polyline points="215.1,120 269.1,120" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="269.1,120 261.1,123.6 261.1,116.4" fill="#1f2937"/>
-<polyline points="176.25,217 255.1,217" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="255.1,217 247.1,220.6 247.1,213.4" fill="#1f2937"/>
-<polyline points="107.55,46 107.55,92" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="107.55,92 103.95,84 111.15,84" fill="#1f2937"/>
-<polyline points="107.55,148 107.55,194" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="107.55,194 103.95,186 111.15,186" fill="#1f2937"/>
-<polyline points="107.55,240 107.55,286" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="107.55,286 103.95,278 111.15,278" fill="#1f2937"/>
-<rect x="19.6" y="0" width="175.9" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="107.55" y="27.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">先頭バイトが 224〜239</text>
-<rect x="0" y="92" width="215.1" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="107.55" y="114.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">10 / 172.16〜31 / 192.168</text>
-<text x="107.55" y="134.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">で始まる</text>
-<rect x="38.85" y="194" width="137.4" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="107.55" y="221.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ホスト部が全て 1</text>
-<rect x="30.8" y="286" width="153.5" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="107.55" y="308.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">グローバルアドレス</text>
-<text x="107.55" y="328.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">例 208.77.188.166</text>
-<rect x="262.1" y="0" width="122" height="46" rx="23" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="323.1" y="27.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">マルチキャスト</text>
-<rect x="269.1" y="97" width="108" height="46" rx="23" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="323.1" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">プライベート</text>
-<rect x="255.1" y="194" width="136" height="46" rx="23" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="323.1" y="221.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ブロードキャスト</text>
-<rect x="212.8" y="6" width="32" height="16" rx="3" fill="#ffffff"/>
-<text x="228.8" y="19.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">該当</text>
-<rect x="226.1" y="103" width="32" height="16" rx="3" fill="#ffffff"/>
-<text x="242.1" y="116.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">該当</text>
-<rect x="199.67" y="200" width="32" height="16" rx="3" fill="#ffffff"/>
-<text x="215.67" y="213.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">該当</text>
-<rect x="85.55" y="60" width="44" height="16" rx="3" fill="#ffffff"/>
-<text x="107.55" y="73.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">いいえ</text>
-<rect x="85.55" y="162" width="44" height="16" rx="3" fill="#ffffff"/>
-<text x="107.55" y="175.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">いいえ</text>
-<rect x="85.55" y="254" width="44" height="16" rx="3" fill="#ffffff"/>
-<text x="107.55" y="267.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">いいえ</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="524" viewBox="0 0 640 524">
+<rect x="0.5" y="0.5" width="639" height="523" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(136 20)">
+<polyline points="136,28 218,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="218,28 210,31.6 210,24.4" fill="#1f2937"/>
+<polyline points="159.8,130 225,130" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="225,130 217,133.6 217,126.4" fill="#1f2937"/>
+<polyline points="158.4,232 218,232" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="218,232 210,235.6 210,228.4" fill="#1f2937"/>
+<polyline points="133.55,334 204,334" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="204,334 196,337.6 196,330.4" fill="#1f2937"/>
+<polyline points="82,56 82,102" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="82,102 78.4,94 85.6,94" fill="#1f2937"/>
+<polyline points="82,158 82,204" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="82,204 78.4,196 85.6,196" fill="#1f2937"/>
+<polyline points="82,260 82,306" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="82,306 78.4,298 85.6,298" fill="#1f2937"/>
+<polyline points="82,362 82,408" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="82,408 78.4,400 85.6,400" fill="#1f2937"/>
+<rect x="28" y="0" width="108" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="82" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">先頭バイトは</text>
+<text x="82" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">224〜239 か</text>
+<rect x="4.2" y="102" width="155.6" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="82" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">10・172.16〜31・</text>
+<text x="82" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">192.168 で始まるか</text>
+<rect x="5.6" y="204" width="152.8" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="82" y="226.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">127・169.254・</text>
+<text x="82" y="246.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">240 以上で始まるか</text>
+<rect x="30.45" y="306" width="103.1" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="82" y="328.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ホスト部が</text>
+<text x="82" y="348.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">すべて 1 か</text>
+<rect x="0" y="408" width="164" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="82" y="430.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">グローバルアドレス</text>
+<text x="82" y="450.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">インターネットで一意</text>
+<text x="82" y="470.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">例 203.0.113.5</text>
+<rect x="218" y="0" width="136" height="56" rx="28" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="286" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">マルチキャスト</text>
+<text x="286" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">複数宛ての配信用</text>
+<rect x="225" y="102" width="122" height="56" rx="28" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="286" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">プライベート</text>
+<text x="286" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">組織の内部専用</text>
+<rect x="218" y="204" width="136" height="56" rx="28" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="286" y="226.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">特別な用途</text>
+<text x="286" y="246.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ループバックなど</text>
+<rect x="204" y="306" width="164" height="56" rx="28" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="286" y="328.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ブロードキャスト</text>
+<text x="286" y="348.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">ネットワーク全体宛て</text>
+<rect x="161" y="11" width="32" height="16" rx="3" fill="#ffffff"/>
+<text x="177" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">はい</text>
+<rect x="176.4" y="113" width="32" height="16" rx="3" fill="#ffffff"/>
+<text x="192.4" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">はい</text>
+<rect x="172.2" y="215" width="32" height="16" rx="3" fill="#ffffff"/>
+<text x="188.2" y="228.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">はい</text>
+<rect x="152.78" y="317" width="32" height="16" rx="3" fill="#ffffff"/>
+<text x="168.78" y="330.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">はい</text>
+<rect x="60" y="70" width="44" height="16" rx="3" fill="#ffffff"/>
+<text x="82" y="83.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">いいえ</text>
+<rect x="60" y="172" width="44" height="16" rx="3" fill="#ffffff"/>
+<text x="82" y="185.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">いいえ</text>
+<rect x="60" y="274" width="44" height="16" rx="3" fill="#ffffff"/>
+<text x="82" y="287.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">いいえ</text>
+<rect x="60" y="376" width="44" height="16" rx="3" fill="#ffffff"/>
+<text x="82" y="389.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">いいえ</text>
 </g>
-<text x="320" y="390" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">上から順に除外していき、どれにも当てはまらなければグローバルアドレスと判断する。</text>
 </svg>

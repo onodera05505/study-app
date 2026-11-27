@@ -1,0 +1,20 @@
+{
+  "topic_id": 140,
+  "term": "BI（Business Intelligence）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "steps",
+      "after": "### データが判断材料になるまで",
+      "caption": "業務の記録はためてから切り口を変えて分析され、指標の形で経営の判断に届きます。段が上がるほど判断に近い形になります。",
+      "direction": "up",
+      "stages": [
+        {"label": "業務システム\n日々の取引を記録する", "icon": "device", "next_label": "データを取り込む"},
+        {"label": "データウェアハウス\n分析用に時系列でためる", "icon": "database", "next_label": "ためたデータ"},
+        {"label": "OLAP・マイニング\n切り口を変えて分析する", "icon": "search", "next_label": "集計と分析の結果", "emphasis": true},
+        {"label": "ダッシュボード\n主要な指標を一画面に", "icon": "chart", "next_label": "指標を見て決める"},
+        {"label": "経営の判断\n次の手を決める", "icon": "people"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "topic_id": 150,
+  "term": "フリーアクセスフロア",
+  "figures": [
+    {
+      "id": 1,
+      "type": "layers",
+      "after": "explanation",
+      "caption": "床を上下 2 枚に分け、その間の空間に配線を通す断面を表します。強調した床下の空間が、ケーブルと冷気の通り道です。",
+      "shape": "stack",
+      "layers": [
+        {"label": "パネル（床板）\n工具で外せる", "note": "配置換えはパネルを開けて引き直す"},
+        {"label": "床下の空間\nケーブルを通す・冷気を流す", "icon": "network", "emphasis": true, "note": "床の上にケーブルがはわない"},
+        {"label": "建物の床\nパネルを支える土台", "icon": "building"}
+      ]
+    }
+  ]
+}

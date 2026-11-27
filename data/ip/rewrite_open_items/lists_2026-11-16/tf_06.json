@@ -1,0 +1,55 @@
+{
+ "target": "ip",
+ "unit": "06",
+ "items": [
+  {
+   "no": 1,
+   "source": "figures_review",
+   "topic_id": 262,
+   "figure": {
+    "topic_id": 498,
+    "figure_id": 3
+   },
+   "from": {
+    "list": "fig_06",
+    "no": 1
+   },
+   "what": "262 の ### BPR・BPM との違い は、図が 498 へ移って 498 を指す 1 文だけが残る。節ごと消し、498 を指す 1 文を残すなら ### 記号をそろえる意味 の末尾などへ移す（write_materials.md「見出しの下が図だけになるときは」）。materials_v4/06-2.json の 262 の detail に残る図の行 ![…](/figures/materials/ip/262-1.svg) も、図の差し込みのときに外れることを確かめる",
+   "questions": [
+    "2018h30a-q13",
+    "2019h31h-q2",
+    "2023r05-q23"
+   ],
+   "figure_before": "data/ip/rewrite_open_items/lists_2026-11-16/figure_before/262-1.json",
+   "related": [
+    {
+     "topic_id": 262,
+     "figure_id": 1
+    },
+    {
+     "topic_id": 498,
+     "figure_id": 3
+    }
+   ],
+   "ledger_row": null
+  },
+  {
+   "no": 2,
+   "source": "figures_review",
+   "topic_id": 498,
+   "figure": {
+    "topic_id": 498,
+    "figure_id": 3
+   },
+   "from": {
+    "list": "fig_06",
+    "no": 1
+   },
+   "what": "498 の ### 混同しやすい用語 の文「BPR と、名前の似た BPM は…活動の名前です。BPMN は…表記法です。」は、移した図 3 と caption が言う点と同じ（1 つの点は 1 か所で言う）。図を残すので、文は図を読む前の導入 1 文に縮めるか、図に無いこと（理由）だけにする",
+   "questions": [],
+   "figure_before": null,
+   "related": [],
+   "ledger_row": null
+  }
+ ]
+}

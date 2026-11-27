@@ -1,0 +1,54 @@
+{
+  "topic_id": 761,
+  "term": "SRI（Socially Responsible Investment：社会的責任投資）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 財務諸表だけでは見えないもの",
+      "caption": "企業が取組みを開示し、投資家がそれを財務と合わせて評価して資金を出す輪です。CSR は企業の側、SRI は投資家の側の行動です。",
+      "nodes": [
+        {
+          "id": "c",
+          "label": "企業\nCSR の取組みをする",
+          "row": 0,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "d",
+          "label": "開示された情報\n財務の数字と非財務の取組み",
+          "row": 0,
+          "col": 1,
+          "icon": "document",
+          "shape": "round"
+        },
+        {
+          "id": "i",
+          "label": "投資家\n財務と非財務で評価する",
+          "row": 1,
+          "col": 1,
+          "emphasis": true,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "c",
+          "to": "d",
+          "label": "ディスクロージャー"
+        },
+        {
+          "from": "d",
+          "to": "i",
+          "label": "投資判断の材料"
+        },
+        {
+          "from": "i",
+          "to": "c",
+          "label": "SRI: 責任を果たす企業へ資金"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "topic_id": 268,
+  "term": "会計監査",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "伝票から決算報告書までの流れと、それを確かめる監査人を示す図です。監査人は報告書だけでなく、流れを伝票までさかのぼって確かめます。",
+      "nodes": [
+        {
+          "id": "v",
+          "label": "取引の記録\n伝票と証拠書類",
+          "row": 0,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "l",
+          "label": "帳簿\n取引を売上・仕入れなど\n項目ごとに記す",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "t",
+          "label": "集計\n項目ごとの合計",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "f",
+          "label": "決算報告書\n外部の人が判断に使う",
+          "row": 0,
+          "col": 3,
+          "emphasis": true
+        },
+        {
+          "id": "au",
+          "label": "監査人\n独立した立場で確かめる",
+          "row": 1,
+          "col": 1,
+          "icon": "search"
+        }
+      ],
+      "edges": [
+        {
+          "from": "v",
+          "to": "l",
+          "label": "記帳する"
+        },
+        {
+          "from": "l",
+          "to": "t",
+          "label": "集計する"
+        },
+        {
+          "from": "t",
+          "to": "f",
+          "label": "まとめ上げる"
+        },
+        {
+          "from": "au",
+          "to": "v",
+          "label": "伝票までさかのぼって突き合わせる",
+          "style": "dashed"
+        },
+        {
+          "from": "au",
+          "to": "f",
+          "label": "適正だと意見を出す",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

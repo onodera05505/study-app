@@ -5,18 +5,54 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### しくみ",
-      "caption": "制約を受けるのは主記憶の物理的な容量、プログラムに見せるのは広い論理的なアドレス空間。",
+      "after": "### 主記憶より広く見せる仕組み",
+      "caption": "プログラムに見せる論理的なアドレス空間と、実際の主記憶・補助記憶の関係を表した図です。強調した変換の所が、狭い主記憶を広く見せる仕組みの芯です。",
       "nodes": [
-        {"id": "prog", "label": "プログラム\n広い論理アドレス空間が\n使えるように見える", "row": 0, "col": 0},
-        {"id": "os", "label": "OS がアドレスを変換", "row": 1, "col": 0, "shape": "round"},
-        {"id": "main", "label": "主記憶\n速いが物理的な容量は小さい", "row": 2, "col": 0, "emphasis": true},
-        {"id": "aux", "label": "補助記憶\n遅いが大容量", "row": 2, "col": 1, "shape": "cylinder"}
+        {
+          "id": "prog",
+          "label": "プログラム\n主記憶より広い空間が\n使えるように見える",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "os",
+          "label": "OS とハードウェア\n論理的なアドレスを\n物理的なアドレスへ変換",
+          "row": 1,
+          "col": 0,
+          "shape": "round",
+          "emphasis": true
+        },
+        {
+          "id": "main",
+          "label": "主記憶\n速いが積める量に限り",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "aux",
+          "label": "補助記憶\n遅いが大容量",
+          "row": 2,
+          "col": 1,
+          "shape": "cylinder"
+        }
       ],
       "edges": [
-        {"from": "prog", "to": "os", "label": "論理アドレスで読み書き"},
-        {"from": "os", "to": "main", "label": "実アドレスに置き換える"},
-        {"from": "main", "to": "aux", "label": "使わない部分の入替え", "arrow": "both"}
+        {
+          "from": "prog",
+          "to": "os",
+          "label": "論理的なアドレスで読み書き"
+        },
+        {
+          "from": "os",
+          "to": "main",
+          "label": "物理的なアドレスで読み書き"
+        },
+        {
+          "from": "main",
+          "to": "aux",
+          "label": "使わない部分の入替え",
+          "arrow": "both"
+        }
       ]
     }
   ]

@@ -1,0 +1,134 @@
+{
+  "topic_id": 310,
+  "term": "ギグエコノミー",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 単発の仕事を受ける仕組み",
+      "caption": "依頼者と働き手は直接は結ばれず、間のプラットフォームが仕事の割当てから評価・報酬までを受け持ちます。",
+      "nodes": [
+        {
+          "id": "req",
+          "label": "依頼者（企業や個人）\n単発の仕事を頼みたい",
+          "row": 1,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "pf",
+          "label": "プラットフォーム\n割当て・評価・報酬を担う",
+          "row": 0,
+          "col": 1,
+          "emphasis": true,
+          "icon": "phone"
+        },
+        {
+          "id": "wk",
+          "label": "個人の働き手\n雇用されず 1 件ずつ受ける",
+          "row": 1,
+          "col": 2,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "req",
+          "to": "pf",
+          "label": "単発の仕事を出し\n代金を払う"
+        },
+        {
+          "from": "pf",
+          "to": "wk",
+          "label": "仕事を割り当て\n報酬と評価を渡す"
+        },
+        {
+          "from": "req",
+          "to": "wk",
+          "label": "雇用契約は無い\n直接は知り合わない",
+          "style": "dashed",
+          "arrow": "none"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 混同しやすい用語",
+      "caption": "真ん中の同じ取引を、発注者の側から呼ぶとクラウドソーシング、働き手の側から呼ぶとギグエコノミーです。下のシェアリングエコノミーは取引する物が違います。",
+      "nodes": [
+        {
+          "id": "cs",
+          "label": "クラウドソーシング\n発注者の側から見た呼び名\n（業務を調達する手法）",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "gig",
+          "label": "ギグエコノミー\n働き手の側から見た呼び名\n（働き方・経済の形）",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "req",
+          "label": "発注者（企業や個人）\nネットで業務を外に頼む",
+          "row": 1,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "deal",
+          "label": "同じ 1 件の取引\n単発の仕事＝労働",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "wk",
+          "label": "個人の働き手\n仕事を 1 件ずつ受ける",
+          "row": 1,
+          "col": 2,
+          "icon": "person"
+        },
+        {
+          "id": "sh",
+          "label": "シェアリングエコノミー\n部屋・車などの遊休資産を\n貸し借りする別の取引",
+          "row": 2,
+          "col": 1,
+          "icon": "box"
+        }
+      ],
+      "edges": [
+        {
+          "from": "req",
+          "to": "deal",
+          "label": "業務を出す"
+        },
+        {
+          "from": "deal",
+          "to": "wk",
+          "label": "単発で受託される"
+        },
+        {
+          "from": "cs",
+          "to": "req",
+          "label": "発注者の側から同じ取引を呼ぶ",
+          "style": "dashed"
+        },
+        {
+          "from": "gig",
+          "to": "wk",
+          "label": "働き手の側から同じ取引を呼ぶ",
+          "style": "dashed"
+        },
+        {
+          "from": "sh",
+          "to": "deal",
+          "label": "取引する物が違う（労働でなく資産）",
+          "style": "dashed",
+          "arrow": "none"
+        }
+      ]
+    }
+  ]
+}

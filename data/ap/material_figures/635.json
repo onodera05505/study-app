@@ -4,22 +4,32 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
-      "after": "### 五つの段階と流れ",
-      "caption": "先頭は必ず戦略で、設計・移行・運用と続く。改善は最後に置かれ、測定した結果を戦略へ戻して回し続ける。",
-      "nodes": [
-        {"id": "st", "label": "サービスストラテジ\n（計画立案）\n全体戦略を確立", "row": 0, "col": 0, "emphasis": true},
-        {"id": "de", "label": "サービスデザイン\n（設計）\n事業要件をサービスに", "row": 0, "col": 1},
-        {"id": "tr", "label": "サービストランジション\n（移行）\nテストして本番展開", "row": 0, "col": 2},
-        {"id": "op", "label": "サービスオペレーション\n（提供）\n日々の提供とサポート", "row": 0, "col": 3},
-        {"id": "ci", "label": "継続的サービス改善\nパフォーマンスを測定", "row": 1, "col": 0, "shape": "round"}
-      ],
-      "edges": [
-        {"from": "st", "to": "de"},
-        {"from": "de", "to": "tr"},
-        {"from": "tr", "to": "op"},
-        {"from": "op", "to": "ci"},
-        {"from": "ci", "to": "st", "label": "改善を戻す", "style": "dashed"}
+      "type": "cycle",
+      "after": "explanation",
+      "caption": "戦略から設計・移行・提供へ矢印の順に進む四段階と、提供の実績を測って戦略へ返す改善の環を表します。改善は四段階すべてにかかります。",
+      "center": "継続的\nサービス改善",
+      "stages": [
+        {
+          "label": "サービスストラテジ（計画立案）\n誰にどんな価値を出すか決める",
+          "icon": "document",
+          "next_label": "提供する価値",
+          "emphasis": true
+        },
+        {
+          "label": "サービスデザイン（設計）\n何をどう作るかを決める",
+          "icon": "gear",
+          "next_label": "設計したサービス"
+        },
+        {
+          "label": "サービストランジション（移行）\n作った物を運用へ引き渡す",
+          "icon": "check",
+          "next_label": "本番のサービス"
+        },
+        {
+          "label": "サービスオペレーション（提供）\n利用者へ毎日届ける",
+          "icon": "people",
+          "next_label": "提供の実績を測って戻す"
+        }
       ]
     }
   ]

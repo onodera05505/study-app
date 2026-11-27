@@ -1,0 +1,280 @@
+{
+  "bundle": "bundle_12",
+  "topics": [
+    {
+      "topic_id": 89,
+      "term": "グローバルとプライベートの IP アドレスと NAT",
+      "field": "ネットワークと Web",
+      "middle": "住所を決めて相手に届ける",
+      "summary": "家や会社の中だけで使う番号と、インターネットで通じる番号を分け、出入り口で付け替える",
+      "goals": [
+        4
+      ],
+      "prereq": [
+        "IP アドレス"
+      ],
+      "sources": [
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "ネットワーク > 通信プロトコル"
+        },
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "ネットワーク応用"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "NAT と IP マスカレード"
+        }
+      ],
+      "source_count": 2,
+      "exam_weight": 1.08
+    },
+    {
+      "topic_id": 90,
+      "term": "サブネットマスクと CIDR",
+      "field": "ネットワークと Web",
+      "middle": "住所を決めて相手に届ける",
+      "summary": "IP アドレスのうち、どこまでがネットワークの名前でどこからが機器の番号かを示す区切り",
+      "goals": [
+        4
+      ],
+      "prereq": [
+        "IP アドレス",
+        "ルーティング"
+      ],
+      "sources": [
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "ネットワーク > 通信プロトコル"
+        },
+        {
+          "name": "カリキュラム標準 J17-IS（情報システム領域）要約",
+          "where": "IS2010.5 の LU 例 > 通信ネットワークのアーキテクチャ、トポロジ…"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "サブネットマスクと CIDR"
+        }
+      ],
+      "source_count": 2,
+      "exam_weight": 1.7
+    },
+    {
+      "topic_id": 91,
+      "term": "URL とドメイン名",
+      "field": "ネットワークと Web",
+      "middle": "URL を開いてから画面が出るまで",
+      "summary": "URL はどの方式で・どのサーバの・どの場所を見るかを 1 行で書いた物。サーバの名前の部分がドメイン名",
+      "goals": [
+        4
+      ],
+      "prereq": [
+        "IP アドレス",
+        "パス（絶対パス・相対パス）と今いる場所"
+      ],
+      "sources": [
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "ネットワーク応用"
+        },
+        {
+          "name": "一般情報教育の知識体系 GEBOK2017.1（J17-GE）",
+          "where": "GE-INW5 インターネットサービス（必修）"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第30回 World Wide Web（The World Wide Web）"
+        }
+      ],
+      "source_count": 3,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 92,
+      "term": "DNS",
+      "field": "ネットワークと Web",
+      "middle": "URL を開いてから画面が出るまで",
+      "summary": "人が覚えやすいドメイン名を、通信に要る IP アドレスに変える電話帳の仕組み。問い合わせの結果は一時的に覚えておく",
+      "goals": [
+        4
+      ],
+      "prereq": [
+        "URL とドメイン名",
+        "IP アドレス"
+      ],
+      "sources": [
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "ネットワーク応用"
+        },
+        {
+          "name": "サイボウズ エンジニア新人研修 講義資料（2021 年公開分）",
+          "where": "HTTP/DNS"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "NC ネットワークと通信 > ネットワークアプリケーション（Tier1）"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "DNS"
+        },
+        {
+          "name": "選考解説記事の集計",
+          "where": "DNS の役割と名前解決"
+        }
+      ],
+      "source_count": 3,
+      "exam_weight": 0.68
+    },
+    {
+      "topic_id": 93,
+      "term": "HTTP",
+      "field": "ネットワークと Web",
+      "middle": "URL を開いてから画面が出るまで",
+      "summary": "ブラウザが「これを下さい」と頼み（リクエスト）、サーバが中身を返す（レスポンス）。1 回ごとに話が完結する",
+      "goals": [
+        4
+      ],
+      "prereq": [
+        "TCP と UDP の違い",
+        "クライアントとサーバ"
+      ],
+      "sources": [
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "ネットワーク応用"
+        },
+        {
+          "name": "サイボウズ エンジニア新人研修 講義資料（2021 年公開分）",
+          "where": "HTTP/DNS"
+        },
+        {
+          "name": "リクルート 2025 年度 新卒エンジニア研修（BootCamp）講座一覧",
+          "where": "ブラウザ"
+        },
+        {
+          "name": "iコンピテンシ ディクショナリ 2022 スキルディクショナリ",
+          "where": "Webシステムの基礎技術 > Webシステムとその技術"
+        },
+        {
+          "name": "カリキュラム標準 J17-IS（情報システム領域）要約",
+          "where": "IS2010.5 の LU 例 > Web 技術の基礎"
+        },
+        {
+          "name": "選考解説記事の集計",
+          "where": "HTTP の仕組み（メソッド・ステータスコード・ステートレス）"
+        }
+      ],
+      "source_count": 5,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 94,
+      "term": "HTTP のメソッドとステータスコード",
+      "field": "ネットワークと Web",
+      "middle": "URL を開いてから画面が出るまで",
+      "summary": "取る（GET）・送る（POST）などの頼み方と、200 成功・404 見つからない・500 サーバの失敗などの返事の番号",
+      "goals": [
+        4
+      ],
+      "prereq": [
+        "HTTP"
+      ],
+      "sources": [
+        {
+          "name": "サイボウズ エンジニア新人研修 講義資料（2021 年公開分）",
+          "where": "HTTP/DNS"
+        },
+        {
+          "name": "サイボウズ エンジニア新人研修 講義資料（2021 年公開分）",
+          "where": "Web アプリケーション基礎"
+        },
+        {
+          "name": "選考解説記事の集計",
+          "where": "HTTP の仕組み（メソッド・ステータスコード・ステートレス）"
+        }
+      ],
+      "source_count": 1,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 95,
+      "term": "ブラウザが画面を描く仕組み",
+      "field": "ネットワークと Web",
+      "middle": "URL を開いてから画面が出るまで",
+      "summary": "受け取った HTML で中身の骨組み、CSS で見た目、JavaScript で動きを付け、ブラウザが画面に描く",
+      "goals": [
+        4
+      ],
+      "prereq": [
+        "HTTP"
+      ],
+      "sources": [
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "アルゴリズムとプログラミング > その他の言語"
+        },
+        {
+          "name": "CS50x 2026 コンピュータサイエンス入門（CS50's Introduction to Computer Science）週ごとの講義一覧",
+          "where": "第8週 HTML・CSS・JavaScript（HTML, CSS, Java…"
+        },
+        {
+          "name": "リクルート 2025 年度 新卒エンジニア研修（BootCamp）講座一覧",
+          "where": "ブラウザ"
+        },
+        {
+          "name": "リクルート 2025 年度 新卒エンジニア研修（BootCamp）講座一覧",
+          "where": "JavaScript"
+        },
+        {
+          "name": "サイボウズ エンジニア新人研修 講義資料（2021 年公開分）",
+          "where": "Chrome Developer Tools の使い方"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "レンダリング"
+        }
+      ],
+      "source_count": 4,
+      "exam_weight": 0.67
+    },
+    {
+      "topic_id": 96,
+      "term": "URL を開いてから画面が出るまでの全体の流れ",
+      "field": "ネットワークと Web",
+      "middle": "URL を開いてから画面が出るまで",
+      "summary": "名前を引く（DNS）→ つなぐ（TCP）→ 頼む（HTTP）→ 返す → 描く、の順を 1 本の話として追う。通信を暗号にする準備は後の単位で扱う",
+      "goals": [
+        4
+      ],
+      "prereq": [
+        "DNS",
+        "TCP と UDP の違い",
+        "HTTP",
+        "ブラウザが画面を描く仕組み"
+      ],
+      "sources": [
+        {
+          "name": "サイボウズ エンジニア新人研修 講義資料（2021 年公開分）",
+          "where": "Web アプリケーション基礎"
+        },
+        {
+          "name": "リクルート 2025 年度 新卒エンジニア研修（BootCamp）講座一覧",
+          "where": "ブラウザ"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第30回 World Wide Web（The World Wide Web）"
+        },
+        {
+          "name": "選考解説記事の集計",
+          "where": "URL を入力してから画面が表示されるまでの流れ"
+        }
+      ],
+      "source_count": 3,
+      "exam_weight": 0.0
+    }
+  ]
+}

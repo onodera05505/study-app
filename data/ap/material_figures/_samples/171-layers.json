@@ -1,0 +1,48 @@
+{
+  "topic_id": 171,
+  "term": "TCP",
+  "figures": [
+    {
+      "id": 1,
+      "type": "layers",
+      "after": "explanation",
+      "caption": "下の層ほど信号の伝送に近く、各層は直下の層の働きを使って上の層へ機能を渡します。経路の途中の機器は下の 3 層だけを扱います。",
+      "shape": "stack",
+      "layers": [
+        {
+          "label": "アプリケーション層\n用途ごとの約束を決める",
+          "note": "HTTP・SMTP"
+        },
+        {
+          "label": "トランスポート層\n端から端まで確実に届ける",
+          "note": "TCP・UDP"
+        },
+        {
+          "label": "ネットワーク層\n宛先までの経路を選ぶ",
+          "note": "IP",
+          "emphasis": true
+        },
+        {
+          "label": "データリンク層\n隣の機器まで届ける",
+          "note": "イーサネット"
+        },
+        {
+          "label": "物理層\n信号を線や電波に流す",
+          "note": "ケーブル・電波"
+        }
+      ],
+      "brackets": [
+        {
+          "from": 0,
+          "to": 1,
+          "label": "端末の中で\n処理する"
+        },
+        {
+          "from": 2,
+          "to": 4,
+          "label": "経路の機器も\n処理する"
+        }
+      ]
+    }
+  ]
+}

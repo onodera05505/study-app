@@ -1,0 +1,94 @@
+{
+  "topic_id": 210,
+  "term": "論理式",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 回路図から式を組み立てる手順",
+      "caption": "入力側から順に、素子を通るたびに線の上へ式を書き込みます。分岐した A は 2 か所で同じ式として使い、最後の素子で式がまとまります。",
+      "nodes": [
+        {
+          "id": "b",
+          "label": "入力 B\nそのまま使う",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "a",
+          "label": "入力 A\n分岐して 2 か所へ",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "c",
+          "label": "入力 C\nそのまま使う",
+          "row": 3,
+          "col": 1
+        },
+        {
+          "id": "not",
+          "label": "否定 NOT\n値を反転する",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "and1",
+          "label": "AND\n2 つの論理積",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "and2",
+          "label": "AND\n2 つの論理積",
+          "row": 2,
+          "col": 1
+        },
+        {
+          "id": "or",
+          "label": "OR 出力\n¬A・B＋A・C",
+          "row": 2,
+          "col": 2,
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "not",
+          "label": "A"
+        },
+        {
+          "from": "not",
+          "to": "and1",
+          "label": "¬A"
+        },
+        {
+          "from": "b",
+          "to": "and1",
+          "label": "B"
+        },
+        {
+          "from": "a",
+          "to": "and2",
+          "label": "A（分岐）"
+        },
+        {
+          "from": "c",
+          "to": "and2",
+          "label": "C"
+        },
+        {
+          "from": "and1",
+          "to": "or",
+          "label": "¬A・B"
+        },
+        {
+          "from": "and2",
+          "to": "or",
+          "label": "A・C"
+        }
+      ]
+    }
+  ]
+}

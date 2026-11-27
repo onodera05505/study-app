@@ -1,0 +1,389 @@
+{
+  "bundle": "expl_07",
+  "topics": [
+    {
+      "topic_id": 157,
+      "term": "ロック粒度",
+      "field": "テクノロジ系",
+      "middle": "データベース",
+      "syllabus_item_name": "トランザクション処理",
+      "question_count": 2,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30a-q29",
+          "content_key": "a9f5d08c7c3220d4",
+          "exam_label": "平成30年度 秋期",
+          "number": 29,
+          "stem": "ロックの粒度に関する説明のうち，適切なものはどれか。",
+          "choices": {
+            "ア": "データを更新するときに，粒度を大きくすると，他のトランザクションの待ちが多くなり，全体のスループットが低下する。",
+            "イ": "同一のデータを更新するトランザクション数が多いときに，粒度を大きくすると，同時実行できるトランザクション数が増える。",
+            "ウ": "表の全データを参照するときに，粒度を大きくすると，他のトランザクションのデータ参照を妨げないようにできる。",
+            "エ": "粒度を大きくすると，含まれるデータ数が多くなるので，一つのトランザクションでかけるロックの個数が多くなる。"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2018h30h-q30",
+          "content_key": "1360a067818a497f",
+          "exam_label": "平成30年度 春期",
+          "number": 30,
+          "stem": "RDBMSのロックの粒度に関する次の記述において，a，bの組合せとして適切なものはどれか。\n並行に処理される二つのトランザクションがそれぞれ一つの表内の複数の行を更新する。行単位のロックを使用する場合と表単位のロックを使用する場合とを比べると，ロックの競合がより起こりやすいのは ［ a ］ 単位のロックを使用する場合である。また，トランザクション実行中にロックを管理するためのRDBMSのメモリ使用領域がより多く必要になるのは ［ b ］ 単位のロックを使用する場合である。",
+          "choices": {
+            "ア": "a：行 ，b：行",
+            "イ": "a：行 ，b：表",
+            "ウ": "a：表 ，b：行",
+            "エ": "a：表 ，b：表"
+          },
+          "answer": "ウ",
+          "has_figure": true,
+          "figure_description": "選択肢は「a」「b」の2列からなる組合せの表。\n\n| | a | b |\n| --- | --- | --- |\n| ア | 行 | 行 |\n| イ | 行 | 表 |\n| ウ | 表 | 行 |\n| エ | 表 | 表 |",
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 158,
+      "term": "転送速度",
+      "field": "テクノロジ系",
+      "middle": "ネットワーク",
+      "syllabus_item_name": "ネットワーク方式",
+      "question_count": 2,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30a-q31",
+          "content_key": "8d537eb064aafaaf",
+          "exam_label": "平成30年度 秋期",
+          "number": 31,
+          "stem": "1.5Mビット／秒の伝送路を用いて12Mバイトのデータを転送するのに必要な伝送時間は何秒か。ここで，伝送路の伝送効率を50％とする。",
+          "choices": {
+            "ア": "16",
+            "イ": "32",
+            "ウ": "64",
+            "エ": "128"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2018h30h-q31",
+          "content_key": "29dbd5937e2d07a7",
+          "exam_label": "平成30年度 春期",
+          "number": 31,
+          "stem": "10Mバイトのデータを100,000ビット／秒の回線を使って転送するとき，転送時間は何秒か。ここで，回線の伝送効率を50％とし，1Mバイト＝10^6バイトとする。",
+          "choices": {
+            "ア": "200",
+            "イ": "400",
+            "ウ": "800",
+            "エ": "1,600"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 159,
+      "term": "C&C サーバ",
+      "field": "テクノロジ系",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ",
+      "question_count": 2,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30a-q41",
+          "content_key": "fa9d94689dfe6e5d",
+          "exam_label": "平成30年度 秋期",
+          "number": 41,
+          "stem": "ボットネットにおけるC&Cサーバの役割として，適切なものはどれか。",
+          "choices": {
+            "ア": "Webサイトのコンテンツをキャッシュし，本来のサーバに代わってコンテンツを利用者に配信することによって，ネットワークやサーバの負荷を軽減する。",
+            "イ": "外部からインターネットを経由して社内ネットワークにアクセスする際に，CHAPなどのプロトコルを用いることによって，利用者認証時のパスワードの盗聴を防止する。",
+            "ウ": "外部からインターネットを経由して社内ネットワークにアクセスする際に，チャレンジレスポンス方式を採用したワンタイムパスワードを用いることによって，利用者認証時のパスワードの盗聴を防止する。",
+            "エ": "侵入して乗っ取ったコンピュータに対して，他のコンピュータへの攻撃などの不正な操作をするよう，外部から命令を出したり応答を受け取ったりする。"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2017h29a-q36",
+          "content_key": "c9eab1e726ccc0c7",
+          "exam_label": "平成29年度 秋期",
+          "number": 36,
+          "stem": "ボットネットにおいてC&Cサーバが果たす役割はどれか。",
+          "choices": {
+            "ア": "遠隔操作が可能なマルウェアに，情報収集及び攻撃活動を指示する。",
+            "イ": "電子商取引事業者などに，偽のディジタル証明書の発行を命令する。",
+            "ウ": "不正なWebコンテンツのテキスト，画像及びレイアウト情報を一元的に管理する。",
+            "エ": "踏み台となる複数のサーバからの通信を制御し遮断する。"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 160,
+      "term": "真正性（Authenticity）",
+      "field": "テクノロジ系",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ",
+      "question_count": 2,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30a-q39",
+          "content_key": "6504cf79233ae56f",
+          "exam_label": "平成30年度 秋期",
+          "number": 39,
+          "stem": "JIS Q 27000:2014（情報セキュリティマネジメントシステム－用語）における真正性及び信頼性に対する定義a〜dの組みのうち，適切なものはどれか。\n〔定義〕\na 意図する行動と結果とが一貫しているという特性\nb エンティティは，それが主張するとおりのものであるという特性\nc 認可されたエンティティが要求したときに，アクセス及び使用が可能であるという特性\nd 認可されていない個人，エンティティ又はプロセスに対して，情報を使用させず，また，開示しないという特性",
+          "choices": {
+            "ア": "真正性：a ，信頼性：c",
+            "イ": "真正性：b ，信頼性：a",
+            "ウ": "真正性：b ，信頼性：d",
+            "エ": "真正性：d ，信頼性：a"
+          },
+          "answer": "イ",
+          "has_figure": true,
+          "figure_description": "選択肢は「真正性」「信頼性」の2列からなる表。\n\n| | 真正性 | 信頼性 |\n| --- | --- | --- |\n| ア | a | c |\n| イ | b | a |\n| ウ | b | d |\n| エ | d | a |",
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2018h30h-q39",
+          "content_key": "36282a3ac76e092b",
+          "exam_label": "平成30年度 春期",
+          "number": 39,
+          "stem": "JIS Q 27000:2014（情報セキュリティマネジメントシステム－用語）において，“エンティティは，それが主張するとおりのものであるという特性”と定義されているものはどれか。",
+          "choices": {
+            "ア": "真正性",
+            "イ": "信頼性",
+            "ウ": "責任追跡性",
+            "エ": "否認防止"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 161,
+      "term": "CSIRT",
+      "field": "テクノロジ系",
+      "middle": "セキュリティ",
+      "syllabus_item_name": "情報セキュリティ管理",
+      "question_count": 2,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30a-q40",
+          "content_key": "72783406c99f1840",
+          "exam_label": "平成30年度 秋期",
+          "number": 40,
+          "stem": "組織的なインシデント対応体制の構築や運用を支援する目的でJPCERT/CCが作成したものはどれか。",
+          "choices": {
+            "ア": "CSIRTマテリアル",
+            "イ": "ISMSユーザーズガイド",
+            "ウ": "証拠保全ガイドライン",
+            "エ": "組織における内部不正防止ガイドライン"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2017h29a-q42",
+          "content_key": "5f78db44ba3ede1b",
+          "exam_label": "平成29年度 秋期",
+          "number": 42,
+          "stem": "CSIRTの説明として，適切なものはどれか。",
+          "choices": {
+            "ア": "IPアドレスの割当て方針の決定，DNSルートサーバの運用監視，DNS管理に関する調整などを世界規模で行う組織である。",
+            "イ": "インターネットに関する技術文書を作成し，標準化のための検討を行う組織である。",
+            "ウ": "企業内・組織内や政府機関に設置され，情報セキュリティインシデントに関する報告を受け取り，調査し，対応活動を行う組織の総称である。",
+            "エ": "情報技術を利用し，宗教的又は政治的な目標を達成するという目的をもつ者や組織の総称である。"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 162,
+      "term": "クラス",
+      "field": "テクノロジ系",
+      "middle": "システム開発技術",
+      "syllabus_item_name": "設計",
+      "question_count": 2,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30a-q47",
+          "content_key": "ad77971ed066a791",
+          "exam_label": "平成30年度 秋期",
+          "number": 47,
+          "stem": "オブジェクト指向におけるクラスとインスタンスとの関係のうち，適切なものはどれか。",
+          "choices": {
+            "ア": "インスタンスはクラスの仕様を定義したものである。",
+            "イ": "クラスの定義に基づいてインスタンスが生成される。",
+            "ウ": "一つのインスタンスに対して，複数のクラスが対応する。",
+            "エ": "一つのクラスに対して，インスタンスはただ一つ存在する。"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2017h29a-q47",
+          "content_key": "2c89bcf289ebba18",
+          "exam_label": "平成29年度 秋期",
+          "number": 47,
+          "stem": "オブジェクト指向分析を用いてモデリングしたとき，クラスとオブジェクトの関係になる組みはどれか。",
+          "choices": {
+            "ア": "公園，ぶらんこ",
+            "イ": "公園，代々木公園",
+            "ウ": "鉄棒，ぶらんこ",
+            "エ": "中之島公園，代々木公園"
+          },
+          "answer": "イ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 163,
+      "term": "バックアップ",
+      "field": "マネジメント系",
+      "middle": "サービスマネジメント",
+      "syllabus_item_name": "サービスの運用",
+      "question_count": 2,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30h-q57",
+          "content_key": "e98d739f4896fdb9",
+          "exam_label": "平成30年度 春期",
+          "number": 57,
+          "stem": "サーバに接続されたディスクのデータのバックアップに関する記述のうち，最も適切なものはどれか。",
+          "choices": {
+            "ア": "一定の期間を過ぎて利用頻度が低くなったデータは，現在のディスクから消去するとともに，バックアップしておいたデータも消去する。",
+            "イ": "システムの本稼働開始日に全てのデータをバックアップし，それ以降は作業時間を短縮するために，更新頻度が高いデータだけをバックアップする。",
+            "ウ": "重要データは，バックアップの媒体を取り違えないように，同一の媒体に上書きでバックアップする。",
+            "エ": "複数のファイルに分散して格納されているデータは，それぞれのファイルへの一連の更新処理が終了した時点でバックアップする。"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2017h29a-q56",
+          "content_key": "bcfa3eb798674007",
+          "exam_label": "平成29年度 秋期",
+          "number": 56,
+          "stem": "新規システムにおけるデータのバックアップ方法に関する記述のうち，最も適切なものはどれか。",
+          "choices": {
+            "ア": "業務処理がバックアップ処理と重なると応答時間が長くなる可能性がある場合には，両方の処理が重ならないようにスケジュールを立てる。",
+            "イ": "バックアップ処理時間を短くするためには，バックアップデータをバックアップ元データと同一の記憶媒体内に置く。",
+            "ウ": "バックアップデータからの復旧時間を短くするためには，差分バックアップを採用する。",
+            "エ": "バックアップデータを長期間保存するためには，ランダムアクセスが可能な媒体を使用する。"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 164,
+      "term": "情報セキュリティ監査",
+      "field": "マネジメント系",
+      "middle": "システム監査",
+      "syllabus_item_name": "システム監査",
+      "question_count": 2,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2018h30a-q58",
+          "content_key": "7012db34ffd05156",
+          "exam_label": "平成30年度 秋期",
+          "number": 58,
+          "stem": "JIS Q 27001:2014（情報セキュリティマネジメントシステム－要求事項）に基づいてISMS内部監査を行った結果として判明した状況のうち，監査人が指摘事項として監査報告書に記載すべきものはどれか。",
+          "choices": {
+            "ア": "USBメモリの使用を，定められた手順に従って許可していた。",
+            "イ": "個人情報の誤廃棄事故を主務官庁などに，規定されたとおりに報告していた。",
+            "ウ": "マルウェアスキャンでスパイウェアが検知され，駆除されていた。",
+            "エ": "リスクアセスメントを実施した後に，リスク受容基準を決めた。"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        },
+        {
+          "question_id": "2018h30a-q59",
+          "content_key": "5666f87e93e28577",
+          "exam_label": "平成30年度 秋期",
+          "number": 59,
+          "stem": "外部保管のために専門業者に機密情報を含むバックアップ媒体を引き渡す際の安全性について，情報セキュリティ監査を実施した。その結果として判明した状況のうち，監査人が指摘事項として監査報告書に記載すべきものはどれか。",
+          "choices": {
+            "ア": "委託元責任者が，一定期間ごとに，専門業者における媒体保管状況を確認する契約を結んだ上で引き渡している。",
+            "イ": "委託元責任者が，専門業者との間で，機密保持条項を盛り込んだ業務委託契約を結んだ上で引き渡している。",
+            "ウ": "委託元担当者が，専用の記録簿に，引渡しの都度，日付と内容を記入し，専門業者から受領印をもらっている。",
+            "エ": "委託元担当者が，バックアップ媒体を段ボール箱に入れ，それを専門業者に引き渡している。"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    }
+  ]
+}

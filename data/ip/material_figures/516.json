@@ -1,0 +1,70 @@
+{
+  "topic_id": 516,
+  "term": "CPRM（Content Protection for Recordable Media）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 写した先で再生できなくなるしくみ",
+      "caption": "録画機からメディア A への記録が、許された 1 回の複製です。A から別のメディアへ写すこと自体は止めず、写した先では鍵が合わずに再生できなくします。",
+      "nodes": [
+        {
+          "id": "rec",
+          "label": "録画機\nCPRM に対応",
+          "row": 0,
+          "col": 0,
+          "icon": "device"
+        },
+        {
+          "id": "ma",
+          "label": "メディア A\n固有の識別情報と\n鍵が結び付く",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "ok",
+          "label": "再生できる\n元のメディアで見る",
+          "row": 0,
+          "col": 2,
+          "icon": "check"
+        },
+        {
+          "id": "mb",
+          "label": "メディア B\n識別情報が違う",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "ng",
+          "label": "再生できない\n複製しても使えない",
+          "row": 1,
+          "col": 2,
+          "icon": "warning"
+        }
+      ],
+      "edges": [
+        {
+          "from": "rec",
+          "to": "ma",
+          "label": "許された 1 回の複製\n（識別情報に合わせて暗号化）"
+        },
+        {
+          "from": "ma",
+          "to": "ok",
+          "label": "鍵が合い復号できる"
+        },
+        {
+          "from": "ma",
+          "to": "mb",
+          "label": "A からさらに\nファイルをコピー"
+        },
+        {
+          "from": "mb",
+          "to": "ng",
+          "label": "鍵が合わず復号できない"
+        }
+      ]
+    }
+  ]
+}

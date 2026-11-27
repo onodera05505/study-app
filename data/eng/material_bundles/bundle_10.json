@@ -1,0 +1,291 @@
+{
+  "bundle": "bundle_10",
+  "topics": [
+    {
+      "topic_id": 73,
+      "term": "平均・中央値・ばらつき",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "データから学ぶ考え方（統計と AI）",
+      "summary": "たくさんの数を代表する値（平均・中央値）と、散らばり具合（分散・標準偏差）。外れ値に引きずられる平均の弱点も",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "変数と代入"
+      ],
+      "sources": [
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "基礎理論 > 応用数学"
+        },
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "基礎理論 > 応用数学"
+        },
+        {
+          "name": "カリキュラム標準 J17-SE（ソフトウェアエンジニアリング領域）",
+          "where": "情報科学基礎科目 > 確率統計"
+        },
+        {
+          "name": "高等学校情報科「情報Ⅰ」教員研修用教材（本編）",
+          "where": "第4章 情報通信ネットワークとデータの活用 > 学習22 量的データの分析"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "正規分布"
+        }
+      ],
+      "source_count": 4,
+      "exam_weight": 0.39
+    },
+    {
+      "topic_id": 74,
+      "term": "AI と機械学習",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "データから学ぶ考え方（統計と AI）",
+      "summary": "人が決まりを書く代わりに、たくさんの例からコンピュータに決まりを見つけさせる方法。AI の中心の技術",
+      "goals": [
+        3,
+        7
+      ],
+      "prereq": [
+        "アルゴリズム"
+      ],
+      "sources": [
+        {
+          "name": "一般情報教育の知識体系 GEBOK2017.1（J17-GE）",
+          "where": "GE-AID3 人工知能 (AI) の仕組み（必修）"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第34回 機械学習と人工知能（Machine Learning & Artif…"
+        },
+        {
+          "name": "CS50x 2026 コンピュータサイエンス入門（CS50's Introduction to Computer Science）週ごとの講義一覧",
+          "where": "番外 人工知能（Artificial Intelligence）"
+        },
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "基礎理論 > 情報に関する理論"
+        },
+        {
+          "name": "カリキュラム標準 J17-CS（コンピュータ科学領域）要約",
+          "where": "知識エリア一覧 > IS 知的システム"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "機械学習・AI による認識"
+        }
+      ],
+      "source_count": 5,
+      "exam_weight": 1.84
+    },
+    {
+      "topic_id": 75,
+      "term": "生成 AI と大規模言語モデル",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "データから学ぶ考え方（統計と AI）",
+      "summary": "大量の文章で学んだモデルが、続く言葉を次々に予測して文やコードを作る。もっともらしく間違えることがある",
+      "goals": [
+        3,
+        7
+      ],
+      "prereq": [
+        "AI と機械学習"
+      ],
+      "sources": [
+        {
+          "name": "CS50x 2026 コンピュータサイエンス入門（CS50's Introduction to Computer Science）週ごとの講義一覧",
+          "where": "番外 人工知能（Artificial Intelligence）"
+        },
+        {
+          "name": "計算機教育で欠けている学期（The Missing Semester of Your CS Education, 2026）講義一覧",
+          "where": "AI エージェントとのコーディング（Agentic Coding）"
+        },
+        {
+          "name": "リクルート 2025 年度 新卒エンジニア研修（BootCamp）講座一覧",
+          "where": "大規模言語モデルことはじめ"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第36回 自然言語処理（Natural Language Processing）"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "生成 AI（基盤モデル・ハルシネーション・プロンプト）・チャットボット"
+        },
+        {
+          "name": "選考解説記事の集計",
+          "where": "生成 AI ツールの使い方"
+        }
+      ],
+      "source_count": 4,
+      "exam_weight": 1.05
+    },
+    {
+      "topic_id": 76,
+      "term": "学習の種類",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "データから学ぶ考え方（統計と AI）",
+      "summary": "正解を付けた例で学ぶ教師あり、似た物をまとめる教師なし、やってみて得点で学ぶ強化学習の違い",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "AI と機械学習"
+      ],
+      "sources": [
+        {
+          "name": "一般情報教育の知識体系 GEBOK2017.1（J17-GE）",
+          "where": "GE-AID3 人工知能 (AI) の仕組み（必修）"
+        },
+        {
+          "name": "情報科学基礎論（Introduction to Information Science）授業計画と内容（2026 前期）",
+          "where": "パターン認識"
+        }
+      ],
+      "source_count": 2,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 77,
+      "term": "ディープラーニング",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "データから学ぶ考え方（統計と AI）",
+      "summary": "人の神経をまねた計算を何層も重ね、画像や言葉の特徴を自分で見つけて学ぶ方法。画像認識や生成 AI の土台",
+      "goals": [
+        3,
+        7
+      ],
+      "prereq": [
+        "AI と機械学習",
+        "学習の種類"
+      ],
+      "sources": [
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第35回 コンピュータビジョン（Computer Vision）"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第36回 自然言語処理（Natural Language Processing）"
+        },
+        {
+          "name": "一般情報教育の知識体系 GEBOK2017.1（J17-GE）",
+          "where": "GE-AID3 人工知能 (AI) の仕組み（必修）"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "ディープラーニング"
+        }
+      ],
+      "source_count": 2,
+      "exam_weight": 1.6
+    },
+    {
+      "topic_id": 78,
+      "term": "学習の落とし穴",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "データから学ぶ考え方（統計と AI）",
+      "summary": "手元の例に合わせすぎて新しいデータで外れる過学習や、偏ったデータで学ぶと結果も偏る問題",
+      "goals": [
+        3,
+        7
+      ],
+      "prereq": [
+        "AI と機械学習",
+        "学習の種類"
+      ],
+      "sources": [
+        {
+          "name": "一般情報教育の知識体系 GEBOK2017.1（J17-GE）",
+          "where": "GE-AID2 現代社会における人工知能（AI）・データ科学への期待と課題（必…"
+        },
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "基礎理論 > 情報に関する理論"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "人間中心のAI 社会原則"
+        }
+      ],
+      "source_count": 2,
+      "exam_weight": 0.27
+    },
+    {
+      "topic_id": 79,
+      "term": "確率の入口",
+      "field": "プログラミングとアルゴリズム",
+      "middle": "データから学ぶ考え方（統計と AI）",
+      "summary": "ある出来事が起こる割合を 0 から 1 の数で表す見方。2 つが続けて起こる確率や、条件が付いたときの確率の考え方の入口",
+      "goals": [
+        3
+      ],
+      "prereq": [
+        "平均・中央値・ばらつき"
+      ],
+      "sources": [
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "応用数学（条件付き確率）"
+        },
+        {
+          "name": "カリキュラム標準 J17-SE（ソフトウェアエンジニアリング領域）",
+          "where": "情報科学基礎科目 > 確率統計"
+        },
+        {
+          "name": "高等学校情報科「情報Ⅰ」教員研修用教材（本編）",
+          "where": "第3章 コンピュータとプログラミング > 学習16 確定モデルと確率モデル"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "場合の数"
+        }
+      ],
+      "source_count": 3,
+      "exam_weight": 0.43
+    },
+    {
+      "topic_id": 80,
+      "term": "ネットワークとインターネット",
+      "field": "ネットワークと Web",
+      "middle": "ネットワークの基本の形",
+      "summary": "建物の中の小さなネットワーク（LAN）がつながり合い、世界中のネットワークの網になったのがインターネット",
+      "goals": [
+        4
+      ],
+      "prereq": [
+        "クライアントとサーバ"
+      ],
+      "sources": [
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "ネットワーク方式"
+        },
+        {
+          "name": "一般情報教育の知識体系 GEBOK2017.1（J17-GE）",
+          "where": "GE-INW2 ネットワークの構成（必修）"
+        },
+        {
+          "name": "一般情報教育の知識体系 GEBOK2017.1（J17-GE）",
+          "where": "GE-INW3 インターネット（必修）"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第28回 コンピュータネットワーク（Computer Networks）"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第29回 インターネット（The Internet）"
+        },
+        {
+          "name": "コンピュータサイエンスと情報技術入門（Introduction to Computer Science and Information Technology）授業計画（2023 春）",
+          "where": "第4回 システムをつなぐ（ネットワーク）（Connecting the Sys…"
+        }
+      ],
+      "source_count": 4,
+      "exam_weight": 0.0
+    }
+  ]
+}

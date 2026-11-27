@@ -1,0 +1,1202 @@
+[
+  {
+    "topic_id": 2,
+    "term": "医療へ回す合図",
+    "points": [
+      {
+        "point": "聞き取りの答えが、安静でも軽くならない・悪化・発熱・脚のしびれ・尿漏れ・初めての痛みのどれかなら手を当てず医療へ回し、いつもの張りなら回さない。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x に「医療へ回す合図」「いつもの張り」、y に「痛みの出方」「ほかに出るもの」「すること」を置き、行をたどれば合図か否かとすることが表だけで分かる。",
+        "existing_figure_id": 1,
+        "existing_action": "keep",
+        "reason": "2 つの側を同じ 3 観点で比べる格子で、左の列に当たれば医療へ、が図だけで言える。",
+        "benefit": 3
+      },
+      {
+        "point": "見分けるのは触る前で、手を当てて楽になった気がすると受診が遅れる。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "理由の 1 文で言え、図に描く構成や比べる観点が無い。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 12,
+    "term": "業として行うには国家資格が要る",
+    "points": [
+      {
+        "point": "お金やお礼を受け取らない・人を募らない・広告しない、の三つがそろう間が身内に施す範囲で、どれか一つでも入れば免許の要る仕事の形に近づく。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x に「この学びの範囲」「業として（免許が要る）」、y に「お金やお礼」「人の集め方」「知らせ方」を置き、三観点で左右を比べる。",
+        "existing_figure_id": 1,
+        "existing_action": "keep",
+        "reason": "三つの観点で範囲の内と外を比べる格子で、どの観点で線を越えるかが図だけで読める。",
+        "benefit": 2
+      },
+      {
+        "point": "「業として」は仕事として繰り返し行うつもりで行うことで、免許なしに行えば罰則の対象になる。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "定義と罰則の事実 1 つずつで、本文の 1 文で足りる。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 13,
+    "term": "医業類似行為の禁止",
+    "points": [
+      {
+        "point": "整体と名乗れば自由ではなく、免許の外の手技は体に害を及ぼすおそれがあるかで禁止と処罰の対象になる。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "「名前でなく危害のおそれで見る」という 1 点の言い切りで、並べる対象や観点が立たない。",
+        "benefit": 1
+      },
+      {
+        "point": "国の通知が名指しした首への急な回転と反らしは、身内相手でもやらない。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "禁じられた手技の名前 1 つで、本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 14,
+    "term": "広告と言葉の規制",
+    "points": [
+      {
+        "point": "施術所が外へ言えるのは法律が挙げた事実（施術者であること・名前・場所・受付の日時）だけで、技能・施術方法・経歴は言えない。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x に「言える（法律が挙げた事項）」「言えない」、y に「中身」「例」「自分の発信では」を置き、事実だけ言える／腕前ややり方を売りにした募集は言えない、を行で比べる。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "言える側と言えない側を同じ観点で並べると、自分の書きたい文がどちらに入るかを表で引ける。",
+        "benefit": 2
+      }
+    ]
+  },
+  {
+    "topic_id": 15,
+    "term": "「治す・治療・診断」と言わない言い方",
+    "points": [
+      {
+        "point": "自分がしたことの範囲どおりに話し、治る・原因・先を言い切らず、続くなら受診を勧める。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x に「言わない言い方」「言う言い方」、y に「何をしたか」「治るかと聞かれたら」「原因を聞かれたら」を置き、各セルに短い言い回しの例を入れる。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "場面ごとに言い換えを左右で並べると、言い切りを避けて受診を勧める形が表だけで分かる。",
+        "benefit": 2
+      },
+      {
+        "point": "「治る」と受け取った相手は、痛みが戻ったときに受診が遅れる。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "因果が 1 段だけで、本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 1,
+    "term": "やってはいけない相手（禁忌）",
+    "points": [
+      {
+        "point": "病名を一つずつ確かめず、通院中か・毎日飲む薬があるかの二つを聞き、どちらかあれば主治医に聞くまで手を当てない（がんにかかったことがある相手は例外で主治医に聞く）。",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": true,
+        "type": "blocks",
+        "idea": "「触る前に二つ聞く」から「どちらかある→手を当てない（主治医に聞く・聞くまでは温める等）」「どちらも無い→いつもの張りなら当ててよい」へ分かれ、「がんにかかったことがある」から例外の線が「手を当てない」へ入る。",
+        "existing_figure_id": 1,
+        "existing_action": "keep",
+        "reason": "聞く二つの分かれ道と例外の入り口を、条件を書いた線で示す経路図で、図だけで判断の順が言える。",
+        "benefit": 3
+      }
+    ]
+  },
+  {
+    "topic_id": 4,
+    "term": "妊娠中の相手",
+    "points": [
+      {
+        "point": "妊娠中の相手は健診に通う通院中の相手として扱い、背中に手を乗せることも含め主治医に聞くまで手を当てない。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "禁忌の単位の線に置くという 1 点で、比べる観点や構成が無い。",
+        "benefit": 1
+      },
+      {
+        "point": "手を当てない間は、横向きでクッション・同じ姿勢の前の声かけ・冷やさない、で体勢と部屋を整える側に回る。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "三つの行いの並びで、本文の箇条で足りる。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 25,
+    "term": "骨格筋のつくりと働き",
+    "points": [
+      {
+        "point": "筋は骨から骨へ張り、縮む力しか出せないので、縮むと両端の骨が近づき、元へ戻すのは反対側の筋の仕事になる。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": true,
+        "type": "blocks",
+        "idea": "骨 A と骨 B の間に「縮めて曲げる側の筋」と「反対側で戻す筋」の 2 本を置き、線のラベルで「縮むと骨を引き寄せる」「戻すのは反対側が縮む」を運ぶ。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "縮む力だけで対になって動く仕組みは、骨と筋の位置関係と引く向きを絵にすると一目になる。",
+        "benefit": 2
+      },
+      {
+        "point": "張りは一点ではなく筋が結ぶ骨と骨の線の上に出るので、手のひらをその線に合わせて置く。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "上の原理から一言で導ける使いどころで、本文で足りる。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 26,
+    "term": "骨の目印で位置を言う",
+    "points": [
+      {
+        "point": "手を当てる場所は「どの骨の目印から・どちら向きに・自分の指いくつぶん」で言い、手のひらで硬い骨か厚い筋かを確かめて決める。",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": true,
+        "type": "steps",
+        "idea": "段を「手のひらを置いて骨を確かめる」→「起点の目印（肩甲棘）」→「向き（下へ）」→「距離（自分の指 2 本）」→「着く場所（肩甲骨の面）」と下る階段にし、段の間に「目印にする骨」「数える向き」「進む幅」「同じ場所」を渡す。",
+        "existing_figure_id": 1,
+        "existing_action": "retype",
+        "reason": "今の blocks は一方向に進む矢印だけの鎖で、段が順に進む手順は steps が運ぶ。",
+        "benefit": 2
+      },
+      {
+        "point": "この学びで使う骨の目印 7 つの名前と言い換え（七番目の首の骨・肩甲棘・肩峰・腸骨稜・大転子・坐骨結節・仙骨）。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "名前と言い換えの一覧で、本文の箇条のままが読みやすい（樹形や一覧は図にしない）。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 6,
+    "term": "避ける部位の考え方",
+    "points": [
+      {
+        "point": "骨が皮膚のすぐ下・関節の狭い隙間・神経と血管の浅い通り道は圧の逃げ場がなく神経がつぶれるので外し、圧を受け止める厚い筋の面に手のひらを置く。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x に「避ける所」「手のひらを置く所」、y に「皮膚の下」「圧は」「例」を置き、逃げ場の有無で左右が分かれることを行で読ませる。",
+        "existing_figure_id": 1,
+        "existing_action": "keep",
+        "reason": "避ける所と置く所を同じ観点で並べた格子で、なぜ外すかまで図だけで言える。",
+        "benefit": 3
+      }
+    ]
+  },
+  {
+    "topic_id": 9,
+    "term": "関節を急に動かす手技を扱わない",
+    "points": [
+      {
+        "point": "首や背中の関節を勢いよくひねって鳴らす手技は、国の通知で禁じられ、勢いは途中で止められないので、頼まれても引き受けない。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "禁じられた手技 1 つとその理由で、本文の 1〜2 文で言える。",
+        "benefit": 1
+      },
+      {
+        "point": "首の向きを変えたいなら、相手自身に自分の速さで動かしてもらう。",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "行い 1 つで、段や往き来が無い。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 10,
+    "term": "やめる合図",
+    "points": [
+      {
+        "point": "合図は 2 段あり、弱める合図は前の強さへ戻して聞き戻らなければ手を離し、やめる合図はその場で手を離してその回を終え、重なれば強い方で決める。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x に「弱める合図」「やめる合図」、y に「相手に出ること」「すること」「聞くのは」を置き、やめる合図の「すること」を強調する。",
+        "existing_figure_id": 1,
+        "existing_action": "keep",
+        "reason": "2 段の合図を同じ観点で並べた格子で、どの合図で何をするかが図だけで引ける。",
+        "benefit": 3
+      }
+    ]
+  },
+  {
+    "topic_id": 17,
+    "term": "相手への確認",
+    "points": [
+      {
+        "point": "手を当てる前に決まった 4 つの問い（いつもの張りか・通院と薬とがんにかかったこと・熱やしびれなど・どこを触ってほしいか）を聞き、答えで医療へ回す／主治医に聞く／聞いた範囲に当てる、に振り分ける。",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": true,
+        "type": "blocks",
+        "idea": "左の列に問い 1〜4 を上から並べ、右へ「医療へ回す（その日は触らない）」「主治医に聞くまで手を当てない」「聞いた範囲に手のひらを当てる」の行き先を置き、線に「初めての痛み」「通院・服薬・がん」「熱・しびれ・夜も痛む」「触ってほしい場所」の条件を書く。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "4 つの問いと 3 つの行き先の対応は、本文の番号付きの箇条だけでは答えから行き先が引きにくく、条件の線でつなぐと図だけで振り分けが言える。",
+        "benefit": 3
+      },
+      {
+        "point": "触る範囲は肩と首の後ろ・腰・殿部・太ももの裏の 4 つで、範囲をまたいで広げるときだけ「ここも触っていい？」と聞く。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "範囲の名前 4 つと決まり 1 つで、本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 19,
+    "term": "力加減の決め方",
+    "points": [
+      {
+        "point": "強さは数字で決めず、腕の重みから少しずつ増し、息を吐いて肩が下がれば止め、弱める合図なら戻して聞き、やめる合図なら手を離す。",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": true,
+        "type": "blocks",
+        "idea": "「手のひらを浅く当てる」→「反応を見る」から、線のラベル「息を吐き肩が下がる」「返事が短い・息が浅い」「痛い・息が止まる・しびれ」で「その強さで待つ」「前の強さへ戻して聞く」「手を離す」へ分かれ、「戻らない」で手を離すへ入る。",
+        "existing_figure_id": 1,
+        "existing_action": "keep",
+        "reason": "反応ごとに行き先が分かれる経路で、線のラベルが条件を運び、図だけで上げ下げの決め方が言える。",
+        "benefit": 3
+      },
+      {
+        "point": "手の力は「当てる」（手のひらと腕の重み）・「乗せて押さない」（手の重みだけ、腰の横のわき腹寄り）・「軽くつまむ」（指の腹で軽く持ち上げる、肩の上の斜めの縁）の 3 つの言い方で分ける。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x に「当てる」「乗せて押さない」「軽くつまむ」、y に「力の出し方」「使う所」を置いた 3×2 の格子。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "三つの言い方を同じ二観点で並べると、どこでどの力かを表で引け、本文の長い一段落を読み返さずに済む。",
+        "benefit": 2
+      }
+    ]
+  },
+  {
+    "topic_id": 29,
+    "term": "筋が張るとは何が起きているか",
+    "points": [
+      {
+        "point": "同じ姿勢で筋が縮んだままになると硬い所ができて血のめぐりが細り、酸素が足りず痛み、その痛みがまた筋を縮ませる悪循環で張りが続く。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": true,
+        "type": "cycle",
+        "idea": "輪の段を「筋が縮んだまま」→「周りより硬い所（壊れた組織ではない）」→「血流と酸素の不足」→「張り・痛み」とし、段の間に「中に硬い部分ができる」「血のめぐりが細る」「酸素が足りず痛む」「痛みが筋を縮ませる」を渡す。中央は「張りが続く」、入口の「同じ姿勢が続く」は中央か最初の段の一言に入れる。",
+        "existing_figure_id": 1,
+        "existing_action": "retype",
+        "reason": "今の blocks は戻りの線で輪を作っているだけで、悪循環（段が輪になって戻る）は cycle が運ぶ。",
+        "benefit": 3
+      },
+      {
+        "point": "硬い所は縮んだ筋なので、力を足さず手のひらを当てたまま待ち、「痛い」と言われたら硬い所の上でも手を離す。",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "上の輪から一言で導ける使い方で、本文で足りる。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 30,
+    "term": "筋膜",
+    "points": [
+      {
+        "point": "筋膜は筋の一本ずつと束を包んで隣の筋や骨へ続くので、張りは相手の言う一点より広く出て、一点でなく面に手のひらを置く。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "「包んで続く」の 1 点で、包む入れ子の絵では続く向きが運べず、本文の 1 文で言える。",
+        "benefit": 1
+      },
+      {
+        "point": "腰では、背骨の両脇の土手には手のひら全体を当て、土手より外の腰の横のわき腹寄りは乗せて押さずに待ち、お腹側へは広げない。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x に「背骨の両脇の土手」「腰の横のわき腹寄り」「お腹側」、y に「奥にあるもの」「手は」を置いた 3×2 の格子。土手より外は肋骨の守りが無く内臓が近いことを行で読ませる。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "腰の 3 つの場所を同じ二観点で並べると、なぜ外側ほど手を弱めるかが図だけで言える。",
+        "benefit": 2
+      }
+    ]
+  },
+  {
+    "topic_id": 31,
+    "term": "血流と代謝",
+    "points": [
+      {
+        "point": "筋が縮んだままだと中の血管が細り、酸素と栄養が届きにくくなって痛みにつながる。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "筋が張る単位の輪の図が受け持つ流れで、ここでは本文の 1 文で足りる。",
+        "benefit": 1
+      },
+      {
+        "point": "温めるのは前でも後でもよく、前は筋がゆるみやすく、後は揉み返しが和らぎやすい。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "2 者の 1 点ずつの違いで、本文で一言で言える。",
+        "benefit": 1
+      },
+      {
+        "point": "冷えた体に強い力を足さず、部屋を暖めて手を当て、終わりに相手自身に軽く動かしてもらうまでを一組にする。",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "場面の流れが 3 つの行いで、本文で足りる。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 36,
+    "term": "痛みの分類",
+    "points": [
+      {
+        "point": "痛みを筋の側・神経の側・傷が見つからない側に分け、手を当ててよいのは筋の側だけで、他の二つは医療へ回す。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x に三つの側、y に「相手の訴え」「手を当てるか」を置き、筋の側の「手を当ててよい」を強調する。",
+        "existing_figure_id": 1,
+        "existing_action": "keep",
+        "reason": "三つの側を同じ二観点で比べる格子で、訴えから触るかが図だけで引ける。",
+        "benefit": 3
+      }
+    ]
+  },
+  {
+    "topic_id": 42,
+    "term": "危険信号（レッドフラッグ）",
+    "points": [
+      {
+        "point": "初めての痛みは年齢を問わず当たってその日は触らず医療へ回し、55 歳を超えて・20 歳未満で始まった痛みはその中で特に急ぐ理由で、いつもの張りは当たらない。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "venn",
+        "idea": "layout は nested。全体の枠を「肩や腰の痛みの訴え」、外の範囲を「初めての痛み（年齢を問わず触らず受診）」、内の範囲を「55 歳を超えて・20 歳未満で始まった（特に急ぐ）」とし、どちらにも入らない領域に「いつもの張り（通院も服薬も無ければ手を当ててよい）」を置く。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "年齢の項目が初めての痛みの内側にあり、年齢で「触ってよい側」を作らないことは、入れ子の絵で一目になる（単位ごとに読み違えが出た所）。",
+        "benefit": 3
+      },
+      {
+        "point": "危険信号は相手への確認の答えのうち重い病気の手がかりを知らせるもので、問いを足さない。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "呼び名と参照先の関係 1 点で、本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 28,
+    "term": "抗重力筋と姿勢",
+    "points": [
+      {
+        "point": "姿勢を支える筋は縮んだまま休まず働くので運動しなくても疲れ、動いて疲れた筋と違い、支えなくてよい姿勢を先に作ることが手当ての一部になる。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x に「動いて疲れた筋」「止まったまま支え続けて疲れた筋」、y に「どう働いたか」「張りが出る場面」「手を当てる前に」を置く。右の列の「腕を膝に預ける・背もたれ・うつ伏せ」を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "本文が「分けて見る」と言う 2 者を三観点で並べると、支える仕事を降ろさせる理由が表だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "頭は前に倒れやすく、首の後ろから背中の筋が引き戻して支え続ける。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "上の格子の右の列が受け持つ例で、本文の 1 文で足りる。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 33,
+    "term": "揉み返し",
+    "points": [
+      {
+        "point": "揉み返しは手を当てた数時間後から翌日に遅れて出て、数日のうちに軽くなっていく向きなら揉み返し、強くなる・続くなら医療へ回す。",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "kind は line。x に「当日」「翌朝」「2 日目」「3 日目」「4 日目」、y に「重だるさ（例）」を取り、系列を「揉み返し（遅れて出て軽くなっていく）」と「医療へ回す（日ごとに強くなる）」の 2 本にし、翌朝の頂点に「遅れて出る」と注記する。",
+        "existing_figure_id": 1,
+        "existing_action": "retype",
+        "reason": "今の sequence は相手とのやり取りを並べているが、要点は重さの時間の動きと向きの違いで、量の変化は chart が運ぶ。",
+        "benefit": 3
+      },
+      {
+        "point": "一回の手当ては、触る前の聞き取り・触っている間の合図・翌日の向きの確かめまでで、その場の「楽になった」は強さが合っていた証拠にならない。",
+        "content_type": "プロセス",
+        "function": "変換的",
+        "draw": true,
+        "type": "timeline",
+        "idea": "軸を「触る前」「手を当てる」「終える」「数時間後」「翌日」「数日後」とし、期間「触る前（医療へ回す合図・禁忌で外す）」「手を当てている間（弱める合図・やめる合図）」「終えてから数日（重さの向きを聞く）」と、点「終えた直後（楽になったは証拠にならない）」を置く。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "判断がどの時点で何を見るかが 3 つの単位に散っており、時間の軸に並べると翌日までが一回だと図だけで言える。",
+        "benefit": 2
+      }
+    ]
+  },
+  {
+    "topic_id": 50,
+    "term": "肩甲骨の動き",
+    "points": [
+      {
+        "point": "肩甲骨は肋骨のかごの上に浮き、骨としては鎖骨と腕の骨にしかつながらず、背骨とは筋で吊られている。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "blocks",
+        "idea": "中央に「肩甲骨（背中の上で浮く三角の骨）」、横に「鎖骨」「腕の骨」、内側に「背骨」、下に「肋骨のかご」を置き、線を「骨でつながる」（鎖骨・腕の骨）と「筋で吊る（肩甲挙筋・菱形筋）」（背骨、点線）と「上に乗って滑る」（肋骨のかご）で分ける。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "骨でつながる相手と筋で吊られる相手の違いは、線の種類とラベルで絵にすると、なぜ動く位置で止まるかの前提が一目になる。",
+        "benefit": 2
+      },
+      {
+        "point": "肘を後ろへ引くと片側だけ縁と背骨のあいだが広いまま残るのが「寄らない」、腕を前へ伸ばすと内側の縁が皮膚を持ち上げるのが「縁が浮く」で、寄らない側は寄せる筋が疲れていると見る。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x に「寄らない」「縁が浮く」、y に「してもらう動き」「見える様子」「手は」を置く。手の行には「肩甲骨と背骨の間と肩甲骨の面に手のひら」「縁の下へ指を差し込まない」。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "見比べる二つの様子を同じ観点で並べると、相手の背中を見たときにどちらかを表で引ける。",
+        "benefit": 2
+      }
+    ]
+  },
+  {
+    "topic_id": 53,
+    "term": "僧帽筋",
+    "points": [
+      {
+        "point": "僧帽筋は上・中ほど・下の部分に分かれ、すくめる・肩甲骨を背骨へ寄せる・肩甲骨を下げる、を分け持つ。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": true,
+        "type": "parts",
+        "idea": "whole を「僧帽筋」とし、部位を「上の部分（すくめる。肩の上の斜めの縁）」「中ほど（背骨へ寄せる。肩甲骨と背骨の間）」「下の部分（肩甲骨を下げる）」の 3 つにし、上の部分を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "一つの大きな筋が部分ごとに別の向きに引くことは、全体を部位に分けた絵で名前と働きを一度に示せる。",
+        "benefit": 2
+      },
+      {
+        "point": "肩の上の斜めの縁は、当てるのもつまむのも肩先から首に近い端の手前までで、端の奥には神経と血管が通る。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "範囲の決まり 1 つで、本文と共通の決まりの 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 61,
+    "term": "肩こりとは何か",
+    "points": [
+      {
+        "point": "肩こりは首の後ろから肩・背中の張りや重さを指す症状の名前で、中心は僧帽筋、原因は姿勢・前かがみ・運動不足・冷え・緊張。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "定義と原因の並びで、本文の 1〜2 文で言える。",
+        "benefit": 1
+      },
+      {
+        "point": "肩こりに見える訴えの裏に病気があることがあるので、いつもと違う頭痛・吐き気・腕のしびれなど当てはまらない訴えを先に外す。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "触る側と外す側の見分けは医療へ回す合図と痛みの分類の格子が受け持ち、ここで描けば重複になる。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 57,
+    "term": "斜角筋と胸郭出口",
+    "points": [
+      {
+        "point": "腕へ行く神経の束と動脈は、前と中の斜角筋のすき間・鎖骨と一番上の肋骨のあいだ・胸の前の小さな筋の裏の三か所を続けて抜け、どこで押されても腕から手がしびれるので、鎖骨の上のくぼみと首の横に入らない。",
+        "content_type": "プロセス",
+        "function": "変換的",
+        "draw": true,
+        "type": "steps",
+        "idea": "direction は down。段を「首の骨の横（神経の束が出る）」→「前と中の斜角筋のすき間（鎖骨の上のくぼみの奥）」→「鎖骨と一番上の肋骨のあいだ」→「胸の前の小さな筋の裏」→「腕から手（押されるとしびれ・握る力が弱まる）」とし、段の間に「神経の束と動脈が抜ける」を渡す。2 段目を強調する。",
+        "existing_figure_id": 1,
+        "existing_action": "retype",
+        "reason": "今の matrix は「通るもの」の行がどの列も同じで比べる観点が立たず、要点は三か所を順に抜ける通り道なので steps が運ぶ。",
+        "benefit": 2
+      },
+      {
+        "point": "腕や指先のしびれは神経の側の訴えなので、筋の張りとして扱わずその日は医療へ回す。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "上の通り道から一言で導け、痛みの分類の格子も受け持つ。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 54,
+    "term": "肩甲挙筋",
+    "points": [
+      {
+        "point": "肩甲挙筋は首の骨の横の突起から肩甲骨の上の角へ斜めに下り、僧帽筋の下に隠れるので、角のまわりに表面の筋ごしに手のひらを当てて待つ。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "付く所 2 つと手の置き方 1 つで本文の 1 文で言え、他の肩の筋との見分けは菱形筋の単位の格子が受け持つ。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 55,
+    "term": "菱形筋",
+    "points": [
+      {
+        "point": "肩の訴えが肩の上の斜めの縁か、肩甲骨の上の角の一点か、肩甲骨の内側の縁に沿ってかで、僧帽筋・肩甲挙筋・菱形筋を見分け、どれも手のひら全体で表面から当てる。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x に「僧帽筋」「肩甲挙筋」「菱形筋」、y に「走る所」「主な働き」「訴えの出方」を置いた 3×3 の格子。菱形筋の列を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "肩の 3 つの筋は関連用語で互いを指し合うが本文では散っており、同じ三観点の格子にすると訴えから筋を図だけで引ける。",
+        "benefit": 2
+      },
+      {
+        "point": "菱形筋は背骨側が高く肩甲骨側が低い斜めに走り、前かがみで肩が前へ出ると伸ばされたまま働き続ける。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "走る向きと働きの因果 1 段で、本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 66,
+    "term": "肩と首に手を当てる順序",
+    "points": [
+      {
+        "point": "肩と首は、始める前・入り方・進み方・途中で見る合図・終わったあと、の毎回同じ 5 段で回す。",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": true,
+        "type": "steps",
+        "idea": "direction は down。段を「始める前（確認と了承、腕を膝に）」→「入り方（肩の上に手のひら全体）」→「進み方（肩の上の縁→肩甲骨の面→肩甲骨と背骨の間→七番目の首の骨より下）」→「途中で見る合図（返事・息・押し返し）」→「終わったあと（翌日の重さを聞く）」とし、段の間に「了承」「左右の硬さ」「浅い層からゆるんだ肩」「合図が無い」を渡す。",
+        "existing_figure_id": 1,
+        "existing_action": "retype",
+        "reason": "今の sequence は相手との往き来がほぼ無い一方向の 5 段で、段が順に進む手順は steps が運ぶ。",
+        "benefit": 3
+      },
+      {
+        "point": "背中の筋は浅い層に僧帽筋、その下に肩甲挙筋と菱形筋、奥に肋骨と血管・神経があり、奥ほど狭いので、浅い層を広い面でゆるめ、奥はその上から手のひらで少し長く当てて待つ。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "layers",
+        "idea": "上（浅い）から「僧帽筋（広い。手のひら全体を当てる）」「肩甲挙筋・菱形筋（その下。上から少し長く待つ）」「肋骨・血管と神経（奥。指で探らない）」の 3 層を積み、左の括弧で「手が届く層」「上から待つだけの層」を示す。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "浅い層から奥への重なりと、どこまで手が働くかは、層を積んだ絵に括弧を添えると図だけで言える。",
+        "benefit": 2
+      }
+    ]
+  },
+  {
+    "topic_id": 49,
+    "term": "頚椎と首の動き",
+    "points": [
+      {
+        "point": "首の骨は七つで、上の二つ（頭を受ける輪と軸）が左右へ回す動きを受け持ち、下の五つが前後と横に倒す動きを分け持ち、回す要は奥にあって手は届かない。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": true,
+        "type": "layers",
+        "idea": "上から「一番上（輪の形。頭を受ける）」「二番目（上へ突き出た軸）」「三〜六番目（前後と横に倒す）」「七番目（うなじの下で一番出る骨）」を積み、括弧で「回す（奥にあり手は届かない）」「倒す」を示す。七番目を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "積み重なった骨のどこが回しどこが倒すかは、層に括弧を添えると図だけで言え、七番目が目印になる理由も見える。",
+        "benefit": 2
+      },
+      {
+        "point": "手を当てるのは肩の上と七番目の首の骨より下の背骨の両わきで、首そのものは後ろに手のひらを軽く添えるまで。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "共通の決まりの 1 文で、首まわりの範囲の格子（胸鎖乳突筋の単位）が受け持つ。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 58,
+    "term": "後頭下筋群",
+    "points": [
+      {
+        "point": "後頭部の骨の下のくぼみの奥を脳へ向かう動脈と神経が通るので、くぼみには指も手のひらの縁も入れず、代わりに後頭部の丸みを手のひらで受けて待つ。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "blocks",
+        "idea": "「後頭部の骨の下の縁」→「くぼみ（奥に小さな筋の集まり）」→「脳へ向かう動脈・後頭部へ行く神経」を「すぐ下」「指を入れると力が届く」の線でつなぎ、くぼみから「後頭部の丸みを手のひらで受ける」へ「入らず代わりに」の線を出す。箱は名前＋一言の 2 行に収める。",
+        "existing_figure_id": 1,
+        "existing_action": "redraw",
+        "reason": "今の図は位置の段と手の段の 2 要点が 1 図に混ざり、下の段の箱が文になっているので、入らない理由と代わりの 1 要点に絞って描き直す。",
+        "benefit": 2
+      },
+      {
+        "point": "ふらつき・めまい・吐き気・目の前が暗くなる、のどれかが出たら、その回を終えて医療へ回す。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "共通の決まりの 1 文で、図にする構成が無い。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 56,
+    "term": "胸鎖乳突筋",
+    "points": [
+      {
+        "point": "首まわりは、首の後ろは手のひらを軽く添えるまで、首の横と前（胸鎖乳突筋の前にのどと太い血管が浅く並ぶ）は手のひらも当てず、七番目の首の骨より下と肩の上は手のひら全体を当てる。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x に「首の後ろ」「首の横と前」「七番目の首の骨より下と肩の上」、y に「下にあるもの」「手は」を置いた 3×2 の格子。首の横と前の「手のひらも当てない」を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "首の単位ごとに繰り返される 3 つの範囲の扱いを同じ二観点で並べると、見えた筋を境に手の扱いが変わることが図だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "胸鎖乳突筋は胸の骨の上端と鎖骨の内側から耳の後ろの下の骨へ斜めに上がり、片方が縮むと顔が反対へ向く。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "付く所と働き 1 つずつで、本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 67,
+    "term": "脊柱と腰椎のつくり",
+    "points": [
+      {
+        "point": "背骨の列は首七・胸十二・腰五と積み重なって仙骨へ続き、上の重みが集まる腰の骨が最も大きく、骨の間のクッションと後ろの関節・靱帯・筋が列を支える。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "layers",
+        "idea": "上から「首の骨（七つ）」「胸の骨（十二）」「腰の骨（五つ。いちばん大きい）」「仙骨（腰の真ん中の下の平たい骨）」を積み、腰の層を強調し、注記で「上の重みが集まる」「列を支える：クッション・関節・靱帯・筋」を添える。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "下が上の重みを受けて支える積み上がりそのもので、層の図にすると腰に重みが集まる理由が一目になる。",
+        "benefit": 2
+      },
+      {
+        "point": "手を当てるのは骨の突起の列ではなく、その両わきを縦に走る筋。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "場所の決まり 1 つで、本文の 1 文で言える。",
+        "benefit": 1
+      },
+      {
+        "point": "腰は前後に倒す動きが主でねじりはわずかなので、中腰でひねる姿勢は負担として残りやすい。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "因果 1 段で、本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 69,
+    "term": "骨盤の目印",
+    "points": [
+      {
+        "point": "腰と殿部の目印は、腰の横でベルトが乗る腸骨稜・腰の真ん中の下の平たい仙骨・座ると椅子に当たる坐骨結節・脚の付け根の外の硬い丸みの大転子の 4 つで、手のひらを置いて確かめる。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x に「真ん中寄り」「横寄り」、y に「腰の高さ」「尻と脚の付け根の高さ」を置いた 2×2 の格子に、仙骨・腸骨稜・坐骨結節・大転子を名前＋言い換えで入れ、どの高さのどちら寄りかで場所が引けるようにする。",
+        "existing_figure_id": 1,
+        "existing_action": "retype",
+        "reason": "今の blocks は中央の箱から 4 つの名前へ同じ意味の線を引いた一覧で（一覧は図にしない）、場所を運ぶには高さと寄りの 2 軸の格子が合う。",
+        "benefit": 2
+      },
+      {
+        "point": "目印が分かれば、腸骨稜より上と一番下の肋骨のあいだを「腰の横のわき腹寄り」、すぐ下で大転子より上を「殿部の上の外寄り」と呼べる。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "呼び名の決まりで、聞き分けの格子は中殿筋と小殿筋の単位が受け持つ。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 71,
+    "term": "脊柱起立筋",
+    "points": [
+      {
+        "point": "脊柱起立筋は背骨の両脇を縦に走る土手で、立っても座っても上体を支え続けるので疲れがたまりやすい。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "場所と働き 1 つずつで、本文の 1 文で言える（姿勢を支える筋の見分けは抗重力筋の単位の格子が受け持つ）。",
+        "benefit": 1
+      },
+      {
+        "point": "土手の上は手のひら全体で当て、土手より外の腰の横のわき腹寄りは横向きで手の重みだけを乗せて待つ。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "腰の場所ごとの手の置き方は筋膜の単位の格子が受け持つ。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 73,
+    "term": "腰方形筋",
+    "points": [
+      {
+        "point": "腰方形筋は腸骨稜からいちばん下の肋骨へ腰の奥を縦に短く走り、片側が縮むとその側へ体を倒す。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "付く所と働き 1 つずつで、本文の 1 文で言える。",
+        "benefit": 1
+      },
+      {
+        "point": "片手で鞄を持つ・片脚に重みを預けるなど左右差のある習慣で片側だけ疲れるので、重い側の暮らしの癖を一緒に探す。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "因果 1 段で、本文の 1〜2 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 74,
+    "term": "胸腰筋膜",
+    "points": [
+      {
+        "point": "胸腰筋膜は脊柱起立筋を袋のように包み、その縁がお腹の横の筋へ続くので、張りは一点でなく面で広がり、手のひら全体で面ごと覆う。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "blocks",
+        "idea": "「お腹の横の筋（わき腹の奥）」「胸腰筋膜（腰の背中側の丈夫な膜）」「脊柱起立筋（背骨の両脇の土手）」「背骨の突起の列」を置き、線を「縁が続き動きが伝わる」「袋のように包む」「骨に付く」とする。膜を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "お腹側と背中側が膜でつながる構成は、箱と線のラベルで描くと「面で張る」理由が図だけで言える。",
+        "benefit": 2
+      }
+    ]
+  },
+  {
+    "topic_id": 76,
+    "term": "大殿筋",
+    "points": [
+      {
+        "point": "大殿筋は座っている間は押しつぶされ、立ち上がる瞬間に急に働き、殿部が上体を起こせないと腰の筋が代わりに働き続ける。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "因果 1 段で、本文の 1〜2 文で言える。",
+        "benefit": 1
+      },
+      {
+        "point": "手を当てるのは尻の中央から下のいちばん広くふくらんだ面で、坐骨結節・仙骨・尻の割れ目に沿った骨の上は外す。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "骨の目印の場所は骨盤の目印の格子が受け持ち、ここは当てる面の名前 1 つで言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 77,
+    "term": "中殿筋と小殿筋",
+    "points": [
+      {
+        "point": "相手が「腰の横」と言ったら、腸骨稜より上（腰の横のわき腹寄り。奥に内臓が近く乗せて押さない）か、すぐ下（殿部の上の外寄り。中殿筋と小殿筋で手のひら全体を当てる）かを聞き分ける。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x に「腸骨稜より上」「腸骨稜のすぐ下（大転子より上）」、y に「呼び名」「奥にあるもの」「手は」を置いた 2×3 の格子。すぐ下の列を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "同じ「腰の横」の訴えを境の骨で二つに分け、同じ観点で並べると、手の扱いの違いが図だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "中殿筋と小殿筋は片脚で立つあいだ骨盤が反対側へ落ちないよう支えるので、よく歩いた日に疲れる。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "因果 1 段で、本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 78,
+    "term": "梨状筋",
+    "points": [
+      {
+        "point": "梨状筋は大殿筋の下に隠れ、すぐ近くを脚へ下る太い神経が通るので、奥を指で探らず、大殿筋の広い面の上から手のひらで少し長く当てて待つ。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "layers",
+        "idea": "上（浅い）から「大殿筋（尻の広い面。手のひらを当てて待つ）」「梨状筋（その下。輪郭は触れない）」「脚へ下る太い神経（すぐ近く。押されるとしびれ）」の 3 層を積み、左の括弧で「手が届く層」「指を差し込まない層」を示す。神経の層を強調する。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "表面の筋の下に隠れた筋と神経の重なりは、層の絵で示すと奥を探らない理由が図だけで言える。",
+        "benefit": 2
+      },
+      {
+        "point": "脚にビリッと来る・じんじんするはやめる合図でその場で手を離し、続く・繰り返すなら医療へ回す。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "やめる合図の単位の格子が受け持つ決まりで、本文の 1 文で言える。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 79,
+    "term": "腸腰筋",
+    "points": [
+      {
+        "point": "腸腰筋は腰の背骨の前と骨盤の内側から脚の付け根の内側へ向かう奥の筋で、手前に内臓と太い血管があるのでお腹側には手を当てない。",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "場所と避ける理由 1 つずつで、本文の 1 文で言える。",
+        "benefit": 1
+      },
+      {
+        "point": "座り続けると縮んだ長さで固まり、立つと腰が伸びにくく腰の後ろの筋が引かれ続けるので、張りには姿勢と動きで応える。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "因果は 1 段で本文で言え、太ももの裏の筋との比べは次の単位の格子が受け持つ。",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 80,
+    "term": "ハムストリングと腰の関係",
+    "points": [
+      {
+        "point": "太ももの裏の筋が縮んだままだと坐骨結節を膝の側へ引いて骨盤が後ろへ傾き、前にかがむと腰が丸まって補うので、脊柱起立筋が伸ばされたまま働き、腰だけ緩めても張りが戻りやすい。",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": true,
+        "type": "blocks",
+        "idea": "「太ももの裏の筋」→「座ると椅子に当たる骨を膝の側へ引く」→「骨盤が後ろへ傾く」→「腰が丸まって補う」→「脊柱起立筋が伸ばされたまま働く」→「腰だけ緩めても張りが戻る」と線のラベルで因果をつなぎ、最後から太ももの裏へ「聞いてから太ももの裏も候補」の点線を戻す。",
+        "existing_figure_id": 1,
+        "existing_action": "keep",
+        "reason": "因果の鎖を線のラベルが運ぶ解釈的な blocks で、図だけで太ももの裏から腰の張りまでが言える。",
+        "benefit": 3
+      },
+      {
+        "point": "腸腰筋とハムストリングはどちらも腰の張りに関わるが、骨盤を引く向きが逆で、手の扱いも違う。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "x に「腸腰筋」「ハムストリング」、y に「走る所」「縮むと骨盤は」「手は」を置いた 2×3 の格子（お腹側は触らず姿勢と動きで／聞いてから太ももの裏に手のひら）。",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "前後二つの筋を同じ三観点で並べると、向きが逆でも腰の張りに行き着くことと手の扱いの違いが表だけで言える。",
+        "benefit": 2
+      }
+    ]
+  },
+  {
+    "topic_id": 85,
+    "term": "腰と殿部に手を当てる順序",
+    "points": [
+      {
+        "point": "腰と殿部は、うつ伏せで背骨の両脇の土手から入り、聞いてから尻の広い面と太ももの裏へ広げ、横向きに変えて殿部の上の外寄りと腰の横のわき腹寄りで締める、毎回同じ 5 段で回す。",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": true,
+        "type": "steps",
+        "idea": "direction は down。段を「始める前（確認と了承・うつ伏せ）」→「入り方（背骨の両脇の土手）」→「進み方（土手→聞いて尻と太ももの裏→横向きで殿部の上の外寄りとわき腹寄り）」→「途中で見る合図」→「終わったあと（翌日の重さの向き）」とし、段の間に「了承」「腰がゆるむ」「聞いた範囲を終える」「合図が無い」を渡す。",
+        "existing_figure_id": 1,
+        "existing_action": "retype",
+        "reason": "今の sequence は相手との往き来がほぼ無い一方向の 5 段で、段が順に進む手順は steps が運ぶ。",
+        "benefit": 3
+      },
+      {
+        "point": "腰は膜とその下の脊柱起立筋、殿部は広い筋の奥に梨状筋と神経が重なり、届くのは浅い層なので広い面を先に緩める。",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": null,
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "層の重なりは梨状筋の単位と肩と首の順序の単位の層の図が受け持ち、ここは本文の 1 文で足りる。",
+        "benefit": 1
+      }
+    ]
+  }
+]

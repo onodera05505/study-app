@@ -1,0 +1,80 @@
+{
+  "topic_id": 185,
+  "term": "リリースと切り戻し",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "上の段が少しずつ広げる道、下の段が戻す道です。戻す道は出す前に用意しておきます。",
+      "nodes": [
+        {
+          "id": "new",
+          "label": "新しいバージョン\n検証の環境で\n確かめ済み",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "part",
+          "label": "一部に公開\n利用者の 1 割だけ",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "watch",
+          "label": "見張る\nエラーの数・\n応答の時間",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "all",
+          "label": "全員に公開\n残りの 9 割へ",
+          "row": 0,
+          "col": 3
+        },
+        {
+          "id": "keep",
+          "label": "前のバージョン\n消さずに残す\n戻す手順は試し済み",
+          "row": 1,
+          "col": 1,
+          "shape": "cylinder"
+        },
+        {
+          "id": "back",
+          "label": "切り戻し\n前のバージョンへ\nすぐ戻す",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "new",
+          "to": "part",
+          "label": "まず 1 割へ"
+        },
+        {
+          "from": "part",
+          "to": "watch",
+          "label": "本番で動かす"
+        },
+        {
+          "from": "watch",
+          "to": "all",
+          "label": "エラーが増えない"
+        },
+        {
+          "from": "watch",
+          "to": "back",
+          "label": "エラーが増えた"
+        },
+        {
+          "from": "keep",
+          "to": "back",
+          "label": "すぐ使える",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

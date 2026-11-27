@@ -1,0 +1,25 @@
+{
+  "topic_id": 480,
+  "term": "オープンリダイレクトの悪用",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "explanation",
+      "caption": "上から時間の順です。利用者を偽サイトへ送り込むのは攻撃者ではなく、遷移先を確かめない正規サイトの機能です。",
+      "actors": [
+        {"id": "x", "label": "攻撃者", "icon": "warning"},
+        {"id": "u", "label": "利用者", "icon": "person"},
+        {"id": "g", "label": "正規サイト", "icon": "server"},
+        {"id": "f", "label": "偽サイト", "icon": "server"}
+      ],
+      "steps": [
+        {"from": "x", "to": "u", "label": "正規ドメインで始まる URL を送る", "note": "遷移先の欄に偽サイトを書き込んである"},
+        {"from": "u", "to": "g", "label": "本物のドメインなので開く"},
+        {"from": "g", "to": "u", "label": "遷移先へ転送する", "note": "遷移先が許可した宛先かを確かめない"},
+        {"from": "u", "to": "f", "label": "偽サイトを開き ID とパスワードを入力"},
+        {"from": "f", "to": "x", "label": "盗んだ ID とパスワード"}
+      ]
+    }
+  ]
+}

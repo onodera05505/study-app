@@ -1,0 +1,36 @@
+{
+  "topic_id": 103,
+  "term": "PDCA",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "### 4つの段階",
+      "caption": "4 つの段階を時計回りに回します。強調した評価で見えた差を改善の処置に回し、その処置が次の計画の入力になって輪が続きます。",
+      "center": "サービス\nマネジメントシステム",
+      "stages": [
+        {
+          "label": "Plan 計画\n仕組みと目標を定める",
+          "icon": "document",
+          "next_label": "定めた仕組みと目標"
+        },
+        {
+          "label": "Do 実行\n導入して運用する",
+          "icon": "gear",
+          "next_label": "運用の実績"
+        },
+        {
+          "label": "Check 評価\n監視・測定して報告する",
+          "icon": "search",
+          "next_label": "見えた差や不足",
+          "emphasis": true
+        },
+        {
+          "label": "Act 改善\n差を埋める処置をする",
+          "icon": "arrow-cycle",
+          "next_label": "次の計画への入力"
+        }
+      ]
+    }
+  ]
+}

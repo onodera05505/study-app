@@ -1,0 +1,151 @@
+{
+ "target": "ip",
+ "units": [
+  "03",
+  "06",
+  "22"
+ ],
+ "status": "done",
+ "items": [
+  {
+   "no": 202,
+   "topic_id": 263,
+   "type": "H",
+   "verdict": "fixed",
+   "rule": "rewrite_open_items.md「D の直し方」1〜3・「点の台帳の直し方」H、rewrite_materials_by_group.md の fate aside の定義",
+   "what": "台帳 06-6 の行は fate figure だが、今の図 1 は空調機の例で補充のルートの点は図にも本文にも無い（旧版の detail・旧図 1 にはあった）。点は 2023r05-q19（M2M を選ぶ）の正解を選ぶのにも定義・決め手にも要らない事例の先の使い道なので、本文は直さず台帳の行を aside に書き換えた（自動販売機の在庫を遠隔で把握する事例は explanation の箇条に残っている）。",
+   "questions_checked": [
+    "2023r05-q19"
+   ]
+  },
+  {
+   "no": 203,
+   "topic_id": 462,
+   "type": "B",
+   "verdict": "fixed",
+   "rule": "write_materials.md「他の論点との分担」の単元をまたぐ行、rewrite_open_items.md「B の直し方」1・2",
+   "what": "462（単元 03）の ### 混同しやすい用語 が後の単元 06 の BPR との比較を持っていた。462 から BPR の箇条を外し、### なぜ他社と比べるのか に 498 を指す 1 文を置いた。498 には比較が無かったので、498 の ### 混同しやすい用語 にベンチマーキングとの違いの箇条を移した（主語とつなぎの語だけ直した）。",
+   "questions_checked": [
+    "2019h31h-q10",
+    "2018h30a-q13"
+   ]
+  },
+  {
+   "no": 204,
+   "topic_id": 421,
+   "type": "B",
+   "verdict": "fixed",
+   "rule": "write_materials.md「他の論点との分担」の単元をまたぐ行、rewrite_open_items.md「B の直し方」1・2、write_materials.md「見出し」（項目も図も残らなければ節ごと消す）",
+   "what": "421（単元 06）の ### 混同しやすい用語 が後の単元 22 の RSS との比較だけを持っていた。箇条を 205 の ### 混同しやすい用語 へ移し（トラックバックは用語集に無いので「[[ブログ]]のトラックバック」とした）、421 は節が空になり図の after も指していないので節ごと消し、### 記事どうしがつながる仕組み に 205 を指す 1 文を置いた。2018h30h-q73 の誤答 RSS は問題解説の note が補う。",
+   "questions_checked": [
+    "2019r01a-q69",
+    "2018h30h-q73",
+    "2025r07-q64",
+    "2021r03-q93"
+   ]
+  }
+ ],
+ "edits": [
+  {
+   "file": "data/ip/materials_v4/03-1.json",
+   "topic_id": 462,
+   "field": "detail",
+   "op": "move",
+   "heading": "### 混同しやすい用語",
+   "before": "462 ### 混同しやすい用語: - **[[BPR（Business Process Reengineering）]]** — 業務のやり方を根本から設計し直す取組です。差を埋める手段として使うことはありますが、測って比べる活動そのものとは別です",
+   "after": "498 ### 混同しやすい用語: - **[[ベンチマーキング]]** — 優れた他社と測って比べ、差を見つける活動です。BPR は見えた差を埋める手段として使うことがありますが、測って比べる活動とは別です"
+  },
+  {
+   "file": "data/ip/materials_v4/03-1.json",
+   "topic_id": 462,
+   "field": "detail",
+   "op": "insert",
+   "heading": "### なぜ他社と比べるのか",
+   "before": "",
+   "after": "見えた差を埋める取組との違いは [[BPR（Business Process Reengineering）]] で説明します。"
+  },
+  {
+   "file": "data/ip/materials_v4/06-4.json",
+   "topic_id": 421,
+   "field": "detail",
+   "op": "move",
+   "heading": "### 混同しやすい用語",
+   "before": "421 ### 混同しやすい用語: - **[[RSS]]** — 更新が伝わる相手が違います。トラックバックは記事を書いた相手に届き、RSS は読み手が自分でまとめて受け取ります（節ごと消した）",
+   "after": "205 ### 混同しやすい用語: - **[[ブログ]]のトラックバック** — 更新が伝わる相手が違います。トラックバックは記事を書いた相手に届き、RSS は読み手が自分でまとめて受け取ります"
+  },
+  {
+   "file": "data/ip/materials_v4/06-4.json",
+   "topic_id": 421,
+   "field": "detail",
+   "op": "insert",
+   "heading": "### 記事どうしがつながる仕組み",
+   "before": "",
+   "after": "トラックバックと更新情報の配信との違いは [[RSS]] で説明します。"
+  }
+ ],
+ "owners": [],
+ "figure_after": [],
+ "ledgers": [
+  {
+   "file": "data/ip/rewrite_ledgers/03-1.json",
+   "topic_id": 462,
+   "point": "BPR は業務のやり方を根本から設計し直す取組で、差を埋める手段に使うことはあるが測って比べる活動とは別",
+   "before": {
+    "fate": "kept",
+    "where": "### 混同しやすい用語"
+   },
+   "after": {
+    "fate": "owner",
+    "where": "498"
+   }
+  },
+  {
+   "file": "data/ip/rewrite_ledgers/06-4.json",
+   "topic_id": 421,
+   "point": "RSS との違い: トラックバックは記事を書いた相手に届き、RSS は読み手が自分でまとめて受け取る",
+   "before": {
+    "fate": "kept",
+    "where": "### 混同しやすい用語"
+   },
+   "after": {
+    "fate": "owner",
+    "where": "205"
+   }
+  },
+  {
+   "file": "data/ip/rewrite_ledgers/06-6.json",
+   "topic_id": 263,
+   "point": "自動販売機は売れた商品と残数を送り続け、補充が必要な機体だけを回るルートを組める",
+   "before": {
+    "fate": "figure",
+    "where": "263 の図 1（空調機 A・B「室温と運転を測る」→「測った値を自動で送る」→サーバ「運転の強さを決める」→「新しい設定を返す」。自動販売機の例は explanation の要点の箇条）"
+   },
+   "after": {
+    "fate": "aside",
+    "where": "補充のルートを組むのは事例の先の使い道で、2023r05-q19 にも M2M の定義・決め手にも要らない周辺（自動販売機の在庫を遠隔で把握する事例は explanation の箇条）"
+   }
+  }
+ ],
+ "returned": [],
+ "noticed": [
+  {
+   "topic_id": 262,
+   "what": "unit_plans/06.json の owners に「BPR・BPM・BPMN の違い（改革・継続的な管理・図の記法）」（owner 262）という比較・使い分けの行がある。unit_plan.md の owners の決まり（比較は受け持ちに書かない）と合わないが、一覧に無いので触っていない"
+  },
+  {
+   "topic_id": 498,
+   "what": "498 の ### 混同しやすい用語 は BCM・BPMN の部分が箇条でなく文の形のまま（今回足したベンチマーキングの箇条と形が混ざる）。一覧に無いので触っていない"
+  }
+ ],
+ "gates": {
+  "check_materials": 0,
+  "check_material_style": 0,
+  "render_check": 0,
+  "check_explanations": 0,
+  "check_unit_plans": null
+ },
+ "chars": {
+  "before": 55929,
+  "after": 56002
+ }
+}

@@ -1,28 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="151" viewBox="0 0 652 154" role="img">
-<title>中間層を何層も深く重ねることで、着目すべき特徴を人が教えなくてもコンピュータ自身が見つけ出す。</title>
-<rect x="0.5" y="0.5" width="651" height="153" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="61" viewBox="0 0 1006 96">
+<rect x="0.5" y="0.5" width="1005" height="95" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <g transform="translate(20 20)">
-<polyline points="103,28 157,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="157,28 149,31.6 149,24.4" fill="#1f2937"/>
-<polyline points="253,28 300,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="300,28 292,31.6 292,24.4" fill="#1f2937"/>
-<polyline points="450,28 490,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="490,28 482,31.6 482,24.4" fill="#1f2937"/>
-<polyline points="551,56 551,78 55,78 55,56" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
-<polygon points="55,56 58.6,64 51.4,64" fill="#1f2937"/>
-<rect x="7" y="0" width="96" height="56" rx="28" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="55" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">入力層</text>
-<text x="55" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">画像データ</text>
-<rect x="157" y="5" width="96" height="46" rx="23" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="205" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">中間層1</text>
-<rect x="300" y="0" width="150" height="56" rx="28" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="375" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">中間層2</text>
-<text x="375" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">さらに何層も重ねる</text>
-<rect x="490" y="0" width="122" height="56" rx="28" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="551" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">出力層</text>
-<text x="551" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">犬か猫かを判定</text>
-<rect x="258.6" y="64" width="188" height="16" rx="3" fill="#ffffff"/>
-<text x="352.6" y="77.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">誤差を逆向きに伝えて重みを修正</text>
+<polyline points="150,28 286,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="286,28 278,31.6 278,24.4" fill="#1f2937"/>
+<polyline points="408,28 544,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="544,28 536,31.6 536,24.4" fill="#1f2937"/>
+<polyline points="694,28 830,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="830,28 822,31.6 822,24.4" fill="#1f2937"/>
+<rect x="0" y="0" width="150" height="56" rx="28" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="75" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">入力層</text>
+<text x="75" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">手書きの数字の画像</text>
+<rect x="286" y="0" width="122" height="56" rx="28" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="347" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">中間層1</text>
+<text x="347" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">細かな手がかり</text>
+<rect x="544" y="0" width="150" height="56" rx="28" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="619" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">中間層2〜</text>
+<text x="619" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">さらに何層も重ねる</text>
+<rect x="830" y="0" width="136" height="56" rx="28" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="898" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">出力層</text>
+<text x="898" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">どの数字かを判定</text>
+<rect x="160" y="11" width="116" height="16" rx="3" fill="#ffffff"/>
+<text x="218" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">重みを掛けて伝える</text>
+<rect x="412" y="11" width="128" height="16" rx="3" fill="#ffffff"/>
+<text x="476" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">特徴を自分で見つける</text>
+<rect x="704" y="11" width="116" height="16" rx="3" fill="#ffffff"/>
+<text x="762" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">見つけた特徴で判断</text>
 </g>
-<text x="326" y="134" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">中間層を何層も深く重ねることで、着目すべき特徴を人が教えなくてもコンピュータ自身が見つけ出す。</text>
 </svg>

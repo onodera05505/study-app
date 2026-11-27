@@ -5,19 +5,125 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 1つずれる誤りの見分け方",
-      "caption": "M＝3 では 3 を掛け終えた時点で n が M＋1＝4 に進んでいるので、抜ける条件は n＞M になる。",
+      "after": "### ループ端を判断記号に書き直す",
+      "caption": "N＝4 で 1 周ずつ追った図です。判断に来た時点の k は足し終えた値より 1 小さく、1 まで足して抜けるときの k は 0 です。",
       "nodes": [
-        {"id": "ini", "label": "x←1, n←1", "row": 0, "col": 0, "shape": "round"},
-        {"id": "bod", "label": "x←x×n（掛ける値 1, 2, 3）\nそのあと n←n＋1", "row": 1, "col": 0},
-        {"id": "jud", "label": "判断 a\nn＞M", "row": 1, "col": 1, "emphasis": true},
-        {"id": "end", "label": "終了\nx＝1×2×3＝6", "row": 0, "col": 1, "shape": "round"}
+        {
+          "id": "ini",
+          "label": "開始\ns←0, k←N, N＝4",
+          "row": 0,
+          "col": 0,
+          "shape": "round"
+        },
+        {
+          "id": "bod",
+          "label": "s←s＋k（足す値 4, 3, 2, 1）\nそのあと k←k−1",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "jud",
+          "label": "判断\n抜けるかどうか",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "end",
+          "label": "終了\ns＝4＋3＋2＋1＝10",
+          "row": 0,
+          "col": 1,
+          "shape": "round"
+        }
       ],
       "edges": [
-        {"from": "ini", "to": "bod"},
-        {"from": "bod", "to": "jud", "label": "判断時の n＝2 → 3 → 4"},
-        {"from": "jud", "to": "bod", "label": "No", "style": "dashed"},
-        {"from": "jud", "to": "end", "label": "Yes：n＝4＝M＋1"}
+        {
+          "from": "ini",
+          "to": "bod",
+          "label": "1 周目へ"
+        },
+        {
+          "from": "bod",
+          "to": "jud",
+          "label": "判断時の k＝3 → 2 → 1 → 0"
+        },
+        {
+          "from": "jud",
+          "to": "bod",
+          "label": "k＝3, 2, 1：もう 1 周",
+          "style": "dashed"
+        },
+        {
+          "from": "jud",
+          "to": "end",
+          "label": "k＝0 で抜ける"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 並列処理の同期（二重線）",
+      "caption": "上の二重線で流れが 2 つに分かれ、下の二重線で両方が終わるのを待ってから 1 本に戻ります。分かれた 2 つの処理は、どちらが先に終わってもかまいません。",
+      "nodes": [
+        {
+          "id": "fk",
+          "label": "上の二重線（分岐）\nここで 2 つの流れに分かれる",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "a",
+          "label": "処理 A\nB と並列に進む",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "b",
+          "label": "処理 B\nA と並列に進む",
+          "row": 1,
+          "col": 2
+        },
+        {
+          "id": "jn",
+          "label": "下の二重線（合流）\n両方そろうまで待つ",
+          "row": 2,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "nx",
+          "label": "次の処理\n1 本の流れに戻る",
+          "row": 3,
+          "col": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": "fk",
+          "to": "a",
+          "label": "同時に始める"
+        },
+        {
+          "from": "fk",
+          "to": "b",
+          "label": "同時に始める"
+        },
+        {
+          "from": "a",
+          "to": "jn",
+          "label": "A が終わる\n（先でも後でもよい）"
+        },
+        {
+          "from": "b",
+          "to": "jn",
+          "label": "B が終わる\n（先でも後でもよい）"
+        },
+        {
+          "from": "jn",
+          "to": "nx",
+          "label": "両方そろったら進む"
+        }
       ]
     }
   ]

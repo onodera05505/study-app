@@ -1,0 +1,245 @@
+{
+  "bundle": "expl_09",
+  "topics": [
+    {
+      "topic_id": 20,
+      "term": "関数の極限",
+      "field": "テクノロジ系",
+      "middle": "基礎理論",
+      "syllabus_item_name": "応用数学",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q4",
+          "content_key": "34b0284a1a6db97d",
+          "exam_label": "令和元年度 秋期",
+          "number": 4,
+          "stem": "a 及び b を定数とする関数 f(t)＝a/(t＋1) 及び g(t)＝b/(t^2－t) に対して，lim(t→∞) g(t)/f(t) はどれか。ここで，a ≠ 0，b ≠ 0，t ＞ 1 とする。",
+          "choices": {
+            "ア": "0",
+            "イ": "1",
+            "ウ": "b/a",
+            "エ": "∞"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 21,
+      "term": "教師あり学習 （回帰， 分類など）",
+      "field": "テクノロジ系",
+      "middle": "基礎理論",
+      "syllabus_item_name": "情報に関する理論",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q4",
+          "content_key": "355590392354b030",
+          "exam_label": "平成31年度 春期",
+          "number": 4,
+          "stem": "機械学習における教師あり学習の説明として，最も適切なものはどれか。",
+          "choices": {
+            "ア": "個々の行動に対しての善しあしを得点として与えることによって，得点が最も多く得られるような方策を学習する。",
+            "イ": "コンピュータ利用者の挙動データを蓄積し，挙動データの出現頻度に従って次の挙動を推論する。",
+            "ウ": "正解のデータを提示したり，データが誤りであることを指摘したりすることによって，未知のデータに対して正誤を得ることを助ける。",
+            "エ": "正解のデータを提示せずに，統計的性質や，ある種の条件によって入力パターンを判定したり，クラスタリングしたりする。"
+          },
+          "answer": "ウ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 22,
+      "term": "2 分探索木",
+      "field": "テクノロジ系",
+      "middle": "アルゴリズムとプログラミング",
+      "syllabus_item_name": "データ構造",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q5",
+          "content_key": "ae1558d6d27b1d83",
+          "exam_label": "平成31年度 春期",
+          "number": 5,
+          "stem": "2 分探索木として適切なものはどれか。ここで，数字 1 〜 9 は，各ノード（節）の値を表す。",
+          "choices": {
+            "ア": "根が 1 で，左の子が 2（その左の子が 4，右の子が 5），右の子が 3（その左の子が 6，右の子が 7）であり，6 の左の子が 8，右の子が 9 である木",
+            "イ": "根が 4 で，左の子が 2（その左の子が 1，右の子が 3），右の子が 8（その左の子が 6，右の子が 9）であり，6 の左の子が 5，右の子が 7 である木",
+            "ウ": "根が 7 で，左の子が 6（その左の子が 4，右の子が 5），右の子が 8（その左の子が 3，右の子が 9）であり，3 の左の子が 1，右の子が 2 である木",
+            "エ": "根が 9 で，左の子が 7（その左の子が 1，右の子が 2），右の子が 8（その左の子が 5，右の子が 6）であり，5 の左の子が 3，右の子が 4 である木"
+          },
+          "answer": "イ",
+          "has_figure": true,
+          "figure_description": "選択肢ア〜エはいずれも，丸で囲んだ数字をノードとし，線で親子を結んだ木の図。ノードの値と親子関係は次のとおり。\n\nア: 根 1 ／ 1 の左の子 2，右の子 3 ／ 2 の左の子 4，右の子 5 ／ 3 の左の子 6，右の子 7 ／ 6 の左の子 8，右の子 9\nイ: 根 4 ／ 4 の左の子 2，右の子 8 ／ 2 の左の子 1，右の子 3 ／ 8 の左の子 6，右の子 9 ／ 6 の左の子 5，右の子 7\nウ: 根 7 ／ 7 の左の子 6，右の子 8 ／ 6 の左の子 4，右の子 5 ／ 8 の左の子 3，右の子 9 ／ 3 の左の子 1，右の子 2\nエ: 根 9 ／ 9 の左の子 7，右の子 8 ／ 7 の左の子 1，右の子 2 ／ 8 の左の子 5，右の子 6 ／ 5 の左の子 3，右の子 4",
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 24,
+      "term": "多次元配列",
+      "field": "テクノロジ系",
+      "middle": "アルゴリズムとプログラミング",
+      "syllabus_item_name": "データ構造",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q9",
+          "content_key": "9cc96f6d90a7bc6b",
+          "exam_label": "令和元年度 秋期",
+          "number": 9,
+          "stem": "配列 A が図2 の状態のとき，図1 の流れ図を実行すると，配列 B が図3 の状態になった。図1 の a に入れる操作はどれか。ここで，配列 A，B の要素をそれぞれ A(i, j)，B(i, j) とする。",
+          "choices": {
+            "ア": "B(7－i, 7－j) ← A(i, j)",
+            "イ": "B(7－j, i) ← A(i, j)",
+            "ウ": "B(i, 7－j) ← A(i, j)",
+            "エ": "B(j, 7－i) ← A(i, j)"
+          },
+          "answer": "エ",
+          "has_figure": true,
+          "figure_description": "図1 流れ図。上から順に次の記号が縦一列に並び，線で結ばれている。\n\n- 端子「開始」\n- ループ始端「ループ1」「i：0，1，7（注）」\n- ループ始端「ループ2」「j：0，1，7（注）」\n- 二重線の長方形（定義済み処理）「a」\n- ループ終端「ループ2」\n- ループ終端「ループ1」\n- 端子「終了」\n\n（注）ループ端の繰返し指定は，変数名：初期値，増分，終値 を示す。\n\n図2 配列 A の状態。8 行 8 列のます目で，行の見出し i が上から 0〜7，列の見出し j が左から 0〜7。j の見出しの上に右向きの矢印と j，i の見出しの左に下向きの矢印と i が付いている。＊の入っているます目は次のとおり（記載の無います目は空欄）。\n\n| i＼j | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| 0 |  | ＊ | ＊ | ＊ | ＊ | ＊ | ＊ |  |\n| 1 |  | ＊ |  |  |  |  |  |  |\n| 2 |  | ＊ |  |  |  |  |  |  |\n| 3 |  | ＊ | ＊ | ＊ | ＊ |  |  |  |\n| 4 |  | ＊ |  |  |  |  |  |  |\n| 5 |  | ＊ |  |  |  |  |  |  |\n| 6 |  | ＊ |  |  |  |  |  |  |\n| 7 |  | ＊ |  |  |  |  |  |  |\n\n図3 実行後の配列 B の状態。図2 と同じ形式の 8 行 8 列のます目。\n\n| i＼j | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| 0 |  |  |  |  |  |  |  |  |\n| 1 | ＊ | ＊ | ＊ | ＊ | ＊ | ＊ | ＊ | ＊ |\n| 2 |  |  |  |  | ＊ |  |  | ＊ |\n| 3 |  |  |  |  | ＊ |  |  | ＊ |\n| 4 |  |  |  |  | ＊ |  |  | ＊ |\n| 5 |  |  |  |  |  |  |  | ＊ |\n| 6 |  |  |  |  |  |  |  | ＊ |\n| 7 |  |  |  |  |  |  |  |  |",
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 25,
+      "term": "Ajax",
+      "field": "テクノロジ系",
+      "middle": "アルゴリズムとプログラミング",
+      "syllabus_item_name": "プログラミング",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q50",
+          "content_key": "a542f8597e248c12",
+          "exam_label": "平成31年度 春期",
+          "number": 50,
+          "stem": "JavaScript の非同期通信の機能を使うことによって，動的なユーザインタフェースを画面全体の遷移を伴わずに実現する技術はどれか。",
+          "choices": {
+            "ア": "Ajax",
+            "イ": "CSS",
+            "ウ": "RSS",
+            "エ": "SNS"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 26,
+      "term": "BNF",
+      "field": "テクノロジ系",
+      "middle": "アルゴリズムとプログラミング",
+      "syllabus_item_name": "プログラム言語",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q7",
+          "content_key": "1161e0e98995f963",
+          "exam_label": "令和元年度 秋期",
+          "number": 7,
+          "stem": "次の BNF で定義される ＜変数名＞ に合致するものはどれか。",
+          "choices": {
+            "ア": "_B39",
+            "イ": "246",
+            "ウ": "3E5",
+            "エ": "F5_1"
+          },
+          "answer": "エ",
+          "has_figure": true,
+          "figure_description": "BNF による構文定義が 4 行の別行立てで示されている。\n\n＜数字＞ ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9\n＜英字＞ ::= A | B | C | D | E | F\n＜英数字＞ ::= ＜英字＞ | ＜数字＞ | _\n＜変数名＞ ::= ＜英字＞ | ＜変数名＞＜英数字＞",
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 27,
+      "term": "アクティビティ図",
+      "field": "テクノロジ系",
+      "middle": "アルゴリズムとプログラミング",
+      "syllabus_item_name": "その他の言語",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019h31h-q46",
+          "content_key": "d9407690793a74e4",
+          "exam_label": "平成31年度 春期",
+          "number": 46,
+          "stem": "UML における振る舞い図の説明のうち，アクティビティ図のものはどれか。",
+          "choices": {
+            "ア": "ある振る舞いから次の振る舞いへの制御の流れを表現する。",
+            "イ": "オブジェクト間の相互作用を時系列で表現する。",
+            "ウ": "システムが外部に提供する機能と，それを利用する者や外部システムとの関係を表現する。",
+            "エ": "一つのオブジェクトの状態がイベントの発生や時間の経過とともにどのように変化するかを表現する。"
+          },
+          "answer": "ア",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    },
+    {
+      "topic_id": 28,
+      "term": "CPI（Cycles Per Instruction）",
+      "field": "テクノロジ系",
+      "middle": "コンピュータ構成要素",
+      "syllabus_item_name": "プロセッサ",
+      "question_count": 1,
+      "explanation": null,
+      "detail": null,
+      "questions": [
+        {
+          "question_id": "2019r01a-q12",
+          "content_key": "0a1cc64c0b1bbc4a",
+          "exam_label": "令和元年度 秋期",
+          "number": 12,
+          "stem": "1 GHz のクロックで動作する CPU がある。この CPU は，機械語の 1 命令を平均 0.8 クロックで実行できることが分かっている。この CPU は 1 秒間に平均何万命令を実行できるか。",
+          "choices": {
+            "ア": "125",
+            "イ": "250",
+            "ウ": "80,000",
+            "エ": "125,000"
+          },
+          "answer": "エ",
+          "has_figure": false,
+          "figure_description": null,
+          "times_asked": 1,
+          "other_question_ids": []
+        }
+      ]
+    }
+  ]
+}

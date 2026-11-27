@@ -1,0 +1,99 @@
+{
+  "topic_id": 263,
+  "term": "M2M（Machine to Machine）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 人が入らずに回るしくみ",
+      "caption": "機器が測った値を自動でサーバへ送り、サーバの判断が機器へ戻ります。往き来の中に人の箱が無く、機械どうしで閉じています。",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "空調機 A\n室温と運転を測る",
+          "row": 0,
+          "col": 0,
+          "icon": "box"
+        },
+        {
+          "id": "b",
+          "label": "空調機 B\n室温と運転を測る",
+          "row": 0,
+          "col": 2,
+          "icon": "box"
+        },
+        {
+          "id": "s",
+          "label": "サーバ\n運転の強さを決める",
+          "row": 0,
+          "col": 1,
+          "emphasis": true,
+          "icon": "server"
+        }
+      ],
+      "edges": [
+        {
+          "from": "a",
+          "to": "s",
+          "label": "測った値を自動で送る"
+        },
+        {
+          "from": "b",
+          "to": "s",
+          "label": "測った値を自動で送る"
+        },
+        {
+          "from": "s",
+          "to": "a",
+          "label": "新しい設定を返す",
+          "style": "dashed"
+        },
+        {
+          "from": "s",
+          "to": "b",
+          "label": "新しい設定を返す",
+          "style": "dashed"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "venn",
+      "after": "### IoT との違い",
+      "caption": "IoT と M2M の範囲の重なりを示す図です。M2M にはインターネットを使わない部分があり、IoT に含まれきりません。",
+      "layout": "overlap",
+      "sets": [
+        {
+          "id": "i",
+          "label": "IoT"
+        },
+        {
+          "id": "m",
+          "label": "M2M"
+        }
+      ],
+      "regions": [
+        {
+          "in": [
+            "i"
+          ],
+          "label": "IoT だけ\n集めたデータを\n人が分析して活かす"
+        },
+        {
+          "in": [
+            "i",
+            "m"
+          ],
+          "label": "両方\nネット越しの\n機械どうしの自動化",
+          "emphasis": true
+        },
+        {
+          "in": [
+            "m"
+          ],
+          "label": "M2M だけ\n閉じた網での\n機器間通信"
+        }
+      ]
+    }
+  ]
+}

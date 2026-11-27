@@ -3,83 +3,31 @@
   "term": "WBS（Work Breakdown Structure）",
   "figures": [
     {
-      "id": 1,
-      "type": "blocks",
-      "after": "### 作業を洗い出すための道具",
-      "caption": "上から段階的に分解し、最下位のワークパッケージが担当者と工数を割り当てられる単位になる。日程や順序は書かない。",
-      "nodes": [
+      "id": 2,
+      "type": "steps",
+      "after": "explanation",
+      "direction": "down",
+      "caption": "WBS は上の段から下の段へ分解を進めます。強調した最下位の段がワークパッケージで、ここに担当と工数を割り当てます。",
+      "stages": [
         {
-          "id": "root",
-          "label": "販売管理システムの導入",
-          "row": 0,
-          "col": 1
+          "label": "プロジェクト全体\nやると決めた範囲",
+          "icon": "building",
+          "next_label": "成果物の単位で分ける"
         },
         {
-          "id": "yo",
-          "label": "要件定義",
-          "row": 1,
-          "col": 0
+          "label": "成果物\n作る物ごとに分ける",
+          "icon": "box",
+          "next_label": "作業へ分ける"
         },
         {
-          "id": "kai",
-          "label": "設計・開発",
-          "row": 1,
-          "col": 1
+          "label": "作業\n作るためにすること",
+          "icon": "gear",
+          "next_label": "割り当てられる\n大きさまで分ける"
         },
         {
-          "id": "ikou",
-          "label": "移行・教育",
-          "row": 1,
-          "col": 2
-        },
-        {
-          "id": "w1",
-          "label": "画面を設計する",
-          "row": 2,
-          "col": 0,
+          "label": "ワークパッケージ\n分解の最下位の単位\n担当と工数を割り当てる",
+          "icon": "person",
           "emphasis": true
-        },
-        {
-          "id": "w2",
-          "label": "プログラムを作る",
-          "row": 2,
-          "col": 1,
-          "emphasis": true
-        },
-        {
-          "id": "note",
-          "label": "ワークパッケージ\n担当者と工数を割り当てる",
-          "row": 2,
-          "col": 2,
-          "shape": "round"
-        }
-      ],
-      "edges": [
-        {
-          "from": "root",
-          "to": "yo"
-        },
-        {
-          "from": "root",
-          "to": "kai"
-        },
-        {
-          "from": "root",
-          "to": "ikou"
-        },
-        {
-          "from": "kai",
-          "to": "w1"
-        },
-        {
-          "from": "kai",
-          "to": "w2"
-        },
-        {
-          "from": "w2",
-          "to": "note",
-          "style": "dashed",
-          "arrow": "none"
         }
       ]
     }

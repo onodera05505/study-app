@@ -4,31 +4,68 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
+      "type": "matrix",
       "after": "### 数え上げの手順",
-      "caption": "最初に出す要素で場合分けすると 2＋2＋1＝5 通り。C の次は頂上の B しか出せないので C A B は作れない。",
-      "nodes": [
-        {"id": "root", "label": "入力は A → B → C\n出す時点は自由", "row": 0, "col": 2},
-        {"id": "fa", "label": "最初に A", "row": 1, "col": 0},
-        {"id": "fb", "label": "最初に B", "row": 1, "col": 2},
-        {"id": "fc", "label": "最初に C", "row": 1, "col": 4},
-        {"id": "o1", "label": "A B C", "row": 2, "col": 0},
-        {"id": "o2", "label": "A C B", "row": 2, "col": 1},
-        {"id": "o3", "label": "B A C", "row": 2, "col": 2},
-        {"id": "o4", "label": "B C A", "row": 2, "col": 3},
-        {"id": "o5", "label": "C B A", "row": 2, "col": 4},
-        {"id": "ng", "label": "C A B は不可\nC の下は B", "row": 2, "col": 5, "emphasis": true}
+      "caption": "入力が A、B、C、D の順のとき、行が最初に出す要素です。その時点でスタックの頂上より下にある要素は、上の要素が出るまで出せません。",
+      "x": {
+        "label": "最初の 1 つを出した直後",
+        "values": [
+          "スタックの中",
+          "まだ入力していない",
+          "次に出せる"
+        ]
+      },
+      "y": {
+        "label": "最初に出す",
+        "values": [
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      "cells": [
+        [
+          "A だけ\n頂上は A",
+          "C と D",
+          "A・C・D の\nどれでも"
+        ],
+        [
+          "下に A、頂上 B",
+          "D",
+          "B か D\nA は出せない"
+        ],
+        [
+          "下から A・B・C\n頂上は C",
+          "なし",
+          "C だけ\n以降は C→B→A"
+        ]
       ],
-      "edges": [
-        {"from": "root", "to": "fa"},
-        {"from": "root", "to": "fb"},
-        {"from": "root", "to": "fc"},
-        {"from": "fa", "to": "o1"},
-        {"from": "fa", "to": "o2"},
-        {"from": "fb", "to": "o3"},
-        {"from": "fb", "to": "o4"},
-        {"from": "fc", "to": "o5"},
-        {"from": "fc", "to": "ng", "style": "dashed", "arrow": "none"}
+      "emphasis": [
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "id": 2,
+      "type": "layers",
+      "after": "explanation",
+      "shape": "stack",
+      "caption": "A、B、C の順に入れると下から積み上がり、出し入れは一番上の頂上でだけ行います。最後に入れた C が最初に出て、最初に入れた A が最後に出ます。",
+      "layers": [
+        {
+          "label": "C（3 番目に入れた）\n頂上：最初に出る",
+          "note": "プッシュもポップもここだけ",
+          "emphasis": true
+        },
+        {
+          "label": "B（2 番目に入れた）\nC が出たあとに出る"
+        },
+        {
+          "label": "A（最初に入れた）\n最後に出る",
+          "note": "上の B と C が出るまで出せない"
+        }
       ]
     }
   ]

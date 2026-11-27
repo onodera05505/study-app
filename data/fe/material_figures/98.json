@@ -1,0 +1,18 @@
+{
+  "topic_id": 98,
+  "term": "XP（エクストリームプログラミング）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "### テストを先に書く理由",
+      "caption": "輪は真上のテストを書く段から始まり、時計回りに回ります。コードより先にテストがあり、整えては次の機能へ進む繰り返しを示します。",
+      "center": "テスト駆動\n開発",
+      "stages": [
+        {"label": "テストを書く\nまだ通らない", "icon": "check", "next_label": "完成の条件が決まる", "emphasis": true},
+        {"label": "コードを書く\nテストを通す", "icon": "device", "next_label": "テストが通る"},
+        {"label": "リファクタリング\n動きを変えずに整える", "icon": "gear", "next_label": "次の機能へ"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,370 @@
+{
+ "exam": "2019h31h",
+ "range": "55-80",
+ "classifications": [
+  {
+   "number": 55,
+   "syllabus_item": 66,
+   "topic_term": "ベンチマーキング（サービスマネジメント）",
+   "topic_is_new": true,
+   "related_terms": [
+    "継続的改善",
+    "ギャップ分析",
+    "ベストプラクティス",
+    "BSC（Balanced Scorecard：バランススコアカード）"
+   ],
+   "confidence": "medium",
+   "notes": "サービスマネジメントのプロセス改善でのベンチマーキング。項目78（ストラテジ系・経営戦略手法）に用語例『ベンチマーキング』があるが、公式分野はマネジメント系なので分野をまたいで合流させないため括弧付きで別論点に起こした。項目は改善のプロセスなので66を選んだ。"
+  },
+  {
+   "number": 56,
+   "syllabus_item": 65,
+   "topic_term": "移行テスト",
+   "topic_is_new": true,
+   "related_terms": [
+    "業務及びシステムの移行",
+    "移行計画",
+    "移行リハーサル",
+    "運用テスト"
+   ],
+   "confidence": "high",
+   "notes": "用語例は『移行』『移行リハーサル』『運用テスト』までで、移行テストそのものは無いので新設。テクノロジ系の項目46（テストの種類）は公式分野と矛盾するため選べない。"
+  },
+  {
+   "number": 57,
+   "syllabus_item": 67,
+   "topic_term": "ロールフォワード",
+   "topic_is_new": true,
+   "related_terms": [
+    "バックアップ",
+    "ジョブの復旧と再実行",
+    "復旧",
+    "ロールバック （切り戻し）"
+   ],
+   "confidence": "medium",
+   "notes": "公式分野がマネジメント系なので、用語例『フォワードリカバリ （ロールフォワード）』を持つ項目31（テクノロジ系・トランザクション処理）は選べない。運用のバックアップと復旧として項目67に置いたが、項目65（復旧・サービス継続計画）に寄せる余地もある。テクノロジ系で同じ主題が出た場合は項目31の表記が別論点になる。"
+  },
+  {
+   "number": 58,
+   "syllabus_item": 69,
+   "topic_term": "監査証拠の入手と評価",
+   "topic_is_new": false,
+   "related_terms": [
+    "代表的なシステム監査技法",
+    "監査手続の適用",
+    "監査調書の作成と保管",
+    "監査人の倫理"
+   ],
+   "confidence": "medium",
+   "notes": "インタビュー時の行動を問う問題。正解が『裏付けの文書や記録を入手する』なので監査証拠を論点にしたが、『代表的なシステム監査技法』（インタビュー法）を論点にする選択もあり得る。"
+  },
+  {
+   "number": 59,
+   "syllabus_item": 69,
+   "topic_term": "監査の独立性と客観性の保持",
+   "topic_is_new": false,
+   "related_terms": [
+    "内部監査",
+    "監査人の倫理",
+    "システム監査人の権限と責任等",
+    "内部監査規程"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 60,
+   "syllabus_item": 69,
+   "topic_term": "情報セキュリティ管理基準",
+   "topic_is_new": false,
+   "related_terms": [
+    "指摘事項",
+    "システム監査報告書",
+    "事業継続計画（BCP）",
+    "システム監査上の判断尺度"
+   ],
+   "confidence": "medium",
+   "notes": "バックアップ媒体の保管場所を“情報セキュリティ管理基準”に照らして指摘する問題。判断尺度となる基準を論点にしたが、『指摘事項』を論点にする選択もあり得る。"
+  },
+  {
+   "number": 61,
+   "syllabus_item": 71,
+   "topic_term": "エンタープライズアーキテクチャ",
+   "topic_is_new": true,
+   "related_terms": [
+    "業務・システム最適化",
+    "ザックマンフレームワーク",
+    "業務モデル",
+    "情報システムモデル"
+   ],
+   "confidence": "high",
+   "notes": "EA の 4 体系（ビジネス／データ／アプリケーション／テクノロジ）のうちアプリケーションアーキテクチャを問う。用語例に EA そのものは無いが、ザックマンフレームワーク・業務・システム最適化を持つ項目71が住所。個別の体系名ではなく EA を論点にして粒度を揃えた。"
+  },
+  {
+   "number": 62,
+   "syllabus_item": 73,
+   "topic_term": "オンデマンドサービス",
+   "topic_is_new": true,
+   "related_terms": [
+    "クラウドサービス（SaaS，PaaS，IaaS など）",
+    "ASP",
+    "ビデオオンデマンド",
+    "サブスクリプションモデル"
+   ],
+   "confidence": "medium",
+   "notes": "利用者の要求に応じて提供されるサービス形態。用語例『ビデオオンデマンド』は項目27（テクノロジ系）で分野が合わないため新設した。提供形態としてソリューションビジネス（73）に置いたが、項目86（e-ビジネス）に寄せる余地もある。"
+  },
+  {
+   "number": 63,
+   "syllabus_item": 90,
+   "topic_term": "BI（Business Intelligence）",
+   "topic_is_new": false,
+   "related_terms": [
+    "データマイニング",
+    "ビッグデータ",
+    "データレイク",
+    "テキストマイニング"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 64,
+   "syllabus_item": 90,
+   "topic_term": "ビッグデータ",
+   "topic_is_new": false,
+   "related_terms": [
+    "人の行動ログデータ",
+    "パーソナルデータ",
+    "データマイニング",
+    "BI（Business Intelligence）"
+   ],
+   "confidence": "high",
+   "notes": "分析結果のフィードバック先（顧客全体／顧客個々）と反映タイミング（一定期間ごと／即時）で活用事例を分類させる問題。"
+  },
+  {
+   "number": 65,
+   "syllabus_item": 75,
+   "topic_term": "ROI（Return On Investment：投資利益率）",
+   "topic_is_new": true,
+   "related_terms": [
+    "開発投資対効果",
+    "IT ポートフォリオ",
+    "経済性計算",
+    "IT 投資マネジメント"
+   ],
+   "confidence": "medium",
+   "notes": "5 年間の利益合計 ÷ 投資額で比較する計算問題。用語例に ROI が無いので新設。投資評価として項目75（開発投資対効果）に置いたが、項目91（会計・財務の経済性計算）や項目71（IT 投資マネジメント）に寄せる余地もある。"
+  },
+  {
+   "number": 66,
+   "syllabus_item": 76,
+   "topic_term": "非機能要件（要件定義）",
+   "topic_is_new": true,
+   "related_terms": [
+    "要求仕様書",
+    "現状分析",
+    "課題定義",
+    "ユーザーニーズ調査"
+   ],
+   "confidence": "medium",
+   "notes": "経営要件・業務要件・機能要件・非機能要件の区別を問う。用語例『非機能要件』は項目43・44（テクノロジ系）と項目65（マネジメント系）にあり、公式分野がストラテジ系なのでそれらには合流させられない。分野をまたいだ統合を避けるため括弧付きで別論点に起こした。"
+  },
+  {
+   "number": 67,
+   "syllabus_item": 78,
+   "topic_term": "コアコンピタンス",
+   "topic_is_new": false,
+   "related_terms": [
+    "競争優位",
+    "ベンチマーキング",
+    "BPR（Business Process Reengineering ）",
+    "ERP（Enterprise Resource Planning：企業資源計画）"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 68,
+   "syllabus_item": 78,
+   "topic_term": "ニッチ戦略",
+   "topic_is_new": true,
+   "related_terms": [
+    "基本戦略（コストリーダーシップ戦略，差別化戦略，集中戦略）",
+    "同質化戦略",
+    "競争優位",
+    "ブルーオーシャン戦略"
+   ],
+   "confidence": "high",
+   "notes": "コトラーの競争地位別戦略（リーダ／チャレンジャ／フォロワ／ニッチャ）を問う。用語例に無いので新設。比較対象の3戦略は周辺知識に置いた。"
+  },
+  {
+   "number": 69,
+   "syllabus_item": 79,
+   "topic_term": "コンバージョン率",
+   "topic_is_new": false,
+   "related_terms": [
+    "CVR（Conversion Rate：顧客転換率）",
+    "LPO（Landing Page Optimization：ランディングページ最適化）",
+    "バナー広告",
+    "A/B テスト"
+   ],
+   "confidence": "high",
+   "notes": "項目79には『コンバージョン率』と『CVR（Conversion Rate：顧客転換率）』が別エントリで載っている。正解の表記に合わせて前者を論点にし、後者は周辺知識に置いた。"
+  },
+  {
+   "number": 70,
+   "syllabus_item": 82,
+   "topic_term": "プロセスイノベーション",
+   "topic_is_new": true,
+   "related_terms": [
+    "プロダクトイノベーション",
+    "オープンイノベーション",
+    "イノベーションのジレンマ",
+    "MOT（Management of Technology ：技術経営）"
+   ],
+   "confidence": "medium",
+   "notes": "製造工程の革新を指す。用語例に無いので新設。技術開発戦略（82）に置いたが、項目78の用語例『イノベーション』に寄せる余地もある。"
+  },
+  {
+   "number": 71,
+   "syllabus_item": 87,
+   "topic_term": "HEMS（Home Energy Management System）",
+   "topic_is_new": false,
+   "related_terms": [
+    "IoT（Internet of Things）",
+    "情報家電",
+    "ホームネットワーク",
+    "スマートグリッド"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 72,
+   "syllabus_item": 86,
+   "topic_term": "CGM（Consumer Generated Media：消費者生成メディア）",
+   "topic_is_new": false,
+   "related_terms": [
+    "SNS",
+    "ブログ",
+    "IR（Investor Relations）",
+    "電子掲示板"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 73,
+   "syllabus_item": 86,
+   "topic_term": "シェアリングエコノミー",
+   "topic_is_new": false,
+   "related_terms": [
+    "CtoC（Consumer to Consumer ）",
+    "クラウドソーシング",
+    "OtoO（Online toOffline）",
+    "SNS"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 74,
+   "syllabus_item": 79,
+   "topic_term": "デジタルサイネージ",
+   "topic_is_new": false,
+   "related_terms": [
+    "インターネット広告",
+    "デジタルディバイド",
+    "販売促進",
+    "電子透かし"
+   ],
+   "confidence": "high",
+   "notes": "問題文の表記は『ディジタルサイネージ』だが、用語例の表記『デジタルサイネージ』をそのまま論点にした。"
+  },
+  {
+   "number": 75,
+   "syllabus_item": 89,
+   "topic_term": "企業の社会的責任（CSR：Corporate Social Responsibility）",
+   "topic_is_new": false,
+   "related_terms": [
+    "グリーン IT",
+    "カーボンフットプリント",
+    "IR（Investor Relations）",
+    "CSR 報告書"
+   ],
+   "confidence": "high",
+   "notes": "正解はグリーン購入だが、問題が主題にしているのは社会的責任の施策の切り分けなので CSR を論点にした。"
+  },
+  {
+   "number": 76,
+   "syllabus_item": 89,
+   "topic_term": "カンパニー制組織",
+   "topic_is_new": false,
+   "related_terms": [
+    "事業部制組織",
+    "マトリックス組織",
+    "プロジェクト組織",
+    "M&A（Mergers and Acquisitions）"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 77,
+   "syllabus_item": 90,
+   "topic_term": "特性要因図",
+   "topic_is_new": true,
+   "related_terms": [
+    "パレート分析",
+    "品質特性",
+    "ロジックツリー",
+    "ブレーンストーミング"
+   ],
+   "confidence": "high",
+   "notes": "QC 七つ道具の一つ。用語例に無いので新設。原因と結果の関係を魚の骨で表す図で、項目90（業務分析・データ利活用）に置いた。"
+  },
+  {
+   "number": 78,
+   "syllabus_item": 91,
+   "topic_term": "機会損失",
+   "topic_is_new": false,
+   "related_terms": [
+    "安全在庫",
+    "EOQ（Economic Ordering Quantity：経済的発注量）",
+    "在庫管理",
+    "経済性計算"
+   ],
+   "confidence": "high",
+   "notes": "需要数が仕入数を上回った分の利益を失った額を求める計算問題。"
+  },
+  {
+   "number": 79,
+   "syllabus_item": 92,
+   "topic_term": "著作者人格権（公表権，氏名表示権，同一性保持権）",
+   "topic_is_new": false,
+   "related_terms": [
+    "著作財産権（複製権，公衆送信権， 頒布権， 譲渡権， 貸与権）",
+    "著作権",
+    "送信可能化",
+    "二次的著作物"
+   ],
+   "confidence": "high",
+   "notes": null
+  },
+  {
+   "number": 80,
+   "syllabus_item": 96,
+   "topic_term": "IETF（Internet Engineering Task Force：インターネット技術タスクフォース）",
+   "topic_is_new": false,
+   "related_terms": [
+    "ANSI（America National Standards Institute：米国規格協会）",
+    "IEEE（Institute ofElectrical and Electronics Engineers：電気電子学会）",
+    "W3C（World Wide Web Consortium ：ワールドワイドウェブコンソシアム）",
+    "デジュレスタンダード"
+   ],
+   "confidence": "high",
+   "notes": null
+  }
+ ]
+}

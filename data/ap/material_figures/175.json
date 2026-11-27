@@ -1,0 +1,25 @@
+{
+  "topic_id": 175,
+  "term": "マルチキャスト",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 1 回の送信で済む理由",
+      "caption": "送信元はグループ宛てに 1 回だけ送り、強調したルータが受け手のいる方向へ複製します。グループに参加していない機器には届きません。",
+      "nodes": [
+        {"id": "src", "label": "送信元\n同じデータを 1 回送る", "row": 1, "col": 0, "icon": "server"},
+        {"id": "r", "label": "ルータ\n必要な方向へ複製する", "row": 1, "col": 1, "emphasis": true},
+        {"id": "a", "label": "受信機 A\nグループに参加", "row": 0, "col": 2, "icon": "device"},
+        {"id": "b", "label": "受信機 B\nグループに参加", "row": 1, "col": 2, "icon": "device"},
+        {"id": "c", "label": "機器 C\nグループに不参加", "row": 2, "col": 2, "icon": "device"}
+      ],
+      "edges": [
+        {"from": "src", "to": "r", "label": "1 回だけ送る\n（宛先はクラス D）"},
+        {"from": "r", "to": "a", "label": "複製して届ける"},
+        {"from": "r", "to": "b", "label": "複製して届ける"},
+        {"from": "r", "to": "c", "label": "届かない", "style": "dashed", "arrow": "none"}
+      ]
+    }
+  ]
+}

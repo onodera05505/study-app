@@ -1,0 +1,62 @@
+{
+  "topic_id": 115,
+  "term": "E-R 図",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "左の列が E-R 図で、右の列がそこから作る表です。箱 1 つが表 1 つになり、1 対多の線は多の側の外部キーになります。",
+      "nodes": [
+        {
+          "id": "cu",
+          "label": "顧客\nエンティティ（もの）",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "od",
+          "label": "注文\nエンティティ（もの）",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "tcu",
+          "label": "顧客の表\n顧客番号、氏名、住所",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "tod",
+          "label": "注文の表\n注文番号、注文日\n顧客番号（外部キー）",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "cu",
+          "to": "od",
+          "label": "つながり 注文する（1 人に何件も）",
+          "arrow": "none"
+        },
+        {
+          "from": "cu",
+          "to": "tcu",
+          "label": "表 1 つになる"
+        },
+        {
+          "from": "od",
+          "to": "tod",
+          "label": "表 1 つになる"
+        },
+        {
+          "from": "tod",
+          "to": "tcu",
+          "label": "顧客番号で指す"
+        }
+      ]
+    }
+  ]
+}

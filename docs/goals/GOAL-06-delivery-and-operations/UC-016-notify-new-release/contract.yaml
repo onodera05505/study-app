@@ -1,0 +1,63 @@
+# UC-016 配信した新しい版を、開いたままの画面に知らせる — 境界の形だけ（振る舞いの正本は ./UC.md と同じ場所の REQ-224〜236・351・352・676）
+# 読み方の決まりは docs/adr/ADR-0001（決め 4: 配信物の版の印を画面が取りに行くのは http・outbound・owned・auth none。
+# 配信の手続きが印を書き出す側と配備の道具を呼ぶ側は operation にしない＝ REQ-224・225・226・351・352 はここに形を持たない。決め 3: メモリ上の記憶は境界でない）
+# 共有語彙（errorCodes・共有の形）は ../../../_shared/components.yaml
+# この UC がプロセスの外に出るのは版の印を取りに行く 1 回だけ。最初の印の保持・見比べの間隔・知らせの出し入れ・読み直しは
+# 同じプロセスの中なので operation にしない（REQ-227〜236 の見比べ以降はここに形を持たない）
+x-uc: UC-016
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-26
+
+operations:
+  fetchVersionStamp:
+    transport: http
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 自分の配備の配信物から版の印を取りに行く。取れない・形が合わないときは印が無いものとして返す
+    wire:
+      method: GET
+      path: /version.json
+      success: 200
+    response:
+      type: object
+      required: [versionStamp]
+      properties:
+        versionStamp:
+          type: [object, "null"]
+          description: 配信物に置かれた版の印。取れない・形が合わないときは null（失敗を畳むので呼び出し元に失敗が見えない）
+          required: [build]
+          properties:
+            build: { type: string, minLength: 1, description: 版を見分ける値。string でないときは印が無いものとして扱う }
+            at: { type: string, minLength: 1, description: 配信の時点。無くても印は成り立つ }
+    errors: []
+    examples:
+      ok:
+        response: { versionStamp: { build: c1ffde6 } }
+      noStamp:
+        response: { versionStamp: null }
+      unreachable:
+        response: { versionStamp: null }
+
+  deployPortal:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: まなびばの配備の手続き。向け先とログイン中の配備先のアカウントを照らし、合えば組み立ててから本番に配信する（入口は scripts/deploy_portal.sh）
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        setup: { type: boolean, description: --setup を渡す }
+    response:
+      type: object
+      required: [exitCode]
+      properties:
+        exitCode: { type: integer, enum: [0, 1], description: プロセスの終了コード。1 は配信しないまま止まった }
+    errors: []
+    examples:
+      ok: { request: {}, response: { exitCode: 0 } }
+      envAccountDiffersWithoutPinnedTool: { request: {}, response: { exitCode: 1 } }
+      pinnedToolMissing: { request: {}, response: { exitCode: 1 } }

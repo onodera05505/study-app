@@ -1,16 +1,52 @@
+import { touchStorage } from './storage'
+
 const TOKEN_KEY = 'study-app.token'
 
+/** 端末の記憶にあるトークン。無いか、端末の記憶が使えず読めなければ null（トークンが無い扱い）。 */
+// @implements REQ-190, REQ-195, REQ-575
+// @operation UC-013#readToken
 export function getToken(): string | null {
-  return localStorage.getItem(TOKEN_KEY)
+  try {
+    return localStorage.getItem(TOKEN_KEY)
+  } catch {
+    return null
+  }
 }
-export function setToken(token: string) {
-  localStorage.setItem(TOKEN_KEY, token)
+/** トークンを端末の記憶に保存する。書けなければ名前つきの失敗を渡す。 */
+// @implements REQ-191
+// @operation UC-013#saveToken
+export function setToken(token: string): string {
+  touchStorage(() => localStorage.setItem(TOKEN_KEY, token))
+  return token
 }
+/** ログインしている人の名前。トークン（JWT）の中身から読む。サーバに聞かない。
+ *  誰でログインしているかが分かるよう、ヘッダーに出す。 */
+// @implements REQ-199
+export function getUserName(): string | null {
+  const token = getToken()
+  if (!token) return null
+  try {
+    const payload = token.split('.')[1]
+    const json = atob(payload.replace(/-/g, '+').replace(/_/g, '/'))
+    const name = (JSON.parse(decodeURIComponent(escape(json))) as { name?: string }).name
+    return typeof name === 'string' && name ? name : null
+  } catch {
+    return null
+  }
+}
+
+/** この端末の記憶からトークンを捨てる。端末の記憶が使えず捨てられなければ何もせずに終え、続きを止めない。 */
+// @implements REQ-198, REQ-576, BR-010
+// @operation UC-013#clearToken
 export function clearToken() {
-  localStorage.removeItem(TOKEN_KEY)
+  try {
+    localStorage.removeItem(TOKEN_KEY)
+  } catch {
+    // 捨てられなくても、ログアウト・断られた要求・トークンの入れ替えの続きへ進む
+  }
   // 「前回の続き」は端末に残る。消さないと、次にログインした別のアカウントに
   // 前の人が読んでいた論点が出る（同じ端末を分け合って使うことがある）。
-  localStorage.removeItem(LAST_TOPIC_KEY)
+  clearLastTopic()
 }
 
 /** トークンが期限切れで捨てられたことの印。
@@ -30,6 +66,8 @@ function markSessionExpired() {
 }
 
 /** 印が立っていれば true を返し、同時に消す（出すのは一度だけ）。 */
+// @implements REQ-197, BR-011
+// @operation UC-013#takeSessionExpired
 export function takeSessionExpired(): boolean {
   try {
     const hit = sessionStorage.getItem(EXPIRED_KEY) === '1'
@@ -40,6 +78,7 @@ export function takeSessionExpired(): boolean {
   }
 }
 
+// @implements REQ-261, REQ-262
 export class ApiError extends Error {
   constructor(
     message: string,
@@ -51,11 +90,30 @@ export class ApiError extends Error {
   }
 }
 
+/** 応答の本文を JSON として読む。空なら null。
+ *
+ *  失敗の応答（ok でない）の本文は、中継機の HTML やプレーンテキストのことがあり、
+ *  JSON として読めなくても「理由が無い失敗」として扱う（null を返す）。
+ *  成功の応答で本文が読めないのは契約違反なので、そのまま投げる。 */
+// @implements REQ-261
+function parseBody(text: string, ok: boolean): any {
+  if (!text) return null
+  try {
+    return JSON.parse(text)
+  } catch (e) {
+    if (ok) throw e
+    return null
+  }
+}
+
+// @implements REQ-196
+// @operation UC-013#markSessionExpired
 export async function api<T = any>(
   path: string,
-  init: { method?: string; body?: unknown } = {},
+  /** anonymous: 端末のトークンを添えず、401 でもトークンを捨てない（本人を得る前の要求に使う）。 */
+  init: { method?: string; body?: unknown; anonymous?: boolean } = {},
 ): Promise<T> {
-  const token = getToken()
+  const token = init.anonymous ? null : getToken()
   let res: Response
   try {
     res = await fetch(`/api${path}`, {
@@ -70,6 +128,7 @@ export async function api<T = any>(
     // 電波が無い・オフラインだと fetch は TypeError を投げる。そのままだと
     // ブラウザの英語メッセージ（Failed to fetch）が画面に出る。
     // サーバまで届いていないので status は無い（undefined のまま）。
+    // @implements REQ-262
     throw new ApiError(
       '通信できませんでした。電波の状態を確認して、もう一度お試しください。',
       undefined,
@@ -77,14 +136,16 @@ export async function api<T = any>(
     )
   }
   const text = await res.text()
-  const data = text ? JSON.parse(text) : null
+  const data = parseBody(text, res.ok)
   if (!res.ok) {
-    if (res.status === 401) {
+    if (res.status === 401 && !init.anonymous) {
       // トークンを持って行って弾かれた＝期限切れ。持っていなければ元から
       // 未ログインなので、期限切れとは言わない。
+      // @implements REQ-194, REQ-197
       if (token) markSessionExpired()
       clearToken()
     }
+    // @implements REQ-261
     throw new ApiError(data?.error ?? '通信に失敗しました', res.status, data)
   }
   return data as T
@@ -92,14 +153,23 @@ export async function api<T = any>(
 
 /** 画面を移るたびに取り直さなくてよいものを、ページを開いている間だけ覚えておく。
  *
- *  シラバスの分野・単元は、回を追加しても構造が変わらない。にもかかわらず
- *  `/topics` へ入るたびに `/fields` と `/categories` を取り直していて、
- *  そのぶん画面が出るのが遅れていた（1リクエストあたり 0.2〜0.4 秒かかる）。
+ *  シラバスの分野・単元は、回を追加しても構造が変わらない。`/topics` へ入るたびに
+ *  `/fields` と `/categories` を取り直すと、そのぶん画面が出るのが遅れる（1リクエストあたり 0.2〜0.4 秒）。
  *
  *  **リロードすれば消える**ので、データを入れ替えたあとは再読み込みで最新になる。
  *  内容が変わりうるもの（論点一覧・進捗・受験履歴）には使わないこと。 */
 const memo = new Map<string, Promise<unknown>>()
 
+/** 覚えたものを捨てる。理解度を記録した直後と、回答が数える回答に加わった直後
+ *  （演習の回答を送ったとき・模試を締めたとき）に呼ぶ。
+ *  /fields と /categories は分野・単元の構造だけでなく「理解した数」も返す（進捗の集計を含む）ので、
+ *  捨てずにいると記録や回答のあとに一覧へ戻ったときに古い数が出る。 */
+// @implements REQ-040, REQ-484
+export function invalidateCached() {
+  memo.clear()
+}
+
+// @implements REQ-017, REQ-018
 export function apiCached<T = any>(path: string): Promise<T> {
   const hit = memo.get(path)
   if (hit) return hit as Promise<T>
@@ -120,21 +190,48 @@ const LAST_TOPIC_KEY = 'study-app.lastTopic'
 
 export type LastTopic = { id: number; term: string; middle: string; middleNo: number }
 
+/** 端末から読んだ値が LastTopic の形か。形でない値は覚えていないのと同じに扱う。 */
+function isLastTopic(v: unknown): v is LastTopic {
+  if (!v || typeof v !== 'object') return false
+  const t = v as Record<string, unknown>
+  return (
+    Number.isInteger(t.id) && (t.id as number) >= 1 &&
+    typeof t.term === 'string' && t.term !== '' &&
+    typeof t.middle === 'string' && t.middle !== '' &&
+    Number.isInteger(t.middleNo) && (t.middleNo as number) >= 1
+  )
+}
+
+// @implements REQ-082, BR-011, BR-012, BR-041
+// @operation UC-005#readLastTopic
 export function getLastTopic(): LastTopic | null {
   try {
     const raw = localStorage.getItem(LAST_TOPIC_KEY)
-    return raw ? (JSON.parse(raw) as LastTopic) : null
+    if (!raw) return null
+    const v: unknown = JSON.parse(raw)
+    return isLastTopic(v) ? v : null
   } catch {
     return null
   }
 }
 
-export function setLastTopic(t: LastTopic) {
+/** この端末が覚えた前回の続きを捨てる。 */
+// @implements REQ-342
+// @operation UC-005#clearLastTopic
+export function clearLastTopic() {
   try {
-    localStorage.setItem(LAST_TOPIC_KEY, JSON.stringify(t))
+    localStorage.removeItem(LAST_TOPIC_KEY)
   } catch {
-    // プライベートモードなどで保存できなくても、機能そのものは止めない
+    // 端末の記憶が使えなければ、読み出しも null になるので捨てられないままでよい
   }
+}
+
+/** 開いた論点を前回の続きとして端末の記憶に書く。書けなければ名前つきの失敗を渡す。 */
+// @implements REQ-077, BR-013
+// @operation UC-005#saveLastTopic
+export function setLastTopic(t: LastTopic): LastTopic {
+  touchStorage(() => localStorage.setItem(LAST_TOPIC_KEY, JSON.stringify(t)))
+  return t
 }
 
 export type Field = {
@@ -144,23 +241,64 @@ export type Field = {
   understood: number
   partly: number
   untouched: number
+  /** 未の論点の数。ロードマップ型では 0 */
+  unanswered: number
 }
+
+/** 理解度の段階。0=未（資格対策だけ）/ 1=未理解 / 2=やや理解 / 3=理解。 */
+export type StatusValue = 0 | 1 | 2 | 3
+
+/** 理解度が回答の履歴からの判定（auto）か本人の上書き（override）か。ロードマップ型では null。 */
+export type StatusSource = 'auto' | 'override'
+
+/** 出題回数の印の段（数が大きいほど出題頻度が高い）。印を付けない論点では null。 */
+export type FrequencyTier = 1 | 2 | 3
 
 export type TopicRow = {
   id: number
+  /** 論点の名前。副題を含まない */
   term: string
+  /** 名前に添える副題。副題を持たない論点では null */
+  subtitle: string | null
   questionCount: number
-  status: number | null
+  frequencyTier: FrequencyTier | null
+  status: StatusValue | null
+  statusSource: StatusSource | null
   field: string
   middle: string
+  /** 小項目の番号。ロードマップ型では null */
+  itemNo: number | null
   itemName: string
+  /** 属するまとまりの no。単元の構成が無いときは null */
+  groupNo: number | null
   isNew: number
 }
 
+/** 単元の構成。groups の配列の順がまとまりの順。 */
+export type UnitStructure = {
+  overview: string
+  groups: { no: number; name: string; description: string }[]
+}
+
+/** 論点の画面から他の論点へ移る導線の 1 件。 */
+export type TopicLink = {
+  id: number
+  term: string
+  questionCount: number
+  frequencyTier: FrequencyTier | null
+}
+
+// @implements BR-045
 export const STATUS_LABEL: Record<number, string> = {
+  0: '未',
   1: '未理解',
   2: 'やや理解',
   3: '理解',
+}
+
+export const STATUS_SOURCE_LABEL: Record<StatusSource, string> = {
+  auto: '回答の履歴からの判定',
+  override: '本人の上書き',
 }
 
 export const STATUS_CLASS: Record<number, string> = {

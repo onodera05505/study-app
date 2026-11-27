@@ -1,0 +1,60 @@
+{
+  "topic_id": 98,
+  "term": "ハルシネーション",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### なぜ事実と違う答えが出るのか",
+      "caption": "質問から答えが出るまでの流れです。どの線にも事実を調べる段が無いので、事実の確認は最後の人に残ります。",
+      "nodes": [
+        {
+          "id": "q",
+          "label": "利用者\n事実を尋ねる",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "ai",
+          "label": "生成 AI\n答えらしい文を作る",
+          "row": 0,
+          "col": 1,
+          "icon": "gear"
+        },
+        {
+          "id": "o",
+          "label": "出力\nもっともらしい文\n誤りが混じりうる",
+          "row": 0,
+          "col": 2,
+          "icon": "document",
+          "emphasis": true
+        },
+        {
+          "id": "p",
+          "label": "人\n出典や数値の裏を取る",
+          "row": 1,
+          "col": 2,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "q",
+          "to": "ai",
+          "label": "質問を渡す"
+        },
+        {
+          "from": "ai",
+          "to": "o",
+          "label": "事実は調べずに組み立てる"
+        },
+        {
+          "from": "o",
+          "to": "p",
+          "label": "事実かは確かめていない"
+        }
+      ]
+    }
+  ]
+}

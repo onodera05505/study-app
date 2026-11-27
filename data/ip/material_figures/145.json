@@ -1,0 +1,31 @@
+{
+  "topic_id": 145,
+  "term": "IT サービスマネジメント",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "### 作って終わりにしない",
+      "caption": "運用を決めた手順で回し、結果を測って直し、また回す輪です。強調した段で測った結果が、次の手順の直しにつながります。",
+      "center": "継続的に\n改善",
+      "stages": [
+        {
+          "label": "プロセスとして回す\n障害対応・変更・構成の把握",
+          "icon": "gear",
+          "next_label": "運用の結果"
+        },
+        {
+          "label": "結果を測る\n事業の求めに合っているか",
+          "icon": "chart",
+          "next_label": "うまくいかない所",
+          "emphasis": true
+        },
+        {
+          "label": "直す\n手順や体制を見直す",
+          "icon": "arrow-cycle",
+          "next_label": "見直した手順"
+        }
+      ]
+    }
+  ]
+}

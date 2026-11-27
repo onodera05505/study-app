@@ -1,0 +1,177 @@
+{
+ "target": "ap",
+ "units": [
+  "17"
+ ],
+ "status": "done",
+ "items": [
+  {
+   "no": 1,
+   "topic_id": 576,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）、scripts/prompts/rewrite_open_items.md「C の直し方」",
+   "what": "explanation の要点の箇条（定義の文ではない）が 2020r02o-q64 の正解アの句をほぼそのまま置いていた。何のために・どこまで使い・何を得たいかを考え、満たすべき条件と事業者に守らせるコントロール水準を決める、と言い直した（計画の段で決める中身は保つ）。",
+   "questions_checked": [
+    "2020r02o-q64"
+   ]
+  },
+  {
+   "no": 2,
+   "topic_id": 576,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）、scripts/prompts/rewrite_open_items.md「C の直し方」",
+   "what": "### 任せても自社に残る責任 の箇条が 2018h30a-q63 の正解イの句（ポリシや社内規則と提供される管理レベルとの不一致）をほぼそのまま置いていた。方針や社内の決まりが求める守り方とサービス側が満たせる所を突き合わせ足りない所を洗い出す、と言い直した。箇条の形は変えていない。",
+   "questions_checked": [
+    "2018h30a-q63"
+   ]
+  },
+  {
+   "no": 3,
+   "topic_id": 640,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）、scripts/prompts/rewrite_open_items.md「C の直し方」",
+   "what": "explanation の要点の箇条（定義の文は 1 行目で別）が 2018h30a-q72 の正解ウの句を語順の入替えだけで置いていた。AI などの自動応答が購入前の提案から購入後のアフターサービスまで顧客と言葉をやり取りする窓口になる、と言い直した。",
+   "questions_checked": [
+    "2018h30a-q72"
+   ]
+  },
+  {
+   "no": 4,
+   "topic_id": 743,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）、scripts/prompts/rewrite_open_items.md「C の直し方」",
+   "what": "### 効果を測る段取り の文が 2016h28h-q61 の誤答ウの句と同じ構造だった。効果がいつ頃出るかと確かめる数字の集め方を計画の段階で決め、事後評価は効果が出る見込みの頃に行う、と言い直した（点は保つ）。",
+   "questions_checked": [
+    "2016h28h-q61"
+   ]
+  },
+  {
+   "no": 5,
+   "topic_id": 42,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）、scripts/prompts/rewrite_open_items.md「C の直し方」",
+   "what": "令和5年版の表の要件定義・開発・運用のセルが 2025r07h-q65 エ・イ・ウ、2025r07h-q60 ウの句をほぼそのまま置いていた。表の形と語（合意・インタフェース・測定量）は残し、各セルを言い直した。初案は開発・運用のセルが 40 字を超え check_materials が警告したので縮めた。ビジネス分析の行は変えておらず q65 は解ける。",
+   "questions_checked": [
+    "2025r07h-q65",
+    "2025r07h-q60"
+   ]
+  },
+  {
+   "no": 6,
+   "topic_id": 42,
+   "type": "C",
+   "verdict": "fixed",
+   "rule": "write_materials.md「書き方の約束」の写さない物（選択肢・問題文の句をほぼそのまま置く）、scripts/prompts/rewrite_open_items.md「C の直し方」",
+   "what": "「開発計画は、全体最適化計画と整合させて策定します」（2018h30h-q64 ア）と「利用者の立場でテストされているかに置かれます」（2025r07h-q60 正解ア）が句をほぼそのまま置いていた。全体最適化計画を土台に食い違わないように立てる、実際に使う側の目でテストが行われたかを確かめる、と言い直した。要点の箇条の利用者の立場の説明は残るので q60 は解ける。",
+   "questions_checked": [
+    "2018h30h-q64",
+    "2025r07h-q60",
+    "2017h29a-q62"
+   ]
+  }
+ ],
+ "edits": [
+  {
+   "file": "data/ap/materials_v4/17-4.json",
+   "topic_id": 576,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "（要点の箇条）",
+   "before": "最初の利用計画の段階では、利用目的・利用範囲・期待効果を検討し、サービスに求める要件と事業者に求める**コントロール水準**（統制の強さ）を自社の基準として定めます",
+   "after": "最初の利用計画の段階では、何のために・どこまで使い・何を得たいかを考え、サービスが満たすべき条件と、事業者に守らせる**コントロール水準**（統制の強さ）を自社の基準として決めます"
+  },
+  {
+   "file": "data/ap/materials_v4/17-4.json",
+   "topic_id": 576,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 任せても自社に残る責任",
+   "before": "自社のセキュリティポリシや社内規則が求める水準と、提供される管理レベルとの差を洗い出します",
+   "after": "自社のセキュリティの方針や社内の決まりが求める守り方を、サービス側がどこまで満たせるかと突き合わせ、足りない所を洗い出します"
+  },
+  {
+   "file": "data/ap/materials_v4/17-3.json",
+   "topic_id": 640,
+   "field": "explanation",
+   "op": "replace",
+   "heading": "（要点の箇条）",
+   "before": "AI を活用した自動応答で、商品提案から販売、**アフターサービス**までの企業と顧客との双方向の対話を担います",
+   "after": "AI などによる自動応答が、購入前の提案から購入後の**アフターサービス**まで、顧客と言葉をやり取りする窓口になります"
+  },
+  {
+   "file": "data/ap/materials_v4/17-2.json",
+   "topic_id": 743,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 効果を測る段取り",
+   "before": "効果が現れる時期と、評価に要るデータの採り方も前もって計画しておき、事後評価はその時期に合わせて行います。",
+   "after": "効果がいつ頃出るかと、それを確かめる数字をどう集めるかも計画の段階で決めておき、事後評価は効果が出る見込みの頃に行います。"
+  },
+  {
+   "file": "data/ap/materials_v4/17-1.json",
+   "topic_id": 42,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 令和5年版のプロセスごとの達成目標",
+   "before": "| 企画 | 要件定義 | 優先順位を付けた要望を業務要件にまとめ、利用者や関係者と**合意** |",
+   "after": "| 企画 | 要件定義 | 利用者・関係者の要望に優先度を決めて業務要件として書き出し、**合意**を取る |"
+  },
+  {
+   "file": "data/ap/materials_v4/17-1.json",
+   "topic_id": 42,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 令和5年版のプロセスごとの達成目標",
+   "before": "| 開発 | 工程全体 | 構成要素間の**インタフェースを特定**し、中間成果物も含めてレビュー |",
+   "after": "| 開発 | 工程全体 | 部品のつなぎ目（**インタフェース**）を洗い出し、途中の成果物からレビュー |"
+  },
+  {
+   "file": "data/ap/materials_v4/17-1.json",
+   "topic_id": 42,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 令和5年版のプロセスごとの達成目標",
+   "before": "| 運用 | 工程全体 | 遂行能力・性能・稼働率など実績の**測定量**を明確にし、サービス水準を維持 |",
+   "after": "| 運用 | 工程全体 | 稼働率・性能・処理能力を何で測るか（**測定量**）を決め、サービス水準を保つ |"
+  },
+  {
+   "file": "data/ap/materials_v4/17-1.json",
+   "topic_id": 42,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 平成16年版の段階ごとの成果物",
+   "before": "開発計画は、全体最適化計画と整合させて策定します。",
+   "after": "開発計画は、全体最適化計画を土台に、それと食い違わないように立てます。"
+  },
+  {
+   "file": "data/ap/materials_v4/17-1.json",
+   "topic_id": 42,
+   "field": "detail",
+   "op": "replace",
+   "heading": "### 令和5年版のプロセスごとの達成目標",
+   "before": "そのため監査のチェックポイントも、利用者の立場でテストされているかに置かれます。",
+   "after": "そのため監査でも、実際に使う側の目でテストが行われたかを確かめます。"
+  }
+ ],
+ "owners": [],
+ "figure_after": [],
+ "ledgers": [],
+ "returned": [],
+ "noticed": [],
+ "gates": {
+  "check_materials": 0,
+  "check_material_style": 0,
+  "render_check": 0,
+  "check_explanations": 0,
+  "check_unit_plans": 0
+ },
+ "chars": {
+  "before": 456,
+  "after": 506
+ }
+}

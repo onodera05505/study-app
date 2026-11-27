@@ -1,0 +1,46 @@
+{
+ "target": "ap",
+ "units": [
+  "17"
+ ],
+ "status": "done",
+ "items": [
+  {
+   "no": 1,
+   "topic_id": 42,
+   "type": "G",
+   "verdict": "already",
+   "rule": "write_materials.md「満たすべき最低条件」の表のセル 40 字（check_materials.py の知らせ）",
+   "what": "今の materials_v4/17-1.json の論点 42 の令和5年版の表は、達成目標の列が 38・39・38・39 字で、全セル 40 字以内。check_materials.py --all の知らせは 16 件（全部 IPA の句読点で、17-1 の表のセルの知らせは無い）。言い直し後の 4 行は旧版の点（ビジネスモデル・業務プロセス／問題と利点、優先度・業務要件・合意、インタフェース・中間成果物のレビュー、遂行能力系の測定量・サービス水準）を保っているので直さない",
+   "questions_checked": [
+    "2025r07h-q65",
+    "2025r07h-q60",
+    "2022r04h-q61",
+    "2018h30h-q64",
+    "2017h29a-q62"
+   ]
+  }
+ ],
+ "edits": [],
+ "owners": [],
+ "figure_after": [],
+ "ledgers": [],
+ "returned": [],
+ "noticed": [
+  {
+   "topic_id": 42,
+   "what": "表の開発の行「途中の成果物からレビュー」は、旧版の「中間成果物も含めてレビュー」の『含めて』（最終成果物に加えて）の含みが『から』で薄れている。運用の行は旧版の『実績の』測定量の『実績』が落ちている。セルは 38・39 字で、語を足すと 40 字を超えやすいため今回は触らない"
+  }
+ ],
+ "gates": {
+  "check_materials": 0,
+  "check_material_style": 0,
+  "render_check": 0,
+  "check_explanations": 0,
+  "check_unit_plans": 0
+ },
+ "chars": {
+  "before": 1211,
+  "after": 1211
+ }
+}

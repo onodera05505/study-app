@@ -1,0 +1,244 @@
+{
+  "bundle": "bundle_22",
+  "topics": [
+    {
+      "topic_id": 169,
+      "term": "テストケースの作り方",
+      "field": "開発の進め方と仕事",
+      "middle": "テストで確かめる",
+      "summary": "同じ扱いになる入力をまとめて代表を 1 つ選び、境目の前後の値は特に確かめる。少ない数で漏れを減らす",
+      "goals": [
+        7
+      ],
+      "prereq": [
+        "テストの段階"
+      ],
+      "sources": [
+        {
+          "name": "カリキュラム標準 J17-SE（ソフトウェアエンジニアリング領域）",
+          "where": "VAV > テスト"
+        },
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "システム開発技術 > 統合・テスト"
+        }
+      ],
+      "source_count": 2,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 170,
+      "term": "テストの自動化とテスト駆動開発",
+      "field": "開発の進め方と仕事",
+      "middle": "テストで確かめる",
+      "summary": "テストをコードで書いて自動で回し、直すたびに前の機能が壊れていないかを確かめる。先にテストを書く進め方もある",
+      "goals": [
+        7
+      ],
+      "prereq": [
+        "テストの段階",
+        "テストケースの作り方"
+      ],
+      "sources": [
+        {
+          "name": "リクルート 2025 年度 新卒エンジニア研修（BootCamp）講座一覧",
+          "where": "テスト駆動開発"
+        },
+        {
+          "name": "サイボウズ エンジニア新人研修 講義資料（2021 年公開分）",
+          "where": "テスト自動化"
+        },
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "システム開発技術 > 保守・廃棄"
+        },
+        {
+          "name": "6.100L コンピュータサイエンスとプログラミング入門（Introduction to CS and Programming Using Python, Fall 2022）講義一覧",
+          "where": "第12回 リスト内包表記・テストとデバッグ（List Comprehensio…"
+        },
+        {
+          "name": "選考解説記事の集計",
+          "where": "テストの種類とテスト駆動開発"
+        }
+      ],
+      "source_count": 4,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 171,
+      "term": "ブラックボックステストとホワイトボックステスト",
+      "field": "開発の進め方と仕事",
+      "middle": "テストで確かめる",
+      "summary": "中身を見ずに入力と出力だけで確かめる方法と、コードの分かれ道を全部通るように確かめる方法",
+      "goals": [
+        7
+      ],
+      "prereq": [
+        "テストの段階"
+      ],
+      "sources": [
+        {
+          "name": "IT パスポート試験 シラバス（Ver.6.5）",
+          "where": "システム開発技術"
+        },
+        {
+          "name": "カリキュラム標準 J17-SE（ソフトウェアエンジニアリング領域）",
+          "where": "VAV > テスト"
+        },
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "システム開発技術 > 統合・テスト"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "ブラックボックステスト"
+        }
+      ],
+      "source_count": 3,
+      "exam_weight": 0.91
+    },
+    {
+      "topic_id": 172,
+      "term": "テストの網羅の度合い",
+      "field": "開発の進め方と仕事",
+      "middle": "テストで確かめる",
+      "summary": "テストでコードの何割を通ったかを、命令・分かれ道・条件の組み合わせの単位で測る見方",
+      "goals": [
+        7
+      ],
+      "prereq": [
+        "テストの段階",
+        "ブラックボックステストとホワイトボックステスト",
+        "条件分岐"
+      ],
+      "sources": [
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "システム開発技術 > 統合・テスト"
+        },
+        {
+          "name": "カリキュラム標準 J17-SE（ソフトウェアエンジニアリング領域）",
+          "where": "VAV > V&V の用語と基礎"
+        },
+        {
+          "name": "過去問の出題回数",
+          "where": "テストの網羅基準（命令・判定条件・条件網羅）"
+        }
+      ],
+      "source_count": 2,
+      "exam_weight": 0.78
+    },
+    {
+      "topic_id": 173,
+      "term": "ターミナルとコマンド",
+      "field": "開発の進め方と仕事",
+      "middle": "手を動かす道具",
+      "summary": "マウスの代わりに文字で命令を打って PC を動かす画面。サーバの操作や開発の道具の多くはこれで使う",
+      "goals": [
+        7,
+        2
+      ],
+      "prereq": [
+        "パス（絶対パス・相対パス）と今いる場所",
+        "プロセス"
+      ],
+      "sources": [
+        {
+          "name": "計算機教育で欠けている学期（The Missing Semester of Your CS Education, 2026）講義一覧",
+          "where": "概要とシェル入門（Course Overview + Introduction…"
+        },
+        {
+          "name": "計算機教育で欠けている学期（The Missing Semester of Your CS Education, 2026）講義一覧",
+          "where": "コマンドライン環境（Command-line Environment）"
+        },
+        {
+          "name": "Crash Course コンピュータサイエンス（Crash Course Computer Science）回の一覧",
+          "where": "第22回 キーボードとコマンドライン（Keyboards & Command …"
+        }
+      ],
+      "source_count": 2,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 174,
+      "term": "エディタと IDE",
+      "field": "開発の進め方と仕事",
+      "middle": "手を動かす道具",
+      "summary": "コードを書くための編集の道具と、補完・実行・デバッグまで 1 つにまとめた統合開発環境",
+      "goals": [
+        7
+      ],
+      "prereq": [
+        "ターミナルとコマンド"
+      ],
+      "sources": [
+        {
+          "name": "計算機教育で欠けている学期（The Missing Semester of Your CS Education, 2026）講義一覧",
+          "where": "開発環境と道具（Development Environment and Too…"
+        },
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "ソフトウェア > 開発ツール"
+        },
+        {
+          "name": "iコンピテンシ ディクショナリ 2022 タスクディクショナリ",
+          "where": "DV05 アプリケーションシステム開発 > 開発環境構築"
+        }
+      ],
+      "source_count": 3,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 175,
+      "term": "パッケージ管理",
+      "field": "開発の進め方と仕事",
+      "middle": "手を動かす道具",
+      "summary": "使うライブラリとその版を設定ファイルに書き、道具で入れる。全員が同じ部品で動かせるようにする",
+      "goals": [
+        7
+      ],
+      "prereq": [
+        "ターミナルとコマンド",
+        "ビルドとライブラリ"
+      ],
+      "sources": [
+        {
+          "name": "計算機教育で欠けている学期（The Missing Semester of Your CS Education, 2026）講義一覧",
+          "where": "パッケージ化とコードの出荷（Packaging and Shipping Co…"
+        },
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "オープンソースソフトウェア"
+        }
+      ],
+      "source_count": 2,
+      "exam_weight": 0.0
+    },
+    {
+      "topic_id": 176,
+      "term": "環境変数と設定ファイル",
+      "field": "開発の進め方と仕事",
+      "middle": "手を動かす道具",
+      "summary": "接続先や秘密の鍵などはコードに直書きせず、環境変数や設定ファイルで渡す。環境ごとに値を変えられる",
+      "goals": [
+        7,
+        6
+      ],
+      "prereq": [
+        "ターミナルとコマンド"
+      ],
+      "sources": [
+        {
+          "name": "計算機教育で欠けている学期（The Missing Semester of Your CS Education, 2026）講義一覧",
+          "where": "コマンドライン環境（Command-line Environment）"
+        },
+        {
+          "name": "基本情報技術者試験 シラバス 科目A（FE Ver.9.2）",
+          "where": "ソフトウェア開発管理技術 > 開発環境管理"
+        }
+      ],
+      "source_count": 2,
+      "exam_weight": 0.0
+    }
+  ]
+}

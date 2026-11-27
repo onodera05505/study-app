@@ -1,0 +1,93 @@
+{
+  "topic_id": 750,
+  "term": "オムニチャネル",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 「複数ある」と「統合されている」の違い",
+      "caption": "上の 3 つの接点が、下の一つに束ねた在庫と顧客 ID を共有します。裏側が一つなので、アプリで注文してショールームで受け取るように接点をまたげます。",
+      "nodes": [
+        {
+          "id": "shop",
+          "label": "ショールーム\n実物を見て試す",
+          "row": 0,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "app",
+          "label": "スマホアプリ\n外出先で注文する",
+          "row": 0,
+          "col": 1,
+          "icon": "phone"
+        },
+        {
+          "id": "sns",
+          "label": "SNS のショップ\n投稿から買う",
+          "row": 0,
+          "col": 2,
+          "icon": "device"
+        },
+        {
+          "id": "db",
+          "label": "在庫・顧客 ID\nどの接点も一つを使う",
+          "row": 1,
+          "col": 1,
+          "shape": "cylinder",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "shop",
+          "to": "db",
+          "label": "同じ在庫と顧客 ID",
+          "arrow": "both"
+        },
+        {
+          "from": "app",
+          "to": "db",
+          "label": "同じ在庫と顧客 ID",
+          "arrow": "both"
+        },
+        {
+          "from": "sns",
+          "to": "db",
+          "label": "同じ在庫と顧客 ID",
+          "arrow": "both"
+        },
+        {
+          "from": "app",
+          "to": "shop",
+          "label": "アプリで注文し\nショールームで受け取る"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "steps",
+      "after": "### 販売チャネルの4つの段階",
+      "direction": "up",
+      "caption": "段が上がるほど、経路どうしのつながりが進みます。強調したオムニチャネルは、裏側の連携に加えて顧客の体験まで統合した段です。",
+      "stages": [
+        {
+          "label": "シングルチャネル\n経路は一つだけ",
+          "next_label": "経路を増やす"
+        },
+        {
+          "label": "マルチチャネル\n経路ごとに在庫も顧客も独立",
+          "next_label": "裏側をつなぐ"
+        },
+        {
+          "label": "クロスチャネル\n在庫と顧客情報を連携",
+          "next_label": "体験まで統合する"
+        },
+        {
+          "label": "オムニチャネル\n一元化し体験も途切れない",
+          "emphasis": true
+        }
+      ]
+    }
+  ]
+}

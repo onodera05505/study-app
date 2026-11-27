@@ -1,0 +1,299 @@
+{
+  "bundle": "23-9",
+  "shared": [
+    {
+      "item": "無線 LAN の 3 つの対策（暗号化・機器の制限・名前の隠蔽）の役割分担（表・図・混同の節）",
+      "count": 3,
+      "holder": 239,
+      "topics": [
+        239,
+        228,
+        384
+      ]
+    },
+    {
+      "item": "3 つの対策を並べて中身が守られるかを見せる図（239 の図 1 と 228 の図 2）",
+      "count": 2,
+      "holder": 239,
+      "topics": [
+        239,
+        228
+      ]
+    },
+    {
+      "item": "WEP は暗号鍵を短時間で割り出せる弱点があり、WPA2 に代わった",
+      "count": 2,
+      "holder": 239,
+      "topics": [
+        239,
+        228
+      ]
+    },
+    {
+      "item": "電波が届く範囲なら誰でも受信できるので、中身を守るには暗号化が要る",
+      "count": 2,
+      "holder": 239,
+      "topics": [
+        239,
+        228
+      ]
+    }
+  ],
+  "topics": [
+    {
+      "topic_id": 239,
+      "points": [
+        {
+          "point": "無線 LAN のセキュリティは、電波が届く範囲なら誰でも受信できる無線 LAN を守る対策（定義）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "中心になるのは通信の暗号化（定義の文に詰めていた要点）",
+          "fate": "kept",
+          "where": "explanation の箇条"
+        },
+        {
+          "point": "キーワード: 暗号化・接続する機器の制限・名前の隠蔽",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "今の標準は WPA2 や WPA3",
+          "fate": "kept",
+          "where": "explanation の箇条"
+        },
+        {
+          "point": "WEP は暗号鍵を短時間で割り出せるため今は使わない",
+          "fate": "kept",
+          "where": "explanation の箇条"
+        },
+        {
+          "point": "無線 LAN に付ける名前を ESSID といい、SSID とも呼ぶ（同じもの）",
+          "fate": "kept",
+          "where": "### ゲスト用の ESSID"
+        },
+        {
+          "point": "外部の端末用の ESSID を別に用意し、内部ネットワークに通さずインターネットだけにつなぐ（要点の箇条）",
+          "fate": "figure",
+          "where": "239 の図 2（ゲスト用 ESSID から社内ネットワークへは通さない線）"
+        },
+        {
+          "point": "表の行: 通信の暗号化は WEP から WPA2・WPA3 へ、盗聴に強い（WEP は弱い）",
+          "fate": "duplicate",
+          "where": "explanation の箇条（暗号化の方式と WEP）"
+        },
+        {
+          "point": "表の行: 機器の制限は MAC アドレスフィルタリングで、登録した機器だけ接続できる",
+          "fate": "kept",
+          "where": "### 暗号化と接続を絞る対策の役割分担"
+        },
+        {
+          "point": "表の行: 名前の隠蔽は ESSID のステルス化で、一覧に名前が出ない",
+          "fate": "kept",
+          "where": "### 暗号化と接続を絞る対策の役割分担"
+        },
+        {
+          "point": "暗号化は通信の中身を守り、機器の制限と名前の隠蔽は接続そのものを絞る",
+          "fate": "kept",
+          "where": "### 暗号化と接続を絞る対策の役割分担"
+        },
+        {
+          "point": "後の 2 つだけでは中身が守られないので、暗号化と組み合わせて使う",
+          "fate": "kept",
+          "where": "### 暗号化と接続を絞る対策の役割分担"
+        },
+        {
+          "point": "1 台のアクセスポイントに仮想的な ESSID を複数持たせ、暗号化方式や通信の制限を ESSID ごとに設定できる",
+          "fate": "kept",
+          "where": "explanation の箇条"
+        },
+        {
+          "point": "外部から持ち込まれた端末のための ESSID はゲストポート・ゲスト SSID とも呼ぶ",
+          "fate": "kept",
+          "where": "### ゲスト用の ESSID"
+        },
+        {
+          "point": "ゲスト用の ESSID は内部ネットワークにつながせず、インターネットへの接続だけを許す（detail の文）",
+          "fate": "figure",
+          "where": "239 の図 2（ゲスト用 ESSID のノード「外にだけ出られる」と caption）"
+        },
+        {
+          "point": "社内の機器を守りながら来客に通信手段を提供できる",
+          "fate": "kept",
+          "where": "### ゲスト用の ESSID"
+        },
+        {
+          "point": "アクセスポイントで接続を絞っても電波は第三者に届き、中身を守るのは暗号化だけ（図 1 の説明文）",
+          "fate": "figure",
+          "where": "239 の図 1"
+        }
+      ]
+    },
+    {
+      "topic_id": 228,
+      "points": [
+        {
+          "point": "WPA2 は無線 LAN の通信を暗号化するための規格（定義）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "キーワード: 無線 LAN・暗号化・WEP の後継",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "盗聴を防ぐには暗号化が欠かせない（WPA2 は盗聴の対策）",
+          "fate": "kept",
+          "where": "explanation の箇条"
+        },
+        {
+          "point": "電波は届く範囲の誰にでも拾われる（要点の箇条と detail の文）",
+          "fate": "prior",
+          "where": "239"
+        },
+        {
+          "point": "WEP に代わって利用が推奨されている",
+          "fate": "kept",
+          "where": "explanation の箇条"
+        },
+        {
+          "point": "WEP は短時間で解読される弱点が報告された",
+          "fate": "prior",
+          "where": "239"
+        },
+        {
+          "point": "機器に設定するのは PSK（事前共有鍵）と呼ばれるパスフレーズ（要点の箇条と detail の文）",
+          "fate": "kept",
+          "where": "### PSK から暗号鍵を作るしくみ"
+        },
+        {
+          "point": "PSK をもとに暗号鍵が作られる（要点の箇条）",
+          "fate": "duplicate",
+          "where": "### PSK から暗号鍵を作るしくみ"
+        },
+        {
+          "point": "そのまま流すと中身を読まれるので WPA2 で通信内容を暗号化する（detail の文）",
+          "fate": "duplicate",
+          "where": "explanation の箇条（盗聴の対策）"
+        },
+        {
+          "point": "アクセスポイントと端末に同じ PSK を設定するだけ",
+          "fate": "figure",
+          "where": "228 の図 1（アクセスポイント「PSK を設定」と各 PC「同じ PSK から」）"
+        },
+        {
+          "point": "パスフレーズをもとに、接続する PC ごとに暗号化用の鍵が作られる",
+          "fate": "kept",
+          "where": "### PSK から暗号鍵を作るしくみ（228 の図 1 も示す）"
+        },
+        {
+          "point": "電波を拾っても読めない（図 1 の破線）",
+          "fate": "figure",
+          "where": "228 の図 1"
+        },
+        {
+          "point": "混同: ESSID はアクセスポイントに付ける名前で、接続先を見分けるための名前",
+          "fate": "kept",
+          "where": "### 混同しやすい用語"
+        },
+        {
+          "point": "混同: ESSID を隠しても電波に流れる中身は暗号化されない",
+          "fate": "owner",
+          "where": "239"
+        },
+        {
+          "point": "混同: MAC アドレスフィルタリングはつないでよい機器を登録し、それ以外を拒否する",
+          "fate": "owner",
+          "where": "239"
+        },
+        {
+          "point": "混同: MAC アドレスフィルタリングは相手を絞るだけで、中身は暗号化されない",
+          "fate": "owner",
+          "where": "239"
+        },
+        {
+          "point": "3 つの対策（WPA2・ESSID を隠す・MAC アドレスフィルタリング）の何をするかと中身が暗号化されるかの表（図 2）",
+          "fate": "figure",
+          "where": "239 の図 1（外した 228 の図 2 の代わり）"
+        }
+      ],
+      "removed_figures": [
+        {
+          "figure_id": 2,
+          "caption": "無線 LAN の 3 つの対策を、何をするかと流れる中身が暗号化されるかで並べた表です。下の段を横に見比べて読みます。",
+          "kept": {
+            "topic_id": 239,
+            "figure_id": 1
+          }
+        }
+      ]
+    },
+    {
+      "topic_id": 384,
+      "points": [
+        {
+          "point": "MAC アドレスフィルタリングは、接続を許す端末の MAC アドレスを登録し、それ以外の接続を拒む仕組み（定義）",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "キーワード: 端末固有の情報・接続を制限",
+          "fate": "kept",
+          "where": "explanation"
+        },
+        {
+          "point": "端末を見分けるのに使うのは MAC アドレスで、機器ごとに割り当てられた固有の番号",
+          "fate": "kept",
+          "where": "explanation の箇条"
+        },
+        {
+          "point": "MAC アドレスはネットワーク機器の差込口ごとに割り当てられ、原則として世界に一つ",
+          "fate": "kept",
+          "where": "explanation の箇条"
+        },
+        {
+          "point": "暗号化ではなく、つないでよいかどうかを決める仕組み",
+          "fate": "owner",
+          "where": "239"
+        },
+        {
+          "point": "アクセスポイントが接続要求の MAC アドレスを許可リストと照らし合わせ、載っている端末だけをつなぐ（図 1 と detail の文）",
+          "fate": "figure",
+          "where": "384 の図 1"
+        },
+        {
+          "point": "家庭用のルータにもたいてい付いている機能",
+          "fate": "aside",
+          "where": "紐づく 2 問を解くのにも定義・違いにも要らない豆知識"
+        },
+        {
+          "point": "PC・プリンタ・ゲーム機のように種類の違う端末が混ざっていても同じ仕組みで限定できる",
+          "fate": "kept",
+          "where": "explanation の箇条"
+        },
+        {
+          "point": "MAC アドレスは通信を観測すれば分かり、機器側で偽装もできる",
+          "fate": "kept",
+          "where": "### 偽装できるという弱点"
+        },
+        {
+          "point": "これだけで無線 LAN を守ることはできない",
+          "fate": "kept",
+          "where": "### 偽装できるという弱点"
+        },
+        {
+          "point": "通信の中身を暗号化する WPA2 などと組み合わせて使うのが前提",
+          "fate": "owner",
+          "where": "239"
+        },
+        {
+          "point": "接続させるかはフィルタリング、中身を守るのは暗号化と役割を分ける",
+          "fate": "owner",
+          "where": "239"
+        }
+      ]
+    }
+  ]
+}

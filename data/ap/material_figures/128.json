@@ -6,17 +6,51 @@
       "id": 1,
       "type": "blocks",
       "after": "### 計算の解き方",
-      "caption": "分周は割り算なので1カウントが2マイクロ秒に伸び、初期値150との積300マイクロ秒が割込みまでの時間になる。",
+      "caption": "分周で1カウントの時間が伸びます。その時間にカウンタの初期値を掛けた分だけ待って割込みが起きます。",
       "nodes": [
-        {"id": "clk", "label": "発振クロック\n16MHz", "row": 0, "col": 0},
-        {"id": "div", "label": "32 分周\n周波数を ÷32", "row": 0, "col": 1, "emphasis": true},
-        {"id": "cnt", "label": "ダウンカウンター\n初期値 150", "row": 0, "col": 2},
-        {"id": "irq", "label": "0 になったら\n割込み発生", "row": 0, "col": 3, "shape": "round"}
+        {
+          "id": "clk",
+          "label": "発振クロック\n24MHz",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "div",
+          "label": "12 分周\n周波数を ÷12",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "cnt",
+          "label": "ダウンカウンター\n初期値 400",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "irq",
+          "label": "0 になったら\n割込み発生",
+          "row": 0,
+          "col": 3,
+          "shape": "round"
+        }
       ],
       "edges": [
-        {"from": "clk", "to": "div"},
-        {"from": "div", "to": "cnt", "label": "500kHz＝周期 2μs"},
-        {"from": "cnt", "to": "irq", "label": "2μs × 150 ＝ 300μs"}
+        {
+          "from": "clk",
+          "to": "div",
+          "label": "24MHz のパルス"
+        },
+        {
+          "from": "div",
+          "to": "cnt",
+          "label": "2MHz＝周期 0.5μs"
+        },
+        {
+          "from": "cnt",
+          "to": "irq",
+          "label": "0.5μs × 400 ＝ 200μs"
+        }
       ]
     }
   ]

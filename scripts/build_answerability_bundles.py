@@ -45,6 +45,10 @@ def main() -> int:
                     help="教材から「出題パターン」節を落として渡す（原理から導けるかを測る）")
     args = ap.parse_args()
     d = args.data
+    # 読む物が欠けたら、例外の跡でなく、無い物を 1 行で名指して止める
+    for name in ("topics.json", "exam_labels.json",):
+        if not (d / name).is_file():
+            sys.exit(f"{d / name} がありません")
 
     done: set[int] = set()
     if args.skip_done:

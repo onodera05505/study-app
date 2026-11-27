@@ -1,0 +1,39 @@
+{
+  "topic_id": 130,
+  "term": "機械学習",
+  "figures": [
+    {
+      "id": 1, "type": "blocks", "after": "### なぜデータが要るのか",
+      "caption": "上の段は人が規則を書く従来のやり方、下の段が機械学習です。強調した学習の箱で、規則をデータから作る点が違います。",
+      "nodes": [
+        {"id": "h", "label": "人\n条件を書き下す", "row": 0, "col": 0, "icon": "person"},
+        {"id": "r1", "label": "規則\n人が書いた手順", "row": 0, "col": 2, "icon": "document"},
+        {"id": "o1", "label": "判断\n書いたとおりに動く", "row": 0, "col": 3},
+        {"id": "d", "label": "大量のデータ\n入力と結果の組", "row": 1, "col": 0, "icon": "database"},
+        {"id": "l", "label": "学習\n規則を自ら見つける", "row": 1, "col": 1, "icon": "gear", "emphasis": true},
+        {"id": "r2", "label": "規則\nデータから得た", "row": 1, "col": 2, "icon": "document"},
+        {"id": "o2", "label": "予測・判断\n新しい入力に答える", "row": 1, "col": 3}
+      ],
+      "edges": [
+        {"from": "h", "to": "r1", "label": "プログラムに書く"},
+        {"from": "r1", "to": "o1", "label": "手順どおり処理"},
+        {"from": "d", "to": "l", "label": "手本として与える"},
+        {"from": "l", "to": "r2", "label": "対応を見つける"},
+        {"from": "r2", "to": "o2", "label": "当てはめる"}
+      ]
+    },
+    {
+      "id": 2, "type": "venn", "after": "### ディープラーニングとの関係",
+      "caption": "外の円が機械学習、内の円がその手法の一つのディープラーニングです。内側だけが、着目する特徴まで学習で見つけます。",
+      "layout": "nested",
+      "sets": [
+        {"id": "ml", "label": "機械学習"},
+        {"id": "dl", "label": "ディープラーニング"}
+      ],
+      "regions": [
+        {"in": ["ml"], "label": "ほかの手法\n着目する特徴は人が決める"},
+        {"in": ["ml", "dl"], "label": "層を重ねた学習\n着目する特徴も自ら見つける", "emphasis": true}
+      ]
+    }
+  ]
+}

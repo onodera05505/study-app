@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="351" viewBox="0 0 663.2 364">
+<rect x="0.5" y="0.5" width="662.2" height="363" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<line x1="48" y1="34" x2="48" y2="324" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="311.6" y1="34" x2="311.6" y2="324" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="575.2" y1="34" x2="575.2" y2="324" stroke="#e5e7eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="0" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="48" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">端末 A</text>
+<rect x="231.05" y="0" width="161.1" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="311.6" y="11.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">在庫データ</text>
+<text x="311.6" y="31.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">在庫数（初期値 30）</text>
+<rect x="527.2" y="0" width="96" height="34" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="575.2" y="21.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">端末 B</text>
+<polyline points="51,68 308.6,68" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="308.6,68 300.6,71.6 300.6,64.4" fill="#1f2937"/>
+<text x="179.8" y="61" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1. ロックして在庫数を読む → 30</text>
+<rect x="53.4" y="73" width="252.8" height="16" rx="3" fill="#ffffff"/>
+<text x="179.8" y="86.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">8 個売れたので 8 を引き、手元の結果は 22</text>
+<polyline points="572.2,124 314.6,124" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="314.6,124 322.6,120.4 322.6,127.6" fill="#1f2937"/>
+<text x="443.4" y="117" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">2. 在庫数を読もうとする → ロック中で待つ</text>
+<rect x="345.5" y="129" width="195.8" height="16" rx="3" fill="#ffffff"/>
+<text x="443.4" y="142.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">端末 A が書き終わるまで読めない</text>
+<polyline points="51,180 308.6,180" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="308.6,180 300.6,183.6 300.6,176.4" fill="#1f2937"/>
+<text x="179.8" y="173" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">3. 22 を書き込み、ロックを解放</text>
+<polyline points="572.2,220 314.6,220" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="314.6,220 322.6,216.4 322.6,223.6" fill="#1f2937"/>
+<text x="443.4" y="213" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">4. ロックして在庫数を読む → 22</text>
+<rect x="311" y="225" width="264.8" height="16" rx="3" fill="#ffffff"/>
+<text x="443.4" y="238.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">5 個入荷したので 5 を足し、手元の結果は 27</text>
+<polyline points="572.2,276 314.6,276" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="314.6,276 322.6,272.4 322.6,279.6" fill="#1f2937"/>
+<text x="443.4" y="269" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">5. 27 を書き込み、ロックを解放</text>
+<rect x="391.4" y="281" width="104" height="16" rx="3" fill="#ffffff"/>
+<text x="443.4" y="294.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">両方の更新が残る</text>
+</g>
+</svg>

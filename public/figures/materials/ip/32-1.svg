@@ -1,29 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="266" viewBox="0 0 640 266" role="img">
-<title>外部キーは参照する側の成績表にある。参照される側の学生番号は主キーであって外部キーではない。</title>
-<rect x="0.5" y="0.5" width="639" height="265" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(41 20)">
-<polyline points="272,122 272,99 75,99 75,76" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="75,76 78.6,84 71.4,84" fill="#1f2937"/>
-<polyline points="272,122 272,99 476,99 476,76" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="476,76 479.6,84 472.4,84" fill="#1f2937"/>
-<path d="M 0 9 A 75 9 0 0 0 150 9 L 150 67 A 75 9 0 0 1 0 67 Z" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<path d="M 0 9 A 75 9 0 0 1 150 9" fill="none" stroke="#1f2937" stroke-width="1"/>
-<text x="75" y="24.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">学生表</text>
-<text x="75" y="44.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">学生番号（主キー）</text>
-<text x="75" y="64.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">学生名</text>
-<path d="M 394 9 A 82 9 0 0 0 558 9 L 558 67 A 82 9 0 0 1 394 67 Z" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<path d="M 394 9 A 82 9 0 0 1 558 9" fill="none" stroke="#1f2937" stroke-width="1"/>
-<text x="476" y="24.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">科目表</text>
-<text x="476" y="44.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">科目コード（主キー）</text>
-<text x="476" y="64.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">科目名</text>
-<rect x="190" y="122" width="164" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="272" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">成績表</text>
-<text x="272" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">学生番号・科目コード</text>
-<text x="272" y="184.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">＝外部キー</text>
-<rect x="127.5" y="85" width="92" height="16" rx="3" fill="#ffffff"/>
-<text x="173.5" y="98.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">学生番号で参照</text>
-<rect x="322" y="85" width="104" height="16" rx="3" fill="#ffffff"/>
-<text x="374" y="98.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">科目コードで参照</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="340" viewBox="0 0 640 340">
+<rect x="0.5" y="0.5" width="639" height="339" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(20 20)">
+<polyline points="300,122 300,99 89,99 89,76" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="89,76 92.6,84 85.4,84" fill="#1f2937"/>
+<polyline points="300,122 300,99 511,99 511,76" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="511,76 514.6,84 507.4,84" fill="#1f2937"/>
+<polyline points="300,244 300,198" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polygon points="300,198 303.6,206 296.4,206" fill="#1f2937"/>
+<rect x="0" y="0" width="178" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="89" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">会員表（参照される側）</text>
+<text x="89" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">会員番号＝主キー</text>
+<text x="89" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">氏名</text>
+<rect x="422" y="0" width="178" height="76" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="511" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">図書表（参照される側）</text>
+<text x="511" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">図書番号＝主キー</text>
+<text x="511" y="62.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">書名</text>
+<rect x="218" y="122" width="164" height="76" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<text x="300" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">貸出表（参照する側）</text>
+<text x="300" y="164.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">会員番号・図書番号</text>
+<text x="300" y="184.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">＝外部キー</text>
+<rect x="218" y="244" width="164" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<text x="300" y="266.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">会員表に無い会員番号</text>
+<text x="300" y="286.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">の貸出</text>
+<rect x="148.5" y="85" width="92" height="16" rx="3" fill="#ffffff"/>
+<text x="194.5" y="98.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">会員番号で参照</text>
+<rect x="359.5" y="85" width="92" height="16" rx="3" fill="#ffffff"/>
+<text x="405.5" y="98.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">図書番号で参照</text>
+<rect x="212" y="212" width="176" height="16" rx="3" fill="#ffffff"/>
+<text x="300" y="225.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">参照先に無いので登録できない</text>
 </g>
-<text x="320" y="246" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">外部キーは参照する側の成績表にある。参照される側の学生番号は主キーであって外部キーではない。</text>
 </svg>

@@ -1,0 +1,186 @@
+{
+  "topic_id": 173,
+  "term": "機械学習（AI 技術）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 学習とは何をしているのか",
+      "caption": "上の行は人が規則を書き込む方式、下の行は機械学習です。判断の基準の出どころが人の知識か、データに合わせて調整した数値かを、行を比べて読みます。",
+      "nodes": [
+        {
+          "id": "exp",
+          "label": "専門家\n基準の出どころは人",
+          "row": 0,
+          "col": 0,
+          "icon": "person"
+        },
+        {
+          "id": "rule",
+          "label": "規則を書き込む\n人が手で作る",
+          "row": 0,
+          "col": 1,
+          "icon": "document"
+        },
+        {
+          "id": "inf",
+          "label": "推論する\nエキスパートシステム",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "data",
+          "label": "大量のデータ\n基準の出どころはデータ",
+          "row": 1,
+          "col": 0,
+          "icon": "database"
+        },
+        {
+          "id": "learn",
+          "label": "学習する\nパラメータを調整",
+          "row": 1,
+          "col": 1,
+          "icon": "gear",
+          "emphasis": true
+        },
+        {
+          "id": "pred",
+          "label": "分類・予測する\n機械学習",
+          "row": 1,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "exp",
+          "to": "rule",
+          "label": "専門家の知識"
+        },
+        {
+          "from": "rule",
+          "to": "inf",
+          "label": "書いた規則"
+        },
+        {
+          "from": "data",
+          "to": "learn",
+          "label": "答え付きの例"
+        },
+        {
+          "from": "learn",
+          "to": "pred",
+          "label": "残った数値"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 学習とは何をしているのか",
+      "caption": "データを学習用と評価用に分け、評価用は学習を通さずに当たりを測るためだけに使います。学習用にだけ合って評価用で外れるなら、過学習と分かります。",
+      "nodes": [
+        {
+          "id": "all",
+          "label": "集めたデータ\n入力と答えの組",
+          "row": 0,
+          "col": 0,
+          "icon": "database"
+        },
+        {
+          "id": "train",
+          "label": "学習用データ\n調整に使う",
+          "row": 0,
+          "col": 1,
+          "icon": "database"
+        },
+        {
+          "id": "learn",
+          "label": "学習する\nパラメータを調整",
+          "row": 0,
+          "col": 2,
+          "icon": "gear"
+        },
+        {
+          "id": "test",
+          "label": "評価用データ\n学習には使わない",
+          "row": 1,
+          "col": 1,
+          "icon": "database"
+        },
+        {
+          "id": "eval",
+          "label": "当たりを測る\n外れれば過学習",
+          "row": 1,
+          "col": 2,
+          "icon": "search",
+          "emphasis": true
+        }
+      ],
+      "edges": [
+        {
+          "from": "all",
+          "to": "train",
+          "label": "大半を分ける"
+        },
+        {
+          "from": "all",
+          "to": "test",
+          "label": "一部を取り置く"
+        },
+        {
+          "from": "train",
+          "to": "learn",
+          "label": "数値を合わせる"
+        },
+        {
+          "from": "learn",
+          "to": "eval",
+          "label": "学習済みのモデル"
+        },
+        {
+          "from": "test",
+          "to": "eval",
+          "label": "初めて見るデータ"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "venn",
+      "after": "### 混同しやすい用語",
+      "caption": "外の枠が AI の技術全体で、ディープラーニングは機械学習の円の内側にあります。エキスパートシステムは機械学習の円の外にあり、データから学びません。",
+      "layout": "nested",
+      "universe": "AI の技術",
+      "sets": [
+        {
+          "id": "ml",
+          "label": "機械学習"
+        },
+        {
+          "id": "dl",
+          "label": "ディープラーニング"
+        }
+      ],
+      "regions": [
+        {
+          "in": [
+            "ml"
+          ],
+          "label": "ほかの機械学習\n特徴は人が決める"
+        },
+        {
+          "in": [
+            "ml",
+            "dl"
+          ],
+          "label": "特徴の決め方も学習\n多層のニューラルネット",
+          "emphasis": true
+        },
+        {
+          "in": [],
+          "label": "エキスパートシステム\nデータから学ばない"
+        }
+      ]
+    }
+  ]
+}

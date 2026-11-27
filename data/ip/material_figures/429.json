@@ -4,36 +4,51 @@
   "figures": [
     {
       "id": 1,
-      "type": "blocks",
-      "after": "### 余りがもつ折り返しの働き",
-      "caption": "26 で割った余りを取ると、Z の次が A に戻る。番号は必ず 0〜25 に収まる。",
-      "nodes": [
-        {"id": "y", "label": "Y\n24", "row": 0, "col": 0},
-        {"id": "z", "label": "Z\n25", "row": 0, "col": 1},
-        {"id": "a", "label": "A\n0", "row": 0, "col": 2, "emphasis": true},
-        {"id": "b", "label": "B\n1", "row": 0, "col": 3}
-      ],
-      "edges": [
-        {"from": "y", "to": "z", "label": "＋1"},
-        {"from": "z", "to": "a", "label": "＋1 で 26 → 余り 0"},
-        {"from": "a", "to": "b", "label": "＋1"}
+      "type": "cycle",
+      "after": "explanation",
+      "caption": "曜日の番号に 1 を足して 7 で割った余りを取ると、土曜の次は日曜に戻ります。輪をどこまで進んでも番号は 0 から 6 に収まります。",
+      "center": "7 で割った\n余り",
+      "stages": [
+        {
+          "label": "日曜\n番号 0（先頭）",
+          "emphasis": true,
+          "next_label": "＋1"
+        },
+        {
+          "label": "月曜〜金曜\n番号 1〜5",
+          "next_label": "＋1 ずつ進む"
+        },
+        {
+          "label": "土曜\n番号 6（最後）",
+          "next_label": "＋1 で 7 → 余り 0"
+        }
       ]
     },
     {
       "id": 2,
-      "type": "blocks",
+      "type": "steps",
       "after": "### 計算の解き方（ボックスをつなぐ問題）",
-      "caption": "余りが次の割られる数になるので、49 と 11 を入れると最後の B2 は 1 になる。",
-      "nodes": [
-        {"id": "in", "label": "入力\nA1＝49\nA2＝11", "row": 0, "col": 0},
-        {"id": "b1", "label": "1個目\nB1＝11\nB2＝49÷11 の余り＝5", "row": 0, "col": 1},
-        {"id": "b2", "label": "2個目\nA1＝11 A2＝5\n11÷5 の余り＝1", "row": 0, "col": 2},
-        {"id": "out", "label": "B2＝1", "row": 0, "col": 3, "emphasis": true}
-      ],
-      "edges": [
-        {"from": "in", "to": "b1", "label": "49 と 11"},
-        {"from": "b1", "to": "b2", "label": "11 と 5 を渡す"},
-        {"from": "b2", "to": "out", "label": "答え"}
+      "caption": "割る数を次の割られる数に、余りを次の割る数に回して、同じ割り算を繰り返します。ボックスを 1 つ通るごとに、この割り算が 1 回進みます。",
+      "direction": "down",
+      "stages": [
+        {
+          "label": "入力\n割られる数 88、割る数 27",
+          "next_label": "88 を 27 で割る"
+        },
+        {
+          "label": "1 回目\n88÷27＝3 余り 7",
+          "icon": "gear",
+          "next_label": "割る数 27 を割られる数に、余り 7 を割る数に"
+        },
+        {
+          "label": "2 回目\n27÷7＝3 余り 6",
+          "icon": "gear",
+          "next_label": "最後の余りを読む"
+        },
+        {
+          "label": "結果\n最後の余りは 6",
+          "emphasis": true
+        }
       ]
     }
   ]

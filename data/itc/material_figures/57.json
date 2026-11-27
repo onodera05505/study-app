@@ -1,0 +1,80 @@
+{
+  "topic_id": 57,
+  "term": "フェルミ推定",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "矢印に書いた仮定で数を置いて掛け合わせ、点線の別の道筋の検算と桁が合うかを確かめます。",
+      "nodes": [
+        {
+          "id": "pop",
+          "label": "人口\n1.2 億人",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "shop",
+          "label": "店舗数\n60,000 店",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "visit",
+          "label": "1 店の来店\n800 人／日",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "per",
+          "label": "1 店 1 日\n200 個",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "ans",
+          "label": "販売個数\n店舗数 × 1 店 1 日\n＝ 1,200 万個／日",
+          "row": 1,
+          "col": 2,
+          "emphasis": true
+        },
+        {
+          "id": "check",
+          "label": "検算\n1 人が週に 1 個と置く\n1.2 億 ÷ 7 ≒ 1,700 万個",
+          "row": 2,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "pop",
+          "to": "shop",
+          "label": "÷ 1 店 2,000 人と置く"
+        },
+        {
+          "from": "visit",
+          "to": "per",
+          "label": "× 買う割合 25% と置く"
+        },
+        {
+          "from": "shop",
+          "to": "ans",
+          "label": "掛ける"
+        },
+        {
+          "from": "per",
+          "to": "ans",
+          "label": "掛ける"
+        },
+        {
+          "from": "ans",
+          "to": "check",
+          "label": "桁が同じか",
+          "style": "dashed",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

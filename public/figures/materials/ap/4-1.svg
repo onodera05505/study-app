@@ -1,41 +1,61 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="242" viewBox="0 0 640 242" role="img">
-<title>稼働率は1サイクル MTBF＋MTTR に占める稼働時間の割合なので、両方を同じ倍率にしても変わらず、冗長構成では止まるのが切替の間だけになる。</title>
-<rect x="0.5" y="0.5" width="639" height="241" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
-<g transform="translate(85 20)">
-<polyline points="103,28 181,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="181,28 173,31.6 173,24.4" fill="#1f2937"/>
-<polyline points="277,28 361,28" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="361,28 353,31.6 353,24.4" fill="#1f2937"/>
-<polyline points="107.25,130 175,130" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="175,130 167,133.6 167,126.4" fill="#1f2937"/>
-<polyline points="283,130 348,130" fill="none" stroke="#1f2937" stroke-width="1.2" stroke-linejoin="round"/>
-<polygon points="348,130 340,133.6 340,126.4" fill="#1f2937"/>
-<rect x="7" y="0" width="96" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="55" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">単一構成</text>
-<text x="55" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">稼働 MTBF</text>
-<rect x="181" y="0" width="96" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="229" y="22.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">停止</text>
-<text x="229" y="42.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">修復 MTTR</text>
-<rect x="361" y="5" width="96" height="46" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="409" y="32.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">稼働 MTBF</text>
-<rect x="2.75" y="102" width="104.5" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="55" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">冗長構成</text>
-<text x="55" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">稼働系 MTBF</text>
-<rect x="175" y="102" width="108" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="229" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">停止は</text>
-<text x="229" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="600">切替の間だけ</text>
-<rect x="348" y="102" width="122" height="56" rx="6" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
-<text x="409" y="124.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">待機系が継続</text>
-<text x="409" y="144.9" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="14" fill="#1f2937" text-anchor="middle">修復は裏で行う</text>
-<rect x="126" y="11" width="32" height="16" rx="3" fill="#ffffff"/>
-<text x="142" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">故障</text>
-<rect x="291" y="11" width="56" height="16" rx="3" fill="#ffffff"/>
-<text x="319" y="24.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">修復完了</text>
-<rect x="125.12" y="113" width="32" height="16" rx="3" fill="#ffffff"/>
-<text x="141.12" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">故障</text>
-<rect x="287.5" y="113" width="56" height="16" rx="3" fill="#ffffff"/>
-<text x="315.5" y="126.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">切替完了</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="275" viewBox="0 0 640 275">
+<rect x="0.5" y="0.5" width="639" height="274" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<g transform="translate(26.1 20)">
+<g transform="translate(13.9 0)">
+<line x1="0" y1="170" x2="0" y2="188" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="224" y1="170" x2="224" y2="188" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="224" y1="110" x2="224" y2="188" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="280" y1="110" x2="280" y2="188" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="280" y1="170" x2="280" y2="188" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="504" y1="170" x2="504" y2="188" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="504" y1="110" x2="504" y2="188" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="560" y1="110" x2="560" y2="188" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="0" y1="50" x2="0" y2="188" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<line x1="280" y1="50" x2="280" y2="188" stroke="#9ca3af" stroke-width="0.8" stroke-dasharray="5 4"/>
+<rect x="0" y="156" width="224" height="14" rx="3" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<rect x="74.1" y="120" width="75.8" height="32" rx="3" fill="#ffffff"/>
+<text x="112" y="132.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">稼働 MTBF</text>
+<text x="112" y="148.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">80 時間動く</text>
+<rect x="224" y="96" width="56" height="14" rx="3" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<rect x="208.1" y="60" width="87.8" height="32" rx="3" fill="#ffffff"/>
+<text x="252" y="72.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">修復 MTTR</text>
+<text x="252" y="88.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">20 時間止まる</text>
+<rect x="280" y="156" width="224" height="14" rx="3" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+<rect x="350.8" y="120" width="82.4" height="32" rx="3" fill="#ffffff"/>
+<text x="392" y="132.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">稼働 MTBF</text>
+<text x="392" y="148.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600">次の 80 時間</text>
+<rect x="504" y="96" width="56" height="14" rx="3" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<rect x="477.6" y="60" width="82.4" height="32" rx="3" fill="#ffffff"/>
+<text x="518.8" y="72.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">修復 MTTR</text>
+<text x="518.8" y="88.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">次の 20 時間</text>
+<rect x="0" y="36" width="280" height="14" rx="3" fill="#f3f4f6" stroke="#1f2937" stroke-width="1"/>
+<rect x="76.3" y="0" width="127.4" height="32" rx="3" fill="#ffffff"/>
+<text x="140" y="12.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">1 サイクル 100 時間</text>
+<text x="140" y="28.2" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#1f2937" text-anchor="middle">稼働率＝80÷100＝0.8</text>
+<line x1="0" y1="188" x2="560" y2="188" stroke="#1f2937" stroke-width="1.4"/>
+<line x1="0" y1="188" x2="0" y2="193" stroke="#1f2937" stroke-width="1.2"/>
+<text x="0" y="207" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">0</text>
+<line x1="56" y1="188" x2="56" y2="193" stroke="#1f2937" stroke-width="1.2"/>
+<text x="56" y="207" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">20</text>
+<line x1="112" y1="188" x2="112" y2="193" stroke="#1f2937" stroke-width="1.2"/>
+<text x="112" y="207" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">40</text>
+<line x1="168" y1="188" x2="168" y2="193" stroke="#1f2937" stroke-width="1.2"/>
+<text x="168" y="207" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">60</text>
+<line x1="224" y1="188" x2="224" y2="193" stroke="#1f2937" stroke-width="1.2"/>
+<text x="224" y="207" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">80</text>
+<line x1="280" y1="188" x2="280" y2="193" stroke="#1f2937" stroke-width="1.2"/>
+<text x="280" y="207" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">100</text>
+<line x1="336" y1="188" x2="336" y2="193" stroke="#1f2937" stroke-width="1.2"/>
+<text x="336" y="207" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">120</text>
+<line x1="392" y1="188" x2="392" y2="193" stroke="#1f2937" stroke-width="1.2"/>
+<text x="392" y="207" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">140</text>
+<line x1="448" y1="188" x2="448" y2="193" stroke="#1f2937" stroke-width="1.2"/>
+<text x="448" y="207" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">160</text>
+<line x1="504" y1="188" x2="504" y2="193" stroke="#1f2937" stroke-width="1.2"/>
+<text x="504" y="207" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">180</text>
+<line x1="560" y1="188" x2="560" y2="193" stroke="#1f2937" stroke-width="1.2"/>
+<text x="560" y="207" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">200</text>
+<text x="280" y="231" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle" font-weight="600">経過時間（時間・例）</text>
 </g>
-<text x="320" y="206" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">稼働率は1サイクル MTBF＋MTTR に占める稼働時間の割合なので、両方を同じ倍率にしても変わらず、冗長構</text>
-<text x="320" y="222" font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, Noto Sans JP, Yu Gothic, Meiryo, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">成では止まるのが切替の間だけになる。</text>
+</g>
 </svg>

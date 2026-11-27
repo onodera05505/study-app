@@ -1,0 +1,52 @@
+{
+  "topic_id": 367,
+  "term": "認証 VLAN",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### 認証の結果で所属 VLAN を決める流れ",
+      "caption": "上から順に、接続した利用者を認証し、その結果で所属 VLAN を決めます。手がかりはポートでなく利用者なので、つなぐポートが変わっても同じ VLAN に入ります。",
+      "actors": [
+        {
+          "id": "pc",
+          "label": "端末（利用者）",
+          "icon": "person"
+        },
+        {
+          "id": "sw",
+          "label": "スイッチ",
+          "icon": "network"
+        },
+        {
+          "id": "rad",
+          "label": "認証サーバ（RADIUS）",
+          "icon": "key"
+        }
+      ],
+      "steps": [
+        {
+          "from": "pc",
+          "to": "sw",
+          "label": "接続して認証情報を送る（IEEE 802.1X）"
+        },
+        {
+          "from": "sw",
+          "to": "rad",
+          "label": "利用者を照会"
+        },
+        {
+          "from": "rad",
+          "to": "sw",
+          "label": "認証結果と所属 VLAN"
+        },
+        {
+          "from": "sw",
+          "to": "pc",
+          "label": "その VLAN のセグメントのアドレス",
+          "note": "どのポートにつないでも同じ VLAN"
+        }
+      ]
+    }
+  ]
+}

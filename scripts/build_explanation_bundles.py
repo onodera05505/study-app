@@ -31,12 +31,13 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent / "lib"))  # 単独で回さない部品の置き場（ADR-0014）
 from build_seed import (  # 計算の定義は1か所に持つ（content_key がずれると解説が迷子になる）
     EXPLANATION_DIR,
     content_key_of,
     exam_rank,
-    load_materials,
 )
+from learning_parts import load_materials  # noqa: E402
 
 TOPICS_PER_BUNDLE = 8  # これ以上増やすと出力量オーバーで担当が落ちる（教材と同じ）
 
@@ -60,6 +61,11 @@ def main() -> int:
     args = ap.parse_args()
     d = args.data
     out_dir = args.out or (d / "explanation_bundles")
+
+    # 読む物が欠けたら、例外の跡でなく、無い物を 1 行で名指して止める
+    for name in ("topics.json", "exam_labels.json", "answer_keys.json",):
+        if not (d / name).is_file():
+            sys.exit(f"{d / name} がありません")
 
     topics = json.loads((d / "topics.json").read_text(encoding="utf-8"))["topics"]
     materials = load_materials(d)

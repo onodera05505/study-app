@@ -1,0 +1,85 @@
+{
+  "topic_id": 412,
+  "term": "KPT（Keep，Problem，Try）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "matrix",
+      "after": "### 3つの分類の境目",
+      "caption": "3 つの分類を、いつの話か・続けるか変えるかで並べています。強調した 2 つのセルが Keep と Try の境目です。",
+      "x": {
+        "label": "観点",
+        "values": [
+          "いつの話か",
+          "中身",
+          "続けるか変えるか"
+        ]
+      },
+      "y": {
+        "label": "分類",
+        "values": [
+          "Keep",
+          "Problem",
+          "Try"
+        ]
+      },
+      "cells": [
+        [
+          "過去\nうまくいったこと",
+          "続けること\n既にやっている\nやり方",
+          "続ける\nそのまま残す"
+        ],
+        [
+          "過去\nうまくいかなかったこと",
+          "問題点\n事実の指摘",
+          "まだ決めない\n打ち手は含まない"
+        ],
+        [
+          "これから\n次の活動",
+          "次に試すこと\nまだやっていない\n工夫",
+          "変える\n新しく試す"
+        ]
+      ],
+      "emphasis": [
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          2
+        ]
+      ]
+    },
+    {
+      "id": 2,
+      "type": "cycle",
+      "after": "### Try を Keep へ移す輪",
+      "caption": "KPT のふりかえりを輪で回す流れです。試した Try は次のふりかえりで見直し、うまくいけば強調した段で Keep へ移ります。",
+      "center": "KPT の\nふりかえり",
+      "stages": [
+        {
+          "label": "活動する\nKeep を続け\nTry を試す",
+          "icon": "people",
+          "next_label": "活動の経験と Try の結果"
+        },
+        {
+          "label": "Try を見直す\nうまくいけば\nKeep へ移す",
+          "icon": "check",
+          "emphasis": true,
+          "next_label": "増えた Keep"
+        },
+        {
+          "label": "Keep と Problem を出す\n良かった点と問題点",
+          "icon": "search",
+          "next_label": "見つかった Problem"
+        },
+        {
+          "label": "Try を決める\nProblem から\n次の工夫を選ぶ",
+          "icon": "document",
+          "next_label": "次に試す Try"
+        }
+      ]
+    }
+  ]
+}

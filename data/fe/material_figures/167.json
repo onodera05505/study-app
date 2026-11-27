@@ -1,0 +1,104 @@
+{
+  "topic_id": 167,
+  "term": "労働者派遣契約",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### 三者の関係",
+      "caption": "労働者派遣の三者の関係です。雇う側（派遣元）と仕事の指示を出す側（派遣先）が分かれています。",
+      "nodes": [
+        {
+          "id": "src",
+          "label": "派遣元企業\n雇って賃金を払う",
+          "row": 0,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "dst",
+          "label": "派遣先企業\n仕事の指示を出す",
+          "row": 0,
+          "col": 2,
+          "icon": "building",
+          "emphasis": true
+        },
+        {
+          "id": "w",
+          "label": "労働者\n派遣先で働く",
+          "row": 0,
+          "col": 1,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "src",
+          "to": "dst",
+          "label": "労働者派遣契約",
+          "arrow": "both"
+        },
+        {
+          "from": "src",
+          "to": "w",
+          "label": "雇用契約",
+          "arrow": "both"
+        },
+        {
+          "from": "dst",
+          "to": "w",
+          "label": "指揮命令"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "blocks",
+      "after": "### 請負・出向との違い",
+      "caption": "請負では、雇う側も指示を出す側も受注者です。発注者から労働者へ直接の指示（破線）が出ると偽装請負になります。",
+      "nodes": [
+        {
+          "id": "o",
+          "label": "発注者\n仕事の完成を受け取る",
+          "row": 0,
+          "col": 0,
+          "icon": "building"
+        },
+        {
+          "id": "c",
+          "label": "受注者\n雇って指示も出す",
+          "row": 0,
+          "col": 2,
+          "icon": "building",
+          "emphasis": true
+        },
+        {
+          "id": "w",
+          "label": "労働者\n受注者の下で働く",
+          "row": 0,
+          "col": 1,
+          "icon": "person"
+        }
+      ],
+      "edges": [
+        {
+          "from": "o",
+          "to": "c",
+          "label": "請負契約（完成を約束）",
+          "arrow": "both"
+        },
+        {
+          "from": "c",
+          "to": "w",
+          "label": "雇用と仕事の指示"
+        },
+        {
+          "from": "o",
+          "to": "w",
+          "label": "直接の指示は偽装請負（違法）",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

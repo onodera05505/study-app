@@ -5,24 +5,135 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 計算の解き方",
-      "caption": "2つの条件の入れ子で枝は4本。20万円・3日は2,000円、5万円・14日は1,000円で合計3,000円。",
+      "after": "### if・else・endif の動き",
+      "caption": "if の中に if を入れた入れ子の分岐の図です。丸い箱の判定が真なら if の直後、偽なら else の後の処理へ進み、それぞれの endif で分岐を閉じます。",
       "nodes": [
-        {"id": "q1", "label": "改善額が\n10 万円より小さい？", "row": 0, "col": 1, "shape": "round"},
-        {"id": "q2", "label": "短縮期間が\n7 日より小さい？", "row": 1, "col": 0, "shape": "round"},
-        {"id": "q3", "label": "短縮期間が\n7 日より小さい？", "row": 1, "col": 2, "shape": "round"},
-        {"id": "p1", "label": "500 円", "row": 2, "col": 0},
-        {"id": "p2", "label": "1,000 円\n5 万円・14 日", "row": 2, "col": 1, "emphasis": true},
-        {"id": "p3", "label": "2,000 円\n20 万円・3 日", "row": 2, "col": 2, "emphasis": true},
-        {"id": "p4", "label": "5,000 円", "row": 2, "col": 3}
+        {
+          "id": "q1",
+          "label": "外側の if\n年齢が 13 より小さい？",
+          "row": 0,
+          "col": 3,
+          "shape": "round",
+          "emphasis": true
+        },
+        {
+          "id": "q2",
+          "label": "外側の if の直後に書いた\n内側の if\n平日に来場した？",
+          "row": 1,
+          "col": 1,
+          "shape": "round"
+        },
+        {
+          "id": "q3",
+          "label": "外側の else の後に書いた\n内側の if\n平日に来場した？",
+          "row": 1,
+          "col": 5,
+          "shape": "round"
+        },
+        {
+          "id": "p1",
+          "label": "if の直後の処理\n料金を 300 円にする\n（子ども・平日）",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "p2",
+          "label": "else の後の処理\n料金を 600 円にする\n（子ども・休日）",
+          "row": 2,
+          "col": 2
+        },
+        {
+          "id": "p3",
+          "label": "if の直後の処理\n料金を 900 円にする\n（大人・平日）",
+          "row": 2,
+          "col": 4
+        },
+        {
+          "id": "p4",
+          "label": "else の後の処理\n料金を 1,200 円にする\n（大人・休日）",
+          "row": 2,
+          "col": 6
+        },
+        {
+          "id": "e2",
+          "label": "内側の endif\nif の中の分岐を閉じる",
+          "row": 3,
+          "col": 1
+        },
+        {
+          "id": "e3",
+          "label": "内側の endif\nelse の中の分岐を閉じる",
+          "row": 3,
+          "col": 5
+        },
+        {
+          "id": "e1",
+          "label": "外側の endif\n外側の分岐を閉じる",
+          "row": 4,
+          "col": 3
+        }
       ],
       "edges": [
-        {"from": "q1", "to": "q2", "label": "はい"},
-        {"from": "q1", "to": "q3", "label": "いいえ"},
-        {"from": "q2", "to": "p1", "label": "はい"},
-        {"from": "q2", "to": "p2", "label": "いいえ"},
-        {"from": "q3", "to": "p3", "label": "はい"},
-        {"from": "q3", "to": "p4", "label": "いいえ"}
+        {
+          "from": "q1",
+          "to": "q2",
+          "label": "真（はい）"
+        },
+        {
+          "from": "q1",
+          "to": "q3",
+          "label": "偽（いいえ）"
+        },
+        {
+          "from": "q2",
+          "to": "p1",
+          "label": "真（はい）"
+        },
+        {
+          "from": "q2",
+          "to": "p2",
+          "label": "偽（いいえ）"
+        },
+        {
+          "from": "q3",
+          "to": "p3",
+          "label": "真（はい）"
+        },
+        {
+          "from": "q3",
+          "to": "p4",
+          "label": "偽（いいえ）"
+        },
+        {
+          "from": "p1",
+          "to": "e2",
+          "label": "次へ"
+        },
+        {
+          "from": "p2",
+          "to": "e2",
+          "label": "次へ"
+        },
+        {
+          "from": "p3",
+          "to": "e3",
+          "label": "次へ"
+        },
+        {
+          "from": "p4",
+          "to": "e3",
+          "label": "次へ"
+        },
+        {
+          "from": "e2",
+          "to": "e1",
+          "label": "外側の if の側を終える"
+        },
+        {
+          "from": "e3",
+          "to": "e1",
+          "label": "外側の else の側を終える"
+        }
       ]
     }
   ]

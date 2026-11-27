@@ -5,18 +5,81 @@
     {
       "id": 1,
       "type": "blocks",
-      "after": "### 4つの階層と進め方",
-      "caption": "現状と理想像を同じ4階層で描き、その差を埋める道筋を移行計画として定義するのが EA。",
+      "after": "explanation",
+      "caption": "現状と理想像を並べてその差を洗い出し、差を埋める道筋を移行計画にまとめる流れを、①〜③の順に読みます。",
       "nodes": [
-        {"id": "as", "label": "現状（As-Is）\nビジネス／データ／\nアプリ／技術の4階層", "row": 0, "col": 0},
-        {"id": "gap", "label": "ギャップ分析\n乖離を明確にする", "row": 0, "col": 1, "emphasis": true},
-        {"id": "to", "label": "理想像（To-Be）\n同じ4階層で\n目指す姿を描く", "row": 0, "col": 2},
-        {"id": "plan", "label": "移行計画\n差を埋める改善活動", "row": 1, "col": 1, "emphasis": true}
+        {
+          "id": "as",
+          "label": "現状\n今の業務と\nシステムの姿",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "gap",
+          "label": "ギャップ分析\n現状と理想像の差を\n洗い出す",
+          "row": 0,
+          "col": 1,
+          "emphasis": true
+        },
+        {
+          "id": "to",
+          "label": "理想像\n目指す業務と\nシステムの姿",
+          "row": 0,
+          "col": 2
+        },
+        {
+          "id": "plan",
+          "label": "移行計画\n差を埋める改善活動",
+          "row": 1,
+          "col": 1,
+          "emphasis": true
+        }
       ],
       "edges": [
-        {"from": "as", "to": "gap", "label": "①現状を把握"},
-        {"from": "to", "to": "gap", "label": "②理想像を設定"},
-        {"from": "gap", "to": "plan", "label": "③差から計画へ"}
+        {
+          "from": "as",
+          "to": "gap",
+          "label": "①現状を把握"
+        },
+        {
+          "from": "to",
+          "to": "gap",
+          "label": "②理想像を設定"
+        },
+        {
+          "from": "gap",
+          "to": "plan",
+          "label": "③差から計画へ"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "layers",
+      "after": "### 4 つの階層で組織全体を描く",
+      "caption": "EA が組織全体を描き分ける 4 つの階層です。上の業務から下の技術へ降りる並びで、下の層が上の層を支えます。",
+      "shape": "stack",
+      "layers": [
+        {
+          "label": "ビジネス\n業務の流れと機能",
+          "icon": "people",
+          "note": "受注・出荷などの業務"
+        },
+        {
+          "label": "データ\n業務が使う情報",
+          "icon": "database",
+          "note": "顧客・商品などの情報"
+        },
+        {
+          "label": "アプリケーション\nデータを扱う仕組み",
+          "icon": "gear",
+          "note": "販売管理などのシステム"
+        },
+        {
+          "label": "テクノロジ\nそれを動かす基盤",
+          "icon": "server",
+          "note": "サーバ・ネットワーク"
+        }
       ]
     }
   ]

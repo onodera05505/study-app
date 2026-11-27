@@ -1,0 +1,92 @@
+{
+ "target": "ap",
+ "unit": "10",
+ "status": "fixed",
+ "blocked": [],
+ "items": [
+  {
+   "no": 1,
+   "figure": {
+    "topic_id": 676,
+    "figure_id": 1
+   },
+   "kind": "restore",
+   "verdict": "applies",
+   "action": [
+    "restore",
+    "caption",
+    "edit"
+   ],
+   "what": "残る図 676-2 は AP のビーコン・端末の選択・同じ名前の AP を 1 つのネットワークにすることを運ぶが、名前を誰がどう付けるか（管理者が自由に付ける）を示す箱も線も無く、外した図の要点の 1 文の後半を言えない。同じ内容ではないので restore_from の図を元の ID 1・after explanation（676 に explanation の図は他に無い）で戻した。中身は今の決まりで見直した: IP アドレスの行は論点名でも後の論点の語でもなく（単元の論点名はグローバル IP アドレス等）、選択肢の語でもなく、本文 ### SSID が果たす役割 が対比を説明する境界なので残した（外すと matrix が 1 行になり型の下限を割る。前の回が図ごと外した原因）。caption に「管理者が自由に付け」を足して要点の両半分を言う形にし、強調を SSID の行の 2 セル（論点自身の行）にして caption の「強調した」と一致させた。2017h29a-q31 の選択肢の句（接続するアクセスポイントの選択に用いられる・ネットワーク上で一意）はセルにも caption にも無い",
+   "questions_checked": [
+    "2017h29a-q31"
+   ]
+  }
+ ],
+ "changed_figures": [
+  {
+   "topic_id": 676,
+   "figure_id": 1,
+   "png": "data/ap/rewrite_open_items/reports_2026-11-16/figures_png/ap-10/676-1.png",
+   "intended_point": "SSID は、つなぐ前に参加するネットワークを選ぶために管理者が自由に付ける名前で、つないだ後に割り当てられて相手を示す IP アドレスとは使う場面が違う"
+  }
+ ],
+ "moved": [],
+ "removed": [],
+ "restored": [
+  {
+   "topic_id": 676,
+   "figure_id": 1,
+   "after": "explanation"
+  }
+ ],
+ "ledgers": [
+  {
+   "file": "data/ap/rewrite_ledgers/10-2.json",
+   "changed_points": 0,
+   "removed_figures_added": 0,
+   "removed_figures_dropped": 1
+  }
+ ],
+ "not_fixed": [
+  {
+   "kind": "text_followup",
+   "no": 1,
+   "topic_id": 676,
+   "figure_id": 1,
+   "what": "戻した図 1 の IP アドレスの行と、本文 ### SSID が果たす役割 の 1 文「接続が済んだ後にホストを識別するのは IP アドレスで、SSID とは役割の層が違います。」（申告の消化 w1_d の no 27 で、図の行を外す前提で本文へ戻した文）が同じ点を言う。write_materials.md「1 つの点は 1 か所で言う」では図を残す側なので、本文のこの文を外すか（台帳 10-2 の 676 の該当行は fate figure・where 676 の図 1 に戻す）、図を残したまま文を残すかを親が決める。あわせて explanation の要点の箇条 1・2（一覧から選ぶ・管理者が自由に決める）が explanation の直後の図 1 と同じ点を言う（箇条 2 の後半の ESSID・一意の保証が無いは図に無い）"
+  },
+  {
+   "kind": "other",
+   "no": 1,
+   "topic_id": 676,
+   "figure_id": 2,
+   "what": "図 1 と図 2 は「名前で接続先を選ぶ」の点を一部重ねて持つ（同じ内容ではない）。図 2 は一覧に無いので直していない。重なりを 1 か所にするなら図 2 を次の一覧に入れる"
+  }
+ ],
+ "not_fixed_counts": {
+  "text_followup": 1,
+  "other": 1
+ },
+ "counts": {
+  "applies": 1,
+  "not_applies": 0,
+  "data_suspect": 0
+ },
+ "gates": {
+  "render_check": {
+   "stops": 0,
+   "warnings_before": 0,
+   "warnings_after": 0
+  },
+  "unfixed_warnings": []
+ },
+ "written": [
+  "data/ap/material_figures/676.json",
+  "data/ap/rewrite_ledgers/10-2.json",
+  "public/figures/materials/ap/676-1.svg",
+  "public/figures/materials/ap/676-2.svg",
+  "data/ap/rewrite_open_items/reports_2026-11-16/figures_png/ap-10/676-1.png",
+  "data/ap/rewrite_open_items/reports_2026-11-16/figures_png/ap-10/676-2.png"
+ ]
+}

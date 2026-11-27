@@ -1,0 +1,96 @@
+{
+  "topic_id": 80,
+  "term": "ネットワークとインターネット",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "### しくみ",
+      "caption": "上は家、下は東京と大阪の事務所です。どの LAN もルータから外へ出て、事務所どうしは WAN の線で結ばれます。",
+      "nodes": [
+        {
+          "id": "home",
+          "label": "家の LAN\nPC・スマホ・Wi-Fi\n自分でそろえる",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "id": "hr",
+          "label": "ルータ\nLAN の出入り口",
+          "row": 0,
+          "col": 1
+        },
+        {
+          "id": "net",
+          "label": "インターネット\n世界中の網どうしの網",
+          "row": 1,
+          "col": 2,
+          "shape": "cloud",
+          "emphasis": true
+        },
+        {
+          "id": "tk",
+          "label": "東京の事務所の LAN\n建物の中の網",
+          "row": 1,
+          "col": 0
+        },
+        {
+          "id": "tr",
+          "label": "ルータ\nLAN の出入り口",
+          "row": 1,
+          "col": 1
+        },
+        {
+          "id": "os",
+          "label": "大阪の事務所の LAN\n建物の中の網",
+          "row": 2,
+          "col": 0
+        },
+        {
+          "id": "or",
+          "label": "ルータ\nLAN の出入り口",
+          "row": 2,
+          "col": 1
+        }
+      ],
+      "edges": [
+        {
+          "from": "home",
+          "to": "hr",
+          "label": "外あての通信",
+          "arrow": "both"
+        },
+        {
+          "from": "hr",
+          "to": "net",
+          "label": "外のサイトとやり取り",
+          "arrow": "both"
+        },
+        {
+          "from": "tk",
+          "to": "tr",
+          "label": "外あての通信",
+          "arrow": "both"
+        },
+        {
+          "from": "tr",
+          "to": "net",
+          "label": "外のサイトとやり取り",
+          "arrow": "both"
+        },
+        {
+          "from": "os",
+          "to": "or",
+          "label": "外あての通信",
+          "arrow": "both"
+        },
+        {
+          "from": "tr",
+          "to": "or",
+          "label": "WAN（通信会社の回線を借りる）",
+          "arrow": "both"
+        }
+      ]
+    }
+  ]
+}

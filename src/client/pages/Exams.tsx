@@ -11,6 +11,10 @@ type Exam = {
   bestScore: number | null
 }
 
+/** 進行中のテストの範囲と回答の進み具合（GET /api/sessions/current の session の一部） */
+type InProgress = { scopeLabel: string; questionCount: number; answered: number }
+
+// @implements REQ-102, REQ-103
 export function Exams() {
   // null は「まだ取得していない」、[] は「取得した結果が空」
   const [exams, setExams] = useState<Exam[] | null>(null)
@@ -18,6 +22,8 @@ export function Exams() {
   // 取得の失敗は操作の失敗と別に持つ。null のままにすると「読み込み中…」が消えない。
   const [loadError, setLoadError] = useState('')
   const [busy, setBusy] = useState(false)
+  // 作れなかったあとに進行中のテストそのものを取れなかった理由
+  const [guideError, setGuideError] = useState('')
   const navigate = useNavigate()
 
   const load = useCallback(() => {
@@ -32,21 +38,41 @@ export function Exams() {
     load()
   }, [load])
 
+  /** 進行中のテストがあって作れなかったときの案内。断りの本文は ErrorBody だけなので、
+   *  範囲と回答の進み具合は GET /api/sessions/current で取り直して添える。
+   *  取り直せなかったときは、範囲と進み具合の代わりに入口への案内と取れなかった理由を出し、読み直す手段を添える。
+   *  取り直したら進行中のテストが無かったときは、入口への案内だけを出す。 */
+  // @implements REQ-110, BR-017, BR-014
+  async function inProgressGuide() {
+    const guide = '練習テスト画面から再開または破棄してください。'
+    setGuideError('')
+    try {
+      const d = await api<{ session: InProgress | null }>('/sessions/current')
+      setError(
+        d.session
+          ? `進行中のテストがあります（${d.session.scopeLabel}・${d.session.answered}／${d.session.questionCount} 問 回答済み）。${guide}`
+          : `進行中のテストがあります。${guide}`,
+      )
+    } catch (e: any) {
+      setError(`進行中のテストがあります。${guide}`)
+      setGuideError(e.message)
+    }
+  }
+
+  // @implements REQ-104, REQ-109, REQ-110
   async function start(body: Record<string, unknown>) {
     // 開始するとタイマーが走り出し、終わるまで練習系のテストが作れなくなる。
     // 1クリックで始まるのは重いので、一度受け止める。
     if (!window.confirm(`${exam.mockMinutes}分のタイマーが始まります。受験を開始しますか？`)) return
     setBusy(true)
     setError('')
+    setGuideError('')
     try {
       const s = await api<{ id: string }>('/sessions', { method: 'POST', body })
       navigate(`/sessions/${s.id}`)
     } catch (e: any) {
-      setError(
-        e.status === 409
-          ? '進行中のテストがあります。練習テスト画面から再開または破棄してください。'
-          : e.message,
-      )
+      if (e.status === 409) await inProgressGuide()
+      else setError(e.message)
     } finally {
       setBusy(false)
     }
@@ -54,17 +80,32 @@ export function Exams() {
 
   return (
     <>
-      <h1>過去問実践</h1>
+      <h1>{exam.words.mock}</h1>
       <p className="lead">
-        本番と同じ {exam.mockSize}問・{exam.mockMinutes}分 で通しで解きます。途中で中断しても、時間内なら再開できます。
+        {exam.roadmap
+          ? `${exam.mockSize}問・${exam.mockMinutes}分 で通しで解きます。途中で中断しても、時間内なら再開できます。`
+          : `本番と同じ ${exam.mockSize}問・${exam.mockMinutes}分 で通しで解きます。途中で中断しても、時間内なら再開できます。`}
       </p>
 
       <div className="notice">
         {exam.passRule}
       </div>
       {error && <p className="error">{error}</p>}
+      {guideError && (
+        <div className="notice">
+          <p className="error" style={{ margin: 0 }}>
+            {guideError}
+          </p>
+          <div className="btn-row" style={{ marginTop: '0.6rem' }}>
+            <button className="btn" onClick={() => inProgressGuide()}>
+              再読み込み
+            </button>
+          </div>
+        </div>
+      )}
 
-      <h2>公開回をそのまま解く</h2>
+      <h2>{exam.roadmap ? '1 日分（3 単位・6 問）を解く' : '公開回をそのまま解く'}</h2>
+      {/* @implements REQ-102, REQ-103 */}
       <ul className="list">
         {(exams ?? []).map((e) => (
           <li key={e.exam} className="row">
@@ -88,6 +129,7 @@ export function Exams() {
             </button>
           </li>
         ))}
+        {/* @implements REQ-103, BR-014, BR-015 */}
         {loadError && (
           <li>
             <p className="error">{loadError}</p>
@@ -98,16 +140,17 @@ export function Exams() {
         )}
         {exams === null && !loadError && <li className="muted">読み込み中…</li>}
         {exams !== null && exams.length === 0 && (
-          <li className="muted">取り込み済みの回がありません。</li>
+          <li className="muted">{exam.roadmap ? '取り込み済みの日がありません。' : '取り込み済みの回がありません。'}</li>
         )}
       </ul>
 
       <h2>全範囲からランダム</h2>
+      {/* @implements REQ-103 */}
       <div className="card">
         <p style={{ marginTop: 0 }}>
-          取り込み済みの全回から、本番の分野比率（
+          {exam.roadmap ? '全 42 単位から 1 問ずつ、分野の単位数（' : '取り込み済みの全回から、本番の分野比率（'}
           {Object.entries(exam.fieldRatio)
-            .map(([f, n]) => `${f.replace('系', '')}${n}`)
+            .map(([f, n]) => `${exam.roadmap ? f : f.replace('系', '')}${n}`)
             .join('・')}
           ）に寄せて{exam.mockSize}問を構成します。繰り返し受験できます。
         </p>

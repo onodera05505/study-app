@@ -1,0 +1,2294 @@
+[
+  {
+    "topic_id": 1,
+    "term": "経済学は何を扱うか（希少性と選択）",
+    "points": [
+      {
+        "point": "元手が足りないので、片方を選べばもう片方を諦めることになる",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "「足りないから諦める」は本文の 1 文で言え、図に並べる観点や量の動きが無い",
+        "benefit": 1
+      },
+      {
+        "point": "「足りない」という話は、元手を増やす話・配り方を変える話・諦める先を決める話の三つに分けて聞ける",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "三つの名前の並びで、比べる観点が立たない（名前だけの一覧は図にしない）",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 2,
+    "term": "機会費用",
+    "points": [
+      {
+        "point": "本当の負担は、これから出ていく金額に、諦めた最良の使い道の値打ちを足したもの",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "足し算 1 本で、例の 20 万円＋15 万円は本文の 1 文で言える",
+        "benefit": 1
+      },
+      {
+        "point": "負担に数えるのは、これから出ていく金額と諦めた最良の一つだけで、すでに払って戻らない額と二番目以下の使い道は数えない",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "行＝出ていくお金・諦めた使い道、列＝数える・数えない の 2×2（これから出ていく額／すでに払って戻らない額、いちばん良い一つ／二番目以下の使い道）。「数える」の列を強調",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "何を負担に入れ何を入れないかを 2 観点で並べると、「お金は出ていないから損はない」を確かめる線引きが表だけで言える",
+        "benefit": 2
+      }
+    ]
+  },
+  {
+    "topic_id": 5,
+    "term": "需要",
+    "points": [
+      {
+        "point": "ほかの事情が動かないとき、値段が下がると買う量が増えるので、右へ下がる線になる",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "形は次の要点の図に含まれ、向きだけなら本文の 1 文で言える",
+        "benefit": 1
+      },
+      {
+        "point": "値段だけが動けば同じ線の上を滑り、収入・好み・似た品の値段などが動けば線そのものが動く",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "line で横軸＝量・縦軸＝値段に、右下がりの需要の線と、収入が増えて右へ動いた線の 2 本。元の線の上に「値段だけ動く＝線の上を滑る」、2 本の間に「収入などが動く＝線ごと動く」の注記",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "滑ると動くの区別は線の絵が無いと追いにくく、到達基準 1 の「図と言葉で説明」の土台になる",
+        "benefit": 3
+      },
+      {
+        "point": "線そのものを動かすのは、収入・好み・似た品の値段・買い手の人数・先行きの予想",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "事情の名前の一覧で、比べる観点が立たない",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 6,
+    "term": "供給",
+    "points": [
+      {
+        "point": "ほかの事情が動かないとき値段が上がると売る量が増え（右上がり）、材料費などが上がると同じ値段で出せる量が減って線が左へ動く",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "line で横軸＝量・縦軸＝値段に、右上がりの供給の線と、材料費が上がって左へ動いた線の 2 本。同じ値段の高さで 2 本の量の差に「同じ値段で出せる量が減る」の注記",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "右上がりの形と、費用で左へ動く向きが線の位置で一目になる",
+        "benefit": 2
+      },
+      {
+        "point": "設備や収穫はすぐ増やせないので、短い間は量がほとんど動かず、時間が経つほど動く幅が大きい",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "時間のずれの一言で、本文の 1 文で言える",
+        "benefit": 1
+      },
+      {
+        "point": "値段と取引量が同じ向きに動けば買い手の側、逆向きなら売り手の側の事情と見分けられる",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝値段・取引量、行＝需要の線が右へ（買い手が増える）・供給の線が左へ（天候や費用）の 2×2（上がる／増える、上がる／減る）。取引量の列を強調",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "値上がりの原因を需要側と供給側に分ける（到達基準 1）手がかりが、取引量の向きの違いとして表だけで言える",
+        "benefit": 3
+      }
+    ]
+  },
+  {
+    "topic_id": 7,
+    "term": "市場均衡",
+    "points": [
+      {
+        "point": "値段が釣り合う水準より高ければ売れ残りで下がり、低ければ品不足で上がるので、どちらからも交点へ押し戻されて落ち着く",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "line で横軸＝量・縦軸＝値段に需要と供給の線を交わらせ、交点に縦の補助線。交点より上の値段の高さに「売れ残り→値下げ」、下に「品不足→値上げ」の注記",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "どちらの向きからも交点へ押し戻されるしくみは 2 本の線の位置関係そのもので、文では追いにくい",
+        "benefit": 3
+      },
+      {
+        "point": "需要の線が右へ動けば値段も量も上がり、供給の線が右へ動けば値段は下がって量は増える",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "線が動いたときの向きの見分けは、単位「供給」の表（値段と取引量の向き）が同じ形で受け持つ",
+        "benefit": 1
+      },
+      {
+        "point": "値札の付け替え・契約・在庫があるので、落ち着くまでに時間がかかる",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "理由の並びの一言で、本文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 13,
+    "term": "あと一つ増やすとどうなるか（限界の考え方）",
+    "points": [
+      {
+        "point": "あと一つで増える得が、あと一つで増える負担より大きければ増やし、並んだところで止める",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "bar で横軸＝1〜4 時間目、系列＝あと 1 時間で増える点（8・5・3・1）とあと 1 時間の負担（4・4・4・4）。得が負担を下回る 3 時間目の手前に「止めどき」の縦線",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "増える得が縮んで負担と並ぶところで止める、という数の動きが棒の並びでそのまま見える",
+        "benefit": 3
+      },
+      {
+        "point": "すでに済んだ分（払った設備の額）は次の一つの判断に入れない",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "入れない物を言う一言で、本文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 21,
+    "term": "労働市場",
+    "points": [
+      {
+        "point": "雇いたい量（右下がり）と働きたい量（右上がり）が交わるところで、賃金と雇う数が決まる",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "交わる 2 本の線は単位「市場均衡」の図と同じ形で、軸の名前を読み替えるだけ",
+        "benefit": 1
+      },
+      {
+        "point": "労働の市場は、移るのに費用がかかる・仕事の中身がそろわない・雇う側が賃金を決める力を持つことがある、の三点で物の市場と違う",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝物の市場・労働の市場、行＝買い手や売り手が移るのにかかる費用・中身がそろうか・値段を決める力 の 3×2（ほぼかからない／引っ越しや転職の費用、同じ品はそろう／同じ職種でも仕事がそろわない、一社では動かせない／雇う側が持つ場合がある）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "三つの違いを同じ観点で物の市場と並べると、需要と供給の形がどこまで当てはまるかが表だけで言える",
+        "benefit": 2
+      },
+      {
+        "point": "人手不足なのに賃金が上がらないなら、賃金以外で調整しているか、雇う側に賃金を決める力があるかを疑う",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "疑う先 2 つの一言で、本文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 20,
+    "term": "値段の上限と下限を決めると何が起きるか",
+    "points": [
+      {
+        "point": "釣り合う水準より低い上限価格を決めると、売りたい量が減り買いたい量が増えて品不足になる",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "line で横軸＝量・縦軸＝値段に需要と供給の線と、釣り合う値段より低い水平の上限価格の線。上限の高さで売りたい量と買いたい量の間に「品不足」の注記",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "上限の値段で売りたい量と買いたい量が開く幅は、線の上で見るのがいちばん早い",
+        "benefit": 3
+      },
+      {
+        "point": "釣り合う水準より高い下限価格は、売れ残り（労働なら雇われない人）を生む",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "上限の図の裏返しで、本文の 1 文で言える",
+        "benefit": 1
+      },
+      {
+        "point": "上限を釣り合う水準より高く、下限を低く置いた場合は何も起きない",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "効かない場合の一言で、本文で足りる",
+        "benefit": 1
+      },
+      {
+        "point": "上限のもとで部屋の質が落ちるかは、上限が実際に効く水準か、どの取引まで対象かで見方が分かれる",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "本文の 3 行の箇条で足り、論点の対立は独立した単位の図が受け持つ",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 4,
+    "term": "事実の話と価値判断の話（実証と規範）",
+    "points": [
+      {
+        "point": "事実の話は確かめる手だてがあり測り方で割れることがある、価値判断の話は何を先に置くかで割れ、いくら数えても一致しない",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝事実の話・価値判断の話、行＝確かめ方・何で割れるか・例の文 の 3×2（何を数えれば決まるか言える／いくら数えても一致しない、比べる地域や期間などの測り方／何を先に置くか、「下限を上げると雇用が減る」／「だから上げるべきでない」）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "一つの主張を二つの話に切り分ける対比は、同じ観点で並べると表だけで言える",
+        "benefit": 3
+      },
+      {
+        "point": "ひとつの主張に両方が混ざり、前半が本当でも後半は自動的には出てこない",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "表の「例の文」の行が同じ主張の前半と後半を並べて受け持つ",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 16,
+    "term": "買う側と売る側の得（余剰）",
+    "points": [
+      {
+        "point": "買う側の得は払ってもよかった上限と値段の差、売る側の得は値段と作るのにかかる額の差",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "bar で横軸＝1・2・3 番目の取引、系列＝払ってよい上限（800・700・600）・値段（500）・作るのにかかる額（300・400・500）。上限と値段の差に「買う側の得」、値段とかかる額の差に「売る側の得」の注記",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "二つの得が棒の高さの差として乗り、本文の足し算がそのまま図に移る",
+        "benefit": 3
+      },
+      {
+        "point": "線が動かないなら、値段が上がると買う側の得は減り売る側の得は増える",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "向きの一言で、本文で足りる",
+        "benefit": 1
+      },
+      {
+        "point": "得の大きさは誰の得かを語らないので、分配は別に見る",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "注意の一言で、本文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 17,
+    "term": "全体の得で仕組みを比べる（厚生の見方）",
+    "points": [
+      {
+        "point": "買う側と売る側の得の合計は、量が絞られると消えた取引の分だけ小さくなり、その分は誰の手にも渡らず無くなる（失われた得）",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "bar で横軸＝1 個目・2 個目・3 個目の取引、系列＝その取引で生まれる得（上限−かかった額: 500・300・100）。量が 2 個に絞られると消える 3 個目の 100 を強調",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "合計 900 が 800 に減り、消えた 100 がどこにも渡らないことが取引ごとの棒で見える",
+        "benefit": 3
+      },
+      {
+        "point": "足した得は誰が受け取ったかを区別しないので、合計が大きいやり方が望ましいとは限らない",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "注意の一言で、本文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 9,
+    "term": "需要の価格弾力性",
+    "points": [
+      {
+        "point": "弾力性が 1 より大きいと値上げで売上は減り、1 より小さいと増える",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "bar で横軸＝値上げ前（100 円×100 個）・敏感な品（110 円×80 個）・鈍い品（110 円×95 個）、系列＝売上（10,000・8,800・10,450 円）。値上げ前の高さに補助の注記",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "1 を境に値上げ後の売上が逆に動くことが棒の上下で見え、到達基準 2 の芯になる",
+        "benefit": 3
+      },
+      {
+        "point": "代わりがある・欠かせない品でない・時間が経っている、ほど買い手は敏感になる",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝敏感（1 より大きい）・鈍い（1 より小さい）、行＝代わりになる品・生活に欠かせないか・見る期間 の 3×2（ある／無い、欠かせない品でない／欠かせない、時間が経った後／値上げの直後）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "敏感さを決める事情を同じ観点で両側に並べると、品ごとの見立てが表だけでできる",
+        "benefit": 2
+      }
+    ]
+  },
+  {
+    "topic_id": 3,
+    "term": "あれもこれもは選べない（生産可能性の限界）",
+    "points": [
+      {
+        "point": "元手が限られていると作れる組み合わせには限りの線があり、線の上では片方を増やせばもう片方が減る（内側は元手が遊んでいる、外側は届かない）",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "line で横軸＝机（0・10・20・30・40 台）・縦軸＝椅子（100・90・70・40・0 脚）の外へ張り出した限りの線。線の内側に「遊んでいる元手がある」、外側に「今の元手では届かない」の注記",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "片方を増やすともう片方が減る関係と、内側・線上・外側の 3 つの位置は線の絵でないと追いにくい",
+        "benefit": 3
+      },
+      {
+        "point": "諦める椅子が 10→20→30→40 と増えていくので、線は外へ張り出して曲がる",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "曲がりは同じ図の線の形に出ており、理由は本文の数の並びで言える",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 24,
+    "term": "最低賃金を上げると雇用は減るか",
+    "points": [
+      {
+        "point": "競争的に近いと見る立場は下限の引き上げで雇う数が減ると見、雇う側が賃金を決める力を重く見る立場は適度なら吸収され増えることもあると見る。分かれ目は前提",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝競争的に近いと見る立場・雇う側が賃金を決める力を重く見る立場、行＝置いている前提・下限を上げると雇う数は の 2×2（雇う側に賃金を決める力は無い／雇う側が決めて値打ちより低く抑えている、減る／適度なら利益の削りで吸収され増えることもある）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "前提の置き方が結論を分ける二つの筋を同じ観点で並べると、どこで分かれるかが表だけで言える",
+        "benefit": 3
+      },
+      {
+        "point": "判断が進む材料は、引き上げ幅・比べた地域と期間・働く時間の削りまで数えたか",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "材料の名前の並びで、比べる観点が立たない",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 18,
+    "term": "税は誰が負担するか（税の帰着）",
+    "points": [
+      {
+        "point": "1 個 10 円の税は、価格が自由に動くなら買う側と売り手に分かれて回り、納める人と負担する人は同じとは限らない",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "bar で横軸＝税の前・税の後、系列＝買う側が払う値段（100・106）と売り手の手取り（100・96）。開きに「税 10 円＝買う側 6 円＋売り手 4 円」の注記",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "納める人と負担する人がずれることが 2 本の棒の開きで一目になる",
+        "benefit": 3
+      },
+      {
+        "point": "値段が動いても量を変えにくい側（逃げ道の少ない側）へ負担が多く回る",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "決め手の一言で、本文で言える",
+        "benefit": 1
+      },
+      {
+        "point": "価格が自由に動く市場なら、納める義務を買う側に置き換えても分かれ方は同じ",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "一言で言える",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 22,
+    "term": "稼ぎの散らばりをどう測るか（分配と格差）",
+    "points": [
+      {
+        "point": "稼ぎの散らばりの測り方は、上と下の比・ジニ係数・真ん中の半分を下回る人の割合の三つ",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝上と下の比・ジニ係数・真ん中の半分を下回る人の割合、行＝何を数えるか・数の読み方 の 3×2（上位 1 割÷下位 1 割／全員を低い順に並べた散らばりを 1 つの数に／線より下の人の割合、大きいほど開いている／0 に近いほど均等・1 に近いほど偏り／大きいほど下に厚い）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "三つの測り方を同じ観点で並べると、同じ「格差」でも何を数えているかの違いが表だけで言える",
+        "benefit": 2
+      },
+      {
+        "point": "世帯の人数・税と社会保障で移す前か後か・一時点か・一つの数にまとめると消える所が、測っていないもの",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "限界の並びで、本文の文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 27,
+    "term": "作る量と入れる元手の関係（生産）",
+    "points": [
+      {
+        "point": "設備を据え置いて働き手だけを増やすと、作れる量は増えるが増え方はだんだん小さくなる",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "bar で横軸＝働き手 1・2・3・4 人（機械 2 台のまま）、系列＝作れる量（10・18・22・24）と増分（10・8・4・2）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "設備を据え置くと増分が 10→8→4→2 と縮む数の動きが棒でそのまま見える",
+        "benefit": 3
+      },
+      {
+        "point": "人も設備もまとめて倍にするときは別の話で、倍より多く作れる業種もある",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "例外の一言で、本文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 29,
+    "term": "かかり続ける費用と、作るほど増える費用",
+    "points": [
+      {
+        "point": "費用は、作る量に関わらずかかる分（固定費）と、作るほど増える分（可変費）に分かれる",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "line で横軸＝1 日に焼く個数（0〜100）、系列＝かかり続ける費用（1 万円で横ばい）と費用の合計（1 万円＋1 個 200 円）の 2 本。2 本の間に「作るほど増える費用」、下に「かかり続ける費用」の注記",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "量に関わらず横ばいの部分と量とともに増える部分の重なりが、線 2 本で一目になる",
+        "benefit": 3
+      },
+      {
+        "point": "どこまでをかかり続ける費用と見るかは、見る期間で動く",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "一言で言える",
+        "benefit": 1
+      },
+      {
+        "point": "かかり続ける費用が重い商いほど、ある量を超えると利益が急に伸び、客が減ると赤字へ振れやすい",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "line で横軸＝売る個数、系列＝利益を、かかり続ける費用が重い商いと軽い商いの 2 本（仮の数）。重い方が傾きが急で、0 を下回る所から急に伸びることに注記",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "量の増減に対する利益の振れ幅の違いは、傾きの違う 2 本の線で見ないと文では追いにくい",
+        "benefit": 2
+      }
+    ]
+  },
+  {
+    "topic_id": 30,
+    "term": "あと一つ作る費用と、一つあたりの費用",
+    "points": [
+      {
+        "point": "あと一つの費用が一つあたりより安い間は平均を下げ、上回ると押し上げるので、一つあたりがいちばん安い量で二つが並ぶ",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "line で横軸＝作る量、系列＝一つあたりの費用（下がってから上がる）とあと一つ作る費用（余裕のある間は 200 円、夜勤からは上がる）の 2 本。一つあたりの底で 2 本が交わる所に注記",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "下なら平均を下げ、上なら押し上げ、底で並ぶ関係は線の位置関係でないと追いにくい",
+        "benefit": 3
+      }
+    ]
+  },
+  {
+    "topic_id": 31,
+    "term": "どこまで作ると儲かるか",
+    "points": [
+      {
+        "point": "あと一つ売って入る額と、あと一つ作る費用が並ぶところで止めると儲けがいちばん大きい",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "bar で横軸＝1〜6 個目、系列＝あと 1 個売って入る額（300 で横ばい）とあと 1 個作る費用（5 個目 280・6 個目 340 と上がる）。5 個目と 6 個目の間に「ここで止める」の縦線",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "入る額と費用が並ぶ所で止める判断が棒で一目になる。形は単位「限界の考え方」の図に近い",
+        "benefit": 2
+      },
+      {
+        "point": "作っても作らなくてもかかる家賃などは、止める量を動かさない",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "入れない物を言う一言で、本文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 32,
+    "term": "完全競争",
+    "points": [
+      {
+        "point": "売り手が多く品物が似ていれば、一社では値段を動かせず、あと一つ売って入る額は市場の値段になる",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "条件と結果の一言で、本文で言える",
+        "benefit": 1
+      },
+      {
+        "point": "入る壁が低いと、儲けが厚い間は新しい売り手が入り、出回る量が増えて値段が下がり、儲けの薄いところへ落ち着く",
+        "content_type": "プロセス",
+        "function": "変換的",
+        "draw": true,
+        "type": "steps",
+        "idea": "direction=down の 4 段: 儲けが厚い（値段が費用を大きく上回る）→ 新しい売り手が入る（入る壁が低い）→ 出回る量が増える → 値段が下がり儲けが薄い所で落ち着く。段の間は「儲けを見て入る」「作った分が出回る」「売れ残りで値段が下がる」",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "出入りの自由が長い目で儲けを削る流れは一方向の段の並びで、段の間に何が起きるかを書くと図だけで言える",
+        "benefit": 2
+      },
+      {
+        "point": "費用の上がりが自社だけなら市場の値段は動かず利益が削られ、売り手全員に共通なら供給の線が左へ動いて市場の値段も上がる",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝自社だけの費用が上がる・売り手全員に共通の費用が上がる、行＝市場の値段・自社の利益 の 2×2（動かない／上がる、削られる／値段の上がりで一部を取り戻す）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "「値段に乗せられない」が成り立つ場合と成り立たない場合が、二つの場合を同じ観点で並べると表だけで言える",
+        "benefit": 2
+      }
+    ]
+  },
+  {
+    "topic_id": 34,
+    "term": "独占",
+    "points": [
+      {
+        "point": "一社だけの売り手は、あと一つ売るための値下げが前の分の値段も下げるので、あと一つ売って入る額が値段より小さくなり、少ない量・高い値段で止まる",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "bar で横軸＝1 個目・2 個目・3 個目、系列＝その数で売れる値段（800・700・600）・あと 1 個売って入る額（800・600・400）・あと 1 個作る費用（300・400・500）。入る額が費用を下回る 3 個目の手前で止まる（2 個・700 円）ことを注記",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "入る額が値段より小さくなることと、少ない量・高い値段で止まる理由が棒の差で図の中で閉じる",
+        "benefit": 3
+      },
+      {
+        "point": "値段に鈍い買い手ほど、高くしても量が減らないので上げやすい",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "向きの一言で、本文で足りる",
+        "benefit": 1
+      },
+      {
+        "point": "力の源は、代わりの品が無いことと、大きな設備や権利で守られた入る壁の高さ",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "源の名前の並びで、本文の文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 35,
+    "term": "独占で失われるもの",
+    "points": [
+      {
+        "point": "独占で買う側が失う得のうち、売り手へ移った分は合計を変えず、起きなくなった取引の分だけが誰の手にも渡らず消える",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "bar で横軸＝買う側の得・売り手の得・消えた分、系列＝値段 500 円のとき（600・300・0）と一社が 700 円にしたとき（100・700・100）。消えた分の棒を強調",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "買う側の減り 500 のうち 400 は移っただけ、100 は消えた、という移動と消失の区別が 2 系列の棒で見える",
+        "benefit": 3
+      },
+      {
+        "point": "値下げさせても売れる数が増えなければ、得が買う側へ戻るだけで消えた分は生まれない",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "同じ図の読み替えで、本文の 1 文で言える",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 39,
+    "term": "数社が互いの出方を見る（寡占）",
+    "points": [
+      {
+        "point": "揃えて高くすれば双方が得だが、抜け駆けした側が一時的に儲かるので、揃えた状態は崩れやすい",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝相手が高いまま・相手が値下げ、行＝自社が高いまま・自社が値下げ の 2×2（双方とも儲けが厚い／客を取られる、抜け駆けで一時儲かる／双方とも儲けが薄い）。双方とも儲けが厚いセルを強調",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "揃えれば双方得なのに抜け駆けで崩れやすい読み合いは、2 社の組み合わせの格子でないと追いにくい",
+        "benefit": 3
+      },
+      {
+        "point": "同時の値上げには、申し合わせ・共通の費用の上がり・後追いの三つの筋がある",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "筋の名前の並びで、本文の文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 37,
+    "term": "競争をどう守るか（独占禁止の考え方）",
+    "points": [
+      {
+        "point": "競う状態を保つ手立ては、申し合わせの禁止・閉め出しの禁止・大きな合併の前もった審査の三つ",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "手立ての名前の一覧で、比べる観点が立たない",
+        "benefit": 1
+      },
+      {
+        "point": "設備を二重に敷くと高くつく分野（自然独占）では、競わせず値段の決め方に決まりを置く",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "例外の一言で、本文で足りる",
+        "benefit": 1
+      },
+      {
+        "point": "市場の線引きを広く取れば一社の力は小さく見え、狭く取れば大きく見える",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "venn",
+        "idea": "layout=nested の 3 範囲: 広く取った市場 ⊃ 狭く取った市場 ⊃ その会社の売上。外の領域に「広く取った残り：代わりの品まで含める」、中の領域に「狭く取った市場：同じ品だけ」、内に「その会社：広く取ると小さく、狭く取ると大きく見える」",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "同じ売上が線引きしだいで大きくも小さくも見えることは、入れ子の範囲の中での占め方として図だけで言える",
+        "benefit": 2
+      }
+    ]
+  },
+  {
+    "topic_id": 48,
+    "term": "大きな会社や場の提供者をどう扱うか",
+    "points": [
+      {
+        "point": "大きいこと自体を問題と見るか、行為だけを問うか、測り方そのものを問うかで見方が分かれる",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝集中それ自体を警戒する立場・効率と新しい物を生む力を重く見る立場・測り方を重く見る立場、行＝問うもの・置いている前提 の 3×2（規模／閉め出しの行為／市場の線引きと値段の物差し、集まった優位は崩れず利用者は移らない／利用者は使い分け大きさだけでは力と言えない／料金を取らない場では値段で測れない）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "三つの立場を同じ観点で並べると、どこで分かれるかが表だけで言える",
+        "benefit": 3
+      },
+      {
+        "point": "判断が進むのは、データが支配する力になっているか・買収の証明・料金を取らない場を対象に含めるか",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "材料の並びで、比べる観点が立たない",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 49,
+    "term": "GDP",
+    "points": [
+      {
+        "point": "GDP は売った額ではなく、仕入れを引いた新しい値打ち（付加価値）を足すので、材料を二重に数えない",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "bar で横軸＝小麦の作り手・パン屋、系列＝売った額（200・500）と付加価値（200・300）。売った額の合計 700 ではなく付加価値の合計 500 を数えると注記",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "仕入れを引いて足すと材料を二重に数えないことが 2 系列の棒の差で一目になる",
+        "benefit": 3
+      },
+      {
+        "point": "中古品の売買、海外の支店で稼いだ所得、市場を通らない家事・介護は GDP に入らない",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "入らない物の一覧で、理由も本文の 1 文ずつで言える",
+        "benefit": 1
+      },
+      {
+        "point": "速報が先に出て、後の推計で数字が置き換わる",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "一言で言える",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 51,
+    "term": "金額の伸びと量の伸び（名目と実質）",
+    "points": [
+      {
+        "point": "金額（名目）の伸びから値段の動きを取り除くと、量（実質）の伸びが残り、名目と実質の向きは食い違うことがある",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "bar で横軸＝量は同じで値段が 1 割上がった場合・値段が下がり量が増えた場合、系列＝名目（110・100）と実質（100・105）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "名目が増えても実質は横ばい、名目が横ばいでも実質は増える、の食い違いが棒の開きで一目になる",
+        "benefit": 3
+      },
+      {
+        "point": "実質の値＝名目の値÷デフレーターで、家計の話は家計の買う品の指数で割る",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "割り算 1 本で、本文の 1 文で言える",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 53,
+    "term": "一人当たりで見る・伸び率で見る",
+    "points": [
+      {
+        "point": "人口が減る国では、全体の額が横ばいでも一人当たりは増え、向きが逆になりうる",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "line で横軸＝年（基準・1 年後・2 年後）、系列＝全体の額（100 で横ばい）・人口（100・98・96）・一人当たり（100・102・104）を基準年＝100 の指数で",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "全体と一人当たりで向きが逆になりうることが 3 本の線で見える",
+        "benefit": 2
+      },
+      {
+        "point": "伸び率は（今期−前期）÷前期×100 で、名目と実質は別物",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "計算の一言で、本文で言える",
+        "benefit": 1
+      },
+      {
+        "point": "季節調整の無い値は前の年の同じ期と、季節調整した値は前の期と比べる",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "2 者の 1 点の違いで、本文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 54,
+    "term": "値段の動きを比率で測る（物価指数）",
+    "points": [
+      {
+        "point": "暮らしの品を入れた買い物かごを固定し、その費用が基準の時点の何倍かを、基準を 100 とした比率で一つの数にする",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "bar で横軸＝基準の年・比べる年、系列＝同じ買い物かごを買う費用（例えば 10,000 円・10,300 円）。基準＝100 に対して 103 の注記",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "かごを固定して費用を比べ比率にする、が棒 2 本と注記で一目になる",
+        "benefit": 2
+      },
+      {
+        "point": "平均的な世帯のかごなので個々の家計の物価ではなく、質が良くなった分の値上がりは反映しない",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "測っていない物の並びで、本文の文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 60,
+    "term": "働いた人・探した人・探さなかった人",
+    "points": [
+      {
+        "point": "15 歳以上の人を就業者・完全失業者・それ以外に分け、完全失業率は完全失業者を労働力人口で割るので、職探しをやめた人は率に出ない",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝就業者・完全失業者・非労働力人口、行＝調査の週にしたこと・完全失業率での扱い の 3×2（1 時間以上働いたか仕事を持ち休んだ／仕事なし・すぐ就ける・探した、の 3 つを満たす／どれかが欠ける（職探しをやめた人など）、分母に入る／分子と分母に入る／どちらにも入らない）。非労働力人口の扱いのセルを強調",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "職探しをやめた人が率に出ない理由は、3 区分と率の分子・分母の対応を格子でたどると直接見える",
+        "benefit": 3
+      },
+      {
+        "point": "完全失業率は景気に遅れて動き、標本調査なので誤差を含む",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "性質の一言で、本文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 50,
+    "term": "同じ額を三つの側から数える（生産・分配・支出）",
+    "points": [
+      {
+        "point": "作った物は誰かの所得になり、その所得が誰かの支出になるので、作った側・配られた側・使われた側のどこから数えても同じ額になる",
+        "content_type": "プロセス",
+        "function": "解釈的",
+        "draw": true,
+        "type": "cycle",
+        "idea": "3 段の輪: 作った側（産業ごとの付加価値の合計）→ 配られた側（報酬・儲け・その他）→ 使われた側（消費・投資・輸出−輸入）→ 作った側。段の間は「作った物が誰かの所得に」「所得が誰かの支出に」「支出に見合って作る」。中央に「同じ額」",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "三つの側が同じ額になる理由は、所得と支出がめぐる輪として描くと図だけで言える",
+        "benefit": 3
+      },
+      {
+        "point": "売れ残りは作った側が自分で買ったと見て在庫投資として支出に数えるので、三つの額はそろう",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "数え方の決まりの一言で、本文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 66,
+    "term": "使うか残すか（消費と貯蓄）",
+    "points": [
+      {
+        "point": "増えた所得のうち消費へ回る割合（限界消費性向）が効き、10 万円増えて 7 万円使えば 7 割",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "例 1 つの割り算で、本文の 1 文で言える",
+        "benefit": 1
+      },
+      {
+        "point": "割合は、続く収入か一度きりか、先の不安の強さで変わる",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "事情の並びで、本文の文で足りる",
+        "benefit": 1
+      },
+      {
+        "point": "一度きりの受け取りは、現金が足りない家計なら買い物へ、先をならす家計なら貯蓄に残る",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "2 者の 1 点の違いで、本文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 76,
+    "term": "お金の三つの働き",
+    "points": [
+      {
+        "point": "お金は、支払いに使う・値段を測る物差しにする・持ち越す、の三つを揃えて持つ",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝支払いに使う・値段を測る物差し・持ち越す、行＝お金・土地や金（きん）・ポイント の 3×3（すぐ使える／円そのもの／いつでもそのまま使える、売って換える手間がかかる／円で測られる側／持ち越せるが換える手間、使える店が限られる／物差しは円のまま／期限で弱い）。お金の行を強調",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "三つの働きを同じ観点で並べると、お金だけが三つを揃えて持つことが表だけで言える",
+        "benefit": 3
+      },
+      {
+        "point": "値段が続けて上がると、持ち越しの働きが弱まる",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "一言で言える",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 77,
+    "term": "金利はどう決まるか",
+    "points": [
+      {
+        "point": "金利は、貸したい量と借りたい量の釣り合いで決まる",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "交わる 2 本の線は単位「市場均衡」の図と同じ形で、軸を読み替えるだけ",
+        "benefit": 1
+      },
+      {
+        "point": "金利の話は「どの期間か」と「名目か実質か」の二軸に置ける",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝名目・実質、行＝短い期間・長い期間 の 2×2（銀行同士の翌営業日返しの金利／名目から物価の上がりを引く、先の物価や金利の予想と長く待つ上乗せが入る／同じく先の物価の予想を引く）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "本文の結びが二つの軸そのもので、格子に置くと金利の話がどこにあるかが表だけで言える",
+        "benefit": 3
+      },
+      {
+        "point": "実質の負担は名目の金利から物価の上がる分を引いた値（2%−3%＝−1%）",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "引き算 1 本で、本文で言える",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 67,
+    "term": "設備にお金を回すかどうか（投資）",
+    "points": [
+      {
+        "point": "投資は、先の稼ぎの見込みと借りる費用（金利）を見比べて決まるので、金利が上がっても見込みが強ければ回す",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝金利が低い・金利が高い、行＝先の注文の見込みが強い・弱い の 2×2（回す／見込みが勝てば回す、見込みしだい／見送る）。見込みが強く金利が高いセルを強調",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "投資が落ちた原因を金利と見込みに分けて見る判断が、二つの事情の組み合わせの格子で図だけで言える",
+        "benefit": 2
+      },
+      {
+        "point": "計画・発注・据え付けに時間がかかるので、効き方は遅れて出る",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "時間のずれの一言で、本文で足りる",
+        "benefit": 1
+      },
+      {
+        "point": "いったん建てると元に戻せないので、先行きが読めないときは待つ側に傾く",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "一言で言える",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 68,
+    "term": "皆が使う量から所得が決まる筋",
+    "points": [
+      {
+        "point": "使う量が作った量より少ないと、在庫が積み上がって作る量が減り、所得が減ってまた使う量が減るので、縮みは一巡で終わらない",
+        "content_type": "プロセス",
+        "function": "解釈的",
+        "draw": true,
+        "type": "cycle",
+        "idea": "4 段の輪: 使う量が減る（注文が細る）→ 在庫が積み上がる（売れ残る）→ 作る量を減らす（絞る）→ 所得が減る（賃金と利益）→ 使う量が減る。段の間は「売れ残る」「作る量を絞る」「払う額が減る」「入った額の 8 割を使う」",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "縮みが一巡で終わらず使う量の側から所得が決まる筋は、輪の形で見ないと文では追いにくい",
+        "benefit": 3
+      },
+      {
+        "point": "この筋が成り立つのは、余っている人と設備があり値段と賃金が動きにくい短い期間",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "成り立つ条件は次の単位「総需要と総供給」の図が受け持つ",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 70,
+    "term": "全体の買いたい量と作れる量（総需要と総供給）",
+    "points": [
+      {
+        "point": "総需要と総供給の 2 本の線の交点で物価と生産量が同時に決まり、買いたい量が増えると、余りがあるうちは量へ、作れる量の近くでは物価へ出る",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "line で横軸＝生産量（96〜105）・縦軸＝物価指数、系列＝総供給（右上がりで 105 付近で立つ）・総需要・増えた後の総需要 の 3 本。交点の移り（生産 100・指数 100 → 104・101）と無理なく作れる量 105 の縦線",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "交点で同時に決まり、余りの有無で量か物価かへ出る動きは線の絵でないと追いにくい",
+        "benefit": 3
+      },
+      {
+        "point": "買いたい量が増えた値上がりは生産と物価が同じ向き、作る費用が上がった値上がりは逆向きに動く",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝生産・物価、行＝買いたい量が増える・作る費用が上がる（輸入する原材料や燃料） の 2×2（増える（100→104）／上がる（100→101）、減る（100→96）／上がる（100→104））。生産の列を強調",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "値上がりの原因の見分けどころ（生産の向き）が、二つの場合を同じ観点で並べると表だけで言える",
+        "benefit": 3
+      }
+    ]
+  },
+  {
+    "topic_id": 58,
+    "term": "値段が続けて上がる・下がる（インフレとデフレ）",
+    "points": [
+      {
+        "point": "上がり続けると現金で買える量が減り受け取りの改定が遅れ、下がり続けると借りたお金が重くなり買い控えが賃金と雇用に回る。金利で打てる手も両側で違う",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝上がり続ける（インフレ）・下がり続ける（デフレ）、行＝誰が痛むか・金利で打てる手 の 2×2（現金や預金で買える量が減り賃金や年金の改定が遅れる／借りたお金が重くなり買い控えが賃金と雇用に回る、引き上げる余地が残る／0 の近くで下げる余地が尽きる）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "両側の痛みと打てる手の非対称が、同じ観点で並べると表だけで言える",
+        "benefit": 3
+      },
+      {
+        "point": "先の物価が上がると見込むと、今のうちに買う力（前倒しの力）と買える量が減って抑える力（目減りの力）が同時に働き、賃金がついてくるかで勝つ側が変わる",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝前倒しの力・目減りの力、行＝どちらへ向かうか・出やすい場面 の 2×2（今のうちに買う／抑える、賃金がついてくる／賃金が遅れる）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "向きの逆な二つの力を同じ観点で並べると、どちらが勝つかの分かれ目が表だけで言える。他の単位からも参照される",
+        "benefit": 2
+      },
+      {
+        "point": "一つの品の値上げはインフレと呼ばず、物価指数で全体の動きを見る",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "一言で言える",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 64,
+    "term": "良い時と悪い時の波（景気の循環）",
+    "points": [
+      {
+        "point": "景気は、上り（回復）・山・下り（後退）・谷を繰り返し、下りは在庫と所得を通じて自ら強まるが、やがて押す力は弱まる",
+        "content_type": "プロセス",
+        "function": "解釈的",
+        "draw": true,
+        "type": "cycle",
+        "idea": "4 段の輪: 回復（作る量と所得が戻る）→ 山（上り切る）→ 後退（在庫が積み上がり作る量を絞る）→ 谷（在庫が減り買い替えが戻る）→ 回復。段の間は何が起きるか（「売れ行きが落ちる」「作る量を売れ行き以上に絞る」「在庫が減り作る量を戻す」「所得と注文が増える」）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "四つの場面と、下りがやがて止まる理由が、輪の段と段の間のラベルで図だけで言える",
+        "benefit": 2
+      },
+      {
+        "point": "景気の統計は動く時期がずれるので、早く動く・ほぼ同時・遅れて動く指標に分けて並べる",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "line で横軸＝時期、系列＝早く動く指標（求人・新しい注文）・ほぼ同時の指標（生産）・遅れて動く指標（完全失業率の改善）の 3 本を時期をずらした波で並べ、生産の線に山と谷の注記",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "指標ごとに山と谷の時期がずれる様子は線を並べないと追いにくく、どの指標で底を言っているかの確かめにつながる",
+        "benefit": 3
+      },
+      {
+        "point": "山と谷は後から振り返って決められ、規則正しく繰り返す時計ではない",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "一言で言える",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 65,
+    "term": "無理なく作れる量との差",
+    "points": [
+      {
+        "point": "無理なく作れる量を実際の量が下回れば量で応じ、上回れば値段と賃金に上げる圧力がかかるので、差の向きが圧力の向きになる",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "bar で横軸＝下回る局面・上回る局面、系列＝無理なく作れる量（100）と実際に作られ買われた量（97・103）。差 −3% に「量で応じる」、+3% に「値段と賃金に圧力」の注記",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "差の向きがそのまま値段と賃金への圧力の向きになることが、棒の上下で一目になる",
+        "benefit": 2
+      },
+      {
+        "point": "無理なく作れる量は推計なので、差が 1% ほどの小ささでは向きだけを根拠にするのは弱い",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "注意の一言で、本文で足りる",
+        "benefit": 1
+      },
+      {
+        "point": "締まりは値段を上げる筋の一つにすぎず、作る側の費用が上がる筋は余りが残っていても起きる",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "費用の筋は単位「総需要と総供給」の表が受け持つ",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 69,
+    "term": "支出が次の所得を生む（波及の重なり）",
+    "points": [
+      {
+        "point": "支出は誰かの所得になり、その一部がまた使われるので、一巡ごとに細りながら足し上がり、残す割合で決まる先で止まる",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "bar で横軸＝1〜5 巡目、系列＝その巡の支出（100・80・64・51・41）と足し上げ（100・180・244・295・336）。残す割合 2 割なら 500 で止まると注記",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "一巡ごとに細りながら止まる先へ近づく数の動きは、棒の並びでないと追いにくい",
+        "benefit": 3
+      },
+      {
+        "point": "税・輸入・余力の無さも広がりを止める",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "漏れの並びで、本文の文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 75,
+    "term": "GDPで豊かさを測れるか",
+    "points": [
+      {
+        "point": "限界を重く見る立場は測れていない物が多いので補う指標が要ると見、代わりの物差しの精度を疑う立場は計り方で数値が大きく変わると見る",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝限界を重く見る立場・代わりの物差しの精度を疑う立場、行＝見ているもの・置いている前提 の 2×2（暮らしの質・市場を通らない家事や介護・将来に残る資源が映らない／満足度などの指標は計り方で大きく変わる、測れる物を測ると判断が引っ張られる／主観の調査は国や文化で答え方が違う）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "二つの立場を同じ観点で並べると、どこで分かれるかが表だけで言える",
+        "benefit": 3
+      },
+      {
+        "point": "同じ育児 1 時間でも、本人の賃金で数えるか頼んだ場合の賃金で数えるかで金額が変わる",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "例 1 つで、本文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 78,
+    "term": "銀行の働きと、お金が増えるしくみ",
+    "points": [
+      {
+        "point": "銀行が貸すとき、借り手の口座に書き込むことで預金が新しく生まれ、払われた先の口座に残り、返済が進むと消える",
+        "content_type": "プロセス",
+        "function": "変換的",
+        "draw": true,
+        "type": "sequence",
+        "idea": "登場人物＝銀行・借り手の企業・取引先 の 3 者。1. 銀行が借り手に 100 を貸す（借り手の口座に 100 と書き込む＝預金が 100 生まれる）2. 借り手が取引先へ仕入れの代金 100 を払う 3. 取引先の口座に預金 100 が残る 4. 借り手が銀行へ返す（note: 返した分の預金は消える）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "どこかから運ばずに貸出と預金を同時に作る、という直感に反する手順は誰の口座に何が書かれるかのやり取りでないと追いにくい",
+        "benefit": 3
+      },
+      {
+        "point": "増えるのを止めるのは借り手の側で、借りたい人がいなければ止まる（準備の割合は上限を決めない）",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "一言で言え、図に描くと共通の決まり 12 の条件を落とす恐れがある",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 79,
+    "term": "中央銀行とは何をするところか",
+    "points": [
+      {
+        "point": "中央銀行の役目は物価の安定で、手段は資金の出し入れで短い金利を導くこと",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "役目と手段の一言で、手段の手順は単位「政策の金利と、市場への働きかけ」の図が受け持つ",
+        "benefit": 1
+      },
+      {
+        "point": "政府からの独立と、決定の理由を公表する説明責任を対で置く",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "2 つの名前の対で、比べる観点が立たない",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 82,
+    "term": "物価の落ち着きを数字で示す",
+    "points": [
+      {
+        "point": "物価の安定を、消費者物価の前年比上昇率 2% という数字の目安で示す",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "値 1 つで、本文で言える",
+        "benefit": 1
+      },
+      {
+        "point": "判断は一本の数字でなく、基調・余り・予想・賃金の四つを合わせて見る",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "物差しの名前の並びで、比べる観点が立たない",
+        "benefit": 1
+      },
+      {
+        "point": "目安の水準は、2% を標準と見るか国ごとに違うと見るかで分かれる",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "2 者の 1 点の違いで、本文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 86,
+    "term": "財政とは何か",
+    "points": [
+      {
+        "point": "国は税で集め、足りない分を借りて、社会保障・国債費・地方へ配る分・一般歳出に配り、借りた分は後の年の国債費になる",
+        "content_type": "プロセス",
+        "function": "変換的",
+        "draw": true,
+        "type": "blocks",
+        "idea": "箱「税\n所得税・消費税・法人税」「借入（公債金）\n足りない分を埋める」→「予算\n1 年ごとに国会で議決」→「社会保障\n年金・医療・介護」「国債費\n元本と利払い」「地方へ配る分\n交付税等」「一般歳出\n防衛・公共事業・教育」。線のラベルは「集める」「借りて埋める」「配る」、借入から国債費へ破線で「後の年に返す」",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "入りと出の構成と、借入が後の年の国債費として出る側に戻ってくる流れが、箱と線のラベルで図だけで言える",
+        "benefit": 2
+      },
+      {
+        "point": "出る側は社会保障・国債費・地方へ配る分の三つの塊で 3 分の 2 ほどを占め、削りにくいので調整は一般歳出に寄る",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": true,
+        "type": "chart",
+        "idea": "bar で横軸＝社会保障・国債費・地方へ配る分・一般歳出、系列＝歳出を 100 と置いた仮の数（30・20・15・35）。一般歳出を強調し、三つの塊で 65 と注記",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "三つの塊の大きさと、調整の余地が一般歳出だけに寄る形が棒の並びで一目になる",
+        "benefit": 2
+      },
+      {
+        "point": "税収が伸びても、社会保障が増える圧力が同時に働くので、伸びた分がそのまま借入の減りにはならない",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "反対に働く力の一言で、本文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 88,
+    "term": "政府の支出と税で需要を動かす",
+    "points": [
+      {
+        "point": "政府が自ら買う筋はそのまま需要に足され、税や給付で手取りを増やす筋は一部が貯蓄に回るので弱く、効くまでの時間も違う",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝政府が自ら買う・税を軽くする／給付を出す、行＝需要への届き方・押し上げの強さ・効くまでの時間 の 3×2（買った分がそのまま需要に足される／手取りが増え一部が使われる、強い／貯蓄に回る分だけ弱い、計画・発注・工事で遅れる／すぐ表れる）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "二つの届き方を同じ観点で並べると、同じ規模でも中身で効き方が違うことが表だけで言える",
+        "benefit": 3
+      },
+      {
+        "point": "借入で賄うと金利を押し上げて投資を押し下げる向きに働く（押し出し）が、貯蓄の余りや買い入れが反対に働く",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "反対に働く力の一言で、詳しくは単位「国が借りるということ」で扱う",
+        "benefit": 1
+      },
+      {
+        "point": "押し上げの大きさは、余力・漏れ・建て直しの局面をどう置くかで見方が分かれる",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "論点の対立は独立した単位の図が受け持つ",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 80,
+    "term": "政策の金利と、市場への働きかけ",
+    "points": [
+      {
+        "point": "中央銀行は金利に値札を貼らず、銀行が預ける当座預金の量を国債の買い入れなどで増減させて、銀行同士の短い金利を方針の水準へ導く",
+        "content_type": "手順",
+        "function": "変換的",
+        "draw": true,
+        "type": "sequence",
+        "idea": "登場人物＝日本銀行・銀行 A・銀行 B の 3 者。1. 日本銀行が会合で短い金利の方針を決める（自分への処理）2. 日本銀行が A から国債を買い、代金を A の当座預金に書き込む 3. 預け金が余った A が B へ翌営業日返しで貸しに出る 4. 貸し手が増えて B が借りる金利が下がり方針の水準に近づく（note: 吸収するときは逆に売る）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "預け金の量で金利を導く手順は、誰から誰へ資金が動くかのやり取りでないと追いにくい",
+        "benefit": 3
+      },
+      {
+        "point": "長い期間の金利は市場が付け、先の物価や金利の予想で動くので、短い金利の方針とずれることがある",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "一言で言え、期間の軸は単位「金利はどう決まるか」の表が受け持つ",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 81,
+    "term": "金融政策はどこを通って届くか",
+    "points": [
+      {
+        "point": "政策金利の動きは、金利の経路・貸出の経路・期待の経路の三つに名前をつけて数える道すじを通って支出と物価に届く",
+        "content_type": "プロセス",
+        "function": "解釈的",
+        "draw": true,
+        "type": "blocks",
+        "idea": "箱「政策金利\n短い金利を動かす」から 3 本: 〈金利の経路〉→「借入・社債の金利\n借りる費用が下がる」、〈貸出の経路〉→「銀行の貸出\n貸せる量と姿勢」、〈期待の経路〉→「先の物価と金利の予想\n今の値付けが動く」。3 つから「支出\n設備・住宅」、そこから「物価\n最後に動く」。線のラベルに経路の名前と何が動くか",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "名前をつけた 3 本の道すじが一つの支出に合流する形は、経路の図でないと文では追いにくい",
+        "benefit": 3
+      },
+      {
+        "point": "届くまでの時間には順番があり、短い金利は方針の直後、貸出金利は契約の切り替えに沿って、設備や住宅はさらに遅れ、物価は最後に動く",
+        "content_type": "プロセス",
+        "function": "変換的",
+        "draw": true,
+        "type": "timeline",
+        "idea": "軸＝方針を変えてからの時間（目盛りは「直後」から「遅い」までの順番だけで、月数は入れない）。点か期間で 短い金利（直後）・貸出金利（契約の切り替えに沿って）・設備や住宅（さらに遅れて）・物価（最後）の 4 つを並べる",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "効いていないのか、まだ届いていないだけなのかの見分けが、時間軸の上の並びで図だけで言える",
+        "benefit": 2
+      },
+      {
+        "point": "借り手が借金を減らしている局面では、金利が下がっても借入は増えない（経路の詰まり）",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "反対に働く場面の一言で、本文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 90,
+    "term": "国が借りるということ（国債の種類）",
+    "points": [
+      {
+        "point": "国債は使い道で、建設国債・特例国債・借換債に分かれ、発行の根拠も違う",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝建設国債・特例国債・借換債、行＝何に充てるか・発行の根拠 の 3×2（後の世代も使う資産をつくる費用／それでも足りない分を埋める／期限が来た国債を返す資金、財政法が例外として認める／そのつど特別の法律と国会の議決／借入の乗り換え）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "使い道で分かれる三つの区分を同じ観点で並べると表だけで言える",
+        "benefit": 3
+      },
+      {
+        "point": "国債は期限が来るたびに借換債で乗り換えながら、全体として 60 年で返し終える",
+        "content_type": "プロセス",
+        "function": "変換的",
+        "draw": true,
+        "type": "timeline",
+        "idea": "軸＝発行からの年（「発行」から「60 年」まで）。期間の帯「最初の国債」、期限ごとの点「借換債\n返す資金を新しい国債で」を数か所、終点に「返し終える\n60 年の決まり」",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "「一円も返していない」でも「その年に全部返す」でもない、繰り延べながら期限を決めて返す道筋が時間軸の上で図だけで言える",
+        "benefit": 2
+      },
+      {
+        "point": "「借金」の数字には、その年の発行額（フロー）と積み上がった残高（ストック）の二種類がある",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "2 者の 1 点の違いで、本文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 91,
+    "term": "借金の重さをどう測るか",
+    "points": [
+      {
+        "point": "財政収支は利払いを含み、プライマリーバランスは利払いを外すので、利払いがある間は PB が釣り合っても財政収支は赤字",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "財政収支＝PB−利払い の引き算 1 本で、本文で言える",
+        "benefit": 1
+      },
+      {
+        "point": "残高の対 GDP 比は、利払いを外した収支が釣り合っていても、金利が伸びより低ければ下がり、高ければ上がる",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "line で横軸＝年（0・5・10・15・20）、系列＝残高の対 GDP 比を、金利 1%・伸び 2% の場合（下がる）と金利 3%・伸び 2% の場合（上がる）の 2 本（どちらも利払いを外した収支は釣り合い。仮の数）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "金利と伸びの大小で比が下がるか上がるかが分かれる動きは、年を追った線でないと追いにくい",
+        "benefit": 3
+      }
+    ]
+  },
+  {
+    "topic_id": 92,
+    "term": "金利が上がると財政はどうなるか",
+    "points": [
+      {
+        "point": "金利が上がっても、効くのは新しく出す分と借換えの分からなので、利払いは入れ替わりが進むにつれて遅れて積み上がる",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "step で横軸＝年（0〜5）、系列＝新しく出す国債の金利（1 年目に 1% から 2% へ跳ぶ）と平均の利率（借換えが進むにつれ 1.0 から 2.0 へ少しずつ上がる）の 2 本（仮の数）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "金利が上がった年に利払いが一気に増えない時間のずれは、2 本の線の開きでないと追いにくい",
+        "benefit": 3
+      },
+      {
+        "point": "利払費はおおよそ残高×平均の利率なので、残高が大きいほど同じ上がりでの増え方が大きい",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "掛け算 1 本で、本文で言える",
+        "benefit": 1
+      },
+      {
+        "point": "所得や物価の伸びを伴う金利の上がりなら、税収も分母の経済の大きさも増える",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "反対に働く力の一言で、本文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 98,
+    "term": "政府の借金はどこまで続けられるか",
+    "points": [
+      {
+        "point": "比率が収まるかを重く見る立場と、返せなくなるかを重く見る立場で、何を「続けられる条件」と置くかが違い、答えが分かれる",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝比率が収まるかを重く見る立場・返せなくなるかを重く見る立場、行＝続けられる条件・置いている前提 の 2×2（残高の対 GDP 比が一定に収まる／自国の通貨で返す手立てを用意できる、金利が伸びを下回る関係が先々も続く／返せなくならないことと運びが続くことを同じと見る）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "条件の置き方で答えが分かれる二つの筋を同じ観点で並べると、分かれ目が表だけで言える",
+        "benefit": 3
+      },
+      {
+        "point": "判断が進むのは、金利と伸びの差の振れを見込むかと、今の利払いの軽さが一時的かどうか",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "材料の並びで、本文の文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 83,
+    "term": "金利を下げきった後の手立て",
+    "points": [
+      {
+        "point": "短い金利を下げきった後は、長めの国債の買い入れ・お金の総量の目標・先行きの示し方の三つで、短い金利以外の道から働きかける",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝長めの国債の買い入れ・お金の総量の目標・先行きの示し方、行＝何をするか・何に働きかけるか の 3×2（満期の長い国債を大量に買う／現金と当座預金の合計を増やす目標を置く／この先どう運ぶかを前もって示す、長めの金利／続ける合図として先行きの見方／先の金利と物価の予想）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "三つの手立てを同じ観点で並べると、どこに働きかけるかの違いが表だけで言える",
+        "benefit": 3
+      },
+      {
+        "point": "借り手がいなければ、土台のお金を増やしても預金は増えない",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "一言で言え、しくみは単位「銀行の働きと、お金が増えるしくみ」の図が受け持つ",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 96,
+    "term": "長く続いた大規模な緩和は何に効いたか",
+    "points": [
+      {
+        "point": "全体ではプラスと重く見る立場と、副作用の積み上がりを重く見る立場で、何を効果に数え何を副作用に数えるかが違う",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝全体ではプラスと重く見る立場・副作用の積み上がりを重く見る立場、行＝数える中身・置いている前提 の 2×2（借入金利の低下・雇用と求人・円の値段や株価を通じた収益／国債の売り買いの細り・利ざやの薄さ・預貯金の利子の減り、比べる相手を置けば効果は測れる／副作用は時間をかけて現れるので今の評価は暫定）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "二つの立場が何を数えるかの違いを同じ観点で並べると表だけで言える",
+        "benefit": 3
+      },
+      {
+        "point": "効果は観測できない比べる相手に頼り、副作用は寄せ集めで、効果は早く傷みは遅いので見る年数で差し引きが変わる",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "測りにくいもと 3 つの並びで、本文の文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 99,
+    "term": "得手が違う相手と分けて作る（比較優位）",
+    "points": [
+      {
+        "point": "どちらの仕事でも相手が上手でも、引き受けたときに諦める物が少ない側が引き受けて交換すると、双方の取り分が増える",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝料理・皿洗い、行＝料理人・相棒 の 2×2 に 1 時間でできる量と皿 1 枚あたりに諦める料理（料理人: 10 皿／40 枚・1/4 皿、相棒: 4 皿／20 枚・1/5 皿）。相棒の皿洗いを強調",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "どちらも料理人が上手でも諦める物の少ない側が引き受ける、という芯は 2 人×2 仕事の格子をたどらないと追いにくい",
+        "benefit": 3
+      },
+      {
+        "point": "国と国でも、人手や設備が別の仕事に移れるなら、見るのは相手の強さでなく互いの諦める物",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "当てはめの一言で、本文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 100,
+    "term": "貿易で得をする人と損をする人",
+    "points": [
+      {
+        "point": "交換が広がると全体の取り分は増えるが、増える分と減る分は同じ人には起きず、得は広く薄く、損は先に集まって出る",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝国全体・買う側・輸入品と競う作る側、行＝安い輸入品が入ると・得と損の出方 の 3×2（差し引きで取り分が増える／同じ額で多く買える／売値と仕事を失う、増える分と減る分は別の人に起きる／得は広く薄く／損は先に集まって出る）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "「全体で得か」と「誰が損をするか」が別の問いであることが、立場ごとに同じ観点で並べると表だけで言える",
+        "benefit": 3
+      }
+    ]
+  },
+  {
+    "topic_id": 101,
+    "term": "関税で守るときに失うもの",
+    "points": [
+      {
+        "point": "関税の「全体の取り分が減る」は、買う側が失う分から作る側の得と税収を引いた残りを指す",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "chart",
+        "idea": "bar で横軸＝買う側が失う分・作る側の得・税収・残る差、系列＝例えば 80・30・40・10 の仮の数。残る差を強調し「買う側の損から 2 つの得を引いた残り」と注記",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "四つの損得の差し引きで「全体が減る」が出ることが棒の並びで一目になる。成り立つ前提は本文に残す",
+        "benefit": 3
+      },
+      {
+        "point": "「全体が減る」が成り立つのは、四つだけで数え、相手がし返さず、育てる狙いを別に置くとき",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "成り立つ条件の並びで、本文の文で足りる（共通の決まり 12 で同じ段に書く）",
+        "benefit": 1
+      },
+      {
+        "point": "守って育てる狙いは、期限と道筋があれば力が付く余地があり、競う相手がないまま続けば付かない",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "2 者の 1 点の違いで、本文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 106,
+    "term": "よその国とのやり取りを記録する（国際収支）",
+    "points": [
+      {
+        "point": "国際収支は経常収支・資本移転等収支・金融収支の三つの帳面で記録し、稼いだ分が外国への貸しや外国資産に変わるので、差し引きは 0 になる",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝経常収支・資本移転等収支・金融収支、行＝記録するもの・黒字の裏側 の 3×2（財とサービスの売り買いと配当や利子／見返り無しの移転・借金の免除／外国に持つ資産と借りた分の増減、稼いだ分は外国の資産に変わる／（小さい）／経常の黒字と同じだけ増える）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "三つの帳面の中身と、経常の黒字が外国資産の積み増しと裏表であることが同じ観点で並ぶと表だけで言える",
+        "benefit": 3
+      },
+      {
+        "point": "税関で数える貿易統計と、所有権の移りで数える国際収支では数字がそろわない",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "2 者の 1 点の違いで、本文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 102,
+    "term": "円高・円安とは何が起きていることか",
+    "points": [
+      {
+        "point": "1 ドルの数字が大きいほど円安で、同じ動きが外貨を受け取る側には追い風、支払う側には向かい風になる",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝円高（1 ドル 80 円）・円安（1 ドル 150 円）、行＝1,000 ドルを受け取る企業・1,000 ドルを支払う企業 の 2×2（10 万円から 8 万円に減る／15 万円に増える、2 万円軽くなる／5 万円重くなる）。1 ドル 100 円からの動きとして列名に添える",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "数字が大きいほど円安という取り違えと、同じ動きが逆に効くことは、向き×立場の格子でないと追いにくい",
+        "benefit": 3
+      },
+      {
+        "point": "円安でも輸出の量がすぐ増えるとは限らず、値段の要因と数量の要因に分けて見る",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "注意の一言で、本文で足りる",
+        "benefit": 1
+      },
+      {
+        "point": "二国間の比率だけでは円の強さは分からず、取引の大きさで重みづけた実効為替レートもある",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "一言で言える",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 103,
+    "term": "為替はどう決まるか",
+    "points": [
+      {
+        "point": "為替を動かす材料は金利の差・物価の差・先の見込みの三つで、向きも効く時間も揃わない",
+        "content_type": "原理",
+        "function": "解釈的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝金利の差・物価の差・先の見込み、行＝どう動かすか・効く時間 の 3×2（高い金利の通貨へ資金が向かう（実質の差で見る）／同じ品が同じ額で買える所へ向かう／見込みが変わると動く前に売り買い、織り込み済みなら決定の時点では動かない／年単位の長い目／すぐ）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "三つの材料を同じ観点で並べると、動いた後にどの材料の話かを見分ける枠が表だけで言える",
+        "benefit": 3
+      },
+      {
+        "point": "同じかごが自国で 100、相手国で 1 ドルなら目安は 1 ドル＝100 円（購買力平価）",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "計算 1 つで、本文で言える",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 109,
+    "term": "経済が伸びるとはどういうことか",
+    "points": [
+      {
+        "point": "伸びは実質の総量で見て、暮らしの水準は一人当たりで見るので、成長の話は「総量か一人当たりか」「名目か実質か」の二軸に置ける",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝名目・実質、行＝総量・一人当たり の 2×2（金額の大きさ／生み出した量の大きさ、一人の受け取る金額／暮らしの水準）。実質×一人当たりのセルを強調",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "本文の結びが二つの軸そのもので、格子に置くと暮らしの水準を見るセルが表だけで言える",
+        "benefit": 3
+      },
+      {
+        "point": "人口が 1 割増えて総量も 1 割増えたなら、一人当たりは変わらない",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "例 1 つで、本文で言える",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 112,
+    "term": "一人・一時間あたりどれだけ生めるか（生産性）",
+    "points": [
+      {
+        "point": "生産性は生み出した値打ちを投じた元手で割った割合で、一人あたりと時間あたりでは短い時間で働く人が増えたときの動きが違う",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝一人あたり・時間あたり、行＝割る数・例の値・短い時間で働く人が増えると の 3×2（働いた人数／働いた時間数、6,000 万円÷10 人＝600 万円／6,000 万円÷2 万時間＝3,000 円、下がる／一時間に生む量が同じなら下がらない）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "同じ割り算の分母を変えると数字の動き方が変わる対比が、2 列に並べると表だけで言える",
+        "benefit": 3
+      },
+      {
+        "point": "分子は金額なので値段が上がっただけでも増え、質の変化は金額に出にくい",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "限界の並びで、本文の文で足りる",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 114,
+    "term": "働き手の数と働き方が伸びを左右する",
+    "points": [
+      {
+        "point": "国全体で生み出す量は、人数の項・時間の項・生産性の項の掛け算で、一つが増えても他が減れば打ち消し合い、短い期間は人数と時間、長い期間は生産性で見る",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝人数の項・時間の項・生産性の項、行＝例の動き・効く期間 の 3×2（働く人 1 割増／一人の時間 1 割減／同じなら総量はほぼ横ばい、参加できる人が出尽くすまで／短い期間／設備や技能を通って遅れて）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "掛け算の三つの項を同じ観点で並べると、打ち消し合いと効く期間の見分けが表だけで言える",
+        "benefit": 3
+      },
+      {
+        "point": "働く人の数は労働力調査の数え方に従うので、職探しをやめた人は働き手に数えない",
+        "content_type": "事実",
+        "function": "表現的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "一言で言える",
+        "benefit": 1
+      }
+    ]
+  },
+  {
+    "topic_id": 116,
+    "term": "自由な貿易の利益は誰に回るか",
+    "points": [
+      {
+        "point": "全体の利益を重く見る立場・分配の損失を重く見る立場・主因ではないと見る立場で、自由化の利益が誰に回るかの見方が分かれる",
+        "content_type": "概念",
+        "function": "組織的",
+        "draw": true,
+        "type": "matrix",
+        "idea": "列＝全体の利益を重く見る立場・分配の損失を重く見る立場・主因ではないと見る立場、行＝見ているもの・置いている前提 の 3×2（生産性の高い企業へ人が移り全体の得が増える／熟練でない働き手の賃金が下がり差が開く／散らばりの大半は自由化以外、働き手が移れ埋め合わせができる／熟練かどうかが動きにくく埋め合わせは行われない／要因を分けて寄与を測れる）",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "三つの立場を同じ観点で並べると、分かれ目（移れるか・埋め合わせが届くか・寄与を測れるか）が表だけで言える",
+        "benefit": 3
+      },
+      {
+        "point": "判断が進むのは、散らばりの拡大を要因別に何割ずつ帰せるかと、埋め合わせが実務で成り立つか",
+        "content_type": "原理",
+        "function": "関係的",
+        "draw": false,
+        "type": null,
+        "idea": "",
+        "existing_figure_id": null,
+        "existing_action": null,
+        "reason": "材料の並びで、本文の文で足りる",
+        "benefit": 1
+      }
+    ]
+  }
+]

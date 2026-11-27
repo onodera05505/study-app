@@ -1,0 +1,105 @@
+{
+  "topic_id": 30,
+  "term": "ICMP（Internet Control Message Protocol）",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### 何を通知するのか",
+      "caption": "途中のルータが配送に失敗すると、その知らせは ICMP で送信元ホストへ戻ります。宛先には何も届きません。",
+      "actors": [
+        {
+          "id": "s",
+          "label": "送信元ホスト",
+          "icon": "device"
+        },
+        {
+          "id": "r",
+          "label": "ルータ",
+          "icon": "network"
+        },
+        {
+          "id": "d",
+          "label": "宛先ホスト",
+          "icon": "device"
+        }
+      ],
+      "steps": [
+        {
+          "from": "s",
+          "to": "r",
+          "label": "IP パケット（宛先ホスト行き）"
+        },
+        {
+          "from": "r",
+          "to": "r",
+          "label": "宛先へ届けられないと分かり破棄する"
+        },
+        {
+          "from": "r",
+          "to": "s",
+          "label": "ICMP 到達不能",
+          "note": "通知先は送信元ホスト。IP だけなら送信元は失敗を知らない"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "sequence",
+      "after": "### 主なメッセージと使うコマンド",
+      "caption": "TTL を 1 ずつ増やして送るたびに、1 つ先の機器が時間超過を返します。返してきた機器を順に並べると経路になります。",
+      "actors": [
+        {
+          "id": "s",
+          "label": "送信元"
+        },
+        {
+          "id": "r1",
+          "label": "ルータ 1"
+        },
+        {
+          "id": "r2",
+          "label": "ルータ 2"
+        },
+        {
+          "id": "d",
+          "label": "宛先"
+        }
+      ],
+      "steps": [
+        {
+          "from": "s",
+          "to": "r1",
+          "label": "TTL＝1 で送る"
+        },
+        {
+          "from": "r1",
+          "to": "s",
+          "label": "ICMP 時間超過",
+          "note": "ルータ 1 で TTL が 0 になる → 1 つ目はルータ 1"
+        },
+        {
+          "from": "s",
+          "to": "r2",
+          "label": "TTL＝2 で送る"
+        },
+        {
+          "from": "r2",
+          "to": "s",
+          "label": "ICMP 時間超過",
+          "note": "ルータ 2 で TTL が 0 になる → 2 つ目はルータ 2"
+        },
+        {
+          "from": "s",
+          "to": "d",
+          "label": "TTL＝3 で送る"
+        },
+        {
+          "from": "d",
+          "to": "s",
+          "label": "宛先から応答が返り、調べ終わる"
+        }
+      ]
+    }
+  ]
+}

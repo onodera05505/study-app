@@ -1,0 +1,60 @@
+{
+  "topic_id": 46,
+  "term": "フィージビリティスタディ",
+  "figures": [
+    {
+      "id": 1,
+      "type": "blocks",
+      "after": "explanation",
+      "caption": "投資を決める前に実現性と採算を確かめ、その結果で道が分かれます。資金を投じて構築するのは、見込みが立った側の道だけです。",
+      "nodes": [
+        {
+          "id": "plan",
+          "label": "企画\n事業やシステムの案を作る",
+          "row": 0,
+          "col": 0,
+          "icon": "document"
+        },
+        {
+          "id": "fs",
+          "label": "フィージビリティスタディ\n投資の前に\n実現性と採算を確かめる",
+          "row": 0,
+          "col": 1,
+          "emphasis": true,
+          "icon": "search"
+        },
+        {
+          "id": "build",
+          "label": "構築へ進む\n資金を投じて作る",
+          "row": 0,
+          "col": 2,
+          "icon": "money"
+        },
+        {
+          "id": "drop",
+          "label": "計画を取り下げる\n資金は投じない",
+          "row": 1,
+          "col": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "plan",
+          "to": "fs",
+          "label": "投資を決める前に評価"
+        },
+        {
+          "from": "fs",
+          "to": "build",
+          "label": "見込みが立つ"
+        },
+        {
+          "from": "fs",
+          "to": "drop",
+          "label": "見込みが立たない",
+          "style": "dashed"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,442 @@
+# UC-022 の境界: 作り手が手元で呼ぶ問題解説の門の入口 1 つと、門が読むファイル（入力の束・書き手の問題解説・過去問・正解表・論点・論点の別名・教材・用語の上書き・登録簿）の形。
+# 読み方は docs/adr/ADR-0008（手元の道具の境界を local-store で読む）。パスは相対ならコマンドを呼んだ作業ディレクトリが起点。
+# 入口の response は、人が読む結果の行のあとに標準出力の最後の行として出す機械向けの 1 行（JSON）の形。人が読む行の形は契約に持たない。
+x-uc: UC-022
+x-status: fixed
+x-spec: ./UC.md
+x-updated: 2026-11-21
+
+schemas:
+  Finding:
+    type: object
+    required: [kind, where, reason]
+    properties:
+      kind: { type: string, minLength: 1 }
+      where: { type: string, minLength: 1, description: ファイル・問題・選択肢・用語・箇所のどれか }
+      reason: { type: string, minLength: 1 }
+
+operations:
+  checkExplanations:
+    transport: local-store
+    direction: inbound
+    owned: true
+    auth: none
+    summary: 資格対策の学びの問題解説を教材の門にかけ、通すか止めるかと理由を返す
+    request:
+      type: object
+      additionalProperties: false
+      properties:
+        data: { type: string, pattern: "^([A-Za-z0-9._-]+/)*[a-z]+$", description: 学びの置き場。最後の段が登録簿の学びの key。省略すると data/ip }
+        bundles: { type: string, minLength: 1, description: 問題解説の入力の束の置き場。省略すると学びの置き場の explanation_bundles }
+        all: { type: boolean, description: 受け取るだけで結果を変えない（止める理由と警告は件数で打ち切らずに常にすべて出す） }
+    response:
+      type: object
+      required: [exitCode, questions, stops, warnings, limits]
+      properties:
+        exitCode: { type: integer, enum: [0, 1], description: 0 は通した、1 は stops が 1 件以上 }
+        questions: { type: integer, minimum: 0, description: 門が見た問題解説の数 }
+        stops:
+          type: array
+          description: 当たった物を件数で打ち切らずにすべて持つ
+          items:
+            allOf:
+              - { $ref: "#/schemas/Finding" }
+              - properties:
+                  kind:
+                    enum: [unreadableOutput, missingExplanation, bundleMismatch, duplicate, missingElement, answerKeyMismatch, questionMissing, contentKeyMismatch, correctMarkMismatch, pastQuestionQuote, unresolvedTerm]
+        warnings:
+          type: array
+          description: exitCode を変えない。当たった物を件数で打ち切らずにすべて持つ。情報の量の種類は無い。termNotesDiffer は用語ごとに 1 件で、where は用語
+          items:
+            allOf:
+              - { $ref: "#/schemas/Finding" }
+              - properties:
+                  kind:
+                    enum: [plainNote, noteValueOnly, termNotesDiffer, labelOrder, representativeNotNewest, choiceNoteLong]
+        limits:
+          type: object
+          description: 門が使った閾値と表示の制約
+          required: [quoteLength, choiceNoteLength]
+          properties:
+            quoteLength: { type: integer, const: 30, description: 問題解説の正解の根拠と選択肢ごとの説明を続けた文が、過去問の本文か選択肢の文のどれか 1 つとこの字数以上連続して一致したら止める（過去問の側は文をまたぐ一致を数えず、問題解説の側は欄をまたぐ一致も数える） }
+            choiceNoteLength: { type: integer, const: 90, description: 用語の説明に使う選択肢ごとの説明（正解の選択肢の説明を含み、「正解。」も数える）がこの字数を超えたら警告 }
+    errors:
+      - code: INVALID_INPUT
+        when: 知らない名前の引数か、値の無い引数がある
+      - code: INVALID_INPUT
+        when: 登録簿に無い学び
+      - code: INVALID_INPUT
+        when: 資格対策でない学び
+      - code: NOT_FOUND
+        when: 入力の束の置き場が無い
+      - code: NOT_FOUND
+        when: 学びの正解表が無い
+      - code: INVALID_INPUT
+        when: 学びの正解表が形として読めない
+    examples:
+      badArguments:
+        request: { data: data/ip, unknownArgument: x }
+        error: INVALID_INPUT
+      pass:
+        request: { data: data/ip }
+        response:
+          exitCode: 0
+          questions: 1100
+          stops: []
+          warnings: []
+          limits: { quoteLength: 30, choiceNoteLength: 90 }
+      unknownLearning:
+        request: { data: data/zzz }
+        error: INVALID_INPUT
+      notQualification:
+        request: { data: data/itc }
+        error: INVALID_INPUT
+      bundlesMissing:
+        request: { data: data/ip, bundles: data/ip/explanation_bundles_x }
+        error: NOT_FOUND
+      notQualificationBeforeBundlesMissing:
+        request: { data: data/itc, bundles: data/ip/explanation_bundles_x }
+        error: INVALID_INPUT
+      answerKeysMissing:
+        request: { data: data/fe }
+        error: NOT_FOUND
+      answerKeysUnreadable:
+        request: { data: data/ap }
+        error: INVALID_INPUT
+
+  readLearningKind:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 登録簿（src/shared/targets.json）から、その学びの種類を読む
+    request:
+      type: object
+      required: [learning]
+      properties:
+        learning: { type: string, pattern: "^[a-z]+$", description: 登録簿の学びの key }
+    response:
+      type: object
+      description: 登録簿のその学びの項のうち門が読む欄
+      required: [kind]
+      properties:
+        kind: { type: string, enum: [exam, roadmap], description: exam が資格対策 }
+    errors:
+      - code: NOT_FOUND
+        when: 登録簿に無い学び
+    examples:
+      ok:
+        request: { learning: ip }
+        response: { kind: exam }
+      unknown:
+        request: { learning: zzz }
+        error: NOT_FOUND
+
+  readExplanationBundle:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 問題解説の入力の束 1 つ（書き手に渡した論点ごとの問題）を読む。入力の束の置き場の「expl_」で始まる名前のファイルだけが束で、束と同じ名前の問題解説のファイルと突き合わせる
+    request:
+      type: object
+      required: [path]
+      properties:
+        path: { type: string, pattern: "^.+/expl_[A-Za-z0-9_-]*\\.json$" }
+    response:
+      type: object
+      required: [topics]
+      properties:
+        topics:
+          type: array
+          items:
+            type: object
+            required: [questions]
+            properties:
+              questions:
+                type: array
+                items:
+                  type: object
+                  required: [question_id, content_key]
+                  properties:
+                    question_id: { type: string, minLength: 1 }
+                    content_key: { type: string, minLength: 1 }
+    errors:
+      - code: INVALID_INPUT
+        when: 形として読めない
+    examples:
+      ok:
+        request: { path: data/ip/explanation_bundles/expl_01.json }
+        response: { topics: [{ questions: [{ question_id: 2026r08-q97, content_key: 50bfe9f96eabc25f }] }] }
+      unreadable:
+        request: { path: data/ip/explanation_bundles/expl_02.json }
+        error: INVALID_INPUT
+
+  readExplanations:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 書き手が書いた問題解説のファイル 1 つを読む
+    request:
+      type: object
+      required: [path]
+      properties:
+        path: { type: string, pattern: "^([A-Za-z0-9._-]+/)*question_explanations/[A-Za-z0-9_-]+\\.json$" }
+    response:
+      type: object
+      required: [explanations]
+      properties:
+        explanations:
+          type: array
+          items:
+            type: object
+            required: [question_id, content_key, correct, correct_reason, choices]
+            properties:
+              question_id: { type: string, minLength: 1 }
+              content_key: { type: string, pattern: "^[0-9a-f]{16}$", description: 同一内容の判定の値。作り方は BR-052 }
+              correct: { type: string, enum: ["ア", "イ", "ウ", "エ"] }
+              correct_reason: { type: string, minLength: 1 }
+              choices:
+                type: array
+                minItems: 4
+                maxItems: 4
+                items:
+                  type: object
+                  required: [label, note]
+                  properties:
+                    label: { type: string, enum: ["ア", "イ", "ウ", "エ"] }
+                    term: { type: [string, "null"], description: 用語の説明の出どころになる語 }
+                    note: { type: string, minLength: 1, description: correct と同じ label の選択肢（正解の側）の説明は「正解」で始まり、ほかの選択肢の説明は「正解」で始まらない }
+    errors:
+      - code: NOT_FOUND
+        when: ファイルが無い
+      - code: INVALID_INPUT
+        when: 形として読めない
+    examples:
+      ok:
+        request: { path: data/ip/question_explanations/expl_01.json }
+        response:
+          explanations: [{ question_id: 2026r08-q97, content_key: 50bfe9f96eabc25f, correct: イ, correct_reason: "…", choices: [{ label: ア, term: null, note: "…" }, { label: イ, term: null, note: "正解。…" }, { label: ウ, term: null, note: "…" }, { label: エ, term: null, note: "…" }] }]
+      missing:
+        request: { path: data/ip/question_explanations/expl_99.json }
+        error: NOT_FOUND
+      unreadable:
+        request: { path: data/ip/question_explanations/expl_02.json }
+        error: INVALID_INPUT
+
+  readAnswerKeys:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 学びの正解表を読む
+    request:
+      type: object
+      required: [path]
+      properties:
+        path: { type: string, pattern: "^([A-Za-z0-9._-]+/)*answer_keys\\.json$" }
+    response:
+      type: object
+      description: 回 → 問番号（文字列）→ 正解
+      additionalProperties: { type: object, additionalProperties: { type: string } }
+    errors:
+      - code: NOT_FOUND
+        when: 正解表が無い
+      - code: INVALID_INPUT
+        when: JSON として読めないか、回の値が object でないか、正解が文字列でない
+    examples:
+      ok:
+        request: { path: data/ip/answer_keys.json }
+        response: { 2026r08: { "97": イ } }
+      missing:
+        request: { path: data/zzz/answer_keys.json }
+        error: NOT_FOUND
+      unreadable:
+        request: { path: data/ip/answer_keys.json }
+        error: INVALID_INPUT
+
+  readPastQuestions:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: "1 回分の過去問を読む（問題の識別子は回と「-q」と問番号を続けた物（例: 2018h30h-q1）。指す過去問・同一内容の鍵・引用の一致を見るため）"
+    request:
+      type: object
+      required: [path]
+      properties:
+        path: { type: string, pattern: "^([A-Za-z0-9._-]+/)*questions/[0-9a-z]+\\.json$" }
+    response:
+      type: object
+      required: [exam, questions]
+      properties:
+        exam: { type: string, minLength: 1, description: 回 }
+        questions:
+          type: array
+          items:
+            type: object
+            required: [number, text]
+            properties:
+              number: { type: integer, minimum: 1, description: 問番号 }
+              text: { type: string }
+              choices: { type: object, additionalProperties: { type: string } }
+    errors:
+      - code: NOT_FOUND
+        when: ファイルが無い
+      - code: INVALID_INPUT
+        when: 形として読めない
+    examples:
+      ok:
+        request: { path: data/ip/questions/2018h30h.json }
+        response: { exam: 2018h30h, questions: [{ number: 1, text: "…", choices: { "ア": "…", "イ": "…", "ウ": "…", "エ": "…" } }] }
+      missing:
+        request: { path: data/ip/questions/1999h11h.json }
+        error: NOT_FOUND
+      unreadable:
+        request: { path: data/ip/questions/2018h30a.json }
+        error: INVALID_INPUT
+
+  readTopics:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 学びの論点の一覧を読む（用語として示した語を論点の名前と別名で解決するため）
+    request:
+      type: object
+      required: [path]
+      properties:
+        path: { type: string, pattern: "^([A-Za-z0-9._-]+/)*topics\\.json$" }
+    response:
+      type: object
+      required: [topics]
+      properties:
+        topics:
+          type: array
+          items:
+            type: object
+            required: [id, term]
+            properties:
+              id: { type: integer, minimum: 1 }
+              term: { type: string, minLength: 1 }
+              aliases: { type: array, items: { type: string, minLength: 1 } }
+    errors:
+      - code: NOT_FOUND
+        when: ファイルが無い
+      - code: INVALID_INPUT
+        when: 形として読めない
+    examples:
+      ok:
+        request: { path: data/ip/topics.json }
+        response: { topics: [{ id: 9, term: ITガバナンス, aliases: [] }] }
+      missing:
+        request: { path: data/zzz/topics.json }
+        error: NOT_FOUND
+      unreadable:
+        request: { path: data/ip/topics.json }
+        error: INVALID_INPUT
+
+  readTopicAliases:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 論点の別名の表を読む（「_」で始まる鍵と、値が文字列でない行は使わない）
+    request:
+      type: object
+      required: [path]
+      properties:
+        path: { type: string, pattern: "^([A-Za-z0-9._-]+/)*topic_aliases\\.json$" }
+    response:
+      type: object
+      description: 別名 → 論点の名前か別名
+      additionalProperties: { type: string }
+    errors:
+      - code: NOT_FOUND
+        when: 表が無い（別名を使わない）
+      - code: INVALID_INPUT
+        when: 形として読めない
+    examples:
+      ok:
+        request: { path: data/ip/topic_aliases.json }
+        response: { アジャイル: アジャイル開発 }
+      missing:
+        request: { path: data/fe/topic_aliases_x.json }
+        error: NOT_FOUND
+      unreadable:
+        request: { path: data/ip/topic_aliases.json }
+        error: INVALID_INPUT
+
+  readMaterialFile:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 教材の世代の置き場の 1 つのファイルの教材を読む（論点ごとに、後の世代・後のファイルの教材を選ぶ。配る教材の本文で用語として示した語と、用語として示した語が論点に当たるときにその論点に教材があるかを見るため）
+    request:
+      type: object
+      required: [path]
+      properties:
+        path: { type: string, pattern: "^([A-Za-z0-9._-]+/)*materials(_v[0-9]+)?/[A-Za-z0-9_-]+\\.json$" }
+    response:
+      type: object
+      properties:
+        materials:
+          type: array
+          items:
+            type: object
+            required: [topic_id]
+            properties:
+              topic_id: { type: integer, minimum: 1 }
+              explanation: { type: string }
+              detail: { type: string }
+    errors:
+      - code: NOT_FOUND
+        when: ファイルが無い
+      - code: INVALID_INPUT
+        when: JSON として読めないか、論点の ID を持たない教材がある
+    examples:
+      ok:
+        request: { path: data/ip/materials_v4/01-1.json }
+        response: { materials: [{ topic_id: 395, explanation: "**経営理念**（企業理念）とは…" }] }
+      missing:
+        request: { path: data/ip/materials_v4/99-9.json }
+        error: NOT_FOUND
+      unreadable:
+        request: { path: data/ip/materials_v4/01-2.json }
+        error: INVALID_INPUT
+
+  readGlossaryOverrides:
+    transport: local-store
+    direction: outbound
+    owned: true
+    auth: none
+    summary: 学びの用語の上書きを読む（「_」で始まる鍵は使わない）
+    request:
+      type: object
+      required: [path]
+      properties:
+        path: { type: string, pattern: "^([A-Za-z0-9._-]+/)*glossary_overrides\\.json$" }
+    response:
+      type: object
+      description: 用語 → 説明（文字列か、brief と topic_id を持つ物）
+      additionalProperties:
+        oneOf:
+          - { type: string }
+          - { type: object, properties: { brief: { type: string }, topic_id: { type: [integer, "null"] } } }
+    errors:
+      - code: NOT_FOUND
+        when: 上書きが無い（上書きを使わない）
+      - code: INVALID_INPUT
+        when: 形として読めない
+    examples:
+      ok:
+        request: { path: data/ip/glossary_overrides.json }
+        response: { RPA: "…" }
+      missing:
+        request: { path: data/zzz/glossary_overrides.json }
+        error: NOT_FOUND
+      unreadable:
+        request: { path: data/ip/glossary_overrides.json }
+        error: INVALID_INPUT

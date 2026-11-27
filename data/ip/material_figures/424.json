@@ -1,0 +1,31 @@
+{
+  "topic_id": 424,
+  "term": "スクラム",
+  "figures": [
+    {
+      "id": 1,
+      "type": "cycle",
+      "after": "explanation",
+      "caption": "一覧の上位から取り出して短い期間で作り、次の回はまた一覧から選び直します。この輪を回すたびに、動く物が少しずつ完成に近づきます。",
+      "center": "反復的かつ\n漸進的",
+      "stages": [
+        {
+          "label": "プロダクトバックログ\n優先順位付きの一覧",
+          "icon": "document",
+          "next_label": "上位の項目"
+        },
+        {
+          "label": "スプリント\n1〜4 週間で作る",
+          "icon": "clock",
+          "next_label": "完成した部分",
+          "emphasis": true
+        },
+        {
+          "label": "動くソフトウェア\nスプリントごとにできる",
+          "icon": "device",
+          "next_label": "次のスプリントの分を選び直す"
+        }
+      ]
+    }
+  ]
+}

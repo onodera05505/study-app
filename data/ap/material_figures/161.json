@@ -1,0 +1,53 @@
+{
+  "topic_id": 161,
+  "term": "DNS",
+  "figures": [
+    {
+      "id": 1,
+      "type": "sequence",
+      "after": "### 正引きと逆引き",
+      "caption": "上の 2 手が正引き、次の 2 手が逆引きで、問い合わせる向きと使うレコードが逆になります。名前とアドレスは例です。",
+      "actors": [
+        {
+          "id": "r",
+          "label": "端末のリゾルバ",
+          "icon": "device"
+        },
+        {
+          "id": "s",
+          "label": "DNS サーバ",
+          "icon": "server"
+        }
+      ],
+      "steps": [
+        {
+          "from": "r",
+          "to": "s",
+          "label": "正引き：www.example.jp の A レコードは"
+        },
+        {
+          "from": "s",
+          "to": "r",
+          "label": "IP アドレス 192.0.2.10"
+        },
+        {
+          "from": "r",
+          "to": "s",
+          "label": "逆引き：10.2.0.192.in-addr.arpa の PTR レコードは",
+          "note": "IP アドレスを逆順に並べた専用のドメイン"
+        },
+        {
+          "from": "s",
+          "to": "r",
+          "label": "ホスト名 www.example.jp"
+        },
+        {
+          "from": "r",
+          "to": "r",
+          "label": "得た対応を TTL の間保持",
+          "note": "同じ名前は問い合わせずに再利用する"
+        }
+      ]
+    }
+  ]
+}
